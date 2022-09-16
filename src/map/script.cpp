@@ -10181,7 +10181,7 @@ BUILDIN_FUNC(skill_plagiarism)
 	TBL_PC *sd;
 
 	if (script_rid2sd(sd))
-		script_pushint(st, pc_skill_plagiarism(sd, script_getnum(st, 2), script_getnum(st, 3)));
+		script_pushint(st, pc_skill_plagiarism(*sd, script_getnum(st, 2), script_getnum(st, 3)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10191,7 +10191,7 @@ BUILDIN_FUNC(skill_plagiarism_reset)
 	TBL_PC *sd;
 
 	if (!script_rid2sd(sd))
-		script_pushint(st, pc_skill_plagiarism_reset(sd, script_getnum(st, 2)));
+		script_pushint(st, pc_skill_plagiarism_reset(*sd, script_getnum(st, 2)));
 
 	return SCRIPT_CMD_SUCCESS;
 }

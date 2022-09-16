@@ -5091,13 +5091,10 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
  * @param skill_lv: Skill level to be plagiarized
  * @return True on success or false otherwise
  */
-bool pc_skill_plagiarism(map_session_data *sd, uint16 skill_id, uint16 skill_lv)
+bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
 {
-	if (sd == nullptr)
-		return false;
-
 	uint16 idx;
-	int type = skill_isCopyable(sd, skill_id);
+	int type = skill_isCopyable(&sd, skill_id);
 
 	skill_id = skill_dummy2skill_id(skill_id);
 	skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
@@ -5109,26 +5106,26 @@ bool pc_skill_plagiarism(map_session_data *sd, uint16 skill_id, uint16 skill_lv)
 	}
 
 	if (type == 1) {
-		pc_skill_plagiarism_reset(sd, type);
+		pc_skill_plagiarism_reset(&sd, type);
 
-		sd->cloneskill_idx = idx;
-		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
-		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), skill_lv);
+		sd.cloneskill_idx = idx;
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM_LV), skill_lv);
 	} else if (type == 2) {
-		pc_skill_plagiarism_reset(sd, type);
+		pc_skill_plagiarism_reset(&sd, type);
 
-		sd->reproduceskill_idx = idx;
-		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), skill_id);
-		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), skill_lv);
+		sd.reproduceskill_idx = idx;
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE), skill_id);
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE_LV), skill_lv);
 	} else {
 		ShowWarning("pc_skill_plagiarism: skill %d is not copyable.\n", skill_id);
 		return false;
 	}
 
-	sd->status.skill[idx].id = skill_id;
-	sd->status.skill[idx].lv = skill_lv;
-	sd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
-	clif_addskill(sd, skill_id);
+	sd.status.skill[idx].id = skill_id;
+	sd.status.skill[idx].lv = skill_lv;
+	sd.status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
+	clif_addskill(&sd, skill_id);
 
 	return true;
 }
@@ -5139,37 +5136,34 @@ bool pc_skill_plagiarism(map_session_data *sd, uint16 skill_id, uint16 skill_lv)
  * @param type: 1 for Plagiarism or 2 for Reproduce
  * @return True on success or false otherwise
  */
-bool pc_skill_plagiarism_reset(map_session_data *sd, uint8 type)
+bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 {
-	if (sd == nullptr)
-		return false;
-
 	uint16 idx;
 	if (type == 1) 
-		idx = sd->cloneskill_idx;
+		idx = sd.cloneskill_idx;
 	else if (type == 2)
-		idx = sd->reproduceskill_idx;
+		idx = sd.reproduceskill_idx;
 	else {
 		ShowError("pc_skill_plagiarism_reset: Unknown type %d.\n", type);
 		return false;
 	}
 
-	if (sd->status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
-		uint16 skill_id = sd->status.skill[idx].id;
-		sd->status.skill[idx].id = 0;
-		sd->status.skill[idx].lv = 0;
-		sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		clif_deleteskill(sd, skill_id);
+	if (sd.status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
+		uint16 skill_id = sd.status.skill[idx].id;
+		sd.status.skill[idx].id = 0;
+		sd.status.skill[idx].lv = 0;
+		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;
+		clif_deleteskill(&sd, skill_id);
 		
 		if (type == 1) {
-			sd->cloneskill_idx = 0;
-			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
-			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
+			sd.cloneskill_idx = 0;
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM), 0);
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
 		}
 		else if (type == 2) {
-			sd->reproduceskill_idx = 0;
-			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
-			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
+			sd.reproduceskill_idx = 0;
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE), 0);
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
 		}
 	}
 	
@@ -10391,11 +10385,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if(sd->cloneskill_idx > 0) {
-		pc_skill_plagiarism_reset(sd, 1);
+		pc_skill_plagiarism_reset(*sd, 1);
 	}
 
 	if(sd->reproduceskill_idx > 0) {
-		pc_skill_plagiarism_reset(sd, 2);
+		pc_skill_plagiarism_reset(*sd, 2);
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
