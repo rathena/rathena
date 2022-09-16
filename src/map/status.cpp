@@ -3641,6 +3641,12 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	pc_delautobonus(*sd, sd->autobonus2, true);
 	pc_delautobonus(*sd, sd->autobonus3, true);
 
+	if (sd->pd != nullptr) {
+		pet_delautobonus(*sd, sd->pd->autobonus, true);
+		pet_delautobonus(*sd, sd->pd->autobonus2, true);
+		pet_delautobonus(*sd, sd->pd->autobonus3, true);
+	}
+
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
