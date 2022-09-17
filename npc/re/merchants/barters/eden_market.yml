@@ -117,60 +117,60 @@ Body:
           - Index: 0
             Item: Malang_Sp_Can
             Amount: 5000
-#      - Index: 1
-#        Item: Shadow_Mix_Recipe
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 1000
-#      - Index: 2
-#        Item: Lapine_DdukddakBox
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 1000
+      - Index: 1
+        Item: Shadow_Mix_Recipe
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 1000
+      - Index: 2
+        Item: Lapine_DdukddakBox
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 1000
       - Index: 3
         Item: EnchantStone_Recipe
         RequiredItems:
           - Index: 0
             Item: Malang_Sp_Can
             Amount: 1000
-#      - Index: 4
-#        Item: Shadow_Cube_Weapon
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 10000
-#      - Index: 5
-#        Item: Shadow_Cube_Armor
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 10000
-#      - Index: 6
-#        Item: Shadow_Cube_Shield
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 10000
-#      - Index: 7
-#        Item: Shadow_Cube_Shoes
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 10000
-#      - Index: 8
-#        Item: Shadow_Cube_Pendant
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 10000
-#      - Index: 9
-#        Item: Shadow_Cube_Earing
-#        RequiredItems:
-#          - Index: 0
-#            Item: Malang_Sp_Can
-#            Amount: 10000
+      - Index: 4
+        Item: Shadow_Cube_Weapon
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 10000
+      - Index: 5
+        Item: Shadow_Cube_Armor
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 10000
+      - Index: 6
+        Item: Shadow_Cube_Shield
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 10000
+      - Index: 7
+        Item: Shadow_Cube_Shoes
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 10000
+      - Index: 8
+        Item: Shadow_Cube_Pendant
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 10000
+      - Index: 9
+        Item: Shadow_Cube_Earing
+        RequiredItems:
+          - Index: 0
+            Item: Malang_Sp_Can
+            Amount: 10000
   - Name: para_pmi01
     Items:
       - Index: 0
