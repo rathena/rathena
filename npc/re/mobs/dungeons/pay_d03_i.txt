@@ -1,0 +1,52 @@
+//===== rAthena Script =======================================
+//= Illusion of Moonlight
+//===== Description: =========================================
+//= Illusion of Moonlight monster spawn script.
+//===== Additional Comments: =================================
+//= 1.0 Initial Release [crazyarashi]
+//= 1.1 Added missing boss kill label [Everade]
+//============================================================
+
+pay_d03_i	monster	Blue Plant	1079,1
+pay_d03_i	monster	Green Plant	1080,1,5000,0
+pay_d03_i	monster	Yellow Plant	1081,1,5000,0
+pay_d03_i	monster	White Plant	1082,5,5000,0
+pay_d03_i	monster	Whisper	1185,1,5000,0
+pay_d03_i,154,112	monster	Whisper	1185,1,5000,0
+pay_d03_i,161,117	monster	Whisper	1185,1,5000,0
+pay_d03_i,84,63	monster	Whisper	1185,1,5000,0
+pay_d03_i,81,61	monster	Whisper	1185,1,5000,0
+
+pay_d03_i	monster	Resentful Munak	3760,20,5000,0
+pay_d03_i	monster	Resentful Bongun	3761,20,5000,0
+pay_d03_i	monster	Resentful Sohee	3762,20,5000,0
+pay_d03_i	monster	Resentful Soldier	3763,15
+pay_d03_i	monster	Deranged Adventurer	3765,5,15000,0
+pay_d03_i,55,75	monster	Wizard of the Truth	3764,1,30000,0
+pay_d03_i	monster	Angry Nine Tail	3759,10,5000,0,"illusion_mob#moonlight::OnKill"
+
+-	script	illusion_mob#moonlight	-1,{
+	end;
+
+OnKill:
+	if (.mvp_spawn == 1)
+		end;
+	.kill_count += 1;
+	if (.kill_count > 1000) {
+		if (rand(100) < 10) // !todo Confirm chance
+			donpcevent strnpcinfo(0)+"::OnBossSpawn";
+	}
+	end;
+
+OnBossSpawn:
+	.mvp_spawn = 1;
+	.kill_count = 0;
+	monster "pay_d03_i",0,0,"Angry Moonlight Flower",3758,1,"illusion_mob#moonlight::OnBossKill";
+	mapannounce "pay_d03_i", "Angry Moonlight Flower: Who dares bully us again? They're in a lot of trouble!", bc_map, "0x70dbdb";
+	end;
+
+OnBossKill:
+	.mvp_spawn = 0;
+	.kill_count = 0;
+	end;
+}

@@ -232,6 +232,110 @@ struct PACKET_CZ_REQ_STYLE_CLOSE{
 	int16 packetType;
 } __attribute__((packed));
 
+struct PACKET_ZC_SUMMON_HP_INIT {
+	int16 PacketType;
+	uint32 summonAID;
+	uint32 CurrentHP;
+	uint32 MaxHP;
+} __attribute__((packed));
+
+struct PACKET_ZC_SUMMON_HP_UPDATE {
+	int16 PacketType;
+	uint32 summonAID;
+	uint16 VarId;
+	uint32 Value;
+} __attribute__((packed));
+
+struct PACKET_ZC_REPUTE_INFO_sub{
+	uint64 type;
+	int64 points;
+} __attribute__((packed));
+
+struct PACKET_ZC_REPUTE_INFO{
+	int16 packetType;
+	int16 packetLength;
+	uint8 success;
+	struct PACKET_ZC_REPUTE_INFO_sub list[];
+} __attribute__((packed));
+
+struct PACKET_ZC_OPEN_REFORM_UI{
+	int16 packetType;
+	uint32 itemId;
+} __attribute__((packed));
+
+struct PACKET_CZ_CLOSE_REFORM_UI{
+	int16 packetType;
+} __attribute__((packed));
+
+struct PACKET_CZ_ITEM_REFORM{
+	int16 packetType;
+	uint32 itemId;
+	uint16 index;
+} __attribute__((packed));
+
+struct PACKET_ZC_ITEM_REFORM_ACK{
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+
+struct PACKET_ZC_UI_OPEN_V3{
+	int16 packetType;
+	uint8 type;
+	uint64 data;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQUEST_RANDOM_ENCHANT{
+	int16 packetType;
+	uint64 clientLuaIndex;
+	uint16 index;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQUEST_PERFECT_ENCHANT{
+	int16 packetType;
+	uint64 clientLuaIndex;
+	uint16 index;
+	uint32 itemId;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT{
+	int16 packetType;
+	uint64 clientLuaIndex;
+	uint16 index;
+	uint16 slot;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQUEST_RESET_ENCHANT{
+	int16 packetType;
+	uint64 clientLuaIndex;
+	uint16 index;
+} __attribute__((packed));
+
+struct PACKET_ZC_RESPONSE_ENCHANT{
+	int16 packetType;
+	uint32 messageId;
+	uint32 enchantItemId;
+} __attribute__((packed));
+
+struct PACKET_CZ_CLOSE_UI_ENCHANT{
+	int16 packetType;
+} __attribute__((packed));
+
+struct PACKET_ZC_TARGET_SPIRITS {
+	int16 packetType;
+	uint32 GID;
+	uint32 unknown_val;
+	uint16 amount;
+} __attribute__((packed));
+
+struct PACKET_CZ_USE_PACKAGEITEM{
+	int16 PacketType;
+	uint16 index;
+	uint32 AID;
+	uint32 itemID;
+	uint32 BoxIndex;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -274,7 +378,6 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_SELLING, 0x9b2)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_CLOSE, 0x9b3)
 DEFINE_PACKET_HEADER(ZC_ACK_COUNT_BARGAIN_SALE_ITEM, 0x9c4)
 DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
-DEFINE_PACKET_HEADER(CZ_NPC_MARKET_PURCHASE, 0x9d6)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE, 0xa46)
 DEFINE_PACKET_HEADER(ZC_STYLE_CHANGE_RES, 0xa47)
@@ -283,8 +386,24 @@ DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE2, 0xafc)
 DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_TSTATUS_UP, 0x0b24)
 DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
+DEFINE_PACKET_HEADER(ZC_TARGET_SPIRITS, 0xb68)
 DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_SPIRITS3, 0xb73)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
+DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
+DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
+DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
+DEFINE_PACKET_HEADER(ZC_OPEN_REFORM_UI, 0x0b8f)
+DEFINE_PACKET_HEADER(CZ_CLOSE_REFORM_UI, 0x0b90)
+DEFINE_PACKET_HEADER(CZ_ITEM_REFORM, 0x0b91)
+DEFINE_PACKET_HEADER(ZC_ITEM_REFORM_ACK, 0x0b92)
+DEFINE_PACKET_HEADER(ZC_UI_OPEN_V3, 0x0b9a)
+DEFINE_PACKET_HEADER(CZ_REQUEST_RANDOM_ENCHANT, 0x0b9b)
+DEFINE_PACKET_HEADER(CZ_REQUEST_PERFECT_ENCHANT, 0x0b9c)
+DEFINE_PACKET_HEADER(CZ_REQUEST_UPGRADE_ENCHANT, 0x0b9d)
+DEFINE_PACKET_HEADER(CZ_REQUEST_RESET_ENCHANT, 0x0b9e)
+DEFINE_PACKET_HEADER(ZC_RESPONSE_ENCHANT, 0x0b9f)
+DEFINE_PACKET_HEADER(CZ_CLOSE_UI_ENCHANT, 0x0ba0)
+DEFINE_PACKET_HEADER(CZ_USE_PACKAGEITEM, 0x0baf)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );

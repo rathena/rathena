@@ -504,7 +504,7 @@ int distance_client(int dx, int dy)
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
-	temp_dist -= 0.0625;
+	temp_dist -= 0.1;
 
 	if(temp_dist < 0) temp_dist = 0;
 

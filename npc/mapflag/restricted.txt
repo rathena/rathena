@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Restricted.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.4
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Disables items configured in item_noequip.txt
 //= and skills configured in skill_nocast_db.txt.
@@ -17,7 +11,9 @@
 //= 1.4 Renewal split. [Euphy]
 //============================================================
 
-//Aldebaran Turbo Track
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
 alde_tt02	mapflag	restricted	1
 turbo_n_1	mapflag	restricted	1
 turbo_n_4	mapflag	restricted	1
@@ -27,10 +23,9 @@ turbo_e_4	mapflag	restricted	1
 turbo_e_8	mapflag	restricted	1
 turbo_e_16	mapflag	restricted	1
 
-//Jail
-sec_pri	mapflag	restricted	2
-
-//Izlude Battle Arena
+//============================================================
+// Arenas
+//============================================================
 force_1-1	mapflag	restricted	3
 force_2-1	mapflag	restricted	3
 force_3-1	mapflag	restricted	3
@@ -40,7 +35,9 @@ force_1-2	mapflag	restricted	3
 force_1-3	mapflag	restricted	3
 prt_are_in	mapflag	restricted	3
 
-//WoE:SE Maps
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	restricted	4
 schg_cas02	mapflag	restricted	4
 schg_cas03	mapflag	restricted	4
@@ -52,11 +49,15 @@ arug_cas03	mapflag	restricted	4
 arug_cas04	mapflag	restricted	4
 arug_cas05	mapflag	restricted	4
 
-//Sealed Shrine ==================
+//============================================================
+// Sealed Shrine
+//============================================================
 1@cata	mapflag	restricted	5
 2@cata	mapflag	restricted	5
 
-//Endless Tower ==================
+//============================================================
+// Endless Tower
+//============================================================
 1@tower	mapflag	restricted	6
 2@tower	mapflag	restricted	6
 3@tower	mapflag	restricted	6
@@ -64,15 +65,21 @@ arug_cas05	mapflag	restricted	4
 5@tower	mapflag	restricted	6
 6@tower	mapflag	restricted	6
 
-//Orc's Memory ===================
+//============================================================
+// Orc's Memory
+//============================================================
 1@orcs	mapflag	restricted	6
 2@orcs	mapflag	restricted	6
 
-// Nidhoggr's Instance ===========
+//============================================================
+// Nidhoggr's Instance
+//============================================================
 1@nyd	mapflag	restricted	6
 2@nyd	mapflag	restricted	6
 
-//Towns
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
 alberta	mapflag	restricted	7
 aldebaran	mapflag	restricted	7
 amatsu	mapflag	restricted	7

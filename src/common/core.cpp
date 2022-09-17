@@ -6,6 +6,7 @@
 #include "../config/core.hpp"
 
 #ifndef MINICORE
+#include "database.hpp"
 #include "ers.hpp"
 #include "socket.hpp"
 #include "timer.hpp"
@@ -29,8 +30,8 @@
 #ifndef DEPRECATED_COMPILER_SUPPORT
 	#if defined( _MSC_VER ) && _MSC_VER < 1900
 		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
-	#elif defined( __clang__ ) && __clang_major__ < 4 && !( __clang_major__ == 3 && __clang_minor__ >= 7 )
-		#error "clang versions older than clang 3.7 are not officially supported anymore"
+	#elif defined( __clang__ ) && __clang_major__ < 6
+		#error "clang versions older than clang 6.0 are not officially supported anymore"
 	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5
 		#error "GCC versions older than GCC 5 are not officially supported anymore"
 	#endif
@@ -365,7 +366,7 @@ int main (int argc, char **argv)
 	Sql_Init();
 	db_init();
 	signals_init();
-
+	do_init_database();
 #ifdef _WIN32
 	cevents_init();
 #endif
@@ -378,7 +379,11 @@ int main (int argc, char **argv)
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
 		t_tick next = do_timer(gettick_nocache());
-		do_sockets(next);
+
+		if (SERVER_TYPE != ATHENA_SERVER_WEB)
+			do_sockets(next);
+		else
+			do_wait(next);
 	}
 
 	do_final();

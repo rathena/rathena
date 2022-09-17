@@ -25,7 +25,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);
-void atcommand_db_load_groups(int* group_ids);
+void atcommand_db_load_groups();
 
 bool atcommand_exists(const char* name);
 

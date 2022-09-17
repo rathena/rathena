@@ -34,7 +34,7 @@ struct CHARACTER_INFO{
 	int32 virtue;
 	int32 honor;
 	int16 jobpoint;
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	int64 hp;
 	int64 maxhp;
 	int64 sp;

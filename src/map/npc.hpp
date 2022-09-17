@@ -9,11 +9,13 @@
 
 #include "../common/database.hpp"
 #include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 #include "clif.hpp" //
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;
@@ -65,7 +67,7 @@ struct s_stylist_list{
 
 class StylistDatabase : public TypesafeYamlDatabase<uint32, s_stylist_list>{
 private:
-	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node );
+	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node );
 
 public:
 	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 1 ){
@@ -73,7 +75,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 };
 
 extern StylistDatabase stylist_db;
@@ -111,7 +113,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 	void loadingFinished();
 };
 
@@ -205,6 +207,11 @@ struct npc_data {
 		t_tick timeout;
 		unsigned long color;
 	} progressbar;
+
+#ifdef GENERATE_NAVI
+	struct navi_link navi; // for warps and the src of npcs
+	std::vector<navi_link> links; // for extra links, like warper npc
+#endif
 };
 
 struct eri;
