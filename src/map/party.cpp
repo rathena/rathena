@@ -506,9 +506,6 @@ void party_member_joined(struct map_session_data *sd)
 
 	if (i < MAX_PARTY) {
 		p->data[i].sd = sd;
-
-		if (p->instance_id > 0)
-			instance_reqinfo(sd, p->instance_id);
 	} else
 		sd->status.party_id = 0; //He does not belongs to the party really?
 }

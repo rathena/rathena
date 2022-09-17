@@ -9,11 +9,13 @@
 
 #include "../common/database.hpp"
 #include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 #include "clif.hpp" //
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;
@@ -33,28 +35,16 @@ struct npc_item_list {
 	t_itemid nameid;
 	unsigned int value;
 #if PACKETVER >= 20131223
-	unsigned short qty; ///< Stock counter (Market shop)
+	int32 qty; ///< Stock counter (Market shop)
 	uint8 flag; ///< 1: Item added by npcshopitem/npcshopadditem, force load! (Market shop)
 #endif
 };
 
-#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#pragma pack(push, 1)
-#endif // not NetBSD < 6 / Solaris
-
 /// List of bought/sold item for NPC shops
 struct s_npc_buy_list {
-	unsigned short qty;		///< Amount of item will be bought
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	int32 qty;		///< Amount of item will be bought
 	uint32 nameid;	///< ID of item will be bought
-#else
-	uint16 nameid;	///< ID of item will be bought
-#endif
-} __attribute__((packed));
-
-#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#pragma pack(pop)
-#endif // not NetBSD < 6 / Solaris
+};
 
 struct s_stylist_costs{
 	uint32 price;
@@ -77,7 +67,7 @@ struct s_stylist_list{
 
 class StylistDatabase : public TypesafeYamlDatabase<uint32, s_stylist_list>{
 private:
-	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node );
+	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node );
 
 public:
 	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 1 ){
@@ -85,7 +75,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 };
 
 extern StylistDatabase stylist_db;
@@ -123,7 +113,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 	void loadingFinished();
 };
 
@@ -217,6 +207,11 @@ struct npc_data {
 		t_tick timeout;
 		unsigned long color;
 	} progressbar;
+
+#ifdef GENERATE_NAVI
+	struct navi_link navi; // for warps and the src of npcs
+	std::vector<navi_link> links; // for extra links, like warper npc
+#endif
 };
 
 struct eri;
@@ -1491,8 +1486,8 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd);
 bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
-e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
-static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list, struct npc_data* nd);
+e_purchase_result npc_buylist(struct map_session_data* sd, std::vector<s_npc_buy_list>& item_list);
+static int npc_buylist_sub(struct map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd);
 uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
 e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
@@ -1550,7 +1545,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 
 extern struct npc_data* fake_nd;
 
-int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list);
+int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s_npc_buy_list>& item_list );
 bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223

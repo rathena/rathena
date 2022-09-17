@@ -18,6 +18,9 @@
 #          Stacked             Whether stackable items are given stacked or not. (Default: true)
 #          Named               Inscribes the item with the obtainer's name. (Default: false)
 #          Bound               Binds the obtained item. (Default: None)
+#          RandomOptionGroup   Applies random options of this group to all equipable items (Default: None)
+#          RefineMinimum       Applies at least this refine level to all equipable items (Default: 0)
+#          RefineMaximum       Applies at most this refine level to all equipable items (Default: 0)
 #          Clear               Remove the given item. (Optional)
 #       Clear                  Remove the given SubGroup. (Optional)
 ###########################################################################

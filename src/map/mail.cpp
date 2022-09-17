@@ -186,6 +186,8 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 			if( battle_config.mail_attachment_weight ){
 				// Sum up all items to get the current total weight
 				for( j = 0; j < MAIL_MAX_ITEM; j++ ){
+					if (sd->mail.item[j].nameid == 0)
+						continue;
 					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
 				}
 
@@ -405,9 +407,9 @@ bool mail_invalid_operation(struct map_session_data *sd)
 		clif_displaymessage( sd->fd, msg_txt( sd, 796 ) ); // You cannot use RODEX on this map.
 		return true;
 	}
+#endif
 
 	return false;
-#endif
 }
 
 /**
