@@ -108,7 +108,6 @@ Body:
           - Index: 0
             Item: Malang_Sp_Can
             Amount: 30000
-#TODO: uncomment items when it will be implanted
   - Name: para_seed10
     Items:
       - Index: 0

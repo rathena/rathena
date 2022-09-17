@@ -1624,5 +1624,20 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 	}
 }
 
+// Eden barter shops
+-	script	eden_barter_init	-1,{
+	end;
+OnInit:
+	if (!getbattleflag("feature.barter")) {
+		unloadnpc "Whiteberry#seed01";
+		unloadnpc "Blackphone#seed02";
+		unloadnpc "Fairy#pmi02";
+		unloadnpc "Earl the Alchemist#alc02";
+		unloadnpc "Geren#pmrf01";
+		unloadnpc "Seth Miners Union#pmc03";
+	}
+	end;
+}
+
 // exit
 paramk,97,5,0	warp	paramk#ex	1,1,moc_para01,106,35
