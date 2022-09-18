@@ -18,7 +18,8 @@ MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
 MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%)
 MAP_H = $(shell ls ../map/*.hpp) \
-	$(shell ls ../config/*.hpp) 
+	$(shell ls ../config/*.hpp) \
+	../custom/battle_config_struct.inc
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -93,7 +94,20 @@ map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(
 obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$< (custom rule)"
 	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
-	
+
+# these have extra dependencies
+obj/atcommand.o: atcommand.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) ../custom/atcommand_def.inc ../custom/atcommand.inc
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/script.o: script.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) ../custom/script_def.inc ../custom/script.inc
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/battle.o: battle.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) ../custom/battle_config_init.inc
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
 obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
 	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
