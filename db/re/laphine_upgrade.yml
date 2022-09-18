@@ -5148,3 +5148,11 @@ Body:
 #      - Item: S_M_Mammoth_Shoes
 #      - Item: S_M_Mammoth_Earring
 #      - Item: S_M_Mammoth_Pendant
+  - Item: SubjectCape_Refine_Cube
+    ResultRefine: 12
+    MaximumRefine: 11
+    CardsAllowed: true
+    TargetItems:
+      - Item: Subject_CapeRange_TH
+      - Item: Subject_CapeMagic_TH
+      - Item: Subject_CapeMelee_TH

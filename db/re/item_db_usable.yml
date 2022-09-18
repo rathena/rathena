@@ -51183,6 +51183,16 @@ Body:
     Weight: 10
     Script: |
       item_reform();
+  - Id: 100848
+    AegisName: Watermelon_Pudding_J
+    Name: Watermelon Pudding    # !todo check english name
+    Type: Healing
+    Weight: 30
+    Script: |
+      percentheal 3,3;
+      specialeffect2 999;
+      specialeffect2 572;
+      /* TODO check effect */
   - Id: 100880
     AegisName: aegis_100880
     Name: Piercing Shadow Box
@@ -52682,6 +52692,15 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 101792
+    AegisName: SubjectCape_Refine_Cube
+    Name: Subject Manteau 12 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box
