@@ -213,7 +213,7 @@ public:
 	}
 
 	void erase( keytype key ) override{
-		TypesafeYamlDatabase::erase( key );
+		TypesafeYamlDatabase<keytype, datatype>::erase( key );
 
 		// Prevent excessive usage during loading
 		if( this->loaded ){
@@ -222,7 +222,7 @@ public:
 	}
 
 	void put( keytype key, std::shared_ptr<datatype> ptr ) override{
-		TypesafeYamlDatabase::put( key, ptr );
+		TypesafeYamlDatabase<keytype, datatype>::put( key, ptr );
 
 		// Prevent excessive usage during loading
 		if( this->loaded ){
