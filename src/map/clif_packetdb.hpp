@@ -2465,6 +2465,10 @@
 	parseable_packet( HEADER_CZ_CLOSE_UI_ENCHANT, sizeof( struct PACKET_CZ_CLOSE_UI_ENCHANT ), clif_parse_enchantwindow_close, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20220216
+	parseable_packet( HEADER_CZ_SEE_GUILD_MEMBERS, sizeof( struct PACKET_CZ_SEE_GUILD_MEMBERS ), clif_parse_dull, 0 );
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220316
 	parseable_packet( HEADER_CZ_USE_PACKAGEITEM, sizeof( struct PACKET_CZ_USE_PACKAGEITEM ), clif_parse_itempackage_select, 0 );
 #endif

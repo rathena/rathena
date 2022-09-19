@@ -1863,7 +1863,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
 	         CONVIP(ip), sd->group_id);
 	// Send friends list
-	clif_friendslist_send(sd);
+	clif_friendslist_send( *sd );
 
 	if( !changing_mapservers ) {
 

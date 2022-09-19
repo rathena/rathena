@@ -831,11 +831,11 @@ void clif_party_dead( struct map_session_data *sd );
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
-void clif_guild_belonginfo(struct map_session_data *sd);
+void clif_guild_belonginfo( struct map_session_data& sd );
 void clif_guild_masterormember(struct map_session_data *sd);
-void clif_guild_basicinfo(struct map_session_data *sd);
+void clif_guild_basicinfo( struct map_session_data& sd );
 void clif_guild_allianceinfo(struct map_session_data *sd);
-void clif_guild_memberlist(struct map_session_data *sd);
+void clif_guild_memberlist( struct map_session_data& sd );
 void clif_guild_skillinfo(struct map_session_data* sd);
 void clif_guild_send_onlineinfo(struct map_session_data *sd); //[LuzZza]
 void clif_guild_memberlogin_notice(struct guild *g,int idx,int flag);
@@ -914,7 +914,7 @@ void clif_pet_autofeed_status(struct map_session_data* sd, bool force);
 
 //friends list
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);
-void clif_friendslist_send(struct map_session_data *sd);
+void clif_friendslist_send( struct map_session_data& sd );
 void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_data *f_sd, int type);
 
 void clif_weather(int16 m); // [Valaris]

@@ -692,19 +692,19 @@ int guild_recv_info(struct guild *sg) {
 
 		if (before.guild_lv != g->guild_lv || bm != m ||
 			before.max_member != g->max_member) {
-			clif_guild_basicinfo(sd); //Submit basic information
+			clif_guild_basicinfo( *sd ); //Submit basic information
 			clif_guild_emblem(sd, g); //Submit emblem
 		}
 
 		if (bm != m) { //Send members information
-			clif_guild_memberlist(g->member[i].sd);
+			clif_guild_memberlist( *sd );
 		}
 
 		if (before.skill_point != g->skill_point)
 			clif_guild_skillinfo(sd); //Submit information skills
 
 		if (guild_new) { // Send information and affiliation if unsent
-			clif_guild_belonginfo(sd);
+			clif_guild_belonginfo( *sd );
 			clif_guild_notice(sd);
 			sd->guild_emblem_id = g->emblem_id;
 		}
@@ -894,7 +894,7 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 	sd->guild_emblem_id = g->emblem_id;
 	sd->guild = g;
 	//Packets which were sent in the previous 'guild_sent' implementation.
-	clif_guild_belonginfo(sd);
+	clif_guild_belonginfo( *sd );
 	clif_guild_notice(sd);
 
 	//TODO: send new emblem info to others
@@ -1011,7 +1011,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 
 	// remove member from guild
 	memset(&g->member[i],0,sizeof(struct guild_member));
-	clif_guild_memberlist(online_member_sd);
+	clif_guild_memberlist( *online_member_sd );
 
 	// update char, if online
 	if(sd != NULL && sd->status.guild_id == guild_id) {
@@ -1118,7 +1118,7 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online) { // clea
 	}
 
 	if(sd->state.connect_new) {	//Note that this works because it is invoked in parse_LoadEndAck before connect_new is cleared.
-		clif_guild_belonginfo(sd);
+		clif_guild_belonginfo( *sd );
 		sd->guild_emblem_id = g->emblem_id;
 	}
 	return 0;
@@ -1359,7 +1359,7 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data) {
 	for(i=0;i<g->max_member;i++){
 		if((sd=g->member[i].sd)!=NULL){
 			sd->guild_emblem_id=emblem_id;
-			clif_guild_belonginfo(sd);
+			clif_guild_belonginfo( *sd );
 			clif_guild_emblem(sd,g);
 			clif_guild_emblem_area(&sd->bl);
 		}
@@ -2009,10 +2009,10 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 
 	// announce the change to all guild members
 	for( i = 0; i < g->max_member; i++ ) {
-		if( g->member[i].sd && g->member[i].sd->fd ) {
-			clif_guild_basicinfo(g->member[i].sd);
-			clif_guild_memberlist(g->member[i].sd);
-			clif_guild_belonginfo(g->member[i].sd); // Update clientside guildmaster flag
+		if( g->member[i].sd ){
+			clif_guild_basicinfo( *g->member[i].sd );
+			clif_guild_memberlist( *g->member[i].sd );
+			clif_guild_belonginfo( *g->member[i].sd ); // Update clientside guildmaster flag
 		}
 	}
 

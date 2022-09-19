@@ -336,6 +336,20 @@ struct PACKET_CZ_USE_PACKAGEITEM{
 	uint32 BoxIndex;
 } __attribute__((packed));
 
+struct PACKET_ZC_FRIENDS_LIST_sub{
+	uint32 AID;
+	uint32 CID;
+#if !( PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328 ) || PACKETVER >= 20200902
+	char name[NAME_LENGTH];
+#endif
+} __attribute__((packed));
+
+struct PACKET_ZC_FRIENDS_LIST{
+	int16 packetType;
+	int16 PacketLength;
+	struct PACKET_ZC_FRIENDS_LIST_sub friends[];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -362,6 +376,7 @@ DEFINE_PACKET_HEADER(ZC_SPIRITS, 0x1d0)
 #else
 	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x1b4)
 #endif
+DEFINE_PACKET_HEADER(ZC_FRIENDS_LIST, 0x201)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_WEAPONITEMLIST, 0x221)
 DEFINE_PACKET_HEADER(ZC_ACK_WEAPONREFINE, 0x223)
 DEFINE_PACKET_HEADER(CZ_REQ_MAKINGITEM, 0x25b)

@@ -8741,25 +8741,32 @@ void clif_guild_created(struct map_session_data *sd,int flag)
 /// mode:
 ///     &0x01 = allow invite
 ///     &0x10 = allow expel
-void clif_guild_belonginfo(struct map_session_data *sd)
-{
-	int ps,fd;
-	struct guild* g;
+void clif_guild_belonginfo( struct map_session_data& sd ){
+	if( sd.guild == nullptr ){
+		return;
+	}
 
-	nullpo_retv(sd);
-	nullpo_retv(g = sd->guild);
+	struct guild& guild = *sd.guild;
+	int position = guild_getposition( &sd );
 
-	fd=sd->fd;
-	ps=guild_getposition(sd);
-	WFIFOHEAD(fd,packet_len(0x16c));
-	WFIFOW(fd,0)=0x16c;
-	WFIFOL(fd,2)=g->guild_id;
-	WFIFOL(fd,6)=g->emblem_id;
-	WFIFOL(fd,10)=g->position[ps].mode;
-	WFIFOB(fd,14)=(bool)(sd->state.gmaster_flag==1);
-	WFIFOL(fd,15)=0;  // InterSID (unknown purpose)
-	safestrncpy(WFIFOCP(fd,19),g->name,NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0x16c));
+	if( position < 0 ){
+		return;
+	}
+
+	struct PACKET_ZC_UPDATE_GDID p = {};
+
+	p.PacketType = HEADER_ZC_UPDATE_GDID;
+	p.guildId = guild.guild_id;
+	p.emblemVersion = guild.emblem_id;
+	p.mode = guild.position[position].mode;
+	p.isMaster = ( sd.state.gmaster_flag == 1 );
+	p.interSid = 0; // InterSID (unknown purpose)
+	safestrncpy( p.guildName, guild.name, sizeof( p.guildName ) );
+#if PACKETVER_MAIN_NUM >= 20220216
+	p.masterGID = guild.member[0].char_id;
+#endif
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -8864,47 +8871,39 @@ void clif_guild_masterormember(struct map_session_data *sd)
 /// 0150 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B (ZC_GUILD_INFO)
 /// 01b6 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B <zeny>.L (ZC_GUILD_INFO2)
 /// 0a84 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <manage land>.16B <zeny>.L <master char id>.L (ZC_GUILD_INFO3)
-void clif_guild_basicinfo(struct map_session_data *sd) {
-	int fd;
-	struct guild *g;
-#if PACKETVER < 20160622
-	int cmd = 0x1b6;
-	int offset = NAME_LENGTH;
-#else
-	int cmd = 0xa84;
-	int offset = 0;
-#endif
-
-	nullpo_retv(sd);
-	fd = sd->fd;
-
-	if( (g = sd->guild) == NULL )
+void clif_guild_basicinfo( struct map_session_data& sd ){
+	if( sd.guild == nullptr ){
 		return;
+	}
 
-	WFIFOHEAD(fd,packet_len(cmd));
-	WFIFOW(fd, 0)=cmd;
-	WFIFOL(fd, 2)=g->guild_id;
-	WFIFOL(fd, 6)=g->guild_lv;
-	WFIFOL(fd,10)=g->connect_member;
-	WFIFOL(fd,14)=g->max_member;
-	WFIFOL(fd,18)=g->average_lv;
-	WFIFOL(fd,22)=(uint32)cap_value(g->exp, 0, MAX_GUILD_EXP);
-	WFIFOL(fd,26)=(uint32)cap_value(g->next_exp, 0, MAX_GUILD_EXP);
-	WFIFOL(fd,30)=0;	// Tax Points
-	WFIFOL(fd,34)=0;	// Honor: (left) Vulgar [-100,100] Famed (right)
-	WFIFOL(fd,38)=0;	// Virtue: (down) Wicked [-100,100] Righteous (up)
-	WFIFOL(fd,42)=g->emblem_id;
-	safestrncpy(WFIFOCP(fd,46),g->name, NAME_LENGTH);
-#if PACKETVER < 20160622
-	safestrncpy(WFIFOCP(fd,70),g->master, NAME_LENGTH);
-#endif
-	safestrncpy(WFIFOCP(fd,70+offset),msg_txt(sd,300+guild_checkcastles(g)),16); // "'N' castles"
-	WFIFOL(fd,70+offset+16) = 0;  // zeny
-#if PACKETVER >= 20160622
-	WFIFOL(fd,70+offset+20) = g->member[0].char_id;  // leader
+	struct guild& guild = *sd.guild;
+	struct PACKET_ZC_GUILD_INFO p = {};
+
+	p.PacketType = HEADER_ZC_GUILD_INFO;
+	p.GDID = guild.guild_id;
+	p.level = guild.guild_lv;
+	p.userNum = guild.connect_member;
+	p.maxUserNum = guild.max_member;
+	p.userAverageLevel = guild.average_lv;
+	p.exp = (uint32)cap_value( guild.exp, 0, MAX_GUILD_EXP );
+	p.maxExp = (uint32)cap_value( guild.next_exp, 0, MAX_GUILD_EXP );
+	p.point = 0; // Tax Points
+	p.honor = 0; // Honor: (left) Vulgar [-100,100] Famed (right)
+	p.virtue = 0; // Virtue: (down) Wicked [-100,100] Righteous (up)
+	p.emblemVersion = guild.emblem_id;
+	safestrncpy( p.guildname, guild.name, sizeof( p.guildname ) );
+	safestrncpy( p.manageLand, msg_txt( &sd, 300 + guild_checkcastles( &guild ) ), sizeof( p.manageLand ) );
+	p.zeny = 0;
+#if PACKETVER >= 20200902
+	p.masterGID = guild.member[0].char_id; // leader
+	safestrncpy( p.masterName, guild.master, sizeof( p.masterName ) );
+#elif PACKETVER_MAIN_NUM >= 20161019 || PACKETVER_RE_NUM >= 20160921 || defined(PACKETVER_ZERO)
+	p.masterGID = guild.member[0].char_id; // leader
+#else
+	safestrncpy( p.masterName, guild.master, sizeof( p.masterName ) );
 #endif
 
-	WFIFOSET(fd,packet_len(cmd));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -8944,52 +8943,51 @@ void clif_guild_allianceinfo(struct map_session_data *sd)
 /// memo:
 ///     probably member's self-introduction (unused, no client UI/packets for editing it)
 /// 0aa5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <lastlogin>.L }* (ZC_MEMBERMGR_INFO2)
-void clif_guild_memberlist(struct map_session_data *sd)
-{
-	int fd;
-	int i,c;
-	struct guild *g;
-#if PACKETVER < 20161026
-	int cmd = 0x154;
-	int size = 104;
-#else
-	int cmd = 0xaa5;
-	int size = 34;
-#endif
-
-	nullpo_retv(sd);
-
-	if( !session_isActive(fd = sd->fd) )
+void clif_guild_memberlist( struct map_session_data& sd ){
+	if( sd.guild == nullptr ){
 		return;
-	if( (g = sd->guild) == NULL )
-		return;
-
-	WFIFOHEAD(fd, g->max_member * size + 4);
-	WFIFOW(fd, 0)=cmd;
-	for(i=0,c=0;i<g->max_member;i++){
-		struct guild_member *m=&g->member[i];
-		if(m->account_id==0)
-			continue;
-		WFIFOL(fd,c*size+ 4)=m->account_id;
-		WFIFOL(fd,c*size+ 8)=m->char_id;
-		WFIFOW(fd,c*size+12)=m->hair;
-		WFIFOW(fd,c*size+14)=m->hair_color;
-		WFIFOW(fd,c*size+16)=m->gender;
-		WFIFOW(fd,c*size+18)=m->class_;
-		WFIFOW(fd,c*size+20)=m->lv;
-		WFIFOL(fd,c*size+22)=(int)cap_value(m->exp,0,INT32_MAX);
-		WFIFOL(fd,c*size+26)=m->online;
-		WFIFOL(fd,c*size+30)=m->position;
-#if PACKETVER < 20161026
-		memset(WFIFOP(fd,c*size+34),0,50);	//[Ind] - This is displayed in the 'note' column but being you can't edit it it's sent empty.
-		safestrncpy(WFIFOCP(fd,c*size+84),m->name,NAME_LENGTH);
-#else
-		WFIFOL(fd,c*size+34)=m->last_login;
-#endif
-		c++;
 	}
-	WFIFOW(fd, 2)=c*size+4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	struct guild& guild = *sd.guild;
+	struct PACKET_ZC_MEMBERMGR_INFO* p = (struct PACKET_ZC_MEMBERMGR_INFO*)packet_buffer;
+
+	p->PacketType = HEADER_ZC_MEMBERMGR_INFO;
+	p->packetLength = sizeof( *p );
+
+	for( int i = 0, c = 0; i < guild.max_member; i++ ){
+		struct guild_member& member = guild.member[i];
+
+		if( member.account_id == 0 ){
+			continue;
+		}
+
+		struct GUILD_MEMBER_INFO& member_info = p->guildMemberInfo[c];
+
+		member_info.AID = member.account_id;
+		member_info.GID = member.char_id;
+		member_info.head = member.hair;
+		member_info.headPalette = member.hair_color;
+		member_info.sex = member.gender;
+		member_info.job = member.class_;
+		member_info.level = member.lv;
+		member_info.contributionExp = (uint32)cap_value( member.exp, 0, MAX_GUILD_EXP );
+		member_info.currentState = member.online;
+		member_info.positionID = member.position;
+#if PACKETVER >= 20200902
+		member_info.lastLoginTime = member.last_login;
+		safestrncpy( member_info.char_name, member.name, sizeof( member_info.char_name ) );
+#elif PACKETVER_MAIN_NUM >= 20161214 || PACKETVER_RE_NUM >= 20161130 || defined(PACKETVER_ZERO)
+		member_info.lastLoginTime = member.last_login;
+#else
+		memset( member_info.intro, 0, sizeof( member_info.intro ) );  //[Ind] - This is displayed in the 'note' column but being you can't edit it it's sent empty.
+		safestrncpy( member_info.char_name, member.name, sizeof( member_info.char_name ) );
+#endif
+
+		c++;
+		p->packetLength += sizeof( member_info );
+	}
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
 }
 
 
@@ -14231,12 +14229,12 @@ void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd)
 	switch( type )
 	{
 	case 0:	// Basic Information Guild, hostile alliance information
-		clif_guild_basicinfo(sd);
+		clif_guild_basicinfo( *sd );
 		clif_guild_allianceinfo(sd);
 		break;
 	case 1:	// Members list, list job title
 		clif_guild_positionnamelist(sd);
-		clif_guild_memberlist(sd);
+		clif_guild_memberlist( *sd );
 		break;
 	case 2:	// List job title, title information list
 		clif_guild_positionnamelist(sd);
@@ -15261,34 +15259,32 @@ int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap)
 /// Sends the whole friends list (ZC_FRIENDS_LIST).
 /// 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }*
 /// 0201 <packet len>.W { <account id>.L <char id>.L }* >= 20180221
-void clif_friendslist_send(struct map_session_data *sd)
-{
-	int i = 0, n, fd = sd->fd;
-#if PACKETVER < 20180221 || PACKETVER_RE_NUM >= 20200902
-	const int size = 8 + NAME_LENGTH;
-#else
-	const int size = 8;
+void clif_friendslist_send( struct map_session_data& sd ){
+	struct PACKET_ZC_FRIENDS_LIST* p = (struct PACKET_ZC_FRIENDS_LIST*)packet_buffer;
+
+	p->packetType = HEADER_ZC_FRIENDS_LIST;
+	p->PacketLength = sizeof( *p );
+
+	for( int i = 0, c = 0; i < MAX_FRIENDS && sd.status.friends[i].char_id; i++ ){
+		struct PACKET_ZC_FRIENDS_LIST_sub& f = p->friends[c];
+
+		f.AID = sd.status.friends[i].account_id;
+		f.CID = sd.status.friends[i].char_id;
+#if !( PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328 ) || PACKETVER >= 20200902
+		safestrncpy( f.name, sd.status.friends[i].name, sizeof( f.name ) );
 #endif
 
-	// Send friends list
-	WFIFOHEAD(fd, MAX_FRIENDS * size + 4);
-	WFIFOW(fd, 0) = 0x201;
-	for(i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id; i++) {
-		WFIFOL(fd, 4 + size * i + 0) = sd->status.friends[i].account_id;
-		WFIFOL(fd, 4 + size * i + 4) = sd->status.friends[i].char_id;
-#if PACKETVER < 20180221 || PACKETVER_RE_NUM >= 20200902
-		safestrncpy(WFIFOCP(fd, 4 + size * i + 8), sd->status.friends[i].name, NAME_LENGTH);
-#endif
+		c++;
+		p->PacketLength += sizeof( f );
 	}
 
-	if (i) {
-		WFIFOW(fd,2) = 4 + size * i;
-		WFIFOSET(fd, WFIFOW(fd,2));
-	}
+	clif_send( p, p->PacketLength, &sd.bl, SELF );
 
-	for (n = 0; n < i; n++) { //Sending the online players
-		if (map_charid2sd(sd->status.friends[n].char_id))
-			clif_friendslist_toggle(sd, sd->status.friends[n].account_id, sd->status.friends[n].char_id, 1);
+	// Sending the online players
+	for( int i = 0; i < MAX_FRIENDS && sd.status.friends[i].char_id; i++ ){
+		if( map_charid2sd( sd.status.friends[i].char_id ) ){
+			clif_friendslist_toggle( &sd, sd.status.friends[i].account_id, sd.status.friends[i].char_id, 1 );
+		}
 	}
 }
 
