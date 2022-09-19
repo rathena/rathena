@@ -2345,6 +2345,14 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
  * @return True on success or false otherwise
  */
 bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 flag, const std::string &other_script, bool onskill) {
+	// Check if the same bonus already exists
+	for (auto &autobonus : bonus) {
+		// Compare based on bonus script
+		if (script == autobonus->bonus_script) {
+			return false;
+		}
+	}
+
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pet_addautobonus: Reached max (%d) number of petautobonus per pet!\n", MAX_PC_BONUS);
 		return false;
@@ -2395,9 +2403,14 @@ void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petaut
 
 		if (b->timer != INVALID_TIMER && !b->bonus_script.empty() && restore) {
 			script_run_petautobonus(b->bonus_script, sd);
-
-			it = bonus.erase(it);
 		}
+
+		if (restore) {
+			it++;
+			continue;
+		}
+
+		it = bonus.erase(it);
 	}
 }
 
