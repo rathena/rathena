@@ -8925,7 +8925,7 @@ void clif_guild_memberlist( struct map_session_data& sd ){
 #elif PACKETVER_MAIN_NUM >= 20161214 || PACKETVER_RE_NUM >= 20161130 || defined(PACKETVER_ZERO)
 		member_info.lastLoginTime = member.last_login;
 #else
-		memset( member_info.intro, 0, sizeof( member_info.intro ) );  //[Ind] - This is displayed in the 'note' column but being you can't edit it it's sent empty.
+		member_info.intro = {};  //[Ind] - This is displayed in the 'note' column but being you can't edit it it's sent empty.
 		safestrncpy( member_info.char_name, member.name, sizeof( member_info.char_name ) );
 #endif
 
