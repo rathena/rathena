@@ -156,20 +156,15 @@
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);
 	packet(0x00f8,2);
 	parseable_packet(0x00f9,26,clif_parse_CreateParty,2);
-	packet(0x00fa,3);
 	packet(0x00fb,-1);
 	parseable_packet(0x00fc,6,clif_parse_PartyInvite,2);
 	packet(0x00fd,27);
-	packet(0x00fe,30);
 	parseable_packet(0x00ff,10,clif_parse_ReplyPartyInvite,2,6);
 	parseable_packet(0x0100,2,clif_parse_LeaveParty,0);
 	packet(0x0101,6);
 	parseable_packet(0x0102,6,clif_parse_PartyChangeOption,2);
 	parseable_packet(0x0103,30,clif_parse_RemovePartyMember,2,6);
 	packet(0x0104,79);
-	packet(0x0105,31);
-	packet(0x0106,10);
-	packet(0x0107,10);
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
 	packet( HEADER_ZC_MVP_GETTING_ITEM, sizeof( struct PACKET_ZC_MVP_GETTING_ITEM ) );
@@ -389,7 +384,6 @@
 	packet(0x01e6,26);
 	parseable_packet(0x01e7,2,clif_parse_NoviceDoriDori,0);
 	parseable_packet(0x01e8,28,clif_parse_CreateParty2,2,26,27);
-	packet(0x01e9,81);
 	packet(0x01ea,6);
 	packet(0x01eb,10);
 	packet(0x01ec,26);
@@ -1084,10 +1078,8 @@
 	packet(0x02c2,-1);
 	parseable_packet(0x02c4,26,clif_parse_PartyInvite2,2);
 	packet(0x02c5,30);
-	packet(0x02c6,30);
 	parseable_packet(0x02c7,7,clif_parse_ReplyPartyInvite2,2,6);
 	parseable_packet(0x02c8,3,clif_parse_PartyTick,2);
-	packet(0x02c9,3);
 	packet(0x02ca,3);
 	packet(0x02cb,20);
 	packet(0x02cc,4);
@@ -1639,7 +1631,6 @@
 #if PACKETVER >= 20100126
 	//packet(0x080C,2);
 	//packet(0x080D,3);
-	packet(0x080E,14);
 #endif
 
 // 2010-02-09aRagexeRE
@@ -2331,10 +2322,7 @@
 
 // 2017-05-02dRagexeRE
 #if PACKETVER >= 20170502
-	packet(0x0A43,85);
 	packet(0x0A44,-1);
-	packet(0x0AB2,7);
-	packet(0x0ABD,10);
 	packet(0x0A98,10);
 	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
 	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0);

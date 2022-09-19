@@ -814,20 +814,20 @@ void clif_vendingreport(struct map_session_data* sd, int index, int amount, uint
 void clif_movetoattack(struct map_session_data *sd,struct block_list *bl);
 
 // party
-void clif_party_created(struct map_session_data *sd,int result);
-void clif_party_member_info(struct party_data *p, struct map_session_data *sd);
-void clif_party_info(struct party_data* p, struct map_session_data *sd);
-void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
-void clif_party_invite_reply(struct map_session_data* sd, const char* nick, enum e_party_invite_reply reply);
+void clif_party_created( struct map_session_data& sd, int result );
+void clif_party_member_info( struct party_data& party, struct map_session_data& sd );
+void clif_party_info( struct party_data& party, struct map_session_data *sd = nullptr );
+void clif_party_invite( struct map_session_data& sd, struct map_session_data& tsd );
+void clif_party_invite_reply( struct map_session_data& sd, const char* nick, enum e_party_invite_reply reply );
 void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag);
-void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target);
-void clif_party_message(struct party_data* p, uint32 account_id, const char* mes, int len);
-void clif_party_xy(struct map_session_data *sd);
-void clif_party_xy_single(int fd, struct map_session_data *sd);
-void clif_party_hp(struct map_session_data *sd);
-void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
-void clif_party_job_and_level(struct map_session_data *sd);
-void clif_party_dead( struct map_session_data *sd );
+void clif_party_withdraw( struct map_session_data& sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target );
+void clif_party_message( struct party_data& party, uint32 account_id, const char* mes, int len );
+void clif_party_xy( struct map_session_data& sd );
+void clif_party_xy_single( struct map_session_data& sd, struct map_session_data& tsd );
+void clif_party_hp( struct map_session_data& sd );
+void clif_hpmeter_single( struct map_session_data& sd, uint32 id, uint32 hp, uint32 maxhp );
+void clif_party_job_and_level( struct map_session_data& sd );
+void clif_party_dead( struct map_session_data& sd );
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
