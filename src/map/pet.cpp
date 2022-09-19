@@ -2346,9 +2346,9 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
  */
 bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 flag, const std::string &other_script, bool onskill) {
 	// Check if the same bonus already exists
-	for (std::shared_ptr<s_petautobonus> autobonus : bonus) {
+	for (auto &autobonus : bonus) {
 		// Compare based on bonus script
-		if (script.compare(autobonus->bonus_script) == 0) {
+		if (script == autobonus->bonus_script) {
 			return false;
 		}
 	}
@@ -2403,7 +2403,6 @@ void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petaut
 
 		if (b->timer != INVALID_TIMER && !b->bonus_script.empty() && restore) {
 			script_run_petautobonus(b->bonus_script, sd);
-			restore = false;
 		}
 
 		if (restore) {
