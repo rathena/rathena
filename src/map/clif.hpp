@@ -638,8 +638,8 @@ void clif_selllist(struct map_session_data *sd);	//self
 void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd);
 void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd);
 void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd);
-void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes);	//self
-void clif_scriptnext(struct map_session_data *sd,int npcid);	//self
+void clif_scriptmes( struct map_session_data& sd, uint32 npcid, const char *mes );
+void clif_scriptnext( struct map_session_data& sd, uint32 npcid );
 void clif_scriptclose(struct map_session_data *sd, int npcid);	//self
 void clif_scriptclear(struct map_session_data *sd, int npcid);	//self
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes);	//self
@@ -690,9 +690,8 @@ void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);
 void clif_divorced(struct map_session_data* sd, const char* name);
 void clif_callpartner(struct map_session_data *sd);
-void clif_playBGM(struct map_session_data* sd, const char* name);
-void clif_soundeffect(struct map_session_data* sd, struct block_list* bl, const char* name, int type);
-void clif_soundeffectall(struct block_list* bl, const char* name, int type, enum send_target coverage);
+void clif_playBGM( struct map_session_data& sd, const char* name );
+void clif_soundeffect( struct block_list& bl, const char* name, int type, enum send_target target );
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, t_tick tick);
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd);
 void clif_hotkeys_send(struct map_session_data *sd, int tab);
@@ -804,7 +803,7 @@ void clif_changed_dir(struct block_list *bl, enum send_target target);
 
 // vending
 void clif_openvendingreq(struct map_session_data* sd, int num);
-void clif_showvendingboard(struct block_list* bl, const char* message, int fd);
+void clif_showvendingboard( struct map_session_data& sd, enum send_target target = AREA_WOS, struct block_list* tbl = nullptr );
 void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist( struct map_session_data* sd, struct map_session_data* vsd );
 void clif_buyvending(struct map_session_data* sd, int index, int amount, int fail);
@@ -1052,10 +1051,8 @@ void clif_showdigit(struct map_session_data* sd, unsigned char type, int value);
 void clif_buyingstore_open(struct map_session_data* sd);
 void clif_buyingstore_open_failed(struct map_session_data* sd, unsigned short result, unsigned int weight);
 void clif_buyingstore_myitemlist(struct map_session_data* sd);
-void clif_buyingstore_entry(struct map_session_data* sd);
-void clif_buyingstore_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd);
-void clif_buyingstore_disappear_entry(struct map_session_data* sd);
-void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd);
+void clif_buyingstore_entry( struct map_session_data& sd, struct block_list* tbl = nullptr );
+void clif_buyingstore_disappear_entry( struct map_session_data& sd, struct block_list* tbl = nullptr );
 void clif_buyingstore_itemlist(struct map_session_data* sd, struct map_session_data* pl_sd);
 void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short result);
 void clif_buyingstore_update_item(struct map_session_data* sd, t_itemid nameid, unsigned short amount, uint32 char_id, int zeny);

@@ -1526,9 +1526,9 @@ void clif_class_change_target(struct block_list *bl,int class_,int type, enum se
 void clif_servantball( struct map_session_data& sd, struct block_list* target, enum send_target send_target ){
 	struct PACKET_ZC_SPIRITS p = {};
 
-	p.packetType = HEADER_ZC_SPIRITS;
-	p.GID = sd.bl.id;
-	p.amount = sd.servantball;
+	p.PacketType = HEADER_ZC_SPIRITS;
+	p.AID = sd.bl.id;
+	p.num = sd.servantball;
 
 	if( target == nullptr ){
 		target = &sd.bl;
@@ -1540,9 +1540,9 @@ void clif_servantball( struct map_session_data& sd, struct block_list* target, e
 void clif_abyssball( struct map_session_data& sd, struct block_list* target, enum send_target send_target ){
 	struct PACKET_ZC_SPIRITS p = {};
 
-	p.packetType = HEADER_ZC_SPIRITS;
-	p.GID = sd.bl.id;
-	p.amount = sd.abyssball;
+	p.PacketType = HEADER_ZC_SPIRITS;
+	p.AID = sd.bl.id;
+	p.num = sd.abyssball;
 
 	if( target == nullptr ){
 		target = &sd.bl;
@@ -2417,17 +2417,17 @@ void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
 /// - set npcid of dialog window (0 by default)
 /// - if set to clear on next mes, clear contents
 /// - append this text
-void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes)
-{
-	int fd = sd->fd;
-	int slen = strlen(mes) + 9;
+void clif_scriptmes( struct map_session_data& sd, uint32 npcid, const char *mes ){
+	struct PACKET_ZC_SAY_DIALOG* p = (struct PACKET_ZC_SAY_DIALOG*)packet_buffer;
 
-	WFIFOHEAD(fd, slen);
-	WFIFOW(fd,0)=0xb4;
-	WFIFOW(fd,2)=slen;
-	WFIFOL(fd,4)=npcid;
-	memcpy(WFIFOCP(fd,8), mes, slen-8);
-	WFIFOSET(fd,WFIFOW(fd,2));
+	int16 length = (int16)( strlen( mes ) + 1 );
+
+	p->PacketType = HEADER_ZC_SAY_DIALOG;
+	p->PacketLength = sizeof( *p ) + length;
+	p->NpcID = npcid;
+	safestrncpy( p->message, mes, length );
+
+	clif_send( p, p->PacketLength, &sd.bl, SELF );
 }
 
 
@@ -2441,17 +2441,13 @@ void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes)
 /// - 00B9 <npcid of dialog window>.L
 /// - set to clear on next mes
 /// - remove 'next' button
-void clif_scriptnext(struct map_session_data *sd,int npcid)
-{
-	int fd;
+void clif_scriptnext( struct map_session_data& sd, uint32 npcid ){
+	struct PACKET_ZC_WAIT_DIALOG p = {};
 
-	nullpo_retv(sd);
+	p.PacketType = HEADER_ZC_WAIT_DIALOG;
+	p.NpcID = npcid;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(0xb5));
-	WFIFOW(fd,0)=0xb5;
-	WFIFOL(fd,2)=npcid;
-	WFIFOSET(fd,packet_len(0xb5));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -2820,7 +2816,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 		p.favorite = sd->inventory.u.items_inventory[n].favorite;
 		p.look = sd->inventory_data[n]->look;
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-		p.enchantgrade = sd->inventory.u.items_inventory[n].enchantgrade;
+		p.grade = sd->inventory.u.items_inventory[n].enchantgrade;
 #endif
 #endif
 #endif
@@ -4716,7 +4712,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p.location = pc_equippoint_sub( sd, sd->inventory_data[index] );
 		p.look = sd->inventory_data[index]->look;
-		p.enchantgrade = sd->inventory.u.items_inventory[index].enchantgrade;
+		p.grade = sd->inventory.u.items_inventory[index].enchantgrade;
 #endif
 #endif
 	}else{
@@ -4936,9 +4932,9 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		if( (cd = (struct chat_data*)map_id2bl(dstsd->chatID)) && cd->usersd[0]==dstsd)
 			clif_dispchat(cd,sd->fd);
 	} else if( dstsd->state.vending )
-		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
+		clif_showvendingboard( *dstsd, SELF, &sd->bl );
 	else if( dstsd->state.buyingstore )
-		clif_buyingstore_entry_single(sd, dstsd);
+		clif_buyingstore_entry( *dstsd, &sd->bl );
 
 	if(dstsd->spiritball > 0)
 		clif_spiritball( &dstsd->bl, &sd->bl, SELF );
@@ -5553,7 +5549,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			if(sd->state.vending)
 				clif_closevendingboard(bl,tsd->fd);
 			if(sd->state.buyingstore)
-				clif_buyingstore_disappear_entry_single(tsd, sd);
+				clif_buyingstore_disappear_entry( *sd, &tsd->bl );
 			break;
 		case BL_ITEM:
 			clif_clearflooritem((struct flooritem_data*)bl,tsd->fd);
@@ -7339,7 +7335,7 @@ void clif_cart_additem( struct map_session_data *sd, int n, int amount ){
 #if PACKETVER >= 20150226
 	clif_add_random_options( p.option_data, &sd->cart.u.items_cart[n] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	p.enchantgrade = sd->cart.u.items_cart[n].enchantgrade;
+	p.grade = sd->cart.u.items_cart[n].enchantgrade;
 #endif
 #endif
 
@@ -7614,23 +7610,19 @@ void clif_openvendingreq(struct map_session_data* sd, int num)
 
 /// Displays a vending board to target/area (ZC_STORE_ENTRY).
 /// 0131 <owner id>.L <message>.80B
-void clif_showvendingboard(struct block_list* bl, const char* message, int fd)
-{
-	unsigned char buf[128];
-
-	nullpo_retv(bl);
-
-	WBUFW(buf,0) = 0x131;
-	WBUFL(buf,2) = bl->id;
-	safestrncpy(WBUFCP(buf,6), message, 80);
-
-	if( session_isActive(fd) ) {
-		WFIFOHEAD(fd,packet_len(0x131));
-		memcpy(WFIFOP(fd,0),buf,packet_len(0x131));
-		WFIFOSET(fd,packet_len(0x131));
-	} else {
-		clif_send(buf,packet_len(0x131),bl,AREA_WOS);
+void clif_showvendingboard( struct map_session_data& sd, enum send_target target, struct block_list* tbl ){
+	if( tbl == nullptr ){
+		tbl = &sd.bl;
+		target = AREA_WOS;
 	}
+
+	struct PACKET_ZC_STORE_ENTRY p = {};
+
+	p.packetType = HEADER_ZC_STORE_ENTRY;
+	p.makerAID = sd.status.account_id;
+	safestrncpy( p.storeName, sd.message, sizeof( p.storeName ) );
+
+	clif_send( &p, sizeof( p ), tbl, target );
 }
 
 
@@ -7700,7 +7692,7 @@ void clif_vendinglist( struct map_session_data* sd, struct map_session_data* vsd
 		p->items[i].location = pc_equippoint_sub( sd, data );
 		p->items[i].viewSprite = data->look;
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-		p->items[i].enchantgrade = vsd->cart.u.items_cart[index].enchantgrade;
+		p->items[i].grade = vsd->cart.u.items_cart[index].enchantgrade;
 #endif
 #endif
 #endif
@@ -7790,7 +7782,7 @@ void clif_openvending( struct map_session_data* sd, int id, struct s_vending* ve
 #if PACKETVER >= 20150226
 		clif_add_random_options( p->items[i].option_data, &sd->cart.u.items_cart[index] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-		p->items[i].enchantgrade = sd->cart.u.items_cart[index].enchantgrade;
+		p->items[i].grade = sd->cart.u.items_cart[index].enchantgrade;
 #endif
 #endif
 	}
@@ -8555,15 +8547,15 @@ void clif_spiritball( struct block_list *bl, struct block_list* target, enum sen
 
 	struct PACKET_ZC_SPIRITS p = {};
 
-	p.packetType = HEADER_ZC_SPIRITS;
-	p.GID = bl->id;
+	p.PacketType = HEADER_ZC_SPIRITS;
+	p.AID = bl->id;
 
 	switch( bl->type ){
 		case BL_PC:
-			p.amount = ( (struct map_session_data*)bl )->spiritball;
+			p.num = ( (struct map_session_data*)bl )->spiritball;
 			break;
 		case BL_HOM:
-			p.amount = ( (struct homun_data*)bl )->homunculus.spiritball;
+			p.num = ( (struct homun_data*)bl )->homunculus.spiritball;
 			break;
 	}
 
@@ -9692,22 +9684,28 @@ void clif_wisall(struct map_session_data *sd,int type,int flag)
 	WFIFOSET(fd,packet_len(0xd2));
 }
 
-
 /// Play a BGM! [Rikter/Yommy] (ZC_PLAY_NPC_BGM).
 /// 07fe <bgm>.24B
-void clif_playBGM(struct map_session_data* sd, const char* name)
-{
-	int fd;
+void clif_playBGM( struct map_session_data& sd, const char* name ){
+#if PACKETVER_MAIN_NUM >= 20220504
+	struct PACKET_ZC_PLAY_NPC_BGM* p = (struct PACKET_ZC_PLAY_NPC_BGM*)packet_buffer;
+	int16 length = (int16)( strlen( name ) + 1 );
 
-	nullpo_retv(sd);
+	p->PacketType = HEADER_ZC_PLAY_NPC_BGM;
+	p->PacketLength = sizeof( *p ) + length;
+	p->playType = 0; // TODO: implement, send loop for the time being
+	safestrncpy( p->bgm, name, length );
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0x7fe));
-	WFIFOW(fd,0) = 0x7fe;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0x7fe));
+	clif_send( p, p->PacketLength, &sd.bl, SELF );
+#elif PACKETVER >= 20091201
+	struct PACKET_ZC_PLAY_NPC_BGM p = {};
+
+	p.PacketType = HEADER_ZC_PLAY_NPC_BGM;
+	safestrncpy( p.bgm, name, sizeof( p.bgm ) );
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
-
 
 /// Plays/stops a wave sound (ZC_SOUND).
 /// 01d3 <file name>.24B <act>.B <term>.L <npc id>.L
@@ -9722,37 +9720,17 @@ void clif_playBGM(struct map_session_data* sd, const char* name)
 /// npc id:
 ///     The accustic direction of the sound is determined by the
 ///     relative position of the NPC to the player (3D sound).
-void clif_soundeffect(struct map_session_data* sd, struct block_list* bl, const char* name, int type)
-{
-	int fd;
+void clif_soundeffect( struct block_list& bl, const char* name, int type, enum send_target target ){
+	struct PACKET_ZC_SOUND p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(bl);
+	p.PacketType = HEADER_ZC_SOUND;
+	safestrncpy( p.name, name, sizeof( p.name ) );
+	p.act = type;
+	p.term = 0; // TODO: implement
+	p.AID = bl.id;
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0x1d3));
-	WFIFOW(fd,0) = 0x1d3;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOB(fd,26) = type;
-	WFIFOL(fd,27) = 0;
-	WFIFOL(fd,31) = bl->id;
-	WFIFOSET(fd,packet_len(0x1d3));
+	clif_send( &p, sizeof( p ), &bl, target );
 }
-
-void clif_soundeffectall(struct block_list* bl, const char* name, int type, enum send_target coverage)
-{
-	unsigned char buf[40];
-
-	nullpo_retv(bl);
-
-	WBUFW(buf,0) = 0x1d3;
-	safestrncpy(WBUFCP(buf,2), name, NAME_LENGTH);
-	WBUFB(buf,26) = type;
-	WBUFL(buf,27) = 0;
-	WBUFL(buf,31) = bl->id;
-	clif_send(buf, packet_len(0x1d3), bl, coverage);
-}
-
 
 /// Displays special effects (npcs, weather, etc) [Valaris] (ZC_NOTIFY_EFFECT2).
 /// 01f3 <id>.L <effect id>.L
@@ -11153,7 +11131,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->state.vending ) { /* show we have a vending */
 		clif_openvending(sd,sd->bl.id,sd->vending);
-		clif_showvendingboard(&sd->bl,sd->message,0);
+		clif_showvendingboard( *sd );
 	}
 
 	// Don't trigger NPC event or opening vending/buyingstore will be failed
@@ -12581,16 +12559,17 @@ void clif_parse_StopAttack(int fd,struct map_session_data *sd)
 
 /// Request to move an item from inventory to cart (CZ_MOVE_ITEM_FROM_BODY_TO_CART).
 /// 0126 <index>.W <amount>.L
-void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+void clif_parse_PutItemToCart( int fd, struct map_session_data *sd ){
 	if (pc_istrading(sd))
 		return;
 	if (!pc_iscarton(sd))
 		return;
 	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
 		return;
-	pc_putitemtocart(sd,RFIFOW(fd,info->pos[0])-2,RFIFOL(fd,info->pos[1]));
+
+	struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART* p = (struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART*)RFIFOP( fd, 0 );
+
+	pc_putitemtocart( sd, server_index( p->index ), p->count);
 }
 
 
@@ -14062,12 +14041,9 @@ void clif_parse_VendingListReq(int fd, struct map_session_data* sd)
 /// Shop item(s) purchase request (CZ_PC_PURCHASE_ITEMLIST_FROMMC).
 /// 0134 <packet len>.W <account id>.L { <amount>.W <index>.W }*
 void clif_parse_PurchaseReq(int fd, struct map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int len = (int)RFIFOW(fd,info->pos[0]) - 8;
-	int id = (int)RFIFOL(fd,info->pos[1]);
-	const uint8* data = (uint8*)RFIFOP(fd,info->pos[2]);
+	struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC* p = (struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC*)RFIFOP( fd, 0 );
 
-	vending_purchasereq(sd, id, sd->vended_id, data, len/4);
+	vending_purchasereq( sd, p->AID, sd->vended_id, (uint8*)p->list, ( p->packetLength - sizeof( *p ) ) / sizeof( struct CZ_PURCHASE_ITEM_FROMMC ) );
 
 	// whether it fails or not, the buy window is closed
 	sd->vended_id = 0;
@@ -14077,16 +14053,14 @@ void clif_parse_PurchaseReq(int fd, struct map_session_data* sd){
 /// Shop item(s) purchase request (CZ_PC_PURCHASE_ITEMLIST_FROMMC2).
 /// 0801 <packet len>.W <account id>.L <unique id>.L { <amount>.W <index>.W }*
 void clif_parse_PurchaseReq2(int fd, struct map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int len = (int)RFIFOW(fd,info->pos[0]) - 12;
-	int aid = (int)RFIFOL(fd,info->pos[1]);
-	int uid = (int)RFIFOL(fd,info->pos[2]);
-	const uint8* data = (uint8*)RFIFOP(fd,info->pos[3]);
+#if PACKETVER >= 20100105
+	struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2* p = (struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2*)RFIFOP( fd, 0 );
 
-	vending_purchasereq(sd, aid, uid, data, len/4);
+	vending_purchasereq( sd, p->AID, p->UniqueID, (uint8*)p->list, ( p->packetLength - sizeof( *p ) ) / sizeof( struct CZ_PURCHASE_ITEM_FROMMC ) );
 
 	// whether it fails or not, the buy window is closed
 	sd->vended_id = 0;
+#endif
 }
 
 
@@ -15755,7 +15729,7 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 		p.favorite = item->favorite;
 		p.location = pc_equippoint( sd, server_index( index ) );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-		p.enchantgrade = item->enchantgrade;
+		p.grade = item->enchantgrade;
 #endif
 	}
 
@@ -16265,7 +16239,7 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 				clif_addcards( &mailitem->slot, item );
 				clif_add_random_options( mailitem->option_data, item );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-				mailitem->enchantgrade = item->enchantgrade;
+				mailitem->grade = item->enchantgrade;
 #endif
 
 				p->PacketLength += sizeof( *mailitem );
@@ -18754,7 +18728,7 @@ void clif_party_show_picker( struct map_session_data* sd, struct item* item_data
 	p.location = id->equip; // equip location
 	p.itemType = itemtype( id->nameid ); // item type
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	p.enchantgrade = item_data->enchantgrade;
+	p.grade = item_data->enchantgrade;
 #endif
 
 	clif_send( &p, sizeof( p ), &sd->bl, PARTY_SAMEMAP_WOS );
@@ -19038,27 +19012,26 @@ void clif_buyingstore_myitemlist( struct map_session_data* sd ){
 
 /// Notifies clients in area of a buying store (ZC_BUYING_STORE_ENTRY).
 /// 0814 <account id>.L <store name>.80B
-void clif_buyingstore_entry(struct map_session_data* sd)
-{
-	uint8 buf[MESSAGE_SIZE+6];
+void clif_buyingstore_entry( struct map_session_data& sd, struct block_list* tbl ){
+#if PACKETVER >= 20100420
+	enum send_target target;
 
-	WBUFW(buf,0) = 0x814;
-	WBUFL(buf,2) = sd->bl.id;
-	safestrncpy(WBUFCP(buf,6), sd->message, MESSAGE_SIZE);
+	if( tbl == nullptr ){
+		tbl = &sd.bl;
+		target = AREA_WOS;
+	}else{
+		target = SELF;
+	}
 
-	clif_send(buf, packet_len(0x814), &sd->bl, AREA_WOS);
+	struct PACKET_ZC_BUYING_STORE_ENTRY p = {};
+
+	p.packetType = HEADER_ZC_BUYING_STORE_ENTRY;
+	p.makerAID = sd.status.account_id;
+	safestrncpy( p.storeName, sd.message, sizeof( p.storeName ) );
+
+	clif_send( &p, sizeof( p ), tbl, target );
+#endif
 }
-void clif_buyingstore_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd)
-{
-	int fd = sd->fd;
-
-	WFIFOHEAD(fd,packet_len(0x814));
-	WFIFOW(fd,0) = 0x814;
-	WFIFOL(fd,2) = pl_sd->bl.id;
-	safestrncpy(WFIFOCP(fd,6), pl_sd->message, MESSAGE_SIZE);
-	WFIFOSET(fd,packet_len(0x814));
-}
-
 
 /// Request to close own buying store (CZ_REQ_CLOSE_BUYING_STORE).
 /// 0815
@@ -19070,25 +19043,25 @@ static void clif_parse_ReqCloseBuyingStore(int fd, struct map_session_data* sd)
 
 /// Notifies clients in area that a buying store was closed (ZC_DISAPPEAR_BUYING_STORE_ENTRY).
 /// 0816 <account id>.L
-void clif_buyingstore_disappear_entry(struct map_session_data* sd)
-{
-	uint8 buf[6];
+void clif_buyingstore_disappear_entry( struct map_session_data& sd, struct block_list* tbl ){
+#if PACKETVER >= 20100309
+	enum send_target target;
 
-	WBUFW(buf,0) = 0x816;
-	WBUFL(buf,2) = sd->bl.id;
+	if( tbl == nullptr ){
+		tbl = &sd.bl;
+		target = AREA_WOS;
+	}else{
+		target = SELF;
+	}
 
-	clif_send(buf, packet_len(0x816), &sd->bl, AREA_WOS);
+	struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY p = {};
+
+	p.packetType = HEADER_ZC_DISAPPEAR_BUYING_STORE_ENTRY;
+	p.makerAID = sd.status.account_id;
+
+	clif_send( &p, sizeof( p ), tbl, target );
+#endif
 }
-void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd)
-{
-	int fd = sd->fd;
-
-	WFIFOHEAD(fd,packet_len(0x816));
-	WFIFOW(fd,0) = 0x816;
-	WFIFOL(fd,2) = pl_sd->bl.id;
-	WFIFOSET(fd,packet_len(0x816));
-}
-
 
 /// Request to open someone else's buying store (CZ_REQ_CLICK_TO_BUYING_STORE).
 /// 0817 <account id>.L
@@ -19328,7 +19301,7 @@ void clif_search_store_info_ack( struct map_session_data* sd ){
 #if PACKETVER >= 20150226
 		clif_add_random_options( p->items[i].option_data, &it );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-		p->items[i].enchantgrade = ssitem->enchantgrade;
+		p->items[i].grade = ssitem->enchantgrade;
 #endif
 #endif
 	}
@@ -20949,25 +20922,26 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 
 	switch( type ){
 		case ITEMOBTAIN_TYPE_BOXITEM:
+#if PACKETVER >= 20091201
 			{
-				struct packet_package_item_announce p;
+				struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item p = {};
 
 				p.PacketType = package_item_announceType;
+				p.PacketLength = sizeof( p );
 				p.type = type;
 				p.ItemID = client_nameid( nameid );
 				p.len = NAME_LENGTH;
 				safestrncpy( p.Name, name, sizeof( p.Name ) );
-				p.unknown = 0x2; // some strange byte, IDA shows.. BYTE3(BoxItemIDLength) = 2;
+				p.boxItemID_len = (int8)sizeof( p.BoxItemID );
 				p.BoxItemID = client_nameid( container );
-
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-				p.PacketLength = 15 + p.len;
-#else
-				p.PacketLength = 11 + p.len;
+#if PACKETVER_MAIN_NUM >= 20220518 || PACKETVER_ZERO_NUM >= 20220518
+				p.refineLevel_len = (int8)sizeof( p.refineLevel );
+				p.refineLevel = 0; // TODO: implement
 #endif
 
-				clif_send( &p, p.PacketLength, NULL, ALL_CLIENT );
+				clif_send( &p, p.PacketLength, nullptr, ALL_CLIENT );
 			}
+#endif
 			break;
 
 		case ITEMOBTAIN_TYPE_MONSTER_ITEM:
@@ -23312,7 +23286,7 @@ static void clif_item_preview( struct map_session_data *sd, int16 index ){
 #endif
 	p.refiningLevel = item->refine;
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200723
-	p.enchantgrade = item->enchantgrade;
+	p.grade = item->enchantgrade;
 #endif
 	clif_addcards( &p.slot, item );
 	clif_add_random_options( p.option_data, item );
@@ -23591,7 +23565,7 @@ void clif_enchantgrade_result( struct map_session_data& sd, uint16 index, e_ench
 
 	p.PacketType = HEADER_ZC_GRADE_ENCHANT_ACK;
 	p.index = client_index( index );
-	p.enchantgrade = sd.inventory.u.items_inventory[index].enchantgrade;
+	p.grade = sd.inventory.u.items_inventory[index].enchantgrade;
 	p.result = result;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
@@ -23605,7 +23579,7 @@ void clif_enchantgrade_announce( struct map_session_data& sd, struct item& item,
 	p.packetType = HEADER_ZC_GRADE_ENCHANT_BROADCAST_RESULT;
 	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
 	p.itemId = client_nameid( item.nameid );
-	p.enchantgrade = item.enchantgrade;
+	p.grade = item.enchantgrade;
 	p.status = success;
 
 	clif_send( &p, sizeof( p ), nullptr, ALL_CLIENT );

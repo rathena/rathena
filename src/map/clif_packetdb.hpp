@@ -88,8 +88,6 @@
 	packet(0x00b1,8);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
 	packet(0x00b3,3);
-	packet(0x00b4,-1);
-	packet(0x00b5,6);
 	packet(0x00b6,6);
 	packet(0x00b7,-1);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
@@ -194,7 +192,7 @@
 	packet( cartlistequipType, -1 );
 	packet( cartlistnormalType, -1 );
 	packet(0x0125,8);
-	parseable_packet(0x0126,8,clif_parse_PutItemToCart,2,4);
+	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART ), clif_parse_PutItemToCart, 0 );
 	parseable_packet(0x0127,8,clif_parse_GetItemFromCart,2,4);
 	parseable_packet(0x0128,8,clif_parse_MoveFromKafraToCart,2,4);
 	parseable_packet(0x0129,8,clif_parse_MoveToKafraFromCart,2,4);
@@ -205,9 +203,8 @@
 	parseable_packet(0x012e,2,clif_parse_CloseVending,0);
 	parseable_packet(0x012f,-1,clif_parse_OpenVending,2,4,0,84);
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
-	packet(0x0131,86);
 	packet(0x0132,6);
-	parseable_packet(0x0134,-1,clif_parse_PurchaseReq,2,4,8);
+	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, clif_parse_PurchaseReq, 0 );
 	packet(0x0135,7);
 	packet(0x0137,6);
 	packet(0x0138,3);
@@ -362,7 +359,6 @@
 	packet(0x01d0,8);
 	packet(0x01d1,14);
 	packet(0x01d2,10);
-	packet(0x01d3,35);
 	packet(0x01d4,6);
 	parseable_packet(0x01d5,-1,clif_parse_NpcStringInput,2,4,8);
 	packet(0x01d6,4);
@@ -1587,13 +1583,7 @@
 #if PACKETVER >= 20091201
 	packet(0x07fc,10);
 	ack_packet(ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,0x07fd,-1,0);
-	packet(0x07fe,26);
 	//packet(0x07ff,-1);
-#endif
-
-// 2009-12-15aRagexeRE
-#if PACKETVER >= 20091215
-	//packet(0x0801,-1);
 #endif
 
 // 2009-12-22aRagexeRE
@@ -1624,7 +1614,7 @@
 
 // 2010-01-05aRagexeRE
 #if PACKETVER >= 20100105
-	parseable_packet(0x0801,-1,clif_parse_PurchaseReq2,2,4,8,12);
+	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC2, -1, clif_parse_PurchaseReq2, 0 );
 #endif
 
 // 2010-01-26aRagexeRE
@@ -1644,7 +1634,6 @@
 	parseable_packet(0x0811,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	//packet(0x0812,86);
 	//packet(0x0813,6);
-	//packet(0x0814,6);
 	//packet(0x0815,-1);
 	//packet(0x0817,-1);
 	//packet(0x0818,6);
@@ -1654,9 +1643,7 @@
 // 2010-03-09aRagexeRE
 #if PACKETVER >= 20100309
 	packet(0x0813,-1);
-	//packet(0x0814,2);
 	//packet(0x0815,6);
-	packet(0x0816,6);
 	packet(0x0818,-1);
 	//packet(0x0819,10);
 	//packet(0x081A,4);
@@ -1693,7 +1680,6 @@
 // 2010-04-20aRagexeRE
 #if PACKETVER >= 20100420
 	packet(0x0812,8);
-	packet(0x0814,86);
 	parseable_packet(0x0815,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0817,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0819,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
@@ -2454,7 +2440,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20220216
-	parseable_packet( HEADER_CZ_SEE_GUILD_MEMBERS, sizeof( struct PACKET_CZ_SEE_GUILD_MEMBERS ), clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_APPROXIMATE_ACTOR, sizeof( struct PACKET_CZ_APPROXIMATE_ACTOR ), clif_parse_dull, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220316
