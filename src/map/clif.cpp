@@ -4903,17 +4903,17 @@ void clif_storageclose(struct map_session_data* sd)
 /// 0b73 <id>.L <amount>.W
 void clif_soulball( struct map_session_data *sd, struct block_list* target, enum send_target send_target ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	struct PACKET_ZC_UNCONFIRMED_SPIRITS3 p = {};
+	struct PACKET_ZC_SOULENERGY p = {};
 
-	p.packetType = HEADER_ZC_UNCONFIRMED_SPIRITS3;
+	p.PacketType = HEADER_ZC_SOULENERGY;
 #else
 	struct PACKET_ZC_SPIRITS p = {};
 
-	p.packetType = HEADER_ZC_SPIRITS;
+	p.PacketType = HEADER_ZC_SPIRITS;
 #endif
 
-	p.GID = sd->bl.id;
-	p.amount = sd->soulball;
+	p.AID = sd->bl.id;
+	p.num = sd->soulball;
 
 	clif_send( &p, sizeof( p ), target == nullptr ? &sd->bl : target, send_target );
 }
