@@ -22408,6 +22408,9 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		log_pick_pc( sd, LOG_TYPE_OTHER, 1, item );
 		clif_misceffect( &sd->bl, 3 );
 		clif_refine( fd, 0, index, item->refine );
+		if (info->broadcast_success) {
+			clif_broadcast_refine_result(*sd, item->nameid, item->refine, true);
+		}
 		if( id->type == IT_WEAPON ){
 			achievement_update_objective( sd, AG_ENCHANT_SUCCESS, 2, id->weapon_level, item->refine );
 		}
@@ -22415,6 +22418,9 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	}else{
 		// Failure
 
+		if (info->broadcast_failure) {
+			clif_broadcast_refine_result(*sd, item->nameid, item->refine, false);
+		}
 		// Blacksmith blessings were used to prevent breaking and downgrading
 		if( blacksmith_amount > 0 ){
 			clif_refine( fd, 3, index, item->refine );
@@ -24690,6 +24696,29 @@ void clif_parse_itempackage_select( int fd, struct map_session_data* sd ){
 			pc_additem( sd, &item, entry.second->amount, LOG_TYPE_PACKAGE );
 		}
 	}
+#endif
+}
+
+void clif_broadcast_refine_result(map_session_data& sd, t_itemid itemId, int8 level, bool success)
+{
+#if PACKETVER_MAIN_NUM >= 20170906 || PACKETVER_RE_NUM >= 20170830 || defined(PACKETVER_ZERO)
+	PACKET_ZC_BROADCAST_ITEMREFINING_RESULT packet{};
+	packet.packetType = HEADER_ZC_BROADCAST_ITEMREFINING_RESULT;
+	packet.itemId = itemId;
+	packet.refine_level = level;
+	packet.status = (int8)success;
+
+	if (battle_config.broadcast_hide_name) {
+		std::string dispname = std::string(sd.status.name);
+		int hide = min(battle_config.broadcast_hide_name, dispname.length() - 1);
+		dispname.replace(dispname.length() - hide, hide, hide, '*');
+		safestrncpy(packet.name, dispname.c_str(), NAME_LENGTH);
+	}
+	else {
+		safestrncpy(packet.name, sd.status.name, NAME_LENGTH);
+	}
+
+	clif_send(&packet, sizeof(packet), &sd.bl, ALL_CLIENT);
 #endif
 }
 
