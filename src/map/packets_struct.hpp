@@ -3326,6 +3326,11 @@ struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub {
 #else
 	uint16 itemId;
 #endif
+#ifdef ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
+	uint16 viewSprite;
+	uint32 location;
+	uint8 unused[6];
+#endif  // ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
 } __attribute__((packed));
 
 struct PACKET_ZC_PC_CASH_POINT_ITEMLIST {

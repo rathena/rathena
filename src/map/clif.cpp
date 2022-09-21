@@ -17290,6 +17290,10 @@ void clif_cashshop_show( struct map_session_data *sd, struct npc_data *nd ){
 		p->items[i].discountPrice = nd->u.shop.shop_item[i].value; // Discount Price
 		p->items[i].itemType = itemtype( id->nameid );
 		p->items[i].itemId = client_nameid( id->nameid );
+#ifdef ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
+		p->items[i].location = pc_equippoint_sub( sd, id );
+		p->items[i].viewSprite = id->look;
+#endif
 	}
 
 	WFIFOSET( fd, len );
