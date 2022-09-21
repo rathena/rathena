@@ -7026,7 +7026,7 @@ ACMD_FUNC(sound)
 	if(strstr(sound_file, ".wav") == NULL)
 		strcat(sound_file, ".wav");
 
-	clif_soundeffectall(&sd->bl, sound_file, 0, AREA);
+	clif_soundeffect( sd->bl, sound_file, 0, AREA );
 
 	return 0;
 }
