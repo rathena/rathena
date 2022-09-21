@@ -17293,6 +17293,7 @@ void clif_cashshop_show( struct map_session_data *sd, struct npc_data *nd ){
 #ifdef ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
 		p->items[i].location = pc_equippoint_sub( sd, id );
 		p->items[i].viewSprite = id->look;
+		memset( p->items[i].unused, 0, sizeof( p->items[i].unused ) );
 #endif
 	}
 
