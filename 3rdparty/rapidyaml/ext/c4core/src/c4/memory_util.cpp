@@ -1,5 +1,5 @@
-#include "c4/memory_util.hpp"
-#include "c4/error.hpp"
+#include "/home/froggo/3rdparty/rapidyaml/ext/c4core/src/c4/memory_util.hpp"
+#include "/home/froggo/3rdparty/rapidyaml/ext/c4core/src/c4/error.hpp"
 
 namespace c4 {
 

@@ -62,6 +62,8 @@
 #include "quest.hpp"
 #include "storage.hpp"
 
+#include "discord/discord_bot.hpp"
+
 using namespace rathena;
 
 const int64 SCRIPT_INT_MIN = INT64_MIN;

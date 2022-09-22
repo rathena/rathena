@@ -1,7 +1,7 @@
 #ifndef _C4_TIME_HPP_
 #define _C4_TIME_HPP_
 
-#include "c4/config.hpp"
+#include "/home/froggo/3rdparty/rapidyaml/ext/c4core/src/c4/config.hpp"
 
 #ifdef __clang__
 #   pragma clang diagnostic push

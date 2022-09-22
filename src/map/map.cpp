@@ -53,6 +53,8 @@
 #include "storage.hpp"
 #include "trade.hpp"
 
+#include "discord/discord_bot.hpp"
+
 using namespace rathena;
 
 std::string default_codepage = "";
@@ -5234,6 +5236,8 @@ int do_init(int argc, char *argv[])
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
+
+	discord_init();
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 

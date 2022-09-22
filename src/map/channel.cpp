@@ -1,4 +1,4 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+﻿// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "channel.hpp"
@@ -20,6 +20,8 @@
 #include "map.hpp" //msg_conf
 #include "pc.hpp"
 #include "pc_groups.hpp"
+
+#include "discord/discord_bot.hpp"
 
 static DBMap* channel_db; // channels
 
@@ -455,6 +457,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 			color = channel_config.colors[sd->fontcolor];
 		safesnprintf(output, CHAT_SIZE_MAX, "%s %s : %s", channel->alias, sd->status.name, msg);
 		clif_channel_msg(channel,output,color);
+		discord_send(msg, channel->name, sd->status.name);
 		sd->channel_tick[idx] = gettick();
 	}
 	return 0;

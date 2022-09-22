@@ -1,5 +1,5 @@
 #include "c4/yml/parse.hpp"
-#include "c4/error.hpp"
+#include "/home/froggo/3rdparty/rapidyaml/ext/c4core/src/c4/error.hpp"
 #include "c4/utf.hpp"
 #include <c4/dump.hpp>
 

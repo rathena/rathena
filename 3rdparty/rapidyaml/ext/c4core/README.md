@@ -162,12 +162,12 @@ c4::make_room()/c4::destroy_room()
 
 ### Writeable string views: c4::substr and c4::csubstr
 
-Here: [`#include <c4/substr.hpp>`](src/c4/substr.hpp)
+Here: [`#include "/home/froggo/3rdparty/rapidyaml/ext/c4core/src/c4/substr.hpp"`](src/c4/substr.hpp)
 
 
 ### Value <-> character interoperation
 
-Here: [`#include <c4/charconv.hpp>`](src/c4/charconv.hpp)
+Here: [`#include "/home/froggo/3rdparty/rapidyaml/ext/c4core/src/c4/charconv.hpp"`](src/c4/charconv.hpp)
 
 ```c++
 // TODO: elaborate on the topics:

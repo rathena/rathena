@@ -1,0 +1,11 @@
+{
+    "version": 1,
+    "debug": 0,
+		"log_level": 255,
+    "display_name": "FroggyRO",
+    "token": "MTAyMTAmk493kosao1MTQyNjMxNA.XkIeoS_.uWGqCZrFAP-A2uZunXsLlXAIwsMJDcpyW3RQqo",
+    "presence": "by Normynator, updated by SapitoSucio",
+    "channels" : {
+        "global": "964443433887397898"
+    }
+}

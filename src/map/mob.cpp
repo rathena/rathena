@@ -41,6 +41,8 @@
 #include "pet.hpp"
 #include "quest.hpp"
 
+#include "discord/discord_bot.hpp"
+
 using namespace rathena;
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
@@ -2829,6 +2831,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,BC_DEFAULT);
+				discord_announce_drop(message);
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
