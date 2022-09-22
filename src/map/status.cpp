@@ -12473,7 +12473,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_WEAPONBREAKER:
-			val2 = val1 * 2; // Chance to break weapon
+			val2 = val1 * 2 * 100; // Chance to break weapon
 			break;
 
 		default:
