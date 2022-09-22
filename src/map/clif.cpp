@@ -19955,115 +19955,113 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		int16 len, szdetails = 13, maxinfotype = PINFO_MAX;
 		int cmd = 0, fd, i = 0;
 		int tot_baseexp = 100, tot_penalty = 100, tot_drop = 100, factor = 1000;
-		int details_bexp[PINFO_MAX];
-		int details_drop[PINFO_MAX];
-		int details_penalty[PINFO_MAX];
+		int details_bexp[PINFO_MAX], details_drop[PINFO_MAX], details_penalty[PINFO_MAX];
 
 		/**
-		 * Set for EXP
+		 * EXP
 		 */
 		//0:PCRoom
-		details_bexp[0] = map_getmapflag(sd->bl.m, MF_BEXP);
-		if (details_bexp[0] == 100 || !details_bexp[0])
-			details_bexp[0] = 0;
+		details_bexp[PINFO_BASIC] = map_getmapflag(sd->bl.m, MF_BEXP);
+		if (details_bexp[PINFO_BASIC] == 100 || !details_bexp[PINFO_BASIC])
+			details_bexp[PINFO_BASIC] = 0;
 		else {
-			if (details_bexp[0] < 100) {
-				details_bexp[0] = 100 - details_bexp[0];
-				details_bexp[0] = 0 - details_bexp[0];
-			}
-			else
-				details_bexp[0] = details_bexp[0] - 100;
+			if (details_bexp[PINFO_BASIC] < 100) {
+				details_bexp[PINFO_BASIC] = 100 - details_bexp[PINFO_BASIC];
+				details_bexp[PINFO_BASIC] = 0 - details_bexp[PINFO_BASIC];
+			} else
+				details_bexp[PINFO_BASIC] = details_bexp[PINFO_BASIC] - 100;
 		}
+
 		//1:Premium
 		if (pc_isvip(sd)) {
-			details_bexp[1] = battle_config.vip_base_exp_increase * 10;
-			if (details_bexp[1] < 0)
-				details_bexp[1] = 0 - details_bexp[1];
-		}
-		else
-			details_bexp[1] = 0;
+			details_bexp[PINFO_PREMIUM] = battle_config.vip_base_exp_increase * battle_config.base_exp_rate / 100;
+			if (details_bexp[PINFO_PREMIUM] < 0)
+				details_bexp[PINFO_PREMIUM] = 0 - details_bexp[PINFO_PREMIUM];
+		} else
+			details_bexp[PINFO_PREMIUM] = 0;
+
 		//2:Server
-		details_bexp[2] = battle_config.base_exp_rate;
-		if (details_bexp[2] == 100)
-			details_bexp[2] = 0;
+		details_bexp[PINFO_SERVER] = battle_config.base_exp_rate;
+		if (details_bexp[PINFO_SERVER] == 100)
+			details_bexp[PINFO_SERVER] = 0;
 		else {
-			if (details_bexp[2] < 100) {
-				details_bexp[2] = 100 - details_bexp[2];
-				details_bexp[2] = 0 - details_bexp[2];
-			}
-			else
-				details_bexp[2] = details_bexp[2] - 100;
+			if (details_bexp[PINFO_SERVER] < 100) {
+				details_bexp[PINFO_SERVER] = 100 - details_bexp[PINFO_SERVER];
+				details_bexp[PINFO_SERVER] = 0 - details_bexp[PINFO_SERVER];
+			} else
+				details_bexp[PINFO_SERVER] = details_bexp[PINFO_SERVER] - 100;
 		}
+
 		//3:TPLUS
-		details_bexp[3] = 0;
-		/* End - EXP set*/
+		details_bexp[PINFO_CAFE] = 0;
 
 		/**
-		 * Set for Drop rate
+		 * Drop rate
 		 */
 		//0:PCRoom
-		details_drop[0] = 0;
+		details_drop[PINFO_BASIC] = 0;
+
 		//1:Premium
-		details_drop[1] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
 		if (pc_isvip(sd)) {
-			if (details_drop[1] < 0)
-				details_drop[1] = 0 - details_drop[1];
-		}
-		else
-			details_drop[1] = 0;
+			details_drop[PINFO_PREMIUM] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
+			if (details_drop[PINFO_PREMIUM] < 0)
+				details_drop[PINFO_PREMIUM] = 0 - details_drop[PINFO_PREMIUM];
+		} else
+			details_drop[PINFO_PREMIUM] = 0;
+
 		//2:Server
-		details_drop[2] = battle_config.item_rate_common;
-		if (details_drop[2] == 100)
-			details_drop[2] = 0;
+		details_drop[PINFO_SERVER] = battle_config.item_rate_common;
+		if (details_drop[PINFO_SERVER] == 100)
+			details_drop[PINFO_SERVER] = 0;
 		else {
-			if (details_drop[2] < 100) {
-				details_drop[2] = 100 - details_drop[2];
-				details_drop[2] = 0 - details_drop[2];
-			}
-			else
-				details_drop[2] = details_drop[2] - 100;
+			if (details_drop[PINFO_SERVER] < 100) {
+				details_drop[PINFO_SERVER] = 100 - details_drop[PINFO_SERVER];
+				details_drop[PINFO_SERVER] = 0 - details_drop[PINFO_SERVER];
+			} else
+				details_drop[PINFO_SERVER] = details_drop[PINFO_SERVER] - 100;
 		}
+
 		//3:TPLUS
-		details_drop[3] = 0;
-		/* End - Drop set*/
+		details_drop[PINFO_CAFE] = 0;
 
 		/**
-		 * Set for Penalty rate
+		 * Penalty rate
 		 */
 		//! FIXME: Current penalty system makes this announcement unable to give info on + or - rate
 		//0:PCRoom
-		details_penalty[0] = 0;
+		details_penalty[PINFO_BASIC] = 0;
+
 		//1:Premium
 		if (pc_isvip(sd)) {
-			details_penalty[1] = battle_config.vip_exp_penalty_base;
-			if (details_penalty[1] == 100)
-				details_penalty[1] = 0;
+			details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base;
+			if (details_penalty[PINFO_PREMIUM] == 100)
+				details_penalty[PINFO_PREMIUM] = 0;
 			else {
-				if (details_penalty[1] < 100) {
-					details_penalty[1] = 100 - details_penalty[1];
-					details_penalty[1] = 0 - details_penalty[1];
-				}
-				else
-					details_penalty[1] = details_penalty[1] - 100;
+				if (details_penalty[PINFO_PREMIUM] < 100) {
+					details_penalty[PINFO_PREMIUM] = 100 - details_penalty[PINFO_PREMIUM];
+					details_penalty[PINFO_PREMIUM] = 0 - details_penalty[PINFO_PREMIUM];
+				} else
+					details_penalty[PINFO_PREMIUM] = details_penalty[PINFO_PREMIUM] - 100;
 			}
-		}
-		else
-			details_penalty[1] = 0;
+			if (battle_config.death_penalty_base > battle_config.vip_exp_penalty_base)
+				details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base - battle_config.death_penalty_base;
+		} else
+			details_penalty[PINFO_PREMIUM] = 0;
+
 		//2:Server
-		details_penalty[2] = battle_config.death_penalty_base;
-		if (details_penalty[2] == 100)
-			details_penalty[2] = 0;
+		details_penalty[PINFO_SERVER] = battle_config.death_penalty_base;
+		if (details_penalty[PINFO_SERVER] == 100)
+			details_penalty[PINFO_SERVER] = 0;
 		else {
-			if (details_penalty[2] < 100) {
-				details_penalty[2] = 100 - details_penalty[2];
-				details_penalty[2] = 0 - details_penalty[2];
-			}
-			else
-				details_penalty[2] = details_penalty[2] - 100;
+			if (details_penalty[PINFO_SERVER] < 100) {
+				details_penalty[PINFO_SERVER] = 100 - details_penalty[PINFO_SERVER];
+				details_penalty[PINFO_SERVER] = 0 - details_penalty[PINFO_SERVER];
+			} else
+				details_penalty[PINFO_SERVER] = details_penalty[PINFO_SERVER] - 100;
 		}
+
 		//3:TPLUS
-		details_penalty[3] = 0;
-		/* End - Penalty set*/
+		details_penalty[PINFO_CAFE] = 0;
 
 		cmd = packet_db_ack[cmdtype];
 		info = &packet_db[cmd];
@@ -20092,21 +20090,21 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 			WFIFOL(fd,info->pos[7]+(i*szdetails)) = details_drop[i]*factor;
 
 			tot_baseexp += details_bexp[i]*factor;
-			tot_drop += details_penalty[i]*factor;
-			tot_penalty += details_drop[i]*factor;
+			tot_drop += details_drop[i]*factor;
+			tot_penalty += details_penalty[i]*factor;
 
 			len += szdetails;
 		}
 		WFIFOW(fd,info->pos[0])  = len; //packetlen
 		if (cmd == 0x08cb) { //0x08cb version
 			WFIFOW(fd,info->pos[1])  = tot_baseexp;
-			WFIFOW(fd,info->pos[2])  = tot_drop;
-			WFIFOW(fd,info->pos[3])  = tot_penalty;
+			WFIFOW(fd,info->pos[2])  = tot_penalty;
+			WFIFOW(fd,info->pos[3])  = tot_drop;
 		}
 		else { //2013-08-07aRagexe uses 0x097b
 			WFIFOL(fd,info->pos[1])  = tot_baseexp;
-			WFIFOL(fd,info->pos[2])  = tot_drop;
-			WFIFOL(fd,info->pos[3])  = tot_penalty;
+			WFIFOL(fd,info->pos[2])  = tot_penalty;
+			WFIFOL(fd,info->pos[3])  = tot_drop;
 		}
 		if (cmdtype == ZC_PERSONAL_INFOMATION_CHN)
 			WFIFOW(fd,info->pos[8])  = 0; //activity rate case of event ??
