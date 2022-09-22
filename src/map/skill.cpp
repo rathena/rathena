@@ -2177,7 +2177,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case SS_KAGEAKUMU:
 	case SS_HITOUAKUMU:
 	case SS_ANKOKURYUUAKUMU:
-		status_change_end(bl, SC_NIGHTMARE, INVALID_TIMER);
+		status_change_end(bl, SC_NIGHTMARE);
 		break;
 	case NW_THE_VIGILANTE_AT_NIGHT:
 	case NW_ONLY_ONE_BULLET:
@@ -2185,7 +2185,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NW_MAGAZINE_FOR_ONE:
 	case NW_WILD_FIRE:
 		if (sc && sc->data[SC_INTENSIVE_AIM_COUNT])
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT, INVALID_TIMER);
+			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 		break;
 	case HN_SHIELD_CHAIN_RUSH:
 	case HN_JACK_FROST_NOVA:
@@ -5900,7 +5900,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SHC_SAVAGE_IMPACT:
 					if (sc && sc->data[SC_CLOAKINGEXCEED])
 						skill_area_temp[0] = 2;
-					status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+					status_change_end(src, SC_CLOAKINGEXCEED);
 				case SHC_FATAL_SHADOW_CROW:
 					// Jump to the target before attacking.
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
@@ -8817,7 +8817,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				else if (!sc->data[SC_DAWN_MOON])
 					sc_start(src, src, SC_DAWN_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 				else if (sc->data[SC_RISING_SUN])
-					status_change_end(bl, SC_DAWN_MOON, INVALID_TIMER);
+					status_change_end(bl, SC_DAWN_MOON);
 			} else {
 				sc_start(src, src, SC_RISING_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			}
@@ -11094,7 +11094,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SS_AKUMUKESU:
 		if (flag & 1) {
-			status_change_end(bl, SC_NIGHTMARE, INVALID_TIMER);
+			status_change_end(bl, SC_NIGHTMARE);
 		} else {
 			i = skill_get_splash(skill_id, skill_lv);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -11198,7 +11198,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SH_COLORS_OF_HYUN_ROK:
 		for(i = SC_COLORS_OF_HYUN_ROK_1; i < SC_COLORS_OF_HYUN_ROK_1+6; i++)
-			status_change_end(src, (sc_type)i, INVALID_TIMER);
+			status_change_end(src, (sc_type)i);
 		if (skill_lv < 7)
 		{
 			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->data[SC_TEMPORARY_COMMUNION]))
@@ -13187,10 +13187,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NW_INTENSIVE_AIM:
 		if (tsc && tsc->data[type]) {
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT, INVALID_TIMER);
-			status_change_end(bl, type, INVALID_TIMER);
+			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
+			status_change_end(bl, type);
 		} else {
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT, INVALID_TIMER);
+			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
@@ -13203,16 +13203,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NW_GRENADE_FRAGMENT:
-		status_change_end(src, type, INVALID_TIMER);
+		status_change_end(src, type);
 		if (skill_lv < 7)
 			sc_start(src, bl, (sc_type)(SC_GRENADE_FRAGMENT_1 -1 + skill_lv), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		else if (skill_lv == 7) {
-			status_change_end(src, SC_GRENADE_FRAGMENT_1, INVALID_TIMER);
-			status_change_end(src, SC_GRENADE_FRAGMENT_2, INVALID_TIMER);
-			status_change_end(src, SC_GRENADE_FRAGMENT_3, INVALID_TIMER);
-			status_change_end(src, SC_GRENADE_FRAGMENT_4, INVALID_TIMER);
-			status_change_end(src, SC_GRENADE_FRAGMENT_5, INVALID_TIMER);
-			status_change_end(src, SC_GRENADE_FRAGMENT_6, INVALID_TIMER);
+			status_change_end(src, SC_GRENADE_FRAGMENT_1);
+			status_change_end(src, SC_GRENADE_FRAGMENT_2);
+			status_change_end(src, SC_GRENADE_FRAGMENT_3);
+			status_change_end(src, SC_GRENADE_FRAGMENT_4);
+			status_change_end(src, SC_GRENADE_FRAGMENT_5);
+			status_change_end(src, SC_GRENADE_FRAGMENT_6);
 		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
@@ -19831,7 +19831,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 		if (sc->data[SC_SUFFRAGIUM]) {
 			VARCAST_REDUCTION(sc->data[SC_SUFFRAGIUM]->val2);
 #ifndef RENEWAL
-			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
+			status_change_end(bl, SC_SUFFRAGIUM);
 #endif
 		}
 		if (sc->data[SC_MEMORIZE]) {

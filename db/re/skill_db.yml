@@ -40879,6 +40879,8 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Critical: true
     Range: -9
     Hit: Single
     HitCount: 1

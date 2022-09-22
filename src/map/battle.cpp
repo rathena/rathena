@@ -2922,20 +2922,25 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SKE_NOON_BLAST:
 				if (!(sc && (sc->data[SC_NOON_SUN] || sc->data[SC_SKY_ENCHANT])))
 					return false;
+				break;
 			case SKE_SUNSET_BLAST:
 				if (!(sc && (sc->data[SC_SUNSET_SUN] || sc->data[SC_SKY_ENCHANT])))
 					return false;
+				break;
 			case NW_ONLY_ONE_BULLET:
 			case NW_SPIRAL_SHOOTING:
 				if (!(sd && sd->weapontype1 == W_RIFLE))
 					return false;
+				break;
 			case NW_MAGAZINE_FOR_ONE:
 				if (!(sd && sd->weapontype1 == W_REVOLVER))
 					return false;
+				break;
 			case SH_CHUL_HO_SONIC_CLAW:
 			case SH_HOGOGONG_STRIKE:
 				if (!(sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || !(sc && sc->data[SC_TEMPORARY_COMMUNION]))
 					return false;
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
