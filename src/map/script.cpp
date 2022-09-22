@@ -4908,13 +4908,13 @@ void script_reload(void) {
 /// mes "<message>";
 BUILDIN_FUNC(mes)
 {
-	TBL_PC* sd;
+	struct map_session_data* sd;
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
 	if( !script_hasdata(st, 3) )
 	{// only a single line detected in the script
-		clif_scriptmes(sd, st->oid, script_getstr(st, 2));
+		clif_scriptmes( *sd, st->oid, script_getstr( st, 2 ) );
 	}
 	else
 	{// parse multiple lines as they exist
@@ -4923,7 +4923,7 @@ BUILDIN_FUNC(mes)
 		for( i = 2; script_hasdata(st, i); i++ )
 		{
 			// send the message to the client
-			clif_scriptmes(sd, st->oid, script_getstr(st, i));
+			clif_scriptmes( *sd, st->oid, script_getstr( st, i ) );
 		}
 	}
 
@@ -4937,7 +4937,7 @@ BUILDIN_FUNC(mes)
 /// next;
 BUILDIN_FUNC(next)
 {
-	TBL_PC* sd;
+	struct map_session_data* sd;
 
 	if (!st->mes_active) {
 		ShowWarning("buildin_next: There is no mes active.\n");
@@ -4950,7 +4950,7 @@ BUILDIN_FUNC(next)
 	sd->npc_idle_type = NPCT_WAIT;
 #endif
 	st->state = STOP;
-	clif_scriptnext(sd, st->oid);
+	clif_scriptnext( *sd, st->oid );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14953,7 +14953,7 @@ BUILDIN_FUNC(playBGM)
 	struct map_session_data* sd;
 
 	if( script_rid2sd(sd) ) {
-		clif_playBGM(sd, script_getstr(st,2));
+		clif_playBGM( *sd, script_getstr( st, 2 ) );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14961,14 +14961,14 @@ BUILDIN_FUNC(playBGM)
 static int playBGM_sub(struct block_list* bl,va_list ap)
 {
 	const char* name = va_arg(ap,const char*);
-	clif_playBGM(BL_CAST(BL_PC, bl), name);
+	clif_playBGM( *BL_CAST( BL_PC, bl ), name );
 	return 0;
 }
 
 static int playBGM_foreachpc_sub(struct map_session_data* sd, va_list args)
 {
 	const char* name = va_arg(args, const char*);
-	clif_playBGM(sd, name);
+	clif_playBGM( *sd, name );
 	return 0;
 }
 
@@ -15005,13 +15005,13 @@ BUILDIN_FUNC(playBGMall)
  *------------------------------------------*/
 BUILDIN_FUNC(soundeffect)
 {
-	TBL_PC* sd;
+	struct map_session_data* sd;
 
 	if(script_rid2sd(sd)){
 		const char* name = script_getstr(st,2);
 		int type = script_getnum(st,3);
 
-		clif_soundeffect(sd,&sd->bl,name,type);
+		clif_soundeffect( sd->bl, name, type, SELF );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15021,7 +15021,7 @@ int soundeffect_sub(struct block_list* bl,va_list ap)
 	char* name = va_arg(ap,char*);
 	int type = va_arg(ap,int);
 
-	clif_soundeffect((TBL_PC *)bl, bl, name, type);
+	clif_soundeffect( *bl, name, type, SELF );
 
 	return 0;
 }
@@ -15052,7 +15052,7 @@ BUILDIN_FUNC(soundeffectall)
 
 	if(!script_hasdata(st,4))
 	{	// area around
-		clif_soundeffectall(bl, name, type, AREA);
+		clif_soundeffect( *bl, name, type, AREA );
 	}
 	else
 	if(!script_hasdata(st,5))
