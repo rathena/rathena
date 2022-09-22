@@ -8661,7 +8661,7 @@ Body:
     SplashArea: 4
     CastTime: 1000
     Duration1: 60000
-    Duration2: 15000
+    Duration2: 18000
     Cooldown: 20000
     Requires:
       SpCost: 40
