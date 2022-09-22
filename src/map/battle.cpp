@@ -8493,7 +8493,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 1);
+		rdamage = i64max(rdamage, 0);
 	}
 
 	if (rdamage == 0)
