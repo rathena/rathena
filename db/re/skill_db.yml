@@ -40998,7 +40998,7 @@ Body:
     TargetType: Ground
     Range: -9
     Hit: Single
-    HitCount: 1
+    HitCount: -3
     Element: Weapon
     DamageFlags:
       Splash: true
