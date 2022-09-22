@@ -1916,14 +1916,14 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 		if (sc->data[SC_WINKCHARM] && target && !flag) { // Prevents skill usage
 			block_list *wink_target = map_id2bl(sc->data[SC_WINKCHARM]->val2);
-			unit_data *wink_ud = unit_bl2ud(src);
 
 			if (wink_target != nullptr) {
+				unit_data *wink_ud = unit_bl2ud(src);
 				if (wink_ud != nullptr && wink_ud->walktimer == INVALID_TIMER)
 					unit_walktobl(src, wink_target, 3, 1);
 				clif_emotion(src, ET_THROB);
 			} else
-				status_change_end(src, SC_WINKCHARM, INVALID_TIMER);
+				status_change_end(src, SC_WINKCHARM);
 		}
 
 		if (sc->data[SC_BLADESTOP]) {
