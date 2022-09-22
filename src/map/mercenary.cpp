@@ -281,7 +281,7 @@ int mercenary_delete(s_mercenary_data *md, int reply) {
 	if( md->devotion_flag )
 	{
 		md->devotion_flag = 0;
-		status_change_end(&sd->bl, SC_DEVOTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_DEVOTION);
 	}
 
 	switch( reply )

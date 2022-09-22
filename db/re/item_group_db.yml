@@ -26140,7 +26140,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Sea_Otter_Mini_Fan
+          - Item: SeeOtter_Fan
             RandomOptionGroup: FAN_UPGRADE_KIT
   - Group: SUIT_UPGRADE_KIT
     SubGroups:
@@ -26637,9 +26637,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Almighty_Earring
+          - Item: S_AllMighty_Earring
             Rate: 1
-          - Item: S_Almighty_Pendant
+          - Item: S_AllMighty_Pendant
             Rate: 1
   - Group: GEMSTONESHADOW_MIX
     SubGroups:
@@ -26748,12 +26748,12 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Kingbird_Ancient_Armor
+          - Item: S_KingbirdAncient_Armor
   - Group: CRITICALHIT_MIX
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Cri_Hit_Armor
+          - Item: S_CriticalHit_Armor
   - Group: BS_ITEM_M_S_2
     SubGroups:
       - SubGroup: 0
@@ -26907,7 +26907,7 @@ Body:
         List:
           - Item: SurviveOrb_K
             Rate: 1
-          - Item: Survive_Circlet_
+          - Item: Survive_Circlet_K
             Rate: 1
   - Group: BS_ITEM_M_S_28
     SubGroups:
@@ -27509,7 +27509,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Wickebines_Black_Cat_Ears
+          - Item: Whikebain_Ears_K
   - Group: ENCHANTSTONE_RECIPE_9M
     SubGroups:
       - SubGroup: 1
@@ -27850,9 +27850,9 @@ Body:
             Rate: 4
           - Item: S_Bearer's_Shoes_II
             Rate: 4
-          - Item: S_Almighty_Earring
+          - Item: S_AllMighty_Earring
             Rate: 4
-          - Item: S_Almighty_Pendant
+          - Item: S_AllMighty_Pendant
             Rate: 4
           - Item: S_All_Race_Shoes
             Rate: 4
@@ -27920,7 +27920,7 @@ Body:
             Rate: 4
           - Item: S_Hard_Champion_Shoes
             Rate: 4
-          - Item: S_Kingbird_Ancient_Armor
+          - Item: S_KingbirdAncient_Armor
             Rate: 4
           - Item: S_Rebellion_Armor
             Rate: 4
@@ -29413,14 +29413,14 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Thousand_Sun
+          - Item: Up_OneSkyOneSun
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: SPIRIT_PENDULUM_CUBE
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Spirit_Pendulum_
+          - Item: Up_SoulWeight
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: CRIMSON_ROSE_CUBE
@@ -29441,21 +29441,21 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Golden_Lord_Launcher
+          - Item: Up_Golden_L_Launcher
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: THE_BLACK_CUBE
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_The_Black
+          - Item: Up_The_Black_Gatling
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: DEMON_SLAYER_SHOT_CUBE
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Demon_Slayer_Shot
+          - Item: Up_Demon_S_Shot
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: RUNE_CRAFT_MATERIALS
@@ -31074,7 +31074,7 @@ Body:
             Rate: 100
           - Item: Avenger
             Rate: 100
-          - Item: Aeon_Staff
+          - Item: Iron_Staff
             Rate: 100
           - Item: Oriental_Sword
             Rate: 100
@@ -31125,25 +31125,353 @@ Body:
         List:
           - Item: Blacksmith_Blessing
             Amount: 2
-  - Group: Bs_Item_M_S_53
+  - Group: BS_ITEM_M_S_53
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Shadow_Refine_Hammer
             Amount: 2
-  - Group: Bs_Item_M_S_54
+  - Group: BS_ITEM_M_S_54
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Mightysoul_Essence
-  - Group: Bs_Item_M_S_55
+  - Group: BS_ITEM_M_S_55
     SubGroups:
       - SubGroup: 0
         List:
           - Item: M_Dimension_Essence
-  - Group: Bs_Item_M_S_56
+  - Group: BS_ITEM_M_S_56
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Enchant_Ticket
             Amount: 2
+  - Group: ENCHANT_STONE_BOX28
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: M_PATKStone_Robe
+            Rate: 10
+          - Item: R_PATKStone_Robe
+            Rate: 10
+          - Item: POWStone_Robe_D
+            Rate: 10
+          - Item: ConStone_Robe_D
+            Rate: 10
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: SPdrainStone_Robe_D
+            Rate: 40
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: ASPDStone_Top
+            Rate: 150
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Item: GreenFloor_Bottom
+            Rate: 160
+          - Item: ExplodingEffect_Middle
+            Rate: 160
+          - Item: StarEmperorStone_Garment
+            Rate: 80
+          - Item: GunslingerStone_Robe
+            Rate: 80
+          - Item: SoulReaperStone_Robe
+            Rate: 80
+          - Item: StarStone_Top3
+            Rate: 80
+          - Item: StarStone_Middle3
+            Rate: 80
+          - Item: StarStone_Bottom3
+            Rate: 80
+          - Item: RebelStone_Top3
+            Rate: 80
+          - Item: RebelStone_Middle3
+            Rate: 80
+          - Item: RebelStone_Bottom3
+            Rate: 80
+          - Item: ReaperStone_Top3
+            Rate: 80
+          - Item: ReaperStone_Middle3
+            Rate: 80
+          - Item: ReaperStone_Bottom3
+            Rate: 80
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: Magic_Stone_Top
+            Rate: 240
+          - Item: Magic_Stone_Middle
+            Rate: 240
+          - Item: Magic_Stone_Bottom
+            Rate: 240
+          - Item: StarGladiatorStone_Top
+            Rate: 150
+          - Item: StarGladiatorStone_Middle
+            Rate: 150
+          - Item: StarGladiatorStone_Bottom
+            Rate: 150
+          - Item: GunslingerStone_Top
+            Rate: 150
+          - Item: GunslingerStone_Middle
+            Rate: 150
+          - Item: GunslingerStone_Bottom
+            Rate: 150
+          - Item: SoulLinkerStone_Top
+            Rate: 150
+          - Item: SoulLinkerStone_Middle
+            Rate: 150
+          - Item: SoulLinkerStone_Bottom
+            Rate: 150
+          - Item: Melee_Stone_Top
+            Rate: 240
+          - Item: Melee_Stone_Middle
+            Rate: 240
+          - Item: Melee_Stone_Bottom
+            Rate: 240
+          - Item: Range_Stone_Top
+            Rate: 240
+          - Item: Range_Stone
+            Rate: 240
+          - Item: Range_Stone_Bottom
+            Rate: 240
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
+          - Item: CastingStone_Top
+            Rate: 360
+          - Item: CastingStone_Middle
+            Rate: 360
+          - Item: CastingStone_Bottom
+            Rate: 360
+          - Item: Critical_Stone
+            Rate: 360
+          - Item: Critical_Stone_Top
+            Rate: 360
+          - Item: Critical_Stone_Bottom
+            Rate: 360
+  - Group: S_FULLPENE_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLPENE_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLPENE_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLPENE_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_DURABLE_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Durable_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_DURABLE_SHIELD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Durable_Shield
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_CLEVER_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Clever_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_CLEVER_SHIELD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Clever_Shield
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ALLMIGHTY_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_AllMighty_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ALLMIGHTY_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_AllMighty_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_PERFECTSIZE_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_PerfectSize_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_PERFECTSIZE_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_PerfectSize_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ABSORB_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Absorb_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ABSORB_SHIELD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Absorb_Shield
+            RefineMinimum: 7
+            RefineMaximum: 10
