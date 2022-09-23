@@ -7638,7 +7638,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 						skillratio += -100 + 150 * skill_lv + 5 * sstatus->spl;
 						if (sd)
-							skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2 * sd->soulball;
+							skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2 * sd->soulball_old;
 						if (sc && sc->data[SC_TOTEM_OF_TUTELARY])
 							skillratio += skillratio * 50 / 100;
 						if (tsc && tsc->data[SC_SOULCURSE])

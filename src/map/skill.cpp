@@ -8800,6 +8800,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (skill_id == SOA_EXORCISM_OF_MALICIOUS_SOUL ) {
 			if (sd) {
 				// Remove old souls if any exist.
+				sd->soulball_old = sd->soulball;
 				pc_delsoulball(sd, sd->soulball, 0);
 			}
 		}
