@@ -2274,7 +2274,7 @@ que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403
 	end;
 	
 OnTouch_:
-	set .@i = charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1);
+	.@i = charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1);
 	if(compare(strnpcinfo(4),"aru")) {
 		switch(.@i) {
 			case 1:	warp "arug_cas01",157,369;	break;
