@@ -189,7 +189,7 @@ int enable_spy = 0; //To enable/disable @spy commands, which consume too much cp
 int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
 
 #ifdef MAP_GENERATOR
-struct generator_options {
+struct s_generator_options {
 	bool navi;
 } gen_options;
 #endif
