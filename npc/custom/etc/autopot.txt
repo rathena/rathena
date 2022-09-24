@@ -74,7 +74,7 @@ L_Start:
 	}
 	setd "@autopot_" + .@type$ + "_ID",.@potion;
 	setd "@autopot_" + .@type$ + "_Active",true;
-	addtimer .@delay,strnpcinfo(3) + "::OnStart";
+	addtimer @autopot_delay,strnpcinfo(3) + "::OnStart";
 	message strcharinfo(0), "Auto-Potion " + strtoupper(.@type$) + " enabled.";
 	callsub L_Info;
 	return;
