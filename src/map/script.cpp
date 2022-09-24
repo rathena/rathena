@@ -26530,6 +26530,19 @@ BUILDIN_FUNC(item_enchant){
 #endif
 }
 
+/*
+* Sends a message via script cmd to server
+*/
+BUILDIN_FUNC(discord) {
+ 	const char* msg = script_getstr(st,2);
+ 	const char* channel = script_getstr(st,3);
+ 	const int ret = discord_script(msg, channel);
+ 	if(ret == 0)
+ 		return SCRIPT_CMD_SUCCESS;
+ 	else
+ 		return SCRIPT_CMD_FAILURE;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27271,6 +27284,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(get_reputation_points, "i?"),
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
+
+	BUILDIN_DEF(discord,"ss"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
