@@ -2,7 +2,7 @@
 
 This is a tool to generate files that are hard to manually create.
 
-Right now, the only thing feature is creating the client navigation files.
+Only navigation files can be generated at this time.
 
 ## How to run
 ### Linux
