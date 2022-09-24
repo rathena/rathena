@@ -76,7 +76,7 @@ else () #RELEASE
       discord_http.cpp 
       discord_websocket.cpp)
   include_directories (${PROJECT_SOURCE_DIR}/3rdparty/)
-
+  include_directories (${CMAKE_SOURCE_DIR}/include)
 endif ()
 
 set (Boost_USE_STATIC_LIBS ON)
@@ -89,7 +89,6 @@ find_package (Threads REQUIRED)
 if(NOT APPLE)
 	find_package (ICU COMPONENTS REQUIRED data i18n io lx tu uc)
 endif()
-include_directories(${RYML_INCLUDE_DIRS} ${RYML_SOURCE_DIR})
 include_directories (${Boost_INCLUDE_DIR} ${ICU_INCLUDE_DIR}
                      ${Iconv_INCLUDE_DIRS} ${OPENSSL_INCLUDE_DIR} 
                      ${CURL_INCLUDE_DIRS})
