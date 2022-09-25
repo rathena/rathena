@@ -18884,6 +18884,8 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		time = time * battle_config.delay_rate / 100;
 
 	//ShowInfo("Delay delayfix = %f\n",time);
+	time = max((int)time, status_get_amotion(bl));
+	time = max((int)time, battle_config.min_skill_delay_limit);
 
 	return max((int)time,0);
 }
