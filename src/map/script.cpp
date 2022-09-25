@@ -26009,7 +26009,7 @@ BUILDIN_FUNC(getenchantgrade){
 }
 
 BUILDIN_FUNC(naviregisterwarp) {
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	TBL_NPC* nd;
 	int x, y, m;
 	const char *warpname, *mapname=NULL;
@@ -26085,7 +26085,7 @@ BUILDIN_FUNC( openstylist ){
 }
 
 BUILDIN_FUNC(navihide) {
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	TBL_NPC *nd;
 
 	nd = map_id2nd(st->oid);
