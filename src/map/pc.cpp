@@ -5093,26 +5093,26 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
  */
 bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
 {
-	uint16 idx;
-	int type = skill_isCopyable(&sd, skill_id);
-
 	skill_id = skill_dummy2skill_id(skill_id);
-	skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
+	uint16 idx = skill_get_index(skill_id);
 
-	//Use skill index, avoiding out-of-bound array [Cydh]
-	if (!(idx = skill_get_index(skill_id))) {
-		ShowWarning("pc_skill_plagiarism: invalid skill idx %d for skill %d.\n", idx, skill_id);
+	// Use skill index, avoiding out-of-bound array [Cydh]
+	if (idx == 0) {
+		ShowWarning("pc_skill_plagiarism: invalid skill idx 0 for skill %d.\n");
 		return false;
 	}
 
+	skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
+
+	int type = skill_isCopyable(&sd, skill_id);
 	if (type == 1) {
-		pc_skill_plagiarism_reset(&sd, type);
+		pc_skill_plagiarism_reset(sd, type);
 
 		sd.cloneskill_idx = idx;
 		pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
 		pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM_LV), skill_lv);
 	} else if (type == 2) {
-		pc_skill_plagiarism_reset(&sd, type);
+		pc_skill_plagiarism_reset(sd, type);
 
 		sd.reproduceskill_idx = idx;
 		pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE), skill_id);
