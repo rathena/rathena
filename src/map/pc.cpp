@@ -5098,7 +5098,7 @@ bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
 
 	// Use skill index, avoiding out-of-bound array [Cydh]
 	if (idx == 0) {
-		ShowWarning("pc_skill_plagiarism: invalid skill idx 0 for skill %d.\n");
+		ShowWarning("pc_skill_plagiarism: invalid skill idx 0 for skill %d.\n", skill_id);
 		return false;
 	}
 
