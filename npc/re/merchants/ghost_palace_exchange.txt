@@ -11,7 +11,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		mes "- You cannot proceed because you have too many items with you. -";
 		close;
 	}
-	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
+	.@item_name_req$ = getitemname(6672);// Gray_Shard
 	mes "[Dimension Traveler]";
 	mes "Adventurer friend, <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
 	next;

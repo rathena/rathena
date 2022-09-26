@@ -84,6 +84,19 @@ namespace rathena {
 		}
 
 		/**
+		 * Resize a map.
+		 * @param map: Map to resize
+		 * @param size: Size to set map to
+		 */
+		template <typename K, typename V, typename S> void map_resize(std::map<K, V> &map, S size) {
+			auto it = map.begin();
+
+			std::advance(it, size);
+
+			map.erase(it, map.end());
+		}
+
+		/**
 		 * Find a key-value pair and return the key value as a reference
 		 * @param map: Unordered Map to search through
 		 * @param key: Key wanted
@@ -127,6 +140,15 @@ namespace rathena {
 				return it->second;
 			else
 				return defaultValue;
+		}
+
+		/**
+		 * Resize an unordered map.
+		 * @param map: Unordered map to resize
+		 * @param size: Size to set unordered map to
+		 */
+		template <typename K, typename V, typename S> void umap_resize(std::unordered_map<K, V> &map, S size) {
+			map.erase(std::advance(map.begin(), map.min(size, map.size())), map.end());
 		}
 
 		/**

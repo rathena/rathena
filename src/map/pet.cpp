@@ -31,6 +31,7 @@
 
 using namespace rathena;
 
+std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
 const t_tick MIN_PETTHINKTIME = 100;
 
 const std::string PetDatabase::getDefaultLocation(){
@@ -2069,7 +2070,7 @@ TIMER_FUNC(pet_recovery_timer){
 		//Display a heal animation?
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
-		status_change_end(&sd->bl, pd->recovery->type, INVALID_TIMER);
+		status_change_end(&sd->bl, pd->recovery->type);
 		clif_emotion(&pd->bl, ET_OK);
 	}
 
@@ -2333,6 +2334,126 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 }
 
 /**
+ * Add petautobonus to player when attacking/attacked.
+ * @param bonus: Bonus
+ * @param script: Script to execute
+ * @param rate: Success chance
+ * @param dur: Duration
+ * @param flag: Battle flag/skill
+ * @param other_script: Secondary script to execute
+ * @param onskill: Skill used to trigger autobonus
+ * @return True on success or false otherwise
+ */
+bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 flag, const std::string &other_script, bool onskill) {
+	// Check if the same bonus already exists
+	for (auto &autobonus : bonus) {
+		// Compare based on bonus script
+		if (script == autobonus->bonus_script) {
+			return false;
+		}
+	}
+
+	if (bonus.size() == MAX_PC_BONUS) {
+		ShowWarning("pet_addautobonus: Reached max (%d) number of petautobonus per pet!\n", MAX_PC_BONUS);
+		return false;
+	}
+
+	if (!onskill) {
+		if (!(flag & BF_RANGEMASK))
+			flag |= BF_SHORT | BF_LONG; //No range defined? Use both.
+		if (!(flag & BF_WEAPONMASK))
+			flag |= BF_WEAPON; //No attack type defined? Use weapon.
+		if (!(flag & BF_SKILLMASK)) {
+			if (flag & (BF_MAGIC | BF_MISC))
+				flag |= BF_SKILL; //These two would never trigger without BF_SKILL
+			if (flag & BF_WEAPON)
+				flag |= BF_NORMAL | BF_SKILL;
+		}
+	}
+
+
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pet_addautobonus: Bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
+	std::shared_ptr<s_petautobonus> entry = std::make_shared<s_petautobonus>();
+
+	entry->rate = cap_value(rate, -10000, 10000);
+	entry->duration = dur;
+	entry->timer = INVALID_TIMER;
+	entry->atk_type = flag;
+	entry->bonus_script = script;
+	entry->other_script = other_script;
+
+	bonus.push_back(entry);
+
+	return true;
+}
+
+/**
+ * Remove a petautobonus from player.
+ * @param sd: Player data
+ * @param bonus: Autobonus
+ * @param restore: Run script on clearing or not
+ */
+void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> &bonus, bool restore) {
+	std::vector<std::shared_ptr<s_petautobonus>>::iterator it = bonus.begin();
+
+	while (it != bonus.end()) {
+		std::shared_ptr<s_petautobonus> b = *it;
+
+		if (b->timer != INVALID_TIMER && !b->bonus_script.empty() && restore) {
+			script_run_petautobonus(b->bonus_script, sd);
+		}
+
+		if (restore) {
+			it++;
+			continue;
+		}
+
+		it = bonus.erase(it);
+	}
+}
+
+/**
+ * Execute petautobonus on player.
+ * @param sd: Player data
+ * @param bonus: Bonus vector
+ * @param autobonus: Autobonus to run
+ */
+void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus) {
+	if (autobonus->timer != INVALID_TIMER)
+		delete_timer(autobonus->timer, pet_endautobonus);
+
+	if (!autobonus->other_script.empty()) {
+		script_run_petautobonus(autobonus->other_script, sd);
+	}
+
+	autobonus->timer = add_timer(gettick() + autobonus->duration, pet_endautobonus, sd.bl.id, (intptr_t)&bonus);
+	status_calc_pc(&sd, SCO_FORCE);
+}
+
+/**
+ * Remove petautobonus timer from player.
+ */
+TIMER_FUNC(pet_endautobonus) {
+	map_session_data *sd = map_id2sd(id);
+	std::vector<std::shared_ptr<s_petautobonus>> *bonus = (std::vector<std::shared_ptr<s_petautobonus>> *)data;
+
+	nullpo_ret(sd);
+	nullpo_ret(bonus);
+
+	for (std::shared_ptr<s_petautobonus> autobonus : *bonus) {
+		if (autobonus->timer == tid) {
+			autobonus->timer = INVALID_TIMER;
+			break;
+		}
+	}
+
+	status_calc_pc(sd, SCO_FORCE);
+	return 0;
+}
+
+/**
  * Initialize pet data.
  */
 void do_init_pet(void)
@@ -2349,6 +2470,7 @@ void do_init_pet(void)
 	add_timer_func_list(pet_skill_support_timer, "pet_skill_support_timer"); // [Skotlex]
 	add_timer_func_list(pet_recovery_timer,"pet_recovery_timer"); // [Valaris]
 	add_timer_func_list(pet_heal_timer,"pet_heal_timer"); // [Valaris]
+	add_timer_func_list(pet_endautobonus, "pet_endautobonus");
 	add_timer_interval(gettick()+MIN_PETTHINKTIME,pet_ai_hard,0,0,MIN_PETTHINKTIME);
 }
 
@@ -2359,6 +2481,8 @@ void do_final_pet(void)
 {
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
+
+	pet_autobonuses.clear();
 
 	pet_db.clear();
 }

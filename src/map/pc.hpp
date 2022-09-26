@@ -395,6 +395,8 @@ struct map_session_data {
 		t_itemid laphine_synthesis;
 		t_itemid laphine_upgrade;
 		bool roulette_open;
+		t_itemid item_reform;
+		uint64 item_enchant_index;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -1068,7 +1070,8 @@ static bool pc_cant_act2( struct map_session_data* sd ){
 		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
 		|| sd->state.barter_open || sd->state.barter_extended_open
 		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
-		|| sd->state.roulette_open || sd->state.enchantgrade_open;
+		|| sd->state.roulette_open || sd->state.enchantgrade_open
+		|| sd->state.item_reform || sd->state.item_enchant_index;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
@@ -1202,6 +1205,26 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
+struct s_reputation{
+	int64 id;
+	std::string name;
+	std::string variable;
+	int64 minimum;
+	int64 maximum;
+};
+
+class ReputationDatabase : public TypesafeYamlDatabase<int64, s_reputation>{
+public:
+	ReputationDatabase() : TypesafeYamlDatabase( "REPUTATION_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+};
+
+extern ReputationDatabase reputation_db;
+
 struct s_statpoint_entry{
 	uint16 level;
 	uint32 statpoints;
@@ -1265,6 +1288,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
+e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
 uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
@@ -1552,7 +1576,7 @@ int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
 bool pc_isautolooting(struct map_session_data *sd, t_itemid nameid);
 
-void pc_overheat(struct map_session_data *sd, int16 heat);
+void pc_overheat(map_session_data &sd, int16 heat);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
 uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
