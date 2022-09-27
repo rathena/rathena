@@ -26304,20 +26304,20 @@ Body:
       }
   - Combos:
       - Combo:
-          - SmatkStone_Robe_    # 311426
-          - SplStone_Robe_D_    # 311425
+          - Smatk_Robe    # 311426
+          - Spl_Robe_D    # 311425
     Script: |
       bonus bSMatk,5;
       bonus bSpl,3;
   - Combos:
       - Combo:
-          - SmatkStone_Robe_    # 311426
+          - Smatk_Robe    # 311426
           - Magic_Top    # 310664
       - Combo:
-          - SmatkStone_Robe_    # 311426
+          - Smatk_Robe    # 311426
           - Magic_Middle    # 310665
       - Combo:
-          - SmatkStone_Robe_    # 311426
+          - Smatk_Robe    # 311426
           - Magic_Bottom    # 310666
     Script: |
       bonus bSMatk,1;
@@ -26325,102 +26325,102 @@ Body:
   - Combos:
       - Combo:
           - Sura_Robe    # 29426
-          - SuraStone_Top3_    # 311427
+          - Sura_Top3    # 311427
       - Combo:
           - Sura_Robe    # 29426
-          - SuraStone_Middle3_    # 311428
+          - Sura_Middle3    # 311428
     Script: |
       bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20;
   - Combos:
       - Combo:
           - Sura_Robe2    # 29427
-          - SuraStone_Top3_    # 311427
+          - Sura_Top3    # 311427
       - Combo:
           - Sura_Robe2    # 29427
-          - SuraStone_Bottom3_    # 311429
+          - Sura_Bottom3    # 311429
     Script: |
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
   - Combos:
       - Combo:
-          - SuraStone_Middle3_    # 311428
+          - Sura_Middle3    # 311428
           - Sura_Robe2    # 29427
     Script: |
       bonus2 bSkillAtk,"SR_TIGERCANNON",15;
   - Combos:
       - Combo:
-          - SuraStone_Bottom3_    # 311429
+          - Sura_Bottom3    # 311429
           - Sura_Robe    # 29426
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
   - Combos:
       - Combo:
-          - MechanicStone_Top3_    # 311430
+          - Mechanic_Top3    # 311430
           - Mechanic_Robe    # 29484
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",15;
   - Combos:
       - Combo:
-          - MechanicStone_Top3_    # 311430
+          - Mechanic_Top3    # 311430
           - Mechanic_Robe2    # 310007
     Script: |
       bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
   - Combos:
       - Combo:
-          - MechanicStone_Middle3_    # 311431
+          - Mechanic_Middle3    # 311431
           - Mechanic_Robe    # 29484
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
   - Combos:
       - Combo:
-          - MechanicStone_Middle3_    # 311431
+          - Mechanic_Middle3    # 311431
           - Mechanic_Robe2    # 310007
     Script: |
       bonus2 bSkillAtk,"NC_ARMSCANNON",15;
   - Combos:
       - Combo:
-          - MechanicStone_Bottom3_    # 311432
+          - Mechanic_Bottom3    # 311432
           - Mechanic_Robe    # 29484
     Script: |
       bonus2 bSkillAtk,"NC_POWERSWING",15;
   - Combos:
       - Combo:
-          - MechanicStone_Bottom3_    # 311432
+          - Mechanic_Bottom3    # 311432
           - Mechanic_Robe2    # 310007
     Script: |
       bonus2 bSkillAtk,"NC_VULCANARM",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Top3_    # 311433
+          - Guillcross_Top3    # 311433
           - Guillotinecross_Robe    # 29524
     Script: |
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Top3_    # 311433
+          - Guillcross_Top3    # 311433
           - Guillotinecross_Robe2    # 310188
     Script: |
       bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Middle3_    # 311434
+          - Guillcross_Middle3    # 311434
           - Guillotinecross_Robe    # 29524
     Script: |
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Middle3_    # 311434
+          - Guillcross_Middle3    # 311434
           - Guillotinecross_Robe2    # 310188
     Script: |
       bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Bottom3_    # 311435
+          - Guillcross_Bottom3    # 311435
           - Guillotinecross_Robe    # 29524
     Script: |
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Bottom3_    # 311435
+          - Guillcross_Bottom3    # 311435
           - Guillotinecross_Robe2    # 310188
     Script: |
       bonus2 bAddRace,RC_All,15;

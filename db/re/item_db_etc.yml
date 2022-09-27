@@ -61188,49 +61188,49 @@ Body:
       bonus2 bAddRace,RC_Fish,10;
       bonus2 bMagicAddRace,RC_Fish,10;
   - Id: 311425
-    AegisName: SplStone_Robe_D_
+    AegisName: Spl_Robe_D
     Name: Spell Stone (Dual)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bSpl,5;
   - Id: 311426
-    AegisName: SmatkStone_Robe_
+    AegisName: Smatk_Robe
     Name: Spell Magic Attack Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bSMatk,3;
   - Id: 311427
-    AegisName: SuraStone_Top3_
+    AegisName: Sura_Top3
     Name: Sura Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*(getskilllv("SR_RAISINGDRAGON")/2);
   - Id: 311428
-    AegisName: SuraStone_Middle3_
+    AegisName: Sura_Middle3
     Name: Sura Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
   - Id: 311429
-    AegisName: SuraStone_Bottom3_
+    AegisName: Sura_Bottom3
     Name: Sura Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_CHANGE");
   - Id: 311430
-    AegisName: MechanicStone_Top3_
+    AegisName: Mechanic_Top3
     Name: Mechanic Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-getskilllv("NC_RESEARCHFE");
   - Id: 311431
-    AegisName: MechanicStone_Middle3_
+    AegisName: Mechanic_Middle3
     Name: Mechanic Stone (Middle)
     Type: Card
     SubType: Enchant
@@ -61239,28 +61239,28 @@ Body:
       bonus bShortAtkRate,.@i;
       bonus bLongAtkRate,.@i;
   - Id: 311432
-    AegisName: MechanicStone_Bottom3_
+    AegisName: Mechanic_Bottom3
     Name: Mechanic Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-(getskilllv("NC_TRAININGAXE")/2);
   - Id: 311433
-    AegisName: GuillcrossStone_Top3_
+    AegisName: Guillcross_Top3
     Name: Guillotine Cross Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-getskilllv("GC_RESEARCHNEWPOISON")/2;
   - Id: 311434
-    AegisName: GuillcrossStone_Middle3_
+    AegisName: Guillcross_Middle3
     Name: Guillotine Cross Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,2*getskilllv("GC_DARKILLUSION");
   - Id: 311435
-    AegisName: GuillcrossStone_Bottom3_
+    AegisName: Guillcross_Bottom3
     Name: Guillotine Cross Stone (Bottom)
     Type: Card
     SubType: Enchant
