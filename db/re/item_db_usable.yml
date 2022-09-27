@@ -52336,7 +52336,7 @@ Body:
     Name: OS Weapon Modification Box
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101356
     AegisName: aegis_101356
     Name: Rabbit Necromancy
@@ -52405,7 +52405,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101364
     AegisName: OS_Weapon_Hammer
     Name: OS Upgrade Weapon Refining Hammer
@@ -52414,7 +52414,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101389
     AegisName: Helm_Of_Faith_Hammer
     Name: Helm of Faith Refining Hammer
@@ -52423,7 +52423,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101390
     AegisName: Clock_Tower_W_Hammer
     Name: Clock Tower Basement Equipment Refining Hammer
@@ -52432,7 +52432,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101393
     AegisName: aegis_101393
     Name: Mugwort Rice Cake
