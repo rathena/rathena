@@ -79,6 +79,7 @@ Body:
     DurationLookup: NPC_PETRIFYATTACK
     States:
       NoCast: true
+      NoAttack: true
     Opt1: StoneWait
     Flags:
       SendOption: true
@@ -352,6 +353,8 @@ Body:
     DurationLookup: AS_ENCHANTPOISON
     CalcFlags:
       Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
     End:
       Aspersio: true
       Fireweapon: true
@@ -494,6 +497,7 @@ Body:
       Earthweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Enchantarms: true
   - Status: Benedictio
     Icon: EFST_BENEDICTIO
     DurationLookup: PR_BENEDICTIO
@@ -519,8 +523,6 @@ Body:
       FailedMado: true
       NoSave: true
       SuperNoviceAngel: true
-    Fail:
-      Offertorium: true
   - Status: Gloria
     Icon: EFST_GLORIA
     DurationLookup: PR_GLORIA
@@ -751,6 +753,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Stripshield
     Icon: EFST_NOEQUIPSHIELD
     DurationLookup: RG_STRIPSHIELD
@@ -762,6 +765,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Striparmor
     Icon: EFST_NOEQUIPARMOR
     DurationLookup: RG_STRIPARMOR
@@ -773,6 +777,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Striphelm
     Icon: EFST_NOEQUIPHELM
     DurationLookup: RG_STRIPHELM
@@ -784,6 +789,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Cp_Weapon
     Icon: EFST_PROTECTWEAPON
     DurationLookup: AM_CP_WEAPON
@@ -931,6 +937,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Explosionspirits
     Icon: EFST_EXPLOSIONSPIRITS
     DurationLookup: MO_EXPLOSIONSPIRITS
@@ -942,6 +949,7 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
+      NoSave: true
   - Status: Combo
     Flags:
       NoClearbuff: true
@@ -978,7 +986,7 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -993,7 +1001,7 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1008,7 +1016,7 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1023,7 +1031,7 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1325,6 +1333,7 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
+      NoSave: true
     End:
       Blessing: true
       Increaseagi: true
@@ -5445,6 +5454,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       NoForcedEnd: true
   - Status: Angel_Protect
     Icon: EFST_ANGEL_PROTECT
@@ -6106,6 +6116,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       NoForcedEnd: true
   - Status: Ljosalfar
     Icon: EFST_LJOSALFAR

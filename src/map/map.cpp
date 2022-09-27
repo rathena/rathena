@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "../config/core.hpp"
+
 #include "../common/cbasetypes.hpp"
 #include "../common/cli.hpp"
 #include "../common/core.hpp"
@@ -41,6 +43,7 @@
 #include "mapreg.hpp"
 #include "mercenary.hpp"
 #include "mob.hpp"
+#include "navi.hpp"
 #include "npc.hpp"
 #include "party.hpp"
 #include "path.hpp"
@@ -98,7 +101,8 @@ std::string log_db_pw = "";
 std::string log_db_db = "log";
 Sql* logmysql_handle;
 
-uint32 start_status_points = 48;
+// inter config
+struct inter_conf inter_config {};
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
@@ -183,6 +187,12 @@ struct s_map_default map_default;
 int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
 int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
+
+#ifdef MAP_GENERATOR
+struct s_generator_options {
+	bool navi;
+} gen_options;
+#endif
 
 /**
  * Get the map data
@@ -442,17 +452,17 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 		skill_unit_move(bl,tick,2);
 		if ( sc && sc->count ) //at least one to cancel
 		{
-			status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
-			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
-			status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
-			status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
-	//		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
-			status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
-			status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
-			status_change_end(bl, SC_SU_STOOP, INVALID_TIMER);
+			status_change_end(bl, SC_CLOSECONFINE);
+			status_change_end(bl, SC_CLOSECONFINE2);
+			status_change_end(bl, SC_TINDER_BREAKER);
+			status_change_end(bl, SC_TINDER_BREAKER2);
+	//		status_change_end(bl, SC_BLADESTOP); //Won't stop when you are knocked away, go figure...
+			status_change_end(bl, SC_TATAMIGAESHI);
+			status_change_end(bl, SC_MAGICROD);
+			status_change_end(bl, SC_SU_STOOP);
 			if (sc->data[SC_PROPERTYWALK] &&
 				sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
-				status_change_end(bl,SC_PROPERTYWALK,INVALID_TIMER);
+				status_change_end(bl,SC_PROPERTYWALK);
 		}
 	} else
 	if (bl->type == BL_NPC)
@@ -480,7 +490,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 			struct block_list *d_bl;
 			if( (d_bl = map_id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || !check_distance_bl(bl,d_bl,10) ) {
 				if( d_bl )
-					status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
+					status_change_end(d_bl,SC__SHADOWFORM);
 				((TBL_PC*)bl)->shadowform_id = 0;
 			}
 		}
@@ -490,7 +500,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
 			else {
 				if (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3 && !skill_check_cloaking(bl, NULL))
-					status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
+					status_change_end(bl, SC_CLOAKING);
 				if (sc->data[SC_WARM])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
@@ -504,7 +514,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				if( sc->data[SC__SHADOWFORM] ) {//Shadow Form Caster Moving
 					struct block_list *d_bl;
 					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || !check_distance_bl(bl,d_bl,10) )
-						status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);
+						status_change_end(bl,SC__SHADOWFORM);
 				}
 
 				if (sc->data[SC_PROPERTYWALK]
@@ -559,6 +569,11 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 	if (type&~BL_MOB)
 		for( bl = mapdata->block[bx+by*mapdata->bxs] ; bl != NULL ; bl = bl->next )
 			if(bl->x == x && bl->y == y && bl->type&type) {
+				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
+					npc_data *nd = BL_CAST(BL_NPC, bl);
+					if (nd && (nd->bl.m < 0 || nd->sc.option && nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE)))
+						continue;
+				}
 				if(flag&1) {
 					struct unit_data *ud = unit_bl2ud(bl);
 					if(!ud || ud->walktimer == INVALID_TIMER)
@@ -2089,20 +2104,20 @@ int map_quit(struct map_session_data *sd) {
 
 			//No need to save infinite status
 			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first] && sd->sc.data[it.first]->val4 > 0) {
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
 
 			//Status that are not saved
 			if (flag[SCF_NOSAVE]) {
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
 			//Removes status by config
 			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
 				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
 			{
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
 		}
@@ -4199,8 +4214,16 @@ int inter_config_read(const char *cfgName)
 			log_db_db = w2;
 		else
 		if(strcmpi(w1,"start_status_points")==0)
-			start_status_points=atoi(w2);
+			inter_config.start_status_points=atoi(w2);
 		else
+		if(strcmpi(w1, "emblem_woe_change")==0)
+			inter_config.emblem_woe_change = config_switch(w2) == 1;
+		else
+		if (strcmpi(w1, "emblem_transparency_limit") == 0) {
+			auto val = atoi(w2);
+			val = cap_value(val, 0, 100);
+			inter_config.emblem_transparency_limit = val;
+		}
 		if( mapreg_config_read(w1,w2) )
 			continue;
 		//support the import command, just like any other config
@@ -4739,7 +4762,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
-					ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+					if (!battle_config.pk_mode)
+						ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 				}
 				if (mapdata->flag[MF_GVG]) {
 					mapdata->flag[MF_GVG] = false;
@@ -4853,7 +4877,9 @@ void do_final(void){
 	do_final_battle();
 	do_final_chrif();
 	do_final_clan();
+#ifndef MAP_GENERATOR
 	do_final_clif();
+#endif
 	do_final_npc();
 	do_final_quest();
 	do_final_achievement();
@@ -5058,6 +5084,42 @@ const char* map_msg_txt(struct map_session_data *sd, int msg_number){
 	return "??";
 }
 
+/**
+ * Read the option specified in command line
+ *  and assign the confs used by the different server.
+ * @param argc: Argument count
+ * @param argv: Argument values
+ * @return true or Exit on failure.
+ */
+int mapgenerator_get_options(int argc, char** argv) {
+#ifdef MAP_GENERATOR
+	bool optionSet = false;
+	for (int i = 1; i < argc; i++) {
+		const char *arg = argv[i];
+		if (arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) {// -, -- and /
+		} else if (arg[0] == '/' || (++arg)[0] == '-') {// long option
+			arg++;
+
+			if (strcmp(arg, "generate-navi") == 0) {
+				gen_options.navi = true;
+			} else {
+				// pass through to default get_options
+				continue;
+			}
+
+			// clear option
+			argv[i] = nullptr;
+			optionSet = true;
+		}
+	}
+	if (!optionSet) {
+		ShowError("No options passed to the map generator, you must set at least one.\n");
+		exit(1);
+	}
+#endif
+	return 1;
+}
+
 
 /// Called when a terminate signal is received.
 void do_shutdown(void)
@@ -5111,6 +5173,14 @@ int do_init(int argc, char *argv[])
 	map_default.x = 156;
 	map_default.y = 191;
 
+	// default inter_config
+	inter_config.start_status_points = 48;
+	inter_config.emblem_woe_change = true;
+	inter_config.emblem_transparency_limit = 80;
+
+#ifdef MAP_GENERATOR
+	mapgenerator_get_options(argc, argv);
+#endif
 	cli_get_options(argc,argv);
 
 	rnd_init();
@@ -5183,7 +5253,9 @@ int do_init(int argc, char *argv[])
 	do_init_instance();
 	do_init_chrif();
 	do_init_clan();
+#ifndef MAP_GENERATOR
 	do_init_clif();
+#endif
 	do_init_script();
 	do_init_itemdb();
 	do_init_channel();
@@ -5213,7 +5285,14 @@ int do_init(int argc, char *argv[])
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '" CL_WHITE "PK Mode" CL_RESET "'.\n");
 
+#ifndef MAP_GENERATOR
 	ShowStatus("Server is '" CL_GREEN "ready" CL_RESET "' and listening on port '" CL_WHITE "%d" CL_RESET "'.\n\n", map_port);
+#else
+	// depending on gen_options, generate the correct things
+	if (gen_options.navi)
+		navi_create_lists();
+	runflag = CORE_ST_STOP;
+#endif
 
 	if( runflag != CORE_ST_STOP )
 	{
