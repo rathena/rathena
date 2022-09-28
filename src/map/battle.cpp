@@ -531,7 +531,11 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #endif
 				}
 				if ( tsc->data[SC_CLIMAX_BLOOM])
+#ifdef RENEWAL
 					ratio += 100;
+#else
+					damage += (int64)(damage * 100 / 100);
+#endif
 				break;
 			case ELE_HOLY:
 				if (tsc->data[SC_ORATIO])
@@ -4805,16 +4809,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sc && sc->data[SC_SPEAR_SCAR])
 				skillratio += 400;
 			RE_LVL_DMOD(100);
-			if (sc && sc->data[SC_SPEAR_SCAR])// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_BANISHINGPOINT:
 			skillratio += -100 + (100 * skill_lv) + ((sd) ? pc_checkskill(sd,SM_BASH) * 70 : 0);
 			if (sc && sc->data[SC_SPEAR_SCAR])
 				skillratio += 800;
 			RE_LVL_DMOD(100);
-			if (sc && sc->data[SC_SPEAR_SCAR])// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_SHIELDPRESS:
 			skillratio += -100 + 200 * skill_lv + sstatus->str;
@@ -4827,8 +4827,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 					skillratio += sd->inventory_data[index]->weight / 10;
 			}
 			RE_LVL_DMOD(100);
-			if (sc && sc->data[SC_SHIELD_POWER])// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_PINPOINTATTACK:
 			skillratio += -100 + 100 * skill_lv + 5 * status_get_agi(src);
@@ -4858,8 +4856,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sc && sc->data[SC_SHIELD_POWER]) 
 				skillratio += skill_lv * 37 * pc_checkskill(sd,IG_SHIELD_MASTERY);
 			RE_LVL_DMOD(100);
-			if (sc && sc->data[SC_SHIELD_POWER])// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_HESPERUSLIT:
 			if (sc && sc->data[SC_INSPIRATION])
@@ -5224,7 +5220,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SU_LUNATICCARROTBEAT:
 		case SU_LUNATICCARROTBEAT2:
-			skillratio += 100 + 100 * skill_lv; // !TODO: What's the STR bonus?
+			skillratio += 100 + 100 * skill_lv;
 			RE_LVL_DMOD(100);
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
