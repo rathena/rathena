@@ -13,6 +13,7 @@
 //= 1.7 Readability changes. Also added BabyExpanded and BabySummoner classes. [Jey]
 //= 1.8 Added option to disable Baby Novice Only but Baby Class can be Enabled [mazvi]
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
+//= 2.0 Added 4th class [Lemongrass]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -40,6 +41,22 @@ function	Require_Level	{
 // Checks if the given eac is a baby class
 function Is_Baby	{
 	return ((getarg(0, eaclass())&EAJL_BABY)>0);
+}
+
+// Checks if the player can change to fourth class.
+// Note: This does not include the level checks.
+function	Can_Change_Fourth	{
+	// To change to fourth class you need to be:
+	// * Transcendent Third Class
+	if( !.FourthClass )
+		return false; // Fourth job change disabled
+	if( (eaclass()&(EAJL_THIRD|EAJL_UPPER)) != (EAJL_THIRD|EAJL_UPPER) )
+		return false; // Not Transcendent Third Class
+	if( eaclass()&EAJL_FOURTH )
+		return false; // Already Fourth Class
+	if( roclass(eaclass()|EAJL_FOURTH) < 0 )
+		return false; // Job has no Fourth Class
+	return true;
 }
 
 // Checks if the player can change to third class.
@@ -127,6 +144,7 @@ function	Job_Options	{
 
 	// initialisation
 	.@eac = eaclass();
+	.@fourth_possible = Can_Change_Fourth();
 	.@third_possible = Can_Change_Third();
 	.@rebirth_possible = Can_Rebirth();
 	.@first_eac = .@eac&EAJ_BASEMASK;
@@ -149,6 +167,11 @@ function	Job_Options	{
 		// Third Job change (displayed below rebirth)
 		Require_Level(.Req_Third[0], .Req_Third[1]);
 		Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
+	}
+	if( .@fourth_possible ) {
+		// Fourth Job change (displayed below rebirth)
+		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
+		Job_Options(.@job_opt, roclass(.@eac|EAJL_FOURTH));
 	}
 	 
 	if (.SecondExpanded && 
@@ -353,7 +376,10 @@ function	Get_Job_Equip	{
 	// Note: The item is dropping, when the player can't hold it.
 	// But that's better than not giving the item at all.
 	.@eac = eaclass();
-	if( .@eac&EAJL_THIRD ) {
+	if( .@eac&EAJL_FOURTH ) {
+		// Fourth Class Items
+		getitem 490087,1; // Hourglass Necklace
+	} else if( .@eac&EAJL_THIRD ) {
 		// Third Class Items
 		getitem 2795,1;	//	Green Apple Ring for every 3rd Class
 		switch(BaseJob) {
@@ -456,24 +482,26 @@ OnInit:
 	.NPCName$ = "[Job Master]";
 	
 	// Settings
-	.ThirdClass = true;			// Enable third classes?
-	.RebirthClass = true;			// Enable rebirth classes?
-	.SecondExpanded = true;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
-	.BabyNovice = true;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
-	.BabyClass = true;				// Enable Baby classes?
-	.BabyThird = true;				// Enable Baby third classes?
-	.BabyExpanded = true;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
-	.BabySummoner = true;			// Enable Baby Summoner?
-	.LastJob = true;				// Enforce linear class changes?
-	.SkillPointCheck = true;		// Force player to use up all skill points?
-	.Platinum = true;				// Get platinum skills automatically?
-	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
+	.FourthClass = true;				// Enable fourth classes?
+	.ThirdClass = true;					// Enable third classes?
+	.RebirthClass = true;				// Enable rebirth classes?
+	.SecondExpanded = true;				// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
+	.BabyNovice = true;					// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
+	.BabyClass = true;					// Enable Baby classes?
+	.BabyThird = true;					// Enable Baby third classes?
+	.BabyExpanded = true;				// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
+	.BabySummoner = true;				// Enable Baby Summoner?
+	.LastJob = true;					// Enforce linear class changes?
+	.SkillPointCheck = true;			// Force player to use up all skill points?
+	.Platinum = true;					// Get platinum skills automatically?
+	.GetJobEquip = false;				// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
 	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
 	setarray .Req_Rebirth[0],99,50;		// Minimum base level, job level to rebirth
 	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class
+	setarray .Req_Fourth[0],200,70;		// Minimum base level, job level to change to fourth class
 	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
 	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
 	.SNovice = 45;						// Minimum base level to turn into Super Novice

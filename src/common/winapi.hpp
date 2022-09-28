@@ -37,6 +37,7 @@
 #define NONLS
 #define NOMEMMGR
 #define NOMETAFILE
+#define NOMINMAX
 #define NOOPENFILE
 #define NOSERVICE
 #define NOSOUND
@@ -52,6 +53,8 @@
 #include <Ws2tcpip.h>
 #include <Mswsock.h>
 #include <MMSystem.h>
+
+#undef NOMINMAX
 
 #include "cbasetypes.hpp"
 

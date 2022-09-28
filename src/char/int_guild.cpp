@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
@@ -745,7 +744,7 @@ const std::string GuildExpDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/exp_guild.yml";
 }
 
-uint64 GuildExpDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 GuildExpDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->nodesExist(node, { "Level", "Exp" })) {
 		return 0;
 	}

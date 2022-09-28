@@ -69,6 +69,7 @@ CREATE TABLE `item_db` (
   `location_shadow_right_accessory` tinyint(1) unsigned DEFAULT NULL,
   `location_shadow_left_accessory` tinyint(1) unsigned DEFAULT NULL,
   `weapon_level` tinyint(1) unsigned DEFAULT NULL,
+  `armor_level` tinyint(1) unsigned DEFAULT NULL,
   `equip_level_min` tinyint(3) unsigned DEFAULT NULL,
   `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
   `refineable` tinyint(1) unsigned DEFAULT NULL,

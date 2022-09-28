@@ -8,7 +8,6 @@
 #include <string>
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 #include <vector>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -45,11 +44,11 @@ InterServerDatabase interServerDb;
 Sql* sql_handle = NULL;	///Link to mysql db, connection FD
 
 int char_server_port = 3306;
-char char_server_ip[64] = "127.0.0.1";
-char char_server_id[32] = "ragnarok";
-char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
-char char_server_db[32] = "ragnarok";
-char default_codepage[32] = ""; //Feature by irmin.
+std::string char_server_ip = "127.0.0.1";
+std::string char_server_id = "ragnarok";
+std::string char_server_pw = ""; // Allow user to send empty password (bugreport:7787)
+std::string char_server_db = "ragnarok";
+std::string default_codepage = ""; //Feature by irmin.
 unsigned int party_share_level = 10;
 
 /// Received packet Lengths from map-server
@@ -321,6 +320,45 @@ const char* job_name(int class_) {
 
 		case JOB_BABY_STAR_EMPEROR2:
 			return msg_txt(120);
+
+		case JOB_DRAGON_KNIGHT:
+		case JOB_MEISTER:
+		case JOB_SHADOW_CROSS:
+		case JOB_ARCH_MAGE:
+		case JOB_CARDINAL:
+		case JOB_WINDHAWK:
+		case JOB_IMPERIAL_GUARD:
+		case JOB_BIOLO:
+		case JOB_ABYSS_CHASER:
+		case JOB_ELEMENTAL_MASTER:
+		case JOB_INQUISITOR:
+		case JOB_TROUBADOUR:
+		case JOB_TROUVERE:
+			return msg_txt( 122 - JOB_DRAGON_KNIGHT + class_ );
+
+		case JOB_WINDHAWK2:
+			return msg_txt( 127 );
+
+		case JOB_MEISTER2:
+			return msg_txt( 123 );
+
+		case JOB_DRAGON_KNIGHT2:
+			return msg_txt( 122 );
+
+		case JOB_IMPERIAL_GUARD2:
+			return msg_txt( 128 );
+
+		case JOB_SKY_EMPEROR:
+		case JOB_SOUL_ASCETIC:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+		case JOB_NIGHT_WATCH:
+		case JOB_HYPER_NOVICE:
+		case JOB_SPIRIT_HANDLER:
+			return msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
+
+		case JOB_SKY_EMPEROR2:
+			return msg_txt( 135 );
 
 		default:
 			return msg_txt(199);
@@ -806,17 +844,17 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
+			char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			safestrncpy(char_server_id,w2,sizeof(char_server_id));
+			char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
-			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
+			char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
-			safestrncpy(char_server_db,w2,sizeof(char_server_db));
+			char_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))
-			safestrncpy(default_codepage,w2,sizeof(default_codepage));
+			default_codepage = w2;
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
@@ -860,7 +898,7 @@ const std::string InterServerDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 id;
 
 	if( !this->asUInt32( node, "ID", id ) ){
@@ -935,17 +973,17 @@ int inter_init_sql(const char *file)
 	//DB connection initialized
 	sql_handle = Sql_Malloc();
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
-	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), (uint16)char_server_port, char_server_db.c_str()))
 	{
-		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
-			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+		ShowError("Couldn't connect with username = '%s', host = '%s', port = '%d', database = '%s'\n",
+			char_server_id.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( *default_codepage ) {
-		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+	if( !default_codepage.empty() ) {
+		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(sql_handle);
 	}
 

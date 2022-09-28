@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -47,7 +46,7 @@ const std::string AchievementDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
+uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef& node){
 	uint32 achievement_id;
 
 	if( !this->asUInt32( node, "Id", achievement_id ) ){
@@ -98,9 +97,9 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	if( this->nodeExists( node, "Targets" ) ){
-		const YAML::Node& targets = node["Targets"];
+		const auto& targets = node["Targets"];
 
-		for( const YAML::Node& targetNode : targets ){
+		for( const auto& targetNode : targets ){
 			uint16 targetId;
 
 			if( !this->asUInt16( targetNode, "Id", targetId ) ){
@@ -200,7 +199,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			achievement->condition = nullptr;
 		}
 
-		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), node["Condition"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Condition"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if (!exists)
 			achievement->condition = nullptr;
@@ -231,10 +230,12 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	if( this->nodeExists( node, "Dependents" ) ){
-		const YAML::Node &dependentNode = node["Dependents"];
+		const auto& dependentNode = node["Dependents"];
 
-		for( const auto it : dependentNode ){
-			uint32 dependent_achievement_id = it.first.as<uint32>();
+		for( const auto& it : dependentNode ){
+			auto id_str = it.key();
+			uint32 dependent_achievement_id;
+			c4::atou<uint32>(id_str, &dependent_achievement_id);
 			bool active;
 
 			if (!this->asBool(dependentNode, std::to_string(dependent_achievement_id), active))
@@ -258,7 +259,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	if( this->nodeExists( node, "Rewards" ) ){
-		const YAML::Node& rewardNode = node["Rewards"];
+		const auto& rewardNode = node["Rewards"];
 
 		if( this->nodeExists( rewardNode, "Item" ) ){
 			std::string item_name;
@@ -302,7 +303,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				achievement->rewards.script = nullptr;
 			}
 
-			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(rewardNode["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 		}else{
 			if (!exists)
 				achievement->rewards.script = nullptr;
@@ -348,11 +349,11 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 }
 
 void AchievementDatabase::loadingFinished(){
-	for (const auto &achit : achievement_db) {
+	for (const auto &achit : *this) {
 		const std::shared_ptr<s_achievement_db> ach = achit.second;
 
 		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
-			if (!achievement_db.exists(*dep)) {
+			if (!this->exists(*dep)) {
 				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
 				dep = ach->dependent_ids.erase(dep);
 
@@ -364,6 +365,8 @@ void AchievementDatabase::loadingFinished(){
 
 		ach->dependent_ids.shrink_to_fit();
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 AchievementDatabase achievement_db;
@@ -386,7 +389,7 @@ const std::string AchievementLevelDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/achievement_level_db.yml";
 }
 
-uint64 AchievementLevelDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 AchievementLevelDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !this->nodesExist( node, { "Level", "Points" } ) ){
 		return 0;
 	}

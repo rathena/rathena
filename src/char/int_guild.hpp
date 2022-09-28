@@ -38,10 +38,12 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
+
+	// Additional
 	t_exp get_nextexp(uint16 level);
-	void loadingFinished();
 };
 
 int inter_guild_parse_frommap(int fd);

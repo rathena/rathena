@@ -61,7 +61,7 @@ OnInit:
 			.alphabet_menu$ = .alphabet_menu$ + .@alphabet$[.@i] +" Cards:";
 			npcshopdelitem "card_mob#"+ .@alphabet$[.@i], 501;
 			for ( .@j = 0; .@j < .@nb; .@j++ ) {
-				if (callfunc( "F_IsCharm", .@id[.@j] ) == true)// Skip enchants in case someone added them as card drop
+				if (getiteminfo(.@id[.@j], ITEMINFO_SUBTYPE) == CARD_ENCHANT)// Skip enchants in case someone added them as card drop
 					continue;
 				npcshopadditem "card_mob#"+ .@alphabet$[.@i], .@id[.@j], 1000000;
 			}

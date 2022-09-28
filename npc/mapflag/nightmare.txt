@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Nightmare mode.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Players drop items/equipment on death.
 //= pvp_nightmaredrop	id,type,percent

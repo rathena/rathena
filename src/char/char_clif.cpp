@@ -21,6 +21,7 @@
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
+#include "packets.hpp"
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
@@ -34,7 +35,7 @@ bool pincode_allowed( char* pincode );
 // 1: failed
 void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason ){
 	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0) = 0x8d5;
+	WFIFOW(fd,0) = HEADER_HC_ACK_CHANGE_CHARACTER_SLOT;
 	WFIFOW(fd,2) = 8;
 	WFIFOW(fd,4) = reason;
 	WFIFOW(fd,6) = sd->char_moves[index];
@@ -374,7 +375,7 @@ void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
 	uint8 count = 0;
 
 	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
-	WFIFOW(fd,0) = 0x99d;
+	WFIFOW(fd,0) = HEADER_HC_ACK_CHARINFO_PER_PAGE;
 	WFIFOW(fd,2) = char_mmo_chars_fromsql(sd, WFIFOP(fd,4), &count) + 4;
 	WFIFOSET(fd,WFIFOW(fd,2));
 
@@ -382,7 +383,7 @@ void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
 	// The client triggers some finalization code only if count is != 3.
 	if( count == 3 ){
 		WFIFOHEAD(fd,4);
-		WFIFOW(fd,0) = 0x99d;
+		WFIFOW(fd,0) = HEADER_HC_ACK_CHARINFO_PER_PAGE;
 		WFIFOW(fd,2) = 4;
 		WFIFOSET(fd,4);
 	}
@@ -1050,7 +1051,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 
 		// send to player
 		WFIFOHEAD(fd,2+MAX_CHAR_BUF);
-		WFIFOW(fd,0) = 0x6d;
+		WFIFOW(fd,0) = HEADER_HC_ACCEPT_MAKECHAR;
 		len = 2 + char_mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
 		WFIFOSET(fd,len);
 

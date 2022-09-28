@@ -206,7 +206,7 @@ function Func_JupHist;
 		mes "[Fayruz]";
 		mes "Well, you look";
 		mes "quite pleased.";
-		mes "May I asked what";
+		mes "May I ask what";
 		mes "happened to put that";
 		mes "expression on your face?";
 		next;

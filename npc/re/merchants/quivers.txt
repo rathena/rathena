@@ -17,11 +17,12 @@
 //===== Additional Comments: =================================
 //= 1.0 Added Mora NPC. [Euphy]
 //= 1.1 Updated to match the official scripts. [Euphy]
+//= 1.2 Update regarding the Barter Shop [JohnnyPlayy, Capuche]
 //============================================================
 
 // Mora :: ep14_1_tre
 //============================================================
-mora,106,117,3	script	Quiver Maker#mora	516,{
+mora,106,117,3	script	Quiver Maker#mora	4_M_RAFLE_GR,{
 	if (checkweight(1201,1) == 0) {
 		mes "[Quiver Maker]";
 		mes "You have too many things with you.";
@@ -38,8 +39,18 @@ mora,106,117,3	script	Quiver Maker#mora	516,{
 	mes "Mora villagers ask what good quivers are. They just don't know how the world works.";
 	mes "No wonder they don't know a thing about quivers - spreading jam over leaves all day long.";
 	next;
-	switch(select("Please make me a quiver.:What's a quiver?")) {
+	if (getbattleflag("feature.barter")) {
+		.@menu$ = "I want arrows";
+	}
+	switch( select("Please make me a quiver.", .@menu$, "What's a quiver?") ) {
 	case 1:
+		if (getbattleflag("feature.barter")) {
+			mes "[Quiver Maker]";
+			mes "Finally, someone has appeared who knows the true value of a quiver. I will do it for those who know its worth.";
+			close2;
+			callshop "Quiver_Archer", 1;
+			end;
+		}
 		mes "[Quiver Maker]";
 		mes "At last someone appreciates a quiver!";
 		mes "I can make Elven Quivers and Hunting Quivers.";
@@ -53,7 +64,16 @@ mora,106,117,3	script	Quiver Maker#mora	516,{
 			mes "You can buy arrows off the tool merchant next to me.";
 			close;
 		}
+		end;
 	case 2:
+		if (getbattleflag("feature.barter")) {
+			mes "[Quiver Maker]";
+			mes "I don't sell ordinary arrows. These are artisan arrows that can only be purchased here. Would you really recognize its worth, right?";
+			close2;
+			callshop "Catch_Arrows", 1;
+		}
+		end;
+	case 3:
 		mes "[Quiver Maker]";
 		mes "An arrow may be thin and light, but carrying hundreds and thousands of arrows is like carrying a whole log.";
 		next;
@@ -124,3 +144,9 @@ S_BuyQuiver:
 	getitem getarg(3),.@quiver;
 	close;
 }
+
+//= Basic Shops
+//============================================================
+
+//= Arrows
+-	marketshop	Catch_Arrows	HIDDEN_NPC,1773:5:-1,1774:5:-1

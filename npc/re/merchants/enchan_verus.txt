@@ -762,10 +762,10 @@ verus04,71,106,5	script	Mass Charleston#2	4_F_CHARLESTON01,{
 		}
 	case 2:	// Reset
 		// Note: the NPC doesn't check if the equipment is already enhanced
-		if (F_IsCharm(.@card[0]) == true) .@card[0] = 0;
-		if (F_IsCharm(.@card[1]) == true) .@card[1] = 0;
-		if (F_IsCharm(.@card[2]) == true) .@card[2] = 0;
-		if (F_IsCharm(.@card[3]) == true) .@card[3] = 0;
+		if (getiteminfo(.@card[0], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[0] = 0;
+		if (getiteminfo(.@card[1], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[1] = 0;
+		if (getiteminfo(.@card[2], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[2] = 0;
+		if (getiteminfo(.@card[3], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[3] = 0;
 		specialeffect2 EF_REPAIRWEAPON;
 		mes "[Mass Charleston]";
 		mes "Reset the product's abilities.";

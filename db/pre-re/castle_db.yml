@@ -44,274 +44,170 @@ Body:
     Name: Kriemhild
     #Name: Creamhilt
     Npc: Agit#prtg_cas01
-    WarpX: 107
-    WarpY: 180
+    EnableClientWarp: false
   - Id: 2
     Map: prtg_cas02
     Name: Swanhild
     #Name: Sbanhealt
     Npc: Agit#prtg_cas02
-    WarpX: 94
-    WarpY: 56
+    EnableClientWarp: false
   - Id: 3
     Map: prtg_cas03
     Name: Fadhgridh
     #Name: Lazrigees
     Npc: Agit#prtg_cas03
-    WarpX: 46
-    WarpY: 97
+    EnableClientWarp: false
   - Id: 4
     Map: prtg_cas04
     Name: Skoegul
     #Name: Squagul
     Npc: Agit#prtg_cas04
-    WarpX: 260
-    WarpY: 262
+    EnableClientWarp: false
   - Id: 5
     Map: prtg_cas05
     Name: Gondul
     #Name: Guindull
     Npc: Agit#prtg_cas05
-    WarpX: 26
-    WarpY: 38
+    EnableClientWarp: false
   - Id: 6
     Map: aldeg_cas01
     Name: Neuschwanstein
     #Name: Noisyubantian
     Npc: Agit#aldeg_cas01
-    WarpX: 212
-    WarpY: 175
+    EnableClientWarp: false
   - Id: 7
     Map: aldeg_cas02
     Name: Hohenschwangau
     #Name: Hohensyubangawoo
     Npc: Agit#aldeg_cas02
-    WarpX: 82
-    WarpY: 71
+    EnableClientWarp: false
   - Id: 8
     Map: aldeg_cas03
     Name: Nuernberg
     #Name: Nyirenverk
     Npc: Agit#aldeg_cas03
-    WarpX: 109
-    WarpY: 112
+    EnableClientWarp: false
   - Id: 9
     Map: aldeg_cas04
     Name: Wuerzburg
     #Name: Byirtsburi
     Npc: Agit#aldeg_cas04
-    WarpX: 60
-    WarpY: 116
+    EnableClientWarp: false
   - Id: 10
     Map: aldeg_cas05
     Name: Rothenburg
     #Name: Rotenburk
     Npc: Agit#aldeg_cas05
-    WarpX: 61
-    WarpY: 185
+    EnableClientWarp: false
   - Id: 11
     Map: gefg_cas01
     Name: Repherion
     #Name: Reprion
     Npc: Agit#gefg_cas01
-    WarpX: 40
-    WarpY: 43
+    EnableClientWarp: false
   - Id: 12
     Map: gefg_cas02
     Name: Eeyolbriggar
     #Name: Yolbriger
     Npc: Agit#gefg_cas02
-    WarpX: 22
-    WarpY: 66
+    EnableClientWarp: false
   - Id: 13
     Map: gefg_cas03
     Name: Yesnelph
     #Name: Isinlife
     Npc: Agit#gefg_cas03
-    WarpX: 112
-    WarpY: 23
+    EnableClientWarp: false
   - Id: 14
     Map: gefg_cas04
     Name: Bergel
     #Name: Berigel
     Npc: Agit#gefg_cas04
-    WarpX: 58
-    WarpY: 46
+    EnableClientWarp: false
   - Id: 15
     Map: gefg_cas05
     Name: Mersetzdeitz
     #Name: Melsedetsu
     Npc: Agit#gefg_cas05
-    WarpX: 66
-    WarpY: 48
+    EnableClientWarp: false
   - Id: 16
     Map: payg_cas01
     Name: Bright Arbor
     #Name: Mingting
     Npc: Agit#payg_cas01
-    WarpX: 115
-    WarpY: 57
+    EnableClientWarp: false
   - Id: 17
     Map: payg_cas02
     Name: Scarlet Palace
     #Name: Tiantan
     Npc: Agit#payg_cas02
-    WarpX: 26
-    WarpY: 265
+    EnableClientWarp: false
   - Id: 18
     Map: payg_cas03
     Name: Holy Shadow
     #Name: Fuying
     Npc: Agit#payg_cas03
-    WarpX: 43
-    WarpY: 264
+    EnableClientWarp: false
   - Id: 19
     Map: payg_cas04
     Name: Sacred Altar
     #Name: Honglou
     Npc: Agit#payg_cas04
-    WarpX: 36
-    WarpY: 272
+    EnableClientWarp: false
   - Id: 20
     Map: payg_cas05
     Name: Bamboo Grove Hill
     #Name: Zhulinxian
     Npc: Agit#payg_cas05
-    WarpX: 274
-    WarpY: 246
+    EnableClientWarp: false
 
 # WOE SE castle
   - Id: 21
     Map: arug_cas01
     Name: Mardol
     Npc: Manager#arug_cas01
-    WarpX: 77
-    WarpY: 371
+    EnableClientWarp: false
   - Id: 22
     Map: arug_cas02
     Name: Cyr
     Npc: Manager#arug_cas02
-    WarpX: 301
-    WarpY: 332
+    EnableClientWarp: false
   - Id: 23
     Map: arug_cas03
     Name: Horn
     Npc: Manager#arug_cas03
-    WarpX: 322
-    WarpY: 91
+    EnableClientWarp: false
   - Id: 24
     Map: arug_cas04
     Name: Gefn
     Npc: Manager#arug_cas04
-    WarpX: 322
-    WarpY: 91
+    EnableClientWarp: false
   - Id: 25
     Map: arug_cas05
     Name: Bandis
     Npc: Manager#arug_cas05
-    WarpX: 322
-    WarpY: 91
+    EnableClientWarp: false
   - Id: 26
     Map: schg_cas01
     Name: Himinn
     Npc: Manager#schg_cas01
-    WarpX: 233
-    WarpY: 300
+    EnableClientWarp: false
   - Id: 27
     Map: schg_cas02
     Name: Andlangr
     Npc: Manager#schg_cas02
-    WarpX: 101
-    WarpY: 372
+    EnableClientWarp: false
   - Id: 28
     Map: schg_cas03
     Name: Viblainn
     Npc: Manager#schg_cas03
-    WarpX: 81
-    WarpY: 94
+    EnableClientWarp: false
   - Id: 29
     Map: schg_cas04
     Name: Hljod
     Npc: Manager#schg_cas04
-    WarpX: 233
-    WarpY: 300
+    EnableClientWarp: false
   - Id: 30
     Map: schg_cas05
     Name: Skidbladnir
     Npc: Manager#schg_cas05
-    WarpX: 233
-    WarpY: 300
-
-# WOE TE castle
-  - Id: 31
-    Map: te_aldecas1
-    Name: Kafragarten 1
-    Npc: Manager_TE#Glaris
-    EnableClientWarp: false
-  - Id: 32
-    Map: te_aldecas2
-    Name: Kafragarten 2
-    Npc: Manager_TE#Defolty
-    EnableClientWarp: false
-  - Id: 33
-    Map: te_aldecas3
-    Name: Kafragarten 3
-    Npc: Manager_TE#Sorin
-    EnableClientWarp: false
-  - Id: 34
-    Map: te_aldecas4
-    Name: Kafragarten 4
-    Npc: Manager_TE#Bennit
-    EnableClientWarp: false
-  - Id: 35
-    Map: te_aldecas5
-    Name: Kafragarten 5
-    Npc: Manager_TE#W
-    EnableClientWarp: false
-  - Id: 36
-    Map: te_prtcas01
-    Name: Gloria 1
-    Npc: Manager_TE#Gaebolg
-    EnableClientWarp: false
-  - Id: 37
-    Map: te_prtcas02
-    Name: Gloria 2
-    Npc: Manager_TE#Richard
-    EnableClientWarp: false
-  - Id: 38
-    Map: te_prtcas03
-    Name: Gloria 3
-    Npc: Manager_TE#Wigner
-    EnableClientWarp: false
-  - Id: 39
-    Map: te_prtcas04
-    Name: Gloria 4
-    Npc: Manager_TE#Heine
-    EnableClientWarp: false
-  - Id: 40
-    Map: te_prtcas05
-    Name: Gloria 5
-    Npc: Manager_TE#Nerious
-    EnableClientWarp: false
-
-# WOE NGuild castle
-  - Id: 41
-    Map: nguild_alde
-    Name: Earth
-    Npc: Agit_N01
-    EnableClientWarp: false
-  - Id: 42
-    Map: nguild_gef
-    Name: Air
-    Npc: Agit_N02
-    EnableClientWarp: false
-  - Id: 43
-    Map: nguild_pay
-    Name: Water
-    Npc: Agit_N03
-    EnableClientWarp: false
-  - Id: 44
-    Map: nguild_prt
-    Name: Fire
-    Npc: Agit_N04
     EnableClientWarp: false
