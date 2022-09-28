@@ -1438,14 +1438,18 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		&& skill_get_casttype(skill_id) == CAST_GROUND )
 		return 0;
 
+	sc = status_get_sc(bl); //check target status
+
 	if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
 		//Special no damage states
 		if(flag&BF_WEAPON && sd->special_state.no_weapon_damage)
 			damage -= damage * sd->special_state.no_weapon_damage / 100;
 
-		if(flag&BF_MAGIC && sd->special_state.no_magic_damage)
-			damage -= damage * sd->special_state.no_magic_damage / 100;
+		if(flag&BF_MAGIC && sd->special_state.no_magic_damage) {
+			if (sc && !sc->data[SC_DEADLY_DEFEASANCE]) //put it here because in in pc_calc_sub with CalcFlag All it'll break setunitdata of monsters, with CalcFlag Base it'll break other sc's bonuses [munkrej]
+				damage -= damage * sd->special_state.no_magic_damage / 100;
+		}
 
 		if(flag&BF_MISC && sd->special_state.no_misc_damage)
 			damage -= damage * sd->special_state.no_misc_damage / 100;
@@ -1453,8 +1457,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(!damage)
 			return 0;
 	}
-
-	sc = status_get_sc(bl); //check target status
 
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;

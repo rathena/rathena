@@ -7630,8 +7630,6 @@ Body:
   - Status: Deadly_Defeasance
     Icon: EFST_DEADLY_DEFEASANCE
     DurationLookup: AG_DEADLY_PROJECTION
-    CalcFlags:
-      Base: true
     Flags:
       BlEffect: true
       DisplayPc: true
@@ -7639,8 +7637,7 @@ Body:
     Icon: EFST_CLIMAX_DES_HU
     DurationLookup: AG_DESTRUCTIVE_HURRICANE
     CalcFlags:
-      Base: true
-      Matk: true
+      All: true
   - Status: Climax
     Icon: EFST_CLIMAX
     DurationLookup: AG_CLIMAX
