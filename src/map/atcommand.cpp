@@ -6694,7 +6694,8 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = 0;
-		sprintf(atcmd_output, msg_txt(sd,1194), item_data->name.c_str(), item_data->ename.c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
+		tmp_item.nameid = sd->state.autolootid[i];
+		sprintf(atcmd_output, msg_txt(sd,1194), createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
 		clif_displaymessage(fd, atcmd_output);
 		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] != 0);
 		if (i == AUTOLOOTITEM_SIZE) {
