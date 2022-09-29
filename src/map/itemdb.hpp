@@ -5,6 +5,7 @@
 #define ITEMDB_HPP
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include "../common/database.hpp"
@@ -1607,6 +1608,8 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 bool itemdb_parse_roulette_db(void);
 
 void itemdb_reload(void);
+
+std::string createItemLink(struct item& data);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);

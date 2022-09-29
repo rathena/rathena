@@ -4004,10 +4004,13 @@ ACMD_FUNC(idsearch)
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
+
+	struct item tmp_item = {}; 
+
 	for(const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
-
-		sprintf(atcmd_output, msg_txt(sd,78), id->ename.c_str(), id->nameid); // %s: %u
+		tmp_item.nameid = id->nameid;
+		sprintf(atcmd_output, msg_txt(sd,78), createItemLink(tmp_item).c_str(), id->nameid); // %s: %u
 		clif_displaymessage(fd, atcmd_output);
 	}
 	sprintf(atcmd_output, msg_txt(sd,79), match); // It is %d affair above.
@@ -6630,7 +6633,8 @@ ACMD_FUNC(autoloot)
  * @alootid
  *------------------------------------------*/
 ACMD_FUNC(autolootitem)
-{
+{	
+	struct item tmp_item = {};
 	std::shared_ptr<item_data> item_data;
 	int i;
 	int action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
@@ -6678,7 +6682,8 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = item_data->nameid; // Autoloot Activated
-		sprintf(atcmd_output, msg_txt(sd,1192), item_data->name.c_str(), item_data->ename.c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
+		tmp_item.nameid = sd->state.autolootid[i];
+		sprintf(atcmd_output, msg_txt(sd,1192), createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
 		clif_displaymessage(fd, atcmd_output);
 		sd->state.autolooting = 1;
 		break;
@@ -6711,13 +6716,13 @@ ACMD_FUNC(autolootitem)
 				if (sd->state.autolootid[i] == 0)
 					continue;
 				item_data = item_db.find( sd->state.autolootid[i] );
-
+				tmp_item.nameid = sd->state.autolootid[i];
 				if( item_data == nullptr ){
 					ShowDebug("Non-existant item %d on autolootitem list (account_id: %d, char_id: %d)", sd->state.autolootid[i], sd->status.account_id, sd->status.char_id);
 					continue;
 				}
 
-				sprintf(atcmd_output, "'%s'/'%s' {%u}", item_data->name.c_str(), item_data->ename.c_str(), item_data->nameid);
+				sprintf(atcmd_output, " ⁕ %s / '%s' {%u}", createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -7770,23 +7775,24 @@ ACMD_FUNC(mobinfo)
 			drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
 		}
 #endif
-
+		struct item tmp_item = {};
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 
 			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1)
 				continue;
 
 			std::shared_ptr<item_data> id = item_db.find(mob->dropitem[i].nameid);
-
+			
 			if (id == nullptr)
 				continue;
 
+			tmp_item.nameid = id->nameid;
 			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
-
-			if (id->slots)
-				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
+			if (id->slots){
+				sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, (float)droprate / 100);
+			}
 			else
-				sprintf(atcmd_output2, " - %s  %02.02f%%", id->ename.c_str(), (float)droprate / 100);
+				sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
 			strcat(atcmd_output, atcmd_output2);
 			if (++j % 3 == 0) {
 				clif_displaymessage(fd, atcmd_output);
@@ -7811,10 +7817,10 @@ ACMD_FUNC(mobinfo)
 					continue;
 
 				std::shared_ptr<item_data> id = item_db.find(mob->mvpitem[i].nameid);
-
 				if (id == nullptr)
 					continue;
 
+				tmp_item.nameid = id->nameid;
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
 				mvppercent = (float)mob->mvpitem[i].rate * mvpremain / 10000.0f;
 				if(battle_config.item_drop_mvp_mode == 0) {
@@ -7824,14 +7830,14 @@ ACMD_FUNC(mobinfo)
 					j++;
 					if (j == 1) {
 						if (id->slots)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
 						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", id->ename.c_str(), mvppercent);
+							sprintf(atcmd_output2, " %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
 					} else {
 						if (id->slots)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+							sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
 						else
-							sprintf(atcmd_output2, " - %s  %02.02f%%", id->ename.c_str(), mvppercent);
+							sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}
@@ -8262,11 +8268,16 @@ ACMD_FUNC(iteminfo)
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
+
+	struct item tmp_item = {};
+
 	for (const auto &result : item_array) {
 		std::shared_ptr<item_data> item_data = result.second;
-
+		itemid = item_data->nameid;
+		tmp_item.nameid = itemid;
+		
 		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
-			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
+			createItemLink(tmp_item).c_str(),item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
 		);
@@ -8320,10 +8331,12 @@ ACMD_FUNC(whodrops)
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
+	struct item tmp_item = {};
 	for (const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
+		tmp_item.nameid = id->nameid;
 
-		sprintf(atcmd_output, msg_txt(sd,1285), id->ename.c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
+		sprintf(atcmd_output, msg_txt(sd,1285), createItemLink(tmp_item).c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
 		clif_displaymessage(fd, atcmd_output);
 
 		if (id->mob[0].chance == 0) {
@@ -9298,6 +9311,7 @@ ACMD_FUNC(itemlist)
 
 	count = 0; // total slots occupied
 	counter = 0; // total items found
+	struct item tmp_item = {};
 	for( i = 0; i < size; ++i ) {
 		const struct item* it = &items[i];
 
@@ -9305,10 +9319,10 @@ ACMD_FUNC(itemlist)
 			continue;
 
 		std::shared_ptr<item_data> itd = item_db.find(it->nameid);
-
 		if (itd == nullptr)
 			continue;
 
+		tmp_item.nameid = itd->nameid;
 		counter += it->amount;
 		count++;
 
@@ -9319,9 +9333,9 @@ ACMD_FUNC(itemlist)
 		}
 
 		if( it->refine )
-			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %u)", it->amount, itd->ename.c_str(), it->refine, itd->name.c_str(), it->nameid);
+			StringBuf_Printf(&buf, "⁕ %d %s %+d (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), it->refine, itd->name.c_str(), it->nameid);
 		else
-			StringBuf_Printf(&buf, "%d %s (%s, id: %u)", it->amount, itd->ename.c_str(), itd->name.c_str(), it->nameid);
+			StringBuf_Printf(&buf, "⁕ %d %s (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), itd->name.c_str(), it->nameid);
 
 		if( it->equip ) {
 			char equipstr[CHAT_SIZE_MAX];
@@ -9415,7 +9429,7 @@ ACMD_FUNC(itemlist)
 
 				if (card == nullptr)
 					continue;
-
+				tmp_item.nameid = card->nameid;
 				counter2++;
 
 				if( counter2 == 1 )
@@ -9424,7 +9438,7 @@ ACMD_FUNC(itemlist)
 				if( counter2 != 1 )
 					StringBuf_AppendStr(&buf, ", ");
 
-				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, card->ename.c_str(), card->nameid);
+				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, createItemLink(tmp_item).c_str(), card->nameid);
 			}
 
 			if( counter2 > 0 )
