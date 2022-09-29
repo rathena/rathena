@@ -27,7 +27,7 @@ prt_fild05,174,238,7	script	Veggie Enchanter#0	4_F_02,2,2,{
 		mes "Enchant or Reset requires 20,000z and 50 Jellopy! It's not bad, is it?";
 		next;
 		mes "[Veggie Enchanter]";
-		mes "Well... As you know, it's vegetable any way. So sometimes it can be broken.";
+		mes "Well... As you know, it's a vegetable any way. So sometimes it can be broken.";
 		close;
 	case 2:
 		.@equip_id = getequipid(EQI_HEAD_LOW);
@@ -152,11 +152,11 @@ prt_fild05,145,235,5	script	Emily#0	4_GEFFEN_03,4,4,{
 	}
 	if (isbegin_quest(12416) == 0) {
 		mes "[Emily]";
-		mes "My name is Emily. I was waiting for someone who adventures with me!";
+		mes "My name is Emily. I was waiting for someone who will go on adventures with me!";
 		next;
-		select("Who said I adventure with you?");
+		select("Who said I will adventure with you?");
 		mes "[Emily]";
-		mes "Well, come one. Don't be stern. Listen, you can decide after listening to my story. Of course, I can give you proper reward.";
+		mes "Well, come one. Don't be stern. Listen, you can decide after listening to my story. Of course, I can give you a proper reward.";
 		next;
 		if (select( "Proper Reward?", "I'm not interested." ) == 2) {
 			mes "[Emily]";
@@ -170,7 +170,7 @@ prt_fild05,145,235,5	script	Emily#0	4_GEFFEN_03,4,4,{
 		mes "It seems this Poring Village can be defeated by beginners just like us. It's just a wild guess though...";
 		next;
 		mes "[Emily]";
-		mes "Well, actually I cannot give you the reward officially through adventurer association. But we can separate incom after hunting.";
+		mes "Well, actually I cannot give you the reward officially through adventurer association. But we can separate the income after hunting.";
 		next;
 		select("But 50-50 sounds fair to me.");
 		mes "[Emily]";
@@ -301,7 +301,7 @@ OnInstanceInit:
 	close;
 
 OnStart:
-	npctalk "Emily: So.. is here Poring Village?";
+	npctalk "Emily: So.. is this Poring Village?";
 	sleep 2000;
 	npctalk "Emily: OK. Let's go!";
 	sleep 2000;
@@ -323,15 +323,15 @@ OnStart:
 	sleep 3000;
 	npctalk "Emily: I'm quite sure Poring gathered a lot of treasure somewhere.";
 	sleep 4000;
-	mapannounce 'map_begi$, "???: I can hear human's voice. Make them welcome, everybody.", bc_map, 0xFFFF00;
+	mapannounce 'map_begi$, "???: I can hear a human's voice. Make them welcome, everybody.", bc_map, 0xFFFF00;
 	sleep 4000;
 	npctalk "Emily: What is it saying?";
 	sleep 3000;
-	npctalk "Emily: It sounds someone is rushing to here... ";
+	npctalk "Emily: It sounds someone is rushing here... ";
 	sleep 2500;
 	mapannounce 'map_begi$, "???: Don't let them run! Take all valuable items from them!", bc_map, 0xFFFF00;
 	sleep 2500;
-	npctalk "Emily: Well... OK. They seems not freindly that much. Quick, hide!";
+	npctalk "Emily: Well... OK. They don't seem very friendly. Quick, hide!";
 	sleep 4000;
 	// disablenpc();
 	hideonnpc();	// hideonnpc instead of disablenpc (official) to display text on rAthena
@@ -417,7 +417,7 @@ OnMobDead:
 	sleep 2000;
 	mapannounce 'map_begi$, "Emily: But the Poring looks unique somehow. Be careful!", bc_map, 0xFFFF00;
 	sleep 2000;
-	mapannounce 'map_begi$, "Emily: Ah, may be force with you if you go near the blue light column.", bc_map, 0xFFFF00;
+	mapannounce 'map_begi$, "Emily: Ah, there is a unique force if you go near the column of blue light.", bc_map, 0xFFFF00;
 	sleep 2000;
 	monster 'map_begi$,132,103,"--en--","MD_GOLDRING",1, instance_npcname("poring_village_1") + "::OnBossDead";
 	end;
@@ -617,13 +617,13 @@ OnMobDead:
 	sleep 2000;
 	mapannounce 'map_begi$, "Emily: What? Who are you?", bc_map, 0xFFFF00;
 	sleep 2000;
-	mapannounce 'map_begi$, "King Poring: I'm a boss of this Poring Village. Sorry for the late introduction.", bc_map, 0xFFFF;
+	mapannounce 'map_begi$, "King Poring: I am the leader of this Poring Village. Sorry for the late introduction.", bc_map, 0xFFFF;
 	sleep 2000;
-	mapannounce 'map_begi$, "King Poring: Maybe there is some misunderstand on our print flyers. This Village is so poor and has nothing valuable.", bc_map, 0xFFFF;
+	mapannounce 'map_begi$, "King Poring: Maybe there is some misunderstanding on our flyers. This village is so poor and has nothing valuable.", bc_map, 0xFFFF;
 	sleep 2000;
 	mapannounce 'map_begi$, "Emily: It's for me to judge after looking around more....", bc_map, 0xFFFF00;
 	sleep 2000;
-	mapannounce 'map_begi$, "King Poring: Ugh.... I don't like fight but there is no choice.", bc_map, 0xFFFF;
+	mapannounce 'map_begi$, "King Poring: Ugh.... I don't like fighting but there is no choice.", bc_map, 0xFFFF;
 	sleep 2000;
 	monster 'map_begi$,182,194,"--en--","PORING",10;
 	for ( .@i = 0; .@i < 10; ++.@i ) {
@@ -665,11 +665,11 @@ OnTouch:
 
 1@begi,199,186,5	script	#gift	4_GEFFEN_03,{
 	mes "[Emily]";
-	mes "You can have all item if you find any item in this dungeon. I already have some.";
+	mes "You can have all of the items you find in this dungeon. I already have some.";
 	next;
 	if (isbegin_quest(12418) == 1) {
 		mes "[Emily]";
-		mes "Ah, I found same items now. Let me give you one of them. Just to celebrate your first visit!";
+		mes "Ah, I found some items. Let me give you one of them. Just to celebrate your first visit!";
 		next;
 		if (rand(100) < 50)
 			getitem 19238,1;	// PoringTownOnion
@@ -678,7 +678,7 @@ OnTouch:
 		completequest 12418;
 	}
 	mes "[Emily]";
-	mes "I don't need this novice box. You can take it. Then, let's go out side!";
+	mes "I don't need this novice box. You can take it. Now, let's go out side!";
 	close2;
 	getitem 23302,1;	// PoringsPreciousBox
 	warp "prt_fild05",149,238;
