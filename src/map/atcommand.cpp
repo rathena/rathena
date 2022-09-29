@@ -6722,7 +6722,7 @@ ACMD_FUNC(autolootitem)
 					continue;
 				}
 
-				sprintf(atcmd_output, " ⁕ %s / '%s' {%u}", createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid);
+				sprintf(atcmd_output, "⠀⁕ %s / '%s' {%u}", createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
