@@ -10870,8 +10870,10 @@ If <char id> is specified, the specified player is used rather than the attached
 
 Generates an item link string for an item that can be used for npctalk, message,
 dispbottom, and broadcast commands. The result is a clickable-item name just
-like SHIFT+Click from a player's inventory/cart/equipment window. In the mes
-command is still usable but the item name is not clickable.
+like SHIFT+Click from a player's inventory/cart/equipment window. This command can be
+used with mes but the item name will not be clickable. You should use the normal client
+tags for displaying item links in mes dialogues, if the client supports them. 
+
 
 Examples:
 
