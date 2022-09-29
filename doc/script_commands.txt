@@ -10877,8 +10877,8 @@ tags for displaying item links in mes dialogues, if the client supports them.
 
 Examples:
 
-	npctalk "Knife [3] : "+itemlink(1202)+"";
-	npctalk "+16 Knife [3] : "+itemlink(1202,16)+"";
+	npctalk "Knife [3] : "+itemlink(1201)+"";
+	npctalk "+16 Knife [3] : "+itemlink(1201,16)+"";
 	npctalk "+13 BXB Bapho+VR+EA2+EA1 : "+itemlink(18110,13,4147,4407,4833,4832)+"";
 	setarray .@opt_ids[0],RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATTMPOWER,0,0;
 	setarray .@opt_values[0],3,5,20,0,0;
