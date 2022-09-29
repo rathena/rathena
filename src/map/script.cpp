@@ -26540,6 +26540,7 @@ BUILDIN_FUNC(itemlink)
 	
 	if( !item_db.exists( item.nameid ) ){
 		ShowError( "Itemlink: Item ID %u does not exists.\n", item.nameid );
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -26552,6 +26553,7 @@ BUILDIN_FUNC(itemlink)
 
 #if PACKETVER >= 20150225
 	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == SCRIPT_CMD_FAILURE ) {
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 #endif
