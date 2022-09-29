@@ -26537,6 +26537,11 @@ BUILDIN_FUNC(itemlink)
 {
 	struct item item = {};
 	item.nameid = script_getnum(st, 2);
+	
+	if( !item_db.exists( item.nameid ) ){
+		ShowError( "Itemlink: Item ID %u does not exists.\n", item.nameid );
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	FETCH(3, item.refine);
 	FETCH(4, item.card[0]);
