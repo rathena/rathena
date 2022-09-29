@@ -8336,7 +8336,7 @@ ACMD_FUNC(whodrops)
 		std::shared_ptr<item_data> id = result.second;
 		tmp_item.nameid = id->nameid;
 
-		sprintf(atcmd_output, msg_txt(sd,1285), createItemLink(tmp_item).c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
+		sprintf(atcmd_output, msg_txt(sd,1285), createItemLink(tmp_item).c_str(), id->nameid); // Item: %s (ID: %u)
 		clif_displaymessage(fd, atcmd_output);
 
 		if (id->mob[0].chance == 0) {
