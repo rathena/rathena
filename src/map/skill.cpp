@@ -8772,6 +8772,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		struct status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
 
+		if (skill_id == LG_OVERBRAND)
+			clif_skill_poseffect(src, skill_id, skill_lv, src->x, src->y, tick);
+
 		if (skill_id == SR_HOWLINGOFLION)
 			starget = splash_target(src);
 		if (skill_id == SJ_NEWMOONKICK) {
