@@ -4009,8 +4009,12 @@ ACMD_FUNC(idsearch)
 
 	for(const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
-		tmp_item.nameid = id->nameid;
-		sprintf(atcmd_output, msg_txt(sd,78), createItemLink(tmp_item).c_str(), id->nameid); // %s: %u
+		if (!battle_config.feature_itemlink)
+			sprintf(atcmd_output, msg_txt(sd,78), id->ename.c_str(), id->nameid); // %s: %u
+		else{
+			tmp_item.nameid = id->nameid;
+			sprintf(atcmd_output, msg_txt(sd,78), createItemLink(tmp_item).c_str(), id->nameid); // %s: %u
+		}
 		clif_displaymessage(fd, atcmd_output);
 	}
 	sprintf(atcmd_output, msg_txt(sd,79), match); // It is %d affair above.
@@ -6682,8 +6686,12 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = item_data->nameid; // Autoloot Activated
-		tmp_item.nameid = sd->state.autolootid[i];
-		sprintf(atcmd_output, msg_txt(sd,1192), createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
+		if (!battle_config.feature_itemlink)
+			sprintf(atcmd_output, msg_txt(sd,1192), item_data->name.c_str(), item_data->ename.c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
+		else{
+			tmp_item.nameid = sd->state.autolootid[i];
+			sprintf(atcmd_output, msg_txt(sd,1192), createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
+		}
 		clif_displaymessage(fd, atcmd_output);
 		sd->state.autolooting = 1;
 		break;
@@ -6694,8 +6702,12 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = 0;
-		tmp_item.nameid = sd->state.autolootid[i];
-		sprintf(atcmd_output, msg_txt(sd,1194), createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
+		if (!battle_config.feature_itemlink)
+			sprintf(atcmd_output, msg_txt(sd,1194), item_data->name.c_str(), item_data->ename.c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
+		else{
+			tmp_item.nameid = sd->state.autolootid[i];
+			sprintf(atcmd_output, msg_txt(sd,1194), createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
+		}
 		clif_displaymessage(fd, atcmd_output);
 		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] != 0);
 		if (i == AUTOLOOTITEM_SIZE) {
@@ -6717,13 +6729,16 @@ ACMD_FUNC(autolootitem)
 				if (sd->state.autolootid[i] == 0)
 					continue;
 				item_data = item_db.find( sd->state.autolootid[i] );
-				tmp_item.nameid = sd->state.autolootid[i];
 				if( item_data == nullptr ){
 					ShowDebug("Non-existant item %d on autolootitem list (account_id: %d, char_id: %d)", sd->state.autolootid[i], sd->status.account_id, sd->status.char_id);
 					continue;
 				}
-
-				sprintf(atcmd_output, "⠀⁕ %s / '%s' {%u}", createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid);
+				if (!battle_config.feature_itemlink)
+					sprintf(atcmd_output, "⠀⁕ %s / '%s' {%u}", item_data->name.c_str(), item_data->ename.c_str(), item_data->nameid);
+				else{
+					tmp_item.nameid = sd->state.autolootid[i];
+					sprintf(atcmd_output, "⠀⁕ %s / '%s' {%u}", createItemLink(tmp_item).c_str(), item_data->ename.c_str(), item_data->nameid);
+				}
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -7789,15 +7804,29 @@ ACMD_FUNC(mobinfo)
 
 			tmp_item.nameid = id->nameid;
 			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
-			if (id->slots){
-				sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, (float)droprate / 100);
-			}
-			else
-				sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
-			strcat(atcmd_output, atcmd_output2);
-			if (++j % 3 == 0) {
-				clif_displaymessage(fd, atcmd_output);
+
+			if (!battle_config.feature_itemlink){
+				if (id->slots)
+					sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
+				else
+					sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", id->ename.c_str(), (float)droprate / 100);
+				strcat(atcmd_output, atcmd_output2);
+				if (++j % 3 == 0) {
+					clif_displaymessage(fd, atcmd_output);
 				strcpy(atcmd_output, " ");
+				}
+			}else{
+
+				if (id->slots){
+					sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, (float)droprate / 100);
+				}
+				else
+					sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
+				strcat(atcmd_output, atcmd_output2);
+				if (++j % 3 == 0) {
+					clif_displaymessage(fd, atcmd_output);
+					strcpy(atcmd_output, " ");
+				}
 			}
 		}
 		if (j == 0)
@@ -7829,16 +7858,30 @@ ACMD_FUNC(mobinfo)
 				}
 				if (mvppercent > 0) {
 					j++;
-					if (j == 1) {
-						if (id->slots)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
-						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
-					} else {
-						if (id->slots)
-							sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
-						else
-							sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+					if (!battle_config.feature_itemlink){
+						if (j == 1) {
+							if (id->slots)
+								sprintf(atcmd_output2, " %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+							else
+								sprintf(atcmd_output2, " %s  %02.02f%%", id->ename.c_str(), mvppercent);
+						} else {
+							if (id->slots)
+								sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+							else
+								sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", id->ename.c_str(), mvppercent);
+						}
+					}else{
+						if (j == 1) {
+							if (id->slots)
+								sprintf(atcmd_output2, " %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
+							else
+								sprintf(atcmd_output2, " %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+						} else {
+							if (id->slots)
+								sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
+							else
+								sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+						}
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}
@@ -8276,12 +8319,18 @@ ACMD_FUNC(iteminfo)
 		std::shared_ptr<item_data> item_data = result.second;
 		itemid = item_data->nameid;
 		tmp_item.nameid = itemid;
-		
-		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
-			createItemLink(tmp_item).c_str(),item_data->nameid,
+		if (!battle_config.feature_itemlink){
+			sprintf(atcmd_output,"Item: '%s' ⁕ '%s'[%d] (%u) Type: %s | Extra Effect: %s", // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
+			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
-			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
-		);
+			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279)); // None / With script
+		}else{
+			sprintf(atcmd_output, msg_txt(sd,1277), // Item: %s ⁕ (ID: %u) Type: %s | Extra Effect: %s
+				createItemLink(tmp_item).c_str(),item_data->nameid,
+				(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
+				(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
+			);
+		}
 		clif_displaymessage(fd, atcmd_output);
 
 		sprintf(atcmd_output, msg_txt(sd,1280), item_data->value_buy, item_data->value_sell, item_data->weight/10. ); // NPC Buy:%dz, Sell:%dz | Weight: %.1f

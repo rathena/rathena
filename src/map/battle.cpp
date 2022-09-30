@@ -10269,6 +10269,7 @@ static const struct _battle_data {
 
 	{ "feature.barter",                     &battle_config.feature_barter,                  1,      0,      1,              },
 	{ "feature.barter_extended",            &battle_config.feature_barter_extended,         1,      0,      1,              },
+	{ "feature.itemlink",            		&battle_config.feature_itemlink,         		1,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
