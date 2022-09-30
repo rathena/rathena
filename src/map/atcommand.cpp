@@ -7821,15 +7821,14 @@ ACMD_FUNC(mobinfo)
 				if (++j % 3 == 0) {
 					clif_displaymessage(fd, atcmd_output);
 				strcpy(atcmd_output, " ");
-				}else{
+				} else {
 
 					if (id->slots){
 						if (!battle_config.feature_itemlink)
 							sprintf(atcmd_output2, " ⁕ %s [%i] %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
 						else
 							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
-					}
-					else{
+					} else {
 						if (!battle_config.feature_itemlink)
 							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), (float)droprate / 100);
 						else
