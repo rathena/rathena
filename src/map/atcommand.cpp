@@ -7805,29 +7805,42 @@ ACMD_FUNC(mobinfo)
 			tmp_item.nameid = id->nameid;
 			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
 
-			if (!battle_config.feature_itemlink){
-				if (id->slots)
-					sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
-				else
-					sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", id->ename.c_str(), (float)droprate / 100);
+				if (id->slots) {
+					if (!battle_config.feature_itemlink)
+						sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
+					else
+						sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
+				}
+				else {
+					if (!battle_config.feature_itemlink)
+						sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", id->ename.c_str(), (float)droprate / 100);
+					else
+						sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
+				}
 				strcat(atcmd_output, atcmd_output2);
 				if (++j % 3 == 0) {
 					clif_displaymessage(fd, atcmd_output);
 				strcpy(atcmd_output, " ");
-				}
-			}else{
+				}else{
 
-				if (id->slots){
-					sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, (float)droprate / 100);
+					if (id->slots){
+						if (!battle_config.feature_itemlink)
+							sprintf(atcmd_output2, " ⁕ %s [%i] %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
+						else
+							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
+					}
+					else{
+						if (!battle_config.feature_itemlink)
+							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), (float)droprate / 100);
+						else
+							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
+					}
+					strcat(atcmd_output, atcmd_output2);
+					if (++j % 3 == 0) {
+						clif_displaymessage(fd, atcmd_output);
+						strcpy(atcmd_output, " ");
+					}
 				}
-				else
-					sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
-				strcat(atcmd_output, atcmd_output2);
-				if (++j % 3 == 0) {
-					clif_displaymessage(fd, atcmd_output);
-					strcpy(atcmd_output, " ");
-				}
-			}
 		}
 		if (j == 0)
 			clif_displaymessage(fd, msg_txt(sd,1246)); // This monster has no drops.
@@ -7858,31 +7871,31 @@ ACMD_FUNC(mobinfo)
 				}
 				if (mvppercent > 0) {
 					j++;
-					if (!battle_config.feature_itemlink){
 						if (j == 1) {
-							if (id->slots)
-								sprintf(atcmd_output2, " %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
-							else
-								sprintf(atcmd_output2, " %s  %02.02f%%", id->ename.c_str(), mvppercent);
+							if (id->slots){
+								if (!battle_config.feature_itemlink)
+									sprintf(atcmd_output2, " %s[%d] %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+								else
+									sprintf(atcmd_output2, " %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+							} else {
+									if (!battle_config.feature_itemlink)
+										sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), mvppercent);
+									else
+										sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+							}
 						} else {
-							if (id->slots)
-								sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
-							else
-								sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", id->ename.c_str(), mvppercent);
+								if (id->slots){
+									if (!battle_config.feature_itemlink)
+										sprintf(atcmd_output2, " %s[%d] %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+									else
+										sprintf(atcmd_output2, " %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);							
+								} else {
+										if (!battle_config.feature_itemlink)
+											sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), mvppercent);
+										else
+											sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+								}
 						}
-					}else{
-						if (j == 1) {
-							if (id->slots)
-								sprintf(atcmd_output2, " %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
-							else
-								sprintf(atcmd_output2, " %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
-						} else {
-							if (id->slots)
-								sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", createItemLink(tmp_item).c_str(), id->slots, mvppercent);
-							else
-								sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
-						}
-					}
 					strcat(atcmd_output, atcmd_output2);
 				}
 			}
@@ -8319,18 +8332,18 @@ ACMD_FUNC(iteminfo)
 		std::shared_ptr<item_data> item_data = result.second;
 		itemid = item_data->nameid;
 		tmp_item.nameid = itemid;
-		if (!battle_config.feature_itemlink){
+		if (!battle_config.feature_itemlink)
 			sprintf(atcmd_output,"Item: '%s' ⁕ '%s'[%d] (%u) Type: %s | Extra Effect: %s", // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
 			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279)); // None / With script
-		}else{
+
+		else
 			sprintf(atcmd_output, msg_txt(sd,1277), // Item: %s ⁕ (ID: %u) Type: %s | Extra Effect: %s
-				createItemLink(tmp_item).c_str(),item_data->nameid,
-				(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
-				(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
-			);
-		}
+			createItemLink(tmp_item).c_str(),item_data->nameid,
+			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
+			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279)); // None / With script
+		
 		clif_displaymessage(fd, atcmd_output);
 
 		sprintf(atcmd_output, msg_txt(sd,1280), item_data->value_buy, item_data->value_sell, item_data->weight/10. ); // NPC Buy:%dz, Sell:%dz | Weight: %.1f
