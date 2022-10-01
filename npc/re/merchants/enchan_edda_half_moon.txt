@@ -183,7 +183,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 		}
 		.@itemid = getequipid(.@part);
 		if (.@itemid != 28387) {
-			mes "Uh, wait! That's not the ^0000cd<ITEM>"+getitemname(28387)+"<INFO>"+28387+"</INFO></ITEM>^000000, is it? Can you check it again?
+			mes "Uh, wait! That's not the ^0000cd<ITEM>"+getitemname(28387)+"<INFO>"+28387+"</INFO></ITEM>^000000, is it? Can you check it again?";
 			close;
 		}
 		.@card = getequipcardid(.@part,3);
