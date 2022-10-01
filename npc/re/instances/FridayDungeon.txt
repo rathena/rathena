@@ -270,13 +270,15 @@ OnInstanceInit:
 			next;
 			mes "Several craft stones fall from his body. They were probably collected while exploring this place.";
 			close2;
-			if ( 'hard == 1 )
-				.@num = rand(6+getmapusers('map$),8+getmapusers('map$));	// Reward amount scales with player count
-			else
-				.@num = rand(4+getmapusers('map$),6+getmapusers('map$));	// Reward amount scales with player count
-				for ( .@i = 0; .@i < .@num; .@i++ )
-					makeitem 25235,1, 'map$, rand(181,183), rand(221,224);
-			'freestones=1;
+			if('freestones==0) {
+				if ( 'hard == 1 )
+					.@num = rand(7,9);
+				else
+					.@num = rand(5,7);
+					for ( .@i = 0; .@i < .@num; .@i++ )
+						makeitem 25235,1, 'map$, rand(181,183), rand(221,224);
+				'freestones=1;
+			}
 		} else
 			close;
 	}
@@ -348,9 +350,9 @@ OnInstanceInit:
 OnTimer500:
 	'chestname$ = strnpcinfo(2);
 	if ( 'hard == 1 )
-		.@num = rand(6+getmapusers('map$),8+getmapusers('map$));	// Reward amount scales with player count
+		.@num = rand(7,9);
 	else
-		.@num = rand(4+getmapusers('map$),6+getmapusers('map$));	// Reward amount scales with player count
+		.@num = rand(5,7);
 	if ( 'chestname$ == "fd_box1" ) {
 		for ( .@i = 0; .@i < .@num; .@i++ )
 			makeitem 25235,1, 'map$, rand(210,214), rand(210,214);
