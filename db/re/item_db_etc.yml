@@ -11476,8 +11476,6 @@ Body:
       bonus bDef,20;
       bonus2 bSubSize,Size_Medium,25;
       bonus2 bSubSize,Size_Large,25;
-      bonus2 bMagicSubSize,Size_Medium,25;
-      bonus2 bMagicSubSize,Size_Large,25;
   - Id: 4610
     AegisName: Sarah_Card
     Name: Sarah Card
@@ -12029,8 +12027,6 @@ Body:
     Script: |
       bonus2 bSubSize,Size_Small,5;
       bonus2 bSubSize,Size_Medium,5;
-      bonus2 bMagicSubSize,Size_Small,5;
-      bonus2 bMagicSubSize,Size_Medium,5;
   - Id: 4661
     AegisName: Basilisk2_Card
     Name: Charge Basilisk Card
@@ -12045,9 +12041,6 @@ Body:
       bonus2 bSubSize,Size_Medium,20;
       bonus2 bSubSize,Size_Large,20;
       bonus2 bSubSize,Size_Small,-15;
-      bonus2 bMagicSubSize,Size_Medium,20;
-      bonus2 bMagicSubSize,Size_Large,20;
-      bonus2 bMagicSubSize,Size_Small,-15;
   - Id: 4662
     AegisName: Big_Eggring_Card
     Name: Big Eggring Card
@@ -41041,9 +41034,7 @@ Body:
     Script: |
       bonus bMdef,10;
       bonus2 bSubSize,Size_Medium,25;
-      bonus2 bMagicSubSize,Size_Medium,25;
       bonus2 bSubSize,Size_Large,25;
-      bonus2 bMagicSubSize,Size_Large,25;
   - Id: 27386
     AegisName: C_Raydric_Card
     Name: Cursed Raydric Card
@@ -43792,7 +43783,6 @@ Body:
       bonus2 bSubEle,Ele_All,5;
       if (.@r>=7) {
          bonus2 bSubSize,Size_All,5;
-         bonus2 bMagicSubSize,Size_All,5;
          if (.@r>=9) {
             bonus2 bSubRace,RC_All,5;
             bonus2 bSubRace,RC_Player_Human,-5;
@@ -48172,7 +48162,6 @@ Body:
       bonus2 bMagicSubDefEle,Ele_Earth,15;
       bonus2 bSubRace,RC_Insect,15;
       bonus2 bWeaponSubSize,Size_Small,15;
-      bonus2 bMagicSubSize,Size_Small,15;
   - Id: 300374
     AegisName: aegis_300374
     Name: Hallucigenia Card
@@ -48287,7 +48276,6 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,-15;
       .@rate = (getrefine() < 12) ? -25 : 25;
       bonus2 bSubSize,Size_All,.@rate;
-      bonus2 bMagicSubSize,Size_All,.@rate;
       if (getequiparmorlv() == 2) {
         bonus bRes,50;
         bonus bMRes,50;
@@ -48881,7 +48869,6 @@ Body:
       bonus2 bSubClass,Class_Boss,7;
       if (.@r>=9) {
          bonus2 bSubSize,Size_All,7;
-         bonus2 bMagicSubSize,Size_All,7;
          if (.@r>=11) {
             bonus2 bSubRace,RC_All,7;
             bonus2 bSubRace,RC_Player_Human,-7;
@@ -52551,7 +52538,6 @@ Body:
          bonus2 bSubEle,Ele_All,3;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,3;
-            bonus2 bMagicSubSize,Size_All,3;
             if (.@r>=11) {
                bonus2 bSubRace,RC_All,3;
                bonus2 bSubRace,RC_Player_Human,-3;
@@ -52572,7 +52558,6 @@ Body:
          bonus2 bSubEle,Ele_All,5;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,5;
-            bonus2 bMagicSubSize,Size_All,5;
             if (.@r>=11) {
                bonus2 bSubRace,RC_All,5;
                bonus2 bSubRace,RC_Player_Human,-5;
@@ -52593,7 +52578,6 @@ Body:
          bonus2 bSubEle,Ele_All,7;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,7;
-            bonus2 bMagicSubSize,Size_All,7;
             if (.@r>=11) {
                bonus2 bSubRace,RC_All,7;
                bonus2 bSubRace,RC_Player_Human,-7;
@@ -56962,7 +56946,6 @@ Body:
          bonus2 bSubEle,Ele_All,7;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,7;
-            bonus2 bMagicSubSize,Size_All,7;
             if (.@r>=11) {
                bonus2 bSubRace,RC_All,7;
                bonus2 bSubRace,RC_Player_Human,-7;
