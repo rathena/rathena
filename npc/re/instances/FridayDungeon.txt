@@ -395,7 +395,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 		close;
 	}
 	mes "[Amateur Collector]";
-	mes "If you bring me a "+F_ItemLink(25235)+", I can enchant a wonderful effect on your accessory!";
+	mes "If you bring me a <ITEM>"+getitemname(25235)+"<INFO>25235</INFO></ITEM>, I can enchant a wonderful effect on your accessory!";
 	next;
 	switch(select("What can you do with the Crafting Stone?:Accessory Enchantment:Reset Enchant")) {
 		case 1:
@@ -413,7 +413,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 					mes "By using the Craft Stone, I can enchant one of your accessories with abilities.";
 					next;
 					mes "[Amateur Collector]";
-					mes "I need 10 x "+F_ItemLink(25235)+" and 100,000 Zeny.";
+					mes "I need 10 x <ITEM>"+getitemname(25235)+"<INFO>25235</INFO></ITEM> and 100,000 Zeny.";
 					mes "There is no failure in the enchantment process.";
 					next;
 					mes "[Amateur Collector]";
@@ -446,14 +446,14 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 			}
 			if(compare(.list$,","+.@equip_id+",")==0) {
 				mes "[Amateur Collector]";
-				mes "I cannot enchant this "+F_ItemLink(.@equip_id)+" accessory.";
+				mes "I cannot enchant this <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> accessory.";
 				close;
 			}
 			//Royal Ring Enchantment
 			if(.@equip_id==28483) {
 				if(.@equip_card[2] != 0) {
 					mes "[Amateur Collector]";
-					mes "The "+F_ItemLink(.@equip_id)+" already has maximum enchantment.";
+					mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> already has maximum enchantment.";
 					mes "I cannot work on this any further.";
 					close;
 				}
@@ -483,14 +483,14 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 				}
 				if(.@pos==2) {
 					mes "[Amateur Collector]";
-					mes "Are you sure to enhance the "+F_ItemLink(.@equip_id)+"?";
+					mes "Are you sure to enhance the <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>?";
 					mes "^0000FFThere is a no chance of failure^000000.";
 					next;
 					if(select("Yes, please proceed:Cancel")==2) close;
 				}
 				if(countitem(25235)<10) {
 					mes "[Amateur Collector]";
-					mes "Please bring me 10 x "+F_ItemLink(25235);
+					mes "Please bring me 10 x <ITEM>"+getitemname(25235)+"<INFO>25235</INFO></ITEM>";
 					close;
 				}
 				if(Zeny < 100000) {
@@ -503,24 +503,24 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 				delequip .@slot;
 				specialeffect2 EF_REPAIRWEAPON;
 				mes "[Amateur Collector]";
-				mes "The "+F_ItemLink(.@equip_id)+" has been enchanted!!";
+				mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> has been enchanted!!";
 				getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
 			//Normal Accessory Enchantment
 			} else {
 				if(.@equip_card[3] != 0) {
 					mes "[Amateur Collector]";
-					mes "The "+F_ItemLink(.@equip_id)+" already has an enchant.";
+					mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> already has an enchant.";
 					mes "I cannot work on this any further.";
 					close;
 				}
 				mes "[Amateur Collector]";
-				mes "Are you sure to enhance the "+F_ItemLink(.@equip_id)+"?";
+				mes "Are you sure to enhance the <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>?";
 				mes "^0000FFThere is a no chance of failure^000000.";
 				next;
 				if(select("Yes, please proceed:Cancel")==2) close;
 				if(countitem(25235)<10) {
 					mes "[Amateur Collector]";
-					mes "Please bring me 10 x "+F_ItemLink(25235);
+					mes "Please bring me 10 x <ITEM>"+getitemname(25235)+"<INFO>25235</INFO></ITEM>";
 					close;
 				}
 				if(Zeny < 100000) {
@@ -534,7 +534,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 				.@enchant = enchant(1);
 				specialeffect2 EF_REPAIRWEAPON;
 				mes "[Amateur Collector]";
-				mes "The "+F_ItemLink(.@equip_id)+" has been enhanted with "+F_ItemLink(.@enchant)+".";
+				mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> has been enhanted with <ITEM>"+getitemname(.@enchant)+"<INFO>"+.@enchant+"</INFO></ITEM>.";
 				getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@enchant;
 			}
 			close;
@@ -551,7 +551,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 			}
 			if(compare(.list$,","+.@equip_id+",")==0) {
 				mes "[Amateur Collector]";
-				mes "I cannot reset this "+F_ItemLink(.@equip_id)+" accessory.";
+				mes "I cannot reset this <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> accessory.";
 				close;
 			}
 			if(.@equip_id==28483) {
@@ -563,18 +563,18 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 			}
 			if(.@equip_card[.@pos] == 0) {
 				mes "[Amateur Collector]";
-				mes "The "+F_ItemLink(.@equip_id)+" is not at its maximum enchantment.";
+				mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> is not at its maximum enchantment.";
 				mes "I cannot reset this accessory.";
 				close;
 			}
 			mes "[Amateur Collector]";
-			mes "All enchanted effects will be removed from the "+F_ItemLink(.@equip_id)+"?";
+			mes "All enchanted effects will be removed from the <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>?";
 			mes "^FF0000There is a "+.@success+"% chance of success. The accessory will be destroyed if the reset fails!^000000";
 			next;
 			if(select("I'll be back later:Please proceed")==1) close;
 			if(countitem(25235)<10) {
 				mes "[Amateur Collector]";
-				mes "Please bring me 10 x "+F_ItemLink(25235);
+				mes "Please bring me 10 x <ITEM>"+getitemname(25235)+"<INFO>25235</INFO></ITEM>";
 				close;
 			}
 			if(Zeny < 100000) {
@@ -595,7 +595,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 			specialeffect2 EF_REPAIRWEAPON;
 			mes "[Amateur Collector]";
 			mes "I have succeeded.";
-			mes "The "+F_ItemLink(.@equip_id)+" has been initialized.";
+			mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> has been initialized.";
 			getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],0,0;
 			close;
 	}
