@@ -5812,6 +5812,15 @@
 	export_constant(IG_S_SPELLCASTER_SHOES);
 	export_constant(IG_S_ABSORB_WEAPON);
 	export_constant(IG_S_ABSORB_SHIELD);
+	export_constant(IG_BS_ITEM_M_S_57);
+	export_constant(IG_BS_ITEM_M_S_58);
+	export_constant(IG_BS_ITEM_M_S_59);
+	export_constant(IG_MONTHLY_PACKAGE_1);
+	export_constant(IG_MONTHLY_PACKAGE_2);
+	export_constant(IG_MONTHLY_PACKAGE_3);
+	export_constant(IG_MONTHLY_BUFF_PACKAGE);
+	export_constant(IG_MONTHLY_BATTLE_PACKAGE);
+	export_constant(IG_MD_AIRBOAT_EXPBOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

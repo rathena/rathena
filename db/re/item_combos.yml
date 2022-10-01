@@ -26304,20 +26304,20 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_311426    # 311426
-          - aegis_311425    # 311425
+          - Smatk_Robe    # 311426
+          - Spl_Robe_D    # 311425
     Script: |
       bonus bSMatk,5;
       bonus bSpl,3;
   - Combos:
       - Combo:
-          - aegis_311426    # 311426
+          - Smatk_Robe    # 311426
           - Magic_Top    # 310664
       - Combo:
-          - aegis_311426    # 311426
+          - Smatk_Robe    # 311426
           - Magic_Middle    # 310665
       - Combo:
-          - aegis_311426    # 311426
+          - Smatk_Robe    # 311426
           - Magic_Bottom    # 310666
     Script: |
       bonus bSMatk,1;
@@ -26325,102 +26325,102 @@ Body:
   - Combos:
       - Combo:
           - Sura_Robe    # 29426
-          - aegis_311427    # 311427
+          - Sura_Top3    # 311427
       - Combo:
           - Sura_Robe    # 29426
-          - aegis_311428    # 311428
+          - Sura_Middle3    # 311428
     Script: |
       bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20;
   - Combos:
       - Combo:
           - Sura_Robe2    # 29427
-          - aegis_311427    # 311427
+          - Sura_Top3    # 311427
       - Combo:
           - Sura_Robe2    # 29427
-          - aegis_311429    # 311429
+          - Sura_Bottom3    # 311429
     Script: |
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
   - Combos:
       - Combo:
-          - aegis_311428    # 311428
+          - Sura_Middle3    # 311428
           - Sura_Robe2    # 29427
     Script: |
       bonus2 bSkillAtk,"SR_TIGERCANNON",15;
   - Combos:
       - Combo:
-          - aegis_311429    # 311429
+          - Sura_Bottom3    # 311429
           - Sura_Robe    # 29426
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
   - Combos:
       - Combo:
-          - aegis_311430    # 311430
+          - Mechanic_Top3    # 311430
           - Mechanic_Robe    # 29484
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",15;
   - Combos:
       - Combo:
-          - aegis_311430    # 311430
+          - Mechanic_Top3    # 311430
           - Mechanic_Robe2    # 310007
     Script: |
       bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
   - Combos:
       - Combo:
-          - aegis_311431    # 311431
+          - Mechanic_Middle3    # 311431
           - Mechanic_Robe    # 29484
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
   - Combos:
       - Combo:
-          - aegis_311431    # 311431
+          - Mechanic_Middle3    # 311431
           - Mechanic_Robe2    # 310007
     Script: |
       bonus2 bSkillAtk,"NC_ARMSCANNON",15;
   - Combos:
       - Combo:
-          - aegis_311432    # 311432
+          - Mechanic_Bottom3    # 311432
           - Mechanic_Robe    # 29484
     Script: |
       bonus2 bSkillAtk,"NC_POWERSWING",15;
   - Combos:
       - Combo:
-          - aegis_311432    # 311432
+          - Mechanic_Bottom3    # 311432
           - Mechanic_Robe2    # 310007
     Script: |
       bonus2 bSkillAtk,"NC_VULCANARM",15;
   - Combos:
       - Combo:
-          - aegis_311433    # 311433
+          - Guillcross_Top3    # 311433
           - Guillotinecross_Robe    # 29524
     Script: |
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
   - Combos:
       - Combo:
-          - aegis_311433    # 311433
+          - Guillcross_Top3    # 311433
           - Guillotinecross_Robe2    # 310188
     Script: |
       bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
   - Combos:
       - Combo:
-          - aegis_311434    # 311434
+          - Guillcross_Middle3    # 311434
           - Guillotinecross_Robe    # 29524
     Script: |
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
   - Combos:
       - Combo:
-          - aegis_311434    # 311434
+          - Guillcross_Middle3    # 311434
           - Guillotinecross_Robe2    # 310188
     Script: |
       bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
   - Combos:
       - Combo:
-          - aegis_311435    # 311435
+          - Guillcross_Bottom3    # 311435
           - Guillotinecross_Robe    # 29524
     Script: |
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
   - Combos:
       - Combo:
-          - aegis_311435    # 311435
+          - Guillcross_Bottom3    # 311435
           - Guillotinecross_Robe2    # 310188
     Script: |
       bonus2 bAddRace,RC_All,15;
@@ -27857,3 +27857,93 @@ Body:
       bonus2 bSubRace,RC_Player_Human,1+2*(.@r/3);
       bonus2 bSubRace,RC_Player_Doram,1+2*(.@r/3);
       bonus bDelayrate,-1-.@r/3;
+  - Combos:
+      - Combo:
+          - Phreeoni_Wing_Suits
+          - Phreeoni_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bLongAtkRate,3*(.@r/2);
+      bonus2 bAddClass,Class_Boss,8*(.@r/3);
+  - Combos:
+      - Combo:
+          - Phreeoni_Wing_Suits
+          - Min_Phreeoni_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bPAtk,10;
+      bonus bCRate,5;
+      bonus bCritAtkRate,4*(.@r/3);
+  - Combos:
+      - Combo:
+          - Beast_Leather_Shoes
+          - Moonlight_Flower_Card
+    Script: |
+      bonus bFixedCast,-200;
+      bonus bSMatk,15;
+  - Combos:
+      - Combo:
+          - Beast_Leather_Shoes
+          - Sealed_M_Flower_Card
+    Script: |
+      bonus bFixedCast,-200;
+  - Combos:
+      - Combo:
+          - Beast_Leather_Shoes
+          - AngerMoonlight_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus2 bMagicAtkEle,Ele_All,4*(.@r/3);
+  - Combos:
+      - Combo:
+          - Pirate_Captain_Coat
+          - Drake_Card
+    Script: |
+      bonus bCritical,15;
+      bonus bCRate,10;
+      bonus bLongAtkRate,15;
+      bonus bShortAtkRate,15;
+  - Combos:
+      - Combo:
+          - The_Origin_of_Fire
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus bBaseAtk,10;
+        bonus bLuk,4;
+        bonus bCritical,2;
+      }
+  - Combos:
+      - Combo:
+          - The_Origin_of_Grass
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus bSPrecovRate,10;
+        bonus bVariableCastrate,-5;
+        bonus bMatk,10;
+      }
+  - Combos:
+      - Combo:
+          - The_Origin_of_Wind
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus bAspdRate,5;
+        bonus bStr,3;
+        bonus bHit,3;
+      }
+  - Combos:
+      - Combo:
+          - The_Origin_of_Water
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus2 bMagicAtkEle,Ele_Water,5;
+        bonus bVariableCastrate,-5;
+        bonus bMatk,10;
+      }

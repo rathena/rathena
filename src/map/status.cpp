@@ -7550,7 +7550,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if (sc->data[SC_ATTACK_STANCE])
 		def -= sc->data[SC_ATTACK_STANCE]->val2;
 	if (sc->data[SC_M_DEFSCROLL])
-		def += 500;
+		def += sc->data[SC_M_DEFSCROLL]->val1;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -7684,7 +7684,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if (sc->data[SC_CLIMAX_CRYIMP])
 		mdef += 100;
 	if (sc->data[SC_M_DEFSCROLL])
-		mdef += 200;
+		mdef += sc->data[SC_M_DEFSCROLL]->val2;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }

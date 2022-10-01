@@ -71770,7 +71770,7 @@ Body:
       }
   - Id: 16088
     AegisName: Saphir_Hall_OS
-    Name: Sapphire Mace-OS
+    Name: Saphir Hall-OS
     Type: Weapon
     SubType: Mace
     Buy: 20
@@ -77173,6 +77173,13 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 20
     View: 823
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Plant,2;
   - Id: 18678
@@ -89592,6 +89599,9 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 571
+    Script: |
+      /* Event bonus */
+      bonus2 bAddItemHealRate,11608,300;
   - Id: 19714
     AegisName: C_Lady_Tanee_Doll
     Name: Costume Lady Tanee Doll
@@ -95182,6 +95192,9 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1340
+    Script: |
+      /* Event bonus */
+      autobonus "{ bonus bShortAtkRate,10; bonus bLongAtkRate,10; bonus2 bMagicAtkEle,Ele_All,10; }",30,10000;
   - Id: 20299
     AegisName: C_Face_Crusher
     Name: Costume Face Crusher
@@ -133197,7 +133210,7 @@ Body:
     View: 1776
   - Id: 31546
     AegisName: C_Clock_Casket_RD
-    Name: C Clock Casket Red
+    Name: Red Clock Casquette
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -141115,6 +141128,7 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
+    EquipLevelMin: 1
     View: 2163
   - Id: 400198
     AegisName: Viva_Adul_Hat_RA1
@@ -142553,6 +142567,19 @@ Body:
             }
          }
       }
+  - Id: 400268
+    AegisName: Rose_Crispinette
+    Name: Rose Crespinette
+    Type: Armor
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 2091
+    Script: |
+      bonus bBaseAtk,20;
+      bonus bMatk,20;
   - Id: 400272
     AegisName: C_Many_Flowers_Prayer
     Name: Costume Hakuba's Wish
@@ -154423,7 +154450,7 @@ Body:
       }
   - Id: 480152
     AegisName: C_Spoon_Fork_Set
-    Name: Costume Fork Spoon Set
+    Name: Costume Spoon Fork Set
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -154550,6 +154577,15 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 124
+  - Id: 480168
+    AegisName: C_Melody_Wing
+    Name: Costume Melody Wing
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 126
   - Id: 480172
     AegisName: aegis_480172
     Name: Subject Cape (Melee)
@@ -157261,6 +157297,211 @@ Body:
     UnEquipScript: |
       if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER)
          sc_end SC_UNLIMIT;
+  - Id: 490197
+    AegisName: The_Origin_of_Fire
+    Name: Origin of Fire
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,2;
+      bonus bBaseAtk,5;
+      if (.@r >= 7) {
+        bonus bBaseAtk,3;
+        bonus bHit,2;
+        bonus bCritical,3;
+        if (.@r >= 9) {
+          bonus bBaseAtk,5;
+          bonus bHit,3;
+          bonus bCritical,1;
+        }
+      }
+  - Id: 490199
+    AegisName: The_Origin_of_Grass
+    Name: Origin of Grass
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20;
+      bonus bInt,4;
+      bonus bSPrecovRate,15;
+      if (.@r >= 7) {
+        bonus bHealPower,10;
+        if (.@r >= 9) {
+          bonus bVariableCastrate,-5;
+        }
+      }
+  - Id: 490200
+    AegisName: The_Origin_of_Wind
+    Name: Origin of Wind	
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bHit,5;
+      bonus bAspd,1;
+      if (.@r >= 7) {
+        bonus bBaseAtk,5;
+        bonus bHit,2;
+        if (.@r >= 9) {
+          bonus bBaseAtk,5;
+          bonus bAgi,3;
+        }
+      }
+  - Id: 490201
+    AegisName: The_Origin_of_fertility
+    Name: Origin of Fertility
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,1;
+      bonus bMaxHP,300;
+      bonus bMaxSP,200;
+      if (.@r >= 7) {
+        bonus bAllStats,2;
+        if (.@r >= 9) {
+          bonus bAllStats,2;
+        }
+      }
+  - Id: 490202
+    AegisName: The_Origin_of_Water
+    Name: Origin of Water
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20;
+      bonus bInt,4;
+      bonus bSPrecovRate,15;
+      if (.@r >= 7) {
+        bonus2 bMagicAtkEle,Ele_Water,5;
+        if (.@r >= 9) {
+          bonus bVariableCastrate,-5;
+        }
+      }
+  - Id: 490203
+    AegisName: aegis_490203
+    Name: Ring of Resonance
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 110
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15;
+      if (.@r >= 7) {
+        bonus2 bMagicAddRace,RC_Demon,10;
+        bonus2 bMagicAddRace,RC_Undead,10;
+        bonus bVariableCastrate,-7;
+        bonus bAspdRate,7;
+      }
+  - Id: 490204
+    AegisName: aegis_490204
+    Name: Spiritual Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 110
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus bMatkRate,3;
+      bonus bDex,2;
+      if (.@r >= 7) {
+        bonus bVariableCastrate,-7;
+        bonus2 bMagicAddRace,RC_Demon,10;
+        bonus2 bMagicAddRace,RC_Undead,10;
+      }
+  - Id: 490205
+    AegisName: aegis_490205
+    Name: Ring of Flame Lord
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 110
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15;
+      if (.@r >= 7) {
+        bonus2 bAddRace,RC_Demon,10;
+        bonus2 bAddRace,RC_Undead,10;
+        bonus bVariableCastrate,-7;
+        bonus bAspdRate,7;
+      }
   - Id: 490207
     AegisName: Memento_Mori
     Name: Memento Mori
@@ -160495,25 +160736,27 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bMagicAddEle,Ele_Undead,7;
-      bonus2 bAddEle,Ele_Undead,7;
-      bonus2 bMagicAddEle,Ele_Dark,7;
       bonus2 bAddEle,Ele_Dark,7;
-      if (.@r>=7) {
-         bonus2 bMagicAddEle,Ele_Undead,13;
-         bonus2 bMagicAddEle,Ele_Dark,13;
-         if (.@r>=9) {
-            bonus2 bSkillAtk,"KO_HAPPOKUNAI",35;
-            bonus2 bSkillAtk,"NJ_KOUENKA",20;
-            bonus2 bSkillAtk,"NJ_HYOUSENSOU",20;
-            bonus2 bSkillAtk,"NJ_HUUJIN",20;
-            if (.@r>=11) {
-               bonus2 bAddRace,RC_Undead,15;
-               bonus2 bMagicAddRace,RC_Undead,15;
-               bonus2 bAddRace,RC_Demon,15;
-               bonus2 bMagicAddRace,RC_Demon,15;
-            }
-         }
+      bonus2 bMagicAddEle,Ele_Dark,7;
+      bonus2 bAddEle,Ele_Undead,7;
+      bonus2 bMagicAddEle,Ele_Undead,7;
+      if (.@r >= 7) {
+        bonus2 bAddEle,Ele_Dark,13;
+        bonus2 bMagicAddEle,Ele_Dark,13;
+        bonus2 bAddEle,Ele_Undead,13;
+        bonus2 bMagicAddEle,Ele_Undead,13;
+        if (.@r >= 9) {
+          bonus2 bSkillAtk,"NJ_KOUENKA",20;
+          bonus2 bSkillAtk,"NJ_HYOUSENSOU",20;
+          bonus2 bSkillAtk,"NJ_HUUJIN",20;
+          bonus2 bSkillAtk,"KO_HAPPOKUNAI",35;
+          if (.@r >= 11) {
+            bonus2 bAddRace,RC_Demon,15;
+            bonus2 bMagicAddRace,RC_Demon,15;
+            bonus2 bAddRace,RC_Undead,15;
+            bonus2 bMagicAddRace,RC_Undead,15;
+          }
+        }
       }
   - Id: 510069
     AegisName: SN_B_Dagger
@@ -170136,7 +170379,7 @@ Body:
       bonus bUnbreakableWeapon;
   - Id: 590043
     AegisName: Saphir_Hall_AD
-    Name: Saphir Mace-OSAD
+    Name: Saphir Hall-OSAD
     Type: Weapon
     SubType: Mace
     Weight: 800
@@ -177194,7 +177437,7 @@ Body:
     Refineable: true
   - Id: 810013
     AegisName: HR_S55_AD
-    Name: HR-55-OSAD
+    Name: HR-S55-OSAD
     Type: Weapon
     SubType: Rifle
     Weight: 1000
