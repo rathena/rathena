@@ -251,7 +251,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 		getitem2 28387,1,1,0,0,0,0,0,.@enchant; //Priest's Necklace
 		close;
 	case 3:
-		S_Cancel;
+		callsub S_Cancel;
 	}
 
 S_Cancel:

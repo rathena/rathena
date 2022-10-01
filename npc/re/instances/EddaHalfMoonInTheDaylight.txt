@@ -1832,7 +1832,7 @@ OnEnable:
 }
 
 1@pop2,136,47,5	script	Pope#2hmoon09	4_F_ARUNA_POP2,{
-	if ('progress >= 13
+	if ('progress >= 13)
 		end;
 	'progress = 13;
 	pcblockmove getcharid(3),1;
