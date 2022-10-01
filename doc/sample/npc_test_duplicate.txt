@@ -34,75 +34,66 @@ prontera,160,175,4	duplicate(Duplicate Test Script)	Duplicate Test3	909,3,3
 prontera,150,168,4	script	Duplicate Command Test	909,{
 	mes "Would you like to create a new NPC?";
 	.@original_npc$ = "original_npc_unique_name";
-	switch(.@s = select("Provide No info:With Name:With Name and Map:With Name, Map and look:With Name, Map, look and dir:cancel")){
-		clear;
+
+	mes "Input Map Name";
+	mes "recommended 'prontera'";
+	input .@map$;
+	clear;
+	mes "Input x";
+	mes "recommended '155'";
+	input .@x,0;
+	clear;
+	mes "Input y";
+	mes "recommended '168'";
+	input .@y,0;
+	clear;
+
+	switch( .@s = select( "Provide no info:With name:With name and look:With name, look and dir:cancel" ) ){
 		case 1:
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y );
+			break;
 		case 2:
-			if(.@s == 2){
-				mes "Input Duplicate NPC Name";
-				input .@name$;
-				.@new_npc$ = duplicate(.@original_npc$,.@name$);
-			}else{
-				.@new_npc$ = duplicate(.@original_npc$);
-			}
-			getmapxy(.@m$,.@x,.@y,BL_NPC,.@original_npc$);
-			if(!$@y) $@y = .@y;
-			$@y -= 2;
-			if(!(.@id = getnpcid(0,.@new_npc$))){
-				mes "Something went wrong!";
-				mes "The new NPC could not be found!";
-				end;
-			}
-			unitwarp(.@id,.@m$,.@x,$@y);
-			mes "The NPC is now at " + .@m$ + "," + .@x + "," + $@y;
-			mes "Done";
-			end;
-		case 3:
-		case 4:
-		case 5:
 			mes "Input Duplicate NPC Name";
 			input .@name$;
 			clear;
-			mes "Input Map Name";
-			mes "recommended 'prontera'";
-			input .@map$;
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y, .@name$ );
+			break;
+		case 3:
+			mes "Input Duplicate NPC Name";
+			input .@name$;
 			clear;
-			mes "Input x";
-			mes "recommended '155'";
-			input .@x,0;
+			mes "Input look";
+			mes "recommended '445'";
+			input .@look,0;
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y, .@name$, .@look );
+			break;
+		case 4:
+			mes "Input Duplicate NPC Name";
+			input .@name$;
 			clear;
-			mes "Input y";
-			mes "recommended '168'";
-			input .@y,0;
+			mes "Input look";
+			mes "recommended '445'";
+			input .@look,0;
 			clear;
-			switch(.@s){
-				case 3:
-					duplicate(.@original_npc$,.@name$,.@map$,.@x,.@y);
-					break;
-				case 4:
-					mes "Input look";
-					mes "recommended '445'";
-					input .@look,0;
-					duplicate(.@original_npc$,.@name$,.@map$,.@x,.@y,.@look);
-					break;
-				case 5:
-					mes "Input look";
-					mes "recommended '445'";
-					input .@look,0;
-					clear;
-					mes "Input dir";
-					mes "between 0 and 7";
-					input .@dir,0,7;
-					duplicate(.@original_npc$,.@name$,.@map$,.@x,.@y,.@look,.@dir);
-					break;
-			}
-			mes "Done";
+			mes "Input dir";
+			mes "between " + DIR_NORTH + " and " + DIR_NORTHEAST;
+			input .@dir,DIR_NORTH,DIR_NORTHEAST;
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y, .@name$, .@look, .@dir );
+			break;
+		default:
+			mes "Ok, see you next time!";
 			close;
-			default:
-				mes "Ok, see you next time!";
-				close;
 	}
-end;
+
+	if( getnpcid( 0, .@new_npc$ ) == 0 ){
+		mes "Something went wrong!";
+		mes "The new NPC could not be found!";
+		close;
+	}
+	
+	clear;
+	mes "The new NPC is now at " + .@map$ + "," + .@x + "," + .@y;
+	end;
 }
 
 prontera,150,165,0	script	test npc::original_npc_unique_name	444,{
