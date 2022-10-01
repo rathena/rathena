@@ -696,7 +696,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 					memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
 				}
 				else if (gc->guild_id) //Guild not yet available, retry in 5.
-					add_timer(gettick()+5000,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
+					add_timer(gettick() + battle_config.mob_respawn_time,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
 			}
 		}	// end addition [Valaris]
 
@@ -914,7 +914,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 		memcpy (md->guardian_data->guild_name, g->name, NAME_LENGTH);
 		md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
 	} else if (md->guardian_data->guild_id)
-		add_timer(gettick()+5000,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
+		add_timer(gettick() + battle_config.mob_respawn_time,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
 	mob_spawn(md);
 
 	return md->bl.id;
@@ -1073,8 +1073,7 @@ int mob_setdelayspawn(struct mob_data *md)
 		spawntime = spawntime/100*battle_config.mob_spawn_delay;
 	}
 
-	if (spawntime < 5000) //Monsters should never respawn faster than within 5 seconds
-		spawntime = 5000;
+	spawntime = u32max(1000, spawntime); //Monsters should never respawn faster than 1 second
 
 	if( md->spawn_timer != INVALID_TIMER )
 		delete_timer(md->spawn_timer, mob_delayspawn);
@@ -1126,7 +1125,7 @@ int mob_spawn (struct mob_data *md)
 			{ // retry again later
 				if( md->spawn_timer != INVALID_TIMER )
 					delete_timer(md->spawn_timer, mob_delayspawn);
-				md->spawn_timer = add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
+				md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time,mob_delayspawn,md->bl.id,0);
 				return 1;
 			}
 		}
@@ -1134,7 +1133,7 @@ int mob_spawn (struct mob_data *md)
 		{ // retry again later (players on sight)
 			if( md->spawn_timer != INVALID_TIMER )
 				delete_timer(md->spawn_timer, mob_delayspawn);
-			md->spawn_timer = add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
+			md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time,mob_delayspawn,md->bl.id,0);
 			return 1;
 		}
 	}
