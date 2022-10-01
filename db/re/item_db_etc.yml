@@ -56304,6 +56304,13 @@ Body:
             bonus bDef,45;
          }
       }
+  - Id: 310760
+    AegisName: DivineGrace_of_Kings
+    Name: Heaven's Majesty
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,25*BaseLevel;
   - Id: 310844
     AegisName: Summer_Hot_Lv1
     Name: Summer Heat(Lv1)

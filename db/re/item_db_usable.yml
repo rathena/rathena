@@ -51188,6 +51188,13 @@ Body:
     Name: Watermelon Pudding    # !todo check english name
     Type: Healing
     Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       percentheal 3,3;
       specialeffect2 999;

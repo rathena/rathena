@@ -70096,6 +70096,21 @@ Body:
          bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
       if (BaseClass == Job_Archer)
          bonus bVariableCastrate,-30;
+  - Id: 15948
+    AegisName: aegis_15948
+    Name: Eye Patch Of Power
+    Type: Armor
+    View: 698
+    Weight: 50
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Script: |
+      bonus2 bResEff,Eff_Bleeding,10000;
+      bonus bBaseAtk,60;
+      if (BaseLevel>=170)
+         bonus bBaseAtk,60;
   - Id: 16000
     AegisName: Erde
     Name: Erde
@@ -144613,6 +144628,23 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus2 bAddSize,Size_All,BaseLevel/10;
+  - Id: 420164
+    AegisName: aegis_420164
+    Name: Red Sleep Sheep
+    Type: Armor
+    View: 2277
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bDelayrate,-15;
+      bonus2 bAddSize,Size_All,5*getskilllv("RA_WUGRIDER");
+      if (getskilllv("RA_CAMOUFLAGE") == 5)
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-60000;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
@@ -152840,6 +152872,39 @@ Body:
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,7;
       }
+  - Id: 470130
+    AegisName: aegis_470130
+    Name: End of the World
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSkillCooldown,"GC_HALLUCINATIONWALK",-5000*getskilllv("GC_CROSSIMPACT");
+      bonus bAtkRate,10*getskilllv("GC_CROSSRIPPERSLASHER");
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",6*getskilllv("GC_ROLLINGCUTTER");
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",100*getskilllv("GC_ROLLINGCUTTER");
+      if (getskilllv("GC_HALLUCINATIONWALK") == 5)
+         bonus2 bSubClass,Class_All,5;
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bDelayrate,-10;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bDelayrate,-10;
+      }
   - Id: 470173
     AegisName: Flame_Rune_Boots
     Name: Rune Boots of Flame
@@ -155594,6 +155659,18 @@ Body:
       }
       if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
          bonus bDelayrate,-30;
+  - Id: 490030
+    AegisName: Temporal_Ring_TW
+    Name: Temporal Ring
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
   - Id: 490033
     AegisName: Fallen_Angel_tear
     Name: Fallen Angel's Tear
@@ -157805,6 +157882,20 @@ Body:
       }
       bonus bAtkRate,.@a;
       bonus bCritAtkRate,.@b;
+  - Id: 490265
+    AegisName: aegis_490265
+    Name: Inception Ring
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bVariableCastrate,-20;
+      bonus bAspd,1;
+      bonus5 bAutoSpell,"WL_RECOGNIZEDSPELL",1,10,BF_MAGIC,0;
   - Id: 490279
     AegisName: aegis_490279
     Name: Raphin P. Necklace
@@ -159002,7 +159093,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -160583,7 +160674,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -161559,7 +161650,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -162166,7 +162257,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -163307,14 +163398,14 @@ Body:
       bonus bAtkRate,5;
       if (.@l>=105) {
          bonus bAtkRate,10;
-         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
-         bonus2 bSkillAtk,"SJ_SOLARBURST",25;
+         bonus2 bSkillAtk,"SJ_NEWMOONKICK",25;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",25;
          if (.@l>=110) {
             bonus bShortAtkRate,10;
             bonus2 bAddSize,Size_ALL,15;
             if (.@l>=115) {
-               bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
-               bonus2 bSkillAtk,"SJ_SOLARBURST",15;
+               bonus2 bSkillAtk,"SJ_NEWMOONKICK",15;
+               bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
             }
          }
       }
@@ -163402,7 +163493,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus bHealPower,6*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
@@ -164043,6 +164134,34 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 540057
+    AegisName: aegis_540057
+    Name: Book of Thoth
+    Type: Weapon
+    SubType: Book
+    Weight: 800
+    Attack: 120
+    MagicAttack: 200
+    Range: 3
+    Slots: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      skill "TF_DOUBLE",10;
+      bonus2 bSkillFixedCast,"MG_FIREBOLT",10000;
+      bonus2 bSkillFixedCast,"MG_COLDBOLT",10000;
+      bonus2 bSkillFixedCast,"MG_LIGHTNINGBOLT",10000;
+      bonus2 bSkillAtk,"MG_FIREBOLT",25*.@r;
+      bonus2 bSkillAtk,"MG_COLDBOLT",25*.@r;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",25*.@r;
+      bonus2 bSkillAtk,"WZ_EARTHSPIKE",25*.@r;
   - Id: 540059
     AegisName: aegis_540059
     Name: Doom Bible
@@ -165705,7 +165824,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus bHealPower,6*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
@@ -165739,7 +165858,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus bHealPower,6*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
@@ -168013,7 +168132,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -168896,7 +169015,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -169754,7 +169873,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -170868,7 +170987,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -171754,7 +171873,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -172744,7 +172863,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -173415,7 +173534,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -173983,7 +174102,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -174996,7 +175115,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus bHealPower,6*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
@@ -175522,7 +175641,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -177251,7 +177370,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -177746,7 +177865,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       if (.@r>=7) {
          bonus2 bIgnoreDefRaceRate,RC_All,50;
          bonus2 bIgnoreMdefRaceRate,RC_All,50;
@@ -178191,7 +178310,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",15,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7*(readparam(bInt)/10);
       if (readparam(bInt)>=110)
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
@@ -178602,7 +178721,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus2 bSkillAtk,"RL_SLUGSHOT",7*(readparam(bStr)/10);
       if (readparam(bStr)>=110)
          bonus2 bSkillAtk,"RL_SLUGSHOT",30;
@@ -178995,7 +179114,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus2 bSkillAtk,"RL_R_TRIP",7*(readparam(bAgi)/10);
       if (readparam(bAgi)>=110)
          bonus2 bSkillAtk,"RL_R_TRIP",30;
@@ -179412,7 +179531,7 @@ Body:
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
       autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
       bonus bAtkRate,10*.@r;
-      bonus bMAtkRate,5*.@r;
+      bonus bMatkRate,5*.@r;
       bonus2 bSkillAtk,"RL_D_TAIL",7*(readparam(bLuk)/10);
       if (readparam(bLuk)>=110)
          bonus2 bSkillAtk,"RL_D_TAIL",30;

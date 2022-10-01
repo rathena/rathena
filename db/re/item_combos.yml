@@ -29370,3 +29370,91 @@ Body:
           - Illusion_Box_Garden    # 311075
     Script: |
       bonus bDelayrate,-25;
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_    # 15137
+          - aegis_300398    # 300398
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bVit,2*.@r;
+      bonus bMaxHPrate,2*.@r;
+  - Combos:
+      - Combo:
+          - Applause_Sandal_    # 22071
+          - aegis_300401    # 300401
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bVariableCastrate,-10;
+      bonus3 bAutoSpellWhenHit,"PR_KYRIE",10,-(readparam(bInt)>=99)?35:15;
+      bonus bAllStats,.@r;
+      /*TODO: Cancel auto spell bonus is not implemented in rAthena yet.*/
+  - Combos:
+      - Combo:
+          - aegis_15948    # 15948
+          - Orc_Hero_Card    # 4143
+    Script: |
+      bonus bBaseAtk,50;
+      if (BaseLevel>=170)
+         bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - aegis_15948    # 15948
+          - Sealed_Orc_Hero_Card    # 4492
+    Script: |
+      bonus bBaseAtk,50;
+      if (BaseLevel>=170)
+         bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Bear's_Power    # 4875
+    Script: |
+      bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Speed_Of_Light    # 4877
+    Script: |
+      bonus bDelayrate,-8;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Muscle_Fool    # 4878
+    Script: |
+      bonus bMaxHPrate,15;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus bMatk,50;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Hawkeye    # 4879
+    Script: |
+      bonus bLongAtkRate,10;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Temporal_Boots_TW    # 22202
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - aegis_490265    # 490265
+          - aegis_420134    # 420134
+    Script: |
+      bonus bMatk,30;
+      bonus bVariableCastrate,-5;
+      bonus bFixedCast,-200;
+      bonus2 bMagicAddClass,Class_Boss,20;
+  - Combos:
+      - Combo:
+          - aegis_540057    # 540057
+          - DivineGrace_of_Kings    # 310760
+    Script: |
+      bonus bAspdRate,15;
+      bonus2 bSubRace,RC_Player_Human,10;
+      skill "PA_GOSPEL",1;
