@@ -345,3 +345,27 @@ Body:
       Map: 1@cor
       X: 176
       Y: 169
+  - Id: 44
+    Name: Half Moon In The Daylight
+    TimeLimit: 7200
+    Enter:
+      Map: 1@pop1
+      X: 47
+      Y: 133
+    AdditionalMaps:
+      1@pop2: true
+      1@pop3: true
+  - Id: 45
+    Name: Weekend Dungeon
+    TimeLimit: 3600
+    Enter:
+      Map: 1@md_pay
+      X: 240
+      Y: 29
+  - Id: 46
+    Name: Friday Dungeon
+    TimeLimit: 7200
+    Enter:
+      Map: 1@md_gef
+      X: 106
+      Y: 129
