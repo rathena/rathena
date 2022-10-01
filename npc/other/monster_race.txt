@@ -2558,7 +2558,7 @@ S_BonusReward:
 		mes "me a reward later?";
 		next;
 		mes "[Ei'felle]";
-		if (!getiteminfo(.@arg1, ITEMINFO_WEAPONLEVEL)) { //use item level to determine if the item is armor (no weapon level)
+		if (getiteminfo( .@arg1, ITEMINFO_TYPE ) == IT_ARMOR) {
 			mes "Of course, of course.";
 			mes "Remember, if you donate";
 			mes "more medals to me, then";
@@ -2601,7 +2601,7 @@ S_BonusReward:
 	getitem .@arg1,1;
 	close;
 }
-	
+
 hugel,71,83,4	script	Wayne	900,{
 	if (!checkweight("Knife",1)) {
 		mes "[Wayne]";

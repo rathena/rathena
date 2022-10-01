@@ -1,0 +1,116 @@
+name: rarearchs
+
+defaults:
+  #if: "!contains(github.event.head_commit.message, 'skip ci')"  # SKIP
+  run:
+    # Use a bash shell so we can use the same syntax for environment variable
+    # access regardless of the host operating system
+    shell: bash -e -x {0}
+
+on:
+  # https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  rarearchs:
+    name: ${{matrix.arch}}/c++${{matrix.std}}/${{matrix.bt}}
+    continue-on-error: true
+    if: always()  # https://stackoverflow.com/questions/62045967/github-actions-is-there-a-way-to-continue-on-error-while-still-getting-correct
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {std: 11, bt: Debug  , arch: aarch64, distro: ubuntu20.04}
+          - {std: 11, bt: Release, arch: aarch64, distro: ubuntu20.04}
+          - {std: 14, bt: Debug  , arch: aarch64, distro: ubuntu20.04}
+          - {std: 14, bt: Release, arch: aarch64, distro: ubuntu20.04}
+          - {std: 17, bt: Debug  , arch: aarch64, distro: ubuntu20.04}
+          - {std: 17, bt: Release, arch: aarch64, distro: ubuntu20.04}
+          #
+          - {std: 11, bt: Debug  , arch: ppc64le, distro: ubuntu20.04}
+          - {std: 11, bt: Release, arch: ppc64le, distro: ubuntu20.04}
+          - {std: 14, bt: Debug  , arch: ppc64le, distro: ubuntu20.04}
+          - {std: 14, bt: Release, arch: ppc64le, distro: ubuntu20.04}
+          - {std: 17, bt: Debug  , arch: ppc64le, distro: ubuntu20.04}
+          - {std: 17, bt: Release, arch: ppc64le, distro: ubuntu20.04}
+          #
+          - {std: 11, bt: Debug  , arch: s390x  , distro: ubuntu20.04}
+          - {std: 11, bt: Release, arch: s390x  , distro: ubuntu20.04}
+          - {std: 14, bt: Debug  , arch: s390x  , distro: ubuntu20.04}
+          - {std: 14, bt: Release, arch: s390x  , distro: ubuntu20.04}
+          - {std: 17, bt: Debug  , arch: s390x  , distro: ubuntu20.04}
+          - {std: 17, bt: Release, arch: s390x  , distro: ubuntu20.04}
+          #
+          #- {std: 11, bt: Debug  , arch: armv6  , distro: bullseye}
+          #- {std: 11, bt: Release, arch: armv6  , distro: bullseye}
+          #- {std: 14, bt: Debug  , arch: armv6  , distro: bullseye}
+          #- {std: 14, bt: Release, arch: armv6  , distro: bullseye}
+          #- {std: 17, bt: Debug  , arch: armv6  , distro: bullseye}
+          #- {std: 17, bt: Release, arch: armv6  , distro: bullseye}
+          #
+          #- {std: 11, bt: Debug  , arch: armv7  , distro: ubuntu20.04}
+          #- {std: 11, bt: Release, arch: armv7  , distro: ubuntu20.04}
+          #- {std: 14, bt: Debug  , arch: armv7  , distro: ubuntu20.04}
+          #- {std: 14, bt: Release, arch: armv7  , distro: ubuntu20.04}
+          #- {std: 17, bt: Debug  , arch: armv7  , distro: ubuntu20.04}
+          #- {std: 17, bt: Release, arch: armv7  , distro: ubuntu20.04}
+    steps:
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}
+      - name: test
+        uses: uraimo/run-on-arch-action@v2.0.5
+        with:
+          arch: ${{matrix.arch}}
+          distro: ${{matrix.distro}}
+          install: |
+            set -x
+            apt-get update -y
+            apt-get install -y \
+              git \
+              build-essential
+            # arm platforms need an up-to-date cmake:
+            # https://gitlab.kitware.com/cmake/cmake/-/issues/20568
+            if [ "${{matrix.arch}}" == "armv6" ] || [ "${{matrix.arch}}" == "armv7" ] ; then
+              apt-get install -y \
+                gpg \
+                wget \
+                apt-transport-https
+              wget --no-check-certificate -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+              echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+              apt-get update -y
+              rm /usr/share/keyrings/kitware-archive-keyring.gpg
+              apt-get install kitware-archive-keyring
+              apt-get update -y
+            fi
+            apt-get install -y cmake cmake-data
+            cmake --version
+          run: |
+            set -x
+            uname -a
+            pwd
+            ls -lFhp .
+            #
+            bdir=build_${{matrix.arch}}_${{matrix.bt}}_${{matrix.std}}
+            idir=install_${{matrix.arch}}_${{matrix.bt}}_${{matrix.std}}
+            mkdir -p $bdir
+            #
+            cmake -S . -B $bdir \
+              -DCMAKE_INSTALL_PREFIX=$idir \
+              -DCMAKE_BUILD_TYPE=${{matrix.bt}} \
+              -DC4_CXX_STANDARD=${{matrix.std}} \
+              -DCXX_STANDARD=${{matrix.std}} \
+              -DC4CORE_DEV=ON \
+              -DC4CORE_BUILD_BENCHMARKS=OFF \
+              -DC4CORE_SANITIZE=OFF \
+              -DC4CORE_LINT=OFF \
+              -DC4CORE_VALGRIND=OFF
+            #
+            cmake --build $bdir -j --target c4core-test-build
+            #
+            cmake --build $bdir    --target c4core-test-run

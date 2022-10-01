@@ -682,26 +682,78 @@ function	script	refinemain	{
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 
-	switch (getequipweaponlv(.@part)) {
-		case 1: .@safe = 7; break;
-		case 2: .@safe = 6; break;
-		case 3: .@safe = 5; break;
-		case 4:
-		default: .@safe = 4; break;
-	}
+	if( .@itemtype == IT_ARMOR ){
+		.@equip_lv = getequiparmorlv( .@part );
 
-	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
-		switch(getequipweaponlv(.@part)) {
-			case 0: .@price = .@price * 10; break;
-			case 1: .@price = .@price * 40; break;
-			case 2: .@price = .@price * 50; break;
-			case 3: .@price = .@price * 2; break;
-			case 4: .@price = .@price * 2; break;
-			case 5: .@price = .@price * 10; break;
+		switch( .@equip_lv ){
+			case 1:
+				.@safe = 4;
+				break;
+			default:
+				// TODO:
+				close;
 		}
+
+		// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
+		if( VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE) ){
+			switch( .@equip_lv ){
+				case 1:
+					.@price = .@price * 10;
+					break;
+				default:
+					// TODO:
+					close;
+			}
+		}
+	}else if( .@itemtype == IT_WEAPON ){
+		.@equip_lv = getequipweaponlv( .@part );
+
+		switch( .@equip_lv ){
+			case 1:
+				.@safe = 7;
+				break;
+			case 2:
+				.@safe = 6;
+				break;
+			case 3:
+				.@safe = 5;
+				break;
+			case 4:
+				.@safe = 4;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+
+		// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
+		if( VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE) ){
+			switch( .@equip_lv ){
+				case 1:
+					.@price = .@price * 40;
+					break;
+				case 2:
+					.@price = .@price * 50;
+					break;
+				case 3:
+					.@price = .@price * 2;
+					break;
+				case 4:
+					.@price = .@price * 2;
+					break;
+				default:
+					// TODO:
+					close;
+			}
+		}
+	}else{
+		.@safe = 4;
 	}
+
+	// TODO: What was this? Maybe shadow?
+	// case 5: .@price = .@price * 10; break;
 
 	if(.@features != 1) {
 		mes "["+ .@npc_name$ +"]";

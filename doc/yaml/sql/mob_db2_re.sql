@@ -5,8 +5,8 @@
 DROP TABLE IF EXISTS `mob_db2_re`;
 CREATE TABLE `mob_db2_re` (
   `id` int(11) unsigned NOT NULL,
-  `name_aegis` varchar(24) NOT NULL,
-  `name_english` text NOT NULL,
+  `name_aegis` varchar(24) DEFAULT NULL,
+  `name_english` text DEFAULT NULL,
   `name_japanese` text DEFAULT NULL,
   `level` smallint(6) unsigned DEFAULT NULL,
   `hp` int(11) unsigned DEFAULT NULL,
@@ -18,6 +18,8 @@ CREATE TABLE `mob_db2_re` (
   `attack2` smallint(6) unsigned DEFAULT NULL,
   `defense` smallint(6) unsigned DEFAULT NULL,
   `magic_defense` smallint(6) unsigned DEFAULT NULL,
+  `resistance` smallint(6) unsigned DEFAULT NULL,
+  `magic_resistance` smallint(6) unsigned DEFAULT NULL,
   `str` smallint(6) unsigned DEFAULT NULL,
   `agi` smallint(6) unsigned DEFAULT NULL,
   `vit` smallint(6) unsigned DEFAULT NULL,
@@ -56,6 +58,7 @@ CREATE TABLE `mob_db2_re` (
   `racegroup_werner_lab` tinyint(1) unsigned DEFAULT NULL,
   `racegroup_temple_demon` tinyint(1) unsigned DEFAULT NULL,
   `racegroup_illusion_vampire` tinyint(1) unsigned DEFAULT NULL,
+  `racegroup_malangdo` tinyint(1) unsigned DEFAULT NULL,
   `element` varchar(24) DEFAULT NULL,
   `element_level` tinyint(4) unsigned DEFAULT NULL,
   `walk_speed` smallint(6) unsigned DEFAULT NULL,

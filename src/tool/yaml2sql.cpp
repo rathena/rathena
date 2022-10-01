@@ -17,6 +17,8 @@
 #endif
 
 #include <yaml-cpp/yaml.h>
+#include <ryml_std.hpp>
+#include <ryml.hpp>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
@@ -38,6 +40,7 @@
 #include "../map/channel.hpp"
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
+#include "../map/elemental.hpp"
 #include "../map/instance.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"
@@ -76,7 +79,7 @@ bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
 YAML::Node inNode;
-std::ofstream out;
+std::ofstream outFile;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
@@ -139,9 +142,13 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 		const std::string to = "sql-files/" + to_table + ".sql";
 
 		if( fileExists( from ) ){
+#ifndef CONVERT_ALL
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
+#else
+			ShowMessage("Found the file \"%s\", converting from yml to sql.\n", from.c_str());
+#endif
 
 			inNode.reset();
 
@@ -156,27 +163,29 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if (!inNode["Body"].IsDefined())
 				continue;
 
+#ifndef CONVERT_ALL
 			if (fileExists(to)) {
 				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
 					continue;
 				}
 			}
+#endif
 
-			out.open(to);
+			outFile.open(to);
 
-			if (!out.is_open()) {
+			if (!outFile.is_open()) {
 				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
-			prepareHeader(out, table.compare(to_table) == 0 ? table : to_table);
+			prepareHeader(outFile, table.compare(to_table) == 0 ? table : to_table);
 
 			if( !lambda( path, name_ext, table ) ){
-				out.close();
+				outFile.close();
 				return false;
 			}
 
-			out.close();
+			outFile.close();
 		}
 	}
 
@@ -436,6 +445,10 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_sage`,");
 			if (appendEntry(jobs["SoulLinker"], value))
 				column.append("`job_soullinker`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["Spirit_Handler"], value))
+				column.append("`job_spirit_handler`,");
+#endif
 			if (appendEntry(jobs["StarGladiator"], value))
 				column.append("`job_stargladiator`,");
 #ifdef RENEWAL
@@ -516,6 +529,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				value.append(",");
 				column.append("`class_third_baby`,");
 			}
+			if (appendEntry(classes["Fourth"], value))
+				column.append("`class_fourth`,");
 #endif
 		}
 
@@ -603,12 +618,16 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 
 		if (appendEntry(input["WeaponLevel"], value))
 			column.append("`weapon_level`,");
+		if (appendEntry(input["ArmorLevel"], value))
+			column.append("`armor_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))
 			column.append("`equip_level_min`,");
 		if (appendEntry(input["EquipLevelMax"], value))
 			column.append("`equip_level_max`,");
 		if (appendEntry(input["Refineable"], value))
 			column.append("`refineable`,");
+		if (appendEntry(input["Gradable"], value))
+			column.append("`gradable`,");
 		if (appendEntry(input["View"], value))
 			column.append("`view`,");
 		if (appendEntry(input["AliasName"], value, true))
@@ -703,11 +722,11 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		column.pop_back(); // Remove last ','
 		value.pop_back(); // Remove last ','
 
-		out << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+		outFile << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
 		entries++;
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
@@ -747,6 +766,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`defense`,");
 		if (appendEntry(input["MagicDefense"], value))
 			column.append("`magic_defense`,");
+#ifdef RENEWAL
+		if (appendEntry(input["Resistance"], value))
+			column.append("`resistance`,");
+		if (appendEntry(input["MagicResistance"], value))
+			column.append("`magic_resistance`,");
+#endif
 		if (appendEntry(input["Str"], value))
 			column.append("`str`,");
 		if (appendEntry(input["Agi"], value))
@@ -902,11 +927,11 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		column.pop_back(); // Remove last ','
 		value.pop_back(); // Remove last ','
 
-		out << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+		outFile << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
 		entries++;
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
