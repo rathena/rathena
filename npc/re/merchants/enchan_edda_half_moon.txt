@@ -37,7 +37,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "There's a story that needs to be told first.";
 			next;
 			mes "[Temple Item Manager]";
-			mes "I've always been a fan of the ^0000cdGoddess^000000. As I entered the temple and started my life as a devoted follower, my life began to blossom.
+			mes "I've always been a fan of the ^0000cdGoddess^000000. As I entered the temple and started my life as a devoted follower, my life began to blossom.";
 			next;
 			mes "[Temple Item Manager]";
 			mes "One day before i went to sleep, I had a ^0000cddream^000000 while I way praying to the Goddess.";
