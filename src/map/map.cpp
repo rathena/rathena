@@ -2172,6 +2172,7 @@ int map_quit(struct map_session_data *sd) {
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
 	pc_crimson_marker_clear(sd);
+	pc_macro_detector_disconnect(*sd);
 	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	unit_free_pc(sd);
 	return 0;

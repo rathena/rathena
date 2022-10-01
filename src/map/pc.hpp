@@ -120,6 +120,57 @@ enum e_additem_result : uint8 {
 	ADDITEM_STACKLIMIT
 };
 
+#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
+#define CAPTCHA_MAX_SIZE 0xFFF
+#define MAX_CAPTCHA_CHUNK_SIZE 1024
+
+struct s_captcha_data {
+	int32 upload_size;
+	int32 image_size;
+	char image_data[CAPTCHA_BMP_SIZE];
+	char captcha_answer[16];
+	char captcha_key[4];
+	script_code *bonus_script;
+
+	~s_captcha_data() {
+		if (this->bonus_script)
+			script_free_code(this->bonus_script);
+	}
+};
+
+struct s_macro_detect {
+	std::shared_ptr<s_captcha_data> cd;
+	int32 reporter_aid;
+	int32 retry;
+	int32 timer;
+};
+
+enum e_macro_detect_status {
+	MCD_TIMEOUT = 0,
+	MCD_INCORRECT = 1,
+	MCD_GOOD = 2,
+};
+
+enum e_macro_report_status {
+	MCR_MONITORING = 0,
+	MCR_NO_DATA = 1,
+	MCR_INPROGRESS = 2,
+};
+
+class CaptchaDatabase : public YamlDatabase {
+public:
+	CaptchaDatabase() : YamlDatabase("CAPTCHA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+	void clear() override {};
+};
+
+extern CaptchaDatabase captcha_db;
+extern std::vector<std::shared_ptr<s_captcha_data>> macro_db;
+
 struct skill_cooldown_entry {
 	unsigned short skill_id;
 	int timer;
@@ -869,6 +920,8 @@ struct map_session_data {
 		uint16 level;
 		int target;
 	} skill_keep_using;
+
+	s_macro_detect macro_detect;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1631,5 +1684,23 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
+
+// Captcha Register
+void pc_macro_captcha_register(map_session_data &sd, const int32 image_size, const char *captcha_answer);
+void pc_macro_captcha_register_upload(map_session_data &sd, const char *captcha_key, const int32 upload_size, const char *upload_data);
+
+// Captcha Preview
+void pc_macro_captcha_preview(map_session_data &sd, const int32 captcha_idx);
+
+// Macro Detector
+void pc_macro_detector_request(map_session_data &sd);
+void pc_macro_detector_process_answer(map_session_data &sd, const char *captcha_answer);
+TIMER_FUNC(pc_macro_detector_timeout);
+void pc_macro_detector_disconnect(map_session_data &sd);
+
+// Macro Reporter
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
+int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap);
+void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
 
 #endif /* PC_HPP */
