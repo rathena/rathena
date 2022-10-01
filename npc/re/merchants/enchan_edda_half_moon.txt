@@ -55,7 +55,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "I started to study dreams with all my passion. I thought this was the will of the Goddess, who's trying to convey to me through them.";
 			next;
 			mes "[Temple Item Manager]";
-			mes "While I was working hard on my research, I made the ^0000cdPassage of Dreams^000000 at the request of our aunt, High Priestess Niren, who's right next to me. It's the result of what I dedicated my life to.
+			mes "While I was working hard on my research, I made the ^0000cdPassage of Dreams^000000 at the request of our aunt, High Priestess Niren, who's right next to me. It's the result of what I dedicated my life to.";
 			next;
 			mes "[Temple Item Manager]";
 			mes "I can't reach the Goddess yet... But there aren't many people who encounter the Goddess in their dreams... Like me...";
