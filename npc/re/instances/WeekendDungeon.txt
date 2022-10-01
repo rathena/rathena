@@ -109,7 +109,7 @@ pay_arche,44,121,5	script	Gift Supplies Clerk	4_F_02,{
 	mes "I offer packaging services for those who wish to present a precious gift to a cherished one.";
 	next;
 	mes "[Gift Supplies Clerk]";
-	mes "If you have 5 units of "+F_ItemLink(23143)+" or "+F_ItemLink(23142)+", I can pack it for just ^FF0000"+F_InsertComma(.@zeny)+"^000000 Zeny!";
+	mes "If you have 5 units of <ITEM>"+getitemname(23143)+"<INFO>23143</INFO></ITEM> or <ITEM>"+getitemname(23142)+"<INFO>23142</INFO></ITEM>, I can pack it for just ^FF0000"+F_InsertComma(.@zeny)+"^000000 Zeny!";
 	mes "Do you want to pack it right now?";
 	next;
 	switch(select("Cancel:Growth Elixir Packing:Job Elixir Packing")) {
@@ -135,7 +135,7 @@ pay_arche,44,121,5	script	Gift Supplies Clerk	4_F_02,{
 		mes "Can't continue because you have too many heavy objects. Reduce your total weight by clearing your inventory.";
 		close;
 	}
-	mes "Confirm to spend "+F_InsertComma(.@zeny)+"z to package 5 "+F_ItemLink(.@item)+" into "+F_ItemLink(.@box)+"?";
+	mes "Confirm to spend "+F_InsertComma(.@zeny)+"z to package 5 <ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM> into <ITEM>"+getitemname(.@box)+"<INFO>"+.@box+"</INFO></ITEM>?";
 	next;
 	if (select("Yes:No") == 2) {
 		mes "[Gift Supplies Clerk]";
