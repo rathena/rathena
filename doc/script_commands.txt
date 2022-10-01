@@ -7100,7 +7100,7 @@ NOTE:
 	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
 
 ---------------------------------------
-
+ 
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
