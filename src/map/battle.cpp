@@ -284,7 +284,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 			// Trigger monster skill condition for non-skill attacks.
 			if (!status_isdead(target) && src != target) {
 				if (damage > 0)
-					mobskill_event(md, src, tick, attack_type);
+					mobskill_event(md, src, tick, attack_type, damage);
 				if (skill_id > 0)
 					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
 			}
@@ -8493,7 +8493,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 1);
+		rdamage = i64max(rdamage, 0);
 	}
 
 	if (rdamage == 0)
@@ -10473,7 +10473,7 @@ void battle_adjust_conf()
 		ShowWarning("Battle setting 'custom_cell_stack_limit' takes no effect as this server was compiled without Cell Stack Limit support.\n");
 #endif
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	battle_config.dynamic_mobs = 1;
 #endif
 }

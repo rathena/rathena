@@ -188,6 +188,12 @@ int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
 int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
 
+#ifdef MAP_GENERATOR
+struct s_generator_options {
+	bool navi;
+} gen_options;
+#endif
+
 /**
  * Get the map data
  * @param mapid: Map ID to lookup
@@ -4871,7 +4877,7 @@ void do_final(void){
 	do_final_battle();
 	do_final_chrif();
 	do_final_clan();
-#ifndef GENERATE_NAVI
+#ifndef MAP_GENERATOR
 	do_final_clif();
 #endif
 	do_final_npc();
@@ -5078,6 +5084,42 @@ const char* map_msg_txt(struct map_session_data *sd, int msg_number){
 	return "??";
 }
 
+/**
+ * Read the option specified in command line
+ *  and assign the confs used by the different server.
+ * @param argc: Argument count
+ * @param argv: Argument values
+ * @return true or Exit on failure.
+ */
+int mapgenerator_get_options(int argc, char** argv) {
+#ifdef MAP_GENERATOR
+	bool optionSet = false;
+	for (int i = 1; i < argc; i++) {
+		const char *arg = argv[i];
+		if (arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) {// -, -- and /
+		} else if (arg[0] == '/' || (++arg)[0] == '-') {// long option
+			arg++;
+
+			if (strcmp(arg, "generate-navi") == 0) {
+				gen_options.navi = true;
+			} else {
+				// pass through to default get_options
+				continue;
+			}
+
+			// clear option
+			argv[i] = nullptr;
+			optionSet = true;
+		}
+	}
+	if (!optionSet) {
+		ShowError("No options passed to the map generator, you must set at least one.\n");
+		exit(1);
+	}
+#endif
+	return 1;
+}
+
 
 /// Called when a terminate signal is received.
 void do_shutdown(void)
@@ -5136,6 +5178,9 @@ int do_init(int argc, char *argv[])
 	inter_config.emblem_woe_change = true;
 	inter_config.emblem_transparency_limit = 80;
 
+#ifdef MAP_GENERATOR
+	mapgenerator_get_options(argc, argv);
+#endif
 	cli_get_options(argc,argv);
 
 	rnd_init();
@@ -5208,7 +5253,7 @@ int do_init(int argc, char *argv[])
 	do_init_instance();
 	do_init_chrif();
 	do_init_clan();
-#ifndef GENERATE_NAVI
+#ifndef MAP_GENERATOR
 	do_init_clif();
 #endif
 	do_init_script();
@@ -5240,10 +5285,12 @@ int do_init(int argc, char *argv[])
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '" CL_WHITE "PK Mode" CL_RESET "'.\n");
 
+#ifndef MAP_GENERATOR
 	ShowStatus("Server is '" CL_GREEN "ready" CL_RESET "' and listening on port '" CL_WHITE "%d" CL_RESET "'.\n\n", map_port);
-
-#ifdef GENERATE_NAVI
-	navi_create_lists();
+#else
+	// depending on gen_options, generate the correct things
+	if (gen_options.navi)
+		navi_create_lists();
 	runflag = CORE_ST_STOP;
 #endif
 

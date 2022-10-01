@@ -36,7 +36,7 @@ else
 endif
 
 TOOLS_DEPENDS=map-server-generator
-TOOLS_FLAGS="-DGENERATE_NAVI"
+TOOLS_FLAGS="-DMAP_GENERATOR"
 
 @SET_MAKE@
 

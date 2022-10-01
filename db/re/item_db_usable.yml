@@ -13570,6 +13570,18 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Patron_Scroll);
+  - Id: 12858
+    AegisName: Golden_Potion_RG
+    Name: RG Golden Potion
+    Type: Healing
+    Buy: 0
+    Weight: 30
+    Delay:
+      Duration: 1000
+      Status: Reuse_Limit_F
+    Script: |
+      percentheal 100,100;
+      itemskill "PR_KYRIE",10;
   - Id: 12860
     AegisName: Mommy_Day_Cake
     Name: Mommy Day Cake
@@ -46416,6 +46428,40 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",19602,19603,19604,20506),1;
+  - Id: 23036
+    AegisName: Pope_Merc_Scroll2
+    Name: Pope Mercenary Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 0
+    Trade:
+      NoSell: true
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      mercenary_create 3527,1800000;
+  - Id: 23037
+    AegisName: CasualPope_Merc_Scroll2
+    Name: Casual Pope Mercenary Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 0
+    Trade:
+      NoSell: true
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      mercenary_create 3528,1800000;
   - Id: 23038
     AegisName: S_Slim_White_Box
     Name: "[Sale] Slim White Potion Box"
@@ -46576,6 +46622,23 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box9);
+  - Id: 23063
+    AegisName: Freeze_Dream
+    Name: Frozen Dream
+    Type: Usable
+    Buy: 0
+    Weight: 0
+    Trade:
+      NoSell: true
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 25088,rand(3,6);
   - Id: 23073
     AegisName: AngelPoring_Box
     Name: Angel Poring Shoes Box
@@ -46766,6 +46829,58 @@ Body:
       getitem 12508,3;
       getitem 12509,3;
       getitem 12510,3;
+  - Id: 23142
+    AegisName: EXPUP_Potion1
+    Name: Minor Growth Elixir
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Buy: 2
+    Weight: 10
+    Script: |
+      getexp (BaseLevel < 100)?15000:1500,0;
+  - Id: 23143
+    AegisName: JEXPUP_Potion1
+    Name: Minor Job Elixir
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Buy: 2
+    Weight: 10
+    Script: |
+      getexp 0,(BaseLevel < 100)?15000:1500;
+  - Id: 23144
+    AegisName: EXPUP_Potion1Box
+    Name: Minor Growth Elixir Box
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 23142,5;
+  - Id: 23145
+    AegisName: JEXPUP_Potion1Box
+    Name: Minor Job Elixir Box
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 23143,5;
   - Id: 23150
     AegisName: Lapine_DdukddakBox
     Name: Lapine Big Box

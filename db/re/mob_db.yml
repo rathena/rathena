@@ -87623,128 +87623,809 @@ Body:
     Ai: 02
 #  - Id: 3509
 #    AegisName: MOON_RABBIT
-#  - Id: 3510
-#    AegisName: POPE_MD_E_GUARD
-#  - Id: 3511
-#    AegisName: POPE_MD_E_BELIEVER_1
-#  - Id: 3512
-#    AegisName: POPE_MD_E_BELIEVER_2
-#  - Id: 3513
-#    AegisName: POPE_MD_E_DOG
-#  - Id: 3514
-#    AegisName: POPE_MD_E_BISHOP
-#  - Id: 3515
-#    AegisName: POPE_MD_E_ICICLE
-#  - Id: 3516
-#    AegisName: POPE_MD_E_LUWMIN
-#  - Id: 3517
-#    AegisName: POPE_MD_E_TITAN
-#  - Id: 3518
-#    AegisName: POPE_MD_H_GUARD
-#  - Id: 3519
-#    AegisName: POPE_MD_H_BELIEVER_1
-#  - Id: 3520
-#    AegisName: POPE_MD_H_BELIEVER_2
-#  - Id: 3521
-#    AegisName: POPE_MD_H_DOG
-#  - Id: 3522
-#    AegisName: POPE_MD_H_BISHOP
-#  - Id: 3523
-#    AegisName: POPE_MD_H_ICICLE
-#  - Id: 3524
-#    AegisName: POPE_MD_H_LUWMIN
-#  - Id: 3525
-#    AegisName: POPE_MD_H_TITAN
-#  - Id: 3526
-#    AegisName: POPE_MD_H_KTULLANUX
-#  - Id: 3527
-#    AegisName: POPE_MD_MERC_NORMAL
-#  - Id: 3528
-#    AegisName: POPE_MD_MERC_CASUAL
-#  - Id: 3529
-#    AegisName: JP_E_MONSTER_1
-#  - Id: 3530
-#    AegisName: JP_E_MONSTER_2
-#  - Id: 3531
-#    AegisName: JP_E_MONSTER_3
-#  - Id: 3532
-#    AegisName: JP_E_MONSTER_4
-#  - Id: 3533
-#    AegisName: JP_E_MONSTER_5
-#  - Id: 3534
-#    AegisName: JP_E_MONSTER_6
-#  - Id: 3535
-#    AegisName: JP_E_MONSTER_7
-#  - Id: 3536
-#    AegisName: JP_E_MONSTER_8
-#  - Id: 3537
-#    AegisName: JP_E_MONSTER_9
-#  - Id: 3538
-#    AegisName: JP_E_MONSTER_10
-#  - Id: 3539
-#    AegisName: JP_E_MONSTER_11
-#  - Id: 3540
-#    AegisName: JP_E_MONSTER_12
-#  - Id: 3541
-#    AegisName: JP_E_MONSTER_13
-#  - Id: 3542
-#    AegisName: JP_E_MONSTER_14
-#  - Id: 3543
-#    AegisName: JP_E_MONSTER_15
-#  - Id: 3544
-#    AegisName: JP_E_MONSTER_16
-#  - Id: 3545
-#    AegisName: JP_E_MONSTER_17
-#  - Id: 3546
-#    AegisName: JP_E_MONSTER_18
-#  - Id: 3547
-#    AegisName: JP_E_MONSTER_19
-#  - Id: 3548
-#    AegisName: JP_E_MONSTER_20
-#  - Id: 3549
-#    AegisName: JP_E_MONSTER_21
-#  - Id: 3550
-#    AegisName: JP_E_MONSTER_22
-#  - Id: 3551
-#    AegisName: JP_E_MONSTER_23
-#  - Id: 3552
-#    AegisName: JP_E_MONSTER_24
-#  - Id: 3553
-#    AegisName: JP_E_MONSTER_25
-#  - Id: 3554
-#    AegisName: JP_E_MONSTER_26
-#  - Id: 3555
-#    AegisName: JP_E_MONSTER_27
-#  - Id: 3556
-#    AegisName: JP_E_MONSTER_28
-#  - Id: 3557
-#    AegisName: JP_E_MONSTER_29
-#  - Id: 3558
-#    AegisName: JP_E_MONSTER_30
-#  - Id: 3559
-#    AegisName: JP_E_MONSTER_31
-#  - Id: 3560
-#    AegisName: JP_E_MONSTER_32
-#  - Id: 3561
-#    AegisName: JP_E_MONSTER_33
-#  - Id: 3562
-#    AegisName: JP_E_MONSTER_34
-#  - Id: 3563
-#    AegisName: JP_E_MONSTER_35
-#  - Id: 3564
-#    AegisName: JP_E_MONSTER_36
-#  - Id: 3565
-#    AegisName: JP_E_MONSTER_37
-#  - Id: 3566
-#    AegisName: JP_E_MONSTER_38
-#  - Id: 3567
-#    AegisName: JP_E_MONSTER_39
-#  - Id: 3568
-#    AegisName: JP_E_MONSTER_40
-#  - Id: 3569
-#    AegisName: POPE_MD_H_MERC_NORMAL
-#  - Id: 3570
-#    AegisName: POPE_MD_H_MERC_CASUAL
+  - Id: 3510
+    AegisName: POPE_MD_E_GUARD
+    Name: Temple Guard
+    Level: 84
+    Hp: 30000
+    BaseExp: 440
+    JobExp: 380
+    Attack: 230
+    Attack2: 60
+    Defense: 50
+    MagicDefense: 20
+    Str: 70
+    Agi: 25
+    Vit: 50
+    Int: 1
+    Dex: 45
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1200
+    AttackMotion: 1200
+    DamageMotion: 480
+    Ai: 09
+    Drops:
+      - Item: Black_Mask
+        Rate: 3000
+      - Item: Silver_Bracelet
+        Rate: 3000  
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 800
+  - Id: 3511
+    AegisName: POPE_MD_E_BELIEVER_1
+    Name: Enraged Devotee
+    Level: 82
+    Hp: 19500
+    BaseExp: 998
+    JobExp: 905
+    Attack: 320
+    Attack2: 30
+    Defense: 75
+    MagicDefense: 30
+    Str: 64
+    Agi: 45
+    Vit: 40
+    Int: 15
+    Dex: 60
+    Luk: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: White_Mask
+        Rate: 3000
+      - Item: Bloody_Page
+        Rate: 1000
+      - Item: Ice_Heart
+        Rate: 2000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3512
+    AegisName: POPE_MD_E_BELIEVER_2
+    Name: Enraged Devotee
+    Level: 85
+    Hp: 22500
+    BaseExp: 998
+    JobExp: 905
+    Attack: 360
+    Attack2: 40
+    Defense: 65
+    MagicDefense: 40
+    Str: 72
+    Agi: 50
+    Vit: 35
+    Int: 10
+    Dex: 55
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Petite_DiablOfs_Wing
+        Rate: 1000
+      - Item: White_Mask
+        Rate: 2000
+      - Item: Clattering_Skull
+        Rate: 2000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3513
+    AegisName: POPE_MD_E_DOG
+    Name: Enraged Dog
+    Level: 85
+    Hp: 27000
+    BaseExp: 1005
+    JobExp: 952
+    Attack: 380
+    Attack2: 42
+    Defense: 40
+    MagicDefense: 10
+    Str: 80
+    Agi: 20
+    Vit: 50
+    Int: 5
+    Dex: 30
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 140
+    AttackDelay: 824
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Sharpened_Cuspid
+        Rate: 2000
+      - Item: Hot_Hair
+        Rate: 1000
+      - Item: Skel_Bone
+        Rate: 800
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3514
+    AegisName: POPE_MD_E_BISHOP
+    Name: Enraged High Priest
+    Level: 87
+    Hp: 142500
+    BaseExp: 1789
+    JobExp: 1455
+    Attack: 350
+    Attack2: 50
+    Defense: 35
+    MagicDefense: 30
+    Str: 32
+    Agi: 48
+    Vit: 45
+    Int: 75
+    Dex: 64
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1100
+    AttackMotion: 1100
+    DamageMotion: 480
+    Ai: 20
+    Class: Boss
+    Drops:
+      - Item: Dream_Piece
+        Rate: 10000
+      - Item: Bishop_Necklace
+        Rate: 100
+      - Item: Ice_Heart
+        Rate: 1000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3515
+    AegisName: POPE_MD_E_ICICLE
+    Name: Frozen Heart
+    Level: 80
+    Hp: 1012
+    BaseExp: 98
+    JobExp: 80
+    Attack: 287
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 10
+    Str: 99
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 50
+    Luk: 1
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 1344
+    Ai: 10
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 3516
+    AegisName: POPE_MD_E_LUWMIN
+    Name: Enraged Luwmin
+    Level: 90
+    Hp: 600000
+    BaseExp: 3089
+    JobExp: 2555
+    Attack: 400
+    Attack2: 60
+    Defense: 40
+    MagicDefense: 45
+    Str: 36
+    Agi: 48
+    Vit: 50
+    Int: 85
+    Dex: 64
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Ai: 20
+    Class: Boss
+    Drops:
+      - Item: Dream_Piece
+        Rate: 10000
+      - Item: Dandelion_Ring
+        Rate: 500
+      - Item: Frozen_Rose
+        Rate: 50
+      - Item: Ice_Heart
+        Rate: 1000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+      - Item: Elemental_Water
+        Rate: 100
+        StealProtected: true
+  - Id: 3517
+    AegisName: POPE_MD_E_TITAN
+    Name: Ice Titan
+    Level: 65
+    Hp: 15000
+    BaseExp: 200
+    JobExp: 150
+    Attack: 180
+    Attack2: 50
+    Defense: 30
+    MagicDefense: 10
+    Str: 42
+    Agi: 20
+    Vit: 35
+    Int: 1
+    Dex: 25
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 210
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Ai: 04
+  - Id: 3518
+    AegisName: POPE_MD_H_GUARD
+    Name: Temple Guard
+    Level: 130
+    Hp: 165000
+    BaseExp: 3205
+    JobExp: 2850
+    Attack: 1238
+    Attack2: 158
+    Defense: 98
+    MagicDefense: 47
+    Str: 106
+    Agi: 110
+    Vit: 61
+    Int: 53
+    Dex: 133
+    Luk: 53
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1100
+    AttackMotion: 1100
+    DamageMotion: 480
+    Ai: 09
+    Drops:
+      - Item: Black_Mask
+        Rate: 3000
+      - Item: Silver_Bracelet
+        Rate: 3000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3519
+    AegisName: POPE_MD_H_BELIEVER_1
+    Name: Enraged Devotee
+    Level: 133
+    Hp: 127500
+    BaseExp: 3413
+    JobExp: 2942
+    Attack: 1284
+    Attack2: 178
+    Defense: 105
+    MagicDefense: 50
+    Str: 110
+    Agi: 80
+    Vit: 65
+    Int: 58
+    Dex: 135
+    Luk: 63
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: White_Mask
+        Rate: 3000
+      - Item: Bloody_Page
+        Rate: 1000
+      - Item: Ice_Heart
+        Rate: 2000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3520
+    AegisName: POPE_MD_H_BELIEVER_2
+    Name: Enraged Devotee
+    Level: 134
+    Hp: 135000
+    BaseExp: 3568
+    JobExp: 3001
+    Attack: 1308
+    Attack2: 210
+    Defense: 108
+    MagicDefense: 55
+    Str: 113
+    Agi: 75
+    Vit: 66
+    Int: 20
+    Dex: 80
+    Luk: 63
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Petite_DiablOfs_Wing
+        Rate: 1000
+      - Item: White_Mask
+        Rate: 2000
+      - Item: Clattering_Skull
+        Rate: 2000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3521
+    AegisName: POPE_MD_H_DOG
+    Name: Enraged Dog
+    Level: 136
+    Hp: 150000
+    BaseExp: 3683
+    JobExp: 3134
+    Attack: 1400
+    Attack2: 280
+    Defense: 130
+    MagicDefense: 60
+    Str: 140
+    Agi: 30
+    Vit: 95
+    Int: 45
+    Dex: 65
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 140
+    AttackDelay: 824
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Sharpened_Cuspid
+        Rate: 2000
+      - Item: Hot_Hair
+        Rate: 1000
+      - Item: Skel_Bone
+        Rate: 800
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3522
+    AegisName: POPE_MD_H_BISHOP
+    Name: Enraged High Priest
+    Level: 140
+    Hp: 375000
+    BaseExp: 4200
+    JobExp: 3764
+    Attack: 740
+    Attack2: 300
+    Defense: 150
+    MagicDefense: 80
+    Str: 64
+    Agi: 73
+    Vit: 70
+    Int: 110
+    Dex: 83
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1100
+    AttackMotion: 1100
+    DamageMotion: 480
+    Ai: 20
+    Class: Boss
+    Drops:
+      - Item: Dream_Piece
+        Rate: 10000
+      - Item: Bishop_Necklace
+        Rate: 100
+      - Item: Ice_Heart
+        Rate: 1000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+  - Id: 3523
+    AegisName: POPE_MD_H_ICICLE
+    Name: Frozen Heart
+    Level: 130
+    Hp: 75000
+    BaseExp: 98
+    JobExp: 80
+    Attack: 540
+    Attack2: 40
+    Defense: 2
+    MagicDefense: 10
+    Str: 120
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 80
+    Luk: 1
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 1344
+    Ai: 10
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 3524
+    AegisName: POPE_MD_H_LUWMIN
+    Name: Enraged Luwmin
+    Level: 140
+    Hp: 825000
+    BaseExp: 5100
+    JobExp: 4564
+    Attack: 840
+    Attack2: 160
+    Defense: 120
+    MagicDefense: 100
+    Str: 69
+    Agi: 81
+    Vit: 75
+    Int: 130
+    Dex: 90
+    Luk: 42
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Ai: 20
+    Class: Boss
+    Drops:
+      - Item: Dream_Piece
+        Rate: 10000
+      - Item: Dandelion_Ring
+        Rate: 100
+      - Item: Frozen_Rose
+        Rate: 50
+      - Item: Ice_Heart
+        Rate: 1000
+      - Item: Center_Potion_B
+        Rate: 100
+      - Item: White_Potion_B
+        Rate: 500
+      - Item: White_Potion
+        Rate: 1000
+      - Item: Elemental_Water
+        Rate: 100
+        StealProtected: true
+  - Id: 3525
+    AegisName: POPE_MD_H_TITAN
+    Name: Ice Titan
+    Level: 90
+    Hp: 105000
+    BaseExp: 440
+    JobExp: 380
+    Attack: 230
+    Attack2: 60
+    Defense: 50
+    MagicDefense: 20
+    Str: 70
+    Agi: 25
+    Vit: 50
+    Int: 1
+    Dex: 45
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Ai: 04
+  - Id: 3526
+    AegisName: POPE_MD_H_KTULLANUX
+    Name: Vision of Ktullanux
+    Level: 141
+    Hp: 2000000
+    BaseExp: 102000
+    JobExp: 91280
+    Attack: 1000
+    Attack2: 300
+    Defense: 150
+    MagicDefense: 95
+    Str: 45
+    Agi: 89
+    Vit: 89
+    Int: 64
+    Dex: 75
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 400
+    AttackDelay: 432
+    AttackMotion: 840
+    DamageMotion: 216
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 2500
+      - Item: Yggdrasilberry
+        Rate: 2500
+    Drops:
+      - Item: Ice_Scale
+        Rate: 4500
+      - Item: Old_Card_Album
+        Rate: 1500
+      - Item: Freeze_Dream
+        Rate: 1500
+      - Item: Old_Violet_Box
+        Rate: 2500
+      - Item: Yggdrasilberry
+        Rate: 2500
+  - Id: 3527
+    AegisName: POPE_MD_MERC_NORMAL
+    Name: Official Pope
+    Level: 87
+    Hp: 37500
+    BaseExp: 440
+    JobExp: 380
+    Attack: 1
+    Attack2: 1
+    Defense: 450
+    MagicDefense: 20
+    Str: 1
+    Agi: 1
+    Vit: 70
+    Int: 5
+    Dex: 50
+    Luk: 1
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 864
+    AttackMotion: 864
+    DamageMotion: 480
+    Ai: 21
+  - Id: 3528
+    AegisName: POPE_MD_MERC_CASUAL
+    Name: Casual Pope
+    Level: 87
+    Hp: 37500
+    BaseExp: 440
+    JobExp: 380
+    Attack: 1
+    Attack2: 1
+    Defense: 450
+    MagicDefense: 20
+    Str: 1
+    Agi: 1
+    Vit: 70
+    Int: 5
+    Dex: 50
+    Luk: 1
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 864
+    AttackMotion: 864
+    DamageMotion: 480
+    Ai: 21
+  - Id: 3569
+    AegisName: POPE_MD_H_MERC_NORMAL
+    Name: Casual Pope
+    Level: 120
+    Hp: 120000
+    BaseExp: 440
+    JobExp: 380
+    Attack: 1
+    Attack2: 1
+    Defense: 999
+    MagicDefense: 105
+    Str: 2
+    Agi: 1
+    Vit: 400
+    Int: 10
+    Dex: 110
+    Luk: 1
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 864
+    AttackMotion: 864
+    DamageMotion: 480
+    Ai: 21
+  - Id: 3570
+    AegisName: POPE_MD_H_MERC_CASUAL
+    Name: Official Pope
+    Level: 120
+    Hp: 120000
+    BaseExp: 440
+    JobExp: 380
+    Attack: 1
+    Attack2: 1
+    Defense: 999
+    MagicDefense: 105
+    Str: 2
+    Agi: 1
+    Vit: 400
+    Int: 10
+    Dex: 110
+    Luk: 1
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 864
+    AttackMotion: 864
+    DamageMotion: 480
+    Ai: 21
 #  - Id: 3571
 #    AegisName: E_MONSTER_41
 #  - Id: 3572
@@ -88435,68 +89116,1342 @@ Body:
     Ai: 09
     Modes:
       Detector: true
-#  - Id: 3637
-#    AegisName: MD_SKELETON_60
-#  - Id: 3638
-#    AegisName: MD_SKELETON_80
-#  - Id: 3639
-#    AegisName: MD_SKELETON_100
-#  - Id: 3640
-#    AegisName: MD_SKELETON_120
-#  - Id: 3641
-#    AegisName: MD_SKELETON_140
-#  - Id: 3642
-#    AegisName: MD_SKELETON_160
-#  - Id: 3643
-#    AegisName: MD_FARMILIAR_60
-#  - Id: 3644
-#    AegisName: MD_FARMILIAR_80
-#  - Id: 3645
-#    AegisName: MD_FARMILIAR_100
-#  - Id: 3646
-#    AegisName: MD_FARMILIAR_120
-#  - Id: 3647
-#    AegisName: MD_FARMILIAR_140
-#  - Id: 3648
-#    AegisName: MD_FARMILIAR_160
-#  - Id: 3649
-#    AegisName: MD_ZOMBIE_60
-#  - Id: 3650
-#    AegisName: MD_ZOMBIE_80
-#  - Id: 3651
-#    AegisName: MD_ZOMBIE_100
-#  - Id: 3652
-#    AegisName: MD_ZOMBIE_120
-#  - Id: 3653
-#    AegisName: MD_ZOMBIE_140
-#  - Id: 3654
-#    AegisName: MD_ZOMBIE_160
+  - Id: 3637
+    AegisName: MD_SKELETON_60
+    Name: Skeleton
+    Level: 60
+    Hp: 2120
+    BaseExp: 1380
+    JobExp: 1370
+    Attack: 350
+    Attack2: 350
+    Defense: 31
+    MagicDefense: 4
+    Str: 28
+    Agi: 19
+    Vit: 34
+    Int: 9
+    Dex: 23
+    LUK: 2
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2228
+    AttackMotion: 528
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Oridecon
+        Rate: 9
+      - Item: Skel_Bone
+        Rate: 1600
+      - Item: Sword_Mace_
+        Rate: 8
+      - Item: Brigan
+        Rate: 3000
+      - Item: Red_Slim_Potion
+        Rate: 1000
+      - Item: Skul_Ring
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3638
+    AegisName: MD_SKELETON_80
+    Name: Skeleton
+    Level: 80
+    Hp: 4070
+    BaseExp: 2500
+    JobExp: 2200
+    Attack: 500
+    Attack2: 500
+    Defense: 41
+    MagicDefense: 8
+    Str: 34
+    Agi: 25
+    Vit: 40
+    Int: 15
+    Dex: 33
+    LUK: 4
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2228
+    AttackMotion: 528
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Oridecon
+        Rate: 36
+      - Item: Skel_Bone
+        Rate: 1600
+      - Item: Sword_Mace_
+        Rate: 32
+      - Item: Brigan
+        Rate: 3000
+      - Item: Red_Slim_Potion
+        Rate: 1000
+      - Item: Skul_Ring
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3639
+    AegisName: MD_SKELETON_100
+    Name: Skeleton
+    Level: 100
+    Hp: 16430
+    BaseExp: 3370
+    JobExp: 2740
+    Attack: 570
+    Attack2: 570
+    Defense: 51
+    MagicDefense: 12
+    Str: 41
+    Agi: 32
+    Vit: 47
+    Int: 32
+    Dex: 43
+    LUK: 6
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2228
+    AttackMotion: 528
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Oridecon
+        Rate: 90
+      - Item: Skel_Bone
+        Rate: 1600
+      - Item: Sword_Mace_
+        Rate: 80
+      - Item: Brigan
+        Rate: 3000
+      - Item: Red_Slim_Potion
+        Rate: 1000
+      - Item: Skul_Ring
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3640
+    AegisName: MD_SKELETON_120
+    Name: Skeleton
+    Level: 120
+    Hp: 31790
+    BaseExp: 6200
+    JobExp: 5530
+    Attack: 850
+    Attack2: 850
+    Defense: 61
+    MagicDefense: 16
+    Str: 49
+    Agi: 40
+    Vit: 55
+    Int: 40
+    Dex: 55
+    LUK: 8
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2228
+    AttackMotion: 528
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Oridecon
+        Rate: 360
+      - Item: Skel_Bone
+        Rate: 1600
+      - Item: Sword_Mace_
+        Rate: 320
+      - Item: Brigan
+        Rate: 3000
+      - Item: Red_Slim_Potion
+        Rate: 1000
+      - Item: Skul_Ring
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3641
+    AegisName: MD_SKELETON_140
+    Name: Skeleton
+    Level: 140
+    Hp: 72040
+    BaseExp: 16750
+    JobExp: 14440
+    Attack: 1590
+    Attack2: 1590
+    Defense: 71
+    MagicDefense: 20
+    Str: 58
+    Agi: 49
+    Vit: 64
+    Int: 49
+    Dex: 67
+    LUK: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2228
+    AttackMotion: 528
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Oridecon
+        Rate: 360
+      - Item: Skel_Bone
+        Rate: 1600
+      - Item: Sword_Mace_
+        Rate: 320
+      - Item: Brigan
+        Rate: 3000
+      - Item: Red_Slim_Potion
+        Rate: 1000
+      - Item: Skul_Ring
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3642
+    AegisName: MD_SKELETON_160
+    Name: Skeleton
+    Level: 160
+    Hp: 135210
+    BaseExp: 29190
+    JobExp: 25270
+    Attack: 2500
+    Attack2: 2500
+    Defense: 81
+    MagicDefense: 24
+    Str: 68
+    Agi: 59
+    Vit: 74
+    Int: 59
+    Dex: 79
+    LUK: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2228
+    AttackMotion: 528
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Oridecon
+        Rate: 360
+      - Item: Skel_Bone
+        Rate: 1600
+      - Item: Sword_Mace_
+        Rate: 320
+      - Item: Brigan
+        Rate: 3000
+      - Item: Red_Slim_Potion
+        Rate: 1000
+      - Item: Skul_Ring
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skeleton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3643
+    AegisName: MD_FARMILIAR_60
+    Name: Familiar
+    Level: 60
+    Hp: 2050
+    BaseExp: 1240
+    JobExp: 1180
+    Attack: 320
+    Attack2: 320
+    Defense: 26
+    MagicDefense: 10
+    Str: 20
+    Agi: 24
+    Vit: 25
+    Int: 10
+    Dex: 25
+    LUK: 2
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_Bat
+        Rate: 2750
+      - Item: Saber_
+        Rate: 10
+      - Item: Sweet_Gents
+        Rate: 8
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grape
+        Rate: 50
+      - Item: Red_Slim_Potion
+        Rate: 350
+      - Item: Center_Potion
+        Rate: 25
+      - Item: Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3644
+    AegisName: MD_FARMILIAR_80
+    Name: Familiar
+    Level: 80
+    Hp: 3990
+    BaseExp: 2380
+    JobExp: 2060
+    Attack: 450
+    Attack2: 450
+    Defense: 30
+    MagicDefense: 20
+    Str: 30
+    Agi: 30
+    Vit: 31
+    Int: 18
+    Dex: 45
+    LUK: 4
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_Bat
+        Rate: 2750
+      - Item: Saber_
+        Rate: 40
+      - Item: Sweet_Gents
+        Rate: 8
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grape
+        Rate: 100
+      - Item: Red_Slim_Potion
+        Rate: 350
+      - Item: Center_Potion
+        Rate: 25
+      - Item: Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3645
+    AegisName: MD_FARMILIAR_100
+    Name: Familiar
+    Level: 100
+    Hp: 15830
+    BaseExp: 3320
+    JobExp: 2820
+    Attack: 490
+    Attack2: 490
+    Defense: 34
+    MagicDefense: 30
+    Str: 40
+    Agi: 37
+    Vit: 38
+    Int: 28
+    Dex: 65
+    LUK: 6
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_Bat
+        Rate: 2750
+      - Item: Saber_
+        Rate: 80
+      - Item: Sweet_Gents
+        Rate: 8
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grape
+        Rate: 150
+      - Item: Red_Slim_Potion
+        Rate: 350
+      - Item: Center_Potion
+        Rate: 25
+      - Item: Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3646
+    AegisName: MD_FARMILIAR_120
+    Name: Familiar
+    Level: 120
+    Hp: 29660
+    BaseExp: 6390
+    JobExp: 5650
+    Attack: 870
+    Attack2: 870
+    Defense: 38
+    MagicDefense: 40
+    Str: 50
+    Agi: 45
+    Vit: 46
+    Int: 40
+    Dex: 85
+    LUK: 8
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_Bat
+        Rate: 2750
+      - Item: Saber_
+        Rate: 100
+      - Item: Sweet_Gents
+        Rate: 8
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grape
+        Rate: 200
+      - Item: Red_Slim_Potion
+        Rate: 350
+      - Item: Center_Potion
+        Rate: 25
+      - Item: Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3647
+    AegisName: MD_FARMILIAR_140
+    Name: Familiar
+    Level: 140
+    Hp: 68920
+    BaseExp: 16610
+    JobExp: 14460
+    Attack: 1390
+    Attack2: 1390
+    Defense: 42
+    MagicDefense: 50
+    Str: 60
+    Agi: 54
+    Vit: 55
+    Int: 54
+    Dex: 105
+    LUK: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_Bat
+        Rate: 2750
+      - Item: Saber_
+        Rate: 100
+      - Item: Sweet_Gents
+        Rate: 8
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grape
+        Rate: 200
+      - Item: Red_Slim_Potion
+        Rate: 350
+      - Item: Center_Potion
+        Rate: 25
+      - Item: Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3648
+    AegisName: MD_FARMILIAR_160
+    Name: Familiar
+    Level: 160
+    Hp: 127820
+    BaseExp: 29020
+    JobExp: 25420
+    Attack: 2560
+    Attack2: 2560
+    Defense: 46
+    MagicDefense: 60
+    Str: 70
+    Agi: 64
+    Vit: 65
+    Int: 70
+    Dex: 125
+    LUK: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_Bat
+        Rate: 2750
+      - Item: Saber_
+        Rate: 100
+      - Item: Sweet_Gents
+        Rate: 8
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grape
+        Rate: 200
+      - Item: Red_Slim_Potion
+        Rate: 350
+      - Item: Center_Potion
+        Rate: 25
+      - Item: Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3649
+    AegisName: MD_ZOMBIE_60
+    Name: Zombie
+    Level: 60
+    Hp: 2580
+    BaseExp: 1410
+    JobExp: 1240
+    Attack: 190
+    Attack2: 190
+    Defense: 20
+    MagicDefense: 6
+    Str: 21
+    Agi: 14
+    Vit: 23
+    Dex: 39
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Decayed_Nail
+        Rate: 9000
+      - Item: Cardinal_Jewel_
+        Rate: 6
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Horrendous_Mouth
+        Rate: 500
+      - Item: White_Jewel
+        Rate: 70
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Holy_Bonnet_
+        Rate: 2
+      - Item: Zombie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3650
+    AegisName: MD_ZOMBIE_80
+    Name: Zombie
+    Level: 80
+    Hp: 4990
+    BaseExp: 2570
+    JobExp: 2010
+    Attack: 280
+    Attack2: 280
+    Defense: 25
+    MagicDefense: 12
+    Str: 28
+    Agi: 21
+    Vit: 30
+    Dex: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Decayed_Nail
+        Rate: 9000
+      - Item: Cardinal_Jewel_
+        Rate: 24
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Horrendous_Mouth
+        Rate: 1000
+      - Item: White_Jewel
+        Rate: 140
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Holy_Bonnet_
+        Rate: 4
+      - Item: Zombie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3651
+    AegisName: MD_ZOMBIE_100
+    Name: Zombie
+    Level: 100
+    Hp: 17590
+    BaseExp: 3150
+    JobExp: 2960
+    Attack: 660
+    Attack2: 660
+    Defense: 30
+    MagicDefense: 18
+    Str: 36
+    Agi: 29
+    Vit: 38
+    Dex: 51
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Decayed_Nail
+        Rate: 9000
+      - Item: Cardinal_Jewel_
+        Rate: 60
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Horrendous_Mouth
+        Rate: 2000
+      - Item: White_Jewel
+        Rate: 210
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Holy_Bonnet_
+        Rate: 8
+      - Item: Zombie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3652
+    AegisName: MD_ZOMBIE_120
+    Name: Zombie
+    Level: 120
+    Hp: 33560
+    BaseExp: 6260
+    JobExp: 5400
+    Attack: 720
+    Attack2: 720
+    Defense: 35
+    MagicDefense: 24
+    Str: 43
+    Agi: 38
+    Vit: 47
+    Dex: 65
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Decayed_Nail
+        Rate: 9000
+      - Item: Cardinal_Jewel_
+        Rate: 240
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Horrendous_Mouth
+        Rate: 3000
+      - Item: White_Jewel
+        Rate: 280
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Holy_Bonnet_
+        Rate: 16
+      - Item: Zombie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3653
+    AegisName: MD_ZOMBIE_140
+    Name: Zombie
+    Level: 140
+    Hp: 75060
+    BaseExp: 16790
+    JobExp: 14690
+    Attack: 1480
+    Attack2: 1480
+    Defense: 40
+    MagicDefense: 30
+    Str: 53
+    Agi: 48
+    Vit: 57
+    Dex: 74
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Decayed_Nail
+        Rate: 9000
+      - Item: Cardinal_Jewel_
+        Rate: 240
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Horrendous_Mouth
+        Rate: 4000
+      - Item: White_Jewel
+        Rate: 350
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Holy_Bonnet_
+        Rate: 32
+      - Item: Zombie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3654
+    AegisName: MD_ZOMBIE_160
+    Name: Zombie
+    Level: 160
+    Hp: 146220
+    BaseExp: 29110
+    JobExp: 25470
+    Attack: 2590
+    Attack2: 2590
+    Defense: 45
+    MagicDefense: 36
+    Str: 64
+    Agi: 59
+    Vit: 68
+    Dex: 86
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Decayed_Nail
+        Rate: 9000
+      - Item: Cardinal_Jewel_
+        Rate: 240
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Horrendous_Mouth
+        Rate: 5000
+      - Item: White_Jewel
+        Rate: 420
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Holy_Bonnet_
+        Rate: 64
+      - Item: Zombie_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3655
 #    AegisName: E_MOBSTER
 #  - Id: 3656
 #    AegisName: B_THE_PAPER
 #  - Id: 3657
 #    AegisName: B_THE_PAPER2
-#  - Id: 3658
-#    AegisName: MD_LICH_LORD_100
-#  - Id: 3659
-#    AegisName: MD_LICH_LORD_160
-#  - Id: 3660
-#    AegisName: MD_NIGHTMARE_100
-#  - Id: 3661
-#    AegisName: MD_NIGHTMARE_160
-#  - Id: 3662
-#    AegisName: MD_JAKK_100
-#  - Id: 3663
-#    AegisName: MD_JAKK_160
-#  - Id: 3664
-#    AegisName: MD_GHOUL_100
-#  - Id: 3665
-#    AegisName: MD_GHOUL_160
-#  - Id: 3666
-#    AegisName: MD_DRAINLIAR_100
-#  - Id: 3667
-#    AegisName: MD_DRAINLIAR_160
+  - Id: 3658
+    AegisName: MD_LICH_LORD_100
+    Name: Lich Lord
+    Level: 100
+    Hp: 2516502
+    BaseExp: 86889
+    JobExp: 65667
+    MvpExp: 10000
+    Attack: 4672
+    Attack2: 4140
+    Defense: 330
+    MagicDefense: 168
+    Str: 128
+    Agi: 156
+    Vit: 174
+    Int: 152
+    Dex: 223
+    Luk: 76
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: Magic_Card_Album
+        Rate: 50
+      - Item: Magic_Card_Album
+        Rate: 50
+    Drops:
+      - Item: Royal_Guardian_Ring
+        Rate: 70
+      - Item: Diamond_Dust_Scroll_1_5
+        Rate: 10
+      - Item: Crimson_Rock_Scroll_1_5
+        Rate: 10
+      - Item: Sienna_Execrate_Scroll_1_5
+        Rate: 10
+      - Item: Varetyr_Spear_Scroll_1_5
+        Rate: 10
+      - Item: Golden_Potion_RG
+        Rate: 500
+      - Item: Golden_Potion_RG
+        Rate: 500
+      - Item: Lich_Lord_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3659
+    AegisName: MD_LICH_LORD_160
+    Name: Lich Lord
+    Level: 160
+    Hp: 23485539
+    BaseExp: 223021
+    JobExp: 218388
+    MvpExp: 100000
+    Attack: 16540
+    Attack2: 13470
+    Defense: 330
+    MagicDefense: 168
+    Str: 148
+    Agi: 176
+    Vit: 194
+    Int: 172
+    Dex: 243
+    Luk: 96
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: Magic_Card_Album
+        Rate: 50
+      - Item: Magic_Card_Album
+        Rate: 50
+    Drops:
+      - Item: Royal_Guardian_Ring
+        Rate: 1000
+      - Item: Diamond_Dust_Scroll_1_5
+        Rate: 500
+      - Item: Crimson_Rock_Scroll_1_5
+        Rate: 500
+      - Item: Sienna_Execrate_Scroll_1_5
+        Rate: 500
+      - Item: Varetyr_Spear_Scroll_1_5
+        Rate: 500
+      - Item: Golden_Potion_RG
+        Rate: 10000
+      - Item: Golden_Potion_RG
+        Rate: 10000
+      - Item: Lich_Lord_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3660
+    AegisName: MD_NIGHTMARE_100
+    Name: Nightmare
+    Level: 100
+    Hp: 21300
+    BaseExp: 1504
+    JobExp: 1730
+    Attack: 599
+    Attack2: 503
+    Defense: 116
+    MagicDefense: 15
+    Str: 67
+    Agi: 52
+    Vit: 40
+    Int: 25
+    Dex: 107
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1816
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Horseshoe
+        Rate: 3000
+      - Item: Blue_Herb
+        Rate: 250
+      - Item: Rosary
+        Rate: 1
+      - Item: Old_Blue_Box
+        Rate: 15
+      - Item: StoneForWork
+        Rate: 10
+      - Item: Inverse_Scale_
+        Rate: 1
+      - Item: Oridecon
+        Rate: 30
+      - Item: Nightmare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3661
+    AegisName: MD_NIGHTMARE_160
+    Name: Nightmare
+    Level: 160
+    Hp: 199129
+    BaseExp: 16131
+    JobExp: 14766
+    Attack: 2722
+    Attack2: 2370
+    Defense: 116
+    MagicDefense: 15
+    Str: 87
+    Agi: 72
+    Vit: 60
+    Int: 45
+    Dex: 127
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1816
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Horseshoe
+        Rate: 3000
+      - Item: Blue_Herb
+        Rate: 250
+      - Item: Rosary
+        Rate: 1
+      - Item: Old_Blue_Box
+        Rate: 15
+      - Item: StoneForWork
+        Rate: 500
+      - Item: Inverse_Scale_
+        Rate: 1
+      - Item: Oridecon
+        Rate: 30
+      - Item: Nightmare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3662
+    AegisName: MD_JAKK_100
+    Name: Jakk
+    Level: 100
+    Hp: 23933
+    BaseExp: 1476
+    JobExp: 1524
+    Attack: 633
+    Attack2: 542
+    Defense: 90
+    MagicDefense: 25
+    Str: 68
+    Agi: 63
+    Vit: 62
+    Int: 35
+    Dex: 91
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1180
+    AttackMotion: 480
+    DamageMotion: 648
+    Ai: 21
+    Drops:
+      - Item: Pumpkin_Head
+        Rate: 4500
+      - Item: Zargon
+        Rate: 450
+      - Item: Elunium
+        Rate: 16
+      - Item: StoneForWork
+        Rate: 10
+      - Item: Frozen_Heart
+        Rate: 3
+      - Item: Pumpkin
+        Rate: 500
+      - Item: Light_Granule
+        Rate: 5
+      - Item: Jakk_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3663
+    AegisName: MD_JAKK_160
+    Name: Jakk
+    Level: 160
+    Hp: 181967
+    BaseExp: 14524
+    JobExp: 16121
+    Attack: 2575
+    Attack2: 2251
+    Defense: 90
+    MagicDefense: 25
+    Str: 88
+    Agi: 83
+    Vit: 82
+    Int: 55
+    Dex: 111
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1180
+    AttackMotion: 480
+    DamageMotion: 648
+    Ai: 21
+    Drops:
+      - Item: Pumpkin_Head
+        Rate: 4500
+      - Item: Zargon
+        Rate: 450
+      - Item: Elunium
+        Rate: 16
+      - Item: StoneForWork
+        Rate: 500
+      - Item: Frozen_Heart
+        Rate: 3
+      - Item: Pumpkin
+        Rate: 500
+      - Item: Light_Granule
+        Rate: 5
+      - Item: Jakk_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3664
+    AegisName: MD_GHOUL_100
+    Name: Ghoul
+    Level: 100
+    Hp: 24471
+    BaseExp: 1534
+    JobExp: 1472
+    Attack: 630
+    Attack2: 527
+    Defense: 78
+    MagicDefense: 5
+    Str: 66
+    Agi: 32
+    Vit: 39
+    Int: 21
+    Dex: 60
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 2456
+    AttackMotion: 912
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Horrendous_Mouth
+        Rate: 3000
+      - Item: Oridecon
+        Rate: 50
+      - Item: White_Herb
+        Rate: 350
+      - Item: StoneForWork
+        Rate: 10
+      - Item: Skul_Ring
+        Rate: 3
+      - Item: Mementos
+        Rate: 750
+      - Item: Poison_Herb_Nerium
+        Rate: 10
+      - Item: Ghoul_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3665
+    AegisName: MD_GHOUL_160
+    Name: Ghoul
+    Level: 160
+    Hp: 200634
+    BaseExp: 13663
+    JobExp: 14004
+    Attack: 2674
+    Attack2: 2325
+    Defense: 78
+    MagicDefense: 5
+    Str: 86
+    Agi: 42
+    Vit: 59
+    Int: 41
+    Dex: 80
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 2456
+    AttackMotion: 912
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Horrendous_Mouth
+        Rate: 3000
+      - Item: Oridecon
+        Rate: 50
+      - Item: White_Herb
+        Rate: 350
+      - Item: StoneForWork
+        Rate: 500
+      - Item: Skul_Ring
+        Rate: 3
+      - Item: Mementos
+        Rate: 750
+      - Item: Poison_Herb_Nerium
+        Rate: 500
+      - Item: Ghoul_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3666
+    AegisName: MD_DRAINLIAR_100
+    Name: Drainliar
+    Level: 100
+    Hp: 22350
+    BaseExp: 1666
+    JobExp: 1595
+    Attack: 580
+    Attack2: 512
+    Defense: 50
+    MagicDefense: 15
+    Str: 45
+    Agi: 54
+    Vit: 44
+    Int: 32
+    Dex: 80
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 19
+    Drops:
+      - Item: Oridecon
+        Rate: 30
+      - Item: Tooth_Of_Bat
+        Rate: 1500
+      - Item: Red_Jewel
+        Rate: 10
+      - Item: StoneForWork
+        Rate: 10
+      - Item: Wing_Of_Red_Bat
+        Rate: 2750
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Poison_Herb_Amoena
+        Rate: 10
+      - Item: Drainliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3667
+    AegisName: MD_DRAINLIAR_160
+    Name: Drainliar
+    Level: 160
+    Hp: 184779
+    BaseExp: 15146
+    JobExp: 13809
+    Attack: 2542
+    Attack2: 2239
+    Defense: 50
+    MagicDefense: 15
+    Str: 65
+    Agi: 74
+    Vit: 64
+    Int: 52
+    Dex: 100
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 19
+    Drops:
+      - Item: Oridecon
+        Rate: 30
+      - Item: Tooth_Of_Bat
+        Rate: 1500
+      - Item: Red_Jewel
+        Rate: 10
+      - Item: StoneForWork
+        Rate: 500
+      - Item: Wing_Of_Red_Bat
+        Rate: 2750
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Poison_Herb_Amoena
+        Rate: 10
+      - Item: Drainliar_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3668
 #    AegisName: B_KIEL_
   - Id: 3669
