@@ -43,7 +43,6 @@ int chrif_setip(const char* ip);
 void chrif_setport(uint16 port);
 
 int chrif_isconnected(void);
-void chrif_check_shutdown(void);
 
 extern int chrif_connected;
 extern int other_mapserver_count;
