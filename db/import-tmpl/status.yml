@@ -37,8 +37,9 @@
 #   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
 #   End:                      List of Status Changes that will end when the status activates. (Optional)
 #   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
+#   Cancel:                   List of Status Changes that will be canceled when the status becomes inactive. (Optional)
 ###########################################################################
 
 Header:
   Type: STATUS_DB
-  Version: 2
+  Version: 3

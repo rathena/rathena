@@ -13044,11 +13044,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 						((TBL_MER*)d_bl)->devotion_flag = 0;
 					clif_devotion(d_bl, NULL);
 				}
-
-				status_change_end(bl, SC_AUTOGUARD);
-				status_change_end(bl, SC_DEFENDER);
-				status_change_end(bl, SC_REFLECTSHIELD);
-				status_change_end(bl, SC_ENDURE);
 			}
 			break;
 
@@ -13110,12 +13105,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
 					clif_status_change(bl,EFST_MOON,0,0,0,0,0);
-
-#ifdef RENEWAL
-				status_change_end(bl, SC_ENSEMBLEFATIGUE);
-#else
-				status_change_end(bl, SC_LONGING);
-#endif
 			}
 			break;
 		case SC_NOCHAT:
@@ -13343,9 +13332,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				}
 			}
 			break;
-		case SC_TEARGAS:
-			status_change_end(bl,SC_TEARGAS_SOB);
-			break;
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
 			if( sd && pc_issit(sd) && pc_setstand(sd, false) )
@@ -13359,25 +13345,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			calc_flag = status_db.getSCB_ALL(); // Required for overlapping
 			break;
 
-		case SC_SUNSTANCE:
-			status_change_end(bl, SC_LIGHTOFSUN);
-			break;
-		case SC_LUNARSTANCE:
-			status_change_end(bl, SC_NEWMOON);
-			status_change_end(bl, SC_LIGHTOFMOON);
-			break;
-		case SC_STARSTANCE:
-			status_change_end(bl, SC_FALLINGSTAR);
-			status_change_end(bl, SC_LIGHTOFSTAR);
-			break;
-		case SC_UNIVERSESTANCE:
-			status_change_end(bl, SC_LIGHTOFSUN);
-			status_change_end(bl, SC_NEWMOON);
-			status_change_end(bl, SC_LIGHTOFMOON);
-			status_change_end(bl, SC_FALLINGSTAR);
-			status_change_end(bl, SC_LIGHTOFSTAR);
-			status_change_end(bl, SC_DIMENSION);
-			break;
 		case SC_GRAVITYCONTROL:
 			status_fix_damage(bl, bl, sce->val2, clif_damage(bl, bl, gettick(), 0, 0, sce->val2, 0, DMG_NORMAL, 0, false), 0);
 			clif_specialeffect(bl, 223, AREA);
@@ -13451,13 +13418,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
 			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
 			break;
-		case SC_SWORDCLAN:
-		case SC_ARCWANDCLAN:
-		case SC_GOLDENMACECLAN:
-		case SC_CROSSBOWCLAN:
-		case SC_JUMPINGCLAN:
-			status_change_end(bl,SC_CLAN_INFO);
-			break;
 		case SC_DIMENSION1:
 		case SC_DIMENSION2:
 			if (sd)
@@ -13495,14 +13455,19 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				pc_delservantball( *sd, sd->servantball );
 			}
 			break;
-		case SC_CHARGINGPIERCE:
-			status_change_end(bl, SC_CHARGINGPIERCE_COUNT);
-			break;
 		case SC_ABYSSFORCEWEAPON:
 			if( sd ){
 				pc_delabyssball( *sd, sd->abyssball );
 			}
 			break;
+	}
+
+	// End statuses found in the Cancel list.
+	if (!scdb->cancel.empty()) {
+		for (const auto &it : scdb->cancel) {
+			if (it == type)
+				status_change_end(bl, it);
+		}
 	}
 
 	// Reset the options as needed

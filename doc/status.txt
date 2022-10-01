@@ -276,6 +276,10 @@ EndReturn: List of status that will end if the status activates and it won't giv
 
 ---------------------------------------
 
+Cancel: List of status that will be canceled when the status becomes inactive.
+
+---------------------------------------
+
 Notes:
 
 By default, statuses are 'Buff' (those that aren't explicitely given the 'Debuff' flag) which are removable by 'map_quit' in combination with 'battle_config.debuff_on_logout'.

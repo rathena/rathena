@@ -37,11 +37,12 @@
 #   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
 #   End:                      List of Status Changes that will end when the status activates. (Optional)
 #   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
+#   Cancel:                   List of Status Changes that will be canceled when the status becomes inactive. (Optional)
 ###########################################################################
 
 Header:
   Type: STATUS_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Status: Stone
@@ -1413,6 +1414,11 @@ Body:
       NoSave: true
       RemoveOnChangeMap: true
       OverlapIgnoreLevel: true
+    Cancel:
+      Autoguard: true
+      Defender: true
+      ReflectShield: true
+      Endure: true
   - Status: Sacrifice
     DurationLookup: PA_SACRIFICE
   - Status: Steelbody
@@ -1682,6 +1688,8 @@ Body:
       RemoveOnChangeMap: true
       RequireWeapon: true
       OverlapIgnoreLevel: true
+    Cancel:
+      EnsembleFatigue: true
   - Status: Elementalchange
     Icon: EFST_ARMOR_PROPERTY
     DurationLookup: NPC_ATTRICHANGE
@@ -4419,6 +4427,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoSave: true
+    Cancel:
+      TearGas_Sob: true
   - Status: Mandragora
     Icon: EFST_MANDRAGORA
     DurationLookup: GN_MANDRAGORA
@@ -6582,6 +6592,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+    Cancel:
+      Clan_Info: true
   - Status: Arcwandclan
     Icon: EFST_ARCWANDCLAN
     CalcFlags:
@@ -6596,6 +6608,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+    Cancel:
+      Clan_Info: true
   - Status: Goldenmaceclan
     Icon: EFST_GOLDENMACECLAN
     CalcFlags:
@@ -6610,6 +6624,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+    Cancel:
+      Clan_Info: true
   - Status: Crossbowclan
     Icon: EFST_CROSSBOWCLAN
     CalcFlags:
@@ -6624,6 +6640,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+    Cancel:
+      Clan_Info: true
   - Status: Jumpingclan
     Icon: EFST_JUMPINGCLAN
     CalcFlags:
@@ -6640,6 +6658,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+    Cancel:
+      Clan_Info: true
   - Status: Tarotcard
     Icon: EFST_TAROTCARD
     DurationLookup: CG_TAROTCARD
@@ -6976,6 +6996,9 @@ Body:
       Sunstance: true
       Starstance: true
       Universestance: true
+    Cancel:
+      NewMoon: true
+      LightOfMoon: true
   - Status: Universestance
     Icon: EFST_UNIVERSESTANCE
     DurationLookup: SJ_UNIVERSESTANCE
@@ -6990,6 +7013,13 @@ Body:
       Sunstance: true
       Lunarstance: true
       Starstance: true
+    Cancel:
+      LightOfSun: true
+      NewMoon: true
+      LightOfMoon: true
+      FallingStar: true
+      LightOfStar: true
+      Dimension: true
   - Status: Sunstance
     Icon: EFST_SUNSTANCE
     DurationLookup: SJ_SUNSTANCE
@@ -7000,6 +7030,8 @@ Body:
       Lunarstance: true
       Starstance: true
       Universestance: true
+    Cancel:
+      LightOfSun: true
   - Status: Flashkick
     Icon: EFST_FLASHKICK
     DurationLookup: SJ_FLASHKICK
@@ -7035,6 +7067,9 @@ Body:
       Sunstance: true
       Lunarstance: true
       Universestance: true
+    Cancel:
+      FallingStar: true
+      LightOfStar: true
   - Status: Dimension
     Icon: EFST_DIMENSION
     DurationLookup: SJ_BOOKOFDIMENSION
@@ -7594,6 +7629,8 @@ Body:
     DurationLookup: DK_CHARGINGPIERCE
     Flags:
       SendVal1: true
+    Cancel:
+      ChargingPierce_Count: true
   - Status: Chargingpierce_Count
     Icon: EFST_CHARGINGPIERCE_COUNT
     Flags:
