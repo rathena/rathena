@@ -166,6 +166,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "[Temple Item Manager]";
 			mes "Oh, that's a shame. I was going to go into more detail this time.";
 			close;
+		}
 	case 2:
 		mes "[Temple Item Manager]";
 		mes "Great decision! Do you want it on your ^0000cdleft^000000? Or the ^0000cdright^000000 side? I'm confident either way!...";
@@ -251,7 +252,6 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 		close;
 	case 3:
 		S_Cancel;
-		}
 	}
 
 S_Cancel:
