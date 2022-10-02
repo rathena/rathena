@@ -18223,7 +18223,19 @@ BUILDIN_FUNC(getrandmobid)
 	}
 
 	int flag = script_hasdata(st, 3) ? script_getnum(st, 3) : RMF_MOB_NOT_BOSS;
+	if (flag < RMF_NONE || flag > RMF_ALL) {
+		ShowWarning("buildin_getrandmobid: Invalid flag %d.\n", flag);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	int lv = script_hasdata(st, 4) ? script_getnum(st, 4) : MAX_LEVEL;
+	if (lv <= 0) {
+		ShowWarning("buildin_getrandmobid: Invalid level %d.\n", lv);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	int mob_id = mob_get_random_id(type, (enum e_random_monster_flags)flag, lv);
 
 	script_pushint(st, mob_id);
