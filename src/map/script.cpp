@@ -18218,6 +18218,7 @@ BUILDIN_FUNC(getrandmobid)
 
 	if (type < MOBG_BRANCH_OF_DEAD_TREE || type >= MOBG_MAX) {
 		ShowWarning("buildin_getrandmobid: Invalid type %d.\n", type);
+		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
