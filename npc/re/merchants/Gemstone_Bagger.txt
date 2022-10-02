@@ -9,20 +9,20 @@
 //= Gemstone Bagger
 //============================================================
 -	script	#GemstoneBagger	HIDDEN_NPC,{
-	mes "[포장 직원]";
-	mes "가방 안에 굴러다니는 자잘한 것들을 찾기 쉽게 압축 포장해 드립니다.";
-	mes "어떤 것을 정리해 드릴까요?";
+	mes "[Gemstone Bagger]";
+	mes "We pack gemstones in bags in the easy to find way.";
+	mes "What would you like to choose?";
 	next;
-	switch(select("젬스톤 주머니 교환:그만둔다")) {
+	switch(select("Exchange Gemstones:Cancel")) {
 	case 1:
-		mes "[포장 직원]";
-		mes "젬스톤 전용 주머니를 준비하겠습니다.";
+		mes "[Gemstone Bagger]";
+		mes "I will prepare a bag for gemstones.";
 		close2;
 		callshop "Gemstone_Bagger", 1;
 		break;
 	case 2:
-		mes "[포장 직원]";
-		mes "도움이 필요하면 또 오세요.";
+		mes "[Gemstone Bagger]";
+		mes "Come back if you need help.";
 		close;
 	}
 }
