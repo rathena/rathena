@@ -8147,12 +8147,15 @@ Body:
     TimeLimit: 4h
   - Id: 12376
     Title: First transaction
+  - Id: 12377
+    Title: Attack on Weekend Dungeon
+    TimeLimit: +1h
   - Id: 12378
-    Title: Fatigue recovery required
-    TimeLimit: 0h
+    Title: Time to Rest
+    TimeLimit: 4h
   - Id: 12379
-    Title: Fatigue recovery required
-    TimeLimit: 0h
+    Title: Time to Rest
+    TimeLimit: 4h
   - Id: 12381
     Title: New Continent's Food Supplier
   - Id: 12382
@@ -9326,9 +9329,19 @@ Body:
     Title: To Granma
   - Id: 14584
     Title: Back to Recorder
+  - Id: 14585
+    Title: Investigating the Cause
+    Targets:
+      - Mob: POPE_MD_E_LUWMIN
+        Count: 1
   - Id: 14586
     Title: Time to Rest
     TimeLimit: 4h
+  - Id: 14587
+    Title: Investigating the Cause
+    Targets:
+      - Mob: POPE_MD_H_KTULLANUX
+        Count: 1
   - Id: 14588
     Title: The Competition
     Targets:

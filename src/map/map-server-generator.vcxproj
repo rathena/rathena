@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B4114A9C-EEA4-433C-A830-56119A984F24}</ProjectGuid>
+    <ProjectGuid>{EB03BC16-8A47-43B9-B5BB-D0200E4A2775}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>mapserver</RootNamespace>
   </PropertyGroup>
@@ -107,7 +107,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);MAP_GENERATOR;WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4018;4200</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -125,7 +125,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);MAP_GENERATOR;WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -144,7 +144,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);MAP_GENERATOR;WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -166,7 +166,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);MAP_GENERATOR;WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -282,17 +282,13 @@
     <Delete Files="$(SolutionDir)libmysql.dll" ContinueOnError="true" />
     <Delete Files="$(SolutionDir)zlib.dll" ContinueOnError="true" />
     <Delete Files="$(SolutionDir)pcre8.dll" ContinueOnError="true" />
-    <Delete Files="$(SolutionDir)serv.bat" ContinueOnError="true" />
-    <Delete Files="$(SolutionDir)mapserv.bat" ContinueOnError="true" />
-    <Delete Files="$(SolutionDir)runserver.bat" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)navigenerator.bat" ContinueOnError="true" />
   </Target>
   <Target Name="AfterBuild">
     <Copy SourceFiles="$(SolutionDir)3rdparty\mysql\lib\$(Platform)\libmysql.dll" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)libmysql.dll')" />
     <Copy SourceFiles="$(SolutionDir)3rdparty\pcre\lib\$(Platform)\pcre8.dll" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)pcre8.dll')" />
     <Copy SourceFiles="$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.dll" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)zlib.dll')" />
-    <Copy SourceFiles="$(SolutionDir)tools\serv.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)serv.bat')" />
-    <Copy SourceFiles="$(SolutionDir)tools\mapserv.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)mapserv.bat')" />
-    <Copy SourceFiles="$(SolutionDir)tools\runserver.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)runserver.bat')" />
+    <Copy SourceFiles="$(SolutionDir)tools\navigenerator.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)navigenerator.bat')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\atcommands.yml" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\atcommands.yml')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\battle_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\battle_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\char_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\char_conf.txt')" />
@@ -334,10 +330,8 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_cash_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_cash_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_combos.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_combos.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_db.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_enchant.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_enchant.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_group_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_group_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_noequip.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_noequip.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_packages.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_packages.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_reform.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_reform.yml')" />
@@ -373,5 +367,6 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\stylist.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\stylist.yml')" />
+    <MakeDir Directories="$(SolutionDir)generated\clientside\data\luafiles514\lua files\navigation\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)generated\clientside\data\luafiles514\lua files\navigation\')" />
   </Target>
 </Project>

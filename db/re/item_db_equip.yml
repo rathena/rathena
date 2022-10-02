@@ -12472,8 +12472,8 @@ Body:
       bonus bHealPower,200;
       bonus2 bAddClass,Class_All,100;
       skill "WZ_STORMGUST",10;
-      Skill "WZ_METEOR",10;
-      Skill "WZ_VERMILION",10;
+      skill "WZ_METEOR",10;
+      skill "WZ_VERMILION",10;
       skill "GM_SANDMAN",1;
       bonus bVariableCastrate,-100;
       bonus bFixedCastrate,-100;
@@ -23845,7 +23845,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 200
-    MagicAttack: 5
     Defense: 50
     Slots: 1
     Jobs:
@@ -31877,7 +31876,7 @@ Body:
       bonus bAgi,2;
   - Id: 2606
     AegisName: Whike_Black_Tail_L
-    Name: Rental Whike Black Tail    # !todo check english name
+    Name: Rental Black Tail of Hyukke
     Type: Armor
     Locations:
       Both_Accessory: true
@@ -55437,7 +55436,7 @@ Body:
       bonus2 bSubClass,Class_Boss,.@def;
   - Id: 5977
     AegisName: C_Poker_Card_In_Mouth
-    Name: Costume Poker Card In Mouth    # !todo check english name
+    Name: "Costume: Poker Card In Mouth"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -69990,7 +69989,7 @@ Body:
       bonus2 bIgnoreDefClassRate,Class_Normal,3*((readparam(bStr)+readparam(bLuk))/15);
   - Id: 15921
     AegisName: Charm_Of_Nature_BR
-    Name: Little Nature    # !todo check english name
+    Name: Charm Of Great Nature
     Type: Armor
     Weight: 200
     Locations:
@@ -70003,7 +70002,7 @@ Body:
       bonus2 bIgnoreMdefClassRate,Class_Normal,3*((readparam(bInt)+readparam(bDex))/15);
   - Id: 15922
     AegisName: Charm_Of_Frozen_BR
-    Name: Mystic Ice Cream    # !todo check english name
+    Name: Charm Of Mistic Frozen
     Type: Armor
     Weight: 200
     Locations:
@@ -79704,7 +79703,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 200
-    MagicAttack: 20
     Slots: 1
     Locations:
       Head_Top: true
@@ -80944,7 +80942,7 @@ Body:
       autobonus2 "{}",50,100,BF_WEAPON|BF_MAGIC,"{ heal 0,-30; }";
   - Id: 18941
     AegisName: Hunting_Cap_Of_Gust
-    Name: Hunting cap Of Gust    # !todo check english name
+    Name: Hunting Cap of Gust
     Type: Armor
     Weight: 100
     Slots: 1
@@ -80962,7 +80960,7 @@ Body:
       autobonus2 "{}",50,100,BF_WEAPON|BF_MAGIC,"{ heal 0,-30; }";
   - Id: 18942
     AegisName: Knit_Cap_Of_Water
-    Name: Great Water Knit Cap    # !todo check english name
+    Name: Knit Cap of Water
     Type: Armor
     Weight: 100
     Slots: 1
@@ -80980,7 +80978,7 @@ Body:
       autobonus2 "{}",50,100,BF_WEAPON|BF_MAGIC,"{ heal 0,-30; }";
   - Id: 18943
     AegisName: Silk_Hat_Of_Earth
-    Name: Intangible Top Hat    # !todo check english name
+    Name: Silk Hat of Earth
     Type: Armor
     Weight: 100
     Slots: 1
@@ -82796,7 +82794,7 @@ Body:
       hateffect(HAT_EF_VALHALLA_IDOL,false);
   - Id: 19110
     AegisName: Valhalla_Idol_
-    Name: Valhalla Idol    # !todo check english name
+    Name: Classic Neuralizer Box
     Type: Armor
     Defense: 2
     Weight: 300
@@ -89496,7 +89494,7 @@ Body:
     View: 390
   - Id: 19703
     AegisName: C_Afro_Wig_Black
-    Name: Costume Afro Wig Black    # !todo check english name
+    Name: Costume Black Afro Wig
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -89513,7 +89511,7 @@ Body:
     ArmorLevel: 1
   - Id: 19705
     AegisName: C_Afro_Wig_Yellow
-    Name: Costume Afro Wig Yellow    # !todo check english name
+    Name: Costume Yellow Afro Wig
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91281,7 +91279,7 @@ Body:
       bonus2 bAddMonsterDropItem,22660,50;
   - Id: 19901
     AegisName: C_Viking_Helm
-    Name: Costume Viking Helm    # !todo check english name
+    Name: Costume Orc Helm
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91469,7 +91467,7 @@ Body:
       bonus bFlee,20;
   - Id: 19921
     AegisName: C_Drooping_Wild_Rose
-    Name: Costume Drooping Wild Rose    # !todo check english name
+    Name: Costume Wild Rose
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91650,7 +91648,7 @@ Body:
     View: 71
   - Id: 19940
     AegisName: C_Event_Pierrot_Nose
-    Name: Costume Event Pierrot Nose    # !todo check english name
+    Name: Costume Clown Nose
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -91668,7 +91666,7 @@ Body:
     View: 70
   - Id: 19942
     AegisName: C_Orchid_Hairband
-    Name: Costume Orchid Hairband    # !todo check english name
+    Name: Costume Orchid Hairband
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91677,7 +91675,7 @@ Body:
     View: 376
   - Id: 19943
     AegisName: C_Hat_Of_Judge
-    Name: Costume Hat Of Judge    # !todo check english name
+    Name: Costume Judge Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91687,7 +91685,7 @@ Body:
     View: 377
   - Id: 19944
     AegisName: C_RTC_Third_Best
-    Name: Costume RTC Third Best    # !todo check english name
+    Name: Costume Goddess of Victory(Purple)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91696,7 +91694,7 @@ Body:
     View: 579
   - Id: 19945
     AegisName: C_RTC_Third
-    Name: Costume RTC Third    # !todo check english name
+    Name: Costume Winner Helmet(Copper)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91705,7 +91703,7 @@ Body:
     View: 685
   - Id: 19946
     AegisName: C_Rocket_Helm_RWC
-    Name: Costume Rocket Helm    # !todo check english name
+    Name: Costume Shuttle to Apex(Blue)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91714,7 +91712,7 @@ Body:
     View: 769
   - Id: 19947
     AegisName: C_Rainbow_Scarf
-    Name: Costume Rainbow Scarf    # !todo check english name
+    Name: Costume Rainbow Scarf
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -91723,7 +91721,7 @@ Body:
     View: 460
   - Id: 19948
     AegisName: C_Globe_Hat
-    Name: Costume Globe Hat    # !todo check english name
+    Name: Costume Globe
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91741,7 +91739,7 @@ Body:
     View: 1136
   - Id: 19950
     AegisName: C_RWC_Champ_Crown
-    Name: Costume RWC Champ Crown    # !todo check english name
+    Name: Costume Princess Tiara
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -91980,7 +91978,7 @@ Body:
     View: 1142
   - Id: 19975
     AegisName: C_Boss_Beret
-    Name: Costume Boss Beret    # !todo check english name
+    Name: Costume Beret BOSS hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -92042,7 +92040,7 @@ Body:
     View: 1148
   - Id: 19981
     AegisName: C_Santa_Beard
-    Name: Costume Santa Beard    # !todo check english name
+    Name: Costume Santa's Beard
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -92159,7 +92157,7 @@ Body:
     View: 885
   - Id: 19993
     AegisName: C_Onigiri_In_Mouth
-    Name: Costume Onigiri In Mouth    # !todo check english name
+    Name: Costume Onigiri
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -96100,7 +96098,7 @@ Body:
     View: 1091
   - Id: 20410
     AegisName: C_Bone_Head
-    Name: Costume Bone Head    # !todo check english name
+    Name: Costume Bone Head
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -96941,7 +96939,7 @@ Body:
       hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,false);
   - Id: 20523
     AegisName: C_2018_RTC_Cape_TW
-    Name: Costume 2018 RTC Cape    # !todo check english name
+    Name: "Costume: 2018 RTC Memorial Cloak"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -97488,7 +97486,7 @@ Body:
     View: 62
   - Id: 20585
     AegisName: C_Ru_Bear_Bag
-    Name: Costume Bear Bag    # !todo check english name
+    Name: Costume Angry Bear Bag
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -97504,7 +97502,7 @@ Body:
     ArmorLevel: 1
   - Id: 20587
     AegisName: C_Light_Darkness_Wing
-    Name: Costume Light Darkness Wing    # !todo check english name
+    Name: Wings of Light and Darkness
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -97537,7 +97535,7 @@ Body:
     ArmorLevel: 1
   - Id: 20591
     AegisName: C_Bow_On_the_Back
-    Name: Costume Bow On the Back    # !todo check english name
+    Name: Costume Bow on Back
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -97586,7 +97584,7 @@ Body:
       NoAuction: true
   - Id: 20596
     AegisName: C_BlackBear_Back_TW
-    Name: Costume BlackBear Back    # !todo check english name
+    Name: "Costume: Black Bear Backpack"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -97629,7 +97627,7 @@ Body:
       bonus bUnbreakableHelm;
   - Id: 20602
     AegisName: C_Seraphim_Wing_TW
-    Name: Costume Archangel's Wings    # !todo check english name
+    Name: "Costume: Ace of Angel Wing (Sweet)"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -97709,7 +97707,7 @@ Body:
       NoAuction: true
   - Id: 20616
     AegisName: C_School_Bag_PU
-    Name: Costume Beginner Purple Backpack    # !todo check english name
+    Name: Costume Beginner Purple Backpack
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -98192,7 +98190,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 100
-    MagicAttack: 10
     Slots: 1
     Locations:
       Garment: true
@@ -98201,6 +98198,7 @@ Body:
     Refineable: true
     View: 7
     Script: |
+      bonus bMatk,10;
       bonus bInt,1;
       bonus bDex,1;
   - Id: 20726
@@ -100489,7 +100487,7 @@ Body:
       }
   - Id: 20926
     AegisName: 2018_RTC_Cape4_TW
-    Name: 2018 RTC Cape4    # !todo check english name
+    Name: 2018-RTC Memorial Cloak
     Type: Armor
     Weight: 300
     Defense: 20
@@ -104822,7 +104820,7 @@ Body:
          bonus bMaxSP,200;
   - Id: 22129
     AegisName: ShoesOfHero
-    Name: Hero's Shoes    # !todo check english name
+    Name: Heroic Boots
     Type: Armor
     Weight: 500
     Defense: 12
@@ -106318,7 +106316,6 @@ Body:
     AegisName: S_Healing_Weapon
     Name: Healing Shadow Weapon
     Type: Shadowgear
-    MagicAttack: 10
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -115217,7 +115214,6 @@ Body:
     AegisName: S_Booster_Earing
     Name: Booster Shadow Earring
     Type: ShadowGear
-    MagicAttack: 15
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 100
@@ -115230,6 +115226,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMatk,15;
       bonus bMaxHP,100;
   - Id: 24588
     AegisName: S_Booster_Pandent
@@ -117544,7 +117541,6 @@ Body:
     AegisName: S_AutoSpell_Shield
     Name: Auto Spell Shadow Shield
     Type: ShadowGear
-    MagicAttack: 15
     Locations:
       Shadow_Shield: true
     Refineable: true
@@ -117904,7 +117900,7 @@ Body:
       }
   - Id: 24746
     AegisName: S_S_Reload_Shield
-    Name: Separate reload shield shadow    # !todo check english name
+    Name: Separate Reload Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -117919,7 +117915,7 @@ Body:
       }
   - Id: 24747
     AegisName: S_SpellCaster_Armor
-    Name: Spellcaster Armor Shadow    # !todo check english name
+    Name: Spell Caster Shadow Armor
     Type: ShadowGear
     Locations:
       Shadow_Armor: true
@@ -117931,7 +117927,7 @@ Body:
       bonus bAtkRate,(.@r/3);
   - Id: 24748
     AegisName: S_SpellCaster_Shoes
-    Name: Spell Caster Shoes Shadow    # !todo check english name
+    Name: Spell Caster Shadow Shoes
     Type: ShadowGear
     Locations:
       Shadow_Shoes: true
@@ -117943,7 +117939,7 @@ Body:
       bonus bAtkRate,(.@r/3);
   - Id: 24749
     AegisName: S_SpellCaster_Earring
-    Name: Spell Caster Earring Shadow    # !todo check english name
+    Name: Spell Caster Shadow Earring
     Type: ShadowGear
     Locations:
       Shadow_Right_Accessory: true
@@ -117955,7 +117951,7 @@ Body:
       bonus bAtkRate,(.@r/3);
   - Id: 24750
     AegisName: S_SpellCaster_Pendant
-    Name: Spell Caster Pendant Shadow    # !todo check english name
+    Name: Spell Caster Shadow Pendant
     Type: ShadowGear
     Locations:
       Shadow_Left_Accessory: true
@@ -117967,7 +117963,7 @@ Body:
       bonus bAtkRate,(.@r/3);
   - Id: 24751
     AegisName: S_P_Power_Weapon
-    Name: Physical Power Weapon Shadow    # !todo check english name
+    Name: Physical Power Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -117983,7 +117979,7 @@ Body:
       }
   - Id: 24752
     AegisName: S_P_Power_Shield
-    Name: Physical Power Shield Shadow    # !todo check english name
+    Name: Physical Power Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -117999,7 +117995,7 @@ Body:
       }
   - Id: 24753
     AegisName: S_M_Spell_Weapon
-    Name: Magical Spell Weapon Shadow    # !todo check english name
+    Name: Magical Spell Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -118015,7 +118011,7 @@ Body:
       }
   - Id: 24754
     AegisName: S_M_Spell_Shield
-    Name: Magical Spell Shield Shadow    # !todo check english name
+    Name: Magical Spell Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -118031,7 +118027,7 @@ Body:
       }
   - Id: 24755
     AegisName: S_Concentration_Weapon
-    Name: Concentration Weapon Shadow    # !todo check english name
+    Name: Concentration Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -118049,7 +118045,7 @@ Body:
       }
   - Id: 24756
     AegisName: S_Concentration_Shield
-    Name: Concentration Shield Shadow    # !todo check english name
+    Name: Concentration Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -118067,7 +118063,7 @@ Body:
       }
   - Id: 24757
     AegisName: S_Wisdom_Weapon
-    Name: Wisdom Weapon Shadow    # !todo check english name
+    Name: Wisdom Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -118083,7 +118079,7 @@ Body:
       }
   - Id: 24758
     AegisName: S_Wisdom_Shield
-    Name: Wisdom Shield Shadow    # !todo check english name
+    Name: Wisdom Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -118099,7 +118095,7 @@ Body:
       }
   - Id: 24759
     AegisName: S_Stamina_Weapon
-    Name: Stamina Weapon Shadow    # !todo check english name
+    Name: Stamina Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -118115,7 +118111,7 @@ Body:
       }
   - Id: 24760
     AegisName: S_Stamina_Shield
-    Name: Stamina Shield Shadow    # !todo check english name
+    Name: Stamina Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -118131,7 +118127,7 @@ Body:
       }
   - Id: 24761
     AegisName: S_Creative_Weapon
-    Name: Creative Weapon Shadow    # !todo check english name
+    Name: Creative Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -118149,7 +118145,7 @@ Body:
       }
   - Id: 24762
     AegisName: S_Creative_Shield
-    Name: Creative Shield Shadow    # !todo check english name
+    Name: Creative Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -118167,7 +118163,7 @@ Body:
       }
   - Id: 24763
     AegisName: S_R_Bearers_Shoes
-    Name: Road Bearers Shoes Shadow    # !todo check english name
+    Name: Lord Bearer's Shadow Shoes
     Type: ShadowGear
     Locations:
       Shadow_Shoes: true
@@ -118184,7 +118180,7 @@ Body:
       }
   - Id: 24764
     AegisName: S_R_Bearers_Armor
-    Name: Lord Bearers Armor Shadow    # !todo check english name
+    Name: Lord Bearer's Shadow Armor
     Type: ShadowGear
     Locations:
       Shadow_Armor: true
@@ -118201,7 +118197,7 @@ Body:
       }
   - Id: 24765
     AegisName: S_R_Bearers_Pendant
-    Name: Lord Bearers Pendant Shadow    # !todo check english name
+    Name: Lord Bearer's Shadow Pendant
     Type: ShadowGear
     Locations:
       Shadow_Left_Accessory: true
@@ -118218,7 +118214,7 @@ Body:
       }
   - Id: 24766
     AegisName: S_R_Bearers_Earring
-    Name: Road Bearers Earring Shadow    # !todo check english name
+    Name: Lord Bearer's Shadow Earring
     Type: ShadowGear
     Locations:
       Shadow_Right_Accessory: true
@@ -118235,7 +118231,7 @@ Body:
       }
   - Id: 24767
     AegisName: S_Mega_Blitz_Shield
-    Name: Mega Blitz Shield Shadow    # !todo check english name
+    Name: Mega Blitz Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -118258,7 +118254,7 @@ Body:
       }
   - Id: 24768
     AegisName: S_Mega_Blitz_Weapon
-    Name: Mega Blitz Weapon Shadow    # !todo check english name
+    Name: Mega Blitz Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -128201,6 +128197,22 @@ Body:
          if (readparam(bLuk)>=90)
             bonus bCritAtkRate,5;
       }
+  - Id: 28948
+    AegisName: Doram_Shield
+    Name: Doram Shield
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 120
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMdef,5;
+      bonus2 bSubSize,Size_All,(getrefine() >= 8 ? 25 : 15);
   - Id: 28950
     AegisName: Variant_Shield
     Name: Abyss Shield
@@ -128359,6 +128371,28 @@ Body:
       bonus2 bSubEle,Ele_Wind,20;
       bonus2 bSubEle,Ele_Holy,20+(getskilllv("CR_TRUST")*2);
       bonus2 bSubEle,Ele_Ghost,20;
+  - Id: 28973
+    AegisName: aegis_28973
+    Name: Themis Balance
+    Type: Armor
+    Weight: 300
+    Defense: 90
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 1
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/5;
+      if (.@r>=9)
+         bonus2 bMagicAtkEle,Ele_Holy,3*(getskilllv("AL_HEAL")/2);
+      if (.@r>=11)
+         bonus2 bSkillCooldown,"LG_RAYOFGENESIS",-1000;
   - Id: 31027
     AegisName: C_Pretty_Bear
     Name: Costume Pretty Bear
@@ -130952,7 +130986,7 @@ Body:
     View: 1051
   - Id: 31305
     AegisName: C_TW_1th_Balloon
-    Name: Costume 1th Balloon    # !todo check english name
+    Name: "Costume: Walking Poring"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -131230,7 +131264,7 @@ Body:
     View: 1676
   - Id: 31333
     AegisName: C_Straight_Pony_WH_V
-    Name: Costume Straight Pony White    # !todo check english name
+    Name: "Costume: Straight Pony (White)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131239,7 +131273,7 @@ Body:
     View: 1395
   - Id: 31334
     AegisName: C_Straight_Pony_BU_V
-    Name: Costume Straight Pony Blue    # !todo check english name
+    Name: "Costume: Straight Pony (Blue)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131248,7 +131282,7 @@ Body:
     View: 1394
   - Id: 31335
     AegisName: C_Straight_Pony_OM_V
-    Name: Costume Straight Pony Brown    # !todo check english name
+    Name: "Costume: Straight Pony (Brown)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131257,7 +131291,7 @@ Body:
     View: 1393
   - Id: 31336
     AegisName: C_Straight_Pony_RD_V
-    Name: Costume Straight Pony Red    # !todo check english name
+    Name: "Costume: Straight Pony (Red)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131266,7 +131300,7 @@ Body:
     View: 1392
   - Id: 31337
     AegisName: C_Straight_Pony_PP_V
-    Name: Costume Straight Pony Purple    # !todo check english name
+    Name: "Costume: Straight Pony (Purple)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131275,7 +131309,7 @@ Body:
     View: 1391
   - Id: 31338
     AegisName: C_Straight_Pony_GN_V
-    Name: Costume Straight Pony Green    # !todo check english name
+    Name: "Costume: Straight Pony (Green)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131284,7 +131318,7 @@ Body:
     View: 1390
   - Id: 31339
     AegisName: C_Straight_Pony_YL_V
-    Name: Costume Straight Pony Yellow    # !todo check english name
+    Name: "Costume: Straight Pony (Yellow)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131293,7 +131327,7 @@ Body:
     View: 1389
   - Id: 31340
     AegisName: C_Straight_Pony_BL_V
-    Name: Costume Straight Pony Black    # !todo check english name
+    Name: "Costume: Straight Pony (Black)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131374,7 +131408,7 @@ Body:
     View: 1620
   - Id: 31349
     AegisName: C_Roll_Twin_BU_V
-    Name: Costume Roll Twin Blue    # !todo check english name
+    Name: "Costume: Roll Twin (Blue)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131383,7 +131417,7 @@ Body:
     View: 1511
   - Id: 31350
     AegisName: C_Roll_Twin_RD_V
-    Name: Costume Roll Twin Red    # !todo check english name
+    Name: "Costume: Roll Twin (Red)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131392,7 +131426,7 @@ Body:
     View: 1512
   - Id: 31351
     AegisName: C_Roll_Twin_YL_V
-    Name: Costume Roll Twin Yellow    # !todo check english name
+    Name: "Costume: Roll Twin (Yellow)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131401,7 +131435,7 @@ Body:
     View: 1513
   - Id: 31352
     AegisName: C_Roll_Twin_GN_V
-    Name: Costume Roll Twin Green    # !todo check english name
+    Name: "Costume: Roll Twin (Green)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131410,7 +131444,7 @@ Body:
     View: 1514
   - Id: 31353
     AegisName: C_Roll_Twin_BL_V
-    Name: Costume Roll Twin Black    # !todo check english name
+    Name: "Costume: Roll Twin (Black)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131419,7 +131453,7 @@ Body:
     View: 1515
   - Id: 31354
     AegisName: C_Roll_Twin_WH_V
-    Name: Costume Roll Twin White    # !todo check english name
+    Name: "Costume: Roll Twin (White)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131428,7 +131462,7 @@ Body:
     View: 1516
   - Id: 31355
     AegisName: C_Roll_Twin_OM_V
-    Name: Costume Roll Twin Brown    # !todo check english name
+    Name: "Costume: Roll Twin (Brown)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -131437,7 +131471,7 @@ Body:
     View: 1517
   - Id: 31356
     AegisName: C_Roll_Twin_PP_V
-    Name: Costume Roll Twin Purple    # !todo check english name
+    Name: "Costume: Roll Twin (Purple)"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -132084,7 +132118,7 @@ Body:
     View: 1040
   - Id: 31426
     AegisName: C_Male_Poring_Balloon
-    Name: Costume Male Poring Balloon    # !todo check english name
+    Name: Costume Gentle Marlin Balloon
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -132093,7 +132127,7 @@ Body:
     View: 1159
   - Id: 31427
     AegisName: C_Fmale_Poring_Balloon
-    Name: Costume Fmale Poring Balloon    # !todo check english name
+    Name: Costume Lady Poring Balloon
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -132878,7 +132912,7 @@ Body:
     View: 1756
   - Id: 31515
     AegisName: C_Leopard_Cat
-    Name: Costume Leopard Cat    # !todo check english name
+    Name: "Costume: Bengal Cat"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -132968,7 +133002,7 @@ Body:
     View: 1766
   - Id: 31525
     AegisName: C_Kid_Deviling
-    Name: Costume Kid Deviling    # !todo check english name
+    Name: Pack New Year Doll Egg
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133030,7 +133064,7 @@ Body:
     View: 1770
   - Id: 31532
     AegisName: C_Neev_Barrette
-    Name: Costume Neev Barrette    # !todo check english name
+    Name: "Costume: Neev Barrette"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -133048,7 +133082,7 @@ Body:
     View: 1771
   - Id: 31534
     AegisName: C_Rainbow_Star
-    Name: Costume Rainbow Star    # !todo check english name
+    Name: Rainbow Star
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -133057,7 +133091,7 @@ Body:
     View: 1019
   - Id: 31535
     AegisName: C_Old_Pink_Poo_Hat
-    Name: Costume Old Pink Poo Hat    # !todo check english name
+    Name: "Costume: Pink Poo Poo Hat"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133273,7 +133307,7 @@ Body:
     View: 1781
   - Id: 31558
     AegisName: C_Hoplite_Helmet_Black
-    Name: Costume Hoplite Helmet Black    # !todo check english name
+    Name: "Costume: Hoplite Helmet Black"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133514,7 +133548,7 @@ Body:
       sc_end SC_STRANGELIGHTS;
   - Id: 31584
     AegisName: C_Marin_Muffler
-    Name: Costume Marin Muffler    # !todo check english name
+    Name: "Costume: Marin's Muffler"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -133539,7 +133573,7 @@ Body:
     View: 1797
   - Id: 31587
     AegisName: C_NationalDay_helmet_TW
-    Name: Costume National Day helmet    # !todo check english name
+    Name: "Costume: Skoi Rider"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133826,7 +133860,7 @@ Body:
     ArmorLevel: 1
   - Id: 31619
     AegisName: C_Magic_Inheritor_TW
-    Name: Costume Magic Inheritor    # !todo check english name
+    Name: Costume Magic Successor
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -133842,7 +133876,7 @@ Body:
     ArmorLevel: 1
   - Id: 31621
     AegisName: C_HappyMargay_TW
-    Name: Costume Happy Margay    # !todo check english name
+    Name: Costume Happy Longtail Cat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133853,7 +133887,7 @@ Body:
     View: 1819
   - Id: 31622
     AegisName: C_LostTime_TW
-    Name: Costume Lost Time    # !todo check english name
+    Name: Costume Lost Time
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133862,7 +133896,7 @@ Body:
     View: 1820
   - Id: 31623
     AegisName: C_RomanticRose_TW
-    Name: Costume Romantic Rose    # !todo check english name
+    Name: Costume Romantic Rose
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -133893,7 +133927,7 @@ Body:
     View: 1761
   - Id: 31626
     AegisName: C_FluffyWing_TW
-    Name: Costume Fluffy Wing    # !todo check english name
+    Name: "Costume: Wing of Harmony"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -134373,7 +134407,7 @@ Body:
     View: 737
   - Id: 31678
     AegisName: C_Pig_Girl_TW
-    Name: Costume Pig Girl    # !todo check english name
+    Name: Costume Little Pig Girl Baloon
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -134382,7 +134416,7 @@ Body:
     View: 1871
   - Id: 31679
     AegisName: C_Pig_Boy_TW
-    Name: Costume Pig Boy    # !todo check english name
+    Name: Costume Little Pig Boy Baloon
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -134574,7 +134608,7 @@ Body:
     View: 1880
   - Id: 31700
     AegisName: C_ScarfOfHero_TW
-    Name: Costume Scarf Of Hero    # !todo check english name
+    Name: "Costume: Hunter Scarf"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -134583,7 +134617,7 @@ Body:
     View: 1882
   - Id: 31701
     AegisName: C_ScarfOfHero_R
-    Name: Costume Scarf Of Hero    # !todo check english name
+    Name: Costume Warrior Scarf (Rental)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -134803,7 +134837,7 @@ Body:
     View: 1773
   - Id: 31725
     AegisName: C_Lunar_Rainbow
-    Name: Costume Lunar Rainbow    # !todo check english name
+    Name: Costume Rainbow
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -134811,7 +134845,7 @@ Body:
     View: 704
   - Id: 31726
     AegisName: C_Hankie_In_Mouth
-    Name: Costume Hankie In Mouth    # !todo check english name
+    Name: Costume Handkerchief
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -134819,7 +134853,7 @@ Body:
     View: 818
   - Id: 31727
     AegisName: C_Ribbon_Green
-    Name: Costume Green Ribbon    # !todo check english name
+    Name: Costume Ribbon (Green)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -134918,7 +134952,7 @@ Body:
     ArmorLevel: 1
   - Id: 31738
     AegisName: C_Side_Tail_PP_M_TW
-    Name: Costume Side Pony Purple    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Purple)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134927,7 +134961,7 @@ Body:
     View: 1849
   - Id: 31739
     AegisName: C_Side_Tail_OM_M_TW
-    Name: Costume Side Pony Brown    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Brown)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134936,7 +134970,7 @@ Body:
     View: 1848
   - Id: 31740
     AegisName: C_Side_Tail_WH_M_TW
-    Name: Costume Side Pony White    # !todo check english name
+    Name: Costume Sweet Side Ponytail (White)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134945,7 +134979,7 @@ Body:
     View: 1847
   - Id: 31741
     AegisName: C_Side_Tail_BL_M_TW
-    Name: Costume Side Pony Black    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Black)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134954,7 +134988,7 @@ Body:
     View: 1846
   - Id: 31742
     AegisName: C_Side_Tail_GN_M_TW
-    Name: Costume Side Pony Green    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Green)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134963,7 +134997,7 @@ Body:
     View: 1845
   - Id: 31743
     AegisName: C_Side_Tail_YL_M_TW
-    Name: Costume Side Pony Yellow    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Yellow)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134972,7 +135006,7 @@ Body:
     View: 1844
   - Id: 31744
     AegisName: C_Side_Tail_RD_M_TW
-    Name: Costume Side Pony Red    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Red)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134981,7 +135015,7 @@ Body:
     View: 1843
   - Id: 31745
     AegisName: C_Side_Tail_BU_M_TW
-    Name: Costume Side Pony Blue    # !todo check english name
+    Name: Costume Sweet Side Ponytail (Blue)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134990,7 +135024,7 @@ Body:
     View: 1842
   - Id: 31746
     AegisName: C_St_Long_PP_M_TW
-    Name: Costume Straight Long Purple    # !todo check english name
+    Name: Costume Beauty and Long Wig (Purple)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -134999,7 +135033,7 @@ Body:
     View: 1841
   - Id: 31747
     AegisName: C_St_Long_OM_M_TW
-    Name: Costume Straight Long Brown    # !todo check english name
+    Name: Costume Beauty and Long Wig (Brown)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135008,7 +135042,7 @@ Body:
     View: 1840
   - Id: 31748
     AegisName: C_St_Long_LPP_M_TW
-    Name: Costume Straight Long Light Purple    # !todo check english name
+    Name: Costume Beauty and Long Wig (Pink)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135017,7 +135051,7 @@ Body:
     View: 1839
   - Id: 31749
     AegisName: C_St_Long_JBL_M_TW
-    Name: Costume Straight Long Black    # !todo check english name
+    Name: Costume Beauty and Long Wig (Grey)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135026,7 +135060,7 @@ Body:
     View: 1838
   - Id: 31750
     AegisName: C_St_Long_GN_M_TW
-    Name: Costume Straight Long Green    # !todo check english name
+    Name: Costume Beauty and Long Wig (Green)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135035,7 +135069,7 @@ Body:
     View: 1837
   - Id: 31751
     AegisName: C_St_Long_GL_M_TW
-    Name: Costume Straight Long Golden    # !todo check english name
+    Name: Costume Beauty and Long Wig (Gold)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135044,7 +135078,7 @@ Body:
     View: 1836
   - Id: 31752
     AegisName: C_St_Long_RD_M_TW
-    Name: Costume Straight Long Red    # !todo check english name
+    Name: Costume Beauty and Long Wig (Red)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135053,7 +135087,7 @@ Body:
     View: 1835
   - Id: 31753
     AegisName: C_St_Long_BU_M_TW
-    Name: Costume Straight Long Blue    # !todo check english name
+    Name: Costume Beauty and Long Wig (Blue)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135062,7 +135096,7 @@ Body:
     View: 1834
   - Id: 31754
     AegisName: C_B_S_PP_M_TW
-    Name: Costume Chignon Purple    # !todo check english name
+    Name: Costume Korean Meatball Head (Purple)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135071,7 +135105,7 @@ Body:
     View: 1857
   - Id: 31755
     AegisName: C_B_S_OM_M_TW
-    Name: Costume Chignon Brown    # !todo check english name
+    Name: Costume Korean Meatball Head (Brown)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135080,7 +135114,7 @@ Body:
     View: 1856
   - Id: 31756
     AegisName: C_B_S_WH_M_TW
-    Name: Costume Chignon White    # !todo check english name
+    Name: Costume Korean Meatball Head (White)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135089,7 +135123,7 @@ Body:
     View: 1855
   - Id: 31757
     AegisName: C_B_S_BL_M_TW
-    Name: Costume Chignon Black    # !todo check english name
+    Name: Costume Korean Meatball Head (Black)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135098,7 +135132,7 @@ Body:
     View: 1854
   - Id: 31758
     AegisName: C_B_S_GN_M_TW
-    Name: Costume Chignon Green    # !todo check english name
+    Name: Costume Korean Meatball Head (Green)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135107,7 +135141,7 @@ Body:
     View: 1853
   - Id: 31759
     AegisName: C_B_S_YL_M_TW
-    Name: Costume Chignon Yellow    # !todo check english name
+    Name: Costume Korean Meatball Head (Yellow)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135116,7 +135150,7 @@ Body:
     View: 1852
   - Id: 31760
     AegisName: C_B_S_RD_M_TW
-    Name: Costume Chignon Red    # !todo check english name
+    Name: Costume Korean Meatball Head (Red)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135125,7 +135159,7 @@ Body:
     View: 1851
   - Id: 31761
     AegisName: C_B_S_BU_M_TW
-    Name: Costume Chignon Blue    # !todo check english name
+    Name: Costume Korean Meatball Head (Blue)
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135179,7 +135213,7 @@ Body:
     View: 1907
   - Id: 31767
     AegisName: C_TW_3rd_Balloon
-    Name: Costume 3rd Balloon    # !todo check english name
+    Name: "Costume: 3rd Year Balloon"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135188,7 +135222,7 @@ Body:
     View: 1909
   - Id: 31768
     AegisName: C_2019RTC_CeleAura_TW
-    Name: Costume 2019 RTC Celebrated Aura    # !todo check english name
+    Name: Costume 3rd Anniversary Balloon
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -135233,7 +135267,7 @@ Body:
     View: 754
   - Id: 31773
     AegisName: C_Aqua_Bunny_Band
-    Name: Costume Aqua Bunny Band    # !todo check english name
+    Name: Costume Bunny Hairband (Light Blue)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135242,7 +135276,7 @@ Body:
     View: 1012
   - Id: 31774
     AegisName: C_Maroon_Bunny_Band
-    Name: Costume Maroon Bunny Band    # !todo check english name
+    Name: Costume Bunny Hairband (Red)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135251,7 +135285,7 @@ Body:
     View: 1013
   - Id: 31775
     AegisName: C_Golden_Bunny_Band
-    Name: Costume Golden Bunny Band    # !todo check english name
+    Name: Costume Bunny Hairband (Golden)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135260,7 +135294,7 @@ Body:
     View: 1014
   - Id: 31776
     AegisName: C_Gray_Bunny_Band
-    Name: Costume Gray Bunny Band    # !todo check english name
+    Name: Costume Bunny Hairband (Grey)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135269,7 +135303,7 @@ Body:
     View: 1015
   - Id: 31777
     AegisName: C_YellowBunny_Hairband
-    Name: Costume Yellow Bunny Hairband    # !todo check english name
+    Name: Costume Bunny Hairband (Yellow)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135278,7 +135312,7 @@ Body:
     View: 662
   - Id: 31778
     AegisName: C_PinkBunny_Hairband
-    Name: Costume Pink Bunny Hairband    # !todo check english name
+    Name: Costume Bunny Hairband (Pink)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135287,7 +135321,7 @@ Body:
     View: 663
   - Id: 31779
     AegisName: C_Green_Bunny_Hairband
-    Name: Costume Green Bunny Hairband    # !todo check english name
+    Name: Costume Bunny Hairband (Pink)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135296,7 +135330,7 @@ Body:
     View: 664
   - Id: 31780
     AegisName: C_Sloth_Hat
-    Name: Costume Sloth Hat    # !todo check english name
+    Name: Costume Sloth Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135305,7 +135339,7 @@ Body:
     View: 638
   - Id: 31781
     AegisName: C_Green_Poring_Hairpin
-    Name: Costume Green Poring Hairpin    # !todo check english name
+    Name: Costume Poporing Hairpin
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135314,7 +135348,7 @@ Body:
     View: 788
   - Id: 31782
     AegisName: C_Solo_Play_Box1
-    Name: Costume Solo Play Box    # !todo check english name
+    Name: Costume Poporing Hairpin
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135388,7 +135422,7 @@ Body:
     View: 1932
   - Id: 31790
     AegisName: C_Blood_Grimoire_J
-    Name: Costume Blood Grimoire    # !todo check english name
+    Name: Costume Grimoire of Red Blood
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135405,7 +135439,7 @@ Body:
     View: 1869
   - Id: 31792
     AegisName: C_Baryon_HeadPhone_TW
-    Name: Costume Baryon Head Phone    # !todo check english name
+    Name: "Costume: Baryon Headphone"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135512,7 +135546,7 @@ Body:
     View: 1924
   - Id: 31804
     AegisName: C_Flower_Hat
-    Name: Costume Flower Hat    # !todo check english name
+    Name: Costume Floral Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135528,7 +135562,7 @@ Body:
     View: 812
   - Id: 31806
     AegisName: C_Tw_Frog_Hat
-    Name: Costume Frog Hat    # !todo check english name
+    Name: Costume Blue Frog Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135544,7 +135578,7 @@ Body:
     View: 514
   - Id: 31808
     AegisName: C_Red_PhD_Hat
-    Name: Costume Red Ph.D Hat    # !todo check english name
+    Name: Costume Academic Cap (Red)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135552,7 +135586,7 @@ Body:
     View: 481
   - Id: 31809
     AegisName: C_Red_Wizardry_Hat
-    Name: Costume Red Mage Hat    # !todo check english name
+    Name: Costume Pointy Hat (Red)
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135629,7 +135663,7 @@ Body:
     View: 1927
   - Id: 31818
     AegisName: C_TopPlayer_TW
-    Name: Costume Top Player    # !todo check english name
+    Name: Costume Top Player
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135664,7 +135698,7 @@ Body:
     View: 1934
   - Id: 31825
     AegisName: C_Tongue_Charm_J
-    Name: Costume Tongue Charm    # !todo check english name
+    Name: Costume Devil's Tongue
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -135691,7 +135725,7 @@ Body:
     View: 1936
   - Id: 31830
     AegisName: C_DragonKnight_Eyepatch
-    Name: Costume Dragon Knight Eye Patch    # !todo check english name
+    Name: Costume Dragon Knight Eyepatch
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -135736,7 +135770,7 @@ Body:
     View: 1940
   - Id: 31835
     AegisName: C_2019_D10_Muffler_TW
-    Name: Costume 2019 D10 Muffler    # !todo check english name
+    Name: Costume 10th October National Day Scarf
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -135745,7 +135779,7 @@ Body:
     View: 1941
   - Id: 31836
     AegisName: C_Aviator_Hat
-    Name: Costume Aviator Hat    # !todo check english name
+    Name: Costume Inventor Hat of Brasilis
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135763,7 +135797,7 @@ Body:
     View: 1919
   - Id: 31838
     AegisName: C_Golden_Wreath
-    Name: Costume Golden Wreath    # !todo check english name
+    Name: Costume Urd Laurel Wreath
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135772,7 +135806,7 @@ Body:
     View: 434
   - Id: 31839
     AegisName: C_FluffyWing_J
-    Name: Costume Fluffy Wing    # !todo check english name
+    Name: Costume Urd Wings
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -136158,7 +136192,7 @@ Body:
     ArmorLevel: 1
   - Id: 31886
     AegisName: aegis_31886
-    Name: Costume Pierced Apple    # !todo check english name
+    Name: Costume Pierced Apple Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136174,7 +136208,7 @@ Body:
     ArmorLevel: 1
   - Id: 31888
     AegisName: C_W_King_Tiger_Doll_Hat
-    Name: Costume White King Tiger Doll Hat    # !todo check english name
+    Name: "Costume: White Tiger Doll"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136270,7 +136304,7 @@ Body:
     View: 811
   - Id: 31909
     AegisName: C_711_Knit_Hat
-    Name: Costume 711 Knit Hat    # !todo check english name
+    Name: Costume Seven-Eleven Knitted Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136334,7 +136368,7 @@ Body:
     ArmorLevel: 1
   - Id: 31917
     AegisName: C_2018_RTC_Cape4_TW_J
-    Name: Costume Glorious Flag (Red)    # !todo check english name
+    Name: Costume Glory Flag (Red)
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -136342,7 +136376,7 @@ Body:
     View: 32
   - Id: 31918
     AegisName: C_Party_Recruiter_Hat
-    Name: Costume Party Recruiter Hat    # !todo check english name
+    Name: Costume Party Member Recruit Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136350,7 +136384,7 @@ Body:
     View: 351
   - Id: 31919
     AegisName: C_Friend_Recruiter_Hat
-    Name: Costume Friend Recruiter Hat    # !todo check english name
+    Name: Costume Friend Recruit Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136358,7 +136392,7 @@ Body:
     View: 353
   - Id: 31920
     AegisName: C_Western_Grace
-    Name: Costume Western Grace    # !todo check english name
+    Name: Costume Western Crace
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136414,7 +136448,7 @@ Body:
     View: 1477
   - Id: 31929
     AegisName: C_Cryptura_Academy_Hat
-    Name: Costume Cryptura Academy Hat    # !todo check english name
+    Name: Costume Smile School Cap
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136494,7 +136528,7 @@ Body:
     ArmorLevel: 1
   - Id: 31939
     AegisName: C_Carnation_Corolla
-    Name: Costume Carnation Corolla    # !todo check english name
+    Name: Costume Carnation Corolla
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136518,7 +136552,7 @@ Body:
     View: 688
   - Id: 31942
     AegisName: C_Romance_Rose_J
-    Name: Costume Romance Rose    # !todo check english name
+    Name: Costume Pretty Rose
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -136602,7 +136636,7 @@ Body:
     View: 2016
   - Id: 31953
     AegisName: C_Cor_Core_Headset
-    Name: Costume Cor Core Headset    # !todo check english name
+    Name: Costume Core Headset
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -136610,7 +136644,7 @@ Body:
     View: 2017
   - Id: 31954
     AegisName: C_Vassalage_Necklace
-    Name: Costume Vassalage Necklace    # !todo check english name
+    Name: Costume Vassalage Necklace
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -136757,7 +136791,7 @@ Body:
     View: 2154
   - Id: 31976
     AegisName: C_Focus_Beret
-    Name: Costume Concentration Beret    # !todo check english name
+    Name: Costume Concentration Beret
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -139263,6 +139297,51 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 400077
+    AegisName: Cat_Shampoo_Hat
+    Name: Splish-splash Nyanpoo Hat
+    Type: Armor
+    View: 507
+    Weight: 1000
+    Buy: 20
+    Defense: 18
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      if (getskilllv("SU_SPIRITOFSEA") >= 1)
+         skill "AL_PNEUMA",1;
+      if (getskilllv("SU_SHRIMPARTY") >= 5) {
+         bonus bMaxHPrate,30;
+         bonus bMaxSPrate,30;
+      }
+      if (getskilllv("SU_GROOMING") >= 5) {
+         bonus2 bResEff,Eff_Confusion,10000;
+         bonus2 bResEff,Eff_Silence,10000;
+      }
+      bonus bHealPower2,20*getskilllv("SU_PURRING");
+      bonus bDef,50*.@r;
+      if (.@r >= 7) {
+         bonus bDelayrate,-10;
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSubClass,Class_Boss,10;
+      }
+      if (.@r >= 9) {
+         bonus bDelayrate,-10;
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSubClass,Class_Boss,10;
+      }
+      if (.@r >= 10)
+         autobonus3 "{ bonus bFlee2,100; }",1000,3000,"SU_TUNAPARTY";
   - Id: 400078
     AegisName: BioWeapon_Helm_RK
     Name: Goral Crown
@@ -139330,6 +139409,49 @@ Body:
          bonus bFixedCast,-200;
          bonus2 bAddSize,Size_All,10;
          bonus2 bMagicAddSize,Size_All,10;
+      }
+  - Id: 400080
+    AegisName: C_Kriemhild_Crown_TW
+    Name: Costume Kriemhild Crown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1056
+  - Id: 400081
+    AegisName: C_2020RTC_Imp_TW
+    Name: Costume 2020RTC Naughty Ghost    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2009
+  - Id: 400082
+    AegisName: 2020RTC_Imp_TW
+    Name: 2020RTC Naughty Ghost    # !todo check english name
+    Type: Armor
+    View: 2009
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_DemiHuman,10;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bAddEffWhenHit,Eff_Freeze,100;
+      if (.@r>=9) {
+         bonus bFixedCast,-100*.@r;
+         bonus bAtkRate,2*.@r;
+         bonus bMatkRate,2*.@r;
+         bonus bLongAtkRate,2*.@r;
+         bonus bHealPower2,3*.@r;
+         bonus bCritAtkRate,5*.@r;
+         bonus bCritical,3*.@r;
       }
   - Id: 400094
     AegisName: BioWeapon_Helm_WL
@@ -139863,6 +139985,14 @@ Body:
             bonus bPow,2;
          }
       }
+  - Id: 400136
+    AegisName: C_Ancient_Gold_Deco_TW
+    Name: Costume Ancient Gold Deco    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 739
   - Id: 400137
     AegisName: 1Para_Cap_A
     Name: Paradise Cap
@@ -140388,6 +140518,30 @@ Body:
       }
       autobonus "{ bonus bAtkEle,Ele_Fire; }",1,60000,BF_WEAPON;
       autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,20; }",1,60000,BF_MAGIC;
+  - Id: 400157
+    AegisName: C_Astrologer_T_Hat
+    Name: Costume Astrologer T Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2125
+  - Id: 400158
+    AegisName: C_Demon_Crown
+    Name: Costume Demon Crown
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2135
+  - Id: 400159
+    AegisName: C_Bridal_Heir_Band_TW
+    Name: Costume Bridal Heir Band    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 167
   - Id: 400160
     AegisName: Wave_Noodle
     Name: Costume Wavy Noodles
@@ -140396,6 +140550,22 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2138
+  - Id: 400161
+    AegisName: C_Hat_0f_King
+    Name: Costume Hat 0f King    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 374
+  - Id: 400162
+    AegisName: C_Red_Navy_Hat
+    Name: Costume Red Navy Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 651
   - Id: 400163
     AegisName: C_Whale_Cap
     Name: Costume Whale Cap
@@ -140404,6 +140574,28 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2140
+  - Id: 400164
+    AegisName: 2021RTC_Headset_TW
+    Name: 2021RTC Headset    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 2134
+    Script: |
+      bonus bFixedCast,-100;
+      bonus bShortAtkRate,1;
+      bonus bLongAtkRate,1;
+      bonus2 bMagicAddEle,Ele_All,1;
+  - Id: 400165
+    AegisName: C_Green_Apple_Hat_J
+    Name: Costume Green Apple Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 821
   - Id: 400166
     AegisName: C_Egir_Helm
     Name: Costume Aegir Helm    # !todo check english name
@@ -140412,6 +140604,62 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 870
+  - Id: 400167
+    AegisName: C_Mosquito_Coil
+    Name: Costume Mosquito Coil    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 563
+  - Id: 400168
+    AegisName: C_Souvenirs_Of_Izlude
+    Name: Costume Souvenirs Of Izlude    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1377
+  - Id: 400169
+    AegisName: C_Fish_Pin
+    Name: Costume Fish Pin    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 669
+  - Id: 400170
+    AegisName: C_Jaty_C
+    Name: Costume Jaty    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 686
+  - Id: 400171
+    AegisName: C_Angel_feather
+    Name: Costume Angel feather    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 18
+  - Id: 400172
+    AegisName: C_Ati_Atihan_Hat_V
+    Name: Costume Atihan Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 303
+  - Id: 400173
+    AegisName: C_Fancy_Phantom_Mask_V
+    Name: Costume Fancy Phantom Mask (Middle)
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 710
   - Id: 400174
     AegisName: C_Weissbier_Hat
     Name: Costume Buyers Hat
@@ -140420,9 +140668,17 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 1079
+  - Id: 400175
+    AegisName: C_Campfire_Hat
+    Name: Costume Camp Fire Cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 416
   - Id: 400176
     AegisName: C_Fishbowl_Parfait_Hat
-    Name: Costume Fishbowl Parfait Hat    # !todo check english name
+    Name: Costume Fishbowl Parfait Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -140672,7 +140928,7 @@ Body:
     View: 747
   - Id: 400188
     AegisName: C_Evt_RagFes_band
-    Name: Costume Ragfest Commemorative Headband    # !todo check english name
+    Name: Costume Ragfest Commemorative Headband
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -140854,7 +141110,7 @@ Body:
     View: 749
   - Id: 400197
     AegisName: C_Sweet_Chef_Hat
-    Name: Costume Sweet Chef Hat    # !todo check english name
+    Name: Costume Sweet Chef Hat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -141492,7 +141748,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400232
     AegisName: Crushed_Snow_Man
-    Name: Costume Crumpled Snowman    # !todo check english name
+    Name: Costume Crushed Snowman
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -141971,7 +142227,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
   - Id: 400245
     AegisName: King_Tiger_Doll_Hat_LT
-    Name: Tiger King Doll Hat-LT    # !todo check english name
+    Name: Tiger King Doll Hat-LT
     Type: Armor
     Weight: 400
     Defense: 6
@@ -142019,7 +142275,7 @@ Body:
       }
   - Id: 400246
     AegisName: Baksojin_Hat_LT
-    Name: Baek Sojin Hat-LT    # !todo check english name
+    Name: Bacsojin Hat-LT
     Type: Armor
     Weight: 400
     Defense: 6
@@ -142040,7 +142296,7 @@ Body:
       bonus bCon,2;
       bonus bVariableCastrate,-10;
       bonus2 bMagicAddRace,RC_Undead,10;
-      autobonus "{ .@r = getrefine(); bonus bMatk,35*.@r; if (.@r>=10) { bonus bSmatk,20; }",1,7000,BF_MAGIC;
+      autobonus "{ .@r = getrefine(); bonus bMatk,35*.@r; if (.@r>=10) { bonus bSmatk,20; } }",1,7000,BF_MAGIC;
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,15;
          if (.@r>=9) {
@@ -142368,6 +142624,14 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 410011
+    AegisName: C_Dark_Blindfold
+    Name: Costume Dark Blinkers
+    Type: Armor
+    View: 187
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
   - Id: 410012
     AegisName: EXP_Processor
     Name: EXP Advisor
@@ -142674,7 +142938,7 @@ Body:
     View: 2082
   - Id: 410056
     AegisName: C_Poulet_TW
-    Name: Costume Chick    # !todo check english name
+    Name: Costume Poulet
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -142690,7 +142954,7 @@ Body:
     View: 2095
   - Id: 410062
     AegisName: C_Carefree_Face
-    Name: Costume carefree face    # !todo check english name
+    Name: Carefree Face
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -142706,7 +142970,7 @@ Body:
     View: 2112
   - Id: 410068
     AegisName: C_Fish_Marche
-    Name: Costume Costal Marche    # !todo check english name
+    Name: Costume Fish Marche
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -142754,7 +143018,7 @@ Body:
       bonus bVariableCastrate,-5;
   - Id: 410081
     AegisName: C_Released_Ground
-    Name: Costume Released Ground    # !todo check english name
+    Name: Costume Released Ground
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -142764,6 +143028,14 @@ Body:
       hateffect HAT_EF_C_Released_Ground,true;
     UnEquipScript: |
       hateffect HAT_EF_C_Released_Ground,false;
+  - Id: 410086
+    AegisName: C_Melon_Headphone_J
+    Name: Costume Melon Headphone    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2129
   - Id: 410087
     AegisName: C_Demons_Familiar_K
     Name: Costume Robotic Watcher
@@ -142885,7 +143157,7 @@ Body:
          bonus bAspd,2;
   - Id: 410099
     AegisName: C_Avenger
-    Name: Costume Avengers    # !todo check english name
+    Name: Costume Avengers
     Type: Armor
     Jobs:
       All: true
@@ -142896,7 +143168,7 @@ Body:
     View: 2156
   - Id: 410103
     AegisName: C_Silk_Of_Soul
-    Name: Costume Soul Silk    # !todo check english name
+    Name: Costume Soul Silk
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -143160,6 +143432,32 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,5;
       bonus5 bAutoSpell,"MG_SOULSTRIKE",10,100,BF_SHORT|BF_WEAPON,1;
+  - Id: 420004
+    AegisName: Nine_Tail_Fox_Hair
+    Name: Nine Tail Fox Hair
+    Type: Armor
+    View: 1884
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Script: |
+      bonus2 bAddRace,RC_Demon,20;
+      bonus2 bMagicAddRace,RC_Demon,20;
+      bonus2 bResEff,Eff_Blind,10000;
+  - Id: 420005
+    AegisName: Love_Feeling_TW
+    Name: Feeling of Love
+    Type: Armor
+    View: 1717
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,80,1000; }",10,10000,BF_MAGIC;
   - Id: 420006
     AegisName: aegis_420006
     Name: Collar of Slavery
@@ -143274,6 +143572,30 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 1403
+  - Id: 420027
+    AegisName: C_Fishbone_Hair
+    Name: Costume Fishbone Hair
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2139
+  - Id: 420028
+    AegisName: Imperial_Glory
+    Name: Imperial Glory
+    Type: Armor
+    View: 2056
+    Buy: 20
+    Weight: 300
+    Defense: 70
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Script: |
+      .@a = (readparam(bAgi)+readparam(bVit))/50;
+      bonus bMdef,4*.@a;
+      bonus bDelayrate,-3*.@a;
   - Id: 420029
     AegisName: C_Imperial_Glory
     Name: "Costume: Imperial Glory"
@@ -143314,7 +143636,7 @@ Body:
     View: 2028
   - Id: 420034
     AegisName: C_Long_Wave_BD
-    Name: Costume Long Wave (Blonde)    # !todo check english name
+    Name: Costume Long Wave(Blonde)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143322,7 +143644,7 @@ Body:
     View: 2029
   - Id: 420035
     AegisName: C_Long_Wave_SV
-    Name: Costume Long Wave (Silver Hair)    # !todo check english name
+    Name: Costume Long Wave(Silver)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143504,7 +143826,7 @@ Body:
       bonus bVariableCastrate,-3;
   - Id: 420067
     AegisName: C_Hopping_Twin_Pigtail
-    Name: Costume Rabbit Ribbon Twintail    # !todo check english name
+    Name: Costume Hopping Twin Pigtail
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143556,6 +143878,14 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 420075
+    AegisName: C_Floating_Gioia_J
+    Name: Costume Floating Gioia    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1730
   - Id: 420076
     AegisName: Vassalage_Necklace
     Name: Bondage Necklace
@@ -143571,7 +143901,7 @@ Body:
       bonus bCritical,3;
   - Id: 420077
     AegisName: C_Cat_Footprints
-    Name: Costume Cat Footprints    # !todo check english name
+    Name: Costume Cat Footprints
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143595,7 +143925,7 @@ Body:
     View: 829
   - Id: 420082
     AegisName: C_WL_Hair_BU
-    Name: Costume Side Roll Pony    # !todo check english name
+    Name: Costume Side Roll Pony
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143611,7 +143941,7 @@ Body:
     View: 2166
   - Id: 420092
     AegisName: aegis_420092
-    Name: Clothes silky long (silver)    # !todo check english name
+    Name: Costume Silky Long(Silver)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143619,7 +143949,7 @@ Body:
     View: 2181
   - Id: 420095
     AegisName: C_Braid_Half_Up_WH
-    Name: Costume Pigtails Half Up (White)    # !todo check english name
+    Name: Costume Pigtails Half Up(White)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143627,7 +143957,7 @@ Body:
     View: 2052
   - Id: 420096
     AegisName: C_Braid_Half_Up_OM
-    Name: Costume Pigtails Half Up (Orange)    # !todo check english name
+    Name: Costume Pigtails Half Up(Orange)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143635,7 +143965,7 @@ Body:
     View: 2053
   - Id: 420097
     AegisName: C_Braid_Half_Up_PP
-    Name: Costume Pigtails Half Up (Purple)    # !todo check english name
+    Name: Costume Pigtails Half Up(Purple)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143643,7 +143973,7 @@ Body:
     View: 2054
   - Id: 420098
     AegisName: C_Braid_Half_Up_BL
-    Name: Costume Pigtails Half Up (Black)    # !todo check english name
+    Name: Costume Pigtails Half Up(Black)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143651,7 +143981,7 @@ Body:
     View: 2051
   - Id: 420099
     AegisName: C_Braid_Half_Up_BU
-    Name: Costume Pigtails Half Up (Blue)    # !todo check english name
+    Name: Costume Pigtails Half Up(Blue)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143659,7 +143989,7 @@ Body:
     View: 2047
   - Id: 420100
     AegisName: C_Braid_Half_Up_YL
-    Name: Costume Pigtails Half Up (Yellow)    # !todo check english name
+    Name: Costume Pigtails Half Up(Yellow)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143667,7 +143997,7 @@ Body:
     View: 2049
   - Id: 420101
     AegisName: C_Braid_Half_Up_RD
-    Name: Costume Pigtails Half Up (Red)    # !todo check english name
+    Name: Costume Pigtails Half Up(Red)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143675,7 +144005,7 @@ Body:
     View: 2048
   - Id: 420102
     AegisName: C_Braid_Half_Up_GN
-    Name: Costume Pigtails Half Up (Green)    # !todo check english name
+    Name: Costume Pigtails Half Up(Green)
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143709,7 +144039,7 @@ Body:
     View: 1110
   - Id: 420109
     AegisName: C_Charm_Of_Flame_Heart
-    Name: Costume Charm of Frame Heart    # !todo check english name
+    Name: Costume Charm of Flame Heart
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143718,7 +144048,7 @@ Body:
     View: 1261
   - Id: 420110
     AegisName: ScarfOfHero_J
-    Name: Scarf Of Hero    # !todo check english name
+    Name: Old Camouflage Scarf
     Type: Armor
     Weight: 100
     Locations:
@@ -143731,7 +144061,7 @@ Body:
       bonus2 bMagicAddSize,Size_All,BaseLevel/10;
   - Id: 420111
     AegisName: C_Rocking_Short
-    Name: Costume Rocking Short    # !todo check english name
+    Name: Costume Rocking Short
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -143740,7 +144070,7 @@ Body:
     View: 2225
   - Id: 420112
     AegisName: Guardian_Claus
-    Name: Guardian Claus    # !todo check english name
+    Name: Guardian Claus
     Type: Armor
     Defense: 2
     Weight: 100
@@ -144155,7 +144485,7 @@ Body:
       bonus bMatkRate,3;
   - Id: 436006
     AegisName: C_Ep19_Rgan
-    Name: Costume Rgan Disguise Tool    # !todo check english name
+    Name: Costume Rgan Disguise Tool
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -144172,7 +144502,7 @@ Body:
       NoAuction: true
   - Id: 436007
     AegisName: C_Ep19_Iwin
-    Name: Costume Iwin Cold Protection Helmet    # !todo check english name
+    Name: Costume Irwin Cold Hat
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -144314,7 +144644,7 @@ Body:
       hateffect HAT_EF_C_MASTER,false;
   - Id: 440009
     AegisName: C_Black_Moon_Cat_kr
-    Name: Costume Black Moon Cat    # !todo check english name
+    Name: Costume Beginner Black Moon Cat
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -144332,7 +144662,7 @@ Body:
       NoAuction: true
   - Id: 440010
     AegisName: C_Bear_Head
-    Name: Costume Teddy Bear Ride    # !todo check english name
+    Name: Costume Teddy Bear Mask
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -147881,7 +148211,6 @@ Body:
     Name: Automatic Armor Type B
     Type: Armor
     Weight: 1000
-    MagicAttack: 125
     Defense: 135
     Slots: 1
     Locations:
@@ -147891,7 +148220,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,10*(.@r/2);
+      bonus bMatk,125+(10*(.@r/2));
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
       }
@@ -147921,6 +148250,46 @@ Body:
          bonus bMaxHPrate,5;
       if (.@r>=11)
          bonus bVariableCastrate,-8;
+  - Id: 450132
+    AegisName: Magical_Cloth
+    Name: Magical Cloth
+    Type: Armor
+    Buy: 200000
+    Weight: 100
+    Defense: 45
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus2 bMagicAtkEle,Ele_Earth,2;
+         bonus2 bMagicAtkEle,Ele_Water,2;
+         bonus2 bMagicAtkEle,Ele_Wind,2;
+         bonus2 bMagicAtkEle,Ele_Fire,2;
+      }
+      if (.@r>=8) {
+         bonus bUnbreakableArmor;
+         bonus2 bMagicAtkEle,Ele_Earth,3;
+         bonus2 bMagicAtkEle,Ele_Water,3;
+         bonus2 bMagicAtkEle,Ele_Wind,3;
+         bonus2 bMagicAtkEle,Ele_Fire,3;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         autobonus "{ bonus2 bSkillAtk,\"MG_FIREBOLT\",100; bonus2 bSkillAtk,\"MG_COLDBOLT\",100; bonus2 bSkillAtk,\"MG_LIGHTNINGBOLT\",100; bonus2 bSkillAtk,\"WZ_EARTHSPIKE\",100; }",2000,10000;
+      }
   - Id: 450142
     AegisName: Orc_Load_Mail
     Name: Orc Lord Armor
@@ -148234,7 +148603,6 @@ Body:
     Name: Faint Star's Robe
     Type: Armor
     Weight: 500
-    MagicAttack: 125
     Defense: 105
     Slots: 1
     Locations:
@@ -148244,7 +148612,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,15*(.@r/2);
+      bonus bMatk,125+(15*(.@r/2));
       if (.@r>=9) {
          bonus bVariableCastrate,-10;
          if (.@r>=11) {
@@ -148502,7 +148870,6 @@ Body:
     Name: Nebula Robe of Spell
     Type: Armor
     Weight: 500
-    MagicAttack: 125
     Defense: 105
     Slots: 1
     Locations:
@@ -148522,7 +148889,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bSpl,1;
-      bonus bMatk,15*(.@r/2);
+      bonus bMatk,125+(15*(.@r/2));
       if (.@r>=9) {
          bonus bMatkRate,5;
          if (.@r>=11) {
@@ -148554,7 +148921,6 @@ Body:
     Name: Nebula Robe of Wisdom
     Type: Armor
     Weight: 500
-    MagicAttack: 125
     Defense: 105
     Slots: 1
     Locations:
@@ -148573,6 +148939,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bMatk,125;
       bonus bWis,1;
       bonus bMaxSPrate,2*(.@r/2);
       bonus bHealPower,(.@r/2);
@@ -148602,6 +148969,48 @@ Body:
             }
          }
       }
+  - Id: 450176
+    AegisName: Supplement_Part_Wing
+    Name: Powered Wing
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 12
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@a = getskilllv("NC_PILEBUNKER");
+      bonus bMaxHPrate,3;
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Wind,10;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",25*.@a;
+      bonus2 bSkillAtk,"NC_FLAMELAUNCHER",25*.@a;
+      bonus2 bSkillAtk,"NC_COLDSLOWER",25*.@a;
+      if (getskilllv("NC_ARMSCANNON") == 5)
+         bonus bDelayrate,-20;
+      if (getskilllv("NC_NEUTRALBARRIER") == 3) {
+         bonus2 bSubClass,Class_Boss,5;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+      if (getskilllv("NC_RESEARCHFE") == 5)
+         bonus bNoKnockback;
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Wind,20;
+         bonus2 bAddClass,Class_Boss,10;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,7;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Wind,20;
+         bonus2 bAddClass,Class_Boss,10;
+      }
   - Id: 450177
     AegisName: Gray_W_Suits
     Name: Gray Wolf Suit
@@ -148625,7 +149034,6 @@ Body:
     Name: Gray Wolf Robe
     Type: Armor
     Weight: 1000
-    MagicAttack: 130
     Defense: 160
     Slots: 1
     Locations:
@@ -148635,7 +149043,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,15*(.@r/2);
+      bonus bMatk,130+(15*(.@r/2));
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
       }
@@ -148644,7 +149052,6 @@ Body:
     Name: Celine's Dress
     Type: Armor
     Weight: 500
-    MagicAttack: 50
     Defense: 40
     Slots: 1
     Locations:
@@ -148654,6 +149061,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMatk,50;
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -148950,7 +149358,7 @@ Body:
       }
   - Id: 450198
     AegisName: Evt_RagFes_Shirts
-    Name: Cotton shirt for smelting Ragfest    # !todo check english name
+    Name: Ragfest Cotton Shirt for Refining
     Type: Armor
     Locations:
       Armor: true
@@ -151948,7 +152356,7 @@ Body:
       }
   - Id: 470112
     AegisName: Moaning_of_EvilSpirits
-    Name: Moaning of EvilSpirits    # !todo check english name
+    Name: Moaning of Evil Spirits
     Type: Armor
     Weight: 500
     Defense: 15
@@ -152739,7 +153147,7 @@ Body:
       bonus2 bSubEle,Ele_Wind,.@c*7;
   - Id: 480052
     AegisName: C_Sakura_Fes_TW
-    Name: Costume Sakura Ribbon    # !todo check english name
+    Name: Costume Sakura Ribbon
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -153491,7 +153899,7 @@ Body:
     View: 104
   - Id: 480108
     AegisName: aegis_480108
-    Name: Costume Poring Basket    # !todo check english name
+    Name: Costume Poring Basket
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -153555,7 +153963,7 @@ Body:
     View: 108
   - Id: 480118
     AegisName: C_G_DaeHyon_Sword_TW
-    Name: Costume General DaeHyon Sword    # !todo check english name
+    Name: Costume General Daehyon Falchion
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -153620,7 +154028,7 @@ Body:
     View: 112
   - Id: 480123
     AegisName: aegis_480123
-    Name: Costume Nydhog Rumor    # !todo check english name
+    Name: Costume Nydhog's Rumor
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -153704,7 +154112,7 @@ Body:
     View: 116
   - Id: 480130
     AegisName: C_Beer_Server
-    Name: Costume Beer Server    # !todo check english name
+    Name: Costume Beer Server
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -153798,7 +154206,7 @@ Body:
       bonus2 bMagicAddSize,Size_Large,5*(.@r/5);
   - Id: 480137
     AegisName: aegis_480137
-    Name: Costume Filir Bag    # !todo check english name
+    Name: Costume Filir Bag
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -154890,7 +155298,7 @@ Body:
       bonus bHit,15;
   - Id: 490035
     AegisName: Pendant_of_Solomon
-    Name: Solomon's Pendant    # !todo check english name
+    Name: Solomon's Pendant
     Type: Armor
     Weight: 500
     Locations:
@@ -155844,7 +156252,7 @@ Body:
       }
   - Id: 490113
     AegisName: Jasper_Ring
-    Name: Jasper Ring    # !todo check english name
+    Name: Jasper Ring
     Type: Armor
     Weight: 400
     Slots: 1
@@ -156681,7 +157089,7 @@ Body:
       bonus bMaxSPrate,7;
   - Id: 490180
     AegisName: aegis_490180
-    Name: Mark of a Hero (Meister)    # !todo check english name
+    Name: Heroic Token (Meister)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156700,7 +157108,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 490181
     AegisName: aegis_490181
-    Name: Token of a Hero (Inquisitor)    # !todo check english name
+    Name: Heroic Token (Inquisitor)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156733,7 +157141,7 @@ Body:
       bonus2 bSubRace,RC_Undead,4;
   - Id: 490184
     AegisName: aegis_490184
-    Name: Token of a Hero (Shinkiro & Shiranui)    # !todo check english name
+    Name: Heroic Token (Shinkiro & Shiranui)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156752,7 +157160,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 490185
     AegisName: aegis_490185
-    Name: Token of a Hero (Night's Watch)    # !todo check english name
+    Name: Heroic Token (Night Watch)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156771,7 +157179,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 490186
     AegisName: aegis_490186
-    Name: Token of a Hero (Youngdosa)    # !todo check english name
+    Name: Heroic Token (Soul Ascetic)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156790,7 +157198,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 490187
     AegisName: aegis_490187
-    Name: Token of a Hero (Heaven)    # !todo check english name
+    Name: Heroic Token (Sky Emperor)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156809,7 +157217,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 490188
     AegisName: aegis_490188
-    Name: Token of a Hero (Spirit Death)    # !todo check english name
+    Name: Heroic Token (Spirit Handler)
     Type: Armor
     Weight: 200
     Defense: 10
@@ -156829,7 +157237,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 490193
     AegisName: aegis_490193
-    Name: Traveler Ring    # !todo check english name
+    Name: Traveler Ring
     Type: Armor
     Weight: 300
     Slots: 1
@@ -156855,7 +157263,7 @@ Body:
          sc_end SC_UNLIMIT;
   - Id: 490207
     AegisName: Memento_Mori
-    Name: Memento Mori    # !todo check english name
+    Name: Memento Mori
     Type: Armor
     Weight: 100
     Slots: 1
@@ -157055,6 +157463,28 @@ Body:
       }
       bonus bAtkRate,.@a;
       bonus bCritAtkRate,.@b;
+  - Id: 490279
+    AegisName: aegis_490279
+    Name: Raphin P. Necklace
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@a = readparam(bInt);
+      .@p = getitempos();
+      bonus bLongAtkRate,5;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",3*getskilllv("RA_WUGSTRIKE");
+      bonus bDelayrate,-.@a/12;
+      if (.@a >= 125) {
+         if (.@p == EQP_ACC_R)
+            bonus bFixedCast,-500;
+         if (.@p == EQP_ACC_L)
+            bonus bBaseAtk,80;
+      }
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
@@ -159981,7 +160411,7 @@ Body:
       }
   - Id: 510060
     AegisName: Fog_Dew_Sword_LT
-    Name: Kirinotsuyu-LT    # !todo check english name
+    Name: Kiri no Tsuyu-LT
     Type: Weapon
     SubType: Dagger
     Weight: 1200
@@ -162707,7 +163137,7 @@ Body:
       }
   - Id: 540048
     AegisName: OneSkyOneSun_LT
-    Name: Ilcheon Ilyang-LT    # !todo check english name
+    Name: One Sky One Sun-LT
     Type: Weapon
     SubType: Book
     Weight: 1100
@@ -165379,7 +165809,7 @@ Body:
       }
   - Id: 550067
     AegisName: MeawFoxtail_LT
-    Name: Nyangnyang Dog Grass-LT    # !todo check english name
+    Name: Meow Meow Foxtail-LT
     Type: Weapon
     SubType: Staff
     Weight: 1200
@@ -165437,7 +165867,7 @@ Body:
       bonus bMatkRate,2*(.@r/3);
   - Id: 550068
     AegisName: SoulWeight_LT
-    Name: Spirit Weight-LT    # !todo check english name
+    Name: Spirit Pendulum-LT
     Type: Weapon
     SubType: Staff
     Weight: 1200
@@ -174218,7 +174648,7 @@ Body:
       }
   - Id: 650024
     AegisName: Humma_Clear_LT
-    Name: Fuma Shuriken Cheongmyeong-LT    # !todo check english name
+    Name: Huuma Shuriken Clearness-LT
     Type: Weapon
     SubType: Huuma
     Weight: 2300
@@ -176324,7 +176754,7 @@ Body:
       }
   - Id: 800013
     AegisName: Crimson_Rose_LT
-    Name: Crimson Rose-LT    # !todo check english name
+    Name: Crimson Rose-LT
     Type: Weapon
     SubType: Revolver
     Weight: 1000
@@ -176696,7 +177126,7 @@ Body:
       }
   - Id: 810009
     AegisName: Master_Soul_Rifle_LT
-    Name: Master Soul Rifle-LT    # !todo check english name
+    Name: Master Soul Rifle-LT
     Type: Weapon
     SubType: Rifle
     Weight: 1000
@@ -177021,7 +177451,7 @@ Body:
       }
   - Id: 820007
     AegisName: Demon_S_Shot_LT
-    Name: Demon Slayer Shot-LT    # !todo check english name
+    Name: Demon Slayer Shot-LT
     Type: Weapon
     SubType: Shotgun
     Weight: 2300
@@ -177474,7 +177904,7 @@ Body:
       }
   - Id: 830012
     AegisName: The_Black_Gatling_LT
-    Name: The Black-LT    # !todo check english name
+    Name: The Black-LT
     Type: Weapon
     SubType: Gatling
     Weight: 3000
@@ -177814,7 +178244,7 @@ Body:
       }
   - Id: 840008
     AegisName: Golden_L_Launcher_LT
-    Name: Golden Road Launcher-LT    # !todo check english name
+    Name: Golden Lord Launcher-LT
     Type: Weapon
     SubType: Grenade
     Weight: 2400

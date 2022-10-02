@@ -6176,9 +6176,7 @@ kind in 'doc/item_bonus.txt'.
 *autobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
 *autobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
 
-These commands are meant to be used in item scripts. They will probably work
-outside item scripts, but the bonus will not persist for long. They, as
-expected, refer only to an invoking character.
+These commands are meant to be used in item scripts only! See 'petautobonus' for pet usage.
 
 What these commands do is 'attach' a script to the player which will get
 executed on attack (or when attacked in the case of autobonus2).
@@ -6842,6 +6840,18 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC name>","<map>",<x>,<y>{,"<Duplicate NPC name>"{,<sprite>{,<dir>{,<xs>{,<xy>}}}}};
+
+This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
+If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
@@ -10310,6 +10320,15 @@ owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'.
 inflicted and the specified number of attacks.
 
 Value of 'rate' is between 1 and 100. 100 = 100%
+
+---------------------------------------
+
+*petautobonus <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus2 <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
+*petautobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
+
+See 'autobonus' for more details.
 
 ---------------------------------------
 

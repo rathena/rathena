@@ -8661,7 +8661,7 @@ Body:
     SplashArea: 4
     CastTime: 1000
     Duration1: 60000
-    Duration2: 15000
+    Duration2: 18000
     Cooldown: 20000
     Requires:
       SpCost: 40
@@ -37451,7 +37451,7 @@ Body:
     CastCancel: true
     AfterCastActDelay: 500
     Duration1: 180000
-    Duration2: 30000
+    Duration2: 15000
     Cooldown: 150000
     FixedCastTime: 2000
     Requires:

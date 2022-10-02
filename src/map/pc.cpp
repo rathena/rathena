@@ -1863,7 +1863,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
 	         CONVIP(ip), sd->group_id);
 	// Send friends list
-	clif_friendslist_send(sd);
+	clif_friendslist_send( *sd );
 
 	if( !changing_mapservers ) {
 
@@ -2063,15 +2063,15 @@ void pc_reg_received(struct map_session_data *sd)
 		}
 	}
 
-#if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
-	if (sd->instance_id > 0)
-		instance_reqinfo(sd, sd->instance_id);
 	if (sd->status.party_id > 0)
 		party_member_joined(sd);
 	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
 	if (sd->status.clan_id > 0)
 		clan_member_joined(sd);
+#if !( PACKETVER_MAIN_NUM >= 20190403 || PACKETVER_RE_NUM >= 20190320 || PACKETVER_ZERO_NUM >= 20190410 )
+	// Before those clients you could send out the instance info even when the client was still loading the map, afterwards you need to send it later
+	clif_instance_info( *sd );
 #endif
 
 	// pet
@@ -9292,7 +9292,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setdead(sd);
 
-	clif_party_dead( sd );
+	clif_party_dead( *sd );
 
 	pc_setparam(sd, SP_PCDIECOUNTER, sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
@@ -10120,6 +10120,8 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 			else if (itemid == ITEMID_COOKIE_BAT)
 				bonus += sd->sc.data[SC_MTF_PUMPKIN]->val2;
 		}
+		if (sd->sc.data[SC_VITALIZE_POTION])
+			bonus += bonus * 10 / 100;
 
 		tmp = hp * bonus / 100; // Overflow check
 		if (bonus != 100 && tmp > hp)
@@ -10481,7 +10483,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 			if( i < MAX_PARTY ){
 				p->party.member[i].class_ = sd->status.class_;
-				clif_party_job_and_level(sd);
+				clif_party_job_and_level( *sd );
 			}
 		}
 	}
@@ -12515,7 +12517,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	if( pc_isdead( sd ) ){
 		sd->state.dead_sit = sd->vd.dead_sit = 0;
-		clif_party_dead( sd );
+		clif_party_dead( *sd );
 	}else{
 		sd->state.dead_sit = sd->vd.dead_sit = 0;
 	}
