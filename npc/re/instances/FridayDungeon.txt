@@ -149,13 +149,16 @@ gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
 		sleep 4000;
 		npctalk "Good Luck~";
 		sleep 3000;
-		monster 'map$,0,0,"Nightmare",'mob[2],20,instance_npcname(strnpcinfo(0))+"::OnNightmareDead";
-		monster 'map$,0,0,"Jakk",'mob[3],30,instance_npcname(strnpcinfo(0))+"::OnJakkDead";
-		monster 'map$,0,0,"Ghoul",'mob[4],30,instance_npcname(strnpcinfo(0))+"::OnGhoulDead";
-		monster 'map$,0,0,"Drainliar",'mob[5],20,instance_npcname(strnpcinfo(0))+"::OnDrainliarDead";
-		hideonnpc instance_npcname(strnpcinfo(0));
-		enablenpc instance_npcname("The Stranger#cadaver");
-		enablenpc instance_npcname("Bizzare Sculpture#boss");
+		if ('step == 0) {
+			'step = 1;
+			monster 'map$,0,0,"Nightmare",'mob[2],20,instance_npcname(strnpcinfo(0))+"::OnNightmareDead";
+			monster 'map$,0,0,"Jakk",'mob[3],30,instance_npcname(strnpcinfo(0))+"::OnJakkDead";
+			monster 'map$,0,0,"Ghoul",'mob[4],30,instance_npcname(strnpcinfo(0))+"::OnGhoulDead";
+			monster 'map$,0,0,"Drainliar",'mob[5],20,instance_npcname(strnpcinfo(0))+"::OnDrainliarDead";
+			hideonnpc instance_npcname(strnpcinfo(0));
+			enablenpc instance_npcname("The Stranger#cadaver");
+			enablenpc instance_npcname("Bizzare Sculpture#boss");
+		}
 	}
 	end;
 
@@ -225,6 +228,7 @@ OnInstanceInit:
 	'freestones = 0;
 	'boss_actv = 0;
 	'map$ = instance_mapname(strnpcinfo(4));
+	'step = 0;
 	end;
 }
 
@@ -316,14 +320,18 @@ OnInstanceInit:
 				if(.@rand==10) {
 					mes "Something seems to have changed in the air around me.";
 					instance_announce -1, "Lord of the Dead: Who Awakened Me? I will meet you in person and ask you why.",bc_map,"0xFFFF00";
-					monster 'map$,210,110,"Lich King",'mob[1],1;
-					'boss_actv = 1;
+					if ('boss_actv == 0) {
+						monster 'map$,210,110,"Lich King",'mob[1],1;
+						'boss_actv = 1;
+					}
 				} else {
 					mes "But nothing else happened.";
 					close2;
-					disablenpc();	// Disable NPC for 5 minutes when MVP didn't spawn.
-					sleep 300000;
-					enablenpc();
+					if ('boss_actv == 0) {
+						disablenpc();	// Disable NPC for 5 minutes when MVP didn't spawn.
+						sleep 300000;
+						enablenpc();
+					}
 					end;
 				}
 				close;
