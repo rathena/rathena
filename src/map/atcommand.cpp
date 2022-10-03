@@ -7805,13 +7805,13 @@ ACMD_FUNC(mobinfo)
 			tmp_item.nameid = id->nameid;
 			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
 
-				if (id->slots) {
+				if (id->slots) { // If item has slots
 					if (!battle_config.feature_itemlink)
 						sprintf(atcmd_output2, " ⁕ %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
 					else
 						sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
 				}
-				else {
+				else { //If item has no slots
 					if (!battle_config.feature_itemlink)
 						sprintf(atcmd_output2, " ⁕ %s  %02.02f%%", id->ename.c_str(), (float)droprate / 100);
 					else
@@ -7820,26 +7820,8 @@ ACMD_FUNC(mobinfo)
 				strcat(atcmd_output, atcmd_output2);
 				if (++j % 3 == 0) {
 					clif_displaymessage(fd, atcmd_output);
-				strcpy(atcmd_output, " ");
-				} else {
-
-					if (id->slots){
-						if (!battle_config.feature_itemlink)
-							sprintf(atcmd_output2, " ⁕ %s [%i] %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
-						else
-							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
-					} else {
-						if (!battle_config.feature_itemlink)
-							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), (float)droprate / 100);
-						else
-							sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), (float)droprate / 100);
-					}
-					strcat(atcmd_output, atcmd_output2);
-					if (++j % 3 == 0) {
-						clif_displaymessage(fd, atcmd_output);
-						strcpy(atcmd_output, " ");
-					}
-				}
+					strcpy(atcmd_output, " ");
+				} 
 		}
 		if (j == 0)
 			clif_displaymessage(fd, msg_txt(sd,1246)); // This monster has no drops.
