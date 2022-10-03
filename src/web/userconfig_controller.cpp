@@ -128,8 +128,6 @@ HANDLER_FUNC(userconfig_load) {
 	}
 
 	if (SqlStmt_NumRows(stmt) <= 0) {
-		SqlStmt_Free(stmt);
-
 		std::string data = "{\"Type\": 1}";
 
 		if( SQL_SUCCESS != SqlStmt_Prepare( stmt, "INSERT INTO `%s` (`account_id`, `world_name`, `data`) VALUES (?, ?, ?)", user_configs_table ) ||

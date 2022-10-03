@@ -134,8 +134,6 @@ HANDLER_FUNC(charconfig_load) {
 	}
 
 	if (SqlStmt_NumRows(stmt) <= 0) {
-		SqlStmt_Free(stmt);
-
 		std::string data = "{\"Type\": 1}";
 
 		if( SQL_SUCCESS != SqlStmt_Prepare( stmt, "INSERT INTO `%s` (`account_id`, `char_id`, `world_name`, `data`) VALUES (?, ?, ?, ?)", char_configs_table ) ||
