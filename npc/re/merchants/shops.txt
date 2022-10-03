@@ -1,14 +1,14 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Shops
-//===== By: ==================================================
+//===== By: ================================================== 
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Current Version: ===================================== 
 //= 2.0
-//===== Compatible With: =====================================
+//===== Compatible With: ===================================== 
 //= rAthena Project
-//===== Description: =========================================
+//===== Description: ========================================= 
 //= Renewal-specific town shop NPCs.
-//===== Additional Comments: =================================
+//===== Additional Comments: ================================= 
 //= 1.0 Moved some merchants to a separate renewal file. [Kenpachi]
 //= 1.1 Added Dicastes merchants. [Joseph]
 //= 1.2 Moved more shops to Renewal file. [Euphy]
