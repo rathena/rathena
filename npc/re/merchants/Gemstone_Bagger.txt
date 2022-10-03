@@ -10,8 +10,8 @@
 //============================================================
 -	script	#GemstoneBagger	HIDDEN_NPC,{
 	mes "[Gemstone Bagger]";
-	mes "We pack gemstones in bags in the easy to find way.";
-	mes "What would you like to choose?";
+	mes "We pack gemstones in bags in an easy to find way.";
+	mes "What would you like to do?";
 	next;
 	switch(select("Exchange Gemstones:Cancel")) {
 	case 1:
