@@ -231,7 +231,7 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 
 					if (this->nodeExists(refineLevelNode, "BroadcastSuccess")) {
-						bool bcast = false;
+						bool bcast;
 						if (!this->asBool(refineLevelNode, "BroadcastSuccess", bcast)) {
 							return 0;
 						}
@@ -244,7 +244,7 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 
 					if (this->nodeExists(refineLevelNode, "BroadcastFailure")) {
-						bool bcast = false;
+						bool bcast;
 						if (!this->asBool(refineLevelNode, "BroadcastFailure", bcast)) {
 							return 0;
 						}

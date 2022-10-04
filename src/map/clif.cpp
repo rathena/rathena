@@ -20979,6 +20979,14 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
 	return; // Nothing todo yet
 }
 
+static std::string clif_hide_name(const char* original_name)
+{
+	std::string censored(original_name);
+	int hide = min(battle_config.broadcast_hide_name, censored.length() - 1);
+	censored.replace(censored.length() - hide, hide, hide, '*');
+	return censored;
+}
+
 /**
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <containerid>.W (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
@@ -20989,10 +20997,8 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
-		std::string dispname = std::string( char_name );
-		int hide = min( battle_config.broadcast_hide_name, dispname.length() - 1 );
-		dispname.replace( dispname.length() - hide, hide, hide, '*' );
-		safestrncpy( name, dispname.c_str(), sizeof( name ) );
+		std::string dispname = clif_hide_name(char_name);
+		safestrncpy(name, dispname.c_str(), sizeof(name));
 	}else{
 		safestrncpy( name, char_name, sizeof( name ) );
 	}
@@ -24702,23 +24708,21 @@ void clif_parse_itempackage_select( int fd, struct map_session_data* sd ){
 void clif_broadcast_refine_result(map_session_data& sd, t_itemid itemId, int8 level, bool success)
 {
 #if PACKETVER_MAIN_NUM >= 20170906 || PACKETVER_RE_NUM >= 20170830 || defined(PACKETVER_ZERO)
-	PACKET_ZC_BROADCAST_ITEMREFINING_RESULT packet{};
-	packet.packetType = HEADER_ZC_BROADCAST_ITEMREFINING_RESULT;
-	packet.itemId = itemId;
-	packet.refine_level = level;
-	packet.status = (int8)success;
+	PACKET_ZC_BROADCAST_ITEMREFINING_RESULT p{};
+	p.packetType = HEADER_ZC_BROADCAST_ITEMREFINING_RESULT;
+	p.itemId = itemId;
+	p.refine_level = level;
+	p.status = (int8)success;
 
 	if (battle_config.broadcast_hide_name) {
-		std::string dispname = std::string(sd.status.name);
-		int hide = min(battle_config.broadcast_hide_name, dispname.length() - 1);
-		dispname.replace(dispname.length() - hide, hide, hide, '*');
-		safestrncpy(packet.name, dispname.c_str(), NAME_LENGTH);
+		std::string dispname = clif_hide_name(sd.status.name);
+		safestrncpy(p.name, dispname.c_str(), sizeof(p.name));
 	}
 	else {
-		safestrncpy(packet.name, sd.status.name, NAME_LENGTH);
+		safestrncpy(p.name, sd.status.name, sizeof(p.name));
 	}
 
-	clif_send(&packet, sizeof(packet), &sd.bl, ALL_CLIENT);
+	clif_send(&p, sizeof(p), &sd.bl, ALL_CLIENT);
 #endif
 }
 
