@@ -30,6 +30,8 @@
 #           Bonus                       Refinement bonus. (Default: 0)
 #           RandomBonus                 Extra refinement bonus of 0~RandomBonus stacked on Bonus. (Default: 0)
 #           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
+#           BroadcastSuccess            Broadcast to the whole server when a refine attempt at this level succeeds. (Default: false)
+#           BroadcastFailure            Broadcast to the whole server when a refine attempt at this level fails. (Default: false)
 #           Chances:                    Success chance based on cost type. (Default: null)
 #             - Type                    Refinement cost type based on ore used.
 #               Rate                    Chance of success out of 0~10000. (Default: 0)
@@ -41,7 +43,7 @@
 
 Header:
   Type: REFINE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Group: Armor

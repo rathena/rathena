@@ -230,6 +230,32 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						}
 					}
 
+					if (this->nodeExists(refineLevelNode, "BroadcastSuccess")) {
+						bool bcast;
+						if (!this->asBool(refineLevelNode, "BroadcastSuccess", bcast)) {
+							return 0;
+						}
+						level_info->broadcast_success = bcast;
+					}
+					else {
+						if (!level_exists) {
+							level_info->broadcast_success = false;
+						}
+					}
+
+					if (this->nodeExists(refineLevelNode, "BroadcastFailure")) {
+						bool bcast;
+						if (!this->asBool(refineLevelNode, "BroadcastFailure", bcast)) {
+							return 0;
+						}
+						level_info->broadcast_failure = bcast;
+					}
+					else {
+						if (!level_exists) {
+							level_info->broadcast_failure = false;
+						}
+					}
+
 					if( this->nodeExists( refineLevelNode, "Chances" ) ){
 						const auto& chancesNode = refineLevelNode["Chances"];
 						for( const auto& chanceNode : chancesNode ){
