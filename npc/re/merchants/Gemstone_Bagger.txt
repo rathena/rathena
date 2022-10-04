@@ -18,7 +18,7 @@
 		mes "[Gemstone Bagger]";
 		mes "I will prepare a bag for gemstones.";
 		close2;
-		callshop "Gemstone_Bagger", 1;
+		callshop "Gemstone_Bagger";
 		break;
 	case 2:
 		mes "[Gemstone Bagger]";
