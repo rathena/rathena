@@ -20878,6 +20878,14 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
 	return; // Nothing todo yet
 }
 
+static std::string clif_hide_name(const char* original_name)
+{
+	std::string censored(original_name);
+	int hide = min(battle_config.broadcast_hide_name, censored.length() - 1);
+	censored.replace(censored.length() - hide, hide, hide, '*');
+	return censored;
+}
+
 /**
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <containerid>.W (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
@@ -20888,10 +20896,8 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
-		std::string dispname = std::string( char_name );
-		int hide = min( battle_config.broadcast_hide_name, dispname.length() - 1 );
-		dispname.replace( dispname.length() - hide, hide, hide, '*' );
-		safestrncpy( name, dispname.c_str(), sizeof( name ) );
+		std::string dispname = clif_hide_name(char_name);
+		safestrncpy(name, dispname.c_str(), sizeof(name));
 	}else{
 		safestrncpy( name, char_name, sizeof( name ) );
 	}
@@ -22308,6 +22314,9 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		log_pick_pc( sd, LOG_TYPE_OTHER, 1, item );
 		clif_misceffect( &sd->bl, 3 );
 		clif_refine( fd, 0, index, item->refine );
+		if (info->broadcast_success) {
+			clif_broadcast_refine_result(*sd, item->nameid, item->refine, true);
+		}
 		if( id->type == IT_WEAPON ){
 			achievement_update_objective( sd, AG_ENCHANT_SUCCESS, 2, id->weapon_level, item->refine );
 		}
@@ -22315,6 +22324,9 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	}else{
 		// Failure
 
+		if (info->broadcast_failure) {
+			clif_broadcast_refine_result(*sd, item->nameid, item->refine, false);
+		}
 		// Blacksmith blessings were used to prevent breaking and downgrading
 		if( blacksmith_amount > 0 ){
 			clif_refine( fd, 3, index, item->refine );
@@ -24590,6 +24602,27 @@ void clif_parse_itempackage_select( int fd, struct map_session_data* sd ){
 			pc_additem( sd, &item, entry.second->amount, LOG_TYPE_PACKAGE );
 		}
 	}
+#endif
+}
+
+void clif_broadcast_refine_result(map_session_data& sd, t_itemid itemId, int8 level, bool success)
+{
+#if PACKETVER_MAIN_NUM >= 20170906 || PACKETVER_RE_NUM >= 20170830 || defined(PACKETVER_ZERO)
+	PACKET_ZC_BROADCAST_ITEMREFINING_RESULT p{};
+	p.packetType = HEADER_ZC_BROADCAST_ITEMREFINING_RESULT;
+	p.itemId = itemId;
+	p.refine_level = level;
+	p.status = (int8)success;
+
+	if (battle_config.broadcast_hide_name) {
+		std::string dispname = clif_hide_name(sd.status.name);
+		safestrncpy(p.name, dispname.c_str(), sizeof(p.name));
+	}
+	else {
+		safestrncpy(p.name, sd.status.name, sizeof(p.name));
+	}
+
+	clif_send(&p, sizeof(p), &sd.bl, ALL_CLIENT);
 #endif
 }
 
