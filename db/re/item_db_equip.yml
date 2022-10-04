@@ -68755,15 +68755,12 @@ Body:
       .@val = 10;
       if (.@r>6) {
          bonus2 bSubSize,Size_Large,10;
-         bonus2 bMagicSubSize,Size_Large,10;
          if (.@r>8) {
             .@val += 5;
          }
       }
       bonus2 bSubSize,Size_Small,.@val;
-      bonus2 bMagicSubSize,Size_Small,.@val;
       bonus2 bSubSize,Size_Medium,.@val;
-      bonus2 bMagicSubSize,Size_Medium,.@val;
   - Id: 15345
     AegisName: ArmorOfSeadragonBR
     Name: Blue Dragon Armor    # !todo check english name
@@ -112410,17 +112407,14 @@ Body:
     Refineable: true
     Script: |
       bonus2 bSubSize,Size_All,2;
-      /*bonus2 bMagicSubSize,Size_All,2;*/
       .@r = getrefine();
       bonus bMaxHP,.@r*10;
       bonus bDef,.@r*10;
       if (.@r >= 7) {
          bonus2 bSubSize,Size_All,2;
-         /*bonus2 bMagicSubSize,Size_All,2;*/
       }
       if (.@r >= 9) {
          bonus2 bSubSize,Size_All,3;
-         /*bonus2 bMagicSubSize,Size_All,3;*/
       }
   - Id: 24427
     AegisName: S_M_Exo_Co_Weapon
@@ -117709,7 +117703,6 @@ Body:
       bonus2 bAddSize,Size_All,(.@r/3);
       bonus2 bMagicAddSize,Size_All,(.@r/3);
       bonus2 bSubSize,Size_All,(.@r/3);
-      bonus2 bMagicSubSize,Size_All,(.@r/3);
       if (.@r==10)
          bonus bNoSizeFix;
   - Id: 24734
@@ -121392,8 +121385,6 @@ Body:
       }
       bonus2 bSubSize,Size_Medium,.@red;
       bonus2 bSubSize,Size_Large,.@red;
-      bonus2 bMagicSubSize,Size_Medium,.@red;
-      bonus2 bMagicSubSize,Size_Large,.@red;
   - Id: 28137
     AegisName: Evt_Avenger
     Name: Sealed Avenger
@@ -121520,9 +121511,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSubSize,Size_Medium,10;
-      bonus2 bMagicSubSize,Size_Medium,10;
       bonus2 bSubSize,Size_Large,10;
-      bonus2 bMagicSubSize,Size_Large,10;
       bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,.@r;
@@ -128299,7 +128288,6 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSubSize,Size_All,2*(.@r/3);
-      bonus2 bMagicSubSize,Size_All,2*(.@r/3);
       if (.@r>=7) {
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,5;
@@ -170938,7 +170926,6 @@ Body:
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,15;
-            bonus2 bMagicSubSize,Size_All,15;
             bonus bLongAtkRate,15;
             if (.@r>=11) {
                bonus bDelayrate,-7;
@@ -171034,9 +171021,7 @@ Body:
             bonus2 bSkillAtk,"RK_STORMBLAST",25;
             if (.@r>=11) {
                bonus2 bSubSize,Size_Small,25;
-               bonus2 bMagicSubSize,Size_Small,25;
                bonus2 bSubSize,Size_Medium,25;
-               bonus2 bMagicSubSize,Size_Medium,25;
             }
          }
       }
@@ -172535,14 +172520,10 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus2 bSubSize,Size_Medium,15;
-      bonus2 bMagicSubSize,Size_Medium,15;
       bonus2 bSubSize,Size_Large,15;
-      bonus2 bMagicSubSize,Size_Large,15;
       if (.@r>=7) {
          bonus2 bSubSize,Size_Medium,15;
-         bonus2 bMagicSubSize,Size_Medium,15;
          bonus2 bSubSize,Size_Large,15;
-         bonus2 bMagicSubSize,Size_Large,15;
          bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bLongAtkRate,15;
@@ -176126,7 +176107,6 @@ Body:
             bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",30;
             if (.@r>=11) {
                bonus2 bSubSize,Size_All,20;
-               bonus2 bMagicSubSize,Size_All,20;
                bonus2 bAddEle,Ele_All,15;
             }
          }
@@ -176778,7 +176758,6 @@ Body:
       }
       if (.@r>=7) {
          bonus2 bSubSize,Size_All,20;
-         bonus2 bMagicSubSize,Size_All,20;
          bonus2 bSkillAtk,"RL_FIREDANCE",25;
          if (.@r>=9) {
             bonus bAtkRate,7;
@@ -177935,7 +177914,6 @@ Body:
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
                bonus2 bSubSize,Size_All,20;
-               bonus2 bMagicSubSize,Size_All,20;
             }
          }
       }

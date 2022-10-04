@@ -4835,8 +4835,6 @@ Body:
       bonus2 bAddSize,Size_Large,15;
       bonus2 bSubSize,Size_Medium,5;
       bonus2 bSubSize,Size_Large,5;
-      bonus2 bMagicSubSize,Size_Medium,5;
-      bonus2 bMagicSubSize,Size_Large,5;
   - Combos:
       - Combo:
           - Sarah_Card
@@ -14040,9 +14038,7 @@ Body:
           - C_Khaliz_Knight_Card
     Script: |
       bonus2 bSubSize,Size_Medium,5;
-      bonus2 bMagicSubSize,Size_Medium,5;
       bonus2 bSubSize,Size_Large,5;
-      bonus2 bMagicSubSize,Size_Large,5;
       bonus2 bMagicAddSize,Size_Medium,5;
       bonus2 bMagicAddSize,Size_Large,5;
   - Combos:
@@ -14412,10 +14408,8 @@ Body:
       bonus bMdef,15;
       bonus bDef,80;
       bonus2 bSubSize,Size_Medium,(readparam(bVit)/30);
-      bonus2 bMagicSubSize,Size_Medium,(readparam(bVit)/30);
       bonus2 bSubSize,Size_Large,(readparam(bVit)/30);
-      bonus2 bMagicSubSize,Size_Large,(readparam(bVit)/30);
-      autobonus2 "{ bonus2 bSubSize,Size_All,7; bonus2 bMagicSubSize,Size_All,7; if (readparam(bVit) >= 120) { bonus2 bSubSize,Size_All,5; bonus2 bMagicSubSize,Size_All,5; } }",1+(readparam(bVit) >= 120),10000,BF_MAGIC|BF_WEAPON;
+      autobonus2 "{ bonus2 bSubSize,Size_All,7; if (readparam(bVit) >= 120) { bonus2 bSubSize,Size_All,5; } }",1+(readparam(bVit) >= 120),10000,BF_MAGIC|BF_WEAPON;
       if (.@sum >= 33) {
          bonus bAspdRate,20;
          bonus bDelayrate,-25;
@@ -22276,7 +22270,6 @@ Body:
           - Dragonic_Slayer_LT
     Script: |
       bonus2 bSubSize,Size_All,10;
-      bonus2 bMagicSubSize,Size_All,10;
       if (getequiprefinerycnt(EQI_HAND_R) >= 10) {
          bonus bLongAtkRate,10;
          bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
@@ -23314,9 +23307,7 @@ Body:
             bonus2 bMagicAddRace,RC_Dragon,15;
             if (@r >= 11) {
                bonus2 bSubSize,Size_Medium,15;
-               bonus2 bMagicSubSize,Size_Medium,15;
                bonus2 bSubSize,Size_Large,15;
-               bonus2 bMagicSubSize,Size_Large,15;
             }
          }
       }
@@ -23331,9 +23322,7 @@ Body:
       bonus bMatk,50;
       bonus bBaseAtk,50;
       bonus2 bSubSize,Size_Medium,15;
-      bonus2 bMagicSubSize,Size_Medium,15;
       bonus2 bSubSize,Size_Large,15;
-      bonus2 bMagicSubSize,Size_Large,15;
   - Combos:
       - Combo:
           - aegis_490180
