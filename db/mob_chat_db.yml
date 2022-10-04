@@ -126,6 +126,26 @@ Body:
     Dialog: This is the truth! Hahahahah!
   - Id: 58 # !todo Unknown dialogue
     Dialog: Attack!
+  - Id: 60
+    Dialog: Go !! Ultra Critical Bash EX !!
+  - Id: 61
+    Dialog: Come on!! Hell's Fireball !!
+  - Id: 62
+    Dialog: Kneel before me!! The vast power of capitalism !!
+  - Id: 63
+    Dialog: You can't run from me!! Double Strafe, pierce through my enemies !!
+  - Id: 64
+    Dialog: I'm gonna make you sick!!! Ultimate generational Envenom !!
+  - Id: 65
+    Dialog: I'll roll over you!! Ultimate Decrease Agility GX !!
+  - Id: 67 
+    Dialog: Dark cast that narrows the field of vision! It can only be removed with a green potion!
+  - Id: 68
+    Dialog: A poison that continuously lowers HP for a certain period of time! But it is not released with a green herb!
+  - Id: 69
+    Dialog: Let's start with recovery!
+  - Id: 70
+    Dialog: Silence that cannot use skills! You can only escape by eating green potions!
 
 Footer:
   Imports:
