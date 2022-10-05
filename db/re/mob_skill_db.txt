@@ -12863,6 +12863,30 @@
 3765,Deranged Adventurer@NPC_TALK,idle,682,10,2500,0,35000,yes,self,always,0,,,,,,,53
 3765,Deranged Adventurer@NPC_TALK,idle,682,10,2500,0,30000,yes,self,always,0,,,,,,,54
 
+// Poring Village instance
+3810,MD_KING_PORING@SM_BASH,attack,5,3,1000,1000,9000,yes,target,always,0,,,,,,,60
+3810,MD_KING_PORING@MG_FIREBALL,attack,17,3,1000,1000,9000,yes,target,always,0,,,,,,,61
+3810,MD_KING_PORING@MC_MAMMONITE,attack,42,3,1000,1000,9000,yes,target,always,0,,,,,,,62
+3810,MD_KING_PORING@AC_DOUBLE,attack,46,3,1000,1000,9000,yes,target,always,0,,,,,,,63
+3810,MD_KING_PORING@TF_POISON,attack,52,3,1000,1000,9000,yes,target,always,0,,,,,,,64
+3810,MD_KING_PORING@AL_DECAGI,attack,30,3,1000,1000,9000,yes,target,always,0,,,,,,,65
+3811,MD_GOLDRING@NPC_STUNATTACK,attack,179,5,3500,1000,10000,no,target,always,0,,,,,,,
+// todo NPC_WIDECONFUSE2
+//3812,MD_AMERING@NPC_WIDECONFUSE2,attack,762,1,3000,2000,20000,yes,target,always,0,,,,,,,
+3812,MD_AMERING@NPC_WIDECONFUSE,attack,667,1,3000,2000,20000,yes,target,always,0,,,,,,,
+3813,MD_DROPS@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,,,,,,,
+3813,MD_DROPS@NPC_FIREATTACK,attack,186,1,2000,100,5000,yes,target,always,0,,,,,,,
+3813,MD_DROPS@NPC_BLINDATTACK,attack,177,3,2000,1000,15000,yes,target,always,0,,,,,,,67
+3814,MD_POPORING@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,,,,,,2,
+3814,MD_POPORING@NPC_POISON,attack,176,1,500,1000,15000,no,target,always,0,,,,,,,
+3814,MD_POPORING@NPC_POISONATTACK,attack,188,1,2000,900,15000,yes,target,always,0,,,,,,,68
+3815,MD_PORING@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,,,,,,2,
+3815,MD_PORING@NPC_SILENCEATTACK,attack,178,2,1500,1000,15000,no,target,always,0,,,,,,,70
+3816,MD_MARIN@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,,,,,,2,
+3816,MD_MARIN@NPC_WATERATTACK,attack,184,1,2000,1000,15000,yes,target,always,0,,,,,,,
+3816,MD_MARIN@AL_HEAL,idle,28,1,10000,500,5000,yes,friend,myhpltmaxrate,90,,,,,,2,
+3816,MD_MARIN@AL_HEAL,attack,28,1,10000,500,5000,yes,friend,myhpltmaxrate,90,,,,,,,69
+
 // Episode 17.1 - Illusion (custom) #!todo
 20340,EL-A17T@NPC_AGIUP,chase,350,5,2000,0,60000,no,self,always,0,,,,,,6,
 20340,EL-A17T@NPC_POWERUP,attack,349,5,2000,0,60000,no,self,always,0,,,,,,6,

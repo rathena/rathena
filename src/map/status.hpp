@@ -73,6 +73,8 @@ struct s_refine_level_info{
 	uint32 bonus;
 	uint32 randombonus_max;
 	uint16 blessing_amount;
+	bool broadcast_success;
+	bool broadcast_failure;
 	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
 };
 
@@ -92,7 +94,7 @@ private:
 	std::shared_ptr<s_refine_level_info> findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine );
 
 public:
-	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 2, 1 ){
 
 	}
 

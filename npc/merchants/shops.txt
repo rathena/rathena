@@ -171,7 +171,6 @@ lhz_in02,286,95,4	shop	Beginner's Merchant#lhz	62,5112:-1,2416:-1,2113:-1,2512:-
 lhz_in02,271,99,5	shop	Armor Dealer#lhz	851,2101:-1,2103:-1,2403:-1,2405:-1,2503:-1,2321:-1,2314:-1,2309:-1,2335:-1,2628:-1
 lhz_in02,276,99,4	shop	Weapon Dealer#lhz	851,1201:-1,1207:-1,1216:-1,1107:-1,1122:-1,1116:-1,1154:-1,1407:-1,1457:-1,1354:-1,1519:-1,13003:-1
 lhz_in02,273,35,4	shop	Wand Dealer#lhz	854,1601:-1,1604:-1,1607:-1,1617:-1,1619:-1
-lhz_in02,105,21,3	shop	Jeweler#lhz	91,721:-1,723:-1,726:-1,728:-1,729:-1,730:-1,2613:-1
 lhz_in02,17,220,5	shop	Vegetable Gardener#lhz2	91,515:-1,516:-1,535:-1
 lhz_in02,21,220,5	shop	Fruit Gardener#lhz2	102,512:-1,513:-1
 lhz_in02,32,219,5	shop	Butcher#lhz	54,517:-1
@@ -205,8 +204,6 @@ xmas_in,174,98,2	shop	Weapon Dealer#xmas	49,1201:-1,1204:-1,1207:-1,1210:-1,1213
 in_moc_16,22,20,7	shop	Sepulchral Merchant#moc	880,1771:-1
 moc_ruins,93,53,2	shop	Item Collector#moc1	85,911:-1,528:-1,919:-1,925:-1
 moc_ruins,81,113,0	shop	Item Collector#moc2	85,911:-1,528:-1,919:-1,925:-1
-moc_ruins,110,105,2	shop	Jeweler#moc1	102,721:-1,723:-1,726:-1,728:-1,729:-1
-moc_ruins,52,85,6	shop	Jeweler#moc2	99,730:-1,2613:-1
 moc_ruins,113,126,4	shop	Trader#moc1	99,747:-1
 moc_ruins,131,138,0	shop	Trader#moc2	93,748:-1
 moc_ruins,71,139,5	shop	Trader#moc3	93,2612:-1

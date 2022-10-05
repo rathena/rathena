@@ -3396,7 +3396,7 @@ Body:
     Script: |
       itemheal rand(45,65),0;
   - Id: 11569
-    AegisName: Orange_Potion_
+    AegisName: Orange_Potion_B
     Name: Orange Potion
     Type: Healing
     Buy: 10
@@ -47477,6 +47477,16 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box12);
+  - Id: 23302
+    AegisName: PoringsPreciousBox
+    Name: Poring Treasure Box
+    Type: Usable
+    Weight: 200
+    EquipLevelMin: 30
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_PORINGSPRECIOUSBOX);
   - Id: 23307
     AegisName: Comp_M_DEFScroll
     Name: "[Sale] Shining Defense Scroll"
@@ -49792,6 +49802,30 @@ Body:
     Weight: 250
     Script: |
       getitem "Explosive_Kunai",500;
+  - Id: 100192
+    AegisName: Gemstone_Blue
+    Name: Blue Gemstone Pouch
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Blue_Gemstone",500;
+  - Id: 100193
+    AegisName: Gemstone_YL
+    Name: Yellow Gemstone Pouch
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Yellow_Gemstone",500;
+  - Id: 100194
+    AegisName: Gemstone_Red
+    Name: Red Gemstone Pouch
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Red_Gemstone",500;
   - Id: 100195
     AegisName: aegis_100195
     Name: Full Metal Jacket Cartridge
@@ -51298,6 +51332,23 @@ Body:
     Weight: 10
     Script: |
       item_reform();
+  - Id: 100848
+    AegisName: Watermelon_Pudding_J
+    Name: Watermelon Pudding    # !todo check english name
+    Type: Healing
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 3,3;
+      specialeffect2 999;
+      specialeffect2 572;
+      /* TODO check effect */
   - Id: 100880
     AegisName: aegis_100880
     Name: Piercing Shadow Box
@@ -52797,6 +52848,15 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 101792
+    AegisName: SubjectCape_Refine_Cube
+    Name: Subject Manteau 12 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box

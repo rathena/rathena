@@ -1222,6 +1222,8 @@ void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex
 // Enchanting Shadow / Shadow Scar Spirit
 void clif_enchantingshadow_spirit(unit_data &ud);
 
+void clif_broadcast_refine_result(struct map_session_data& sd, t_itemid itemId, int8 level, bool success);
+
 // Captcha Register
 void clif_captcha_upload_request(map_session_data &sd);
 void clif_captcha_upload_end(map_session_data &sd);
