@@ -2248,7 +2248,7 @@
 
 #if PACKETVER >= 20160316
 	parseable_packet(HEADER_CZ_REQ_UPLOAD_MACRO_DETECTOR, sizeof(PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR), clif_parse_captcha_register, 0);
-	parseable_packet(HEADER_ZC_ACK_UPLOAD_MACRO_DETECTOR, sizeof(PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR), clif_parse_captcha_upload, 0);
+	parseable_packet(HEADER_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA, -1, clif_parse_captcha_upload, 0);
 	parseable_packet(HEADER_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA, sizeof(PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA), clif_parse_macro_detector_download_ack, 0);
 	parseable_packet(HEADER_CZ_ACK_ANSWER_MACRO_DETECTOR, sizeof(PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR), clif_parse_macro_detector_answer, 0);
 	parseable_packet(HEADER_CZ_REQ_APPLY_MACRO_DETECTOR, sizeof(PACKET_CZ_REQ_APPLY_MACRO_DETECTOR), clif_parse_macro_reporter_ack, 0);

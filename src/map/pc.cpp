@@ -63,7 +63,6 @@ using namespace rathena;
 JobDatabase job_db;
 
 CaptchaDatabase captcha_db;
-std::vector<std::shared_ptr<s_captcha_data>> macro_db;
 const char *macro_allowed_answer_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
@@ -14995,95 +14994,84 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	clif_attendence_response( sd, attendance_counter );
 }
 
-void pc_macro_captcha_register(map_session_data &sd, const int32 image_size, const char *captcha_answer) {
+/**
+ * Save a captcha image to memory via /macro_register.
+ * @param sd: Player data
+ * @param image_size: Captcha image size
+ * @param captcha_answer: Answer to captcha
+ */
+void pc_macro_captcha_register(map_session_data &sd, int16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
 	nullpo_retv(captcha_answer);
 
-	if (strlen(captcha_answer) < 4 || (image_size < 0 || image_size > CAPTCHA_BMP_SIZE) || macro_db.size() >= CAPTCHA_MAX_SIZE) {
-		clif_captcha_upload_request(sd, "", 1); // Notify client of failure.
+	sd.captcha_upload.cd = nullptr;
+	sd.captcha_upload.upload_size = 0;
+
+	if (strlen(captcha_answer) < 4 || image_size < 0 || image_size > CAPTCHA_BMP_SIZE || captcha_db.size() >= 0xFFF) {
+		clif_captcha_upload_request(sd); // Notify client of failure.
 		return;
 	}
 
 	std::shared_ptr<s_captcha_data> cd = std::make_shared<s_captcha_data>();
+	sd.captcha_upload.cd = cd;
 
-	cd->upload_size = 0;
 	cd->image_size = image_size;
 	safestrncpy(cd->captcha_answer, captcha_answer, sizeof(cd->captcha_answer));
-	memset(cd->image_data, 0, CAPTCHA_BMP_SIZE);
-	safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "%X", static_cast<uint32>(macro_db.size() + 1));
+	memset(cd->image_data, 0, sizeof(cd->image_data));
 
-	macro_db.push_back(cd);
+	// The key will be generated after the upload finished succesfully
+	safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "");
 
 	// Request the image data from the client.
-	clif_captcha_upload_request(sd, cd->captcha_key, 0);
+	clif_captcha_upload_request(sd);
 }
 
-void pc_macro_captcha_register_upload(map_session_data &sd, const char *captcha_key, const int32 upload_size, const char *upload_data) {
+/**
+ * Save captcha image to server.
+ * @param sd: Player data
+ * @param captcha_key: Captcha ID
+ * @param upload_size: Captcha size
+ * @param upload_data: Image data
+ */
+void pc_macro_captcha_register_upload(map_session_data &sd, char captcha_key[CAPTCHA_KEY_SIZE], int16 upload_size, char *upload_data) {
 	nullpo_retv(captcha_key);
 	nullpo_retv(upload_data);
 
-	if (upload_size < 1 || upload_size >= MAX_CAPTCHA_CHUNK_SIZE)
-		return;
-
-	const int32 captcha_idx = static_cast<int32>(strtol(captcha_key, nullptr, 16) - 1);
-
-	if (captcha_idx < 1 || captcha_idx > macro_db.size())
-		return;
-
-	std::shared_ptr<s_captcha_data> cd = macro_db[captcha_idx];
-
-	if (cd->upload_size + upload_size >= cd->image_size)
-		return;
-
-	memcpy(&cd->image_data[cd->upload_size], &upload_data, upload_size);
-	cd->upload_size += upload_size;
+	memcpy(&sd.captcha_upload.cd->image_data[sd.captcha_upload.upload_size], upload_data, upload_size);
+	sd.captcha_upload.upload_size += upload_size;
 
 	// Notify that the image finished uploading.
-	if (cd->upload_size == cd->image_size)
+	if (sd.captcha_upload.upload_size == sd.captcha_upload.cd->image_size) {
+		// Tell the client that the upload was finished
 		clif_captcha_upload_end(sd);
-}
 
-void pc_macro_captcha_preview(map_session_data &sd, const int32 captcha_idx) {
-	// Send client error if captcha id is out of range.
-	const int32 cr_len = static_cast<int32>(macro_db.size());
+		// Look for a free key
+		int32 i;
 
-	if (cr_len == 0 || captcha_idx < 0 || captcha_idx >(cr_len - 1)) {
-		clif_captcha_preview_request_init(sd, "", 0, 1);
-		return;
-	}
+		for (i = 0; i <= 0xFFF; i++) {
+			if (!captcha_db.exists(i)) {
+				break;
+			}
+		}
 
-	const std::shared_ptr<s_captcha_data> cd = macro_db[captcha_idx];
+		if (i == (0xFFF + 1)) {
+			// no free key found...
+			sd.captcha_upload.cd = nullptr;
+			sd.captcha_upload.upload_size = 0;
+			return;
+		}
 
-	// Send preview initialization request to the client.
-	clif_captcha_preview_request_init(sd, cd->captcha_key, cd->image_size, 0);
-
-	// Send the image data in chunks.
-	const int chunks = (cd->image_size / MAX_CAPTCHA_CHUNK_SIZE) + (cd->image_size % MAX_CAPTCHA_CHUNK_SIZE != 0);
-
-	for (int i = 0, offset = 0; i < chunks; i++) {
-		const int32 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
-
-		clif_captcha_preview_request_download(sd, cd->captcha_key, chunk_size, &cd->image_data[offset]);
-		offset += chunk_size;
-	}
-}
-
-void pc_macro_detector_request(map_session_data &sd) {
-	const std::shared_ptr<s_captcha_data> cd = sd.macro_detect.cd;
-
-	// Send preview initialization request to the client.
-	clif_macro_detector_request_init(sd, cd->captcha_key, cd->image_size);
-
-	// Send the image data in chunks.
-	const int32 chunks = (cd->image_size / MAX_CAPTCHA_CHUNK_SIZE) + (cd->image_size % MAX_CAPTCHA_CHUNK_SIZE != 0);
-
-	for (int i = 0, offset = 0; i < chunks; i++) {
-		const int32 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
-
-		clif_macro_detector_request_download(sd, cd->captcha_key, chunk_size, &cd->image_data[offset]);
-		offset += chunk_size;
+		safesnprintf(sd.captcha_upload.cd->captcha_key, sizeof(sd.captcha_upload.cd->captcha_key), "%03X", i);
+		captcha_db.put(i, sd.captcha_upload.cd);
+		sd.captcha_upload.cd = nullptr;
+		sd.captcha_upload.upload_size = 0;
+		
+		// TODO: write YAML and BMP file?
 	}
 }
 
+/**
+ * Timer attached to target player with attempts to confirm captcha.
+ */
 TIMER_FUNC(pc_macro_detector_timeout) {
 	map_session_data *sd = map_id2sd(id);
 
@@ -15109,7 +15097,12 @@ TIMER_FUNC(pc_macro_detector_timeout) {
 	return 0;
 }
 
-void pc_macro_detector_process_answer(map_session_data &sd, const char *captcha_answer) {
+/**
+ * Check player's captcha answer.
+ * @param sd: Player data
+ * @param captcha_answer: Captcha answer entered by player
+ */
+void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
 	nullpo_retv(captcha_answer);
 
 	// All attempts have been exhausted block the user
@@ -15165,6 +15158,10 @@ void pc_macro_detector_process_answer(map_session_data &sd, const char *captcha_
 	addt_tickimer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
 }
 
+/**
+ * Determine if a player tries to log out during a captcha check.
+ * @param sd: Player data
+ */
 void pc_macro_detector_disconnect(map_session_data &sd) {
 	// Delete the timeout timer
 	if (sd.macro_detect.timer != INVALID_TIMER) {
@@ -15177,21 +15174,31 @@ void pc_macro_detector_disconnect(map_session_data &sd) {
 		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
 }
 
+/**
+ * Area select via /macro_detector.
+ * @param sd: Player data
+ * @param x: X location
+ * @param y: Y location
+ * @param radius: Area
+ */
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius) {
-	std::vector<int32> aid_list;
+	std::vector<uint32> aid_list;
 
 	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.bl.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
 
 	clif_macro_reporter_select(sd, aid_list);
 }
 
+/**
+ * Save a list of players from an area select via /macro_detector.
+ */
 int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
 	nullpo_retr(0, bl);
 
 	if (bl->type != BL_PC)
 		return 0;
 
-	std::vector<int32> *aid_list = va_arg(ap, std::vector<int32> *);
+	std::vector<uint32> *aid_list = va_arg(ap, std::vector<uint32> *);
 
 	nullpo_ret(aid_list);
 
@@ -15199,13 +15206,17 @@ int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
 	return 0;
 }
 
+/**
+ * Send out captcha check to player.
+ * @param ssd: Source player data
+ * @param tsd: Target player data
+ */
 void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd) {
-	if (macro_db.empty())
+	if (captcha_db.empty())
 		return;
 
 	// Pick a random image from the database.
-	const int32 captcha_idx = rnd() % static_cast<int32>(macro_db.size());
-	const std::shared_ptr<s_captcha_data> cd = macro_db[captcha_idx];
+	const std::shared_ptr<s_captcha_data> cd = captcha_db.random();
 
 	// Set macro detection data.
 	tsd.macro_detect.cd = cd;
@@ -15216,12 +15227,17 @@ void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd) {
 	tsd.state.block_action |= (PCBLOCK_ALL | PCBLOCK_IMMUNE);
 
 	// Open macro detect client side.
-	pc_macro_detector_request(tsd);
+	clif_macro_detector_request(tsd);
 
 	// Start the timeout timer.
 	tsd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, tsd.bl.id, 0);
 }
 
+/**
+ * Parse a BMP image to memory.
+ * @param filepath: Image file location
+ * @param cd: Captcha data
+ */
 bool pc_macro_read_captcha_db_loadbmp(const std::string filepath, std::shared_ptr<s_captcha_data> cd) {
 	if (cd == nullptr)
 		return false;
@@ -15233,45 +15249,28 @@ bool pc_macro_read_captcha_db_loadbmp(const std::string filepath, std::shared_pt
 		return false;
 	}
 
-	// Get the file size
-	fseek(fp, 0, SEEK_END);
-	const uint32 file_len = static_cast<uint32>(ftell(fp));
-	fseek(fp, 0, SEEK_SET);
-
-	if (file_len != CAPTCHA_BMP_SIZE) {
-		ShowError("%s: Invalid BMP file given at \"%s\"\n", __func__, filepath.c_str());
-		fclose(fp);
-		return false;
-	}
-
 	// Load the file data and verify magic
-	char *bmp_data = static_cast<char *>(aMalloc(CAPTCHA_BMP_SIZE));
+	char bmp_data[CAPTCHA_BMP_SIZE];
 
 	if (fread(bmp_data, CAPTCHA_BMP_SIZE, 1, fp) != 1) {
 		ShowError("%s: Failed to read data from \"%s\"\n", __func__, filepath.c_str());
 		fclose(fp);
-		aFree(bmp_data);
 		return false;
 	}
-	if (bmp_data[0] != 'B' || bmp_data[1] != 'M') {
-		ShowError("%s: Invalid BMP file header given at \"%s\"\n", __func__, filepath.c_str());
-		fclose(fp);
-		aFree(bmp_data);
-		return false;
-	}
-
-	// Initialize the destination buffer
-	cd->image_size = 0;
-	memset(cd->image_data, 0, CAPTCHA_BMP_SIZE);
-
-	// Compress the data into the destination
-	unsigned long com_size = 0;
-
-	encode_zip(cd->image_data, &com_size, bmp_data, CAPTCHA_BMP_SIZE);
-	cd->image_size = static_cast<int32>(com_size);
 
 	fclose(fp);
-	aFree(bmp_data);
+
+	if (bmp_data[0] != 'B' || bmp_data[1] != 'M') {
+		ShowError("%s: Invalid BMP file header given at \"%s\"\n", __func__, filepath.c_str());
+		return false;
+	}
+
+	// Compress the data into the destination
+	unsigned long com_size = sizeof(cd->image_data);
+
+	encode_zip(cd->image_data, &com_size, bmp_data, CAPTCHA_BMP_SIZE);
+	cd->image_size = static_cast<int16>(com_size);
+
 	return true;
 }
 
@@ -15285,12 +15284,12 @@ const std::string CaptchaDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
-	uint32 index;
+	int16 index;
 
-	if (!this->asUInt32(node, "Id", index))
+	if (!this->asInt16(node, "Id", index))
 		return 0;
 
-	std::shared_ptr<s_captcha_data> cd = macro_db[index];
+	std::shared_ptr<s_captcha_data> cd = captcha_db.find(index);
 	bool exists = cd != nullptr;
 
 	if (!exists) {
@@ -15298,6 +15297,7 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			return 0;
 
 		cd = std::make_shared<s_captcha_data>();
+		safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "%03X", index);
 	}
 
 	if (this->nodeExists(node, "Filename")) {
@@ -15318,12 +15318,15 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		if (!this->asString(node, "Answer", answer))
 			return 0;
 
-		safestrncpy(cd->captcha_answer, answer.c_str(), answer.length() + 1);
+		if (answer.length() < 4 || answer.length() > CAPTCHA_ANSWER_SIZE) {
+			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...", CAPTCHA_ANSWER_SIZE);
+			return 0;
+		}
+
+		safestrncpy(cd->captcha_answer, answer.c_str(), sizeof(cd->captcha_answer));
 	}
 
-	cd->upload_size = cd->image_size;
-
-	safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "%X", static_cast<int32>(macro_db.size() + 1));
+	safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "%X", static_cast<int32>(captcha_db.size() + 1));
 
 	if (this->nodeExists(node, "Bonus")) {
 		std::string script;
@@ -15344,7 +15347,7 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	}
 
 	if (!exists)
-		macro_db.insert(macro_db.begin(), index, cd);
+		captcha_db.put(index, cd);
 
 	return 1;
 }
@@ -15363,7 +15366,7 @@ void do_final_pc(void) {
 	attendance_db.clear();
 	reputation_db.clear();
 	penalty_db.clear();
-	macro_db.clear();
+	captcha_db.clear();
 }
 
 void do_init_pc(void) {

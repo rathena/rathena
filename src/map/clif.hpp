@@ -47,6 +47,7 @@ enum e_bg_queue_apply_ack : uint16;
 enum e_instance_notify : uint8;
 struct s_laphine_synthesis;
 struct s_laphine_upgrade;
+struct s_captcha_data;
 enum e_macro_detect_status;
 enum e_macro_report_status;
 
@@ -1222,21 +1223,19 @@ void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex
 void clif_enchantingshadow_spirit(unit_data &ud);
 
 // Captcha Register
-void clif_captcha_upload_request(map_session_data &sd, const char *captcha_key, const int captcha_flag);
+void clif_captcha_upload_request(map_session_data &sd);
 void clif_captcha_upload_end(map_session_data &sd);
 
 // Captcha Preview
-void clif_captcha_preview_request_init(map_session_data &sd, const char *captcha_key, const int image_size, const int captcha_flag);
-void clif_captcha_preview_request_download(map_session_data &sd, const char *captcha_key, const int chunk_size, const char *chunk_data);
+void clif_captcha_preview_response(map_session_data &sd, std::shared_ptr<s_captcha_data> cd);
 
 // Macro Detector
-void clif_macro_detector_request_init(map_session_data &sd, const char *captcha_key, const int image_size);
-void clif_macro_detector_request_download(map_session_data &sd, const char *captcha_key, const int chunk_size, const char *chunk_data);
+void clif_macro_detector_request(map_session_data &sd);
 void clif_macro_detector_request_show(map_session_data &sd);
 void clif_macro_detector_status(map_session_data &sd, e_macro_detect_status stype);
 
 // Macro Reporter
-void clif_macro_reporter_select(map_session_data &sd, const std::vector<int32> &aid_list);
+void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> &aid_list);
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 #endif /* CLIF_HPP */
