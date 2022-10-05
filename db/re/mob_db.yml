@@ -92166,20 +92166,326 @@ Body:
 #    AegisName: E_POPORING_CLOVER
 #  - Id: 3809
 #    AegisName: FATAL_BUG
-#  - Id: 3810
-#    AegisName: MD_KING_PORING
-#  - Id: 3811
-#    AegisName: MD_GOLDRING
-#  - Id: 3812
-#    AegisName: MD_AMERING
-#  - Id: 3813
-#    AegisName: MD_DROPS
-#  - Id: 3814
-#    AegisName: MD_POPORING
-#  - Id: 3815
-#    AegisName: MD_PORING
-#  - Id: 3816
-#    AegisName: MD_MARIN
+  - Id: 3810
+    AegisName: MD_KING_PORING
+    Name: King Poring
+    Level: 35
+    Hp: 140000
+    BaseExp: 9580
+    JobExp: 8288
+    Attack: 131
+    Attack2: 119
+    Defense: 20
+    MagicDefense: 20
+    Str: 50
+    Agi: 50
+    Vit: 50
+    Int: 50
+    Dex: 50
+    Luk: 50
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 170
+    AttackDelay: 768
+    AttackMotion: 1632
+    DamageMotion: 576
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Seed_Of_Yggdrasil
+        Rate: 3000
+      - Item: PoringTownOnion
+        Rate: 1000
+      - Item: PoringTownCarrot
+        Rate: 100
+    Drops:
+      - Item: Large_Jellopy
+        Rate: 3000
+      - Item: Jejellopy
+        Rate: 3000
+      - Item: Blue_Herb
+        Rate: 3000
+      - Item: White_Herb
+        Rate: 3000
+      - Item: Yellow_Herb
+        Rate: 3000
+      - Item: Green_Herb
+        Rate: 3000
+      - Item: Old_Violet_Box
+        Rate: 10
+  - Id: 3811
+    AegisName: MD_GOLDRING
+    Name: Hugh Goldling
+    Level: 35
+    Hp: 72118
+    BaseExp: 6327
+    JobExp: 5565
+    Attack: 98
+    Attack2: 89
+    Defense: 10
+    MagicDefense: 10
+    Str: 40
+    Agi: 40
+    Vit: 40
+    Int: 40
+    Dex: 40
+    Luk: 40
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Jejellopy
+        Rate: 3000
+      - Item: Yellow_Herb
+        Rate: 3000
+      - Item: Golden_Jewel
+        Rate: 10
+      - Item: Yellow_Slim_Potion
+        Rate: 10
+  - Id: 3812
+    AegisName: MD_AMERING
+    Name: Huge Amering
+    Level: 35
+    Hp: 72810
+    BaseExp: 6375
+    JobExp: 5524
+    Attack: 97
+    Attack2: 89
+    Defense: 10
+    MagicDefense: 10
+    Str: 40
+    Agi: 40
+    Vit: 40
+    Int: 40
+    Dex: 40
+    Luk: 40
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Jejellopy
+        Rate: 3000
+      - Item: Blue_Herb
+        Rate: 100
+      - Item: Violet_Jewel
+        Rate: 10
+      - Item: Red_Herb
+        Rate: 3000
+  - Id: 3813
+    AegisName: MD_DROPS
+    Name: Enriched Drops
+    Level: 35
+    Hp: 1095
+    BaseExp: 377
+    JobExp: 300
+    Attack: 62
+    Attack2: 22
+    Defense: 10
+    MagicDefense: 10
+    Str: 20
+    Agi: 20
+    Vit: 20
+    Int: 20
+    Dex: 20
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 5000
+      - Item: Rod_
+        Rate: 80
+      - Item: Sticky_Mucus
+        Rate: 600
+      - Item: Apple
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Apple
+        Rate: 400
+      - Item: Orange_Juice
+        Rate: 20
+      - Item: Drops_Card
+        Rate: 25
+        StealProtected: true
+  - Id: 3814
+    AegisName: MD_POPORING
+    Name: Enriched Poporing
+    Level: 36
+    Hp: 1167
+    BaseExp: 384
+    JobExp: 309
+    Attack: 67
+    Attack2: 24
+    Defense: 10
+    MagicDefense: 12
+    Str: 20
+    Agi: 20
+    Vit: 20
+    Int: 20
+    Dex: 20
+    Luk: 20
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 5000
+      - Item: Garlet
+        Rate: 1000
+      - Item: Green_Herb
+        Rate: 1000
+      - Item: Grape
+        Rate: 200
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Main_Gauche
+        Rate: 20
+      - Item: Green_Potion
+        Rate: 500
+      - Item: Poporing_Card
+        Rate: 10
+        StealProtected: true
+  - Id: 3815
+    AegisName: MD_PORING
+    Name: Enriched Poring
+    Level: 34
+    Hp: 1023
+    BaseExp: 369
+    JobExp: 291
+    Attack: 58
+    Attack2: 20
+    Defense: 10
+    MagicDefense: 12
+    Str: 20
+    Agi: 20
+    Vit: 20
+    Int: 20
+    Dex: 20
+    Luk: 20
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 5000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 40
+      - Item: Poring_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3816
+    AegisName: MD_MARIN
+    Name: Enriched Marin
+    Level: 33
+    Hp: 960
+    BaseExp: 358
+    JobExp: 279
+    Attack: 53
+    Attack2: 19
+    Defense: 10
+    MagicDefense: 10
+    Str: 20
+    Agi: 20
+    Vit: 20
+    Int: 20
+    Dex: 20
+    Luk: 20
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Garlet
+        Rate: 1600
+      - Item: Sticky_Mucus
+        Rate: 750
+      - Item: Cold_Scroll_2_1
+        Rate: 50
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Blue_Herb
+        Rate: 38
+      - Item: Candy
+        Rate: 175
+      - Item: Poring_Hat
+        Rate: 1
+      - Item: Marin_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3817
 #    AegisName: DALCOM
 #  - Id: 3818

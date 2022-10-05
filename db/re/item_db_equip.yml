@@ -68755,15 +68755,12 @@ Body:
       .@val = 10;
       if (.@r>6) {
          bonus2 bSubSize,Size_Large,10;
-         bonus2 bMagicSubSize,Size_Large,10;
          if (.@r>8) {
             .@val += 5;
          }
       }
       bonus2 bSubSize,Size_Small,.@val;
-      bonus2 bMagicSubSize,Size_Small,.@val;
       bonus2 bSubSize,Size_Medium,.@val;
-      bonus2 bMagicSubSize,Size_Medium,.@val;
   - Id: 15345
     AegisName: ArmorOfSeadragonBR
     Name: Blue Dragon Armor    # !todo check english name
@@ -69966,6 +69963,38 @@ Body:
          bonus bHealPower,35;
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",35;
       }
+  - Id: 15897
+    AegisName: Rebirth_Circlet
+    Name: Rebirth Crown
+    Type: Armor
+    View: 2120
+    Buy: 20
+    Weight: 600
+    Defense: 12
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus2 bResEff,Eff_Stone,1000*.@r;
+      bonus bDelayrate,-3*.@r;
+      if (.@r>=7) {
+         bonus2 bMagicAddEle,Ele_All,15;
+         bonus2 bSkillCooldown,"WL_COMET",-40000;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAddEle,Ele_All,15;
+         bonus2 bSkillCooldown,"WL_COMET",-45000;
+      }
+      if (.@r>=10) {
+        bonus2 bMagicAtkEle,Ele_Neutral,(readparam(bInt)+readparam(bDex))/10;
+        if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         skill "PF_SPIDERWEB",1;
+      }
   - Id: 15905
     AegisName: C_Helmet_Of_Siegfried_J
     Name: Costume Helmet of Siegfried
@@ -70045,6 +70074,40 @@ Body:
       }
       bonus bShortAtkRate,.@a;
       bonus bHit,.@b;
+  - Id: 15945
+    AegisName: aegis_15945
+    Name: Metal Riffs Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,50;
+      bonus bVariableCastrate,-10;
+      bonus2 bMagicAtkEle,Ele_Neutral,BaseLevel/12;
+      bonus2 bSkillAtk,"WM_METALICSOUND",7*(getskilllv("WM_SONG_OF_MANA")+getskilllv("WM_DANCE_WITH_WUG")+getskilllv("WM_LERADS_DEW"));
+      if (getskilllv("WM_SEVERE_RAINSTORM") == 5)
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
+      if (BaseClass == Job_Archer)
+         bonus bVariableCastrate,-30;
+  - Id: 15948
+    AegisName: aegis_15948
+    Name: Eye Patch Of Power
+    Type: Armor
+    View: 698
+    Weight: 50
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Script: |
+      bonus2 bResEff,Eff_Bleeding,10000;
+      bonus bBaseAtk,60;
+      if (BaseLevel>=170)
+         bonus bBaseAtk,60;
   - Id: 16000
     AegisName: Erde
     Name: Erde
@@ -78104,6 +78167,22 @@ Body:
     Script: |
       bonus bUnbreakableHelm;
       bonus2 bMagicAtkEle,Ele_Fire,4;
+  - Id: 18738
+    AegisName: White_Boys_Hat
+    Name: Boys White Hat
+    Type: Armor
+    View: 877
+    Buy: 20
+    Weight: 100
+    Defense: 10
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,(.@r>=5?20:10);
   - Id: 18739
     AegisName: Carnation_Hairband
     Name: Carnation Hairband
@@ -105570,6 +105649,38 @@ Body:
          bonus bMatk,25;
       if (.@r>=9)
          bonus bMatk,15;
+  - Id: 22202
+    AegisName: Temporal_Boots_TW
+    Name: Temporal Boots
+    Type: Armor
+    Weight: 600
+    Defense: 25
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      if (.@r>=10) {
+         bonus bAllStats,2;
+         if (readparam(bStr)>=108)
+            bonus bBaseAtk,50;
+         if (readparam(bAgi)>=108)
+            bonus bAspd,1;
+         if (readparam(bVit)>=108)
+            bonus bMaxHPrate,8;
+         if (readparam(bInt)>=108)
+            bonus bMatk,60;
+         if (readparam(bDex)>=108) {
+            bonus bFixedCast,-500;
+            bonus bLongAtkRate,5;
+         }
+         if (readparam(bLuk)>=108)
+            bonus bCriticalRate,30;
+      }
   - Id: 22203
     AegisName: Space_shoes_JP
     Name: Special Environment Boots
@@ -112410,17 +112521,14 @@ Body:
     Refineable: true
     Script: |
       bonus2 bSubSize,Size_All,2;
-      /*bonus2 bMagicSubSize,Size_All,2;*/
       .@r = getrefine();
       bonus bMaxHP,.@r*10;
       bonus bDef,.@r*10;
       if (.@r >= 7) {
          bonus2 bSubSize,Size_All,2;
-         /*bonus2 bMagicSubSize,Size_All,2;*/
       }
       if (.@r >= 9) {
          bonus2 bSubSize,Size_All,3;
-         /*bonus2 bMagicSubSize,Size_All,3;*/
       }
   - Id: 24427
     AegisName: S_M_Exo_Co_Weapon
@@ -117709,7 +117817,6 @@ Body:
       bonus2 bAddSize,Size_All,(.@r/3);
       bonus2 bMagicAddSize,Size_All,(.@r/3);
       bonus2 bSubSize,Size_All,(.@r/3);
-      bonus2 bMagicSubSize,Size_All,(.@r/3);
       if (.@r==10)
          bonus bNoSizeFix;
   - Id: 24734
@@ -121392,8 +121499,6 @@ Body:
       }
       bonus2 bSubSize,Size_Medium,.@red;
       bonus2 bSubSize,Size_Large,.@red;
-      bonus2 bMagicSubSize,Size_Medium,.@red;
-      bonus2 bMagicSubSize,Size_Large,.@red;
   - Id: 28137
     AegisName: Evt_Avenger
     Name: Sealed Avenger
@@ -121520,9 +121625,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSubSize,Size_Medium,10;
-      bonus2 bMagicSubSize,Size_Medium,10;
       bonus2 bSubSize,Size_Large,10;
-      bonus2 bMagicSubSize,Size_Large,10;
       bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,.@r;
@@ -128299,7 +128402,6 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSubSize,Size_All,2*(.@r/3);
-      bonus2 bMagicSubSize,Size_All,2*(.@r/3);
       if (.@r>=7) {
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,5;
@@ -142584,6 +142686,44 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 400307
+    AegisName: aegis_400307
+    Name: The Alliance of Onigami
+    Type: Armor
+    View: 2268
+    Weight: 500
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAgi,3*.@r;
+      bonus bMdef,10;
+      bonus bPerfectHitRate,30;
+      bonus2 bSkillAtk,"SR_HOWLINGOFLION",50;
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",50;
+      if (getskilllv("SR_KNUCKLEARROW") == 10)
+         bonus2 bAddEle,Ele_All,25;
+      if (getskilllv("SR_RAISINGDRAGON") == 10) {
+         bonus bMaxHPrate,25;
+         bonus2 bSubClass,Class_Boss,20;
+      }
+      if (getskilllv("SR_GENTLETOUCH_CURE") == 5)
+         bonus bSPDrainValue,3;
+      if (getskilllv("SR_GENTLETOUCH_CHANGE") == 5)
+         bonus bNoSizeFix;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"SR_HOWLINGOFLION",75;
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",75;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SR_HOWLINGOFLION",100;
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",100;
+      }
   - Id: 400309
     AegisName: C_20th_Anniversary_Hat
     Name: COSTUME 20th Anniversary hat    # !todo check english name
@@ -143028,6 +143168,39 @@ Body:
       hateffect HAT_EF_C_Released_Ground,true;
     UnEquipScript: |
       hateffect HAT_EF_C_Released_Ground,false;
+  - Id: 410084
+    AegisName: Melon_Headphone_J_
+    Name: Premium Melon Headphones
+    Type: Armor
+    View: 2129
+    Buy: 2000000
+    Weight: 200
+    Defense: 6
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+  - Id: 410085
+    AegisName: Melon_Headphone_J
+    Name: Premium Melon Headphones
+    Type: Armor
+    View: 2129
+    Buy: 2000000
+    Weight: 200
+    Defense: 6
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
   - Id: 410086
     AegisName: C_Melon_Headphone_J
     Name: Costume Melon Headphone    # !todo check english name
@@ -143365,6 +143538,49 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2178
+  - Id: 410185
+    AegisName: aegis_410185
+    Name: Rebellion Pocket Watch
+    Type: Armor
+    View: 2289
+    Weight: 100
+    Defense: 2
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bResEff,Eff_Silence,10000;
+      if (getskilllv("RL_FALLEN_ANGEL") == 1) {
+         bonus2 bSkillCooldown,"RL_AM_BLAST",-5000;
+         bonus2 bSkillCooldown,"RL_RICHS_COIN",-3000;
+      }
+      if (getskilllv("RL_P_ALTER") == 5)
+         bonus bDelayrate,-15;
+  - Id: 410186
+    AegisName: aegis_410186
+    Name: Rebellion Pocket Watch
+    Type: Armor
+    View: 2289
+    Weight: 100
+    Defense: 2
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bResEff,Eff_Silence,10000;
+      if (getskilllv("RL_FALLEN_ANGEL") == 1) {
+         bonus2 bSkillCooldown,"RL_AM_BLAST",-5000;
+         bonus2 bSkillCooldown,"RL_RICHS_COIN",-3000;
+      }
+      if (getskilllv("RL_P_ALTER") == 5)
+         bonus bDelayrate,-15;
   - Id: 410187
     AegisName: C_Diving_Goggles
     Name: Costume Diving Hunting Goggles    # !todo check english name
@@ -144388,6 +144604,35 @@ Body:
     Script: |
       bonus bCritical,3;
       bonus bCritAtkRate,5;
+  - Id: 420160
+    AegisName: aegis_420160
+    Name: Tyrant of Earth
+    Type: Armor
+    View: 1982
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddSize,Size_All,BaseLevel/10;
+  - Id: 420164
+    AegisName: aegis_420164
+    Name: Red Sleep Sheep
+    Type: Armor
+    View: 2277
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bDelayrate,-15;
+      bonus2 bAddSize,Size_All,5*getskilllv("RA_WUGRIDER");
+      if (getskilllv("RA_CAMOUFLAGE") == 5)
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-60000;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
@@ -149884,6 +150129,36 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
       }
+  - Id: 450222
+    AegisName: aegis_450222
+    Name: Requiescat in Pace
+    Type: Armor
+    Weight: 1000
+    Defense: 150
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bUnbreakableArmor;
+      bonus bAspdRate,10;
+      bonus2 bAddRace,RC_Demon,40;
+      bonus2 bAddRace,RC_DemiHuman,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bMagicAddRace,RC_Demon,40;
+      bonus2 bMagicAddRace,RC_DemiHuman,40;
+      bonus2 bMagicAddRace,RC_Player_Doram,40;
+      bonus2 bSubEle,Ele_Poison,2*.@r;
+      if (.@r>=5) {
+         bonus bDef,300;
+         bonus bMdef,30;
+      }
+      if (.@r>=7)
+         bonus bSpeedAddRate,25;
   - Id: 450224
     AegisName: aegis_450224
     Name: Robe of Dominator
@@ -149902,6 +150177,33 @@ Body:
       bonus bAtkRate,10*(.@r/3);
       bonus bMatkRate,10*(.@r/3);
       bonus bUnbreakableArmor;
+  - Id: 450226
+    AegisName: aegis_450226
+    Name: Four of a Kind
+    Type: Armor
+    Weight: 1000
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bInt,10*getskilllv("WL_RADIUS");
+      bonus bMatk,50*getskilllv("WL_RADIUS");
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus2 bMagicAddRace,RC_All,7*getskilllv("WL_TETRAVORTEX");
+      if (getskilllv("WL_COMET") == 5) {
+         bonus2 bFixedCastrate,"WL_TETRAVORTEX",-100;
+         bonus2 bFixedCastrate,"WL_JACKFROST",-100;
+      }
+      if (.@r>=5)
+         bonus bMdef,25;
+      if (.@r>=7)
+         bonus bMdef,25;
   - Id: 450234
     AegisName: Flame_Rune_Armor
     Name: Rune Armor of Flame
@@ -152558,6 +152860,39 @@ Body:
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,7;
       }
+  - Id: 470130
+    AegisName: aegis_470130
+    Name: End of the World
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSkillCooldown,"GC_HALLUCINATIONWALK",-5000*getskilllv("GC_CROSSIMPACT");
+      bonus bAtkRate,10*getskilllv("GC_CROSSRIPPERSLASHER");
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",6*getskilllv("GC_ROLLINGCUTTER");
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",100*getskilllv("GC_ROLLINGCUTTER");
+      if (getskilllv("GC_HALLUCINATIONWALK") == 5)
+         bonus2 bSubClass,Class_All,5;
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bDelayrate,-10;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bDelayrate,-10;
+      }
   - Id: 470173
     AegisName: Flame_Rune_Boots
     Name: Rune Boots of Flame
@@ -154483,7 +154818,7 @@ Body:
         }
       }
   - Id: 480161
-    AegisName: aegis_480161
+    AegisName: Subject_CapeRange_TH
     Name: Subject Cape (Range)
     Type: Armor
     Defense: 10
@@ -154514,7 +154849,7 @@ Body:
       if (.@r>=9)
          bonus bAspd,1;
   - Id: 480166
-    AegisName: aegis_480166
+    AegisName: Subject_CapeMagic_TH
     Name: Subject Cape (Magic)
     Type: Armor
     Defense: 10
@@ -154551,7 +154886,7 @@ Body:
     ArmorLevel: 1
     View: 124
   - Id: 480172
-    AegisName: aegis_480172
+    AegisName: Subject_CapeMelee_TH
     Name: Subject Cape (Melee)
     Type: Armor
     Defense: 10
@@ -154719,6 +155054,36 @@ Body:
       bonus bMaxHP,1500+100*(.@r/2);
       if (.@r>=7) {
          bonus bVariableCastrate,-7;
+      }
+  - Id: 480188
+    AegisName: aegis_480188
+    Name: Valkyrie Curse Bright
+    Type: Armor
+    Weight: 400
+    Defense: 38
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 131
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubClass,Class_All,5;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus bMaxHPrate,2*.@r;
+      bonus bMaxSPrate,2*.@r;
+      bonus2 bSubEle,Ele_Ghost,7*.@r;
+      if (.@r>=7) {
+         bonus bAllStats,10;
+         bonus2 bAddEle,Ele_All,10;
+         bonus2 bMagicAddEle,Ele_All,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddEle,Ele_All,15;
+         bonus2 bMagicAddEle,Ele_All,15;
+         bonus bDefRatioAtkClass,Class_All;
       }
   - Id: 480197
     AegisName: aegis_480197
@@ -155282,6 +155647,18 @@ Body:
       }
       if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
          bonus bDelayrate,-30;
+  - Id: 490030
+    AegisName: Temporal_Ring_TW
+    Name: Temporal Ring
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
   - Id: 490033
     AegisName: Fallen_Angel_tear
     Name: Fallen Angel's Tear
@@ -157139,6 +157516,36 @@ Body:
       bonus bBaseAtk,40;
       bonus bMatk,40;
       bonus2 bSubRace,RC_Undead,4;
+  - Id: 490183
+    AegisName: Military_Glove
+    Name: Military Glove
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bVit,7;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"NC_AXETORNADO",BaseLevel/2;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",BaseLevel/2;
+      bonus2 bSkillAtk,"NC_POWERSWING",BaseLevel/2;
+      if (getskilllv("NC_SILVERSNIPER") == 5)
+         bonus2 bAddEle,Ele_All,10;
+      if (getskilllv("NC_MAGICDECOY") == 5) {
+         bonus2 bAddMonsterDropItem,731,30;
+         bonus2 bAddMonsterDropItem,731,10;
+      }
+      if (getskilllv("NC_AXEBOOMERANG") == 5) {
+         bonus bAspdRate,10;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+      if (getskilllv("NC_MAGMA_ERUPTION") == 5)
+         bonus bDelayrate,-30;
   - Id: 490184
     AegisName: aegis_490184
     Name: Heroic Token (Shinkiro & Shiranui)
@@ -157463,6 +157870,20 @@ Body:
       }
       bonus bAtkRate,.@a;
       bonus bCritAtkRate,.@b;
+  - Id: 490265
+    AegisName: aegis_490265
+    Name: Inception Ring
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bVariableCastrate,-20;
+      bonus bAspd,1;
+      bonus5 bAutoSpell,"WL_RECOGNIZEDSPELL",1,10,BF_MAGIC,0;
   - Id: 490279
     AegisName: aegis_490279
     Name: Raphin P. Necklace
@@ -158631,6 +159052,44 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bShortAtkRate,4*(.@r/3);
+  - Id: 500041
+    AegisName: Melon_Blade
+    Name: Melon Blade
+    Type: Weapon
+    SubType: 1hSword
+    Buy: 20
+    Weight: 1200
+    Attack: 150
+    MagicAttack: 130
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 500042
     AegisName: SP_B_Saber
     Name: Super Psychic Booster Saber
@@ -160089,6 +160548,129 @@ Body:
             }
          }
       }
+  - Id: 510043
+    AegisName: Kings_Bless_A
+    Name: Awakened King Sword of Praising Glory
+    Type: Weapon
+    SubType: Dagger
+    Buy: 20
+    Weight: 600
+    Attack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      StarGladiator: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Holy;
+      bonus2 bAddSize,Size_All,6*.@r;
+      if (.@r>=9)
+         bonus bNoSizeFix;
+  - Id: 510044
+    AegisName: Kings_Eager_A
+    Name: Awakened Karma Sword of Wearing Destruction
+    Type: Weapon
+    SubType: Dagger
+    Buy: 20
+    Weight: 600
+    Attack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      StarGladiator: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Dark;
+      bonus2 bAddEle,Ele_All,6*.@r;
+      if (.@r>=9)
+         bonus2 bSkillCooldown,"GC_DARKCROW",-30000;
+  - Id: 510048
+    AegisName: Melon_Dagger
+    Name: Melon Dagger
+    Type: Weapon
+    SubType: Dagger
+    Buy: 20
+    Weight: 600
+    Attack: 120
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 510049
     AegisName: C_Garden_Knife
     Name: Corrode Garden Knife
@@ -161025,6 +161607,46 @@ Body:
             }
          }
       }
+  - Id: 520015
+    AegisName: Melon_Axe
+    Name: Melon Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Buy: 20
+    Weight: 1800
+    Attack: 180
+    MagicAttack: 110
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 520017
     AegisName: Glacier_Axe
     Name: Glacier Axe
@@ -161596,6 +162218,42 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 530022
+    AegisName: Melon_Spear
+    Name: Melon Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Buy: 20
+    Weight: 1800
+    Attack: 150
+    MagicAttack: 110
+    Range: 3
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 530023
     AegisName: Solid_Spear
     Name: Solid Spear
@@ -162728,14 +163386,14 @@ Body:
       bonus bAtkRate,5;
       if (.@l>=105) {
          bonus bAtkRate,10;
-         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
-         bonus2 bSkillAtk,"SJ_SOLARBURST",25;
+         bonus2 bSkillAtk,"SJ_NEWMOONKICK",25;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",25;
          if (.@l>=110) {
             bonus bShortAtkRate,10;
             bonus2 bAddSize,Size_ALL,15;
             if (.@l>=115) {
-               bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
-               bonus2 bSkillAtk,"SJ_SOLARBURST",15;
+               bonus2 bSkillAtk,"SJ_NEWMOONKICK",15;
+               bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
             }
          }
       }
@@ -162795,6 +163453,44 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"AB_DUPLELIGHT",25*(.@r/3);
       bonus2 bSkillAtk,"AB_JUDEX",25*(.@r/3);
+  - Id: 540038
+    AegisName: Melon_Book
+    Name: Melon Book
+    Type: Weapon
+    SubType: Book
+    Buy: 20
+    Weight: 800
+    Attack: 120
+    MagicAttack: 140
+    Range: 1
+    Slots: 1
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus bHealPower,6*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 540039
     AegisName: ML_B_Book
     Name: Moon Starlight Booster Book
@@ -163426,6 +164122,34 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 540057
+    AegisName: aegis_540057
+    Name: Book of Thoth
+    Type: Weapon
+    SubType: Book
+    Weight: 800
+    Attack: 120
+    MagicAttack: 200
+    Range: 3
+    Slots: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      skill "TF_DOUBLE",10;
+      bonus2 bSkillFixedCast,"MG_FIREBOLT",10000;
+      bonus2 bSkillFixedCast,"MG_COLDBOLT",10000;
+      bonus2 bSkillFixedCast,"MG_LIGHTNINGBOLT",10000;
+      bonus2 bSkillAtk,"MG_FIREBOLT",25*.@r;
+      bonus2 bSkillAtk,"MG_COLDBOLT",25*.@r;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",25*.@r;
+      bonus2 bSkillAtk,"WZ_EARTHSPIKE",25*.@r;
   - Id: 540059
     AegisName: aegis_540059
     Name: Doom Bible
@@ -165057,6 +165781,81 @@ Body:
       }
       bonus bMatk,15*(.@r/2);
       bonus2 bSkillAtk,"SO_DIAMONDDUST",12*(.@r/3);
+  - Id: 550048
+    AegisName: Melon_Wand
+    Name: Melon Wand
+    Type: Weapon
+    SubType: Staff
+    Buy: 20
+    Weight: 300
+    Attack: 60
+    MagicAttack: 180
+    Range: 1
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus bHealPower,6*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+  - Id: 550049
+    AegisName: Melon_Foxtail
+    Name: Melon Foxtail
+    Type: Weapon
+    SubType: Staff
+    Buy: 20
+    Weight: 400
+    Attack: 150
+    MagicAttack: 180
+    Range: 9
+    Slots: 1
+    Jobs:
+      Summoner: true
+      Spirit_Handler: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus bHealPower,6*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 550050
     AegisName: SP_B_Fox
     Name: Lunatic Picky Booster Foxtail
@@ -166419,6 +167218,45 @@ Body:
             }
          }
       }
+  - Id: 550095
+    AegisName: aegis_550095
+    Name: Ancient Royal Cane
+    Type: Weapon
+    SubType: Mace
+    Weight: 100
+    Attack: 150
+    MagicAttack: 110
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Monk: true
+      Priest: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_DemiHuman,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bMaxHP,1000*.@r;
+      bonus bFlee2,.@r;
+      if (.@r>=5) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
+      if (.@r>=7) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
   - Id: 560000
     AegisName: Boost_Knuckles
     Name: Booster Knuckles
@@ -167256,6 +168094,41 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus2 bSkillAtk,"SR_TIGERCANNON",4*(.@r/3);
+  - Id: 560029
+    AegisName: Melon_Claw
+    Name: Melon Claw
+    Type: Weapon
+    Buy: 20
+    Weight: 400
+    Attack: 140
+    MagicAttack: 100
+    Range: 1
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 560030
     AegisName: Precision_Fist
     Name: Precision Fist
@@ -168103,6 +168976,42 @@ Body:
             }
          }
       }
+  - Id: 570026
+    AegisName: Melon_Viollin
+    Name: Melon Viollin
+    Type: Weapon
+    SubType: Musical
+    Buy: 20
+    Weight: 250
+    Attack: 180
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 570027
     AegisName: Trumpet_Shell_K_LT
     Name: Trumpet Shell-LT
@@ -168924,6 +169833,42 @@ Body:
                }
             }
          }
+      }
+  - Id: 580026
+    AegisName: Melon_Whip
+    Name: Melon Whip
+    Type: Weapon
+    SubType: Whip
+    Buy: 20
+    Weight: 500
+    Attack: 150
+    MagicAttack: 120
+    Range: 2
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
       }
   - Id: 580027
     AegisName: Barb_Wire_K_LT
@@ -169998,6 +170943,47 @@ Body:
       }
       bonus2 bMagicAtkEle,Ele_Holy,(.@r/2);
       bonus2 bSkillAtk,"AB_ADORAMUS",5*(.@r/3);
+  - Id: 590033
+    AegisName: Melon_Mace
+    Name: Melon Mace
+    Type: Weapon
+    SubType: Mace
+    Buy: 20
+    Weight: 1500
+    Attack: 150
+    MagicAttack: 110
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Monk: true
+      Priest: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 590034
     AegisName: Meteor_Striker_LT
     Name: Meteor Striker-LT
@@ -170848,6 +171834,42 @@ Body:
             }
          }
       }
+  - Id: 600022
+    AegisName: Melon_Claymore
+    Name: Melon Claymore
+    Type: Weapon
+    SubType: 2hSword
+    Buy: 20
+    Weight: 3400
+    Attack: 280
+    MagicAttack: 230
+    Range: 1
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 600023
     AegisName: Oriental_Sword_LT
     Name: Oriental Sword-LT
@@ -170938,7 +171960,6 @@ Body:
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,15;
-            bonus2 bMagicSubSize,Size_All,15;
             bonus bLongAtkRate,15;
             if (.@r>=11) {
                bonus bDelayrate,-7;
@@ -171034,9 +172055,7 @@ Body:
             bonus2 bSkillAtk,"RK_STORMBLAST",25;
             if (.@r>=11) {
                bonus2 bSubSize,Size_Small,25;
-               bonus2 bMagicSubSize,Size_Small,25;
                bonus2 bSubSize,Size_Medium,25;
-               bonus2 bMagicSubSize,Size_Medium,25;
             }
          }
       }
@@ -171768,6 +172787,76 @@ Body:
             }
          }
       }
+  - Id: 610029
+    AegisName: Kings_Double_Edge_A
+    Name: Awakened Old King's Double Edge
+    Type: Weapon
+    SubType: Katar
+    Buy: 20
+    Weight: 1200
+    Attack: 240
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@b = BaseLevel;
+      if (.@r>=9)
+         .@b *= 3;
+      else if (.@r>=7)
+         .@b *= 2;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",.@b;
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",.@b;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",.@b;
+      if (.@r>=10) {
+         bonus bDefRatioAtkClass,Class_All;
+         bonus2 bSkillCooldown,"GC_ROLLINGCUTTER",-200;
+      }
+  - Id: 610032
+    AegisName: Melon_Katar
+    Name: Melon Katar
+    Type: Weapon
+    SubType: Katar
+    Buy: 20
+    Weight: 2800
+    Attack: 150
+    MagicAttack: 250
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 610033
     AegisName: Shiver_Katar_K_LT
     Name: Shiver Katar-LT
@@ -172401,6 +173490,44 @@ Body:
             }
          }
       }
+  - Id: 620014
+    AegisName: Melon_T_Axe
+    Name: Melon Two-Handed Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Buy: 20
+    Weight: 4000
+    Attack: 320
+    MagicAttack: 200
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 620015
     AegisName: Avenger_LT
     Name: Avenger-LT
@@ -172535,14 +173662,10 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus2 bSubSize,Size_Medium,15;
-      bonus2 bMagicSubSize,Size_Medium,15;
       bonus2 bSubSize,Size_Large,15;
-      bonus2 bMagicSubSize,Size_Large,15;
       if (.@r>=7) {
          bonus2 bSubSize,Size_Medium,15;
-         bonus2 bMagicSubSize,Size_Medium,15;
          bonus2 bSubSize,Size_Large,15;
-         bonus2 bMagicSubSize,Size_Large,15;
          bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bLongAtkRate,15;
@@ -172932,6 +174055,42 @@ Body:
                bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
             }
          }
+      }
+  - Id: 630017
+    AegisName: Melon_Lance
+    Name: Melon Lance
+    Type: Weapon
+    SubType: 2hSpear
+    Buy: 20
+    Weight: 3500
+    Attack: 200
+    MagicAttack: 230
+    Range: 3
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
       }
   - Id: 630018
     AegisName: Glacier_Lance
@@ -173906,6 +175065,47 @@ Body:
       }
       bonus bMatk,15*(.@r/2);
       bonus2 bSkillAtk,"WL_JACKFROST",12*(.@r/3);
+  - Id: 640030
+    AegisName: Melon_Staff
+    Name: Melon Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 20
+    Weight: 2400
+    Attack: 120
+    MagicAttack: 270
+    Range: 1
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",50,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus bHealPower,6*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 640031
     AegisName: Solid_Staff
     Name: Solid Staff
@@ -174395,6 +175595,41 @@ Body:
                bonus2 bSkillAtk,"KO_HUUMARANKA",15;
             }
          }
+      }
+  - Id: 650016
+    AegisName: Melon_Huuma
+    Name: Melon Huuma
+    Type: Weapon
+    SubType: Huuma
+    Buy: 20
+    Weight: 1500
+    Attack: 150
+    MagicAttack: 160
+    Range: 1
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
       }
   - Id: 650017
     AegisName: FCH_B_Huuma
@@ -176088,6 +177323,43 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 700048
+    AegisName: Melon_Wing
+    Name: Melon Wing
+    Type: Weapon
+    SubType: Bow
+    Buy: 20
+    Weight: 900
+    Attack: 160
+    MagicAttack: 170
+    Range: 5
+    Slots: 1
+    Jobs:
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 700049
     AegisName: Narcis_Bow_LT
     Name: Narcissus Bow-LT
@@ -176126,7 +177398,6 @@ Body:
             bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",30;
             if (.@r>=11) {
                bonus2 bSubSize,Size_All,20;
-               bonus2 bMagicSubSize,Size_All,20;
                bonus2 bAddEle,Ele_All,15;
             }
          }
@@ -176552,6 +177823,37 @@ Body:
             }
          }
       }
+  - Id: 800007
+    AegisName: Melon_Handgun
+    Name: Melon Handgun
+    Type: Weapon
+    SubType: Revolver
+    Buy: 20
+    Weight: 350
+    Attack: 70
+    Range: 7
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 800008
     AegisName: DF_B_Revolver
     Name: Desperado Fire Booster Revolver
@@ -176778,7 +178080,6 @@ Body:
       }
       if (.@r>=7) {
          bonus2 bSubSize,Size_All,20;
-         bonus2 bMagicSubSize,Size_All,20;
          bonus2 bSkillAtk,"RL_FIREDANCE",25;
          if (.@r>=9) {
             bonus bAtkRate,7;
@@ -176966,6 +178267,40 @@ Body:
          bonus2 bSkillAtk,"GS_TRACKING",10;
       if (BaseLevel>=90)
          bonus2 bSkillAtk,"GS_TRACKING",15;
+  - Id: 810004
+    AegisName: Melon_Rifle
+    Name: Melon Rifle
+    Type: Weapon
+    SubType: Rifle
+    Buy: 20
+    Weight: 850
+    Attack: 170
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",30,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",15,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7*(readparam(bInt)/10);
+      if (readparam(bInt)>=110)
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 810005
     AegisName: Precision_Rifle
     Name: Precision Piercer
@@ -177343,6 +178678,40 @@ Body:
             }
          }
       }
+  - Id: 820003
+    AegisName: Melon_Shotgun
+    Name: Melon Shotgun
+    Type: Weapon
+    SubType: Shotgun
+    Buy: 20
+    Weight: 3000
+    Attack: 180
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus2 bSkillAtk,"RL_SLUGSHOT",7*(readparam(bStr)/10);
+      if (readparam(bStr)>=110)
+         bonus2 bSkillAtk,"RL_SLUGSHOT",30;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 820004
     AegisName: Precision_Shotgun
     Name: Precision Shatter
@@ -177702,6 +179071,40 @@ Body:
             }
          }
       }
+  - Id: 830006
+    AegisName: Melon_Gatling_Gun
+    Name: Melon Gatling Gun
+    Type: Weapon
+    SubType: Gatling
+    Buy: 20
+    Weight: 2500
+    Attack: 120
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus2 bSkillAtk,"RL_R_TRIP",7*(readparam(bAgi)/10);
+      if (readparam(bAgi)>=110)
+         bonus2 bSkillAtk,"RL_R_TRIP",30;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 830007
     AegisName: FR_B_Gatling
     Name: Fire Round Booster Gatling Gun
@@ -177935,7 +179338,6 @@ Body:
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
                bonus2 bSubSize,Size_All,20;
-               bonus2 bMagicSubSize,Size_All,20;
             }
          }
       }
@@ -178084,6 +179486,40 @@ Body:
                }
             }
          }
+      }
+  - Id: 840003
+    AegisName: Melon_Launcher
+    Name: Melon Launcher
+    Type: Weapon
+    SubType: Grenade
+    Buy: 20
+    Weight: 1400
+    Attack: 210
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",20,5000,BF_WEAPON;
+      autobonus "{ bonus bUseSPrate,-100; bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+      bonus bAtkRate,10*.@r;
+      bonus bMatkRate,5*.@r;
+      bonus2 bSkillAtk,"RL_D_TAIL",7*(readparam(bLuk)/10);
+      if (readparam(bLuk)>=110)
+         bonus2 bSkillAtk,"RL_D_TAIL",30;
+      if (.@r>=7) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
       }
   - Id: 840004
     AegisName: Precision_Grenade

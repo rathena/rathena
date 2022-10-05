@@ -369,3 +369,9 @@ Body:
       Map: 1@md_gef
       X: 106
       Y: 129
+  - Id: 47
+    Name: Poring Village
+    Enter:
+      Map: 1@begi
+      X: 100
+      Y: 22

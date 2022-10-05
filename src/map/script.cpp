@@ -8815,6 +8815,7 @@ BUILDIN_FUNC(getcharid)
 
 /*==========================================
  * returns the GID of an NPC
+ * Returns 0 if the NPC name provided is not found.
  *------------------------------------------*/
 BUILDIN_FUNC(getnpcid)
 {
@@ -8825,9 +8826,9 @@ BUILDIN_FUNC(getnpcid)
 	{// unique npc name
 		if( ( nd = npc_name2id(script_getstr(st,3)) ) == NULL )
 		{
-			ShowError("buildin_getnpcid: No such NPC '%s'.\n", script_getstr(st,3));
+			//Npc not found.
 			script_pushint(st,0);
-			return SCRIPT_CMD_FAILURE;
+			return SCRIPT_CMD_SUCCESS;
 		}
 	}
 
@@ -25021,6 +25022,115 @@ BUILDIN_FUNC(unloadnpc) {
 }
 
 /**
+ * Duplicate a NPC.
+ * Return the duplicate Unique name on success or empty string on failure.
+ * duplicate "<NPC name>","<map>",<x>,<y>{,"<Duplicate NPC name>"{,<sprite>{,<dir>{,<xs>{,<xy>}}}}};
+ */
+BUILDIN_FUNC(duplicate)
+{
+	const char* old_npcname = script_getstr( st, 2 );
+	npc_data* nd = npc_name2id( old_npcname );
+
+	if( nd == nullptr ){
+		ShowError( "buildin_duplicate: No such NPC '%s'.\n", old_npcname );
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* mapname = script_getstr( st, 3 );
+	int16 mapid = map_mapname2mapid( mapname );
+
+	if( mapid < 0 ){
+		ShowError( "buildin_duplicate: map '%s' in not found!\n", mapname );
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct map_data* mapdata = map_getmapdata( mapid );
+
+	if( mapdata == nullptr ){
+		// Should not happen, but who knows...
+		ShowError( "buildin_duplicate: mapdata for '%s' is unavailable!\n", mapname );
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int16 x = script_getnum( st, 4 );
+
+	if( x < 0 || x >= mapdata->xs ){
+		ShowError( "buildin_duplicate: x coordinate %hd is out of bounds for map %s[0-%hd]!\n", x, mapname, mapdata->xs );
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int16 y = script_getnum( st, 5 );
+
+	if( y < 0 || y >= mapdata->ys ){
+		ShowError( "buildin_duplicate: y coordinate %hd is out of bounds for map %s[0-%hd]!\n", y, mapname, mapdata->ys );
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	char name[NPC_NAME_LENGTH + 1];
+
+	if( script_hasdata( st, 6 ) ){
+		const char* new_name = script_getstr( st, 6 );
+
+		if( strlen( new_name ) > NPC_NAME_LENGTH ){
+			ShowError( "buildin_duplicate: new NPC name \"%s\" is too long!\n", new_name );
+			script_pushstrcopy( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		safestrncpy( name, new_name, sizeof( name ) );
+	}else{
+		safestrncpy( name, nd->name, sizeof( name ) );
+	}
+
+	int class_;
+
+	if( script_hasdata( st, 7 ) ){
+		class_ = script_getnum( st, 7 );
+	}else{
+		class_ = nd->class_;
+	}
+
+	uint8 dir;
+
+	if( script_hasdata( st, 8 ) ){
+		dir = script_getnum( st, 8 );
+	}else{
+		dir = nd->ud.dir;
+	}
+
+	int16 xs;
+
+	if( script_hasdata( st, 9 ) ){
+		xs = script_getnum( st, 9 );
+	}else{
+		xs = nd->u.scr.xs;
+	}
+
+	int16 ys;
+
+	if( script_hasdata( st, 10 ) ){
+		ys = script_getnum( st, 10 );
+	}else{
+		ys = nd->u.scr.ys;
+	}
+
+	npc_data* dnd = npc_duplicate_npc( nd, name, mapid, x, y, class_, dir, xs, ys );
+
+	if( dnd == nullptr ){
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}else{
+		script_pushstrcopy( st, dnd->exname );
+		return SCRIPT_CMD_SUCCESS;
+	}
+}
+
+/**
  * Add an achievement to the player's log
  * achievementadd(<achievement ID>{,<char ID>});
  */
@@ -27173,6 +27283,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobcanentermap,"s?"),
 	BUILDIN_DEF(openstorage2,"ii?"),
 	BUILDIN_DEF(unloadnpc, "s"),
+	BUILDIN_DEF(duplicate, "ssii?????"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),
