@@ -265,7 +265,7 @@ einbroch,246,186,5	script	Assistant Remain#ein	4_M_CRU_HEAD,{
 		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
 		mes .@npc_name$;
 		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
-		mes "These days, some local monsters areIt has become ferocious or has grown in numbers.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
 		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
@@ -2501,7 +2501,7 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 		specialeffect EF_FLASHER;
 		mes .@npc_name$;
 		mes "It's refreshing!";
-		mes "д╪го~...";
+		mes "Kyaha~...";
 		mes "...";
 		mes "Ah! Adventurer!";
 		next;
@@ -2793,7 +2793,7 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 		specialeffect EF_FLASHER;
 		mes .@npc_name$;
 		mes "!";
-		mes "д╪го~...";
+		mes "Kyaha~...";
 		mes "...";
 		next;
 		mes .@npc_name$;
@@ -2937,7 +2937,7 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 		specialeffect EF_FLASHER;
 		mes .@npc_name$;
 		mes "It's refreshing!";
-		mes "д╪го~...";
+		mes "Kyaha~...";
 		mes "...";
 		mes "Ah! Adventurer!";
 		next;
@@ -3086,7 +3086,7 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 		specialeffect EF_FLASHER;
 		mes .@npc_name$;
 		mes "It's refreshing!";
-		mes "д╪го~...";
+		mes "Kyaha~...";
 		mes "...";
 		mes "Ah! Adventurer!";
 		next;
@@ -3532,7 +3532,7 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 		specialeffect EF_FLASHER;
 		mes .@npc_name$;
 		mes "It's refreshing!";
-		mes "д╪го~...";
+		mes "Kyaha~...";
 		next;
 		mes .@npc_name$;
 		mes "Ah, adventurer. I'm taking a monster subjugation investigation request today, how is it?";
