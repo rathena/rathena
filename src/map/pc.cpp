@@ -15155,7 +15155,7 @@ void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[
 	clif_macro_detector_request_show(sd);
 
 	// Reset the timer
-	addt_tickimer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
+	addtick_timer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
 }
 
 /**
