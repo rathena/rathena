@@ -145,13 +145,13 @@ struct s_macro_detect {
 	int32 timer;
 };
 
-enum e_macro_detect_status {
+enum e_macro_detect_status : uint8 {
 	MCD_TIMEOUT = 0,
 	MCD_INCORRECT = 1,
 	MCD_GOOD = 2,
 };
 
-enum e_macro_report_status {
+enum e_macro_report_status : uint8 {
 	MCR_MONITORING = 0,
 	MCR_NO_DATA = 1,
 	MCR_INPROGRESS = 2,

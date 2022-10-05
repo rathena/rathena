@@ -48,8 +48,8 @@ enum e_instance_notify : uint8;
 struct s_laphine_synthesis;
 struct s_laphine_upgrade;
 struct s_captcha_data;
-enum e_macro_detect_status;
-enum e_macro_report_status;
+enum e_macro_detect_status : uint8;
+enum e_macro_report_status : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
