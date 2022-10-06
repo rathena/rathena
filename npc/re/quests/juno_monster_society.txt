@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Yuno Monster Society
+//= Juno Monster Society
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= NPCs that give hunting quests in exchange for experience.
@@ -108,16 +108,16 @@ rachel,142,152,5	script	Assistant Mumuz#ra	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Mumuz, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Mumuz, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -131,12 +131,12 @@ rachel,142,152,5	script	Assistant Mumuz#ra	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "Hey, I'm Mumuz, the assistant of the Yuno Monster Society.";
+	mes "Hey, I'm Mumuz, the assistant of the Juno Monster Society.";
 	mes "How can I help you?";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a monster research facility in Yuno.";
+		mes "The Juno Monster Society is literally a monster research facility in Juno.";
 		next;
 		mes .@npc_name$;
 		mes "The Society has recently determined that some regional monsters have become excessively ferocious or have increased their numbers.";
@@ -171,7 +171,7 @@ rachel,142,152,5	script	Assistant Mumuz#ra	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -181,16 +181,16 @@ alberta,124,59,5	script	Assistant Dunea#alb	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Dunea, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Dunea, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -204,12 +204,12 @@ alberta,124,59,5	script	Assistant Dunea#alb	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "I, Dunea, assistant to the Yuno Monster Society!";
+	mes "I, Dunea, assistant to the Juno Monster Society!";
 	mes "I will assist adventurers for the sake of the world.";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -245,7 +245,7 @@ alberta,124,59,5	script	Assistant Dunea#alb	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -255,16 +255,16 @@ einbroch,246,186,5	script	Assistant Remain#ein	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Remain, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Remain, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -278,12 +278,12 @@ einbroch,246,186,5	script	Assistant Remain#ein	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "This is Remain, the assistant of the Yuno Monster Society!";
+	mes "This is Remain, the assistant of the Juno Monster Society!";
 	mes "How can I help you?";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a monster research facility in Yuno.";
+		mes "The Juno Monster Society is literally a monster research facility in Juno.";
 		mes "According to recent investigations, it has been found that some regional monsters have become excessively ferocious or have increased their numbers.";
 		next;
 		mes .@npc_name$;
@@ -291,7 +291,7 @@ einbroch,246,186,5	script	Assistant Remain#ein	4_M_CRU_HEAD,{
 		mes "I'm Lemaine, the assistant to the Map Examiners!";
 		next;
 		mes .@npc_name$;
-		mes "Promoting the work of the Yuno Monster Society for righteous people like this from the city...";
+		mes "Promoting the work of the Juno Monster Society for righteous people like this from the city...";
 		mes "I will promote the Carbonated Water Vending Machineor guide you to the place where the inspector is!";
 		close;
 	}
@@ -319,7 +319,7 @@ einbroch,246,186,5	script	Assistant Remain#ein	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -329,16 +329,16 @@ geffen,151,68,5	script	Assistant Kihana#gef	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Kihana, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Kihana, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -352,12 +352,12 @@ geffen,151,68,5	script	Assistant Kihana#gef	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "I, Kihana, an assistant to the Yuno Monster Society!";
+	mes "I, Kihana, an assistant to the Juno Monster Society!";
 	mes "Nice to meet you. How can I help you?";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -393,7 +393,7 @@ geffen,151,68,5	script	Assistant Kihana#gef	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -403,16 +403,16 @@ yuno,177,179,3	script	Assistant Avery#yu	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Avery, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Avery, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -426,12 +426,12 @@ yuno,177,179,3	script	Assistant Avery#yu	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "This is Avery, the assistant of the Yuno Monster Society!";
+	mes "This is Avery, the assistant of the Juno Monster Society!";
 	mes "Hey, how can I help you?";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -467,7 +467,7 @@ yuno,177,179,3	script	Assistant Avery#yu	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -477,16 +477,16 @@ veins,215,122,5	script	Assistant Eureka#ve	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Eureka, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Eureka, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -500,21 +500,21 @@ veins,215,122,5	script	Assistant Eureka#ve	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "This is Eureka, an assistant to the Yuno Monster Society.";
+	mes "This is Eureka, an assistant to the Juno Monster Society.";
 	mes "How can I help you?";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
 		mes "These days, some local monsters have become overly ferocious or have increased numbers.";
-		mes "So we came to the Yuno Monster Society to coordinate this.";
+		mes "So we came to the Juno Monster Society to coordinate this.";
 		next;
 		mes .@npc_name$;
-		mes "Yuno Monster Society is a monster research facility based in Yuno.";
+		mes "Juno Monster Society is a monster research facility based in Juno.";
 		mes "We are dispatching Map Examiners to various places to subdue monsters.";
 		next;
 		mes .@npc_name$;
 		mes "How are you? Are you interested?";
-		mes "I am responsible for promoting the work of the Yuno Monster Society, managing the " + .@item_name$ + " vending machines, and guiding you to the places where the Map Examiners connect.";
+		mes "I am responsible for promoting the work of the Juno Monster Society, managing the " + .@item_name$ + " vending machines, and guiding you to the places where the Map Examiners connect.";
 		close;
 	}
 	mes .@npc_name$;
@@ -541,7 +541,7 @@ veins,215,122,5	script	Assistant Eureka#ve	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -551,16 +551,16 @@ lighthalzen,171,106,5	script	Assistant Staff#lig	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Staff, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Staff, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -574,13 +574,13 @@ lighthalzen,171,106,5	script	Assistant Staff#lig	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "Staff, the assistant of the Yuno Monster Society!!!";
+	mes "Staff, the assistant of the Juno Monster Society!!!";
 	mes "Do you need my help!!!";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that studies monsters!!!";
-		mes "...and in Yuno.";
+		mes "The Juno Monster Society is literally a conference that studies monsters!!!";
+		mes "...and in Juno.";
 		next;
 		mes "Recently, some local monsters have become excessively ferocious or their numbers have increased!!!";
 		mes "That's why Map Examiners dispatched to different places are giving adventurers a quest to subdue monsters!!!";
@@ -618,7 +618,7 @@ lighthalzen,171,106,5	script	Assistant Staff#lig	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -628,16 +628,16 @@ prontera,168,125,5	script	Assistant Alonzo#prt	4_M_CRU_HEAD,{
 
 	if (isbegin_quest(16547) == 0) {
 		mes .@npc_name$;
-		mes "Would you like to participate in the monster subjugation event hosted by the Yuno Monster Society?";
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
 		mes "We will take you directly to your desired location!";
 		next;
 		mes .@npc_name$;
-		mes "I'm Alonzo, Assistant Superintendent of the Yuno Monster Society.";
+		mes "I'm Alonzo, Assistant Superintendent of the Juno Monster Society.";
 		mes "I'm here to promote the monster subjugation event to you.";
 		next;
-		select( "Monster subjugation?", "Yuno Monster Society?" );	// note: same text
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -651,12 +651,12 @@ prontera,168,125,5	script	Assistant Alonzo#prt	4_M_CRU_HEAD,{
 		next;
 	}
 	mes .@npc_name$;
-	mes "This is Alonzo, assistant to the Yuno Monster Society!";
+	mes "This is Alonzo, assistant to the Juno Monster Society!";
 	mes "How can I help you?";
 	next;
-	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Yuno Monster Association." ) == 2) {
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is literally a conference that researches and studies monsters with Yuno as a base.";
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
 		mes "These days, some local monsters have become overly ferocious or have a large number.";
 		next;
 		mes .@npc_name$;
@@ -692,7 +692,7 @@ prontera,168,125,5	script	Assistant Alonzo#prt	4_M_CRU_HEAD,{
 	close;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 	end;
 }
 
@@ -705,7 +705,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 
 	if (BaseLevel < 70) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5917,PLAYTIME) ) {
@@ -741,7 +741,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
 				mes .@npc_name$;
-				mes "You don't have " + .@item_name$ + ", but why did the Yuno Monster Society ask you to get this? It's just a drink.";
+				mes "You don't have " + .@item_name$ + ", but why did the Juno Monster Society ask you to get this? It's just a drink.";
 				close;
 			}
 			mes .@npc_name$;
@@ -761,7 +761,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 	switch( checkquest(5916,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello~ Adventurer~ I'm an INPU from the Yuno Monster Society.";
+		mes "Hello~ Adventurer~ I'm an INPU from the Juno Monster Society.";
 		next;
 		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Greetings." ) ) {
 		case 1:
@@ -780,7 +780,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 			mes "I think it's because the number of monsters has increased, but I think it's because I haven't been subjugating monsters as much as I used to.";
 			next;
 			mes .@npc_name$;
-			mes "In order to prevent further expansion of the monster colony, the Yuno Monster Society is planning a massive subjugation.";
+			mes "In order to prevent further expansion of the monster colony, the Juno Monster Society is planning a massive subjugation.";
 			next;
 			mes .@npc_name$;
 			mes "If colonies with increased population collide, it can cause damage to nearby residents.";
@@ -792,7 +792,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
 				mes .@npc_name$;
-				mes "You don't have " + .@item_name$ + ", but why did the Yuno Monster Society ask you to get this? It's just a drink.";
+				mes "You don't have " + .@item_name$ + ", but why did the Juno Monster Society ask you to get this? It's just a drink.";
 				close;
 			}
 			mes .@npc_name$;
@@ -827,7 +827,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5917,PLAYTIME) == 0 || checkquest(5917,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5916,HUNTING) == -1 && checkquest(5917,PLAYTIME) == -1" );
@@ -842,7 +842,7 @@ gef_fild06,209,31,6	script	Map Examiner Gefil#yma	4_M_MIDDLE,{
 
 	if (BaseLevel < 71) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5921,PLAYTIME) ) {
@@ -896,7 +896,7 @@ gef_fild06,209,31,6	script	Map Examiner Gefil#yma	4_M_MIDDLE,{
 	switch( checkquest(5920,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is looking for people to submit subjugation quests.";
+		mes "The Juno Monster Society is looking for people to submit subjugation quests.";
 		next;
 		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "You seem to be able to afford it?" ) ) {
 		case 1:
@@ -955,7 +955,7 @@ gef_fild06,209,31,6	script	Map Examiner Gefil#yma	4_M_MIDDLE,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5921,PLAYTIME) == 0 || checkquest(5921,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5920,HUNTING) == -1 && checkquest(5921,PLAYTIME) == -1" );
@@ -970,7 +970,7 @@ lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
 
 	if (BaseLevel < 71) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5919,PLAYTIME) ) {
@@ -997,7 +997,7 @@ lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
 			sleep2 500;
 			specialeffect EF_FLASHER;
 			mes .@npc_name$;
-			mes "Huh?! Oh, that's right. Were you working part-time? Ah! It's the Yuno Monster Society. Welcome!";
+			mes "Huh?! Oh, that's right. Were you working part-time? Ah! It's the Juno Monster Society. Welcome!";
 			close;
 		case 2:
 			mes .@npc_name$;
@@ -1026,7 +1026,7 @@ lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
 	switch( checkquest(5918,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "This is the Yuno Monster Society.";
+		mes "This is the Juno Monster Society.";
 		next;
 		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Why are you so blunt?" ) ) {
 		case 1:
@@ -1094,7 +1094,7 @@ lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5919,PLAYTIME) == 0 || checkquest(5919,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5920,HUNTING) == -1 && checkquest(5921,PLAYTIME) == -1" );
@@ -1109,7 +1109,7 @@ mal_dun01,141,126,4	script	Map Examiner Mother One#yma	4_F_TAEKWON,{
 
 	if (BaseLevel < 75) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5927,PLAYTIME) ) {
@@ -1229,7 +1229,7 @@ mal_dun01,141,126,4	script	Map Examiner Mother One#yma	4_F_TAEKWON,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5927,PLAYTIME) == 0 || checkquest(5927,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5926,HUNTING) == -1 && checkquest(5927,PLAYTIME) == -1" );
@@ -1244,7 +1244,7 @@ hu_fild01,133,157,6	script	Map Examiner Huf#yma	4_MAL_CAPTAIN,{
 
 	if (BaseLevel < 75) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5925,PLAYTIME) ) {
@@ -1300,7 +1300,7 @@ hu_fild01,133,157,6	script	Map Examiner Huf#yma	4_MAL_CAPTAIN,{
 	switch( checkquest(5924,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is conducting a subjugation quest.";
+		mes "The Juno Monster Society is conducting a subjugation quest.";
 		next;
 		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Are you from Port Malaya?" ) ) {
 		case 1:
@@ -1365,7 +1365,7 @@ hu_fild01,133,157,6	script	Map Examiner Huf#yma	4_MAL_CAPTAIN,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5925,PLAYTIME) == 0 || checkquest(5925,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5924,HUNTING) == -1 && checkquest(5925,PLAYTIME) == -1" );
@@ -1380,7 +1380,7 @@ tur_dun01,159,46,4	script	Map Examiner Tural#yma	4_M_BRZ_MAN1,{
 
 	if (BaseLevel < 75) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5923,PLAYTIME) ) {
@@ -1493,7 +1493,7 @@ tur_dun01,159,46,4	script	Map Examiner Tural#yma	4_M_BRZ_MAN1,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5925,PLAYTIME) == 0 || checkquest(5925,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5922,HUNTING) == -1 && checkquest(5923,PLAYTIME) == -1" );
@@ -1509,7 +1509,7 @@ ein_fild03,135,46,5	script	Map Examiner Tailing#tailing	1_M_YOUNGKNIGHT,{
 
 	if (BaseLevel < 76) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3472,PLAYTIME) ) {
@@ -1551,7 +1551,7 @@ ein_fild03,135,46,5	script	Map Examiner Tailing#tailing	1_M_YOUNGKNIGHT,{
 	switch( checkquest(3471,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello!! You're here again! This is Map Examiner Tailing from the Yuno Monster Society!";
+		mes "Hello!! You're here again! This is Map Examiner Tailing from the Juno Monster Society!";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -1599,7 +1599,7 @@ ein_fild03,135,46,5	script	Map Examiner Tailing#tailing	1_M_YOUNGKNIGHT,{
 			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
 			next;
 			mes .@npc_name$;
-			mes "If this phenomenon continues, it is dangerous, so the Yuno Monster Society has decided to carry out a full-scale subjugation.";
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
 			next;
 			mes .@npc_name$;
 			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
@@ -1635,7 +1635,7 @@ ein_fild03,135,46,5	script	Map Examiner Tailing#tailing	1_M_YOUNGKNIGHT,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3471,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3471,HUNTING) == 2" );
@@ -1649,7 +1649,7 @@ lhz_fild03,167,344,3	script	Map Examiner Modaka#madaka	4_F_JOB_KNIGHT,{
 
 	if (BaseLevel < 77) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3474,PLAYTIME) ) {
@@ -1690,7 +1690,7 @@ lhz_fild03,167,344,3	script	Map Examiner Modaka#madaka	4_F_JOB_KNIGHT,{
 	switch( checkquest(3473,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello!! You're here again! I'm Modaka, an Map Examiner dispatched from the Yuno Monster Society!";
+		mes "Hello!! You're here again! I'm Modaka, an Map Examiner dispatched from the Juno Monster Society!";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -1738,7 +1738,7 @@ lhz_fild03,167,344,3	script	Map Examiner Modaka#madaka	4_F_JOB_KNIGHT,{
 			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
 			next;
 			mes .@npc_name$;
-			mes "If this phenomenon continues, it is dangerous, so the Yuno Monster Society has decided to carry out a full-scale subjugation.";
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
 			next;
 			mes .@npc_name$;
 			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
@@ -1774,7 +1774,7 @@ lhz_fild03,167,344,3	script	Map Examiner Modaka#madaka	4_F_JOB_KNIGHT,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3473,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3473,HUNTING) == 2" );
@@ -1787,7 +1787,7 @@ tur_dun02,151,256,4	script	Map Examiner Tidun#yma	4_M_NINJA_BLUE,{
 
 	if (BaseLevel < 80) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5929,PLAYTIME) ) {
@@ -1842,7 +1842,7 @@ tur_dun02,151,256,4	script	Map Examiner Tidun#yma	4_M_NINJA_BLUE,{
 	switch( checkquest(5928,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "The Yuno Monster Society prepared a quest to subdue the Turtle Island dungeon. Do you have any thoughts?";
+		mes "The Juno Monster Society prepared a quest to subdue the Turtle Island dungeon. Do you have any thoughts?";
 		next;
 		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "third" ) ) {
 		case 1:
@@ -1901,7 +1901,7 @@ tur_dun02,151,256,4	script	Map Examiner Tidun#yma	4_M_NINJA_BLUE,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5929,PLAYTIME) == 0 || checkquest(5929,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5928,HUNTING) == -1 && checkquest(5929,PLAYTIME) == -1" );
@@ -1916,7 +1916,7 @@ tur_dun03,125,186,6	script	Map Examiner Tsensor#yma	4_M_SIT_NOVICE,{
 
 	if (BaseLevel < 80) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(5931,PLAYTIME) ) {
@@ -2030,7 +2030,7 @@ tur_dun03,125,186,6	script	Map Examiner Tsensor#yma	4_M_SIT_NOVICE,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5931,PLAYTIME) == 0 || checkquest(5931,PLAYTIME) == 1) && countitem(1000374) > 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5930,HUNTING) == -1 && checkquest(5931,PLAYTIME) == -1" );
@@ -2046,7 +2046,7 @@ ra_fild12,50,219,1	script	Map Examiner Chakari#chakari	4_F_JOB_ASSASSIN,{
 
 	if (BaseLevel < 80) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3476,PLAYTIME) ) {
@@ -2088,7 +2088,7 @@ ra_fild12,50,219,1	script	Map Examiner Chakari#chakari	4_F_JOB_ASSASSIN,{
 	switch( checkquest(3475,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello! I'm Chakarina, an Map Examiner dispatched from the Yuno Monster Society~!";
+		mes "Hello! I'm Chakarina, an Map Examiner dispatched from the Juno Monster Society~!";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -2136,7 +2136,7 @@ ra_fild12,50,219,1	script	Map Examiner Chakari#chakari	4_F_JOB_ASSASSIN,{
 			mes "It should have been a continuous subjugation, but I think it was on the verge of a dangerous situation due to a brief hiatus.";
 			next;
 			mes .@npc_name$;
-			mes "So the Yuno Monster Society dispatched several Map Examiners, and that's why I came here.";
+			mes "So the Juno Monster Society dispatched several Map Examiners, and that's why I came here.";
 			close;
 		case 4:
 			mes .@npc_name$;
@@ -2169,7 +2169,7 @@ ra_fild12,50,219,1	script	Map Examiner Chakari#chakari	4_F_JOB_ASSASSIN,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	// note: ! displayed when playtime ongoing
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3475,HUNTING) == -1" );
@@ -2184,7 +2184,7 @@ ice_dun01,161,13,3	script	Map Examiner Dove#dove123	8_F_GIRL,{
 
 	if (BaseLevel < 85) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3484,PLAYTIME) ) {
@@ -2226,7 +2226,7 @@ ice_dun01,161,13,3	script	Map Examiner Dove#dove123	8_F_GIRL,{
 	switch( checkquest(3483,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello!! You're here again! I'm Dove, an Map Examiner dispatched from the Yuno Monster Society!";
+		mes "Hello!! You're here again! I'm Dove, an Map Examiner dispatched from the Juno Monster Society!";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -2274,7 +2274,7 @@ ice_dun01,161,13,3	script	Map Examiner Dove#dove123	8_F_GIRL,{
 			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
 			next;
 			mes .@npc_name$;
-			mes "If this phenomenon continues, it is dangerous, so the Yuno Monster Society has decided to carry out a full-scale subjugation.";
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
 			next;
 			mes .@npc_name$;
 			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
@@ -2310,7 +2310,7 @@ ice_dun01,161,13,3	script	Map Examiner Dove#dove123	8_F_GIRL,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3483,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3483,HUNTING) == 2" );
@@ -2324,7 +2324,7 @@ ra_fild08,163,47,5	script	Map Examiner Lucia#rsia	4_F_04,{
 
 	if (BaseLevel < 85) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3480,PLAYTIME) ) {
@@ -2369,7 +2369,7 @@ ra_fild08,163,47,5	script	Map Examiner Lucia#rsia	4_F_04,{
 	switch( checkquest(3479,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "See you again, this is Lucia from the Yuno Monster Society.";
+		mes "See you again, this is Lucia from the Juno Monster Society.";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -2417,7 +2417,7 @@ ra_fild08,163,47,5	script	Map Examiner Lucia#rsia	4_F_04,{
 			mes "Now we have reached a critical level.";
 			next;
 			mes .@npc_name$;
-			mes "I had no choice but to move at the Yuno Monster Society.";
+			mes "I had no choice but to move at the Juno Monster Society.";
 			next;
 			mes .@npc_name$;
 			mes "This is how we dispatched Map Examiners to each area in need of subjugation.";
@@ -2453,7 +2453,7 @@ ra_fild08,163,47,5	script	Map Examiner Lucia#rsia	4_F_04,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3479,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3479,HUNTING) == 2" );
@@ -2466,7 +2466,7 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 
 	if (BaseLevel < 86) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(8667,PLAYTIME) ) {
@@ -2598,7 +2598,7 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8668,HUNTING) == -1 && checkquest(8667,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8667,PLAYTIME) == 2" );
@@ -2615,7 +2615,7 @@ ve_fild07,158,354,3	script	Map Examiner Shevko#chevco	2_M_DYEINGER,{
 
 	if (BaseLevel < 86) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3478,PLAYTIME) ) {
@@ -2660,7 +2660,7 @@ ve_fild07,158,354,3	script	Map Examiner Shevko#chevco	2_M_DYEINGER,{
 	switch( checkquest(3477,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Nice to meet you, I'm Shevko, Map Examiner of the Yuno Monster Society.";
+		mes "Nice to meet you, I'm Shevko, Map Examiner of the Juno Monster Society.";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -2708,7 +2708,7 @@ ve_fild07,158,354,3	script	Map Examiner Shevko#chevco	2_M_DYEINGER,{
 			mes "I knew that the number of monsters was gradually increasing, but it was a result of not taking it seriously.";
 			next;
 			mes .@npc_name$;
-			mes "In order to restore it back to its former state, the Yuno Monster Society has dispatched Map Examiners to various places.";
+			mes "In order to restore it back to its former state, the Juno Monster Society has dispatched Map Examiners to various places.";
 			next;
 			mes .@npc_name$;
 			mes "I am one of those Map Examiners, and I am waiting for the subjugation of the brave adventurers.";
@@ -2744,7 +2744,7 @@ ve_fild07,158,354,3	script	Map Examiner Shevko#chevco	2_M_DYEINGER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3477,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3477,HUNTING) == 2" );
@@ -2757,7 +2757,7 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 
 	if (BaseLevel < 86) {
 		mes .@npc_name$;
-		mes "Yuno MonsterThe Society is in the process of subjugation quests. But you still look a little weak to carry out the quest.";
+		mes "Juno MonsterThe Society is in the process of subjugation quests. But you still look a little weak to carry out the quest.";
 		close;
 	}
 	switch( checkquest(8664,PLAYTIME) ) {
@@ -2886,7 +2886,7 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8665,HUNTING) == -1 && checkquest(8664,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8664,PLAYTIME) == 2" );
@@ -2902,7 +2902,7 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 
 	if (BaseLevel < 87) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(8670,PLAYTIME) ) {
@@ -3034,7 +3034,7 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8671,HUNTING) == -1 && checkquest(8670,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8670,PLAYTIME) == 2" );
@@ -3050,7 +3050,7 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 
 	if (BaseLevel < 88) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(8661,PLAYTIME) ) {
@@ -3183,7 +3183,7 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8662,HUNTING) == -1 && checkquest(8661,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8661,PLAYTIME) == 2" );
@@ -3200,7 +3200,7 @@ ve_fild01,354,280,3	script	Map Examiner Yirun Seo#suiroon	4_F_SISTER,{
 
 	if (BaseLevel < 90) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(3482,PLAYTIME) ) {
@@ -3242,7 +3242,7 @@ ve_fild01,354,280,3	script	Map Examiner Yirun Seo#suiroon	4_F_SISTER,{
 	switch( checkquest(3481,HUNTING) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello!! My name is Irun Seo, an Map Examiner dispatched from the Yuno Monster Society!";
+		mes "Hello!! My name is Irun Seo, an Map Examiner dispatched from the Juno Monster Society!";
 		next;
 		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
 		case 1:
@@ -3290,7 +3290,7 @@ ve_fild01,354,280,3	script	Map Examiner Yirun Seo#suiroon	4_F_SISTER,{
 			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
 			next;
 			mes .@npc_name$;
-			mes "If this phenomenon continues, it is dangerous, so the Yuno Monster Society has decided to carry out a full-scale subjugation.";
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
 			next;
 			mes .@npc_name$;
 			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
@@ -3326,7 +3326,7 @@ ve_fild01,354,280,3	script	Map Examiner Yirun Seo#suiroon	4_F_SISTER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3481,HUNTING) == -1 && checkquest(3482,PLAYTIME) == -1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3482,PLAYTIME) == 2" );
@@ -3349,7 +3349,7 @@ ve_fild04,52,242,5	script	Map Examiner Rana#85	4_M_MOC_SOLDIER,{
 	switch( checkquest(8676,PLAYTIME) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello. This is Ranya from the Yuno Monster Society.";
+		mes "Hello. This is Ranya from the Juno Monster Society.";
 		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
 		break;
 	case 0:
@@ -3401,7 +3401,7 @@ ve_fild04,52,242,5	script	Map Examiner Rana#85	4_M_MOC_SOLDIER,{
 			next;
 			mes .@npc_name$;
 			mes "It already means that you can't control the object naturally.";
-			mes "To prevent further colonization from expanding, our Yuno Monster Society has planned a massive subjugation.";
+			mes "To prevent further colonization from expanding, our Juno Monster Society has planned a massive subjugation.";
 			next;
 			mes .@npc_name$;
 			mes "No matter how many adventurers visit, it's a big deal if you come down to where people live...";
@@ -3479,7 +3479,7 @@ ve_fild04,52,242,5	script	Map Examiner Rana#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8677,HUNTING) == -1 && checkquest(8676,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8676,PLAYTIME) == 2" );
@@ -3495,13 +3495,13 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 
 	if (BaseLevel < 93) {
 		mes .@npc_name$;
-		mes "The Yuno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
 		close;
 	}
 	switch( checkquest(8673,PLAYTIME) ) {
 	case -1:
 		mes .@npc_name$;
-		mes "Hello, adventurer! I'm Kantu from the Yuno Monster Society.";
+		mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
 		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
 		next;
 		mes .@npc_name$;
@@ -3552,7 +3552,7 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 			mes "It already means that you can't control the object naturally.";
 			next;
 			mes .@npc_name$;
-			mes "To prevent further colonization from expanding, our Yuno Monster Society has planned a massive subjugation.";
+			mes "To prevent further colonization from expanding, our Juno Monster Society has planned a massive subjugation.";
 			mes "No matter how many adventurers visit, it's a big deal if you come down to where people live...";
 			next;
 			mes .@npc_name$;
@@ -3630,7 +3630,7 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8672,HUNTING) == -1 && checkquest(8673,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8673,PLAYTIME) == 2" );
@@ -3771,7 +3771,7 @@ ve_fild03,348,230,5	script	Map Examiner Dew#85	4_M_MOC_SOLDIER,{
 	end;
 
 OnInit:
-	setunittitle getnpcid(0), "<Yuno Monster Society>";
+	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8680,HUNTING) == -1 && checkquest(8679,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8679,PLAYTIME) == 2" );
