@@ -18236,9 +18236,7 @@ BUILDIN_FUNC(getrandmobid)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int mob_id = mob_get_random_id(type, (enum e_random_monster_flags)flag, lv);
-
-	script_pushint(st, mob_id);
+	script_pushint(st, mob_get_random_id(type, (enum e_random_monster_flags)flag, lv));
 
 	return SCRIPT_CMD_SUCCESS;
 }

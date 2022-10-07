@@ -3584,9 +3584,9 @@ This command does not count skills which are set as flag 4 (permament granted) (
 
 *getrandmobid(<type>{,<flag>{,<level>}})
 
-This command return a random monster ID from the random monster group.
+This command returns a random monster ID from the random monster group.
 If <level> is provided it will check against the monster level.
-It will return 0 if invalid.
+Returns 0 if invalid.
 
 Valid <type> are:
 	MOBG_BRANCH_OF_DEAD_TREE    = 0 // (default)
