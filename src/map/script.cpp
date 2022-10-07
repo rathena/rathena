@@ -24130,12 +24130,7 @@ BUILDIN_FUNC(minmax){
 
 BUILDIN_FUNC(cap_value)
 {
-	int value = script_getnum(st, 2);
-	int min = script_getnum(st, 3);
-	int max = script_getnum(st, 4);
-
-	script_pushint(st, (int)cap_value(value, min, max));
-
+	script_pushint(st, (int)cap_value(script_getnum(st, 2), script_getnum(st, 3), script_getnum(st, 4)));
 	return true;
 }
 
