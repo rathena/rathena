@@ -9576,7 +9576,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (md) {
 			md->next_walktime = tick - 1;
 			if (md->special_state.ai == AI_SPHERE)
-				unit_escape(&md->bl, src, 7, 2);
+				unit_escape(&md->bl, bl, 7, 2);
 			else
 				mob_randomwalk(md,tick);
 		}
