@@ -26535,9 +26535,7 @@ BUILDIN_FUNC(addfame) {
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	int amount = script_getnum(st, 2);
-
-	pc_addfame(*sd, amount);
+	pc_addfame(*sd, script_getnum(st, 2));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -26560,8 +26558,7 @@ BUILDIN_FUNC(getfamerank) {
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	int rank = pc_famerank(sd->status.char_id, sd->class_ & MAPID_UPPERMASK);
-	script_pushint(st, rank);
+	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_UPPERMASK));
 
 	return SCRIPT_CMD_SUCCESS;
 }
