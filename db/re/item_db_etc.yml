@@ -48161,7 +48161,7 @@ Body:
       bonus2 bMagicAddRace,RC_Demon,50;
       bonus2 bMagicAddRace,RC_Formless,50;
   - Id: 300249
-    AegisName: aegis_300249
+    AegisName: Giant_Caput_Card
     Name: Giant Caput Card
     Type: Card
     Weight: 10
@@ -48175,7 +48175,7 @@ Body:
          bonus2 bAddRace,RC_Formless,15;
       }
   - Id: 300250
-    AegisName: aegis_300250
+    AegisName: Dolorian_Card
     Name: Dolorian Card
     Type: Card
     Weight: 10
@@ -48189,7 +48189,7 @@ Body:
          bonus2 bAddRace,RC_Demon,15;
       }
   - Id: 300251
-    AegisName: aegis_300251
+    AegisName: Plagarion_Card
     Name: Plagarion Card
     Type: Card
     Weight: 10
@@ -48204,7 +48204,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,7;
       bonus bUseSPrate,5;
   - Id: 300252
-    AegisName: aegis_300252
+    AegisName: Deadre_Card
     Name: Deadre Card
     Type: Card
     Weight: 10
@@ -48219,7 +48219,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,7;
       bonus bUseSPrate,5;
   - Id: 300253
-    AegisName: aegis_300253
+    AegisName: Venedi_Card
     Name: Venedi Card
     Type: Card
     Weight: 10
@@ -48611,7 +48611,7 @@ Body:
       bonus3 bSubRace,RC_Demon,-30,BF_NORMAL;
       bonus3 bSubRace,RC_DemiHuman,-30,BF_NORMAL;
   - Id: 300281
-    AegisName: aegis_300281
+    AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
     Type: Card
     Weight: 10

@@ -1,0 +1,489 @@
+//===== rAthena Script =======================================
+//= New dungeons
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//===== Changelog: ===========================================
+//= 1.0 Added sp_rudus4 quests. [Capuche]
+//============================================================
+
+// sp_rudus4
+pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
+	if (BaseLevel < 200) {
+		mes "[Yulma]";
+		mes "Uh... who was it?";
+		mes "Sorry, I'm not good at remembering people's faces! But I think it's not good enough to ask about my work here.";
+		next;
+		mes " - This is a quest that can be performed at level 200 or higher - ";
+		close;
+	}
+	switch( isbegin_quest(16521) ) {
+	case 0:
+		emotion ET_SMILE;
+		mes "[Yulma]";
+		mes "Oh, " + strcharinfo(0) + " did you come to Meow for a drink?";
+		mes "I just had a business, and it's good.";
+		next;
+		select( "What is it for?" );
+		mes "[Yulma]";
+		mes "You know that Secret Wings and our rebellion have been tracking the traces of Illusion's illegal experiments, right?";
+		next;
+		mes "[Yulma]";
+		mes "In the meantime, I found a way to the 4th floor of Rudus.";
+		next;
+		switch( select( "Well, you know.", "Where was Rudus?" ) ) {
+		case 1:
+			emotion ET_DELIGHT;
+			mes "[Yulma]";
+			mes "Hehehe, because I can communicate well with " + strcharinfo(0) + ".";
+			break;
+		case 2:
+			emotion ET_SURPRISE;
+			mes "[Yulma]";
+			mes "What, how many times did you forget?";
+			mes "It was the place where Illusion abandoned the failed works that were created after the experiment.";
+			next;
+			mes "[Yulma]";
+			mes "Remember morning, morning? Where the little girl stays.";
+			mes "She is on the first floor, and Rudus itself exists on the second and third floors.";
+			break;
+		}
+		next;
+		mes "[Yulma]";
+		mes "By the way, the 4th floor of Rudus, it was quite a great place....";
+		mes "Among the subjects abandoned in Rudus, only particularly powerful ones are gathered.";
+		next;
+		mes "[Yulma]";
+		mes "Researchers of the Wings of Secrets say that after fierce competition among the subjects, the strongest subjects seem to have settled there.";
+		next;
+		mes "[Yulma]";
+		mes "Well, actually, I don't know about complicated things!";
+		mes "It seems that the Secret Wing researchers need to study the entities there.";
+		next;
+		mes "[Yulma]";
+		mes "So I was looking for someone to help.";
+		mes "To be precise, " + strcharinfo(0) + ", you!";
+		next;
+		mes "[Yulma]";
+		mes "Do you need a job? I know everything~";
+		mes "If you have an idea, go to the 3rd floor of Rudus.";
+		next;
+		mes "[Yulma]";
+		mes "<NAVI>[Pion]<INFO>sp_rudus3,380,42,0,101,0</INFO></NAVI> is in control of the path leading down to the fourth floor.";
+		mes "Go and say I sent it, and find out if it's worth it and come!";
+		setquest 16521;
+		close2;
+		navigateto("sp_rudus3",380,42);
+		end;
+	case 1:
+		mes "[Yulma]";
+		mes "Do you need a job? I know everything~";
+		mes "If you have an idea, go to the 3rd floor of Rudus.";
+		next;
+		mes "[Yulma]";
+		mes "<NAVI>[Pion]<INFO>sp_rudus3,380,42,0,101,0</INFO></NAVI> is in control of the path leading down to the fourth floor.";
+		mes "Go and say I sent it, and find out if it's worth it and come!";
+		close;
+	case 2:
+		break;
+	}
+	if (isbegin_quest(16522) == 1) {
+		mes "[Yulma]";
+		mes "Oh, you went down to the 4th floor of Rudus. How was it?";
+		mes "Is the pian doing well? Did the subjects feel a bit worthy of a fight?";
+		next;
+		mes "[Yulma]";
+		mes "Then help me study the people on the wings of the secret.";
+		mes "I was looking for someone to hunt because it was not enough to catch and research monsters myself.";
+		next;
+		select( "Ask if I can just hunt" );
+		emotion ET_KEK;
+		mes "[Yulma]";
+		mes "Oh, I almost forgot.";
+		mes "If you attach this chip somewhere on your body and hunt it, researchers can receive data.";
+		next;
+		mes "[Yulma]";
+		mes "New material, eco-friendly, non-toxic, safe material, so you don't have to worry about it.";
+		mes "Where would you like to hang it?";
+		next;
+		select( "Earlobe", "Back neck", "Back of hand", "Forehead" );
+		mes "[Yulma]";
+		mes "Okay, I'll attach it well so it doesn't bother you.";
+		mes "Okay, that's it! Then...";
+		completequest 16522;
+		next;
+	}
+	mes "[Yulma]";
+	mes "Please take good care of me today!";
+	mes "So, what kind of research would you like to help with today?";
+	next;
+	switch( select("Abyssal Solitude", "Transformation and Evolution", "Data Backup", "Doesn't help" ) ) {
+	case 1:
+		switch( checkquest(16523,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Yulma]";
+			mes "Secret Wings researchers are resting.";
+			mes "So, " + strcharinfo(0) + ", how about coming home after a little rest?";
+			next;
+			mes "[Yulma]";
+			mes "The 4th floor of Rudus is not a comfortable place to go in and out easily.";
+			mes "Let's get some rest and work fully prepared!";
+			close;
+		case 2:
+			erasequest 16523;
+			break;
+		}
+		switch( checkquest(16524,HUNTING) ) {
+		case -1:
+			mes "[Yulma]";
+			mes "A place where only strong individuals survive and bite stronger ones...";
+			mes "Like a deep, dark pit of solitude.";
+			next;
+			emotion ET_SWEAT;
+			mes "[Yulma]";
+			mes "Well, I don't know about that!";
+			mes "My job is to deliver the requests of researchers.";
+			next;
+			mes "[Yulma]";
+			mes "Researchers want to know how different the subjects of Rudus are from those distributed on the 4th floor.";
+			next;
+			emotion ET_PROFUSELY_SWAT;
+			mes "[Yulma]";
+			mes "How much more has it lost its original form, and whether it has changed itself after the experiment.";
+			mes "<FONT SIZE = 9>Um... these researchers look a little dangerous too? I think that's where all researchers are, to a person like me.</FONT>";
+			next;
+			mes "[Yulma]";
+			mes "Anyway, you want to collect <FONT COLOR = 0000CD>Dolorian, Plagarion, and Deadre</FONT> data.";
+			mes "What if we hunt 10 individuals each?";
+			next;
+			if (select( "I'll come hunting", "I refuse" ) == 2) {
+				mes "[Yulma]";
+				mes "We're already comrades on the same boat~?";
+				mes "Isn't that right, comrade? Think again!";
+				close;
+			}
+			mes "[Yulma]";
+			mes "Okay, if you go hunting and hunting, data will be gathered.";
+			mes "And my allowance will be accumulating!";
+			setquest 16524;
+			close;
+		case 0:
+		case 1:
+			mes "[Yulma]";
+			mes "Secret Wings researchers want to collect <FONT COLOR = 0000CD>Dolorian, Plagarion, and Deadre</FONT> data.";
+			mes "What if we hunt 10 individuals each?";
+			close;
+		case 2:
+			mes "[Yulma]";
+			mes "Today's hunting seems to be successful!";
+			mes "How did you know, " + strcharinfo(0) + ", the chip you put on him worked today.";
+			next;
+			emotion ET_DELIGHT;
+			mes "[Yulma]";
+			mes "I see it every time, but every time it's amazing, how the chip works.";
+			mes "Well, you should pay for the work you did today.";
+			next;
+			mes "[Yulma]";
+			mes "Here you are!";
+			mes "Then you're done with a bath, so let's get some rest and come back. Please take care of me tomorrow as well~";
+			erasequest 16524;
+			setquest 16523;
+			getexp 15915940,11141160;	// TODO: the amount has been changed which the monster update
+			close;
+		}
+		end;
+	case 2:
+		switch( checkquest(16525,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Yulma]";
+			mes "Secret Wings researchers left work after work.";
+			mes "So, " + strcharinfo(0) + ", how about coming home after a little rest?";
+			next;
+			mes "[Yulma]";
+			mes "The 4th floor of Rudus is not a comfortable place to go in and out easily.";
+			mes "You too, get a good rest, and let's work fully prepared!";
+			close;
+		case 2:
+			erasequest 16525;
+			break;
+		}
+		switch( checkquest(16526,HUNTING) ) {
+		case -1:
+			mes "[Yulma]";
+			mes "Twin Carput and Venenum, the 4th-floor entities are greatly altered from the other-floor entities.";
+			mes "to become gigantic, or to harbor more venom...";
+			next;
+			emotion ET_PROFUSELY_SWAT;
+			mes "[Yulma]";
+			mes "Researchers must be very interested in these guys.";
+			mes "That's why I asked you to hunt.";
+			mes "<FONT SIZE = 9>Um...why don't we do it? There must be something complicated at the upper level. I don't know.</FONT>";
+			next;
+			mes "[Yulma]";
+			mes "Can you hunt 15 <FONT COLOR = 0000CD>Giant Kaput and Venedi</FONT> each?";
+			mes "Data will be collected automatically, so you just need to focus on hunting.";
+			next;
+			if (select( "I'll come hunting", "I refuse" ) == 2) {
+				mes "[Yulma]";
+				mes "We're already comrades on the same boat~?";
+				mes "Isn't that right, comrade? Think again!";
+				close;
+			}
+			mes "[Yulma]";
+			mes "Okay, go and hunt hard!";
+			mes "Your performance is my bonus!";
+			setquest 16526;
+			close;
+		case 0:
+		case 1:
+			mes "[Yulma]";
+			mes "Can you hunt 15 <FONT COLOR = 0000CD>Giant Kaput and Venedi</FONT> each?";
+			mes "Data will be collected automatically, so you just need to focus on hunting.";
+			close;
+		case 2:
+			mes "[Yulma]";
+			mes "Have you been well? You came back from hunting safely.";
+			mes "Please tell me that the researchers worked hard today.";
+			next;
+			mes "[Yulma]";
+			mes "Looks like good data has been gathered.";
+			mes "Then you should pay for the work you did today.";
+			next;
+			mes "[Yulma]";
+			mes "Here you are!";
+			mes "You worked hard today, so get a good rest and come back. Let's work hard tomorrow!";
+			erasequest 16526;
+			setquest 16525;
+			getexp 15176970,11001900;	// TODO: the amount has been changed which the monster update
+			close;
+		}
+		end;
+	case 3:
+		switch( checkquest(16527,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Yulma]";
+			mes "Your researcher, you said you have withdrawn now. Chip maintenance once a day is enough!";
+			mes "So, " + strcharinfo(0) + ", how about coming home after a little rest?";
+			next;
+			mes "[Yulma]";
+			mes "The 4th floor of Rudus is not a comfortable place to go in and out easily.";
+			mes "Let's get some rest and work fully prepared!";
+			close;
+		case 2:
+			erasequest 16527;
+			break;
+		}
+		switch( isbegin_quest(16528) ) {
+		case 0:
+			mes "[Yulma]";
+			mes "Oh, by the way, are the chips sticking well?";
+			mes "It doesn't last that long...";
+			next;
+			mes "[Yulma]";
+			mes "And I have to back up and format the data I have collected so that I can receive new data, but I don't have the talent to do that...";
+			next;
+			mes "[Yulma]";
+			mes "I'll introduce you to a researcher who is currently in the field, would you like to go directly?";
+			mes "Probably disguised to observe monsters, but I'll give you the location, so go check it out!";
+			next;
+			if (select( "Find", "Does not find" ) == 2) {
+				mes "[Yulma]";
+				mes "Working only with me, isn't it frustrating?";
+				mes "It wouldn't be a bad idea to meet the researchers working in the field in person...";
+				close;
+			}
+			mes "[Yulma]";
+			mes "Yeah! Isn't it frustrating to only meet with me to get work delivered?";
+			next;
+			mes "[Yulma]";
+			mes "I'm on my way to see you, so if you have any questions, you can ask them directly!";
+			mes "<NAVI>[Researcher] I heard that <INFO>sp_rudus4,192,204,0,101,0</INFO></NAVI> mostly burrow around the center of the 4th floor of Rudus.";
+			setquest 16528;
+			close;
+		case 1:
+			mes "[Yulma]";
+			mes "I'm on my way to meet the secret wing researcher, so if you have any questions, you can ask them directly!";
+			mes "<NAVI>[Researcher] I heard that <INFO>sp_rudus4,192,204,0,101,0</INFO></NAVI> mostly burrow around the center of the 4th floor of Rudus.";
+			close;
+		case 2:
+			mes "[Yulma]";
+			mes "Have you been? Did you talk a bit?";
+			mes "Is the researcher hiding well?";
+			next;
+			mes "[Yulma]";
+			mes "He's famous for hiding things like he did even though he didn't have any hiding skills.";
+			mes "That's why you're out there.";
+			next;
+			mes "[Yulma]";
+			mes "Because this is also a job... Since I replaced it safely, the superiors told me to take care of some allowances.";
+			next;
+			mes "[Yulma]";
+			mes "Well, it's good that you come back to me too!";
+			mes "Then have a good day and see you tomorrow!";
+			erasequest 16528;
+			erasequest 16540;
+			setquest 16527;
+			getexp 15000000,11000000;
+			close;
+		}
+		end;
+	case 4:
+		mes "[Yulma]";
+		mes "Eh, won't you?";
+		mes "I was eagerly waiting for " + strcharinfo(0) + "!";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(16524,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(16526,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16528) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16523,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16525,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16527,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 200 && (checkquest(16524,HUNTING) == -1 && checkquest(16523,PLAYTIME) == -1)" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 200 && (checkquest(16526,HUNTING) == -1 && checkquest(16525,PLAYTIME) == -1)" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 200 && (isbegin_quest(16528) == 0 && checkquest(16527,PLAYTIME) == -1)" );
+	end;
+}
+
+sp_rudus3,380,42,3	script	Pion#rudus4	4_M_REBELLION3,{
+	switch( isbegin_quest(16521) ) {
+	case 0:
+		emotion ET_SLEEPY;
+		mes "[Pion]";
+		mes "Zzz... Whoa!";
+		mes "Excuse me, sir! No more work!";
+		next;
+		mes "[Pion]";
+		mes "Seup, Ha-am... Down this slope is an access control area.";
+		mes "People are not allowed to enter.";
+		next;
+		select("I'm not an ordinary person." );
+		mes "[Pion]";
+		mes "Yes? Ah... ah no! " + strcharinfo(0) + " !";
+		mes "That... Still, I can't let you in on my own.";
+		close;
+	case 1:
+		emotion ET_SLEEPY;
+		mes "[Pion]";
+		mes "Zzz... Whoa!";
+		mes "Excuse me! No more work!";
+		next;
+		mes "[Pion]";
+		mes "Oops... ah, this is definitely not saliva";
+		mes "It is a drop of sweat that shines with passion and effort.";
+		next;
+		mes "[Pion]";
+		mes "Hmm, hmmm. The entrance down this slope is now restricted...";
+		mes "What's going on?";
+		next;
+		if (select( "I want to go to the 4th floor of Rudus.", "Point out the working attitude." ) == 2) {
+			mes "[Pion]";
+			mes "Oh, there's a problem with your working attitude?";
+			mes "Sa, some people might sleep!!";
+			next;
+			mes "[Pion]";
+			mes "I only slept a little!";
+			mes "Really!";
+			close;
+		}
+		mes "[Pion]";
+		mes "Fourth floor? I'm in control right there...";
+		mes "Ah, did you come to see Yulma from Bullet Meow?";
+		next;
+		mes "[Pion]";
+		mes "Then you should pass it.";
+		mes "If you want to look at the specimens on the 4th floor and help with a research request, go back to <NAVI>[Yulma]<INFO>pub_cat,94,43,0,101,0</INFO></NAVI> and ask.";
+		next;
+		mes "[Pion]";
+		mes "I'll move you to the 4th floor.";
+		close2;
+		completequest 16521;
+		setquest 16522;
+		warp "sp_rudus4",370,156;
+		end;
+	case 2:
+		break;
+	}
+	emotion ET_SLEEPY;
+	mes "[Pion]";
+	mes "Zzz... Huh! Shi, excuse me!";
+	mes "Are you sure you want to go down to the 4th floor of Rudus?";
+	next;
+	if (select( "move", "do not move" ) ) {
+		mes "[Pion]";
+		mes "I see. Ha-am....";
+		close;
+	}
+	mes "[Pion]";
+	mes "I'll move you. Take care!";
+	close2;
+	warp "sp_rudus4",370,156;
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(16521) == 1" );
+	end;
+}
+
+sp_rudus4,192,204,3	script	Secret Wing Researcher#rudu	4_SOIL,{
+	if (isbegin_quest(16528) == 1) {
+		mes "[Secret Wings Researcher]";
+		mes "Good. Field work.";
+		mes "You need to observe a lot of monsters.";
+		next;
+		emotion ET_HUK;
+		mes "[Secret Wings Researcher]";
+		mes "...huh!";
+		mes "How did you recognize me?";
+		next;
+		mes "[Secret Wings Researcher]";
+		mes "Oh, look again, " + strcharinfo(0) + ".";
+		mes "I got a call. Are you here to renew the chip?";
+		next;
+		mes "[Secret Wing Researcher]";
+		mes "Let's see... Let's get some chips.";
+		mes "Hmmmm... Connect with my machine... Empty data...";
+		next;
+		emotion ET_BEST;
+		mes "[Secret Wing Researcher]";
+		mes "Okay, that's it! The data is clean and very nice. I'll paste it again.";
+		next;
+		mes "[Secret Wing Researcher]";
+		mes "Because this is also a job, <NAVI>[Yulma]<INFO>pub_cat,94,43,0,101,0</INFO></NAVI> will give you a small allowance when you return.";
+		mes "I am always indebted to you. Good job!";
+		completequest 16528;
+		setquest 16540;
+		close;
+	}
+	mes "[Secret Wing Researcher]";
+	mes "Good. Field work.";
+	mes "You have to watch a lot of monsters.";
+	next;
+	emotion ET_HUK;
+	mes "[Secret Wing Researcher]";
+	mes "...huh!";
+	mes "How did you recognize me?";
+	next;
+	emotion ET_KEK;
+	mes "[Secret Wing Researcher]";
+	mes "Evil! If you pretend to know, monsters will come!";
+	mes "Go away!";
+	close;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(16528) == 1" );
+	end;
+}

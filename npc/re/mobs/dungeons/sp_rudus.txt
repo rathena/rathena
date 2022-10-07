@@ -22,3 +22,10 @@ sp_rudus3,0,0	monster	Mutant Dolor	20362,60,5000
 sp_rudus3,0,0	monster	Mutant Plaga	20360,53,5000
 sp_rudus3,0,0	monster	Mutant Venenum	20364,65,5000
 sp_rudus3,0,0	monster	Mutant Twin Caput	20366,65,5000
+
+sp_rudus4	monster	Giant Caput	20929,55
+sp_rudus4	monster	Dolorian	20930,55
+sp_rudus4	monster	Deadre	20932,55
+sp_rudus4	monster	Venedi	20933,55
+sp_rudus4	monster	Plagarion	20931,55
+sp_rudus4	boss_monster	R001-Bestia	20934,1,21600000,600000,0
