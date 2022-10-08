@@ -10166,6 +10166,8 @@ void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_targe
  *--------------------------*/
 void clif_party_xy_remove(struct map_session_data* sd)
 {
+	nullpo_retv(sd);
+
 	PACKET_ZC_NOTIFY_POSITION_TO_GROUPM p{};
 	p.PacketType = HEADER_ZC_NOTIFY_POSITION_TO_GROUPM;
 	p.AID = sd->status.account_id;
