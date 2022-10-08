@@ -95920,13 +95920,13 @@ Body:
     AegisName: GIANT_CAPUT
     Name: Giant Caput
     Level: 213
-    Hp: 4439942
-    BaseExp: 262421
-    JobExp: 183695
+    Hp: 12405430
+    BaseExp: 262421  # TODO
+    JobExp: 183695  # TODO
     Attack: 7135
     Attack2: 894
-    Defense: 298
-    MagicDefense: 85
+    Defense: 288
+    MagicDefense: 125
     MagicResistance: 113
     Resistance: 113
     Str: 257
@@ -95969,13 +95969,13 @@ Body:
     AegisName: DOLORIAN
     Name: Dolorian
     Level: 214
-    Hp: 4660787
-    BaseExp: 267459
-    JobExp: 187221
+    Hp: 11763310
+    BaseExp: 267459  # TODO
+    JobExp: 187221  # TODO
     Attack: 7230
     Attack2: 904
-    Defense: 420
-    MagicDefense: 85
+    Defense: 145
+    MagicDefense: 142
     MagicResistance: 114
     Resistance: 116
     Str: 256
@@ -96018,13 +96018,13 @@ Body:
     AegisName: PLAGARION
     Name: Plagarion
     Level: 215
-    Hp: 4881632
-    BaseExp: 264854
-    JobExp: 185398
+    Hp: 13189560
+    BaseExp: 264854  # TODO
+    JobExp: 185398  # TODO
     Attack: 7800
     Attack2: 940
-    Defense: 440
-    MagicDefense: 110
+    Defense: 285
+    MagicDefense: 122
     MagicResistance: 118
     Resistance: 118
     Str: 278
@@ -96067,13 +96067,13 @@ Body:
     AegisName: DEADRE
     Name: Deadre
     Level: 214
-    Hp: 4460787
-    BaseExp: 263484
-    JobExp: 184439
+    Hp: 12435400
+    BaseExp: 263484  # TODO
+    JobExp: 184439  # TODO
     Attack: 7415
     Attack2: 921
-    Defense: 501
-    MagicDefense: 110
+    Defense: 231
+    MagicDefense: 88
     MagicResistance: 96
     Resistance: 118
     Str: 277
@@ -96114,13 +96114,13 @@ Body:
     AegisName: VENEDI
     Name: Venedi
     Level: 213
-    Hp: 4439942
-    BaseExp: 261478
-    JobExp: 183035
+    Hp: 11790680
+    BaseExp: 261478  # TODO
+    JobExp: 183035  # TODO
     Attack: 7122
     Attack2: 911
-    Defense: 321
-    MagicDefense: 99
+    Defense: 207
+    MagicDefense: 110
     MagicResistance: 108
     Resistance: 122
     Str: 256
@@ -96161,7 +96161,7 @@ Body:
     AegisName: R001_BESTIA
     Name: R001-Bestia
     Level: 215
-    Hp: 134179630
+    Hp: 134179630  # TODO
     BaseExp: 6578140
     JobExp: 4604698
     Attack: 12871
