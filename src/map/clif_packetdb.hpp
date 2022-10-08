@@ -163,6 +163,7 @@
 	parseable_packet(0x0102,6,clif_parse_PartyChangeOption,2);
 	parseable_packet(0x0103,30,clif_parse_RemovePartyMember,2,6);
 	packet(0x0104,79);
+	packet(HEADER_ZC_NOTIFY_POSITION_TO_GROUPM, sizeof(struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM));
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
 	packet( HEADER_ZC_MVP_GETTING_ITEM, sizeof( struct PACKET_ZC_MVP_GETTING_ITEM ) );
