@@ -8454,6 +8454,8 @@ Body:
   - Status: Rush_Quake2
     Icon: EFST_RUSH_QUAKE2
     DurationLookup: MT_RUSH_QUAKE
+    CalcFlags:
+      All: true
   - Status: Intensive_Aim
     Icon: EFST_INTENSIVE_AIM
     States:
