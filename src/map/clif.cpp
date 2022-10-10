@@ -22366,7 +22366,7 @@ void clif_unequipall_reply( struct map_session_data* sd, bool failed ){
 }
 
 void clif_parse_unequipall( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+#if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
 	if( pc_cant_act( sd ) ){
 		clif_unequipall_reply( sd, true );
 		return;
