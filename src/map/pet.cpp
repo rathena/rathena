@@ -2428,7 +2428,7 @@ void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petaut
 		script_run_petautobonus(autobonus->other_script, sd);
 	}
 
-	autobonus->timer = add_timer(gettick() + autobonus->duration, pet_endautobonus, sd.bl.id, (intptr_t)&bonus);
+	autobonus->timer = add_timer(gettick() + autobonus->duration, pet_endautobonus, sd.bl.id, (intptr_t)bonus);
 	status_calc_pc(&sd, SCO_FORCE);
 }
 
