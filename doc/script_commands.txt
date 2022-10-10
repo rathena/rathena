@@ -11117,7 +11117,7 @@ See 'achievementinfo' for valid <type> values.
 
 *addfame(<amount>,{,<char id>})
 
-ncreases the fame of the attached player or the supplied <char id> by the <amount> given.
+Increases the fame of the attached player or the supplied <char id> by the <amount> given.
 Note: Only works with Blacksmith, Alchemist and Taekwon classes.
 
 ---------------------------------------
