@@ -435,7 +435,7 @@ har_in01,19,86,4	script	Weapon Dealer#rockridge01	1_F_02,{
 		mes "Sure, if you have things I can sell.";
 		mes "Show me what you've got.";
 		close2;
-		callshop "armor_rockridge", 2;
+		callshop "bullets_rockridge", 2;
 		end;
 	case 5:
 		mes "[Weapon Dealer]";
