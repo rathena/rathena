@@ -1322,24 +1322,66 @@ Body:
   - Id: 3469
     Title: Illusion of Underwater 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3471
+    Title: Subjugation-Einbroch Field-2
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ein_fild03
   - Id: 3472
     Title: "[Standby] Subjugation-Einbroch Field-2"
     TimeLimit: 4h
+  - Id: 3473
+    Title: Subjugation-Lighthalzen Field-2
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: lhz_fild03
   - Id: 3474
     Title: "[Standby] Subjugation-Lighthalzen Field-2"
     TimeLimit: 4h
+  - Id: 3475
+    Title: Subjugation-Ida Plains-1
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild12
   - Id: 3476
     Title: "[Standby] Subjugation-Ida Plains-1"
     TimeLimit: 4h
+  - Id: 3477
+    Title: Subjugation-Veins Field-1
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ve_fild07
   - Id: 3478
     Title: "[Standby] Subjugation-Veins Field-1"
     TimeLimit: 4h
+  - Id: 3479
+    Title: "Subjugation-Ida Plains-2"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild08
   - Id: 3480
     Title: "[Standby] Subjugation-Ida Plains-2"
     TimeLimit: 4h
+  - Id: 3481
+    Title: "Subjugation-Veins Field-2"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ve_fild01
   - Id: 3482
     Title: "[Standby] Subjugation-Veins Field-2"
     TimeLimit: 4h
+  - Id: 3483
+    Title: "Subjugation-Ice Cave 1st Floor"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ice_dun01
   - Id: 3484
     Title: "[Standby] Subjugation-Ice Cave 1st Floor"
     TimeLimit: 4h
@@ -2812,29 +2854,101 @@ Body:
   - Id: 5900
     Title: "[Waiting] Cleaning the first power plant."
     TimeLimit: 4h
+  - Id: 5916
+    Title: "Subjugation-Einbroch Field-1"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ein_fild06
+        MapMobTargets:
+          MOLE: true
+          METALING: true
   - Id: 5917
     Title: "[Standby] Subjugation-Einbroch Field-1"
     TimeLimit: 4h
+  - Id: 5918
+    Title: "Subjugation-Lighthalzen Field-1"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: lhz_fild01
+        MapMobTargets:
+          RAFFLESIA: true
+          STEM_WORM: true
+          METALING: true 
   - Id: 5919
     Title: "[Standby] Subjugation-Lighthalzen Field-1"
     TimeLimit: 4h
+  - Id: 5920
+    Title: "Subjugation - Geffen field"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: gef_fild06
+        MapMobTargets:
+          PETIT: true
+          MANTIS: true
+          SIDE_WINDER: true
   - Id: 5921
     Title: "[Standby] Subjugation-Geffen Field"
     TimeLimit: 4h
+  - Id: 5922
+    Title: "Subjugation - Turtle Island"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: tur_dun01
+        MapMobTargets:
+          SPRING_RABBIT: true
+          DRAGON_TAIL: true
+          PERMETER: true
+          PEST: true
   - Id: 5923
     Title: "[Standby] Subjugation-Turtle Island"
     TimeLimit: 4h
+  - Id: 5924
+    Title: "Subjugation - In front of Thanatos Tower"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: hu_fild01
+        MapMobTargets:
+          NOVUS: true
+          NOVUS_: true
+          GEOGRAPHER: true
+          DRAGON_EGG: true
   - Id: 5925
     Title: "[Standby] Subjugation-Thanatos Tower"
     TimeLimit: 4h
+  - Id: 5926
+    Title: "Subjugation - Starlight Coral Zone"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: mal_dun01
+        MapMobTargets:
+          RED_ERUMA: true
+          SIORAVA: true
+          C5_RED_ERUMA: true
   - Id: 5927
     Title: "[Standby] Subjugation-Coral Zone"
     TimeLimit: 4h
+  - Id: 5928
+    Title: "Subjugation - Turtle Island Dungeon"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: tur_dun02
+        MapMobTargets:
+          SOLIDER: true
+          PERMETER: true
+          PEST: true
+          FREEZER: true
   - Id: 5929
     Title: "[Standby] Subjugation-Turtle Island Dungeon"
     TimeLimit: 4h
   - Id: 5930
-    Title: Subjugation-Yanggeochon
+    Title: "Subjugation - Yanggeochon"
     Targets:
       - Id: 1
         Count: 80
@@ -5590,24 +5704,99 @@ Body:
   - Id: 8661
     Title: "[Standby] Subjugation-Audumra Chowon-3"
     TimeLimit: 4h
+  - Id: 8662
+    Title: "Subjugation-Audumla Meadow-3"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild01
+        MapMobTargets:
+          ANOPHELES: true
+          DESERT_WOLF: true
+          ROWEEN: true
   - Id: 8664
     Title: "[Standby] Subjugation-Ida Plains-3"
     TimeLimit: 4h
+  - Id: 8665
+    Title: "Subjugation-Ida Plains-3"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild03
+        MapMobTargets:
+          ANACONDAQ: true
+          ANOPHELES: true
+          HILL_WIND_1: true
+          ROWEEN: true
   - Id: 8667
     Title: "[Standby] Subjugation-Audumra Chowon-1"
     TimeLimit: 4h
+  - Id: 8668
+    Title: "Subjugation-Audumla Meadow-1"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild04
+        MapMobTargets:
+          ANOPHELES: true
+          ROWEEN: true
+          HILL_WIND_1: true
+          DESERT_WOLF: true
   - Id: 8670
     Title: "[Standby] Subjugation-Audumra Chowon-2"
     TimeLimit: 4h
+  - Id: 8671
+    Title: "Subjugation-Audumla Meadow-2"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild05
+        MapMobTargets:
+          ANOPHELES: true
+          KOBOLD_1: true
+          KOBOLD_2: true
+          KOBOLD_3: true
+  - Id: 8672
+    Title: "Subjugation - Porto Luna"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild06
+        MapMobTargets:
+          ANOPHELES: true
+          KOBOLD_1: true
+          KOBOLD_2: true
+          KOBOLD_3: true
+          KOBOLD_ARCHER: true
   - Id: 8673
     Title: "[Standby] Subjugation-Portu Luna"
     TimeLimit: 4h
   - Id: 8676
     Title: "[Standby] Subjugation-Veins Field-3"
     TimeLimit: 4h
+  - Id: 8677
+    Title: "Subjugation-Veins Field-3"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ve_fild04
+        MapMobTargets:
+          GALION: true
+          DROSERA: true
+          MUSCIPULAR: true
   - Id: 8679
     Title: "[Standby] Subjugation-Veins Field-4"
     TimeLimit: 4h
+  - Id: 8680
+    Title: "Subjugation-Veins Field-4"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ve_fild03
+        MapMobTargets:
+          MAGMARING: true
+          DROSERA: true
+          MUSCIPULAR: true
   - Id: 9000
     Title: Job Change to Knight
   - Id: 9001
@@ -10246,6 +10435,8 @@ Body:
     TimeLimit: 4h
   - Id: 16546
     Title: Farm Worker
+  - Id: 16547
+    Title: Juno Monster Society
   - Id: 17000
     Title: Meet with Father Bamph
   - Id: 17001
