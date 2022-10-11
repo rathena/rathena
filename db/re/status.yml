@@ -80,6 +80,7 @@ Body:
     DurationLookup: NPC_PETRIFYATTACK
     States:
       NoCast: true
+      NoAttack: true
     Opt1: StoneWait
     Flags:
       SendOption: true
@@ -363,6 +364,8 @@ Body:
     DurationLookup: AS_ENCHANTPOISON
     CalcFlags:
       Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
     End:
       Aspersio: true
       Fireweapon: true
@@ -532,7 +535,7 @@ Body:
       FailedMado: true
       NoSave: true
       SuperNoviceAngel: true
-    Fail:
+    End:
       Offertorium: true
   - Status: Gloria
     Icon: EFST_GLORIA
@@ -767,6 +770,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Stripshield
     Icon: EFST_NOEQUIPSHIELD
     DurationLookup: RG_STRIPSHIELD
@@ -778,6 +782,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Striparmor
     Icon: EFST_NOEQUIPARMOR
     DurationLookup: RG_STRIPARMOR
@@ -789,6 +794,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Striphelm
     Icon: EFST_NOEQUIPHELM
     DurationLookup: RG_STRIPHELM
@@ -800,6 +806,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Cp_Weapon
     Icon: EFST_PROTECTWEAPON
     DurationLookup: AM_CP_WEAPON
@@ -947,6 +954,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Explosionspirits
     Icon: EFST_EXPLOSIONSPIRITS
     DurationLookup: MO_EXPLOSIONSPIRITS
@@ -958,6 +966,7 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
+      NoSave: true
   - Status: Combo
     Flags:
       NoClearbuff: true
@@ -994,7 +1003,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1009,7 +1018,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1024,7 +1033,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1039,7 +1048,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1341,6 +1350,7 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
+      NoSave: true
     End:
       Blessing: true
       Increaseagi: true
@@ -2650,7 +2660,6 @@ Body:
   - Status: Inchealrate
     Icon: EFST_HEALPLUS
     Flags:
-      NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
@@ -6050,27 +6059,16 @@ Body:
   - Status: 2011rwc_Scroll
     Icon: EFST_2011RWC_SCROLL
     CalcFlags:
-      Str: true
-      Agi: true
-      Vit: true
-      Int: true
-      Dex: true
-      Luk: true
       Batk: true
       Matk: true
+      Aspd: true
+      MaxHp: true
+      MaxSp: true
     Flags:
-      NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
-      Food_Str_Cash: true
-      Food_Agi_Cash: true
-      Food_Vit_Cash: true
-      Food_Int_Cash: true
-      Food_Dex_Cash: true
-      Food_Luk_Cash: true
   - Status: Jp_Event04
     Icon: EFST_JP_EVENT04
     Flags:
@@ -8166,3 +8164,239 @@ Body:
       NoClearbuff: true
     End:
       Sub_Weaponproperty: true
+  - Status: Almighty
+    Icon: EFST_ALMIGHTY
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+      Batk: true
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Str_Cash: true
+      Food_Agi_Cash: true
+      Food_Vit_Cash: true
+      Food_Int_Cash: true
+      Food_Dex_Cash: true
+      Food_Luk_Cash: true
+      UltimateCook: true
+  - Status: UltimateCook
+    Icon: EFST_ULTIMATECOOK
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+      Batk: true
+      Matk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Str_Cash: true
+      Food_Agi_Cash: true
+      Food_Vit_Cash: true
+      Food_Int_Cash: true
+      Food_Dex_Cash: true
+      Food_Luk_Cash: true
+      Almighty: true
+  - Status: M_DefScroll
+    Icon: EFST_M_DEFSCROLL
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Infinity_Drink
+    Icon: EFST_INFINITY_DRINK
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Mental_Potion
+    Icon: EFST_TARGET_ASPD
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Limit_Power_Booster
+    Icon: EFST_LIMIT_POWER_BOOSTER
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Combat_Pill
+    Icon: EFST_GM_BATTLE
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Combat_Pill2
+    Icon: EFST_GM_BATTLE2
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: MysticPowder
+    Icon: EFST_MYSTICPOWDER
+    CalcFlags:
+      Luk: true
+      Flee: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: SparkCandy
+    Icon: EFST_STEAMPACK
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: MagicCandy
+    Icon: EFST_MAGIC_CANDY
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Acaraje
+    Icon: EFST_ACARAJE
+    CalcFlags:
+      Hit: true
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: PopeCookie
+    Icon: EFST_POPECOOKIE
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Vitalize_Potion
+    Icon: EFST_VITALIZE_POTION
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Cup_Of_Boza
+    Icon: EFST_CUP_OF_BOZA
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: SKF_MATK
+    Icon: EFST_SKF_MATK
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: SKF_ATK
+    Icon: EFST_SKF_ATK
+    CalcFlags:
+      Batk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: SKF_ASPD
+    Icon: EFST_SKF_ASPD
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: SKF_CAST
+    Icon: EFST_SKF_CAST
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Beef_Rib_Stew
+    Icon: EFST_BEEF_RIB_STEW
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Pork_Rib_Stew
+    Icon: EFST_PORK_RIB_STEW
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

@@ -1,6 +1,6 @@
 #include "../config/core.hpp"
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 
 #include <sys/stat.h>
 #include <algorithm>
@@ -12,8 +12,9 @@
 #include <vector>
 
 #include "../common/db.hpp"
-#include "../common/showmsg.hpp"
 #include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/utils.hpp"
 #include "map.hpp"
 #include "mob.hpp"
 #include "navi.hpp"
@@ -424,6 +425,13 @@ void write_object_lists() {
 	auto npc_file = std::ofstream(filePrefix + "./navi_npc_krpri.lub");
 	auto map_file = std::ofstream(filePrefix + "./navi_map_krpri.lub");
 
+	if (!mob_file) {
+		ShowError("Failed to create mobfile.\n");
+		ShowError("Maybe the file directory \"%s\" does not exist?\n", filePrefix.c_str());
+		ShowInfo("Create the directory and rerun map-server-generator\n");
+		exit(1);
+	}
+
 	int warp_count = 0;
 	int npc_count = 0;
 	int spawn_count = 0;
@@ -622,12 +630,6 @@ void navi_create_lists() {
 	BHEAP_INIT(g_open_set);
 
 	auto starttime = std::chrono::system_clock::now();
-
-	if (!fileExists(filePrefix)) {
-		ShowError("File directory %s does not exist.\n", filePrefix.c_str());
-		ShowInfo("Create the directory and rerun map-server");
-		exit(1);
-	}
 
 	npc_event_runall(script_config.navi_generate_name);
 

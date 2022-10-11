@@ -73,6 +73,8 @@ struct s_refine_level_info{
 	uint32 bonus;
 	uint32 randombonus_max;
 	uint16 blessing_amount;
+	bool broadcast_success;
+	bool broadcast_failure;
 	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
 };
 
@@ -92,7 +94,7 @@ private:
 	std::shared_ptr<s_refine_level_info> findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine );
 
 public:
-	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 2, 1 ){
 
 	}
 
@@ -1226,10 +1228,32 @@ enum sc_type : int16 {
 	SC_DEEP_POISONING_OPTION,
 	SC_POISON_SHIELD,
 	SC_POISON_SHIELD_OPTION,
-	SC_M_LIFEPOTION,
-	SC_S_MANAPOTION,
 
 	SC_SUB_WEAPONPROPERTY,
+
+	SC_M_LIFEPOTION,
+	SC_S_MANAPOTION,
+	SC_ALMIGHTY,
+	SC_ULTIMATECOOK,
+	SC_M_DEFSCROLL,
+	SC_INFINITY_DRINK,
+	SC_MENTAL_POTION,
+	SC_LIMIT_POWER_BOOSTER,
+	SC_COMBAT_PILL,
+	SC_COMBAT_PILL2,
+	SC_MYSTICPOWDER,
+	SC_SPARKCANDY,
+	SC_MAGICCANDY,
+	SC_ACARAJE,
+	SC_POPECOOKIE,
+	SC_VITALIZE_POTION,
+	SC_CUP_OF_BOZA,
+	SC_SKF_MATK,
+	SC_SKF_ATK,
+	SC_SKF_ASPD,
+	SC_SKF_CAST,
+	SC_BEEF_RIB_STEW,
+	SC_PORK_RIB_STEW,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
