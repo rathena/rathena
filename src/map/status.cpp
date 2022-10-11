@@ -4647,8 +4647,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		if (sc->data[SC_STRIKING])
 			sd->bonus.perfect_hit += 20 + 10 * pc_checkskill(sd, SO_STRIKING);
 		if (sc->data[SC_RUSH_QUAKE2]) {
-			sd->bonus.short_attack_atk_rate += 5 * pc_checkskill(sd, MT_RUSH_QUAKE);
-			sd->bonus.long_attack_atk_rate += 5 * pc_checkskill(sd, MT_RUSH_QUAKE);
+			sd->bonus.short_attack_atk_rate += 5 * sc->data[SC_RUSH_QUAKE2]->val1;
+			sd->bonus.long_attack_atk_rate += 5 * sc->data[SC_RUSH_QUAKE2]->val1;
 		}
 		if (sc->data[SC_BO_HELL_DUSTY]) {
 			sd->bonus.long_attack_atk_rate += 20;
@@ -12676,8 +12676,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_TEMPORARY_COMMUNION:
 			val2 = val1 * 3;
+			break;
 		case SC_BLESSING_OF_M_CREATURES:
 			val2 = val1 * 10;
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->endreturn.empty() && scdb->fail.empty()) {
