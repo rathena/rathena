@@ -166,8 +166,8 @@ struct s_enchantgradelevel{
 	uint16 refine;
 	uint16 chance;
 	uint16 bonus;
-	bool AnnounceSuccess;
-	bool AnnounceFail;
+	bool announceSuccess;
+	bool announceFail;
 	struct{
 		t_itemid item;
 		uint16 amountPerStep;
@@ -184,7 +184,7 @@ struct s_enchantgrade{
 
 class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{
 public:
-	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 1 ){
+	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 2, 1 ){
 
 	}
 

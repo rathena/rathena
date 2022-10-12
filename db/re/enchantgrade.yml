@@ -32,6 +32,7 @@
 #           Bonus                       Enchantgrade bonus. (Default: 0)
 #           AnnounceSuccess             Announce on upgrade success. (Default: true)
 #           AnnounceFail                Announce on upgrade failure. (Default: false)
+#           Announce                    Announce on upgrade success and failure.
 #           Catalyst:                   Catalyst item to increase chance of success.
 #             Item                      The item that can be used.
 #             AmountPerStep             Amount of Item needed.
@@ -50,7 +51,7 @@
 
 Header:
   Type: ENCHANTGRADE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Type: Armor
