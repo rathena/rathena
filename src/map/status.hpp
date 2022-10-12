@@ -1255,6 +1255,8 @@ enum sc_type : int16 {
 	SC_BEEF_RIB_STEW,
 	SC_PORK_RIB_STEW,
 
+	SC_WEAPONBREAKER,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

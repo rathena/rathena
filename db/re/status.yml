@@ -8400,3 +8400,5 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: WeaponBreaker
+    DurationLookup: NPC_WEAPONBRAKER

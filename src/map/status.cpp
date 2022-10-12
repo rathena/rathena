@@ -12509,6 +12509,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				}
 			}
 			break;
+		case SC_WEAPONBREAKER:
+			val2 = val1 * 2 * 100; // Chance to break weapon
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->endreturn.empty() && scdb->fail.empty()) {

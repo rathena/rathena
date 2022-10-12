@@ -1657,9 +1657,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			break;
 		}
 	// Equipment breaking monster skills [Celest]
-	case NPC_WEAPONBRAKER:
-		skill_break_equip(src,bl, EQP_WEAPON, 150*skill_lv, BCT_ENEMY);
-		break;
 	case NPC_ARMORBRAKE:
 		skill_break_equip(src,bl, EQP_ARMOR, 150*skill_lv, BCT_ENEMY);
 		break;
@@ -2226,8 +2223,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			rate = 0;
 			if( sd )
 				rate += sd->bonus.break_weapon_rate;
-			if( sc && sc->data[SC_MELTDOWN] )
-				rate += sc->data[SC_MELTDOWN]->val2;
+			if (sc) {
+				if (sc->data[SC_MELTDOWN])
+					rate += sc->data[SC_MELTDOWN]->val2;
+				if (sc->data[SC_WEAPONBREAKER])
+					rate += sc->data[SC_WEAPONBREAKER]->val2;
+			}
 			if( rate )
 				skill_break_equip(src,bl, EQP_WEAPON, rate, BCT_ENEMY);
 
@@ -5078,7 +5079,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_UNDEADATTACK:
 	case NPC_CHANGEUNDEAD:
 	case NPC_ARMORBRAKE:
-	case NPC_WEAPONBRAKER:
 	case NPC_HELMBRAKE:
 	case NPC_SHIELDBRAKE:
 	case NPC_BLINDATTACK:
@@ -7674,6 +7674,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
 	case NPC_KEEPING:
+	case NPC_WEAPONBRAKER:
 	case NPC_BARRIER:
 	case NPC_INVINCIBLE:
 	case NPC_INVINCIBLEOFF:
