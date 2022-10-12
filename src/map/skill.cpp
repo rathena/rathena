@@ -21145,7 +21145,7 @@ short skill_can_produce_mix(struct map_session_data *sd, t_itemid nameid, int tr
 
 	nullpo_ret(sd);
 
-	if (!nameid || !itemdb_exists(nameid))
+	if (!nameid || !item_db.exists(nameid))
 		return 0;
 
 	for (i = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
@@ -21277,7 +21277,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 		short x, j;
 		t_itemid id;
 
-		if (!(id = skill_produce_db[idx].mat_id[i]) || !itemdb_exists(id))
+		if (!(id = skill_produce_db[idx].mat_id[i]) || !item_db.exists(id))
 			continue;
 		num++;
 		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * skill_produce_db[idx].mat_amount[i];
@@ -24238,7 +24238,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const ryml::NodeRef& node) {
  * @return Spell data or nullptr otherwise
  */
 std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(t_itemid nameid) {
-	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.empty())
+	if (nameid == 0 || !item_db.exists(nameid) || reading_spellbook_db.empty())
 		return nullptr;
 
 	for (const auto &spell : reading_spellbook_db) {
@@ -24327,7 +24327,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 		return true;
 	}
 
-	if (!itemdb_exists(nameid)) {
+	if (!item_db.exists(nameid)) {
 		ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
 		return false;
 	}

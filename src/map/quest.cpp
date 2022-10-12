@@ -777,7 +777,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 				continue;
 			if (it->rate < 10000 && rnd()%10000 >= it->rate)
 				continue; // TODO: Should this be affected by server rates?
-			if (!itemdb_exists(it->nameid))
+			if (!item_db.exists(it->nameid))
 				continue;
 
 			struct item entry = {};

@@ -3562,7 +3562,7 @@ bool itemdb_parse_roulette_db(void)
 			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
 			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
 
-			if (!itemdb_exists(item_id)) {
+			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
 				continue;
 			}
