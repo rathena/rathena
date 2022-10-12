@@ -133,10 +133,25 @@ HANDLER_FUNC(charconfig_load) {
 	}
 
 	if (SqlStmt_NumRows(stmt) <= 0) {
-		SqlStmt_Free(stmt);
-		ShowDebug("[AccountID: %d, CharID: %d, World: \"%s\"] Not found in table, sending new info.\n", account_id, char_id, world_name);
+		std::string data = "{\"Type\": 1}";
+
+		if( SQL_SUCCESS != SqlStmt_Prepare( stmt, "INSERT INTO `%s` (`account_id`, `char_id`, `world_name`, `data`) VALUES (?, ?, ?, ?)", char_configs_table ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 0, SQLDT_INT, &account_id, sizeof( account_id ) ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 1, SQLDT_INT, &char_id, sizeof( char_id ) ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 2, SQLDT_STRING, (void*)world_name, strlen( world_name ) ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 3, SQLDT_STRING, (void*)data.c_str(), strlen( data.c_str() ) ) ||
+			SQL_SUCCESS != SqlStmt_Execute( stmt ) ){
+			SqlStmt_ShowDebug( stmt );
+			SqlStmt_Free( stmt );
+			sl.unlock();
+			res.status = HTTP_BAD_REQUEST;
+			res.set_content( "Error", "text/plain" );
+			return;
+		}
+
+		SqlStmt_Free( stmt );
 		sl.unlock();
-		res.set_content("{\"Type\": 1}", "application/json");
+		res.set_content( data, "application/json" );
 		return;
 	}
 
