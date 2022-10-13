@@ -5091,6 +5091,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	// Check if sprite is the mob name or ID
 	char *pid;
+	sprite[NAME_LENGTH-1] = '\0';
 	mob_id = strtol(sprite, &pid, 0);
 
 	if (pid != nullptr && *pid != '\0') {
