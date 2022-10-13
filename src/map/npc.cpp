@@ -5097,13 +5097,13 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	if (pid != nullptr && *pid != '\0') {
 		std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(sprite);
 
-		if (mob != nullptr)
-			mob_id = mob->id;
+		if (mob == nullptr) {
+			ShowError("npc_parse_mob: Unknown mob name %s (file '%s', line '%d').\n", sprite, filepath, strline(buffer,start-buffer));
+			return strchr(start,'\n');// skip and continue
+		}
+		mob_id = mob->id;
 	}
-
-	// check monster ID if exists!
-	if( mobdb_checkid(mob_id) == 0 )
-	{
+	else if (mobdb_checkid(mob_id) == 0) {	// check monster ID if exists!
 		ShowError("npc_parse_mob: Unknown mob ID %d (file '%s', line '%d').\n", mob_id, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
