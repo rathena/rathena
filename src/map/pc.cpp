@@ -6289,7 +6289,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_MOB_DROP; i++ )
-		if( !md->db->dropitem[i].steal_protected && item_db.exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].rate
+		if( item_db.exists(md->db->dropitem[i].nameid) && !md->db->dropitem[i].steal_protected && rnd() % 10000 < md->db->dropitem[i].rate
 #ifndef RENEWAL
 		* rate/100.
 #endif
