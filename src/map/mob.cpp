@@ -695,7 +695,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 					md->guardian_data->emblem_id = g->emblem_id;
 					memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
 				}
-				else if (gc->guild_id) //Guild not yet available, retry in 5.
+				else if (gc->guild_id) // Guild is not yet available, retry after the configured timespan.
 					add_timer(gettick() + battle_config.mob_respawn_time,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
 			}
 		}	// end addition [Valaris]
