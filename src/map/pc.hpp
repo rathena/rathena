@@ -120,10 +120,18 @@ enum e_additem_result : uint8 {
 	ADDITEM_STACKLIMIT
 };
 
-#define CAPTCHA_ANSWER_SIZE 16
-#define CAPTCHA_KEY_SIZE 4
-#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
-#define MAX_CAPTCHA_CHUNK_SIZE 1024
+#ifndef CAPTCHA_ANSWER_SIZE
+	#define CAPTCHA_ANSWER_SIZE 16
+#endif
+#ifndef CAPTCHA_KEY_SIZE
+	#define CAPTCHA_KEY_SIZE 4
+#endif
+#ifndef CAPTCHA_BMP_SIZE
+	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
+#endif
+#ifndef MAX_CAPTCHA_CHUNK_SIZE
+	#define MAX_CAPTCHA_CHUNK_SIZE 1024
+#endif
 
 struct s_captcha_data {
 	int16 image_size;
@@ -165,7 +173,6 @@ public:
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef &node) override;
-	void clear() override {};
 };
 
 extern CaptchaDatabase captcha_db;
@@ -924,6 +931,7 @@ struct map_session_data {
 		std::shared_ptr<s_captcha_data> cd;
 		int16 upload_size;
 	} captcha_upload;
+
 	s_macro_detect macro_detect;
 };
 
@@ -1698,7 +1706,6 @@ void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
-int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap);
 void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
 
 #endif /* PC_HPP */

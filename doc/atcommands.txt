@@ -1542,6 +1542,29 @@ Example:
 
 ---------------------------------------
 
+@macroregister
+/macro_register
+
+Opens the UI for adding new captcha to the macro checker.
+
+
+---------------------------------------
+
+@macrodetect
+/macro_detector
+
+Opens the UI for checking players with the macro checker.
+
+
+---------------------------------------
+
+@macropreview <id>
+/macro_preview <id>
+
+Opens the UI to view a captcha image by ID.
+
+---------------------------------------
+
 =====================
 | 6. Party Commands |
 =====================

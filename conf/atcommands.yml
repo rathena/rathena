@@ -1016,6 +1016,15 @@ Body:
   - Command: enchantgradeui
     Help: |
       Opens the enchantgrade UI.
+  - Command: macroregister
+    Help: |
+      Opens the macro registration UI.
+  - Command: macrodetect
+    Help: |
+      Opens the macro detection UI.
+  - Command: macropreview
+    Help: |
+      Opens the macro image preview UI.
 
 Footer:
   Imports:

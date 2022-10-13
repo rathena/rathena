@@ -21550,12 +21550,14 @@ void clif_parse_open_ui( int fd, struct map_session_data* sd ){
 				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
 			}
 			break;
+#if PACKETVER >= 20160316
 		case IN_UI_MACRO_REGISTER:
 			clif_ui_open(*sd, OUT_UI_CAPTCHA, 0);
 			break;
 		case IN_UI_MACRO_DETECTOR:
 			clif_ui_open(*sd, OUT_UI_MACRO, 0);
 			break;
+#endif
 	}
 }
 
@@ -24636,11 +24638,6 @@ void clif_parse_captcha_register(int fd, map_session_data *sd) {
 #if PACKETVER >= 20160316
 	nullpo_retv(sd);
 
-	if (!pc_has_permission(sd, PC_PERM_MACRO_REGISTER)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 246)); // Your GM level doesn't authorize you to perform this action.
-		return;
-	}
-
 	PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR *p = (PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR *)RFIFOP(fd, 0);
 
 	pc_macro_captcha_register(*sd, p->imageSize, p->answer);
@@ -24667,11 +24664,6 @@ void clif_captcha_upload_request(map_session_data &sd) {
 void clif_parse_captcha_upload(int fd, map_session_data *sd) {
 #if PACKETVER >= 20160316
 	nullpo_retv(sd);
-
-	if (!pc_has_permission(sd, PC_PERM_MACRO_REGISTER)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 246)); // Your GM level doesn't authorize you to perform this action.
-		return;
-	}
 
 	PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA *p = (PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA *)RFIFOP(fd, 0);
 	int16 upload_size = p->PacketLength - sizeof(PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA);
@@ -24700,15 +24692,9 @@ void clif_parse_captcha_preview_request(int fd, map_session_data *sd) {
 #if PACKETVER >= 20160323
 	nullpo_retv(sd);
 
-	if (!(pc_has_permission(sd, PC_PERM_MACRO_REGISTER) && pc_has_permission(sd, PC_PERM_MACRO_DETECT))) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 246)); // Your GM level doesn't authorize you to perform this action.
-		return;
-	}
-
 	PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR *p = (PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR *)RFIFOP(fd, 0);
-	const std::shared_ptr<s_captcha_data> cd = captcha_db.find(p->captchaID);
 
-	clif_captcha_preview_response(*sd, cd);
+	clif_captcha_preview_response(*sd, captcha_db.find(p->captchaID));
 #endif
 }
 
@@ -24766,7 +24752,6 @@ void clif_macro_detector_request(map_session_data &sd) {
 
 	for (int16 offset = 0; offset < cd->image_size;) {
 		int16 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
-
 		PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA *p2 = (PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA *)packet_buffer;
 
 		p2->PacketType = HEADER_ZC_APPLY_MACRO_DETECTOR_CAPTCHA;
@@ -24830,11 +24815,6 @@ void clif_parse_macro_reporter_select(int fd, map_session_data *sd) {
 #if PACKETVER >= 20160330
 	nullpo_retv(sd);
 
-	if (!pc_has_permission(sd, PC_PERM_MACRO_DETECT)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 246)); // Your GM level doesn't authorize you to perform this action.
-		return;
-	}
-
 	PACKET_CZ_REQ_PLAYER_AID_IN_RANGE *p = (PACKET_CZ_REQ_PLAYER_AID_IN_RANGE *)RFIFOP(fd, 0);
 
 	pc_macro_reporter_area_select(*sd, p->xPos, p->yPos, p->RadiusRange);
@@ -24843,7 +24823,6 @@ void clif_parse_macro_reporter_select(int fd, map_session_data *sd) {
 
 void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> &aid_list) {
 #if PACKETVER >= 20160330
-
 	PACKET_ZC_ACK_PLAYER_AID_IN_RANGE *p = (PACKET_ZC_ACK_PLAYER_AID_IN_RANGE *)packet_buffer;
 
 	p->PacketType = HEADER_ZC_ACK_PLAYER_AID_IN_RANGE;
@@ -24858,11 +24837,6 @@ void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> 
 void clif_parse_macro_reporter_ack(int fd, map_session_data *sd) {
 #if PACKETVER >= 20160316
 	nullpo_retv(sd);
-
-	if (!pc_has_permission(sd, PC_PERM_MACRO_DETECT)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 246)); // Your GM level doesn't authorize you to perform this action.
-		return;
-	}
 
 	PACKET_CZ_REQ_APPLY_MACRO_DETECTOR *p = (PACKET_CZ_REQ_APPLY_MACRO_DETECTOR *)RFIFOP(fd, 0);
 	map_session_data *tsd = map_id2sd(p->AID);

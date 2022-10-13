@@ -18,7 +18,7 @@ Filename: Name of the BMP image file (with location).
 		  The path of the file can be different for each captcha image, but it's best practice to keep them in the same directory.
 
 Example:
-    Filename: db/captcha/rathena.bmp
+    Filename: db/import/captcha/rathena.bmp
 
 ---------------------------------------
 
@@ -26,17 +26,19 @@ Answer: Correct answer for the captcha (case-sensitive).
 
 ---------------------------------------
 
-Bonus: NPC script that is ran when a captcha is successfully answered. Accepts script constants, player variables, and a player variable
-	   CAPTCHA_RETRIES. This variable can be used within the Bonus script to get the remaining retries a player has. Coupled with the
-	   script command 'getbattleflag()' this could be used to assign different bonuses based on success rate.
+Bonus: NPC script that is ran when a captcha is successfully answered. Accepts all forms of script constants, variables, as well as the
+	   unique player variable @captcha_retries. This variable can be used within the Bonus script to get the remaining retries a player
+	   has. Coupled with the script command 'getbattleflag()' this could be used to assign different bonuses based on success rate.
 
 Example:
     # Give level 10 Blessing for 20 minutes with no failures, else give for 30 seconds.
     Bonus: >
-      if (CAPTCHA_RETRIES == getbattleflag("macro_detection_retry") {
+      if (@captcha_retries == getbattleflag("macro_detection_retry")) {
+        # Player solved it on first try
         specialeffect2 EF_BLESSING;
         sc_start SC_BLESSING,1200000,10;
       } else {
+        # Player needed more than one try
         specialeffect2 EF_BLESSING;
         sc_start SC_BLESSING,30000,10;
       }

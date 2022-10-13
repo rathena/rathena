@@ -15006,7 +15006,7 @@ void pc_macro_captcha_register(map_session_data &sd, int16 image_size, char capt
 	sd.captcha_upload.cd = nullptr;
 	sd.captcha_upload.upload_size = 0;
 
-	if (strlen(captcha_answer) < 4 || image_size < 0 || image_size > CAPTCHA_BMP_SIZE || captcha_db.size() >= 0xFFF) {
+	if (strlen(captcha_answer) < 4 || image_size < 0 || image_size > CAPTCHA_BMP_SIZE) {
 		clif_captcha_upload_request(sd); // Notify client of failure.
 		return;
 	}
@@ -15105,14 +15105,12 @@ TIMER_FUNC(pc_macro_detector_timeout) {
 void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
 	nullpo_retv(captcha_answer);
 
-	// All attempts have been exhausted block the user
-	if (sd.macro_detect.retry == 0) {
-		clif_macro_detector_status(sd, MCD_INCORRECT);
-		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+	const std::shared_ptr<s_captcha_data> cd = sd.macro_detect.cd;
+
+	// Has no captcha request
+	if (cd == nullptr) {
 		return;
 	}
-
-	const std::shared_ptr<s_captcha_data> cd = sd.macro_detect.cd;
 
 	// Correct answer
 	if (strcmp(captcha_answer, cd->captcha_answer) == 0) {
@@ -15128,34 +15126,30 @@ void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[
 		sd.state.block_action &= ~PCBLOCK_IMMUNE;
 
 		// Assign temporary macro variable to check failures
-		pc_setglobalreg(&sd, add_str("CAPTCHA_RETRIES"), battle_config.macro_detection_retry - sd.macro_detect.retry);
+		pc_setreg(&sd, add_str("@captcha_retries"), battle_config.macro_detection_retry - sd.macro_detect.retry);
 
 		// Grant bonuses via script
 		run_script(cd->bonus_script, 0, sd.bl.id, fake_nd->bl.id);
 
-		// Remove temporary macro variable
-		pc_setglobalreg(&sd, add_str("CAPTCHA_RETRIES"), 0);
-
 		// Notify the client
 		clif_macro_detector_status(sd, MCD_GOOD);
-		return;
+	} else {
+		// Deduct an answering attempt
+		sd.macro_detect.retry -= 1;
+
+		// All attempts have been exhausted block the user
+		if (sd.macro_detect.retry <= 0) {
+			clif_macro_detector_status(sd, MCD_INCORRECT);
+			chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+			return;
+		}
+
+		// Incorrect response, update the client
+		clif_macro_detector_request_show(sd);
+
+		// Reset the timer
+		addtick_timer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
 	}
-
-	// Deduct an answering attempt
-	sd.macro_detect.retry -= 1;
-
-	// All attempts have been exhausted block the user
-	if (sd.macro_detect.retry == 0) {
-		clif_macro_detector_status(sd, MCD_INCORRECT);
-		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
-		return;
-	}
-
-	// Incorrect response, update the client
-	clif_macro_detector_request_show(sd);
-
-	// Reset the timer
-	addtick_timer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
 }
 
 /**
@@ -15175,21 +15169,6 @@ void pc_macro_detector_disconnect(map_session_data &sd) {
 }
 
 /**
- * Area select via /macro_detector.
- * @param sd: Player data
- * @param x: X location
- * @param y: Y location
- * @param radius: Area
- */
-void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius) {
-	std::vector<uint32> aid_list;
-
-	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.bl.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
-
-	clif_macro_reporter_select(sd, aid_list);
-}
-
-/**
  * Save a list of players from an area select via /macro_detector.
  */
 int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
@@ -15204,6 +15183,21 @@ int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
 
 	aid_list->push_back(bl->id);
 	return 0;
+}
+
+/**
+ * Area select via /macro_detector.
+ * @param sd: Player data
+ * @param x: X location
+ * @param y: Y location
+ * @param radius: Area
+ */
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius) {
+	std::vector<uint32> aid_list;
+
+	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.bl.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
+
+	clif_macro_reporter_select(sd, aid_list);
 }
 
 /**
@@ -15238,7 +15232,7 @@ void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd) {
  * @param filepath: Image file location
  * @param cd: Captcha data
  */
-bool pc_macro_read_captcha_db_loadbmp(const std::string filepath, std::shared_ptr<s_captcha_data> cd) {
+bool pc_macro_read_captcha_db_loadbmp(const std::string &filepath, std::shared_ptr<s_captcha_data> cd) {
 	if (cd == nullptr)
 		return false;
 
