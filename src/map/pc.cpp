@@ -203,7 +203,7 @@ uint64 AttendanceDatabase::parseBodyNode(const ryml::NodeRef& node){
 					continue;
 				}
 
-				if( item_id == 0 || !item_db.exists( item_id ) ){
+				if( !item_db.exists( item_id ) ){
 					ShowError( "pc_attendance_load: Unknown item ID %u for day %d.\n", item_id, day + 1 );
 					continue;
 				}
