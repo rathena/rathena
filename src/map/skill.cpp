@@ -21141,12 +21141,12 @@ void skill_unit_move_unit_group(std::shared_ptr<s_skill_unit_group> group, int16
  */
 short skill_can_produce_mix(struct map_session_data *sd, t_itemid nameid, int trigger, int qty)
 {
-	short i, j;
-
 	nullpo_ret(sd);
 
-	if (!nameid || !item_db.exists(nameid))
+	if (!item_db.exists(nameid))
 		return 0;
+
+	short i, j;
 
 	for (i = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
 		if (skill_produce_db[i].nameid == nameid) {
@@ -21275,9 +21275,9 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 
 	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
 		short x, j;
-		t_itemid id;
+		t_itemid id = skill_produce_db[idx].mat_id[i];
 
-		if (!(id = skill_produce_db[idx].mat_id[i]) || !item_db.exists(id))
+		if (!item_db.exists(id))
 			continue;
 		num++;
 		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * skill_produce_db[idx].mat_amount[i];

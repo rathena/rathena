@@ -4700,7 +4700,7 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		struct npc_item_list *list = &market->list[i];
 		uint16 j;
 
-		if (!list->nameid || !item_db.exists(list->nameid)) {
+		if (!item_db.exists(list->nameid)) {
 			ShowError("npc_market_checkall_sub: NPC '%s' sells invalid item '%u', deleting...\n", nd->exname, list->nameid);
 			npc_market_delfromsql(nd->exname, list->nameid);
 			continue;
