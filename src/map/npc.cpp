@@ -3938,7 +3938,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
-			if (itemdb_exists(nameid) == NULL) {
+			if (!item_db.exists(nameid)) {
 				ShowWarning("npc_parse_shop: Invalid item ID cost in file '%s', line '%d' (id '%u').\n", filepath, strline(buffer,start-buffer), nameid);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -4700,7 +4700,7 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		struct npc_item_list *list = &market->list[i];
 		uint16 j;
 
-		if (!list->nameid || !itemdb_exists(list->nameid)) {
+		if (!item_db.exists(list->nameid)) {
 			ShowError("npc_market_checkall_sub: NPC '%s' sells invalid item '%u', deleting...\n", nd->exname, list->nameid);
 			npc_market_delfromsql(nd->exname, list->nameid);
 			continue;
@@ -5277,7 +5277,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 				if (!strcmpi(drop_arg1, "random"))
 					args.nightmaredrop.drop_id = -1;
-				else if (itemdb_exists((args.nightmaredrop.drop_id = strtol(drop_arg1, nullptr, 10))) == NULL) {
+				else if (!item_db.exists((args.nightmaredrop.drop_id = strtol(drop_arg1, nullptr, 10)))) {
 					args.nightmaredrop.drop_id = 0;
 					ShowWarning("npc_parse_mapflag: Invalid item ID '%d' supplied for mapflag 'pvp_nightmaredrop' (file '%s', line '%d'), removing.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", args.nightmaredrop.drop_id, filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
 					break;

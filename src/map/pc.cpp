@@ -203,7 +203,7 @@ uint64 AttendanceDatabase::parseBodyNode(const ryml::NodeRef& node){
 					continue;
 				}
 
-				if( item_id == 0 || !itemdb_exists( item_id ) ){
+				if( !item_db.exists( item_id ) ){
 					ShowError( "pc_attendance_load: Unknown item ID %u for day %d.\n", item_id, day + 1 );
 					continue;
 				}
@@ -1343,7 +1343,7 @@ void pc_setequipindex(struct map_session_data *sd)
 //{
 //	int i;
 //	struct item *item = &sd->inventory.u.items_inventory[eqindex];
-//	struct item_data *data;
+//	std::shared_ptr<item_data> data;
 //
 //	//Crafted/made/hatched items.
 //	if (itemdb_isspecial(item->card[0]))
@@ -1353,7 +1353,7 @@ void pc_setequipindex(struct map_session_data *sd)
 //	if( item->card[MAX_SLOTS - 1] && s < MAX_SLOTS - 1 )
 //		s = MAX_SLOTS - 1;
 //
-//	ARR_FIND( 0, s, i, item->card[i] && (data = itemdb_exists(item->card[i])) != NULL && data->flag.no_equip&flag );
+//	ARR_FIND( 0, s, i, item->card[i] && (data = item_db.find(item->card[i])) != NULL && data->flag.no_equip&flag );
 //	return( i < s ) ? 0 : 1;
 //}
 
@@ -2920,7 +2920,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
 		return;
 	}
-	if (nameid && !itemdb_exists(nameid)) {
+	if (!item_db.exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %u\n",nameid);
 		return;
 	}
@@ -6289,7 +6289,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_MOB_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].rate
+		if( item_db.exists(md->db->dropitem[i].nameid) && !md->db->dropitem[i].steal_protected && rnd() % 10000 < md->db->dropitem[i].rate
 #ifndef RENEWAL
 		* rate/100.
 #endif

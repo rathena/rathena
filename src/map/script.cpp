@@ -7520,7 +7520,7 @@ BUILDIN_FUNC(checkweight2)
 		if(fail)
 			continue; //cpntonie to depop rest
 
-		if(itemdb_exists(nameid) == NULL ) {
+		if (!item_db.exists(nameid)) {
 			ShowError("buildin_checkweight2: Invalid item '%u'.\n", nameid);
 			fail=1;
 			continue;
@@ -7848,7 +7848,7 @@ BUILDIN_FUNC(rentitem) {
 	else
 	{
 		nameid = script_getnum(st, 2);
-		if( nameid == 0 || !itemdb_exists(nameid) )
+		if( !item_db.exists(nameid) )
 		{
 			ShowError("buildin_rentitem: Nonexistant item %u requested.\n", nameid);
 			return SCRIPT_CMD_FAILURE;
@@ -8014,7 +8014,7 @@ BUILDIN_FUNC(getnameditem)
 	}else
 		nameid = script_getnum(st, 2);
 
-	if(!itemdb_exists(nameid)/* || itemdb_isstackable(nameid)*/)
+	if(!item_db.exists(nameid)/* || itemdb_isstackable(nameid)*/)
 	{	//Even though named stackable items "could" be risky, they are required for certain quests.
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
@@ -8098,7 +8098,7 @@ BUILDIN_FUNC(makeitem) {
 			nameid = (t_itemid)val;
 		}
 
-		if( !itemdb_exists( nameid ) ){
+		if( !item_db.exists( nameid ) ){
 			ShowError( "buildin_makeitem: Unknown item id %u\n", nameid );
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -8158,7 +8158,7 @@ BUILDIN_FUNC(makeitem2) {
 	}else{
 		nameid = (t_itemid)script_getnum( st, 2 );
 
-		if( !itemdb_exists( nameid ) ){
+		if( !item_db.exists( nameid ) ){
 			ShowError( "buildin_%s: Unknown item id %u\n", funcname, nameid );
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -8533,7 +8533,7 @@ BUILDIN_FUNC(delitem)
 	else
 	{
 		it.nameid = script_getnum(st, 2);// <item id>
-		if( !itemdb_exists( it.nameid ) )
+		if( !item_db.exists( it.nameid ) )
 		{
 			ShowError("buildin_%s: unknown item \"%u\".\n", command, it.nameid);
 			st->state = END;
@@ -8628,7 +8628,7 @@ BUILDIN_FUNC(delitem2)
 	else
 	{
 		it.nameid = script_getnum(st, 2);// <item id>
-		if( !itemdb_exists( it.nameid ) )
+		if( !item_db.exists( it.nameid ) )
 		{
 			ShowError("buildin_%s: unknown item \"%u\".\n", command, it.nameid);
 			st->state = END;
@@ -11143,7 +11143,7 @@ BUILDIN_FUNC(getmobdrops)
 	{
 		if( mob->dropitem[i].nameid == 0 )
 			continue;
-		if( itemdb_exists(mob->dropitem[i].nameid) == NULL )
+		if( !item_db.exists(mob->dropitem[i].nameid) )
 			continue;
 
 		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), mob->dropitem[i].nameid);
@@ -12122,7 +12122,7 @@ BUILDIN_FUNC(getareadropitem)
 	}else{
 		nameid = script_getnum(st, 7);
 
-		if( !itemdb_exists( nameid ) ){
+		if( !item_db.exists( nameid ) ){
 			ShowError( "buildin_getareadropitem: Unknown item id %u\n", nameid );
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -17854,7 +17854,7 @@ BUILDIN_FUNC(npcshopitem)
 	for (n = 0, i = 3; n < amount; n++, i+=offs) {
 		t_itemid nameid = script_getnum( st, i );
 
-		if( itemdb_exists( nameid ) == nullptr ){
+		if( !item_db.exists( nameid ) ){
 			ShowError( "builtin_npcshopitem: Item ID %u does not exist.\n", nameid );
 			script_pushint( st, 0 );
 			return SCRIPT_CMD_FAILURE;
@@ -17899,7 +17899,7 @@ BUILDIN_FUNC(npcshopadditem)
 			t_itemid nameid = script_getnum(st,i);
 			uint16 j;
 
-			if( itemdb_exists( nameid ) == nullptr ){
+			if( !item_db.exists( nameid ) ){
 				ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
 				script_pushint( st, 0 );
 				return SCRIPT_CMD_FAILURE;
@@ -17939,7 +17939,7 @@ BUILDIN_FUNC(npcshopadditem)
 	{
 		t_itemid nameid = script_getnum( st, i );
 
-		if( itemdb_exists( nameid ) == nullptr ){
+		if( !item_db.exists( nameid ) ){
 			ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
 			script_pushint( st, 0 );
 			return SCRIPT_CMD_FAILURE;
@@ -23597,7 +23597,7 @@ BUILDIN_FUNC(mergeitem2) {
 			nameid = id->nameid;
 		} else {// <item id>
 			nameid = script_getnum(st, 2);
-			if (!itemdb_exists(nameid)) {
+			if (!item_db.exists(nameid)) {
 				ShowError("buildin_mergeitem: Nonexistant item %u requested.\n", nameid);
 				script_pushint(st, count);
 				return SCRIPT_CMD_FAILURE;
@@ -25581,7 +25581,7 @@ BUILDIN_FUNC(mail){
 			msg.item[i].nameid = (t_itemid)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 			msg.item[i].identify = 1;
 
-			if( !itemdb_exists(msg.item[i].nameid) ){
+			if( !item_db.exists(msg.item[i].nameid) ){
 				ShowError( "buildin_mail: invalid item id %u.\n", msg.item[i].nameid );
 				return SCRIPT_CMD_FAILURE;
 			}
@@ -25683,7 +25683,7 @@ BUILDIN_FUNC(mail){
 			for( k = 0; k < num_items && start < end; k++, start++ ){
 				msg.item[k].card[i] = (t_itemid)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
-				if( msg.item[k].card[i] != 0 && !itemdb_exists(msg.item[k].card[i]) ){
+				if( !item_db.exists(msg.item[k].card[i]) ){
 					ShowError( "buildin_mail: invalid card id %u.\n", msg.item[k].card[i] );
 					return SCRIPT_CMD_FAILURE;
 				}

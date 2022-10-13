@@ -1551,7 +1551,10 @@ extern ItemPackageDatabase item_package_db;
 
 uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
+
+[[deprecated("Please upgrade your code to item_db.exists() or item_db.find()! This function will be dropped soon!")]]
 std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);
+
 #define itemdb_name(n) itemdb_search(n)->name.c_str()
 #define itemdb_ename(n) itemdb_search(n)->ename.c_str()
 #define itemdb_type(n) itemdb_search(n)->type

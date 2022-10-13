@@ -13466,7 +13466,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
 
-				if (!itemdb_exists(skill->require.itemid[0]))
+				if (!item_db.exists(skill->require.itemid[0]))
 					break;
 				memset(&it, 0, sizeof(it));
 				it.nameid = skill->require.itemid[0];
