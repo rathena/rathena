@@ -49196,6 +49196,50 @@ Body:
       bonus bDef,-30;
       bonus bFlee,-30;
       bonus bSPDrainValue,-1;
+  - Id: 300339
+    AegisName: SLD_P_Dark_L_Card_J
+    Name: Sealed Contaminated Dark Lord Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@val = readparam(bStr) + readparam(bInt) + readparam(bDex);
+      bonus2 bAddEle,Ele_Neutral,.@val/20;
+      bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
+  - Id: 300340
+    AegisName: SLD_P_Spi_Q_Card_J
+    Name: Sealed Contaminated Spider Queen Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bResEff,Eff_Freezing,1500;
+  - Id: 300341
+    AegisName: SLD_F_Muspell_Card_J
+    Name: Sealed Contaminated Firm Muspellskoll Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Fire,15;
   - Id: 300343
     AegisName: SLD_Timeholder_Card_J
     Name: Sealed Time Holder Card
@@ -49247,50 +49291,6 @@ Body:
     Script: |
       bonus2 bResEff,Eff_Curse,3000;
       bonus2 bResEff,Eff_Fear,3000;
-  - Id: 300339
-    AegisName: SLD_P_Dark_L_Card_J
-    Name: Sealed Contaminated Dark Lord Card
-    Type: Card
-    Buy: 20
-    Weight: 10
-    Locations:
-      Armor: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      .@val = readparam(bStr) + readparam(bInt) + readparam(bDex);
-      bonus2 bAddEle,Ele_Neutral,.@val/20;
-      bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
-  - Id: 300340
-    AegisName: SLD_P_Spi_Q_Card_J
-    Name: Sealed Contaminated Spider Queen Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      bonus bMaxHPrate,5;
-      bonus bMaxSPrate,5;
-      bonus2 bAddEle,Ele_Water,10;
-      bonus2 bMagicAddEle,Ele_Water,10;
-      bonus2 bResEff,Eff_Freezing,1500;
-  - Id: 300341
-    AegisName: SLD_F_Muspell_Card_J
-    Name: Sealed Contaminated Firm Muspellskoll Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      bonus bMaxHPrate,5;
-      bonus bMaxSPrate,5;
-      bonus2 bAddEle,Ele_Fire,10;
-      bonus2 bMagicAddEle,Ele_Fire,10;
-      bonus2 bSubEle,Ele_Fire,15;
   - Id: 300348
     AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
@@ -50028,6 +50028,19 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_Wind,(readparam(bStr)+readparam(bInt)+readparam(bDex))/10;
       bonus2 bMagicAddEle,Ele_Wind,(readparam(bStr)+readparam(bLuk)+readparam(bDex))/10;
+  - Id: 300407
+    AegisName: aegis_300407
+    Name: Sealed Tao Gunka Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,30;
+      bonus bDef,-50;
+      bonus bMdef,-50;
   - Id: 300408
     AegisName: aegis_300408
     Name: Sealed Leak Card
@@ -50084,19 +50097,6 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,10*.@r;
-  - Id: 300407
-    AegisName: aegis_300407
-    Name: Sealed Tao Gunka Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Armor: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      bonus bMaxHPrate,30;
-      bonus bDef,-50;
-      bonus bMdef,-50;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
