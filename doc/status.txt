@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220421
+//= 20221013
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -266,7 +266,7 @@ Fail: List of status that causes the status to fail to activate.
 
 ---------------------------------------
 
-End: List of status that will end if the status activates.
+EndOnStart: List of status that will end if the status activates.
 
 ---------------------------------------
 
@@ -276,7 +276,7 @@ EndReturn: List of status that will end if the status activates and it won't giv
 
 ---------------------------------------
 
-Cancel: List of status that will be canceled when the status becomes inactive.
+EndOnEnd: List of status that will end when the status becomes inactive.
 
 ---------------------------------------
 

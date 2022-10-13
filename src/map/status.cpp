@@ -962,14 +962,14 @@ std::bitset<SCB_MAX> StatusDatabase::getCalcFlag(sc_type type) {
 }
 
 /**
- * Get SC's END list
+ * Get SC's EndOnStart list
  * @param sc: SC type
  * @return End list
  **/
-std::vector<sc_type> StatusDatabase::getEnd(sc_type type) {
+std::vector<sc_type> StatusDatabase::getEndOnStart(sc_type type) {
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	return status ? status->end : std::vector<sc_type> {};
+	return status ? status->endonstart : std::vector<sc_type> {};
 }
 
 /**
@@ -10215,9 +10215,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	std::vector<sc_type> endlist;
 
 	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
-		endlist = status_db.getEnd(SC__BLOODYLUST);
+		endlist = status_db.getEndOnStart(SC__BLOODYLUST);
 	else
-		endlist = scdb->end;
+		endlist = scdb->endonstart;
 
 	// End the SCs from the list
 	if (!endlist.empty()) {
@@ -12485,7 +12485,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		default:
-			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->endreturn.empty() && scdb->fail.empty()) {
+			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
 				// Status change with no calc, no icon, and no skill associated...?
 				ShowWarning("status_change_start: Status %s (%d) is bare. Add the NoWarning flag to suppress this message.\n", script_get_constant_str("SC_", type), type);
 				return 0;
@@ -13462,11 +13462,10 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 	}
 
-	// End statuses found in the Cancel list.
-	if (!scdb->cancel.empty()) {
-		for (const auto &it : scdb->cancel) {
-			if (it == type)
-				status_change_end(bl, it);
+	// End statuses found in the EndOnEnd list.
+	if (!scdb->endonend.empty()) {
+		for (const auto &it : scdb->endonend) {
+			status_change_end(bl, it);
 		}
 	}
 
@@ -15588,8 +15587,8 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
-	if (this->nodeExists(node, "End")) {
-		const ryml::NodeRef& endNode = node["End"];
+	if (this->nodeExists(node, "EndOnStart")) {
+		const ryml::NodeRef& endNode = node["EndOnStart"];
 
 		for (const auto &it : endNode) {
 			std::string end;
@@ -15599,12 +15598,12 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			int64 constant;
 
 			if (!script_get_constant(end_constant.c_str(), &constant)) {
-				this->invalidWarning(endNode, "End status %s is invalid.\n", end.c_str());
+				this->invalidWarning(endNode, "EndOnStart status %s is invalid.\n", end.c_str());
 				return 0;
 			}
 
 			if (!this->validateStatus(static_cast<sc_type>(constant))) {
-				this->invalidWarning(endNode, "End status %s is out of bounds.\n", end.c_str());
+				this->invalidWarning(endNode, "EndOnStart status %s is out of bounds.\n", end.c_str());
 				return 0;
 			}
 
@@ -15614,9 +15613,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (active)
-				status->end.push_back(static_cast<sc_type>(constant));
+				status->endonstart.push_back(static_cast<sc_type>(constant));
 			else
-				util::vector_erase_if_exists(status->end, static_cast<sc_type>(constant));
+				util::vector_erase_if_exists(status->endonstart, static_cast<sc_type>(constant));
 		}
 	}
 
@@ -15649,6 +15648,38 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				status->endreturn.push_back(static_cast<sc_type>(constant));
 			else
 				util::vector_erase_if_exists(status->endreturn, static_cast<sc_type>(constant));
+		}
+	}
+
+	if (this->nodeExists(node, "EndOnEnd")) {
+		const ryml::NodeRef &endNode = node["EndOnEnd"];
+
+		for (const auto &it : endNode) {
+			std::string end;
+			c4::from_chars(it.key(), &end);
+
+			std::string end_constant = "SC_" + end;
+			int64 constant;
+
+			if (!script_get_constant(end_constant.c_str(), &constant)) {
+				this->invalidWarning(endNode, "EndOnEnd status %s is invalid.\n", end.c_str());
+				return 0;
+			}
+
+			if (!this->validateStatus(static_cast<sc_type>(constant))) {
+				this->invalidWarning(endNode, "EndOnEnd status %s is out of bounds.\n", end.c_str());
+				return 0;
+			}
+
+			bool active;
+
+			if (!this->asBool(endNode, end, active))
+				return 0;
+
+			if (active)
+				status->endonend.push_back(static_cast<sc_type>(constant));
+			else
+				util::vector_erase_if_exists(status->endonend, static_cast<sc_type>(constant));
 		}
 	}
 
