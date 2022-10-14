@@ -26638,6 +26638,24 @@ BUILDIN_FUNC(item_enchant){
 #endif
 }
 
+BUILDIN_FUNC(macro_detector) {
+	map_session_data *sd;
+
+	if (script_hasdata(st, 2) && script_isstring(st, 2)) { // Character Name
+		if (!script_nick2sd(2, sd)) {
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else { // Account ID
+		if (!script_accid2sd(2, sd)) {
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	// Reporter Account ID as -1 for server.
+	pc_macro_reporter_process(*sd, -1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27380,6 +27398,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(get_reputation_points, "i?"),
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
+	BUILDIN_DEF(macro_detector, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
