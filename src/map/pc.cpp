@@ -12,6 +12,7 @@
 #include "../common/core.hpp" // get_svn_revision()
 #include "../common/database.hpp"
 #include "../common/ers.hpp"  // ers_destroy
+#include "../common/grfio.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp" //NAME_LENGTH
 #include "../common/nullpo.hpp"
@@ -60,6 +61,9 @@
 using namespace rathena;
 
 JobDatabase job_db;
+
+CaptchaDatabase captcha_db;
+const char *macro_allowed_answer_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
@@ -1747,6 +1751,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->autotrade_tid = INVALID_TIMER;
 	sd->respawn_tid = INVALID_TIMER;
 	sd->tid_queue_active = INVALID_TIMER;
+	sd->macro_detect.timer = INVALID_TIMER;
 
 	sd->skill_keep_using.tid = INVALID_TIMER;
 	sd->skill_keep_using.skill_id = 0;
@@ -14989,6 +14994,351 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	clif_attendence_response( sd, attendance_counter );
 }
 
+/**
+ * Save a captcha image to memory via /macro_register.
+ * @param sd: Player data
+ * @param image_size: Captcha image size
+ * @param captcha_answer: Answer to captcha
+ */
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+	nullpo_retv(captcha_answer);
+
+	sd.captcha_upload.cd = nullptr;
+	sd.captcha_upload.upload_size = 0;
+
+	if (strlen(captcha_answer) < 4 || image_size == 0 || image_size > CAPTCHA_BMP_SIZE) {
+		clif_captcha_upload_request(sd); // Notify client of failure.
+		return;
+	}
+
+	std::shared_ptr<s_captcha_data> cd = std::make_shared<s_captcha_data>();
+	sd.captcha_upload.cd = cd;
+
+	cd->image_size = image_size;
+	safestrncpy(cd->captcha_answer, captcha_answer, sizeof(cd->captcha_answer));
+	memset(cd->image_data, 0, sizeof(cd->image_data));
+
+	// Request the image data from the client.
+	clif_captcha_upload_request(sd);
+}
+
+/**
+ * Save captcha image to server.
+ * @param sd: Player data
+ * @param captcha_key: Captcha ID
+ * @param upload_size: Captcha size
+ * @param upload_data: Image data
+ */
+void pc_macro_captcha_register_upload(map_session_data &sd, uint16 upload_size, char *upload_data) {
+	nullpo_retv(upload_data);
+
+	memcpy(&sd.captcha_upload.cd->image_data[sd.captcha_upload.upload_size], upload_data, upload_size);
+	sd.captcha_upload.upload_size += upload_size;
+
+	// Notify that the image finished uploading.
+	if (sd.captcha_upload.upload_size == sd.captcha_upload.cd->image_size) {
+		// Tell the client that the upload was finished
+		clif_captcha_upload_end(sd);
+
+		// Look for a free key
+		uint16 index;
+
+		for (index = 0; index < UINT16_MAX; index++) {
+			if (!captcha_db.exists(index)) {
+				break;
+			}
+		}
+
+		if (index == UINT16_MAX) {
+			// no free key found...
+			sd.captcha_upload.cd = nullptr;
+			sd.captcha_upload.upload_size = 0;
+			return;
+		}
+
+		captcha_db.put(index, sd.captcha_upload.cd);
+		sd.captcha_upload.cd = nullptr;
+		sd.captcha_upload.upload_size = 0;
+		
+		// TODO: write YAML and BMP file?
+	}
+}
+
+/**
+ * Timer attached to target player with attempts to confirm captcha.
+ */
+TIMER_FUNC(pc_macro_detector_timeout) {
+	map_session_data *sd = map_id2sd(id);
+
+	nullpo_ret(sd);
+
+	// Remove the current timer
+	sd->macro_detect.timer = INVALID_TIMER;
+
+	// Deduct an answering attempt
+	sd->macro_detect.retry -= 1;
+
+	if (sd->macro_detect.retry == 0) {
+		// All attempts have been exhausted block the user
+		clif_macro_detector_status(*sd, MCD_TIMEOUT);
+		chrif_req_login_operation(sd->macro_detect.reporter_aid, sd->status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+	} else {
+		// Update the client
+		clif_macro_detector_request_show(*sd);
+
+		// Start a new timer
+		sd->macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd->bl.id, 0);
+	}
+	return 0;
+}
+
+/**
+ * Check player's captcha answer.
+ * @param sd: Player data
+ * @param captcha_answer: Captcha answer entered by player
+ */
+void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+	nullpo_retv(captcha_answer);
+
+	const std::shared_ptr<s_captcha_data> cd = sd.macro_detect.cd;
+
+	// Has no captcha request
+	if (cd == nullptr) {
+		return;
+	}
+
+	// Correct answer
+	if (strcmp(captcha_answer, cd->captcha_answer) == 0) {
+		// Delete the timer
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+
+		// Clear the macro detect data
+		sd.macro_detect = {};
+		sd.macro_detect.timer = INVALID_TIMER;
+
+		// Unblock all actions for the player
+		sd.state.block_action &= ~PCBLOCK_ALL;
+		sd.state.block_action &= ~PCBLOCK_IMMUNE;
+
+		// Assign temporary macro variable to check failures
+		pc_setreg(&sd, add_str("@captcha_retries"), battle_config.macro_detection_retry - sd.macro_detect.retry);
+
+		// Grant bonuses via script
+		run_script(cd->bonus_script, 0, sd.bl.id, fake_nd->bl.id);
+
+		// Notify the client
+		clif_macro_detector_status(sd, MCD_GOOD);
+	} else {
+		// Deduct an answering attempt
+		sd.macro_detect.retry -= 1;
+
+		// All attempts have been exhausted block the user
+		if (sd.macro_detect.retry <= 0) {
+			clif_macro_detector_status(sd, MCD_INCORRECT);
+			chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+			return;
+		}
+
+		// Incorrect response, update the client
+		clif_macro_detector_request_show(sd);
+
+		// Reset the timer
+		addtick_timer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
+	}
+}
+
+/**
+ * Determine if a player tries to log out during a captcha check.
+ * @param sd: Player data
+ */
+void pc_macro_detector_disconnect(map_session_data &sd) {
+	// Delete the timeout timer
+	if (sd.macro_detect.timer != INVALID_TIMER) {
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+		sd.macro_detect.timer = INVALID_TIMER;
+	}
+
+	// If the player disconnects before clearing the challenge the account is banned.
+	if (sd.macro_detect.retry != 0)
+		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+}
+
+/**
+ * Save a list of players from an area select via /macro_detector.
+ */
+int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
+	nullpo_retr(0, bl);
+
+	if (bl->type != BL_PC)
+		return 0;
+
+	std::vector<uint32> *aid_list = va_arg(ap, std::vector<uint32> *);
+
+	nullpo_ret(aid_list);
+
+	aid_list->push_back(bl->id);
+	return 0;
+}
+
+/**
+ * Area select via /macro_detector.
+ * @param sd: Player data
+ * @param x: X location
+ * @param y: Y location
+ * @param radius: Area
+ */
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius) {
+	std::vector<uint32> aid_list;
+
+	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.bl.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
+
+	clif_macro_reporter_select(sd, aid_list);
+}
+
+/**
+ * Send out captcha check to player.
+ * @param ssd: Source player data
+ * @param tsd: Target player data
+ */
+void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd) {
+	if (captcha_db.empty())
+		return;
+
+	// Pick a random image from the database.
+	const std::shared_ptr<s_captcha_data> cd = captcha_db.random();
+
+	// Set macro detection data.
+	tsd.macro_detect.cd = cd;
+	tsd.macro_detect.reporter_aid = ssd.status.account_id;
+	tsd.macro_detect.retry = battle_config.macro_detection_retry;
+
+	// Block all actions for the target player.
+	tsd.state.block_action |= (PCBLOCK_ALL | PCBLOCK_IMMUNE);
+
+	// Open macro detect client side.
+	clif_macro_detector_request(tsd);
+
+	// Start the timeout timer.
+	tsd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, tsd.bl.id, 0);
+}
+
+/**
+ * Parse a BMP image to memory.
+ * @param filepath: Image file location
+ * @param cd: Captcha data
+ */
+bool pc_macro_read_captcha_db_loadbmp(const std::string &filepath, std::shared_ptr<s_captcha_data> cd) {
+	if (cd == nullptr)
+		return false;
+
+	FILE *fp = fopen(filepath.c_str(), "rb");
+
+	if (fp == nullptr) {
+		ShowError("%s: Failed to open file \"%s\"\n", __func__, filepath.c_str());
+		return false;
+	}
+
+	// Load the file data and verify magic
+	char bmp_data[CAPTCHA_BMP_SIZE];
+
+	if (fread(bmp_data, CAPTCHA_BMP_SIZE, 1, fp) != 1) {
+		ShowError("%s: Failed to read data from \"%s\"\n", __func__, filepath.c_str());
+		fclose(fp);
+		return false;
+	}
+
+	fclose(fp);
+
+	if (bmp_data[0] != 'B' || bmp_data[1] != 'M') {
+		ShowError("%s: Invalid BMP file header given at \"%s\"\n", __func__, filepath.c_str());
+		return false;
+	}
+
+	// Compress the data into the destination
+	unsigned long com_size = sizeof(cd->image_data);
+
+	encode_zip(cd->image_data, &com_size, bmp_data, CAPTCHA_BMP_SIZE);
+	cd->image_size = static_cast<int16>(com_size);
+
+	return true;
+}
+
+const std::string CaptchaDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/captcha_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the captcha_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
+	uint16 index;
+
+	if (!this->asUInt16(node, "Id", index))
+		return 0;
+
+	std::shared_ptr<s_captcha_data> cd = captcha_db.find(index);
+	bool exists = cd != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Filename", "Answer" }))
+			return 0;
+
+		cd = std::make_shared<s_captcha_data>();
+		cd->index = index;
+	}
+
+	if (this->nodeExists(node, "Filename")) {
+		std::string filename;
+
+		if (!this->asString(node, "Filename", filename))
+			return 0;
+
+		if (!pc_macro_read_captcha_db_loadbmp(filename, cd)) {
+			this->invalidWarning(node["Filename"], "Failed to parse BMP image, skipping...\n");
+			return 0;
+		}
+	}
+
+	if (this->nodeExists(node, "Answer")) {
+		std::string answer;
+
+		if (!this->asString(node, "Answer", answer))
+			return 0;
+
+		if (answer.length() < 4 || answer.length() > CAPTCHA_ANSWER_SIZE) {
+			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...", CAPTCHA_ANSWER_SIZE);
+			return 0;
+		}
+
+		safestrncpy(cd->captcha_answer, answer.c_str(), sizeof(cd->captcha_answer));
+	}
+
+	if (this->nodeExists(node, "Bonus")) {
+		std::string script;
+
+		if (!this->asString(node, "Bonus", script)) {
+			return 0;
+		}
+
+		if (cd->bonus_script) {
+			script_free_code(cd->bonus_script);
+			cd->bonus_script = nullptr;
+		}
+
+		cd->bonus_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Bonus"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+	} else {
+		if (!exists)
+			cd->bonus_script = parse_script("specialeffect2 EF_BLESSING; sc_start SC_BLESSING,600000,10; specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,600000,10;", "macro_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+	}
+
+	if (!exists)
+		captcha_db.put(index, cd);
+
+	return 1;
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
@@ -15003,6 +15353,7 @@ void do_final_pc(void) {
 	attendance_db.clear();
 	reputation_db.clear();
 	penalty_db.clear();
+	captcha_db.clear();
 }
 
 void do_init_pc(void) {
@@ -15013,6 +15364,7 @@ void do_init_pc(void) {
 	pc_read_motd(); // Read MOTD [Valaris]
 	attendance_db.load();
 	reputation_db.load();
+	captcha_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");
@@ -15027,6 +15379,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
+	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

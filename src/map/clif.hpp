@@ -47,6 +47,9 @@ enum e_bg_queue_apply_ack : uint16;
 enum e_instance_notify : uint8;
 struct s_laphine_synthesis;
 struct s_laphine_upgrade;
+struct s_captcha_data;
+enum e_macro_detect_status : uint8;
+enum e_macro_report_status : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -1157,12 +1160,16 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
 /// Attendance System
 enum in_ui_type : int8 {
+	IN_UI_MACRO_REGISTER = 2,
+	IN_UI_MACRO_DETECTOR,
 	IN_UI_ATTENDANCE = 5
 };
 
 enum out_ui_type : int8 {
 	OUT_UI_BANK = 0,
 	OUT_UI_STYLIST,
+	OUT_UI_CAPTCHA,
+	OUT_UI_MACRO,
 	OUT_UI_QUEST = 6,
 	OUT_UI_ATTENDANCE,
 	OUT_UI_ENCHANTGRADE,
@@ -1216,5 +1223,21 @@ void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex
 void clif_enchantingshadow_spirit(unit_data &ud);
 
 void clif_broadcast_refine_result(struct map_session_data& sd, t_itemid itemId, int8 level, bool success);
+
+// Captcha Register
+void clif_captcha_upload_request(map_session_data &sd);
+void clif_captcha_upload_end(map_session_data &sd);
+
+// Captcha Preview
+void clif_captcha_preview_response(map_session_data &sd, std::shared_ptr<s_captcha_data> cd);
+
+// Macro Detector
+void clif_macro_detector_request(map_session_data &sd);
+void clif_macro_detector_request_show(map_session_data &sd);
+void clif_macro_detector_status(map_session_data &sd, e_macro_detect_status stype);
+
+// Macro Reporter
+void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> &aid_list);
+void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 #endif /* CLIF_HPP */
