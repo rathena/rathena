@@ -15029,7 +15029,7 @@ void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char cap
  * @param upload_size: Captcha size
  * @param upload_data: Image data
  */
-void pc_macro_captcha_register_upload(map_session_data &sd, int16 upload_size, char *upload_data) {
+void pc_macro_captcha_register_upload(map_session_data &sd, uint16 upload_size, char *upload_data) {
 	nullpo_retv(upload_data);
 
 	memcpy(&sd.captcha_upload.cd->image_data[sd.captcha_upload.upload_size], upload_data, upload_size);
