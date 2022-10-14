@@ -15000,13 +15000,13 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
  * @param image_size: Captcha image size
  * @param captcha_answer: Answer to captcha
  */
-void pc_macro_captcha_register(map_session_data &sd, int16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
 	nullpo_retv(captcha_answer);
 
 	sd.captcha_upload.cd = nullptr;
 	sd.captcha_upload.upload_size = 0;
 
-	if (strlen(captcha_answer) < 4 || image_size < 0 || image_size > CAPTCHA_BMP_SIZE) {
+	if (strlen(captcha_answer) < 4 || image_size == 0 || image_size > CAPTCHA_BMP_SIZE) {
 		clif_captcha_upload_request(sd); // Notify client of failure.
 		return;
 	}

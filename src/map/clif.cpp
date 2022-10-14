@@ -24729,8 +24729,8 @@ void clif_captcha_preview_response(map_session_data &sd, std::shared_ptr<s_captc
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
 
 	if (cd != nullptr) {
-		for (int16 offset = 0; offset < cd->image_size;) {
-			int16 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
+		for (uint16 offset = 0; offset < cd->image_size;) {
+			uint16 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
 			PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA *p2 = (PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA *)packet_buffer;
 
 			p2->PacketType = HEADER_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA;
@@ -24763,8 +24763,8 @@ void clif_macro_detector_request(map_session_data &sd) {
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
 
-	for (int16 offset = 0; offset < cd->image_size;) {
-		int16 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
+	for (uint16 offset = 0; offset < cd->image_size;) {
+		uint16 chunk_size = min(cd->image_size - offset, MAX_CAPTCHA_CHUNK_SIZE);
 		PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA *p2 = (PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA *)packet_buffer;
 
 		p2->PacketType = HEADER_ZC_APPLY_MACRO_DETECTOR_CAPTCHA;
