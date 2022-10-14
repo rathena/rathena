@@ -729,7 +729,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				erasequest 8641;
 				setquest 8642;
 				// getexp 15642570,10949790;	// pre-rebalance
-				getexp 20300909,10949790;	// rebalance (unknown jexp, copy from pre-rebalance)
+				getexp 20300909,14210636;	// rebalance (unknown jexp, 70% of baseexp)
 				close;
 			}
 			end;
@@ -786,7 +786,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				erasequest 8644;
 				setquest 8645;
 				// getexp 10756120,7541880;	// pre-rebalance
-				getexp 14106860,7541880;	// rebalance (unknown jexp, copy from pre-rebalance)
+				getexp 14106860,9874802;	// rebalance (unknown jexp, 70% of baseexp)
 				close;
 			}
 			end;
@@ -909,7 +909,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					mes "Thank you. See you again tomorrow.";
 					completequest 8650;
 					setquest 8651;
-					getexp 44984725,0;	// rebalance (unknown jexp)
+					getexp 44984725,31489308;	// rebalance (unknown jexp, 70% of baseexp)
 					close;
 				}
 				end;
@@ -947,7 +947,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					mes "Thank you. See you again tomorrow.";
 					erasequest 8652;
 					setquest 8651;
-					getexp 44984725,0;	// rebalance (unknown jexp)
+					getexp 44984725,31489308;	// rebalance (unknown jexp, 70% of baseexp)
 					close;
 				}
 				end;
@@ -1017,7 +1017,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					mes "Thank you. See you tomorrow.";
 					completequest 8653;
 					setquest 8654;
-					getexp 29944101,0;	// rebalance (unknown jexp)
+					getexp 29944101,20960871;	// rebalance (unknown jexp, 70% of baseexp)
 					close;
 				}
 				end;
@@ -1056,7 +1056,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					mes "Thank you. See you tomorrow.";
 					erasequest 8655;
 					setquest 8654;
-					getexp 29944101,0;	// rebalance (unknown jexp)
+					getexp 29944101,20960871;	// rebalance (unknown jexp, 70% of baseexp)
 					close;
 				}
 				end;
@@ -1134,7 +1134,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				erasequest 8658;
 				erasequest 8659;
 				setquest 8657;
-				getexp 13000000,0;	// rebalance (unknown jexp)
+				getexp 13000000,9100000;	// rebalance (unknown jexp, 70% of baseexp)
 				close;
 			case 2:
 				end;
