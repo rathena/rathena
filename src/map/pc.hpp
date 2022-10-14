@@ -123,9 +123,6 @@ enum e_additem_result : uint8 {
 #ifndef CAPTCHA_ANSWER_SIZE
 	#define CAPTCHA_ANSWER_SIZE 16
 #endif
-#ifndef CAPTCHA_KEY_SIZE
-	#define CAPTCHA_KEY_SIZE 4
-#endif
 #ifndef CAPTCHA_BMP_SIZE
 	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
 #endif
@@ -137,7 +134,6 @@ struct s_captcha_data {
 	int16 image_size;
 	char image_data[CAPTCHA_BMP_SIZE];
 	char captcha_answer[CAPTCHA_ANSWER_SIZE];
-	char captcha_key[CAPTCHA_KEY_SIZE];
 	script_code *bonus_script;
 
 	~s_captcha_data() {
@@ -1698,7 +1694,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd );
 
 // Captcha Register
 void pc_macro_captcha_register(map_session_data &sd, int16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
-void pc_macro_captcha_register_upload(map_session_data & sd, char captcha_key[CAPTCHA_KEY_SIZE], int16 upload_size, char *upload_data);
+void pc_macro_captcha_register_upload(map_session_data & sd, int16 upload_size, char *upload_data);
 
 // Macro Detector
 void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);

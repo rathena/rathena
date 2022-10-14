@@ -24649,11 +24649,10 @@ void clif_captcha_upload_request(map_session_data &sd) {
 	PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR p = {};
 
 	p.PacketType = HEADER_ZC_ACK_UPLOAD_MACRO_DETECTOR;
+	safestrncpy(p.captchaKey, "", sizeof(p.captchaKey));
 	if (sd.captcha_upload.cd != nullptr) {
-		safestrncpy(p.captchaKey, sd.captcha_upload.cd->captcha_key, sizeof(p.captchaKey));
 		p.captchaFlag = 0;
 	} else {
-		safestrncpy(p.captchaKey, "", sizeof(p.captchaKey));
 		p.captchaFlag = 1;
 	}
 
@@ -24674,7 +24673,7 @@ void clif_parse_captcha_upload(int fd, map_session_data *sd) {
 	if (sd->captcha_upload.upload_size + upload_size > sd->captcha_upload.cd->image_size)
 		return;
 
-	pc_macro_captcha_register_upload(*sd, p->captchaKey, upload_size, p->imageData);
+	pc_macro_captcha_register_upload(*sd, upload_size, p->imageData);
 #endif
 }
 
@@ -24703,14 +24702,13 @@ void clif_captcha_preview_response(map_session_data &sd, std::shared_ptr<s_captc
 	PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR p = {};
 
 	p.PacketType = HEADER_ZC_ACK_PREVIEW_MACRO_DETECTOR;
+	safestrncpy(p.captchaKey, "", sizeof(p.captchaKey));
 	if (cd == nullptr) {
 		p.captchaFlag = 1;
 		p.imageSize = 0;
-		safestrncpy(p.captchaKey, "", sizeof(p.captchaKey));
 	} else {
 		p.captchaFlag = 0;
 		p.imageSize = cd->image_size;
-		safestrncpy(p.captchaKey, cd->captcha_key, sizeof(p.captchaKey));
 	}
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
@@ -24722,7 +24720,7 @@ void clif_captcha_preview_response(map_session_data &sd, std::shared_ptr<s_captc
 
 			p2->PacketType = HEADER_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA;
 			p2->PacketLength = (int16)(sizeof(PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA) + chunk_size);
-			safestrncpy(p2->captchaKey, cd->captcha_key, sizeof(p2->captchaKey));
+			safestrncpy(p2->captchaKey, p.captchaKey, sizeof(p2->captchaKey));
 			memcpy(p2->imageData, &cd->image_data[offset], chunk_size);
 
 			clif_send(p2, p2->PacketLength, &sd.bl, SELF);
@@ -24746,7 +24744,7 @@ void clif_macro_detector_request(map_session_data &sd) {
 
 	p.PacketType = HEADER_ZC_APPLY_MACRO_DETECTOR;
 	p.imageSize = cd->image_size;
-	safestrncpy(p.captchaKey, cd->captcha_key, sizeof(p.captchaKey));
+	safestrncpy(p.captchaKey, "", sizeof(p.captchaKey));
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
 
@@ -24756,7 +24754,7 @@ void clif_macro_detector_request(map_session_data &sd) {
 
 		p2->PacketType = HEADER_ZC_APPLY_MACRO_DETECTOR_CAPTCHA;
 		p2->PacketLength = (int16)(sizeof(PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA) + chunk_size);
-		safestrncpy(p2->captchaKey, cd->captcha_key, sizeof(p2->captchaKey));
+		safestrncpy(p2->captchaKey, p.captchaKey, sizeof(p2->captchaKey));
 		memcpy(p2->imageData, &cd->image_data[offset], chunk_size);
 
 		clif_send(p2, p2->PacketLength, &sd.bl, SELF);

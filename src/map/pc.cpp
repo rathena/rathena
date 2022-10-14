@@ -15018,9 +15018,6 @@ void pc_macro_captcha_register(map_session_data &sd, int16 image_size, char capt
 	safestrncpy(cd->captcha_answer, captcha_answer, sizeof(cd->captcha_answer));
 	memset(cd->image_data, 0, sizeof(cd->image_data));
 
-	// The key will be generated after the upload finished succesfully
-	safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "");
-
 	// Request the image data from the client.
 	clif_captcha_upload_request(sd);
 }
@@ -15032,8 +15029,7 @@ void pc_macro_captcha_register(map_session_data &sd, int16 image_size, char capt
  * @param upload_size: Captcha size
  * @param upload_data: Image data
  */
-void pc_macro_captcha_register_upload(map_session_data &sd, char captcha_key[CAPTCHA_KEY_SIZE], int16 upload_size, char *upload_data) {
-	nullpo_retv(captcha_key);
+void pc_macro_captcha_register_upload(map_session_data &sd, int16 upload_size, char *upload_data) {
 	nullpo_retv(upload_data);
 
 	memcpy(&sd.captcha_upload.cd->image_data[sd.captcha_upload.upload_size], upload_data, upload_size);
@@ -15060,7 +15056,6 @@ void pc_macro_captcha_register_upload(map_session_data &sd, char captcha_key[CAP
 			return;
 		}
 
-		safesnprintf(sd.captcha_upload.cd->captcha_key, sizeof(sd.captcha_upload.cd->captcha_key), "%03X", i);
 		captcha_db.put(i, sd.captcha_upload.cd);
 		sd.captcha_upload.cd = nullptr;
 		sd.captcha_upload.upload_size = 0;
@@ -15291,7 +15286,6 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			return 0;
 
 		cd = std::make_shared<s_captcha_data>();
-		safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "%03X", index);
 	}
 
 	if (this->nodeExists(node, "Filename")) {
@@ -15319,8 +15313,6 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 		safestrncpy(cd->captcha_answer, answer.c_str(), sizeof(cd->captcha_answer));
 	}
-
-	safesnprintf(cd->captcha_key, sizeof(cd->captcha_key), "%X", static_cast<int32>(captcha_db.size() + 1));
 
 	if (this->nodeExists(node, "Bonus")) {
 		std::string script;
