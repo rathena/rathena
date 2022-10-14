@@ -6,13 +6,13 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
-nif_dun01	monster	Gan Ceann	20935,60	//  GAN_CEANN
-nif_dun01	monster	Brutal Murderer	20937,60	//  BRUTAL_MURDERER
-nif_dun01	monster	Ghost Cube	20938,60	//  GHOST_CUBE
-nif_dun01	monster	Lude Gal	20939,60	//  LUDE_GAL
+nif_dun01	monster	Gan Ceann	GAN_CEANN,60
+nif_dun01	monster	Brutal Murderer	BRUTAL_MURDERER,60
+nif_dun01	monster	Ghost Cube	GHOST_CUBE,60
+nif_dun01	monster	Lude Gal	LUDE_GAL,60
 
-nif_dun02	monster	Disguiser	20936,70	//  DISGUISER
-nif_dun02	monster	Grote	20941,65	//  GROTE
-nif_dun02	monster	Pierrotzoist	20942,65	//  PIERROTZOIST
-nif_dun02	monster	Blue Moon Loli Ruri	20940,70	//  BLUEMOON_LOLI_RURI
-nif_dun02	boss_monster	Death Witch	20943,1,21600000,600000,0	//  DEATH_WITCH
+nif_dun02	monster	Disguiser	DISGUISER,80
+nif_dun02	monster	Grote	GROTE,80
+nif_dun02	monster	Pierrotzoist	PIERROTZOIST,80
+nif_dun02	monster	Blue Moon Loli Ruri	BLUEMOON_LOLI_RURI,80
+nif_dun02	boss_monster	Death Witch	DEATH_WITCH,1,21600000,600000,0
