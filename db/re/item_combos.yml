@@ -29353,3 +29353,42 @@ Body:
       bonus bAspdRate,15;
       bonus2 bSubRace,RC_Player_Human,10;
       skill "PA_GOSPEL",1;
+  - Combos:
+      - Combo:
+          - aegis_510080   # 510080
+          - aegis_510081   # 510081
+    Script: |
+      bonus bCritAtkRate,-7;
+      bonus bShortAtkRate,15;
+      bonus bAspdRate,-7;
+      bonus bHit,50;
+  - Combos:
+      - Combo:
+          - aegis_510082   # 510082
+          - aegis_510083   # 510083
+    Script: |
+      bonus bCritAtkRate,-5;
+      bonus bShortAtkRate,10;
+      bonus bAspdRate,10;
+      bonus bCritical,-5;
+  - Combos:
+      - Combo:
+          - aegis_510087   # 510087
+          - aegis_510088   # 510088
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bLongAtkDef,-7;
+      bonus bAspdRate,15;
+      bonus bHit,-25;
+  - Combos:
+      - Combo:
+          - aegis_510089   # 510089
+          - aegis_510090   # 510090
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,-7;
+      bonus2 bSubRace,RC_Player_Doram,-7;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Water,15;
+      bonus bDelayrate,7;
+      bonus bMaxSPrate,15;

@@ -6196,6 +6196,60 @@ Body:
     Refineable: true
     Script: |
       bonus2 bSkillAtk,"MC_MAMMONITE",30;
+  - Id: 1341
+    AegisName: aegis_1341
+    Name: Destruction axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 4400
+    Attack: 230
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"MT_TRIPLE_LASER",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"MT_TRIPLE_LASER",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"MT_TRIPLE_LASER",10;
+               if (.@r>=10) {
+                  bonus bCritical,10;
+                  if (.@r>=11) {
+                     bonus bCritAtkRate,20;
+                     bonus2 bSkillAtk,"MT_TRIPLE_LASER",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 1351
     AegisName: Battle_Axe
     Name: Battle Axe
@@ -102752,6 +102806,26 @@ Body:
             }
          }
       }
+  - Id: 21064
+    AegisName: aegis_21064
+    Name: Heroria Two-handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 3000
+    Attack: 200
+    Range: 1
+    Jobs:
+      Knight: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bLongAtkDef,7;
+      bonus bAspdRate,-7;
+      bonus bCritical,15;
   - Id: 21202
     AegisName: C_Eat_Coin
     Name: Costume Eatcoin Helm
@@ -136899,6 +136973,22 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 1122
+  - Id: 31978
+    AegisName: aegis_31978
+    Name: Costume Red Flame Giant    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2308
+  - Id: 31979
+    AegisName: aegis_31979
+    Name: Costume Golden Flame Giant    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2309
   - Id: 32001
     AegisName: Diva_Spear
     Name: Diva Spear
@@ -142756,6 +142846,114 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 1003
+  - Id: 400336
+    AegisName: aegis_400336
+    Name: Heroria Helm    # !todo check english name
+    Type: Armor
+    Weight: 2000
+    Defense: 90
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 40
+    Script: |
+      bonus bMdef,2;
+      bonus2 bMagicAtkEle,Ele_All,-10;
+      bonus bShortAtkRate,5;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+  - Id: 400337
+    AegisName: aegis_400337
+    Name: Heroria Marksman's Apple    # !todo check english name
+    Type: Armor
+    Weight: 1400
+    Defense: 40
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 72
+    Script: |
+      bonus bMdef,5;
+      bonus2 bMagicAtkEle,Ele_All,-10;
+      bonus bLongAtkRate,5;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+  - Id: 400338
+    AegisName: aegis_400338
+    Name: Heroria Wizard's Hat    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 112
+    Script: |
+      bonus bMdef,10;
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bLongAtkRate,-10;
+      bonus bShortAtkRate,-10;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+      bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Doram,10;
+  - Id: 400339
+    AegisName: aegis_400339
+    Name: Heroria beret    # !todo check english name
+    Type: Armor
+    Weight: 3000
+    Defense: 120
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 226
+    Script: |
+      bonus bMdef,8;
+      bonus2 bSubEle,Ele_All,5;
+      bonus bNearAtkDef,5;
+      bonus bLongAtkDef,5;
+      bonus bLongAtkRate,-10;
+      bonus bShortAtkRate,-10;
+      bonus2 bMagicAtkEle,Ele_All,-10;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+  - Id: 400340
+    AegisName: aegis_400340
+    Name: Heroria Viretta    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 60
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 11
+    Script: |
+      bonus bMdef,7;
+      bonus bUseSPrate,10;
+      bonus bHealPower,5;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus bDelayrate,-5;
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -143530,6 +143728,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2258
+  - Id: 410157
+    AegisName: aegis_410157
+    Name: Costume Happening Clover    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2262
   - Id: 410169
     AegisName: aegis_410169
     Name: Costume Lovely Fox    # !todo check english name
@@ -143538,6 +143744,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2178
+  - Id: 410170
+    AegisName: aegis_410170
+    Name: Costume star-shaped eyepatch    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 800
   - Id: 410185
     AegisName: aegis_410185
     Name: Rebellion Pocket Watch
@@ -144771,6 +144985,22 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2216
+  - Id: 436010
+    AegisName: C_spiding
+    Name: Costume Gumming    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2315
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 440000
     AegisName: C_SharkHead
     Name: Costume Shark Hat
@@ -150204,6 +150434,102 @@ Body:
          bonus bMdef,25;
       if (.@r>=7)
          bonus bMdef,25;
+  - Id: 450229
+    AegisName: aegis_450229
+    Name: Heroria Mail    # !todo check english name
+    Type: Armor
+    Weight: 2000
+    Defense: 200
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bMaxHPrate,3;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bShortAtkRate,5;
+  - Id: 450230
+    AegisName: aegis_450230
+    Name: Heroria Tides    # !todo check english name
+    Type: Armor
+    Weight: 1400
+    Defense: 100
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus2 bSubRace,RC_Player_Human,7;
+      bonus2 bSubRace,RC_Player_Doram,7;
+      bonus bHit,10;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bLongAtkRate,5;
+  - Id: 450231
+    AegisName: aegis_450231
+    Name: Heroria Suits    # !todo check english name
+    Type: Armor
+    Weight: 1900
+    Defense: 120
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,2;
+      bonus2 bSubRace,RC_Player_Human,7;
+      bonus2 bSubRace,RC_Player_Doram,7;
+      bonus bFlee,20;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bShortAtkRate,5;
+  - Id: 450232
+    AegisName: aegis_450232
+    Name: Heroria Magic Robe    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 50
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,20;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bHealPower,5;
+      bonus3 bSubRace,RC_Player_Human,7,BF_WEAPON;
+      bonus3 bSubRace,RC_Player_Doram,7,BF_WEAPON;
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 450233
+    AegisName: aegis_450233
+    Name: Heroria Full Plate    # !todo check english name
+    Type: Armor
+    Weight: 3600
+    Defense: 450
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,15;
+      bonus2 bSubRace,RC_Player_Human,15;
+      bonus2 bSubRace,RC_Player_Doram,15;
+      bonus bMaxHPrate,5;
+      bonus2 bAddRace,RC_Player_Human,-20;
+      bonus2 bAddRace,RC_Player_Doram,-20;
+      bonus2 bMagicAddRace,RC_Player_Human,-20;
+      bonus2 bMagicAddRace,RC_Player_Doram,-20;
+      bonus bHealPower,10;
   - Id: 450234
     AegisName: Flame_Rune_Armor
     Name: Rune Armor of Flame
@@ -150607,6 +150933,74 @@ Body:
       bonus bMres,3;
       bonus bShortWeaponDamageReturn,.@r;
       bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
+  - Id: 460034
+    AegisName: aegis_460034
+    Name: Heroria Brutal Shield    # !todo check english name
+    Type: Armor
+    Weight: 3000
+    Defense: 140
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMdef,10;
+      bonus2 bSubRace,RC_Player_Human,-10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+  - Id: 460035
+    AegisName: aegis_460035
+    Name: Heroria Cranial Shield    # !todo check english name
+    Type: Armor
+    Weight: 3000
+    Defense: 140
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMdef,10;
+      bonus2 bSubRace,RC_Player_Human,10-10;
+      bonus2 bSubRace,RC_Player_Doram,10-10;
+  - Id: 460036
+    AegisName: aegis_460036
+    Name: Heroria Brutal Guard    # !todo check english name
+    Type: Armor
+    Weight: 1500
+    Defense: 30
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMdef,5;
+      bonus bMatk,20;
+      bonus bBaseAtk,20;
+      bonus2 bSubRace,RC_Player_Human,-6;
+      bonus2 bSubRace,RC_Player_Doram,6;
+  - Id: 460037
+    AegisName: aegis_460037
+    Name: Heroria Cranial Guard    # !todo check english name
+    Type: Armor
+    Weight: 1500
+    Defense: 30
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMdef,5;
+      bonus bMatk,20;
+      bonus bBaseAtk,20;
+      bonus2 bSubRace,RC_Player_Human,6-6;
+      bonus2 bSubRace,RC_Player_Doram,6-6;
   - Id: 470000
     AegisName: Attacker_Booster_Greaves_
     Name: Attacker Booster Greaves
@@ -152893,6 +153287,81 @@ Body:
          bonus bMaxSPrate,10;
          bonus bDelayrate,-10;
       }
+  - Id: 470153
+    AegisName: aegis_470153
+    Name: Heroria Speed ​​Boots    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus bAspdRate,8;
+      bonus bCritical,-10;
+  - Id: 470154
+    AegisName: aegis_470154
+    Name: Heroria Casting Shoes    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus bAspdRate,-10;
+      bonus bVariableCastrate,-8;
+  - Id: 470155
+    AegisName: aegis_470155
+    Name: Heroria Critical Shoes    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus bFixedCast,1000;
+      bonus bCritical,8;
+  - Id: 470156
+    AegisName: aegis_470156
+    Name: Heroria Fix Sandals    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus bFixedCast,-500;
+      bonus bDelayrate,10;
+  - Id: 470157
+    AegisName: aegis_470157
+    Name: Heroria Cool Sandals    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus bDelayrate,-8;
+      bonus bVariableCastrate,10;
   - Id: 470173
     AegisName: Flame_Rune_Boots
     Name: Rune Boots of Flame
@@ -155166,6 +155635,102 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 480215
+    AegisName: aegis_480215
+    Name: Heroria Cloak    # !todo check english name
+    Type: Armor
+    Weight: 1600
+    Defense: 50
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bMaxHPrate,3;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bShortAtkRate,3;
+  - Id: 480216
+    AegisName: aegis_480216
+    Name: Heroria Scarf    # !todo check english name
+    Type: Armor
+    Weight: 1000
+    Defense: 30
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,2;
+      bonus2 bSubRace,RC_Player_Human,4;
+      bonus2 bSubRace,RC_Player_Doram,4;
+      bonus bHit,10;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bLongAtkRate,3;
+  - Id: 480217
+    AegisName: aegis_480217
+    Name: Heroria Clock    # !todo check english name
+    Type: Armor
+    Weight: 1200
+    Defense: 10
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,3;
+      bonus2 bSubRace,RC_Player_Human,4;
+      bonus2 bSubRace,RC_Player_Doram,4;
+      bonus bFlee,20;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bShortAtkRate,3;
+  - Id: 480218
+    AegisName: aegis_480218
+    Name: Heroria Hood    # !todo check english name
+    Type: Armor
+    Weight: 600
+    Defense: 20
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,8;
+      bonus2 bSubRace,RC_Player_Human,4;
+      bonus2 bSubRace,RC_Player_Doram,4;
+      bonus bHealPower,5;
+      bonus3 bSubRace,RC_Player_Human,5,BF_WEAPON;
+      bonus3 bSubRace,RC_Player_Doram,5,BF_WEAPON;
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 480219
+    AegisName: aegis_480219
+    Name: Heroria Foldrun    # !todo check english name
+    Type: Armor
+    Weight: 2000
+    Defense: 80
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bMdef,5;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bMaxHPrate,5;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus bHealPower,3;
   - Id: 480230
     AegisName: Flame_Rune_Hood
     Name: Rune Manteau of Flame
@@ -157870,6 +158435,88 @@ Body:
       }
       bonus bAtkRate,.@a;
       bonus bCritAtkRate,.@b;
+  - Id: 490251
+    AegisName: aegis_490251
+    Name: Heroria Ring    # !todo check english name
+    Type: Armor
+    Weight: 250
+    Defense: 5
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Script: |
+      bonus bAspdRate,3;
+      bonus bCritical,-3;
+  - Id: 490252
+    AegisName: aegis_490252
+    Name: Heroria Earrings    # !todo check english name
+    Type: Armor
+    Weight: 250
+    Defense: 5
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Script: |
+      bonus bDelayrate,3;
+      bonus bVariableCastrate,-3;
+  - Id: 490253
+    AegisName: aegis_490253
+    Name: Heroria Necklace    # !todo check english name
+    Type: Armor
+    Weight: 250
+    Defense: 5
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Script: |
+      bonus2 bAddRace,RC_Player_Human,-3;
+      bonus2 bAddRace,RC_Player_Doram,-3;
+      bonus2 bMagicAddRace,RC_Player_Human,-3;
+      bonus2 bMagicAddRace,RC_Player_Doram,-3;
+      bonus bHealPower,3;
+  - Id: 490254
+    AegisName: aegis_490254
+    Name: Heroria Critical Ring    # !todo check english name
+    Type: Armor
+    Weight: 250
+    Defense: 5
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Script: |
+      bonus bAspdRate,-3;
+      bonus bCritical,3;
+  - Id: 490255
+    AegisName: aegis_490255
+    Name: Heroria Cool Time Earrings    # !todo check english name
+    Type: Armor
+    Weight: 250
+    Defense: 5
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Script: |
+      bonus bDelayrate,-3;
+      bonus bVariableCastrate,3;
+  - Id: 490256
+    AegisName: aegis_490256
+    Name: Heroria Defender Necklace    # !todo check english name
+    Type: Armor
+    Weight: 250
+    Defense: 5
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,3;
+      bonus2 bSubRace,RC_Player_Doram,3;
+      bonus bHealPower2,-3;
   - Id: 490265
     AegisName: aegis_490265
     Name: Inception Ring
@@ -157884,6 +158531,159 @@ Body:
       bonus bVariableCastrate,-20;
       bonus bAspd,1;
       bonus5 bAutoSpell,"WL_RECOGNIZEDSPELL",1,10,BF_MAGIC,0;
+  - Id: 490273
+    AegisName: Under_Seal_D_Key
+    Name: Sealed Dimensional Key    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+  - Id: 490274
+    AegisName: Under_Seal_D_Padlock
+    Name: Sealed Dimensional Lock    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+  - Id: 490275
+    AegisName: Under_Seal_D_keyring
+    Name: Sealed Dimensional Keychain    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+  - Id: 490276
+    AegisName: Dimmension_W_Key
+    Name: Dimensional Wanderer's Key    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAllTraitStats,3;
+      bonus bVariableCastrate,-10;
+      if (.@r>=7) {
+         bonus bSMatk,3;
+         if (.@r>=9) {
+            bonus bSMatk,2*.@param;
+            bonus bWis,4*.@param;
+            if (.@r>=12) {
+               bonus bFixedCast,-300;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMatkRate,3;
+         bonus bSpl,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bSMatk,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSMatk,3;
+               bonus bRes,20;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,2*(readparam(bInt)/15);
+               }
+            }
+         }
+      }
+  - Id: 490277
+    AegisName: Dimmension_W_Padlock
+    Name: Dimensional Wanderer's Lock    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAllTraitStats,3;
+      bonus bVariableCastrate,-10;
+      if (.@r>=7) {
+         bonus bPAtk,3;
+         if (.@r>=9) {
+            bonus bPAtk,2*.@param;
+            bonus bSta,4*.@param;
+            if (.@r>=12) {
+               bonus bFixedCast,-300;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bAtkRate,3;
+         bonus bPow,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,3;
+               bonus bRes,20;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,2*(readparam(bStr)/15);
+               }
+            }
+         }
+      }
+  - Id: 490278
+    AegisName: Dimmension_W_Keyring
+    Name: Dimensional Wanderer's Keychain    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAllTraitStats,3;
+      bonus bVariableCastrate,-10;
+      if (.@r>=7) {
+         bonus bPAtk,3;
+         if (.@r>=9) {
+            bonus bPAtk,2*.@param;
+            bonus bCrt,4*.@param;
+            if (.@r>=12) {
+               bonus bFixedCast,-300;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bAtkRate,3;
+         bonus bCon,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,3;
+               bonus bRes,20;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,2*(readparam(bDex)/15);
+               }
+            }
+         }
+      }
   - Id: 490279
     AegisName: aegis_490279
     Name: Raphin P. Necklace
@@ -159449,6 +160249,94 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 500057
+    AegisName: aegis_500057
+    Name: Heroria Crusader Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Crusader: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus bLongAtkDef,5;
+      bonus bVariableCastrate,-10;
+      bonus bDef,-150;
+  - Id: 500058
+    AegisName: aegis_500058
+    Name: Heroria Guardian Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 80
+    Range: 1
+    Jobs:
+      Crusader: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bAddRace,RC_Player_Human,-5;
+      bonus2 bAddRace,RC_Player_Doram,-5;
+      bonus2 bMagicAddRace,RC_Player_Human,-5;
+      bonus2 bMagicAddRace,RC_Player_Doram,-5;
+      bonus bMatkRate,-3;
+      bonus bAtkRate,-3;
+      bonus bDef,300;
+  - Id: 500059
+    AegisName: aegis_500059
+    Name: Heroria Alchemic Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkDef,5;
+      bonus bAspdRate,10;
+      bonus bDef,-150;
+  - Id: 500060
+    AegisName: aegis_500060
+    Name: Heroria Basic Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bShortAtkRate,10;
+      bonus bCritical,-5;
+      bonus bHit,30;
   - Id: 500062
     AegisName: aegis_500062
     Name: Devil Cursed Sword
@@ -159552,6 +160440,112 @@ Body:
             bonus2 bAddSize,Size_All,10;
             if (.@g>=ENCHANTGRADE_B) {
                bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 500065
+    AegisName: aegis_500065
+    Name: Blood Rapier    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1500
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",10;
+               if (.@r>=10) {
+                  bonus bCritical,10;
+                  if (.@r>=11) {
+                     bonus bCritAtkRate,20;
+                     bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 500066
+    AegisName: aegis_500066
+    Name: Victory Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1500
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",10;
+         if (.@r>=7) {
+            bonus bShortAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus bShortAtkRate,15;
+                     bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_All,10;
                if (.@g>=ENCHANTGRADE_A) {
                   bonus2 bAddEle,Ele_All,10;
                }
@@ -161295,6 +162289,214 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 510079
+    AegisName: aegis_510079
+    Name: Heroria Alchemic Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 120
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bLongAtkDef,5;
+      bonus bHealPower,10;
+      bonus bDelayrate,-10;
+      bonus bAtkRate,-3;
+  - Id: 510080
+    AegisName: aegis_510080
+    Name: Heroria Assassin Dagger I    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 150
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510081
+    AegisName: aegis_510081
+    Name: Heroria Assassin Dagger II    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 50
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510082
+    AegisName: aegis_510082
+    Name: Heroria Assassin Knife I    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 150
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510083
+    AegisName: aegis_510083
+    Name: Heroria Assassin Knife Ⅱ    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 50
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510084
+    AegisName: aegis_510084
+    Name: Heroria Log Knife    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Rogue: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus bShortAtkRate,10;
+      bonus bMatkRate,-3;
+      bonus bBaseAtk,30;
+  - Id: 510085
+    AegisName: aegis_510085
+    Name: Heroria Log Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Rogue: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bShortAtkRate,-5;
+      bonus bAspdRate,-5;
+      bonus bVariableCastrate,-10;
+  - Id: 510086
+    AegisName: aegis_510086
+    Name: Heroria Hunter Knife    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Hunter: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,-10;
+      bonus2 bSubRace,RC_Player_Doram,-10;
+      bonus bShortAtkRate,10;
+      bonus bVariableCastrate,5;
+      bonus bHit,30;
+  - Id: 510087
+    AegisName: aegis_510087
+    Name: Heroria Ninja Dagger I    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 150
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510088
+    AegisName: aegis_510088
+    Name: Heroria Ninja Dagger II    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 50
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510089
+    AegisName: aegis_510089
+    Name: Heroria Ninjudo I    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 150
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+  - Id: 510090
+    AegisName: aegis_510090
+    Name: Heroria Ninjudo Ⅱ    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 50
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
   - Id: 510091
     AegisName: aegis_510091
     Name: Underworld Knife
@@ -161336,6 +162538,59 @@ Body:
                      bonus2 bSkillAtk,"WH_SWIFTTRAP",15;
                      bonus2 bSkillAtk,"WH_SOLIDTRAP",5;
                      bonus2 bSkillAtk,"WH_FLAMETRAP",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 510092
+    AegisName: aegis_510092
+    Name: Holy Light Dagger
+    Type: Weapon
+    SubType: Dagger
+    Weight: 800
+    Attack: 205
+    Range: 1
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",10;
+         if (.@r>=7) {
+            bonus bShortAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"ABC_DEFT_STAB",15;
+                     bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",5;
                   }
                }
             }
@@ -161697,6 +162952,27 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 520022
+    AegisName: aegis_520022
+    Name: Heroria Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bShortAtkRate,10;
+      bonus bLongAtkDef,5;
+      bonus bAspdRate,10;
+      bonus bDef,-150;
   - Id: 530000
     AegisName: Boost_Spear
     Name: Booster Spear
@@ -162363,6 +163639,26 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 530036
+    AegisName: aegis_530036
+    Name: Heroria Spear    # !todo check english name
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 1500
+    Attack: 130
+    Range: 3
+    Jobs:
+      Crusader: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,10;
+      bonus bAspdRate,5;
+      bonus bHit,30;
   - Id: 540000
     AegisName: Boost_Spellbook
     Name: Booster Spellbook
@@ -164264,6 +165560,133 @@ Body:
             }
          }
       }
+  - Id: 540061
+    AegisName: aegis_540061
+    Name: Heroria Elemental Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,-5;
+      bonus2 bMagicAtkEle,Ele_Water,-5+10;
+      bonus2 bMagicAtkEle,Ele_Fire,-5+10;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-15;
+  - Id: 540062
+    AegisName: aegis_540062
+    Name: Heroic Sorceric Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,-5+10;
+      bonus2 bMagicAtkEle,Ele_Water,-5;
+      bonus2 bMagicAtkEle,Ele_Fire,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5+10;
+      bonus bVariableCastrate,5;
+      bonus bMatkRate,5;
+  - Id: 540063
+    AegisName: aegis_540063
+    Name: Heroria Demonic Bible    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bShortAtkRate,10;
+      bonus bAspdRate,10;
+      bonus bCritical,-5;
+  - Id: 540064
+    AegisName: aegis_540064
+    Name: Heroria Star Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkDef,-5;
+      bonus bDelayrate,5;
+      bonus bAspdRate,10;
+  - Id: 540065
+    AegisName: aegis_540065
+    Name: Heroria Gladiator Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+      bonus bShortAtkRate,10;
+      bonus bVariableCastrate,-10;
+      bonus bHit,-15;
+  - Id: 540066
+    AegisName: aegis_540066
+    Name: Heroic Book of Orders    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkDef,-5;
+      bonus bAspdRate,-5;
+      bonus bHit,30;
   - Id: 550001
     AegisName: Boost_Rod
     Name: Booster Rod
@@ -167257,6 +168680,280 @@ Body:
          bonus bDef,150;
          bonus bMdef,15;
       }
+  - Id: 550096
+    AegisName: aegis_550096
+    Name: Heroria Wizardry Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_Ghost,-5;
+      bonus2 bMagicAtkEle,Ele_Undead,-5+10;
+      bonus2 bMagicAtkEle,Ele_Neutral,-5;
+      bonus2 bMagicAtkEle,Ele_Dark,-5+10;
+      bonus bAspdRate,-5;
+      bonus bMatkRate,5;
+  - Id: 550097
+    AegisName: aegis_550097
+    Name: Heroria Spell Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 110
+    Range: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus bDelayrate,-10;
+      bonus bVariableCastrate,5;
+  - Id: 550098
+    AegisName: aegis_550098
+    Name: Heroria Holy Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 110
+    Range: 1
+    Jobs:
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_All,-5;
+      bonus bHealPower,10;
+      bonus bDelayrate,-10;
+      bonus bMatkRate,-3;
+  - Id: 550099
+    AegisName: aegis_550099
+    Name: Heroria Arc Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-10;
+  - Id: 550100
+    AegisName: aegis_550100
+    Name: Heroria Soul Stick    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubEle,Ele_Dark,-5;
+      bonus2 bMagicAtkEle,Ele_Dark,10;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-10;
+  - Id: 550101
+    AegisName: aegis_550101
+    Name: Heroria Link Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 110
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bNearAtkDef,-5;
+      bonus bHealPower,10;
+      bonus bDelayrate,-10;
+      bonus bVariableCastrate,5;
+  - Id: 550102
+    AegisName: aegis_550102
+    Name: Heroria Soul Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubEle,Ele_Neutral,-5;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bVariableCastrate,-10;
+      bonus bUseSPrate,5;
+  - Id: 550103
+    AegisName: aegis_550103
+    Name: Heroria Summoner Foxtail    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 110
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+      bonus bHealPower,10;
+      bonus bDelayrate,-10;
+      bonus bUseSPrate,5;
+  - Id: 550104
+    AegisName: aegis_550104
+    Name: Heroria foxtail    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubEle,Ele_Neutral,-5;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bDelayrate,5;
+      bonus bMatkRate,5;
+  - Id: 550105
+    AegisName: aegis_550105
+    Name: Heroria foxtail model    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,10;
+      bonus bCritical,-5;
+      bonus bHit,30;
+  - Id: 550106
+    AegisName: aegis_550106
+    Name: Heroria Basic Rod    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_Wind,-5;
+      bonus2 bMagicAtkEle,Ele_Water,-5+10;
+      bonus2 bMagicAtkEle,Ele_Fire,-5+10;
+      bonus2 bMagicAtkEle,Ele_Earth,-5;
+      bonus bDelayrate,-10;
+      bonus bVariableCastrate,5;
+  - Id: 550107
+    AegisName: aegis_550107
+    Name: Heroria Basic Wand    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_Wind,-5+10;
+      bonus2 bMagicAtkEle,Ele_Water,-5;
+      bonus2 bMagicAtkEle,Ele_Fire,-5;
+      bonus2 bMagicAtkEle,Ele_Earth,-5+10;
+      bonus bVariableCastrate,-10;
+      bonus bUseSPrate,5;
   - Id: 560000
     AegisName: Boost_Knuckles
     Name: Booster Knuckles
@@ -168292,6 +169989,46 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 560039
+    AegisName: aegis_560039
+    Name: Heroria Knuckles    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Monk: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkDef,5;
+      bonus bMaxHPrate,-5;
+      bonus bHit,30;
+  - Id: 560040
+    AegisName: aegis_560040
+    Name: Heroria Crowe    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Monk: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,10;
+      bonus bAspdRate,10;
+      bonus bCritical,-5;
   - Id: 570000
     AegisName: Boost_Guitar
     Name: Booster Guitar
@@ -169150,6 +170887,161 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 570034
+    AegisName: aegis_570034
+    Name: Heroria Violin    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Weight: 1500
+    Attack: 110
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus3 bSubRace,RC_Player_Human,5,BF_WEAPON;
+      bonus3 bSubRace,RC_Player_Doram,5,BF_WEAPON;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-10;
+  - Id: 570035
+    AegisName: aegis_570035
+    Name: Heroria guitar    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bLongAtkRate,-5;
+      bonus bShortAtkRate,-5;
+      bonus bDelayrate,-10;
+      bonus bVariableCastrate,5;
+  - Id: 570036
+    AegisName: aegis_570036
+    Name: Crime Violin
+    Type: Weapon
+    SubType: Musical
+    Weight: 1100
+    Attack: 120
+    MagicAttack: 220
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bSpl,2;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"TR_METALIC_FURY",10;
+         if (.@r>=7) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"TR_METALIC_FURY",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"TR_SOUNDBLEND",15;
+                     bonus2 bSkillAtk,"TR_METALIC_FURY",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 570037
+    AegisName: aegis_570037
+    Name: Light Power Harp
+    Type: Weapon
+    SubType: Musical
+    Weight: 2000
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",15;
+                     bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 580000
     AegisName: Boost_Whip
     Name: Booster Whip
@@ -170008,6 +171900,167 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 580035
+    AegisName: aegis_580035
+    Name: Heroria Rope    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Weight: 1500
+    Attack: 110
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus3 bSubRace,RC_Player_Human,5,BF_WEAPON;
+      bonus3 bSubRace,RC_Player_Doram,5,BF_WEAPON;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-10;
+  - Id: 580036
+    AegisName: aegis_580036
+    Name: Heroria Whip    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Weight: 1500
+    Attack: 100
+    MagicAttack: 130
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bLongAtkRate,-5;
+      bonus bShortAtkRate,-5;
+      bonus bDelayrate,-10;
+      bonus bVariableCastrate,5;
+  - Id: 580037
+    AegisName: aegis_580037
+    Name: Crime Whip
+    Type: Weapon
+    SubType: Whip
+    Weight: 1100
+    Attack: 120
+    MagicAttack: 220
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bSpl,2;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"TR_METALIC_FURY",10;
+         if (.@r>=7) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"TR_METALIC_FURY",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"TR_SOUNDBLEND",15;
+                     bonus2 bSkillAtk,"TR_METALIC_FURY",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 580038
+    AegisName: aegis_580038
+    Name: Light Power Spark
+    Type: Weapon
+    SubType: Whip
+    Weight: 2000
+    Attack: 200
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",15;
+                     bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 590000
     AegisName: Boost_Mace
     Name: Booster Mace
@@ -171324,6 +173377,71 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 590050
+    AegisName: aegis_590050
+    Name: Heroria Smith Mace    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,10;
+      bonus bShortAtkRate,-5;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-10;
+  - Id: 590051
+    AegisName: aegis_590051
+    Name: Heroria Alchemic Mace    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 130
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,10;
+      bonus bShortAtkRate,-5;
+      bonus bAspdRate,-5;
+      bonus bVariableCastrate,-10;
+  - Id: 590052
+    AegisName: aegis_590052
+    Name: Heroria Monk Mace    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 110
+    Range: 1
+    Jobs:
+      Monk: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bLongAtkRate,-5;
+      bonus bShortAtkRate,-5;
+      bonus bDelayrate,5;
+      bonus bVariableCastrate,-10;
   - Id: 600000
     AegisName: IDTest_bothhand
     Name: IDTest bothhand
@@ -172079,6 +174197,26 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 600032
+    AegisName: aegis_600032
+    Name: Heroria Zweihander    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 3000
+    Attack: 200
+    Range: 1
+    Jobs:
+      Knight: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bShortAtkRate,-7;
+      bonus bAspdRate,15;
+      bonus bMdef,-80;
   - Id: 610000
     AegisName: Boost_Katar
     Name: Booster Katar
@@ -173076,6 +175214,26 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 610043
+    AegisName: aegis_610043
+    Name: Heroria Katar    # !todo check english name
+    Type: Weapon
+    SubType: Katar
+    Weight: 3000
+    Attack: 200
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bShortAtkRate,-7;
+      bonus bDelayrate,7;
+      bonus bAspdRate,15;
   - Id: 610044
     AegisName: aegis_610044
     Name: The Ripper
@@ -173700,6 +175858,81 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 620021
+    AegisName: aegis_620021
+    Name: Heroria Giant Axe    # !todo check english name
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 3000
+    Attack: 200
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bCritAtkRate,7;
+      bonus bShortAtkRate,15;
+      bonus bAspdRate,-7;
+      bonus bHit,50;
+  - Id: 620022
+    AegisName: aegis_620022
+    Name: Divine Buster    # !todo check english name
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 6600
+    Attack: 330
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"MT_MIGHTY_SMASH",10;
+         if (.@r>=7) {
+            bonus bShortAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"MT_MIGHTY_SMASH",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"MT_AXE_STOMP",15;
+                     bonus2 bSkillAtk,"MT_MIGHTY_SMASH",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 630003
     AegisName: Ep172_Bh_Spear
     Name: Luxuria Pierce
@@ -174128,6 +176361,26 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 630020
+    AegisName: aegis_630020
+    Name: Heroria Lance    # !todo check english name
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 3000
+    Attack: 200
+    Range: 3
+    Jobs:
+      Knight: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,7;
+      bonus bLongAtkRate,15;
+      bonus bVariableCastrate,7;
+      bonus bHit,50;
   - Id: 640000
     AegisName: Boost_Staff
     Name: Booster Staff
@@ -175308,6 +177561,54 @@ Body:
             }
          }
       }
+  - Id: 640038
+    AegisName: aegis_640038
+    Name: Heroria Wizardry Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 3000
+    Attack: 100
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_Wind,-7;
+      bonus2 bMagicAtkEle,Ele_Water,-7+15;
+      bonus2 bMagicAtkEle,Ele_Fire,-7+15;
+      bonus2 bMagicAtkEle,Ele_Earth,-7;
+      bonus bDelayrate,-15;
+      bonus bVariableCastrate,7;
+  - Id: 640039
+    AegisName: aegis_640039
+    Name: Heroria Magical Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 3000
+    Attack: 100
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_Wind,-7+15;
+      bonus2 bMagicAtkEle,Ele_Water,-7;
+      bonus2 bMagicAtkEle,Ele_Fire,-7;
+      bonus2 bMagicAtkEle,Ele_Earth,-7+15;
+      bonus bDelayrate,7;
+      bonus bVariableCastrate,-15;
   - Id: 650003
     AegisName: Ep172_Bh_Huuma
     Name: Wrath Wheel
@@ -175976,6 +178277,139 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 650030
+    AegisName: aegis_650030
+    Name: Heroria Fuma Shuriken    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Weight: 3000
+    Attack: 200
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,15;
+      bonus bShortAtkRate,-7;
+      bonus bDelayrate,7;
+      bonus bHit,50;
+  - Id: 650033
+    AegisName: aegis_650033
+    Name: Devil Claw    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Weight: 2000
+    Attack: 100
+    MagicAttack: 330
+    Range: 1
+    Slots: 2
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bSpl,2;
+      bonus2 bSkillAtk,"SS_ANTENPOU",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"SS_ANTENPOU",10;
+         if (.@r>=7) {
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"SS_ANTENPOU",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"SS_SEKIENHOU",15;
+                     bonus2 bSkillAtk,"SS_ANTENPOU",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 650034
+    AegisName: aegis_650034
+    Name: Wind Magic Shuriken Radiance    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Weight: 2600
+    Attack: 330
+    Range: 1
+    Slots: 2
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",10;
+               if (.@r>=10) {
+                  bonus bDelayrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"SS_FUUMASHOUAKU",15;
+                     bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 700000
     AegisName: IDTest_bow
     Name: IDTest bow
@@ -177588,6 +180022,87 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 700061
+    AegisName: aegis_700061
+    Name: Heroria Log Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Weight: 3000
+    Attack: 200
+    Range: 5
+    Jobs:
+      Rogue: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,10;
+      bonus bVariableCastrate,-15;
+      bonus bCritical,-7;
+  - Id: 700062
+    AegisName: aegis_700062
+    Name: Heroria Hunter Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Weight: 3000
+    Attack: 200
+    Range: 5
+    Jobs:
+      Hunter: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bLongAtkDef,7;
+      bonus bVariableCastrate,-15;
+      bonus bHit,-25;
+  - Id: 700063
+    AegisName: aegis_700063
+    Name: Heroria Crossbow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Weight: 3000
+    Attack: 200
+    Range: 5
+    Jobs:
+      Hunter: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,7;
+      bonus bLongAtkRate,15;
+      bonus bAspdRate,15;
+      bonus bCritical,-7;
+  - Id: 700064
+    AegisName: aegis_700064
+    Name: Heroria Rhythm Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Weight: 3000
+    Attack: 200
+    Range: 5
+    Jobs:
+      BardDancer: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,-7;
+      bonus2 bSubRace,RC_Player_Doram,-7;
+      bonus bLongAtkRate,15;
+      bonus bVariableCastrate,7;
+      bonus bHit,50;
   - Id: 700065
     AegisName: aegis_700065
     Name: Angel Wing Bow
@@ -177624,6 +180139,59 @@ Body:
                   if (.@r>=11) {
                      bonus2 bSkillAtk,"WH_GALESTORM",15;
                      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 700066
+    AegisName: aegis_700066
+    Name: Dark Angel Ray Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1500
+    Attack: 280
+    Range: 5
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",10;
+               if (.@r>=10) {
+                  bonus bCritical,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"ABC_FRENZY_SHOT",15;
+                     bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",5;
                   }
                }
             }
@@ -178139,6 +180707,133 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 800017
+    AegisName: aegis_800017
+    Name: Heroria Revolver    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Weight: 3000
+    Attack: 200
+    Range: 7
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,7;
+      bonus bLongAtkRate,15;
+      bonus bAspdRate,15;
+      bonus bVariableCastrate,7;
+  - Id: 800026
+    AegisName: aegis_800026
+    Name: Devil's Bullet
+    Type: Weapon
+    SubType: Revolver
+    Weight: 2000
+    Attack: 250
+    Range: 7
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 800027
+    AegisName: aegis_800027
+    Name: Devil Hunter
+    Type: Weapon
+    SubType: Revolver
+    Weight: 1700
+    Attack: 250
+    Range: 7
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
+               if (.@r>=10) {
+                  bonus bCritical,10;
+                  if (.@r>=11) {
+                     bonus bCritAtkRate,20;
+                     bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 810000
     AegisName: Ep172_1h_Rifle
     Name: Lust Pointer
@@ -178577,6 +181272,133 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 810016
+    AegisName: aegis_810016
+    Name: Heroria Rifle    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Weight: 3000
+    Attack: 200
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,7;
+      bonus bLongAtkRate,15;
+      bonus bDelayrate,7;
+      bonus bHit,50;
+  - Id: 810026
+    AegisName: aegis_810026
+    Name: Screaming Rifle
+    Type: Weapon
+    SubType: Rifle
+    Weight: 2200
+    Attack: 265
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"NW_GRENADES_DROPPING",15;
+                     bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 810027
+    AegisName: aegis_810027
+    Name: Last Dawn
+    Type: Weapon
+    SubType: Rifle
+    Weight: 2400
+    Attack: 265
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
+               if (.@r>=10) {
+                  bonus bCritical,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",15;
+                     bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 820000
     AegisName: Ep172_1h_Shotgun
     Name: Lust Shatter
@@ -178911,6 +181733,136 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bSplashRange,1;
+  - Id: 820012
+    AegisName: aegis_820012
+    Name: Heroria Shotgun    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Weight: 3000
+    Attack: 200
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bSplashRange,1;
+      bonus bLongAtkRate,15;
+      bonus bNearAtkDef,-7;
+      bonus bVariableCastrate,-15;
+      bonus bHit,-25;
+  - Id: 820020
+    AegisName: aegis_820020
+    Name: Outlaw Cursed Shotgun
+    Type: Weapon
+    SubType: Shotgun
+    Weight: 2500
+    Attack: 280
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus bSplashRange,1;
+      bonus2 bSkillAtk,"NW_WILD_FIRE",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_WILD_FIRE",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_WILD_FIRE",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_WILD_FIRE",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 820021
+    AegisName: aegis_820021
+    Name: Lord of Glory
+    Type: Weapon
+    SubType: Shotgun
+    Weight: 2300
+    Attack: 280
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus bSplashRange,1;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 830000
     AegisName: Boost_Gatling
     Name: Booster Gatling
@@ -179390,6 +182342,133 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 830016
+    AegisName: aegis_830016
+    Name: Heroria Gatlinggun    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Weight: 3000
+    Attack: 200
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bNearAtkDef,-7;
+      bonus bAspdRate,15;
+      bonus bHit,-25;
+  - Id: 830025
+    AegisName: aegis_830025
+    Name: RG-5649
+    Type: Weapon
+    SubType: Gatling
+    Weight: 2900
+    Attack: 295
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+               if (.@r>=10) {
+                  bonus bDelayrate,-10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 830026
+    AegisName: aegis_830026
+    Name: Lightning Splatter
+    Type: Weapon
+    SubType: Gatling
+    Weight: 3000
+    Attack: 295
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
+               if (.@r>=10) {
+                  bonus bDelayrate,-10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 840000
     AegisName: Ep172_1h_Grenade
     Name: Lust Boom
@@ -179764,3 +182843,130 @@ Body:
     Gradable: true
     Flags:
       DropEffect: CLIENT
+  - Id: 840011
+    AegisName: aegis_840011
+    Name: Heroria Launcher    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Weight: 3000
+    Attack: 200
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bNearAtkDef,-7;
+      bonus bVariableCastrate,7;
+      bonus bAtkRate,7;
+  - Id: 840020
+    AegisName: aegis_840020
+    Name: Devil Lord Launcher
+    Type: Weapon
+    SubType: Grenade
+    Weight: 2500
+    Attack: 330
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
+               if (.@r>=10) {
+                  bonus bDelayrate,-10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 840021
+    AegisName: aegis_840021
+    Name: Justice Bomber
+    Type: Weapon
+    SubType: Grenade
+    Weight: 2600
+    Attack: 330
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bCon,2;
+      bonus2 bSkillAtk,"NW_WILD_FIRE",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NW_WILD_FIRE",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"NW_WILD_FIRE",10;
+               if (.@r>=10) {
+                  bonus bDelayrate,-10;
+                  if (.@r>=11) {
+                     bonus bLongAtkRate,15;
+                     bonus2 bSkillAtk,"NW_WILD_FIRE",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
