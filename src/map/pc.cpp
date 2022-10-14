@@ -15041,22 +15041,22 @@ void pc_macro_captcha_register_upload(map_session_data &sd, int16 upload_size, c
 		clif_captcha_upload_end(sd);
 
 		// Look for a free key
-		int32 i;
+		uint16 index;
 
-		for (i = 0; i <= 0xFFF; i++) {
-			if (!captcha_db.exists(i)) {
+		for (index = 0; index < UINT16_MAX; index++) {
+			if (!captcha_db.exists(index)) {
 				break;
 			}
 		}
 
-		if (i == (0xFFF + 1)) {
+		if (index == UINT16_MAX) {
 			// no free key found...
 			sd.captcha_upload.cd = nullptr;
 			sd.captcha_upload.upload_size = 0;
 			return;
 		}
 
-		captcha_db.put(i, sd.captcha_upload.cd);
+		captcha_db.put(index, sd.captcha_upload.cd);
 		sd.captcha_upload.cd = nullptr;
 		sd.captcha_upload.upload_size = 0;
 		
@@ -15273,9 +15273,9 @@ const std::string CaptchaDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
-	int16 index;
+	uint16 index;
 
-	if (!this->asInt16(node, "Id", index))
+	if (!this->asUInt16(node, "Id", index))
 		return 0;
 
 	std::shared_ptr<s_captcha_data> cd = captcha_db.find(index);
@@ -15286,6 +15286,7 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			return 0;
 
 		cd = std::make_shared<s_captcha_data>();
+		cd->index = index;
 	}
 
 	if (this->nodeExists(node, "Filename")) {

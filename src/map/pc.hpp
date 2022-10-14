@@ -131,6 +131,7 @@ enum e_additem_result : uint8 {
 #endif
 
 struct s_captcha_data {
+	uint16 index;
 	uint16 image_size;
 	char image_data[CAPTCHA_BMP_SIZE];
 	char captcha_answer[CAPTCHA_ANSWER_SIZE];
