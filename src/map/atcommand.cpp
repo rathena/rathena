@@ -5291,7 +5291,7 @@ ACMD_FUNC(jailfor) {
 	struct map_session_data *pl_sd = NULL;
 	char * modif_p;
 	int jailtime = 0;
-	short m_index = 0;
+
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
