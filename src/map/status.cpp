@@ -1120,17 +1120,22 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 /**
  * Accessor for a status_change_entry in a status_change
  */
-status_change_entry * status_change::getSCE(enum sc_type type) const {
+status_change_entry * status_change::getSCE(enum sc_type type) {
 	// TODO: bounds check
-	return data[type];
+	if (type == lastStatus.first)
+		return lastStatus.second;
+	
+	lastStatus = {type, data[type]};
+	return lastStatus.second;
 }
 
-status_change_entry * status_change::getSCE(uint32 type) const {
+status_change_entry * status_change::getSCE(uint32 type) {
 	return getSCE(static_cast<sc_type>(type));
 }
 
 status_change_entry * status_change::createSCE(enum sc_type type) {
 	data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+	lastStatus = {type, data[type]};
 	return data[type];
 }
 
@@ -1140,6 +1145,7 @@ status_change_entry * status_change::createSCE(enum sc_type type) {
 void status_change::deleteSCE(enum sc_type type) {
 	ers_free(sc_data_ers, data[type]);
 	data[type] = nullptr;
+	lastStatus = {type, data[type]};
 }
 
 /**
@@ -1147,6 +1153,7 @@ void status_change::deleteSCE(enum sc_type type) {
  */
 void status_change::clearSCE(enum sc_type type) {
 	data[type] = nullptr;
+	lastStatus = {type, data[type]};
 }
 
 /** Creates dummy status */
@@ -3565,7 +3572,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
-	const struct status_change *sc = &sd->sc;
+	struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int i, skill, refinedef = 0;
 	short index = -1;

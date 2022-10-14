@@ -3166,9 +3166,11 @@ public:
 #endif
 private:
 	struct status_change_entry *data[SC_MAX];
+	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
+
 public:
-	status_change_entry * getSCE(enum sc_type type) const;
-	status_change_entry * getSCE(uint32 type) const;
+	status_change_entry * getSCE(enum sc_type type);
+	status_change_entry * getSCE(uint32 type);
 	status_change_entry * createSCE(enum sc_type type);
 	void deleteSCE(enum sc_type type);
 	void clearSCE(enum sc_type type);
