@@ -10821,67 +10821,6 @@ ACMD_FUNC( enchantgradeui ){
 #endif
 }
 
-/**
- * Opens the macro registration UI
- * Usage: @macrodetect
- */
-ACMD_FUNC(macroregister) {
-	nullpo_retr(-1, sd);
-
-#if !( PACKETVER >= 20160316 )
-	sprintf(atcmd_output, msg_txt(sd, 798), "2016-03-16"); // This command requires packet version %s or newer.
-	clif_displaymessage(fd, atcmd_output);
-	return -1;
-#else
-	clif_ui_open(*sd, OUT_UI_CAPTCHA, 0);
-	return 0;
-#endif
-}
-
-/**
- * Opens the macro detection UI
- * Usage: @macrodetect
- */
-ACMD_FUNC(macrodetect) {
-	nullpo_retr(-1, sd);
-
-#if !( PACKETVER >= 20160316 )
-	sprintf(atcmd_output, msg_txt(sd, 798), "2016-03-16"); // This command requires packet version %s or newer.
-	clif_displaymessage(fd, atcmd_output);
-	return -1;
-#else
-	clif_ui_open(*sd, OUT_UI_MACRO, 0);
-	return 0;
-#endif
-}
-
-/**
- * Opens the macro preview UI
- * Usage: @macropreview
- */
-ACMD_FUNC(macropreview) {
-	nullpo_retr(-1, sd);
-
-#if !( PACKETVER >= 20160316 )
-	sprintf(atcmd_output, msg_txt(sd, 798), "2016-03-16"); // This command requires packet version %s or newer.
-	clif_displaymessage(fd, atcmd_output);
-	return -1;
-#else
-	int32 id = -1;
-
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-
-	if (!message || !*message || sscanf(message, "%11d", &id) < 0) {
-		sprintf(atcmd_output, msg_txt(sd, 1521), command); // Usage: %s <captcha ID>.
-		clif_displaymessage(fd, atcmd_output);
-		return -1;
-	}
-
-	clif_captcha_preview_response(*sd, captcha_db.find(id));
-	return 0;
-#endif
-}
-
 #include "../custom/atcommand.inc"
 
 /**
@@ -11206,9 +11145,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(addfame),
 		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(macroregister, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(macrodetect, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(macropreview, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

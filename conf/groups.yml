@@ -207,7 +207,6 @@ Body:
       cartlist: true
       itemlist: true
       stats: true
-      macrodetect: true
     LogCommands: true
     Permissions:
       join_chat: true
@@ -217,6 +216,7 @@ Body:
       hack_info: true
       any_warp: true
       view_hpmeter: true
+      macro_detect: true
   - Id: 99
     Name: Admin
     Level: 99
@@ -239,6 +239,7 @@ Body:
       item_unconditional: false
       bypass_stat_onclone: true
       bypass_max_stat: true
+      macro_register: true
       #all_permission: true
 
 Footer:
