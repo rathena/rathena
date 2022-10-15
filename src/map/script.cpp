@@ -26535,8 +26535,9 @@ BUILDIN_FUNC(addfame) {
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	pc_addfame(*sd, script_getnum(st, 2));
-
+	if (!pc_addfame(*sd, script_getnum(st, 2)))
+		return SCRIPT_CMD_FAILURE;
+	
 	return SCRIPT_CMD_SUCCESS;
 }
 
