@@ -20,7 +20,7 @@ rachel,142,155,3	script	Carbonated Water Vending Machine#ra	4_VENDING_MACHINE2,{
 	mes "<font size = 10, color = DF0101>Caution: There is a report that excessive consumption of the product in a state of accumulated fatigue due to its strong carbonation effect may cause temporary memory loss.</font>";
 	next;
 	callshop "market_soda";
-	close;
+	end;
 }
 prontera,170,125,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#prt	4_VENDING_MACHINE2
 alberta,127,59,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#alb	4_VENDING_MACHINE2
