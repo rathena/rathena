@@ -27,9 +27,9 @@ prt_in,212,169,3	script	Guild Clerk	4_M_04,{
 	mes "Our guild office actively supports the smooth gathering of adventurers";
 	next;
 	mes "[Guild Clerk]";
-	mes "as part of that ^0000ffMonday-Saturday^000000";
-	mes "<ITEM>Emperium<INFO>714</INFO></ITEM> in a limited quantity of 100 pieces per day";
-	mes "Afternoon ^0000ff18:00~23:59^000000 is on sale.";
+	mes "As part of that,";
+	mes "we are selling a limited quantity of 100 <ITEM>Emperium<INFO>714</INFO></ITEM> every day";
+	mes "from ^0000ff18:00 to 23:59^000000 from ^0000ffMonday to Saturday^000000.";
 	next;
 	mes "[Guild Clerk]";
 	mes "Please note that our guild office does not sell because we have to run around to supply Emperium outside of the hours.";
