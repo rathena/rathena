@@ -24130,7 +24130,7 @@ BUILDIN_FUNC(minmax){
 
 BUILDIN_FUNC(cap_value)
 {
-	script_pushint64(st, (int64)cap_value(script_getnum64(st, 2), script_getnum64(st, 3), script_getnum64(st, 4)));
+	script_pushint64(st, cap_value(script_getnum64(st, 2), script_getnum64(st, 3), script_getnum64(st, 4)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
