@@ -15,10 +15,10 @@
 prt_in,212,169,3	script	Guild Clerk	4_M_04,{
 	if (gettime(DT_DAYOFWEEK) >= 1 && gettime(DT_DAYOFWEEK) <= 6 && gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) <= 23) {
 		mes "[Guild Clerk]";
-		mes "The Empelium to be distributed to the guild office today has arrived. If you want to purchase, please put as many as you want~";
+		mes "The Emperium to be distributed to the guild office today has arrived. If you want to purchase, please put as many as you want~";
 		next;
 		mes "[Guild Clerk]";
-		mes "It seems that many people are looking for Empelium today. It's just a personal feeling.";
+		mes "It seems that many people are looking for Emperium today. It's just a personal feeling.";
 		close2;                                                                                                         
     	callshop "emp_seller#slo";
 		end;
@@ -32,7 +32,7 @@ prt_in,212,169,3	script	Guild Clerk	4_M_04,{
 	mes "Afternoon ^0000ff18:00~23:59^000000 is on sale.";
 	next;
 	mes "[Guild Clerk]";
-	mes "Please note that our guild office does not sell because we have to run around to supply Empelium outside of the hours.";
+	mes "Please note that our guild office does not sell because we have to run around to supply Emperium outside of the hours.";
 	close;
 
 OnClock0000:
