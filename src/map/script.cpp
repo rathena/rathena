@@ -18229,11 +18229,20 @@ BUILDIN_FUNC(getrandmobid)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int lv = script_hasdata(st, 4) ? script_getnum(st, 4) : MAX_LEVEL;
-	if (lv <= 0) {
-		ShowWarning("buildin_getrandmobid: Invalid level %d.\n", lv);
-		script_pushint(st, 0);
-		return SCRIPT_CMD_FAILURE;
+	int lv;
+	if ( script_hasdata(st, 4) ) {
+		lv = script_getnum(st, 4);
+		
+		if (lv <= 0) {
+			ShowWarning("buildin_getrandmobid: Invalid level %d.\n", lv);
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		
+		// If a level is provided, make sure it is respected
+		flag |= RMF_CHECK_MOB_LV;
+	} else {
+		lv = MAX_LEVEL;
 	}
 
 	script_pushint(st, mob_get_random_id(type, (enum e_random_monster_flags)flag, lv));
