@@ -18214,7 +18214,7 @@ BUILDIN_FUNC(delmonsterdrop)
  *------------------------------------------*/
 BUILDIN_FUNC(getrandmobid)
 {
-	int type = script_hasdata(st, 2) ? script_getnum(st, 2) : MOBG_BRANCH_OF_DEAD_TREE;
+	int type = script_getnum(st, 2);
 
 	if (type < MOBG_BRANCH_OF_DEAD_TREE || type >= MOBG_MAX) {
 		ShowWarning("buildin_getrandmobid: Invalid type %d.\n", type);
