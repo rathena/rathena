@@ -49196,6 +49196,50 @@ Body:
       bonus bDef,-30;
       bonus bFlee,-30;
       bonus bSPDrainValue,-1;
+  - Id: 300339
+    AegisName: SLD_P_Dark_L_Card_J
+    Name: Sealed Contaminated Dark Lord Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@val = readparam(bStr) + readparam(bInt) + readparam(bDex);
+      bonus2 bAddEle,Ele_Neutral,.@val/20;
+      bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
+  - Id: 300340
+    AegisName: SLD_P_Spi_Q_Card_J
+    Name: Sealed Contaminated Spider Queen Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bResEff,Eff_Freezing,1500;
+  - Id: 300341
+    AegisName: SLD_F_Muspell_Card_J
+    Name: Sealed Contaminated Firm Muspellskoll Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Fire,15;
   - Id: 300343
     AegisName: SLD_Timeholder_Card_J
     Name: Sealed Time Holder Card
@@ -49247,50 +49291,6 @@ Body:
     Script: |
       bonus2 bResEff,Eff_Curse,3000;
       bonus2 bResEff,Eff_Fear,3000;
-  - Id: 300339
-    AegisName: SLD_P_Dark_L_Card_J
-    Name: Sealed Contaminated Dark Lord Card
-    Type: Card
-    Buy: 20
-    Weight: 10
-    Locations:
-      Armor: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      .@val = readparam(bStr) + readparam(bInt) + readparam(bDex);
-      bonus2 bAddEle,Ele_Neutral,.@val/20;
-      bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
-  - Id: 300340
-    AegisName: SLD_P_Spi_Q_Card_J
-    Name: Sealed Contaminated Spider Queen Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      bonus bMaxHPrate,5;
-      bonus bMaxSPrate,5;
-      bonus2 bAddEle,Ele_Water,10;
-      bonus2 bMagicAddEle,Ele_Water,10;
-      bonus2 bResEff,Eff_Freezing,1500;
-  - Id: 300341
-    AegisName: SLD_F_Muspell_Card_J
-    Name: Sealed Contaminated Firm Muspellskoll Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      bonus bMaxHPrate,5;
-      bonus bMaxSPrate,5;
-      bonus2 bAddEle,Ele_Fire,10;
-      bonus2 bMagicAddEle,Ele_Fire,10;
-      bonus2 bSubEle,Ele_Fire,15;
   - Id: 300348
     AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
@@ -50028,6 +50028,19 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_Wind,(readparam(bStr)+readparam(bInt)+readparam(bDex))/10;
       bonus2 bMagicAddEle,Ele_Wind,(readparam(bStr)+readparam(bLuk)+readparam(bDex))/10;
+  - Id: 300407
+    AegisName: aegis_300407
+    Name: Sealed Tao Gunka Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,30;
+      bonus bDef,-50;
+      bonus bMdef,-50;
   - Id: 300408
     AegisName: aegis_300408
     Name: Sealed Leak Card
@@ -50084,19 +50097,6 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,10*.@r;
-  - Id: 300407
-    AegisName: aegis_300407
-    Name: Sealed Tao Gunka Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Armor: true
-    Flags:
-      DropEffect: CLIENT
-    Script: |
-      bonus bMaxHPrate,30;
-      bonus bDef,-50;
-      bonus bMdef,-50;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -63487,6 +63487,657 @@ Body:
     SubType: Enchant
     Script: |
       bonus bPow,5;
+  - Id: 311777
+    AegisName: Pow_Orb_1
+    Name: Power Orb 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,2;
+  - Id: 311778
+    AegisName: Pow_Orb_2
+    Name: Power Orb 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,4;
+  - Id: 311779
+    AegisName: Pow_Orb_3
+    Name: Power Orb 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,6;
+  - Id: 311780
+    AegisName: Pow_Orb_4
+    Name: Power Orb 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,8;
+  - Id: 311781
+    AegisName: Pow_Orb_5
+    Name: Power Orb 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+  - Id: 311782
+    AegisName: Pow_Orb_6
+    Name: Power Orb 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,1;
+      bonus bBaseAtk,12;
+  - Id: 311783
+    AegisName: Pow_Orb_7
+    Name: Power Orb 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,2;
+      bonus bBaseAtk,14;
+  - Id: 311784
+    AegisName: Pow_Orb_8
+    Name: Power Orb 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,3;
+      bonus bBaseAtk,16;
+  - Id: 311785
+    AegisName: Pow_Orb_9
+    Name: Power Orb 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,4;
+      bonus bBaseAtk,18;
+  - Id: 311786
+    AegisName: Pow_Orb_10
+    Name: Power Orb 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,20;
+  - Id: 311787
+    AegisName: Pow_Orb_11
+    Name: Power Orb 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,1;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,22;
+  - Id: 311788
+    AegisName: Pow_Orb_12
+    Name: Power Orb 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,2;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,24;
+  - Id: 311789
+    AegisName: Pow_Orb_13
+    Name: Power Orb 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,26;
+  - Id: 311790
+    AegisName: Pow_Orb_14
+    Name: Power Orb 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,4;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,28;
+  - Id: 311791
+    AegisName: Pow_Orb_15
+    Name: Power Orb 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,30;
+  - Id: 311792
+    AegisName: Pow_Orb_16
+    Name: Power Orb 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus bAtkRate,6;
+      bonus bBaseAtk,32+3*(getrefine()/4);
+  - Id: 311793
+    AegisName: Pow_Orb_17
+    Name: Power Orb 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus bAtkRate,7;
+      bonus bBaseAtk,34+3*(getrefine()/3);
+  - Id: 311794
+    AegisName: Pow_Orb_18
+    Name: Power Orb 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5+(.@r/4);
+      bonus bAtkRate,8;
+      bonus bBaseAtk,36+3*(.@r/2);
+  - Id: 311795
+    AegisName: Pow_Orb_19
+    Name: Power Orb 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5+(.@r/3);
+      bonus bAtkRate,9;
+      bonus bBaseAtk,38+3*(.@r/2);
+  - Id: 311796
+    AegisName: Pow_Orb_20
+    Name: Power Orb 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5+(.@r/2);
+      bonus bAtkRate,10;
+      bonus bBaseAtk,40+3*(.@r/2);
+  - Id: 311797
+    AegisName: Spl_Orb_1
+    Name: Spell Orb 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,2;
+  - Id: 311798
+    AegisName: Spl_Orb_2
+    Name: Spell Orb 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,4;
+  - Id: 311799
+    AegisName: Spl_Orb_3
+    Name: Spell Orb 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,6;
+  - Id: 311800
+    AegisName: Spl_Orb_4
+    Name: Spell Orb 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,8;
+  - Id: 311801
+    AegisName: Spl_Orb_5
+    Name: Spell Orb 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+  - Id: 311802
+    AegisName: Spl_Orb_6
+    Name: Spell Orb 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,1;
+      bonus bMatk,12;
+  - Id: 311803
+    AegisName: Spl_Orb_7
+    Name: Spell Orb 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2;
+      bonus bMatk,14;
+  - Id: 311804
+    AegisName: Spl_Orb_8
+    Name: Spell Orb 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,3;
+      bonus bMatk,16;
+  - Id: 311805
+    AegisName: Spl_Orb_9
+    Name: Spell Orb 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,4;
+      bonus bMatk,18;
+  - Id: 311806
+    AegisName: Spl_Orb_10
+    Name: Spell Orb 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+      bonus bMatk,20;
+  - Id: 311807
+    AegisName: Spl_Orb_11
+    Name: Spell Orb 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,1;
+      bonus bMatkRate,5;
+      bonus bMatk,22;
+  - Id: 311808
+    AegisName: Spl_Orb_12
+    Name: Spell Orb 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,2;
+      bonus bMatkRate,5;
+      bonus bMatk,24;
+  - Id: 311809
+    AegisName: Spl_Orb_13
+    Name: Spell Orb 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+      bonus bMatkRate,5;
+      bonus bMatk,26;
+  - Id: 311810
+    AegisName: Spl_Orb_14
+    Name: Spell Orb 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,4;
+      bonus bMatkRate,5;
+      bonus bMatk,28;
+  - Id: 311811
+    AegisName: Spl_Orb_15
+    Name: Spell Orb 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,5;
+      bonus bMatkRate,5;
+      bonus bMatk,30;
+  - Id: 311812
+    AegisName: Spl_Orb_16
+    Name: Spell Orb Lv 16    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,5;
+      bonus bMatkRate,6;
+      bonus bMatk,32+3*(getrefine()/4);
+  - Id: 311813
+    AegisName: Spl_Orb_17
+    Name: Spell Orb Lv 17    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,5;
+      bonus bMatkRate,7;
+      bonus bMatk,34+3*(getrefine()/3);
+  - Id: 311814
+    AegisName: Spl_Orb_18
+    Name: Spell Orb 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,5+(.@r/4);
+      bonus bMatkRate,8;
+      bonus bMatk,36+3*(.@r/2);
+  - Id: 311815
+    AegisName: Spl_Orb_19
+    Name: Spell Orb 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,5+(.@r/3);
+      bonus bMatkRate,9;
+      bonus bMatk,38+3*(.@r/2);
+  - Id: 311816
+    AegisName: Spl_Orb_20
+    Name: Spell Orb 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,5+(.@r/2);
+      bonus bMatkRate,10;
+      bonus bMatk,40+3*(.@r/2);
+  - Id: 311817
+    AegisName: Warrior_Orb_1
+    Name: Warrior Orb 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,1;
+  - Id: 311818
+    AegisName: Warrior_Orb_2
+    Name: Warrior Orb 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2;
+  - Id: 311819
+    AegisName: Warrior_Orb_3
+    Name: Warrior of 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,3;
+  - Id: 311820
+    AegisName: Warrior_Orb_4
+    Name: Warrior Orb 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,4;
+  - Id: 311821
+    AegisName: Warrior_Orb_5
+    Name: Warrior Orb 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,5;
+  - Id: 311822
+    AegisName: Warrior_Orb_6
+    Name: Warrior Orb 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,6;
+  - Id: 311823
+    AegisName: Warrior_Orb_7
+    Name: Warrior of 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,7;
+  - Id: 311824
+    AegisName: Warrior_Orb_8
+    Name: Warrior of 8 Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,8;
+  - Id: 311825
+    AegisName: Warrior_Orb_9
+    Name: Warrior of 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,9;
+  - Id: 311826
+    AegisName: Warrior_Orb_10
+    Name: Warrior Orb 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,10;
+  - Id: 311827
+    AegisName: Warrior_Orb_11
+    Name: Warrior Orb 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,11;
+  - Id: 311828
+    AegisName: Warrior_Orb_12
+    Name: Warrior Orb 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+  - Id: 311829
+    AegisName: Warrior_Orb_13
+    Name: Warrior of 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,13;
+  - Id: 311830
+    AegisName: Warrior_Orb_14
+    Name: Warrior of 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,14;
+  - Id: 311831
+    AegisName: Warrior_Orb_15
+    Name: Warrior Orb 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,15;
+  - Id: 311832
+    AegisName: Magician_Orb_1
+    Name: Magician Orb 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,1;
+  - Id: 311833
+    AegisName: Magician_Orb_2
+    Name: Magician Orb 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2;
+  - Id: 311834
+    AegisName: Magician_Orb_3
+    Name: Magician of 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 311835
+    AegisName: Magician_Orb_4
+    Name: Magician of 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Id: 311836
+    AegisName: Magician_Orb_5
+    Name: Magician Orb 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 311837
+    AegisName: Magician_Orb_6
+    Name: Magician Orb 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,6;
+  - Id: 311838
+    AegisName: Magician_Orb_7
+    Name: Magician of 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,7;
+  - Id: 311839
+    AegisName: Magician_Orb_8
+    Name: Magician of 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,8;
+  - Id: 311840
+    AegisName: Magician_Orb_9
+    Name: Magician of 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,9;
+  - Id: 311841
+    AegisName: Magician_Orb_10
+    Name: Magician Orb 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 311842
+    AegisName: Magician_Orb_11
+    Name: Magician Orb 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,11;
+  - Id: 311843
+    AegisName: Magician_Orb_12
+    Name: Magician Orb 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,12;
+  - Id: 311844
+    AegisName: Magician_Orb_13
+    Name: Magician of 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,13;
+  - Id: 311845
+    AegisName: Magician_Orb_14
+    Name: Magician of 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,14;
+  - Id: 311846
+    AegisName: Magician_Orb_15
+    Name: Magician of 15 Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+  - Id: 311847
+    AegisName: Shooter_Orb_1
+    Name: Shooter of 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,1;
+  - Id: 311848
+    AegisName: Shooter_Orb_2
+    Name: Shooter of 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2;
+  - Id: 311849
+    AegisName: Shooter_Orb_3
+    Name: Shooter of 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,3;
+  - Id: 311850
+    AegisName: Shooter_Orb_4
+    Name: Shooter of 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,4;
+  - Id: 311851
+    AegisName: Shooter_Orb_5
+    Name: Shooter of 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,5;
+  - Id: 311852
+    AegisName: Shooter_Orb_6
+    Name: Shooter of 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,6;
+  - Id: 311853
+    AegisName: Shooter_Orb_7
+    Name: Shooter of 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,7;
+  - Id: 311854
+    AegisName: Shooter_Orb_8
+    Name: Shooter of 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,8;
+  - Id: 311855
+    AegisName: Shooter_Orb_9
+    Name: Shooter of 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,9;
+  - Id: 311856
+    AegisName: Shooter_Orb_10
+    Name: Shooter of 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,10;
+  - Id: 311857
+    AegisName: Shooter_Orb_11
+    Name: Shooter of 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,11;
+  - Id: 311858
+    AegisName: Shooter_Orb_12
+    Name: Shooter of 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,12;
+  - Id: 311859
+    AegisName: Shooter_Orb_13
+    Name: Shooter of 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,13;
+  - Id: 311860
+    AegisName: Shooter_Orb_14
+    Name: Shooter of 14 Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,14;
+  - Id: 311861
+    AegisName: Shooter_Orb_15
+    Name: Shooter of 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,15;
   - Id: 311862
     AegisName: Barmund_Flame1
     Name: Varmundt's Crystal (Flame) Lv1
@@ -67981,6 +68632,321 @@ Body:
     Name: Fragrant flowers    # !todo check english name
     Type: Etc
     Weight: 10
+  - Id: 1001090
+    AegisName: aegis_1001090
+    Name: Dimensional Jewel Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001091
+    AegisName: aegis_1001091
+    Name: Dimensional Jewel Decoration Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001092
+    AegisName: aegis_1001092
+    Name: Heroria Jewel Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001093
+    AegisName: Dimmension_Jewel
+    Name: Dimensional Jewel    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001094
+    AegisName: Dimmension_Jewelry
+    Name: Dimensional craftsmanship    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001095
+    AegisName: Herosria_Jewel
+    Name: Heroria Jewel    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001096
+    AegisName: aegis_1001096
+    Name: Heroria Gold Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001097
+    AegisName: aegis_1001097
+    Name: Heroria Silver Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001098
+    AegisName: aegis_1001098
+    Name: Heroria Copper Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001099
+    AegisName: aegis_1001099
+    Name: Heroria Iron Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001100
+    AegisName: Heros_Gold_Bar
+    Name: Heroria Gold Bar    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001101
+    AegisName: Heros_Silver_Bar
+    Name: Heroria Silver Bar    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001102
+    AegisName: Heros_Copper_Bar
+    Name: Heroria copper ingot    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001103
+    AegisName: Heros_Iron_Bar
+    Name: Heroria Iron    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001104
+    AegisName: aegis_1001104
+    Name: Heroria Ruby Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001105
+    AegisName: aegis_1001105
+    Name: Heroria Topaz Gemstone    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001106
+    AegisName: aegis_1001106
+    Name: Heroria Sapphire Gemstone    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001107
+    AegisName: aegis_1001107
+    Name: Heroria Emerald Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001108
+    AegisName: aegis_1001108
+    Name: Heroria Diamond Ore    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001109
+    AegisName: Heros_Ruby
+    Name: Heroria Ruby    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001110
+    AegisName: Heros_Topaz
+    Name: Heroria Topaz    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001111
+    AegisName: Heros_Sapphire
+    Name: Heroria Sapphire    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001112
+    AegisName: Heros_Emerald
+    Name: Heroria Emerald    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001113
+    AegisName: Heros_Diamond
+    Name: Heroria Diamond    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001114
+    AegisName: aegis_1001114
+    Name: Heroria Red Herb    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001115
+    AegisName: aegis_1001115
+    Name: Heroria Blue Herb    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001116
+    AegisName: aegis_1001116
+    Name: Heroria Yellow Herb    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001117
+    AegisName: aegis_1001117
+    Name: Heroria White Herb    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001118
+    AegisName: Heros_Ruby_1
+    Name: Shining Heroria Ruby    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001119
+    AegisName: Heros_Topaz_1
+    Name: Shining Heroria Topaz    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001120
+    AegisName: Heros_Sapphire_1
+    Name: Shining Heroria Sapphire    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001121
+    AegisName: Heros_Emerald_1
+    Name: Shining Heroria Emerald    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001122
+    AegisName: Heros_Diamond_1
+    Name: Shining Heroria Diamond    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001123
+    AegisName: Heros_Ruby_2
+    Name: Brilliant Heroria Ruby    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001124
+    AegisName: Heros_Topaz_2
+    Name: Brilliant Heroria Topaz    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001125
+    AegisName: Heros_Sapphire_2
+    Name: Brilliant Heroria Sapphire    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001126
+    AegisName: Heros_Emerald_2
+    Name: Brilliant Heroria Emerald    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001127
+    AegisName: Heros_Diamond_2
+    Name: Brilliant Heroria Diamond    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001128
+    AegisName: Creed_Of_Herosria
+    Name: Heroria's Faith    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001129
+    AegisName: Justice_Of_Herosria
+    Name: Definition of Heroria    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001130
+    AegisName: Glory_Of_Herosria
+    Name: Heroic Glory    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001131
+    AegisName: aegis_1001131
+    Name: Heroria Red Herb Powder    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001132
+    AegisName: aegis_1001132
+    Name: Heroria Blue Herb Powder    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001133
+    AegisName: aegis_1001133
+    Name: Heroria Yellow Herb Powder    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001134
+    AegisName: aegis_1001134
+    Name: Heroria White Herb Powder    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1001135
     AegisName: aegis_1001135
     Name: Hard ice    # !todo check english name
@@ -68028,6 +68994,60 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001142
+    AegisName: aegis_1001142
+    Name: Sharp Wolf's Claw    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001143
+    AegisName: aegis_1001143
+    Name: Hard Dragon's Shell    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001144
+    AegisName: aegis_1001144
+    Name: Hard Dragon's Scale    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001145
+    AegisName: aegis_1001145
+    Name: Hard Dragon's Tooth    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001146
+    AegisName: aegis_1001146
+    Name: Very hard piece of iron    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001147
+    AegisName: aegis_1001147
+    Name: Root of a precious plant    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001157
+    AegisName: 2210_ev_fur
+    Name: Gumming's Hair    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001158
+    AegisName: 2210_ev_leather
+    Name: Gumming's Leather    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

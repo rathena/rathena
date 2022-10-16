@@ -27732,7 +27732,7 @@ Body:
           - Dark_Blindfold        # 5104
       - Combo:
           - aegis_28973           # 28973
-          - Dark_Blindfold        # 18609
+          - Dark_Blindfold_        # 18609
     Script: |
       bonus bVariableCastrate,-5;
       bonus2 bMagicAddRace,RC_All,5;
@@ -27743,100 +27743,6 @@ Body:
     Script: |
       bonus bMatkRate,5;
       bonus2 bIgnoreMdefRaceRate,RC_All,50;
-  - Combos:
-      - Combo:
-          - aegis_311460    # 311460
-          - Staremperor_Robe    # 29658
-    Script: |
-      bonus2 bSkillAtk,"SJ_NEWMOONKICK",15;
-  - Combos:
-      - Combo:
-          - aegis_311461    # 311461
-          - Staremperor_Robe    # 29658
-    Script: |
-      bonus2 bSkillAtk,"SJ_SOLARBURST",15;
-  - Combos:
-      - Combo:
-          - aegis_311462    # 311462
-          - Staremperor_Robe    # 29658
-    Script: |
-      bonus2 bSPDrainRate,2,1;
-  - Combos:
-      - Combo:
-          - aegis_311463    # 311463
-          - Rebellion_Robe    # 29667
-    Script: |
-      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",15;
-  - Combos:
-      - Combo:
-          - aegis_311464    # 311464
-          - Rebellion_Robe    # 29667
-    Script: |
-      bonus2 bSkillAtk,"RL_R_TRIP",15;
-  - Combos:
-      - Combo:
-          - aegis_311465    # 311465
-          - Rebellion_Robe    # 29667
-    Script: |
-      bonus bFixedCast,-500;
-  - Combos:
-      - Combo:
-          - aegis_311466    # 311466
-          - Soulreaper_Robe    # 29654
-    Script: |
-      bonus2 bSkillUseSP,"SP_SPA",15;
-  - Combos:
-      - Combo:
-          - aegis_311467    # 311467
-          - Soulreaper_Robe    # 29654
-    Script: |
-      bonus2 bSkillAtk,"SP_SWHOO",15;
-  - Combos:
-      - Combo:
-          - aegis_311468    # 311468
-          - Soulreaper_Robe    # 29654
-    Script: |
-      bonus bFixedCast,-500;
-  - Combos:
-      - Combo:
-          - aegis_311469    # 311469
-          - Melee_Top    # 310327
-      - Combo:
-          - aegis_311469    # 311469
-          - Melee_Middle    # 310328
-      - Combo:
-          - aegis_311469    # 311469
-          - Melee_Bottom    # 310329
-    Script: |
-      bonus bPAtk,1;
-      bonus bPow,1;
-  - Combos:
-      - Combo:
-          - aegis_311469    # 311469
-          - aegis_311471    # 311471
-    Script: |
-      bonus bPAtk,5;
-      bonus bPow,3;
-  - Combos:
-      - Combo:
-          - aegis_311470    # 311470
-          - Range_Top    # 310325
-      - Combo:
-          - aegis_311470    # 311470
-          - Range_Middle    # 310330
-      - Combo:
-          - aegis_311470    # 311470
-          - Range_Bottom    # 310326
-    Script: |
-      bonus bPAtk,1;
-      bonus bCon,1;
-  - Combos:
-      - Combo:
-          - aegis_311470    # 311470
-          - Con_Robe_D    # 311355
-    Script: |
-      bonus bPAtk,5;
-      bonus bCon,3;
   - Combos:
       - Combo:
           - 2020RTC_Imp_TW    # 400082
@@ -29447,3 +29353,42 @@ Body:
       bonus bAspdRate,15;
       bonus2 bSubRace,RC_Player_Human,10;
       skill "PA_GOSPEL",1;
+  - Combos:
+      - Combo:
+          - aegis_510080   # 510080
+          - aegis_510081   # 510081
+    Script: |
+      bonus bCritAtkRate,-7;
+      bonus bShortAtkRate,15;
+      bonus bAspdRate,-7;
+      bonus bHit,50;
+  - Combos:
+      - Combo:
+          - aegis_510082   # 510082
+          - aegis_510083   # 510083
+    Script: |
+      bonus bCritAtkRate,-5;
+      bonus bShortAtkRate,10;
+      bonus bAspdRate,10;
+      bonus bCritical,-5;
+  - Combos:
+      - Combo:
+          - aegis_510087   # 510087
+          - aegis_510088   # 510088
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bLongAtkDef,-7;
+      bonus bAspdRate,15;
+      bonus bHit,-25;
+  - Combos:
+      - Combo:
+          - aegis_510089   # 510089
+          - aegis_510090   # 510090
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,-7;
+      bonus2 bSubRace,RC_Player_Doram,-7;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Water,15;
+      bonus bDelayrate,7;
+      bonus bMaxSPrate,15;
