@@ -14997,7 +14997,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 /**
  * Send a player to jail and determine the location to send in jail.
  * @param sd: Player data
- * @param duration: Duration in milliseconds (default INT_MAX = infinite)
+ * @param duration: Duration in minutes (default INT_MAX = infinite)
  */
 void pc_jail(map_session_data &sd, int32 duration) {
 	uint16 m_index = mapindex_name2id(MAP_JAIL);
@@ -15014,7 +15014,7 @@ void pc_jail(map_session_data &sd, int32 duration) {
 			break;
 	}
 
-	sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, (duration != INT_MAX ? 60000 : 1000));
+	sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, (duration != INT_MAX && duration != 0 ? 60000 : 1000));
 }
 
 /**
@@ -15023,12 +15023,23 @@ void pc_jail(map_session_data &sd, int32 duration) {
  * @param stype: Macro detection status type (for banning)
  */
 static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status stype) {
-	if (battle_config.macro_detection_punishment == 0) {
+	int32 duration = 0;
+
+	// Determine if there's a unique duration
+	if (battle_config.macro_detection_punishment_time > 0) {
+		char time[13];
+
+		safesnprintf(time, 13, "+%dnm", battle_config.macro_detection_punishment_time);
+		duration = static_cast<int32>(solve_time(time));
+	}
+
+	if (battle_config.macro_detection_punishment == 0) { // Ban
 		clif_macro_detector_status(sd, stype);
-		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
-	} else {
+		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
+	} else { // Jail
 		// Delete the timer
-		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+		if (sd.macro_detect.timer)
+			delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
 
 		// Clear the macro detect data
 		sd.macro_detect = {};
@@ -15041,7 +15052,7 @@ static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status styp
 		// Send success to close the window without closing the client
 		clif_macro_detector_status(sd, MCD_GOOD);
 
-		pc_jail(sd);
+		pc_jail(sd, (duration == 0 ? INT_MAX : duration / 60));
 	}
 }
 

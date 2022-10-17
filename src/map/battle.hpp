@@ -714,6 +714,7 @@ struct Battle_Config
 	int macro_detection_retry;
 	int macro_detection_timeout;
 	int macro_detection_punishment;
+	int macro_detection_punishment_time;
 
 #include "../custom/battle_config_struct.inc"
 };

@@ -10273,6 +10273,7 @@ static const struct _battle_data {
 	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
 	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
 	{ "macro_detection_punishment",         &battle_config.macro_detection_punishment,      0,      0,      1,              },
+	{ "macro_detection_punishment_time",    &battle_config.macro_detection_punishment_time, 0,      0,      INT_MAX,        },
 
 #include "../custom/battle_config_init.inc"
 };

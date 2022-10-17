@@ -5281,7 +5281,7 @@ ACMD_FUNC(unjail)
 	}
 
 	//Reset jail time to 1 sec.
-	sc_start(NULL,&pl_sd->bl,SC_JAILED,100,1,1000);
+	pc_jail(*pl_sd, 0);
 	clif_displaymessage(pl_sd->fd, msg_txt(sd,120)); // A GM has discharged you from jail.
 	clif_displaymessage(fd, msg_txt(sd,121)); // Player unjailed.
 	return 0;
