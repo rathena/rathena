@@ -1700,6 +1700,7 @@ void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char cap
 void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
 
 // Macro Detector
+TIMER_FUNC(pc_macro_detector_timeout);
 void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 

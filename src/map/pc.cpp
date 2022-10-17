@@ -15014,19 +15014,35 @@ void pc_jail(map_session_data &sd, int32 duration) {
 			break;
 	}
 
-	// Duration of INT_MAX to specify infinity.
 	sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, (duration != INT_MAX ? 60000 : 1000));
 }
 
 /**
  * Determine the punishment type when failing macro checks.
  * @param sd: Player data
+ * @param stype: Macro detection status type (for banning)
  */
-static void pc_macro_punishment(map_session_data &sd) {
-	if (battle_config.macro_detection_punishment == 0)
+static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status stype) {
+	if (battle_config.macro_detection_punishment == 0) {
+		clif_macro_detector_status(sd, stype);
 		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
-	else
+	} else {
+		// Delete the timer
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+
+		// Clear the macro detect data
+		sd.macro_detect = {};
+		sd.macro_detect.timer = INVALID_TIMER;
+
+		// Unblock all actions for the player
+		sd.state.block_action &= ~PCBLOCK_ALL;
+		sd.state.block_action &= ~PCBLOCK_IMMUNE;
+
+		// Send success to close the window without closing the client
+		clif_macro_detector_status(sd, MCD_GOOD);
+
 		pc_jail(sd);
+	}
 }
 
 /**
@@ -15114,9 +15130,8 @@ TIMER_FUNC(pc_macro_detector_timeout) {
 	sd->macro_detect.retry -= 1;
 
 	if (sd->macro_detect.retry == 0) {
-		// All attempts have been exhausted block the user
-		clif_macro_detector_status(*sd, MCD_TIMEOUT);
-		pc_macro_punishment(*sd);
+		// All attempts have been exhausted, punish the user
+		pc_macro_punishment(*sd, MCD_TIMEOUT);
 	} else {
 		// Update the client
 		clif_macro_detector_request_show(*sd);
@@ -15167,10 +15182,9 @@ void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[
 		// Deduct an answering attempt
 		sd.macro_detect.retry -= 1;
 
-		// All attempts have been exhausted block the user
+		// All attempts have been exhausted, punish the user
 		if (sd.macro_detect.retry <= 0) {
-			clif_macro_detector_status(sd, MCD_INCORRECT);
-			pc_macro_punishment(sd);
+			pc_macro_punishment(sd, MCD_INCORRECT);
 			return;
 		}
 
@@ -15195,7 +15209,7 @@ void pc_macro_detector_disconnect(map_session_data &sd) {
 
 	// If the player disconnects before clearing the challenge the account is banned/jailed.
 	if (sd.macro_detect.retry != 0)
-		pc_macro_punishment(sd);
+		pc_macro_punishment(sd, MCD_TIMEOUT);
 }
 
 /**
