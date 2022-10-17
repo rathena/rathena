@@ -2285,11 +2285,11 @@ OnTouch_:
 		}
 	} else {
 		switch(.@i) {
-			case 1:	warp "schg_cas01",373,304;	break;
+			case 1:	warp "schg_cas01",369,306;	break;
 			case 2:	warp "schg_cas02",177,355;	break;
 			case 3:	warp "schg_cas03",81,95;	break;
-			case 4:	warp "schg_cas04",373,304;	break;
-			case 5:	warp "schg_cas05",373,304;	break;
+			case 4:	warp "schg_cas04",369,306;	break;
+			case 5:	warp "schg_cas05",369,306;	break;
 		}
 	}
 	end;
