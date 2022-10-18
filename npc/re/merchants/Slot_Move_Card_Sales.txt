@@ -25,8 +25,8 @@ prt_in,211,173,3	script	Slot Move Card Sales#slo	4_F_01,{
 	callshop "change_slot#slo";
 	end;
 
-OnClock0000:
-	if (gettime(DT_DAYOFWEEK) == 1) npcshopupdate "change_slot#slo",12786,0,9999;
+OnMon0000:
+	npcshopupdate "change_slot#slo",12786,0,9999;
 	end;
 }
 -	marketshop	change_slot#slo	FAKE_NPC,12786:100000:9999
