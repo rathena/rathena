@@ -121681,7 +121681,7 @@ Body:
     AegisName: G_Knight_BattleAxe
     Name: Guardian Knight Battle Axe
     Type: Weapon
-    SubType: 1hAxe
+    SubType: 2hAxe
     Weight: 5000
     Attack: 270
     Range: 1
@@ -121707,10 +121707,10 @@ Body:
          bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
          bonus2 bSkillAtk,"NC_AXETORNADO",20;
          bonus2 bSkillAtk,"NC_MAGMA_ERUPTION",20;
-      }
-      if (.@r>=11) {
-         bonus2 bAddRace,RC_Undead,20;
-         bonus2 bAddRace,RC_Angel,20;
+         if (.@r>=11) {
+            bonus2 bAddRace,RC_Undead,20;
+            bonus2 bAddRace,RC_Angel,20;
+         }
       }
   - Id: 28142
     AegisName: Maxi_Spanner_J
