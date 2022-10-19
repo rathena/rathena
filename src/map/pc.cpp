@@ -15038,7 +15038,7 @@ static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status styp
 		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
 	} else { // Jail
 		// Delete the timer
-		if (sd.macro_detect.timer)
+		if (sd.macro_detect.timer != INVALID_TIMER)
 			delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
 
 		// Clear the macro detect data
