@@ -31475,3 +31475,15 @@ Body:
           - Item: S_Absorb_Shield
             RefineMinimum: 7
             RefineMaximum: 10
+  - Group: PORINGSPRECIOUSBOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Orange_Potion_B
+            Amount: 3
+          - Item: N_Fly_Wing
+            Amount: 3
+          - Item: Candy_Striper_B
+            Amount: 5
+          - Item: Candy_B
+            Amount: 5

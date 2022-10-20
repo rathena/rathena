@@ -431,8 +431,9 @@ hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try
 to 'mes 0x10' it will print '16'.
 
 Number values can't exceed the limits of an integer variable: Any number
-greater than INT_MAX (2147483647) or smaller than INT_MIN (-2147483648) will
-be capped to those values and will cause a warning to be reported.
+greater than INT64_MAX (9223372036854775807) or smaller than INT64_MIN
+(-9223372036854775808) will be capped to those values and will cause a warning
+to be reported.
 
 Variables
 ---------
@@ -6840,6 +6841,18 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC name>","<map>",<x>,<y>{,"<Duplicate NPC name>"{,<sprite>{,<dir>{,<xs>{,<xy>}}}}};
+
+This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
+If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};
 

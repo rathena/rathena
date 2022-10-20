@@ -3095,10 +3095,10 @@
 
 // Luina 1
 //============================================================
-aldeg_cas01,51,102,5	duplicate(GuildRelay1)	Buzz#01	754,{
-aldeg_cas01,75,39,3	duplicate(GuildRelay2)	Lenya#01	754,{
-aldeg_cas01,200,175,3	duplicate(GuildRelay3)	Gealuve#01	754,{
-aldeg_cas01,59,224,3	duplicate(GuildRelay4)	Pariz#01	754,{
+aldeg_cas01,51,102,5	duplicate(GuildRelay1)	Buzz#01	754
+aldeg_cas01,75,39,3	duplicate(GuildRelay2)	Lenya#01	754
+aldeg_cas01,200,175,3	duplicate(GuildRelay3)	Gealuve#01	754
+aldeg_cas01,59,224,3	duplicate(GuildRelay4)	Pariz#01	754
 
 // Luina 2
 //============================================================

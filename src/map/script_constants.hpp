@@ -1865,6 +1865,7 @@
 	export_constant(SC_SKF_CAST);
 	export_constant(SC_BEEF_RIB_STEW);
 	export_constant(SC_PORK_RIB_STEW);
+	export_constant(SC_WEAPONBREAKER);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -5812,6 +5813,7 @@
 	export_constant(IG_S_SPELLCASTER_SHOES);
 	export_constant(IG_S_ABSORB_WEAPON);
 	export_constant(IG_S_ABSORB_SHIELD);
+	export_constant(IG_PORINGSPRECIOUSBOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

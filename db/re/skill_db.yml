@@ -9635,15 +9635,13 @@ Body:
     Name: NPC_WEAPONBRAKER
     Description: Break weapon
     MaxLevel: 10
-    Type: Weapon
-    TargetType: Attack
+    TargetType: Self
     Flags:
       IsNpc: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    Element: Weapon
-    Status: BrokenWeapon
+    Duration: 30000
+    Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
     Description: Break armor
@@ -44821,7 +44819,7 @@ Body:
       IsGuild: true
     CastCancel: true
     Duration1: 300000
-    Cooldown: 60000
+    Cooldown: 900000
     FixedCastTime: 1000
   - Id: 10018
     Name: GD_CHARGESHOUT_BEATING
@@ -44833,7 +44831,7 @@ Body:
     Flags:
       IsGuild: true
     CastCancel: true
-    Cooldown: 60000
+    Cooldown: 900000
     FixedCastTime: 1000
   - Id: 10019
     Name: GD_EMERGENCY_MOVE
@@ -44847,5 +44845,5 @@ Body:
       IsGuild: true
     SplashArea: 15
     Duration1: 10000
-    Cooldown: 600000
+    Cooldown: 60000
     Status: Emergency_Move
