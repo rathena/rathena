@@ -11183,3 +11183,24 @@ See 'achievementinfo' for valid <type> values.
 - Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
 
 ---------------------------------------
+
+*addfame(<amount>,{,<char id>})
+
+Increases the fame of the attached player or the supplied <char id> by the <amount> given.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfame({<char id>})
+
+Gets the fame points of the attached player or the supplied <char id>.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfamerank({<char id>})
+
+Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
