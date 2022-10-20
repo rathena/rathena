@@ -3583,6 +3583,32 @@ This command does not count skills which are set as flag 4 (permament granted) (
 
 ---------------------------------------
 
+*getrandmobid(<type>{,<flag>{,<level>}})
+
+This command returns a random monster ID from the random monster group.
+With <flag> you can apply certain restrictions which monsters of the group can be returned.
+Returns 0 if one of the parameters is invalid or no monster could be found with the given parameters.
+
+Valid <type> are:
+	MOBG_BRANCH_OF_DEAD_TREE
+	MOBG_PORING_BOX
+	MOBG_BLOODY_DEAD_BRANCH
+	MOBG_RED_POUCH_OF_SURPRISE
+	MOBG_CLASSCHANGE
+	MOBG_TAEKWON_MISSION
+	
+Valid <flag> are:
+	RMF_NONE            = 0x00 - Apply no flags
+	RMF_DB_RATE         = 0x01 - Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV    = 0x02 - Apply a monster level check
+	RMF_MOB_NOT_BOSS    = 0x04 - Selected monster should not be a Boss type (default)
+	                           - (except those from MOBG_BLOODY_DEAD_BRANCH)
+	RMF_MOB_NOT_SPAWN   = 0x08 - Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT   = 0x10 - Selected monster should not be a Plant type
+	RMF_ALL             = 0xFF - Apply all flags
+	
+---------------------------------------
+
 *getmonsterinfo(<mob ID>,<type>)
 *getmonsterinfo(<mob name>,<type>)
 

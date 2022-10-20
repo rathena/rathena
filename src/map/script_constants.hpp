@@ -4944,6 +4944,15 @@
 	export_constant(MOBG_CLASSCHANGE);
 	export_constant(MOBG_TAEKWON_MISSION);
 
+	/* mob random groups flags */
+	export_constant(RMF_NONE);
+	export_constant(RMF_DB_RATE);
+	export_constant(RMF_CHECK_MOB_LV);
+	export_constant(RMF_MOB_NOT_BOSS);
+	export_constant(RMF_MOB_NOT_SPAWN);
+	export_constant(RMF_MOB_NOT_PLANT);
+	export_constant(RMF_ALL);
+
 	/* random option attributes */
 	export_constant(ROA_ID);
 	export_constant(ROA_VALUE);
