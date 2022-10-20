@@ -20167,6 +20167,7 @@ Body:
     AegisName: Thanos_Whip_J
     Name: Requiem Blade Whip
     Type: Weapon
+    SubType: Whip
     Buy: 100000
     Attack: 160
     MagicAttack: 120
