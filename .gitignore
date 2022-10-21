@@ -39,6 +39,7 @@ Thumbs.db
 /Makefile
 /Makefile.cache
 /map-server
+/map-server-generator
 /mapcache
 /nbproject
 /web-server

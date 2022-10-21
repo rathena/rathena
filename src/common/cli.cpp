@@ -88,6 +88,10 @@ int cli_get_options(int argc, char ** argv) {
 	for (i = 1; i < argc; i++) {
 		const char* arg = argv[i];
 
+		// to temporarily support mapgenerator options
+		if (!arg)
+			continue;
+
 		if (arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) {// -, -- and /
 			ShowError("Unknown option '%s'.\n", argv[i]);
 			exit(EXIT_FAILURE);

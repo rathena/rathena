@@ -9098,7 +9098,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 1);
+		rdamage = i64max(rdamage, 0);
 	}
 
 	if (rdamage == 0)
@@ -10914,6 +10914,8 @@ static const struct _battle_data {
 	{ "feature.barter",                     &battle_config.feature_barter,                  1,      0,      1,              },
 	{ "feature.barter_extended",            &battle_config.feature_barter_extended,         1,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
+	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
+	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -11117,7 +11119,7 @@ void battle_adjust_conf()
 		ShowWarning("Battle setting 'custom_cell_stack_limit' takes no effect as this server was compiled without Cell Stack Limit support.\n");
 #endif
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	battle_config.dynamic_mobs = 1;
 #endif
 }
