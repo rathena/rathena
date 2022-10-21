@@ -5128,7 +5128,7 @@ bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
 	}
 
 	sd.status.skill[idx].id = skill_id;
-	sd.status.skill[idx].lv = skill_lv;
+	sd.status.skill[idx].lv = static_cast<uint8>(skill_lv);
 	sd.status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
 	clif_addskill(&sd, skill_id);
 
