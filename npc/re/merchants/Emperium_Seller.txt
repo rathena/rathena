@@ -24,7 +24,7 @@ prt_in,212,169,3	script	Guild Clerk	4_M_04,{
 		end;
 	}
 	mes "[Guild Clerk]";
-	mes "Our guild office actively supports the smooth gathering of adventurers";
+	mes "Our guild office actively supports the smooth gathering of adventurers.";
 	next;
 	mes "[Guild Clerk]";
 	mes "As part of that,";
@@ -32,7 +32,7 @@ prt_in,212,169,3	script	Guild Clerk	4_M_04,{
 	mes "from ^0000ff18:00 to 23:59^000000 from ^0000ffMonday to Saturday^000000.";
 	next;
 	mes "[Guild Clerk]";
-	mes "Please note that our guild office does not sell because we have to run around to supply Emperium outside of the hours.";
+	mes "Please note that our guild office does not sell all the time because we have to run around to supply Emperium outside of the hours.";
 	close;
 
 OnHour00:
