@@ -10177,7 +10177,7 @@ BUILDIN_FUNC(petautobonus3) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(skill_plagiarism)
+BUILDIN_FUNC(plagiarizeskill)
 {
 	TBL_PC *sd;
 
@@ -10187,7 +10187,7 @@ BUILDIN_FUNC(skill_plagiarism)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(skill_plagiarism_reset)
+BUILDIN_FUNC(plagiarizeskillreset)
 {
 	TBL_PC *sd;
 
@@ -26912,8 +26912,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petautobonus,"sii??"),
 	BUILDIN_DEF2(petautobonus,"petautobonus2","sii??"),
 	BUILDIN_DEF(petautobonus3,"siiv?"),
-	BUILDIN_DEF(skill_plagiarism, "ii"),
-	BUILDIN_DEF(skill_plagiarism_reset, "i"),
+	BUILDIN_DEF(plagiarizeskill, "ii"),
+	BUILDIN_DEF(plagiarizeskillreset, "i"),
 	BUILDIN_DEF(skill,"vi?"),
 	BUILDIN_DEF2(skill,"addtoskill","vi?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"vi"),
