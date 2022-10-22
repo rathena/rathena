@@ -44,6 +44,8 @@
 //	casttargeted		When a target is in cast range (no condition value).
 //	rudeattacked		When mob is rude attacked (no condition value).
 //	mobnearbygt		When monsters in range become greater than specified number.
+//	groundattacked		When mob is hit by ground targeted skill (no condition value).
+//	damagedgt		When single attack deals greater damage than specified number.
 //
 //	Status abnormalities specified through the statuson/statusoff system:
 //	    anybad (any type of state change) / stone / freeze / stun / sleep /

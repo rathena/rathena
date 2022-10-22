@@ -729,6 +729,23 @@ Refines an equipped item by the specified amount.
 
 ---------------------------------------
 
+@grade <equip position> <+/- amount>
+
+Enchantgrade an equipped item by the specified amount.
+0: All Equipment
+1: Lower Headgear
+2: Right Hand
+4: Garment
+8: Left Accessory
+16: Body Armor
+32: Left Hand
+64: Shoes
+128: Right Accessory
+256: Top Headgear
+512: Mid Headgear
+
+---------------------------------------
+
 @repairall
 
 Repairs all broken items in your inventory.

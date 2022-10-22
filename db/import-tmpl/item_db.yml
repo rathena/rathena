@@ -44,6 +44,7 @@
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
+#   Gradable                If the item can be graded. (Default: false)
 #   View                    View sprite of an item. (Default: 0)
 #   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
 #   Flags:                  Item flags. (Default: null)
@@ -85,7 +86,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 2
+  Version: 3
 
 #Body:
 # THQ Quest Items

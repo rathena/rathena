@@ -249,7 +249,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	StringBuf_Destroy(&buf);
 
 	clif_buyingstore_myitemlist(sd);
-	clif_buyingstore_entry(sd);
+	clif_buyingstore_entry( *sd );
 	idb_put(buyingstore_db, sd->status.char_id, sd);
 
 	return 0;
@@ -276,7 +276,7 @@ void buyingstore_close(struct map_session_data* sd) {
 		idb_remove(buyingstore_db, sd->status.char_id);
 
 		// notify other players
-		clif_buyingstore_disappear_entry(sd);
+		clif_buyingstore_disappear_entry( *sd );
 	}
 }
 
