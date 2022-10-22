@@ -431,8 +431,9 @@ hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try
 to 'mes 0x10' it will print '16'.
 
 Number values can't exceed the limits of an integer variable: Any number
-greater than INT_MAX (2147483647) or smaller than INT_MIN (-2147483648) will
-be capped to those values and will cause a warning to be reported.
+greater than INT64_MAX (9223372036854775807) or smaller than INT64_MIN
+(-9223372036854775808) will be capped to those values and will cause a warning
+to be reported.
 
 Variables
 ---------
@@ -3582,6 +3583,32 @@ This command does not count skills which are set as flag 4 (permament granted) (
 
 ---------------------------------------
 
+*getrandmobid(<type>{,<flag>{,<level>}})
+
+This command returns a random monster ID from the random monster group.
+With <flag> you can apply certain restrictions which monsters of the group can be returned.
+Returns 0 if one of the parameters is invalid or no monster could be found with the given parameters.
+
+Valid <type> are:
+	MOBG_BRANCH_OF_DEAD_TREE
+	MOBG_PORING_BOX
+	MOBG_BLOODY_DEAD_BRANCH
+	MOBG_RED_POUCH_OF_SURPRISE
+	MOBG_CLASSCHANGE
+	MOBG_TAEKWON_MISSION
+	
+Valid <flag> are:
+	RMF_NONE            = 0x00 - Apply no flags
+	RMF_DB_RATE         = 0x01 - Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV    = 0x02 - Apply a monster level check
+	RMF_MOB_NOT_BOSS    = 0x04 - Selected monster should not be a Boss type (default)
+	                           - (except those from MOBG_BLOODY_DEAD_BRANCH)
+	RMF_MOB_NOT_SPAWN   = 0x08 - Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT   = 0x10 - Selected monster should not be a Plant type
+	RMF_ALL             = 0xFF - Apply all flags
+	
+---------------------------------------
+
 *getmonsterinfo(<mob ID>,<type>)
 *getmonsterinfo(<mob name>,<type>)
 
@@ -6176,9 +6203,7 @@ kind in 'doc/item_bonus.txt'.
 *autobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
 *autobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
 
-These commands are meant to be used in item scripts. They will probably work
-outside item scripts, but the bonus will not persist for long. They, as
-expected, refer only to an invoking character.
+These commands are meant to be used in item scripts only! See 'petautobonus' for pet usage.
 
 What these commands do is 'attach' a script to the player which will get
 executed on attack (or when attacked in the case of autobonus2).
@@ -6276,6 +6301,24 @@ from the invoker.
 
 If 'flag' is 1, means will clears all scripts even it's Permanent effect. By default,
 it just removes non-permanent script.
+
+---------------------------------------
+
+*plagiarizeskill <skill_id>,<level>;
+
+Enable the player to plagiarize specific skills that are copyable.
+Return 1 on success, 0 otherwise.
+
+---------------------------------------
+
+*plagiarizeskillreset <flag>;
+
+Remove a plagiarized skill from the player.
+Return 1 on success, 0 otherwise.
+
+Flag constants:
+	1 - Use for Plagiarism Skill
+	2 - Use for Reproduce Skill
 
 ---------------------------------------
 
@@ -6842,6 +6885,18 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC name>","<map>",<x>,<y>{,"<Duplicate NPC name>"{,<sprite>{,<dir>{,<xs>{,<xy>}}}}};
+
+This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
+If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
@@ -8529,6 +8584,7 @@ Parameters (indexes) for monsters are:
 	UMOB_IGNORE_CELL_STACK_LIMIT
 	UMOB_RES
 	UMOB_MRES
+	UMOB_DAMAGETAKEN
 
 -----
 
@@ -8953,6 +9009,18 @@ Example:
 
 	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
 	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
+
+---------------------------------------
+
+*cap_value(<number>, <min>, <max>)
+
+Returns the number but capped between <min> and <max>.
+
+Example:
+	// capped between 0 ~ 100
+	.@value = cap_value(10, 0, 100);   // .@value will be equal to 10
+	.@value = cap_value(1000, 0, 100); // .@value will be equal to 100
+	.@value = cap_value(-10, 3, 100);  // .@value will be equal to 3
 
 ---------------------------------------
 
@@ -10313,6 +10381,15 @@ Value of 'rate' is between 1 and 100. 100 = 100%
 
 ---------------------------------------
 
+*petautobonus <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus2 <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
+*petautobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
+
+See 'autobonus' for more details.
+
+---------------------------------------
+
 ===========================
 |11.- Homunculus commands.|
 ===========================
@@ -11105,5 +11182,26 @@ See 'achievementinfo' for valid <type> values.
 - ACHIEVEINFO_COMPLETE, ACHIEVEINFO_COMPLETEDATE, and ACHIEVEINFO_GOTREWARD require the
   specific value returned from 'gettimetick(2)'.
 - Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
+
+---------------------------------------
+
+*addfame(<amount>,{,<char id>})
+
+Increases the fame of the attached player or the supplied <char id> by the <amount> given.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfame({<char id>})
+
+Gets the fame points of the attached player or the supplied <char id>.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfamerank({<char id>})
+
+Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
+Note: Only works with classes that use the ranking system.
 
 ---------------------------------------

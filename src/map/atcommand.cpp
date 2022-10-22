@@ -3268,7 +3268,7 @@ ACMD_FUNC(recall) {
 
 	if ( pc_get_group_level(sd) < pc_get_group_level(pl_sd) )
 	{
-		clif_displaymessage(fd, msg_txt(sd,81)); // Your GM level doesn't authorize you to preform this action on the specified player.
+		clif_displaymessage(fd, msg_txt(sd,81)); // Your GM level doesn't authorize you to perform this action on the specified player.
 		return -1;
 	}
 
@@ -7026,7 +7026,7 @@ ACMD_FUNC(sound)
 	if(strstr(sound_file, ".wav") == NULL)
 		strcat(sound_file, ".wav");
 
-	clif_soundeffectall(&sd->bl, sound_file, 0, AREA);
+	clif_soundeffect( sd->bl, sound_file, 0, AREA );
 
 	return 0;
 }
