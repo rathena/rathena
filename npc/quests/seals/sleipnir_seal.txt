@@ -354,7 +354,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 				else if (.@god_treasure < 301) {
 					     if (.@god_treasure1 < 160) getitem 5014,1; //Fin_Helm
 					else if (.@god_treasure1 < 320) getitem 5005,1; //Gas_Mask
-					else if (.@god_treasure1 < 480) getitem 5054,1; //Assasin_Mask
+					else if (.@god_treasure1 < 480) getitem 5096,1; //Assasin_Mask_
 					else if (.@god_treasure1 < 540) getitem 2265,1; //Ganster_Mask
 					else if (.@god_treasure1 < 700) getitem 2266,1; //Iron_Cane
 					else if (.@god_treasure1 < 800) getitem 2260,1; //Mini_Glasses

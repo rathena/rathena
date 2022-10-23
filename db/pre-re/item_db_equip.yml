@@ -25687,19 +25687,15 @@ Body:
     Script: |
       bonus bStr,2;
   - Id: 5054
-    AegisName: Assassin_Mask
-    Name: Assassin Mask
+    AegisName: Popcorn_Hair
+    Name: Popcorn Hair    # !todo check english name
     Type: Armor
     Buy: 20
-    Weight: 100
-    Jobs:
-      Assassin: true
-      Priest: true
+    Weight: 300
     Locations:
-      Head_Low: true
+      Head_Top: true
     ArmorLevel: 1
-    EquipLevelMin: 70
-    View: 180
+    View: 1895
   - Id: 5055
     AegisName: Novice_Egg_Cap
     Name: Novice False Eggshell
