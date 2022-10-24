@@ -15,7 +15,7 @@ services:
             MYSQL_PASSWORD: ragnarok
 
     login:
-        image: "rathena/${mod:-rathena-renewal-vip}:${version:-latest}"
+        image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
         command: "./login-server"
         restart: always
         ports:
@@ -27,7 +27,7 @@ services:
         depends_on:
             - db
     char:
-        image: "rathena/${mod:-rathena-renewal-vip}:${version:-latest}"
+        image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
         command: "./char-server"
         restart: always
         ports:
@@ -39,7 +39,7 @@ services:
         depends_on:
             - login
     map:
-        image: "rathena/${mod:-rathena-renewal-vip}:${version:-latest}"
+        image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
         command: "./map-server"
         restart: always
         ports:
