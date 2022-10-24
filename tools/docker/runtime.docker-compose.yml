@@ -26,19 +26,6 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == manager]
-    myadmin:
-        image: phpmyadmin
-        restart: always
-        profiles: ["phpmyadmin"]
-        depends_on:
-            - db
-        environment:
-            PMA_HOST: db
-            PMA_USER: ragnarok
-            PMA_PASSWORD: ragnarok
-        deploy:
-            mode: replicated
-            replicas: 1
     login:
         image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
         command: "./login-server"
