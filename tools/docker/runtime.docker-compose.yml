@@ -21,7 +21,15 @@ services:
             MYSQL_DATABASE: ragnarok
             MYSQL_USER: ragnarok
             MYSQL_PASSWORD: ragnarok
-
+    myadmin:
+        image: phpmyadmin
+        restart: always
+        depends_on:
+            - db
+        environment:
+            PMA_HOST: db
+            PMA_USER: ragnarok
+            PMA_PASSWORD: ragnarok
     login:
         image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
         command: "./login-server"
