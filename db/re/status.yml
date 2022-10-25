@@ -1233,7 +1233,6 @@ Body:
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
-      NoSave: true
   - Status: Truesight
     Icon: EFST_TRUESIGHT
     DurationLookup: SN_SIGHT
