@@ -12360,6 +12360,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					if (pc_checkskill(sd, SU_SPIRITOFSEA) > 0)
 						val2 *= 2; // Doubles HP
 				}
+				if (status->hp < status->max_hp) {
+					clif_skill_nodamage(nullptr, bl, AL_HEAL, val2, 1);
+					status_heal(bl, val2, 0, 0);
+				}
 				tick_time = 10000 - ((val1 - 1) * 1000);
 				val4 = tick / tick_time;
 			}
@@ -14747,7 +14751,10 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_FRESHSHRIMP:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, sce->val2, 0, 0);
+			if (status->hp < status->max_hp) {
+				clif_skill_nodamage(nullptr, bl, AL_HEAL, sce->val2, 1);
+				status_heal(bl, sce->val2, 0, 0);
+			}
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick);
 			return 0;
 		}

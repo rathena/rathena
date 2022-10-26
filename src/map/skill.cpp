@@ -11173,26 +11173,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case SH_MARINE_FESTIVAL_OF_KI_SUL:
+	case SH_SANDY_FESTIVAL_OF_KI_SUL:
 		if (flag & 1) {	
 			int time = skill_get_time(skill_id, skill_lv);
 			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->data[SC_TEMPORARY_COMMUNION]))
-				int time = 2 * skill_get_time(skill_id, skill_lv);
-			sc_start(src, bl, type, 100, skill_lv, time);
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		} else {
-			i = skill_get_splash(skill_id, skill_lv);
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->data[SC_TEMPORARY_COMMUNION]))
-				i += 2;
-
-			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR,
-				src, skill_id, skill_lv, tick, flag | BCT_PARTY | SD_SPLASH | 1, skill_castend_nodamage_id);
-		}
-		break;
-	case SH_SANDY_FESTIVAL_OF_KI_SUL:
-		if (flag & 1) {
-			int time = skill_get_time(skill_id, skill_lv);
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->data[SC_TEMPORARY_COMMUNION]))
-				int time = 2 * skill_get_time(skill_id, skill_lv);
+				time *= 2;
 			sc_start(src, bl, type, 100, skill_lv, time);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		} else {
