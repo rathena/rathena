@@ -2849,7 +2849,7 @@ e_purchase_result npc_buylist( struct map_session_data* sd, std::vector<s_npc_bu
 }
 
 /// npc_selllist for script-controlled shops
-static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* item_list, struct npc_data* nd)
+static int npc_selllist_sub(struct map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list, struct npc_data* nd)
 {
 	char npc_ev[EVENT_NAME_LENGTH];
 	char card_slot[NAME_LENGTH];
@@ -2891,12 +2891,12 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	}
 
 	// save list of to be sold items
-	for( i = 0; i < n; i++ )
+	for( i = 0; i < list_length; i++ )
 	{
-		int idx = item_list[i * 2] - 2;
+		int idx = item_list[i].index - 2;
 
 		script_setarray_pc( sd, "@sold_nameid", i, sd->inventory.u.items_inventory[idx].nameid, &key_nameid );
-		script_setarray_pc( sd, "@sold_quantity", i, item_list[i*2+1], &key_amount );
+		script_setarray_pc( sd, "@sold_quantity", i, item_list[i].amount, &key_amount );
 
 		if( itemdb_isequip(sd->inventory.u.items_inventory[idx].nameid) )
 		{// process equipment based information into the arrays
@@ -2933,7 +2933,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 ///
 /// @param item_list 'n' pairs <index,amount>
 /// @return result code for clif_parse_NpcSellListSend
-uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list)
+uint8 npc_selllist(struct map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list)
 {
 	double z;
 	int i,skill;
@@ -2950,13 +2950,13 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 	z = 0;
 
 	// verify the sell list
-	for( i = 0; i < n; i++ )
+	for( i = 0; i < list_length; i++ )
 	{
 		t_itemid nameid;
 		int amount, idx, value;
 
-		idx    = item_list[i*2]-2;
-		amount = item_list[i*2+1];
+		idx    = item_list[i].index - 2;
+		amount = item_list[i].amount;
 
 		if( idx >= MAX_INVENTORY || idx < 0 || amount < 0 )
 		{
@@ -2965,7 +2965,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 
 		nameid = sd->inventory.u.items_inventory[idx].nameid;
 
-		if( !nameid || !sd->inventory_data[idx] || sd->inventory.u.items_inventory[idx].amount < amount )
+		if( !nameid || !sd->inventory_data[idx] || sd->inventory.u.items_inventory[idx].amount < amount)
 		{
 			return 1;
 		}
@@ -2989,16 +2989,16 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 
 	if( nd->master_nd )
 	{// Script-controlled shops
-		return npc_selllist_sub(sd, n, item_list, nd->master_nd);
+		return npc_selllist_sub(sd, list_length, item_list, nd->master_nd);
 	}
 
 	// delete items
-	for( i = 0; i < n; i++ )
+	for( i = 0; i < list_length; i++ )
 	{
 		int amount, idx;
 
-		idx    = item_list[i*2]-2;
-		amount = item_list[i*2+1];
+		idx = item_list[i].index - 2;
+		amount = item_list[i].amount;
 
 		// Forged packet, we do not care if he loses items
 		if( sd->inventory_data[idx] == nullptr ){
@@ -3013,7 +3013,9 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 			}
 		}
 
-		pc_delitem(sd, idx, amount, 0, 6, LOG_TYPE_NPC);
+		if (pc_delitem(sd, idx, amount, 0, 6, LOG_TYPE_NPC)) {
+			return 1;
+		}
 	}
 
 	if( z > MAX_ZENY )

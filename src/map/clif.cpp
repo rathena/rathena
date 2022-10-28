@@ -12295,16 +12295,15 @@ void clif_npc_sell_result(struct map_session_data* sd, unsigned char result)
 void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 {
 	int fail=0,n;
-	unsigned short *item_list;
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+	PACKET_CZ_PC_SELL_ITEMLIST* p = reinterpret_cast<PACKET_CZ_PC_SELL_ITEMLIST*>(RFIFOP(fd, 0));
 
-	n = (RFIFOW(fd,info->pos[0])-4) /4; // (pktlen-(cmd+len))/listsize
-	item_list = (unsigned short*)RFIFOP(fd,info->pos[1]);
-
+	n = (p->packetLength - 4) / sizeof(PACKET_CZ_PC_SELL_ITEMLIST_sub); // (pktlen-(cmd+len))/listsize
+	
 	if (sd->state.trading || !sd->npc_shopid)
 		fail = 1;
 	else
-		fail = npc_selllist(sd,n,item_list);
+		fail = npc_selllist(sd, n, p->sellList);
 
 	sd->npc_shopid = 0; //Clear shop data.
 	clif_npc_sell_result(sd, fail);
