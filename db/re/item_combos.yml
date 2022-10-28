@@ -20895,7 +20895,7 @@ Body:
           - DesireOfDeath
           - aegis_310655
     Script: |
-      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000; }";
       /*Unknow Rate*/
   - Combos:
       - Combo:
@@ -22531,7 +22531,7 @@ Body:
           - Dynast
           - aegis_310655
     Script: |
-      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000; }";
   - Combos:
       - Combo:
           - FrontiaBoots
