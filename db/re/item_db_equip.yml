@@ -153203,10 +153203,10 @@ Body:
          .@dmg = 15;
       if (.@r>=11)
          .@dmg += 20;
-      bonus2 bAddRace,RC_Brute,r,.@dmg;
-      bonus2 bAddRace,RC_Fish,r,.@dmg;
-      bonus2 bAddRace,RC_Brute,r,.@dmg;
-      bonus2 bAddRace,RC_Fish,r,.@dmg;
+      bonus2 bAddRace,RC_Brute,.@dmg;
+      bonus2 bAddRace,RC_Fish,.@dmg;
+      bonus2 bAddRace,RC_Brute,.@dmg;
+      bonus2 bAddRace,RC_Fish,.@dmg;
   - Id: 470125
     AegisName: E_Auto_Leg_A
     Name: Automatic Leg Type A (bind)    # !todo check english name
