@@ -36795,7 +36795,7 @@ Body:
       } else if (.@r >= 7) {
          .@mdef += 3;
       }
-      bonus bMDef,.@mdef;
+      bonus bMdef,.@mdef;
   - Id: 25672
     AegisName: EP17_1_EVT05
     Name: Modification Module (Vit)
@@ -49372,7 +49372,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bMAtkRate,10;
+      bonus bMatkRate,10;
       bonus2 bSubRace,RC_Demon,-5;
       bonus bMaxSPrate,-50;
   - Id: 300354
@@ -62219,7 +62219,7 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bMAtk,20*(.@r/3);
+      bonus bMatk,20*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
       if (.@r>=9) {
         bonus bMatkRate,10;
