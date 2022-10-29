@@ -36795,7 +36795,7 @@ Body:
       } else if (.@r >= 7) {
          .@mdef += 3;
       }
-      bonus bMDef,.@mdef;
+      bonus bMdef,.@mdef;
   - Id: 25672
     AegisName: EP17_1_EVT05
     Name: Modification Module (Vit)
@@ -44033,7 +44033,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000; }";
       /*Unknow Rate*/
   - Id: 29438
     AegisName: Z-Knockback
@@ -49372,7 +49372,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bMAtkRate,10;
+      bonus bMatkRate,10;
       bonus2 bSubRace,RC_Demon,-5;
       bonus bMaxSPrate,-50;
   - Id: 300354
@@ -50187,7 +50187,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000; }";
       /*Unknow Rate*/
   - Id: 310076
     AegisName: Cassock_Str
@@ -62219,7 +62219,7 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bMAtk,20*(.@r/3);
+      bonus bMatk,20*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
       if (.@r>=9) {
         bonus bMatkRate,10;
