@@ -1450,48 +1450,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;
 
-	if (sc && sc->data[SC_MAXPAIN])
-		return 0;
-
-	if (sc) {
-		if (sc->data[SC_IMMUNE_PROPERTY]) {
-			int element = skill_get_ele(skill_id, skill_lv);
-			if (!skill_id || element == ELE_WEAPON) {
-					element = status_get_status_data(src)->rhw.ele | status_get_status_data(src)->lhw.ele;
-				if (tsd && tsd->state.arrow_atk && tsd->bonus.arrow_ele)
-					element = tsd->bonus.arrow_ele;
-				if (tsd && tsd->spiritcharm_type != CHARM_TYPE_NONE && tsd->spiritcharm >= MAX_SPIRITCHARM)
-					element = tsd->spiritcharm_type; 
-			}
-			else if (element == ELE_ENDOWED) //Use enchantment's element
-				element = status_get_attack_sc_element(src, status_get_sc(src));
-			else if (element == ELE_RANDOM) //Use random element
-				element = rnd() % ELE_ALL;
-
-			if ((sc->data[SC_IMMUNE_PROPERTY_NOTHING] && element == ELE_NEUTRAL)
-			|| (sc->data[SC_IMMUNE_PROPERTY_WATER] && element == ELE_WATER)
-			|| (sc->data[SC_IMMUNE_PROPERTY_GROUND] && element == ELE_EARTH)
-			|| (sc->data[SC_IMMUNE_PROPERTY_FIRE] && element == ELE_FIRE)
-			|| (sc->data[SC_IMMUNE_PROPERTY_WIND] && element == ELE_WIND)
-			|| (sc->data[SC_IMMUNE_PROPERTY_DARKNESS] && element == ELE_DARK)
-			|| (sc->data[SC_IMMUNE_PROPERTY_SAINT] && element == ELE_HOLY)
-			|| (sc->data[SC_IMMUNE_PROPERTY_POISON] && element == ELE_POISON)
-			|| (sc->data[SC_IMMUNE_PROPERTY_TELEKINESIS] && element == ELE_GHOST)
-			|| (sc->data[SC_IMMUNE_PROPERTY_UNDEAD] && element == ELE_UNDEAD)) {
-				damage = 0;
-			}
-		}
-	}
-
-	if (sc && sc->data[SC_DAMAGE_HEAL]) {
-		int dmg_heal_lv = sc->data[SC_DAMAGE_HEAL]->val1;
-		if (damage > 0 && ((flag & BF_WEAPON && dmg_heal_lv == 1) || (flag & BF_MAGIC && dmg_heal_lv == 2) || (flag & BF_MISC && dmg_heal_lv == 3))) {//Absorb MISC damage or WEAPON & MAGIC damage on level 3?
-			clif_skill_nodamage(NULL, bl, AL_HEAL, (int)damage, 1);
-			status_heal(bl, damage, 0, 0);
-			damage = 0;
-		}
-	}
-
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
@@ -2522,6 +2480,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
+		case NPC_MAXPAIN_ATK:
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -6398,6 +6357,12 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		if (!tsc)
 			return;
 
+		if (tsc->data[SC_MAXPAIN]) {
+			tsc->data[SC_MAXPAIN]->val2 = (int)damage;
+			if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && (wd->flag&BF_SHORT))) //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
+				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
+		}
+		
 		// Calculate skill reflect damage separately
 		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILLIMMUNE))
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
@@ -6407,12 +6372,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 			if (sc && sc->data[SC_VITALITYACTIVATION])
 				rdamage /= 2;
-			if (tsc->data[SC_MAXPAIN]) {
-				tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
-				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, wd->flag);
-				tsc->data[SC_MAXPAIN]->val2 = 0;
-			}
-			else if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
+			if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
 				rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
@@ -6713,6 +6673,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			break;
 		case MH_EQC:
 			ATK_ADD(wd.damage, wd.damage2, 6000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
+			break;
+		case NPC_MAXPAIN_ATK:
+			if (sc && sc->data[SC_MAXPAIN]) {
+				if (sc->data[SC_MAXPAIN]->val2)
+					wd.damage = sc->data[SC_MAXPAIN]->val2 * skill_lv / 10;
+				else if (sc->data[SC_MAXPAIN]->val3)
+					wd.damage = sc->data[SC_MAXPAIN]->val3 * skill_lv / 10;
+			}
+			else 
+				wd.damage = 0;
 			break;
 	}
 
@@ -8188,12 +8158,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if (status_bl_has_mode(target, MD_STATUSIMMUNE))
 				md.damage /= 10;
 			break;
-		case NPC_MAXPAIN_ATK:
-			if (ssc && ssc->data[SC_MAXPAIN])
-				md.damage = ssc->data[SC_MAXPAIN]->val2;
-			else
-				md.damage = 0;
-			break;
 		case NPC_WIDESUCK:
 			md.damage = tstatus->max_hp * 15 / 100;
 			break;
@@ -8464,7 +8428,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 						return 0;
 				}
 			}
-			if ( tsc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
+			if ( tsc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION && skill_id != NPC_MAXPAIN_ATK ) {
 				// Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
 				if (!skill_id && battle_config.devotion_rdamage_skill_only && tsc->data[SC_REFLECTSHIELD]->val4)
 					rdamage = 0;
@@ -8510,11 +8474,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 			rdamage -= damage * sc->data[SC_VENOMBLEED]->val2 / 100;
 			rdamage = i64max(rdamage, 1);
 		}
-	}
-
-	if (tsc) {
-		if (tsc->data[SC_MAXPAIN])
-			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
 	// Config damage adjustment
