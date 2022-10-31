@@ -6326,7 +6326,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 	if (sc->data[SC_ALL_STAT_DOWN])
 		str -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
-	return (unsigned short)cap_value(str,0,USHRT_MAX);
+	return (unsigned short)cap_value(str,SHRT_MIN,USHRT_MAX);
 }
 
 /**
@@ -6412,7 +6412,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if (sc->data[SC_ALL_STAT_DOWN])
 		agi -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
-	return (unsigned short)cap_value(agi,0,USHRT_MAX);
+	return (unsigned short)cap_value(agi,SHRT_MIN,USHRT_MAX);
 }
 
 /**
@@ -6490,7 +6490,7 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if (sc->data[SC_ALL_STAT_DOWN])
 		vit -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
-	return (unsigned short)cap_value(vit,0,USHRT_MAX);
+	return (unsigned short)cap_value(vit,SHRT_MIN,USHRT_MAX);
 }
 
 /**
@@ -6581,7 +6581,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 	if (sc->data[SC_ALL_STAT_DOWN])
 		int_ -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
-	return (unsigned short)cap_value(int_,0,USHRT_MAX);
+	return (unsigned short)cap_value(int_,SHRT_MIN,USHRT_MAX);
 }
 
 /**
@@ -6669,7 +6669,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if (sc->data[SC_ALL_STAT_DOWN])
 		dex -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
-	return (unsigned short)cap_value(dex,0,USHRT_MAX);
+	return (unsigned short)cap_value(dex,SHRT_MIN,USHRT_MAX);
 }
 
 /**
@@ -6745,7 +6745,7 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 	if (sc->data[SC_ALL_STAT_DOWN])
 		luk -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
-	return (unsigned short)cap_value(luk,0,USHRT_MAX);
+	return (unsigned short)cap_value(luk,SHRT_MIN,USHRT_MAX);
 }
 
 /**
