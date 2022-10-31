@@ -1450,6 +1450,46 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;
 
+	if (sc) {
+		if (sc->data[SC_IMMUNE_PROPERTY]) {
+			int element = skill_get_ele(skill_id, skill_lv);
+			if (!skill_id || element == ELE_WEAPON) {
+				element = status_get_status_data(src)->rhw.ele | status_get_status_data(src)->lhw.ele;
+				if (tsd && tsd->state.arrow_atk && tsd->bonus.arrow_ele)
+					element = tsd->bonus.arrow_ele;
+				if (tsd && tsd->spiritcharm_type != CHARM_TYPE_NONE && tsd->spiritcharm >= MAX_SPIRITCHARM)
+					element = tsd->spiritcharm_type;
+			} else if (element == ELE_ENDOWED) //Use enchantment's element
+				element = status_get_attack_sc_element(src, status_get_sc(src));
+			else if (element == ELE_RANDOM) //Use random element
+				element = rnd() % ELE_ALL;
+
+			if ((sc->data[SC_IMMUNE_PROPERTY_NOTHING] && element == ELE_NEUTRAL)
+				|| (sc->data[SC_IMMUNE_PROPERTY_WATER] && element == ELE_WATER)
+				|| (sc->data[SC_IMMUNE_PROPERTY_GROUND] && element == ELE_EARTH)
+				|| (sc->data[SC_IMMUNE_PROPERTY_FIRE] && element == ELE_FIRE)
+				|| (sc->data[SC_IMMUNE_PROPERTY_WIND] && element == ELE_WIND)
+				|| (sc->data[SC_IMMUNE_PROPERTY_DARKNESS] && element == ELE_DARK)
+				|| (sc->data[SC_IMMUNE_PROPERTY_SAINT] && element == ELE_HOLY)
+				|| (sc->data[SC_IMMUNE_PROPERTY_POISON] && element == ELE_POISON)
+				|| (sc->data[SC_IMMUNE_PROPERTY_TELEKINESIS] && element == ELE_GHOST)
+				|| (sc->data[SC_IMMUNE_PROPERTY_UNDEAD] && element == ELE_UNDEAD)) {
+				damage = 0;
+			}
+		}
+	}
+
+	if (sc && sc->data[SC_DAMAGE_HEAL]) {
+		int dmg_heal_lv = sc->data[SC_DAMAGE_HEAL]->val1;
+		if (damage > 0 && ((flag & BF_WEAPON && dmg_heal_lv == 1) || (flag & BF_MAGIC && dmg_heal_lv == 2) || (flag & BF_MISC && dmg_heal_lv == 3))) {//Absorb MISC damage or WEAPON & MAGIC damage on level 3?
+			if(flag & BF_MAGIC)
+				clif_specialeffect(bl, 1143, AREA);
+			clif_skill_nodamage(NULL, bl, AL_HEAL, (int)damage, 1);
+			status_heal(bl, damage, 0, 0);
+			damage = 0;
+		}
+	}
+
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
