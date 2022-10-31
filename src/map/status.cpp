@@ -6323,6 +6323,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += sc->data[SC_ALMIGHTY]->val1;
 	if (sc->data[SC_ULTIMATECOOK])
 		str += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->data[SC_ALL_STAT_DOWN])
+		str -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
 }
@@ -6407,6 +6409,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += sc->data[SC_ALMIGHTY]->val1;
 	if (sc->data[SC_ULTIMATECOOK])
 		agi += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->data[SC_ALL_STAT_DOWN])
+		agi -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
 	return (unsigned short)cap_value(agi,0,USHRT_MAX);
 }
@@ -6483,6 +6487,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_ULTIMATECOOK]->val1;
 	if (sc->data[SC_CUP_OF_BOZA])
 		vit += 10;
+	if (sc->data[SC_ALL_STAT_DOWN])
+		vit -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
@@ -6572,6 +6578,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += sc->data[SC_ALMIGHTY]->val1;
 	if (sc->data[SC_ULTIMATECOOK])
 		int_ += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->data[SC_ALL_STAT_DOWN])
+		int_ -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
 	return (unsigned short)cap_value(int_,0,USHRT_MAX);
 }
@@ -6658,6 +6666,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += sc->data[SC_ALMIGHTY]->val1;
 	if (sc->data[SC_ULTIMATECOOK])
 		dex += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->data[SC_ALL_STAT_DOWN])
+		dex -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
 }
@@ -6732,6 +6742,8 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk += sc->data[SC_ULTIMATECOOK]->val1;
 	if (sc->data[SC_MYSTICPOWDER])
 		luk += 10;
+	if (sc->data[SC_ALL_STAT_DOWN])
+		luk -= sc->data[SC_ALL_STAT_DOWN]->val2;
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
@@ -10792,6 +10804,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = 1;
 			tick_time = val2 * 1000; // [GodLesZ] tick time
 			break;
+		case SC_GRADUAL_GRAVITY:
+			val2 = 10 * val1;
+			val4 = tick / 1000;
+			tick_time = 1000;
+			break;
+		case SC_ALL_STAT_DOWN:
+			val2 = (val1 < 5)?(20 * val1 - 10):100;
+			break;
 		case SC_BOSSMAPINFO:
 			if( sd != NULL ) {
 				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
@@ -13855,6 +13875,18 @@ TIMER_FUNC(status_change_timer){
 				sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
 			status_heal(bl, 0, sp, 2);
 			sc_timer_next((sce->val2 * 1000) + tick);
+			return 0;
+		}
+		break;
+
+	case SC_GRADUAL_GRAVITY:
+		if (--(sce->val4) >= 0) {
+			int hp = 0;
+			hp = status->max_hp * sce->val2 / 100;
+			if (!status_charge(bl, hp, 0))
+				status_zap(bl, hp, 0);
+			if (sc->data[type])
+				sc_timer_next(1000 + tick);
 			return 0;
 		}
 		break;
