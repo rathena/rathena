@@ -7621,15 +7621,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				y = -1;
 			else
 				y = 0;
-			if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates with target. 
+			if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates
 				if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1)) {
-					skill_blown(bl, bl, 1, map_calc_dir_xy(src->x + x, src->y + y, bl->x, bl->y, unit_getdir(src)), BLOWN_IGNORE_NO_KNOCKBACK);
+					clif_blown(src);
 				}
 			}
 			else {
 				int16 px = bl->x, py = bl->y;
-				if (skill_check_unit_movepos(1, bl, src->x + x, src->y + y, 1, 1)) {
-					skill_blown(bl, bl, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_IGNORE_NO_KNOCKBACK);
+				if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1)) {
+					clif_blown(bl);
 				}
 				if (unit_movepos(src, px, py, 1, 1)) {
 					clif_blown(src);
