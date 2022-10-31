@@ -38,7 +38,7 @@ static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
 	int j;
 	struct cash_item_data* cid;
 
-	if( !itemdb_exists( nameid ) ){
+	if( !item_db.exists( nameid ) ){
 		ShowWarning( "cashshop_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return 0;
 	}
@@ -156,7 +156,7 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	time_t now = time(NULL);
 	struct sale_item_data* sale_item = NULL;
 
-	if( !itemdb_exists(nameid) ){
+	if( !item_db.exists(nameid) ){
 		ShowWarning( "sale_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return false;
 	}

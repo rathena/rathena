@@ -56,9 +56,22 @@
 #define VIP_SCRIPT 0
 
 #ifdef VIP_ENABLE
-	#define MIN_STORAGE 300 // Default number of storage slots.
-	#define MIN_CHARS 3 // Default number of characters per account.
-	#define MAX_CHAR_VIP 6 // This must be less than MAX_CHARS
+	#ifndef MIN_STORAGE
+		#define MIN_STORAGE 300 // Default number of storage slots.
+	#endif
+	#ifndef MAX_CHAR_VIP
+		#define MAX_CHAR_VIP 6 // This must be less than MAX_CHARS
+	#endif
+#else
+	#ifndef MIN_STORAGE
+		#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
+	#endif
+	#ifndef MAX_CHAR_VIP
+		#define MAX_CHAR_VIP 0
+	#endif
+#endif
+
+#ifndef MAX_CHAR_BILLING
 	#define MAX_CHAR_BILLING 0 // This must be less than MAX_CHARS
 #endif
 
@@ -83,6 +96,9 @@
 
 /// Uncomment for use with Nemo patch ExtendCashShopPreview
 //#define ENABLE_CASHSHOP_PREVIEW_PATCH
+
+/// Uncomment for use with Nemo patch ExtendOldCashShopPreview
+//#define ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
 
 /**
  * No settings past this point

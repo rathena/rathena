@@ -9,11 +9,13 @@
 
 #include "../common/database.hpp"
 #include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 #include "clif.hpp" //
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;
@@ -205,6 +207,11 @@ struct npc_data {
 		t_tick timeout;
 		unsigned long color;
 	} progressbar;
+
+#ifdef MAP_GENERATOR
+	struct navi_link navi; // for warps and the src of npcs
+	std::vector<navi_link> links; // for extra links, like warper npc
+#endif
 };
 
 struct eri;
@@ -1487,6 +1494,7 @@ void npc_parse_mob2(struct spawn_data* mob);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int npce_index);
+npc_data* npc_duplicate_npc( npc_data* nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys );
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);

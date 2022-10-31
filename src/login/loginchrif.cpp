@@ -158,7 +158,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	char birthdate[10+1] = "";
 	char pincode[PINCODE_LENGTH+1];
 	char isvip = false;
-	uint8 char_slots = MIN_CHARS, char_vip = 0, char_billing = 0;
+	uint8 char_slots = MIN_CHARS, char_vip = 0, char_billing = MAX_CHAR_BILLING;
 	AccountDB* accounts = login_get_accounts_db();
 
 	memset(pincode,0,PINCODE_LENGTH+1);
@@ -171,14 +171,19 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 
 		safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
 		safestrncpy(pincode, acc.pincode, sizeof(pincode));
+		char_slots = login_config.char_per_account;
+
+		// Respect account information from login-server
+		if( acc.char_slots > 0 ){
+			char_slots = acc.char_slots;
+		}
+
 #ifdef VIP_ENABLE
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(NULL) ) {
 			isvip = true;
-			char_slots = login_config.char_per_account + char_vip;
-		} else
-			char_slots = login_config.char_per_account;
-		char_billing = MAX_CHAR_BILLING; //TODO create a config for this
+			char_slots += char_vip;
+		}
 #endif
 	}
 
@@ -676,17 +681,26 @@ int logchrif_parse_reqvipdata(int fd) {
 				vip_time += timediff; // set new duration
 			}
 			if( now < vip_time ) { //isvip
-				if(acc.group_id != login_config.vip_sys.group) //only upd this if we're not vip already
+				if(acc.group_id != login_config.vip_sys.group){ //only upd this if we're not vip already
 					acc.old_group = acc.group_id;
+					if( acc.char_slots == 0 ){
+						acc.char_slots = MIN_CHARS;
+					}
+					acc.char_slots += login_config.vip_sys.char_increase;
+				}
 				acc.group_id = login_config.vip_sys.group;
-				acc.char_slots = login_config.char_per_account + login_config.vip_sys.char_increase;
 				isvip = true;
 			} else { //expired or @vip -xx
 				vip_time = 0;
-				if(acc.group_id == login_config.vip_sys.group) //prevent alteration in case account wasn't registered as vip yet
+				if(acc.group_id == login_config.vip_sys.group){ //prevent alteration in case account wasn't registered as vip yet
 					acc.group_id = acc.old_group;
+					if( acc.char_slots == 0 ){
+						acc.char_slots = MIN_CHARS;
+					}else{
+						acc.char_slots -= login_config.vip_sys.char_increase;
+					}
+				}
 				acc.old_group = 0;
-				acc.char_slots = login_config.char_per_account;
 			}
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc, false);
