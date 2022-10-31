@@ -30,6 +30,7 @@
 #include "log.hpp"
 #include "map.hpp"
 #include "mob.hpp"
+#include "navi.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
@@ -2112,18 +2113,18 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 	strftime(time, sizeof(time), "%H:%M", localtime(&nd->u.tomb.kill_time));
 
 	// TODO: Find exact color?
-	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name.c_str());
-	clif_scriptmes(sd, nd->bl.id, buffer);
+	snprintf( buffer, sizeof( buffer ), msg_txt( sd, 657 ), nd->u.tomb.md->db->name.c_str() ); // [ ^EE0000%s^000000 ]
+	clif_scriptmes( *sd, nd->bl.id, buffer );
 
-	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,658));
+	clif_scriptmes( *sd, nd->bl.id, msg_txt( sd, 658 ) ); // Has met its demise
 
-	snprintf(buffer, sizeof(buffer), msg_txt(sd,659), time);
-	clif_scriptmes(sd, nd->bl.id, buffer);
+	snprintf( buffer, sizeof( buffer ), msg_txt( sd, 659 ), time ); // Time of death : ^EE0000%s^000000
+	clif_scriptmes( *sd, nd->bl.id, buffer );
 
-	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,660));
+	clif_scriptmes( *sd, nd->bl.id, msg_txt( sd, 660 ) ); // Defeated by
 
-	snprintf(buffer, sizeof(buffer), msg_txt(sd,661), nd->u.tomb.killer_name[0] ? nd->u.tomb.killer_name : "Unknown");
-	clif_scriptmes(sd, nd->bl.id, buffer);
+	snprintf( buffer, sizeof( buffer ), msg_txt( sd, 661 ), nd->u.tomb.killer_name[0] ? nd->u.tomb.killer_name : "Unknown" ); // [^EE0000%s^000000]
+	clif_scriptmes( *sd, nd->bl.id, buffer );
 
 	clif_scriptclose(sd, nd->bl.id);
 }
@@ -2343,7 +2344,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 			break;
 		case NPCTYPE_ITEMSHOP:
 			{
-				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
+				std::shared_ptr<item_data> id = item_db.find(nd->u.shop.itemshop_nameid);
 				int delete_amount = price, i;
 
 				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
@@ -2418,7 +2419,6 @@ int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s
 	t_itemid nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	enum e_CASHSHOP_ACK res;
-	item_data *id;
 
 	if( !nd || ( nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 		return ERROR_TYPE_NPC;
@@ -2434,7 +2434,8 @@ int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s
 	{
 		nameid = item_list[i].nameid;
 		amount = item_list[i].qty;
-		id = itemdb_exists(nameid);
+
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
 		if( !id || amount <= 0 )
 			return ERROR_TYPE_ITEM_ID;
@@ -2445,7 +2446,7 @@ int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s
 
 		nameid = item_list[i].nameid = nd->u.shop.shop_item[j].nameid; //item_avail replacement
 
-		if( !itemdb_isstackable2(id) && amount > 1 )
+		if( !itemdb_isstackable2(id.get()) && amount > 1 )
 		{
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %u!\n", sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
 			amount = item_list[i].qty = 1;
@@ -2529,7 +2530,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 		case NPCTYPE_ITEMSHOP:
 		{
 			int total = 0, i;
-			struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
+			std::shared_ptr<item_data> id = item_db.find(nd->u.shop.itemshop_nameid);
 
 			if (id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
 				if (display) {
@@ -2576,7 +2577,6 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, int points)
 {
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
-	struct item_data *item;
 	int i, price, w;
 	enum e_CASHSHOP_ACK res;
 
@@ -2592,7 +2592,9 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 	if( sd->state.trading )
 		return ERROR_TYPE_EXCHANGE;
 
-	if( (item = itemdb_exists(nameid)) == NULL )
+	std::shared_ptr<item_data> id = item_db.find(nameid);
+
+	if( id == nullptr )
 		return ERROR_TYPE_ITEM_ID; // Invalid Item
 
 	ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[i].nameid) == nameid);
@@ -2603,7 +2605,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 
 	nameid = nd->u.shop.shop_item[i].nameid; //item_avail replacement
 
-	if(!itemdb_isstackable2(item) && amount > 1)
+	if(!itemdb_isstackable2(id.get()) && amount > 1)
 	{
 		ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %u!\n",
 			sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
@@ -2613,20 +2615,20 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 	switch( pc_checkadditem(sd, nameid, amount) )
 	{
 		case CHKADDITEM_NEW:
-			if( pc_inventoryblank(sd) < item->inventorySlotNeeded(amount) )
+			if( pc_inventoryblank(sd) < id->inventorySlotNeeded(amount) )
 				return ERROR_TYPE_INVENTORY_WEIGHT;
 			break;
 		case CHKADDITEM_OVERAMOUNT:
 			return ERROR_TYPE_INVENTORY_WEIGHT;
 	}
 
-	w = item->weight * amount;
+	w = id->weight * amount;
 	if( w + sd->weight > sd->max_weight )
 		return ERROR_TYPE_INVENTORY_WEIGHT;
 
 	if( (double)nd->u.shop.shop_item[i].value * amount > INT_MAX )
 	{
-		ShowWarning("npc_cashshop_buy: Item '%s' (%u) price overflow attempt!\n", item->name.c_str(), nameid);
+		ShowWarning("npc_cashshop_buy: Item '%s' (%u) price overflow attempt!\n", id->name.c_str(), nameid);
 		ShowDebug("(NPC:'%s' (%s,%d,%d), player:'%s' (%d/%d), value:%d, amount:%d)\n",
 					nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
 		return ERROR_TYPE_ITEM_ID;
@@ -2647,7 +2649,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
 
-		if (item->flag.guid)
+		if (id->flag.guid)
 			get_amt = 1;
 
 		for (int j = 0; j < amount; j += get_amt)
@@ -2722,7 +2724,6 @@ e_purchase_result npc_buylist( struct map_session_data* sd, std::vector<s_npc_bu
 		t_itemid nameid;
 		unsigned short amount;
 		int value;
-		item_data *id;
 
 		// find this entry in the shop's sell list
 		ARR_FIND( 0, nd->u.shop.count, j,
@@ -2744,12 +2745,13 @@ e_purchase_result npc_buylist( struct map_session_data* sd, std::vector<s_npc_bu
 		amount = item_list[i].qty;
 		nameid = item_list[i].nameid = shop[j].nameid; //item_avail replacement
 		value = shop[j].value;
-		id = itemdb_exists(nameid);
+
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
 		if( !id )
 			return e_purchase_result::PURCHASE_FAIL_COUNT; // item no longer in itemdb
 
-		if( !itemdb_isstackable2(id) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
+		if( !itemdb_isstackable2(id.get()) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %u!\n",
 				sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
 			amount = item_list[i].qty = 1;
@@ -3046,7 +3048,7 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 	uint32 requiredItems[MAX_INVENTORY] = { 0 };
 
 	for( s_barter_purchase& purchase : purchases ){
-		purchase.data = itemdb_exists( purchase.item->nameid );
+		purchase.data = item_db.find( purchase.item->nameid ).get();
 
 		if( purchase.data == nullptr ){
 			return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
@@ -3071,14 +3073,13 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 
 		for( const auto& requirementPair : purchase.item->requirements ){
 			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
-
-			item_data* id = itemdb_exists( requirement->nameid );
+			std::shared_ptr<item_data> id = item_db.find(requirement->nameid);
 
 			if( id == nullptr ){
 				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
 			}
 
-			if( itemdb_isstackable2( id ) ){
+			if( itemdb_isstackable2( id.get() ) ){
 				int j;
 
 				for( j = 0; j < MAX_INVENTORY; j++ ){
@@ -3715,6 +3716,12 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->progressbar.timeout = 0;
 	nd->vd = npc_viewdb[0]; // Default to JT_INVISIBLE
 
+#ifdef MAP_GENERATOR
+	nd->navi.pos = {m, x, y};
+	nd->navi.id = 0;
+	nd->navi.npc = nd;
+#endif
+
 	return nd;
 }
 
@@ -3834,6 +3841,11 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.warp.y = to_y;
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = ys;
+
+#ifdef MAP_GENERATOR
+	nd->navi.warp_dest = {map_mapindex2mapid(i), to_x, to_y};
+#endif
+
 	npc_warp++;
 	nd->bl.type = BL_NPC;
 	nd->subtype = NPCTYPE_WARP;
@@ -3926,7 +3938,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
-			if (itemdb_exists(nameid) == NULL) {
+			if (!item_db.exists(nameid)) {
 				ShowWarning("npc_parse_shop: Invalid item ID cost in file '%s', line '%d' (id '%u').\n", filepath, strline(buffer,start-buffer), nameid);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -3985,7 +3997,6 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		t_itemid nameid2;
 		int32 qty = -1;
 		int value;
-		struct item_data* id;
 		bool skip = false;
 
 		if( p == NULL )
@@ -4010,7 +4021,9 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		if (skip)
 			break;
 
-		if( (id = itemdb_exists(nameid2)) == NULL ) {
+		std::shared_ptr<item_data> id = item_db.find(nameid2);
+
+		if( id == nullptr ) {
 			ShowWarning("npc_parse_shop: Invalid sell item in file '%s', line '%d' (id '%u').\n", filepath, strline(buffer,start-buffer), nameid2);
 			p = strchr(p+1,',');
 			continue;
@@ -4687,7 +4700,7 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		struct npc_item_list *list = &market->list[i];
 		uint16 j;
 
-		if (!list->nameid || !itemdb_exists(list->nameid)) {
+		if (!item_db.exists(list->nameid)) {
 			ShowError("npc_market_checkall_sub: NPC '%s' sells invalid item '%u', deleting...\n", nd->exname, list->nameid);
 			npc_market_delfromsql(nd->exname, list->nameid);
 			continue;
@@ -4956,7 +4969,7 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 
 	for( i = 0; i < ( strlen( message ) + 1 ) && k < 127; i ++ ) {
 		if( message[i] == ' ' || message[i] == '\0' ) {
-			if( message[ ( i - 1 ) ] == ' ' ) {
+			if (i > 0 && message[i - 1] == ' ') {
 				continue; // To prevent "@atcmd [space][space]" and .@atcmd_numparameters return 1 without any parameter.
 			}
 			temp[k] = '\0';
@@ -5040,7 +5053,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 {
 	int num, mob_id, mob_lv = -1, size = -1, w1count;
 	short m, x = 0, y = 0, xs = -1, ys = -1;
-	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int ai = AI_NONE; // mob_ai
 
@@ -5053,7 +5066,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	// w4=<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 	if( ( w1count = sscanf(w1, "%15[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) ) < 1
 	||	sscanf(w3, "%23[^,],%11d", mobname, &mob_lv) < 1
-	||	sscanf(w4, "%11d,%11d,%11u,%11u,%77[^,],%11d,%11d[^\t\r\n]", &mob_id, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
+	||	sscanf(w4, "%23[^,],%11d,%11u,%11u,%77[^,],%11d,%11d[^\t\r\n]", sprite, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
 	{
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -5076,9 +5089,21 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start,'\n');// skip and continue
 	}
 
-	// check monster ID if exists!
-	if( mobdb_checkid(mob_id) == 0 )
-	{
+	// Check if sprite is the mob name or ID
+	char *pid;
+	sprite[NAME_LENGTH-1] = '\0';
+	mob_id = strtol(sprite, &pid, 0);
+
+	if (pid != nullptr && *pid != '\0') {
+		std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(sprite);
+
+		if (mob == nullptr) {
+			ShowError("npc_parse_mob: Unknown mob name %s (file '%s', line '%d').\n", sprite, filepath, strline(buffer,start-buffer));
+			return strchr(start,'\n');// skip and continue
+		}
+		mob_id = mob->id;
+	}
+	else if (mobdb_checkid(mob_id) == 0) {	// check monster ID if exists!
 		ShowError("npc_parse_mob: Unknown mob ID %d (file '%s', line '%d').\n", mob_id, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
@@ -5264,7 +5289,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 				if (!strcmpi(drop_arg1, "random"))
 					args.nightmaredrop.drop_id = -1;
-				else if (itemdb_exists((args.nightmaredrop.drop_id = strtol(drop_arg1, nullptr, 10))) == NULL) {
+				else if (!item_db.exists((args.nightmaredrop.drop_id = strtol(drop_arg1, nullptr, 10)))) {
 					args.nightmaredrop.drop_id = 0;
 					ShowWarning("npc_parse_mapflag: Invalid item ID '%d' supplied for mapflag 'pvp_nightmaredrop' (file '%s', line '%d'), removing.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", args.nightmaredrop.drop_id, filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
 					break;
@@ -5615,6 +5640,60 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	}
 
 	return vector.size();
+}
+
+/**
+ * Duplicates a NPC.
+ * nd: Original NPC data
+ * name: Duplicate NPC name
+ * m: Map ID of duplicate NPC
+ * x: X coordinate of duplicate NPC
+ * y: Y coordinate of duplicate NPC
+ * class_: View of duplicate NPC
+ * dir: Facing direction of duplicate NPC
+ * Returns duplicate NPC data on success
+ */
+npc_data* npc_duplicate_npc( npc_data* nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys ){
+	static char w1[128], w2[128], w3[128], w4[128];
+	const char* stat_buf = "- call from duplicate subsystem -\n";
+	char exname[NPC_NAME_LENGTH + 1];
+
+	snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map_getmapdata(mapid)->name, x, y, dir);
+	snprintf(w2, sizeof(w2), "duplicate(%s)", nd->exname);
+
+	//Making sure the generated name is not used for another npc.
+	int i = 0;
+	snprintf(exname, ARRAYLENGTH(exname), "%d_%d_%d_%d", i, mapid, x, y);
+	while (npc_name2id(exname) != nullptr) {
+		++i;
+		snprintf(exname, ARRAYLENGTH(exname), "%d_%d_%d_%d", i, mapid, x, y);
+	}
+
+	snprintf(w3, sizeof(w3), "%s::%s", name, exname);
+
+	if( xs >= 0 && ys >= 0 ){
+		snprintf( w4, sizeof( w4 ), "%d,%d,%d", class_, xs, ys ); // Touch Area
+	}else{
+		snprintf( w4, sizeof( w4 ), "%d", class_ );
+	}
+
+	npc_parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "DUPLICATE");//DUPLICATE means nothing for now.
+
+	npc_data* dnd = npc_name2id( exname );
+
+	// No need to try and execute any events
+	if( dnd == nullptr ){
+		return nullptr;
+	}
+
+	//run OnInit Events
+	char evname[EVENT_NAME_LENGTH];
+	safesnprintf(evname, EVENT_NAME_LENGTH, "%s::%s", exname, script_config.init_event_name);
+	if ((struct event_data*)strdb_get(ev_db, evname)) {
+		npc_event_do(evname);
+	}
+
+	return dnd;
 }
 
 const char *npc_get_script_event_name(int npce_index)

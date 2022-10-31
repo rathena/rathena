@@ -120,6 +120,60 @@ enum e_additem_result : uint8 {
 	ADDITEM_STACKLIMIT
 };
 
+#ifndef CAPTCHA_ANSWER_SIZE
+	#define CAPTCHA_ANSWER_SIZE 16
+#endif
+#ifndef CAPTCHA_BMP_SIZE
+	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
+#endif
+#ifndef MAX_CAPTCHA_CHUNK_SIZE
+	#define MAX_CAPTCHA_CHUNK_SIZE 1024
+#endif
+
+struct s_captcha_data {
+	uint16 index;
+	uint16 image_size;
+	char image_data[CAPTCHA_BMP_SIZE];
+	char captcha_answer[CAPTCHA_ANSWER_SIZE];
+	script_code *bonus_script;
+
+	~s_captcha_data() {
+		if (this->bonus_script)
+			script_free_code(this->bonus_script);
+	}
+};
+
+struct s_macro_detect {
+	std::shared_ptr<s_captcha_data> cd;
+	int32 reporter_aid;
+	int32 retry;
+	int32 timer;
+};
+
+enum e_macro_detect_status : uint8 {
+	MCD_TIMEOUT = 0,
+	MCD_INCORRECT = 1,
+	MCD_GOOD = 2,
+};
+
+enum e_macro_report_status : uint8 {
+	MCR_MONITORING = 0,
+	MCR_NO_DATA = 1,
+	MCR_INPROGRESS = 2,
+};
+
+class CaptchaDatabase : public TypesafeYamlDatabase<int16, s_captcha_data> {
+public:
+	CaptchaDatabase() : TypesafeYamlDatabase("CAPTCHA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+};
+
+extern CaptchaDatabase captcha_db;
+
 struct skill_cooldown_entry {
 	unsigned short skill_id;
 	int timer;
@@ -395,6 +449,8 @@ struct map_session_data {
 		t_itemid laphine_synthesis;
 		t_itemid laphine_upgrade;
 		bool roulette_open;
+		t_itemid item_reform;
+		uint64 item_enchant_index;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -867,6 +923,13 @@ struct map_session_data {
 		uint16 level;
 		int target;
 	} skill_keep_using;
+
+	struct {
+		std::shared_ptr<s_captcha_data> cd;
+		uint16 upload_size;
+	} captcha_upload;
+
+	s_macro_detect macro_detect;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1068,7 +1131,8 @@ static bool pc_cant_act2( struct map_session_data* sd ){
 		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
 		|| sd->state.barter_open || sd->state.barter_extended_open
 		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
-		|| sd->state.roulette_open || sd->state.enchantgrade_open;
+		|| sd->state.roulette_open || sd->state.enchantgrade_open
+		|| sd->state.item_reform || sd->state.item_enchant_index;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
@@ -1201,6 +1265,26 @@ public:
 };
 
 extern AttendanceDatabase attendance_db;
+
+struct s_reputation{
+	int64 id;
+	std::string name;
+	std::string variable;
+	int64 minimum;
+	int64 maximum;
+};
+
+class ReputationDatabase : public TypesafeYamlDatabase<int64, s_reputation>{
+public:
+	ReputationDatabase() : TypesafeYamlDatabase( "REPUTATION_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+};
+
+extern ReputationDatabase reputation_db;
 
 struct s_statpoint_entry{
 	uint16 level;
@@ -1347,6 +1431,8 @@ enum e_addskill_type {
 };
 
 bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
+bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv);
+bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -1553,7 +1639,7 @@ int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
 bool pc_isautolooting(struct map_session_data *sd, t_itemid nameid);
 
-void pc_overheat(struct map_session_data *sd, int16 heat);
+void pc_overheat(map_session_data &sd, int16 heat);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
 uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
@@ -1608,5 +1694,17 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
+
+// Captcha Register
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
+
+// Macro Detector
+void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_disconnect(map_session_data &sd);
+
+// Macro Reporter
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
+void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
 
 #endif /* PC_HPP */

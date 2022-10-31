@@ -19,6 +19,7 @@
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
+#include "navi.hpp"
 #include "script.hpp"
 
 struct npc_data;
@@ -812,6 +813,13 @@ struct map_data {
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
+#ifdef MAP_GENERATOR
+	struct {
+		std::vector<const struct npc_data *> npcs;
+		std::vector<const struct navi_link *> warps_into;
+		std::vector<const struct navi_link *> warps_outof;
+	} navi;
+#endif
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -823,6 +831,14 @@ struct map_data_other_server {
 	uint32 ip;
 	uint16 port;
 };
+
+struct inter_conf {
+	uint32 start_status_points;
+	bool emblem_woe_change;
+	uint32 emblem_transparency_limit;
+};
+
+extern struct inter_conf inter_config;
 
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk);
 int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
@@ -837,8 +853,6 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
-
-extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;

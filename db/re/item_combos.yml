@@ -156,7 +156,7 @@ Body:
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
       }
       if ((.@eq + .@weapon) >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          if ((.@eq + .@weapon) >= 22) {
             bonus bLongAtkRate,10;
          }
@@ -355,17 +355,21 @@ Body:
       bonus bAspdRate,getequiprefinerycnt(EQI_HAND_R);
   - Combos:
       - Combo:
-          - Principles_Of_Magic
-          - Librarian_Glove
-          - Pocket_Watch_
+          - Principles_Of_Magic    # 1572
+          - Librarian_Glove    # 2716
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Ancient_Magic
-          - Librarian_Glove
-          - Pocket_Watch_
+          - Ancient_Magic    # 1573
+          - Librarian_Glove    # 2716
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Ancient_Magic
-          - Librarian_Glove
-          - Pocket_Watch
+          - Ancient_Magic    # 1573
+          - Librarian_Glove    # 2716
+          - Pocket_Watch_    # 2717
+      - Combo:
+          - Principles_Of_Magic    # 1572
+          - Librarian_Glove    # 2716
+          - Pocket_Watch_    # 2717
     Script: |
       bonus bInt,5;
       bonus bMaxHP,700;
@@ -1011,19 +1015,19 @@ Body:
       }
   - Combos:
       - Combo:
-          - Novice_Warlock's_Staff
-          - Beginner's_Cap
-          - Beginner's_Suit
-          - Beginner's_Cloak
-          - Beginner's_Boots
-          - Beginner's_Ring
+          - Rebeginer_WL_Staff     # 2046
+          - Beginner's_Cap     # 19310
+          - Beginner's_Suit     # 15250
+          - Beginner's_Cloak     # 20906
+          - Beginner's_Boots     # 22173
+          - Beginner's_Ring     # 28566
     Script: |
       bonus bMatk,3*(min(BaseLevel,150)/10);
       bonus bVariableCastrate,-15;
       bonus2 bMagicAtkEle,Ele_Fire,5;
   - Combos:
       - Combo:
-          - Aeon_Staff
+          - Iron_Staff
           - Ancient_Hero_Boots
       - Combo:
           - Ancient_Hero_Boots
@@ -1061,37 +1065,37 @@ Body:
       }
   - Combos:
       - Combo:
-          - Memorize_Book
-          - One_Eyed_Glass
-          - Pocket_Watch
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book
-          - One_Eyed_Glass
-          - Pocket_Watch_
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Memorize_Book
-          - Pocket_Watch_
-          - One_Eyed_Glass_
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book
-          - Pocket_Watch
-          - One_Eyed_Glass_
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Memorize_Book_
-          - One_Eyed_Glass
-          - Pocket_Watch
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book_
-          - One_Eyed_Glass
-          - Pocket_Watch_
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Memorize_Book_
-          - Pocket_Watch_
-          - One_Eyed_Glass_
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book_
-          - Pocket_Watch
-          - One_Eyed_Glass_
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch__    # 2971
     Script: |
       bonus bHPrecovRate,15;
       bonus bSPrecovRate,15;
@@ -1151,8 +1155,8 @@ Body:
           - Illusion_Engine_A
           - Illusion_Leg_B
       - Combo:
-          - RangerStone_Robe_
-          - RangerStone_Middle_
+          - Ranger_Robe
+          - Ranger_Middle
       - Combo:
           - As_Wind_Ghost_Card
           - As_Ragged_Golem_Card
@@ -1167,7 +1171,7 @@ Body:
           - Sprint_Mail_IL
       - Combo:
           - Runeknight_Top3
-          - RuneknightStone_Robe_
+          - Runeknight_Robe
     Script: |
       bonus bVariableCastrate,-10;
   - Combos:
@@ -1314,11 +1318,11 @@ Body:
           - ILL_Phen_Card
           - ILL_Obeaune_Card
       - Combo:
-          - Yellow_Pitaya_Card
-          - Boiling_Marc_Card
+          - Pitaya_Y_Card
+          - EP17_2_Marc_Card
       - Combo:
-          - Purple_Pitaya_Card
-          - Boiling_Marc_Card
+          - Pitaya_V_Card
+          - EP17_2_Marc_Card
     Script: |
       bonus2 bSubEle,Ele_Neutral,5;
   - Combos:
@@ -1371,11 +1375,11 @@ Body:
           - Mechanical_Plant_Hat
           - Smoking_Pipe
       - Combo:
-          - RuneknightStone_Robe_
-          - RuneknightStone_Bottom_
+          - Runeknight_Robe
+          - Runeknight_Bottom
       - Combo:
-          - GuillotineCross_Robe2
-          - GuillotineCross_Top2
+          - Guillotinecross_Robe2
+          - Assassincross_Top2
       - Combo:
           - R_Hunting_Mail
           - R_Hunting_Manteau
@@ -2065,7 +2069,7 @@ Body:
           - S_Shadowchaser_Shield
     Script: |
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",20;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bMatkRate,2;
       bonus bLongAtkRate,2;
   - Combos:
@@ -2486,7 +2490,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Demon,15;
       bonus2 bIgnoreDefRaceRate,RC_Undead,15;
       bonus bMaxHPrate,10+.@r;
-      bonus2 bAddClass,Class_All,2+.@r;
+      bonus bAtkRate,2+.@r;
   - Combos:
       - Combo:
           - Valkyrie_Manteau
@@ -2845,21 +2849,21 @@ Body:
           - Gh_md_dex
           - Hawkeye
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Contaminated_Raydric_Card
           - Daydric_Card
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus2 bSubEle,Ele_Neutral,10;
   - Combos:
       - Combo:
           - Contaminated_Raydric_Archer_Card
           - P_Archer_Skeleton_Card
       - Combo:
-          - GeneticStone_Robe_
-          - GeneticStone_Bottom_
+          - Genetic_Robe
+          - Genetic_Bottom
       - Combo:
           - E_Illusion_Engine_B
           - E_Illusion_Leg_A
@@ -2886,8 +2890,8 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,8;
   - Combos:
       - Combo:
-          - Contaminated_Dark_Lord_Card
-          - Dark_Lord_Card
+          - Polluted_Dark_L_Card    # 27363
+          - Dark_Lord_Card    # 4168
     Script: |
       bonus2 bMagicAtkEle,Ele_Fire,15;
       bonus2 bSkillAtk,"WZ_METEOR",15;
@@ -3849,19 +3853,19 @@ Body:
           - RWC_2012_Pendant_
           - RWC_Memory_Knife
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod_
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod2
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod2_
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod_C
     Script: |
       bonus bMatk,getequiprefinerycnt(EQI_HAND_R)*10;
@@ -4033,6 +4037,13 @@ Body:
           - RWC_Gold_Brooch
           - RWC_Brooch
       - Combo:
+          - C_Amdarais_Card
+          - AmdaraisH_Card
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
           - Min_Toad_Card
           - Min_Chimera_Card
       - Combo:
@@ -4044,11 +4055,8 @@ Body:
       - Combo:
           - Min_Eclipse_Card
           - Min_Chimera_Card
-      - Combo:
-          - C_Amdarais_Card
-          - AmdaraisH_Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMatkRate,10;
   - Combos:
       - Combo:
@@ -4226,7 +4234,7 @@ Body:
           - Mantis_Card
           - Chaotic_Mantis_Card
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bHit,12;
   - Combos:
       - Combo:
@@ -4633,7 +4641,7 @@ Body:
   - Combos:
       - Combo:
           - Turtle_General_Card
-          - Ominous_Turtle_General_Card
+          - OminousTurtleG_Card
     Script: |
       bonus2 bSubSize,Size_All,5;
       bonus bHit,25;
@@ -4820,8 +4828,8 @@ Body:
       bonus2 bSPLossRate,6,6000;
   - Combos:
       - Combo:
-          - White_Knightage_Card
-          - Khaliz_Knightage_Card
+          - White_Knightage_Card    # 4608
+          - Khaliz_Knightage_Card    # 4609
     Script: |
       bonus2 bAddSize,Size_Medium,15;
       bonus2 bAddSize,Size_Large,15;
@@ -4896,11 +4904,10 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Undead,50;
   - Combos:
       - Combo:
-          - Grave_Mummy_Card
-          - Grave_A_Mummy_Card
+          - Grave_Mummy_Card       # 4656
+          - Grave_A_Mummy_Card    # 4657
     Script: |
-      /* Unofficial chance */
-      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,10;
+      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,30;
       bonus2 bSubEle,Ele_Neutral,5;
   - Combos:
       - Combo:
@@ -5171,11 +5178,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       }
   - Combos:
@@ -5187,11 +5194,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       }
   - Combos:
@@ -5203,11 +5210,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",10;
       }
   - Combos:
@@ -5251,11 +5258,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r >= 27) {
          bonus bVariableCastRate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",10;
       }
   - Combos:
@@ -5267,11 +5274,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CART_TORNADO",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CART_TORNADO",10;
       }
   - Combos:
@@ -5283,11 +5290,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       }
   - Combos:
@@ -5309,11 +5316,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bCritAtkRate,5;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus bCritAtkRate,5;
       }
   - Combos:
@@ -5325,11 +5332,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SC_FATALMENACE",10;
       }
   - Combos:
@@ -5341,11 +5348,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SU_PICKYPECK",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SU_PICKYPECK",10;
       }
   - Combos:
@@ -5357,11 +5364,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_R_TRIP",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_R_TRIP",10;
       }
   - Combos:
@@ -5373,11 +5380,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_FIRE_RAIN",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_FIRE_RAIN",10;
       }
   - Combos:
@@ -5389,11 +5396,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_SOLARBURST",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_SOLARBURST",10;
       }
   - Combos:
@@ -5405,11 +5412,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus2 bAddSize,Size_All,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
       if (.@r >= 27) {
          bonus2 bAddSize,Size_All,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
       }
   - Combos:
@@ -5421,11 +5428,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",10;
       }
   - Combos:
@@ -5437,11 +5444,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       }
   - Combos:
@@ -5453,11 +5460,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",10;
       }
   - Combos:
@@ -5479,11 +5486,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bCritAtkRate,5;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus bCritAtkRate,5;
       }
   - Combos:
@@ -5773,11 +5780,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
       }
   - Combos:
@@ -5789,11 +5796,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       }
   - Combos:
@@ -5805,11 +5812,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
       }
   - Combos:
@@ -5821,11 +5828,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
       }
   - Combos:
@@ -5837,11 +5844,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
       }
   - Combos:
@@ -5885,11 +5892,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r >= 27) {
          bonus bVariableCastRate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
       }
   - Combos:
@@ -5901,11 +5908,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CART_TORNADO",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
       }
   - Combos:
@@ -5917,11 +5924,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       }
   - Combos:
@@ -5933,11 +5940,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
       }
   - Combos:
@@ -5949,11 +5956,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SU_PICKYPECK",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
       }
   - Combos:
@@ -5965,11 +5972,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_R_TRIP",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_R_TRIP",15;
       }
   - Combos:
@@ -5981,11 +5988,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_FIRE_RAIN",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
       }
   - Combos:
@@ -5997,11 +6004,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_SOLARBURST",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_SOLARBURST",15;
       }
   - Combos:
@@ -6013,11 +6020,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus2 bAddSize,Size_All,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
       if (.@r >= 27) {
          bonus2 bAddSize,Size_All,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       }
   - Combos:
@@ -6029,11 +6036,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",15;
       }
   - Combos:
@@ -6323,11 +6330,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
       }
   - Combos:
@@ -6339,11 +6346,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       }
   - Combos:
@@ -6355,11 +6362,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
       }
   - Combos:
@@ -6371,11 +6378,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
       }
   - Combos:
@@ -6387,11 +6394,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_TIGERCANNON",15;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
       }
   - Combos:
@@ -6435,11 +6442,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
       if (.@r >= 27) {
          bonus bVariableCastRate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
       }
   - Combos:
@@ -6451,11 +6458,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CART_TORNADO",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
       }
   - Combos:
@@ -6467,11 +6474,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       }
   - Combos:
@@ -6483,11 +6490,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
       }
   - Combos:
@@ -6499,11 +6506,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SU_PICKYPECK",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
       }
   - Combos:
@@ -6515,11 +6522,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_R_TRIP",15;
       if (.@r >= 27) {
          bonus bLongAtkRate,10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_R_TRIP",15;
       }
   - Combos:
@@ -6531,11 +6538,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
       }
   - Combos:
@@ -6547,11 +6554,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_SOLARBURST",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_SOLARBURST",15;
       }
   - Combos:
@@ -6563,11 +6570,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus2 bAddSize,Size_All,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       if (.@r >= 27) {
          bonus2 bAddSize,Size_All,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       }
   - Combos:
@@ -6579,11 +6586,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",15;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",15;
       }
   - Combos:
@@ -7975,7 +7982,7 @@ Body:
           - Overwhelm_Str_Armor
           - Modify_Str_Boots_
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES);
       if (.@r >= 21) {
          bonus2 bIgnoreDefRaceRate,RC_Brute,20;
@@ -8093,7 +8100,7 @@ Body:
           - E_Illusion_Leg_A
           - E_Illusion_Armor_A
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Illusion_Armor_A
@@ -8276,7 +8283,7 @@ Body:
          .@val = 20;
       }
       if ((.@weapon + .@eq) >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       }
       if ((.@weapon + .@eq) >= 22) {
          .@val += 30;
@@ -8291,7 +8298,7 @@ Body:
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       .@eq = getequiprefinerycnt(EQI_SHOES);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (.@weapon >= 7 && .@eq >= 7) {
          bonus bAspd,2;
       }
@@ -9061,29 +9068,29 @@ Body:
       }
   - Combos:
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - SurviveOrb_K
     Script: |
       bonus bDelayrate,getequiprefinerycnt(EQI_HEAD_TOP)*-1;
   - Combos:
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Clack_Of_Servival
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Coak_of_Survival
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bVariableCastrate,-5*(.@r/2);
   - Combos:
       - Combo:
-          - Survive_Circlet_
-          - Cloak_Of_Survival_C
+          - Survive_Circlet_K     # 19266
+          - Cloak_Of_Survival_C     # 2535
     Script: |
-      bonus bVariableCastrate,getequiprefinerycnt(EQI_GARMENT)*-5;
+      bonus bVariableCastrate,-5*getequiprefinerycnt(EQI_GARMENT)/2;
   - Combos:
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - SurviveOrb
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
@@ -9252,7 +9259,7 @@ Body:
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       .@eq = getequiprefinerycnt(EQI_HEAD_TOP);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (.@weapon >= 7 && .@eq >= 7) {
          bonus bAspd,2;
       }
@@ -9271,7 +9278,7 @@ Body:
       .@eq = getequiprefinerycnt(EQI_HEAD_TOP);
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       if (.@eq >= 7 && .@weapon >= 7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if ((.@eq + .@weapon) >= 18) {
          bonus2 bSubSize,Size_Small,20;
@@ -10020,8 +10027,8 @@ Body:
           - Shield_Of_Flame
           - Shining_Trapezohedron
       - Combo:
-          - ShadowchaserStone_Robe_
-          - ShadowchaseStone_Middle_
+          - Shadowchaser_Robe
+          - Shadowchaser_Middle
       - Combo:
           - Mechanic_Robe2
           - Mechanic_Top2
@@ -10048,12 +10055,12 @@ Body:
           - Lava_Leather_Boots
           - Lava_Leather_Armor
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       .@a = getequiprefinerycnt(EQI_GARMENT);
       .@b = getequiprefinerycnt(EQI_SHOES);
       .@c = getequiprefinerycnt(EQI_ARMOR);
       if (.@a >= 7 && .@b >= 7 && .@c >= 7)
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@a+.@b+.@c >= 27)
             bonus bDelayrate,-20;
   - Combos:
@@ -10062,12 +10069,12 @@ Body:
           - Lava_Leather_Shoes
           - Lava_Leather_Suit
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       .@a = getequiprefinerycnt(EQI_GARMENT);
       .@b = getequiprefinerycnt(EQI_SHOES);
       .@c = getequiprefinerycnt(EQI_ARMOR);
       if (.@a >= 7 && .@b >= 7 && .@c >= 7)
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@a+.@b+.@c >= 27)
             bonus bCritAtkRate,20;
   - Combos:
@@ -10225,10 +10232,10 @@ Body:
       bonus bMaxSPRate,5;
       .@r = getequiprefinerycnt(EQI_SHOES);
       if (.@r >= 7) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
       }
       if (.@r >= 9) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
       }
       if (.@r >= 12) {
          bonus bDelayrate,-5;
@@ -10356,7 +10363,7 @@ Body:
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSubRace,RC_DemiHuman,40;
       bonus2 bSubRace,RC_Player_Human,40;
-      bonus4 bAutoSpellOnSkill,"LK_SPIRALPIERCE","RK_SONICWAVE",getskilllv("RK_SONICWAVE"),10000;
+      bonus4 bAutoSpellOnSkill,"LK_SPIRALPIERCE","RK_SONICWAVE",getskilllv("RK_SONICWAVE"),1000;
       if (.@r >= 7) {
          bonus2 bSkillAtk,"RK_SONICWAVE",20;
          bonus2 bSkillAtk,"LK_SPIRALPIERCE",20;
@@ -10578,7 +10585,7 @@ Body:
          .@val = 20;
       }
       if ((.@eq + .@weapon) >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          if ((.@eq + .@weapon) >= 22) {
             .@val += 20;
          }
@@ -10688,7 +10695,7 @@ Body:
           - Ancient_Hero_Boots
           - Meteor_Striker
     Script: |
-      autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000;
+      autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000;
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
@@ -10724,7 +10731,7 @@ Body:
           - Ancient_Hero_Boots
           - MeawFoxtail
     Script: |
-      autobonus "{ bonus bLuk,20; bonus bMatkRate,15; bonus2 bAddClass,Class_All,15; }",20,7000,BF_MAGIC|BF_WEAPON; /* unknown rate */
+      autobonus "{ bonus bLuk,20; bonus bMatkRate,15; bonus bAtkRate,15; }",20,7000,BF_MAGIC|BF_WEAPON; /* unknown rate */
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
@@ -10758,7 +10765,7 @@ Body:
           - Sharp_Wind_Sword
           - Fog_Dew_Sword
     Script: |
-      autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,10; }",20,7000,BF_WEAPON; /* unknown rate */
+      autobonus "{ bonus bStr,20; bonus bAtkRate,10; }",20,7000,BF_WEAPON; /* unknown rate */
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
@@ -10816,7 +10823,7 @@ Body:
           - Illusion_Boots
           - Illusion_Butcher
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       .@eq = getequiprefinerycnt(EQI_SHOES);
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       if (.@eq >= 7 && .@weapon >= 7) {
@@ -10846,7 +10853,7 @@ Body:
           - S_Physical_Pendant
     Script: |
       if (getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) {
-         bonus2 bAddClass,Class_All,1;
+         bonus bAtkRate,1;
       }
   - Combos:
       - Combo:
@@ -11281,7 +11288,7 @@ Body:
           - S_Infinity_Earring
           - S_Infinity_Pendant
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15)
          bonus bNoSizeFix;
   - Combos:
@@ -11827,7 +11834,7 @@ Body:
       if ((getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R)) >= 10) {
          .@val += 2;
       }
-      bonus2 bAddClass,Class_All,.@val;
+      bonus bAtkRate,.@val;
       bonus bMaxHPrate,.@val;
   - Combos:
       - Combo:
@@ -12152,10 +12159,10 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bBaseAtk,.@r*2;
       if (.@r >= 25) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       else if (.@r >= 23) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
       }
   - Combos:
       - Combo:
@@ -12559,13 +12566,13 @@ Body:
           - SweetNightM_Card
           - Vampire's_Servant
     Script: |
-      bonus bMatkRate,(getrefine()/3);
+      bonus bMatkRate,(getequiprefinerycnt(EQI_ARMOR)/3);
   - Combos:
       - Combo:
           - LivingDead_Card
           - Vampire's_Servant
     Script: |
-      bonus2 bAddClass,Class_All,(getrefine()/3);
+      bonus bAtkRate,(getequiprefinerycnt(EQI_ARMOR)/3);
   - Combos:
       - Combo:
           - Ill_Dracula_Card
@@ -12623,7 +12630,7 @@ Body:
       bonus2 bSubSize,Size_Medium,20;
   - Combos:
       - Combo:
-          - Ominous_Solider_Card
+          - OminousSolider_Card
           - Ominous_Permeter_Card
     Script: |
       bonus bMaxHPrate,(getequiprefinerycnt(EQI_ARMOR)/3);
@@ -12667,7 +12674,7 @@ Body:
           - Cowraiders2_Card
     Script: |
       bonus bStr,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Combos:
       - Combo:
           - Cowraiders1_Card
@@ -12712,8 +12719,8 @@ Body:
       bonus2 bAddRace,RC_Player_Doram,5;
   - Combos:
       - Combo:
-          - Despair_God_Morocc_Card
-          - Morocc's_Minion_Card
+          - DespairGodMorocc_Card    # 27321
+          - MinionOfMorocc_Card    # 27326
     Script: |
       bonus bMaxHPrate,50;
   - Combos:
@@ -13079,7 +13086,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L);
       bonus bBaseAtk,10*(.@r/3);
-      bonus2 bAddClass,Class_All,2*(.@r/5);
+      bonus bAtkRate,2*(.@r/5);
       if (.@r >= 14) {
          .@val = 25;
          if (.@r >= 16) {
@@ -13107,7 +13114,7 @@ Body:
          bonus2 bSkillAtk,"GC_COUNTERSLASH",20;
       }
       if (.@a+.@b >= 18)
-         bonus2 bAddClass,Class_All,12;
+         bonus bAtkRate,12;
          if (.@a+.@b >= 20) .@val = 20;
             bonus2 bSkillAtk,"ASC_BREAKER",40+.@val;
             bonus2 bSkillAtk,"ASC_METEORASSAULT",40+.@val;
@@ -13121,199 +13128,199 @@ Body:
       bonus bMaxSPrate,10;
   - Combos:
       - Combo:
-          - SuraStone_Robe_
-          - SuraStone_Top_
+          - Sura_Robe    # 29426
+          - Sura_Top    # 29423
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10;
   - Combos:
       - Combo:
-          - SuraStone_Robe_
-          - SuraStone_Middle_
+          - Sura_Robe    # 29426
+          - Sura_Middle    # 29424
     Script: |
       bonus2 bFixedCastrate,"CH_SOULCOLLECT",-40;
   - Combos:
       - Combo:
-          - SuraStone_Robe_
-          - SuraStone_Bottom_
+          - Sura_Robe    # 29426
+          - Sura_Bottom    # 29425
     Script: |
       bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER","CH_SOULCOLLECT",300,1;
   - Combos:
       - Combo:
-          - SuraStone_Robe2_
-          - SuraStone_Top2_
+          - Sura_Robe2    # 29427
+          - Sura_Top2    # 29613
       - Combo:
-          - SuraStone_Robe2_
-          - SuraStone_Bottom2_
+          - Sura_Robe2    # 29427
+          - Sura_Bottom2    # 29611
     Script: |
       bonus2 bSkillAtk,"SR_TIGERCANNON",15;
   - Combos:
       - Combo:
-          - SuraStone_Robe2_
-          - SuraStone_Middle2_
+          - Sura_Robe2    # 29427
+          - Sura_Middle2    # 29612
     Script: |
       bonus bMaxHPrate,10;
   - Combos:
       - Combo:
-          - RangerStone_Robe_
-          - RangerStone_Top_
+          - Ranger_Robe
+          - Ranger_Top
     Script: |
       bonus2 bSkillAtk,"RA_ARROWSTORM",15;
   - Combos:
       - Combo:
-          - RangerStone_Robe_
-          - RangerStone_Bottom_
+          - Ranger_Robe
+          - Ranger_Bottom
     Script: |
       autobonus3 "{ bonus bLongAtkRate,5; }",1000,60000,"SN_WINDWALK";
   - Combos:
       - Combo:
-          - SorcererStone_Robe_
-          - SorcererStone_Top_
+          - Sorcerer_Robe
+          - Sorcerer_Top
       - Combo:
           - Sorcerer_Middle3
-          - SorcererStone_Robe_
+          - Sorcerer_Robe
     Script: |
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
   - Combos:
       - Combo:
-          - SorcererStone_Robe_
-          - SorcererStone_Middle_
+          - Sorcerer_Robe
+          - Sorcerer_Middle
     Script: |
       bonus2 bSkillCooldown,"SO_WARMER",-15000;
   - Combos:
       - Combo:
-          - SorcererStone_Robe_
-          - SorcererStone_Bottom_
+          - Sorcerer_Robe
+          - Sorcerer_Bottom
     Script: |
       bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-2000;
   - Combos:
       - Combo:
-          - RuneknightStone_Robe_
-          - RuneknightStone_Top_
+          - Runeknight_Robe
+          - Runeknight_Top
     Script: |
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
   - Combos:
       - Combo:
-          - RuneknightStone_Robe_
-          - RuneknightStone_Middle_
+          - Runeknight_Robe
+          - Runeknight_Middle
     Script: |
       bonus2 bSkillUseSPrate,"RK_DRAGONBREATH",10;
       bonus2 bSkillUseSPrate,"RK_DRAGONBREATH_WATER",10;
   - Combos:
       - Combo:
-          - GeneticStone_Robe_
-          - GeneticStone_Top_
+          - Genetic_Robe
+          - Genetic_Top
       - Combo:
           - Genetic_Middle3
-          - GeneticStone_Robe_
+          - Genetic_Robe
     Script: |
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
   - Combos:
       - Combo:
-          - GeneticStone_Robe_
-          - GeneticStone_Middle_
+          - Genetic_Robe
+          - Genetic_Middle
     Script: |
       bonus2 bSkillCooldown,"GN_MANDRAGORA",-3000;
   - Combos:
       - Combo:
-          - WarlockStone_Robe_
-          - WarlockStone_Top_
+          - Warlock_Robe
+          - Warlock_Top
       - Combo:
           - Warlock_Middle3
-          - WarlockStone_Robe_
+          - Warlock_Robe
     Script: |
       bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
   - Combos:
       - Combo:
-          - WarlockStone_Robe_
-          - WarlockStone_Middle_
+          - Warlock_Robe
+          - Warlock_Middle
     Script: |
       bonus bFixedCast,-100*(getskilllv("HW_SOULDRAIN")/2);
   - Combos:
       - Combo:
-          - WarlockStone_Robe_
-          - WarlockStone_Bottom_
+          - Warlock_Robe
+          - Warlock_Bottom
     Script: |
       bonus2 bMagicAtkEle,ELE_FIRE,5;
   - Combos:
       - Combo:
-          - ShadowchaserStone_Robe_
-          - ShadowchaserStone_Top_
+          - Shadowchaser_Robe
+          - Shadowchaser_Top
     Script: |
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
   - Combos:
       - Combo:
-          - ShadowchaserStone_Robe_
-          - ShadowchaseStone_Bottom_
+          - Shadowchaser_Robe
+          - Shadowchaser_Bottom
     Script: |
       bonus2 bSkillUseSPrate,"SC_TRIANGLESHOT",10;
   - Combos:
       - Combo:
-          - MechanicStone_Robe_
-          - MechanicStone_Top_
+          - Mechanic_Robe    # 29484
+          - Mechanic_Top    # 29481
       - Combo:
-          - RoyalguardStone_Robe_
-          - PaladinStone_Top_
+          - Royalguard_Robe    # 29520
+          - Paladin_Top    # 29517
       - Combo:
-          - GuillcrossStone_Robe_
-          - AssacrossStone_Top_
+          - Guillotinecross_Robe    # 29524
+          - Assassincross_Top    # 29521
       - Combo:
-          - WanderMins_Top3
-          - WanderMinstrelStone_Robe_
+          - WanderMins_Top3    # 311005
+          - WanderMinstrel_Robe    # 29488
     Script: |
       bonus2 bSPDrainRate,20,1;
   - Combos:
       - Combo:
-          - MechanicStone_Robe_
-          - MechanicStone_Middle_
+          - Mechanic_Robe    # 29484
+          - Mechanic_Middle    # 29482
     Script: |
       bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
   - Combos:
       - Combo:
-          - MechanicStone_Robe_
-          - MechanicStone_Bottom_
+          - Mechanic_Robe    # 29484
+          - Mechanic_Bottom    # 29483
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",15;
   - Combos:
       - Combo:
-          - WanderMinstrelStone_Robe_
-          - WanderMinstrelStone_Top_
+          - WanderMinstrel_Robe    # 29488
+          - WanderMinstrel_Top    # 29485
       - Combo:
-          - WanderMins_Bottom3
-          - WanderMinstrelStone_Robe_
+          - WanderMins_Bottom3    # 311007
+          - WanderMinstrel_Robe    # 29488
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
   - Combos:
       - Combo:
-          - WanderMinstrelStone_Robe_
-          - WanderMinstrelStone_Middle_
+          - WanderMinstrel_Robe    # 29488
+          - WanderMinstrel_Middle    # 29486
     Script: |
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
   - Combos:
       - Combo:
-          - WanderMinstrelStone_Robe_
-          - WanderMinstrelStone_Bottom_
+          - WanderMinstrel_Robe    # 29488
+          - WanderMinstrel_Bottom    # 29487
     Script: |
       bonus2 bSkillFixedCast,"WM_SEVERE_RAINSTORM",-500;
   - Combos:
       - Combo:
-          - ArchbishopStone_Robe_
-          - HighpriestStone_Top_
+          - Archbishop_Robe
+          - Highpriest_Top
     Script: |
       bonus2 bSkillAtk,"AB_ADORAMUS",15;
   - Combos:
       - Combo:
-          - ArchbishopStone_Robe_
-          - HighpriestStone_Middle_
+          - Archbishop_Robe
+          - Highpriest_Middle
     Script: |
       bonus2 bSkillCooldown,"AB_ADORAMUS",-1000;
   - Combos:
       - Combo:
-          - ArchbishopStone_Robe_
-          - HighpriestStone_Bottom_
+          - Archbishop_Robe
+          - Highpriest_Bottom
       - Combo:
-          - SoulReaperStone_Robe_
-          - SoulLinkerStone_Top_
+          - Soulreaper_Robe
+          - Soullinker_Top
       - Combo:
           - aegis_310659
           - Casting_Robe
@@ -13321,131 +13328,131 @@ Body:
       bonus bFixedCast,-500;
   - Combos:
       - Combo:
-          - RoyalguardStone_Robe_
-          - PaladinStone_Middle_
+          - Royalguard_Robe    # 29520
+          - Paladin_Middle    # 29518
     Script: |
       bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500;
   - Combos:
       - Combo:
-          - RoyalguardStone_Robe_
-          - PaladinStone_Bottom_
+          - Royalguard_Robe    # 29520
+          - Paladin_Bottom    # 29519
       - Combo:
-          - Royalguard_Middle3
-          - RoyalguardStone_Robe_
+          - Royalguard_Middle3    # 310888
+          - Royalguard_Robe    # 29520
       - Combo:
-          - Royalguard_Middle3
-          - RoyalGuard_Robe2
+          - Royalguard_Middle3    # 310888
+          - RoyalGuard_Robe2    # 310184
     Script: |
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Robe_
-          - AssacrossStone_Middle_
+          - Guillotinecross_Robe    # 29524
+          - Assassincross_Middle
     Script: |
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Robe_
-          - AssacrossStone_Bottom_
+          - Guillotinecross_Robe    # 29524
+          - Assassincross_Bottom
     Script: |
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
   - Combos:
       - Combo:
-          - SorcererStone_Robe2_
-          - SorcererStone_Bottom2_
+          - Sorcerer_Robe2
+          - Sorcerer_Bottom2
     Script: |
       bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
   - Combos:
       - Combo:
-          - SorcererStone_Robe2_
-          - SorcererStone_Middle2_
+          - Sorcerer_Robe2
+          - Sorcerer_Middle2
     Script: |
       bonus2 bSkillAtk,"SO_EARTHGRAVE",20;
   - Combos:
       - Combo:
-          - SorcererStone_Robe2_
-          - SorcererStone_Top2_
+          - Sorcerer_Robe2
+          - Sorcerer_Top2
     Script: |
       bonus2 bSkillAtk,"SO_DIAMONDDUST",10;
   - Combos:
       - Combo:
-          - ShadowchaserStone_Robe2_
-          - ShadowchasStone_Bottom2_
+          - Shadowchaser_Robe2
+          - Shadowchaser_Bottom2
       - Combo:
-          - StarEmperorStone_Garment_
-          - StarGladiatorStone_Bottom_
+          - Staremperor_Robe
+          - Gladiator_Bottom
       - Combo:
-          - KagerouStone_Robe_
-          - NinjaStone_Bottom_
+          - Kagerou_Robe
+          - Ninja_Bottom
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Combos:
       - Combo:
-          - ShadowchaserStone_Robe2_
-          - ShadowchasStone_Middle2_
+          - Shadowchaser_Robe2
+          - Shadowchaser_Middle2
     Script: |
       bonus2 bSkillUseSPrate,"SC_FATALMENACE",10;
   - Combos:
       - Combo:
-          - ShadowchaserStone_Robe2_
-          - ShadowchaserStone_Top2_
+          - Shadowchaser_Robe2
+          - Shadowchaser_Top2
     Script: |
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
   - Combos:
       - Combo:
-          - SoulReaperStone_Robe_
-          - SoulLinkerStone_Middle_
+          - Soulreaper_Robe
+          - Soullinker_Middle
     Script: |
       bonus2 bSkillAtk,"SP_SPA",20;
   - Combos:
       - Combo:
-          - SoulReaperStone_Robe_
-          - SoulLinkerStone_Bottom_
+          - Soulreaper_Robe
+          - Soullinker_Bottom
     Script: |
       bonus2 bSkillAtk,"SP_SWHOO",20;
   - Combos:
       - Combo:
-          - StarEmperorStone_Garment_
-          - StarGladiatorStone_Top_
+          - Staremperor_Robe
+          - Gladiator_Top
     Script: |
       bonus2 bSkillAtk,"SJ_SOLARBURST",15;
   - Combos:
       - Combo:
-          - StarEmperorStone_Garment_
-          - StarGladiatorStone_Middle_
+          - Staremperor_Robe
+          - Gladiator_Middle
     Script: |
       bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
   - Combos:
       - Combo:
-          - KagerouStone_Robe_
-          - NinjaStone_Top_
+          - Kagerou_Robe
+          - Ninja_Top
     Script: |
       bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25;
   - Combos:
       - Combo:
-          - KagerouStone_Robe_
-          - NinjaStone_Middle_
+          - Kagerou_Robe
+          - Ninja_Middle
     Script: |
       bonus2 bSkillAtk,"KO_BAKURETSU",25;
   - Combos:
       - Combo:
-          - OboroStone_Robe_
-          - NinjaStone_Top_
+          - Oboro_Robe
+          - Ninja_Top
     Script: |
       bonus2 bSkillAtk,"NJ_BAKUENRYU",30;
       bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",30;
       bonus2 bSkillAtk,"NJ_KAMAITACHI",30;
   - Combos:
       - Combo:
-          - OboroStone_Robe_
-          - NinjaStone_Middle_
+          - Oboro_Robe
+          - Ninja_Middle
     Script: |
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",20;
       bonus2 bSkillAtk,"NJ_HUUJIN",20;
   - Combos:
       - Combo:
-          - OboroStone_Robe_
-          - NinjaStone_Bottom_
+          - Oboro_Robe
+          - Ninja_Bottom
       - Combo:
           - Auto_Engine_A
           - Auto_Leg_B
@@ -13456,39 +13463,39 @@ Body:
       bonus bVariableCastrate,-15;
   - Combos:
       - Combo:
-          - GunslingerStone_Robe_
-          - GunslingerStone_Top_
+          - Rebellion_Robe
+          - Gunslinger_Top
     Script: |
       bonus2 bSkillAtk,"RL_R_TRIP",15;
   - Combos:
       - Combo:
-          - GunslingerStone_Robe_
-          - GunslingerStone_Middle_
+          - Rebellion_Robe
+          - Gunslinger_Middle
     Script: |
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20;
   - Combos:
       - Combo:
-          - GunslingerStone_Robe_
-          - GunslingerStone_Bottom_
+          - Rebellion_Robe
+          - Gunslinger_Bottom
     Script: |
       bonus2 bSkillAtk,"RL_BANISHING_BUSTER",25;
   - Combos:
       - Combo:
-          - DoramStone_Robe_
-          - DoramStone_Top_
+          - Doram_Robe
+          - Doram_Top
     Script: |
       bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20;
       bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20;
   - Combos:
       - Combo:
-          - DoramStone_Robe_
-          - DoramStone_Middle_
+          - Doram_Robe
+          - Doram_Middle
     Script: |
       bonus2 bSkillCooldown,"SU_SVG_SPIRIT",-1000;
   - Combos:
       - Combo:
-          - DoramStone_Robe_
-          - DoramStone_Bottom_
+          - Doram_Robe
+          - Doram_Bottom
     Script: |
       bonus2 bSkillCooldown,"SU_CN_METEOR",-1000;
   - Combos:
@@ -13514,7 +13521,7 @@ Body:
           - King_Schmidt_Manteau
     Script: |
       bonus bCritAtkRate,7;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Schmidt_Insignia_Rigid_Body
@@ -13677,7 +13684,7 @@ Body:
           - Ancient_Hero_Boots
           - Ray_Knuckle
     Script: |
-      autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON;
+      autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000,BF_WEAPON;
   - Combos:
       - Combo:
           - Great_Hero_Boots
@@ -13699,10 +13706,10 @@ Body:
           - Up_Undine_Spear_K
       - Combo:
           - Great_Hero_Boots
-          - Up_Thousand_Sun
+          - Up_OneSkyOneSun
     Script: |
       bonus bStr,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Great_Hero_Boots
@@ -13726,13 +13733,13 @@ Body:
           - Up_Narcis_Bow
       - Combo:
           - Great_Hero_Boots
-          - Up_Golden_Lord_Launcher
+          - Up_Golden_L_Launcher
       - Combo:
           - Great_Hero_Boots
-          - Up_The_Black
+          - Up_The_Black_Gatling
       - Combo:
           - Great_Hero_Boots
-          - Up_Demon_Slayer_Shot
+          - Up_Demon_S_Shot
     Script: |
       bonus bDex,10;
       bonus bLongAtkRate,5;
@@ -13776,7 +13783,7 @@ Body:
           - Up_Saint_Hall
       - Combo:
           - Great_Hero_Boots
-          - Up_Spirit_Pendulum_
+          - Up_SoulWeight
     Script: |
       bonus bInt,10;
       bonus bMatkRate,7;
@@ -13806,21 +13813,21 @@ Body:
           - Up_Crimson_Rose
     Script: |
       bonus bDex,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Great_Hero_Boots
           - Up_Ray_Knuckle
     Script: |
       bonus bVit,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Great_Hero_Boots
           - Up_MeawFoxtail
     Script: |
       bonus bLuk,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bMatkRate,7;
   - Combos:
       - Combo:
@@ -13836,7 +13843,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L);
       bonus bBaseAtk,15*(.@r/3);
-      bonus2 bAddClass,Class_All,3*(.@r/5);
+      bonus bAtkRate,3*(.@r/5);
       if (.@r >= 14) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30;
          bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000;
@@ -13883,11 +13890,11 @@ Body:
           - Dragon_Boots
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMdef,8;
       bonus bDef,50;
       bonus bBaseAtk,15*(readparam(bStr)/15);
-      autobonus2 "{ bonus2 bAddClass,Class_All,10; if (readparam(bStr) >= 120) { bonus2 bAddClass,Class_All,15; } }",1+(readparam(bStr) >= 120),10000,BF_MAGIC|BF_WEAPON;
+      autobonus2 "{ bonus bAtkRate,10; if (readparam(bStr) >= 120) { bonus bAtkRate,15; } }",1+(readparam(bStr) >= 120),10000,BF_MAGIC|BF_WEAPON;
       if (.@sum >= 33) {
          bonus bAspdRate,20;
          bonus bDelayrate,-25;
@@ -14031,9 +14038,7 @@ Body:
           - C_Khaliz_Knight_Card
     Script: |
       bonus2 bSubSize,Size_Medium,5;
-      bonus2 bMagicSubSize,Size_Medium,5;
       bonus2 bSubSize,Size_Large,5;
-      bonus2 bMagicSubSize,Size_Large,5;
       bonus2 bMagicAddSize,Size_Medium,5;
       bonus2 bMagicAddSize,Size_Large,5;
   - Combos:
@@ -14069,7 +14074,7 @@ Body:
           - King_Schmidt_Manteau
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
-      autobonus "{ bonus2 bAddClass,Class_All,10; }",1,10000,BF_WEAPON;
+      autobonus "{ bonus bAtkRate,10; }",1,10000,BF_WEAPON;
       bonus bBaseAtk,30;
       if (.@sum >= 40) {
          bonus2 bAddEle,Ele_Undead,20;
@@ -14110,7 +14115,7 @@ Body:
           - King_Schmidt_Manteau
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
-      autobonus "{ bonus bMatkRate,7; bonus2 bAddClass,Class_All,7; }",1,10000,BF_MAGIC;
+      autobonus "{ bonus bMatkRate,7; bonus bAtkRate,7; }",1,10000,BF_MAGIC;
       if (.@sum >= 30) {
          bonus2 bMagicAddEle,Ele_Undead,20;
          bonus2 bAddEle,Ele_Undead,20;
@@ -14139,11 +14144,11 @@ Body:
       bonus2 bAddSize,Size_Medium,5;
       bonus2 bMagicAddSize,Size_Medium,5;
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - ILL_Obeaune_Card
-          - Boiling_Piranha_Card
+          - EP17_2_Piranha_Card
     Script: |
       bonus2 bMagicAddEle,Ele_Water,15;
   - Combos:
@@ -14164,7 +14169,7 @@ Body:
       bonus bStr,4;
   - Combos:
       - Combo:
-          - aegis_400049
+          - Stripe_Hat
           - MH_P89_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -14172,7 +14177,7 @@ Body:
       bonus bLongAtkRate,3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400049
+          - Stripe_Hat
           - AC_B44_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -14180,7 +14185,7 @@ Body:
       bonus bLongAtkRate,3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400049
+          - Stripe_Hat
           - Boost_Lance_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -14195,7 +14200,7 @@ Body:
     Script: |
       bonus2 bAddSize,Size_Small,20;
       bonus bCritical,5;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
       bonus bStr,5;
@@ -14244,7 +14249,7 @@ Body:
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bBaseAtk,30;
       if (.@eq >= 7 && .@weapon >= 7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if ((.@eq + .@weapon) >= 18) {
          bonus2 bSkillAtk,"SR_SKYNETBLOW",20;
@@ -14258,7 +14263,7 @@ Body:
           - KatarOfCold_Icicle_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@sum >= 7) {
          bonus bCritical,5;
       }
@@ -14275,7 +14280,7 @@ Body:
           - Morrigane's_Pendant_IL
     Script: |
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Electronic_Guitar_IL
@@ -14336,7 +14341,7 @@ Body:
           - KatarOfCold_Icicle_IL
           - Ring_IL
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (getequiprefinerycnt(EQI_HAND_R) >= 9) {
          bonus bCritAtkRate,20;
       }
@@ -14349,7 +14354,7 @@ Body:
           - Water_Sprits_Armor_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@sum >= 7) {
          bonus bDelayrate,-5;
       }
@@ -14403,10 +14408,8 @@ Body:
       bonus bMdef,15;
       bonus bDef,80;
       bonus2 bSubSize,Size_Medium,(readparam(bVit)/30);
-      bonus2 bMagicSubSize,Size_Medium,(readparam(bVit)/30);
       bonus2 bSubSize,Size_Large,(readparam(bVit)/30);
-      bonus2 bMagicSubSize,Size_Large,(readparam(bVit)/30);
-      autobonus2 "{ bonus2 bSubSize,Size_All,7; bonus2 bMagicSubSize,Size_All,7; if (readparam(bVit) >= 120) { bonus2 bSubSize,Size_All,5; bonus2 bMagicSubSize,Size_All,5; } }",1+(readparam(bVit) >= 120),10000,BF_MAGIC|BF_WEAPON;
+      autobonus2 "{ bonus2 bSubSize,Size_All,7; if (readparam(bVit) >= 120) { bonus2 bSubSize,Size_All,5; } }",1+(readparam(bVit) >= 120),10000,BF_MAGIC|BF_WEAPON;
       if (.@sum >= 33) {
          bonus bAspdRate,20;
          bonus bDelayrate,-25;
@@ -14419,7 +14422,7 @@ Body:
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMdef,8;
       bonus bDef,50;
       bonus bAspdRate,3*(readparam(bDex)/15);
@@ -14454,12 +14457,12 @@ Body:
           - Dragon_Boots
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMdef,8;
       bonus bDef,50;
       bonus bCritAtkRate,3*(readparam(bLuk)/15);
       bonus bCritical,2*(readparam(bLuk)/15);
-      autobonus2 "{ bonus bCritAtkRate,10; bonus2 bAddClass,Class_All,7; if (readparam(bLuk) >= 120) { bonus bCritAtkRate,10; bonus2 bAddClass,Class_All,7; } }",1+(readparam(bLuk) >= 120),10000,BF_MAGIC|BF_WEAPON;
+      autobonus2 "{ bonus bCritAtkRate,10; bonus bAtkRate,7; if (readparam(bLuk) >= 120) { bonus bCritAtkRate,10; bonus bAtkRate,7; } }",1+(readparam(bLuk) >= 120),10000,BF_MAGIC|BF_WEAPON;
       if (.@sum >= 33) {
          bonus bAspdRate,20;
          bonus bDelayrate,-25;
@@ -14477,7 +14480,7 @@ Body:
       bonus2 bSubRace,RC_Angel,15;
       bonus2 bSubRace,RC_Demon,15;
       if (.@sum >= 27) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14512,7 +14515,7 @@ Body:
       bonus2 bSubRace,RC_Demon,20;
       if (.@sum >= 27) {
          bonus bMatkRate,4;
-         bonus2 bAddClass,Class_All,4;
+         bonus bAtkRate,4;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14530,7 +14533,7 @@ Body:
       bonus2 bSubRace,RC_Demon,15;
       if (.@sum >= 27) {
          bonus bMatkRate,7;
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14562,7 +14565,7 @@ Body:
       bonus bDef,30;
       bonus bLuk,8;
       if (.@sum >= 27) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14638,14 +14641,14 @@ Body:
           - Reginleif_Card
           - Randgris_Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMaxHPrate,5;
   - Combos:
       - Combo:
           - Ingrid_Card
           - Randgris_Card
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMaxHPrate,10;
   - Combos:
       - Combo:
@@ -14686,7 +14689,7 @@ Body:
           - CassockA_STR
     Script: |
       bonus2 bAddRace,RC_All,12;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Cassock_Agi
@@ -14743,7 +14746,7 @@ Body:
       - Combo:
           - Omega_Cleaner_Card
           - KickAndKick_Card
-          - MD_Papila_H_Card
+          - Papila_Ruba_H_Card
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",20;
       bonus2 bSkillAtk,"NC_VULCANARM",20;
@@ -14753,7 +14756,7 @@ Body:
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Broken_Cleaner_Card
+          - Beta_Cleaner_Card
           - Verporta_Card
           - MD_Papila_Ruba_H_Card
     Script: |
@@ -14765,9 +14768,9 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Bath_Manager_Card
+          - Beta_Baths_A_Card
           - P_Archer_Skeleton_Card
-          - MD_Papila_H_Card
+          - Papila_Ruba_H_Card
     Script: |
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20;
       bonus2 bSkillAtk,"GN_CARTCANNON",20;
@@ -14779,7 +14782,7 @@ Body:
       - Combo:
           - Bookworm_Card
           - Assistant_Card
-          - Blue_Pitaya_Card
+          - Pitaya_B_Card
     Script: |
       bonus2 bSkillAtk,"SO_DIAMONDDUST",20;
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",20;
@@ -14789,9 +14792,9 @@ Body:
       bonus2 bSkillAtk,"SO_DIAMONDDUST",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Roaming_Spellbook_Card
+          - Roaming_Splbook_Card
           - Assistant_Card
-          - Red_Pitaya_Card
+          - Pitaya_R_Card
     Script: |
       bonus2 bSkillAtk,"WL_CRIMSONROCK",20;
       bonus2 bSkillAtk,"WL_COMET",20;
@@ -14801,7 +14804,7 @@ Body:
       bonus2 bSkillAtk,"WL_CRIMSONROCK",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Sewage_Venenum_Card
+          - Venenum3_Card
           - Cowraiders3_Card
           - Aries_Card
     Script: |
@@ -14813,7 +14816,7 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Sewage_Cramp_Card
+          - EP17_2_Cramp_Card
           - Mt_Dolor_Card
           - Aries_Card
     Script: |
@@ -14824,7 +14827,7 @@ Body:
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",5*(.@r_shoes/3);
   - Combos:
       - Combo:
-          - Sewage_Waterfall_Card
+          - Waterfall_Card
           - Soheon_Card
           - Dry_Rafflesia_Card
     Script: |
@@ -14860,7 +14863,7 @@ Body:
       bonus2 bSkillAtk,"SP_SWHOO",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Unleashed_Magic_Card
+          - Plasma_Y_Card
           - MD_Papila_Cae_Card
           - MD_Papila_Cae_H_Card
     Script: |
@@ -14884,7 +14887,7 @@ Body:
       bonus2 bSkillAtk,"AB_JUDEX",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Powerful_Magic_Card
+          - Plasma_R_Card
           - Mutant_Plaga_Card
           - MD_Papila_Ruba_Card
     Script: |
@@ -14896,7 +14899,7 @@ Body:
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Sharp_Magic_Card
+          - Plasma_R2_Card
           - P_Archer_Skeleton_Card
           - MD_Papila_Cae_Card
     Script: |
@@ -14908,9 +14911,9 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Boiling_Phen_Card
+          - EP17_2_Phen_Card
           - Alnoldi_Ex_Card
-          - Beta_Basic_H_Card
+          - B_Scissore_Ng_H_Card
     Script: |
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",20;
@@ -14920,7 +14923,7 @@ Body:
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Boiling_Swordfish_Card
+          - EP17_2_Sword_Fish_Card
           - High_Bellare_Card
           - MD_Papila_Card
     Script: |
@@ -14932,15 +14935,15 @@ Body:
       bonus2 bSkillAtk,"RL_R_TRIP",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Boiling_Piranha_Card
+          - EP17_2_Piranha_Card
           - Piranha_Card
     Script: |
       bonus2 bMagicAddEle,Ele_Water,15;
       bonus bMatk,10;
   - Combos:
       - Combo:
-          - Green_Pitaya_Card
-          - Beta_Basic_Card
+          - Pitaya_G_Card
+          - Beta_Scissore_Ng_Card
           - Plaga3_Card
     Script: |
       bonus2 bSkillAtk,"SU_CN_METEOR",20;
@@ -15021,32 +15024,32 @@ Body:
   - Combos:
       - Combo:
           - RoyalGuard_Robe2
-          - RoyalGuard_Bottom2
+          - Paladin_Bottom2
     Script: |
       bonus bFixedCast,getskilllv("CR_AUTOGUARD")/2*-100;
   - Combos:
       - Combo:
           - RoyalGuard_Robe2
-          - RoyalGuard_Middle2
+          - Paladin_Middle2
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,5;
   - Combos:
       - Combo:
           - RoyalGuard_Robe2
-          - RoyalGuard_Top2
+          - Paladin_Top2
     Script: |
       bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
   - Combos:
       - Combo:
-          - GuillotineCross_Robe2
-          - GuillotineCross_Bottom2
+          - Guillotinecross_Robe2
+          - Assassincross_Bottom2
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bCritAtkRate,15;
   - Combos:
       - Combo:
-          - GuillotineCross_Robe2
-          - GuillotineCross_Middle2
+          - Guillotinecross_Robe2
+          - Assassincross_Middle2
     Script: |
       bonus2 bSkillAtk,"GC_COUNTERSLASH",20;
   - Combos:
@@ -15087,21 +15090,21 @@ Body:
       bonus bFixedCast,-100*(getskilllv("CR_ACIDDEMONSTRATION")/2);
   - Combos:
       - Combo:
-          - WandMinst_Robe2
-          - WandMinst_Top2
+          - WanderMins_Robe2
+          - WanderMins_Top2
     Script: |
       bonus2 bSkillAtk,"WM_REVERBERATION",10;
   - Combos:
       - Combo:
-          - WandMinst_Robe2
-          - WandMinst_Mid2
+          - WanderMins_Robe2
+          - WanderMins_Middle2
     Script: |
       bonus2 bSkillUseSPrate,"WM_REVERBERATION",20;
       bonus2 bSkillUseSPrate,"WM_METALICSOUND",20;
   - Combos:
       - Combo:
-          - WandMinst_Robe2
-          - WandMinst_Bot2
+          - WanderMins_Robe2
+          - WanderMins_Bottom2
     Script: |
       bonus2 bSkillAtk,"WM_METALICSOUND",20;
   - Combos:
@@ -15148,7 +15151,7 @@ Body:
           - Attacker_Booster_Manteau_
           - Attacker_Booster_Ring
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bDelayrate,-15;
       bonus2 bSkillAtk,"SC_FATALMENACE",min(BaseLevel,180)/15;
       autobonus3 "{ bonus2 bSkillAtk,\"SC_FATALMENACE\",35; }",1000,60000,"ST_PRESERVE";
@@ -15462,7 +15465,7 @@ Body:
           - Ranger_Booster_Manteau_
           - Range_Booster_Brooch
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bDelayrate,-15;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",min(BaseLevel,180)/15;
       autobonus3 "{ bonus2 bSkillAtk,\"GC_ROLLINGCUTTER\",20; }",1000,60000,"ASC_EDP";
@@ -15565,13 +15568,16 @@ Body:
       bonus2 bSkillAtk,"SU_CN_METEOR",4*(.@r/2);
   - Combos:
       - Combo:
-          - Auto_Leg_A
-          - Auto_Armor_A
-      - Combo:
           - Gray_W_Boots
           - Gray_W_Suits
     Script: |
       bonus2 bAddClass,Class_All,7;
+  - Combos:
+      - Combo:
+          - Auto_Leg_A
+          - Auto_Armor_A
+    Script: |
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Auto_Leg_A
@@ -15623,7 +15629,7 @@ Body:
           - HeroBoots_INT
       - Combo:
           - WanderMins_Middle3
-          - WandMinst_Robe2
+          - WanderMins_Robe2
     Script: |
       bonus2 bMagicAtkEle,Ele_All,15;
   - Combos:
@@ -15649,16 +15655,16 @@ Body:
       bonus bAspd,2;
   - Combos:
       - Combo:
-          - aegis_310325
-          - aegis_310326
-          - aegis_310330
+          - Range_Top
+          - Range_Bottom
+          - Range_Middle
     Script: |
       bonus bLongAtkRate,6;
   - Combos:
       - Combo:
-          - aegis_310327
-          - aegis_310328
-          - aegis_310329
+          - Melee_Top
+          - Melee_Middle
+          - Melee_Bottom
     Script: |
       bonus bShortAtkRate,6;
   - Combos:
@@ -16626,7 +16632,7 @@ Body:
           - S_FullPene_Pendant
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bIgnoreDefRace,RC_All;
          bonus2 bIgnoreDefRaceRate,RC_Player_Human,-100;
@@ -16638,7 +16644,7 @@ Body:
           - S_FullPene_Shoes
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bIgnoreDefRace,RC_All;
          bonus2 bIgnoreDefRaceRate,RC_Player_Human,-100;
@@ -16729,7 +16735,7 @@ Body:
           - Blue_Rear_Ribbon
           - Bag_Of_Antonio_S
     Script: |
-      bonus2 bAddClass,Class_All,4;
+      bonus bAtkRate,4;
       if (getequiprefinerycnt(EQI_GARMENT) >= 12) {
          bonus bAllStats,1;
       }
@@ -17002,7 +17008,7 @@ Body:
     Script: |
       bonus bLongAtkRate,10;
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
          bonus bCritAtkRate,15;
          bonus bHit,15;
@@ -17175,7 +17181,7 @@ Body:
           - Time_Overload_Robe
     Script: |
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Regia_Hunting_Boots
@@ -17702,7 +17708,7 @@ Body:
           - Temporal_M_Str
     Script: |
       .@sum = getequiprefinerycnt(EQI_HEAD_MID)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@sum >= 14) {
          bonus bBaseAtk,80;
       }
@@ -17726,7 +17732,7 @@ Body:
       }
       if (.@sum >= 18) {
          bonus2 bAddSize,Size_All,7;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@sum >= 22) {
          bonus bLongAtkRate,10;
@@ -17779,7 +17785,7 @@ Body:
          bonus bBaseAtk,80;
       }
       if (.@sum >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus bMaxSPrate,7;
       }
       if (.@sum >= 22) {
@@ -18046,20 +18052,20 @@ Body:
       bonus bDelayrate,-5;
   - Combos:
       - Combo:
-          - aegis_490090
-          - Egir_Armor_K
-          - Aegir_Helm
-          - Egir_Manteau_K
-          - Egir_Shoes_K
+          - Egir_Ring_K    # 490090
+          - Egir_Armor_K    # 15138
+          - Aegir_Helm    # 19026
+          - Egir_Manteau_K    # 20756
+          - Egir_Shoes_K    # 22059
       - Combo:
-          - aegis_310667
-          - aegis_310664
+          - Magic_Robe_D    # 310667
+          - Magic_Top    # 310664
       - Combo:
-          - aegis_310667
-          - aegis_310665
+          - Magic_Robe_D    # 310667
+          - Magic_Middle    # 310665
       - Combo:
-          - aegis_310667
-          - aegis_310666
+          - Magic_Robe_D    # 310667
+          - Magic_Bottom    # 310666
     Script: |
       bonus2 bMagicAtkEle,Ele_All,2;
   - Combos:
@@ -18106,7 +18112,7 @@ Body:
       }
       if (.@r >= 9) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@r >= 11) {
          bonus bFixedCast,-500;
@@ -18124,7 +18130,7 @@ Body:
       }
       if (.@r >= 9) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r >= 11) {
             bonus bFixedCast,-500;
          }
@@ -18142,7 +18148,7 @@ Body:
       }
       if (.@r >= 9) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r >= 11) {
             bonus bFixedCast,-500;
          }
@@ -18301,7 +18307,7 @@ Body:
           - Beginner's_Ring
     Script: |
       bonus bBaseAtk,3*(min(BaseLevel,150)/10);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bAspd,1;
   - Combos:
       - Combo:
@@ -18334,7 +18340,7 @@ Body:
       bonus bBaseAtk,3*(min(BaseLevel,150)/10);
       bonus bVariableCastrate,-10;
       bonus bMatkRate,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Combos:
       - Combo:
           - Rebeginer_N2_Mace
@@ -18358,7 +18364,7 @@ Body:
     Script: |
       bonus bBaseAtk,3*(min(BaseLevel,150)/10);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
   - Combos:
       - Combo:
           - Rebeginer_WM_Bow
@@ -18659,7 +18665,7 @@ Body:
           - S_Mammoth_Weapon
           - S_Mammoth_Shield
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       if (getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 45) {
          bonus bNoKnockback;
       }
@@ -18697,7 +18703,7 @@ Body:
           - S_M_Mammoth_Shoes
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bNoKnockback;
          if (.@sum >= 20) {
@@ -18710,7 +18716,7 @@ Body:
           - S_M_Mammoth_Pendant
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bNoKnockback;
          if (.@sum >= 20) {
@@ -19348,7 +19354,7 @@ Body:
             bonus2 bAddRace,RC_All,20;
             if (.@sum >= 22) {
                bonus bVariableCastrate,-10;
-               bonus2 bAddClass,Class_All,15;
+               bonus bAtkRate,15;
             }
          }
       }
@@ -19358,7 +19364,7 @@ Body:
           - Sprint_Shoes_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (getequiprefinerycnt(EQI_ARMOR) >= 7 && getequiprefinerycnt(EQI_SHOES) >= 7) {
          bonus bBaseAtk,70;
          if (.@sum >= 18) {
@@ -19446,8 +19452,8 @@ Body:
           - Wizardy_Staff
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      bonus bMatkRate,6*.@r;
-      bonus bDex,2*.@r;
+      bonus bMatkRate,6;
+      bonus bDex,2;
       bonus bVariableCastrate,-.@r;
   - Combos:
       - Combo:
@@ -19689,7 +19695,7 @@ Body:
           - Mirage_Shoes
       - Combo:
           - aegis_310883
-          - RuneknightStone_Robe_
+          - Runeknight_Robe
     Script: |
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
@@ -19881,18 +19887,19 @@ Body:
       autobonus "{ bonus2 bIgnoreDefRaceRate,RC_All,100; }",5,.@time,BF_NORMAL;
   - Combos:
       - Combo:
-          - aegis_400043
+          - Fallen_Angel_feather
           - Fallen_Angel_Wing
     Script: |
       .@head = getequiprefinerycnt(EQI_HEAD_TOP);
       .@garment = getequiprefinerycnt(EQI_GARMENT);
-      if (.@head >= 10 && .@garment >= 10)
+      if (.@head >= 10 && .@garment >= 10) {
          bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+(.@head+.@garment);
-      bonus2 bSubRace,RC_All,3;
-      bonus2 bSubRace,RC_Angel,-3;
+         bonus2 bSubRace,RC_All,3;
+         bonus2 bSubRace,RC_Angel,-3;
+      }
   - Combos:
       - Combo:
-          - aegis_450131
+          - Fallen_Angel_Armor_TW
           - Fallen_Angel_Wing
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 9) {
@@ -19901,14 +19908,14 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_450131
-          - aegis_400043
+          - Fallen_Angel_Armor_TW
+          - Fallen_Angel_feather
     Script: |
       bonus bVit,2;
       bonus bMaxHPrate,10;
   - Combos:
       - Combo:
-          - aegis_490033
+          - Fallen_Angel_tear
           - Fallen_Angel_Wing
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 9) {
@@ -19917,15 +19924,15 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490033
-          - aegis_400043
+          - Fallen_Angel_tear
+          - Fallen_Angel_feather
     Script: |
       if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9)
          bonus bVariableCastrate,-5;
   - Combos:
       - Combo:
-          - aegis_490033
-          - aegis_450131
+          - Fallen_Angel_tear
+          - Fallen_Angel_Armor_TW
     Script: |
       if (getequiprefinerycnt(EQI_ARMOR) >= 9)
          bonus bMaxHPrate,8;
@@ -19936,13 +19943,13 @@ Body:
     Script: |
       bonus bFixedCast,-200;
       if (BaseLevel >= 30) {
-         bonus2 bAddClass,Class_All,1;
+         bonus bAtkRate,1;
          bonus bAspdRate,2;
          if (BaseLevel >= 45) {
-            bonus2 bAddClass,Class_All,1;
+            bonus bAtkRate,1;
             bonus bAspdRate,3;
             if (BaseLevel >= 85) {
-               bonus2 bAddClass,Class_All,1;
+               bonus bAtkRate,1;
                bonus bAspdRate,5;
             }
          }
@@ -19973,7 +19980,7 @@ Body:
       bonus bFixedCast,-200;
       bonus bAspdRate,10;
       if (BaseLevel >= 105) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          if (BaseLevel >= 110) {
             bonus bShortAtkRate,5;
             bonus bLongAtkRate,5;
@@ -20165,8 +20172,11 @@ Body:
       bonus2 bSubEle,Ele_Holy,75-(getskilllv("CR_TRUST")*5);
   - Combos:
       - Combo:
-          - FullForce
-          - Doppelganger_Card
+          - FullForce    # 21053
+          - Doppelganger_Card    # 4142
+      - Combo:
+          - FullForce_    # 600025
+          - SLD_Doppelganger_Card_J    # 300323
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       skill "PR_LEXAETERNA",1;
@@ -20295,8 +20305,11 @@ Body:
       bonus bDefRatioAtkClass,Class_All;
   - Combos:
       - Combo:
-          - Orc_Load_Mail
-          - Orc_Load_Card
+          - Orc_Load_Mail    # 450142
+          - Orc_Load_Card    # 4135
+      - Combo:
+          - Orc_Load_Mail_    # 450205
+          - Sealed_Orc_Load_Card_J    # 300322
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus bNoWalkDelay;
@@ -20309,7 +20322,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_300310
+          - S_Helmut_Card
           - Skia_Nerius_Card
     Script: |
       bonus2 bAddRace,RC_All,3;
@@ -20664,33 +20677,33 @@ Body:
       bonus bSmatk,3;
   - Combos:
       - Combo:
-          - aegis_310660
-          - aegis_310325
+          - Range_Robe_D
+          - Range_Top
       - Combo:
-          - aegis_310660
-          - aegis_310326
+          - Range_Robe_D
+          - Range_Bottom
       - Combo:
-          - aegis_310660
-          - aegis_310330
+          - Range_Robe_D
+          - Range_Middle
     Script: |
       bonus bLongAtkRate,2;
   - Combos:
       - Combo:
-          - aegis_310661
-          - aegis_310327
+          - Melee_Robe_D
+          - Melee_Top
       - Combo:
-          - aegis_310661
-          - aegis_310328
+          - Melee_Robe_D
+          - Melee_Middle
       - Combo:
-          - aegis_310661
-          - aegis_310329
+          - Melee_Robe_D
+          - Melee_Bottom
     Script: |
       bonus bShortAtkRate,2;
   - Combos:
       - Combo:
-          - aegis_310664
-          - aegis_310665
-          - aegis_310666
+          - Magic_Top    # 310664
+          - Magic_Middle    # 310665
+          - Magic_Bottom    # 310666
     Script: |
       bonus2 bMagicAtkEle,Ele_All,6;
   - Combos:
@@ -20702,7 +20715,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_310882
-          - RuneknightStone_Robe_
+          - Runeknight_Robe
     Script: |
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15;
       bonus2 bSkillAtk,"RK_DRAGONBREATH",15;
@@ -20721,7 +20734,7 @@ Body:
   - Combos:
       - Combo:
           - Warlock_Top3
-          - WarlockStone_Robe_
+          - Warlock_Robe
     Script: |
       bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
   - Combos:
@@ -20736,16 +20749,16 @@ Body:
   - Combos:
       - Combo:
           - Warlock_Bottom3
-          - WarlockStone_Robe_
+          - Warlock_Robe
     Script: |
       bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
   - Combos:
       - Combo:
-          - Royalguard_Top3
-          - RoyalguardStone_Robe_
+          - Royalguard_Top3    # 310887
+          - Royalguard_Robe    # 29520
       - Combo:
-          - Royalguard_Bottom3
-          - RoyalguardStone_Robe_
+          - Royalguard_Bottom3    # 310889
+          - Royalguard_Robe    # 29520
     Script: |
       bonus2 bSkillAtk,"LG_CANNONSPEAR",15;
   - Combos:
@@ -20785,32 +20798,32 @@ Body:
           - HeroBoots_AGI
     Script: |
       bonus bCritical,15;
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
   - Combos:
       - Combo:
           - WanderMins_Top3
-          - WandMinst_Robe2
+          - WanderMins_Robe2
     Script: |
       bonus2 bSkillAtk,"WM_METALICSOUND",15;
   - Combos:
       - Combo:
-          - WanderMins_Middle3
-          - WanderMinstrelStone_Robe_
+          - WanderMins_Middle3    # 311006
+          - WanderMinstrel_Robe    # 29488
     Script: |
       bonus2 bAddSize,Size_All,15;
   - Combos:
       - Combo:
           - WanderMins_Bottom3
-          - WandMinst_Robe2
+          - WanderMins_Robe2
     Script: |
       bonus2 bSkillAtk,"WM_REVERBERATION",15;
   - Combos:
       - Combo:
           - Genetic_Top3
-          - GeneticStone_Robe_
+          - Genetic_Robe
       - Combo:
           - Genetic_Bottom3
-          - GeneticStone_Robe_
+          - Genetic_Robe
     Script: |
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",15;
   - Combos:
@@ -20831,31 +20844,31 @@ Body:
   - Combos:
       - Combo:
           - Sorcerer_Top3
-          - SorcererStone_Robe_
+          - Sorcerer_Robe
     Script: |
       bonus2 bSkillCooldown,"SO_CLOUD_KILL",-2000;
   - Combos:
       - Combo:
           - Sorcerer_Top3
-          - SorcererStone_Robe2_
+          - Sorcerer_Robe2
     Script: |
       bonus2 bSkillAtk,"SO_EARTHGRAVE",15;
   - Combos:
       - Combo:
           - Sorcerer_Middle3
-          - SorcererStone_Robe2_
+          - Sorcerer_Robe2
     Script: |
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
   - Combos:
       - Combo:
           - Sorcerer_Bottom3
-          - SorcererStone_Robe_
+          - Sorcerer_Robe
     Script: |
       bonus2 bSkillAtk,"SO_POISON_BUSTER",15;
   - Combos:
       - Combo:
           - Sorcerer_Bottom3
-          - SorcererStone_Robe2_
+          - Sorcerer_Robe2
     Script: |
       bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
   - Combos:
@@ -20882,7 +20895,7 @@ Body:
           - DesireOfDeath
           - aegis_310655
     Script: |
-      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000; }";
       /*Unknow Rate*/
   - Combos:
       - Combo:
@@ -21110,7 +21123,7 @@ Body:
           - S_AutoSpell_Earring
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       if (.@sum >= 27) {
          bonus3 bAutoSpell,"AS_SONICBLOW",10,80;
       }
@@ -21136,7 +21149,7 @@ Body:
           - S_M_AutoSpell_Pendant
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 20) {
          bonus5 bAutoSpell,"NC_POWERSWING",max(getskilllv("NC_POWERSWING"),8),80,BF_SHORT|BF_NORMAL,1;
       }
@@ -21339,7 +21352,7 @@ Body:
           - Thanos_Bow_AD     # 700029
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"SN_SHARPSHOOTING",10*(.@r_weapon/2);
   - Combos:
       - Combo:
@@ -21871,7 +21884,7 @@ Body:
       bonus bBaseAtk,50;
       if (getequiprefinerycnt(EQI_ARMOR) >= 11) {
          bonus bAspdRate,10;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
   - Combos:
       - Combo:
@@ -21879,25 +21892,25 @@ Body:
           - Victory_Wing_Ear
     Script: |
       bonus bDelayrate,-15;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - aegis_480124
-          - aegis_410016
+          - Battle_Processor
       - Combo:
           - aegis_480124
           - Battle_Processor_
     Script: |
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - aegis_480124
-          - aegis_410079
+          - Deepblue_Sunglasses
     Script: |
       bonus bVariableCastrate,-15;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - aegis_480125
@@ -21908,7 +21921,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480125
-          - aegis_410016
+          - Battle_Processor
       - Combo:
           - aegis_480125
           - Battle_Processor_
@@ -21918,7 +21931,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480125
-          - aegis_410079
+          - Deepblue_Sunglasses
     Script: |
       bonus bVariableCastrate,-15;
       bonus bMatkRate,7;
@@ -21977,7 +21990,7 @@ Body:
           - Signet_Of_Pow_Star
           - Star_Armor_Of_Pow
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bPAtk,2;
   - Combos:
       - Combo:
@@ -22257,7 +22270,6 @@ Body:
           - Dragonic_Slayer_LT
     Script: |
       bonus2 bSubSize,Size_All,10;
-      bonus2 bMagicSubSize,Size_All,10;
       if (getequiprefinerycnt(EQI_HAND_R) >= 10) {
          bonus bLongAtkRate,10;
          bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
@@ -22495,7 +22507,7 @@ Body:
           - Hero_Boots_LT   # 470094
     Script: |
       bonus bPAtk,2;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Solid_Dagger
@@ -22519,7 +22531,7 @@ Body:
           - Dynast
           - aegis_310655
     Script: |
-      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000; }";
   - Combos:
       - Combo:
           - FrontiaBoots
@@ -23295,9 +23307,7 @@ Body:
             bonus2 bMagicAddRace,RC_Dragon,15;
             if (@r >= 11) {
                bonus2 bSubSize,Size_Medium,15;
-               bonus2 bMagicSubSize,Size_Medium,15;
                bonus2 bSubSize,Size_Large,15;
-               bonus2 bMagicSubSize,Size_Large,15;
             }
          }
       }
@@ -23312,9 +23322,7 @@ Body:
       bonus bMatk,50;
       bonus bBaseAtk,50;
       bonus2 bSubSize,Size_Medium,15;
-      bonus2 bMagicSubSize,Size_Medium,15;
       bonus2 bSubSize,Size_Large,15;
-      bonus2 bMagicSubSize,Size_Large,15;
   - Combos:
       - Combo:
           - aegis_490180
@@ -23566,14 +23574,14 @@ Body:
          }
       }
       bonus bBaseAtk,15*(.@sum/3);
-      bonus2 bAddClass,Class_All,4*(.@sum/5);
+      bonus bAtkRate,4*(.@sum/5);
   - Combos:
       - Combo:
           - MeawFoxtail_LT   # 550067
           - Hero_Boots_LT   # 470094
     Script: |
       bonus bSmatk,2;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMatkRate,10;
   - Combos:
       - Combo:
@@ -23917,7 +23925,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_480161     # 480161
+          - Subject_CapeRange_TH     # 480161
           - Old_Camo_RabbitHood     # 18984
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23927,7 +23935,7 @@ Body:
          bonus2 bSkillCooldown,"RA_ARROWSTORM",-500;
   - Combos:
       - Combo:
-          - aegis_480161     # 480161
+          - Subject_CapeRange_TH     # 480161
           - Old_Shadow_Handicraft     # 18975
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23937,7 +23945,7 @@ Body:
          bonus2 bSkillCooldown,"SC_FEINTBOMB",-1800;
   - Combos:
       - Combo:
-          - aegis_480161     # 480161
+          - Subject_CapeRange_TH     # 480161
           - Old_Midas_Whisper     # 18977
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23947,7 +23955,7 @@ Body:
          bonus2 bAddSize,Size_All,5;
   - Combos:
       - Combo:
-          - aegis_480161     # 480161
+          - Subject_CapeRange_TH     # 480161
           - Old_Protect_Of_Crown     # 18983
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23957,7 +23965,7 @@ Body:
          bonus2 bAddSize,Size_All,5;
   - Combos:
       - Combo:
-          - aegis_480161     # 480161
+          - Subject_CapeRange_TH     # 480161
           - Old_Driver_Band_Y     # 18974
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23967,10 +23975,10 @@ Body:
          bonus2 bSkillCooldown,"NC_SELFDESTRUCTION",-30000;
   - Combos:
       - Combo:
-          - aegis_480166     # 480166
+          - Subject_CapeMagic_TH     # 480166
           - Old_Minstrel_Song_Hat     # 18976
       - Combo:
-          - aegis_480166     # 480166
+          - Subject_CapeMagic_TH     # 480166
           - Old_Dying_Swan     # 18981
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23979,7 +23987,7 @@ Body:
          bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
   - Combos:
       - Combo:
-          - aegis_480166     # 480166
+          - Subject_CapeMagic_TH     # 480166
           - Old_Wind_Whisper     # 18980
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23988,7 +23996,7 @@ Body:
          bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
   - Combos:
       - Combo:
-          - aegis_480166     # 480166
+          - Subject_CapeMagic_TH     # 480166
           - Old_Magic_Stone_Hat     # 18978
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -23997,7 +24005,7 @@ Body:
          bonus2 bMagicAddClass,Class_Boss,15;
   - Combos:
       - Combo:
-          - aegis_480166     # 480166
+          - Subject_CapeMagic_TH     # 480166
           - Old_Mitra     # 18972
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -24015,7 +24023,7 @@ Body:
           - aegis_300362  # 300362 Unfrost Flower Card
           - aegis_300360  # 300360 Shining Seaweed Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
      - Combo:
           - aegis_300367  # 300367 Lesser Rgan Card
@@ -24049,7 +24057,7 @@ Body:
           - aegis_300381  # 300381 Hearthunter AT Card
           - aegis_300363  # 300363 Limacina Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
      - Combo:
           - Snowflower_Armor  # 450206
@@ -24079,7 +24087,7 @@ Body:
           - Snowflower_Boots  # 470115
           - Snowflower_Armor  # 450206
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
      - Combo:
           - Snowflower_Boots  # 470115
@@ -24125,7 +24133,7 @@ Body:
   - Combos:
      - Combo:
           - aegis_311356  # 311356 Archbishop Stone (Top)
-          - ArchbishopStone_Robe_ # 29516
+          - Archbishop_Robe # 29516
     Script: |
       bonus2 bMagicAtkEle,Ele_All,15;
   - Combos:
@@ -24137,7 +24145,7 @@ Body:
   - Combos:
      - Combo:
           - aegis_311357  # 311357 Archbishop Stone (Middle)
-          - ArchbishopStone_Robe_ # 29516
+          - Archbishop_Robe # 29516
     Script: |
       bonus2 bSkillAtk,"AB_ADORAMUS",15;
   - Combos:
@@ -24149,7 +24157,7 @@ Body:
   - Combos:
      - Combo:
           - aegis_311358  # 311358 Archbishop Stone (Bottom)
-          - ArchbishopStone_Robe_ # 29516
+          - Archbishop_Robe # 29516
     Script: |
       bonus2 bMagicAddRace,RC_All,15;
       bonus2 bMagicAddRace,RC_Brute,-15;
@@ -24163,7 +24171,7 @@ Body:
   - Combos:
      - Combo:
           - aegis_311359  # 311359 Ranger Stone (Top)
-          - RangerStone_Robe_ # 29431
+          - Ranger_Robe # 29431
     Script: |
       bonus2 bSkillCooldown,"RA_UNLIMIT",-45000;
   - Combos:
@@ -24175,7 +24183,7 @@ Body:
   - Combos:
      - Combo:
           - aegis_311360  # 311360 Ranger Stone (Middle)
-          - RangerStone_Robe_ # 29431
+          - Ranger_Robe # 29431
     Script: |
       bonus2 bSkillAtk,"RA_ARROWSTORM",15;
   - Combos:
@@ -24187,7 +24195,7 @@ Body:
   - Combos:
      - Combo:
           - aegis_311361  # 311361 Ranger Stone (Bottom)
-          - RangerStone_Robe_ # 29431
+          - Ranger_Robe # 29431
     Script: |
       bonus2 bSPDrainRate,20,1;
   - Combos:
@@ -24199,37 +24207,37 @@ Body:
   - Combos:
      - Combo:
           - aegis_311362  # 311362 Shadow Chaser Stone (Top)
-          - ShadowchaserStone_Robe_ # 29480
+          - Shadowchaser_Robe # 29480
     Script: |
       bonus2 bSkillAtk,"SC_FEINTBOMB",15;
   - Combos:
      - Combo:
           - aegis_311362  # 311362 Shadow Chaser Stone (Top)
-          - ShadowchaserStone_Robe2_  # 29618
+          - Shadowchaser_Robe2  # 29618
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Combos:
      - Combo:
           - aegis_311363  # 311363 Shadow Chaser Stone (Middle)
-          - ShadowchaserStone_Robe_ # 29480
+          - Shadowchaser_Robe # 29480
     Script: |
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
   - Combos:
      - Combo:
           - aegis_311363  # 311363 Shadow Chaser Stone (Middle)
-          - ShadowchaserStone_Robe2_  # 29618
+          - Shadowchaser_Robe2  # 29618
     Script: |
       bonus2 bSkillAtk,"SC_FATALMENACE",15;
   - Combos:
      - Combo:
           - aegis_311364  # 311364 Shadow Chaser Stone (Bottom)
-          - ShadowchaserStone_Robe_ # 29480
+          - Shadowchaser_Robe # 29480
     Script: |
       bonus2 bAddEle,Ele_All,15;
   - Combos:
      - Combo:
           - aegis_311364  # 311364 Shadow Chaser Stone (Bottom)
-          - ShadowchaserStone_Robe2_  # 29618
+          - Shadowchaser_Robe2  # 29618
     Script: |
       bonus2 bAddSize,Size_All,15;
   - Combos:
@@ -24727,7 +24735,7 @@ Body:
           - Royal_Guardian_Ring     # 28483
           - Lich_Lord_Card     # 27025
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMatkRate,5;
   - Combos:
       - Combo:
@@ -24779,7 +24787,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_410136     # 410136
-          - aegis_480161     # 480161
+          - Subject_CapeRange_TH     # 480161
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bLongAtkRate,7;
@@ -24788,7 +24796,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_410136     # 410136
-          - aegis_480166     # 480166
+          - Subject_CapeMagic_TH     # 480166
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bMatk,50;
@@ -24797,7 +24805,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_410136     # 410136
-          - aegis_480172     # 480172
+          - Subject_CapeMelee_TH     # 480172
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bBaseAtk,50;
@@ -24805,7 +24813,7 @@ Body:
          bonus2 bAddClass,Class_All,2*min(.@r,15);
   - Combos:
       - Combo:
-          - aegis_480172     # 480172
+          - Subject_CapeMelee_TH     # 480172
           - Old_Rune_Circlet     # 18971
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -24814,7 +24822,7 @@ Body:
          skill "TF_DOUBLE",5;
   - Combos:
       - Combo:
-          - aegis_480172     # 480172
+          - Subject_CapeMelee_TH     # 480172
           - Old_Circlet_Of_Bone     # 18982
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -24823,7 +24831,7 @@ Body:
          bonus2 bAddRace,RC_All,5;
   - Combos:
       - Combo:
-          - aegis_480172     # 480172
+          - Subject_CapeMelee_TH     # 480172
           - Old_Driver_Band_R     # 18973
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -24832,7 +24840,7 @@ Body:
          bonus bDelayrate,-5;
   - Combos:
       - Combo:
-          - aegis_480172     # 480172
+          - Subject_CapeMelee_TH     # 480172
           - Old_Blazing_Soul     # 18979
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
@@ -26153,13 +26161,13 @@ Body:
           - Phantom_Of_Masquerade    # 19497
           - Thanatos_Card    # 4399
     Script: |
-      bonus bBaseAtk,pow(getrefine(),2)*4;
+      bonus bBaseAtk,pow(getequiprefinerycnt(EQI_HEAD_TOP),2)*4;
   - Combos:
       - Combo:
           - Phantom_Of_Masquerade    # 19497
           - SLD_Thanatos_Card_J    # 300338
     Script: |
-      bonus bBaseAtk,pow(getrefine(),2)*2;
+      bonus bBaseAtk,pow(getequiprefinerycnt(EQI_HEAD_TOP),2)*2;
   - Combos:
       - Combo:
           - Walking_Stick_    # 1675
@@ -26206,7 +26214,7 @@ Body:
           - Jirant_Staff    # 2041
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      .@a = min(4,.@r-6);
+      .@a = min(10,.@r);
       skill "AL_INCAGI",1;
       bonus2 bSkillAtk,"SO_ELECTRICWALK",30*.@r;
       bonus2 bSkillAtk,"SO_FIREWALK",30*.@r;
@@ -26283,3 +26291,3104 @@ Body:
          bonus bMatkRate,5;
          bonus bVariableCastrate,-5;
       }
+  - Combos:
+      - Combo:
+          - aegis_311426    # 311426
+          - aegis_311425    # 311425
+    Script: |
+      bonus bSMatk,5;
+      bonus bSpl,3;
+  - Combos:
+      - Combo:
+          - aegis_311426    # 311426
+          - Magic_Top    # 310664
+      - Combo:
+          - aegis_311426    # 311426
+          - Magic_Middle    # 310665
+      - Combo:
+          - aegis_311426    # 311426
+          - Magic_Bottom    # 310666
+    Script: |
+      bonus bSMatk,1;
+      bonus bSpl,1;
+  - Combos:
+      - Combo:
+          - Sura_Robe    # 29426
+          - aegis_311427    # 311427
+      - Combo:
+          - Sura_Robe    # 29426
+          - aegis_311428    # 311428
+    Script: |
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20;
+  - Combos:
+      - Combo:
+          - Sura_Robe2    # 29427
+          - aegis_311427    # 311427
+      - Combo:
+          - Sura_Robe2    # 29427
+          - aegis_311429    # 311429
+    Script: |
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
+  - Combos:
+      - Combo:
+          - aegis_311428    # 311428
+          - Sura_Robe2    # 29427
+    Script: |
+      bonus2 bSkillAtk,"SR_TIGERCANNON",15;
+  - Combos:
+      - Combo:
+          - aegis_311429    # 311429
+          - Sura_Robe    # 29426
+    Script: |
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
+  - Combos:
+      - Combo:
+          - aegis_311430    # 311430
+          - Mechanic_Robe    # 29484
+    Script: |
+      bonus2 bSkillAtk,"NC_AXETORNADO",15;
+  - Combos:
+      - Combo:
+          - aegis_311430    # 311430
+          - Mechanic_Robe2    # 310007
+    Script: |
+      bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
+  - Combos:
+      - Combo:
+          - aegis_311431    # 311431
+          - Mechanic_Robe    # 29484
+    Script: |
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
+  - Combos:
+      - Combo:
+          - aegis_311431    # 311431
+          - Mechanic_Robe2    # 310007
+    Script: |
+      bonus2 bSkillAtk,"NC_ARMSCANNON",15;
+  - Combos:
+      - Combo:
+          - aegis_311432    # 311432
+          - Mechanic_Robe    # 29484
+    Script: |
+      bonus2 bSkillAtk,"NC_POWERSWING",15;
+  - Combos:
+      - Combo:
+          - aegis_311432    # 311432
+          - Mechanic_Robe2    # 310007
+    Script: |
+      bonus2 bSkillAtk,"NC_VULCANARM",15;
+  - Combos:
+      - Combo:
+          - aegis_311433    # 311433
+          - Guillotinecross_Robe    # 29524
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
+  - Combos:
+      - Combo:
+          - aegis_311433    # 311433
+          - Guillotinecross_Robe2    # 310188
+    Script: |
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
+  - Combos:
+      - Combo:
+          - aegis_311434    # 311434
+          - Guillotinecross_Robe    # 29524
+    Script: |
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+  - Combos:
+      - Combo:
+          - aegis_311434    # 311434
+          - Guillotinecross_Robe2    # 310188
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
+  - Combos:
+      - Combo:
+          - aegis_311435    # 311435
+          - Guillotinecross_Robe    # 29524
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
+  - Combos:
+      - Combo:
+          - aegis_311435    # 311435
+          - Guillotinecross_Robe2    # 310188
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+  - Combos:
+      - Combo:
+          - aegis_490221    # 490221
+          - Old_Rune_Circlet    # 18971
+    Script: |
+      bonus bLongAtkRate,15;
+  - Combos:
+      - Combo:
+          - aegis_490221    # 490221
+          - Old_Protect_Of_Crown    # 18983
+    Script: |
+      bonus2 bSkillCooldown,"LG_EARTHDRIVE",-2200;
+  - Combos:
+      - Combo:
+          - Luminous_Blue_Stone_TW    # 32270
+          - Sharp2    # 4817
+      - Combo:
+          - Luminous_Blue_Stone_TW    # 32270
+          - Sharp1    # 4818
+    Script: |
+      bonus bCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_490229    # 490229
+          - Old_Circlet_Of_Bone    # 18982
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,15;
+      bonus2 bAddRace,RC_All,10;
+  - Combos:
+      - Combo:
+          - aegis_490229    # 490229
+          - Old_Shadow_Handicraft    # 18975
+    Script: |
+      autobonus3 "{}",30,100,"SC_TRIANGLESHOT","{ sc_start SC_UNLIMIT,5000,3; sc_start SC_SPCOST_RATE,5000,-100; }";
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Moonlight_Flower_Card    # 4131
+    Script: |
+      bonus2 bResEff,Eff_Curse,10000;
+      skill "AL_INCAGI",10;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Eddga_Card    # 4123
+    Script: |
+      .@vit = readparam(bVit);
+      bonus bDef,20*(.@vit/10);
+      bonus bMdef,2*(.@vit/10);
+      if (.@vit>=130) {
+         bonus bMaxHPrate,50;
+         bonus bHealPower2,20;
+         bonus bAddItemHealRate,20;
+      }
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Orc_Hero_Card    # 4143
+    Script: |
+      bonus bFlee2,5;
+      bonus2 bSubSkill,"NPC_CRITICALSLASH",100;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Orc_Load_Card    # 4135
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "CR_REFLECTSHIELD",10;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Osiris_Card    # 4144
+    Script: |
+      bonus bSPDrainValue,2;
+      skill "WZ_QUAGMIRE",5;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Doppelganger_Card    # 4142
+    Script: |
+      bonus bShortAtkRate,20;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Drake_Card    # 4137
+    Script: |
+      bonus2 bAddSize,Size_All,20;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Baphomet_Card    # 4147
+    Script: |
+      autobonus "{ bonus2 bHPDrainRate,1000,1; }",10,5000,BF_WEAPON;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Phreeoni_Card    # 4121
+    Script: |
+      bonus bPerfectHitAddRate,50;
+      bonus bSPDrainValue,5;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Maya_Card    # 4146
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      autobonus2 "{ bonus2 bRegenPercentHP,25,1000; }",10,2000,BF_MAGIC;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Mistress_Card    # 4132
+    Script: |
+      bonus2 bSubEle,Ele_Wind,15;
+      skill "MG_SAFETYWALL",10;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_M_Flower_Card_J     # 300139
+    Script: |
+      bonus bMaxHPrate,20;
+      bonus bAspdRate,3;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_Eddga_Card_J     # 300319
+    Script: |
+      .@vit = readparam(bVit);
+      bonus bDef,10*(.@vit/10);
+      bonus bMdef,.@vit/10;
+      if (.@vit>=130) {
+         bonus bHealPower,10;
+         bonus bAddItemHealRate,10;
+      }
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_Orc_Hero_Card_J    # 300321
+    Script: |
+      bonus bFlee2,2;
+      bonus2 bSubSkill,"NPC_CRITICALSLASH",30;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_Orc_Load_Card_J    # 300322
+    Script: |
+      bonus bMaxHPRate,25;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - SLD_Osiris_Card_J    # 300320
+    Script: |
+      bonus bSPDrainValue,1;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - SLD_Doppelganger_Card_J    # 300323
+    Script: |
+      bonus bShortAtkRate,10;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_Drake_Card_J    # 300324
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - SLD_Baphomet_Card_J    # 300325
+    Script: |
+      autobonus "{ bonus2 bHPDrainRate,1000,1; }",10,3000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_Phreeoni_Card_J    # 300326
+    Script: |
+      bonus bPerfectHitAddRate,15;
+      bonus bSPDrainValue,1;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - SLD_Maya_Card_J    # 300327
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      autobonus2 "{ bonus2 bRegenPercentHP,15,1000; }",10,2000,BF_MAGIC;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Sealed_Mistress_Card_J    # 300328
+    Script: |
+      bonus2 bSubEle,Ele_Wind,15;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - aegis_450215    # 450215
+    Script: |
+      skill "CR_PROVIDENCE",3;
+  - Combos:
+      - Combo:
+          - Star_Eyepatch_JP    # 19443
+          - Sealed_Orc_Hero_Card_J    # 300321
+      - Combo:
+          - Star_Eyepatch_JP_    # 19444
+          - Sealed_Orc_Hero_Card_J    # 300321
+    Script: |
+      .@vit = readparam(bVit);
+      .@luk = readparam(bVit);
+      if (BaseLevel >= 100) {
+         bonus bBaseAtk,10*(.@vit/10);
+         bonus bMatk,10*(.@vit/10);
+         bonus bVit,.@luk/10;
+         bonus bLuk,.@luk/10;
+      }
+      else if (BaseLevel <= 99) {
+         bonus bBaseAtk,3*(.@vit/10);
+         bonus bMatk,3*(.@vit/10);
+         bonus bVit,.@luk/20;
+         bonus bLuk,.@luk/20;
+      }
+  - Combos:
+      - Combo:
+          - Orc_Load_Mail_    # 450205
+          - Orc_Load_Card    # 4135
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bNoWalkDelay;
+      bonus2 bResEff,Eff_Freeze,10000;
+      if (BaseLevel >= 100)
+         bonus2 bAddEle,Ele_Dark,13*.@r;
+      else
+         bonus2 bAddEle,Ele_Dark,5*.@r;
+  - Combos:
+      - Combo:
+          - Orc_Load_Mail    # 450142
+          - Sealed_Orc_Load_Card_J    # 300322
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bResEff,Eff_Freeze,10000;
+      if (BaseLevel >= 100)
+         bonus2 bAddEle,Ele_Dark,3*.@r;
+      else
+         bonus2 bAddEle,Ele_Dark,.@r;
+  - Combos:
+      - Combo:
+          - Old_Moc_Shawl    # 20932
+          - SLD_Osiris_Card_J    # 300320
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus2 bSubEle,Ele_Dark,30;
+      bonus2 bSubEle,Ele_Fire,15;
+      bonus2 bResEff,Eff_Curse,3000;
+  - Combos:
+      - Combo:
+          - FullForce_    # 600025
+          - Doppelganger_Card    # 4142
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus3 bAutoSpell,"RK_IGNITIONBREAK",5,20;
+      if (BaseLevel >= 100) {
+         bonus bAspdRate,5*.@r;
+         bonus2 bAddRace,RC_All,10*.@r;
+      }
+      else {
+         bonus bAspdRate,2*.@r;
+         bonus2 bAddRace,RC_All,4*.@r;
+      }
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - FullForce    # 21053
+          - SLD_Doppelganger_Card_J    # 300323
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      if (BaseLevel >= 100) {
+         bonus bAspdRate,5*.@r;
+         bonus2 bAddRace,RC_All,10*.@r;
+      }
+      else {
+         bonus bAspdRate,2*.@r;
+         bonus2 bAddRace,RC_All,4*.@r;
+      }
+  - Combos:
+      - Combo:
+          - Phreeoni_Wing    # 20859
+          - Sealed_Phreeoni_Card_J    # 300326
+    Script: |
+      bonus bPerfectHitAddRate,15;
+      bonus2 bResEff,Eff_Stone,3000;
+  - Combos:
+      - Combo:
+          - Magicstone_Of_Grace    # 19106
+          - Sealed_Mistress_Card_J    # 300328
+    Script: |
+      bonus bMatkRate,10;
+      bonus bHealPower,10;
+      bonus2 bAddItemHealRate,526,15;
+      bonus2 bAddItemSPHealRate,526,15;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Grand_Pere_Card_J    # 27247
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus3 bAddEff,Eff_Sleep,1000,ATF_MAGIC;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - As_Ragged_Golem_Card_J    # 27035
+    Script: |
+      .@str = readparam(bStr);
+      bonus bBaseAtk,10*(.@str/10);
+      bonus bHit,5*(.@str/10);
+      if (.@str>=130)
+         bonus2 bAddClass,Class_Boss,25;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Amdarais_Card    # 4601
+    Script: |
+      bonus bAtkRate,15;
+      bonus bMatkRate,15;
+      bonus2 bHPRegenRate,666,4000;
+      bonus2 bSPRegenRate,66,4000;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Polluted_Dark_L_Card    # 27363
+    Script: |
+      bonus bMaxHPRate,50;
+      skill "SA_DISPELL",5;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Polluted_Spi_Q_Card    # 27362
+    Script: |
+      bonus bMaxHPRate,10;
+      bonus bMaxSPRate,10;
+      bonus2 bSubEle,Ele_Water,15;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Knight_Sakray_Card    # 27184
+    Script: |
+      bonus2 bSPDrainRate,20,2;
+      bonus2 bSubEle,Ele_Neutral,20;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Firm_Muspell_Card    # 27346
+    Script: |
+      bonus bMaxHPRate,10;
+      bonus bMaxSPRate,10;
+      bonus2 bSubEle,Ele_Fire,15;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - CorruptionRoot_Card    # 4603
+    Script: |
+      bonus2 bAddEff,Eff_Sleep,5000;
+      bonus2 bAddEff,Eff_Stone,5000;
+      bonus2 bAddEff,Eff_Curse,5000;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - CorruptionRootH_Card_J    # 27009
+    Script: |
+      bonus3 bAutoSpell,"WL_MARSHOFABYSS",5,50;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Sarah_Card_J    # 27248
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Dark,15;
+      skill "WL_HELLINFERNO",5;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - ReaperAnkou_Card    # 27327
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus2 bSubEle,Ele_Water,15;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - C_Amdarais_Card    # 27383
+    Script: |
+      bonus bMaxHPrate,50;
+      bonus bAtkRate,15;
+      bonus bMatkRate,15;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - C_Himel_Card    # 27381
+    Script: |
+      bonus2 bComaClass,Class_Normal,100;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Faceworm_Q_Card_J    # 27237
+    Script: |
+      bonus bAtkRate,15;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - DespairGodMorocc_Card    # 27321
+    Script: |
+      skill "LG_INSPIRATION",1;
+      bonus2 bSkillUseSPrate,"LG_INSPIRATION",-1;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - C_CorruptionRoot_Card    # 27382
+    Script: |
+      bonus2 bAddEff,Eff_Sleep,5000;
+      bonus2 bAddEff,Eff_Stone,5000;
+      bonus2 bAddEff,Eff_Curse,5000;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Nidhogg_Shadow_Card    # 4456
+    Script: |
+      bonus bMaxHPrate,50;
+      if (eaclass()&EAJL_UPPER && BaseJob == Job_Wizard) {
+         bonus bFixedCastrate,-70;
+         bonus bMatkRate,3*getequiprefinerycnt(EQI_ARMOR);
+      }
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Schmidt_Card    # 27329
+    Script: |
+      skill "LG_EARTHDRIVE",5;
+      bonus bAtkRate,10;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Bijou_Card_J    # 27040
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+      skill "SA_DELUGE",5;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Fenrir_Card    # 4556
+    Script: |
+      bonus bFixedCastrate,-80;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Felock_Card    # 27182
+    Script: |
+      bonus bAtkRate,30;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Thanatos_Card    # 4399
+    Script: |
+      bonus bReduceDamageReturn,10;
+      bonus bBaseAtk,BaseLevel;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - AmdaraisH_Card_J    # 27008
+    Script: |
+      bonus bAtkRate,15;
+      bonus bMatkRate,15;
+      bonus2 bHPRegenRate,666,6000;
+      bonus2 bSPRegenRate,66,6000;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Evil_Fanatics_Card    # 27265
+    Script: |
+      bonus2 bSubRace,RC_DemiHuman,30;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - MinionOfMorocc_Card    # 27326
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus2 bSubEle,Ele_Wind,10;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - SLD_P_Dark_L_Card_J    # 300339
+    Script: |
+      bonus bMaxHPrate,25;
+      .@val = readparam(bStr) +  readparam(bInt) +  readparam(bDex);
+      bonus2 bAddEle,Ele_Neutral,.@val/20;
+      bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - SLD_P_Spi_Q_Card_J    # 300340
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+      bonus2 bSubEle,Ele_Water,10;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - SLD_F_Muspell_Card_J    # 300341
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+      bonus2 bSubEle,Ele_Fire,10;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - SLD_Thanatos_Card_J    # 300338
+    Script: |
+      bonus bBaseAtk,BaseLevel/2;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - Memento_Mori    # 490207
+    Script: |
+      bonus bAllStats,10;
+      bonus bAtkRate,30;
+      bonus bMatkRate,30;
+  - Combos:
+      - Combo:
+          - CorruptionRootH_Card_J    # 27009
+          - AmdaraisH_Card_J    # 27008
+    Script: |
+      bonus bAtkRate,15;
+      bonus bMatkRate,15;
+      bonus2 bSubEle,Ele_Dark,50;
+  - Combos:
+      - Combo:
+          - Neev_Huuma_Shuriken     # 13339
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Huuma_Shuriken     # 13339
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Bow_Of_Rogue     # 18153
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Bow_Of_Rogue     # 18153
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Hunter_Bow     # 18154
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Hunter_Bow     # 18154
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_CrossBow     # 18155
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_CrossBow     # 18155
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Wizardy_Staff     # 2042
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Wizardy_Staff     # 2042
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Arc_Wand     # 2043
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Arc_Wand     # 2043
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Holy_Stick     # 2044
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Holy_Stick     # 2044
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Divine_Cross     # 2045
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Divine_Cross     # 2045
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Claymore     # 21031
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Claymore     # 21031
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Glaive     # 26008
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Glaive     # 26008
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Various_Jur     # 28026
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Various_Jur     # 28026
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Guillotine     # 28121
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Guillotine     # 28121
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Buster     # 28122
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Buster     # 28122
+          - Neev_Barrette_     # 19313
+      - Combo:
+          - Neev_Rifle     # 28235
+          - Neev_Barrette     # 19312
+      - Combo:
+          - Neev_Rifle     # 28235
+          - Neev_Barrette_     # 19313
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@a = readparam(bStr)/10;
+      .@b = readparam(bAgi)/10;
+      .@c = readparam(bVit)/10;
+      .@d = readparam(bInt)/10;
+      .@e = readparam(bDex)/10;
+      .@f = readparam(bLuk)/10;
+      bonus bAtkRate,.@a;
+      bonus bBaseAtk,.@r*20;
+      bonus bAspdRate,.@b;
+      bonus bMaxHPrate,.@c;
+      bonus bMatk,.@d+(.@r*20);
+      bonus bVariableCastrate,-.@e;
+      bonus bCritical,.@f;
+  - Combos:
+      - Combo:
+          - Survival_Staff_IL_J     # 2059
+          - Illusion_Survivor_Manteau     # 20847
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      .@a = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatkRate,10+(3*.@a);
+      bonus bMaxHP,1000*.@r;
+      bonus2 bSubEle,Ele_Fire,40;
+      bonus2 bSubEle,Ele_Earth,40;
+      bonus2 bSubEle,Ele_Water,40;
+      bonus2 bSubEle,Ele_Wind,40;
+  - Combos:
+      - Combo:
+          - Cigar     # 2267
+          - Man_Medal     # 18904
+      - Combo:
+          - Sunglasses      # 2201
+          - Man_Medal     # 18904
+      - Combo:
+          - Sunglasses_    # 2202
+          - Man_Medal     # 18904
+      - Combo:
+          - Sunglasses      # 2201
+          - Cigar     # 2267
+          - Man_Medal     # 18904
+      - Combo:
+          - Sunglasses_     # 2202
+          - Cigar     # 2267
+          - Man_Medal     # 18904
+    Script: |
+      bonus3 bAutoSpell,"SM_PROVOKE",5,2;
+  - Combos:
+      - Combo:
+          - Old_Driver_Band_R    # 18973
+          - aegis_490239     # 490239
+    Script: |
+      bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-500;
+      bonus2 bAddSize,Size_All,10;
+  - Combos:
+      - Combo:
+          - Old_Driver_Band_Y    # 18974
+          - aegis_490239     # 490239
+    Script: |
+      bonus2 bVariableCastrate,"NC_ARMSCANNON",-50;
+      bonus bDelayrate,-5;
+  - Combos:
+      - Combo:
+          - Old_Midas_Whisper    # 18977
+          - aegis_490239     # 490239
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-2000;
+      bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",40;
+  - Combos:
+      - Combo:
+          - Tao_Gunka_Card    # 4302
+          - aegis_450224     # 450224
+    Script: |
+      bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",1,100;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - aegis_300407    # 300407
+          - aegis_450224     # 450224
+    Script: |
+      bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",1,50;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - Incisive_Arrow    # 1764
+          - Little_Fhat     # 18541
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bCritAtkRate,5;
+      if (.@r>=7)
+         bonus bCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - Arrow_Of_Shadow    # 1767
+          - Arcus_Daemonicus     # 18125
+    Script: |
+      bonus bLongAtkRate,50;
+  - Combos:
+      - Combo:
+          - aegis_15932    # 15932
+          - aegis_490246    # 490246
+    Script: |
+      skill "TF_DOUBLE",max(getskilllv("TF_DOUBLE"),3);
+  - Combos:
+      - Combo:
+          - S_SNV_Weapon   # 24684
+          - S_Booster_Armor
+          - S_Booster_Shield
+          - S_Booster_Shoes
+          - S_Booster_Earing
+          - S_Booster_Pandent
+    Script: |
+      skill "PF_DOUBLECASTING",5;
+      bonus bShortAtkRate,15;
+      bonus bLongAtkRate,15;
+      bonus2 bMagicAtkEle,Ele_All,15;
+      skill "PA_SHIELDCHAIN",5;
+      skill "PF_DOUBLECASTING",5;
+      bonus2 bSkillAtk,"RG_BACKSTAP",20;
+      bonus2 bSkillAtk,"CR_SHIELDBOOMERANG",20;
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",20;
+      bonus2 bSkillAtk,"RG_RAID",20;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+      bonus2 bSkillAtk,"MG_FIREBOLT",20;
+      bonus2 bSkillAtk,"MG_COLDBOLT",20;
+      bonus2 bIgnoreDefRaceRate,RC_All,70;
+      bonus2 bIgnoreMdefRaceRate,RC_All,70;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,70;
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,70;
+  - Combos:
+      - Combo:
+          - S_SNV_Weapon   # 24684
+          - S_Booster_Armor
+          - S_Booster_Shield
+          - S_Booster_Shoes
+          - S_Booster_Earing
+          - S_Booster_Pandent
+          - SN_B_Dagger   # 510069
+    Script: |
+      skill "SC_FATALMENACE",7;
+      bonus2 bSkillAtk,"SC_FATALMENACE",20;
+  - Combos:
+      - Combo:
+          - S_SNV_Weapon   # 24684
+          - SN_B_Wand   # 550079
+    Script: |
+      skill "SO_PSYCHIC_WAVE",3;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",20;
+  - Combos:
+      - Combo:
+          - aegis_311460   # 311460
+          - Staremperor_Robe   # 29658
+    Script: |
+      bonus2 bSkillAtk,"SJ_NEWMOONKICK",15;
+  - Combos:
+      - Combo:
+          - aegis_311461   # 311461
+          - Staremperor_Robe   # 29658
+    Script: |
+      bonus2 bSkillAtk,"SJ_SOLARBURST",15;
+  - Combos:
+      - Combo:
+          - aegis_311462   # 311462
+          - Staremperor_Robe   # 29658
+    Script: |
+      bonus2 bSPDrainRate,20,1;
+  - Combos:
+      - Combo:
+          - aegis_311463   # 311463
+          - Rebellion_Robe   # 29667
+    Script: |
+      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",15;
+  - Combos:
+      - Combo:
+          - aegis_311464   # 311464
+          - Rebellion_Robe   # 29667
+    Script: |
+      bonus2 bSkillAtk,"RL_R_TRIP",15;
+  - Combos:
+      - Combo:
+          - aegis_311465   # 311465
+          - Rebellion_Robe   # 29667
+    Script: |
+      bonus bFixedCast,-500;
+  - Combos:
+      - Combo:
+          - aegis_311466   # 311466
+          - Soulreaper_Robe   # 29654
+    Script: |
+      bonus bUseSPrate,-15;
+  - Combos:
+      - Combo:
+          - aegis_311467   # 311467
+          - Soulreaper_Robe   # 29654
+    Script: |
+      bonus2 bSkillAtk,"SP_SWHOO",15;
+  - Combos:
+      - Combo:
+          - aegis_311468   # 311468
+          - Soulreaper_Robe   # 29654
+    Script: |
+      bonus bFixedCast,-500;
+  - Combos:
+      - Combo:
+          - aegis_311469   # 311469
+          - Melee_Top   # 310327
+    Script: |
+      bonus bPAtk,1;
+      bonus bPow,1;
+  - Combos:
+      - Combo:
+          - aegis_311469   # 311469
+          - Melee_Middle   # 310328
+    Script: |
+      bonus bPAtk,1;
+      bonus bPow,1;
+  - Combos:
+      - Combo:
+          - aegis_311469   # 311469
+          - Melee_Bottom   # 310329
+    Script: |
+      bonus bPAtk,1;
+      bonus bPow,1;
+  - Combos:
+      - Combo:
+          - aegis_311469   # 311469
+          - aegis_311471   # 311471
+    Script: |
+      bonus bPAtk,5;
+      bonus bPow,3;
+  - Combos:
+      - Combo:
+          - aegis_311470   # 311470
+          - Range_Top   # 310325
+    Script: |
+      bonus bPAtk,1;
+      bonus bCon,1;
+  - Combos:
+      - Combo:
+          - aegis_311470   # 311470
+          - Range_Bottom   # 310326
+    Script: |
+      bonus bPAtk,1;
+      bonus bCon,1;
+  - Combos:
+      - Combo:
+          - aegis_311470   # 311470
+          - Range_Middle   # 310330
+    Script: |
+      bonus bPAtk,1;
+      bonus bCon,1;
+  - Combos:
+      - Combo:
+          - aegis_311470   # 311470
+          - Con_Robe_D   # 311355
+    Script: |
+      bonus bPAtk,5;
+      bonus bCon,3;
+  - Combos:
+      - Combo:
+          - Sagittarius_DiademK_LT   # 400261
+          - Burning_Knuckle_AD   # 560034
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
+      bonus bLongAtkRate,4*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Sagittarius_DiademK_LT   # 400261
+          - Saphir_Hall_AD   # 590043
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bVariableCastrate,-10;
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Sagittarius_DiademK_LT   # 400261
+          - HR_S55_AD   # 810013
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Scorpio_Diadem_K_LT   # 400262
+          - Cannon_Rapier_AD   # 500051
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"LG_RAYOFGENESIS",-1000;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",7*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Scorpio_Diadem_K_LT   # 400262
+          - Rutilus_Stick_AD   # 550075
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1000;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Scorpio_Diadem_K_LT   # 400262
+          - Ultio_Spes_AD   # 590044
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_Holy,7;
+      bonus2 bSkillAtk,"AB_JUDEX",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Large_Sorcerer_Crown_LT   # 400263
+          - Cannon_Rapier_AD   # 500051
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,70;
+      bonus2 bSkillAtk,"WL_HELLINFERNO",7*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Large_Sorcerer_Crown_LT   # 400263
+          - Kuroiro_AD   # 510066
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_Fire,7;
+      bonus2 bMagicAtkEle,Ele_Water,7;
+      bonus2 bMagicAtkEle,Ele_Wind,7;
+      bonus2 bSkillAtk,"NJ_KOUENKA",5*(.@r_weapon/2);
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",5*(.@r_weapon/2);
+      bonus2 bSkillAtk,"NJ_HUUJIN",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Large_Sorcerer_Crown_LT   # 400263
+          - Rutilus_Stick_AD   # 550075
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,70;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",7*(.@r_weapon/2);
+      bonus2 bSkillAtk,"WL_COMET",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Stripe_Hat_LT   # 400264
+          - Boost_Lance_AD   # 530031
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500;
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Stripe_Hat_LT   # 400264
+          - MH_P89_AD   # 700055
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-500;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Stripe_Hat_LT   # 400264
+          - AC_B44_AD   # 700056
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bDelayrate,-15;
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Phantom_Cap_LT   # 400265
+          - Rutilus_Stick_AD   # 550075
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,70;
+      bonus2 bSkillAtk,"SP_SPA",5*(.@r_weapon/2);
+      bonus2 bSkillAtk,"SP_SWHOO",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Phantom_Cap_LT   # 400265
+          - ElectricFox_AD   # 550076
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"SU_CN_METEOR",-1000;
+      bonus2 bSkillAtk,"SU_CN_METEOR",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Phantom_Cap_LT   # 400265
+          - Ultio_Spes_AD   # 590044
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_Holy,7;
+      bonus2 bSkillAtk,"AB_ADORAMUS",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Ignis_CapK_LT   # 400266
+          - Saphir_Hall_AD   # 590043
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bBaseAtk,70;
+      bonus2 bSkillAtk,"GN_CARTCANNON",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Ignis_CapK_LT   # 400266
+          - Blasti_AD   # 620018
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bBaseAtk,70;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Ignis_CapK_LT   # 400266
+          - Virtual_Bow_AD   # 700054
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"RA_ARROWSTORM",-2500;
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",5*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Clock_Casket_RD_LT   # 400267
+          - Circuit_Board_AD   # 540051
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bBaseAtk,70;
+      bonus2 bSkillAtk,"SJ_SOLARBURST",7*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Clock_Casket_RD_LT   # 400267
+          - Beam_Claymore_AD   # 600028
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",7*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Clock_Casket_RD_LT   # 400267
+          - Meuchler_AD   # 610039
+    Script: |
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bBaseAtk,70;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",7*(.@r_weapon/2);
+  - Combos:
+      - Combo:
+          - Phreeoni_Wing_Suits   # 450217
+          - Phreeoni_Card   # 4121
+    Script: |
+      .@r_armor = getequiprefinerycnt(EQI_ARMOR);
+      bonus bLongAtkRate,3*(.@r_armor/2);
+      bonus2 bAddClass,Class_Boss,8*(.@r_armor/3);
+  - Combos:
+      - Combo:
+          - Phreeoni_Wing_Suits   # 450217
+          - Min_Phreeoni_Card   # 4649
+    Script: |
+      .@r_armor = getequiprefinerycnt(EQI_ARMOR);
+      bonus bCRate,5;
+      bonus bPAtk,10;
+      bonus bCritAtkRate,4*(.@r_armor/3);
+  - Combos:
+      - Combo:
+          - E_Auto_Armor_A   # 450218
+          - E_Auto_Engine_A   # 480185
+    Script: |
+      bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - E_Auto_Armor_A   # 450218
+          - E_Auto_Engine_B   # 480186
+    Script: |
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - E_Auto_Armor_B   # 450219
+          - E_Auto_Engine_A   # 480185
+    Script: |
+      bonus bAspdRate,10;
+  - Combos:
+      - Combo:
+          - E_Auto_Armor_B   # 450219
+          - E_Auto_Engine_B   # 480186
+    Script: |
+      bonus bMatk,50;
+  - Combos:
+      - Combo:
+          - Beast_Leather_Shoes   # 470122
+          - Moonlight_Flower_Card   # 4131
+    Script: |
+      bonus bFixedCast,-200;
+      bonus bSMatk,15;
+  - Combos:
+      - Combo:
+          - Beast_Leather_Shoes   # 470122
+          - Sealed_M_Flower_Card   # 4490
+    Script: |
+      bonus bFixedCast,-200;
+  - Combos:
+      - Combo:
+          - Beast_Leather_Shoes   # 470122
+          - AngerMoonlight_Card   # 27081
+    Script: |
+      .@r_shoes = getequiprefinerycnt(EQI_SHOES);
+      bonus2 bMagicAtkEle,Ele_All,4*(.@r_shoes/3);
+  - Combos:
+      - Combo:
+          - E_Auto_Leg_A   # 470125
+          - E_Auto_Armor_A   # 450218
+    Script: |
+      bonus bAtkRate,7;
+  - Combos:
+      - Combo:
+          - E_Auto_Leg_A   # 470125
+          - E_Auto_Armor_B   # 450219
+    Script: |
+      bonus bAspdRate,7;
+  - Combos:
+      - Combo:
+          - E_Auto_Leg_B   # 470126
+          - E_Auto_Armor_A   # 450218
+    Script: |
+      bonus bMaxSPrate,7;
+  - Combos:
+      - Combo:
+          - E_Auto_Leg_B   # 470126
+          - E_Auto_Armor_B   # 450219
+    Script: |
+      bonus bMatkRate,7;
+  - Combos:
+      - Combo:
+          - Pirate_Captain_Coat   # 480174
+          - Drake_Card   # 4137
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bShortAtkRate,15;
+      bonus bCRate,10;
+      bonus bCritical,15;
+  - Combos:
+      - Combo:
+          - E_Auto_Engine_A   # 480185
+          - E_Auto_Leg_A   # 470125
+    Script: |
+      bonus bCritAtkRate,15;
+  - Combos:
+      - Combo:
+          - E_Auto_Engine_A   # 480185
+          - E_Auto_Leg_B   # 470126
+    Script: |
+      bonus bVariableCastrate,-15;
+  - Combos:
+      - Combo:
+          - E_Auto_Engine_B   # 480186
+          - E_Auto_Leg_A   # 470125
+    Script: |
+      bonus bLongAtkRate,7;
+  - Combos:
+      - Combo:
+          - E_Auto_Engine_B   # 480186
+          - E_Auto_Leg_B   # 470126
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+  - Combos:
+      - Combo:
+          - aegis_480197   # 480197
+          - Victory_Wing_Ear   # 400001
+    Script: |
+      bonus bDelayrate,-15;
+      bonus bCritAtkRate,7;
+  - Combos:
+      - Combo:
+          - aegis_480197   # 480197
+          - Battle_Processor   # 410016
+    Script: |
+      bonus bLongAtkRate,5;
+      bonus bShortAtkRate,5;
+      bonus bCritAtkRate,7;
+  - Combos:
+      - Combo:
+          - aegis_480197   # 480197
+          - Deepblue_Sunglasses   # 410079
+    Script: |
+      bonus bVariableCastrate,-15;
+      bonus bCritAtkRate,7;
+  - Combos:
+      - Combo:
+          - Flame_Rune_Hood   # 480230
+          - Flame_Rune_Armor   # 450234
+          - Flame_Rune_Boots   # 470173
+    Script: |
+      bonus bPow,(readparam(bStr)/30);
+      bonus bShortAtkRate,10;
+      bonus bVariableCastrate,-10;
+  - Combos:
+      - Combo:
+          - Plain_Rune_Hood   # 480231
+          - Plain_Rune_Armor   # 450243
+          - Plain_Rune_Boots   # 470174
+    Script: |
+      bonus bSta,(readparam(bVit)/30);
+      bonus bMaxHPrate,20;
+  - Combos:
+      - Combo:
+          - Ice_Rune_Hood   # 480232
+          - Ice_Rune_Armor   # 450244
+          - Ice_Rune_Boots   # 470175
+    Script: |
+      bonus bCon,(readparam(bDex)/30);
+      bonus bLongAtkRate,10;
+      bonus bVariableCastrate,-15;
+  - Combos:
+      - Combo:
+          - Death_Rune_Hood   # 480233
+          - Death_Rune_Armor   # 450245
+          - Death_Rune_Boots   # 470176
+    Script: |
+      bonus bSpl,(readparam(bInt)/30);
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bVariableCastrate,-10;
+  - Combos:
+      - Combo:
+          - aegis_490220   # 490220
+          - Blessed_Knife_LT   # 510072
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      if (getequiprefinerycnt(EQI_HAND_R)>=10) {
+         bonus bShortAtkRate,10;
+         bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",10;
+      }
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_C) {
+         bonus bPAtk,5;
+         bonus bPow,5;
+         bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_490220   # 490220
+          - Freedom_Stick_LT   # 550082
+    Script: |
+      bonus2 bMagicAddSize,Size_All,15;
+      if (getequiprefinerycnt(EQI_HAND_R)>=10) {
+         bonus2 bMagicAtkEle,Ele_All,10;
+         bonus2 bSkillAtk,"HN_GROUND_GRAVITATION",10;
+         bonus2 bSkillAtk,"HN_HELLS_DRIVE",10;
+      }
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_C) {
+         bonus bSMatk,5;
+         bonus bSpl,5;
+         bonus2 bSkillAtk,"HN_GROUND_GRAVITATION",10;
+         bonus2 bSkillAtk,"HN_HELLS_DRIVE",10;
+      }
+  - Combos:
+      - Combo:
+          - Egirnion_Gardiansword   # 490235
+          - Egirnion_Ring   # 490092
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Combos:
+      - Combo:
+          - Egirnion_Gardiansword   # 490235
+          - Egirnion_Necklace   # 490093
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus bShortAtkRate,3;
+  - Combos:
+      - Combo:
+          - Blessed_Knife   # 510070
+          - Ancient_Hero_Boots   # 22171
+    Script: |
+      autobonus "{ bonus bAtkRate,15; bonus bStr,20; }",1,7000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - Up_Blessed_Knife   # 510071
+          - Great_Hero_Boots   # 22238
+    Script: |
+      bonus bShortAtkRate,5;
+      bonus bStr,10;
+  - Combos:
+      - Combo:
+          - Blessed_Knife_LT   # 510072
+          - Hero_Boots_LT   # 470094
+    Script: |
+      bonus bPAtk,2;
+      bonus bAtkRate,10;
+  - Combos:
+      - Combo:
+          - Freedom_Stick   # 550080
+          - Ancient_Hero_Boots   # 22171
+    Script: |
+      autobonus "{ bonus bMatkRate,15; bonus bInt,20; }",1,7000,BF_MAGIC;
+  - Combos:
+      - Combo:
+          - Up_Freedom_Stick   # 550081
+          - Great_Hero_Boots   # 22238
+    Script: |
+      bonus bMatkRate,7;
+      bonus bInt,10;
+  - Combos:
+      - Combo:
+          - Freedom_Stick_LT   # 550082
+          - Hero_Boots_LT   # 470094
+    Script: |
+      bonus bSMatk,2;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - aegis_28973           # 28973
+          - Dark_Blindfold        # 5104
+      - Combo:
+          - aegis_28973           # 28973
+          - Dark_Blindfold_        # 18609
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus2 bMagicAddRace,RC_All,5;
+  - Combos:
+      - Combo:
+          - Magical_Cloth           # 450132
+          - Real_Ceila_Card       # 4692
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bIgnoreMdefRaceRate,RC_All,50;
+  - Combos:
+      - Combo:
+          - 2020RTC_Imp_TW    # 400082
+          - 2021RTC_Headset_TW    # 400164
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSubRace,RC_Player_Human,1+2*(.@r/3);
+      bonus2 bSubRace,RC_Player_Doram,1+2*(.@r/3);
+      bonus bDelayrate,-1-.@r/3;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Emperor    # 27135
+    Script: |
+      bonus bVit,3;
+      bonus bMaxHPrate,10;
+      bonus2 bSkillAtk,"LG_OVERBRAND",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Hierophant    # 27138
+    Script: |
+      bonus bLuk,3;
+      bonus bHealPower2,10;
+      bonus bAddItemHealRate,10;
+      bonus2 bSkillAtk,"GN_CART_TORNADO",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Lover    # 27137
+    Script: |
+      bonus bDex,3;
+      bonus bMdef,20;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Tram    # 27132
+    Script: |
+      bonus bLuk,3;
+      bonus bLongAtkRate,5;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Power    # 27140
+    Script: |
+      bonus bStr,3;
+      bonus bBaseAtk,50;
+      bonus2 bSkillAtk,"SR_SKYNETBLOW",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Hermit    # 27134
+    Script: |
+      bonus bHealPower,5;
+      bonus bSPrecovRate,50;
+      bonus2 bSkillAtk,"AB_ADORAMUS",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Justice    # 27129
+    Script: |
+      bonus bVit,3;
+      bonus bDef,300;
+      bonus2 bSkillAtk,"RK_HUNDREDSPEAR",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Reaper    # 27133
+    Script: |
+      bonus bAgi,3;
+      bonus bFlee,50;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Temperance    # 27131
+    Script: |
+      bonus bDex,3;
+      bonus bAspd,1;
+      bonus2 bSkillAtk,"RA_ARROWSTORM",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Devil    # 27139
+    Script: |
+      bonus bAgi,3;
+      bonus bHit,50;
+      bonus2 bSkillAtk,"SC_FEINTBOMB",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Star    # 27130
+    Script: |
+      bonus bInt,3;
+      bonus bMatk,50;
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Moon    # 27136
+    Script: |
+      bonus bInt,3;
+      bonus bNoCastCancel;
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Fool    # 27364
+    Script: |
+      bonus bAllStats,1;
+      bonus bMaxHP,5000;
+      bonus bMaxSP,500;
+      skill "MC_CARTREVOLUTION",1;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_WheelOfF    # 27365
+    Script: |
+      bonus bStr,2;
+      bonus bLuk,2;
+      bonus bHPrecovRate,350;
+      bonus2 bSkillAtk,"KO_SETSUDAN",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_TheHangedM    # 27366
+    Script: |
+      bonus bInt,2;
+      bonus bDex,2;
+      bonus bMaxSPrate,10;
+      bonus2 bSkillAtk,"RL_FIREDANCE",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_TheWorld    # 27367
+    Script: |
+      bonus bAgi,2;
+      bonus bVit,2;
+      bonus2 bSkillAtk,"SU_CN_METEOR",50;
+      bonus bIntravision;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_TheHighPriestess    # 300286
+    Script: |
+      bonus bAgi,2;
+      bonus bInt,2;
+      bonus2 bMagicAddClass,Class_Boss,5;
+      bonus2 bSkillAtk,"SP_SPA",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_TheTower    # 300288
+    Script: |
+      bonus bStr,2;
+      bonus bAgi,2;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SJ_BOOKOFCREATINGSTAR",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Justice_R    # 300131
+    Script: |
+      bonus bLuk,3;
+      bonus2 bIgnoreDefRaceRate,RC_All,25;
+      bonus2 bSkillAtk,"RK_SONICWAVE",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Star_R    # 300132
+    Script: |
+      bonus bDex,3;
+      bonus bMagicHPGainValue,200;
+      bonus2 bSkillAtk,"WL_HELLINFERNO",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Temperance_R    # 300133
+    Script: |
+      bonus bInt,3;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Tram_R    # 300134
+    Script: |
+      bonus bVit,3;
+      bonus2 bAddClass,Class_Boss,5;
+      bonus2 bSkillAtk,"NC_POWERSWING",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Reaper_R    # 300135
+    Script: |
+      bonus bVit,3;
+      bonus bSPDrainValue,5;
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Lover_R    # 300136
+    Script: |
+      bonus bInt,3;
+      bonus2 bIgnoreMdefRaceRate,RC_All,25;
+      bonus2 bSkillAtk,"WM_GREAT_ECHO",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Emperor_R    # 300163
+    Script: |
+      bonus bLuk,3;
+      bonus bShortWeaponDamageReturn,5;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Power_R    # 300164
+    Script: |
+      bonus bAgi,3;
+      bonus bHPGainValue,200;
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Devil_R    # 300165
+    Script: |
+      bonus bStr,3;
+      bonus bSPDrainValue,2;
+      bonus2 bSkillAtk,"SC_FATALMENACE",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Moon_R    # 300166
+    Script: |
+      bonus bDex,3;
+      bonus bFixedCastrate,-50;
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_WheelOfF_R    # 300167
+    Script: |
+      bonus bAgi,2;
+      bonus bVit,2;
+      bonus2 bHPRegenRate,1500,5000;
+      bonus2 bSkillAtk,"KO_BAKURETSU",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_TheWorld_R    # 300168
+    Script: |
+      bonus bStr,2;
+      bonus bLuk,2;
+      bonus bPerfectHitRate,10;
+      bonus2 bSkillAtk,"SU_SVG_SPIRIT",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Hermit_R    # 300282
+    Script: |
+      bonus bHealPower,5;
+      bonus2 bSPRegenRate,50,5000;
+      bonus2 bSkillAtk,"AB_JUDEX",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Fool_R    # 300283
+    Script: |
+      bonus bAllStats,1;
+      bonus2 bHPRegenRate,5000,10000;
+      bonus2 bSPRegenRate,50,10000;
+      skill "WS_CARTBOOST",1;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_Hierophant_R    # 300284
+    Script: |
+      bonus bVit,3;
+      bonus2 bAddItemHealRate,545,200;
+      bonus2 bAddItemHealRate,546,200;
+      bonus2 bAddItemHealRate,547,200;
+      bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_TheHangedM_R    # 300285
+    Script: |
+      bonus bAgi,2;
+      bonus bVit,2;
+      bonus bSPGainValue,20;
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_TheHighPriestess_R    # 300287
+    Script: |
+      bonus bVit,2;
+      bonus bDex,2;
+      bonus bMagicSPGainValue,20;
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",5;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Card_Of_TheTower_R    # 300289
+    Script: |
+      bonus bDex,2;
+      bonus bLuk,2;
+      bonus bShortAtkRate,5;
+      bonus2 bSkillAtk,"SJ_STAREMPEROR",50;
+  - Combos:
+      - Combo:
+          - Arcana    # 29585
+          - Melon_Headphone_J_    # 410084
+      - Combo:
+          - Arcana    # 29585
+          - Melon_Headphone_J    # 410085
+    Script: |
+      bonus bBaseAtk,BaseLevel;
+      bonus bMatk,BaseLevel;
+  - Combos:
+      - Combo:
+          - Knight_Windstorm_Card    # 4318
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAtkRate,25;
+      bonus2 bAddEff,Eff_Freeze,2000;
+      /*unknown Rate*/
+  - Combos:
+      - Combo:
+          - Turtle_General_Card    # 4305
+          - aegis_311439    # 311439
+    Script: |
+      autobonus "{ bonus2 bAddEle,Ele_Fire,20; }",30,10000,BF_WEAPON;
+      /*unknown Rate*/
+  - Combos:
+      - Combo:
+          - Dracula_Card    # 4134
+          - aegis_311439    # 311439
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bLongAtkRate,15;
+      bonus bHPGainValue,200;
+      bonus bSPGainValue,20;
+  - Combos:
+      - Combo:
+          - Lord_Of_Death_Card    # 4276
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAtkRate,25;
+      bonus2 bAddEff,Eff_Stun,500;
+      bonus2 bAddEff,Eff_Curse,500;
+      bonus2 bAddEff,Eff_Silence,500;
+      bonus2 bAddEff,Eff_Poison,500;
+      bonus2 bAddEff,Eff_Bleeding,500;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Apocalips_H_Card    # 4374
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,15;
+  - Combos:
+      - Combo:
+          - Kiel_Card    # 4403
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,15;
+      skill "SA_SPELLBREAKER",5;
+  - Combos:
+      - Combo:
+          - Pharaoh_Card    # 4148
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+      skill "PA_PRESSURE",5;
+  - Combos:
+      - Combo:
+          - Rsx_0806_Card    # 4342
+          - aegis_311439    # 311439
+    Script: |
+      bonus bDef,500;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Detale_Card    # 4386
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,50;
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,70,BF_MAGIC,0;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Garm_Card    # 4324
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,50;
+      bonus3 bAddEffWhenHit,Eff_Freeze,2000,ATF_WEAPON|ATF_MAGIC;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Amon_Ra_Card    # 4236
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus3 bAutoSpellWhenHit,"PR_KYRIE",10,(30+70*(readparam(bInt)>=99));
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Dark_Lord_Card    # 4168
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",70;
+  - Combos:
+      - Combo:
+          - Sealed_D_Lord_Card    # 4488
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",20;
+  - Combos:
+      - Combo:
+          - Boitata_Card    # 27126
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAspd,1;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - Incant_Samurai_Card    # 4263
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bAddRace,RC_DemiHuman,35;
+      bonus2 bAddRace,RC_Player_Doram,35;
+  - Combos:
+      - Combo:
+          - Bacsojin_Card    # 4372
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSkillUseSP,"AB_CHEAL",50;
+  - Combos:
+      - Combo:
+          - Dark_Snake_Lord_Card    # 4330
+          - aegis_311439    # 311439
+    Script: |
+      bonus bInt,JobLevel/3;
+      bonus bMdef,JobLevel/3;
+  - Combos:
+      - Combo:
+          - Gopinich_Card    # 27162
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "WZ_HEAVENDRIVE",5;
+  - Combos:
+      - Combo:
+          - Tao_Gunka_Card    # 4302
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAtkRate,15;
+      bonus bMatkRate,15;
+      skill "NPC_STONESKIN",2;
+  - Combos:
+      - Combo:
+          - Bakonawa_Card    # 4591
+          - aegis_311439    # 311439
+    Script: |
+      bonus bStr,26;
+      bonus5 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",4,20,BF_WEAPON,0;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Bangungot_Card    # 4590
+          - aegis_311439    # 311439
+    Script: |
+      bonus bInt,26;
+      bonus5 bAutoSpellWhenHit,"NPC_WIDESLEEP",4,20,BF_MAGIC,0;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Buwaya_Card    # 4592
+          - aegis_311439    # 311439
+    Script: |
+      bonus bVit,26;
+      bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",4,20,BF_MAGIC,0;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Leak_Card    # 4520
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,50;
+      bonus3 bAddEffWhenHit,Eff_Confusion,100,ATF_WEAPON|ATF_MAGIC;
+      bonus3 bAddEffWhenHit,Eff_Fear,100,ATF_WEAPON|ATF_MAGIC;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Lady_Tanee_Card    # 4376
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bAddRace,RC_All,30;
+      bonus2 bAddItemHealRate,513,30*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_300392    # 300392
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAtkRate,10;
+      bonus2 bAddEff,Eff_Freeze,1000;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - aegis_300393    # 300393
+          - aegis_311439    # 311439
+    Script: |
+      autobonus "{ bonus2 bAddEle,Ele_Fire,10; }",15,10000,BF_WEAPON;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - aegis_300394    # 300394
+          - aegis_311439    # 311439
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
+      bonus bHPGainValue,100;
+      bonus bSPGainValue,10;
+  - Combos:
+      - Combo:
+          - aegis_311440    # 311440
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAtkRate,10;
+      bonus2 bAddEff,Eff_Stun,250;
+      bonus2 bAddEff,Eff_Curse,250;
+      bonus2 bAddEff,Eff_Silence,250;
+      bonus2 bAddEff,Eff_Poison,250;
+      bonus2 bAddEff,Eff_Bleeding,250;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - aegis_300395    # 300395
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,5;
+  - Combos:
+      - Combo:
+          - aegis_300396    # 300396
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,15;
+  - Combos:
+      - Combo:
+          - aegis_300397    # 300397
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+  - Combos:
+      - Combo:
+          - aegis_300398    # 300398
+          - aegis_311439    # 311439
+    Script: |
+      bonus bDef,150;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - aegis_300399    # 300399
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - aegis_300400    # 300400
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - aegis_300401    # 300401
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - aegis_300402    # 300402
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAspd,1;
+      bonus bMatkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_300403    # 300403
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bAddRace,RC_DemiHuman,25;
+      bonus2 bAddRace,RC_Player_Doram,25;
+  - Combos:
+      - Combo:
+          - aegis_300404    # 300404
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSkillUseSP,"AB_CHEAL",25;
+  - Combos:
+      - Combo:
+          - aegis_300405    # 300405
+          - aegis_311439    # 311439
+    Script: |
+      bonus bInt,JobLevel/10;
+      bonus bMdef,JobLevel/10;
+  - Combos:
+      - Combo:
+          - aegis_300406    # 300406
+          - aegis_311439    # 311439
+    Script: |
+      bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - aegis_300407    # 300407
+          - aegis_311439    # 311439
+    Script: |
+      bonus bAtkRate,10;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - aegis_300408    # 300408
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,30;
+      bonus3 bAddEffWhenHit,Eff_Confusion,50,ATF_WEAPON|ATF_MAGIC;
+      bonus3 bAddEffWhenHit,Eff_Fear,50,ATF_WEAPON|ATF_MAGIC;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - aegis_300409    # 300409
+          - aegis_311439    # 311439
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddItemHealRate,513,10*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_300410    # 300410
+          - aegis_311442    # 311442
+    Script: |
+      bonus bAtkRate,20;
+  - Combos:
+      - Combo:
+          - aegis_300411    # 300411
+          - aegis_311442    # 311442
+    Script: |
+      bonus bMatkRate,20;
+  - Combos:
+      - Combo:
+          - Kings_Magic    # 311284
+          - aegis_311442    # 311442
+    Script: |
+      bonus bMaxHP,50*BaseLevel;
+      bonus bMaxSP,5*BaseLevel;
+  - Combos:
+      - Combo:
+          - Kings_Bless_A    # 510043
+          - Kings_Eager_A    # 510044
+    Script: |
+      bonus bPerfectHitRate,100;
+      bonus2 bSubRace,RC_Player_Human,20;
+  - Combos:
+      - Combo:
+          - Kings_Magic    # 311284
+          - Kings_Bless_A    # 510043
+    Script: |
+      bonus bReduceDamageReturn,50;
+  - Combos:
+      - Combo:
+          - Kings_Magic    # 311284
+          - Kings_Eager_A    # 510044
+    Script: |
+      bonus bReduceDamageReturn,50;
+  - Combos:
+      - Combo:
+          - Kings_Magic    # 311284
+          - Kings_Double_Edge_A    # 610029
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bReduceDamageReturn,10*.@r;
+  - Combos:
+      - Combo:
+          - FaceWorm_Skin    # 20717
+          - Temporal_Boots_TW    # 22202
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - FaceWorm_Skin_    # 20718
+          - Temporal_Boots_TW    # 22202
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - Dynast    # 29436
+          - Military_Glove    # 490183
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+         bonus bLongAtkRate,25;
+         bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-3000;
+      }
+  - Combos:
+      - Combo:
+          - Lapine_Shield    # 2198
+          - Rebirth_Circlet    # 15897
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (.@r>=7)
+         bonus2 bSkillCooldown,"WL_COMET",40000;
+      if (.@r>=9)
+         bonus2 bSkillCooldown,"WL_COMET",45000;
+  - Combos:
+      - Combo:
+          - B_Ygnizem_Card    # 4352
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      bonus2 bHPRegenRate,5000,10000;
+      bonus2 bSPRegenRate,100,10000;
+  - Combos:
+      - Combo:
+          - B_Eremes_Card    # 4359
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus2 bSubEle,Ele_Earth,50;
+      bonus2 bSubEle,Ele_Water,50;
+      skill "AS_ENCHANTPOISON",10;
+  - Combos:
+      - Combo:
+          - B_Katrinn_Card    # 4365
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMatk,100;
+      skill "HW_GANBANTEIN",1;
+  - Combos:
+      - Combo:
+          - B_Seyren_Card    # 4357
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bBaseAtk,100;
+      skill "LK_CONCENTRATION",5;
+  - Combos:
+      - Combo:
+          - B_Shecil_Card    # 4367
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus2 bAddClass,Class_Boss,25;
+      skill "SN_SIGHT",10;
+  - Combos:
+      - Combo:
+          - B_Harword_Card    # 4361
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus2 bAddClass,Class_Normal,25;
+      skill "WS_MELTDOWN",10;
+  - Combos:
+      - Combo:
+          - B_Magaleta_Card    # 4363
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      skill "HP_ASSUMPTIO",5;
+  - Combos:
+      - Combo:
+          - Clown_Card    # 4560
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bFlee,50;
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      if (readparam(bVit)>=110)
+         bonus bFlee,50;
+  - Combos:
+      - Combo:
+          - Creator_Card    # 4563
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bCritical,50;
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",5,-100,BF_WEAPON,1;
+      if (readparam(bStr)>=110)
+         bonus bCritical,50;
+  - Combos:
+      - Combo:
+          - Stalker_Card    # 4564
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bHit,50;
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus5 bAutoSpellWhenHit,"ST_FULLSTRIP",1,-100,BF_WEAPON,1;
+      if (readparam(bLuk)>=110)
+         bonus bHit,50;
+  - Combos:
+      - Combo:
+          - Professor_Card    # 4561
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",5,-100,BF_MAGIC,0;
+      if (readparam(bDex)>=110)
+         bonus bMatkRate,7;
+  - Combos:
+      - Combo:
+          - Champion_Card    # 4562
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAtkRate,7;
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",5,-100,BF_WEAPON,1;
+      if (readparam(bAgi)>=110)
+         bonus bAtkRate,7;
+  - Combos:
+      - Combo:
+          - Gypsy_Card    # 4566
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bFlee,50;
+      bonus bMaxHPRate,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      if (readparam(bVit)>=110)
+         bonus bFlee,50;
+  - Combos:
+      - Combo:
+          - Paladin_Card    # 4565
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHPRate,60;
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus5 bAutoSpellWhenHit,"CR_GRANDCROSS",10,-100,BF_WEAPON,0;
+      if (readparam(bInt)>=110)
+         bonus bMaxHPRate,10;
+  - Combos:
+      - Combo:
+          - Archbishop_Card_J    # 27059
+          - Real_Magaleta_Card_J    # 27069
+    Script: |
+      autobonus3 "{ bonus bHealPower,100; }",100,5000,"AL_HEAL","{ active_transform 3221,5000; }";
+      autobonus3 "{ bonus bHealPower,100; }",100,5000,"AB_HIGHNESSHEAL","{ active_transform 3221,5000; }";
+      autobonus3 "{ bonus bHealPower,100; }",100,5000,"AB_CHEAL","{ active_transform 3221,5000; }";
+  - Combos:
+      - Combo:
+          - Archbishop_Card_J    # 27059
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bNoGemStone;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Archbishop_Card_J    # 27059
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Archbishop_Card_J    # 27059
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Warlock_Card_J    # 27062
+          - Real_Katrinn_Card_J    # 27070
+    Script: |
+      autobonus "{ bonus bInt,100; }",30,5000,BF_MAGIC,"{ active_transform 3224,5000; }";
+  - Combos:
+      - Combo:
+          - Warlock_Card_J    # 27062
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bDelayrate,-10;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Warlock_Card_J    # 27062
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bDelayrate,10;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Warlock_Card_J    # 27062
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bDelayrate,10;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - GuillotineCross_Card_J    # 27058
+          - Real_Eremes_Card_J    # 27068
+    Script: |
+      autobonus "{ bonus bAgi,100; }",30,5000,BF_WEAPON,"{ active_transform 3220,5000; }";
+  - Combos:
+      - Combo:
+          - GuillotineCross_Card_J    # 27058
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAspd,2;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - GuillotineCross_Card_J    # 27058
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAspd,-2;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - GuillotineCross_Card_J    # 27058
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAspd,-2;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Mechanic_Card_J    # 27061
+          - Real_Harword_Card_J    # 27072
+    Script: |
+      autobonus "{ bonus bLuk,100; }",30,5000,BF_WEAPON,"{ active_transform 3223,5000; }";
+  - Combos:
+      - Combo:
+          - Mechanic_Card_J    # 27061
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAtkRate,15;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Mechanic_Card_J    # 27061
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAtkRate,-15;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Mechanic_Card_J    # 27061
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bAtkRate,-15;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - RuneKnight_Card_J    # 27063
+          - Real_Seyren_Card_J    # 27073
+    Script: |
+      autobonus "{ bonus bVit,100; }",30,5000,BF_WEAPON,"{ active_transform 3225,5000; }";
+  - Combos:
+      - Combo:
+          - RuneKnight_Card_J    # 27063
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bLongAtkDef,10;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - RuneKnight_Card_J    # 27063
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bLongAtkDef,-10;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - RuneKnight_Card_J    # 27063
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bLongAtkDef,-10;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Ranger_Card_J    # 27060
+          - Real_Shecil_Card_J    # 27071
+    Script: |
+      autobonus "{ bonus bDex,100; }",30,5000,BF_WEAPON,"{ active_transform 3222,5000; }";
+  - Combos:
+      - Combo:
+          - Ranger_Card_J    # 27060
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bSPDrainValue,3;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Ranger_Card_J    # 27060
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bSPDrainValue,-3;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Ranger_Card_J    # 27060
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bSPDrainValue,-3;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Genetic_Card_J    # 27065
+          - Real_Flamel_Card_J # 27075
+    Script: |
+      autobonus "{ bonus bLuk,100; }",30,5000,BF_WEAPON,"{ active_transform 3241,5000; }";
+  - Combos:
+      - Combo:
+          - Genetic_Card_J    # 27065
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHP,50*BaseLevel;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Genetic_Card_J    # 27065
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHP,-50*BaseLevel;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Genetic_Card_J    # 27065
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHP,-50*BaseLevel;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - ShadowChaser_Card_J     # 27066
+          - Real_Gertie_Card_J    # 27078
+    Script: |
+      autobonus "{ bonus bAgi,100; }",30,5000,BF_WEAPON,"{ active_transform 3244,5000; }";
+  - Combos:
+      - Combo:
+          - ShadowChaser_Card_J     # 27066
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bPerfectHitRate,30;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - ShadowChaser_Card_J     # 27066
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bPerfectHitRate,-30;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - ShadowChaser_Card_J     # 27066
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bPerfectHitRate,-30;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Sura_Card_J    # 27056
+          - Real_Chen_Card_J    # 27077
+    Script: |
+      autobonus "{ bonus bStr,100; }",30,5000,BF_WEAPON,"{ active_transform 3243,5000; }";
+  - Combos:
+      - Combo:
+          - Sura_Card_J    # 27056
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bFlee,50;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Sura_Card_J    # 27056
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bFlee,-50;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Sura_Card_J    # 27056
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bFlee,-50;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Sorcerer_Card_J    # 27055
+          - Real_Ceila_Card_J    # 27076
+    Script: |
+      autobonus "{ bonus bInt,100; }",30,5000,BF_MAGIC,"{ active_transform 3242,5000; }";
+  - Combos:
+      - Combo:
+          - Sorcerer_Card_J    # 27055
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMagicHPGainValue,200;
+      bonus bMagicSPGainValue,20;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Sorcerer_Card_J    # 27055
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMagicHPGainValue,-200;
+      bonus bMagicSPGainValue,-20;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Sorcerer_Card_J    # 27055
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMagicHPGainValue,-200;
+      bonus bMagicSPGainValue,-20;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Minstrel_Card_J    # 27057
+          - Real_Alphoccio_Card_J    # 27080
+    Script: |
+      autobonus "{ bonus bDex,100; }",30,5000,BF_WEAPON,"{ active_transform 3245,5000; }";
+  - Combos:
+      - Combo:
+          - Minstrel_Card_J    # 27057
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Minstrel_Card_J    # 27057
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bLongAtkRate,-15;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Minstrel_Card_J    # 27057
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bLongAtkRate,-15;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - RoyalGuard_Card_J    # 27064
+          - Real_Randel_Card_J    # 27074
+    Script: |
+      autobonus "{ bonus bVit,100; }",30,5000,BF_WEAPON,"{ active_transform 3240,5000; }";
+  - Combos:
+      - Combo:
+          - RoyalGuard_Card_J    # 27064
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMdef,30;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - RoyalGuard_Card_J    # 27064
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMdef,-30;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - RoyalGuard_Card_J    # 27064
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMdef,-30;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Wanderer_Card_J    # 27067
+          - Real_Trentini_Card_J    # 27079
+    Script: |
+      autobonus "{ bonus bDex,100; }",30,5000,BF_WEAPON,"{ active_transform 3246,5000; }";
+  - Combos:
+      - Combo:
+          - Wanderer_Card_J    # 27067
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMatkRate,15;
+      bonus2 bSubEle,Ele_Neutral,50;
+  - Combos:
+      - Combo:
+          - Hero_Cape    # 20783
+          - Wanderer_Card_J    # 27067
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMatkRate,-15;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Coak_of_Survival    # 20813
+          - Wanderer_Card_J    # 27067
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMatkRate,-15;
+      bonus2 bSubEle,Ele_Neutral,-50;
+  - Combos:
+      - Combo:
+          - Sealed_B_Ygnizem_Card_J    # 300318
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      bonus2 bHPRegenRate,1500,10000;
+      bonus2 bSPRegenRate,30,10000;
+  - Combos:
+      - Combo:
+          - aegis_300314    # 300314
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus2 bHPRegenRate,5000,10000;
+      bonus2 bSPRegenRate,100,10000;
+      bonus bHealPower2,10;
+      bonus bAddItemHealRate,10;
+  - Combos:
+      - Combo:
+          - aegis_450222    # 450222
+          - Murderous_Grudge    # 29724
+    Script: |
+      bonus bPerfectHitRate,25;
+  - Combos:
+      - Combo:
+          - Grave_Amon_Ra_Card    # 4652
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPRate,50;
+      skill "AB_ORATIO",5;
+  - Combos:
+      - Combo:
+          - AngerMoonlight_Card    # 27081
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatkRate,10;
+      skill "AB_SILENTIUM",3;
+  - Combos:
+      - Combo:
+          - Ill_Dracula_Card    # 27104
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bAspd,3;
+  - Combos:
+      - Combo:
+          - Anc_W_Deffend_Card_J    # 27380
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bDelayrate,-(getskilllv("ASC_BREAKER")+getskilllv("ASC_METEORASSAULT"));
+  - Combos:
+      - Combo:
+          - Anc_Tao_Gunka_Card_J    # 27376
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "SM_PROVOKE",10;
+  - Combos:
+      - Combo:
+          - Shining_T_Bear_Card_J    # 27369
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bAtkRate,10;
+      skill "PR_ASPERSIO",5;
+  - Combos:
+      - Combo:
+          - AwakenKtullanux_Card    # 27113
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "WL_JACKFROST",3;
+  - Combos:
+      - Combo:
+          - FuryHero_Card    # 27088
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bSkillCooldown,"RK_DRAGONBREATH_WATER",-500;
+      bonus2 bSkillCooldown,"RK_DRAGONBREATH",-500;
+  - Combos:
+      - Combo:
+          - Chaos_Acolyte_Card    # 27343
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,readparam(bInt)/10;
+      if (readparam(bInt)>=130)
+         bonus3 bAddEff,Eff_Silence,500,ATF_MAGIC;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - Chaos_Baphomet_Card    # 27334
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatkRate,10;
+      skill "WZ_VERMILION",10;
+  - Combos:
+      - Combo:
+          - Q_Scaraba_Card    # 4507
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bAddRace,RC_All,20;
+  - Combos:
+      - Combo:
+          - Gold_Q_Scaraba_Card    # 4509
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bResEff,Eff_Confusion,10000;
+      skill "AM_CP_HELM",5;
+    UnEquipScript: |
+      sc_end SC_CP_HELM;
+  - Combos:
+      - Combo:
+          - ILL_Kraken_Card    # 300151
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "WL_FROSTMISTY",3;
+  - Combos:
+      - Combo:
+          - ILL_Deviace_Card    # 300142
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bAllStats,10;
+      bonus2 bFixedCastrate,"WL_TETRAVORTEX",-100;
+  - Combos:
+      - Combo:
+          - WizardOfVeritas_Card    # 27087
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bVariableCastrate,"HW_MAGICPOWER",-100;
+  - Combos:
+      - Combo:
+          - Timeholder_Card    # 4625
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bReduceDamageReturn,10;
+      bonus bMatk,BaseLevel;
+  - Combos:
+      - Combo:
+          - Fragment_Of_Soul_Card_J    # 27371
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus3 bAutoSpell,"RA_AIMEDBOLT",10,10;
+      /*Unknown Rate*/
+  - Combos:
+      - Combo:
+          - OminousSolider_Card    # 27114
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHP,5000;
+      bonus bMaxSP,500;
+  - Combos:
+      - Combo:
+          - OminousTurtleG_Card    # 27119
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bAtkRate,10;
+      skill "SM_MAGNUM",10;
+  - Combos:
+      - Combo:
+          - Bomi_Card    # 27105
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatkRate,10;
+      skill "WZ_STORMGUST",10;
+  - Combos:
+      - Combo:
+          - SLD_G_Amon_Ra_Card_J    # 300348
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus2 bMagicAddRace,RC_Demon,10;
+      bonus2 bMagicAddRace,RC_Undead,10;
+      bonus2 bMagicAddEle,Ele_Dark,10;
+      bonus2 bMagicAddEle,Ele_Undead,10;
+  - Combos:
+      - Combo:
+          - SLD_A_Moonlight_Card_J    # 300345
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bMagicAddRace,RC_Demon,20;
+      bonus2 bMagicAddRace,RC_Brute,20;
+  - Combos:
+      - Combo:
+          - SLD_Ill_Dracula_Card_J    # 300346
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bAspd,1;
+  - Combos:
+      - Combo:
+          - SLD_A_W_Def_Card_J    # 300351
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus bDelayrate,-(getskilllv("ASC_BREAKER")+getskilllv("ASC_METEORASSAULT"))/3;
+  - Combos:
+      - Combo:
+          - SLD_A_Tao_Gunka_Card_J    # 300349
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - SLD_Ktullanux_Card_J    # 300352
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus2 bMagicAddRace,RC_Demon,10;
+      bonus2 bMagicAddRace,RC_Formless,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Neutral,10;
+  - Combos:
+      - Combo:
+          - SLD_S_T_Bear_Card_J    # 300350
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bAddRace,RC_Undead,20;
+      bonus2 bAddRace,RC_Demon,20;
+  - Combos:
+      - Combo:
+          - SLD_C_Baphomet_Card_J    # 300353
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bMagicAddRace,RC_Undead,20;
+      bonus2 bMagicAddRace,RC_Insect,20;
+  - Combos:
+      - Combo:
+          - SLD_ILL_Kraken_Card_J    # 300354
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus2 bAddRace,RC_Fish,10;
+      bonus2 bAddRace,RC_Plant,10;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bAddEle,Ele_Ghost,10;
+      bonus2 bMagicAddRace,RC_Fish,10;
+      bonus2 bMagicAddRace,RC_Plant,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bMagicAddEle,Ele_Ghost,10;
+  - Combos:
+      - Combo:
+          - SLD_Q_Scaraba_Card_J    # 300335
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+  - Combos:
+      - Combo:
+          - SLD_G_Q_Scaraba_Card_J    # 300337
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bResEff,Eff_Confusion,10000;
+  - Combos:
+      - Combo:
+          - SLD_Timeholder_Card_J    # 300343
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatk,BaseLevel/2;
+  - Combos:
+      - Combo:
+          - SLD_O_TurtleG_Card_J    # 300355
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus2 bAddRace,RC_Formless,20;
+      bonus2 bAddRace,RC_Brute,20;
+  - Combos:
+      - Combo:
+          - SLD_Bomi_Card_J    # 300344
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - ILL_Vitata_Card    # 300238
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bMatkRate,10;
+      skill "PR_SANCTUARY",10;
+  - Combos:
+      - Combo:
+          - ILL_Maya_Card    # 300239
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bAtkRate,10;
+      skill "CR_AUTOGUARD",10;
+  - Combos:
+      - Combo:
+          - aegis_480188    # 480188
+          - Heros_TriumphantSong    # 311074
+    Script: |
+      bonus bAspdRate,20;
+  - Combos:
+      - Combo:
+          - aegis_480188    # 480188
+          - Illusion_Box_Garden    # 311075
+    Script: |
+      bonus bDelayrate,-25;
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_    # 15137
+          - aegis_300398    # 300398
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bVit,2*.@r;
+      bonus bMaxHPrate,2*.@r;
+  - Combos:
+      - Combo:
+          - Applause_Sandal_    # 22071
+          - aegis_300401    # 300401
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bVariableCastrate,-10;
+      bonus3 bAutoSpellWhenHit,"PR_KYRIE",10,-(readparam(bInt)>=99)?35:15;
+      bonus bAllStats,.@r;
+      /*TODO: Cancel auto spell bonus is not implemented in rAthena yet.*/
+  - Combos:
+      - Combo:
+          - aegis_15948    # 15948
+          - Orc_Hero_Card    # 4143
+    Script: |
+      bonus bBaseAtk,50;
+      if (BaseLevel>=170)
+         bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - aegis_15948    # 15948
+          - Sealed_Orc_Hero_Card    # 4492
+    Script: |
+      bonus bBaseAtk,50;
+      if (BaseLevel>=170)
+         bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Bear's_Power    # 4875
+    Script: |
+      bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Speed_Of_Light    # 4877
+    Script: |
+      bonus bDelayrate,-8;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Muscle_Fool    # 4878
+    Script: |
+      bonus bMaxHPrate,15;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus bMatk,50;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Hawkeye    # 4879
+    Script: |
+      bonus bLongAtkRate,10;
+  - Combos:
+      - Combo:
+          - Temporal_Ring_TW    # 490030
+          - Temporal_Boots_TW    # 22202
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - aegis_490265    # 490265
+          - aegis_420134    # 420134
+    Script: |
+      bonus bMatk,30;
+      bonus bVariableCastrate,-5;
+      bonus bFixedCast,-200;
+      bonus2 bMagicAddClass,Class_Boss,20;
+  - Combos:
+      - Combo:
+          - aegis_540057    # 540057
+          - DivineGrace_of_Kings    # 310760
+    Script: |
+      bonus bAspdRate,15;
+      bonus2 bSubRace,RC_Player_Human,10;
+      skill "PA_GOSPEL",1;
+  - Combos:
+      - Combo:
+          - aegis_510080   # 510080
+          - aegis_510081   # 510081
+    Script: |
+      bonus bCritAtkRate,-7;
+      bonus bShortAtkRate,15;
+      bonus bAspdRate,-7;
+      bonus bHit,50;
+  - Combos:
+      - Combo:
+          - aegis_510082   # 510082
+          - aegis_510083   # 510083
+    Script: |
+      bonus bCritAtkRate,-5;
+      bonus bShortAtkRate,10;
+      bonus bAspdRate,10;
+      bonus bCritical,-5;
+  - Combos:
+      - Combo:
+          - aegis_510087   # 510087
+          - aegis_510088   # 510088
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bLongAtkDef,-7;
+      bonus bAspdRate,15;
+      bonus bHit,-25;
+  - Combos:
+      - Combo:
+          - aegis_510089   # 510089
+          - aegis_510090   # 510090
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,-7;
+      bonus2 bSubRace,RC_Player_Doram,-7;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Water,15;
+      bonus bDelayrate,7;
+      bonus bMaxSPrate,15;

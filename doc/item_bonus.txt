@@ -125,7 +125,7 @@ Atk/Def
 bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
-bonus bAtkRate,n;  			Attack power + n% (unofficial)
+bonus bAtkRate,n;  			ATK + n% that won't interfere with Damage modifier and SC_EDP (renewal mode only)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%

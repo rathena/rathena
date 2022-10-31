@@ -72,7 +72,7 @@ enum e_battle_check_target : uint32 {
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
-	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
+	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2, percentAtk, percentAtk2;
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
@@ -216,6 +216,7 @@ struct Battle_Config
 	int guild_exp_limit;
 	int guild_max_castles;
 	int guild_skill_relog_delay;
+	int guild_skill_relog_type;
 	int emergency_call;
 	int guild_aura;
 	int pc_invincible_time;
@@ -559,8 +560,6 @@ struct Battle_Config
 	int vip_exp_penalty_job;
 	int vip_disp_rate;
 	int mon_trans_disable_in_gvg;
-	int emblem_woe_change;
-	int emblem_transparency_limit;
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
@@ -712,6 +711,8 @@ struct Battle_Config
 	int feature_barter;
 	int feature_barter_extended;
 	int break_mob_equip;
+	int macro_detection_retry;
+	int macro_detection_timeout;
 
 #include "../custom/battle_config_struct.inc"
 };
