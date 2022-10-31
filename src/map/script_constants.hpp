@@ -4685,6 +4685,7 @@
 	export_constant(UMOB_IGNORE_CELL_STACK_LIMIT);
 	export_constant(UMOB_RES);
 	export_constant(UMOB_MRES);
+	export_constant(UMOB_DAMAGETAKEN);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);

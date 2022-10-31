@@ -3580,13 +3580,13 @@ int mob_skill_id2skill_idx(int mob_id,uint16 skill_id)
  *------------------------------------------*/
 int mob_getfriendhprate_sub(struct block_list *bl,va_list ap)
 {
-	int min_rate, max_rate,rate;
+	int64 min_rate, max_rate,rate;
 	struct block_list **fr;
 	struct mob_data *md;
 
 	md = va_arg(ap,struct mob_data *);
-	min_rate=va_arg(ap,int);
-	max_rate=va_arg(ap,int);
+	min_rate=va_arg(ap,int64);
+	max_rate=va_arg(ap,int64);
 	fr=va_arg(ap,struct block_list **);
 
 	if( md->bl.id == bl->id && !(battle_config.mob_ai&0x10))
@@ -3604,7 +3604,7 @@ int mob_getfriendhprate_sub(struct block_list *bl,va_list ap)
 		(*fr) = bl;
 	return 1;
 }
-static struct block_list *mob_getfriendhprate(struct mob_data *md,int min_rate,int max_rate)
+static struct block_list *mob_getfriendhprate(struct mob_data *md,int64 min_rate,int64 max_rate)
 {
 	struct block_list *fr=NULL;
 	int type = BL_MOB;
@@ -3620,7 +3620,7 @@ static struct block_list *mob_getfriendhprate(struct mob_data *md,int min_rate,i
 /*==========================================
  * Check hp rate of its master
  *------------------------------------------*/
-struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int rate)
+struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int64 rate)
 {
 	if( md && md->master_id > 0 )
 	{
@@ -3636,7 +3636,7 @@ struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int rate)
  *------------------------------------------*/
 int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 {
-	int cond1,cond2;
+	int64 cond1,cond2;
 	struct mob_data **fr, *md, *mmd;
 	int flag=0;
 
@@ -3649,8 +3649,8 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 
 	if (battle_check_target(&mmd->bl,bl,BCT_ENEMY)>0)
 		return 0;
-	cond1=va_arg(ap,int);
-	cond2=va_arg(ap,int);
+	cond1=va_arg(ap,int64);
+	cond2=va_arg(ap,int64);
 	fr=va_arg(ap,struct mob_data **);
 	if( cond2==-1 ){
 		int j;
@@ -3666,7 +3666,7 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	return 0;
 }
 
-struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
+struct mob_data *mob_getfriendstatus(struct mob_data *md,int64 cond1,int64 cond2)
 {
 	struct mob_data* fr = NULL;
 	nullpo_ret(md);

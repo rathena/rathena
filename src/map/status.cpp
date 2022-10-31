@@ -2602,6 +2602,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 			;
 		else
 			md->level = md->db->lv;
+		md->damagetaken = md->db->damagetaken;
 	}
 
 	// Check if we need custom base-status

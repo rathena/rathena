@@ -20167,6 +20167,7 @@ Body:
     AegisName: Thanos_Whip_J
     Name: Requiem Blade Whip
     Type: Weapon
+    SubType: Whip
     Buy: 100000
     Attack: 160
     MagicAttack: 120
@@ -30793,7 +30794,7 @@ Body:
     Refineable: true
     Script: |
       bonus bMdef,3;
-      bonus3 bAutoSpellwhenhit,"AL_HEAL",max(1,getskilllv("AL_HEAL")),20;
+      bonus3 bAutoSpellWhenHit,"AL_HEAL",max(1,getskilllv("AL_HEAL")),20;
   - Id: 2546
     AegisName: Beach_Manteau
     Name: Beach Manteau
@@ -51982,7 +51983,7 @@ Body:
       bonus2 bSubEle,Ele_Water,7;
       bonus2 bAddMonsterDropItem,12354,100;
       bonus2 bAddMonsterDropItem,530,300;
-      bonus5 bAutoSpellwhenhit,"BA_FROSTJOKER",(getrefine()>7?5:1),20,BF_WEAPON|BF_MAGIC,0;
+      bonus5 bAutoSpellWhenHit,"BA_FROSTJOKER",(getrefine()>7?5:1),20,BF_WEAPON|BF_MAGIC,0;
   - Id: 5739
     AegisName: Sagittarius_Crown
     Name: Sagittarius Crown
@@ -68070,7 +68071,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bflee,5*(.@r/2);
+      bonus bFlee,5*(.@r/2);
       if (.@r>=9)
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",20;
   - Id: 15179
@@ -76955,7 +76956,7 @@ Body:
     View: 808
     Script: |
       autobonus "{ bonus bAtkEle,Ele_Fire; }",10,180000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }";
-      bonus3 bAutospell,"AS_SONICBLOW",5,10;
+      bonus3 bAutoSpell,"AS_SONICBLOW",5,10;
   - Id: 18660
     AegisName: Indi_Feather_Band
     Name: Indian Feather Headband
@@ -77357,7 +77358,7 @@ Body:
     View: 827
     Script: |
       bonus bVit,2;
-      bonus bMaxHp,100;
+      bonus bMaxHP,100;
   - Id: 18682
     AegisName: Teardrop
     Name: Teardrop
@@ -78654,7 +78655,7 @@ Body:
     View: 105
     Script: |
       bonus bVit,1;
-      bonus bMaxHprate,5;
+      bonus bMaxHPrate,5;
       .@r = getrefine();
       if (.@r>=7)
          bonus2 bSubEle,Ele_Neutral,1;
@@ -85696,7 +85697,7 @@ Body:
     View: 102
     Script: |
       bonus bAllStats,1;
-      bonus MaxHp,200;
+      bonus bMaxHP,200;
   - Id: 19311
     AegisName: Greater_Dracul_Horn
     Name: Greater Dracule Horn
@@ -111177,7 +111178,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMaxHP,.@r*10;
-      bonus bMDef,1;
+      bonus bMdef,1;
       if (.@r >= 7) {
          bonus bMaxHPrate,3;
       }
@@ -153202,10 +153203,10 @@ Body:
          .@dmg = 15;
       if (.@r>=11)
          .@dmg += 20;
-      bonus2 RC_Brute,r,.@dmg;
-      bonus2 RC_Fish,r,.@dmg;
-      bonus2 RC_Brute,r,.@dmg;
-      bonus2 RC_Fish,r,.@dmg;
+      bonus2 bAddRace,RC_Brute,.@dmg;
+      bonus2 bAddRace,RC_Fish,.@dmg;
+      bonus2 bAddRace,RC_Brute,.@dmg;
+      bonus2 bAddRace,RC_Fish,.@dmg;
   - Id: 470125
     AegisName: E_Auto_Leg_A
     Name: Automatic Leg Type A (bind)    # !todo check english name
