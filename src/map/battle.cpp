@@ -1465,15 +1465,15 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				element = rnd() % ELE_ALL;
 
 			if ((sc->data[SC_IMMUNE_PROPERTY_NOTHING] && element == ELE_NEUTRAL)
-				|| (sc->data[SC_IMMUNE_PROPERTY_WATER] && element == ELE_WATER)
-				|| (sc->data[SC_IMMUNE_PROPERTY_GROUND] && element == ELE_EARTH)
-				|| (sc->data[SC_IMMUNE_PROPERTY_FIRE] && element == ELE_FIRE)
-				|| (sc->data[SC_IMMUNE_PROPERTY_WIND] && element == ELE_WIND)
-				|| (sc->data[SC_IMMUNE_PROPERTY_DARKNESS] && element == ELE_DARK)
-				|| (sc->data[SC_IMMUNE_PROPERTY_SAINT] && element == ELE_HOLY)
-				|| (sc->data[SC_IMMUNE_PROPERTY_POISON] && element == ELE_POISON)
-				|| (sc->data[SC_IMMUNE_PROPERTY_TELEKINESIS] && element == ELE_GHOST)
-				|| (sc->data[SC_IMMUNE_PROPERTY_UNDEAD] && element == ELE_UNDEAD)) {
+			|| (sc->data[SC_IMMUNE_PROPERTY_WATER] && element == ELE_WATER)
+			|| (sc->data[SC_IMMUNE_PROPERTY_GROUND] && element == ELE_EARTH)
+			|| (sc->data[SC_IMMUNE_PROPERTY_FIRE] && element == ELE_FIRE)
+			|| (sc->data[SC_IMMUNE_PROPERTY_WIND] && element == ELE_WIND)
+			|| (sc->data[SC_IMMUNE_PROPERTY_DARKNESS] && element == ELE_DARK)
+			|| (sc->data[SC_IMMUNE_PROPERTY_SAINT] && element == ELE_HOLY)
+			|| (sc->data[SC_IMMUNE_PROPERTY_POISON] && element == ELE_POISON)
+			|| (sc->data[SC_IMMUNE_PROPERTY_TELEKINESIS] && element == ELE_GHOST)
+			|| (sc->data[SC_IMMUNE_PROPERTY_UNDEAD] && element == ELE_UNDEAD)) {
 				damage = 0;
 			}
 		}
@@ -1482,8 +1482,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sc && sc->data[SC_DAMAGE_HEAL]) {
 		int dmg_heal_lv = sc->data[SC_DAMAGE_HEAL]->val1;
 		if (damage > 0 && ((flag & BF_WEAPON && dmg_heal_lv == 1) || (flag & BF_MAGIC && dmg_heal_lv == 2) || (flag & BF_MISC && dmg_heal_lv == 3))) {//Absorb MISC damage or WEAPON & MAGIC damage on level 3?
-			if(flag & BF_MAGIC)
-				clif_specialeffect(bl, 1143, AREA);
 			clif_skill_nodamage(NULL, bl, AL_HEAL, (int)damage, 1);
 			status_heal(bl, damage, 0, 0);
 			damage = 0;
