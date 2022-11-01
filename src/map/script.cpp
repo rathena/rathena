@@ -26736,7 +26736,7 @@ BUILDIN_FUNC(itemlink)
 	FETCH(8, item.enchantgrade);
 
 #if PACKETVER >= 20150225
-	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == SCRIPT_CMD_FAILURE ) {
+	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == false) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}

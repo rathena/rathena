@@ -3,6 +3,7 @@ function	script	AssertTrue	{
 		errormes "AssertTrue failed for " + getarg(1) + ".";
 		return false;
 	}
+	return true;
 }
 
 function	script	AssertEquals	{
