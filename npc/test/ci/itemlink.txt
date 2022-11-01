@@ -1,0 +1,9 @@
+-	script	itemlink#ci	-1,{
+OnInit:
+	if (PACKETVER >= 20200916) { // only test on 20200916+
+		.@expected$ = "<ITEML>0000213v0%0g&00'00)18X)1ck)00)00+2R,00-00</ITEML>";
+		setarray .@opt_ids,RDMOPT_WEAPON_ATTR_GROUND;
+		.@actual$ = itemlink(13454,16,4399,4608,0,0,0,.@opt_ids,.@opt_dummy,.@opt_dummy);
+		AssertEquals(.@expected$, .@actual$, "Generated itemlink for +16 Earth Crimson Saber");
+	}
+}
