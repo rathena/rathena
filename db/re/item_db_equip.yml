@@ -153863,7 +153863,7 @@ Body:
     Weight: 300
     Slots: 1
     Locations:
-      Armor: true
+      Garment: true
     ArmorLevel: 1
     EquipLevelMin: 100
     Refineable: true
