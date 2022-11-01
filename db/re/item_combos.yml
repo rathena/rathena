@@ -12566,13 +12566,13 @@ Body:
           - SweetNightM_Card
           - Vampire's_Servant
     Script: |
-      bonus bMatkRate,(getrefine()/3);
+      bonus bMatkRate,(getequiprefinerycnt(EQI_ARMOR)/3);
   - Combos:
       - Combo:
           - LivingDead_Card
           - Vampire's_Servant
     Script: |
-      bonus bAtkRate,(getrefine()/3);
+      bonus bAtkRate,(getequiprefinerycnt(EQI_ARMOR)/3);
   - Combos:
       - Combo:
           - Ill_Dracula_Card
@@ -19452,8 +19452,8 @@ Body:
           - Wizardy_Staff
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      bonus bMatkRate,6*.@r;
-      bonus bDex,2*.@r;
+      bonus bMatkRate,6;
+      bonus bDex,2;
       bonus bVariableCastrate,-.@r;
   - Combos:
       - Combo:
@@ -20895,7 +20895,7 @@ Body:
           - DesireOfDeath
           - aegis_310655
     Script: |
-      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000; }";
       /*Unknow Rate*/
   - Combos:
       - Combo:
@@ -22531,7 +22531,7 @@ Body:
           - Dynast
           - aegis_310655
     Script: |
-      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000; }";
   - Combos:
       - Combo:
           - FrontiaBoots
@@ -26161,13 +26161,13 @@ Body:
           - Phantom_Of_Masquerade    # 19497
           - Thanatos_Card    # 4399
     Script: |
-      bonus bBaseAtk,pow(getrefine(),2)*4;
+      bonus bBaseAtk,pow(getequiprefinerycnt(EQI_HEAD_TOP),2)*4;
   - Combos:
       - Combo:
           - Phantom_Of_Masquerade    # 19497
           - SLD_Thanatos_Card_J    # 300338
     Script: |
-      bonus bBaseAtk,pow(getrefine(),2)*2;
+      bonus bBaseAtk,pow(getequiprefinerycnt(EQI_HEAD_TOP),2)*2;
   - Combos:
       - Combo:
           - Walking_Stick_    # 1675
@@ -27815,7 +27815,7 @@ Body:
           - Card_Of_Reaper    # 27133
     Script: |
       bonus bAgi,3;
-      bonus Flee,50;
+      bonus bFlee,50;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",50;
   - Combos:
       - Combo:
