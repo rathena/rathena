@@ -4013,7 +4013,7 @@ ACMD_FUNC(idsearch)
 			sprintf(atcmd_output, msg_txt(sd,78), id->ename.c_str(), id->nameid); // %s: %u
 		else{
 			tmp_item.nameid = id->nameid;
-			sprintf(atcmd_output, msg_txt(sd,78), createItemLink(tmp_item).c_str(), id->nameid); // %s: %u
+			sprintf(atcmd_output, msg_txt(sd,1523), createItemLink(tmp_item).c_str(), id->nameid); // ⁕ %s : %u
 		}
 		clif_displaymessage(fd, atcmd_output);
 	}
@@ -7798,7 +7798,6 @@ ACMD_FUNC(mobinfo)
 				continue;
 
 			std::shared_ptr<item_data> id = item_db.find(mob->dropitem[i].nameid);
-			
 			if (id == nullptr)
 				continue;
 
@@ -8314,13 +8313,13 @@ ACMD_FUNC(iteminfo)
 		itemid = item_data->nameid;
 		tmp_item.nameid = itemid;
 		if (!battle_config.feature_itemlink)
-			sprintf(atcmd_output,"Item: '%s' ⁕ '%s'[%d] (%u) Type: %s | Extra Effect: %s", // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
+			sprintf(atcmd_output, msg_txt(sd,1277), // Item: %s ⁕ (ID: %u) Type: %s | Extra Effect: %s
 			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279)); // None / With script
 
 		else
-			sprintf(atcmd_output, msg_txt(sd,1277), // Item: %s ⁕ (ID: %u) Type: %s | Extra Effect: %s
+			sprintf(atcmd_output, msg_txt(sd,1522), // Item: %s ⁕ (ID: %u) Type: %s | Extra Effect: %s
 			createItemLink(tmp_item).c_str(),item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279)); // None / With script
@@ -8380,7 +8379,10 @@ ACMD_FUNC(whodrops)
 		std::shared_ptr<item_data> id = result.second;
 		tmp_item.nameid = id->nameid;
 
-		sprintf(atcmd_output, msg_txt(sd,1285), createItemLink(tmp_item).c_str(), id->nameid); // Item: %s (ID: %u)
+		if (battle_config.feature_itemlink)
+			sprintf(atcmd_output, msg_txt(sd,1521), createItemLink(tmp_item).c_str(), id->nameid); // Item: %s (ID: %u)
+		else
+			sprintf(atcmd_output, msg_txt(sd,1285), id->ename.c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
 		clif_displaymessage(fd, atcmd_output);
 
 		if (id->mob[0].chance == 0) {
@@ -9377,9 +9379,15 @@ ACMD_FUNC(itemlist)
 		}
 
 		if( it->refine )
-			StringBuf_Printf(&buf, "⁕ %d %s %+d (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), it->refine, itd->name.c_str(), it->nameid);
+			if (battle_config.feature_itemlink)
+				StringBuf_Printf(&buf, "⁕ %d %s %+d (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), it->refine, itd->name.c_str(), it->nameid);
+			else
+				StringBuf_Printf(&buf, "%d %s %+d (%s, id: %u)", it->amount, itd->ename.c_str(), it->refine, itd->name.c_str(), it->nameid);
 		else
-			StringBuf_Printf(&buf, "⁕ %d %s (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), itd->name.c_str(), it->nameid);
+			if (battle_config.feature_itemlink)
+				StringBuf_Printf(&buf, "⁕ %d %s (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), itd->name.c_str(), it->nameid);
+			else
+				StringBuf_Printf(&buf, "%d %s (%s, id: %u)", it->amount, itd->ename.c_str(), itd->name.c_str(), it->nameid);
 
 		if( it->equip ) {
 			char equipstr[CHAT_SIZE_MAX];
@@ -9482,7 +9490,10 @@ ACMD_FUNC(itemlist)
 				if( counter2 != 1 )
 					StringBuf_AppendStr(&buf, ", ");
 
-				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, createItemLink(tmp_item).c_str(), card->nameid);
+				if (battle_config.feature_itemlink)
+					StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, createItemLink(tmp_item).c_str(), card->nameid);
+				else
+					StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, card->ename.c_str(), card->nameid);
 			}
 
 			if( counter2 > 0 )
