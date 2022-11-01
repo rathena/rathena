@@ -26744,6 +26744,8 @@ BUILDIN_FUNC(itemlink)
 
 	std::string itemlstr = createItemLink(item);
 	script_pushstrcopy(st, itemlstr.c_str());
+	return SCRIPT_CMD_SUCCESS;
+}
 
 BUILDIN_FUNC(addfame) {
 	struct map_session_data *sd;
