@@ -51,6 +51,7 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+#include "tax.hpp"
 #include "trade.hpp"
 
 using namespace rathena;
@@ -4907,6 +4908,7 @@ void do_final(void){
 	do_final_vending();
 	do_final_buyingstore();
 	do_final_path();
+	do_final_tax();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -5275,6 +5277,7 @@ int do_init(int argc, char *argv[])
 	do_init_quest();
 	do_init_achievement();
 	do_init_battleground();
+	do_init_tax();
 	do_init_npc();
 	do_init_unit();
 	do_init_duel();

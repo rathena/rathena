@@ -54,6 +54,7 @@
 #include "../map/script.hpp"
 #include "../map/skill.hpp"
 #include "../map/storage.hpp"
+#include "../map/tax.hpp"
 
 using namespace rathena;
 

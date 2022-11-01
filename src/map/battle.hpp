@@ -320,8 +320,6 @@ struct Battle_Config
 	int dead_branch_active;
 	int vending_max_value;
 	int vending_over_max;
-	int vending_tax;
-	int vending_tax_min;
 	int show_steal_in_same_party;
 	int party_share_type;
 	int party_hp_mode;
@@ -691,6 +689,7 @@ struct Battle_Config
 	int idletime_mer_option;
 	int feature_refineui;
 	int rndopt_drop_pillar;
+	int display_tax_info;
 	int pet_legacy_formula;
 	int pet_distance_check;
 	int pet_hide_check;

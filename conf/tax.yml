@@ -1,0 +1,88 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Tax Database
+###########################################################################
+#
+# Tax Settings
+#
+###########################################################################
+# Type                Tax type. Valid types are TAX_SELLING for vending and TAX_BUYING for buyingstore.
+#   InTotal           Tax applied for total transaction. Supports unlimited entries.
+#     - MinimalValue  Minimum Zeny value before Tax is applied. (Default: 0)
+#       Tax           Tax percentage applied to MinimalValue. (Default: 0)
+#   EachEntry         Tax by selling entry. Supports unlimited entries.
+#     - MinimalValue  Minimum Zeny value before Tax is applied. (Default: 0)
+#       Tax           Tax percentage applied to MinimalValue. (Default: 0)
+###########################################################################
+
+Header:
+  Type: TAX_DB
+  Version: 1
+
+Body:
+  # Zeny received for the seller will be reduced after taxes from the total selling price but the buyer pays just the total selling price
+  - Type: TAX_SELLING
+    InTotal:
+    - MinimalValue: 0
+      Tax: 0
+
+    EachEntry:
+    # 10% if >= 100,000,001
+    - MinimalValue: 100000001
+      Tax: 1000
+    # 8% if >= 10,000,001
+    - MinimalValue: 10000001
+      Tax: 800
+    # 6% if >= 1,000,001
+    - MinimalValue: 1000001
+      Tax: 600
+    # 4% if >= 100,001
+    - MinimalValue: 100001
+      Tax: 400
+    # 2% if >= 10,001
+    - MinimalValue: 10001
+      Tax: 200
+
+  # Zeny received for the seller will be the total selling price but the buyer must pay taxes for the total selling price
+  - Type: TAX_BUYING
+    InTotal:
+    - MinimalValue: 0
+      Tax: 0
+
+    # Tax by buying entry
+    EachEntry:
+    # 10% if >= 100,000,001
+    - MinimalValue: 100000001
+      Tax: 1000
+    # 8% if >= 10,000,001
+    - MinimalValue: 10000001
+      Tax: 800
+    # 6% if >= 1,000,001
+    - MinimalValue: 1000001
+      Tax: 600
+    # 4% if >= 100,001
+    - MinimalValue: 100001
+      Tax: 400
+    # 2% if >= 10,001
+    - MinimalValue: 10001
+      Tax: 200
+
+Footer:
+  Imports:
+  - Path: conf/import/tax.yml

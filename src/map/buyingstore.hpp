@@ -15,9 +15,10 @@ struct map_session_data;
 
 struct s_buyingstore_item
 {
-	int price;
-	unsigned short amount;
-	t_itemid nameid;
+	int price; ///< Value
+	unsigned short amount; ///< Amount of items in Buyingstore
+	t_itemid nameid; ///< Item ID
+	unsigned int price_vat; ///< Value after tax
 };
 
 struct s_buyingstore

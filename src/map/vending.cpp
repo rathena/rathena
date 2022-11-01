@@ -24,6 +24,7 @@
 #include "path.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
+#include "tax.hpp"
 
 static uint32 vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
@@ -98,17 +99,42 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 }
 
 /**
- * Calculates taxes for vending
- * @param sd: Vender
- * @param zeny: Total amount to tax
- * @return Total amount after taxes
+ * Return the total amount after taxes
+ * @param vsd: Vendor player
+ * @param data: Item data
+ * @param count: Number of different items
+ * @return Total price after taxes
  */
-static double vending_calc_tax(struct map_session_data *sd, double zeny)
-{
-	if (battle_config.vending_tax && zeny >= battle_config.vending_tax_min)
-		zeny -= zeny * (battle_config.vending_tax / 10000.);
+static unsigned short vending_tax_intotal(struct map_session_data* vsd, const uint8* data, int count) {
+	std::shared_ptr<s_tax> tax = tax_db.find(TAX_SELLING);
+	double total = 0;
+	int i, j, vend_list[MAX_VENDING]; // against duplicate packets
 
-	return zeny;
+	if (tax == nullptr || tax->total.empty())
+		return 0;
+
+	for (i = 0; i < count; i++) {
+		short amount = *(uint16*)(data + 4 * i + 0);
+		short idx = *(uint16*)(data + 4 * i + 2);
+		idx -= 2;
+
+		if (amount <= 0)
+			continue;
+
+		// check of item index in the cart
+		if (idx < 0 || idx >= MAX_CART)
+			continue;
+
+		ARR_FIND(0, vsd->vend_num, j, vsd->vending[j].index == idx);
+		if (j == vsd->vend_num)
+			continue; //picked non-existing item
+		else
+			vend_list[i] = j;
+
+		total += ((double)vsd->vending[j].value * amount);
+	}
+
+	return tax->taxPercentage(tax->total, total);
 }
 
 /**
@@ -123,7 +149,7 @@ static double vending_calc_tax(struct map_session_data *sd, double zeny)
 void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const uint8* data, int count)
 {
 	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
-	double z;
+	double z, z_gained = 0;
 	struct s_vending vending[MAX_VENDING]; // against duplicate packets
 	struct map_session_data* vsd = map_id2sd(aid);
 
@@ -132,7 +158,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		return; // invalid shop
 
 	if( vsd->vender_id != uid ) { // shop has changed
-		clif_buyvending(sd, 0, 0, 6);  // store information was incorrect
+		clif_buyvending(sd, 0, 0, VENDING_ACK_INVALID);  // store information was incorrect
 		return;
 	}
 
@@ -152,6 +178,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	// some checks
 	z = 0.; // zeny counter
 	w = 0;  // weight counter
+	int tax_total = vending_tax_intotal(vsd, data, count);
 	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
 		short idx    = *(uint16*)(data + 4*i + 2);
@@ -171,18 +198,20 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 			vend_list[i] = j;
 
 		z += ((double)vsd->vending[j].value * (double)amount);
+		z_gained += ((double)vsd->vending[j].value_vat * (double)amount);
+		z_gained = z_gained - (z_gained / 10000 * tax_total);
 		if( z > (double)sd->status.zeny || z < 0. || z > (double)MAX_ZENY ) {
-			clif_buyvending(sd, idx, amount, 1); // you don't have enough zeny
+			clif_buyvending(sd, idx, amount, VENDING_ACK_NOZENY); // you don't have enough zeny
 			return;
 		}
-		if( z + (double)vsd->status.zeny > (double)MAX_ZENY && !battle_config.vending_over_max ) {
-			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // too much zeny = overflow
+		if(z_gained + (double)vsd->status.zeny > (double)MAX_ZENY && !battle_config.vending_over_max ) {
+			clif_buyvending(sd, idx, vsd->vending[j].amount, VENDING_ACK_NOSTOCK); // too much zeny = overflow
 			return;
 
 		}
 		w += itemdb_weight(vsd->cart.u.items_cart[idx].nameid) * amount;
 		if( w + sd->weight > sd->max_weight ) {
-			clif_buyvending(sd, idx, amount, 2); // you can not buy, because overweight
+			clif_buyvending(sd, idx, amount, VENDING_ACK_OVERWEIGHT); // you can not buy, because overweight
 			return;
 		}
 
@@ -194,7 +223,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		// here, we check cumulative amounts
 		if( vending[j].amount < amount ) {
 			// send more quantity is not a hack (an other player can have buy items just before)
-			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // not enough quantity
+			clif_buyvending(sd, idx, vsd->vending[j].amount, VENDING_ACK_NOSTOCK); // not enough quantity
 			return;
 		}
 
@@ -215,19 +244,31 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 	pc_payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd);
 	achievement_update_objective(sd, AG_SPEND_ZENY, 1, (int)z);
-	z = vending_calc_tax(sd, z);
-	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd);
+	pc_getzeny(vsd, (int)z_gained, LOG_TYPE_VENDING, sd);
+
+	if (battle_config.etc_log) {
+		ShowInfo("vending_purchasereq: AID=%u CID=%u gained %u zeny. AID=%u CID=%u paid %u zeny\n",
+			vsd->status.account_id, vsd->status.char_id, (unsigned int)z_gained,
+			sd->status.account_id, sd->status.char_id, (unsigned int)z);
+	}
 
 	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
 		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
-		z = 0.; // zeny counter
 
 		// vending item
 		pc_additem(sd, &vsd->cart.u.items_cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		z += ((double)vsd->vending[vend_list[i]].value * (double)amount);
+		z_gained = ((double)vsd->vending[vend_list[i]].value_vat * (double)amount);
+		z_gained = z_gained - (z_gained / 10000 * tax_total);
+
+		if (battle_config.display_tax_info) {
+			char msg[CHAT_SIZE_MAX];
+
+			sprintf(msg, msg_txt(sd, 780), itemdb_ename(vsd->cart.u.items_cart[idx].nameid), (double)vsd->vending[vend_list[i]].value * amount, z_gained); // %s : %.0f => %.0f
+			clif_displaymessage(vsd->fd, msg);
+		}
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_table, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->cart.u.items_cart[idx].id ) != SQL_SUCCESS ) {
@@ -240,8 +281,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		}
 
 		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
-		z = vending_calc_tax(sd, z);
-		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z);
+		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z_gained);
 
 		//print buyer's name
 		if( battle_config.buyer_name ) {
@@ -260,6 +300,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 			vsd->vending[cursor].index = vsd->vending[i].index;
 			vsd->vending[cursor].amount = vsd->vending[i].amount;
 			vsd->vending[cursor].value = vsd->vending[i].value;
+			vsd->vending[cursor].value_vat = vsd->vending[i].value_vat;
 		}
 
 		cursor++;
@@ -301,7 +342,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
-	
+
 	nullpo_retr(false,sd);
 
 	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd)) {
@@ -347,6 +388,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		sd->vending[i].index = index;
 		sd->vending[i].amount = amount;
 		sd->vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
+
 		i++; // item successfully added
 	}
 
@@ -367,6 +409,8 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);
+
+	tax_db.setVendingTax(sd);
 	
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 
@@ -725,7 +769,7 @@ void vending_update(map_session_data &sd)
 }
 
 /**	
- * Initialise the vending module
+ * Destroy the vending module
  * called in map::do_init
  */
 void do_final_vending(void)
@@ -735,7 +779,7 @@ void do_final_vending(void)
 }
 
 /**
- * Destory the vending module
+ * Initialise the vending module
  * called in map::do_final
  */
 void do_init_vending(void)

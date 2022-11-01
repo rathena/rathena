@@ -13,9 +13,10 @@ struct s_search_store_search;
 struct s_autotrader;
 
 struct s_vending {
-	short index; /// cart index (return item data)
-	short amount; ///amout of the item for vending
-	unsigned int value; ///at wich price
+	short index; ///< Cart index (return item data)
+	short amount; ///< Amount of the item for vending
+	unsigned int value; ///< Price
+	unsigned int value_vat; ///< Value after tax
 };
 
 DBMap * vending_getdb();
