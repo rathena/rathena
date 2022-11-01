@@ -712,6 +712,8 @@ struct Battle_Config
 	int feature_barter;
 	int feature_barter_extended;
 	int break_mob_equip;
+	int macro_detection_retry;
+	int macro_detection_timeout;
 
 #include "../custom/battle_config_struct.inc"
 };

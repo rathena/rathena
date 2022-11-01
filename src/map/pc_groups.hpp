@@ -48,6 +48,8 @@ enum e_pc_permission : uint32 {
 	PC_PERM_BYPASS_STAT_ONCLONE,
 	PC_PERM_BYPASS_MAX_STAT,
 	PC_PERM_ATTENDANCE,
+	PC_PERM_MACRO_DETECT,
+	PC_PERM_MACRO_REGISTER,
 	//.. add other here
 	PC_PERM_MAX,
 };
@@ -84,6 +86,8 @@ static const struct s_pcg_permission_name {
 	{ "bypass_stat_onclone",PC_PERM_BYPASS_STAT_ONCLONE },
 	{ "bypass_max_stat",PC_PERM_BYPASS_MAX_STAT },
 	{ "attendance",PC_PERM_ATTENDANCE },
+	{ "macro_detect",PC_PERM_MACRO_DETECT },
+	{ "macro_register",PC_PERM_MACRO_REGISTER },
 };
 
 struct s_player_group{

@@ -4,6 +4,7 @@
 #include "userconfig_controller.hpp"
 
 #include <string>
+#include <nlohmann/json.hpp>
 
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
@@ -22,25 +23,22 @@ HANDLER_FUNC(userconfig_save) {
 	}
 	
 	auto account_id = std::stoi(req.get_file_value("AID").content);
-	auto world_name_str = req.get_file_value("WorldName").content;
-	auto world_name = world_name_str.c_str();
-	std::string data;
+	auto world_name = req.get_file_value("WorldName").content;
+	auto data = nlohmann::json::object();
 
 	if (req.has_file("data")) {
-		data = req.get_file_value("data").content;
-		addToJsonObject(data, "\"Type\": 1");
-	} else {
-		data = "{\"Type\": 1}";
+		data = nlohmann::json::parse(req.get_file_value("data").content);
 	}
+
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
 	SqlStmt * stmt = SqlStmt_Malloc(handle);
 	if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
-			"SELECT `account_id` FROM `%s` WHERE (`account_id` = ? AND `world_name` = ?) LIMIT 1",
+			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `world_name` = ?) LIMIT 1",
 			user_configs_table)
 		|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_INT, &account_id, sizeof(account_id))
-		|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)world_name, strlen(world_name))
+		|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)world_name.c_str(), world_name.length())
 		|| SQL_SUCCESS != SqlStmt_Execute(stmt)
 	) {
 		SqlStmt_ShowDebug(stmt);
@@ -51,14 +49,10 @@ HANDLER_FUNC(userconfig_save) {
 		return;
 	}
 
-	if (SqlStmt_NumRows(stmt) <= 0) {
-		if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
-				"INSERT INTO `%s` (`account_id`, `world_name`, `data`) VALUES (?, ?, ?)",
-				user_configs_table)
-			|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_INT, &account_id, sizeof(account_id))
-			|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)world_name, strlen(world_name))
-			|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, (void *)data.c_str(), strlen(data.c_str()))
-			|| SQL_SUCCESS != SqlStmt_Execute(stmt)
+	if (SqlStmt_NumRows(stmt) > 0) {
+		char databuf[SQL_BUFFER_SIZE];
+		if (SQL_SUCCESS != SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &databuf, sizeof(databuf), NULL, NULL)
+			|| SQL_SUCCESS != SqlStmt_NextRow(stmt)
 		) {
 			SqlStmt_ShowDebug(stmt);
 			SqlStmt_Free(stmt);
@@ -67,27 +61,34 @@ HANDLER_FUNC(userconfig_save) {
 			res.set_content("Error", "text/plain");
 			return;
 		}
-	} else {
-		if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
-				"UPDATE `%s` SET `data` = ? WHERE (`account_id` = ? AND `world_name` = ?)",
-				user_configs_table)
-			|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, (void *)data.c_str(), strlen(data.c_str()))
-			|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_INT, &account_id, sizeof(account_id))
-			|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, (void *)world_name, strlen(world_name))
-			|| SQL_SUCCESS != SqlStmt_Execute(stmt)
-		) {
-			SqlStmt_ShowDebug(stmt);
-			SqlStmt_Free(stmt);
-			sl.unlock();
-			res.status = HTTP_BAD_REQUEST;
-			res.set_content("Error", "text/plain");
-			return;
-		}
+
+		auto db_data = nlohmann::json::parse(databuf);
+		mergeData(db_data, data, true);
+		data = std::move(db_data);
+	}
+
+
+	auto data_str = data.dump();
+
+	if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
+			"REPLACE INTO `%s` (`account_id`, `world_name`, `data`) VALUES (?, ?, ?)",
+			user_configs_table)
+		|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_INT, &account_id, sizeof(account_id))
+		|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)world_name.c_str(), world_name.length())
+		|| SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, (void *)data_str.c_str(), data_str.length())
+		|| SQL_SUCCESS != SqlStmt_Execute(stmt)
+	) {
+		SqlStmt_ShowDebug(stmt);
+		SqlStmt_Free(stmt);
+		sl.unlock();
+		res.status = HTTP_BAD_REQUEST;
+		res.set_content("Error", "text/plain");
+		return;
 	}
 
 	SqlStmt_Free(stmt);
 	sl.unlock();
-	res.set_content(data, "application/json");
+	res.set_content(data_str, "application/json");
 }
 
 HANDLER_FUNC(userconfig_load) {
@@ -128,10 +129,24 @@ HANDLER_FUNC(userconfig_load) {
 	}
 
 	if (SqlStmt_NumRows(stmt) <= 0) {
-		SqlStmt_Free(stmt);
-		ShowDebug("[AccountID: %d, World: \"%s\"] Not found in table, sending new info.\n", account_id, world_name);
+		std::string data = "{\"Type\": 1}";
+
+		if( SQL_SUCCESS != SqlStmt_Prepare( stmt, "INSERT INTO `%s` (`account_id`, `world_name`, `data`) VALUES (?, ?, ?)", user_configs_table ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 0, SQLDT_INT, &account_id, sizeof( account_id ) ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 1, SQLDT_STRING, (void *)world_name, strlen( world_name ) ) ||
+			SQL_SUCCESS != SqlStmt_BindParam( stmt, 2, SQLDT_STRING, (void *)data.c_str(), strlen( data.c_str() ) ) ||
+			SQL_SUCCESS != SqlStmt_Execute( stmt ) ){
+			SqlStmt_ShowDebug( stmt );
+			SqlStmt_Free( stmt );
+			sl.unlock();
+			res.status = HTTP_BAD_REQUEST;
+			res.set_content( "Error", "text/plain" );
+			return;
+		}
+
+		SqlStmt_Free( stmt );
 		sl.unlock();
-		res.set_content("{\"Type\": 1}", "application/json");
+		res.set_content( data, "application/json" );
 		return;
 	}
 
@@ -152,5 +167,6 @@ HANDLER_FUNC(userconfig_load) {
 	sl.unlock();
 
 	databuf[sizeof(databuf) - 1] = 0;
-	res.set_content(databuf, "application/json");
-}
+	auto response = nlohmann::json::parse(databuf);
+	response["Type"] = 1;
+	res.set_content(response.dump(), "application/json");}

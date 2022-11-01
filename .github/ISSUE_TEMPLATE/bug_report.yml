@@ -6,7 +6,9 @@ body:
     id: hash
     attributes:
       label: rAthena Hash
-      description: Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue.
+      description: |
+        Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue.
+        One way to get your hash is to type `git rev-parse --short HEAD` on your console.
     validations:
       required: true
   - type: input

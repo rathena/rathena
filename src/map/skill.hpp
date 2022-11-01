@@ -611,6 +611,7 @@ int skill_autospell(struct map_session_data *md,uint16 skill_id);
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal);
 
 bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce);
+int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_id);
 
 // Abnormal status
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
