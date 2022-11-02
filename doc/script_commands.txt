@@ -6309,6 +6309,10 @@ it just removes non-permanent script.
 Enable the player to plagiarize specific skills that are copyable.
 Return 1 on success, 0 otherwise.
 
+Note:
+ - Plagiarism only able to copy skill while SC_PRESERVE is not active and skill is copyable by Plagiarism.
+ - Reproduce can copy skill if SC__REPRODUCE is active and the skill is copyable by Reproduce.
+
 ---------------------------------------
 
 *plagiarizeskillreset <flag>;

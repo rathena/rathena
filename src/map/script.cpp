@@ -10191,7 +10191,7 @@ BUILDIN_FUNC(plagiarizeskillreset)
 {
 	TBL_PC *sd;
 
-	if (!script_rid2sd(sd))
+	if (script_rid2sd(sd))
 		script_pushint(st, pc_skill_plagiarism_reset(*sd, script_getnum(st, 2)));
 
 	return SCRIPT_CMD_SUCCESS;
