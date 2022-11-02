@@ -17022,7 +17022,7 @@ Body:
     Range: 11
     Hit: Multi_Hit
     HitCount: -20
-    Duration1: 18000
+    Duration2: 18000
     SplashArea: 9
     Knockback: 2
     CastCancel: true
