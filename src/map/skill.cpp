@@ -7629,15 +7629,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			else
 				y = 0;
 			if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates
-				if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1)) {
-					clif_blown(src);
+				if (skill_check_unit_movepos(1, bl, src->x+x, src->y+y, 1, 1)) {
+					clif_blown(bl);
 				}
 			}
 			else {
+				int16 px = bl->x, py = bl->y; //save target's coordinates before target move
 				if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1)) {
 					clif_blown(bl);
 				}
-				if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
+				if (unit_movepos(src, px, py, 1, 1)) {
 					clif_blown(src);
 				}
 			}
