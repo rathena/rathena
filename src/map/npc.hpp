@@ -208,6 +208,12 @@ struct npc_data {
 		unsigned long color;
 	} progressbar;
 
+	struct{
+		uint32 owner_char_id;
+		t_tick last_interaction;
+		int removal_tid;
+	} dynamicnpc;
+
 #ifdef MAP_GENERATOR
 	struct navi_link navi; // for warps and the src of npcs
 	std::vector<navi_link> links; // for extra links, like warper npc
@@ -1494,12 +1500,14 @@ void npc_parse_mob2(struct spawn_data* mob);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int npce_index);
-npc_data* npc_duplicate_npc( npc_data* nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys );
+npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys, struct map_session_data* owner = nullptr );
+struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, struct map_session_data& sd );
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
 bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd);
+bool npc_is_hidden_dynamicnpc( struct npc_data& nd, struct map_session_data& tsd );
 bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
 #define npc_enable(nd, flag) npc_enable_target(nd, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
