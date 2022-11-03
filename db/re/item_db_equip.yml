@@ -68504,10 +68504,10 @@ Body:
       if (.@r>=7) {
          bonus bBaseAtk,15;
          bonus bMatk,15;
-      }
-      if (.@r>=7) {
-         bonus bBaseAtk,20;
-         bonus bMatk,20;
+         if (.@r>=9) {
+            bonus bBaseAtk,20;
+            bonus bMatk,20;
+         }
       }
   - Id: 15209
     AegisName: Drake_Coat

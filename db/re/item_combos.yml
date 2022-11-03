@@ -30020,7 +30020,7 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Swordman) {
+         if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
             bonus2 bAddRace,RC_All,15;
             autobonus "{ bonus3 bAutoSpell,\"RK_MILLENNIUMSHIELD\",1,10; }",1000,6000,BF_WEAPON;
             autobonus3 "{ bonus3 bAutoSpell,\"RK_MILLENNIUMSHIELD\",1,10; }",1000,6000,"RK_STORMBLAST";
