@@ -236,7 +236,7 @@
 	packet(0x0152,-1);
 	parseable_packet(0x0153,-1,clif_parse_GuildChangeEmblem,2,4);
 	packet(0x0154,-1);
-	parseable_packet(0x0155,-1,clif_parse_GuildChangeMemberPosition,2,4);
+	parseable_packet( HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, clif_parse_GuildChangeMemberPosition, 0 );
 	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
