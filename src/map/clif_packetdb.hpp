@@ -6,9 +6,6 @@
 
 	#define packet(cmd,length) packetdb_addpacket(cmd,length,NULL,0)
 	#define parseable_packet(cmd,length,func,...) packetdb_addpacket(cmd,length,func,__VA_ARGS__,0)
-	#define ack_packet(type,cmd,length,...) \
-		packetdb_addpacket(cmd,length,NULL,__VA_ARGS__,0); \
-		packet_db_ack[type] = cmd
 
 	packet(0x0064,55);
 	packet(0x0065,17);
@@ -78,7 +75,6 @@
 	parseable_packet(0x00a7,8,clif_parse_UseItem,2,4);
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
-	ack_packet(ZC_WEAR_EQUIP_ACK,0x00aa,7,2,4,6);
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
 	packet(0x00ac,7);
 	//packet(0x00ad,-1);
@@ -415,7 +411,6 @@
 	//packet(0x020c,-1);
 	packet(0x020d,-1);
 	packet(0x8b3,-1);
-	ack_packet(ZC_CLEAR_DIALOG,0x8d6,6,2);
 
 // 2004-07-05aSakexe
 #if PACKETVER >= 20040705
@@ -1082,7 +1077,6 @@
 	packet(0x02cd,26);
 	packet(0x02ce,10);
 	parseable_packet(0x02cf,6,clif_parse_MemorialDungeonCommand,2);
-	ack_packet(ZC_NOTIFY_BIND_ON_EQUIP,0x02d3,4,2);
 	packet(0x02d5,2);
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
 	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
@@ -1582,7 +1576,6 @@
 // 2009-12-01aRagexeRE
 #if PACKETVER >= 20091201
 	packet(0x07fc,10);
-	ack_packet(ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,0x07fd,-1,0);
 	//packet(0x07ff,-1);
 #endif
 
@@ -1720,7 +1713,6 @@
 
 // 2010-06-29aRagexeRE
 #if PACKETVER >= 20100629
-	ack_packet(ZC_WEAR_EQUIP_ACK,0x00AA,9,2,4,6,8);
 	//packet(0x07F1,18);
 	//packet(0x07F2,8);
 	//packet(0x07F3,6);
@@ -1773,7 +1765,6 @@
 	packet(0x0856,-1);
 	packet(0x0857,-1);
 	packet(0x0858,-1);
-	ack_packet(ZC_WEAR_EQUIP_ACK,0x08d0,9,2,4,6,8);
 #endif
 
 // 2011-10-05aRagexeRE
@@ -1924,11 +1915,8 @@
 	packet(0x0977,14); //Monster HP Bar
 	parseable_packet(0x0916,26,clif_parse_GuildInvite2,2);
 	parseable_packet(0x091d,41,clif_parse_PartyBookingRegisterReq,2,4,6);
-	ack_packet(ZC_PERSONAL_INFOMATION,0x08cb,10,2,4,6,8,10,11,13,15); //Still need further information
 	// Merge Item
-	ack_packet(ZC_MERGE_ITEM_OPEN,0x096D,-1,2,4); // ZC_MERGE_ITEM_OPEN
 	parseable_packet(0x096E,-1,clif_parse_merge_item_req,2,4); // CZ_REQ_MERGE_ITEM
-	ack_packet(ZC_ACK_MERGE_ITEM,0x096F,7,2,4,6); // ZC_ACK_MERGE_ITEM
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
 	parseable_packet(0x0844,2,clif_parse_cashshop_open_request,0);
 	packet(0x0849,16); //clif_cashshop_result
@@ -2033,10 +2021,7 @@
 	packet(0x0977,14); //Monster HP Bar
 	parseable_packet(0x0978,6,clif_parse_reqworldinfo,2);
 	packet(0x0979,50); //ackworldinfo
-	ack_packet(ZC_PERSONAL_INFOMATION,0x097b,16,2,4,8,12,16,17,21,25); //Still need further information
-	//ack_packet(ZC_PERSONAL_INFOMATION_CHN,0x0981,12,2,4,6,8,12,13,15,17,10); // Disabled until further information is found.
 	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
-	ack_packet(ZC_WEAR_EQUIP_ACK,0x0999,11,2,4,8,10); // cz_wear_equipv5
 	packet(0x099a,9); // take_off_equipv5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
@@ -2060,16 +2045,11 @@
 
 // 2013-07-17Ragexe
 #if PACKETVER >= 20130717
-	ack_packet(ZC_BANKING_CHECK,0x09A6,12,2,10);
 	parseable_packet(0x09A7,10,clif_parse_BankDeposit,2,6);
-	ack_packet(ZC_ACK_BANKING_DEPOSIT,0x09A8,16,2,4,12);
 	parseable_packet(0x09A9,10,clif_parse_BankWithdraw,2,6);
-	ack_packet(ZC_ACK_BANKING_WITHDRAW,0x09AA,16,2,4,12);
 	parseable_packet(0x09AB,6,clif_parse_BankCheck,2);
 	parseable_packet(0x09B6,6,clif_parse_BankOpen,2);
-	ack_packet(ZC_ACK_OPEN_BANKING,0x09B7,4,2);
 	parseable_packet(0x09B8,6,clif_parse_BankClose,2);
-	ack_packet(ZC_ACK_CLOSE_BANKING,0x09B9,4,2);
 #endif
 
 // 2013-07-31cRagexe
@@ -2080,11 +2060,8 @@
 
 // 2013-08-07Ragexe
 #if PACKETVER >= 20130807
-	ack_packet(ZC_C_MARKERINFO,0x09C1,10,2,6,8);
 	// Merge Item
-	ack_packet(ZC_MERGE_ITEM_OPEN,0x096D,-1,2,4); // ZC_MERGE_ITEM_OPEN
 	parseable_packet(0x096E,-1,clif_parse_merge_item_req,2,4); // CZ_REQ_MERGE_ITEM
-	ack_packet(ZC_ACK_MERGE_ITEM,0x096F,7,2,4,6,7); // ZC_ACK_MERGE_ITEM
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
 	packet(0x9CD,8); // ZC_MSG_COLOR
 #endif
