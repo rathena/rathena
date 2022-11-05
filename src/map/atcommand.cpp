@@ -7864,17 +7864,17 @@ ACMD_FUNC(mobinfo)
 									sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
 						}
 					} else {
-							if (id->slots){
-								if (!battle_config.feature_itemlink)
-									sprintf(atcmd_output2, " %s[%d] %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
-								else
-									sprintf(atcmd_output2, " %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);							
-							} else {
-									if (!battle_config.feature_itemlink)
-										sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), mvppercent);
-									else
-										sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
-							}
+						if (id->slots){
+							if (!battle_config.feature_itemlink)
+								sprintf(atcmd_output2, " %s[%d] %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
+							else
+								sprintf(atcmd_output2, " %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);							
+						} else {
+							if (!battle_config.feature_itemlink)
+								sprintf(atcmd_output2, " ⁕ %s %02.02f%%", id->ename.c_str(), mvppercent);
+							else
+								sprintf(atcmd_output2, " ⁕ %s %02.02f%%", createItemLink(tmp_item).c_str(), mvppercent);
+						}
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}
