@@ -40,7 +40,7 @@ start_serv(){
 			mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$1" > "$FIFO" 2>&1 & PID=$!
 			#"./$1" > >(tee "$LOGRUN") 2>&1 & PID=$! #bash only
 			echo "$PID" > .$1.pid
-			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" | tee ${LOGFILE}
+			echo "Server '$1' started at $(date +"%m-%d-%H:%M-%S")" | tee ${LOGFILE}
 		else
 			echo "Cannot start '$1', because it is already running p${PSRUN}" | tee ${LOGFILE}
 		fi
@@ -48,7 +48,7 @@ start_serv(){
 		if [ -z ${PSRUN} ]; then
 			./$1&
 			echo "$!" > .$1.pid
-			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
+			echo "Server '$1' started at $(date +"%m-%d-%H:%M-%S")"
 		else
 			echo "Cannot start '$1', because it is already running p${PSRUN}"
 		fi
@@ -74,8 +74,8 @@ watch_serv(){
 				#echo "fifo=$FIFO"
 				echo "server '$i' is down"
 				echo "server '$i' is down" >> ${LOGFILE}
-				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" 
-				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
+				echo "restarting server at time at $(date +"%m-%d-%H:%M-%S")"
+				echo "restarting server at time at $(date +"%m-%d-%H:%M-%S")" >> ${LOGFILE}
 				if [ -e $FIFO ]; then rm $FIFO; fi
 				mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$i" > "$FIFO" 2>&1 & PID=$!
 				echo "$PID" > .$i.pid

@@ -6,7 +6,7 @@
 
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install this
 # separately; see below.
-TEMP=`getopt -o d: -l destdir: -- "$@"`
+TEMP=$(getopt -o d: -l destdir: -- "$@")
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
 # Note the quotes around `$TEMP': they are essential!
 eval set -- "${TEMP}"
