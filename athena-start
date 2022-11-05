@@ -205,11 +205,11 @@ case $1 in
 			;;
 			'val_runonce')
 				echo "syntax: 'val_runonce'"
-				echo "This option will run valgrin with run-once to check the servers"
+				echo "This option will run valgrind with run-once to check the servers"
 			;;
 			'valchk')
 				echo "syntax: 'valchk'"
-				echo "This option will run valgrin with the servers"
+				echo "This option will run valgrind with the servers"
 			;;
 			*)
 				echo "Please specify a command you would like more info on { start | stop | restart | status | watch }"
