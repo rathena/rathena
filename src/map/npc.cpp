@@ -3708,6 +3708,8 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	struct npc_data *nd = nullptr;
 
 	CREATE(nd, struct npc_data, 1);
+	new (nd) npc_data();
+
 	nd->bl.id = npc_get_new_npc_id();
 	nd->bl.prev = nd->bl.next = nullptr;
 	nd->bl.m = m;
