@@ -181,7 +181,7 @@ case $1 in
 			'start')
 				echo "syntax: 'start {--enlog}'"
 				echo "This option will start the servers"
-				echo "--enlog will write all terminal output into a log/$servname.log file"
+				echo "--enlog will write all terminal output into a log/\$servname.log file"
 			;;
 			'stop')
 				echo "This option will shut the servers down"
