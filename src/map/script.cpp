@@ -26631,6 +26631,35 @@ BUILDIN_FUNC(get_reputation_points){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(add_reputation_points)
+{
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 4, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 type = script_getnum64( st, 2 );
+	std::shared_ptr<s_reputation> reputation = reputation_db.find( type );
+
+	if( reputation == nullptr ){
+		ShowError( "buildin_set_reputation_points: Unknown reputation type %" PRIi64 ".\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 points = pc_readreg2( sd, reputation->variable.c_str() ) + script_getnum64(st, 3);
+
+	points = cap_value( points, reputation->minimum, reputation->maximum );
+
+	if( !pc_setreg2( sd, reputation->variable.c_str(), points ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_reputation_type( *sd, type, points );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(item_reform){
 #if PACKETVER < 20211103
 	ShowError( "buildin_item_reform: This command requires packet version 2021-11-03 or newer.\n" );
@@ -27492,6 +27521,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(set_reputation_points, "ii?"),
 	BUILDIN_DEF(get_reputation_points, "i?"),
+	BUILDIN_DEF(add_reputation_points, "ii?"),
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
 	BUILDIN_DEF(addfame, "i?"),

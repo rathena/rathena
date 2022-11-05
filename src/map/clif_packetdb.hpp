@@ -107,7 +107,7 @@
 	packet(0x00c6,-1);
 	packet(0x00c7,-1);
 	parseable_packet(0x00c8,-1,clif_parse_NpcBuyListSend,2,4);
-	parseable_packet(0x00c9,-1,clif_parse_NpcSellListSend,2,4);
+	parseable_packet(HEADER_CZ_PC_SELL_ITEMLIST,-1,clif_parse_NpcSellListSend,2,4);
 	packet(0x00ca,3);
 	packet(0x00cb,3);
 	parseable_packet(0x00cc,6,clif_parse_GMKick,2);

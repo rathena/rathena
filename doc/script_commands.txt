@@ -8312,6 +8312,13 @@ Gets the reputation points for reputation group <type> for the attached player o
 
 ---------------------------------------
 
+*add_reputation_points(<type>,<points>{,<char id>})
+
+Adds the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
 *item_reform({<item id>{,<char id>}})
 *item_reform({<"item name">{,<char id>}})
 
