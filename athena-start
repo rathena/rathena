@@ -155,7 +155,7 @@ case $1 in
 		done
 	;;
 	'restart')
-		 restart
+		 restart "$@"
 	;;
 	'status')
 		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
