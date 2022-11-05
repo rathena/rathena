@@ -20,8 +20,7 @@ print_start() {
 get_status(){
 	PIDFILE=.$1.pid
 	if [ -e ${PIDFILE} ]; then
-		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
-		PSRUN=$(echo "$ISRUN" | awk '{ print $1 }')
+		PSRUN=$(pgrep -F ${PIDFILE})
 	fi
 	#return ${PSRUN} #seems to cause an issue for some os
 }
@@ -67,7 +66,7 @@ watch_serv(){
 			LOGRUN="$LOG_DIR/$i.log"
 			FIFO=$i"_fifo"
 
-			get_status $i
+			get_status ${i}
 			#echo "Echo id of $i is ${PSRUN}"
 			if [ -z ${PSRUN} ]; then
 				count=$((count+1))
