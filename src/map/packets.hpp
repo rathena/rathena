@@ -355,6 +355,18 @@ struct PACKET_CZ_PC_SELL_ITEMLIST {
 	PACKET_CZ_PC_SELL_ITEMLIST_sub sellList[];
 } __attribute__((packed));
 
+struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub{
+	uint32 AID;
+	uint32 CID;
+	int32 position;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQ_CHANGE_MEMBERPOS{
+	int16 packetType;
+	int16 packetLength;
+	struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub list[];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -365,6 +377,7 @@ DEFINE_PACKET_HEADER(ZC_BROADCAST, 0x9a)
 DEFINE_PACKET_HEADER(ZC_ITEM_ENTRY, 0x9d)
 DEFINE_PACKET_HEADER(ZC_PC_PURCHASE_RESULT, 0xca)
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_ITEM, 0x10a)
+DEFINE_PACKET_HEADER(CZ_REQ_CHANGE_MEMBERPOS, 0x155)
 DEFINE_PACKET_HEADER(CZ_REQMAKINGITEM, 0x18e)
 DEFINE_PACKET_HEADER(ZC_ACK_REQMAKINGITEM, 0x18f)
 DEFINE_PACKET_HEADER(CZ_REQ_MAKINGARROW, 0x1ae)
