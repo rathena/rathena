@@ -3522,6 +3522,14 @@ int npc_unload(struct npc_data* nd, bool single) {
 		nd->dynamicnpc.removal_tid = INVALID_TIMER;
 	}
 
+	if( nd->dynamicnpc.owner_char_id != 0 ){
+		struct map_session_data* owner = map_charid2sd( nd->dynamicnpc.owner_char_id );
+
+		if( owner != nullptr ){
+			owner->npc_id_dynamic = 0;
+		}
+	}
+
 	aFree(nd);
 
 	return 0;
@@ -4503,6 +4511,7 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 
 	if( owner != nullptr ){
 		nd->dynamicnpc.owner_char_id = owner->status.char_id;
+		owner->npc_id_dynamic = nd->bl.id;
 	}
 
 	switch( type ) {
@@ -5776,6 +5785,8 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ), npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
 			return 0;
 		}
+
+		sd->npc_id_dynamic = 0;
 	}
 
 	// Delete the NPC
@@ -5787,6 +5798,11 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 }
 
 struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, struct map_session_data& sd ){
+	if( sd.npc_id_dynamic != 0 ){
+		clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
+		return nullptr;
+	}
+
 	// TODO: check maps that might forbid usage? maybe create mapflag?
 
 	int16 new_x, new_y;
