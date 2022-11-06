@@ -25100,21 +25100,21 @@ void packetdb_readdb(){
  *
  *------------------------------------------*/
 void do_init_clif(void) {
-	const char* colors[COLOR_MAX] = {
-		"0x00FF00",
-		"0xFF0000",
-		"0xFFFFFF",
-		"0xFFFF00",
-		"0x00FFFF",
-		"0xB5FFB5",
+	const int colors[COLOR_MAX] = {
+		0x00FF00, // COLOR_DEFAULT
+		0xFF0000, // COLOR_RED
+		0xFFFFFF, // COLOR_WHITE
+		0xFFFF00, // COLOR_YELLOW
+		0x00FFFF, // COLOR_CYAN
+		0xB5FFB5, // COLOR_LIGHT_GREEN
+		0xFFFF63, // COLOR_LIGHT_YELLOW
 	};
-	int i;
+
 	/**
 	 * Setup Color Table (saves unnecessary load of strtoul on every call)
 	 **/
-	for(i = 0; i < COLOR_MAX; i++) {
-		color_table[i] = strtoul(colors[i],NULL,0);
-		color_table[i] = (color_table[i] & 0x0000FF) << 16 | (color_table[i] & 0x00FF00) | (color_table[i] & 0xFF0000) >> 16;//RGB to BGR
+	for( int i = 0; i < COLOR_MAX; i++ ){
+		color_table[i] = ( colors[i] & 0x0000FF ) << 16 | ( colors[i] & 0x00FF00 ) | ( colors[i] & 0xFF0000 ) >> 16; //RGB to BGR
 	}
 
 	packetdb_readdb();
