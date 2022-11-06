@@ -149711,11 +149711,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      .@l = BaseLevel;
       bonus bMaxHP,1500;
       bonus bMaxSP,150;
       bonus bDelayrate,-5;
       bonus bBaseAtk,5*(min(.@l,150)/10);
-      .@l = BaseLevel;
       if (.@l>=105)
          bonus bAtkRate,3;
       if (.@l>=110)
