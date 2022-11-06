@@ -31487,3 +31487,121 @@ Body:
             Amount: 5
           - Item: Candy_B
             Amount: 5
+  - Group: ENCHANT_STONE_BOX29
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SmatkStone_Robe
+            Rate: 10
+          - Item: SplStone_Robe_D
+            Rate: 10
+          - Item: ResistDefStone_Robe
+            Rate: 10
+          - Item: StaminaWISStone_Robe_D
+            Rate: 10
+          - Item: MinorCastStone_Robe_D
+            Rate: 10
+          - Item: CastStone_Robe_D
+            Rate: 40
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Item: MinorCastingStone_Robe
+            Rate: 160
+          - Item: BlueAuraEffect_Middle
+            Rate: 160
+          - Item: KagerouStone_Robe
+            Rate: 80
+          - Item: OboroStone_Robe
+            Rate: 80
+          - Item: DoramStone_Robe
+            Rate: 80
+          - Item: KagerouStone_Top3
+            Rate: 80
+          - Item: KagerouStone_Middle3
+            Rate: 80
+          - Item: KagerouStone_Bottom3
+            Rate: 80
+          - Item: OboroStone_Top3
+            Rate: 80
+          - Item: OboroStone_Middle3
+            Rate: 80
+          - Item: OboroStone_Bottom3
+            Rate: 80
+          - Item: DoramStone_Top3
+            Rate: 80
+          - Item: DoramStone_Middle3
+            Rate: 80
+          - Item: DoramStone_Bottom3
+            Rate: 80
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: Magic_Stone_Top
+            Rate: 240
+          - Item: Magic_Stone_Middle
+            Rate: 240
+          - Item: Magic_Stone_Bottom
+            Rate: 240
+          - Item: DefenseStone_Top
+            Rate: 150
+          - Item: DefenseStone_Middle
+            Rate: 150
+          - Item: DefenseStone_Bottom
+            Rate: 150
+          - Item: NinjaStone_Top
+            Rate: 150
+          - Item: NinjaStone_Middle
+            Rate: 150
+          - Item: NinjaStone_Bottom
+            Rate: 150
+          - Item: DoramStone_Top
+            Rate: 150
+          - Item: DoramStone_Middle
+            Rate: 150
+          - Item: DoramStone_Bottom
+            Rate: 150
+          - Item: ReloadStone_Top
+            Rate: 240
+          - Item: ReloadStone_Middle
+            Rate: 240
+          - Item: ReloadStone_Bottom
+            Rate: 240
+          - Item: EXPStone_Middle
+            Rate: 240
+          - Item: EXPStone_Bottom
+            Rate: 240
+          - Item: EXPStone_Top
+            Rate: 240
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
+          - Item: CastingStone_Top
+            Rate: 360
+          - Item: CastingStone_Middle
+            Rate: 360
+          - Item: CastingStone_Bottom
+            Rate: 360
+          - Item: Critical_Stone
+            Rate: 360
+          - Item: Critical_Stone_Top
+            Rate: 360
+          - Item: Critical_Stone_Bottom
+            Rate: 360
