@@ -5507,7 +5507,7 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 			mes "Then when would we be able to set off?";
 			next;
 			mes "[Stello]";
-			mes "Maybe tommorrow.";
+			mes "Maybe tomorrow.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "Isn't the fog covering the area near the shore? wouldn't it be a problem to just sail off?";
