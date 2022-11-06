@@ -6900,6 +6900,17 @@ NOTE:
 	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
 
 ---------------------------------------
+ 
+*duplicate_dynamic("<NPC name>"{,<character ID>});
+
+This command will duplicate the NPC with the given <NPC name> near the attached player or the player with the given <character ID>.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
 
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};

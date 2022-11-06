@@ -70,6 +70,8 @@ static void npc_market_fromsql(void);
 #define npc_market_clearfromsql(exname) (npc_market_delfromsql_((exname), 0, true))
 #endif
 
+TIMER_FUNC(npc_dynamicnpc_removal_timer);
+
 /// Returns a new npc id that isn't being used in id_db.
 /// Fatal error if nothing is available.
 int npc_get_new_npc_id(void) {
@@ -864,6 +866,10 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
     if (nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE))
         return 0;
 
+	if( nd->dynamicnpc.owner_char_id != 0 ){
+		return 0;
+	}
+
 	int skill_id = va_arg(args, int);
 
 	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_DISABLENEARNPC [Cydh]
@@ -952,6 +958,11 @@ bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd) {
 	if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id) != sd->cloaked_npc.end())
 		return (!npc_cloaked);
 	return npc_cloaked;
+}
+
+bool npc_is_hidden_dynamicnpc( struct npc_data& nd, struct map_session_data& tsd ){
+	// If the NPC is dynamic and the target character is not the owner of the dynamic NPC
+	return nd.dynamicnpc.owner_char_id != 0 && nd.dynamicnpc.owner_char_id != tsd.status.char_id;
 }
 
 static int npc_cloaked_sub(struct block_list *bl, va_list ap)
@@ -1839,6 +1850,10 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 	if (npc_is_cloaked(nd, sd))
 		return 1;
 
+	if( npc_is_hidden_dynamicnpc( *nd, *sd ) ){
+		return 1;
+	}
+
 	int xs = -1, ys = -1;
 	switch(nd->subtype) {
 	case NPCTYPE_WARP:
@@ -1939,6 +1954,10 @@ int npc_touch_areanpc2(struct mob_data *md)
 		if( mapdata->npc[i]->sc.option&(OPTION_INVISIBLE|OPTION_CLOAK) )
 			continue;
 
+		if( mapdata->npc[i]->dynamicnpc.owner_char_id != 0 ){
+			continue;
+		}
+
 		switch( mapdata->npc[i]->subtype )
 		{
 			case NPCTYPE_WARP:
@@ -2031,6 +2050,10 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
 	{
 		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE)
 			continue;
+
+		if( mapdata->npc[i]->dynamicnpc.owner_char_id != 0 ){
+			continue;
+		}
 
 		switch(mapdata->npc[i]->subtype)
 		{
@@ -2149,9 +2172,17 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
 
+	if( npc_is_hidden_dynamicnpc( *nd, *sd ) ){
+		return 1;
+	}
+
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
 		clif_msg(sd, WORK_IN_PROGRESS);
 		return 1;
+	}
+
+	if( nd->dynamicnpc.owner_char_id != 0 ){
+		nd->dynamicnpc.last_interaction = gettick();
 	}
 
 	switch(nd->subtype) {
@@ -2207,6 +2238,7 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
  *------------------------------------------*/
 bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 	struct block_list *target = map_id2bl(id);
+	struct npc_data* nd = BL_CAST( BL_NPC, target );
 
 	nullpo_retr(true, sd);
 
@@ -2217,7 +2249,6 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 
 	if( id != sd->npc_id ){
 		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
-		TBL_NPC* nd = BL_CAST(BL_NPC, target);
 
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
 			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
@@ -2235,6 +2266,10 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 	if( !closing )
 		sd->npc_idle_tick = gettick(); //Update the last NPC iteration
 #endif
+
+	if( nd != nullptr && nd->dynamicnpc.owner_char_id != 0 ){
+		nd->dynamicnpc.last_interaction = gettick();
+	}
 
 	/**
 	 * WPE can get to this point with a progressbar; we deny it.
@@ -2311,6 +2346,10 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	}
 	if (nd->sc.option & OPTION_INVISIBLE) // can't buy if npc is not visible (hack?)
 		return 1;
+
+	if( npc_is_hidden_dynamicnpc( *nd, *sd ) ){
+		return 1;
+	}
 
 	sd->npc_shopid = id;
 
@@ -3477,6 +3516,20 @@ int npc_unload(struct npc_data* nd, bool single) {
 	nd->qi_data.clear();
 
 	script_stop_sleeptimers(nd->bl.id);
+
+	if( nd->dynamicnpc.removal_tid != INVALID_TIMER ){
+		delete_timer( nd->dynamicnpc.removal_tid, npc_dynamicnpc_removal_timer );
+		nd->dynamicnpc.removal_tid = INVALID_TIMER;
+	}
+
+	if( nd->dynamicnpc.owner_char_id != 0 ){
+		struct map_session_data* owner = map_charid2sd( nd->dynamicnpc.owner_char_id );
+
+		if( owner != nullptr ){
+			owner->npc_id_dynamic = 0;
+		}
+	}
+
 	aFree(nd);
 
 	return 0;
@@ -3719,6 +3772,9 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->sc_display_count = 0;
 	nd->progressbar.timeout = 0;
 	nd->vd = npc_viewdb[0]; // Default to JT_INVISIBLE
+	nd->dynamicnpc.owner_char_id = 0;
+	nd->dynamicnpc.last_interaction = 0;
+	nd->dynamicnpc.removal_tid = INVALID_TIMER;
 
 #ifdef MAP_GENERATOR
 	nd->navi.pos = {m, x, y};
@@ -4388,8 +4444,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// shop/cashshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>
 /// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
-const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
-{
+const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, struct map_session_data* owner = nullptr ){
 	short x, y, m, xs = -1, ys = -1;
 	int16 dir;
 	char srcname[128];
@@ -4455,6 +4510,12 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	nd->src_id = src_id;
 	nd->bl.type = BL_NPC;
 	nd->subtype = (enum npc_subtype)type;
+
+	if( owner != nullptr ){
+		nd->dynamicnpc.owner_char_id = owner->status.char_id;
+		owner->npc_id_dynamic = nd->bl.id;
+	}
+
 	switch( type ) {
 		case NPCTYPE_SCRIPT:
 			++npc_script;
@@ -5657,13 +5718,13 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
  * dir: Facing direction of duplicate NPC
  * Returns duplicate NPC data on success
  */
-npc_data* npc_duplicate_npc( npc_data* nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys ){
+npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys, struct map_session_data* owner ){
 	static char w1[128], w2[128], w3[128], w4[128];
 	const char* stat_buf = "- call from duplicate subsystem -\n";
 	char exname[NPC_NAME_LENGTH + 1];
 
 	snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map_getmapdata(mapid)->name, x, y, dir);
-	snprintf(w2, sizeof(w2), "duplicate(%s)", nd->exname);
+	snprintf(w2, sizeof(w2), "duplicate(%s)", nd.exname);
 
 	//Making sure the generated name is not used for another npc.
 	int i = 0;
@@ -5681,7 +5742,7 @@ npc_data* npc_duplicate_npc( npc_data* nd, char name[NPC_NAME_LENGTH + 1], int16
 		snprintf( w4, sizeof( w4 ), "%d", class_ );
 	}
 
-	npc_parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "DUPLICATE");//DUPLICATE means nothing for now.
+	npc_parse_duplicate( w1, w2, w3, w4, stat_buf, stat_buf, "DUPLICATE", owner ); //DUPLICATE means nothing for now.
 
 	npc_data* dnd = npc_name2id( exname );
 
@@ -5696,6 +5757,81 @@ npc_data* npc_duplicate_npc( npc_data* nd, char name[NPC_NAME_LENGTH + 1], int16
 	if ((struct event_data*)strdb_get(ev_db, evname)) {
 		npc_event_do(evname);
 	}
+
+	return dnd;
+}
+
+TIMER_FUNC(npc_dynamicnpc_removal_timer){
+	struct npc_data* nd = map_id2nd( id );
+
+	if( nd == nullptr ){
+		return 0;
+	}
+
+	nd->dynamicnpc.removal_tid = INVALID_TIMER;
+
+	struct map_session_data* sd = map_charid2sd( nd->dynamicnpc.owner_char_id );
+
+	if( sd != nullptr ){
+		// Still talking to the NPC
+		// TODO: are there other fields to check?
+		if( sd->npc_id == nd->bl.id || sd->npc_shopid == nd->bl.id ){
+			// Retry later
+			nd->dynamicnpc.last_interaction = gettick();
+			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
+			return 0;
+		}
+
+		// Last interaction is not long enough in the past
+		if( DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ) < battle_config.feature_dynamicnpc_timeout ){
+			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ), npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
+			return 0;
+		}
+
+		sd->npc_id_dynamic = 0;
+	}
+
+	// Delete the NPC
+	npc_unload( nd, true );
+	// Update NPC event database
+	npc_read_event_script();
+
+	return 0;
+}
+
+struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, struct map_session_data& sd ){
+	if( sd.npc_id_dynamic != 0 ){
+		clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
+		return nullptr;
+	}
+
+	// TODO: check maps that might forbid usage? maybe create mapflag?
+
+	int16 new_x, new_y;
+
+	if( !map_search_freecell( &sd.bl, 0, &new_x, &new_y, battle_config.feature_dynamicnpc_rangex, battle_config.feature_dynamicnpc_rangey, 0 ) ){
+		ShowError( "npc_duplicate_npc_for_player: Unable to find a free cell to duplicate NPC \"%s\" for player \"%s\"(AID: %u, CID: %u)\n", nd.exname, sd.status.name, sd.status.account_id, sd.status.char_id );
+		return nullptr;
+	}
+
+	int8 dir;
+
+	if( battle_config.feature_dynamicnpc_direction ){
+		// Let the NPC look to the player
+		dir = map_calc_dir_xy( new_x, new_y, sd.bl.x, sd.bl.y, DIR_CENTER );
+	}else{
+		// Use original NPCs direction
+		dir = nd.ud.dir;
+	}
+
+	struct npc_data* dnd = npc_duplicate_npc( nd, nd.name, sd.bl.m, new_x, new_y, nd.class_, dir, nd.u.scr.xs, nd.u.scr.ys, &sd );
+
+	if( dnd == nullptr ){
+		return nullptr;
+	}
+
+	dnd->dynamicnpc.last_interaction = gettick();
+	dnd->dynamicnpc.removal_tid = add_timer( dnd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, dnd->bl.id, NULL );
 
 	return dnd;
 }
@@ -6034,11 +6170,10 @@ void do_init_npc(void){
 
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
+	add_timer_func_list( npc_dynamicnpc_removal_timer, "npc_dynamicnpc_removal_timer" );
 
 	// Init dummy NPC
-	fake_nd = (struct npc_data *)aCalloc(1,sizeof(struct npc_data));
-	fake_nd->bl.m = -1;
-	fake_nd->bl.id = npc_get_new_npc_id();
+	fake_nd = npc_create_npc( -1, 0, 0 );
 	fake_nd->class_ = JT_FAKENPC;
 	fake_nd->speed = 200;
 	strcpy(fake_nd->name,"FAKE_NPC");
