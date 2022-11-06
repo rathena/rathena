@@ -36795,7 +36795,7 @@ Body:
       } else if (.@r >= 7) {
          .@mdef += 3;
       }
-      bonus bMDef,.@mdef;
+      bonus bMdef,.@mdef;
   - Id: 25672
     AegisName: EP17_1_EVT05
     Name: Modification Module (Vit)
@@ -44033,7 +44033,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000; }";
       /*Unknow Rate*/
   - Id: 29438
     AegisName: Z-Knockback
@@ -47195,6 +47195,24 @@ Body:
     Script: |
       bonus bLongAtkRate,25;
       bonus bPerfectHitRate,5;
+  - Id: 300152
+    AegisName: AngelBlessing_Effect
+    Name: Angel Blessing Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_Blessing_Of_Angels,true;
+    UnEquipScript: |
+      hateffect HAT_EF_Blessing_Of_Angels,false;
+  - Id: 300157
+    AegisName: Time_Effect
+    Name: Time Accessory Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_C_Time_Accessory,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Time_Accessory,false;
   - Id: 300163
     AegisName: Card_Of_Emperor_R
     Name: The Emperor Reversed
@@ -49372,7 +49390,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bMAtkRate,10;
+      bonus bMatkRate,10;
       bonus2 bSubRace,RC_Demon,-5;
       bonus bMaxSPrate,-50;
   - Id: 300354
@@ -49806,6 +49824,15 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,100;
       bonus2 bMagicAtkEle,Ele_Undead,100;
       bonus2 bSubEle,Ele_All,-30;
+  - Id: 300385
+    AegisName: VF_Effect_TW
+    Name: Valhalla Effect Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_VALHALLA_IDOL,true;
+    UnEquipScript: |
+      hateffect HAT_EF_VALHALLA_IDOL,false;
   - Id: 300392
     AegisName: aegis_300392
     Name: Sealed Stormy Knight Card
@@ -50187,7 +50214,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000; }";
       /*Unknow Rate*/
   - Id: 310076
     AegisName: Cassock_Str
@@ -52284,6 +52311,15 @@ Body:
     SubType: Enchant
     Script: |
       bonus bAllStats,10;
+  - Id: 310322
+    AegisName: MagicFeather_Effect
+    Name: Magic Feather Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_magical_feather,true;
+    UnEquipScript: |
+      hateffect HAT_EF_magical_feather,false;
   - Id: 310325
     AegisName: Range_Top
     Name: Range Stone (Top)
@@ -62219,7 +62255,7 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bMAtk,20*(.@r/3);
+      bonus bMatk,20*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
       if (.@r>=9) {
         bonus bMatkRate,10;
@@ -64678,6 +64714,123 @@ Body:
             }
          }
       }
+  - Id: 311912
+    AegisName: aegis_311912
+    Name: Kagerou Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,2*getskilllv("KO_RIGHT");
+  - Id: 311913
+    AegisName: aegis_311913
+    Name: Kagerou Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("KO_RIGHT");
+  - Id: 311914
+    AegisName: aegis_311914
+    Name: Kagerou Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"KO_HAPPOKUNAI",5*getskilllv("KO_MEIKYOUSISUI");
+  - Id: 311915
+    AegisName: aegis_311915
+    Name: Oboro Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddSize,Size_All,2*getskilllv("KO_RIGHT");
+  - Id: 311916
+    AegisName: aegis_311916
+    Name: Oboro Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,3*getskilllv("KO_MEIKYOUSISUI");
+  - Id: 311917
+    AegisName: aegis_311917
+    Name: Oboro Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",4*getskilllv("KO_IZAYOI");
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",4*getskilllv("KO_IZAYOI");
+      bonus2 bSkillAtk,"NJ_HUUJIN",4*getskilllv("KO_IZAYOI");
+  - Id: 311918
+    AegisName: aegis_311918
+    Name: Summoner Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",5*getskilllv("SU_PICKYPECK");
+      bonus2 bSkillAtk,"SU_CN_METEOR",5*getskilllv("SU_SV_STEMSPEAR");
+  - Id: 311919
+    AegisName: aegis_311919
+    Name: Summoner Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-2*getskilllv("SU_FRESHSHRIMP");
+  - Id: 311920
+    AegisName: aegis_311920
+    Name: Summoner Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("SU_ARCLOUSEDASH");
+  - Id: 311921
+    AegisName: aegis_311921
+    Name: Defense Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,20;
+      bonus bMdef,4;
+  - Id: 311922
+    AegisName: aegis_311922
+    Name: Defense Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,20;
+      bonus bMdef,4;
+  - Id: 311923
+    AegisName: aegis_311923
+    Name: Defense Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,20;
+      bonus bMdef,4;
+  - Id: 311924
+    AegisName: aegis_311924
+    Name: Resist Defense Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,100;
+      bonus bMdef,25;
+      bonus bRes,20;
+      bonus bMRes,20;
+  - Id: 311925
+    AegisName: aegis_311925
+    Name: Stamina Wisdom Stone (Dual)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,5;
+      bonus bWis,5;
+  - Id: 311926
+    AegisName: aegis_311926
+    Name: Romance Rose Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_C_Romance_Rose_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Romance_Rose_TW,false;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -65982,6 +66135,11 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 1000319
+    AegisName: AngelBlessingEffect_Mid
+    Name: Angel Blessing Effect (Middle)
+    Type: Etc
+    Weight: 100
   - Id: 1000320
     AegisName: Kafra_Coin_Kr
     Name: Kafra Coin
@@ -66091,6 +66249,11 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1000345
+    AegisName: TimeEffect_Middle
+    Name: Time Accessory Effect (Middle)
+    Type: Etc
+    Weight: 100
   - Id: 1000346
     AegisName: 4th_Job_Guide
     Name: 4th Job Guide
@@ -66119,6 +66282,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000365
+    AegisName: MagicFeatherEffect_Top
+    Name: Magic Feather Effect (Upper)
+    Type: Etc
+    Weight: 10
   - Id: 1000366
     AegisName: MD_Geffen_Win
     Name: Geffen Arena Championship
@@ -66210,6 +66378,18 @@ Body:
     Name: Melee Stone (Lower)
     Type: Etc
     Weight: 100
+  - Id: 1000395
+    AegisName: Jellopy_Essence_TW
+    Name: Jellopy Essence
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1000396
     AegisName: Naght_Sieger_Soul
     Name: Naght Sieger Soul
@@ -66938,6 +67118,14 @@ Body:
     Name: Royal Guard Stone (Lower)
     Type: Etc
     Weight: 100
+  - Id: 1000620
+    AegisName: Timeoverload_Power_TW
+    Name: Time Overload Power
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
   - Id: 1000635
     AegisName: 19th_Anniv_Invitation
     Name: 19th Anniversary Thank You Letter
@@ -67820,6 +68008,11 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 1000875
+    AegisName: Valhalla_F_Effect_T
+    Name: Valhalla Effect (Middle)
+    Type: Etc
+    Weight: 100
   - Id: 1000882
     AegisName: aegis_1000882
     Name: Electric Effect (Bottom)
@@ -69048,6 +69241,87 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001159
+    AegisName: KagerouStone_Top3
+    Name: Kagerou Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001160
+    AegisName: KagerouStone_Middle3
+    Name: Kagerou Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001161
+    AegisName: KagerouStone_Bottom3
+    Name: Kagerou Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001162
+    AegisName: OboroStone_Top3
+    Name: Oboro Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001163
+    AegisName: OboroStone_Middle3
+    Name: Oboro Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001164
+    AegisName: OboroStone_Bottom3
+    Name: Oboro Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001165
+    AegisName: DoramStone_Top3
+    Name: Summoner Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001166
+    AegisName: DoramStone_Middle3
+    Name: Summoner Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001167
+    AegisName: DoramStone_Bottom3
+    Name: Summoner Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001168
+    AegisName: DefenseStone_Top
+    Name: Defense Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001169
+    AegisName: DefenseStone_Middle
+    Name: Defense Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001170
+    AegisName: DefenseStone_Bottom
+    Name: Defense Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001171
+    AegisName: ResistDefStone_Robe
+    Name: Resist Defense Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001172
+    AegisName: StaminaWISStone_Robe_D
+    Name: Stamina Wisdom Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1001174
+    AegisName: Ymir_Heart_TW
+    Name: Imelo Heart Power Stone    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+  - Id: 1001175
+    AegisName: aegis_1001175
+    Name: Romance Rose Effect (Upper)
+    Type: Etc
+    Weight: 10
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
