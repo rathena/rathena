@@ -48211,3 +48211,19 @@ Body:
           - Item: Trans_Scroll_Gazeti
           - Item: Trans_Scroll_Kobold_Archer
           - Item: Trans_Scroll_Necromancer
+  - Group: KACHUA_SECRET_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cachua_Coupon
+      - SubGroup: 1
+        List:
+          - Item: Red_Potion
+            Rate: 4
+          - Item: Yellow_Potion
+            Rate: 3
+          - Item: White_Potion
+            Rate: 2
+          - Item: Blue_Potion
+            Rate: 1
+            Announced: true
