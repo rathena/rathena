@@ -25230,7 +25230,7 @@ BUILDIN_FUNC(duplicate_dynamic){
 
 	if( dnd == nullptr ){
 		script_pushstrcopy( st, "" );
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 	}else{
 		script_pushstrcopy( st, dnd->exname );
 		return SCRIPT_CMD_SUCCESS;
