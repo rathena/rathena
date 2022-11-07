@@ -2123,7 +2123,9 @@ void pc_reg_received(struct map_session_data *sd)
 
 	if( battle_config.feature_goldpc_active ){
 		sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, NULL );
+#ifndef VIP_ENABLE
 		clif_goldpc_info( *sd );
+#endif
 	}else{
 		sd->goldpc_tid = INVALID_TIMER;
 	}
