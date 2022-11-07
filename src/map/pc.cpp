@@ -2003,7 +2003,7 @@ TIMER_FUNC(pc_goldpc_update){
 		pc_setreg2( sd, GOLDPC_SECONDS_VAR, 0 );
 
 		if( points < battle_config.feature_goldpc_max_points ){
-			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, nullptr );
+			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
 		}
 
 		// Update the client
@@ -2122,7 +2122,7 @@ void pc_reg_received(struct map_session_data *sd)
 #endif
 
 	if( battle_config.feature_goldpc_active ){
-		sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, nullptr );
+		sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
 #ifndef VIP_ENABLE
 		clif_goldpc_info( *sd );
 #endif
