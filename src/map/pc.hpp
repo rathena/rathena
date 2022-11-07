@@ -1712,4 +1712,6 @@ void pc_macro_detector_disconnect(map_session_data &sd);
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
 void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
 
+TIMER_FUNC(pc_goldpc_update);
+
 #endif /* PC_HPP */
