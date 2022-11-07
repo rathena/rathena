@@ -2044,21 +2044,21 @@ Body:
     Group: Goal_Level
     Name: The start of another adventure!
     Condition: " BaseLevel == 100 "
-    #Rewards:
+    Rewards:
       Item: Rebeginer_Box_100
     Score: 10
   - Id: 200033
     Group: Goal_Level
     Name: With a new mind!(1)
     Condition: " BaseLevel == 170 && (Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS_T) "
-    #Rewards:
+    Rewards:
       Item: Costume_Ticket
     Score: 50
   - Id: 200034
     Group: Goal_Level
     Name: With a new mind!(2)
     Condition: " BaseLevel == 170 && (Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER_T) "
-    #Rewards:
+    Rewards:
       Item: Costume_Ticket
     Score: 50
   - Id: 220000
