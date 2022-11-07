@@ -3820,7 +3820,7 @@ Body:
     AegisName: Sweet_Potato_
     Name: Sweet Potato
     Type: Healing
-    Weight: 30
+    Weight: 20
     Trade:
       NoDrop: true
       NoTrade: true
