@@ -1972,6 +1972,47 @@ bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl
 	return true;
 }
 
+TIMER_FUNC(pc_goldpc_update){
+	struct map_session_data* sd = map_id2sd( id );
+
+	if( sd == nullptr ){
+		return 0;
+	}
+
+	sd->goldpc_tid = INVALID_TIMER;
+
+	// Check if feature is still active
+	if( !battle_config.feature_goldpc_active ){
+		return 0;
+	}
+
+	// TODO: add mapflag to disable?
+
+	int32 points = (int32)pc_readreg2( sd, GOLDPC_POINT_VAR );
+
+	if( points < battle_config.feature_goldpc_max_points ){
+		if( battle_config.feature_goldpc_vip && pc_isvip( sd ) ){
+			points += 2;
+		}else{
+			points += 1;
+		}
+
+		points = std::min( points, battle_config.feature_goldpc_max_points );
+
+		pc_setreg2( sd, GOLDPC_POINT_VAR, points );
+		pc_setreg2( sd, GOLDPC_SECONDS_VAR, 0 );
+
+		if( points < battle_config.feature_goldpc_max_points ){
+			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, NULL );
+		}
+
+		// Update the client
+		clif_goldpc_info( *sd );
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Invoked once after the char/account/account2 registry variables are received. [Skotlex]
  * We didn't receive item information at this point so DO NOT attempt to do item operations here.
@@ -2079,6 +2120,13 @@ void pc_reg_received(struct map_session_data *sd)
 	// Before those clients you could send out the instance info even when the client was still loading the map, afterwards you need to send it later
 	clif_instance_info( *sd );
 #endif
+
+	if( battle_config.feature_goldpc_active ){
+		sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, NULL );
+		clif_goldpc_info( *sd );
+	}else{
+		sd->goldpc_tid = INVALID_TIMER;
+	}
 
 	// pet
 	if (sd->status.pet_id > 0)
@@ -15452,6 +15500,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
+	add_timer_func_list( pc_goldpc_update, "pc_goldpc_update" );
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

@@ -24901,6 +24901,50 @@ void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status styp
 #endif
 }
 
+void clif_goldpc_info( struct map_session_data& sd ){
+#if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
+	if( battle_config.feature_goldpc_active ){
+		struct PACKET_ZC_GOLDPCCAFE_POINT p = {};
+
+		p.packetType = HEADER_ZC_GOLDPCCAFE_POINT;
+		p.active = sd.goldpc_tid != INVALID_TIMER;
+		if( battle_config.feature_goldpc_vip && pc_isvip( &sd ) ){
+			p.unitPoint = 2;
+		}else{
+			p.unitPoint = 1;
+		}
+		p.point = (int32)pc_readreg2( &sd, GOLDPC_POINT_VAR );
+		// TODO: check if we should send max value, if disabled/max reached
+		p.accumulatePlaySecond = (int32)( 3600 - battle_config.feature_goldpc_time + pc_readreg2( &sd, GOLDPC_SECONDS_VAR ) );
+
+		clif_send( &p, sizeof( p ), &sd.bl, SELF );
+	}
+#endif
+}
+
+void clif_parse_dynamic_npc( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
+	struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST* p = (struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST*)RFIFOP( fd, 0 );
+
+	char npcname[NPC_NAME_LENGTH + 1];
+
+	if( strncasecmp( "GOLDPCCAFE", p->nickname, sizeof( p->nickname ) ) == 0 ){
+		safestrncpy( npcname, p->nickname, sizeof( npcname ) );
+	}else{
+		return;
+	}
+
+	struct npc_data* nd = npc_name2id( npcname );
+
+	if( nd == nullptr ){
+		ShowError( "clif_parse_dynamic_npc: Original NPC \"%s\" was not found.\n", npcname );
+		return;
+	}
+
+	npc_duplicate_npc_for_player( *nd, *sd );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

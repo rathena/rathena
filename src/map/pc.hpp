@@ -63,6 +63,8 @@ enum sc_type : int16;
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 #define ACHIEVEMENTLEVEL "AchievementLevel"
+#define GOLDPC_POINT_VAR "Goldpc_Points"
+#define GOLDPC_SECONDS_VAR "Goldpc_Seconds"
 
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
@@ -931,6 +933,8 @@ struct map_session_data {
 	} captcha_upload;
 
 	s_macro_detect macro_detect;
+
+	int goldpc_tid;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table

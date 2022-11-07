@@ -1,0 +1,12 @@
+//===== rAthena Script =======================================
+//= Gold PC Bonus NPC
+//===== Description: =========================================
+//= NPC that can be spawned via the Gold PC Timer Button.
+//===== Changelog: ===========================================
+//= 1.0 Initial release [Lemongrass]
+//============================================================
+
+prontera,0,0,5	script	Goldpoint Manager::GOLDPCCAFE	4_F_02,{
+	// TODO: Implement
+	end;
+}

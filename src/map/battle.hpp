@@ -719,6 +719,11 @@ struct Battle_Config
 	int feature_dynamicnpc_rangey;
 	int feature_dynamicnpc_direction;
 
+	int feature_goldpc_active;
+	int feature_goldpc_time;
+	int feature_goldpc_max_points;
+	int feature_goldpc_vip;
+
 #include "../custom/battle_config_struct.inc"
 };
 
