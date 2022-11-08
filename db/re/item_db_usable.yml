@@ -48195,7 +48195,7 @@ Body:
       getitem 23338,50;
       getitem 23504,25;
       getitem 23581,1;
-   - Id: 23581
+  - Id: 23581
     AegisName: Adventurer_Box_90
     Name: Adventurer Box (90)
     Type: Usable
