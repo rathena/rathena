@@ -24183,7 +24183,9 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
-    AfterCastActDelay: 2000
+    AfterCastActDelay: 1000
+    FixedCastTime: 500
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
