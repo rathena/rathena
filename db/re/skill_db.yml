@@ -19489,6 +19489,7 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
+    Element: Wind
     CopyFlags:
       Skill:
         Reproduce: true
