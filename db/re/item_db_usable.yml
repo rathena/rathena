@@ -47956,132 +47956,6 @@ Body:
       getitem 11572,45;
       getitem 22543,2;
       getitem 23506,8;
-  - Id: 23575
-    AegisName: Adventurer_Box_1
-    Name: Adventurer Box (1)
-    Type: Usable
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 11567,100;
-      getitem 12265,5;
-      getitem 22979,5;
-      getitem 23338,50;
-      getitem 23576,1;
-  - Id: 23576
-    AegisName: Adventurer_Box_15
-    Name: Adventurer Box (15)
-    Type: Usable
-    EquipLevelMin: 15
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 11567,150;
-      getitem 23338,50;
-      getitem 23577,1;
-  - Id: 23577
-    AegisName: Adventurer_Box_30
-    Name: Adventurer Box (30)
-    Type: Usable
-    EquipLevelMin: 30
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 23338,50;
-      getitem 23503,20;
-      getitem 23578,1;
-  - Id: 23578
-    AegisName: Adventurer_Box_45
-    Name: Adventurer Box (45)
-    Type: Usable
-    EquipLevelMin: 45
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 23338,50;
-      getitem 23503,25;
-      getitem 23579,1;
-  - Id: 23579
-    AegisName: Adventurer_Box_60
-    Name: Adventurer Box (60)
-    Type: Usable
-    EquipLevelMin: 60
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 23338,50;
-      getitem 23504,20;
-      getitem 23580,1;
-  - Id: 23580
-    AegisName: Adventurer_Box_75
-    Name: Adventurer Box (75)
-    Type: Usable
-    EquipLevelMin: 75
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 23338,50;
-      getitem 23504,25;
-      getitem 23581,1;
-   - Id: 23581
-    AegisName: Adventurer_Box_90
-    Name: Adventurer Box (90)
-    Type: Usable
-    EquipLevelMin: 90
-    Weight: 0
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 23505,20;
-      getitem 23338,50;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
     Name: "[Event] Crate of 20 Yellow Potions"
@@ -48212,6 +48086,132 @@ Body:
     Script: |
       percentheal 5,0;
       sc_start SC_MATKPOTION,600000,3;
+  - Id: 23575
+    AegisName: Adventurer_Box_1
+    Name: Adventurer Box (1)
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11567,100;
+      getitem 12265,5;
+      getitem 22979,5;
+      getitem 23338,50;
+      getitem 23576,1;
+  - Id: 23576
+    AegisName: Adventurer_Box_15
+    Name: Adventurer Box (15)
+    Type: Usable
+    EquipLevelMin: 15
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11567,150;
+      getitem 23338,50;
+      getitem 23577,1;
+  - Id: 23577
+    AegisName: Adventurer_Box_30
+    Name: Adventurer Box (30)
+    Type: Usable
+    EquipLevelMin: 30
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23503,20;
+      getitem 23578,1;
+  - Id: 23578
+    AegisName: Adventurer_Box_45
+    Name: Adventurer Box (45)
+    Type: Usable
+    EquipLevelMin: 45
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23503,25;
+      getitem 23579,1;
+  - Id: 23579
+    AegisName: Adventurer_Box_60
+    Name: Adventurer Box (60)
+    Type: Usable
+    EquipLevelMin: 60
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23504,20;
+      getitem 23580,1;
+  - Id: 23580
+    AegisName: Adventurer_Box_75
+    Name: Adventurer Box (75)
+    Type: Usable
+    EquipLevelMin: 75
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23504,25;
+      getitem 23581,1;
+   - Id: 23581
+    AegisName: Adventurer_Box_90
+    Name: Adventurer Box (90)
+    Type: Usable
+    EquipLevelMin: 90
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23505,20;
+      getitem 23338,50;
   - Id: 23582
     AegisName: E_Wing_Of_Fly_3Day_Box
     Name: "[Gift] Unlimited Fly Wing 3 Day Box"
