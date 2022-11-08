@@ -10276,7 +10276,7 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
- PETINFO_ID - Pet ID
+ PETINFO_ID - Pet unique ID
  PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.yml' - will tell you what kind of a pet it is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.

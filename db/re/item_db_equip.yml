@@ -55510,7 +55510,7 @@ Body:
     Script: |
       bonus bMdef,5;
       .@def = 10;
-      if (getpetinfo(PETINFO_ID) == 9026) {
+      if (getpetinfo(PETINFO_EGGID) == 9026) {
          .@def += 5;
          if (getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_CORDIAL) {
             .@def += 5;
@@ -81479,7 +81479,7 @@ Body:
          bonus bMatkRate,7;
       else
          bonus bMatkRate,5;
-      if (getpetinfo(PETINFO_ID) == 9023) {
+      if (getpetinfo(PETINFO_EGGID) == 9023) {
          if (getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_LOYAL)
             bonus bDelayRate,-5;
          else
@@ -84173,9 +84173,13 @@ Body:
       bonus bSPGainValue,50;
       bonus bLongSPGainValue,50;
       bonus bMagicSPGainValue,50;
-      if (getpetinfo(PETINFO_ID) == 9055) {
-         bonus2 bHPRegenRate,(getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_LOYAL ? 1000 : 500),5000;
-         bonus2 bSPRegenRate,(getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_LOYAL ? 40 : 20),5000;
+      if (getpetinfo(PETINFO_EGGID) == 9055) {
+         if (getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_LOYAL)
+            .@factor = 2;
+         else
+            .@factor = 1;
+         bonus2 bHPRegenRate,(.@factor*500),5000;
+         bonus2 bSPRegenRate,(.@factor*20),5000;
       }
     UnEquipScript: |
       heal -5000,-500;
@@ -143797,30 +143801,34 @@ Body:
     Script: |
       bonus2 bAddSize,Size_All,10;
       bonus2 bMagicAddSize,Size_All,10;
-      if (getpetinfo(PETINFO_ID) == 9112)
+      switch( getpetinfo(PETINFO_EGGID) ) {
+      case 9112:  // Moonlight_Egg
          bonus2 bHPVanishRate,40,4;
-      if (getpetinfo(PETINFO_ID) == 9088) {
+         break;
+      case 9088:  // Angeling_Egg
          bonus bBaseAtk,readparam(bLuk);
          bonus bMatk,readparam(bLuk);
          bonus2 bExpAddClass,Class_All,5;
-      }
-      if (getpetinfo(PETINFO_ID) == 9096) {
+         break;
+      case 9096:  // Cat_O_Nine_Tail_Egg
          bonus2 bAddRace,RC_Demon,30;
          bonus2 bMagicAddRace,RC_Demon,30;
          bonus2 bSubRace,RC_Demon,5;
-      }
-      if (getpetinfo(PETINFO_ID) == 9087) {
+         break;
+      case 9087:  // High_Orc_Egg
          bonus2 bAddRace,RC_Brute,30;
          bonus2 bMagicAddRace,RC_Brute,30;
          bonus2 bSubRace,RC_Brute,5;
-      }
-      if (getpetinfo(PETINFO_ID) == 9069) {
+         break;
+      case 9069:  // Mastering_Egg
          bonus2 bAddRace,RC_Plant,30;
          bonus2 bMagicAddRace,RC_Plant,30;
          bonus2 bSubRace,RC_Plant,5;
-      }
-      if (getpetinfo(PETINFO_ID) == 9106)
+         break;
+      case 9106:  // Metaller_Egg
          bonus3 bAutoSpell,"WM_METALICSOUND",5,150;
+         break;
+      }
   - Id: 410028
     AegisName: Wonder_Egg_Basket_
     Name: Wonder Egg Basket
@@ -143834,23 +143842,39 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus bAspdRate,10;
-      if (getpetinfo(PETINFO_ID) == 9109 || getpetinfo(PETINFO_ID) == 9112 || getpetinfo(PETINFO_ID) == 9115 || getpetinfo(PETINFO_ID) == 9121) {
+      switch( getpetinfo(PETINFO_EGGID) ) {
+      case 9109:  // Sweet_Drops_Egg
+      case 9112:  // Moonlight_Egg
+      case 9115:  // Bacsojin_Egg2
+      case 9121:  // Orc_Hero_Egg_
+      case 9126:  // Kiel_Egg
+      case 9136:  // Eddga_Egg
          bonus bBaseAtk,200;
          bonus bMatk,200;
          bonus bAllStats,10;
-      }
-      /*Todo Itemid 9126 9136*/
-      if (getpetinfo(PETINFO_ID) == 9088 || getpetinfo(PETINFO_ID) == 9108 || getpetinfo(PETINFO_ID) == 9113) {
+         break;
+      case 9088:  // Angeling_Egg
+      case 9108:  // Xm_Teddybear_Egg
+      case 9113:  // Roost_Of_Skelion
          bonus bBaseAtk,200;
          bonus bMatk,200;
          bonus2 bAddSize,Size_All,10;
          bonus2 bMagicAddSize,Size_All,10;
-      }
-      if (getpetinfo(PETINFO_ID) == 9069 || getpetinfo(PETINFO_ID) == 9087 || getpetinfo(PETINFO_ID) == 9096 || getpetinfo(PETINFO_ID) == 9106 || getpetinfo(PETINFO_ID) == 9117 || getpetinfo(PETINFO_ID) == 9118 || getpetinfo(PETINFO_ID) == 9119 || getpetinfo(PETINFO_ID) == 9120 || getpetinfo(PETINFO_ID) == 9124) {
+         break;
+      case 9069:  // Mastering_Egg
+      case 9087:  // High_Orc_Egg
+      case 9096:  // Cat_O_Nine_Tail_Egg
+      case 9106:  // Metaller_Egg
+      case 9117:  // Contaminated_Wanderer_Egg
+      case 9118:  // Aliot_Egg
+      case 9119:  // Alicel_Egg
+      case 9120:  // Aliza_Egg
+      case 9124:  // Ep17_2_C_Admin2_Egg
          bonus bBaseAtk,200;
          bonus bMatk,200;
          bonus bDef,150;
          bonus bMdef,15;
+         break;
       }
   - Id: 410029
     AegisName: C_Wonder_Egg_Basket
