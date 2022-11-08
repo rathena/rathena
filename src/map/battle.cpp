@@ -1154,14 +1154,12 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	int flag = d->flag;
 
 	// SC Types that must be first because they may or may not block damage
-	if ((sce = sc->data[SC_KYRIE]) && damage > 0 && (flag & BF_WEAPON)) {
+	if ((sce = sc->data[SC_KYRIE]) && damage > 0 && ((flag & BF_WEAPON) || skill_id == TF_THROWSTONE)) {
 		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
-		if (skill_id == TF_THROWSTONE) {
-			if (sce->val2 >= 0)
-				damage = 0;
-			else
-				damage = -sce->val2;
-		}
+		if (sce->val2 >= 0)
+			damage = 0;
+		else
+			damage = -sce->val2;
 		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT)
 			status_change_end(target, SC_KYRIE);
 	}
