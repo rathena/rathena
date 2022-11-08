@@ -6309,6 +6309,10 @@ it just removes non-permanent script.
 Enable the player to plagiarize specific skills that are copyable.
 Return 1 on success, 0 otherwise.
 
+Note:
+ - Plagiarism only able to copy skill while SC_PRESERVE is not active and skill is copyable by Plagiarism.
+ - Reproduce can copy skill if SC__REPRODUCE is active and the skill is copyable by Reproduce.
+
 ---------------------------------------
 
 *plagiarizeskillreset <flag>;
@@ -6889,6 +6893,17 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
 If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+ 
+*duplicate_dynamic("<NPC name>"{,<character ID>});
+
+This command will duplicate the NPC with the given <NPC name> near the attached player or the player with the given <character ID>.
 The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
 
 NOTE:
@@ -8304,6 +8319,13 @@ Sets the reputation points via <points> for reputation group <type> for the atta
 *get_reputation_points(<type>{,<char id>})
 
 Gets the reputation points for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
+*add_reputation_points(<type>,<points>{,<char id>})
+
+Adds the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
 <type> is the client side index as stored in the Id field of the reputation.yml database files.
 
 ---------------------------------------
