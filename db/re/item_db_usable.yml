@@ -52857,6 +52857,15 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101876
+    AegisName: aegis_101876
+    Name: Costume Enchant Stone Box 29
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box29);
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box

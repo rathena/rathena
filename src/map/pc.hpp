@@ -491,6 +491,7 @@ struct map_session_data {
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
+	int npc_id_dynamic;
 	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
@@ -1431,6 +1432,8 @@ enum e_addskill_type {
 };
 
 bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
+bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv);
+bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 

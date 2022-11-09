@@ -4685,6 +4685,7 @@
 	export_constant(UMOB_IGNORE_CELL_STACK_LIMIT);
 	export_constant(UMOB_RES);
 	export_constant(UMOB_MRES);
+	export_constant(UMOB_DAMAGETAKEN);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -4943,6 +4944,15 @@
 	export_constant(MOBG_RED_POUCH_OF_SURPRISE);
 	export_constant(MOBG_CLASSCHANGE);
 	export_constant(MOBG_TAEKWON_MISSION);
+
+	/* mob random groups flags */
+	export_constant(RMF_NONE);
+	export_constant(RMF_DB_RATE);
+	export_constant(RMF_CHECK_MOB_LV);
+	export_constant(RMF_MOB_NOT_BOSS);
+	export_constant(RMF_MOB_NOT_SPAWN);
+	export_constant(RMF_MOB_NOT_PLANT);
+	export_constant(RMF_ALL);
 
 	/* random option attributes */
 	export_constant(ROA_ID);
@@ -5814,6 +5824,7 @@
 	export_constant(IG_S_ABSORB_WEAPON);
 	export_constant(IG_S_ABSORB_SHIELD);
 	export_constant(IG_PORINGSPRECIOUSBOX);
+	export_constant(IG_ENCHANT_STONE_BOX29);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

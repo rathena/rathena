@@ -137,6 +137,7 @@ Thumbs.db
 /webserv.bat
 /yaml2sql.bat
 /yamlupgrade.bat
+/navigenerator.bat
 
 # dlls
 /libmysql.dll

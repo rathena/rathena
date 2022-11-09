@@ -716,6 +716,11 @@ struct Battle_Config
 	int macro_detection_punishment;
 	int macro_detection_punishment_time;
 
+	int feature_dynamicnpc_timeout;
+	int feature_dynamicnpc_rangex;
+	int feature_dynamicnpc_rangey;
+	int feature_dynamicnpc_direction;
+
 #include "../custom/battle_config_struct.inc"
 };
 
