@@ -47956,6 +47956,36 @@ Body:
       getitem 11572,45;
       getitem 22543,2;
       getitem 23506,8;
+  - Id: 23503
+    AegisName: Red_Potion_B_20
+    Name: "[Event] Crate of 20 Red Potions"
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11570,20;
+  - Id: 23504
+    AegisName: Orange_Potion_B_20
+    Name: "[Event] Crate of 20 Orange Potions"
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11569,20;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
     Name: "[Event] Crate of 20 Yellow Potions"
