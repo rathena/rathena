@@ -20574,7 +20574,7 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward)
+	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !(rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1))
 		factor = 2;
 
 	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx] * factor, LOG_TYPE_ROULETTE)) == 0) {
@@ -20634,8 +20634,6 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
 	}else{
 		if (!sd->roulette.stage) {
-			// Get bonus item stage
-			int reward_stage = rnd() % MAX_ROULETTE_LEVEL;
 			if (sd->roulette_point.bronze > 0) {
 				sd->roulette_point.bronze -= 1;
 				pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
@@ -20643,17 +20641,18 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 				sd->roulette_point.silver -= 10;
 				sd->roulette.stage = 2;
 				pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
-				// Get bonus item stage only from current stage or higher
-				reward_stage = rnd() % (MAX_ROULETTE_LEVEL - sd->roulette.stage + 1) + sd->roulette.stage;
 			} else if (sd->roulette_point.gold > 9) {
 				sd->roulette_point.gold -= 10;
 				sd->roulette.stage = 4;
 				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
-				// Get bonus item stage only from current stage or higher
-				reward_stage = rnd() % (MAX_ROULETTE_LEVEL - sd->roulette.stage + 1) + sd->roulette.stage;
 			}
-			// Get bonus reward item id
-			sd->roulette.bonusItemID = (battle_config.feature_roulette_bonus_reward) ? rd.nameid[reward_stage][rnd() % (rd.items[reward_stage] - 1)] : 0;
+			if( battle_config.feature_roulette_bonus_reward ){
+				// Get bonus item stage only from current stage or higher
+				int reward_stage = rnd_value( sd->roulette.stage, MAX_ROULETTE_LEVEL - 1 );
+				sd->roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]]
+			}else{
+				sd->roulette.bonusItemID = 0;
+			}
 		}
 
 		sd->roulette.prizeStage = sd->roulette.stage;
