@@ -26743,7 +26743,7 @@ BUILDIN_FUNC(itemlink)
 	}
 #endif
 
-	std::string itemlstr = createItemLink(item);
+	std::string itemlstr = item_db.create_item_link(item);
 	script_pushstrcopy(st, itemlstr.c_str());
 	return SCRIPT_CMD_SUCCESS;
 }

@@ -1344,6 +1344,7 @@ public:
 	// Additional
 	std::shared_ptr<item_data> searchname( const char* name );
 	std::shared_ptr<item_data> search_aegisname( const char *name );
+	std::string create_item_link( struct item& data );
 };
 
 extern ItemDatabase item_db;
@@ -1612,8 +1613,6 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 bool itemdb_parse_roulette_db(void);
 
 void itemdb_reload(void);
-
-std::string createItemLink(struct item& data);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);
