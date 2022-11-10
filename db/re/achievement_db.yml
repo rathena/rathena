@@ -1784,6 +1784,12 @@ Body:
     Rewards:
       TitleId: 1034
     Score: 10
+  - ID: 130005 # TODO (Terra Gloria: give achievement when player visit the coronation ceremony)
+    Group: "AG_CHATTING"
+    Name: "Who made the king"
+    Reward:
+      TitleID: 1046
+    Score: 10
   - Id: 170000
     Group: Chatting
     Name: Song chamber is not an accident
@@ -2061,6 +2067,14 @@ Body:
     Rewards:
       Item: Costume_Ticket
     Score: 50
+  - ID: 200035
+    Group: "AG_GOAL_LEVEL"
+    Name: "Level 200 achieved!"
+    Condition: " BaseLevel == 200 "
+    Reward:
+      ItemID: 400124
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+    Score: 100
   - Id: 220000
     Group: Chatting_Create
     Name: Community begin
