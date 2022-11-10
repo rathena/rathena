@@ -20574,7 +20574,6 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	// If 
 	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward)
 		factor = 2;
 
