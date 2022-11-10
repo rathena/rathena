@@ -7821,7 +7821,7 @@ ACMD_FUNC(mobinfo)
 			if (++j % 3 == 0) {
 				clif_displaymessage(fd, atcmd_output);
 				strcpy(atcmd_output, " ");
-			} 
+			}
 		}
 		if (j == 0)
 			clif_displaymessage(fd, msg_txt(sd,1246)); // This monster has no drops.
@@ -9487,6 +9487,7 @@ ACMD_FUNC(itemlist)
 
 				if (card == nullptr)
 					continue;
+
 				tmp_item.nameid = card->nameid;
 				counter2++;
 
