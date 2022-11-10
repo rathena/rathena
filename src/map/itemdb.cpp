@@ -1255,21 +1255,24 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 		return "Unknown item";
 	}
 
+// All these dates are unconfirmed
+#if PACKETVER >= 20100000
+	if( !battle_config.feature_itemlink ){
+		// Feature is disabled
+		return data->ename;
+	}
+
 	struct item_data* id = data.get();
 
-// All these dates are unconfirmed
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	const std::string start_tag = "<ITEML>";
 	const std::string closing_tag = "</ITEML>";
 #elif PACKETVER >= 20151104
 	const std::string start_tag = "<ITEM>";
 	const std::string closing_tag = "</ITEM>";
-#elif PACKETVER >= 20100000
+#else // PACKETVER >= 20100000
 	const std::string start_tag = "<ITEMLINK>";
 	const std::string closing_tag = "</ITEMLINK>";
-#else
-	// Did not exist before that
-	return id->ename;
 #endif
 
 	std::string itemstr = start_tag;
@@ -1319,6 +1322,10 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 
 	itemstr += closing_tag;
 	return itemstr;
+#else
+	// Did not exist before that
+	return data->ename;
+#endif
 }
 
 ItemDatabase item_db;
