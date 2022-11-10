@@ -1345,6 +1345,7 @@ public:
 	std::shared_ptr<item_data> searchname( const char* name );
 	std::shared_ptr<item_data> search_aegisname( const char *name );
 	std::string create_item_link( struct item& data );
+	std::string create_item_link( t_itemid id );
 };
 
 extern ItemDatabase item_db;

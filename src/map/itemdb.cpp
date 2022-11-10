@@ -1328,6 +1328,14 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 #endif
 }
 
+std::string ItemDatabase::create_item_link( t_itemid id ){
+	struct item it = {};
+
+	it.nameid = id;
+
+	return this->create_item_link( it );
+}
+
 ItemDatabase item_db;
 
 /**
