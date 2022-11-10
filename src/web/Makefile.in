@@ -19,6 +19,9 @@ HTTPLIB_AR = ../../3rdparty/httplib/obj/httplib.a
 HTTPLIB_H = $(shell find ../../3rdparty/httplib/ -type f -name "*.h")
 HTTPLIB_INCLUDE = -I../../3rdparty/httplib
 
+NLOHMANN_H = $(shell find ../../3rdparty/json/include/nlohmann/ -type f -name "*.hpp")
+NLOHMANN_INCLUDE = -I../../3rdparty/json/include
+
 WEB_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 WEB_DIR_OBJ = $(WEB_OBJ:%=obj/%)
 WEB_H = $(shell ls *.hpp)
@@ -75,9 +78,9 @@ web-server: obj $(WEB_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HT
 
 # web object files
 
-obj/%.o: %.cpp $(WEB_H) $(COMMON_H) $(LIBCONFIG_H) $(HTTPLIB_H) $(RAPIDYAML_H)
+obj/%.o: %.cpp $(WEB_H) $(COMMON_H) $(LIBCONFIG_H) $(HTTPLIB_H) $(RAPIDYAML_H) $(NLOHMANN_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(HTTPLIB_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(HTTPLIB_INCLUDE) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):

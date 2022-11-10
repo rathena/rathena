@@ -56,8 +56,8 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 const struct TimerData* get_timer(int tid);
 int delete_timer(int tid, TimerFunc func);
 
-t_tick addt_tickimer(int tid, t_tick tick);
-t_tick sett_tickimer(int tid, t_tick tick);
+t_tick addtick_timer(int tid, t_tick tick);
+t_tick settick_timer(int tid, t_tick tick);
 
 int add_timer_func_list(TimerFunc func, const char* name);
 

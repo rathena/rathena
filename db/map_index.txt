@@ -1185,6 +1185,21 @@ prt_elib
 1@pdb
 airplane2
 vr_bob
+hero_dun1
+hero_ent1
+hero_ent2
+hero_ent3
+hero_in1
+hero_in2
+hero_in3
+hero_in4
+hero_lb
+hero_out1
+hero_out2
+hero_out3
+hero_out4
+hero_tra
+herosria
 
 //======================================================================================
 // - Other/Extra maps -

@@ -344,6 +344,29 @@ struct PACKET_ZC_FRIENDS_LIST{
 	struct PACKET_ZC_FRIENDS_LIST_sub friends[];
 } __attribute__((packed));
 
+struct PACKET_CZ_PC_SELL_ITEMLIST_sub {
+	uint16 index;
+	uint16 amount;
+} __attribute__((packed));
+
+struct PACKET_CZ_PC_SELL_ITEMLIST {
+	int16 packetType;
+	int16 packetLength;
+	PACKET_CZ_PC_SELL_ITEMLIST_sub sellList[];
+} __attribute__((packed));
+
+struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub{
+	uint32 AID;
+	uint32 CID;
+	int32 position;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQ_CHANGE_MEMBERPOS{
+	int16 packetType;
+	int16 packetLength;
+	struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub list[];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -354,6 +377,7 @@ DEFINE_PACKET_HEADER(ZC_BROADCAST, 0x9a)
 DEFINE_PACKET_HEADER(ZC_ITEM_ENTRY, 0x9d)
 DEFINE_PACKET_HEADER(ZC_PC_PURCHASE_RESULT, 0xca)
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_ITEM, 0x10a)
+DEFINE_PACKET_HEADER(CZ_REQ_CHANGE_MEMBERPOS, 0x155)
 DEFINE_PACKET_HEADER(CZ_REQMAKINGITEM, 0x18e)
 DEFINE_PACKET_HEADER(ZC_ACK_REQMAKINGITEM, 0x18f)
 DEFINE_PACKET_HEADER(CZ_REQ_MAKINGARROW, 0x1ae)
@@ -412,6 +436,7 @@ DEFINE_PACKET_HEADER(CZ_REQUEST_RESET_ENCHANT, 0x0b9e)
 DEFINE_PACKET_HEADER(ZC_RESPONSE_ENCHANT, 0x0b9f)
 DEFINE_PACKET_HEADER(CZ_CLOSE_UI_ENCHANT, 0x0ba0)
 DEFINE_PACKET_HEADER(CZ_USE_PACKAGEITEM, 0x0baf)
+DEFINE_PACKET_HEADER(CZ_PC_SELL_ITEMLIST, 0x00c9)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );
