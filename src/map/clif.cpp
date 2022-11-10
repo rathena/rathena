@@ -20562,6 +20562,7 @@ static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_RO
 static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	struct item it;
 	uint8 res = 1;
+	unsigned short factor = 1;
 
 	nullpo_retr(1, sd);
 
@@ -20573,7 +20574,11 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_ROULETTE)) == 0) {
+	// If 
+	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward)
+		factor = 2;
+
+	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx] * factor, LOG_TYPE_ROULETTE)) == 0) {
 		; // onSuccess
 	}
 
@@ -20595,7 +20600,7 @@ void clif_roulette_generate( struct map_session_data *sd, unsigned char result, 
 	p.Result = result;
 	p.Step = stage;
 	p.Idx = prizeIdx;
-	p.AdditionItemID = bonusItemID;
+	p.AdditionItemID = battle_config.feature_roulette_bonus_reward ? bonusItemID : 0;
 	p.RemainGold = sd->roulette_point.gold;
 	p.RemainSilver = sd->roulette_point.silver;
 	p.RemainBronze = sd->roulette_point.bronze;
@@ -20630,6 +20635,8 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
 	}else{
 		if (!sd->roulette.stage) {
+			// Get bonus item stage
+			int reward_stage = rnd() % MAX_ROULETTE_LEVEL;
 			if (sd->roulette_point.bronze > 0) {
 				sd->roulette_point.bronze -= 1;
 				pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
@@ -20637,11 +20644,17 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 				sd->roulette_point.silver -= 10;
 				sd->roulette.stage = 2;
 				pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
+				// Get bonus item stage only from current stage or higher
+				reward_stage = rnd() % (MAX_ROULETTE_LEVEL - sd->roulette.stage + 1) + sd->roulette.stage;
 			} else if (sd->roulette_point.gold > 9) {
 				sd->roulette_point.gold -= 10;
 				sd->roulette.stage = 4;
 				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
+				// Get bonus item stage only from current stage or higher
+				reward_stage = rnd() % (MAX_ROULETTE_LEVEL - sd->roulette.stage + 1) + sd->roulette.stage;
 			}
+			// Get bonus reward item id
+			sd->roulette.bonusItemID = (battle_config.feature_roulette_bonus_reward) ? rd.nameid[reward_stage][rnd() % (rd.items[reward_stage] - 1)] : 0;
 		}
 
 		sd->roulette.prizeStage = sd->roulette.stage;
@@ -20658,7 +20671,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		}
 	}
 
-	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx), sd->roulette.bonusItemID);
 }
 
 /// Request to claim a prize
