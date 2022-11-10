@@ -7792,6 +7792,7 @@ ACMD_FUNC(mobinfo)
 		}
 #endif
 		struct item tmp_item = {};
+
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 
 			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1)
@@ -8316,7 +8317,6 @@ ACMD_FUNC(iteminfo)
 			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279)); // None / With script
-
 		else{
 			tmp_item.nameid = itemid;
 			sprintf(atcmd_output, msg_txt(sd,1522), // Item: %s ⁕ (ID: %u) Type: %s | Extra Effect: %s
@@ -8375,9 +8375,10 @@ ACMD_FUNC(whodrops)
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
-	struct item tmp_item = {};
 	for (const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
+		struct item tmp_item = {};
+
 		tmp_item.nameid = id->nameid;
 
 		if (battle_config.feature_itemlink)
@@ -9358,7 +9359,9 @@ ACMD_FUNC(itemlist)
 
 	count = 0; // total slots occupied
 	counter = 0; // total items found
+
 	struct item tmp_item = {};
+
 	for( i = 0; i < size; ++i ) {
 		const struct item* it = &items[i];
 
@@ -9366,6 +9369,7 @@ ACMD_FUNC(itemlist)
 			continue;
 
 		std::shared_ptr<item_data> itd = item_db.find(it->nameid);
+
 		if (itd == nullptr)
 			continue;
 
@@ -9379,16 +9383,17 @@ ACMD_FUNC(itemlist)
 			StringBuf_Clear(&buf);
 		}
 
-		if( it->refine )
+		if( it->refine ) {
 			if (battle_config.feature_itemlink)
 				StringBuf_Printf(&buf, "⁕ %d %s %+d (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), it->refine, itd->name.c_str(), it->nameid);
 			else
 				StringBuf_Printf(&buf, "%d %s %+d (%s, id: %u)", it->amount, itd->ename.c_str(), it->refine, itd->name.c_str(), it->nameid);
-		else
+		} else {
 			if (battle_config.feature_itemlink)
 				StringBuf_Printf(&buf, "⁕ %d %s (%s, id: %u)", it->amount, createItemLink(tmp_item).c_str(), itd->name.c_str(), it->nameid);
 			else
 				StringBuf_Printf(&buf, "%d %s (%s, id: %u)", it->amount, itd->ename.c_str(), itd->name.c_str(), it->nameid);
+		}
 
 		if( it->equip ) {
 			char equipstr[CHAT_SIZE_MAX];

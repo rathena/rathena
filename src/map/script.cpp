@@ -26720,10 +26720,11 @@ BUILDIN_FUNC(item_enchant){
 BUILDIN_FUNC(itemlink)
 {
 	struct item item = {};
+
 	item.nameid = script_getnum(st, 2);
 	
 	if( !item_db.exists( item.nameid ) ){
-		ShowError( "Itemlink: Item ID %u does not exists.\n", item.nameid );
+		ShowError( "buildin_itemlink: Item ID %u does not exists.\n", item.nameid );
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
