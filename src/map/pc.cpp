@@ -14194,7 +14194,7 @@ void pc_scdata_received(struct map_session_data *sd) {
 
 	clif_weight_limit( sd );
 
-	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
+	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) && pc_attendance_counter(sd) < 200 ){
 		clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 	}
 
