@@ -1267,9 +1267,6 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	const std::string start_tag = "<ITEML>";
 	const std::string closing_tag = "</ITEML>";
-#elif PACKETVER >= 20151104
-	const std::string start_tag = "<ITEM>";
-	const std::string closing_tag = "</ITEM>";
 #else // PACKETVER >= 20100000
 	const std::string start_tag = "<ITEMLINK>";
 	const std::string closing_tag = "</ITEMLINK>";
