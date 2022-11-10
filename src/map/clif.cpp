@@ -20649,7 +20649,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 			if( battle_config.feature_roulette_bonus_reward ){
 				// Get bonus item stage only from current stage or higher
 				int reward_stage = rnd_value( sd->roulette.stage, MAX_ROULETTE_LEVEL - 1 );
-				sd->roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]]
+				sd->roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]];
 			}else{
 				sd->roulette.bonusItemID = 0;
 			}
