@@ -536,6 +536,7 @@
 	export_constant(MF_NORENEWALEXPPENALTY);
 	export_constant(MF_NOPETCAPTURE);
 	export_constant(MF_NOBUYINGSTORE);
+	export_constant(MF_NODYNAMICNPC);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -5824,6 +5825,7 @@
 	export_constant(IG_S_ABSORB_WEAPON);
 	export_constant(IG_S_ABSORB_SHIELD);
 	export_constant(IG_PORINGSPRECIOUSBOX);
+	export_constant(IG_ENCHANT_STONE_BOX29);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

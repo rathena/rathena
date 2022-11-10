@@ -67,7 +67,7 @@ Body:
   - Id: 3
     Name: Orc's Memory
     Enter:
-      Map: 1@orcs 
+      Map: 1@orcs
       X: 179
       Y: 15
     AdditionalMaps:
