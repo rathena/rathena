@@ -1785,8 +1785,8 @@ Body:
       TitleId: 1034
     Score: 10
   - Id: 130005 # TODO (Terra Gloria: give achievement when player visit the coronation ceremony)
-    Group: "AG_CHATTING"
-    Name: "Who made the king"
+    Group: Chatting
+    Name: Who made the king
     Rewards:
       TitleID: 1046
     Score: 10
@@ -2068,8 +2068,8 @@ Body:
       Item: Costume_Ticket
     Score: 50
   - Id: 200035
-    Group: "AG_GOAL_LEVEL"
-    Name: "Level 200 achieved!"
+    Group: Goal_Level
+    Name: Level 200 achieved!
     Condition: " BaseLevel == 200 "
     Rewards:
       Item: C_Magestic_Goat2
