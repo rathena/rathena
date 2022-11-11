@@ -20574,7 +20574,7 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !(rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1))
+	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !(rd.flag[sd->roulette.prizeStage][sd->roulette.prizeIdx]&1))
 		factor = 2;
 
 	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx] * factor, LOG_TYPE_ROULETTE)) == 0) {
