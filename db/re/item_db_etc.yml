@@ -33826,6 +33826,10 @@ Body:
     Script: |
       bonus bVariableCastrate,-15;
       /*Item removed on 2014-12-17*/
+  - Id: 23914
+    AegisName: Main_Lucky_Box
+    Name: Kachua's Secret Box
+    Type: Etc
   - Id: 25000
     AegisName: SPdrainStone_Top
     Name: SP Absorption Stone(Upper)

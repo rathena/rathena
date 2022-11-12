@@ -23,6 +23,7 @@
 #
 ###########################################################################
 # - Group                      Group name of the item.
+#   AnnounceBoxItemId          Item to be shown in special item obtaining broadcast packet in the box name field. Uses the last item the player used if not defined. (Default: 0)
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
 #       List:                  List of item(s) for the SubGroup.
@@ -44,7 +45,7 @@
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Group: 2013_RWC_SCROLL
@@ -29984,7 +29985,7 @@ Body:
             Rate: 185
           - Item: Enchanting_Weapone_S
             Rate: 185
-  # todo! Custom Rates (50% Stone vs 50% Epic Module) 
+  # todo! Custom Rates (50% Stone vs 50% Epic Module)
   - Group: EPIC_MODULE_MIX
     SubGroups:
       - SubGroup: 1
@@ -48212,6 +48213,7 @@ Body:
           - Item: Trans_Scroll_Kobold_Archer
           - Item: Trans_Scroll_Necromancer
   - Group: KACHUA_SECRET_BOX
+    AnnounceBoxItemId: 23914
     SubGroups:
       - SubGroup: 0
         List:
