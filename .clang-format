@@ -1,0 +1,10 @@
+---
+BasedOnStyle: Google
+AllowShortIfStatementsOnASingleLine: Never
+ColumnLimit: '100'
+IndentWidth: '4'
+Language: Cpp
+TabWidth: '4'
+UseTab: Always
+
+...
