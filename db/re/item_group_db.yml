@@ -44,7 +44,7 @@
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 3
+  Version: 2
 
 Body:
   - Group: 2013_RWC_SCROLL
@@ -30083,7 +30083,7 @@ Body:
             Rate: 212
           - Item: EP17_2_LE6
             Rate: 212
-  # todo! Custom Rates (50% Stone vs 50% Epic Module)
+  # todo! Custom Rates (50% Stone vs 50% Epic Module) 
   - Group: EPIC_MODULE_MIX
     SubGroups:
       - SubGroup: 1
