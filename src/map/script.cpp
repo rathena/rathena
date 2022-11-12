@@ -26774,6 +26774,41 @@ BUILDIN_FUNC(item_enchant){
 #endif
 }
 
+/**
+* Generate item link string for client
+* itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+* @author [Cydh]
+**/
+BUILDIN_FUNC(itemlink)
+{
+	struct item item = {};
+
+	item.nameid = script_getnum(st, 2);
+	
+	if( !item_db.exists( item.nameid ) ){
+		ShowError( "buildin_itemlink: Item ID %u does not exists.\n", item.nameid );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	FETCH(3, item.refine);
+	FETCH(4, item.card[0]);
+	FETCH(5, item.card[1]);
+	FETCH(6, item.card[2]);
+	FETCH(7, item.card[3]);
+	FETCH(8, item.enchantgrade);
+
+#if PACKETVER >= 20150225
+	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == false) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+#endif
+
+	std::string itemlstr = item_db.create_item_link(item);
+	script_pushstrcopy(st, itemlstr.c_str());
+	return SCRIPT_CMD_SUCCESS;
+}
 
 BUILDIN_FUNC(addfame) {
 	struct map_session_data *sd;
@@ -27558,6 +27593,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(add_reputation_points, "ii?"),
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
+	BUILDIN_DEF(itemlink, "i?????????"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
