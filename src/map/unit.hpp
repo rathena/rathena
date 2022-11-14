@@ -65,6 +65,7 @@ struct unit_data {
 	int32 group_id;
 
 	std::vector<int> shadow_scar_timer;
+	std::vector<int16> skill_unit_cell; // Any skill units an object is currently standing in. (Key: skill ID)
 };
 
 struct view_data {
