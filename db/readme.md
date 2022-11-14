@@ -18,6 +18,7 @@ We want to add our own custom achievement that can be given to a player via an N
 
 #### /db/import/achievement_db.yml
 
+```yml
     - Id: 280000
       Group: None
       Name: Emperio
@@ -30,6 +31,7 @@ We want to add our own custom achievement that can be given to a player via an N
       Reward:
         TitleId: 1036
       Score: 50
+```
 
 
 ### Instances
@@ -38,6 +40,7 @@ We want to add our own customized Housing Instance.
 
 #### /db/import/instance_db.yml
 
+```yml
 	- Id: 35
 	    Name: Home
         IdleTimeOut: 900
@@ -48,6 +51,7 @@ We want to add our own customized Housing Instance.
         AdditionalMaps:
           - Map: 2@home
           - Map: 3@home
+```
 
 
 ### Mob Alias
@@ -56,8 +60,10 @@ We want to give a custom mob a Novice player sprite.
 
 #### /db/import/mob_avail.yml
 
+```yml
     - Mob: PORING # Make Porings look like Baphomet.
       Sprite: BAPHOMET
+```
 
 
 ### Custom Maps
@@ -66,12 +72,14 @@ We want to add our own custom maps. For this we need to add our map names to `im
 
 #### /db/import/map_index.txt
 
+```
     1@home	1250
     2@home
     3@home
     ev_has
     shops
     prt_pvp
+```
 
 
 ### Item Trade Restrictions
@@ -80,8 +88,9 @@ We want to ensure that specific items cannot be traded, sold, dropped, placed in
 
 #### /db/import/item_db.yml
 
+```yml
     - Id: 34000 # Old Green Box
-	  Trade:
+      Trade:
         NoDrop: true
         NoTrade: true
         TradePartner: true
@@ -92,7 +101,7 @@ We want to ensure that specific items cannot be traded, sold, dropped, placed in
         NoMail: true
         NoAuction: true
     - Id: 34001 # House Keys
-	  Trade:
+      Trade:
         NoDrop: true
         NoTrade: true
         TradePartner: true
@@ -103,7 +112,7 @@ We want to ensure that specific items cannot be traded, sold, dropped, placed in
         NoMail: true
         NoAuction: true
     - Id: 34002 # Reputation Journal
-	  Trade:
+      Trade:
         NoDrop: true
         NoTrade: true
         TradePartner: true
@@ -113,6 +122,7 @@ We want to ensure that specific items cannot be traded, sold, dropped, placed in
         NoGuildStorage: true
         NoMail: true
         NoAuction: true
+```
 
 
 ### Custom Quests
@@ -121,10 +131,12 @@ We want to add our own custom quests to the quest_db.
 
 #### /db/import/quest_db.yml
 
+```yml
     - Id: 89001
-	  Title: "Reputation Quest"
+      Title: "Reputation Quest"
     - Id: 89002
-	  Title: "Reputation Quest"
+      Title: "Reputation Quest"
+```
 
 
 
