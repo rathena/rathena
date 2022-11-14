@@ -54,11 +54,10 @@ We want to add our own customized Housing Instance.
 ---
 We want to give a custom mob a Novice player sprite.
 
-#### /db/import/mob_avail.txt
+#### /db/import/mob_avail.yml
 
-    // Structure of Database:
-    // MobID,SpriteID{,Equipment}
-    3850,0
+    - Mob: PORING # Make Porings look like Baphomet.
+      Sprite: BAPHOMET
 
 
 ### Custom Maps
@@ -79,33 +78,53 @@ We want to add our own custom maps. For this we need to add our map names to `im
 ---
 We want to ensure that specific items cannot be traded, sold, dropped, placed in storage, etc.
 
-#### /db/import/item_trade.txt
+#### /db/import/item_db.yml
 
-    // Legend for 'TradeMask' field (bitmask):
-    // 1   - item can't be dropped
-    // 2   - item can't be traded (nor vended)
-    // 4   - wedded partner can override restriction 2
-    // 8   - item can't be sold to npcs
-    // 16  - item can't be placed in the cart
-    // 32  - item can't be placed in the storage
-    // 64  - item can't be placed in the guild storage
-    // 128 - item can't be attached to mail
-    // 256 - item can't be auctioned
-    // Full outright value = 511
-    34000,511,100	// Old Green Box
-    34001,511,100	// House Keys
-    34002,511,100	// Reputation Journal
+    - Id: 34000 # Old Green Box
+	  Trade:
+        NoDrop: true
+        NoTrade: true
+        TradePartner: true
+        NoSell: true
+        NoCart: true
+        NoStorage: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    - Id: 34001 # House Keys
+	  Trade:
+        NoDrop: true
+        NoTrade: true
+        TradePartner: true
+        NoSell: true
+        NoCart: true
+        NoStorage: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    - Id: 34002 # Reputation Journal
+	  Trade:
+        NoDrop: true
+        NoTrade: true
+        TradePartner: true
+        NoSell: true
+        NoCart: true
+        NoStorage: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
 
 
 ### Custom Quests
 ---
 We want to add our own custom quests to the quest_db.
 
-#### /db/import/quest_db.txt
+#### /db/import/quest_db.yml
 
-    // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,MobID1,NameID1,Rate1,MobID2,NameID2,Rate2,MobID3,NameID3,Rate3,Quest Title
-    89001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reputation Quest"
-    89002,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reputation Quest"
+    - Id: 89001
+	  Title: "Reputation Quest"
+    - Id: 89002
+	  Title: "Reputation Quest"
 
 
 
