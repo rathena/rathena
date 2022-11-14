@@ -26845,6 +26845,17 @@ BUILDIN_FUNC(getfamerank) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(pc_isdead) {
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st, pc_isdead(sd));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27597,6 +27608,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
+	BUILDIN_DEF(pc_isdead, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
