@@ -11251,7 +11251,7 @@ Note: Only works with classes that use the ranking system.
 
 ---------------------------------------
 
-*pc_isdead({<char id>})
+*isdead({<account id>})
 
 Returns true if the player is dead else false.
 
