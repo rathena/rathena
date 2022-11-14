@@ -10734,12 +10734,12 @@ Body:
   - Id: 18021
     Title: A guest
   - Id: 18022
-    Title: Hey!Sweetie
+    Title: Hey! Sweetie
     Targets:
       - Mob: MD_SWEETY
         Count: 1
   - Id: 18023
-    Title: Hey!Sweetie - Waiting
+    Title: Hey! Sweetie - Waiting
     TimeLimit: 4h
   - Id: 18024
     Title: Core collection
