@@ -56,6 +56,7 @@ enum e_log_pick_type : uint32
 	LOG_TYPE_ENCHANTGRADE     = 0x04000000,
 	LOG_TYPE_REFORM           = 0x08000000,
 	LOG_TYPE_ENCHANT          = 0x10000000,
+	LOG_TYPE_PACKAGE          = 0x20000000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all

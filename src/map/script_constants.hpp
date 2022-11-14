@@ -536,6 +536,7 @@
 	export_constant(MF_NORENEWALEXPPENALTY);
 	export_constant(MF_NOPETCAPTURE);
 	export_constant(MF_NOBUYINGSTORE);
+	export_constant(MF_NODYNAMICNPC);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -654,6 +655,7 @@
 	export_constant2("bCastrate",SP_CASTRATE);
 	export_constant2("bMaxHPrate",SP_MAXHPRATE);
 	export_constant2("bMaxSPrate",SP_MAXSPRATE);
+	export_constant2("bMaxAPrate", SP_MAXAPRATE);
 	export_constant2("bUseSPrate",SP_SPRATE);
 	export_constant2("bAddEle",SP_ADDELE);
 	export_constant2("bAddRace",SP_ADDRACE);
@@ -1840,8 +1842,31 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_SUB_WEAPONPROPERTY);
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
+	export_constant(SC_ALMIGHTY);
+	export_constant(SC_ULTIMATECOOK);
+	export_constant(SC_M_DEFSCROLL);
+	export_constant(SC_INFINITY_DRINK);
+	export_constant(SC_MENTAL_POTION);
+	export_constant(SC_LIMIT_POWER_BOOSTER);
+	export_constant(SC_COMBAT_PILL);
+	export_constant(SC_COMBAT_PILL2);
+	export_constant(SC_MYSTICPOWDER);
+	export_constant(SC_SPARKCANDY);
+	export_constant(SC_MAGICCANDY);
+	export_constant(SC_ACARAJE);
+	export_constant(SC_POPECOOKIE);
+	export_constant(SC_VITALIZE_POTION);
+	export_constant(SC_CUP_OF_BOZA);
+	export_constant(SC_SKF_MATK);
+	export_constant(SC_SKF_ATK);
+	export_constant(SC_SKF_ASPD);
+	export_constant(SC_SKF_CAST);
+	export_constant(SC_BEEF_RIB_STEW);
+	export_constant(SC_PORK_RIB_STEW);
+	export_constant(SC_WEAPONBREAKER);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -4463,6 +4488,7 @@
 	export_constant(MOB_ELEMENT);
 	export_constant(MOB_MODE);
 	export_constant(MOB_MVPEXP);
+	export_constant(MOB_ID);
 
 	/* petinfo types */
 	export_constant(PETINFO_ID);
@@ -4663,6 +4689,7 @@
 	export_constant(UMOB_IGNORE_CELL_STACK_LIMIT);
 	export_constant(UMOB_RES);
 	export_constant(UMOB_MRES);
+	export_constant(UMOB_DAMAGETAKEN);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -4922,6 +4949,15 @@
 	export_constant(MOBG_CLASSCHANGE);
 	export_constant(MOBG_TAEKWON_MISSION);
 
+	/* mob random groups flags */
+	export_constant(RMF_NONE);
+	export_constant(RMF_DB_RATE);
+	export_constant(RMF_CHECK_MOB_LV);
+	export_constant(RMF_MOB_NOT_BOSS);
+	export_constant(RMF_MOB_NOT_SPAWN);
+	export_constant(RMF_MOB_NOT_PLANT);
+	export_constant(RMF_ALL);
+
 	/* random option attributes */
 	export_constant(ROA_ID);
 	export_constant(ROA_VALUE);
@@ -5074,6 +5110,7 @@
 	export_constant(IG_A_GRADE_COIN_BAG);
 	export_constant(IG_ADVANCED_WEAPONS_BOX);
 	export_constant(IG_SPLENDID_BOX);
+	export_constant(IG_SPLENDID_BOX2);
 	export_constant(IG_CARDALBUM_ARMOR);
 	export_constant(IG_CARDALBUM_HELM);
 	export_constant(IG_CARDALBUM_ACC);
@@ -5741,6 +5778,57 @@
 	export_constant(IG_AUTO_M_I_BOX_A);
 	export_constant(IG_AUTO_M_I_BOX_B);
 	export_constant(IG_ILLUSION_MODULE_MIX);
+	export_constant(IG_ENCHANT_STONE_BOX22);
+	export_constant(IG_ENCHANT_STONE_BOX23);
+	export_constant(IG_ENCHANT_STONE_BOX24);
+	export_constant(IG_ENCHANT_STONE_BOX25);
+	export_constant(IG_ENCHANT_STONE_BOX27);
+	export_constant(IG_ANCIENT_HERO_BOX_1);
+	export_constant(IG_3LV_9REFINE_WEAPON_7GU);
+	export_constant(IG_3LV_10REFINE_WEAPON_8GU);
+	export_constant(IG_3LV_11REFINE_WEAPON_9GU);
+	export_constant(IG_3LV_12REFINE_WEAPON_10G);
+	export_constant(IG_4LV_9REFINE_WEAPON_8GU);
+	export_constant(IG_4LV_10REFINE_WEAPON_9GU);
+	export_constant(IG_4LV_11REFINE_WEAPON_10G);
+	export_constant(IG_BS_ITEM_M_S_52);
+	export_constant(IG_BS_ITEM_M_S_53);
+	export_constant(IG_BS_ITEM_M_S_54);
+	export_constant(IG_BS_ITEM_M_S_55);
+	export_constant(IG_BS_ITEM_M_S_56);
+	export_constant(IG_ENCHANT_STONE_BOX28);
+	export_constant(IG_S_FULLPENE_EARRING);
+	export_constant(IG_S_FULLPENE_PENDANT);
+	export_constant(IG_S_FULLPENE_ARMOR);
+	export_constant(IG_S_FULLPENE_SHOES);
+	export_constant(IG_S_FULLTEMP_EARRING);
+	export_constant(IG_S_FULLTEMP_PENDANT);
+	export_constant(IG_S_FULLTEMP_ARMOR);
+	export_constant(IG_S_FULLTEMP_SHOES);
+	export_constant(IG_S_DURABLE_WEAPON);
+	export_constant(IG_S_DURABLE_SHIELD);
+	export_constant(IG_S_CLEVER_WEAPON);
+	export_constant(IG_S_CLEVER_SHIELD);
+	export_constant(IG_S_ALLMIGHTY_EARRING);
+	export_constant(IG_S_ALLMIGHTY_PENDANT);
+	export_constant(IG_S_TRUEGEM_EARRING);
+	export_constant(IG_S_TRUEGEM_PENDANT);
+	export_constant(IG_S_TRUEGEM_SHOES);
+	export_constant(IG_S_TRUEGEM_ARMOR);
+	export_constant(IG_S_PERFECTSIZE_WEAPON);
+	export_constant(IG_S_PERFECTSIZE_ARMOR);
+	export_constant(IG_S_M_MAMMOTH_EARRING);
+	export_constant(IG_S_M_MAMMOTH_PENDANT);
+	export_constant(IG_S_M_MAMMOTH_ARMOR);
+	export_constant(IG_S_M_MAMMOTH_SHOES);
+	export_constant(IG_S_SPELLCASTER_EARRING);
+	export_constant(IG_S_SPELLCASTER_PENDANT);
+	export_constant(IG_S_SPELLCASTER_ARMOR);
+	export_constant(IG_S_SPELLCASTER_SHOES);
+	export_constant(IG_S_ABSORB_WEAPON);
+	export_constant(IG_S_ABSORB_SHIELD);
+	export_constant(IG_PORINGSPRECIOUSBOX);
+	export_constant(IG_ENCHANT_STONE_BOX29);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

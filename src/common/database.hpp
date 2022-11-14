@@ -111,7 +111,7 @@ public:
 		}
 	}
 
-	void put( keytype key, std::shared_ptr<datatype> ptr ){
+	virtual void put( keytype key, std::shared_ptr<datatype> ptr ){
 		this->data[key] = ptr;
 	}
 
@@ -135,7 +135,7 @@ public:
 		return rathena::util::umap_random( this->data );
 	}
 
-	void erase(keytype key) {
+	virtual void erase(keytype key) {
 		this->data.erase(key);
 	}
 };
@@ -143,19 +143,22 @@ public:
 template <typename keytype, typename datatype> class TypesafeCachedYamlDatabase : public TypesafeYamlDatabase<keytype, datatype>{
 private:
 	std::vector<std::shared_ptr<datatype>> cache;
+	bool loaded;
 
 public:
 	TypesafeCachedYamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, minimumVersion_ ){
-
+		this->loaded = false;
 	}
 
 	TypesafeCachedYamlDatabase( const std::string& type_, uint16 version_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, version_ ){
-
+		this->loaded = false;
 	}
 
 	void clear() override{
 		TypesafeYamlDatabase<keytype, datatype>::clear();
 		cache.clear();
+		cache.shrink_to_fit();
+		this->loaded = false;
 	}
 
 	std::shared_ptr<datatype> find( keytype key ) override{
@@ -164,6 +167,10 @@ public:
 		}else{
 			return cache[this->calculateCacheKey( key )];
 		}
+	}
+
+	std::vector<std::shared_ptr<datatype>> getCache() {
+		return this->cache;
 	}
 
 	virtual size_t calculateCacheKey( keytype key ){
@@ -178,8 +185,10 @@ public:
 
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() <= key) {
+				// Some keys compute to 0, so we allocate a minimum of 500 (250*2) entries
+				const static size_t minimum = 250;
 				// Double the current size, so we do not have to resize that often
-				size_t new_size = key * 2;
+				size_t new_size = std::max( key, minimum ) * 2;
 
 				// Very important => initialize everything to nullptr
 				this->cache.resize(new_size, nullptr);
@@ -189,8 +198,36 @@ public:
 			this->cache[key] = pair.second;
 		}
 
-		// Free the memory that was allocated too much
-		this->cache.shrink_to_fit();
+		for( auto it = this->cache.rbegin(); it != this->cache.rend(); it++ ){
+			if( *it != nullptr ){
+				// Resize to only fit all existing non null entries
+				this->cache.resize( this->cache.rend() - it );
+
+				// Free the memory that was allocated too much
+				this->cache.shrink_to_fit();
+				break;
+			}
+		}
+
+		this->loaded = true;
+	}
+
+	void erase( keytype key ) override{
+		TypesafeYamlDatabase<keytype, datatype>::erase( key );
+
+		// Prevent excessive usage during loading
+		if( this->loaded ){
+			this->cache[this->calculateCacheKey( key )] = nullptr;
+		}
+	}
+
+	void put( keytype key, std::shared_ptr<datatype> ptr ) override{
+		TypesafeYamlDatabase<keytype, datatype>::put( key, ptr );
+
+		// Prevent excessive usage during loading
+		if( this->loaded ){
+			this->cache[this->calculateCacheKey( key )] = ptr;
+		}
 	}
 };
 

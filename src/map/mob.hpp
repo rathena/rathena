@@ -193,7 +193,8 @@ struct s_mob_skill {
 	short permillage;
 	int casttime,delay;
 	short cancel;
-	short cond1,cond2;
+	short cond1;
+	int64 cond2;
 	short target;
 	int val[5];
 	short emotion;
@@ -286,6 +287,32 @@ public:
 
 extern MobDatabase mob_db;
 
+struct s_map_mob_drop{
+	uint16 mob_id;
+	std::shared_ptr<s_mob_drop> drop;
+};
+
+struct s_map_drops{
+	uint16 mapid;
+	std::unordered_map<uint16, std::shared_ptr<s_mob_drop>> globals;
+	std::unordered_map<uint16, std::unordered_map<uint16, std::shared_ptr<s_mob_drop>>> specific;
+};
+
+class MapDropDatabase : public TypesafeYamlDatabase<uint16, s_map_drops>{
+public:
+	MapDropDatabase() : TypesafeYamlDatabase( "MAP_DROP_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+
+private:
+	bool parseDrop( const ryml::NodeRef& node, std::unordered_map<uint16, std::shared_ptr<s_mob_drop>>& drops );
+};
+
+extern MapDropDatabase map_drop_db;
+
 struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
@@ -353,6 +380,7 @@ struct mob_data {
 	 * MvP Tombstone NPC ID
 	 **/
 	int tomb_nid;
+	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
 };
@@ -430,6 +458,9 @@ enum e_mob_skill_condition {
 	MSC_MASTERATTACKED,
 	MSC_ALCHEMIST,
 	MSC_SPAWN,
+	MSC_MOBNEARBYGT,
+	MSC_GROUNDATTACKED,
+	MSC_DAMAGEDGT,
 };
 
 // The data structures for storing delayed item drops
@@ -447,7 +478,7 @@ struct item_drop_list {
 
 uint16 mobdb_searchname(const char * const str);
 std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str );
-int mobdb_searchname_array(const char *str, uint16 * out, int size);
+uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
@@ -499,8 +530,8 @@ int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
-int mobskill_use(struct mob_data *md,t_tick tick,int event);
-int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
+int mobskill_use(struct mob_data *md,t_tick tick,int event, int64 damage = 0);
+int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag, int64 damage = 0);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);

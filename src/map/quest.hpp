@@ -35,6 +35,7 @@ struct s_quest_objective {
 	e_element element;
 	int16 mapid;
 	std::string map_name;
+	std::vector<uint16> mobs_allowed;
 };
 
 struct s_quest_db {
@@ -55,7 +56,7 @@ enum e_quest_check_type : uint8 {
 
 class QuestDatabase : public TypesafeYamlDatabase<uint32, s_quest_db> {
 public:
-	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 2, 1) {
+	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 3, 1) {
 
 	}
 

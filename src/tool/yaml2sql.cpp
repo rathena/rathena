@@ -445,6 +445,10 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_sage`,");
 			if (appendEntry(jobs["SoulLinker"], value))
 				column.append("`job_soullinker`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["Spirit_Handler"], value))
+				column.append("`job_spirit_handler`,");
+#endif
 			if (appendEntry(jobs["StarGladiator"], value))
 				column.append("`job_stargladiator`,");
 #ifdef RENEWAL
@@ -622,6 +626,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column.append("`equip_level_max`,");
 		if (appendEntry(input["Refineable"], value))
 			column.append("`refineable`,");
+		if (appendEntry(input["Gradable"], value))
+			column.append("`gradable`,");
 		if (appendEntry(input["View"], value))
 			column.append("`view`,");
 		if (appendEntry(input["AliasName"], value, true))

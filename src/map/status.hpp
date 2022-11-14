@@ -73,6 +73,8 @@ struct s_refine_level_info{
 	uint32 bonus;
 	uint32 randombonus_max;
 	uint16 blessing_amount;
+	bool broadcast_success;
+	bool broadcast_failure;
 	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
 };
 
@@ -92,7 +94,7 @@ private:
 	std::shared_ptr<s_refine_level_info> findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine );
 
 public:
-	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 2, 1 ){
 
 	}
 
@@ -1226,8 +1228,34 @@ enum sc_type : int16 {
 	SC_DEEP_POISONING_OPTION,
 	SC_POISON_SHIELD,
 	SC_POISON_SHIELD_OPTION,
+
+	SC_SUB_WEAPONPROPERTY,
+
 	SC_M_LIFEPOTION,
 	SC_S_MANAPOTION,
+	SC_ALMIGHTY,
+	SC_ULTIMATECOOK,
+	SC_M_DEFSCROLL,
+	SC_INFINITY_DRINK,
+	SC_MENTAL_POTION,
+	SC_LIMIT_POWER_BOOSTER,
+	SC_COMBAT_PILL,
+	SC_COMBAT_PILL2,
+	SC_MYSTICPOWDER,
+	SC_SPARKCANDY,
+	SC_MAGICCANDY,
+	SC_ACARAJE,
+	SC_POPECOOKIE,
+	SC_VITALIZE_POTION,
+	SC_CUP_OF_BOZA,
+	SC_SKF_MATK,
+	SC_SKF_ATK,
+	SC_SKF_ASPD,
+	SC_SKF_CAST,
+	SC_BEEF_RIB_STEW,
+	SC_PORK_RIB_STEW,
+
+	SC_WEAPONBREAKER,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -2912,27 +2940,28 @@ enum e_status_change_flag : uint16 {
 
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
-	sc_type type;					///< SC_
-	efst_type icon;					///< EFST_
-	std::bitset<SCS_MAX> state;		///< SCS_
-	std::bitset<SCB_MAX> calc_flag;	///< SCB_ flags
-	uint16 opt1;					///< OPT1_
-	uint16 opt2;					///< OPT2_
-	uint32 opt3;					///< OPT3_
-	uint32 look;					///< OPTION_ Changelook
-	std::bitset<SCF_MAX> flag;		///< SCF_ Flags, enum e_status_change_flag
-	bool display;					///< Display status effect/icon (for certain state)
-	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
-	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
-	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
-	std::vector<sc_type> endreturn;	///< List of SC that will be ended when this SC is activated and then immediately return
-	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
-	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
+	sc_type type;						///< SC_
+	efst_type icon;						///< EFST_
+	std::bitset<SCS_MAX> state;			///< SCS_
+	std::bitset<SCB_MAX> calc_flag;		///< SCB_ flags
+	uint16 opt1;						///< OPT1_
+	uint16 opt2;						///< OPT2_
+	uint32 opt3;						///< OPT3_
+	uint32 look;						///< OPTION_ Changelook
+	std::bitset<SCF_MAX> flag;			///< SCF_ Flags, enum e_status_change_flag
+	bool display;						///< Display status effect/icon (for certain state)
+	uint16 skill_id;					///< Associated skill for (addeff) duration lookups
+	std::vector<sc_type> endonstart;	///< List of SC that will be ended when this SC is activated
+	std::vector<sc_type> fail;			///< List of SC that causing this SC cannot be activated
+	std::vector<sc_type> endreturn;		///< List of SC that will be ended when this SC is activated and then immediately return
+	std::vector<sc_type> endonend;		///< List of SC that will be ended when this SC ends
+	t_tick min_duration;				///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;					///< Minimum rate to be applied (after all status reduction)
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 3) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
@@ -2952,7 +2981,7 @@ public:
 	// Extras
 	efst_type getIcon(sc_type type);
 	std::bitset<SCB_MAX> getCalcFlag(sc_type type);
-	std::vector<sc_type> getEnd(sc_type type);
+	std::vector<sc_type> getEndOnStart(sc_type type);
 	uint16 getSkill(sc_type type);
 	bool hasSCF(status_change *sc, e_status_change_flag flag);
 	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
@@ -3283,8 +3312,7 @@ static int sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, 
 static int sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
 }
-int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
-#define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
+int status_change_end(struct block_list* bl, enum sc_type type, int tid = INVALID_TIMER);
 TIMER_FUNC(status_change_timer);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
