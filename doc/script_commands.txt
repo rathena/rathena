@@ -11253,6 +11253,6 @@ Note: Only works with classes that use the ranking system.
 
 *pc_isdead({<char id>})
 
-Returns 1 if the player is dead else 0.
+Returns true if the player is dead else false.
 
 ---------------------------------------
