@@ -56,12 +56,12 @@ We want to add our own customized Housing Instance.
 
 ### Mob Alias
 ---
-We want to give a custom mob a Novice player sprite.
+We want to make Porings look like Baphomet.
 
 #### /db/import/mob_avail.yml
 
 ```yml
-    - Mob: PORING # Make Porings look like Baphomet.
+    - Mob: PORING
       Sprite: BAPHOMET
 ```
 
