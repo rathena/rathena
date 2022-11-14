@@ -41,16 +41,16 @@ We want to add our own customized Housing Instance.
 #### /db/import/instance_db.yml
 
 ```yml
-	- Id: 35
-	    Name: Home
-        IdleTimeOut: 900
-        Enter:
-          Map: 1@home
-          X: 24
-          Y: 6
-        AdditionalMaps:
-          - Map: 2@home
-          - Map: 3@home
+    - Id: 35
+      Name: Home
+      IdleTimeOut: 900
+      Enter:
+        Map: 1@home
+        X: 24
+        Y: 6
+      AdditionalMaps:
+        - Map: 2@home
+        - Map: 3@home
 ```
 
 
