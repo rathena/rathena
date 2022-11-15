@@ -10821,6 +10821,24 @@ ACMD_FUNC( enchantgradeui ){
 #endif
 }
 
+ACMD_FUNC( roulette ){
+	nullpo_retr( -1, sd );
+
+#if PACKETVER < 20141022
+	sprintf( atcmd_output, msg_txt( sd, 798 ), "2014-10-22" ); // This command requires packet version %s or newer.
+	clif_displaymessage( fd, atcmd_output );
+	return -1;
+#else
+	if( !battle_config.feature_roulette ){
+		clif_displaymessage( fd, msg_txt( sd, 1497 ) ); // Roulette is disabled
+		return -1;
+	}
+
+	clif_roulette_open( sd );
+	return 0;
+#endif
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -11145,6 +11163,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(addfame),
 		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(roulette, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;
