@@ -28,7 +28,7 @@ ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
 			end;
 		}
 		mes "- It seems he is already incapable to do any action. Let's go get him a piece of Yggdrasil Leaf. -";
-		completequest 18001;
+		erasequest 18001;
 		setquest 11615;
 		close2;
 		cloakonnpcself( "Dew#ep172_bapw2-00" );
@@ -44,7 +44,7 @@ ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
 		mes "Cough cough!!!!";
 		mes "Eeeeeek.";
 		delitem 610,1;
-		completequest 11615;
+		erasequest 11615;
 		setquest 11616;
 		next;
 		mes "[ Dew ]";
@@ -126,7 +126,7 @@ ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18001) == 1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11615) && countitem(610) > 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11615) == 1 && countitem(610) > 0" );
 	end;
 }
 
@@ -254,7 +254,7 @@ OnTouch:
 		next;
 		mes "[ Mark ]";
 		mes "I've got a notice from Alp... that they found the door on their way back, so let's get up there before it gets any more dangerous.";
-		completequest 11616;
+		erasequest 11616;
 		setquest 11617;
 		close2;
 		cutin "",255;
@@ -289,15 +289,23 @@ ba_pw01,20,119,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bapw1-00	4_F_PINKWOMAN
 ba_pw01,19,119,3	duplicate(dummy_cloaked_npc)	Lasis#ep172_bapw1-00	4_M_REBELLION
 
 ba_pw01,87,290,3	script	Alp#ep172_bapw1-00	4_M_BLACKMAN,{
-	if (isbegin_quest(11618) < 2) {
+	if (isbegin_quest(11618) == 1 || isbegin_quest(11620) > 0) {
 		cutin "bu_alp3",2;
 		mes "[ Alp ]";
 		mes "You're here...";
 		mes "This way...";
-		if (isbegin_quest(11617) == 1) {
-			completequest 11617;
-			setquest 11618;
-		}
+		close2;
+		cutin "",255;
+		warp "ba_in01",23,315;
+		end;
+	}
+	if (isbegin_quest(11617) == 1) {
+		erasequest 11617;
+		setquest 11618;
+		cutin "bu_alp3",2;
+		mes "[ Alp ]";
+		mes "You're here...";
+		mes "This way...";
 		close2;
 		cutin "",255;
 		warp "ba_in01",23,315;
@@ -315,7 +323,7 @@ OnInit:
 }
 
 ba_in01,20,319,3	script	Lasis#ep172_bain1-00	4_M_REBELLION,{
-	if (isbegin_quest(11620) < 2) {
+	if (isbegin_quest(11618) == 1 || isbegin_quest(11620) == 1) {
 		mes "[ Lasis ]";
 		mes "We're finally here.";
 		mes "I've got someone to wait, let's split up here.";
@@ -340,7 +348,7 @@ ba_in01,20,319,3	script	Lasis#ep172_bain1-00	4_M_REBELLION,{
 		mes "[ Mark ]";
 		mes "The door that goes to the inside is locked, so let's go outside.";
 		if (isbegin_quest(11618) == 1) {
-			completequest 11618;
+			erasequest 11618;
 			setquest 11620;
 		}
 		close2;
@@ -614,7 +622,7 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#ep172_bamaison-00	4_EP17_MASTER_A,{
 		mes "If you are a guest to the mansion, please complete a guest registration first. Please understand that we are not responsible for any mishap that is caused by mistaking you as an intruder.";
 		close3;
 	}
-	if (isbegin_quest(11620) == 2 && isbegin_quest(17333) == 0) {
+	if (isbegin_quest(17333) == 0) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ¥á ]";
 		mes "Welcome. It's a pleasure to meet you. I was worried that you got lost in the mansion.";
@@ -1583,7 +1591,7 @@ ba_in01,221,116,0	script	#ep172_tea_ev	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
 	setarray .@quest[0],16442,16443,16444,16445,16453;
-	for (.@i = 0; .@i < getarraysize(.@quest); .@i++)
+	for ( .@i = 0; .@i < getarraysize(.@quest); .@i++ )
 		if (isbegin_quest(.@quest[.@i]) != 2) .@miss++;
 	if (.@miss || isbegin_quest(16448) > 0 && isbegin_quest(16452) < 1)
 		cloakonnpcself( "Kaya Toss#ep172_bain01-00" );
@@ -1799,7 +1807,7 @@ ba_in01,203,103,5	script	Dien#ep172_bain01-00	4_F_DIENE,{
 		cutin "",255;
 		completequest 16440;
 		setarray .@quest[0],16441,16442,16443,16444,16445;
-		for (.@i = 0; .@i < getarraysize(.@quest); .@i++)
+		for ( .@i = 0; .@i < getarraysize(.@quest); .@i++ )
 			setquest .@quest[.@i];
 		end;
 	}
@@ -1837,7 +1845,7 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 	}
 	if (isbegin_quest(16441) == 1) {
 		setarray .@quest[0],16442,16443,16444,16445,16453;
-		for (.@i = 0; .@i < getarraysize(.@quest); .@i++) {
+		for ( .@i = 0; .@i < getarraysize(.@quest); .@i++ ) {
 			if (isbegin_quest(.@quest[.@i]) != 2)
 				.@miss++;
 		}
@@ -2594,18 +2602,6 @@ ba_maison,100,95,5	duplicate(dummy_cloaked_npc)	Assassin#ep172_bamaison-00	4_M_M
 
 
 //= Managers
-function	script	172_manager_check	{
-	questinfo_refresh();
-	setarray .@quest[0],16442,16443,16444,16445;
-	for (.@i = 0; .@i < getarraysize(.@quest); .@i++) {
-		if (isbegin_quest(.@quest[.@i]) != 2)
-			.@miss++;
-	}
-	if (!.@miss)
-		unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
-	return;
-}
-
 ba_maison,189,56,3	script	Yunas#ep172_bamaison-00	4_EP17_BASIC_B,{
 	if (isbegin_quest(16441) == 1) {
 		cutin "ep172_beta",2;
@@ -2735,7 +2731,8 @@ ba_maison,189,56,3	script	Yunas#ep172_bamaison-00	4_EP17_BASIC_B,{
 		cutin "",255;
 		if (isbegin_quest(16442) == 1)
 			completequest 16442;
-		172_manager_check;
+		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
 	cutin "ep172_beta",2;
@@ -2829,7 +2826,8 @@ ba_maison,318,169,5	script	Skippy#ep172_bamaison-00	4_EP17_BASIC_B,{
 		cutin "",255;
 		if (isbegin_quest(16443) == 1)
 			completequest 16443;
-		172_manager_check;
+		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
 	cutin "ep172_beta",2;
@@ -2939,7 +2937,8 @@ ba_maison,249,161,3	script	Adore#ep172_bamaison-00	4_EP17_BASIC_B,{
 			completequest 16444;
 			setquest 16453;
 		}
-		172_manager_check;
+		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
 	cutin "ep172_beta",2;
@@ -3075,7 +3074,8 @@ ba_maison,232,310,5	script	Nono#ep172_bamaison-00	4_EP17_BASIC_B,{
 		}
 		if (isbegin_quest(16445) == 1)
 			completequest 16445;
-		172_manager_check;
+		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
 	cutin "ep172_beta",2;
@@ -3283,7 +3283,7 @@ ba_maison,150,47,0	script	#ep172_body-0	CLEAR_NPC,{
 	.@count = countitem(1000226);
 	if (isbegin_quest(18002) == 1 && isbegin_quest(.@quest) == 0 && .@count < 5) {
 		cloakonnpcself();
-		cloakoffnpcslf( "#ep172_beta-" + .@id );
+		cloakoffnpcself( "#ep172_beta-" + .@id );
 		mes "The body of Manager Beta is hidden under the landscapes.";
 		next;
 		mes "I've recovered the core.";
@@ -4831,7 +4831,7 @@ OnTouch:
 		mes "There's a fire!!!";
 		next;
 		specialeffect EF_WATERBALL, AREA, "ep172_firepit-01";
-		for (.@i = 0; .@i < 4; .@i++)
+		for ( .@i = 0; .@i < 4; .@i++ )
 			classchange 4_TRACE,"#ep172_firepit-" + .@i, bc_self;
 		cutin "bu_maggi3",2;
 		mes "[ Magi ]";
@@ -4847,7 +4847,7 @@ OnTouch:
 		mes "Click";
 		next;
 		cloakoffnpcself( "Mansion Manager ¥á#ep172_libent" );
-		for (.@i = 0; .@i < 4; .@i++)
+		for ( .@i = 0; .@i < 4; .@i++ )
 			classchange 4_BONFIRE,"#ep172_firepit-" + .@i, bc_self;
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ¥á ]";
@@ -4984,7 +4984,7 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 		setquest 11628;
 		close3;
 	}
-	for (.@i = 11629; .@i < 11634; .@i++) {
+	for ( .@i = 11629; .@i < 11634; .@i++ ) {
 		if (isbegin_quest(.@i) == 0)
 			.@miss++;
 		else if (isbegin_quest(.@i) == 1)
@@ -5023,7 +5023,7 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 		mes "Thank you for your party confirmation.";
 		mes "" + strcharinfo(0) + " and 4... 5... 4... 6... 7... 4... 3... people has been registered.";
 		mes "Thank you for your cooperation.";
-		for (.@i = 11629; .@i < 11634; .@i++) {
+		for ( .@i = 11629; .@i < 11634; .@i++ ) {
 			if (isbegin_quest(.@i) == 1)
 				completequest .@i;
 		}
@@ -5035,12 +5035,10 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 	mes "Hello, " + strcharinfo(0) + ".";
 	mes "The following requests are only for library users, we'd appreciate if you'd give us your support.";
 	next;
-	function get_prefix;
-	.@worm$ = get_prefix(11634,11635);
-	.@book$ = get_prefix(11636,11637);
-	explode(.@T$,.@worm$,":");
-	explode(.@TT$,.@book$,":");
-	switch( select(((atoi(.@T$[1]) == false)?"^777777":"") + "Ultimate Bookworm" + "[" + .@T$[0] + "]^000000",((atoi(.@TT$[1]) == false)?"^777777":"") + "Ultimate Book" + "[" + .@TT$[0] + "]^000000","Cancel")) {
+	.@quest_menu$[0] = callsub( S_Menu, 11634,11635, "Ultimate Bookworm" );
+	.@quest_menu$[1] = callsub( S_Menu, 11636,11637, "Ultimate Book" );
+
+	switch( select( .@quest_menu$[0], .@quest_menu$[1], "Cancel" ) ) {
 	case 1:
 		.@hunt = 11634;
 		.@cooldown = 11635;
@@ -5105,6 +5103,34 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 	}
 	end;
 
+S_Menu:
+	.@string$ = getarg(2);
+
+	switch( checkquest(getarg(1),PLAYTIME) ) {
+	case -1:
+		switch( checkquest(getarg(0),HUNTING) ) {
+		case -1:
+			.@menu$ = .@string$ + " [130]";
+			break;
+		case 0:
+		case 1:
+			.@menu$ = "^777777" + .@string$ + " [Ongoing]^000000";
+			break;
+		case 2:
+			.@menu$ = .@string$ + " [130]";
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		.@menu$ = "^777777" + .@string$ + " [Waiting]^000000";
+		break;
+	case 2:
+		.@menu$ = .@string$ + " [130]";
+		break;
+	}
+	return .@menu$;
+
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11629) == 1 && isbegin_quest(11630) == 1 && isbegin_quest(11631) == 1 && isbegin_quest(11632) == 1 && isbegin_quest(11633) == 1" );
@@ -5115,20 +5141,6 @@ OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11636,HUNTING) == -1 && checkquest(11637,PLAYTIME) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11636,HUNTING) == 2" );
 	end;
-
-function	get_prefix	{
-	.@hunt = checkquest(getarg(0),HUNTING);
-	.@cd = checkquest(getarg(1),PLAYTIME);
-	if (.@cd == 0)
-		return "Waiting:0";
-	else if (.@cd == -1 && .@hunt == -1)
-		return "130:1";
-	else if (.@cd == -1 && .@hunt == 0 || .@hunt == 1)
-		return "Ongoing:0";
-	else
-		return "130:1";
-}
-
 }
 
 ba_lib,159,19,5	script	Dew#ep172_balib	4_M_REDMAN,{
@@ -5427,15 +5439,13 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ep172_bain-00	20640,{
 		npctalk "¦®(^¡ä^)¦° Cleaning..", "", bc_self;
 		break;
 	}
-	function get_prefix;
-	.@sewage$ = get_prefix(5893,5895,5896);
-	.@power$ = get_prefix(5897,5899,5900);
-	explode(.@T$,.@sewage$,":");
-	explode(.@TT$,.@power$,":");
+	.@quest_menu$[0] = callsub( S_Menu, 5893,5895,5896, "Sewage Plant Cleaning" );
+	.@quest_menu$[1] = callsub( S_Menu, 5897,5899,5900, "1st Power Plant Cleaning" );
+	
 	mes "[ Cleaning Robot ¥Ø ]";
 	mes "Cleaning is fun~";
 	next;
-	switch( select(((atoi(.@T$[1]) == false)?"^777777":"") + "[" + .@T$[0] + "]^000000" + " Sewage Plant Cleaning",((atoi(.@TT$[1]) == false)?"^777777":"") + "[" + .@TT$[0] + "]^000000" + " 1st Power Plant Cleaning","Good luck.")) {
+	switch( select( .@quest_menu$[0], .@quest_menu$[1], "Good luck." ) ) {
 	case 1:
 		setarray .@quest[0],5893,5894,5895;
 		.@cd = 5896;
@@ -5502,7 +5512,7 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ep172_bain-00	20640,{
 		mes "[ Cleaning Robot ¥Ø ]";
 		mes "Thank you very much~";
 		npctalk "(¢½¬©¢½)~¢¾", "", bc_self;
-		for (.@i = 0; .@i < getarraysize(.@quest); .@i++)
+		for ( .@i = 0; .@i < 3; .@i++ )
 			setquest .@quest[.@i];
 		close;
 	case 0:
@@ -5523,46 +5533,35 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ep172_bain-00	20640,{
 	}
 	end;
 
-function	get_prefix	{
-	for (.@i = getarg(0); .@i < getarg(1)+1; .@i++) {
-		if (checkquest(.@i,HUNTING) == 0 || checkquest(.@i,HUNTING) == 1) {
-			.@active = 1;
-			break;
-		}
-	}
-	.@cd = checkquest(getarg(2),PLAYTIME);
-	if (.@cd == 0)
-		return "Waiting:0";
-	else if (.@cd == -1 && .@active == 0)
-		return "Daily:1";
-	else if (.@cd == -1 && .@active == 1)
-		return "Ongoing:0";
-	else
-		return "Daily:1";
-}
+S_Menu:
+	.@string$ = getarg(3);
 
-OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 &&  isbegin_quest(5892) == 0" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5896,PLAYTIME) == -1 && checkquest(5893,HUNTING) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5896,PLAYTIME) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5893,HUNTING) == 2 && checkquest(5894,HUNTING) == 2 && checkquest(5895,HUNTING) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5893,HUNTING) == 2 && checkquest(5894,HUNTING) == 2 && checkquest(5895,HUNTING) == 2" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5900,PLAYTIME) == -1 && checkquest(5897,HUNTING) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5900,PLAYTIME) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5897,HUNTING) == 2 && checkquest(5898,HUNTING) == 2 && checkquest(5899,HUNTING) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5897,HUNTING) == 2 && checkquest(5898,HUNTING) == 2 && checkquest(5899,HUNTING) == 2" );
-	donpcevent strnpcinfo(0) + "::OnMove";
-	end;
+	switch( checkquest(getarg(2),PLAYTIME) ) {
+	case -1:
+		if (checkquest(getarg(0),HUNTING) == -1 || checkquest(getarg(0),HUNTING) == 2 || checkquest(getarg(1),HUNTING) == -1 || checkquest(getarg(1),HUNTING) == 2)
+			.@menu$ = "[Daily] " + .@string$;
+		else
+			.@menu$ = "^777777[Ongoing]^000000 " + .@string$;
+		break;
+	case 0:
+	case 1:
+		.@menu$ = "^777777[Waiting]^000000 " + .@string$;
+		break;
+	case 2:
+		.@menu$ = "[Daily] " + .@string$;
+		break;
+	}
+	return .@menu$;
 
 OnMove:
 	.@gid = getnpcid(0);
 	npcspeed rand(50,200);
-	.@x = rand(16,31);
-	.@y = rand(311,332);
-	while (!checkcell("ba_in01",.@x,.@y,cell_chkpass)) {
+	do {
 		.@x = rand(16,31);
 		.@y = rand(311,332);
 	}
+	while (!checkcell("ba_in01",.@x,.@y,cell_chkpass));
+
 	unitstopwalk .@gid, USW_FORCE_STOP;
 	unitwalk .@gid,.@x,.@y;
 	switch( rand(1,11)) {
@@ -5597,6 +5596,19 @@ OnMove:
 		break;
 	}
 	sleep rand(1500,5000);
+	donpcevent strnpcinfo(0) + "::OnMove";
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 &&  isbegin_quest(5892) == 0" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5896,PLAYTIME) == -1 && checkquest(5893,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5896,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5893,HUNTING) == 2 && checkquest(5894,HUNTING) == 2 && checkquest(5895,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5893,HUNTING) == 2 && checkquest(5894,HUNTING) == 2 && checkquest(5895,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5900,PLAYTIME) == -1 && checkquest(5897,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5900,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5897,HUNTING) == 2 && checkquest(5898,HUNTING) == 2 && checkquest(5899,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5897,HUNTING) == 2 && checkquest(5898,HUNTING) == 2 && checkquest(5899,HUNTING) == 2" );
 	donpcevent strnpcinfo(0) + "::OnMove";
 	end;
 }
@@ -6136,13 +6148,10 @@ ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
 	mes "Are you here to keep our promise?";
 	mes "Which job would you like to take on?";
 	next;
-	function get_prefix;
-	.@warehouse$ = get_prefix(17359,17360);
-	.@underground$ = get_prefix(17361,17362);
-	explode(.@T$,.@warehouse$,":");
-	explode(.@TT$,.@underground$,":");
+	.@quest_menu$[0] = callsub( S_Menu, 17359,17360, "Warehouse Clearance" );
+	.@quest_menu$[1] = callsub( S_Menu, 17361,17362, "Basement Clearance" );
 
-	switch( select(((atoi(.@T$[1]) == false)?"^777777":"") + "Warehouse Clearance" + .@T$[0] + "^000000",((atoi(.@TT$[1]) == false)?"^777777":"") + "Basement Clearance" + .@TT$[0] + "^000000","Is there something wrong?")) {
+	switch( select( .@quest_menu$[0], .@quest_menu$[1], "Is there something wrong?" ) ) {
 	case 1:
 		.@lvl = 160;
 		.@hunt = 17359;
@@ -6150,7 +6159,7 @@ ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
 		break;
 	case 2:
 		.@lvl = 170;
-		if (BaseLevel < 170) {
+		if (BaseLevel < .@lvl) {
 			cutin "ep172_beta",2;
 			mes "[ Chirp ]";
 			mes "What? You mean the basement?";
@@ -6231,6 +6240,34 @@ ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
 	}
 	end;
 
+S_Menu:
+	.@string$ = getarg(2);
+
+	switch( checkquest(getarg(1),PLAYTIME) ) {
+	case -1:
+		switch( checkquest(getarg(0),HUNTING) ) {
+		case -1:
+			.@menu$ = .@string$;
+			break;
+		case 0:
+		case 1:
+			.@menu$ = "^777777" + .@string$ + " - Ongoing^000000";
+			break;
+		case 2:
+			.@menu$ = "" + .@string$ + " - Completed";
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		.@menu$ = "^777777" + .@string$ + " - Waiting^000000";
+		break;
+	case 2:
+		.@menu$ = .@string$;
+		break;
+	}
+	return .@menu$;
+
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && isbegin_quest(17333) > 0 && checkquest(17342,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && isbegin_quest(17333) > 0 && checkquest(17342,HUNTING) == 2" );
@@ -6243,21 +6280,6 @@ OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17358) == 2 && BaseLevel >= 170 && checkquest(17361,HUNTING) == -1 && checkquest(17362,PLAYTIME) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17358) == 2 && BaseLevel >= 170 && checkquest(17361,HUNTING) == 2" );
 	end;
-
-function	get_prefix	{
-	.@hunt = checkquest(getarg(0),HUNTING);
-	.@cd = checkquest(getarg(1),PLAYTIME);
-	if (.@cd == 0)
-		return " - Waiting:0";
-	else if (.@cd == -1 && .@hunt == -1)
-		return ":1";
-	else if (.@cd == -1 && .@hunt == 0 || .@hunt == 1)
-		return " - Ongoing:0";
-	else if (.@cd == -1 && .@hunt == 2)
-		return " - Completed:1";
-	else
-		return ":1";
-}
 }
 
 ba_2whs01,153,49,1	duplicate(dummy_cloaked_npc)	Beta#ep172_2whs01-00	4_EP17_BASIC_B
@@ -6284,7 +6306,7 @@ ba_2whs01,110,218,0	script	Emergency Key#ep172_0	4_ENERGY_WHITE,{
 		sleep2 2500;
 		setpcblock PCBLOCK_ALL,false;
 		if (countitem(1000102) >= 3)
-			unittalk getcharid(3), "" + strcharinfo(0) + " : Let's go find the other emergency key.", bc_self;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Let's go find the other emergency key.", bc_self;	// TODO check
 		else
 			unittalk getcharid(3), "" + strcharinfo(0) + " : Let's go find the other emergency key.", bc_self;
 		completequest .@quest_id;
@@ -6298,6 +6320,7 @@ ba_2whs01,110,218,0	script	Emergency Key#ep172_0	4_ENERGY_WHITE,{
 
 OnInit:
 	cloakonnpc();
+
 	.@id = atoi(replacestr(strnpcinfo(2),"ep172_",""));
 	.@quest_id = 17345 + .@id;
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(" + .@quest_id + ") == 1" );
@@ -10278,7 +10301,7 @@ ba_maison,306,206,5	script	Cotton#172_lost_0	4_EP17_BASIC_B,{
 		erasequest 8595;
 		close;
 	}
-	for (.@i = 0; .@i < 5; .@i++) {
+	for ( .@i = 0; .@i < 5; .@i++ ) {
 		if (checkquest(.quest_id[.@i],HUNTING) == 0 || checkquest(.quest_id[.@i],HUNTING) == 1) {
 			switch( .quest_id[.@i]) {
 				case 8590: .@color$ = "^FF45FFRed"; break;
@@ -10350,7 +10373,7 @@ ba_maison,306,206,5	script	Cotton#172_lost_0	4_EP17_BASIC_B,{
 
 OnInit:
 	setarray .quest_id[0],8590,8591,8592,8593,8594;
-	for (.@i = 0; .@i < getarraysize(.quest_id); .@i++) {
+	for ( .@i = 0; .@i < getarraysize(.quest_id); .@i++ ) {
 		.@prefix$ += " checkquest(" + .quest_id[.@i] + ",HUNTING) == -1";
 		if (.@i < 4)
 			.@prefix$ += " &&";
@@ -10367,7 +10390,7 @@ ba_maison,309,206,5	script	Kitty#172_lost_0	20653,{
 		npctalk "Kitty : ...", bc_self;
 		break;
 	case 2:
-		npctalk "Kitty : Tweet." bc_self;
+		npctalk "Kitty : Tweet.", bc_self;
 		break;
 	case 3:
 		npctalk "Kitty : Cluck.", bc_self;
