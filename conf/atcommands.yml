@@ -1018,7 +1018,7 @@ Body:
       Opens the enchantgrade UI.
   - Command: roulette
     Help: |
-      Opens the roulette window.
+      Opens the roulette UI.
 
 Footer:
   Imports:
