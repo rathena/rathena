@@ -26869,8 +26869,9 @@ BUILDIN_FUNC(close3)
 		ShowWarning("Incorrect use of 'close3' command!\n");
 		script_reportsrc(st);
 	} else {
-		st->state = CLOSE3;
+		st->state = CLOSE;
 		st->mes_active = 0;
+		st->clear_cutin = 1;
 	}
 	clif_scriptclose(sd, st->oid);
 
