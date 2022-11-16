@@ -1517,11 +1517,6 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			break;
 	}
 
-	unit_data *ud = unit_bl2ud(src);
-
-	if (ud != nullptr)
-		ud->skill_unit_cell.clear();
-
 	if(!flag) // Death cancelled.
 		return (int)(hp+sp+ap);
 
