@@ -19872,29 +19872,6 @@ BUILDIN_FUNC(unittalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit do an emotion.
-///
-/// unitemote <unit_id>,<emotion>;
-///
-/// @see ET_* in script_constants.hpp
-BUILDIN_FUNC(unitemote)
-{
-	int emotion;
-	struct block_list* bl;
-
-	emotion = script_getnum(st,3);
-
-	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (script_rid2bl(2,bl))
-		clif_emotion(bl, emotion);
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /// Makes the unit cast the skill on the target or self if no target is specified.
 ///
 /// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>,<cancel>,<Line_ID>};
@@ -25193,11 +25170,44 @@ BUILDIN_FUNC(duplicate)
 		ys = nd->u.scr.ys;
 	}
 
-	npc_data* dnd = npc_duplicate_npc( nd, name, mapid, x, y, class_, dir, xs, ys );
+	npc_data* dnd = npc_duplicate_npc( *nd, name, mapid, x, y, class_, dir, xs, ys );
 
 	if( dnd == nullptr ){
 		script_pushstrcopy( st, "" );
 		return SCRIPT_CMD_FAILURE;
+	}else{
+		script_pushstrcopy( st, dnd->exname );
+		return SCRIPT_CMD_SUCCESS;
+	}
+}
+
+/**
+ * Duplicate a NPC for a player.
+ * Return the duplicate Unique name on success or empty string on failure.
+ * duplicate_dynamic("<NPC name>"{,<character ID>});
+ */
+BUILDIN_FUNC(duplicate_dynamic){
+	const char* old_npcname = script_getstr( st, 2 );
+	struct npc_data* nd = npc_name2id( old_npcname );
+
+	if( nd == nullptr ){
+		ShowError( "buildin_duplicate_dynamic: No such NPC '%s'.\n", old_npcname );
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct npc_data* dnd = npc_duplicate_npc_for_player( *nd, *sd );
+
+	if( dnd == nullptr ){
+		script_pushstrcopy( st, "" );
+		return SCRIPT_CMD_SUCCESS;
 	}else{
 		script_pushstrcopy( st, dnd->exname );
 		return SCRIPT_CMD_SUCCESS;
@@ -26741,6 +26751,41 @@ BUILDIN_FUNC(item_enchant){
 #endif
 }
 
+/**
+* Generate item link string for client
+* itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+* @author [Cydh]
+**/
+BUILDIN_FUNC(itemlink)
+{
+	struct item item = {};
+
+	item.nameid = script_getnum(st, 2);
+	
+	if( !item_db.exists( item.nameid ) ){
+		ShowError( "buildin_itemlink: Item ID %u does not exists.\n", item.nameid );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	FETCH(3, item.refine);
+	FETCH(4, item.card[0]);
+	FETCH(5, item.card[1]);
+	FETCH(6, item.card[2]);
+	FETCH(7, item.card[3]);
+	FETCH(8, item.enchantgrade);
+
+#if PACKETVER >= 20150225
+	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == false) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+#endif
+
+	std::string itemlstr = item_db.create_item_link(item);
+	script_pushstrcopy(st, itemlstr.c_str());
+	return SCRIPT_CMD_SUCCESS;
+}
 
 BUILDIN_FUNC(addfame) {
 	struct map_session_data *sd;
@@ -26773,6 +26818,17 @@ BUILDIN_FUNC(getfamerank) {
 		return SCRIPT_CMD_FAILURE;
 
 	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_UPPERMASK));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(isdead) {
+	struct map_session_data *sd;
+
+	if (!script_mapid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st, pc_isdead(sd));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27244,7 +27300,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
-	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
 	BUILDIN_DEF(unitskilluseid,"ivi????"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii???"), // [Celest]
 // <--- [zBuffer] List of unit control commands
@@ -27427,6 +27482,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openstorage2,"ii?"),
 	BUILDIN_DEF(unloadnpc, "s"),
 	BUILDIN_DEF(duplicate, "ssii?????"),
+	BUILDIN_DEF(duplicate_dynamic, "s?"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),
@@ -27524,9 +27580,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(add_reputation_points, "ii?"),
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
+	BUILDIN_DEF(itemlink, "i?????????"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
+	BUILDIN_DEF(isdead, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

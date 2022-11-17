@@ -542,6 +542,7 @@ enum clif_messages : uint16_t {
 	MSG_ATTENDANCE_DISABLED = 0xd92,
 
 	// Unofficial names
+	C_DYNAMICNPC_TWICE = 0xa47, /// <"Is already in service. Please try again in a few minutes."
 	C_ITEM_EQUIP_SWITCH = 0xbc7,
 	C_ITEM_NOEQUIP = 0x174,	/// <"You can't put this item on."
 	C_ENCHANT_OVERWEIGHT = 0xEFD,
@@ -947,6 +948,7 @@ void clif_equipcheckbox(struct map_session_data* sd);
 void clif_msg(struct map_session_data* sd, unsigned short id);
 void clif_msg_value(struct map_session_data* sd, unsigned short id, int value);
 void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id);
+void clif_msg_color( struct map_session_data* sd, uint16 msg_id, uint32 color );
 
 //quest system [Kevin] [Inkfish]
 void clif_quest_send_list(struct map_session_data * sd);
@@ -1110,6 +1112,7 @@ enum clif_colors {
 	COLOR_YELLOW,
 	COLOR_CYAN,
 	COLOR_LIGHT_GREEN,
+	COLOR_LIGHT_YELLOW,
 	COLOR_MAX
 };
 extern unsigned long color_table[COLOR_MAX];

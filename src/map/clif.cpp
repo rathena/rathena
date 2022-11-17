@@ -447,6 +447,11 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	break;
 	}
 
+	if( src_bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)src_bl ), *sd ) ){
+		// Do not send anything
+		return 0;
+	}
+
 	/* unless visible, hold it here */
 	if (!battle_config.update_enemy_position && clif_ally_only && !sd->special_state.intravision &&
 		!sd->sc.data[SC_INTRAVISION] && battle_check_target(src_bl,&sd->bl,BCT_ENEMY) > 0)
@@ -4914,6 +4919,11 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 	// Hide NPC from Maya Purple card
 	if (clif_npc_mayapurple(bl))
 		return;
+
+	if( bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)bl ), *sd ) ){
+		// Do not send anything
+		return;
+	}
 
 	ud = unit_bl2ud(bl);
 
@@ -14106,38 +14116,35 @@ void clif_parse_GuildChangePositionInfo(int fd, struct map_session_data *sd)
 
 /// Request to update the position of guild members (CZ_REQ_CHANGE_MEMBERPOS).
 /// 0155 <packet len>.W { <account id>.L <char id>.L <position id>.L }*
-void clif_parse_GuildChangeMemberPosition(int fd, struct map_session_data *sd)
-{
-	int i;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int len = RFIFOW(fd,info->pos[0]);
-	int idxgpos = info->pos[1];
-
+void clif_parse_GuildChangeMemberPosition( int fd, struct map_session_data *sd ){
 	if(!sd->state.gmaster_flag)
 		return;
 
+	struct PACKET_CZ_REQ_CHANGE_MEMBERPOS* p = (struct PACKET_CZ_REQ_CHANGE_MEMBERPOS*)RFIFOP( fd, 0 );
 
-	// Guild leadership change
-	if( len == 16 && RFIFOL(fd,12) == 0 ){
-		if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
-			clif_msg(sd, GUILD_MASTER_WOE);
+	int16 entries = ( p->packetLength - sizeof( *p ) ) / sizeof( p->list[0] );
+
+	for( int16 i = 0; i < entries; i++ ){
+		struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub& entry = p->list[i];
+
+		// Guild leadership change
+		if( entry.position == 0 ){
+			if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
+				clif_msg( sd, GUILD_MASTER_WOE );
+				return;
+			}
+
+			if( battle_config.guild_leaderchange_delay && DIFF_TICK( time( nullptr ),sd->guild->last_leader_change ) < battle_config.guild_leaderchange_delay ){
+				clif_msg( sd, GUILD_MASTER_DELAY );
+				return;
+			}
+
+			guild_gm_change( sd->status.guild_id, entry.CID );
+
+			// No further entries will be processed - the requesting player lost his guild master status
 			return;
-		}
-
-		if( battle_config.guild_leaderchange_delay && DIFF_TICK(time(NULL),sd->guild->last_leader_change) < battle_config.guild_leaderchange_delay ){
-			clif_msg(sd, GUILD_MASTER_DELAY);
-			return;
-		}
-
-		guild_gm_change(sd->status.guild_id, RFIFOL(fd, 8));
-		return;
-	}
-
-	for(i=idxgpos;i<len;i+=12){
-		int position = RFIFOL(fd,i+8);
-
-		if( position > 0 ){
-			guild_change_memberposition(sd->status.guild_id,RFIFOL(fd,i),RFIFOL(fd,i+4),position);
+		}else if( entry.position > 0 ){
+			guild_change_memberposition( sd->status.guild_id, entry.AID, entry.CID, entry.position );
 		}
 	}
 }
@@ -24986,21 +24993,21 @@ void packetdb_readdb(){
  *
  *------------------------------------------*/
 void do_init_clif(void) {
-	const char* colors[COLOR_MAX] = {
-		"0x00FF00",
-		"0xFF0000",
-		"0xFFFFFF",
-		"0xFFFF00",
-		"0x00FFFF",
-		"0xB5FFB5",
+	const int colors[COLOR_MAX] = {
+		0x00FF00, // COLOR_DEFAULT
+		0xFF0000, // COLOR_RED
+		0xFFFFFF, // COLOR_WHITE
+		0xFFFF00, // COLOR_YELLOW
+		0x00FFFF, // COLOR_CYAN
+		0xB5FFB5, // COLOR_LIGHT_GREEN
+		0xFFFF63, // COLOR_LIGHT_YELLOW
 	};
-	int i;
+
 	/**
 	 * Setup Color Table (saves unnecessary load of strtoul on every call)
 	 **/
-	for(i = 0; i < COLOR_MAX; i++) {
-		color_table[i] = strtoul(colors[i],NULL,0);
-		color_table[i] = (color_table[i] & 0x0000FF) << 16 | (color_table[i] & 0x00FF00) | (color_table[i] & 0xFF0000) >> 16;//RGB to BGR
+	for( int i = 0; i < COLOR_MAX; i++ ){
+		color_table[i] = ( colors[i] & 0x0000FF ) << 16 | ( colors[i] & 0x00FF00 ) | ( colors[i] & 0xFF0000 ) >> 16; //RGB to BGR
 	}
 
 	packetdb_readdb();
