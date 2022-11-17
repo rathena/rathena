@@ -12815,8 +12815,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_C_MARKER:
 			//Send mini-map, don't wait for first timer triggered
-			if( src->type == BL_PC && ( sd = (struct map_session_data*)( src ) ) ){
-				clif_crimson_marker( *sd, *bl, false );
+			if (src->type == BL_PC) {
+				clif_crimson_marker(*(struct map_session_data *)(src), *bl, false);
 			}
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
