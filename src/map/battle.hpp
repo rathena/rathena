@@ -563,6 +563,7 @@ struct Battle_Config
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
+	int feature_itemlink;
 
 	// autotrade persistency
 	int feature_autotrade;
@@ -713,6 +714,11 @@ struct Battle_Config
 	int break_mob_equip;
 	int macro_detection_retry;
 	int macro_detection_timeout;
+
+	int feature_dynamicnpc_timeout;
+	int feature_dynamicnpc_rangex;
+	int feature_dynamicnpc_rangey;
+	int feature_dynamicnpc_direction;
 
 #include "../custom/battle_config_struct.inc"
 };

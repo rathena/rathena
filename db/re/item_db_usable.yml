@@ -3802,6 +3802,34 @@ Body:
     Script: |
       itemheal rand(50,100),0;
       /*TODO*/
+  - Id: 11614
+    AegisName: Fresh_Milk
+    Name: Fresh Milk
+    Type: Healing
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      itemheal rand(27,37),0;
+  - Id: 11615
+    AegisName: Sweet_Potato_
+    Name: Sweet Potato
+    Type: Healing
+    Weight: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      itemheal rand(15,23),0;
   - Id: 11616
     AegisName: Yummy_Meat
     Name: Delicious Meat
@@ -47350,6 +47378,21 @@ Body:
     Script: |
       specialeffect2 EF_CLAYMORE;
       setmadogear true;
+  - Id: 23278
+    AegisName: HelpmeShorty
+    Name: Help Me Shorty
+    Type: Delayconsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      duplicate_dynamic("Shorty#fgtg01");
   - Id: 23280
     AegisName: N_Fly_Wing_
     Name: Novice Fly Wing
@@ -47539,6 +47582,20 @@ Body:
     Script: |
       input .@megaphone$;
       announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
+  - Id: 23338
+    AegisName: Comp_Wing_Of_Fly
+    Name: Compressed Fly Wing
+    Type: Delayconsume
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+       itemskill "AL_TELEPORT",1;
   - Id: 23360
     AegisName: Psychotropic
     Name: Psychotropic
@@ -47678,6 +47735,397 @@ Body:
     Script: |
       specialeffect2 EF_POTION_BERSERK;
       sc_start SC_INFINITY_DRINK,1800000,0;
+  - Id: 23484
+    AegisName: Firstaid_Box_5
+    Name: First aid Box (5)
+    Type: Usable
+    EquipLevelMin: 5
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11518,10;
+      getitem 11614,20;
+      getitem 12325,15;
+      getitem 22542,1;
+      getitem 23485,1;
+  - Id: 23485
+    AegisName: Firstaid_Box_10
+    Name: First aid Box (10)
+    Type: Usable
+    EquipLevelMin: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11518,15;
+      getitem 11614,40;
+      getitem 12325,15;
+      getitem 22542,1;
+      getitem 23486,1;
+  - Id: 23486
+    AegisName: Firstaid_Box_15
+    Name: First aid Box (15)
+    Type: Usable
+    EquipLevelMin: 15
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11518,20;
+      getitem 11614,60;
+      getitem 12325,10;
+      getitem 22542,2;
+      getitem 23487,1;
+  - Id: 23487
+    AegisName: Firstaid_Box_20
+    Name: First aid Box (20)
+    Type: Usable
+    EquipLevelMin: 20
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11518,15;
+      getitem 11615,80;
+      getitem 12325,10;
+      getitem 22542,2;
+      getitem 23488,1;
+  - Id: 23488
+    AegisName: Firstaid_Box_25
+    Name: First aid Box (25)
+    Type: Usable
+    EquipLevelMin: 25
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11518,20;
+      getitem 11615,100;
+      getitem 12325,5;
+      getitem 22542,3;
+      getitem 23489,1;
+  - Id: 23489
+    AegisName: Firstaid_Box_30
+    Name: First aid Box (30)
+    Type: Usable
+    EquipLevelMin: 30
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11518,25;
+      getitem 11615,120;
+      getitem 12325,5;
+      getitem 22542,3;
+      getitem 23490,1;
+  - Id: 23490
+    AegisName: Firstaid_Box_35
+    Name: First aid Box (35)
+    Type: Usable
+    EquipLevelMin: 35
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,15;
+      getitem 22542,3;
+      getitem 23491,1;
+      getitem 23503,5;
+  - Id: 23491
+    AegisName: Firstaid_Box_40
+    Name: First aid Box (40)
+    Type: Usable
+    EquipLevelMin: 40
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,15;
+      getitem 22544,2;
+      getitem 23492,1;
+      getitem 23503,6;
+  - Id: 23492
+    AegisName: Firstaid_Box_45
+    Name: First aid Box (45)
+    Type: Usable
+    EquipLevelMin: 45
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,20;
+      getitem 22544,2;
+      getitem 23493,1;
+      getitem 23503,7;
+  - Id: 23493
+    AegisName: Firstaid_Box_50
+    Name: First aid Box (50)
+    Type: Usable
+    EquipLevelMin: 50
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,20;
+      getitem 22544,2;
+      getitem 23494,1;
+      getitem 23504,7;
+  - Id: 23494
+    AegisName: Firstaid_Box_55
+    Name: First aid Box (55)
+    Type: Usable
+    EquipLevelMin: 55
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,25;
+      getitem 22544,2;
+      getitem 23495,1;
+      getitem 23504,8;
+  - Id: 23495
+    AegisName: Firstaid_Box_60
+    Name: First aid Box (60)
+    Type: Usable
+    EquipLevelMin: 60
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,25;
+      getitem 23496,1;
+      getitem 23504,9;
+  - Id: 23496
+    AegisName: Firstaid_Box_65
+    Name: First aid Box (65)
+    Type: Usable
+    EquipLevelMin: 65
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,30;
+      getitem 23497,1;
+      getitem 23505,5;
+  - Id: 23497
+    AegisName: Firstaid_Box_70
+    Name: First aid Box (70)
+    Type: Usable
+    EquipLevelMin: 70
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,30;
+      getitem 23498,1;
+      getitem 23505,6;
+  - Id: 23498
+    AegisName: Firstaid_Box_75
+    Name: First aid Box (75)
+    Type: Usable
+    EquipLevelMin: 75
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,35;
+      getitem 23499,1;
+      getitem 23505,7;
+  - Id: 23499
+    AegisName: Firstaid_Box_80
+    Name: First aid Box (80)
+    Type: Usable
+    EquipLevelMin: 80
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,35;
+      getitem 23500,1;
+      getitem 23505,8;
+  - Id: 23500
+    AegisName: Firstaid_Box_85
+    Name: First aid Box (85)
+    Type: Usable
+    EquipLevelMin: 85
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,40;
+      getitem 22543,2;
+      getitem 23501,1;
+      getitem 23506,7;
+  - Id: 23501
+    AegisName: Firstaid_Box_90
+    Name: First aid Box (90)
+    Type: Usable
+    EquipLevelMin: 90
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,40;
+      getitem 22543,2;
+      getitem 23502,1;
+      getitem 23506,8;
+  - Id: 23502
+    AegisName: Firstaid_Box_95
+    Name: First aid Box (95)
+    Type: Usable
+    EquipLevelMin: 95
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,45;
+      getitem 22543,2;
+      getitem 23506,8;
+  - Id: 23503
+    AegisName: Red_Potion_B_20
+    Name: "[Event] Crate of 20 Red Potions"
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11570,20;
+  - Id: 23504
+    AegisName: Orange_Potion_B_20
+    Name: "[Event] Crate of 20 Orange Potions"
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11569,20;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
     Name: "[Event] Crate of 20 Yellow Potions"
@@ -47808,6 +48256,132 @@ Body:
     Script: |
       percentheal 5,0;
       sc_start SC_MATKPOTION,600000,3;
+  - Id: 23575
+    AegisName: Adventurer_Box_1
+    Name: Adventurer Box (1)
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11567,100;
+      getitem 12265,5;
+      getitem 22979,5;
+      getitem 23338,50;
+      getitem 23576,1;
+  - Id: 23576
+    AegisName: Adventurer_Box_15
+    Name: Adventurer Box (15)
+    Type: Usable
+    EquipLevelMin: 15
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11567,150;
+      getitem 23338,50;
+      getitem 23577,1;
+  - Id: 23577
+    AegisName: Adventurer_Box_30
+    Name: Adventurer Box (30)
+    Type: Usable
+    EquipLevelMin: 30
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23503,20;
+      getitem 23578,1;
+  - Id: 23578
+    AegisName: Adventurer_Box_45
+    Name: Adventurer Box (45)
+    Type: Usable
+    EquipLevelMin: 45
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23503,25;
+      getitem 23579,1;
+  - Id: 23579
+    AegisName: Adventurer_Box_60
+    Name: Adventurer Box (60)
+    Type: Usable
+    EquipLevelMin: 60
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23504,20;
+      getitem 23580,1;
+  - Id: 23580
+    AegisName: Adventurer_Box_75
+    Name: Adventurer Box (75)
+    Type: Usable
+    EquipLevelMin: 75
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23338,50;
+      getitem 23504,25;
+      getitem 23581,1;
+  - Id: 23581
+    AegisName: Adventurer_Box_90
+    Name: Adventurer Box (90)
+    Type: Usable
+    EquipLevelMin: 90
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23505,20;
+      getitem 23338,50;
   - Id: 23582
     AegisName: E_Wing_Of_Fly_3Day_Box
     Name: "[Gift] Unlimited Fly Wing 3 Day Box"
@@ -52857,6 +53431,15 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101876
+    AegisName: aegis_101876
+    Name: Costume Enchant Stone Box 29
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box29);
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box
