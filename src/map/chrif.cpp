@@ -1614,8 +1614,7 @@ void chrif_parse_ack_vipActive(int fd) {
 	}
 	// Show info if status changed
 	if (((flag&0x4) || changed) && !sd->vip.disableshowrate) {
-		clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-		//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		clif_display_pinfo( *sd );
 	}
 #endif
 }
