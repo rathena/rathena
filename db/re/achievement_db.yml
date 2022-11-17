@@ -1784,6 +1784,12 @@ Body:
     Rewards:
       TitleId: 1034
     Score: 10
+  - Id: 130005 # TODO (Terra Gloria: give achievement when player visit the coronation ceremony)
+    Group: Chatting
+    Name: Who made the king
+    Rewards:
+      TitleID: 1046
+    Score: 10
   - Id: 170000
     Group: Chatting
     Name: Song chamber is not an accident
@@ -2037,30 +2043,38 @@ Body:
     Name: Reborn in Valhalla!
     Condition: " Class == JOB_NOVICE_HIGH "
     Rewards:
-    #  Item: Adventurer_Box_1
+      Item: Adventurer_Box_1
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 10
   - Id: 200032
     Group: Goal_Level
     Name: The start of another adventure!
     Condition: " BaseLevel == 100 "
-    #Rewards:
-    #  Item: Rebeginer_Box_100
+    Rewards:
+      Item: Rebeginer_Box_100
     Score: 10
   - Id: 200033
     Group: Goal_Level
     Name: With a new mind!(1)
     Condition: " BaseLevel == 170 && (Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS_T) "
-    #Rewards:
-    #  Item: Costume_Ticket
+    Rewards:
+      Item: Costume_Ticket
     Score: 50
   - Id: 200034
     Group: Goal_Level
     Name: With a new mind!(2)
     Condition: " BaseLevel == 170 && (Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER_T) "
-    #Rewards:
-    #  Item: Costume_Ticket
+    Rewards:
+      Item: Costume_Ticket
     Score: 50
+  - Id: 200035
+    Group: Goal_Level
+    Name: Level 200 achieved!
+    Condition: " BaseLevel == 200 "
+    Rewards:
+      Item: C_Magestic_Goat2
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+    Score: 100
   - Id: 220000
     Group: Chatting_Create
     Name: Community begin

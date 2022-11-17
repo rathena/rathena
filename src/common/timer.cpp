@@ -329,7 +329,7 @@ t_tick settick_timer(int tid, t_tick tick)
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
 	if( i == BHEAP_LENGTH(timer_heap) )
 	{
-		ShowError("sett_tickimer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+		ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 
