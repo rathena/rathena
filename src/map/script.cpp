@@ -4977,18 +4977,24 @@ BUILDIN_FUNC(clear)
 /// close;
 BUILDIN_FUNC(close)
 {
-	TBL_PC* sd;
+	struct map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
+	const char* command = script_getfuncname( st );
+
 	if( !st->mes_active ) {
 		st->state = END; // Keep backwards compatibility.
-		ShowWarning("Incorrect use of 'close' command!\n");
+		ShowWarning("buildin_close: Incorrect use of '%s' command!\n", command);
 		script_reportsrc(st);
 	} else {
 		st->state = CLOSE;
 		st->mes_active = 0;
+	}
+
+	if( !strcmp(command, "close3") ){
+		st->clear_cutin = true;
 	}
 
 	clif_scriptclose(sd, st->oid);
@@ -26890,6 +26896,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(clear,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
+	BUILDIN_DEF2(close, "close3", ""),
 	BUILDIN_DEF(menu,"sl*"),
 	BUILDIN_DEF(select,"s*"), //for future jA script compatibility
 	BUILDIN_DEF(prompt,"s*"),
