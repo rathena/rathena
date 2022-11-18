@@ -4967,7 +4967,7 @@ BUILDIN_FUNC(clear)
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_scriptclear(sd, st->oid);
+	clif_scriptclear( *sd, st->oid );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19872,29 +19872,6 @@ BUILDIN_FUNC(unittalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit do an emotion.
-///
-/// unitemote <unit_id>,<emotion>;
-///
-/// @see ET_* in script_constants.hpp
-BUILDIN_FUNC(unitemote)
-{
-	int emotion;
-	struct block_list* bl;
-
-	emotion = script_getnum(st,3);
-
-	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (script_rid2bl(2,bl))
-		clif_emotion(bl, emotion);
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /// Makes the unit cast the skill on the target or self if no target is specified.
 ///
 /// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>,<cancel>,<Line_ID>};
@@ -23633,7 +23610,7 @@ BUILDIN_FUNC(mergeitem) {
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_merge_item_open(sd);
+	clif_merge_item_open( *sd );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25230,7 +25207,7 @@ BUILDIN_FUNC(duplicate_dynamic){
 
 	if( dnd == nullptr ){
 		script_pushstrcopy( st, "" );
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 	}else{
 		script_pushstrcopy( st, dnd->exname );
 		return SCRIPT_CMD_SUCCESS;
@@ -27323,7 +27300,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
-	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
 	BUILDIN_DEF(unitskilluseid,"ivi????"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii???"), // [Celest]
 // <--- [zBuffer] List of unit control commands

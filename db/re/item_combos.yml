@@ -30333,7 +30333,7 @@ Body:
           - G_Strings    # 2339
       - Combo:
           - Etran_Shirt_TW    # 20910
-          - G_Strings    # 2371
+          - G_Strings_    # 2371
     Script: |
       .@r =  getequiprefinerycnt(EQI_ARMOR);
       bonus bInt,15;

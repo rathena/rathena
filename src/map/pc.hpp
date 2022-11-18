@@ -1146,7 +1146,7 @@ static bool pc_cant_act( struct map_session_data* sd ){
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
 #ifdef VIP_ENABLE
-	#define pc_isvip(sd)      ( sd->vip.enabled ? true : false )
+	#define pc_isvip(sd)      ( (sd)->vip.enabled ? true : false )
 #else
 	#define pc_isvip(sd)      ( false )
 #endif

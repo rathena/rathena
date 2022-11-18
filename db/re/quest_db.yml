@@ -9790,6 +9790,17 @@ Body:
   - Id: 14687
     Title: Mysterious Device
     TimeLimit: +1h
+  - Id: 14688
+    Title: My name is Shorty
+  - Id: 14689
+    Title: Help Shorty
+  - Id: 14693
+    Title: To Payon
+  - Id: 14694
+    Title: To Prontera Field
+  - Id: 14695
+    Title: Cheer up, Sunsammi!
+    TimeLimit: +30mn
   - Id: 14699
     Title: Event once a day
     TimeLimit: 4h

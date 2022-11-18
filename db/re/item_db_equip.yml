@@ -21172,8 +21172,7 @@ Body:
       SoulLinker: true
       Wizard: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -21401,8 +21400,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -60231,8 +60229,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -60263,8 +60260,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -60372,8 +60368,7 @@ Body:
     Jobs:
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -62168,8 +62163,7 @@ Body:
       KagerouOboro: true
       Ninja: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -62283,8 +62277,7 @@ Body:
       KagerouOboro: true
       Ninja: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -62403,8 +62396,7 @@ Body:
     Jobs:
       KagerouOboro: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -73200,8 +73192,7 @@ Body:
       BardDancer: true
       Hunter: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -73354,8 +73345,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -73388,8 +73378,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -73556,8 +73545,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -73588,8 +73576,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -73816,8 +73803,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -73855,8 +73841,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -102638,8 +102623,7 @@ Body:
       Knight: true
       Swordman: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -102761,8 +102745,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -102821,8 +102804,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -102978,8 +102960,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -119020,8 +119001,7 @@ Body:
       Knight: true
       Swordman: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -119171,8 +119151,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -120950,8 +120929,7 @@ Body:
     Jobs:
       Assassin: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -121094,8 +121072,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -121153,8 +121130,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -121283,8 +121259,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -121735,8 +121710,7 @@ Body:
       Merchant: true
       Swordman: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -121897,8 +121871,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122119,8 +122092,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -122387,8 +122359,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122421,8 +122392,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122456,8 +122426,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122488,8 +122457,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -174555,8 +174523,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 1
     # Flags:
       # BuyingStore: true
@@ -174743,8 +174710,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -175517,8 +175483,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -176449,8 +176414,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -177146,8 +177110,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -177595,8 +177558,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -177644,8 +177606,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -178718,8 +178679,7 @@ Body:
       KagerouOboro: true
       Ninja: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 150
     Refineable: true
@@ -179523,8 +179483,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 1
     # Flags:
       # BuyingStore: true
@@ -179733,8 +179692,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -179779,8 +179737,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -179823,8 +179780,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -179869,8 +179825,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -181340,8 +181295,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 1
     # Flags:
       # BuyingStore: true
