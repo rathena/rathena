@@ -1858,10 +1858,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		}
 	}
 
-	if (src->type == BL_NPC) // NPC-objects can override cast distance
-		range = AREA_SIZE; // Maximum visible distance before NPC goes out of sight
-	else
-		range = skill_get_range2(src, skill_id, skill_lv, true); // Skill cast distance from database
+	range = skill_get_range2(src, skill_id, skill_lv, true); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
@@ -1877,7 +1874,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	// Check range when not using skill on yourself or is a combo-skill during attack
 	// (these are supposed to always have the same range as your attack)
-	if( src->id != target_id && (!combo || ud->attacktimer == INVALID_TIMER) ) {
+	if( src->type != BL_NPC && src->id != target_id && (!combo || ud->attacktimer == INVALID_TIMER) ) {
 		if( skill_get_state(ud->skill_id) == ST_MOVE_ENABLE ) {
 			if( !unit_can_reach_bl(src, target, range + 1, 1, NULL, NULL) )
 				return 0; // Walk-path check failed.
