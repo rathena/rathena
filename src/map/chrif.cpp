@@ -340,11 +340,9 @@ int chrif_save(struct map_session_data *sd, int flag) {
 				// Store the seconds that already fully passed
 				pc_setreg2( sd, GOLDPC_SECONDS_VAR, battle_config.feature_goldpc_time - remaining / 1000 );
 
-				// If player starts autotrade, stop counting
-				if( flag&CSAVE_AUTOTRADE ){
-					delete_timer( sd->goldpc_tid, pc_goldpc_update );
-					sd->goldpc_tid = INVALID_TIMER;
-				}
+				// If a player logs out or starts autotrade, stop counting
+				delete_timer( sd->goldpc_tid, pc_goldpc_update );
+				sd->goldpc_tid = INVALID_TIMER;
 			}
 		}
 	}
