@@ -2734,17 +2734,12 @@ static void clif_addcards( struct EQUIPSLOTINFO* buf, struct item* item ){
 
 /// Fills in part of the item buffers that calls for variable bonuses data. [Napster]
 /// A maximum of 5 random options can be supported.
-static uint8 clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], struct item* it ){
-	nullpo_retr( 0, it );
-
-	uint8 count = 0;
-
+static void clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], struct item& it ){
 	for( int i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
-		if( it->option[i].id ){
-			buf[i].index = it->option[i].id;	// OptIndex
-			buf[i].value = it->option[i].value;	// Value
-			buf[i].param = it->option[i].param;	// Param1
-			count++;
+		if( it.option[i].id ){
+			buf[i].index = it.option[i].id; // OptIndex
+			buf[i].value = it.option[i].value; // Value
+			buf[i].param = it.option[i].param; // Param1
 		}else{
 			buf[i].index = 0;
 			buf[i].value = 0;
@@ -2759,8 +2754,6 @@ static uint8 clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], 
 		buf[i].param = 0;	// Param1
 	}
 #endif
-
-	return count;
 }
 
 /// Notifies the client, about a received inventory item or the result of a pick-up request.
@@ -2803,7 +2796,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 		 */
 		p.bindOnEquipType = sd->inventory.u.items_inventory[n].bound && !itemdb_isstackable2( sd->inventory_data[n] ) ? 2 : sd->inventory_data[n]->flag.bindOnEquip ? 1 : 0;
 #if PACKETVER >= 20150226
-		clif_add_random_options( p.option_data, &sd->inventory.u.items_inventory[n] );
+		clif_add_random_options( p.option_data, sd->inventory.u.items_inventory[n] );
 #if PACKETVER >= 20160921
 		p.favorite = sd->inventory.u.items_inventory[n].favorite;
 		p.look = sd->inventory_data[n]->look;
@@ -2918,7 +2911,9 @@ static void clif_item_equip( short idx, struct EQUIPITEM_INFO *p, struct item *i
 #endif
 
 #if PACKETVER >= 20150226
-	p->option_count = clif_add_random_options( p->option_data, it );
+	clif_add_random_options( p->option_data, *it );
+	// Client ingores the value anyway and recalculates it
+	p->option_count = 0;
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
@@ -4647,7 +4642,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 		p.refine = sd->inventory.u.items_inventory[index].refine;
 		clif_addcards( &p.slot, &sd->inventory.u.items_inventory[index] );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p.option_data, &sd->inventory.u.items_inventory[index] );
+		clif_add_random_options( p.option_data, sd->inventory.u.items_inventory[index] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p.location = pc_equippoint_sub( sd, sd->inventory_data[index] );
 		p.look = sd->inventory_data[index]->look;
@@ -4794,7 +4789,7 @@ void clif_storageitemadded( struct map_session_data* sd, struct item* i, int ind
 	p.refine = i->refine; //refine
 	clif_addcards( &p.slot, i );
 #if PACKETVER >= 20150226
-	clif_add_random_options( p.option_data, i );
+	clif_add_random_options( p.option_data, *i );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	p.enchantgrade = i->enchantgrade;
 #endif
@@ -7277,7 +7272,7 @@ void clif_cart_additem( struct map_session_data *sd, int n, int amount ){
 	p.refine = sd->cart.u.items_cart[n].refine;
 	clif_addcards( &p.slot, &sd->cart.u.items_cart[n] );
 #if PACKETVER >= 20150226
-	clif_add_random_options( p.option_data, &sd->cart.u.items_cart[n] );
+	clif_add_random_options( p.option_data, sd->cart.u.items_cart[n] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	p.grade = sd->cart.u.items_cart[n].enchantgrade;
 #endif
@@ -7602,7 +7597,7 @@ void clif_vendinglist( struct map_session_data* sd, struct map_session_data* vsd
 		p->items[i].refine = vsd->cart.u.items_cart[index].refine;
 		clif_addcards( &p->items[i].slot, &vsd->cart.u.items_cart[index] );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p->items[i].option_data, &vsd->cart.u.items_cart[index] );
+		clif_add_random_options( p->items[i].option_data, vsd->cart.u.items_cart[index] );
 #if PACKETVER >= 20160921
 		p->items[i].location = pc_equippoint_sub( sd, data );
 		p->items[i].viewSprite = data->look;
@@ -7695,7 +7690,7 @@ void clif_openvending( struct map_session_data* sd, int id, struct s_vending* ve
 		p->items[i].refine = sd->cart.u.items_cart[index].refine;
 		clif_addcards( &p->items[i].slot, &sd->cart.u.items_cart[index] );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p->items[i].option_data, &sd->cart.u.items_cart[index] );
+		clif_add_random_options( p->items[i].option_data, sd->cart.u.items_cart[index] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p->items[i].grade = sd->cart.u.items_cart[index].enchantgrade;
 #endif
@@ -15628,7 +15623,7 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 		p.IsDamaged = item->attribute ? 1 : 0;
 		p.refiningLevel = item->refine;
 		clif_addcards( &p.slot, item );
-		clif_add_random_options( p.optionData, item );
+		clif_add_random_options( p.optionData, *item );
 
 		p.weight = 0;
 		for( int i = 0; i < MAIL_MAX_ITEM; i++ ){
@@ -16149,7 +16144,7 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 				mailitem->viewSprite = data->look;
 				mailitem->bindOnEquip = item->bound ? 2 : data->flag.bindOnEquip ? 1 : 0;
 				clif_addcards( &mailitem->slot, item );
-				clif_add_random_options( mailitem->option_data, item );
+				clif_add_random_options( mailitem->option_data, *item );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 				mailitem->grade = item->enchantgrade;
 #endif
@@ -19216,7 +19211,7 @@ void clif_search_store_info_ack( struct map_session_data* sd ){
 
 		clif_addcards( &p->items[i].slot, &it );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p->items[i].option_data, &it );
+		clif_add_random_options( p->items[i].option_data, it );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p->items[i].grade = ssitem->enchantgrade;
 #endif
@@ -23190,7 +23185,7 @@ static void clif_item_preview( struct map_session_data *sd, int16 index ){
 	p.grade = item->enchantgrade;
 #endif
 	clif_addcards( &p.slot, item );
-	clif_add_random_options( p.option_data, item );
+	clif_add_random_options( p.option_data, *item );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
