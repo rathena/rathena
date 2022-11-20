@@ -2286,6 +2286,8 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 			// close
 			case CLOSE:
 				sd->st->state = END;
+				if (sd->st->clear_cutin)
+					clif_cutin(sd,"",255);
 				break;
 			// close2
 			case STOP:
@@ -5805,7 +5807,10 @@ struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, struct map_s
 		return nullptr;
 	}
 
-	// TODO: check maps that might forbid usage? maybe create mapflag?
+	if( map_getmapflag( sd.bl.m, MF_NODYNAMICNPC ) ){
+		// It has been confirmed that there is no reply to the client
+		return nullptr;
+	}
 
 	int16 new_x, new_y;
 

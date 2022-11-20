@@ -533,7 +533,7 @@ OnMobDead:
 	killmonster 'map_begi$, instance_npcname("poring_village_2") + "::OnMobDead";
 	mapannounce 'map_begi$, "Emily: Hmm.. here is another Boss... It looks strong...", bc_map, 0xFFFF00;
 	sleep 2000;
-	mapannounce 'map_begi$, "Emily: I'm not good at battle.. Let me look for tresure first. See you soon~", bc_map, 0xFFFF00;
+	mapannounce 'map_begi$, "Emily: I'm not good at battle.. Let me look for treasure first. See you soon~", bc_map, 0xFFFF00;
 	sleep 2000;
 	monster 'map_begi$,42,173,"--en--","MD_AMERING",1, instance_npcname("poring_village_2") + "::OnBossDead";
 	end;
