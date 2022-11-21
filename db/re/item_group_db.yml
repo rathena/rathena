@@ -31773,3 +31773,171 @@ Body:
           - Item: S_Aimed_Weapon
           - Item: S_Aimed_Pendant
           - Item: S_Aimed_Earing
+  - Group: S_BANISH_CANNON_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Banish_Cannon_Armor
+          - Item: S_Banish_Cannon_Shield
+          - Item: S_Banish_Cannon_Shoes
+  - Group: S_BRAND_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Brand_Armor
+          - Item: S_Brand_Shield
+          - Item: S_Brand_Shoes
+  - Group: S_GENESIS_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Genesis_Weapon
+          - Item: S_Genesis_Pendant
+          - Item: S_Genesis_Earing
+  - Group: S_CHAIN_PRESS_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Chain_Press_Weapon
+          - Item: S_Chain_Press_Pendant
+          - Item: S_Chain_Press_Earing
+  - Group: S_GRAVE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Grave_Weapon
+          - Item: S_Grave_Pendant
+          - Item: S_Grave_Earing
+  - Group: S_DUST_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Dust_Armor
+          - Item: S_Dust_Shield
+          - Item: S_Dust_Shoes
+  - Group: S_VARETYR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Varetyr_Weapon
+          - Item: S_Varetyr_Pendant
+          - Item: S_Varetyr_Earing
+  - Group: S_PSYCHIC_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Psychic_Armor
+          - Item: S_Psychic_Shield
+          - Item: S_Psychic_Shoes
+  - Group: S_SPORE_BOMB_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Spore_Bomb_Armor
+          - Item: S_Spore_Bomb_Shield
+          - Item: S_Spore_Bomb_Shoes
+  - Group: S_CANNON_CART_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Cannon_Cart_Weapon
+          - Item: S_Cannon_Cart_Pendant
+          - Item: S_Cannon_Cart_Earing
+  - Group: S_CRAZY_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Crazy_Weapon
+          - Item: S_Crazy_Pendant
+          - Item: S_Crazy_Earing
+  - Group: S_CART_TORNADO_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Cart_Tornado_Armor
+          - Item: S_Cart_Tornado_Shield
+          - Item: S_Cart_Tornado_Shoes
+  - Group: S_KNUCKLEARROW_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Knucklearrow_Armor
+          - Item: S_Knucklearrow_Shield
+          - Item: S_Knucklearrow_Shoes
+  - Group: S_SKYNETBLOW_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Skynetblow_Weapon
+          - Item: S_Skynetblow_Pendant
+          - Item: S_Skynetblow_Earing
+  - Group: S_RAMPAGE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Rampage_Armor
+          - Item: S_Rampage_Shield
+          - Item: S_Rampage_Shoes
+  - Group: S_TIGERCANNON_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TigerCannon_Weapon
+          - Item: S_Tigercannon_Pendant
+          - Item: S_Tigercannon_Earing
+  - Group: S_MENACE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Menace_Armor
+          - Item: S_Menace_Shield
+          - Item: S_Menace_Shoes
+  - Group: S_SHADOWSPELL_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Shadowspell_Weapon
+          - Item: S_Shadowspell_Pendant
+          - Item: S_Shadowspell_Earing
+  - Group: S_TRIANGLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Triangle_Armor
+          - Item: S_Triangle_Shield
+          - Item: S_Triangle_Shoes
+  - Group: S_PAINT_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Paint_Weapon
+          - Item: S_Paint_Pendant
+          - Item: S_Paint_Earing
+  - Group: S_RAINSTORM_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Rainstorm_Armor
+          - Item: S_Rainstorm_Shield
+          - Item: S_Rainstorm_Shoes
+  - Group: S_METALIC_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Metalic_Armor
+          - Item: S_Metalic_Shield
+          - Item: S_Metalic_Shoes
+  - Group: S_ARROWVULCAN_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Arrowvulcan_Weapon
+          - Item: S_Arrowvulcan_Pendant
+          - Item: S_Arrowvulcan_Earing
+  - Group: S_REVERBERATION_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Reverberation_Weapon
+          - Item: S_Reverberation_Pendant
+          - Item: S_Reverberation_Earing

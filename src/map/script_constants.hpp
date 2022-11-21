@@ -5850,6 +5850,30 @@
 	export_constant(IG_S_ARROW_CUBE);
 	export_constant(IG_S_AIMED_CUBE);
 	export_constant(IG_S_CLUSTER_CUBE);
+	export_constant(IG_S_BANISH_CANNON_CUBE);
+	export_constant(IG_S_BRAND_CUBE);
+	export_constant(IG_S_GENESIS_CUBE);
+	export_constant(IG_S_CHAIN_PRESS_CUBE);
+	export_constant(IG_S_GRAVE_CUBE);
+	export_constant(IG_S_DUST_CUBE);
+	export_constant(IG_S_VARETYR_CUBE);
+	export_constant(IG_S_PSYCHIC_CUBE);
+	export_constant(IG_S_SPORE_BOMB_CUBE);
+	export_constant(IG_S_CANNON_CART_CUBE);
+	export_constant(IG_S_CRAZY_CUBE);
+	export_constant(IG_S_CART_TORNADO_CUBE);
+	export_constant(IG_S_KNUCKLEARROW_CUBE);
+	export_constant(IG_S_SKYNETBLOW_CUBE);
+	export_constant(IG_S_RAMPAGE_CUBE);
+	export_constant(IG_S_TIGERCANNON_CUBE);
+	export_constant(IG_S_MENACE_CUBE);
+	export_constant(IG_S_SHADOWSPELL_CUBE);
+	export_constant(IG_S_TRIANGLE_CUBE);
+	export_constant(IG_S_PAINT_CUBE);
+	export_constant(IG_S_RAINSTORM_CUBE);
+	export_constant(IG_S_METALIC_CUBE);
+	export_constant(IG_S_ARROWVULCAN_CUBE);
+	export_constant(IG_S_REVERBERATION_CUBE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

@@ -195,152 +195,152 @@ Body:
           - Index: 0
             Item: Cachua_Coupon
             Amount: 15
-  # - Name: CachuaCoupon02
-    # Items:
-      # - Index: 0
-        # Item: S_Banish_Cannon_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 1
-        # Item: S_Brand_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 2
-        # Item: S_Genesis_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 3
-        # Item: S_Chain_Press_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 4
-        # Item: S_Grave_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 5
-        # Item: S_Dust_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 6
-        # Item: S_Varetyr_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 7
-        # Item: S_Psychic_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 8
-        # Item: S_Spore_Bomb_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 9
-        # Item: S_Cannon_Cart_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 10
-        # Item: S_Crazy_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 11
-        # Item: S_Cart_Tornado_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 12
-        # Item: S_Knucklearrow_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 13
-        # Item: S_Skynetblow_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 14
-        # Item: S_Rampage_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 15
-        # Item: S_TigerCannon_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 16
-        # Item: S_Menace_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 17
-        # Item: S_Shadowspell_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 18
-        # Item: S_Triangle_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 19
-        # Item: S_Paint_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 20
-        # Item: S_Rainstorm_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 21
-        # Item: S_Metalic_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 22
-        # Item: S_Arrowvulcan_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 23
-        # Item: S_Reverberation_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
+  - Name: CachuaCoupon02
+    Items:
+      - Index: 0
+        Item: S_Banish_Cannon_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 1
+        Item: S_Brand_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 2
+        Item: S_Genesis_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 3
+        Item: S_Chain_Press_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 4
+        Item: S_Grave_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 5
+        Item: S_Dust_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 6
+        Item: S_Varetyr_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 7
+        Item: S_Psychic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 8
+        Item: S_Spore_Bomb_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 9
+        Item: S_Cannon_Cart_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 10
+        Item: S_Crazy_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 11
+        Item: S_Cart_Tornado_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 12
+        Item: S_Knucklearrow_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 13
+        Item: S_Skynetblow_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 14
+        Item: S_Rampage_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 15
+        Item: S_TigerCannon_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 16
+        Item: S_Menace_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 17
+        Item: S_Shadowspell_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 18
+        Item: S_Triangle_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 19
+        Item: S_Paint_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 20
+        Item: S_Rainstorm_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 21
+        Item: S_Metalic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 22
+        Item: S_Arrowvulcan_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 23
+        Item: S_Reverberation_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
   # - Name: CachuaCoupon03
     # Items:
       # - Index: 0
