@@ -24988,7 +24988,7 @@ Body:
             Rate: 73
           - Item: S_M_SciHunting_Armor
             Rate: 73
-          - Item: S_Magic_Fishing_Insect_Net_Armor
+          - Item: S_M_FishInsect_Armor
             Rate: 73
           - Item: S_Tension_Weapon
             Rate: 73
@@ -27425,7 +27425,7 @@ Body:
             Rate: 1
           - Item: S_M_SciHunting_Armor
             Rate: 1
-          - Item: S_Magic_Fishing_Insect_Net_Armor
+          - Item: S_M_FishInsect_Armor
             Rate: 1
           - Item: S_Tempest_Earring
             Rate: 1
@@ -27870,7 +27870,7 @@ Body:
             Rate: 4
           - Item: S_M_SciHunting_Armor
             Rate: 4
-          - Item: S_Magic_Fishing_Insect_Net_Armor
+          - Item: S_M_FishInsect_Armor
             Rate: 4
           - Item: S_Plasterer's_Armor_II
             Rate: 4

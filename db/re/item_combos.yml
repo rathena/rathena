@@ -11976,7 +11976,7 @@ Body:
       - Combo:
           - S_Tempest_Shield
           - S_Tempest_Shoes
-          - S_Magic_Fishing_Insect_Net_Armor
+          - S_M_FishInsect_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;

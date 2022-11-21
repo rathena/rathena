@@ -506,7 +506,7 @@ Body:
       - Item: S_M_ExoCorrupt_Armor
       - Item: S_M_DragonVib_Armor
       - Item: S_M_SciHunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_M_FishInsect_Armor
       - Item: S_Plasterer's_Armor_II
       - Item: S_Insomniac_Shoes_II
       - Item: S_Peerless_Armor_II
@@ -1238,7 +1238,7 @@ Body:
       - Item: S_M_ExoCorrupt_Armor
       - Item: S_M_DragonVib_Armor
       - Item: S_M_SciHunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_M_FishInsect_Armor
       - Item: S_Plasterer's_Armor_II
       - Item: S_Insomniac_Shoes_II
       - Item: S_Peerless_Armor_II
@@ -2048,7 +2048,7 @@ Body:
       - Item: S_M_ExoCorrupt_Armor
       - Item: S_M_DragonVib_Armor
       - Item: S_M_SciHunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_M_FishInsect_Armor
       - Item: S_Plasterer's_Armor_II
       - Item: S_Insomniac_Shoes_II
       - Item: S_Peerless_Armor_II
