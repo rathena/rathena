@@ -5894,6 +5894,26 @@
 	export_constant(IG_S_CATNIP_CUBE);
 	export_constant(IG_S_SAVAGERABBIT_CUBE);
 	export_constant(IG_S_PICKYRUSH_CUBE);
+	export_constant(IG_S_RUNEKNIGHT_CUBE);
+	export_constant(IG_S_ROYALGUARD_CUBE);
+	export_constant(IG_S_WARLOCK_CUBE);
+	export_constant(IG_S_SORCERER_CUBE);
+	export_constant(IG_S_MECHANIC_CUBE);
+	export_constant(IG_S_GENERIC_CUBE);
+	export_constant(IG_S_ARCHBISHOP_CUBE);
+	export_constant(IG_S_SURA_CUBE);
+	export_constant(IG_S_GUILLOTINECROSS_CUBE);
+	export_constant(IG_S_SHADOWCHASER_CUBE);
+	export_constant(IG_S_RANGER_CUBE);
+	export_constant(IG_S_WANDERER_CUBE);
+	export_constant(IG_S_MINSTREL_CUBE);
+	export_constant(IG_S_STAR_EMPEROR_CUBE);
+	export_constant(IG_S_SOUL_REAPER_CUBE);
+	export_constant(IG_S_KAGEROU_CUBE);
+	export_constant(IG_S_OBORO_CUBE);
+	export_constant(IG_S_REBELLION_CUBE);
+	export_constant(IG_S_SUPERNOVICE_CUBE);
+	export_constant(IG_S_DORAM_CUBE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

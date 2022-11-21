@@ -32081,3 +32081,191 @@ Body:
           - Item: S_Pickyrush_Weapon
           - Item: S_Pickyrush_Shield
           - Item: S_Pickyrush_Armor
+  - Group: S_RUNEKNIGHT_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Swordman_earring
+          - Item: S_Swordman_Pendant
+          - Item: S_Knight_Shoes
+          - Item: S_Knight_Armor
+          - Item: S_Runeknight_Weapon
+          - Item: S_Runeknight_Shield
+  - Group: S_ROYALGUARD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Swordman_earring
+          - Item: S_Swordman_Pendant
+          - Item: S_Crusader_Shoes
+          - Item: S_Crusader_Armor
+          - Item: S_Royalguard_Weapon
+          - Item: S_Royalguard_Shield
+  - Group: S_WARLOCK_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Magician_earring
+          - Item: S_Magician_Pendant
+          - Item: S_Wizard_Shoes
+          - Item: S_Wizard_Armor
+          - Item: S_Warlock_Weapon
+          - Item: S_Warlock_Shield
+  - Group: S_SORCERER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Magician_earring
+          - Item: S_Magician_Pendant
+          - Item: S_Sage_Shoes
+          - Item: S_Sage_Armor
+          - Item: S_Sorcerer_Weapon
+          - Item: S_Sorcerer_Shield
+  - Group: S_MECHANIC_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Merchant_earring
+          - Item: S_Merchant_Pendant
+          - Item: S_Blacksmith_Shoes
+          - Item: S_Blacksmith_Armor
+          - Item: S_Mechanic_weapon
+          - Item: S_Mechanic_Shield
+  - Group: S_GENERIC_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Merchant_earring
+          - Item: S_Merchant_Pendant
+          - Item: S_Alchemist_Shoes
+          - Item: S_Alchemist_Armor
+          - Item: S_Genetic_Weapon
+          - Item: S_Genetic_Shield
+  - Group: S_ARCHBISHOP_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Acolyte_earring
+          - Item: S_Acolyte_Pendant
+          - Item: S_Priest_Shoes
+          - Item: S_Priest_Armor
+          - Item: S_Archbishop_Weapon
+          - Item: S_Archbishop_Shield
+  - Group: S_SURA_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Acolyte_earring
+          - Item: S_Acolyte_Pendant
+          - Item: S_Monk_Shoes
+          - Item: S_Monk_Armor
+          - Item: S_Sura_weapon
+          - Item: S_Sura_Shield
+  - Group: S_GUILLOTINECROSS_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Thief_Pendant
+          - Item: S_Assassin_Shoes
+          - Item: S_Assassin_Armor
+          - Item: S_Guillotine_Weapon
+          - Item: S_Guillotine_Shield
+          - Item: S_Thief_earring
+  - Group: S_SHADOWCHASER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Thief_Pendant
+          - Item: S_Rogue_Shoes
+          - Item: S_Rogue_Armor
+          - Item: S_Shadowchaser_Weapon
+          - Item: S_Shadowchaser_Shield
+          - Item: S_Thief_earring
+  - Group: S_RANGER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Archer_Pendant
+          - Item: S_Hunter_Shoes
+          - Item: S_Hunter_Armor
+          - Item: S_Ranger_Weapon
+          - Item: S_Ranger_Shield
+          - Item: S_Archer_earring
+  - Group: S_WANDERER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Archer_Pendant
+          - Item: S_Dancer_Shoes
+          - Item: S_Dancer_Armor
+          - Item: S_Wanderer_Weapon
+          - Item: S_Wanderer_Shield
+          - Item: S_Archer_earring
+  - Group: S_MINSTREL_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Archer_Pendant
+          - Item: S_Bard_Shoes
+          - Item: S_Bard_Armor
+          - Item: S_Minstrel_Weapon
+          - Item: S_Minstrel_Shield
+          - Item: S_Archer_earring
+  - Group: S_STAR_EMPEROR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Taekwon_Weapon
+          - Item: S_Taekwon_Shield
+          - Item: S_Star_Emperor_Armor
+          - Item: S_Star_Emperor_Shoes
+  - Group: S_SOUL_REAPER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Taekwon_Weapon
+          - Item: S_Taekwon_Shield
+          - Item: S_Soul_Reaper_Armor
+          - Item: S_Soul_Reaper_Shoes
+  - Group: S_KAGEROU_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Ninja_Weapon
+          - Item: S_Ninja_Shield
+          - Item: S_Kagerou_Armor
+          - Item: S_Kagerou_Shoes
+  - Group: S_OBORO_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Ninja_Weapon
+          - Item: S_Ninja_Shield
+          - Item: S_Oboro_Armor
+          - Item: S_Oboro_Shoes
+  - Group: S_REBELLION_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Gunslinger_Weapon
+          - Item: S_Gunslinger_Shield
+          - Item: S_Rebellion_Armor
+          - Item: S_Rebellion_Shoes
+  - Group: S_SUPERNOVICE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SuperNovice_Weapon
+          - Item: S_SuperNovice_Shield
+  - Group: S_DORAM_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_DoramMagical_Weapon
+          - Item: S_DoramPhysical_Weapon
+          - Item: S_DoramPhysical_Shield
+          - Item: S_DoramMagical_Shield
+          - Item: S_DoramPhysical_Armor
+          - Item: S_DoramPhysical_Shoes
+          - Item: S_DoramMagical_Armor
+          - Item: S_DoramMagical_Shoes

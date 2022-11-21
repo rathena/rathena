@@ -463,128 +463,128 @@ Body:
           - Index: 0
             Item: Cachua_Coupon
             Amount: 15
-  # - Name: CachuaCoupon04
-    # Items:
-      # - Index: 0
-        # Item: S_RuneKnight_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 1
-        # Item: S_RoyalGuard_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 2
-        # Item: S_Warlock_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 3
-        # Item: S_Sorcerer_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 4
-        # Item: S_Mechanic_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 5
-        # Item: S_Generic_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 6
-        # Item: S_ArchBishop_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 7
-        # Item: S_Sura_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 8
-        # Item: S_GuillotineCross_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 9
-        # Item: S_ShadowChaser_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 10
-        # Item: S_Ranger_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 11
-        # Item: S_Wanderer_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 12
-        # Item: S_Minstrel_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 30
-      # - Index: 13
-        # Item: S_Star_Emperor_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
-      # - Index: 14
-        # Item: S_Soul_Reaper_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
-      # - Index: 15
-        # Item: S_Kagerou_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
-      # - Index: 16
-        # Item: S_Oboro_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
-      # - Index: 17
-        # Item: S_Rebellion_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
-      # - Index: 18
-        # Item: S_SuperNovice_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 10
-      # - Index: 19
-        # Item: S_Doram_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 40
+  - Name: CachuaCoupon04
+    Items:
+      - Index: 0
+        Item: S_RuneKnight_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 1
+        Item: S_RoyalGuard_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 2
+        Item: S_Warlock_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 3
+        Item: S_Sorcerer_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 4
+        Item: S_Mechanic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 5
+        Item: S_Generic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 6
+        Item: S_ArchBishop_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 7
+        Item: S_Sura_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 8
+        Item: S_GuillotineCross_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 9
+        Item: S_ShadowChaser_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 10
+        Item: S_Ranger_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 11
+        Item: S_Wanderer_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 12
+        Item: S_Minstrel_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 30
+      - Index: 13
+        Item: S_Star_Emperor_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 14
+        Item: S_Soul_Reaper_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 15
+        Item: S_Kagerou_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 16
+        Item: S_Oboro_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 17
+        Item: S_Rebellion_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 18
+        Item: S_SuperNovice_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 10
+      - Index: 19
+        Item: S_Doram_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 40
   # - Name: CachuaCoupon05
     # Items:
       # - Index: 0
