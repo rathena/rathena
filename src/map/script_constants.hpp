@@ -5920,6 +5920,8 @@
 	export_constant(IG_S_PENE2_CUBE);
 	export_constant(IG_S_TEMP1_CUBE);
 	export_constant(IG_S_TEMP2_CUBE);
+	export_constant(IG_BLACKSMITH_BLESS_BOX_3);
+	export_constant(IG_SHADOW_HAMMER_BOX_3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

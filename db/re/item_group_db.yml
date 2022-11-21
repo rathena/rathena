@@ -32333,3 +32333,15 @@ Body:
           - Item: S_M_DragonVib_Armor
           - Item: S_M_SciHunting_Armor
           - Item: S_M_FishInsect_Armor
+  - Group: BLACKSMITH_BLESS_BOX_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Blacksmith_Blessing
+            Amount: 3
+  - Group: SHADOW_HAMMER_BOX_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shadow_Refine_Hammer
+            Amount: 3

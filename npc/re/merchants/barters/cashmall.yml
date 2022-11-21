@@ -805,18 +805,18 @@ Body:
           - Index: 0
             Item: Cachua_Coupon
             Amount: 75
-      # - Index: 30
-        # Item: Blacksmith_Bless_Box_3
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
-      # - Index: 31
-        # Item: Shadow_Hammer_Box_3
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 20
+      - Index: 30
+        Item: Blacksmith_Bless_Box_3
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
+      - Index: 31
+        Item: Shadow_Hammer_Box_3
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 20
       - Index: 32
         Item: Sillit_Pong_Box
         RequiredItems:
