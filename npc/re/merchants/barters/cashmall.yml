@@ -585,44 +585,44 @@ Body:
           - Index: 0
             Item: Cachua_Coupon
             Amount: 40
-  # - Name: CachuaCoupon05
-    # Items:
-      # - Index: 0
-        # Item: S_Mammoth_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 40
-      # - Index: 1
-        # Item: S_Gemstone_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 40
-      # - Index: 2
-        # Item: S_Pene1_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 35
-      # - Index: 3
-        # Item: S_Pene2_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 35
-      # - Index: 4
-        # Item: S_Temp1_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 35
-      # - Index: 5
-        # Item: S_Temp2_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 35
+  - Name: CachuaCoupon05
+    Items:
+      - Index: 0
+        Item: S_Mammoth_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 40
+      - Index: 1
+        Item: S_Gemstone_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 40
+      - Index: 2
+        Item: S_Pene1_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+      - Index: 3
+        Item: S_Pene2_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+      - Index: 4
+        Item: S_Temp1_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
+      - Index: 5
+        Item: S_Temp2_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 35
   - Name: CachuaCoupon06
     Items:
       - Index: 0

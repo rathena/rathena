@@ -53571,6 +53571,108 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_S_Doram_Cube);
+  - Id: 101041
+    AegisName: S_Mammoth_Cube
+    Name: Mammoth Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Mammoth_Cube);
+  - Id: 101042
+    AegisName: S_Gemstone_Cube
+    Name: Gemstone Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Gemstone_Cube);
+  - Id: 101043
+    AegisName: S_Pene1_Cube
+    Name: Penetration Shadow Cube I
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Pene1_Cube);
+  - Id: 101044
+    AegisName: S_Pene2_Cube
+    Name: Penetration Shadow Cube II
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Pene2_Cube);
+  - Id: 101045
+    AegisName: S_Temp1_Cube
+    Name: Tempest Shadow Cube I
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Temp1_Cube);
+  - Id: 101046
+    AegisName: S_Temp2_Cube
+    Name: Tempest Shadow Cube II
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Temp2_Cube);
   - Id: 101060
     AegisName: Select_Example1
     Name: TestA

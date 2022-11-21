@@ -5914,6 +5914,12 @@
 	export_constant(IG_S_REBELLION_CUBE);
 	export_constant(IG_S_SUPERNOVICE_CUBE);
 	export_constant(IG_S_DORAM_CUBE);
+	export_constant(IG_S_MAMMOTH_CUBE);
+	export_constant(IG_S_GEMSTONE_CUBE);
+	export_constant(IG_S_PENE1_CUBE);
+	export_constant(IG_S_PENE2_CUBE);
+	export_constant(IG_S_TEMP1_CUBE);
+	export_constant(IG_S_TEMP2_CUBE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
