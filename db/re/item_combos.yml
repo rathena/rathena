@@ -12091,7 +12091,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Fishing_Insect_Net_Armor
+          - S_FishInsect_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;

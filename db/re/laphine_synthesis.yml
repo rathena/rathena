@@ -400,7 +400,7 @@ Body:
       - Item: S_ExoCorrupt_Armor
       - Item: S_DragonVib_Armor
       - Item: S_SciHunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_FishInsect_Armor
       - Item: Sentimental_Weapone_S
       - Item: Sentimental_Earring_S
       - Item: Sentimental_Pendant_S
@@ -3311,7 +3311,7 @@ Body:
       - Item: S_ExoCorrupt_Armor
       - Item: S_DragonVib_Armor
       - Item: S_SciHunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_FishInsect_Armor
       - Item: S_Penetration_Earring
       - Item: S_Penetration_Pendent
       - Item: S_Executioner_Weapon
@@ -3732,7 +3732,7 @@ Body:
 #      - Item: S_ExoCorrupt_Armor
 #      - Item: S_DragonVib_Armor
 #      - Item: S_SciHunting_Armor
-#      - Item: S_Fishing_Insect_Net_Armor
+#      - Item: S_FishInsect_Armor
 #      - Item: Sentimental_Weapone_S
 #      - Item: Sentimental_Earring_S
 #      - Item: Sentimental_Pendant_S

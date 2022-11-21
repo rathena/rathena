@@ -112320,7 +112320,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Plant,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Brute,.@val;
   - Id: 24379
-    AegisName: S_Fishing_Insect_Net_Armor
+    AegisName: S_FishInsect_Armor
     Name: Fishing Insect Net Shadow Armor
     Type: Shadowgear
     Locations:

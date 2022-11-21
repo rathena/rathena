@@ -25028,7 +25028,7 @@ Body:
             Rate: 73
           - Item: S_SciHunting_Armor
             Rate: 73
-          - Item: S_Fishing_Insect_Net_Armor
+          - Item: S_FishInsect_Armor
             Rate: 73
           - Item: Sentimental_Weapone_S
             Rate: 73
@@ -27383,7 +27383,7 @@ Body:
             Rate: 1
           - Item: S_SciHunting_Armor
             Rate: 1
-          - Item: S_Fishing_Insect_Net_Armor
+          - Item: S_FishInsect_Armor
             Rate: 1
           - Item: S_Penetration_Earring
             Rate: 1
@@ -27900,7 +27900,7 @@ Body:
             Rate: 4
           - Item: S_SciHunting_Armor
             Rate: 4
-          - Item: S_Fishing_Insect_Net_Armor
+          - Item: S_FishInsect_Armor
             Rate: 4
           - Item: S_Infinity_Weapon
             Rate: 4
