@@ -531,7 +531,7 @@ Body:
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
       - Item: S_ExeHoly_Armor
-      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_ExoCorrupt_Armor
       - Item: S_Vibration_Dragon_Killer_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor
@@ -1263,7 +1263,7 @@ Body:
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
       - Item: S_ExeHoly_Armor
-      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_ExoCorrupt_Armor
       - Item: S_Vibration_Dragon_Killer_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor
@@ -2073,7 +2073,7 @@ Body:
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
       - Item: S_ExeHoly_Armor
-      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_ExoCorrupt_Armor
       - Item: S_Vibration_Dragon_Killer_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor

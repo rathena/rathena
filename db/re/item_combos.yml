@@ -12054,7 +12054,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Exorcist_Corrupted_Armor
+          - S_ExoCorrupt_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;

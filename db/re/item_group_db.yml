@@ -25020,9 +25020,9 @@ Body:
             Rate: 73
           - Item: S_Penetration_Shield
             Rate: 73
-          - Item: S_Executioner_Holy_Water_Armor
+          - Item: S_ExeHoly_Armor
             Rate: 73
-          - Item: S_Exorcist_Corrupted_Armor
+          - Item: S_ExoCorrupt_Armor
             Rate: 73
           - Item: S_Vibration_Dragon_Killer_Armor
             Rate: 73
@@ -27375,9 +27375,9 @@ Body:
             Rate: 1
           - Item: S_Penetration_Shield
             Rate: 1
-          - Item: S_Executioner_Holy_Water_Armor
+          - Item: S_ExeHoly_Armor
             Rate: 1
-          - Item: S_Exorcist_Corrupted_Armor
+          - Item: S_ExoCorrupt_Armor
             Rate: 1
           - Item: S_Vibration_Dragon_Killer_Armor
             Rate: 1
@@ -27892,9 +27892,9 @@ Body:
             Rate: 4
           - Item: S_Penetration_Shield
             Rate: 4
-          - Item: S_Executioner_Holy_Water_Armor
+          - Item: S_ExeHoly_Armor
             Rate: 4
-          - Item: S_Exorcist_Corrupted_Armor
+          - Item: S_ExoCorrupt_Armor
             Rate: 4
           - Item: S_Vibration_Dragon_Killer_Armor
             Rate: 4
