@@ -341,128 +341,128 @@ Body:
           - Index: 0
             Item: Cachua_Coupon
             Amount: 15
-  # - Name: CachuaCoupon03
-    # Items:
-      # - Index: 0
-        # Item: S_Moonlight_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 1
-        # Item: S_Sunshine_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 2
-        # Item: S_Stardust_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 3
-        # Item: S_S_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 4
-        # Item: S_Evilcurse_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 5
-        # Item: S_Syuriken_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 6
-        # Item: S_Kunai_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 7
-        # Item: S_Huusouka_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 8
-        # Item: S_Kamaenraku_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 9
-        # Item: S_God_Hammer_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 10
-        # Item: S_Shatter_Buster_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 11
-        # Item: S_Tail_Dragon_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 12
-        # Item: S_Trip_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 13
-        # Item: S_Flare_Dance_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 14
-        # Item: S_Super_Magic_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 15
-        # Item: S_Super_Power_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 16
-        # Item: S_Silvervine_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 17
-        # Item: S_Catnip_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 18
-        # Item: S_SavageRabbit_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 19
-        # Item: S_Pickyrush_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
+  - Name: CachuaCoupon03
+    Items:
+      - Index: 0
+        Item: S_Moonlight_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 1
+        Item: S_Sunshine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 2
+        Item: S_Stardust_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 3
+        Item: S_S_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 4
+        Item: S_Evilcurse_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 5
+        Item: S_Syuriken_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 6
+        Item: S_Kunai_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 7
+        Item: S_Huusouka_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 8
+        Item: S_Kamaenraku_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 9
+        Item: S_God_Hammer_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 10
+        Item: S_Shatter_Buster_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 11
+        Item: S_Tail_Dragon_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 12
+        Item: S_Trip_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 13
+        Item: S_Flare_Dance_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 14
+        Item: S_Super_Magic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 15
+        Item: S_Super_Power_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 16
+        Item: S_Silvervine_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 17
+        Item: S_Catnip_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 18
+        Item: S_SavageRabbit_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 19
+        Item: S_Pickyrush_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
   # - Name: CachuaCoupon04
     # Items:
       # - Index: 0
