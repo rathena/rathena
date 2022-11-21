@@ -145152,7 +145152,7 @@ Body:
     ArmorLevel: 1
     View: 2052
   - Id: 420096
-    AegisName: C_Braid_Half_Up_OM
+    AegisName: C_Braid_Half_Up_OM_K
     Name: Costume Pigtails Half Up(Orange)
     Type: Armor
     Locations:
@@ -145160,7 +145160,7 @@ Body:
     ArmorLevel: 1
     View: 2053
   - Id: 420097
-    AegisName: C_Braid_Half_Up_PP
+    AegisName: C_Braid_Half_Up_PP_K
     Name: Costume Pigtails Half Up(Purple)
     Type: Armor
     Locations:
