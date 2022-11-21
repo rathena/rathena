@@ -49,152 +49,152 @@ Body:
 ###########################################################################
 ##= Cachua Coupon Exchanges
 ###########################################################################
-  # - Name: CachuaCoupon01
-    # Items:
-      # - Index: 0
-        # Item: S_Ignition_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 1
-        # Item: S_W_Breath_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 2
-        # Item: S_F_Breath_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 3
-        # Item: S_Sonic_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 4
-        # Item: S_Strain_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 5
-        # Item: S_Jack_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 6
-        # Item: S_Chain_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 7
-        # Item: S_Crimson_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 8
-        # Item: S_Vulcan_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 9
-        # Item: S_Boomerang_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 10
-        # Item: S_Arms_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 11
-        # Item: S_Tornado_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 12
-        # Item: S_Duplelight_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 13
-        # Item: S_Magnus_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 14
-        # Item: S_Adoramus_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 15
-        # Item: S_Judex_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 16
-        # Item: S_Rolling_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 17
-        # Item: S_Ripper_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 18
-        # Item: S_Slash_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 19
-        # Item: S_Katar_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 20
-        # Item: S_Shooting_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 21
-        # Item: S_Arrow_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 22
-        # Item: S_Aimed_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
-      # - Index: 23
-        # Item: S_Cluster_Cube
-        # RequiredItems:
-          # - Index: 0
-            # Item: Cachua_Coupon
-            # Amount: 15
+  - Name: CachuaCoupon01
+    Items:
+      - Index: 0
+        Item: S_Ignition_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 1
+        Item: S_W_Breath_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 2
+        Item: S_F_Breath_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 3
+        Item: S_Sonic_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 4
+        Item: S_Strain_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 5
+        Item: S_Jack_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 6
+        Item: S_Chain_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 7
+        Item: S_Crimson_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 8
+        Item: S_Vulcan_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 9
+        Item: S_Boomerang_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 10
+        Item: S_Arms_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 11
+        Item: S_Tornado_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 12
+        Item: S_Duplelight_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 13
+        Item: S_Magnus_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 14
+        Item: S_Adoramus_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 15
+        Item: S_Judex_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 16
+        Item: S_Rolling_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 17
+        Item: S_Ripper_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 18
+        Item: S_Slash_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 19
+        Item: S_Katar_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 20
+        Item: S_Shooting_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 21
+        Item: S_Arrow_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 22
+        Item: S_Aimed_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
+      - Index: 23
+        Item: S_Cluster_Cube
+        RequiredItems:
+          - Index: 0
+            Item: Cachua_Coupon
+            Amount: 15
   # - Name: CachuaCoupon02
     # Items:
       # - Index: 0

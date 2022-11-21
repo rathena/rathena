@@ -31605,3 +31605,171 @@ Body:
             Rate: 360
           - Item: Critical_Stone_Bottom
             Rate: 360
+  - Group: S_IGNITION_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Ignition_Weapon
+          - Item: S_Ignition_Pendant
+          - Item: S_Ignition_Earing
+  - Group: S_W_BREATH_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_W_Breath_Armor
+          - Item: S_W_Breath_Shield
+          - Item: S_W_Breath_Shoes
+  - Group: S_F_BREATH_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_F_Breath_Weapon
+          - Item: S_F_Breath_Pendant
+          - Item: S_F_Breath_Earing
+  - Group: S_SONIC_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Sonic_Armor
+          - Item: S_Sonic_Shield
+          - Item: S_Sonic_Shoes
+  - Group: S_STRAIN_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Strain_Weapon
+          - Item: S_Strain_Pendant
+          - Item: S_Strain_Earing
+  - Group: S_JACK_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Jack_Armor
+          - Item: S_Jack_Shield
+          - Item: S_Jack_Shoes
+  - Group: S_CHAIN_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Chain_Weapon
+          - Item: S_Chain_Pendant
+          - Item: S_Chain_Earing
+  - Group: S_CRIMSON_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Crimson_Armor
+          - Item: S_Crimson_Shield
+          - Item: S_Crimson_Shoes
+  - Group: S_VULCAN_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Vulcan_Armor
+          - Item: S_Vulcan_Shield
+          - Item: S_Vulcan_Shoes
+  - Group: S_BOOMERANG_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Boomerang_Weapon
+          - Item: S_Boomerang_Pendant
+          - Item: S_Boomerang_Earing
+  - Group: S_ARMS_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Arms_Weapon
+          - Item: S_Arms_Pendant
+          - Item: S_Arms_Earing
+  - Group: S_TORNADO_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Tornado_Armor
+          - Item: S_Tornado_Shield
+          - Item: S_Tornado_Shoes
+  - Group: S_DUPLELIGHT_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Duplelight_Armor
+          - Item: S_Duplelight_Shield
+          - Item: S_Duplelight_Shoes
+  - Group: S_MAGNUS_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Magnus_Weapon
+          - Item: S_Magnus_Pendant
+          - Item: S_Magnus_Earing
+  - Group: S_ADORAMUS_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Adoramus_Weapon
+          - Item: S_Adoramus_Pendant
+          - Item: S_Adoramus_Earing
+  - Group: S_JUDEX_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Judex_Armor
+          - Item: S_Judex_Shield
+          - Item: S_Judex_Shoes
+  - Group: S_ROLLING_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Rolling_Armor
+          - Item: S_Rolling_Shield
+          - Item: S_Rolling_Shoes
+  - Group: S_RIPPER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Ripper_Weapon
+          - Item: S_Ripper_Pendant
+          - Item: S_Ripper_Earing
+  - Group: S_SLASH_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Slash_Armor
+          - Item: S_Slash_Shield
+          - Item: S_Slash_Shoes
+  - Group: S_KATAR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Slash_Armor
+          - Item: S_Slash_Shield
+          - Item: S_Slash_Shoes
+  - Group: S_SHOOTING_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Shooting_Weapon
+          - Item: S_Shooting_Pendant
+          - Item: S_Shooting_Earing
+  - Group: S_ARROW_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Arrow_Armor
+          - Item: S_Arrow_Shield
+          - Item: S_Arrow_Shoes
+  - Group: S_AIMED_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Aimed_Weapon
+          - Item: S_Aimed_Pendant
+          - Item: S_Aimed_Earing
+  - Group: S_CLUSTER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Aimed_Weapon
+          - Item: S_Aimed_Pendant
+          - Item: S_Aimed_Earing

@@ -5826,6 +5826,30 @@
 	export_constant(IG_S_ABSORB_SHIELD);
 	export_constant(IG_PORINGSPRECIOUSBOX);
 	export_constant(IG_ENCHANT_STONE_BOX29);
+	export_constant(IG_S_IGNITION_CUBE);
+	export_constant(IG_S_W_BREATH_CUBE);
+	export_constant(IG_S_F_BREATH_CUBE);
+	export_constant(IG_S_SONIC_CUBE);
+	export_constant(IG_S_STRAIN_CUBE);
+	export_constant(IG_S_JACK_CUBE);
+	export_constant(IG_S_CHAIN_CUBE);
+	export_constant(IG_S_CRIMSON_CUBE);
+	export_constant(IG_S_VULCAN_CUBE);
+	export_constant(IG_S_BOOMERANG_CUBE);
+	export_constant(IG_S_ARMS_CUBE);
+	export_constant(IG_S_TORNADO_CUBE);
+	export_constant(IG_S_DUPLELIGHT_CUBE);
+	export_constant(IG_S_MAGNUS_CUBE);
+	export_constant(IG_S_ADORAMUS_CUBE);
+	export_constant(IG_S_JUDEX_CUBE);
+	export_constant(IG_S_ROLLING_CUBE);
+	export_constant(IG_S_RIPPER_CUBE);
+	export_constant(IG_S_SLASH_CUBE);
+	export_constant(IG_S_KATAR_CUBE);
+	export_constant(IG_S_SHOOTING_CUBE);
+	export_constant(IG_S_ARROW_CUBE);
+	export_constant(IG_S_AIMED_CUBE);
+	export_constant(IG_S_CLUSTER_CUBE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
