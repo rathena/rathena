@@ -24982,7 +24982,7 @@ Body:
             Rate: 73
           - Item: S_M_ExeHoly_Armor
             Rate: 73
-          - Item: S_Magic_Exorcist_Corrupted_Armor
+          - Item: S_M_ExoCorrupt_Armor
             Rate: 73
           - Item: S_Magic_Vibration_Dragon_Killer_Armor
             Rate: 73
@@ -27419,7 +27419,7 @@ Body:
             Rate: 1
           - Item: S_M_ExeHoly_Armor
             Rate: 1
-          - Item: S_Magic_Exorcist_Corrupted_Armor
+          - Item: S_M_ExoCorrupt_Armor
             Rate: 1
           - Item: S_Magic_Vibration_Dragon_Killer_Armor
             Rate: 1
@@ -27864,7 +27864,7 @@ Body:
             Rate: 4
           - Item: S_M_ExeHoly_Armor
             Rate: 4
-          - Item: S_Magic_Exorcist_Corrupted_Armor
+          - Item: S_M_ExoCorrupt_Armor
             Rate: 4
           - Item: S_Magic_Vibration_Dragon_Killer_Armor
             Rate: 4

@@ -369,7 +369,7 @@ Body:
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
       - Item: S_M_ExeHoly_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_M_ExoCorrupt_Armor
       - Item: S_Magic_Vibration_Dragon_Killer_Armor
       - Item: S_Magic_Scissor_Hunting_Armor
       - Item: S_Magic_Fishing_Insect_Net_Armor
@@ -3345,7 +3345,7 @@ Body:
       - Item: S_Tempest_Shoes
       - Item: S_Tempest_Shield
       - Item: S_M_ExeHoly_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_M_ExoCorrupt_Armor
       - Item: S_Magic_Vibration_Dragon_Killer_Armor
       - Item: S_Magic_Scissor_Hunting_Armor
       - Item: S_Magic_Fishing_Insect_Net_Armor
@@ -3701,7 +3701,7 @@ Body:
 #      - Item: S_Tempest_Shield
 #      - Item: S_Tempest_Shoes
 #      - Item: S_M_ExeHoly_Armor
-#      - Item: S_Magic_Exorcist_Corrupted_Armor
+#      - Item: S_M_ExoCorrupt_Armor
 #      - Item: S_Magic_Vibration_Dragon_Killer_Armor
 #      - Item: S_Magic_Scissor_Hunting_Armor
 #      - Item: S_Magic_Fishing_Insect_Net_Armor

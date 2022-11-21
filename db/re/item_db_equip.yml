@@ -111856,7 +111856,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Undead,.@val;
   - Id: 24348
-    AegisName: S_Magic_Exorcist_Corrupted_Armor
+    AegisName: S_M_ExoCorrupt_Armor
     Name: Magic Exorcist Corrupted Shadow Armor
     Type: Shadowgear
     Locations:
