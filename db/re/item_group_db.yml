@@ -24980,7 +24980,7 @@ Body:
             Rate: 73
           - Item: S_Tempest_Shoes
             Rate: 73
-          - Item: S_Magic_Executioner_Holy_Water_Armor
+          - Item: S_M_ExeHoly_Armor
             Rate: 73
           - Item: S_Magic_Exorcist_Corrupted_Armor
             Rate: 73
@@ -27417,7 +27417,7 @@ Body:
             Rate: 1
           - Item: S_Tempest_Shield
             Rate: 1
-          - Item: S_Magic_Executioner_Holy_Water_Armor
+          - Item: S_M_ExeHoly_Armor
             Rate: 1
           - Item: S_Magic_Exorcist_Corrupted_Armor
             Rate: 1
@@ -27862,7 +27862,7 @@ Body:
             Rate: 4
           - Item: S_Tempest_Shoes
             Rate: 4
-          - Item: S_Magic_Executioner_Holy_Water_Armor
+          - Item: S_M_ExeHoly_Armor
             Rate: 4
           - Item: S_Magic_Exorcist_Corrupted_Armor
             Rate: 4

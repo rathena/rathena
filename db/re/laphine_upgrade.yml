@@ -502,7 +502,7 @@ Body:
       - Item: S_Blitz_Armor
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_M_ExeHoly_Armor
       - Item: S_Magic_Exorcist_Corrupted_Armor
       - Item: S_Magic_Vibration_Dragon_Killer_Armor
       - Item: S_Magic_Scissor_Hunting_Armor
@@ -1234,7 +1234,7 @@ Body:
       - Item: S_Blitz_Armor
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_M_ExeHoly_Armor
       - Item: S_Magic_Exorcist_Corrupted_Armor
       - Item: S_Magic_Vibration_Dragon_Killer_Armor
       - Item: S_Magic_Scissor_Hunting_Armor
@@ -2044,7 +2044,7 @@ Body:
       - Item: S_Blitz_Armor
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_M_ExeHoly_Armor
       - Item: S_Magic_Exorcist_Corrupted_Armor
       - Item: S_Magic_Vibration_Dragon_Killer_Armor
       - Item: S_Magic_Scissor_Hunting_Armor

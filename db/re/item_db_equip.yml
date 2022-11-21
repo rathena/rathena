@@ -111842,7 +111842,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24347
-    AegisName: S_Magic_Executioner_Holy_Water_Armor
+    AegisName: S_M_ExeHoly_Armor
     Name: Magic Executioner Holy Water Shadow Armor
     Type: Shadowgear
     Locations:
