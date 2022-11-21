@@ -97448,7 +97448,7 @@ Body:
     EquipLevelMin: 1
     View: 21
   - Id: 20512
-    AegisName: C_Bag_of_Adventurer_j
+    AegisName: C_Bravery_Bag
     Name: Costume Adventurer's Backpack
     Type: Armor
     Locations:
@@ -97715,7 +97715,7 @@ Body:
     UnEquipScript: |
       hateffect(HAT_EF_C_GHOST_EFFECT,false);
   - Id: 20548
-    AegisName: Costume_Popping_Poring_Aura
+    AegisName: C_Popping_Poring_Aura
     Name: Costume Popping Poring Aura
     Type: Armor
     Locations:
@@ -98017,6 +98017,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     EquipLevelMin: 1
+  - Id: 20574
+    AegisName: C_School_Bag_RD
+    Name: Costume Backpack (Red)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 51
   - Id: 20575
     AegisName: C_School_Bag_BL
     Name: Costume Backpack (Black)
@@ -98231,6 +98239,17 @@ Body:
     Script: |
       /*TODO: View ID*/
       bonus bUnbreakableHelm;
+  - Id: 20601
+    AegisName: C_99LV_Rune_Red
+    Name: Costume Red Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Rune_Red,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Rune_Red,false);
   - Id: 20602
     AegisName: C_Seraphim_Wing_TW
     Name: "Costume: Ace of Angel Wing (Sweet)"
@@ -144918,6 +144937,22 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2141
+  - Id: 420046
+    AegisName: C_Royal_Mantle
+    Name: Costume Royal Mantle
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1697
+  - Id: 420047
+    AegisName: C_H_Knight_Cloak
+    Name: Costume Honorable Knight Cloak
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2059
   - Id: 420048
     AegisName: C_White_Corone
     Name: Costume White Coronet
@@ -155549,7 +155584,7 @@ Body:
     ArmorLevel: 1
     View: 104
   - Id: 480108
-    AegisName: aegis_480108
+    AegisName: C_Poring_Basket
     Name: Costume Poring Basket
     Type: Armor
     Locations:
@@ -155662,7 +155697,7 @@ Body:
          bonus2 bSubEle,Ele_Earth,.@bonus*.@c;
       }
   - Id: 480121
-    AegisName: aegis_480121
+    AegisName: C_Striking_Mikoshi
     Name: Costume Striking Mikoshi    # !todo check english name
     Type: Armor
     Locations:
@@ -155860,7 +155895,7 @@ Body:
       bonus2 bAddSize,Size_Large,5*(.@r/5);
       bonus2 bMagicAddSize,Size_Large,5*(.@r/5);
   - Id: 480137
-    AegisName: aegis_480137
+    AegisName: C_Filir_Bag
     Name: Costume Filir Bag
     Type: Armor
     Locations:
