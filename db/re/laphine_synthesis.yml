@@ -371,7 +371,7 @@ Body:
       - Item: S_M_ExeHoly_Armor
       - Item: S_M_ExoCorrupt_Armor
       - Item: S_M_DragonVib_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_M_SciHunting_Armor
       - Item: S_Magic_Fishing_Insect_Net_Armor
       - Item: S_Plasterer's_Armor_II
       - Item: S_Insomniac_Shoes_II
@@ -3347,7 +3347,7 @@ Body:
       - Item: S_M_ExeHoly_Armor
       - Item: S_M_ExoCorrupt_Armor
       - Item: S_M_DragonVib_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_M_SciHunting_Armor
       - Item: S_Magic_Fishing_Insect_Net_Armor
       - Item: S_Tempest_Earring
       - Item: S_Tempest_Pendent
@@ -3703,7 +3703,7 @@ Body:
 #      - Item: S_M_ExeHoly_Armor
 #      - Item: S_M_ExoCorrupt_Armor
 #      - Item: S_M_DragonVib_Armor
-#      - Item: S_Magic_Scissor_Hunting_Armor
+#      - Item: S_M_SciHunting_Armor
 #      - Item: S_Magic_Fishing_Insect_Net_Armor
 #      - Item: S_Plasterer's_Armor_II
 #      - Item: S_Insomniac_Shoes_II

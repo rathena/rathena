@@ -111884,7 +111884,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Dragon,.@val;
   - Id: 24350
-    AegisName: S_Magic_Scissor_Hunting_Armor
+    AegisName: S_M_SciHunting_Armor
     Name: Magic Scissor Hunting Shadow Armor
     Type: Shadowgear
     Locations:

@@ -24986,7 +24986,7 @@ Body:
             Rate: 73
           - Item: S_M_DragonVib_Armor
             Rate: 73
-          - Item: S_Magic_Scissor_Hunting_Armor
+          - Item: S_M_SciHunting_Armor
             Rate: 73
           - Item: S_Magic_Fishing_Insect_Net_Armor
             Rate: 73
@@ -27423,7 +27423,7 @@ Body:
             Rate: 1
           - Item: S_M_DragonVib_Armor
             Rate: 1
-          - Item: S_Magic_Scissor_Hunting_Armor
+          - Item: S_M_SciHunting_Armor
             Rate: 1
           - Item: S_Magic_Fishing_Insect_Net_Armor
             Rate: 1
@@ -27868,7 +27868,7 @@ Body:
             Rate: 4
           - Item: S_M_DragonVib_Armor
             Rate: 4
-          - Item: S_Magic_Scissor_Hunting_Armor
+          - Item: S_M_SciHunting_Armor
             Rate: 4
           - Item: S_Magic_Fishing_Insect_Net_Armor
             Rate: 4
