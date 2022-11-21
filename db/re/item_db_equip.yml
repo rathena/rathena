@@ -85873,6 +85873,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 1370
+  - Id: 19290
+    AegisName: C_Elder_Devil_Horn
+    Name: Costume Elder Devil Horn
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 757
   - Id: 19291
     AegisName: C_Shiba_Inu
     Name: Costume Shiba Inu
@@ -89941,6 +89949,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 388
+  - Id: 19679
+    AegisName: C_Round_Eyes_J
+    Name: Costume Blank Eyes
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 185
   - Id: 19682
     AegisName: C_Santa_Poring_Hat
     Name: Costume SantaPoring Cap
@@ -93022,7 +93038,7 @@ Body:
     ArmorLevel: 1
     View: 212
   - Id: 20018
-    AegisName: C_Holo_Ear
+    AegisName: Horo_Ears
     Name: Costume Holo Ear
     Type: Armor
     Buy: 10
@@ -96095,7 +96111,7 @@ Body:
     EquipLevelMin: 1
     View: 1369
   - Id: 20340
-    AegisName: C_Straight_Pony_Black
+    AegisName: C_Straight_Pony_BL
     Name: Costume Straight Pony Black
     Type: Armor
     Locations:
@@ -96104,7 +96120,7 @@ Body:
     EquipLevelMin: 1
     View: 1371
   - Id: 20341
-    AegisName: C_Bouncing_Hair_Black
+    AegisName: C_Cowlick_BL
     Name: Costume Bouncing Hair Black
     Type: Armor
     Locations:
@@ -96113,7 +96129,7 @@ Body:
     EquipLevelMin: 1
     View: 1372
   - Id: 20342
-    AegisName: C_Loose_Wave_Twin
+    AegisName: C_Loose_Wave_Twin_BL
     Name: Costume Loose Wave Twin
     Type: Armor
     Locations:
@@ -97536,7 +97552,7 @@ Body:
     ArmorLevel: 1
     View: 28
   - Id: 20524
-    AegisName: C_Shining_Angel_Wings
+    AegisName: C_Shining_Angel_Wing
     Name: Costume Shining Angel Wings
     Type: Armor
     Locations:
@@ -132364,7 +132380,7 @@ Body:
     EquipLevelMin: 1
     View: 1414
   - Id: 31375
-    AegisName: C_Mystic_Eye
+    AegisName: C_Demons_Eye
     Name: C Mystic Eye
     Type: Armor
     Locations:
@@ -133854,7 +133870,7 @@ Body:
     EquipLevelMin: 1
     View: 1773
   - Id: 31540
-    AegisName: C_GeminiS58_Eyes_Red
+    AegisName: C_Gemini_RedEyes
     Name: C GeminiS58 Eyes Red
     Type: Armor
     Locations:
@@ -135463,7 +135479,7 @@ Body:
     EquipLevelMin: 1
     View: 1887
   - Id: 31716
-    AegisName: Costume_Twinkling_Red_Eyes
+    AegisName: C_Blinking_Eyes_RD
     Name: Costume Twinkling Red Eyes
     Type: Armor
     Locations:
@@ -143852,6 +143868,134 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2055
+  - Id: 410030
+    AegisName: C_Country_Tail_BU
+    Name: Costume Country Tail (Blue)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2039
+  - Id: 410031
+    AegisName: C_Country_Tail_RD
+    Name: Costume Country Tail (Red)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2040
+  - Id: 410032
+    AegisName: C_Country_Tail_YL
+    Name: Costume Country Tail (Yellow)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2041
+  - Id: 410033
+    AegisName: C_Country_Tail_GN
+    Name: Costume Country Tail (Green)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2042
+  - Id: 410034
+    AegisName: C_Country_Tail_BL
+    Name: Costume Country Tail (Black)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2043
+  - Id: 410035
+    AegisName: C_Country_Tail_WH
+    Name: Costume Country Tail (White)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2044
+  - Id: 410036
+    AegisName: C_Country_Tail_OM
+    Name: Costume Country Tail (Brown)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2045
+  - Id: 410037
+    AegisName: C_Country_Tail_PP
+    Name: Costume Country Tail (Purple)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2046
+  - Id: 410038
+    AegisName: C_Braid_Half_Up_BU
+    Name: Costume Braid Half Up (Blue)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2047
+  - Id: 410039
+    AegisName: C_Braid_Half_Up_RD
+    Name: Costume Braid Half Up (Red)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2048
+  - Id: 410040
+    AegisName: C_Braid_Half_Up_YL
+    Name: Costume Braid Half Up (Yellow)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2049
+  - Id: 410041
+    AegisName: C_Braid_Half_Up_GN
+    Name: Costume Braid Half Up (Green)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2050
+  - Id: 410042
+    AegisName: C_Braid_Half_Up_BL
+    Name: Costume Braid Half Up (Black)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2051
+  - Id: 410043
+    AegisName: C_Braid_Half_Up_WH
+    Name: Costume Braid Half Up (White)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2052
+  - Id: 410044
+    AegisName: C_Braid_Half_Up_OM
+    Name: Costume Braid Half Up (Brown)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2053
+  - Id: 410045
+    AegisName: C_Braid_Half_Up_PP
+    Name: Costume Braid Half Up (Purple)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2054
   - Id: 410048
     AegisName: C_Tiger
     Name: Costume Tiger
@@ -144511,7 +144655,7 @@ Body:
     Script: |
       autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,80,1000; }",10,10000,BF_MAGIC;
   - Id: 420006
-    AegisName: aegis_420006
+    AegisName: Vassalage_Necklace
     Name: Collar of Slavery
     Type: Armor
     View: 2018
@@ -144939,7 +145083,7 @@ Body:
     ArmorLevel: 1
     View: 1730
   - Id: 420076
-    AegisName: Vassalage_Necklace
+    AegisName: Choker_Of_Restriction
     Name: Bondage Necklace
     Type: Armor
     Weight: 10
@@ -145000,7 +145144,7 @@ Body:
     ArmorLevel: 1
     View: 2181
   - Id: 420095
-    AegisName: C_Braid_Half_Up_WH
+    AegisName: C_Braid_Half_Up_WH_K
     Name: Costume Pigtails Half Up(White)
     Type: Armor
     Locations:
@@ -145024,7 +145168,7 @@ Body:
     ArmorLevel: 1
     View: 2054
   - Id: 420098
-    AegisName: C_Braid_Half_Up_BL
+    AegisName: C_Braid_Half_Up_BL_K
     Name: Costume Pigtails Half Up(Black)
     Type: Armor
     Locations:
@@ -145032,7 +145176,7 @@ Body:
     ArmorLevel: 1
     View: 2051
   - Id: 420099
-    AegisName: C_Braid_Half_Up_BU
+    AegisName: C_Braid_Half_Up_BU_K
     Name: Costume Pigtails Half Up(Blue)
     Type: Armor
     Locations:
@@ -145040,7 +145184,7 @@ Body:
     ArmorLevel: 1
     View: 2047
   - Id: 420100
-    AegisName: C_Braid_Half_Up_YL
+    AegisName: C_Braid_Half_Up_YL_K
     Name: Costume Pigtails Half Up(Yellow)
     Type: Armor
     Locations:
@@ -145048,7 +145192,7 @@ Body:
     ArmorLevel: 1
     View: 2049
   - Id: 420101
-    AegisName: C_Braid_Half_Up_RD
+    AegisName: C_Braid_Half_Up_RD_K
     Name: Costume Pigtails Half Up(Red)
     Type: Armor
     Locations:
@@ -145056,7 +145200,7 @@ Body:
     ArmorLevel: 1
     View: 2048
   - Id: 420102
-    AegisName: C_Braid_Half_Up_GN
+    AegisName: C_Braid_Half_Up_GN_K
     Name: Costume Pigtails Half Up(Green)
     Type: Armor
     Locations:
@@ -154689,7 +154833,7 @@ Body:
     ArmorLevel: 1
     View: 72
   - Id: 480056
-    AegisName: aegis_480056
+    AegisName: C_Wing_Of_Angel_Move_BK
     Name: Costume Heavenly Fallen Angel Wings
     Type: Armor
     Locations:
@@ -154697,7 +154841,7 @@ Body:
     ArmorLevel: 1
     View: 73
   - Id: 480058
-    AegisName: aegis_480058
+    AegisName: C_Wing_Of_Angel_Move_GD
     Name: Costume Wavy Golden Angel Wings
     Type: Armor
     Locations:
@@ -155534,7 +155678,7 @@ Body:
     ArmorLevel: 1
     View: 112
   - Id: 480123
-    AegisName: aegis_480123
+    AegisName: C_Nydhog_Rumor
     Name: Costume Nydhog's Rumor
     Type: Armor
     Locations:
@@ -155632,6 +155776,10 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+    Script: |
+      hateffect(HAT_EF_C_Swirling_Flame,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Swirling_Flame,false);
   - Id: 480134
     AegisName: aegis_480134
     Name: Avareco
@@ -156338,6 +156486,10 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+    Script: |
+      hateffect(HAT_EF_C_Astra_Blessing,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Astra_Blessing,false);
   - Id: 480215
     AegisName: aegis_480215
     Name: Heroria Cloak    # !todo check english name

@@ -1554,7 +1554,7 @@ Body:
       - Item: C_Cowlick_OM
       - Item: C_Cowlick_BU
       - Item: C_Cowlick_WH
-      - Item: C_Bouncing_Hair_Black
+      - Item: C_Cowlick_BL
       - Item: C_Straight_Pony_YL
       - Item: C_Straight_Pony_GN
       - Item: C_Straight_Pony_PP
@@ -1562,7 +1562,7 @@ Body:
       - Item: C_Straight_Pony_OM
       - Item: C_Straight_Pony_BU
       - Item: C_Straight_Pony_WH
-      - Item: C_Straight_Pony_Black
+      - Item: C_Straight_Pony_BL
       - Item: C_Loose_Wave_Twin_YL
       - Item: C_Loose_Wave_Twin_GN
       - Item: C_Loose_Wave_Twin_PP
@@ -1570,7 +1570,7 @@ Body:
       - Item: C_Loose_Wave_Twin_OM
       - Item: C_Loose_Wave_Twin_BU
       - Item: C_Loose_Wave_Twin_WH
-      - Item: C_Loose_Wave_Twin
+      - Item: C_Loose_Wave_Twin_BL
       - Item: C_Cupid_Wing_Pink
       - Item: C_Pecopeco_Cap
       - Item: C_Green_Hat
@@ -1779,7 +1779,7 @@ Body:
       - Item: C_Frill_Collar
       - Item: C_Rose_Gothic_Bonnet
       - Item: C_LittleGarden
-      - Item: Costume_Twinkling_Red_Eyes
+      - Item: C_Blinking_Eyes_RD
       - Item: C_P_Ulysses_Feather
       - Item: C_DancingButterfly_TW
       - Item: C_Blue_Pencil_In_Mouth
@@ -3291,7 +3291,7 @@ Body:
 #      - Item: C_Frill_Collar
 #      - Item: C_Rose_Gothic_Bonnet
 #      - Item: C_LittleGarden
-#      - Item: Costume_Twinkling_Red_Eyes
+#      - Item: C_Blinking_Eyes_RD
 #  - Item: Egirnion_Box
 #    RewardGroup: EGIRNION_BOX
 #    Requirements:

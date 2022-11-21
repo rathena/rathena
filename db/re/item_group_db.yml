@@ -25627,7 +25627,7 @@ Body:
             Rate: 140
           - Item: C_Cowlick_WH
             Rate: 140
-          - Item: C_Bouncing_Hair_Black
+          - Item: C_Cowlick_BL
             Rate: 140
           - Item: C_Straight_Pony_YL
             Rate: 140
@@ -25643,7 +25643,7 @@ Body:
             Rate: 140
           - Item: C_Straight_Pony_WH
             Rate: 140
-          - Item: C_Straight_Pony_Black
+          - Item: C_Straight_Pony_BL
             Rate: 140
           - Item: C_Loose_Wave_Twin_YL
             Rate: 140
@@ -25659,7 +25659,7 @@ Body:
             Rate: 140
           - Item: C_Loose_Wave_Twin_WH
             Rate: 140
-          - Item: C_Loose_Wave_Twin
+          - Item: C_Loose_Wave_Twin_BL
             Rate: 140
           - Item: C_Cupid_Wing_Pink
             Rate: 140
@@ -26070,7 +26070,7 @@ Body:
             Rate: 140
           - Item: C_LittleGarden
             Rate: 140
-          - Item: Costume_Twinkling_Red_Eyes
+          - Item: C_Blinking_Eyes_RD
             Rate: 140
           - Item: C_Blink_Eyes_Sakura
             Rate: 140
