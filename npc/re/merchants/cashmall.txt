@@ -1,0 +1,145 @@
+//===== rAthena Script ======================================= 
+//= Cash Mall
+//===== Changelogs: ==========================================
+//= 1.0 Initial version from replays. [Lemongrass]
+//============================================================
+
+prontera,137,125,4	script	캐시 판매 안내인#prontera::cashmall_warper	4_M_HUMAN_02,{
+	mes "[안내인]";
+	mes "안녕하십까~";
+	mes "저는 여러분을 특별한 장소로";
+	mes "안내해 드리는 안내인입니다.";
+	mes "그곳이 어떤 곳이냐구요?";
+	next;
+	mes "[안내인]";
+	mes "그곳에는 신비한 아이템을 가득";
+	mes "모아놓고 파는 곳이지요.";
+	mes "다만 그곳에서 물건을 사기";
+	mes "위해서는 특별한 돈이 필요하죠.";
+	next;
+	mes "[안내인]";
+	mes "그럼 그곳으로 가실 준비가 되셨습니까?";
+	next;
+	switch( select( "예", "아니오" )) {
+		case 1:
+			mes "[안내인]";
+			mes "네~ 정말 준비가 철저하시군요.";
+			mes "자 그럼 좋은 물건 구하시기 바랍니다~";
+			mes "아참 이걸 빼먹었군요. 나오실 때는";
+			mes "다시 이곳으로 나오게 되니 꼭";
+			mes "기억해두세요~";
+			close2;
+			// TODO: store city you came from
+			warp "itemmall",22,43;
+			end;
+		case 2:
+			
+			mes "[안내인]";
+			mes "저런~";
+			mes "하지만 좌절하지 마십시오.";
+			mes "기회는 아직 있으니까요~";
+			close;
+	}
+}
+
+// TODO: find duplicates in other cities
+
+itemmall,21,45,4	script	출구 안내인	4_M_HUMAN_02,{
+	mes "[안내인]";
+	mes "좋은 시간 되셨습니까?";
+	mes "저희 아이템몰을 이용해주셔서 정말 감사합니다.";
+	mes "앞으로도 좋은 아이템을 가지고 찾아뵙도록 하겠습니다.";
+	next;
+	mes "[안내인]";
+	mes "그럼 오셨던 곳으로 돌아가시겠습니까?";
+	next;
+	switch( select( "예", "아니오" )) {
+		case 1:
+			mes "[안내인]";
+			mes "이용해주셔서 감사합니다.";
+			mes "그럼 오셨던 곳으로 다시 보내드리겠습니다.";
+			close2;
+			warp "prontera",116,72; // TODO: if multiple duplicates to warp you in, warp to correct location, per city you came from
+			end;
+		case 2:
+			mes "[안내인]";
+			mes "아직 더 사실 물건이 있으신거군요.";
+			mes "그럼 좋은 시간 되십시오.";
+			close;
+	}
+}
+
+itemmall,41,53,3	script	고양이손 판매원 마카롬	4_M_MERCAT1,{
+	mes "[마카롬]";
+	mes "어서오십셩!";
+	mes "날이면 날마다 오는 것이 아니에용!";
+	mes "오늘 보실 물건들은~ 짜잔!";
+	mes "<ITEM>[[카츄아]마일리지 쿠폰]<INFO>1000274</INFO></ITEM>으로만 교환하실 수 있답니다!";
+	mes "마음껏 골라보십셩!";
+	next;
+	switch( select( "3-1차 직업군 스킬 쉐도우", "3-2차 직업군 스킬 쉐도우", "확장 직업군 스킬 쉐도우", "직업별 일반 쉐도우", "쉐도우 큐브", "제련,개조,유용한 물품", "뚝딱 상자", "마법서" ) ){
+		case 1:
+			mes "[마카롬]";
+			mes "^FF00663-1차 직업군 스킬 쉐도우^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon01";
+			end;
+
+		case 2:
+			mes "[마카롬]";
+			mes "^FF00663-2차 직업군 스킬 쉐도우^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon02";
+			end;
+
+		case 3:
+			mes "[마카롬]";
+			mes "^FF0066확장 직업군 스킬 쉐도우^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon03";
+			end;
+
+		case 4:
+			mes "[마카롬]";
+			mes "^FF0066직업별 일반 쉐도우^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon04";
+			end;
+
+		case 5:
+			mes "[마카롬]";
+			mes "^FF0066쉐도우 큐브^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon05";
+			end;
+
+		case 6:
+			mes "[마카롬]";
+			mes "^FF0066제련,개조,유용한 물품^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon06";
+			end;
+
+		case 7:
+			mes "[마카롬]";
+			mes "^FF0066뚝딱상자들^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon07";
+			end;
+
+		case 8:
+			mes "[마카롬]";
+			mes "^FF0066마법서^000000 말씀이시지요!";
+			mes "요런 것들이 있습죠!";
+			close2;
+			callshop "CachuaCoupon08";
+			end;
+	}
+}
