@@ -24984,7 +24984,7 @@ Body:
             Rate: 73
           - Item: S_M_ExoCorrupt_Armor
             Rate: 73
-          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+          - Item: S_M_DragonVib_Armor
             Rate: 73
           - Item: S_Magic_Scissor_Hunting_Armor
             Rate: 73
@@ -27421,7 +27421,7 @@ Body:
             Rate: 1
           - Item: S_M_ExoCorrupt_Armor
             Rate: 1
-          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+          - Item: S_M_DragonVib_Armor
             Rate: 1
           - Item: S_Magic_Scissor_Hunting_Armor
             Rate: 1
@@ -27866,7 +27866,7 @@ Body:
             Rate: 4
           - Item: S_M_ExoCorrupt_Armor
             Rate: 4
-          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+          - Item: S_M_DragonVib_Armor
             Rate: 4
           - Item: S_Magic_Scissor_Hunting_Armor
             Rate: 4
