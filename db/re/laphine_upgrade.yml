@@ -532,7 +532,7 @@ Body:
       - Item: S_Penetration_Shield
       - Item: S_ExeHoly_Armor
       - Item: S_ExoCorrupt_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_DragonVib_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor
       - Item: Sentimental_Weapone_S
@@ -1264,7 +1264,7 @@ Body:
       - Item: S_Penetration_Shield
       - Item: S_ExeHoly_Armor
       - Item: S_ExoCorrupt_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_DragonVib_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor
       - Item: Sentimental_Weapone_S
@@ -2074,7 +2074,7 @@ Body:
       - Item: S_Penetration_Shield
       - Item: S_ExeHoly_Armor
       - Item: S_ExoCorrupt_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_DragonVib_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor
       - Item: Sentimental_Weapone_S

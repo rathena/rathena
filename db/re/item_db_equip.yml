@@ -112292,7 +112292,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Angel,.@val;
   - Id: 24377
-    AegisName: S_Vibration_Dragon_Killer_Armor
+    AegisName: S_DragonVib_Armor
     Name: Vibration Dragon Killer Shadow Armor
     Type: Shadowgear
     Locations:
