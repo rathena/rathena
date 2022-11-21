@@ -112264,7 +112264,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24375
-    AegisName: S_Executioner_Holy_Water_Armor
+    AegisName: S_ExeHoly_Armor
     Name: Executioner Holy Water Shadow Armor
     Type: Shadowgear
     Locations:
