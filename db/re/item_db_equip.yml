@@ -133206,7 +133206,7 @@ Body:
     EquipLevelMin: 1
     View: 1561
   - Id: 31464
-    AegisName: C_Bloom_Afro
+    AegisName: C_Mike_Hat
     Name: C Bloom Afro
     Type: Armor
     Locations:
@@ -133613,7 +133613,7 @@ Body:
     EquipLevelMin: 1
     View: 1751
   - Id: 31510
-    AegisName: C_ShortHair_CatEar
+    AegisName: C_Cat_Ear_Short
     Name: C Short Haired Cat Ears
     Type: Armor
     Locations:
@@ -133622,7 +133622,7 @@ Body:
     EquipLevelMin: 1
     View: 1752
   - Id: 31511
-    AegisName: C_LongHair_CatEar
+    AegisName: C_Cat_Ear_Long
     Name: C Long Haired Cat Ears
     Type: Armor
     Locations:
@@ -133925,7 +133925,7 @@ Body:
     EquipLevelMin: 1
     View: 1774
   - Id: 31544
-    AegisName: C_Piamette_Curls
+    AegisName: C_Piamette_Roll_Hair
     Name: Costume Piamette Curls
     Type: Armor
     Locations:
@@ -134208,7 +134208,7 @@ Body:
     EquipLevelMin: 1
     View: 1790
   - Id: 31575
-    AegisName: C_Electro_Two_Sides_Up
+    AegisName: C_Electro_Two_Side_Up
     Name: C Electro Two Sides Up
     Type: Armor
     Locations:
@@ -134759,7 +134759,7 @@ Body:
     EquipLevelMin: 1
     View: 836
   - Id: 31635
-    AegisName: Costume_Flowing_Long_BD
+    AegisName: C_Fairy_Long_BD
     Name: C Flowing Long Blonde
     Type: Armor
     Locations:
@@ -134768,7 +134768,7 @@ Body:
     EquipLevelMin: 1
     View: 1832
   - Id: 31636
-    AegisName: Costume_Flowing_Long_SV
+    AegisName: C_Fairy_Long_SV
     Name: C Flowing Long Silver
     Type: Armor
     Locations:
@@ -134795,7 +134795,7 @@ Body:
     EquipLevelMin: 1
     View: 1835
   - Id: 31639
-    AegisName: Costume_Straight_Long_BD
+    AegisName: C_Straight_Long_GL
     Name: C Straight Long Blonde
     Type: Armor
     Locations:
@@ -135207,7 +135207,7 @@ Body:
     EquipLevelMin: 1
     View: 733
   - Id: 31684
-    AegisName: Costume_Kururinpa_Tails
+    AegisName: C_Kururinpa_Hair
     Name: C Kururinpa Tails
     Type: Armor
     Locations:
@@ -135417,7 +135417,7 @@ Body:
     EquipLevelMin: 1
     View: 810
   - Id: 31707
-    AegisName: Costume_Nine_Tail_Fox_Hair
+    AegisName: C_Nine_Tail_Fox_Hair
     Name: C Nine Tail Fox Hair
     Type: Armor
     Locations:
@@ -135624,7 +135624,7 @@ Body:
     EquipLevelMin: 1
     View: 1893
   - Id: 31730
-    AegisName: Costume_Volume_Low_Twin_SK
+    AegisName: C_Volume_Low_Twin_CB
     Name: C Volume Low Twin Sakura
     Type: Armor
     Locations:
@@ -136150,7 +136150,7 @@ Body:
     EquipLevelMin: 1
     View: 1915
   - Id: 31788
-    AegisName: C_Piamette_Curls_SV
+    AegisName: C_Piamette_Roll_Hair_SV
     Name: C Piamette Curls Silver
     Type: Armor
     Locations:
@@ -136382,7 +136382,7 @@ Body:
     EquipLevelMin: 1
     View: 1809
   - Id: 31815
-    AegisName: Costume_Angola_Intention
+    AegisName: C_Angola_Intention
     Name: C Angola Intention
     Type: Armor
     Locations:
@@ -136498,7 +136498,7 @@ Body:
     EquipLevelMin: 1
     View: 1938
   - Id: 31833
-    AegisName: C_Halloween_CatShort
+    AegisName: C_Halloween_Cat_Short
     Name: C Halloween Short Haired Cat Ears
     Type: Armor
     Locations:
@@ -139959,21 +139959,29 @@ Body:
     Script: |
       bonus2 bExpAddClass,Class_All,10;
   - Id: 400056
-    AegisName: VIP_Hair_Female
+    AegisName: C_VIP_Hair_Female
     Name: "Costume: Blue Devil Wig"
     Type: Armor
     View: 1990
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_VIP_HAIR,true;
+    UnEquipScript: |
+      hateffect HAT_EF_VIP_HAIR,false;
   - Id: 400057
-    AegisName: VIP_Hair_Male
+    AegisName: C_VIP_Hair_Male
     Name: "Costume: Red Lotus Demon Wig"
     Type: Armor
     View: 1989
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_VIP_HAIR,true;
+    UnEquipScript: |
+      hateffect HAT_EF_VIP_HAIR,false;
   - Id: 400059
     AegisName: Scorpio_Diadem_K
     Name: Scorpio Celestial Coronet
