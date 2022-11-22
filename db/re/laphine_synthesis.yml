@@ -1790,7 +1790,7 @@ Body:
       - Item: C_Frog_Hood
       - Item: C_Lude_Hood
       - Item: C_Blessings_Of_Soul
-      - Item: C_Crow
+      - Item: C_Gossip_Raven
       - Item: C_Halloween_Hat
       - Item: C_Blessed_Veil
       - Item: C_Eyes_Of_Ifrit
@@ -1813,7 +1813,7 @@ Body:
       - Item: C_Sakura_Coronet
       - Item: C_Full_Bloom_Hairpin
       - Item: Cons_Of_Earth
-      - Item: Costume_Master_Of_Wind
+      - Item: C_Cons_Of_Wind
       - Item: C_Cons_Of_Darkness
       - Item: C_Boitata_Hat_J
       - Item: C_Jioia_TW

@@ -95689,7 +95689,7 @@ Body:
     EquipLevelMin: 1
     View: 1332
   - Id: 20287
-    AegisName: C_Mans_Medal_Gold
+    AegisName: C_Man_Medal_Gold
     Name: Costume Man's Medal(Gold)
     Type: Armor
     Locations:
@@ -96940,7 +96940,7 @@ Body:
     EquipLevelMin: 1
     View: 825
   - Id: 20439
-    AegisName: C_New_Year_Shine
+    AegisName: C_Glow_Of_New_Year
     Name: Costume New Year Shine
     Type: Armor
     Locations:
@@ -132444,7 +132444,7 @@ Body:
     EquipLevelMin: 1
     View: 1335
   - Id: 31380
-    AegisName: C_Crow
+    AegisName: C_Gossip_Raven
     Name: C Crow
     Type: Armor
     Locations:
@@ -133871,7 +133871,7 @@ Body:
     EquipLevelMin: 1
     View: 1772
   - Id: 31538
-    AegisName: C_Lovely_Feeling
+    AegisName: C_Love_Feeling_J
     Name: C Lovely Feeling
     Type: Armor
     Locations:
@@ -135225,7 +135225,7 @@ Body:
     EquipLevelMin: 1
     View: 1874
   - Id: 31686
-    AegisName: Costume_Desert_Wolf_Baby
+    AegisName: C_Desert_Wolf_B
     Name: C Desert Wolf Baby
     Type: Armor
     Locations:
@@ -136283,7 +136283,7 @@ Body:
     EquipLevelMin: 1
     View: 428
   - Id: 31803
-    AegisName: Costume_Master_Of_Wind
+    AegisName: C_Cons_Of_Wind
     Name: C Master of Wind
     Type: Armor
     Locations:
@@ -144159,6 +144159,14 @@ Body:
       hateffect HAT_EF_C_Released_Ground,true;
     UnEquipScript: |
       hateffect HAT_EF_C_Released_Ground,false;
+  - Id: 410082
+    AegisName: C_BirthDay_Balloon_TW
+    Name: Costume Happy Birthday Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2137
   - Id: 410084
     AegisName: Melon_Headphone_J_
     Name: Premium Melon Headphones
@@ -144413,7 +144421,7 @@ Body:
     EquipLevelMin: 1
     View: 2245
   - Id: 410133
-    AegisName: aegis_410133
+    AegisName: C_Belka_Strelka
     Name: Costume Puppy Diverse
     Type: Armor
     Locations:
