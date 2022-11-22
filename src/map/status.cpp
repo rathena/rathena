@@ -12815,8 +12815,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_C_MARKER:
 			//Send mini-map, don't wait for first timer triggered
-			if (src->type == BL_PC && (sd = map_id2sd(src->id)))
-				clif_crimson_marker(sd, bl, false);
+			if (src->type == BL_PC) {
+				clif_crimson_marker(*(struct map_session_data *)(src), *bl, false);
+			}
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd)
@@ -13419,7 +13420,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				ARR_FIND(0,MAX_SKILL_CRIMSON_MARKER,i,caster->c_marker[i] == bl->id);
 				if (i < MAX_SKILL_CRIMSON_MARKER) {
 					caster->c_marker[i] = 0;
-					clif_crimson_marker(caster, bl, true);
+					clif_crimson_marker( *caster, *bl, true );
 				}
 			}
 			break;
@@ -14417,7 +14418,7 @@ TIMER_FUNC(status_change_timer){
 			if (!caster || caster->bl.m != bl->m) //End the SC if caster isn't in same map
 				break;
 			sc_timer_next(1000 + tick);
-			clif_crimson_marker(caster, bl, false);
+			clif_crimson_marker( *caster, *bl, false );
 			return 0;
 		}
 		break;

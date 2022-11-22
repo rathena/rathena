@@ -1100,7 +1100,7 @@ OnTimer11000:
 	mapannounce "job3_rang02","Test Supervisor, Caution : When you use a 'Bombring Capsule' a Bombring is summoned near you, and after 3 seconds it will explode.",bc_map,"0x87ceeb"; //FW_NORMAL 12 0 0
 	end;
 OnTimer14000:
-	mapannounce "job3_rang02","Test Supervisor, Caution : The explosive range of the Bombring is a 5x5 cell around the Bombring, so be carefull not to be caught in the explosion.",bc_map,"0xffb6c1"; //FW_NORMAL 12 0 0
+	mapannounce "job3_rang02","Test Supervisor, Caution : The explosive range of the Bombring is a 5x5 cell around the Bombring, so be careful not to be caught in the explosion.",bc_map,"0xffb6c1"; //FW_NORMAL 12 0 0
 	end;
 OnTimer17000:
 	mapannounce "job3_rang02","Test Supervisor, Caution : Whilst progressing, if you complete the mission given by an staff member come and see me, then you will pass the 2nd practical test!",bc_map,"0x87ceeb"; //FW_NORMAL 12 0 0

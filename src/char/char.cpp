@@ -3010,7 +3010,11 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.start_zeny = atoi(w2);
 			if (charserv_config.start_zeny < 0)
 				charserv_config.start_zeny = 0;
+#ifdef RENEWAL
 		} else if (strcmpi(w1, "start_items") == 0) {
+#else
+		} else if (strcmpi(w1, "start_items_pre") == 0) {
+#endif
 			char_config_split_startitem(w1, w2, charserv_config.start_items);
 #if PACKETVER >= 20151001
 		} else if (strcmpi(w1, "start_items_doram") == 0) {

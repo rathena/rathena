@@ -1800,7 +1800,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src, bl, SC_MAGIC_POISON, 100, skill_lv, 20000);
 		break;
 	case NPC_COMET:
-		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
+		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_JACKFROST:
 		sc_start(src,bl,SC_FREEZE,200,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -3673,6 +3673,13 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	}
 
 	damage = dmg.damage + dmg.damage2;
+
+	if ((dmg.flag & BF_MAGIC) && tsc && tsc->data[SC_MAXPAIN]) {
+		tsc->data[SC_MAXPAIN]->val3 = (int)damage;
+		tsc->data[SC_MAXPAIN]->val2 = 0;
+		if (!tsc->data[SC_KYOMU]) //SC_KYOMU invalidates reflecting ability.
+			skill_castend_damage_id(bl, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, flag);
+	}
 
 	if( (skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
 		skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
@@ -7617,6 +7624,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
+	case CR_REFLECTSHIELD:
+	case MS_REFLECTSHIELD:
+		if (tsc && tsc->data[SC_DARKCROW]) { // SC_DARKCROW prevents using reflecting skills
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+			break;
+		}
 	case PR_SLOWPOISON:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
@@ -7629,8 +7643,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case KN_ONEHAND:
 	case MER_QUICKEN:
 	case CR_SPEARQUICKEN:
-	case CR_REFLECTSHIELD:
-	case MS_REFLECTSHIELD:
 	case AS_POISONREACT:
 #ifndef RENEWAL
 	case MC_LOUD:
