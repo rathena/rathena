@@ -1649,7 +1649,7 @@ Body:
       - Item: C_Thanatos_Sword
       - Item: C_Warm_Cat_Muffler
       - Item: C_Clock_Casket
-      - Item: C_Happy_Parrot_J
+      - Item: C_Chatty_Parrot
       - Item: C_Flame_Muffler
       - Item: C_Teddy_Bear_Hood
       - Item: C_Mouton_Life_BL
@@ -1738,13 +1738,13 @@ Body:
       - Item: C_Big_Foxtail
       - Item: C_T_Bear_Bag
       - Item: C_Poring_On_Shoulder
-      - Item: Costume_Yawata_Seal
+      - Item: C_FortunetellinSealed
       - Item: C_Pretty_Bear_WH
       - Item: C_Bicolor_Cat_Witch_Hat
       - Item: C_Nifl_Bloom
       - Item: C_Floating_Ball_TW
       - Item: C_Dark_Snake_Lord_Stall
-      - Item: Costume_Twin_Cannon
+      - Item: C_Twin_Canon
       - Item: C_Picnic_Basket
       - Item: C_Magic_Helm
       - Item: C_ManyStars_TW
@@ -1774,7 +1774,7 @@ Body:
       - Item: C_Magic_Heir_TW
       - Item: C_Blink_Eyes_Sakura
       - Item: C_Angola_Intention
-      - Item: C_Stole_Of_Dominion
+      - Item: C_Stall_Of_Dominions
       - Item: C_Flowery_Vision_TH
       - Item: C_Frill_Collar
       - Item: C_Rose_Gothic_Bonnet
@@ -1799,7 +1799,7 @@ Body:
       - Item: C_Wildcat_Knit_Cap
       - Item: C_Pink_Fur_Hat
       - Item: C_Gift_Of_Snow
-      - Item: C_Large_Ribbon_Muffler_Red
+      - Item: C_L_RibbonMuff_Red
       - Item: C_Imperial_Glory
       - Item: C_Black_Shiba_Inu_Hat
       - Item: C_Black_Glasses
@@ -3272,11 +3272,11 @@ Body:
 #    RewardGroup: ENCHANTSTONE_RECIPE_3M
 #    Requirements:
 #      - Item: C_Pretty_Bear_WH
-#      - Item: Costume_Yawata_Seal
+#      - Item: C_FortunetellinSealed
 #      - Item: C_Floating_Ball_TW
 #      - Item: C_Dark_Snake_Lord_Stall
 #      - Item: C_Bicolor_Cat_Witch_Hat
-#      - Item: Costume_Twin_Cannon
+#      - Item: C_Twin_Canon
 #      - Item: C_Picnic_Basket
 #      - Item: C_Magic_Helm
 #      - Item: C_Fawn_Ear
