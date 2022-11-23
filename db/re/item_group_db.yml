@@ -37089,8 +37089,8 @@ Body:
             Rate: 25
           - Item: Sura_Rampage    # 1830
             Rate: 25
-          - Item: Iron_Nail_K    # 1847
-            Rate: 0
+#          - Item: Iron_Nail_K    # 1847
+#            Rate: 0
           - Item: Violin_    # 1902
             Rate: 300
           - Item: Mandolin_    # 1904
@@ -37147,12 +37147,12 @@ Body:
             Rate: 25
           - Item: Staff_Of_Geffen    # 2022
             Rate: 1
-          - Item: Iron_Staff    # 2048
-            Rate: 0
-          - Item: Sillit_Pong_Bottle    # 6443
-            Rate: 0
-          - Item: God_Material_Box    # 12674
-            Rate: 0
+#          - Item: Iron_Staff    # 2048
+#            Rate: 0
+#          - Item: Sillit_Pong_Bottle    # 6443
+#            Rate: 0
+#          - Item: God_Material_Box    # 12674
+#            Rate: 0
           - Item: Dragon_Killer    # 13001
             Rate: 25
           - Item: Krieg    # 13046
@@ -37183,12 +37183,12 @@ Body:
             Rate: 25
           - Item: Huuma_Thunderstorm    # 13315
             Rate: 25
-          - Item: Humma_Clear    # 13345
-            Rate: 0
+#          - Item: Humma_Clear    # 13345
+#            Rate: 0
           - Item: Chrome_Sword    # 13431
             Rate: 25
-          - Item: Sword_Of_Bluefire    # 13485
-            Rate: 0
+#          - Item: Sword_Of_Bluefire    # 13485
+#            Rate: 0
           - Item: Red_Ether_Bag    # 16010
             Rate: 25
           - Item: Robot's_Arm    # 16033
@@ -37199,86 +37199,86 @@ Body:
             Rate: 1
           - Item: Creeper_Bow    # 18111
             Rate: 25
-          - Item: Royal_Bow_K    # 18164
-            Rate: 0
-          - Item: Narcis_Bow    # 18170
-            Rate: 0
-          - Item: C_Evil_Druid_Hat    # 19824
-            Rate: 0
-          - Item: Oriental_Sword    # 21038
-            Rate: 0
-          - Item: Pump_Of_Spirit    # 25041
-            Rate: 0
-          - Item: Shadow_Staff_K    # 26118
-            Rate: 0
-          - Item: SoulWeight    # 26154
-            Rate: 0
-          - Item: MeawFoxtail    # 26155
-            Rate: 0
-          - Item: Shiver_Katar_K    # 28039
-            Rate: 0
+#          - Item: Royal_Bow_K    # 18164
+#            Rate: 0
+#          - Item: Narcis_Bow    # 18170
+#            Rate: 0
+#          - Item: C_Evil_Druid_Hat    # 19824
+#            Rate: 0
+#          - Item: Oriental_Sword    # 21038
+#            Rate: 0
+#          - Item: Pump_Of_Spirit    # 25041
+#            Rate: 0
+#          - Item: Shadow_Staff_K    # 26118
+#            Rate: 0
+#          - Item: SoulWeight    # 26154
+#            Rate: 0
+#          - Item: MeawFoxtail    # 26155
+#            Rate: 0
+#          - Item: Shiver_Katar_K    # 28039
+#            Rate: 0
           - Item: Tornado_Axe    # 28101
             Rate: 1
-          - Item: Avenger    # 28130
-            Rate: 0
-          - Item: Master_Soul_Rifle    # 28255
-            Rate: 0
-          - Item: Demon_S_Shot    # 28256
-            Rate: 0
-          - Item: Golden_L_Launcher    # 28257
-            Rate: 0
-          - Item: The_Black_Gatling    # 28258
-            Rate: 0
-          - Item: Demon_Hunting_Bible_K    # 28630
-            Rate: 0
-          - Item: OneSkyOneSun    # 28631
-            Rate: 0
-          - Item: Magic_Sword    # 28744
-            Rate: 0
-          - Item: Sharp_Wind_Sword    # 28763
-            Rate: 0
-          - Item: Fog_Dew_Sword    # 28764
-            Rate: 0
-          - Item: C_Kururinpa_Hair    # 31684
-            Rate: 0
-          - Item: C_Medium_Wave_BD    # 31717
-            Rate: 0
-          - Item: Mushroom_Hair    # 31855
-            Rate: 0
-          - Item: Undine_Spear_K    # 32018
-            Rate: 0
-          - Item: Celine_Brooch_K    # 32237
-            Rate: 0
-          - Item: Crimson_Rose    # 32302
-            Rate: 0
-          - Item: Victory_Wing_Ear    # 400001
-            Rate: 0
-          - Item: Light_Blade    # 500003
-            Rate: 0
-          - Item: Slate_Sword    # 500004
-            Rate: 0
-          - Item: Fatalist    # 510006
-            Rate: 0
-          - Item: Freezing_Rod    # 550007
-            Rate: 0
-          - Item: Ray_Knuckle    # 560002
-            Rate: 0
-          - Item: Trumpet_Shell_K    # 570002
-            Rate: 0
-          - Item: Barb_Wire_K    # 580002
-            Rate: 0
-          - Item: Meteor_Striker    # 590002
-            Rate: 0
-          - Item: Saint_Hall    # 590003
-            Rate: 0
-          - Item: Dragonic_Slayer    # 600004
-            Rate: 0
-          - Item: Blade_Katar    # 610003
-            Rate: 0
-          - Item: Blue_Crystal_Staff    # 640004
-            Rate: 0
-          - Item: Scalet_Dragon_L_Bow    # 700003
-            Rate: 0
+#          - Item: Avenger    # 28130
+#            Rate: 0
+#          - Item: Master_Soul_Rifle    # 28255
+#            Rate: 0
+#          - Item: Demon_S_Shot    # 28256
+#            Rate: 0
+#          - Item: Golden_L_Launcher    # 28257
+#            Rate: 0
+#          - Item: The_Black_Gatling    # 28258
+#            Rate: 0
+#          - Item: Demon_Hunting_Bible_K    # 28630
+#            Rate: 0
+#          - Item: OneSkyOneSun    # 28631
+#            Rate: 0
+#          - Item: Magic_Sword    # 28744
+#            Rate: 0
+#          - Item: Sharp_Wind_Sword    # 28763
+#            Rate: 0
+#          - Item: Fog_Dew_Sword    # 28764
+#            Rate: 0
+#          - Item: C_Kururinpa_Hair    # 31684
+#            Rate: 0
+#          - Item: C_Medium_Wave_BD    # 31717
+#            Rate: 0
+#          - Item: Mushroom_Hair    # 31855
+#            Rate: 0
+#          - Item: Undine_Spear_K    # 32018
+#            Rate: 0
+#          - Item: Celine_Brooch_K    # 32237
+#            Rate: 0
+#          - Item: Crimson_Rose    # 32302
+#            Rate: 0
+#          - Item: Victory_Wing_Ear    # 400001
+#            Rate: 0
+#          - Item: Light_Blade    # 500003
+#            Rate: 0
+#          - Item: Slate_Sword    # 500004
+#            Rate: 0
+#          - Item: Fatalist    # 510006
+#            Rate: 0
+#          - Item: Freezing_Rod    # 550007
+#            Rate: 0
+#          - Item: Ray_Knuckle    # 560002
+#            Rate: 0
+#          - Item: Trumpet_Shell_K    # 570002
+#            Rate: 0
+#          - Item: Barb_Wire_K    # 580002
+#            Rate: 0
+#          - Item: Meteor_Striker    # 590002
+#            Rate: 0
+#          - Item: Saint_Hall    # 590003
+#            Rate: 0
+#          - Item: Dragonic_Slayer    # 600004
+#            Rate: 0
+#          - Item: Blade_Katar    # 610003
+#            Rate: 0
+#          - Item: Blue_Crystal_Staff    # 640004
+#            Rate: 0
+#          - Item: Scalet_Dragon_L_Bow    # 700003
+#            Rate: 0
   - Group: CACHUA_ROBE
     SubGroups:
       - SubGroup: 1
@@ -37321,30 +37321,30 @@ Body:
             Rate: 200
           - Item: Beach_Towel    # 2565
             Rate: 200
-          - Item: Sillit_Pong_Bottle    # 6443
-            Rate: 0
-          - Item: God_Material_Box    # 12674
-            Rate: 0
-          - Item: C_Evil_Druid_Hat    # 19824
-            Rate: 0
+#          - Item: Sillit_Pong_Bottle    # 6443
+#            Rate: 0
+#          - Item: God_Material_Box    # 12674
+#            Rate: 0
+#          - Item: C_Evil_Druid_Hat    # 19824
+#            Rate: 0
           - Item: Supplement_Part_Con    # 20732
             Rate: 3
           - Item: Upgrade_Part_Engine    # 20733
             Rate: 3
           - Item: Felock_Cape    # 20744
             Rate: 2
-          - Item: Pump_Of_Spirit    # 25041
-            Rate: 0
-          - Item: C_Kururinpa_Hair    # 31684
-            Rate: 0
-          - Item: C_Medium_Wave_BD    # 31717
-            Rate: 0
-          - Item: Mushroom_Hair    # 31855
-            Rate: 0
-          - Item: Celine_Brooch_K    # 32237
-            Rate: 0
-          - Item: Victory_Wing_Ear    # 400001
-            Rate: 0
+#          - Item: Pump_Of_Spirit    # 25041
+#            Rate: 0
+#          - Item: C_Kururinpa_Hair    # 31684
+#            Rate: 0
+#          - Item: C_Medium_Wave_BD    # 31717
+#            Rate: 0
+#          - Item: Mushroom_Hair    # 31855
+#            Rate: 0
+#          - Item: Celine_Brooch_K    # 32237
+#            Rate: 0
+#          - Item: Victory_Wing_Ear    # 400001
+#            Rate: 0
   - Group: CACHUA_MAIL
     SubGroups:
       - SubGroup: 1
@@ -37421,10 +37421,10 @@ Body:
             Rate: 1
           - Item: Dragon_Vest    # 2399
             Rate: 1
-          - Item: Sillit_Pong_Bottle    # 6443
-            Rate: 0
-          - Item: God_Material_Box    # 12674
-            Rate: 0
+#          - Item: Sillit_Pong_Bottle    # 6443
+#            Rate: 0
+#          - Item: God_Material_Box    # 12674
+#            Rate: 0
           - Item: Tidung    # 15032
             Rate: 1
           - Item: Prison_Uniform    # 15040
@@ -37433,22 +37433,22 @@ Body:
             Rate: 1
           - Item: Rider_Suit    # 15058
             Rate: 1
-          - Item: Lounge_Suit_    # 15089
+          - Item: Lounge_Suit    # 15089
             Rate: 1
-          - Item: C_Evil_Druid_Hat    # 19824
-            Rate: 0
-          - Item: Pump_Of_Spirit    # 25041
-            Rate: 0
-          - Item: C_Kururinpa_Hair    # 31684
-            Rate: 0
-          - Item: C_Medium_Wave_BD    # 31717
-            Rate: 0
-          - Item: Mushroom_Hair    # 31855
-            Rate: 0
-          - Item: Celine_Brooch_K    # 32237
-            Rate: 0
-          - Item: Victory_Wing_Ear    # 400001
-            Rate: 0
+#          - Item: C_Evil_Druid_Hat    # 19824
+#            Rate: 0
+#          - Item: Pump_Of_Spirit    # 25041
+#            Rate: 0
+#          - Item: C_Kururinpa_Hair    # 31684
+#            Rate: 0
+#          - Item: C_Medium_Wave_BD    # 31717
+#            Rate: 0
+#          - Item: Mushroom_Hair    # 31855
+#            Rate: 0
+#          - Item: Celine_Brooch_K    # 32237
+#            Rate: 0
+#          - Item: Victory_Wing_Ear    # 400001
+#            Rate: 0
   - Group: CACHUA_SHOES
     SubGroups:
       - SubGroup: 1
@@ -37487,30 +37487,30 @@ Body:
             Rate: 360
           - Item: Shadow_Walk_    # 2486
             Rate: 2
-          - Item: Sillit_Pong_Bottle    # 6443
-            Rate: 0
-          - Item: God_Material_Box    # 12674
-            Rate: 0
-          - Item: C_Evil_Druid_Hat    # 19824
-            Rate: 0
+#          - Item: Sillit_Pong_Bottle    # 6443
+#            Rate: 0
+#          - Item: God_Material_Box    # 12674
+#            Rate: 0
+#          - Item: C_Evil_Druid_Hat    # 19824
+#            Rate: 0
           - Item: Supplement_Part_Agi    # 22043
             Rate: 3
           - Item: Upgrade_Part_Booster    # 22044
             Rate: 3
           - Item: Felock_Boots    # 22047
             Rate: 2
-          - Item: Pump_Of_Spirit    # 25041
-            Rate: 0
-          - Item: C_Kururinpa_Hair    # 31684
-            Rate: 0
-          - Item: C_Medium_Wave_BD    # 31717
-            Rate: 0
-          - Item: Mushroom_Hair    # 31855
-            Rate: 0
-          - Item: Celine_Brooch_K    # 32237
-            Rate: 0
-          - Item: Victory_Wing_Ear    # 400001
-            Rate: 0
+#          - Item: Pump_Of_Spirit    # 25041
+#            Rate: 0
+#          - Item: C_Kururinpa_Hair    # 31684
+#            Rate: 0
+#          - Item: C_Medium_Wave_BD    # 31717
+#            Rate: 0
+#          - Item: Mushroom_Hair    # 31855
+#            Rate: 0
+#          - Item: Celine_Brooch_K    # 32237
+#            Rate: 0
+#          - Item: Victory_Wing_Ear    # 400001
+#            Rate: 0
   - Group: CACHUA_SHIELD
     SubGroups:
       - SubGroup: 1
@@ -37547,24 +37547,24 @@ Body:
             Rate: 493
           - Item: Bible_Of_Promise2    # 2162
             Rate: 3
-          - Item: Sillit_Pong_Bottle    # 6443
-            Rate: 0
-          - Item: God_Material_Box    # 12674
-            Rate: 0
-          - Item: C_Evil_Druid_Hat    # 19824
-            Rate: 0
-          - Item: Pump_Of_Spirit    # 25041
-            Rate: 0
-          - Item: C_Kururinpa_Hair    # 31684
-            Rate: 0
-          - Item: C_Medium_Wave_BD    # 31717
-            Rate: 0
-          - Item: Mushroom_Hair    # 31855
-            Rate: 0
-          - Item: Celine_Brooch_K    # 32237
-            Rate: 0
-          - Item: Victory_Wing_Ear    # 400001
-            Rate: 0
+#          - Item: Sillit_Pong_Bottle    # 6443
+#            Rate: 0
+#          - Item: God_Material_Box    # 12674
+#            Rate: 0
+#          - Item: C_Evil_Druid_Hat    # 19824
+#            Rate: 0
+#          - Item: Pump_Of_Spirit    # 25041
+#            Rate: 0
+#          - Item: C_Kururinpa_Hair    # 31684
+#            Rate: 0
+#          - Item: C_Medium_Wave_BD    # 31717
+#            Rate: 0
+#          - Item: Mushroom_Hair    # 31855
+#            Rate: 0
+#          - Item: Celine_Brooch_K    # 32237
+#            Rate: 0
+#          - Item: Victory_Wing_Ear    # 400001
+#            Rate: 0
   - Group: CACHUA_HELM
     SubGroups:
       - SubGroup: 1
@@ -37643,8 +37643,8 @@ Body:
             Rate: 50
           - Item: Prontera_Army_Cap    # 2261
             Rate: 250
-          - Item: Smoking_Pipe    # 2268
-            Rate: 0
+#          - Item: Smoking_Pipe    # 2268
+#            Rate: 0
           - Item: Ghost_Bandana    # 2274
             Rate: 50
           - Item: Red_Bandana    # 2275
@@ -37653,8 +37653,8 @@ Body:
             Rate: 50
           - Item: Apple_Of_Archer    # 2285
             Rate: 40
-          - Item: Elven_Ears    # 2286
-            Rate: 0
+#          - Item: Elven_Ears    # 2286
+#            Rate: 0
           - Item: Pirate_Bandana    # 2287
             Rate: 250
           - Item: Funeral_Costume    # 2290
@@ -37665,8 +37665,8 @@ Body:
             Rate: 50
           - Item: Joker_Jester    # 5003
             Rate: 250
-          - Item: Oxygen_Mask    # 5004
-            Rate: 0
+#          - Item: Oxygen_Mask    # 5004
+#            Rate: 0
           - Item: Loard_Circlet    # 5007
             Rate: 40
           - Item: Puppy_Love    # 5008
@@ -37679,54 +37679,54 @@ Body:
             Rate: 250
           - Item: Egg_Shell    # 5015
             Rate: 250
-          - Item: Boy's_Cap    # 5016
-            Rate: 0
+#          - Item: Boy's_Cap    # 5016
+#            Rate: 0
           - Item: Bone_Helm    # 5017
             Rate: 40
           - Item: Corsair    # 5019
             Rate: 40
-          - Item: Helm_Of_Angel    # 5025
-            Rate: 0
-          - Item: Hat_Of_Cook    # 5026
-            Rate: 0
-          - Item: Wizardry_Hat    # 5027
-            Rate: 0
+#          - Item: Helm_Of_Angel    # 5025
+#            Rate: 0
+#          - Item: Hat_Of_Cook    # 5026
+#            Rate: 0
+#          - Item: Wizardry_Hat    # 5027
+#            Rate: 0
           - Item: Panda_Cap    # 5030
             Rate: 40
-          - Item: Picnic_Hat    # 5032
-            Rate: 0
+#          - Item: Picnic_Hat    # 5032
+#            Rate: 0
           - Item: Poring_Hat    # 5035
             Rate: 40
-          - Item: Deviruchi_Cap    # 5038
-            Rate: 0
-          - Item: Blush    # 5040
-            Rate: 0
-          - Item: Hair_Protector    # 5042
-            Rate: 0
-          - Item: Magician_Hat    # 5045
-            Rate: 0
-          - Item: Drooping_Kitty    # 5058
-            Rate: 0
-          - Item: Brown_Bear_Cap    # 5059
-            Rate: 0
-          - Item: Fish_On_Head    # 5065
-            Rate: 0
+#          - Item: Deviruchi_Cap    # 5038
+#            Rate: 0
+#          - Item: Blush    # 5040
+#            Rate: 0
+#          - Item: Hair_Protector    # 5042
+#            Rate: 0
+#          - Item: Magician_Hat    # 5045
+#            Rate: 0
+#          - Item: Drooping_Kitty    # 5058
+#            Rate: 0
+#          - Item: Brown_Bear_Cap    # 5059
+#            Rate: 0
+#          - Item: Fish_On_Head    # 5065
+#            Rate: 0
           - Item: Horn_Of_Succubus    # 5066
             Rate: 40
           - Item: Inccubus_Horn    # 5072
             Rate: 40
-          - Item: Cowboy_Hat    # 5075
-            Rate: 0
-          - Item: Fur_Hat    # 5076
-            Rate: 0
-          - Item: Headgear_Of_Queen    # 5080
-            Rate: 0
-          - Item: Red_Bonnet    # 5109
-            Rate: 0
-          - Item: Baby_Pacifier    # 5110
-            Rate: 0
-          - Item: Winter_Hat    # 5115
-            Rate: 0
+#          - Item: Cowboy_Hat    # 5075
+#            Rate: 0
+#          - Item: Fur_Hat    # 5076
+#            Rate: 0
+#          - Item: Headgear_Of_Queen    # 5080
+#            Rate: 0
+#          - Item: Red_Bonnet    # 5109
+#            Rate: 0
+#          - Item: Baby_Pacifier    # 5110
+#            Rate: 0
+#          - Item: Winter_Hat    # 5115
+#            Rate: 0
           - Item: Banana_Hat    # 5116
             Rate: 40
           - Item: Ear_Of_Puppy    # 5118
@@ -37739,42 +37739,42 @@ Body:
             Rate: 40
           - Item: Marionette_Doll    # 5141
             Rate: 40
-          - Item: Bride_Mask    # 5169
-            Rate: 0
-          - Item: Feather_Beret    # 5170
-            Rate: 0
+#          - Item: Bride_Mask    # 5169
+#            Rate: 0
+#          - Item: Feather_Beret    # 5170
+#            Rate: 0
           - Item: Valkyrie_Helm    # 5171
             Rate: 1
-          - Item: Satto_Hat    # 5173
-            Rate: 0
-          - Item: Ayam    # 5174
-            Rate: 0
-          - Item: Hahoe_Mask    # 5176
-            Rate: 0
-          - Item: Guardian_Lion_Mask    # 5177
-            Rate: 0
-          - Item: Sillit_Pong_Bottle    # 6443
-            Rate: 0
-          - Item: God_Material_Box    # 12674
-            Rate: 0
+#          - Item: Satto_Hat    # 5173
+#            Rate: 0
+#          - Item: Ayam    # 5174
+#            Rate: 0
+#          - Item: Hahoe_Mask    # 5176
+#            Rate: 0
+#          - Item: Guardian_Lion_Mask    # 5177
+#            Rate: 0
+#          - Item: Sillit_Pong_Bottle    # 6443
+#            Rate: 0
+#          - Item: God_Material_Box    # 12674
+#            Rate: 0
           - Item: Cursed_Book    # 18752
             Rate: 1
-          - Item: Feather_Beret_    # 18755
-            Rate: 0
-          - Item: C_Evil_Druid_Hat    # 19824
-            Rate: 0
-          - Item: Pump_Of_Spirit    # 25041
-            Rate: 0
-          - Item: C_Kururinpa_Hair    # 31684
-            Rate: 0
-          - Item: C_Medium_Wave_BD    # 31717
-            Rate: 0
-          - Item: Mushroom_Hair    # 31855
-            Rate: 0
-          - Item: Celine_Brooch_K    # 32237
-            Rate: 0
-          - Item: Victory_Wing_Ear    # 400001
-            Rate: 0
+#          - Item: Feather_Beret_    # 18755
+#            Rate: 0
+#          - Item: C_Evil_Druid_Hat    # 19824
+#            Rate: 0
+#          - Item: Pump_Of_Spirit    # 25041
+#            Rate: 0
+#          - Item: C_Kururinpa_Hair    # 31684
+#            Rate: 0
+#          - Item: C_Medium_Wave_BD    # 31717
+#            Rate: 0
+#          - Item: Mushroom_Hair    # 31855
+#            Rate: 0
+#          - Item: Celine_Brooch_K    # 32237
+#            Rate: 0
+#          - Item: Victory_Wing_Ear    # 400001
+#            Rate: 0
   - Group: BALLOON_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -38569,14 +38569,14 @@ Body:
             Amount: 10
           - Item: Sillit_Pong_Bottle    # 6443
             Rate: 1
-          - Item: Guarantee_Weapon_12Up    # 6584
-            Rate: 0
-          - Item: Guarantee_Armor_12Up    # 6585
-            Rate: 0
-          - Item: Guarantee_Weapon_13Up    # 6870
-            Rate: 0
-          - Item: Guarantee_Armor_13Up    # 6876
-            Rate: 0
+#          - Item: Guarantee_Weapon_12Up    # 6584
+#            Rate: 0
+#          - Item: Guarantee_Armor_12Up    # 6585
+#            Rate: 0
+#          - Item: Guarantee_Weapon_13Up    # 6870
+#            Rate: 0
+#          - Item: Guarantee_Armor_13Up    # 6876
+#            Rate: 0
           - Item: Guarantee_Weapon_10Up    # 6993
             Rate: 1
           - Item: Guarantee_Armor_10Up    # 6994
@@ -42380,32 +42380,32 @@ Body:
           - Item: Cachua_Coupon    # 1000274
       - SubGroup: 1
         List:
-          - Item: Guarantee_Weapon_9Up    # 6228
-            Rate: 0
+#          - Item: Guarantee_Weapon_9Up    # 6228
+#            Rate: 0
           - Item: Guarantee_Weapon_8Up    # 6229
             Rate: 1
           - Item: Guarantee_Weapon_7Up    # 6230
             Rate: 1
-          - Item: Guarantee_Armor_9Up    # 6232
-            Rate: 0
+#          - Item: Guarantee_Armor_9Up    # 6232
+#            Rate: 0
           - Item: Guarantee_Armor_8Up    # 6233
             Rate: 1
           - Item: Guarantee_Armor_7Up    # 6234
             Rate: 1
-          - Item: Guarantee_Weapon_11Up    # 6238
-            Rate: 0
-          - Item: Guarantee_Armor_11Up    # 6239
-            Rate: 0
-          - Item: Guarantee_Weapon_12Up    # 6584
-            Rate: 0
-          - Item: Guarantee_Armor_12Up    # 6585
-            Rate: 0
+#          - Item: Guarantee_Weapon_11Up    # 6238
+#            Rate: 0
+#          - Item: Guarantee_Armor_11Up    # 6239
+#            Rate: 0
+#          - Item: Guarantee_Weapon_12Up    # 6584
+#            Rate: 0
+#          - Item: Guarantee_Armor_12Up    # 6585
+#            Rate: 0
           - Item: Blacksmith_Blessing    # 6635
             Rate: 450
-          - Item: Guarantee_Weapon_10Up    # 6993
-            Rate: 0
-          - Item: Guarantee_Armor_10Up    # 6994
-            Rate: 0
+#          - Item: Guarantee_Weapon_10Up    # 6993
+#            Rate: 0
+#          - Item: Guarantee_Armor_10Up    # 6994
+#            Rate: 0
           - Item: M_Dimension_Essence    # 7925
             Rate: 9
           - Item: C_CatPaw_7Day_Box_    # 9553
@@ -42456,8 +42456,8 @@ Body:
             Rate: 95
           - Item: Shadow_9_Refine_Hammer    # 23926
             Rate: 1
-          - Item: Sillit_Pong_Box    # 23952
-            Rate: 0
+#          - Item: Sillit_Pong_Box    # 23952
+#            Rate: 0
           - Item: Mightysoul_Essence    # 25375
             Rate: 9
           - Item: World_Tour_Ticket    # 25464
@@ -42498,22 +42498,22 @@ Body:
             Rate: 569
           - Item: Main_Lucky_Box    # 100215
             Rate: 569
-          - Item: Temporal_Refine_Cube    # 100268
-            Rate: 0
-          - Item: Geffen_Refine_Cube    # 100269
-            Rate: 0
-          - Item: Old_Refine_Cube    # 100270
-            Rate: 0
+#          - Item: Temporal_Refine_Cube    # 100268
+#            Rate: 0
+#          - Item: Geffen_Refine_Cube    # 100269
+#            Rate: 0
+#          - Item: Old_Refine_Cube    # 100270
+#            Rate: 0
           - Item: Refine_Hero_Weapon    # 100271
             Rate: 1
           - Item: Refine_Hero_Boots    # 100272
             Rate: 1
           - Item: Remodel_Hero_Boots    # 100273
             Rate: 1
-          - Item: OS_Weapon_Refine_Cube    # 100321
-            Rate: 0
-          - Item: Racecap_Refine_Cube    # 100322
-            Rate: 0
+#          - Item: OS_Weapon_Refine_Cube    # 100321
+#            Rate: 0
+#          - Item: Racecap_Refine_Cube    # 100322
+#            Rate: 0
           - Item: Main_Lucky_Box    # 100323
             Rate: 10
           - Item: Main_Lucky_Box    # 100324
