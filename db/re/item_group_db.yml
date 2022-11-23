@@ -8932,21 +8932,21 @@ Body:
             Rate: 5
           - Item: Mora_Berry
             Rate: 4
-  - Group: F_CLOVER_BOX_MOUTH
+  - Group: CLOVER_BOX_MOUTH
     SubGroups:
       - SubGroup: 0
         List:
           - Item: 4Leaf_Clover_In_Mouth
             Duration: 60
             UniqueId: true
-  - Group: F_CLOVER_BOX_MOUTH2
+  - Group: CLOVER_BOX_MOUTH2
     SubGroups:
       - SubGroup: 0
         List:
           - Item: 4Leaf_Clover_In_Mouth
             Duration: 120
             UniqueId: true
-  - Group: F_CLOVER_BOX_MOUTH4
+  - Group: CLOVER_BOX_MOUTH4
     SubGroups:
       - SubGroup: 0
         List:
@@ -29984,105 +29984,6 @@ Body:
             Rate: 185
           - Item: Enchanting_Weapone_S
             Rate: 185
-  # todo! Custom Rates
-  - Group: AUTOMATIC_MODULE_MIX
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Item: EP17_2_NO1
-            Rate: 212
-          - Item: EP17_2_NO2
-            Rate: 212
-          - Item: EP17_2_NO3
-            Rate: 212
-          - Item: EP17_2_NO4
-            Rate: 212
-          - Item: EP17_2_NO5
-            Rate: 212
-          - Item: EP17_2_NO6
-            Rate: 212
-          - Item: EP17_2_NO7
-            Rate: 212
-          - Item: EP17_2_NO8
-            Rate: 212
-          - Item: EP17_2_RA1
-            Rate: 212
-          - Item: EP17_2_RA2
-            Rate: 212
-          - Item: EP17_2_RA3
-            Rate: 212
-          - Item: EP17_2_RA4
-            Rate: 212
-          - Item: EP17_2_RA5
-            Rate: 212
-          - Item: EP17_2_RA6
-            Rate: 212
-          - Item: EP17_2_RA7
-            Rate: 212
-          - Item: EP17_2_RA8
-            Rate: 212
-          - Item: EP17_2_RA9
-            Rate: 212
-          - Item: EP17_2_RA10
-            Rate: 212
-          - Item: EP17_2_RA11
-            Rate: 212
-          - Item: EP17_2_RA12
-            Rate: 212
-          - Item: EP17_2_RA13
-            Rate: 212
-          - Item: EP17_2_RA14
-            Rate: 212
-          - Item: EP17_2_RA15
-            Rate: 212
-          - Item: EP17_2_RA16
-            Rate: 212
-          - Item: EP17_2_RA17
-            Rate: 212
-          - Item: EP17_2_RA18
-            Rate: 212
-          - Item: EP17_2_RA19
-            Rate: 212
-          - Item: EP17_2_RA20
-            Rate: 212
-          - Item: EP17_2_RA21
-            Rate: 212
-          - Item: EP17_2_UQ1
-            Rate: 212
-          - Item: EP17_2_UQ2
-            Rate: 212
-          - Item: EP17_2_UQ3
-            Rate: 212
-          - Item: EP17_2_UQ4
-            Rate: 212
-          - Item: EP17_2_UQ5
-            Rate: 212
-          - Item: EP17_2_UQ6
-            Rate: 212
-          - Item: EP17_2_UQ7
-            Rate: 212
-          - Item: EP17_2_UQ8
-            Rate: 212
-          - Item: EP17_2_UQ9
-            Rate: 212
-          - Item: EP17_2_UQ10
-            Rate: 212
-          - Item: EP17_2_UQ11
-            Rate: 212
-          - Item: EP17_2_UQ12
-            Rate: 212
-          - Item: EP17_2_LE1
-            Rate: 212
-          - Item: EP17_2_LE2
-            Rate: 212
-          - Item: EP17_2_LE3
-            Rate: 212
-          - Item: EP17_2_LE4
-            Rate: 212
-          - Item: EP17_2_LE5
-            Rate: 212
-          - Item: EP17_2_LE6
-            Rate: 212
   # todo! Custom Rates (50% Stone vs 50% Epic Module) 
   - Group: EPIC_MODULE_MIX
     SubGroups:
