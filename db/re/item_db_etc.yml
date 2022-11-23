@@ -48922,7 +48922,7 @@ Body:
     Flags:
       DropEffect: CLIENT
   - Id: 300308
-    AegisName: aegis_300308
+    AegisName: S_Meyer_Card
     Name: Meyer Lugenburg Card
     Type: Card
     Weight: 10

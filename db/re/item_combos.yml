@@ -14156,7 +14156,7 @@ Body:
           - ILL_Sword_Fish_Card
           - Sword_Fish_Card
       - Combo:
-          - aegis_300308
+          - S_Meyer_Card
           - S_Kronecker_Card
     Script: |
       bonus bMatkRate,3;
