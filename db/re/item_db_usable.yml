@@ -2264,7 +2264,7 @@ Body:
     Name: Festival Noodles
     Type: Healing
     Script: |
-      bonus_script "{ }",900;
+      /* TODO */
   - Id: 9581
     AegisName: Wet_Sealed_Card
     Name: Sealed Wet Card
@@ -53301,7 +53301,7 @@ Body:
   - Id: 23023
     AegisName: C_Giant_Fly_Wing
     Name: Infinite Giant Flywing
-    Type: Usable
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -53311,6 +53311,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      callfunc "F_CashPartyCall";
   - Id: 23024
     AegisName: Piamette_Scroll
     Name: Piamette Scroll
@@ -53381,7 +53383,7 @@ Body:
     Flags:
       Container: true
     Script: |
-      getgroupitem(IG_MINUS_STATUS_BOX);  /* TODO */
+      getgroupitem(IG_MINUS_STATUS_BOX);
   - Id: 23033
     AegisName: Invisible_Box
     Name: Invisible Box

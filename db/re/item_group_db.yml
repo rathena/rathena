@@ -48191,3 +48191,23 @@ Body:
             Amount: 10
           - Item: Enchant_Stone_Box24
             Amount: 10
+  - Group: MINUS_STATUS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Minus_Str
+          - Item: Minus_Agi
+          - Item: Minus_Vit
+          - Item: Minus_Int
+          - Item: Minus_Dex
+          - Item: Minus_Luk
+  - Group: COMP_TRANS_SCROLL
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Trans_Scroll_Wind_Ghost
+          - Item: Trans_Scroll_Horn_Scaraba
+          - Item: Trans_Scroll_Wanderer
+          - Item: Trans_Scroll_Gazeti
+          - Item: Trans_Scroll_Kobold_Archer
+          - Item: Trans_Scroll_Necromancer
