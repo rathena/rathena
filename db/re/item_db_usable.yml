@@ -90,7 +90,7 @@ Header:
 
 Body:
   - Id: 500
-    AegisName: Choko_Gangjeong
+    AegisName: Warnut_Chocoball
     Name: Choko Gangjeong
     Type: Healing
     Weight: 10
@@ -3505,7 +3505,7 @@ Body:
     Script: |
       itemheal rand(325,405),0;
   - Id: 11566
-    AegisName: Yellow_Potion_
+    AegisName: Yellow_Potion_B
     Name: Yellow Potion
     Type: Healing
     Buy: 10
@@ -3568,7 +3568,7 @@ Body:
     Script: |
       itemheal rand(105,145),0;
   - Id: 11570
-    AegisName: Red_Potion_
+    AegisName: Red_Potion_B
     Name: Red Potion
     Type: Healing
     Buy: 10
@@ -3584,7 +3584,7 @@ Body:
     Script: |
       itemheal rand(45,65),0;
   - Id: 11571
-    AegisName: Green_Potion_
+    AegisName: Green_Potion_B
     Name: Green Potion
     Type: Healing
     Buy: 10
@@ -3635,7 +3635,7 @@ Body:
     Script: |
       itemheal rand(325,405),0;
   - Id: 11574
-    AegisName: Yellow_Slim_Potion_
+    AegisName: Yellow_Slim_Potion_B
     Name: Yellow Slim Potion
     Type: Healing
     Buy: 10
@@ -22986,7 +22986,7 @@ Body:
     Script: |
       getitem 12278,5;
   - Id: 13899
-    AegisName: Mimic_Summon_Box10
+    AegisName: Mimic_Scroll_Box10
     Name: Mimic Summoning 10 Box
     Type: Cash
     Buy: 20
@@ -34040,7 +34040,7 @@ Body:
       sc_start SC_FOOD_LUK_CASH,1800000,15;
       sc_start SC_CRIFOOD,600000,rand(11,33);
   - Id: 14623
-    AegisName: Golden_Treasure_Box_
+    AegisName: GoldenTreasureBox
     Name: Golden Treasure Box
     Type: Cash
     Buy: 10
@@ -34723,7 +34723,7 @@ Body:
     Script: |
       sc_start SC_JEXPBOOST,3600000,35;
   - Id: 14766
-    AegisName: Limited_Power_Booster
+    AegisName: Limit_Power_Booster
     Name: Limited Power Booster
     Type: Usable
     Buy: 10
@@ -39027,7 +39027,7 @@ Body:
     Script: |
       getgroupitem(IG_F_XMAS_CARD_BOX2);
   - Id: 16481
-    AegisName: Small_Life_Potion_Box_10
+    AegisName: E_S_Life_Potion_Box
     Name: Small Life Potion Box (10)
     Type: Usable
     Buy: 20
@@ -39043,7 +39043,7 @@ Body:
     Script: |
       getitem 12516,10;
   - Id: 16483
-    AegisName: Abrasive_Box_10
+    AegisName: E_Abrasive_Box10
     Name: Abrasive Box (10)
     Type: Usable
     Buy: 20
@@ -39076,7 +39076,7 @@ Body:
     Script: |
       getitem 12209,10;
   - Id: 16504
-    AegisName: Bubble_Gum_Box_10
+    AegisName: E_Bubble_Gum_Box
     Name: Bubble Gum Box(10)
     Type: Cash
     Buy: 10
@@ -39092,7 +39092,7 @@ Body:
     Script: |
       getitem 12210,10;
   - Id: 16505
-    AegisName: Steamed_Tongue_Box_10
+    AegisName: E_Str_Dish_Box
     Name: Steamed Tongue Box (10)
     Type: Cash
     Buy: 20
@@ -39108,7 +39108,7 @@ Body:
     Script: |
       getitem 12501,10;
   - Id: 16506
-    AegisName: Steamed_Desert_Scorpions_Box_10
+    AegisName: E_Agi_Dish_Box
     Name: Steamed Desert Scorpions Box (10)
     Type: Cash
     Buy: 20
@@ -39124,7 +39124,7 @@ Body:
     Script: |
       getitem 12502,10;
   - Id: 16507
-    AegisName: Dragon_Breath_Cocktail_Box_10
+    AegisName: E_Int_Dish_Box
     Name: Dragon Breath Cocktail Box (10)
     Type: Cash
     Buy: 20
@@ -39140,7 +39140,7 @@ Body:
     Script: |
       getitem 12503,10;
   - Id: 16508
-    AegisName: Hwergelmir's_Tonic_Box_10
+    AegisName: E_Dex_Dish_Box
     Name: Hwergelmir's Tonic Box (10)
     Type: Cash
     Buy: 20
@@ -39156,7 +39156,7 @@ Body:
     Script: |
       getitem 12504,10;
   - Id: 16509
-    AegisName: Cooked_Nine_Tail_Box_10
+    AegisName: E_Luk_Dish_Box
     Name: Cooked Nine Tail Box (10)
     Type: Cash
     Buy: 20
@@ -39172,7 +39172,7 @@ Body:
     Script: |
       getitem 12505,10;
   - Id: 16510
-    AegisName: Immortal_Stew_Box_10
+    AegisName: E_Vit_Dish_Box
     Name: Immortal Stew Box (10)
     Type: Cash
     Buy: 20
@@ -39188,7 +39188,7 @@ Body:
     Script: |
       getitem 12506,10;
   - Id: 16514
-    AegisName: Blessing_Scroll_Box_10
+    AegisName: E_Blessing_10_Scr_Box
     Name: Blessing Scroll Box (10)
     Type: Cash
     Buy: 20
@@ -39204,7 +39204,7 @@ Body:
     Script: |
       getitem 12522,10;
   - Id: 16515
-    AegisName: Increase_Agility_Scroll_Box_10
+    AegisName: E_Inc_Agi_10_Scr_Box
     Name: Increase Agility Scroll Box (10)
     Type: Cash
     Buy: 20
@@ -49796,7 +49796,7 @@ Body:
     Script: |
       getgroupitem(IG_Idn_Wisdom_Egg);
   - Id: 22521
-    AegisName: Level_Up_Box_
+    AegisName: 80LVUP
     Name: Level Up Box
     Type: Cash
     Buy: 10
@@ -49813,7 +49813,7 @@ Body:
     Script: |
       /*TODO*/
   - Id: 22522
-    AegisName: Level_Up_Box100
+    AegisName: 100LVUP
     Name: Level Up Box(100)
     Type: Cash
     Buy: 10
@@ -49830,7 +49830,7 @@ Body:
     Script: |
       getgroupitem(IG_Level_Up_Box100);
   - Id: 22523
-    AegisName: Level_Up_Box120
+    AegisName: 120LVUP
     Name: Level Up Box(120)
     Type: Cash
     Buy: 10
@@ -49933,7 +49933,7 @@ Body:
     Script: |
       /*TODO*/
   - Id: 22529
-    AegisName: Shadow_Exchange_Box
+    AegisName: Shadow_Mix_Recipe
     Name: Shadow Exchange SynthesisBox
     Type: Delayconsume
     Weight: 10
@@ -50283,7 +50283,7 @@ Body:
       sc_start SC_BATKFOOD,60000,10;
       sc_start SC_MATKFOOD,60000,10;
   - Id: 22554
-    AegisName: First_Aid_Box
+    AegisName: First_Aid_Kit_B
     Name: First Aid Box
     Type: Cash
     Buy: 10
@@ -50816,7 +50816,7 @@ Body:
     Script: |
       /* TODO */
   - Id: 22653
-    AegisName: Wet_Card_Album
+    AegisName: Wet_CardAlbum
     Name: Wet Card Album
     Type: Usable
     Buy: 10000
@@ -51476,7 +51476,7 @@ Body:
     Script: |
       /*No Info*/
   - Id: 22764
-    AegisName: Pet_Exchange_Ticket_Box_
+    AegisName: PetTradeTicket_Box
     Name: Pet Exchange Ticket Box
     Type: Cash
     Buy: 10
@@ -52438,7 +52438,7 @@ Body:
       getitem 12531,1;
       getitem callfunc("F_Rand",6230,6234,22654),1;
   - Id: 22888
-    AegisName: New_Year's_Scroll
+    AegisName: 2015_New_Year_Scroll
     Name: New Year's Scroll
     Type: Usable
     Buy: 10
@@ -52454,7 +52454,7 @@ Body:
     Script: |
       getitem callfunc("F_Rand",6238,6239,6228,6232,24240,24241,24242,17474),1;
   - Id: 22893
-    AegisName: New_Year's_Shadow_Cube
+    AegisName: New_Year_Shadow_Cube
     Name: New Year's Shadow Cube
     Type: Usable
     Buy: 20
@@ -52541,7 +52541,7 @@ Body:
     Script: |
       callfunc("F_Mysterious_box");
   - Id: 22902
-    AegisName: Sealed_Card_Album_Scroll_II
+    AegisName: Sealed_Scroll2
     Name: Sealed Card Album Scroll II
     Type: Usable
     Buy: 20
@@ -53020,7 +53020,7 @@ Body:
     Script: |
       mercenary_create 3528,1800000;
   - Id: 23038
-    AegisName: S_Slim_White_Box
+    AegisName: White_Slim_Potion_Box_
     Name: "[Sale] Slim White Potion Box"
     Type: Usable
     Trade:
@@ -53052,7 +53052,7 @@ Body:
     Script: |
       percentheal 50,50;
   - Id: 23043
-    AegisName: S_Seed_Of_Yggdrasil_Box
+    AegisName: Yggdrasil_Seed_Box_
     Name: "[Sale] Yggdrasil Seed Box"
     Type: Usable
     Trade:
@@ -53099,7 +53099,7 @@ Body:
       specialeffect2 EF_WIND;
       sc_start SC_MYSTICPOWDER,300000,0;
   - Id: 23047
-    AegisName: S_Blessing_Tyr
+    AegisName: Comp_Tyr's_Blessing
     Name: "[Sale] Blessing of Tyr"
     Type: Usable
     Weight: 10
@@ -53827,21 +53827,21 @@ Body:
     Script: |
       laphine_synthesis();
   - Id: 23152
-    AegisName: Collectibles_Box
+    AegisName: EventItem_Recipe
     Name: Collectibles SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23153
-    AegisName: Pet_Egg_Box
+    AegisName: PetEgg_Recipe
     Name: Pet Egg SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23154
-    AegisName: Costume_Exchange_Box
+    AegisName: Nyang_Costume_Recipe
     Name: Costume Exchange SynthesisBox
     Type: Delayconsume
     Weight: 10
@@ -54257,7 +54257,7 @@ Body:
     Script: |
       /* unknown */
   - Id: 23229
-    AegisName: Scroll_of_Fallen_Angel_Wings
+    AegisName: FallenAngelWing_Reset
     Name: Scroll of Fallen Angel Wings
     Type: Delayconsume
     Weight: 10
@@ -54289,42 +54289,42 @@ Body:
     Script: |
       getgroupitem(IG_CANDLELIGHT_SCROLL);
   - Id: 23236
-    AegisName: Class_Shadow_Box_Weapon
+    AegisName: JobShadow_Mix_Weapon
     Name: Class Shadow Box (Weapon)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23237
-    AegisName: Class_Shadow_Box_Armor
+    AegisName: JobShadow_Mix_Armor
     Name: Class Shadow Box (Armor)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23238
-    AegisName: Class_Shadow_Box_Shoes
+    AegisName: JobShadow_Mix_Shoes
     Name: Class Shadow Box (Shoes)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23239
-    AegisName: Class_Shadow_Box_Shield
+    AegisName: JobShadow_Mix_Shield
     Name: Class Shadow Box (Shield)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23240
-    AegisName: Class_Shadow_Box_Pendant
+    AegisName: JobShadow_Mix_Pendant
     Name: Class Shadow Box (Pendant)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23241
-    AegisName: Class_Shadow_Box_Earring
+    AegisName: JobShadow_Mix_Earing
     Name: Class Shadow Box (Earring)
     Type: Delayconsume
     Weight: 10
@@ -60300,14 +60300,14 @@ Body:
     Script: |
       laphine_synthesis();
   - Id: 100402
-    AegisName: Thousand_Sun_Cube
+    AegisName: OneSkyOneSun_Cube
     Name: Thousand Sun Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100403
-    AegisName: Spirit_Pendulum_Cube
+    AegisName: SoulWeight_Cube
     Name: Spirit Pendulum Modification Cube
     Type: Delayconsume
     Weight: 10
@@ -60328,21 +60328,21 @@ Body:
     Script: |
       laphine_synthesis();
   - Id: 100406
-    AegisName: Golden_Lord_Launcher_Cube
+    AegisName: Golden_L_Launcher_Cube
     Name: Golden Lord Launcher Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100407
-    AegisName: The_Black_Cube
+    AegisName: The_Black_Gatling_Cube
     Name: The Black Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100408
-    AegisName: Demon_Slayer_Shot_Cube
+    AegisName: Demon_S_Shot_Cube
     Name: Demon Slayer Shot Modification Cube
     Type: Delayconsume
     Weight: 10

@@ -546,21 +546,21 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: Steamed_Tongue_Box_10
+          - Item: E_Str_Dish_Box
             Rate: 1
-          - Item: Steamed_Desert_Scorpions_Box_10
+          - Item: E_Agi_Dish_Box
             Rate: 1
-          - Item: Dragon_Breath_Cocktail_Box_10
+          - Item: E_Int_Dish_Box
             Rate: 1
-          - Item: Hwergelmir's_Tonic_Box_10
+          - Item: E_Dex_Dish_Box
             Rate: 1
-          - Item: Cooked_Nine_Tail_Box_10
+          - Item: E_Luk_Dish_Box
             Rate: 1
-          - Item: Immortal_Stew_Box_10
+          - Item: E_Vit_Dish_Box
             Rate: 1
-          - Item: Blessing_Scroll_Box_10
+          - Item: E_Blessing_10_Scr_Box
             Rate: 1
-          - Item: Increase_Agility_Scroll_Box_10
+          - Item: E_Inc_Agi_10_Scr_Box
             Rate: 1
   - Group: ADV_SIEGE_SUPPLY_BOX
     SubGroups:
@@ -7138,7 +7138,7 @@ Body:
             Rate: 160
           - Item: MechanicStone_Robe
             Rate: 160
-          - Item: WanderMinstrelStone_Robe
+          - Item: WanderMinstreStone_Robe
             Rate: 160
           - Item: EXPStone_Bottom
             Rate: 240
@@ -7186,9 +7186,9 @@ Body:
             Rate: 370
           - Item: WanderMinstrelStone_Top
             Rate: 370
-          - Item: WanderMinstrelStone_Middle
+          - Item: WanderMinstStone_Middle
             Rate: 370
-          - Item: WanderMinstrelStone_Bottom
+          - Item: WanderMinstStone_Bottom
             Rate: 370
   - Group: ENCHANT_STONE_BOX16
     SubGroups:
@@ -7404,15 +7404,15 @@ Body:
             Rate: 107
           - Item: CastStone_Robe
             Rate: 107
-          - Item: SoulReaperStone_Robe
+          - Item: SoulreaperStone_Robe
             Rate: 214
-          - Item: StarEmperorStone_Garment
+          - Item: StaremperorStone_Robe
             Rate: 214
           - Item: KagerouStone_Robe
             Rate: 214
           - Item: OboroStone_Robe
             Rate: 214
-          - Item: GunslingerStone_Robe
+          - Item: RebellionStone_Robe
             Rate: 214
           - Item: DoramStone_Robe
             Rate: 214
@@ -7420,17 +7420,17 @@ Body:
             Rate: 227
           - Item: WaterFieldEffect_Bottom
             Rate: 227
-          - Item: SoulLinkerStone_Top
+          - Item: SoullinkerStone_Top
             Rate: 348
-          - Item: SoulLinkerStone_Middle
+          - Item: SoullinkerStone_Middle
             Rate: 348
-          - Item: SoulLinkerStone_Bottom
+          - Item: SoullinkerStone_Bottom
             Rate: 348
-          - Item: StarGladiatorStone_Top
+          - Item: GladiatorStone_Top
             Rate: 348
-          - Item: StarGladiatorStone_Middle
+          - Item: GladiatorStone_Middle
             Rate: 348
-          - Item: StarGladiatorStone_Bottom
+          - Item: GladiatorStone_Bottom
             Rate: 348
           - Item: NinjaStone_Top
             Rate: 348
@@ -7490,11 +7490,11 @@ Body:
             Rate: 160
           - Item: MinorCastingStone_Robe
             Rate: 160
-          - Item: RangerStone_II_Garment
+          - Item: RangerStone_Robe2
             Rate: 160
-          - Item: MechanicStone_II_Garment
+          - Item: MechanicStone_Robe2
             Rate: 160
-          - Item: ArchbishopStone_II_Garment
+          - Item: ArchbishopStone_Robe2
             Rate: 160
           - Item: EXPStone_Bottom
             Rate: 240
@@ -7528,23 +7528,23 @@ Body:
             Rate: 370
           - Item: Critical_Stone_Bottom
             Rate: 370
-          - Item: RangerStone_II_Top
+          - Item: RangerStone_Top2
             Rate: 370
-          - Item: RangerStone_II_Middle
+          - Item: RangerStone_Middle2
             Rate: 370
-          - Item: RangerStone_II_Bottom
+          - Item: RangerStone_Bottom2
             Rate: 370
-          - Item: MechanicStone_II_Top
+          - Item: MechanicStone_Top2
             Rate: 370
-          - Item: MechanicStone_II_Middle
+          - Item: MechanicStone_Middle2
             Rate: 370
-          - Item: MechanicStone_II_Bottom
+          - Item: MechanicStone_Bottom2
             Rate: 370
-          - Item: HighpriestStone_II_Top
+          - Item: HighpriestStone_Top2
             Rate: 370
-          - Item: HighpriestStone_II_Middle
+          - Item: HighpriestStone_Middle2
             Rate: 370
-          - Item: HighpriestStone_II_Bottom
+          - Item: HighpriestStone_Bottom2
             Rate: 370
   - Group: ENCHANT_STONE_BOX2
     SubGroups:
@@ -7612,9 +7612,9 @@ Body:
             Rate: 160
           - Item: WarlockStone_Robe2
             Rate: 160
-          - Item: RoyalGuardStone_Robe2
+          - Item: RoyalguardStone_Robe2
             Rate: 160
-          - Item: GuillotineCrossStone_Robe2
+          - Item: GuillcrossStone_Robe2
             Rate: 160
           - Item: EXPStone_Bottom
             Rate: 240
@@ -7654,17 +7654,17 @@ Body:
             Rate: 370
           - Item: WarlockStone_Bottom2
             Rate: 370
-          - Item: RoyalGuardStone_Top2
+          - Item: PaladinStone_Top2
             Rate: 370
-          - Item: RoyalGuardStone_Middle2
+          - Item: PaladinStone_Middle2
             Rate: 370
-          - Item: RoyalGuardStone_Bottom2
+          - Item: PaladinStone_Bottom2
             Rate: 370
-          - Item: GuillotineCrossStone_Top2
+          - Item: AssacrossStone_Top2
             Rate: 370
-          - Item: GuillotineCrossStone_Middle2
+          - Item: AssacrossStone_Middle2
             Rate: 370
-          - Item: GuillotineCrossStone_Bottom2
+          - Item: AssacrossStone_Bottom2
             Rate: 370
   - Group: ENCHANT_STONE_BOX21
     SubGroups:
@@ -12211,7 +12211,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Guarantee_Weapon_6Up
-          - Item: Level_Up_Box120
+          - Item: 120LVUP
   - Group: LEVEL_UP_BOX120
     SubGroups:
       - SubGroup: 0
@@ -15720,7 +15720,7 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Rate: 1
           - Item: World_Tour_Ticket
             Rate: 1
@@ -23916,7 +23916,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Amount: 100
           - Item: Enchant_Stone_Box26
             Amount: 2
@@ -23926,7 +23926,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Amount: 200
           - Item: Enchant_Stone_Box26
             Amount: 2
@@ -23936,7 +23936,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Amount: 400
           - Item: Enchant_Stone_Box26
             Amount: 2
@@ -23970,9 +23970,9 @@ Body:
             Rate: 80
           - Item: ShadowchaserStone_Robe2
             Rate: 80
-          - Item: RangerStone_II_Garment
+          - Item: RangerStone_Robe2
             Rate: 80
-          - Item: ArchbishopStone_II_Garment
+          - Item: ArchbishopStone_Robe2
             Rate: 80
           - Item: ASPDStone_Robe_D
             Rate: 80
@@ -24020,17 +24020,17 @@ Body:
             Rate: 150
           - Item: ShadowchaserStone_Top2
             Rate: 150
-          - Item: RangerStone_II_Top
+          - Item: RangerStone_Top2
             Rate: 150
-          - Item: RangerStone_II_Middle
+          - Item: RangerStone_Middle2
             Rate: 150
-          - Item: RangerStone_II_Bottom
+          - Item: RangerStone_Bottom2
             Rate: 150
-          - Item: HighpriestStone_II_Top
+          - Item: HighpriestStone_Top2
             Rate: 150
-          - Item: HighpriestStone_II_Middle
+          - Item: HighpriestStone_Middle2
             Rate: 150
-          - Item: HighpriestStone_II_Bottom
+          - Item: HighpriestStone_Bottom2
             Rate: 150
           - Item: ASPDStone_Top
             Rate: 160
@@ -24084,7 +24084,7 @@ Body:
             Rate: 1
           - Item: MechanicStone_Robe
             Rate: 1
-          - Item: WanderMinstrelStone_Robe
+          - Item: WanderMinstreStone_Robe
             Rate: 1
           - Item: RuneknightStone_Robe
             Rate: 1
@@ -24102,7 +24102,7 @@ Body:
             Rate: 1
           - Item: OboroStone_Robe
             Rate: 1
-          - Item: GunslingerStone_Robe
+          - Item: RebellionStone_Robe
             Rate: 1
           - Item: DoramStone_Robe
             Rate: 1
@@ -24124,19 +24124,19 @@ Body:
             Rate: 1
           - Item: WarlockStone_Robe2
             Rate: 1
-          - Item: RoyalGuardStone_Robe2
+          - Item: RoyalguardStone_Robe2
             Rate: 1
-          - Item: GuillotineCrossStone_Robe2
+          - Item: GuillcrossStone_Robe2
             Rate: 1
-          - Item: RangerStone_II_Garment
+          - Item: RangerStone_Robe2
             Rate: 1
-          - Item: MechanicStone_II_Garment
+          - Item: MechanicStone_Robe2
             Rate: 1
-          - Item: ArchbishopStone_II_Garment
+          - Item: ArchbishopStone_Robe2
             Rate: 1
-          - Item: SoulReaperStone_Robe
+          - Item: SoulreaperStone_Robe
             Rate: 1
-          - Item: StarEmperorStone_Garment
+          - Item: StaremperorStone_Robe
             Rate: 1
   - Group: THIRD_JOB_STONE_TOP_BOX
     SubGroups:
@@ -24190,19 +24190,19 @@ Body:
             Rate: 1
           - Item: WarlockStone_Top2
             Rate: 1
-          - Item: RoyalGuardStone_Top2
+          - Item: PaladinStone_Top2
             Rate: 1
-          - Item: GuillotineCrossStone_Top2
+          - Item: AssacrossStone_Top2
             Rate: 1
-          - Item: RangerStone_II_Top
+          - Item: RangerStone_Top2
             Rate: 1
-          - Item: MechanicStone_II_Top
+          - Item: MechanicStone_Top2
             Rate: 1
-          - Item: HighpriestStone_II_Top
+          - Item: HighpriestStone_Top2
             Rate: 1
-          - Item: SoulLinkerStone_Top
+          - Item: SoullinkerStone_Top
             Rate: 1
-          - Item: StarGladiatorStone_Top
+          - Item: GladiatorStone_Top
             Rate: 1
   - Group: THIRD_JOB_STONE_MIDDLE_BOX
     SubGroups:
@@ -24218,7 +24218,7 @@ Body:
             Rate: 1
           - Item: MechanicStone_Middle
             Rate: 1
-          - Item: WanderMinstrelStone_Middle
+          - Item: WanderMinstStone_Middle
             Rate: 1
           - Item: RuneknightStone_Middle
             Rate: 1
@@ -24256,19 +24256,19 @@ Body:
             Rate: 1
           - Item: WarlockStone_Middle2
             Rate: 1
-          - Item: RoyalGuardStone_Middle2
+          - Item: PaladinStone_Middle2
             Rate: 1
-          - Item: GuillotineCrossStone_Middle2
+          - Item: AssacrossStone_Middle2
             Rate: 1
-          - Item: RangerStone_II_Middle
+          - Item: RangerStone_Middle2
             Rate: 1
-          - Item: MechanicStone_II_Middle
+          - Item: MechanicStone_Middle2
             Rate: 1
-          - Item: HighpriestStone_II_Middle
+          - Item: HighpriestStone_Middle2
             Rate: 1
-          - Item: SoulLinkerStone_Middle
+          - Item: SoullinkerStone_Middle
             Rate: 1
-          - Item: StarGladiatorStone_Middle
+          - Item: GladiatorStone_Middle
             Rate: 1
   - Group: THIRD_JOB_STONE_BOTTOM_BOX
     SubGroups:
@@ -24284,7 +24284,7 @@ Body:
             Rate: 1
           - Item: MechanicStone_Bottom
             Rate: 1
-          - Item: WanderMinstrelStone_Bottom
+          - Item: WanderMinstStone_Bottom
             Rate: 1
           - Item: RuneknightStone_Bottom
             Rate: 1
@@ -24322,19 +24322,19 @@ Body:
             Rate: 1
           - Item: WarlockStone_Bottom2
             Rate: 1
-          - Item: RoyalGuardStone_Bottom2
+          - Item: PaladinStone_Bottom2
             Rate: 1
-          - Item: GuillotineCrossStone_Bottom2
+          - Item: AssacrossStone_Bottom2
             Rate: 1
-          - Item: RangerStone_II_Bottom
+          - Item: RangerStone_Bottom2
             Rate: 1
-          - Item: MechanicStone_II_Bottom
+          - Item: MechanicStone_Bottom2
             Rate: 1
-          - Item: HighpriestStone_II_Bottom
+          - Item: HighpriestStone_Bottom2
             Rate: 1
-          - Item: SoulLinkerStone_Bottom
+          - Item: SoullinkerStone_Bottom
             Rate: 1
-          - Item: StarGladiatorStone_Bottom
+          - Item: GladiatorStone_Bottom
             Rate: 1
   - Group: SHADOW_EXCHANGE_BOX
     SubGroups:
@@ -24948,29 +24948,29 @@ Body:
             Rate: 218
           - Item: S_Archer_earring
             Rate: 218
-          - Item: S_Hasty_Shoes_II
+          - Item: S2_Hasty_Shoes
             Rate: 73
-          - Item: S_Bearer's_Pendant_II
+          - Item: S2_Bearers_Pendent
             Rate: 73
-          - Item: S_Gemstone_Earring_II
+          - Item: S2_Gemstone_Earring
             Rate: 73
-          - Item: S_Spellflow_Shield_II
+          - Item: S2_Spell_Flow_Shield
             Rate: 73
-          - Item: S_Spiritual_Weapon_II
+          - Item: S2_Spiritual_Weapon
             Rate: 73
-          - Item: S_Malicious_Armor_II
+          - Item: S2_Malicious_Armor
             Rate: 73
           - Item: S_Sigrun_Armor
             Rate: 73
           - Item: S_Sigrun_Shield
             Rate: 73
-          - Item: S_Force_Executioner_Weapon
+          - Item: S2_Force_Ex_Weapon
             Rate: 73
-          - Item: S_Spirit_Magic_Executioner_Weapon
+          - Item: S2_Spirit_M_E_Weapon
             Rate: 73
-          - Item: S_Caster_Armor_II
+          - Item: S2_Caster_Armor
             Rate: 73
-          - Item: S_Reload_Armor_II
+          - Item: S2_Reload_Armor
             Rate: 73
           - Item: S_Critical_Shield
             Rate: 73
@@ -24980,15 +24980,15 @@ Body:
             Rate: 73
           - Item: S_Tempest_Shoes
             Rate: 73
-          - Item: S_Magic_Executioner_Holy_Water_Armor
+          - Item: S_M_ExeHoly_Armor
             Rate: 73
-          - Item: S_Magic_Exorcist_Corrupted_Armor
+          - Item: S_M_ExoCorrupt_Armor
             Rate: 73
-          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+          - Item: S_M_DragonVib_Armor
             Rate: 73
-          - Item: S_Magic_Scissor_Hunting_Armor
+          - Item: S_M_SciHunting_Armor
             Rate: 73
-          - Item: S_Magic_Fishing_Insect_Net_Armor
+          - Item: S_M_FishInsect_Armor
             Rate: 73
           - Item: S_Tension_Weapon
             Rate: 73
@@ -25008,27 +25008,27 @@ Body:
             Rate: 73
           - Item: S_Restore_Earring
             Rate: 73
-          - Item: S_Restore_Pendant
+          - Item: S_Restore_Pendent
             Rate: 73
-          - Item: S_Mortal_Blow_Weapon
+          - Item: S_MortalBlow_Weapon
             Rate: 73
-          - Item: S_Mortal_Blow_Earring
+          - Item: S_MortalBlow_Earring
             Rate: 73
-          - Item: S_Mortal_Blow_Pendant
+          - Item: S_MortalBlow_Pendent
             Rate: 73
           - Item: S_Penetration_Shoes
             Rate: 73
           - Item: S_Penetration_Shield
             Rate: 73
-          - Item: S_Executioner_Holy_Water_Armor
+          - Item: S_ExeHoly_Armor
             Rate: 73
-          - Item: S_Exorcist_Corrupted_Armor
+          - Item: S_ExoCorrupt_Armor
             Rate: 73
-          - Item: S_Vibration_Dragon_Killer_Armor
+          - Item: S_DragonVib_Armor
             Rate: 73
-          - Item: S_Scissor_Hunting_Armor
+          - Item: S_SciHunting_Armor
             Rate: 73
-          - Item: S_Fishing_Insect_Net_Armor
+          - Item: S_FishInsect_Armor
             Rate: 73
           - Item: Sentimental_Weapone_S
             Rate: 73
@@ -25627,7 +25627,7 @@ Body:
             Rate: 140
           - Item: C_Cowlick_WH
             Rate: 140
-          - Item: C_Bouncing_Hair_Black
+          - Item: C_Cowlick_BL
             Rate: 140
           - Item: C_Straight_Pony_YL
             Rate: 140
@@ -25643,7 +25643,7 @@ Body:
             Rate: 140
           - Item: C_Straight_Pony_WH
             Rate: 140
-          - Item: C_Straight_Pony_Black
+          - Item: C_Straight_Pony_BL
             Rate: 140
           - Item: C_Loose_Wave_Twin_YL
             Rate: 140
@@ -25659,7 +25659,7 @@ Body:
             Rate: 140
           - Item: C_Loose_Wave_Twin_WH
             Rate: 140
-          - Item: C_Loose_Wave_Twin
+          - Item: C_Loose_Wave_Twin_BL
             Rate: 140
           - Item: C_Cupid_Wing_Pink
             Rate: 140
@@ -25797,7 +25797,7 @@ Body:
             Rate: 140
           - Item: C_Piggyback
             Rate: 140
-          - Item: C_RuneHelm
+          - Item: C_Rune_Helm
             Rate: 140
           - Item: C_Shaving_Foam
             Rate: 140
@@ -25815,7 +25815,7 @@ Body:
             Rate: 140
           - Item: C_Clock_Casket
             Rate: 140
-          - Item: C_Happy_Parrot_J
+          - Item: C_Chatty_Parrot
             Rate: 140
           - Item: C_Flame_Muffler
             Rate: 140
@@ -25835,7 +25835,7 @@ Body:
             Rate: 140
           - Item: C_Alice_Wig
             Rate: 140
-          - Item: Khalitzburg_KN_Helm_BL
+          - Item: C_Khalitzburg_Helm_BL
             Rate: 140
           - Item: C_Wanderer_Sakkat
             Rate: 140
@@ -25949,7 +25949,7 @@ Body:
             Rate: 140
           - Item: C_WingOfHeart
             Rate: 140
-          - Item: Costume_Master_Of_Flames
+          - Item: C_Cons_Of_Fire
             Rate: 140
           - Item: C_Kishu_Inu
             Rate: 140
@@ -26645,30 +26645,30 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Gemstone_Weapon_II
+          - Item: S2_Gemstone_Weapon
             Rate: 1
-          - Item: S_Gemstone_Shield_II
+          - Item: S2_Gemstone_Shield
             Rate: 1
   - Group: BEARERSSHADOW_MIX
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Bearer's_Armor_II
+          - Item: S2_Bearers_Armor
             Rate: 1
-          - Item: S_Bearer's_Shoes_II
+          - Item: S2_Bearers_Shoes
             Rate: 1
   - Group: COMPOSESHADOW_MIX
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Magic_Compose_Armor
+          - Item: S_MagicCompose_Armor
   - Group: RACESHADOW_MIX
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_All_Race_Shoes
+          - Item: S_AllRace_Shoes
             Rate: 1
-          - Item: S_All_Race_Shield
+          - Item: S_AllRace_Shield
             Rate: 1
   - Group: CANDY_BAG_SCROLL_MELEE
     SubGroups:
@@ -26701,7 +26701,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Neko_Headress
+          - Item: Cat_Lace_Hairband_K
             RandomOptionGroup: MAGICAL_CAT_HAND
   - Group: INFINITYSHADOW_MIX
     SubGroups:
@@ -26738,12 +26738,12 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Immune_Athena_Shield
+          - Item: S_ImmunedAthena_Shield
   - Group: HARDCHAMPTION_MIX
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Hard_Champion_Shoes
+          - Item: S_HardChamption_Shoes
   - Group: KINGBIRDANCIENT_MIX
     SubGroups:
       - SubGroup: 0
@@ -26851,7 +26851,7 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Restore_Pendant
+          - Item: S_Restore_Pendent
             Rate: 1
           - Item: S_Restore_Earring
             Rate: 1
@@ -26865,11 +26865,11 @@ Body:
             Rate: 1
           - Item: S_Healing_Weapon
             Rate: 1
-          - Item: S_Mortal_Blow_Earring
+          - Item: S_MortalBlow_Earring
             Rate: 1
-          - Item: S_Mortal_Blow_Pendant
+          - Item: S_MortalBlow_Pendent
             Rate: 1
-          - Item: S_Mortal_Blow_Weapon
+          - Item: S_MortalBlow_Weapon
             Rate: 1
   - Group: BS_ITEM_M_S_4
     SubGroups:
@@ -26933,7 +26933,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Elemental_Crown_
+          - Item: Elemental_Crown_K
   - Group: BS_ITEM_M_S_36
     SubGroups:
       - SubGroup: 0
@@ -27256,7 +27256,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Neko_Headress
+          - Item: Cat_Lace_Hairband_K
   - Group: BS_ITEM_M_S_35
     SubGroups:
       - SubGroup: 0
@@ -27375,15 +27375,15 @@ Body:
             Rate: 1
           - Item: S_Penetration_Shield
             Rate: 1
-          - Item: S_Executioner_Holy_Water_Armor
+          - Item: S_ExeHoly_Armor
             Rate: 1
-          - Item: S_Exorcist_Corrupted_Armor
+          - Item: S_ExoCorrupt_Armor
             Rate: 1
-          - Item: S_Vibration_Dragon_Killer_Armor
+          - Item: S_DragonVib_Armor
             Rate: 1
-          - Item: S_Scissor_Hunting_Armor
+          - Item: S_SciHunting_Armor
             Rate: 1
-          - Item: S_Fishing_Insect_Net_Armor
+          - Item: S_FishInsect_Armor
             Rate: 1
           - Item: S_Penetration_Earring
             Rate: 1
@@ -27417,15 +27417,15 @@ Body:
             Rate: 1
           - Item: S_Tempest_Shield
             Rate: 1
-          - Item: S_Magic_Executioner_Holy_Water_Armor
+          - Item: S_M_ExeHoly_Armor
             Rate: 1
-          - Item: S_Magic_Exorcist_Corrupted_Armor
+          - Item: S_M_ExoCorrupt_Armor
             Rate: 1
-          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+          - Item: S_M_DragonVib_Armor
             Rate: 1
-          - Item: S_Magic_Scissor_Hunting_Armor
+          - Item: S_M_SciHunting_Armor
             Rate: 1
-          - Item: S_Magic_Fishing_Insect_Net_Armor
+          - Item: S_M_FishInsect_Armor
             Rate: 1
           - Item: S_Tempest_Earring
             Rate: 1
@@ -27594,17 +27594,17 @@ Body:
           - Item: AngelPoring_Boots
       - SubGroup: 1
         List:
-          - Item: Leo_Stone
+          - Item: AngelPoring_Purple
             Rate: 1667
-          - Item: Pisces_Stone
+          - Item: AngelPoring_SkyBlue
             Rate: 1667
-          - Item: Capricorn_Stone
+          - Item: AngelPoring_Green
             Rate: 1667
-          - Item: Aquarius_Stone
+          - Item: AngelPoring_Pink
             Rate: 1667
-          - Item: Scorpio_Stone
+          - Item: AngelPoring_DeepRed
             Rate: 1667
-          - Item: Taurus_Stone
+          - Item: AngelPoring_Clear
             Rate: 1667
   - Group: SHADOW_CUBE_PENDANT
     SubGroups:
@@ -27674,9 +27674,9 @@ Body:
             Rate: 278
           - Item: S_Elegant_Pendent
             Rate: 278
-          - Item: S_Restore_Pendant
+          - Item: S_Restore_Pendent
             Rate: 278
-          - Item: S_Mortal_Blow_Pendant
+          - Item: S_MortalBlow_Pendent
             Rate: 278
           - Item: Sentimental_Pendant_S
             Rate: 278
@@ -27754,7 +27754,7 @@ Body:
             Rate: 270
           - Item: S_Restore_Earring
             Rate: 270
-          - Item: S_Mortal_Blow_Earring
+          - Item: S_MortalBlow_Earring
             Rate: 270
           - Item: Sentimental_Earring_S
             Rate: 270
@@ -27816,91 +27816,91 @@ Body:
             Rate: 4
           - Item: S_Wanderer_Shield
             Rate: 4
-          - Item: S_Hasty_Shoes_II
+          - Item: S2_Hasty_Shoes
             Rate: 4
-          - Item: S_Bearer's_Pendant_II
+          - Item: S2_Bearers_Pendent
             Rate: 4
-          - Item: S_Gemstone_Earring_II
+          - Item: S2_Gemstone_Earring
             Rate: 4
-          - Item: S_Spellflow_Shield_II
+          - Item: S2_Spell_Flow_Shield
             Rate: 4
-          - Item: S_Spiritual_Weapon_II
+          - Item: S2_Spiritual_Weapon
             Rate: 4
-          - Item: S_Malicious_Armor_II
+          - Item: S2_Malicious_Armor
             Rate: 4
           - Item: S_Sigrun_Armor
             Rate: 4
           - Item: S_Sigrun_Shield
             Rate: 4
-          - Item: S_Force_Executioner_Weapon
+          - Item: S2_Force_Ex_Weapon
             Rate: 4
-          - Item: S_Spirit_Magic_Executioner_Weapon
+          - Item: S2_Spirit_M_E_Weapon
             Rate: 4
-          - Item: S_Caster_Armor_II
+          - Item: S2_Caster_Armor
             Rate: 4
-          - Item: S_Reload_Armor_II
+          - Item: S2_Reload_Armor
             Rate: 4
-          - Item: S_Magic_Compose_Armor
+          - Item: S_MagicCompose_Armor
             Rate: 4
-          - Item: S_Gemstone_Weapon_II
+          - Item: S2_Gemstone_Weapon
             Rate: 4
-          - Item: S_Gemstone_Shield_II
+          - Item: S2_Gemstone_Shield
             Rate: 4
-          - Item: S_Bearer's_Armor_II
+          - Item: S2_Bearers_Armor
             Rate: 4
-          - Item: S_Bearer's_Shoes_II
+          - Item: S2_Bearers_Shoes
             Rate: 4
           - Item: S_AllMighty_Earring
             Rate: 4
           - Item: S_AllMighty_Pendant
             Rate: 4
-          - Item: S_All_Race_Shoes
+          - Item: S_AllRace_Shoes
             Rate: 4
-          - Item: S_All_Race_Shield
+          - Item: S_AllRace_Shield
             Rate: 4
           - Item: S_Tempest_Shield
             Rate: 4
           - Item: S_Tempest_Shoes
             Rate: 4
-          - Item: S_Magic_Executioner_Holy_Water_Armor
+          - Item: S_M_ExeHoly_Armor
             Rate: 4
-          - Item: S_Magic_Exorcist_Corrupted_Armor
+          - Item: S_M_ExoCorrupt_Armor
             Rate: 4
-          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+          - Item: S_M_DragonVib_Armor
             Rate: 4
-          - Item: S_Magic_Scissor_Hunting_Armor
+          - Item: S_M_SciHunting_Armor
             Rate: 4
-          - Item: S_Magic_Fishing_Insect_Net_Armor
+          - Item: S_M_FishInsect_Armor
             Rate: 4
-          - Item: S_Plasterer's_Armor_II
+          - Item: S2_Plasterer's_Armor
             Rate: 4
-          - Item: S_Insomniac_Shoes_II
+          - Item: S2_Insomniac_Shoes
             Rate: 4
-          - Item: S_Peerless_Armor_II
+          - Item: S2_Peerless_Armor
             Rate: 4
-          - Item: S_Adulate_Shoes_II
+          - Item: S2_Adurate_Shoes
             Rate: 4
-          - Item: S_Unfreezing_Weapon_II
+          - Item: Unfreez_Weapon_S2
             Rate: 4
-          - Item: S_Vitality_Earring_II
+          - Item: Vitality_Earing_S2
             Rate: 4
-          - Item: S_Neutral_Weapon_II
+          - Item: S2_Neutral_Weapon
             Rate: 4
-          - Item: S_Uncursed_Pendant_II
+          - Item: S2_Curse_Lift_Pendent
             Rate: 4
           - Item: S_Penetration_Shoes
             Rate: 4
           - Item: S_Penetration_Shield
             Rate: 4
-          - Item: S_Executioner_Holy_Water_Armor
+          - Item: S_ExeHoly_Armor
             Rate: 4
-          - Item: S_Exorcist_Corrupted_Armor
+          - Item: S_ExoCorrupt_Armor
             Rate: 4
-          - Item: S_Vibration_Dragon_Killer_Armor
+          - Item: S_DragonVib_Armor
             Rate: 4
-          - Item: S_Scissor_Hunting_Armor
+          - Item: S_SciHunting_Armor
             Rate: 4
-          - Item: S_Fishing_Insect_Net_Armor
+          - Item: S_FishInsect_Armor
             Rate: 4
           - Item: S_Infinity_Weapon
             Rate: 4
@@ -27916,9 +27916,9 @@ Body:
             Rate: 4
           - Item: S_Magical_Armor
             Rate: 4
-          - Item: S_Immune_Athena_Shield
+          - Item: S_ImmunedAthena_Shield
             Rate: 4
-          - Item: S_Hard_Champion_Shoes
+          - Item: S_HardChamption_Shoes
             Rate: 4
           - Item: S_KingbirdAncient_Armor
             Rate: 4
@@ -28532,13 +28532,13 @@ Body:
             Rate: 33
           - Item: S_Restore_Earring
             Rate: 33
-          - Item: S_Restore_Pendant
+          - Item: S_Restore_Pendent
             Rate: 33
-          - Item: S_Mortal_Blow_Weapon
+          - Item: S_MortalBlow_Weapon
             Rate: 33
-          - Item: S_Mortal_Blow_Earring
+          - Item: S_MortalBlow_Earring
             Rate: 33
-          - Item: S_Mortal_Blow_Pendant
+          - Item: S_MortalBlow_Pendent
             Rate: 33
           - Item: Sentimental_Weapone_S
             Rate: 33
@@ -28661,7 +28661,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Amount: 100
           - Item: Evt_Cos_Coin
             Amount: 12
@@ -28671,7 +28671,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Amount: 200
           - Item: Evt_Cos_Coin
             Amount: 25
@@ -28681,7 +28681,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Actinidia_Cat_Fruit
+          - Item: Nyangvine_Fruit
             Amount: 400
           - Item: Evt_Cos_Coin
             Amount: 50
@@ -28823,21 +28823,21 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Plasterer's_Armor_II
+          - Item: S2_Plasterer's_Armor
             Rate: 1
-          - Item: S_Insomniac_Shoes_II
+          - Item: S2_Insomniac_Shoes
             Rate: 1
-          - Item: S_Peerless_Armor_II
+          - Item: S2_Peerless_Armor
             Rate: 1
-          - Item: S_Adulate_Shoes_II
+          - Item: S2_Adurate_Shoes
             Rate: 1
-          - Item: S_Unfreezing_Weapon_II
+          - Item: Unfreez_Weapon_S2
             Rate: 1
-          - Item: S_Vitality_Earring_II
+          - Item: Vitality_Earing_S2
             Rate: 1
-          - Item: S_Neutral_Weapon_II
+          - Item: S2_Neutral_Weapon
             Rate: 1
-          - Item: S_Uncursed_Pendant_II
+          - Item: S2_Curse_Lift_Pendent
             Rate: 1
   - Group: BS_SHA_M_S_2
     SubGroups:
@@ -28995,11 +28995,11 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Mortal_Blow_Weapon
+          - Item: S_MortalBlow_Weapon
             Rate: 1
-          - Item: S_Mortal_Blow_Earring
+          - Item: S_MortalBlow_Earring
             Rate: 1
-          - Item: S_Mortal_Blow_Pendant
+          - Item: S_MortalBlow_Pendent
             Rate: 1
   - Group: SLD_CARD_RECIPE
     SubGroups:
@@ -29978,7 +29978,7 @@ Body:
             Rate: 185
           - Item: S_Elegant_Weapon
             Rate: 185
-          - Item: S_Mortal_Blow_Weapon
+          - Item: S_MortalBlow_Weapon
             Rate: 185
           - Item: Sentimental_Weapone_S
             Rate: 185
@@ -30592,7 +30592,7 @@ Body:
             Rate: 80
           - Item: WarlockStone_Robe2
             Rate: 80
-          - Item: GuillotineCrossStone_Robe2
+          - Item: GuillcrossStone_Robe2
             Rate: 80
           - Item: ASPDStone_Robe_D
             Rate: 80
@@ -30616,11 +30616,11 @@ Body:
             Rate: 120
           - Item: WarlockStone_Bottom2
             Rate: 120
-          - Item: GuillotineCrossStone_Top2
+          - Item: AssacrossStone_Top2
             Rate: 120
-          - Item: GuillotineCrossStone_Middle2
+          - Item: AssacrossStone_Middle2
             Rate: 120
-          - Item: GuillotineCrossStone_Bottom2
+          - Item: AssacrossStone_Bottom2
             Rate: 120
           - Item: WaterFieldEffect_Bottom
             Rate: 140
@@ -30704,7 +30704,7 @@ Body:
             Rate: 80
           - Item: WarlockStone_Robe2
             Rate: 80
-          - Item: RoyalGuardStone_Robe2
+          - Item: RoyalguardStone_Robe2
             Rate: 80
           - Item: RuneknightStone_Robe2
             Rate: 80
@@ -30754,11 +30754,11 @@ Body:
             Rate: 150
           - Item: WarlockStone_Bottom2
             Rate: 150
-          - Item: RoyalGuardStone_Top2
+          - Item: PaladinStone_Top2
             Rate: 150
-          - Item: RoyalGuardStone_Middle2
+          - Item: PaladinStone_Middle2
             Rate: 150
-          - Item: RoyalGuardStone_Bottom2
+          - Item: PaladinStone_Bottom2
             Rate: 150
           - Item: RuneknightStone_Top2
             Rate: 150
@@ -30826,7 +30826,7 @@ Body:
             Rate: 80
           - Item: GeneticStone_Robe
             Rate: 80
-          - Item: WanderMinstrelStone_Robe
+          - Item: WanderMinstreStone_Robe
             Rate: 80
           - Item: SorcererStone_Robe2
             Rate: 80
@@ -30870,9 +30870,9 @@ Body:
             Rate: 150
           - Item: WanderMinstrelStone_Top
             Rate: 150
-          - Item: WanderMinstrelStone_Middle
+          - Item: WanderMinstStone_Middle
             Rate: 150
-          - Item: WanderMinstrelStone_Bottom
+          - Item: WanderMinstStone_Bottom
             Rate: 150
           - Item: SorcererStone_Bottom2
             Rate: 150
@@ -30962,11 +30962,11 @@ Body:
             Rate: 80
           - Item: MechanicStone_Robe
             Rate: 80
-          - Item: MechanicStone_II_Garment
+          - Item: MechanicStone_Robe2
             Rate: 80
           - Item: GuillcrossStone_Robe
             Rate: 80
-          - Item: GuillotineCrossStone_Robe2
+          - Item: GuillcrossStone_Robe2
             Rate: 80
           - Item: SuraStone_Top3
             Rate: 80
@@ -31014,11 +31014,11 @@ Body:
             Rate: 150
           - Item: MechanicStone_Bottom
             Rate: 150
-          - Item: MechanicStone_II_Top
+          - Item: MechanicStone_Top2
             Rate: 150
-          - Item: MechanicStone_II_Middle
+          - Item: MechanicStone_Middle2
             Rate: 150
-          - Item: MechanicStone_II_Bottom
+          - Item: MechanicStone_Bottom2
             Rate: 150
           - Item: AssacrossStone_Top
             Rate: 150
@@ -31026,11 +31026,11 @@ Body:
             Rate: 150
           - Item: AssacrossStone_Bottom
             Rate: 150
-          - Item: GuillotineCrossStone_Top2
+          - Item: AssacrossStone_Top2
             Rate: 150
-          - Item: GuillotineCrossStone_Middle2
+          - Item: AssacrossStone_Middle2
             Rate: 150
-          - Item: GuillotineCrossStone_Bottom2
+          - Item: AssacrossStone_Bottom2
             Rate: 150
           - Item: aegis_100496
             Rate: 360
@@ -31080,7 +31080,7 @@ Body:
             Rate: 100
           - Item: Undine_Spear_K
             Rate: 100
-          - Item: Exoricists_Bible_
+          - Item: Demon_Hunting_Bible_K
             Rate: 100
           - Item: Shiver_Katar_K
             Rate: 100
@@ -31177,11 +31177,11 @@ Body:
             Rate: 160
           - Item: ExplodingEffect_Middle
             Rate: 160
-          - Item: StarEmperorStone_Garment
+          - Item: StaremperorStone_Robe
             Rate: 80
-          - Item: GunslingerStone_Robe
+          - Item: RebellionStone_Robe
             Rate: 80
-          - Item: SoulReaperStone_Robe
+          - Item: SoulreaperStone_Robe
             Rate: 80
           - Item: StarStone_Top3
             Rate: 80
@@ -31211,11 +31211,11 @@ Body:
             Rate: 240
           - Item: Magic_Stone_Bottom
             Rate: 240
-          - Item: StarGladiatorStone_Top
+          - Item: GladiatorStone_Top
             Rate: 150
-          - Item: StarGladiatorStone_Middle
+          - Item: GladiatorStone_Middle
             Rate: 150
-          - Item: StarGladiatorStone_Bottom
+          - Item: GladiatorStone_Bottom
             Rate: 150
           - Item: GunslingerStone_Top
             Rate: 150
@@ -31223,11 +31223,11 @@ Body:
             Rate: 150
           - Item: GunslingerStone_Bottom
             Rate: 150
-          - Item: SoulLinkerStone_Top
+          - Item: SoullinkerStone_Top
             Rate: 150
-          - Item: SoulLinkerStone_Middle
+          - Item: SoullinkerStone_Middle
             Rate: 150
-          - Item: SoulLinkerStone_Bottom
+          - Item: SoullinkerStone_Bottom
             Rate: 150
           - Item: Melee_Stone_Top
             Rate: 240
