@@ -2224,6 +2224,20 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_PC_COSTUME_BOX);
+  - Id: 9539
+    AegisName: Blue_Potion_B_10
+    Name: "[Event] Blue Potion Box"
+    Type: Healing
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 11572,10; /* [Event] Blue Potion */
   - Id: 9550
     AegisName: Gemstone_Of_Time
     Name: Gemstone of Time
@@ -2245,6 +2259,12 @@ Body:
     Weight: 10
     Script: |
       rentitem 22998,604800;
+  - Id: 9569
+    AegisName: Festival_Noodle
+    Name: Festival Noodles
+    Type: Healing
+    Script: |
+      bonus_script "{ }",900;
   - Id: 9581
     AegisName: Wet_Sealed_Card
     Name: Sealed Wet Card
@@ -2343,6 +2363,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_E_LIMITPOWERBOOSTER);
+  - Id: 9610
+    AegisName: E_Mysterious_Water
+    Name: "[Event]Mysterious Water"
+    Type: Healing
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_M_LIFEPOTION,600000,-4,3;
   - Id: 9785
     AegisName: Frozen_Box_IL
     Name: Frozen Refine Box
@@ -3446,6 +3482,15 @@ Body:
     Weight: 40
     Script: |
       itemheal 325,0;
+  - Id: 11556
+    AegisName: Blue_Potion_RG
+    Name: RG Blue Potion
+    Type: Healing
+    Weight: 90
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemheal 0,rand(40,60);
   - Id: 11557
     AegisName: TE_White_Potion
     Name: TE White Potion
@@ -3958,6 +4003,48 @@ Body:
     Script: |
       itemheal rand(50,100),0;
       /*TODO*/
+  - Id: 11607
+    AegisName: Crepe
+    Name: Sweet Crepe
+    Type: Healing
+    Weight: 100
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_end SC_POISON;
+      sc_end SC_SILENCE;
+      sc_end SC_BLIND;
+      sc_end SC_CONFUSION;
+      sc_end SC_CURSE;
+      sc_end SC_Hallucination;
+  - Id: 11608
+    AegisName: Chocolate_Egg
+    Name: Chocolate Egg
+    Type: Healing
+    Weight: 50
+    Script: |
+      itemheal rand(325,405),0;
+  - Id: 11609
+    AegisName: Yummy_Cookie_Egg
+    Name: Tasty Cookie Egg
+    Type: Healing
+    Weight: 50
+    Script: |
+      itemheal 0,rand(40,60);
+  - Id: 11610
+    AegisName: Sweet_Melon
+    Name: Sweet Melon
+    Type: Healing
+    Weight: 50
+    Script: |
+      itemheal 350,0;
+  - Id: 11613
+    AegisName: Harvest_Cookie
+    Name: Harvest Biscuit
+    Type: Healing
+    Weight: 30
+    Script: |
+      percentheal 3,0;
+      itemheal 0,100;
   - Id: 11614
     AegisName: Fresh_Milk
     Name: Fresh Milk
@@ -13608,6 +13695,23 @@ Body:
       getitem 546,100;
       getitem 547,100;
       getitem 505,100;
+  - Id: 12832
+    AegisName: Mysterious_Water
+    Name: Mysterious Water
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_M_LIFEPOTION,600000,-4,3;
   - Id: 12834
     AegisName: Undead_Egg
     Name: Undead Egg
@@ -13790,6 +13894,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_POPE_SCROLL);
+  - Id: 12856
+    AegisName: GoldenApple_P_RG
+    Name: RG Golden Apple Slice
+    Type: Usable
+    Weight: 300
+    Script: |
+      percentheal 50,50;
+  - Id: 12857
+    AegisName: GoldenApple_RG
+    Name: RG Golden Apple
+    Type: Usable
+    Weight: 300
+    Script: |
+      percentheal 100,100;
   - Id: 12858
     AegisName: Golden_Potion_RG
     Name: RG Golden Potion
@@ -13844,6 +13962,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_MYSTERIOUS_EGG2);
+  - Id: 12872
+    AegisName: Battle_Manual_Limit
+    Name: Battle Manual Limit
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,3600000,60;
   - Id: 12873
     AegisName: TE_Potion_Box
     Name: TE Potion Box
@@ -35143,6 +35276,21 @@ Body:
     Script: |
       specialeffect2 EF_BASH3D;
       sc_start SC_ULTIMATECOOK,1800000,10;
+  - Id: 14908
+    AegisName: Korea_Rice_Cake_B
+    Name: "[Not for Sale] Songpyeon"    # !todo check english name
+    Type: Healing
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 20,0;
   - Id: 16100
     AegisName: Angry_Mouth_C_Box
     Name: Angry Mouth Box
@@ -48984,6 +49132,13 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_INFINITY_10_BOX);
+  - Id: 17888
+    AegisName: Comp_Kafra_Card_Box
+    Name: "[NotForSale] Kafra Card Box(10)"
+    Type: Cash
+    Weight: 10
+    Script: |
+      getitem 12211,10;
   - Id: 17894
     AegisName: New_Vigorgra_Package
     Name: New Cheer Up Package
@@ -52582,6 +52737,86 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_SEALED_SCROLL3);
+  - Id: 22907
+    AegisName: Service30_M_01_Call
+    Name: Edward Zonda Calling Bell
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO dynamic NPC */
+  - Id: 22908
+    AegisName: Service30_F_01_Call
+    Name: Elysee Zonda Calling Bell
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO dynamic NPC */
+  - Id: 22911
+    AegisName: Weapon_7Up_Box
+    Name: Weapon +7 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6230,1; /* Safe to 7 Weapon Certificate */
+  - Id: 22913
+    AegisName: Weapon_9Up_Box
+    Name: Weapon +9 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6228,1; /* +9 Weapon refine deed */
+  - Id: 22915
+    AegisName: Weapon_11Up_Box
+    Name: Weapon +11 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6238,1; /* +11 Weapon refine deed */
+  - Id: 22926
+    AegisName: Armor_7Up_Box
+    Name: Armor +7 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6234,1; /* Safe to 7 Body Armor Certificate */
+  - Id: 22928
+    AegisName: Armor_9Up_Box
+    Name: Armor +9 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6232,1; /* +9 Armor refine deed */
+  - Id: 22930
+    AegisName: Armor_11Up_Box
+    Name: Armor +11 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6239,1; /* +11 Armor refine deed */
+  - Id: 22945
+    AegisName: Cherry_Blossom_Cake
+    Name: Cherry Blossom Rice Cake
+    Type: Usable
+    Weight: 30
+    Script: |
+      percentheal 30,30;
+      /* TODO Increases damage against small, medium and large enemies by 5% for 5 minutes. */
   - Id: 22946
     AegisName: Status_Decrease_Scroll
     Name: Stats Reduction Scroll
@@ -52599,6 +52834,96 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_STATUS_DECREASE_SCROLL);
+  - Id: 22947
+    AegisName: Minus_Str_Box
+    Name: Strength Soul Potion Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22702,5; /* STR Soul Potion */
+  - Id: 22948
+    AegisName: Minus_Agi_Box
+    Name: Agility Soul Potion Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22703,5; /* AGI Soul Potion */
+  - Id: 22949
+    AegisName: Minus_Vit_Box
+    Name: Vitality Soul Potion Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22704,5; /* VIT Soul Potion */
+  - Id: 22950
+    AegisName: Minus_Int_Box
+    Name: Intelligence Soul Potion Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22705,5; /* INT Soul Potion */
+  - Id: 22951
+    AegisName: Minus_Dex_Box
+    Name: Dexterity Soul Potion Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22706,5; /* DEX Soul Potion */
+  - Id: 22952
+    AegisName: Minus_Luk_Box
+    Name: Lucky Soul Potion Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22707,5; /* LUK Soul Potion */
   - Id: 22953
     AegisName: Enchant_Stone_Box7
     Name: Costume Enchant Stone Box 7
@@ -52718,6 +53043,36 @@ Body:
     Weight: 10
     Script: |
       warp "cmd_fild07",83,270;
+  - Id: 22982
+    AegisName: Service30P_M_01_Call
+    Name: Edward Zonda Owner EX
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO dynamic NPC */
+  - Id: 22983
+    AegisName: Service30P_F_01_Call
+    Name: Elysee Zonda Owner EX
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO dynamic NPC */
   - Id: 22984
     AegisName: Dr_Life_Potion_01
     Name: Kahluna Milk
@@ -52768,6 +53123,42 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_IMPROVED_NOMALBOX);
+  - Id: 22991
+    AegisName: Soccer_Cake
+    Name: Soccer Cake
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 30,30;
+  - Id: 22996
+    AegisName: Comp_Neuralizer
+    Name: "[Gift] Neuralizer"
+    Type: Usable
+    Script: |
+      callfunc "F_CashReset";
+  - Id: 22997
+    AegisName: C_Greed_Scroll
+    Name: Endless Greed Scroll
+    Type: Delayconsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemskill "BS_GREED",1;
   - Id: 22998
     AegisName: C_CatPaw_Ticket
     Name: Infinite Cat Hand Ticket
@@ -52775,6 +53166,16 @@ Body:
     Trade:
     Script: |
       callfunc "F_CashStore";
+  - Id: 22999
+    AegisName: Comp_Trans_Scroll
+    Name: "[Event] Transformation Pack"
+    Type: Usable
+    Weight: 100
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_COMP_TRANS_SCROLL);
   - Id: 23001
     AegisName: Enchant_Stone_Box8
     Name: Costume Enchant Stone Box 8
@@ -52897,6 +53298,19 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_CROSSEVENTBOX);
+  - Id: 23023
+    AegisName: C_Giant_Fly_Wing
+    Name: Infinite Giant Flywing
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 23024
     AegisName: Piamette_Scroll
     Name: Piamette Scroll
@@ -52960,6 +53374,14 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_LOOSE_WAVE_TWIN_BOX);
+  - Id: 23032
+    AegisName: Minus_Status_Box
+    Name: Stats Soul Potion Box
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_MINUS_STATUS_BOX);  /* TODO */
   - Id: 23033
     AegisName: Invisible_Box
     Name: Invisible Box
@@ -53082,6 +53504,16 @@ Body:
       sc_end SC_CURSE;
       sc_end SC_ORCISH;
       sc_end SC_CHANGEUNDEAD;
+  - Id: 23045
+    AegisName: Mont_Blanc_Cake
+    Name: Mont Blanc
+    Type: Delayconsume
+    Weight: 50
+    NoUse:
+      Sitting: true
+    Script: |
+      percentheal 20,20;
+      itemskill "AC_CONCENTRATION",5;
   - Id: 23046
     AegisName: Comp_Mystic_Powder
     Name: "[Sale] Mystic Powder"
@@ -53379,6 +53811,14 @@ Body:
       if (strcharinfo(3) == "slabw01") {
          sc_start SC_EP16_2_BUFF_AC,10000,0;
       }
+  - Id: 23079
+    AegisName: Strawberry_CreamCake
+    Name: Strawberry Cream Cake
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      percentheal 10,10;
+      itemskill "HP_ASSUMPTIO",3;
   - Id: 23080
     AegisName: Cursed_Crystal
     Name: Cursed Crystal
@@ -53455,6 +53895,25 @@ Body:
       getitem 25183,1;
       getitem 25184,1;
       getitem 25185,1;
+  - Id: 23094
+    AegisName: Comp_Glass_Of_Illusion
+    Name: "[NotForSale] Glass of Illusion"
+    Type: Usable
+    Weight: 10
+    Delay:
+      Duration: 300000
+      Status: Reuse_Limit_A
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start SC_INCFLEE2,60000,20;
   - Id: 23095
     AegisName: Poring_Scroll
     Name: Poring Scroll
@@ -53847,6 +54306,33 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 23159
+    AegisName: Poison_Pack2
+    Name: Poison Bottle Pack
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 678,10; /* Poison Bottle */
+  - Id: 23160
+    AegisName: Shadow_Cube_Sak
+    Name: Shadow Cube
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 23161
     AegisName: Gunslinger_Box
     Name: Gunslinger Box
@@ -54123,6 +54609,40 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_PREMIUMNOMALBOX);
+  - Id: 23203
+    AegisName: Small_Mana_Potion
+    Name: Small Mana Potion
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_S_MANAPOTION,600000,-5,5;
+  - Id: 23204
+    AegisName: M_DEFScroll
+    Name: Brilliant Protection Scroll
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Sitting: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start SC_M_DEFSCROLL,600000,0;
   - Id: 23205
     AegisName: New_Hat_Scroll2
     Name: New Hat Scroll II
@@ -54149,6 +54669,36 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_NEW_HAT_BOX2);
+  - Id: 23207
+    AegisName: Premium_Box
+    Name: "[30Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 23213
+    AegisName: Premium_Box_5d7
+    Name: "[7Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 23217
     AegisName: 2016_Special_Scroll
     Name: 2016 Special Scroll
@@ -54476,6 +55026,52 @@ Body:
     Buy: 10
     Script: |
       pet 1041;
+  - Id: 23257
+    AegisName: Dew_Of_Old_Tree
+    Name: Old Tree's Dew
+    Type: Usable
+    Buy: 2500
+    Weight: 50
+    NoUse:
+      Sitting: true
+    Script: |
+      /* TODO pet 2019; */
+  - Id: 23258
+    AegisName: Foul_Rotten_Meat
+    Name: Stinky Rotten Meat
+    Type: Usable
+    Buy: 2500
+    Weight: 50
+    NoUse:
+      Sitting: true
+    Script: |
+      /* TODO pet 1782; */
+  - Id: 23259
+    AegisName: St_Cupcake
+    Name: Strawberry Cream Cupcake
+    Type: Usable
+    Weight: 100
+    Script: |
+      percentheal 0,5;
+      specialeffect2 EF_HEAL3;
+      sc_start SC_BLESSING,240000,5;
+  - Id: 23260
+    AegisName: Parfait
+    Name: Fruit Parfait
+    Type: Usable
+    Weight: 100
+    Script: |
+      specialeffect2 EF_POTION3;
+      percentheal 20,0;
+  - Id: 23261
+    AegisName: Macaron
+    Name: Chewy Macaron
+    Type: Usable
+    Weight: 100
+    Script: |
+      specialeffect2 EF_POTION7;
+      percentheal 5,0;
+      sc_start SC_ANGELUS,240000,5;
   - Id: 23262
     AegisName: Hair_Bun_Box
     Name: Tango Hair Gift Box
@@ -54801,6 +55397,13 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_LOVE_SCROLL);
+  - Id: 23284
+    AegisName: Advanced_Taiming_Item
+    Name: Premium Taming Gift Set
+    Type: Usable
+    Weight: 200
+    Script: |
+      /* TODO */
   - Id: 23285
     AegisName: Candy_Box_Melee
     Name: Candy Bag Backpack (Physical)
@@ -55028,6 +55631,32 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_SHADOW_SCROLL2);
+  - Id: 23320
+    AegisName: Melon_Juice
+    Name: Melon Juice
+    Type: Usable
+    Weight: 50
+    Script: |
+      percentheal 10,10;
+      sc_start SC_HITFOOD,180000,30;
+  - Id: 23321
+    AegisName: Sweet_Melon_Juice
+    Name: Sweet Melon Juice
+    Type: Usable
+    Weight: 100
+    Script: |
+      percentheal 30,30;
+  - Id: 23322
+    AegisName: Melon_Parfait
+    Name: Melon Parfait
+    Type: Usable
+    Weight: 150
+    Delay:
+      Duration: 5000
+      Status: Reuse_Limit_F
+    Script: |
+      percentheal 100,100;
+      itemskill "PR_KYRIE",10;
   - Id: 23323
     AegisName: C_Wing_Of_Fly_3Day_Box_
     Name: Unlimited Wing Of Fly 3D Box
@@ -55231,6 +55860,96 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_BUY_ARBEIT1_3LV);
+  - Id: 23348
+    AegisName: Vend_Arbeit_1Lv
+    Name: Consignment Merchant Voucher Lv1
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 23349
+    AegisName: Vend_Arbeit_2Lv
+    Name: Consignment Merchant Voucher
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 23350
+    AegisName: Vend_Arbeit_3Lv
+    Name: Consignment Merchant Voucher Lv3
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 23351
+    AegisName: Buy_Arbeit_1Lv
+    Name: Personal Shopper Voucher Lv1
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 23352
+    AegisName: Buy_Arbeit_2Lv
+    Name: Personal Shopper Voucher
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 23353
+    AegisName: Buy_Arbeit_3Lv
+    Name: Personal Shopper Voucher Lv3
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 23354
     AegisName: Vend_Arbeit3_1Lv
     Name: "[3 Day] Consignment Merchant Envelope Lv1"
@@ -55316,6 +56035,34 @@ Body:
       sc_end SC_TOXIN;
       sc_end SC_MAGICMUSHROOM;
       sc_end SC_OBLIVIONCURSE;
+  - Id: 23362
+    AegisName: Pig_Potato
+    Name: Meatball
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 10,10;
+  - Id: 23364
+    AegisName: Cryptura_Cookie
+    Name: Critatura Pope Cookie
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 23365
     AegisName: Cryptura_Giftbox
     Name: Critatura Souvenir Box
@@ -55496,6 +56243,13 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_JULY_HAIR_BOX);
+  - Id: 23445
+    AegisName: Grilled_Turkey
+    Name: Home Food
+    Type: Usable
+    Weight: 100
+    Script: |
+      percentheal 20,20;
   - Id: 23473
     AegisName: Infinity_Scroll
     Name: Infinity Scroll
@@ -56009,6 +56763,14 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23548
+    AegisName: Ice_Candy
+    Name: Snow Candy
+    Type: Usable
+    Weight: 20
+    Script: |
+      percentheal 5,5;
+      sc_start SC_FREEZE,3000,0,10000,0;
   - Id: 23549
     AegisName: Snow_Cookie
     Name: Snow Cookie
@@ -56429,6 +57191,36 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box14);
+  - Id: 23647
+    AegisName: Zero_Merchant_Bell
+    Name: Tool Dealer Bell
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO dynamic npc */
+  - Id: 23648
+    AegisName: Zero_Kafra_Bell
+    Name: Kafra Storage Bell
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO dynamic npc */
   - Id: 23650
     AegisName: Ice_Scroll
     Name: Ice Scroll
@@ -56876,6 +57668,13 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_COMP_ALL_RING_BOX);
+  - Id: 23761
+    AegisName: Advanced_Taiming_Item2
+    Name: Premium Taming Gift Set II
+    Type: Usable
+    Weight: 200
+    Script: |
+      /* TODO */
   - Id: 23763
     AegisName: Mysterious_Egg3
     Name: Mysterious Egg III
@@ -58596,6 +59395,21 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 100061
+    AegisName: E_Red_Booster
+    Name: "[Event] Red Booster"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 100065
     AegisName: WL_MB_SG
     Name: Spell Book (Storm Gust)
@@ -59872,6 +60686,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_BOOSTER_PACK_200);
+  - Id: 100337
+    AegisName: Booster_Call
+    Name: Booster Call
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 100338
     AegisName: Booster_W_Up_1
     Name: Booster Weapon Phase 1 Upgrade Package
@@ -59930,6 +60759,83 @@ Body:
       NoAuction: true
     Script: |
       laphine_upgrade();
+  - Id: 100342
+    AegisName: Exp_Up_1
+    Name: Growth Potion (Small)
+    Type: Usable
+    EquipLevelMax: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getexp2 1650,0;
+  - Id: 100343
+    AegisName: Exp_Up_2
+    Name: Growth Potion (Medium)
+    Type: Usable
+    EquipLevelMin: 50
+    EquipLevelMax: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getexp2 4060,0;
+  - Id: 100344
+    AegisName: Exp_Up_3
+    Name: Growth Potion (Advanced)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 100
+    EquipLevelMax: 160
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getexp2 127280,0;
+  - Id: 100345
+    AegisName: Exp_Up_4
+    Name: Growth Potion(Superior)
+    Type: Usable
+    EquipLevelMin: 160
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getexp2 9736480,0;
+  - Id: 100346
+    AegisName: Jexp_Up_1
+    Name: Job Potion (Small)
+    Type: Usable
+    EquipLevelMin: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 100347
     AegisName: 2020_Goal_Gift_Box
     Name: 2021 Booster Goal Achievement Gift Box
@@ -61831,6 +62737,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_S_COSTUME_BOX);
+  - Id: 100913
+    AegisName: EXP_Drop_Up_7days
+    Name: Kafra Buff(7 Days)
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 100917
     AegisName: Hero_Weapon_Hammer_4
     Name: Modified Hero's Weapon Refinement Hammer IV

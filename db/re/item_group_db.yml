@@ -31821,13 +31821,6 @@ Body:
             Amount: 3
           - Item: S_Skia_Card    # 27333
             Rate: 136
-          - Item: aegis_27389    # 27389
-            Rate: 371
-            Amount: 3
-          - Item: aegis_27390    # 27390
-            Rate: 136
-          - Item: aegis_27392    # 27392
-            Rate: 136
           - Item: Kathryn_Card    # 27393
             Rate: 371
             Amount: 3
@@ -31847,8 +31840,6 @@ Body:
             Rate: 371
             Amount: 3
           - Item: S_Poe_Card    # 300130
-            Rate: 136
-          - Item: aegis_410025    # 410025
             Rate: 136
   - Group: SEASON_EVT_REWARD_2
     SubGroups:
@@ -42642,8 +42633,6 @@ Body:
           - Item: Kronecker_Card    # 27330
             Rate: 360
           - Item: Skia_Card    # 27332
-            Rate: 360
-          - Item: aegis_27389    # 27389
             Rate: 360
           - Item: Kathryn_Card    # 27393
             Rate: 563
