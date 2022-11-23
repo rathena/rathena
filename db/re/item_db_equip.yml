@@ -5230,7 +5230,7 @@ Body:
       bonus bAtkEle,Ele_Holy;
       bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
   - Id: 1298
-    AegisName: Shiver_Katar_K
+    AegisName: Shiver_Katar
     Name: Shiver Katar
     Type: Weapon
     SubType: Katar
@@ -67849,7 +67849,7 @@ Body:
       if (.@r > 9)
          bonus bUseSPrate,-5;
   - Id: 15162
-    AegisName: Lounge_Suit
+    AegisName: Lounge_Suit_
     Name: Lounge Suit
     Type: Armor
     Buy: 20
@@ -121210,7 +121210,7 @@ Body:
          }
       }
   - Id: 28039
-    AegisName: Katar_of_Shiver
+    AegisName: Shiver_Katar_K
     Name: Katar of Shiver
     Type: Weapon
     SubType: Katar
@@ -126199,7 +126199,7 @@ Body:
       bonus bVit,8;
       bonus bInt,8;
   - Id: 28602
-    AegisName: Demon_Hunting_Bible_K
+    AegisName: Demon_Hunting_Bible
     Name: Demon Hunting Bible
     Type: Weapon
     SubType: Book

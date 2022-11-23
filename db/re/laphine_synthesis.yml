@@ -2911,7 +2911,7 @@ Body:
     RewardGroup: SHIVER_KATAR_K_CUBE
     MinimumRefine: 9
     Requirements:
-      - Item: Katar_of_Shiver
+      - Item: Shiver_Katar_K
   - Item: Blade_Katar_Cube
     RewardGroup: BLADE_KATAR_CUBE
     MinimumRefine: 9

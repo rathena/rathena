@@ -31082,7 +31082,7 @@ Body:
             Rate: 100
           - Item: Exoricists_Bible_
             Rate: 100
-          - Item: Katar_of_Shiver
+          - Item: Shiver_Katar_K
             Rate: 100
   - Group: 3LV_9REFINE_WEAPON_7GU
     SubGroups:
@@ -37433,7 +37433,7 @@ Body:
             Rate: 1
           - Item: Rider_Suit    # 15058
             Rate: 1
-          - Item: Lounge_Suit    # 15089
+          - Item: Lounge_Suit_    # 15089
             Rate: 1
           - Item: C_Evil_Druid_Hat    # 19824
             Rate: 0

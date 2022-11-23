@@ -4778,10 +4778,10 @@ Body:
           - Angra_Mantis_Card
           - Chaotic_Killer_Mantis_Card
       - Combo:
-          - Shiver_Katar_K
+          - Shiver_Katar
           - Mobster_Card
       - Combo:
-          - Shiver_Katar_K
+          - Shiver_Katar
           - Sedora_Card
       - Combo:
           - Fafnir_Skin
@@ -10735,7 +10735,7 @@ Body:
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
-          - Katar_of_Shiver
+          - Shiver_Katar_K
     Script: |
       autobonus "{ bonus bLuk,20; bonus bCritAtkRate,10; }",30,7000;
   - Combos:
