@@ -5230,7 +5230,7 @@ Body:
       bonus bAtkEle,Ele_Holy;
       bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
   - Id: 1298
-    AegisName: Shiver_Katar_K
+    AegisName: Shiver_Katar
     Name: Shiver Katar
     Type: Weapon
     SubType: Katar
@@ -17778,7 +17778,7 @@ Body:
          bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
       }
   - Id: 1865
-    AegisName: Raging_Dragon_Fist
+    AegisName: Combo_Fist
     Name: Raging Dragon Fist
     Type: Weapon
     SubType: Knuckle
@@ -17808,7 +17808,7 @@ Body:
       if (.@r >= 11)
          bonus2 bSkillAtk,"CH_CHAINCRUSH",30;
   - Id: 1866
-    AegisName: Dedicated_Bandage
+    AegisName: Asura_Bandage
     Name: Dedicated Bandage
     Type: Weapon
     SubType: Knuckle
@@ -21863,7 +21863,7 @@ Body:
          bonus2 bSkillCooldown,"WL_EARTHSTRAIN",-1000;
       }
   - Id: 2055
-    AegisName: Staff_of_Miracle
+    AegisName: Staff_Of_Miracle
     Name: Staff of Miracle
     Type: Weapon
     SubType: 2hStaff
@@ -21963,7 +21963,7 @@ Body:
          bonus2 bSubSize,Size_All,25;
       }
   - Id: 2058
-    AegisName: Detecting_Staff
+    AegisName: Ein_BHSTAFF
     Name: Detecting Staff
     Type: Weapon
     SubType: 2hStaff
@@ -38562,7 +38562,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 2983
-    AegisName: Greed_Brooch
+    AegisName: Brooch_Greed
     Name: Greed Brooch
     Type: Armor
     Buy: 10
@@ -66642,7 +66642,7 @@ Body:
       bonus bMaxHP,BaseLevel*3;
       bonus bMaxSP,BaseLevel/2;
   - Id: 15089
-    AegisName: Menswear
+    AegisName: Lounge_Suit
     Name: Menswear
     Type: Armor
     Buy: 10
@@ -67849,7 +67849,7 @@ Body:
       if (.@r > 9)
          bonus bUseSPrate,-5;
   - Id: 15162
-    AegisName: Lounge_Suit
+    AegisName: Lounge_Suit_
     Name: Lounge Suit
     Type: Armor
     Buy: 20
@@ -68029,7 +68029,7 @@ Body:
       if (.@r >= 9)
          bonus bDefEle,Ele_Holy;
   - Id: 15174
-    AegisName: Surfer_Swimsuit
+    AegisName: Supper_Swimsuit_K
     Name: Surfer Swimsuit
     Type: Armor
     Buy: 20
@@ -72188,7 +72188,7 @@ Body:
          bonus3 bAutoSpell,"AB_JUDEX",max(2,getskilllv("AB_JUDEX")),50;
       /* Unknow Rates */
   - Id: 16096
-    AegisName: Bright_Pendulum
+    AegisName: Bright_Mace
     Name: Bright Pendulum
     Type: Weapon
     SubType: Mace
@@ -73864,7 +73864,7 @@ Body:
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
       }
   - Id: 18184
-    AegisName: Rapid_Fire
+    AegisName: Rapid_Fire_C_Bow
     Name: Rapid Fire
     Type: Weapon
     SubType: Bow
@@ -83398,7 +83398,7 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH",(.@r>=8?45:(.@r>=6?30:15));
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",(.@r>=8?45:(.@r>=6?30:15));
   - Id: 19117
-    AegisName: Poring_Sunglasses_
+    AegisName: Poring_Sunglasses_K
     Name: Poring Sunglasses
     Type: Armor
     Weight: 10
@@ -83411,7 +83411,7 @@ Body:
       bonus2 bDropAddRace,RC_All,5;
       bonus2 bExpAddRace,RC_All,5;
   - Id: 19118
-    AegisName: Poring_Sunglasses__
+    AegisName: Poring_Sunglasses_K_
     Name: Poring Sunglasses
     Type: Armor
     Weight: 10
@@ -83923,7 +83923,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19148
-    AegisName: Santa_Poring_Balloon
+    AegisName: SantaPoring_Balloon
     Name: Santa Poring Balloon
     Type: Armor
     Buy: 20
@@ -83953,7 +83953,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19150
-    AegisName: Metalring_Balloon
+    AegisName: Metaling_Balloon
     Name: Metalring Balloon
     Type: Armor
     Buy: 20
@@ -83968,7 +83968,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19151
-    AegisName: Devilring_Balloon
+    AegisName: Deviling_Balloon
     Name: Devilring Balloon
     Type: Armor
     Buy: 20
@@ -83983,7 +83983,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19152
-    AegisName: Angelring_Balloon
+    AegisName: Angeling_Balloon
     Name: Angelring Balloon
     Type: Armor
     Buy: 20
@@ -84013,7 +84013,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19154
-    AegisName: Arch_Angelring_Balloon
+    AegisName: Archangeling_Balloon
     Name: Arch Angelring Balloon
     Type: Armor
     Buy: 20
@@ -84124,7 +84124,7 @@ Body:
          }
       }
   - Id: 19162
-    AegisName: Scuba_Mask_
+    AegisName: Scuba_Mask_K
     Name: Scuba Mask
     Type: Armor
     Buy: 20
@@ -84255,7 +84255,7 @@ Body:
       bonus bMaxSP,140;
       bonus2 bSPRegenRate,6,4000;
   - Id: 19168
-    AegisName: Band_Of_Kafra_
+    AegisName: Kafra_Employee_Band
     Name: Kafra Staff Headband
     Type: Armor
     Buy: 20
@@ -84407,7 +84407,7 @@ Body:
       bonus2 bAddRace,RC_Angel,5;
       bonus2 bSubRace,RC_Angel,5;
   - Id: 19177
-    AegisName: Elemental_Crown_
+    AegisName: Elemental_Crown_K
     Name: Elemental Crown
     Type: Armor
     Weight: 500
@@ -85369,7 +85369,7 @@ Body:
     Refineable: true
     View: 873
   - Id: 19242
-    AegisName: Neko_Headress
+    AegisName: Cat_Lace_Hairband_K
     Name: Costume Neko Headress
     Type: Armor
     Weight: 100
@@ -95673,7 +95673,7 @@ Body:
     EquipLevelMin: 1
     View: 1332
   - Id: 20287
-    AegisName: C_Mans_Medal_Gold
+    AegisName: C_Man_Medal_Gold
     Name: Costume Man's Medal(Gold)
     Type: Armor
     Locations:
@@ -96095,7 +96095,7 @@ Body:
     EquipLevelMin: 1
     View: 1369
   - Id: 20340
-    AegisName: C_Straight_Pony_Black
+    AegisName: C_Straight_Pony_BL
     Name: Costume Straight Pony Black
     Type: Armor
     Locations:
@@ -96104,7 +96104,7 @@ Body:
     EquipLevelMin: 1
     View: 1371
   - Id: 20341
-    AegisName: C_Bouncing_Hair_Black
+    AegisName: C_Cowlick_BL
     Name: Costume Bouncing Hair Black
     Type: Armor
     Locations:
@@ -96113,7 +96113,7 @@ Body:
     EquipLevelMin: 1
     View: 1372
   - Id: 20342
-    AegisName: C_Loose_Wave_Twin
+    AegisName: C_Loose_Wave_Twin_BL
     Name: Costume Loose Wave Twin
     Type: Armor
     Locations:
@@ -96158,7 +96158,7 @@ Body:
     EquipLevelMin: 1
     View: 726
   - Id: 20348
-    AegisName: C_Sunday_Hat
+    AegisName: C_Picnic_Hat
     Name: Costume Sunday Hat
     Type: Armor
     Locations:
@@ -96446,7 +96446,7 @@ Body:
     EquipLevelMin: 1
     View: 1404
   - Id: 20380
-    AegisName: C_Mechanical_Feather_Hairband
+    AegisName: C_Mech_Feather_Hairband
     Name: Costume Mechanical Feather Hairband
     Type: Armor
     Locations:
@@ -100030,7 +100030,7 @@ Body:
             bonus bCritAtkRate,(.@r>=9)?15:10;
       }
   - Id: 20819
-    AegisName: Oxygen_Bottle
+    AegisName: Oxygen_Bomb_K
     Name: Oxygen Bottle
     Type: Armor
     Weight: 500
@@ -103332,7 +103332,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 21207
-    AegisName: C_Bullhead
+    AegisName: C_bullhead
     Name: Costume Bull Head
     Type: Armor
     Locations:
@@ -111394,7 +111394,7 @@ Body:
       if (.@r>=9)
          bonus bCritAtkRate,3;
   - Id: 24320
-    AegisName: S_Hasty_Shoes_II
+    AegisName: S2_Hasty_Shoes
     Name: Hasty Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111412,7 +111412,7 @@ Body:
       bonus bAtkRate,.@val;
       bonus bMatkRate,.@val;
   - Id: 24321
-    AegisName: S_Bearer's_Pendant_II
+    AegisName: S2_Bearers_Pendent
     Name: Bearer's Shadow Pendant II
     Type: Shadowgear
     Locations:
@@ -111431,7 +111431,7 @@ Body:
       }
       bonus bMaxHPrate,.@val;
   - Id: 24322
-    AegisName: S_Gemstone_Earring_II
+    AegisName: S2_Gemstone_Earring
     Name: Gemstone Shadow Earring II
     Type: Shadowgear
     Locations:
@@ -111450,7 +111450,7 @@ Body:
       bonus bMatk,5;
       bonus bUseSPrate,-.@val;
   - Id: 24323
-    AegisName: S_Spellflow_Shield_II
+    AegisName: S2_Spell_Flow_Shield
     Name: Spellflow Shadow Shield II
     Type: Shadowgear
     Locations:
@@ -111463,7 +111463,7 @@ Body:
       bonus bMatkRate,1 + (.@r >= 7);
       bonus bUseSPrate,-1;
   - Id: 24324
-    AegisName: S_Spiritual_Weapon_II
+    AegisName: S2_Spiritual_Weapon
     Name: Spiritual Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -111477,7 +111477,7 @@ Body:
       bonus bSPrecovRate,5;
       bonus bAtkRate,1 + (.@r >= 7);
   - Id: 24325
-    AegisName: S_Malicious_Armor_II
+    AegisName: S2_Malicious_Armor
     Name: Malicious Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111536,7 +111536,7 @@ Body:
          bonus bMaxSP,300;
       }
   - Id: 24328
-    AegisName: S_Force_Executioner_Weapon
+    AegisName: S2_Force_Ex_Weapon
     Name: Force Executioner Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -111549,7 +111549,7 @@ Body:
       bonus bBaseAtk,5+.@r;
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@r/2;
   - Id: 24329
-    AegisName: S_Spirit_Magic_Executioner_Weapon
+    AegisName: S2_Spirit_M_E_Weapon
     Name: Spirit Magic Executioner Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -111562,7 +111562,7 @@ Body:
       bonus bMatk,5+.@r;
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@r/2;
   - Id: 24330
-    AegisName: S_Caster_Armor_II
+    AegisName: S2_Caster_Armor
     Name: Caster Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111576,7 +111576,7 @@ Body:
       bonus bSPrecovRate,20;
       bonus bVariableCastrate,-.@r/2;
   - Id: 24331
-    AegisName: S_Reload_Armor_II
+    AegisName: S2_Reload_Armor
     Name: Reload Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111624,7 +111624,7 @@ Body:
          bonus bCritical,2;
       }
   - Id: 24334
-    AegisName: S_Magic_Compose_Armor
+    AegisName: S_MagicCompose_Armor
     Name: Magic Compose Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111643,7 +111643,7 @@ Body:
          bonus3 bAutoSpell,"WZ_EARTHSPIKE",.@val,(5+.@r);
       }
   - Id: 24335
-    AegisName: S_Gemstone_Weapon_II
+    AegisName: S2_Gemstone_Weapon
     Name: Gemstone Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -111662,7 +111662,7 @@ Body:
          bonus bUseSPrate,-2;
       }
   - Id: 24336
-    AegisName: S_Gemstone_Shield_II
+    AegisName: S2_Gemstone_Shield
     Name: Gemstone Shadow Shield II
     Type: Shadowgear
     Locations:
@@ -111680,7 +111680,7 @@ Body:
          bonus bUseSPrate,-2;
       }
   - Id: 24337
-    AegisName: S_Bearer's_Armor_II
+    AegisName: S2_Bearers_Armor
     Name: Bearer's Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111698,7 +111698,7 @@ Body:
          bonus bMaxHPrate,1;
       }
   - Id: 24338
-    AegisName: S_Bearer's_Shoes_II
+    AegisName: S2_Bearers_Shoes
     Name: Bearer's Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111740,7 +111740,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus bAllStats,.@r;
   - Id: 24341
-    AegisName: S_All_Race_Shoes
+    AegisName: S_AllRace_Shoes
     Name: All Race Shadow Shoes
     Type: Shadowgear
     Locations:
@@ -111761,7 +111761,7 @@ Body:
       bonus2 bAddRace,RC_All,.@val;
       bonus2 bMagicAddRace,RC_All,.@val;
   - Id: 24342
-    AegisName: S_All_Race_Shield
+    AegisName: S_AllRace_Shield
     Name: All Race Shadow Shield
     Type: Shadowgear
     Locations:
@@ -111842,7 +111842,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24347
-    AegisName: S_Magic_Executioner_Holy_Water_Armor
+    AegisName: S_M_ExeHoly_Armor
     Name: Magic Executioner Holy Water Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111856,7 +111856,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Undead,.@val;
   - Id: 24348
-    AegisName: S_Magic_Exorcist_Corrupted_Armor
+    AegisName: S_M_ExoCorrupt_Armor
     Name: Magic Exorcist Corrupted Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111870,7 +111870,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Angel,.@val;
   - Id: 24349
-    AegisName: S_Magic_Vibration_Dragon_Killer_Armor
+    AegisName: S_M_DragonVib_Armor
     Name: Magic Vibration Dragon Killer Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111884,7 +111884,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Dragon,.@val;
   - Id: 24350
-    AegisName: S_Magic_Scissor_Hunting_Armor
+    AegisName: S_M_SciHunting_Armor
     Name: Magic Scissor Hunting Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111899,7 +111899,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Brute,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,.@val;
   - Id: 24351
-    AegisName: S_Magic_Fishing_Insect_Net_Armor
+    AegisName: S_M_FishInsect_Armor
     Name: Magic Fishing Insect Net Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111913,7 +111913,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Fish,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Insect,.@val;
   - Id: 24352
-    AegisName: S_Plasterer's_Armor_II
+    AegisName: S2_Plasterer's_Armor
     Name: Plasterer's Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111926,7 +111926,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Stone,100*.@r;
   - Id: 24353
-    AegisName: S_Insomniac_Shoes_II
+    AegisName: S2_Insomniac_Shoes
     Name: Insomniac Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111939,7 +111939,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Sleep,100*.@r;
   - Id: 24354
-    AegisName: S_Peerless_Armor_II
+    AegisName: S2_Peerless_Armor
     Name: Peerless Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111952,7 +111952,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Silence,100*.@r;
   - Id: 24355
-    AegisName: S_Adulate_Shoes_II
+    AegisName: S2_Adurate_Shoes
     Name: Adulate Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111965,7 +111965,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Blind,100*.@r;
   - Id: 24356
-    AegisName: S_Unfreezing_Weapon_II
+    AegisName: Unfreez_Weapon_S2
     Name: Unfreezing Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -111979,7 +111979,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Freeze,100*.@r;
   - Id: 24357
-    AegisName: S_Vitality_Earring_II
+    AegisName: Vitality_Earing_S2
     Name: Vitality Shadow Earring II
     Type: Shadowgear
     Locations:
@@ -111992,7 +111992,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Bleeding,100*.@r;
   - Id: 24358
-    AegisName: S_Neutral_Weapon_II
+    AegisName: S2_Neutral_Weapon
     Name: Neutral Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -112006,7 +112006,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Stun,100*(.@r/2);
   - Id: 24359
-    AegisName: S_Uncursed_Pendant_II
+    AegisName: S2_Curse_Lift_Pendent
     Name: Uncursed Shadow Pendant II
     Type: Shadowgear
     Locations:
@@ -112159,7 +112159,7 @@ Body:
       }
       bonus bHPrecovRate,.@val;
   - Id: 24369
-    AegisName: S_Restore_Pendant
+    AegisName: S_Restore_Pendent
     Name: Restore Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -112179,7 +112179,7 @@ Body:
       }
       bonus bSPrecovRate,.@val;
   - Id: 24370
-    AegisName: S_Mortal_Blow_Weapon
+    AegisName: S_MortalBlow_Weapon
     Name: Mortal Blow Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -112200,7 +112200,7 @@ Body:
       }
       bonus bCritAtkRate,.@val;
   - Id: 24371
-    AegisName: S_Mortal_Blow_Earring
+    AegisName: S_MortalBlow_Earring
     Name: Mortal Blow Shadow Earring
     Type: Shadowgear
     Locations:
@@ -112220,7 +112220,7 @@ Body:
       }
       bonus bCritAtkRate,.@val;
   - Id: 24372
-    AegisName: S_Mortal_Blow_Pendant
+    AegisName: S_MortalBlow_Pendent
     Name: Mortal Blow Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -112264,7 +112264,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24375
-    AegisName: S_Executioner_Holy_Water_Armor
+    AegisName: S_ExeHoly_Armor
     Name: Executioner Holy Water Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112278,7 +112278,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Undead,.@val;
   - Id: 24376
-    AegisName: S_Exorcist_Corrupted_Armor
+    AegisName: S_ExoCorrupt_Armor
     Name: Exorcist Corrupted Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112292,7 +112292,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Angel,.@val;
   - Id: 24377
-    AegisName: S_Vibration_Dragon_Killer_Armor
+    AegisName: S_DragonVib_Armor
     Name: Vibration Dragon Killer Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112306,7 +112306,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Dragon,.@val;
   - Id: 24378
-    AegisName: S_Scissor_Hunting_Armor
+    AegisName: S_SciHunting_Armor
     Name: Scissor Hunting Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112320,7 +112320,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Plant,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Brute,.@val;
   - Id: 24379
-    AegisName: S_Fishing_Insect_Net_Armor
+    AegisName: S_FishInsect_Armor
     Name: Fishing Insect Net Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112656,7 +112656,7 @@ Body:
          bonus bMatkRate,2;
       }
   - Id: 24399
-    AegisName: S_Immune_Athena_Shield
+    AegisName: S_ImmunedAthena_Shield
     Name: Immune Athena Shadow Shield
     Type: Shadowgear
     Locations:
@@ -112668,7 +112668,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus bDef,50+20*(.@r/2);
   - Id: 24400
-    AegisName: S_Hard_Champion_Shoes
+    AegisName: S_HardChamption_Shoes
     Name: Hard Champion Shadow Shoes
     Type: Shadowgear
     Locations:
@@ -112939,7 +112939,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bSkillCooldown,"SP_SOULREAPER",-3000-1000*(.@r/2);
   - Id: 24416
-    AegisName: S_Temporal_Transcendent_Weapon
+    AegisName: S_Timeoverload_Weapon
     Name: Temporal Transcendent Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -112960,7 +112960,7 @@ Body:
       bonus bMatk,.@r;
       bonus bCritAtkRate,7;
   - Id: 24417
-    AegisName: S_Temporal_Transcendent_Armor
+    AegisName: S_Timeoverload_Armor
     Name: Temporal Transcendent Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112979,7 +112979,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bAspd,1;
   - Id: 24418
-    AegisName: S_Temporal_Transcendent_Shield
+    AegisName: S_Timeoverload_Shield
     Name: Temporal Transcendent Shadow Shield
     Type: Shadowgear
     Locations:
@@ -112998,7 +112998,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bVariableCastrate,-10;
   - Id: 24419
-    AegisName: S_Temporal_Transcendent_Shoes
+    AegisName: S_Timeoverload_Shoes
     Name: Temporal Transcendent Shadow Shoes
     Type: Shadowgear
     Locations:
@@ -113017,7 +113017,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bAspdRate,7;
   - Id: 24420
-    AegisName: S_Temporal_Transcendent_Earring
+    AegisName: S_Timeoverload_Earing
     Name: Temporal Transcendent Shadow Earring
     Type: Shadowgear
     Locations:
@@ -113036,7 +113036,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bMatk,15;
   - Id: 24421
-    AegisName: S_Temporal_Transcendent_Pendant
+    AegisName: S_Timeoverload_Pandent
     Name: Temporal Transcendent Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -120121,7 +120121,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,5;
       bonus2 bMagicAtkEle,Ele_Earth,5;
   - Id: 26161
-    AegisName: Penitentia
+    AegisName: Ponitendtia
     Name: Penitentia
     Type: Weapon
     SubType: Staff
@@ -121210,7 +121210,7 @@ Body:
          }
       }
   - Id: 28039
-    AegisName: Katar_of_Shiver
+    AegisName: Shiver_Katar_K
     Name: Katar of Shiver
     Type: Weapon
     SubType: Katar
@@ -121285,7 +121285,7 @@ Body:
          bonus2 bAddRace,RC_DemiHuman,15;
       }
   - Id: 28042
-    AegisName: Ripper_Cross
+    AegisName: Reaper_Cross
     Name: Ripper Cross
     Type: Weapon
     SubType: Katar
@@ -126199,7 +126199,7 @@ Body:
       bonus bVit,8;
       bonus bInt,8;
   - Id: 28602
-    AegisName: Demon_Hunting_Bible_K
+    AegisName: Demon_Hunting_Bible
     Name: Demon Hunting Bible
     Type: Weapon
     SubType: Book
@@ -126765,7 +126765,7 @@ Body:
          }
       }
   - Id: 28630
-    AegisName: Exoricists_Bible_
+    AegisName: Demon_Hunting_Bible_K
     Name: Exoricist's Bible
     Type: Weapon
     SubType: Book
@@ -126869,7 +126869,7 @@ Body:
          bonus2 bSkillAtk,"AB_DUPLELIGHT",30;
       }
   - Id: 28633
-    AegisName: Boltijin
+    AegisName: Boltigin
     Name: Boltijin
     Type: Weapon
     SubType: Book
@@ -129434,7 +129434,7 @@ Body:
     EquipLevelMin: 1
     View: 793
   - Id: 31061
-    AegisName: C_Nipper_Hairpin
+    AegisName: C_Forceps_Hairpin
     Name: Costume Nipper Hairpin
     Type: Armor
     Locations:
@@ -129733,7 +129733,7 @@ Body:
     EquipLevelMin: 1
     View: 845
   - Id: 31093
-    AegisName: C_Under_Lamp
+    AegisName: C_Underlamp
     Name: Costume Under Lamp
     Type: Armor
     Locations:
@@ -130115,7 +130115,7 @@ Body:
     EquipLevelMin: 1
     View: 1202
   - Id: 31134
-    AegisName: C_Happy_Parrot_J
+    AegisName: C_Chatty_Parrot
     Name: Costume Talkactive Parrot
     Type: Armor
     Locations:
@@ -130151,7 +130151,7 @@ Body:
     EquipLevelMin: 1
     View: 1556
   - Id: 31138
-    AegisName: C_Piamette_Red_Hood
+    AegisName: C_Piamette_Hood_Red
     Name: Costume Piamette's Red Hood
     Type: Armor
     Locations:
@@ -130365,7 +130365,7 @@ Body:
     EquipLevelMin: 1
     View: 1149
   - Id: 31160
-    AegisName: C_RuneHelm
+    AegisName: C_Rune_Helm
     Name: Costume Rune Helm
     Type: Armor
     Locations:
@@ -131230,7 +131230,7 @@ Body:
     EquipLevelMin: 1
     View: 1631
   - Id: 31255
-    AegisName: C_Sweet_Helmet
+    AegisName: C_Dalcom_Helmet
     Name: C Sweet Helmet
     Type: Armor
     Locations:
@@ -131880,7 +131880,7 @@ Body:
     EquipLevelMin: 1
     View: 853
   - Id: 31323
-    AegisName: C_Yellow_Hunting_Cap
+    AegisName: C_Love_Daddy
     Name: C Yellow Hunting Cap
     Type: Armor
     Locations:
@@ -131966,7 +131966,7 @@ Body:
     EquipLevelMin: 1
     View: 1675
   - Id: 31332
-    AegisName: Khalitzburg_KN_Helm_BL
+    AegisName: C_Khalitzburg_Helm_BL
     Name: C Black Khalitzburg Knight Helm
     Type: Armor
     Locations:
@@ -132310,7 +132310,7 @@ Body:
     EquipLevelMin: 1
     View: 1677
   - Id: 31369
-    AegisName: C_Straight_Long_WH_
+    AegisName: C_Straight_Long_WHK
     Name: Costume Straight Long White
     Type: Armor
     Locations:
@@ -133027,7 +133027,7 @@ Body:
     EquipLevelMin: 1
     View: 913
   - Id: 31448
-    AegisName: C_Stings_Silk_Ribbon
+    AegisName: C_Sting_Silk_Ribbon
     Name: C Stings Silk Ribbon
     Type: Armor
     Locations:
@@ -133127,7 +133127,7 @@ Body:
     EquipLevelMin: 1
     View: 1426
   - Id: 31459
-    AegisName: C_Sweet_Bonbon
+    AegisName: C_Sweets_Bonbon
     Name: Costume Sweets Bonbon
     Type: Armor
     Locations:
@@ -133180,7 +133180,7 @@ Body:
     EquipLevelMin: 1
     View: 837
   - Id: 31465
-    AegisName: C_Robin_Egg_Minihat
+    AegisName: C_Egg_Minihat
     Name: C Robin Egg Minihat
     Type: Armor
     Locations:
@@ -133189,7 +133189,7 @@ Body:
     EquipLevelMin: 1
     View: 1722
   - Id: 31466
-    AegisName: C_Holy_Eggshell
+    AegisName: C_Holy_Egg_Hat
     Name: C Holy Egg Shell
     Type: Armor
     Locations:
@@ -133198,7 +133198,7 @@ Body:
     EquipLevelMin: 1
     View: 537
   - Id: 31467
-    AegisName: C_Evil_Eggshell
+    AegisName: C_Mimic_Egg_Shell
     Name: C Evil Eggshell
     Type: Armor
     Locations:
@@ -133443,7 +133443,7 @@ Body:
     EquipLevelMin: 1
     View: 1743
   - Id: 31494
-    AegisName: C_Volume_Low_Twin_Upper
+    AegisName: C_Volume_Low_TwinK
     Name: C Volume Low Twin
     Type: Armor
     Locations:
@@ -133452,7 +133452,7 @@ Body:
     EquipLevelMin: 1
     View: 1683
   - Id: 31495
-    AegisName: C_Lolita_Two_Side_Up_
+    AegisName: C_Lolita_Two_Side_UpK
     Name: C Lolita Two Side Up Upper
     Type: Armor
     Locations:
@@ -133659,7 +133659,7 @@ Body:
     EquipLevelMin: 1
     View: 1763
   - Id: 31519
-    AegisName: C_Noodles_Hat
+    AegisName: C_Slurp_Slurp_Hat
     Name: C Noodles Hat
     Type: Armor
     Locations:
@@ -134219,7 +134219,7 @@ Body:
     EquipLevelMin: 1
     View: 1306
   - Id: 31580
-    AegisName: C_Autumn_Flavor
+    AegisName: C_Autumnal_Flavor
     Name: C Autumn Flavor
     Type: Armor
     Locations:
@@ -134724,7 +134724,7 @@ Body:
     EquipLevelMin: 1
     View: 836
   - Id: 31635
-    AegisName: Costume_Flowing_Long_BD
+    AegisName: C_Fairy_Long_BD
     Name: C Flowing Long Blonde
     Type: Armor
     Locations:
@@ -134733,7 +134733,7 @@ Body:
     EquipLevelMin: 1
     View: 1832
   - Id: 31636
-    AegisName: Costume_Flowing_Long_SV
+    AegisName: C_Fairy_Long_SV
     Name: C Flowing Long Silver
     Type: Armor
     Locations:
@@ -135019,7 +135019,7 @@ Body:
     EquipLevelMin: 1
     View: 903
   - Id: 31667
-    AegisName: Costume_Poring_Beret
+    AegisName: C_PoringBeret_TW
     Name: C Poring Beret
     Type: Armor
     Locations:
@@ -135037,7 +135037,7 @@ Body:
     EquipLevelMin: 1
     View: 888
   - Id: 31669
-    AegisName: C_Adv_Whisper_Mask_M
+    AegisName: C_Adv_Whisper_Mask_J
     Name: C Evolved Whisper Mask Mid
     Type: Armor
     Locations:
@@ -135082,7 +135082,7 @@ Body:
     EquipLevelMin: 1
     View: 1867
   - Id: 31674
-    AegisName: Costume_Jitterbug_Cap
+    AegisName: C_Jitterbug_Cap
     Name: C Jitterbug Cap
     Type: Armor
     Locations:
@@ -135172,7 +135172,7 @@ Body:
     EquipLevelMin: 1
     View: 733
   - Id: 31684
-    AegisName: Costume_Kururinpa_Tails
+    AegisName: C_Kururinpa_Hair
     Name: C Kururinpa Tails
     Type: Armor
     Locations:
@@ -135181,7 +135181,7 @@ Body:
     EquipLevelMin: 1
     View: 1873
   - Id: 31685
-    AegisName: Costume_Fluffy_Semi_Long
+    AegisName: C_Fluffy_Semi_Long
     Name: C Fluffy Semi Long
     Type: Armor
     Locations:
@@ -135454,7 +135454,7 @@ Body:
     EquipLevelMin: 1
     View: 155
   - Id: 31715
-    AegisName: Costume_Orange_Rabbit
+    AegisName: C_Orange_Rabbit
     Name: C Orange Rabbit
     Type: Armor
     Locations:
@@ -135472,7 +135472,7 @@ Body:
     EquipLevelMin: 1
     View: 1888
   - Id: 31717
-    AegisName: Costume_Medium_Wave_BD
+    AegisName: C_Medium_Wave_BD
     Name: C Medium Wave Blonde
     Type: Armor
     Locations:
@@ -135490,7 +135490,7 @@ Body:
     EquipLevelMin: 1
     View: 1720
   - Id: 31719
-    AegisName: Costume_Master_Of_Flames
+    AegisName: C_Cons_Of_Fire
     Name: C Master Of Flames
     Type: Armor
     Locations:
@@ -135499,7 +135499,7 @@ Body:
     EquipLevelMin: 1
     View: 1890
   - Id: 31720
-    AegisName: Costume_Vesper_Hat
+    AegisName: C_VesperHeadGear
     Name: C Vesper Hat
     Type: Armor
     Locations:
@@ -135580,7 +135580,7 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
   - Id: 31729
-    AegisName: Costume_Miracle_Plant
+    AegisName: C_Miracle_Plant
     Name: C Miracle Plant
     Type: Armor
     Locations:
@@ -135598,7 +135598,7 @@ Body:
     EquipLevelMin: 1
     View: 1894
   - Id: 31731
-    AegisName: Costume_Sweets_Party
+    AegisName: C_SnackParty
     Name: C Sweets Party
     Type: Armor
     Locations:
@@ -136124,7 +136124,7 @@ Body:
     EquipLevelMin: 1
     View: 1916
   - Id: 31789
-    AegisName: Costume_Turkey_Hat
+    AegisName: C_Turkey_Hat
     Name: C Turkey Hat
     Type: Armor
     Locations:
@@ -136248,7 +136248,7 @@ Body:
     EquipLevelMin: 1
     View: 428
   - Id: 31803
-    AegisName: Costume_Master_Of_Wind
+    AegisName: C_Cons_Of_Wind
     Name: C Master of Wind
     Type: Armor
     Locations:
@@ -137944,7 +137944,7 @@ Body:
          bonus2 bSkillAtk,"LG_SHIELDPRESS",20;
       }
   - Id: 32025
-    AegisName: Fortridge
+    AegisName: Fortrage
     Name: Fortridge
     Type: Weapon
     SubType: 1hSpear
@@ -145470,7 +145470,7 @@ Body:
     UnEquipScript: |
       sc_end SC_UNLIMIT;
   - Id: 436000
-    AegisName: aegis_436000
+    AegisName: Tha_Maero_MaskK
     Name: Thanatos's Maeror Mask
     Type: Armor
     View: 666
@@ -145485,7 +145485,7 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus bMatkRate,3;
   - Id: 436001
-    AegisName: aegis_436001
+    AegisName: Tha_Despero_MaskK
     Name: Thanatos's Despero Mask
     Type: Armor
     View: 693
@@ -145500,7 +145500,7 @@ Body:
       bonus2 bAddRace,RC_Player_Doram,10;
       bonus bAtkRate,3;
   - Id: 436002
-    AegisName: aegis_436002
+    AegisName: Thanatos_Mal_MaskK
     Name: Thanatos's Odium Mask
     Type: Armor
     View: 667
@@ -145784,7 +145784,7 @@ Body:
     Script: |
       bonus bMaxHP,100;
   - Id: 450001
-    AegisName: Attacker_Booster_Plate_
+    AegisName: Atker_Plate
     Name: Attacker Booster Plate
     Type: Armor
     Defense: 120
@@ -145811,7 +145811,7 @@ Body:
          bonus bDelayrate,-5;
       }
   - Id: 450002
-    AegisName: Elemental_Booster_Robe_
+    AegisName: Ele_Robe
     Name: Elemental Booster Robe
     Type: Armor
     Defense: 80
@@ -145838,7 +145838,7 @@ Body:
          bonus bVariableCastrate,-5;
       }
   - Id: 450003
-    AegisName: Defender_Booster_Robe_
+    AegisName: Defn_Robe
     Name: Defender Booster Robe
     Type: Armor
     Defense: 90
@@ -145865,7 +145865,7 @@ Body:
          bonus bVariableCastrate,-5;
       }
   - Id: 450004
-    AegisName: Ranger_Booster_Suits_
+    AegisName: Ran_Suits
     Name: Ranger Booster Suits
     Type: Armor
     Defense: 100
@@ -151651,7 +151651,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,6-6;
       bonus2 bSubRace,RC_Player_Doram,6-6;
   - Id: 470000
-    AegisName: Attacker_Booster_Greaves_
+    AegisName: Atker_Greave
     Name: Attacker Booster Greaves
     Type: Armor
     Defense: 20
@@ -151675,7 +151675,7 @@ Body:
          bonus bFixedCast,-500;
       }
   - Id: 470001
-    AegisName: Elemental_Booster_Shoes_
+    AegisName: Ele_Shoes
     Name: Elemental Booster Shoes
     Type: Armor
     Defense: 15
@@ -151699,7 +151699,7 @@ Body:
          bonus bFixedCast,-500;
       }
   - Id: 470002
-    AegisName: Defender_Booster_Shoes_
+    AegisName: Defn_Shoes
     Name: Defender Booster Shoes
     Type: Armor
     Defense: 18
@@ -151723,7 +151723,7 @@ Body:
          bonus bFixedCast,-500;
       }
   - Id: 470003
-    AegisName: Ranger_Booster_Boots_
+    AegisName: Ran_Boots
     Name: Ranger Booster Boots
     Type: Armor
     Defense: 18
@@ -154180,7 +154180,7 @@ Body:
          }
       }
   - Id: 480000
-    AegisName: Attacker_Booster_Manteau_
+    AegisName: Atker_Manteau
     Name: Attacker Booster Manteau
     Type: Armor
     Defense: 30
@@ -154203,7 +154203,7 @@ Body:
          bonus bDelayrate,-10;
       }
   - Id: 480001
-    AegisName: Elemental_Booster_Muffler_
+    AegisName: Ele_Muffler
     Name: Elemental Booster Muffler
     Type: Armor
     Defense: 20
@@ -154230,7 +154230,7 @@ Body:
          bonus bDelayrate,-10;
       }
   - Id: 480002
-    AegisName: Defender_Booster_Muffler_
+    AegisName: Defn_Muffler
     Name: Defender Booster Muffler
     Type: Armor
     Defense: 25
@@ -154257,7 +154257,7 @@ Body:
          bonus bDelayrate,-10;
       }
   - Id: 480003
-    AegisName: Ranger_Booster_Manteau_
+    AegisName: Ran_Manteau
     Name: Ranger Booster Manteau
     Type: Armor
     Defense: 30
@@ -154697,7 +154697,7 @@ Body:
     ArmorLevel: 1
     View: 73
   - Id: 480058
-    AegisName: aegis_480058
+    AegisName: C_Wing_Of_Angel_Move_GD
     Name: Costume Wavy Golden Angel Wings
     Type: Armor
     Locations:
@@ -156628,7 +156628,7 @@ Body:
          }
       }
   - Id: 490004
-    AegisName: Attacker_Booster_Ring
+    AegisName: Atker_Ring
     Name: Attacker Booster Ring
     Type: Armor
     Slots: 1
@@ -156642,7 +156642,7 @@ Body:
       bonus bMaxHPrate,3;
       bonus bCritAtkRate,5;
   - Id: 490005
-    AegisName: Elemental_Booster_Earring
+    AegisName: Ele_Earing
     Name: Elemental Booster Earrings
     Type: Armor
     Slots: 1
@@ -156660,7 +156660,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Ground,5;
       bonus2 bMagicAtkEle,Ele_Neutral,5;
   - Id: 490006
-    AegisName: Defender_Booster_Earring
+    AegisName: Defn_Earing
     Name: Defender Booster Earrings
     Type: Armor
     Slots: 1
@@ -156678,7 +156678,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Ghost,5;
       bonus2 bMagicAtkEle,Ele_Holy,5;
   - Id: 490007
-    AegisName: Range_Booster_Brooch
+    AegisName: Ran_Brooch
     Name: Range Booster Brooches
     Type: Armor
     Slots: 1
@@ -158653,7 +158653,7 @@ Body:
     Script: |
       bonus bAllStats,2;
   - Id: 490164
-    AegisName: aegis_490164
+    AegisName: Hero_Token_SHC
     Name: Heroic Token (Shadow Cross)
     Type: Armor
     Weight: 200
@@ -158672,7 +158672,7 @@ Body:
       bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490165
-    AegisName: aegis_490165
+    AegisName: Hero_Token_ABC
     Name: Heroic Token (Abyss Chaser)
     Type: Armor
     Weight: 200

@@ -1908,7 +1908,7 @@ Body:
     Name: Elite Adventurer! (1)
     Condition: " Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 50
   - Id: 200012
@@ -1916,7 +1916,7 @@ Body:
     Name: Transcendentaler! (1)
     Condition: " Class >= JOB_RUNE_KNIGHT_T && Class <= JOB_GUILLOTINE_CROSS_T "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 60
   - Id: 200013
@@ -1924,7 +1924,7 @@ Body:
     Name: Elite Adventurer! (2)
     Condition: " Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 50
   - Id: 200014
@@ -1932,7 +1932,7 @@ Body:
     Name: Transcendentaler! (2)
     Condition: " Class >= JOB_ROYAL_GUARD_T && Class <= JOB_SHADOW_CHASER_T "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 60
   - Id: 200015
@@ -1947,7 +1947,7 @@ Body:
     Name: This is My way!
     Condition: " Class == JOB_STAR_GLADIATOR || Class == JOB_SOUL_LINKER || Class == JOB_KAGEROU || Class == JOB_OBORO || Class == JOB_REBELLION "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 20
   - Id: 200017
@@ -2027,7 +2027,7 @@ Body:
     Name: Incarnation of Love and Hate
     Condition: " BaseLevel == 99 && Class == JOB_NOVICE "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
     Score: 30
   - Id: 200030
@@ -2035,7 +2035,7 @@ Body:
     Name: I really love it!
     Condition: " BaseLevel == 99 && (Class >= JOB_SWORDMAN && Class <= JOB_THIEF) "
     Rewards:
-      Item: Bubble_Gum_Box_10
+      Item: E_Bubble_Gum_Box
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
     Score: 30
   - Id: 200031
