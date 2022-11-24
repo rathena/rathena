@@ -48922,7 +48922,7 @@ Body:
     Flags:
       DropEffect: CLIENT
   - Id: 300308
-    AegisName: aegis_300308
+    AegisName: S_Meyer_Card
     Name: Meyer Lugenburg Card
     Type: Card
     Weight: 10
@@ -50124,6 +50124,76 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,10*.@r;
+  - Id: 300421
+    AegisName: aegis_300421
+    Name: Catherine Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300422
+    AegisName: aegis_300422
+    Name: Catherine Gaebolg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus bShortAtkRate,5+4*(getrefine()/2);
+  - Id: 300423
+    AegisName: aegis_300423
+    Name: Friedrich Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300424
+    AegisName: aegis_300424
+    Name: Friedrich S. Heine Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_All,5+4*(getrefine()/2);
+  - Id: 300425
+    AegisName: aegis_300425
+    Name: Crux Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300426
+    AegisName: aegis_300426
+    Name: Crux Findel Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus bLongAtkRate,5+4*(getrefine()/2);
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -64831,6 +64901,622 @@ Body:
       hateffect HAT_EF_C_Romance_Rose_TW,true;
     UnEquipScript: |
       hateffect HAT_EF_C_Romance_Rose_TW,false;
+  - Id: 311927
+    AegisName: Bio_Jam_Df1
+    Name: Broken Biosphere Gem (Dragon Fishing)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Fish,15;
+      bonus2 bMagicAddRace,RC_Fish,15;
+      bonus2 bAddRace,RC_Dragon,15;
+      bonus2 bMagicAddRace,RC_Dragon,15;
+  - Id: 311928
+    AegisName: Bio_Jam_Df2
+    Name: Biosphere Gem (Dragon Fishing)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Fish,30;
+      bonus2 bMagicAddRace,RC_Fish,30;
+      bonus2 bAddRace,RC_Dragon,30;
+      bonus2 bMagicAddRace,RC_Dragon,30;
+  - Id: 311929
+    AegisName: Bio_Jam_Df3
+    Name: Brilliant Biosphere Gem (Dragon Fishing)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Fish,45;
+      bonus2 bMagicAddRace,RC_Fish,45;
+      bonus2 bAddRace,RC_Dragon,45;
+      bonus2 bMagicAddRace,RC_Dragon,45;
+  - Id: 311930
+    AegisName: Bio_Jam_Es1
+    Name: Broken Biosphere Gem (Exor-scissor)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Demon,15;
+      bonus2 bMagicAddRace,RC_Demon,15;
+      bonus2 bAddRace,RC_Plant,15;
+      bonus2 bMagicAddRace,RC_Plant,15;
+  - Id: 311931
+    AegisName: Bio_Jam_Es2
+    Name: Biosphere Gem (Exor-scissor)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Demon,30;
+      bonus2 bMagicAddRace,RC_Demon,30;
+      bonus2 bAddRace,RC_Plant,30;
+      bonus2 bMagicAddRace,RC_Plant,30;
+  - Id: 311932
+    AegisName: Bio_Jam_Es3
+    Name: Brilliant Biosphere Gem (Exor-scissor)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Demon,45;
+      bonus2 bMagicAddRace,RC_Demon,45;
+      bonus2 bAddRace,RC_Plant,45;
+      bonus2 bMagicAddRace,RC_Plant,45;
+  - Id: 311933
+    AegisName: Bio_Jam_Vl1
+    Name: Broken Biosphere Gem (Vibra-rupt)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Angel,15;
+      bonus2 bMagicAddRace,RC_Angel,15;
+      bonus2 bAddRace,RC_Formless,15;
+      bonus2 bMagicAddRace,RC_Formless,15;
+  - Id: 311934
+    AegisName: Bio_Jam_Vl2
+    Name: Biosphere Gem (Vibra-rupt)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Angel,30;
+      bonus2 bMagicAddRace,RC_Angel,30;
+      bonus2 bAddRace,RC_Formless,30;
+      bonus2 bMagicAddRace,RC_Formless,30;
+  - Id: 311935
+    AegisName: Bio_Jam_Vl3
+    Name: Brilliant Biosphere Gem (Vibra-rupt)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Angel,45;
+      bonus2 bMagicAddRace,RC_Angel,45;
+      bonus2 bAddRace,RC_Formless,45;
+      bonus2 bMagicAddRace,RC_Formless,45;
+  - Id: 311936
+    AegisName: Bio_Jam_Eq1
+    Name: Broken Biosphere Gem (Execu-sect)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Insect,15;
+      bonus2 bMagicAddRace,RC_Insect,15;
+      bonus2 bAddRace,RC_DemiHuman,15;
+      bonus2 bMagicAddRace,RC_DemiHuman,15;
+  - Id: 311937
+    AegisName: Bio_Jam_Eq2
+    Name: Biosphere Gem (Execu-sect)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Insect,30;
+      bonus2 bMagicAddRace,RC_Insect,30;
+      bonus2 bAddRace,RC_DemiHuman,30;
+      bonus2 bMagicAddRace,RC_DemiHuman,30;
+  - Id: 311938
+    AegisName: Bio_Jam_Eq3
+    Name: Brilliant Biosphere Gem (Execu-sect)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Insect,45;
+      bonus2 bMagicAddRace,RC_Insect,45;
+      bonus2 bAddRace,RC_DemiHuman,45;
+      bonus2 bMagicAddRace,RC_DemiHuman,45;
+  - Id: 311939
+    AegisName: Bio_Jam_Hd1
+    Name: Broken Biosphere Gem (Hunting Divine)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Undead,15;
+      bonus2 bMagicAddRace,RC_Undead,15;
+      bonus2 bAddRace,RC_Brute,15;
+      bonus2 bMagicAddRace,RC_Brute,15;
+  - Id: 311940
+    AegisName: Bio_Jam_Hd2
+    Name: Biosphere Gem (Hunting Divine)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Undead,30;
+      bonus2 bMagicAddRace,RC_Undead,30;
+      bonus2 bAddRace,RC_Brute,30;
+      bonus2 bMagicAddRace,RC_Brute,30;
+  - Id: 311941
+    AegisName: Bio_Jam_Hd3
+    Name: Brilliant Biosphere Gem (Hunting Divine)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Undead,45;
+      bonus2 bMagicAddRace,RC_Undead,45;
+      bonus2 bAddRace,RC_Brute,45;
+      bonus2 bMagicAddRace,RC_Brute,45;
+  - Id: 311942
+    AegisName: Bio_Jam_Normal
+    Name: Brilliant Biosphere Gem (Normal Type)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddClass,Class_Normal,30;
+      bonus2 bMagicAddClass,Class_Normal,30;
+  - Id: 311943
+    AegisName: Bio_Jam_Boss
+    Name: Brilliant Biosphere Gem (Boss Type)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddClass,Class_Boss,30;
+      bonus2 bMagicAddClass,Class_Boss,30;
+  - Id: 311944
+    AegisName: Ba_Stead1
+    Name: Stead of Varmundt Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bRes,3;
+      bonus bSta,1;
+  - Id: 311945
+    AegisName: Ba_Stead2
+    Name: Stead of Varmundt Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bRes,6;
+      bonus bSta,2;
+  - Id: 311946
+    AegisName: Ba_Stead3
+    Name: Stead of Varmundt Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bRes,9;
+      bonus bSta,3;
+  - Id: 311947
+    AegisName: Ba_Stead4
+    Name: Stead of Varmundt Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bRes,12;
+      bonus bSta,4;
+  - Id: 311948
+    AegisName: Ba_Stead5
+    Name: Stead of Varmundt Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bRes,15;
+      bonus bSta,5;
+  - Id: 311949
+    AegisName: Ba_Tenacity1
+    Name: Tenacity of Varmundt Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bPow,1;
+  - Id: 311950
+    AegisName: Ba_Tenacity2
+    Name: Tenacity of Varmundt Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,6;
+      bonus bPow,2;
+  - Id: 311951
+    AegisName: Ba_Tenacity3
+    Name: Tenacity of Varmundt Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,9;
+      bonus bPow,3;
+  - Id: 311952
+    AegisName: Ba_Tenacity4
+    Name: Tenacity of Varmundt Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,12;
+      bonus bPow,4;
+  - Id: 311953
+    AegisName: Ba_Tenacity5
+    Name: Tenacity of Varmundt Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,15;
+      bonus bPow,5;
+  - Id: 311954
+    AegisName: Ba_Intelligence1
+    Name: Intelligence of Varmundt Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+      bonus bSpl,1;
+  - Id: 311955
+    AegisName: Ba_Intelligence2
+    Name: Intelligence of Varmundt Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,6;
+      bonus bSpl,2;
+  - Id: 311956
+    AegisName: Ba_Intelligence3
+    Name: Intelligence of Varmundt Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,9;
+      bonus bSpl,3;
+  - Id: 311957
+    AegisName: Ba_Intelligence4
+    Name: Intelligence of Varmundt Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,12;
+      bonus bSpl,4;
+  - Id: 311958
+    AegisName: Ba_Intelligence5
+    Name: Intelligence of Varmundt Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,15;
+      bonus bSpl,5;
+  - Id: 311959
+    AegisName: Ba_focus1
+    Name: Focus of Varmundt Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,2;
+      bonus bCrt,1;
+  - Id: 311960
+    AegisName: Ba_focus2
+    Name: Focus of Varmundt Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,4;
+      bonus bCrt,2;
+  - Id: 311961
+    AegisName: Ba_focus3
+    Name: Focus of Varmundt Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,6;
+      bonus bCrt,3;
+  - Id: 311962
+    AegisName: Ba_focus4
+    Name: Focus of Varmundt Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,8;
+      bonus bCrt,4;
+  - Id: 311963
+    AegisName: Ba_focus5
+    Name: Focus of Varmundt Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,10;
+      bonus bCrt,5;
+  - Id: 311964
+    AegisName: Ba_Agility1
+    Name: Agility of Varmundt Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bCon,1;
+  - Id: 311965
+    AegisName: Ba_Agility2
+    Name: Agility of Varmundt Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,6;
+      bonus bCon,2;
+  - Id: 311966
+    AegisName: Ba_Agility3
+    Name: Agility of Varmundt Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,9;
+      bonus bCon,3;
+  - Id: 311967
+    AegisName: Ba_Agility4
+    Name: Agility of Varmundt Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,12;
+      bonus bCon,4;
+  - Id: 311968
+    AegisName: Ba_Agility5
+    Name: Agility of Varmundt Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,15;
+      bonus bCon,5;
+  - Id: 311969
+    AegisName: Ba_Mental1
+    Name: Mental of Varmundt Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMRes,2;
+      bonus bWis,1;
+  - Id: 311970
+    AegisName: Ba_Mental2
+    Name: Mental of Varmundt Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMRes,4;
+      bonus bWis,2;
+  - Id: 311971
+    AegisName: Ba_Mental3
+    Name: Mental of Varmundt Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMRes,6;
+      bonus bWis,3;
+  - Id: 311972
+    AegisName: Ba_Mental4
+    Name: Mental of Varmundt Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMRes,8;
+      bonus bWis,4;
+  - Id: 311973
+    AegisName: Ba_Mental5
+    Name: Mental of Varmundt Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMRes,10;
+      bonus bWis,5;
+  - Id: 311974
+    AegisName: Ba_Pow1
+    Name: Fragment of Varmundt (POW) Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,1;
+  - Id: 311975
+    AegisName: Ba_Pow2
+    Name: Fragment of Varmundt (POW) Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,2;
+  - Id: 311976
+    AegisName: Ba_Pow3
+    Name: Fragment of Varmundt (POW) Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,3;
+  - Id: 311977
+    AegisName: Ba_Pow4
+    Name: Fragment of Varmundt (POW) Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,4;
+  - Id: 311978
+    AegisName: Ba_Pow5
+    Name: Fragment of Varmundt (POW) Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,5;
+  - Id: 311979
+    AegisName: Ba_Con1
+    Name: Fragment of Varmundt (CON) Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCon,1;
+  - Id: 311980
+    AegisName: Ba_Con2
+    Name: Fragment of Varmundt (CON) Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCon,2;
+  - Id: 311981
+    AegisName: Ba_Con3
+    Name: Fragment of Varmundt (CON) Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCon,3;
+  - Id: 311982
+    AegisName: Ba_Con4
+    Name: Fragment of Varmundt (CON) Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCon,4;
+  - Id: 311983
+    AegisName: Ba_Con5
+    Name: Fragment of Varmundt (CON) Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCon,5;
+  - Id: 311984
+    AegisName: Ba_Crt1
+    Name: Fragment of Varmundt (CRT) Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCrt,1;
+  - Id: 311985
+    AegisName: Ba_Crt2
+    Name: Fragment of Varmundt (CRT) Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCrt,2;
+  - Id: 311986
+    AegisName: Ba_Crt3
+    Name: Fragment of Varmundt (CRT) Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCrt,3;
+  - Id: 311987
+    AegisName: Ba_Crt4
+    Name: Fragment of Varmundt (CRT) Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCrt,4;
+  - Id: 311988
+    AegisName: Ba_Crt5
+    Name: Fragment of Varmundt (CRT) Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCrt,5;
+  - Id: 311989
+    AegisName: Ba_Sta1
+    Name: Fragment of Varmundt (STA) Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,1;
+  - Id: 311990
+    AegisName: Ba_Sta2
+    Name: Fragment of Varmundt (STA) Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,2;
+  - Id: 311991
+    AegisName: Ba_Sta3
+    Name: Fragment of Varmundt (STA) Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,3;
+  - Id: 311992
+    AegisName: Ba_Sta4
+    Name: Fragment of Varmundt (STA) Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,4;
+  - Id: 311993
+    AegisName: Ba_Sta5
+    Name: Fragment of Varmundt (STA) Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,5;
+  - Id: 311994
+    AegisName: Ba_Spl1
+    Name: Fragment of Varmundt (SPL) Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,1;
+  - Id: 311995
+    AegisName: Ba_Spl2
+    Name: Fragment of Varmundt (SPL) Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,2;
+  - Id: 311996
+    AegisName: Ba_Spl3
+    Name: Fragment of Varmundt (SPL) Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,3;
+  - Id: 311997
+    AegisName: Ba_Spl4
+    Name: Fragment of Varmundt (SPL) Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,4;
+  - Id: 311998
+    AegisName: Ba_Spl5
+    Name: Fragment of Varmundt (SPL) Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,5;
+  - Id: 311999
+    AegisName: Ba_Wis1
+    Name: Fragment of Varmundt (WIS) Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bWis,1;
+  - Id: 312000
+    AegisName: Ba_Wis2
+    Name: Fragment of Varmundt (WIS) Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bWis,2;
+  - Id: 312001
+    AegisName: Ba_Wis3
+    Name: Fragment of Varmundt (WIS) Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bWis,3;
+  - Id: 312002
+    AegisName: Ba_Wis4
+    Name: Fragment of Varmundt (WIS) Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bWis,4;
+  - Id: 312003
+    AegisName: Ba_Wis5
+    Name: Fragment of Varmundt (WIS) Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bWis,5;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -69322,6 +70008,98 @@ Body:
     Name: Romance Rose Effect (Upper)
     Type: Etc
     Weight: 10
+  - Id: 1001177
+    AegisName: Temple_Barmund_Rune
+    Name: Crusade Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001178
+    AegisName: Temple_Barmund_Rune2
+    Name: Crusade Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001179
+    AegisName: Venom_Barmund_Rune
+    Name: Poison Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001180
+    AegisName: Venom_Barmund_Rune2
+    Name: Poison Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001181
+    AegisName: Soul_Barmund_Rune
+    Name: Soul Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001182
+    AegisName: Soul_Barmund_Rune2
+    Name: Soul Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001183
+    AegisName: Barmund_Temple_Essence
+    Name: Essence of the Temple    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      DropEffect: CLIENT
+  - Id: 1001184
+    AegisName: Barmund_Venom_Essence
+    Name: Venomous Essence    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001185
+    AegisName: Barmund_Soul_Essence
+    Name: Soul Essence    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001186
+    AegisName: Barmund_Water
+    Name: Magic number of soul    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001188
+    AegisName: Barmund_Water2
+    Name: Holy Magic Beast    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001189
+    AegisName: Barmund_Water3
+    Name: Poison Magic Beast    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
