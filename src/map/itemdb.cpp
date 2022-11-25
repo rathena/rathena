@@ -4609,7 +4609,7 @@ void itemdb_gen_itemmoveinfo()
 	os << "// This format does not accept blank lines. Be careful.\n";
 
 	item_data tmp_id{};
-	for (auto& it = sorted_itemdb.begin(); it != sorted_itemdb.end(); ++it) {
+	for (auto it = sorted_itemdb.begin(); it != sorted_itemdb.end(); ++it) {
 		if (it->second->type == IT_UNKNOWN)
 			continue;
 		if (memcmp(&it->second->flag.trade_restriction, &tmp_id.flag.trade_restriction, sizeof(tmp_id.flag.trade_restriction)) == 0)
