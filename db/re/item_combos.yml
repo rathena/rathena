@@ -14156,7 +14156,7 @@ Body:
           - ILL_Sword_Fish_Card
           - Sword_Fish_Card
       - Combo:
-          - aegis_300308
+          - S_Meyer_Card
           - S_Kronecker_Card
     Script: |
       bonus bMatkRate,3;
@@ -30367,3 +30367,21 @@ Body:
     Script: |
       if (getequiprefinerycnt(EQI_SHOES) >= 6)
          bonus2 bSkillUseSP,"MC_CARTREVOLUTION",4;
+  - Combos:
+      - Combo:
+          - aegis_300422   # 300422
+          - S_Helmut_Card   # 300310
+    Script: |
+      bonus bShortAtkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_300424   # 300424
+          - S_Meyer_Card   # 300308
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Combos:
+      - Combo:
+          - aegis_300426   # 300426
+          - S_Helmut_Card   # 300310
+    Script: |
+      bonus bLongAtkRate,5;
