@@ -70017,6 +70017,18 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 1721
+  - Id: 15842
+    AegisName: C_Disapear_Time_J
+    Name: Costume Magic Time
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1998
+    Script: |
+      hateffect HAT_EF_C_Disapear_Time_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Disapear_Time_TW,false;
   - Id: 15843
     AegisName: Hunters_Dinner
     Name: Costume Hunter's Dinner    # !todo check english name
@@ -70025,6 +70037,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2024
+  - Id: 15847
+    AegisName: C_EXE_Wing_Cap_TH
+    Name: Costume Unknown Feather Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1597
   - Id: 15858
     AegisName: C_Choco_Banana
     Name: Costume Choco Banana Bonnet
@@ -89857,7 +89877,7 @@ Body:
     Script: |
       bonus2 bAddItemHealRate,513,1100;
   - Id: 19667
-    AegisName: C_Dragon_Helm
+    AegisName: C_Helm_Of_Dragoon
     Name: Costume Dragon Helm
     Type: Armor
     Locations:
@@ -91263,7 +91283,7 @@ Body:
     EquipLevelMin: 1
     View: 600
   - Id: 19819
-    AegisName: C_Gang_Doogun
+    AegisName: C_Necromencer_Hood
     Name: Costume Gang Doogun
     Type: Armor
     Locations:
@@ -91285,7 +91305,7 @@ Body:
     EquipLevelMin: 1
     View: 375
   - Id: 19822
-    AegisName: C_Yellow_Doogun
+    AegisName: C_Yellow_Bandana
     Name: Costume Yellow Doogun
     Type: Armor
     Locations:
@@ -92416,7 +92436,7 @@ Body:
     EquipLevelMin: 1
     View: 420
   - Id: 19957
-    AegisName: C_Scooter_Hat
+    AegisName: C_Scooter_Hat_J
     Name: Costume Scooter Hat
     Type: Armor
     Locations:
@@ -95647,7 +95667,7 @@ Body:
     EquipLevelMin: 1
     View: 977
   - Id: 20282
-    AegisName: C_White_Student_Cap
+    AegisName: C_White_Boys_Hat
     Name: Costume White Student Cap
     Type: Armor
     Locations:
@@ -95863,6 +95883,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 720
+  - Id: 20306
+    AegisName: C_Artist_Hat
+    Name: Costume Artist's Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1344
   - Id: 20307
     AegisName: C_Beginner_Cap
     Name: Costume Beginner Cap
@@ -96489,7 +96517,7 @@ Body:
     EquipLevelMin: 1
     View: 1406
   - Id: 20382
-    AegisName: C_Silver_Sniper_Doll
+    AegisName: C_Silversniper_Doll
     Name: Costume Silver Sniper Doll
     Type: Armor
     Locations:
@@ -96694,7 +96722,7 @@ Body:
     EquipLevelMin: 1
     View: 1418
   - Id: 20408
-    AegisName: C_Requiem_Crown_of_Light_and_Dark
+    AegisName: C_Bldy_Light_Dark_Crown
     Name: Costume Requiem Crown of Light and Dark
     Type: Armor
     Locations:
@@ -97345,7 +97373,7 @@ Body:
     EquipLevelMin: 1
     View: 215
   - Id: 20499
-    AegisName: C_Cat_Ears_Hat
+    AegisName: C_Cat_Ear_Hat
     Name: Costume Cat Ears Hat
     Type: Armor
     Locations:
@@ -129253,7 +129281,7 @@ Body:
     EquipLevelMin: 1
     View: 226
   - Id: 31038
-    AegisName: C_Cheks_Bandana
+    AegisName: C_Cheks_Vandana
     Name: Costume Cheks Bandana
     Type: Armor
     Locations:
@@ -131651,7 +131679,7 @@ Body:
     EquipLevelMin: 1
     View: 1652
   - Id: 31295
-    AegisName: C_Red_Wing_Hat
+    AegisName: C_Priest_Hat_J
     Name: C Red Wing Hat
     Type: Armor
     Locations:
@@ -133775,7 +133803,7 @@ Body:
     EquipLevelMin: 1
     View: 596
   - Id: 31527
-    AegisName: C_Radiant_Rainbow_Wings
+    AegisName: C_14_RainbowWing
     Name: C Radiant Rainbow Wings
     Type: Armor
     Locations:
@@ -133961,7 +133989,7 @@ Body:
     EquipLevelMin: 1
     View: 1777
   - Id: 31547
-    AegisName: C_Poporing_Mascot_Head
+    AegisName: C_Poporing_Mascot_Cos
     Name: C Poporing Mascot Head
     Type: Armor
     Locations:
@@ -134091,7 +134119,7 @@ Body:
     EquipLevelMin: 1
     View: 1359
   - Id: 31561
-    AegisName: C_Heavenly_Dark_Flame
+    AegisName: C_8Type_PurgatorialWing
     Name: C Heavenly Dark Flame
     Type: Armor
     Locations:
@@ -136382,7 +136410,7 @@ Body:
     EquipLevelMin: 1
     View: 1881
   - Id: 31814
-    AegisName: Costume_Lunatic_Family_Balloon
+    AegisName: C_RabbitFamilyBalloon
     Name: C Lunatic Family Balloon
     Type: Armor
     Locations:
@@ -145067,7 +145095,7 @@ Body:
     ArmorLevel: 1
     View: 2110
   - Id: 420062
-    AegisName: C_AB_Hair_PP
+    AegisName: C_Angel_Stairs
     Name: Costume Ponytail Hair(Purple)
     Type: Armor
     Locations:
