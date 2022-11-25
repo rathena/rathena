@@ -2326,6 +2326,8 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
 bool itemdb_parse_roulette_db(void);
 
+void itemdb_gen_itemmoveinfo();
+
 void itemdb_reload(void);
 
 void do_final_itemdb(void);
