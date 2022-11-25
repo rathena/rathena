@@ -529,3 +529,19 @@ Body:
       - Group: 1
         Items:
           - Item: aegis_101726
+  - Item: aegis_101919
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_101920
+      - Group: 1
+        Items:
+          - Item: aegis_101921
+  - Item: aegis_101922
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_101923
+      - Group: 1
+        Items:
+          - Item: aegis_101924

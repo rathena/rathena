@@ -155844,7 +155844,7 @@ Body:
     ArmorLevel: 1
     View: 113
   - Id: 480124
-    AegisName: aegis_480124
+    AegisName: Cvt_Physical_Wing
     Name: Convertible Physical Wing
     Type: Armor
     Weight: 400
@@ -155871,7 +155871,7 @@ Body:
          }
       }
   - Id: 480125
-    AegisName: aegis_480125
+    AegisName: Cvt_Magical_Wing
     Name: Convertible Magical Wing
     Type: Armor
     Weight: 400

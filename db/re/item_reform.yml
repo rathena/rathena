@@ -1931,280 +1931,280 @@ Body:
 #          Amount: 150
 #       ResultItem: Blessed_Knife_LT
 #       ChangeRefine: -1
-# - Item: Helm_Of_Faith_Hammer
-#   BaseItems:
-#     - BaseItem: Viva_Adul_Hat_WL1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_WL1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_WL2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_WL2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SR1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SR1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SR2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SR2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_AB1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_AB1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_AB2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_AB2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SC1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SC1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SC2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SC2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_RA1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_RA1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_RA2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_RA2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_LG1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_LG1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_LG2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_LG2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_GC1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_GC1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_GC2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_GC2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SO1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SO1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SO2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SO2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_RK1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_RK1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_RK2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_RK2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_WM1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_WM1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_WM2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_WM2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_NC1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_NC1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_NC2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_NC2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_GN1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_GN1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_GN2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_GN2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_KO1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_KO1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_KO2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_KO2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_RL1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_RL1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_RL2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_RL2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SP1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SP1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SP2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SP2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SJ1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SJ1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SJ2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SJ2
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SU1
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SU1
-#       ChangeRefine: 1
-#     - BaseItem: Viva_Adul_Hat_SU2
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Viva_Adul_Hat_SU2
-#       ChangeRefine: 1
+  - Item: Helm_Of_Faith_Hammer
+    BaseItems:
+      - BaseItem: Viva_Adul_Hat_WL1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_WL1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_WL2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_WL2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SR1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SR1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SR2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SR2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_AB1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_AB1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_AB2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_AB2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SC1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SC1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SC2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SC2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_RA1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_RA1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_RA2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_RA2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_LG1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_LG1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_LG2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_LG2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_GC1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_GC1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_GC2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_GC2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SO1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SO1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SO2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SO2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_RK1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_RK1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_RK2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_RK2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_WM1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_WM1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_WM2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_WM2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_NC1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_NC1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_NC2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_NC2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_GN1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_GN1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_GN2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_GN2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_KO1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_KO1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_KO2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_KO2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_RL1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_RL1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_RL2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_RL2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SP1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SP1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SP2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SP2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SJ1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SJ1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SJ2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SJ2
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SU1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SU1
+        ChangeRefine: 1
+      - BaseItem: Viva_Adul_Hat_SU2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Viva_Adul_Hat_SU2
+        ChangeRefine: 1
   - Item: Hero_Weapon_Up_Box_6
     BaseItems:
       - BaseItem: Up_Humma_Clear
@@ -3649,216 +3649,216 @@ Body:
 #          Amount: 20
 #       ResultItem: Clock_Casket_RD_LT
 #       ChangeRefine: -5
-# - Item: Clock_Tower_W_Hammer
-#   BaseItems:
-#     - BaseItem: Precision_Bow
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Bow
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Fist
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Fist
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Fuuma
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Fuuma
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Gatling
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Gatling
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Grenade
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Grenade
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Lute
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Lute
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Pistol
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Pistol
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Rifle
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Rifle
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Shotgun
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Shotgun
-#       ChangeRefine: 1
-#     - BaseItem: Precision_Whip
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Precision_Whip
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Claymore
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Claymore
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Dagger
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Dagger
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Edge
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Edge
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Manual
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Manual
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Rod
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Rod
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Spear
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Spear
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Staff
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Staff
-#       ChangeRefine: 1
-#     - BaseItem: Solid_Wand
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Solid_Wand
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Axe
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Axe
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Blade
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Blade
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Book
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Book
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Cross
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Cross
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Dagger
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Dagger
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Edge
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Edge
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Katar
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Katar
-#       ChangeRefine: 1
-#     - BaseItem: Wicked_Plant
-#       MinimumRefine: 9
-#       MaximumRefine: 11
-#       Materials:
-#        - Material: Blacksmith_Blessing
-#          Amount: 14
-#       ResultItem: Wicked_Plant
-#       ChangeRefine: 1
+  - Item: Clock_Tower_W_Hammer
+    BaseItems:
+      - BaseItem: Precision_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Bow
+        ChangeRefine: 1
+      - BaseItem: Precision_Fist
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Fist
+        ChangeRefine: 1
+      - BaseItem: Precision_Fuuma
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Fuuma
+        ChangeRefine: 1
+      - BaseItem: Precision_Gatling
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Gatling
+        ChangeRefine: 1
+      - BaseItem: Precision_Grenade
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Grenade
+        ChangeRefine: 1
+      - BaseItem: Precision_Lute
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Lute
+        ChangeRefine: 1
+      - BaseItem: Precision_Pistol
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Pistol
+        ChangeRefine: 1
+      - BaseItem: Precision_Rifle
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Rifle
+        ChangeRefine: 1
+      - BaseItem: Precision_Shotgun
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Shotgun
+        ChangeRefine: 1
+      - BaseItem: Precision_Whip
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Precision_Whip
+        ChangeRefine: 1
+      - BaseItem: Solid_Claymore
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Claymore
+        ChangeRefine: 1
+      - BaseItem: Solid_Dagger
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Dagger
+        ChangeRefine: 1
+      - BaseItem: Solid_Edge
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Edge
+        ChangeRefine: 1
+      - BaseItem: Solid_Manual
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Manual
+        ChangeRefine: 1
+      - BaseItem: Solid_Rod
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Rod
+        ChangeRefine: 1
+      - BaseItem: Solid_Spear
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Spear
+        ChangeRefine: 1
+      - BaseItem: Solid_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Staff
+        ChangeRefine: 1
+      - BaseItem: Solid_Wand
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Solid_Wand
+        ChangeRefine: 1
+      - BaseItem: Wicked_Axe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Axe
+        ChangeRefine: 1
+      - BaseItem: Wicked_Blade
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Blade
+        ChangeRefine: 1
+      - BaseItem: Wicked_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Book
+        ChangeRefine: 1
+      - BaseItem: Wicked_Cross
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Cross
+        ChangeRefine: 1
+      - BaseItem: Wicked_Dagger
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Dagger
+        ChangeRefine: 1
+      - BaseItem: Wicked_Edge
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Edge
+        ChangeRefine: 1
+      - BaseItem: Wicked_Katar
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Katar
+        ChangeRefine: 1
+      - BaseItem: Wicked_Plant
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 14
+        ResultItem: Wicked_Plant
+        ChangeRefine: 1
   - Item: Thanos_Upgrade_Box
     BaseItems:
       - BaseItem: Thanos_Sword

@@ -21888,17 +21888,17 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_480124
+          - Cvt_Physical_Wing
           - Victory_Wing_Ear
     Script: |
       bonus bDelayrate,-15;
       bonus bAtkRate,7;
   - Combos:
       - Combo:
-          - aegis_480124
+          - Cvt_Physical_Wing
           - Battle_Processor
       - Combo:
-          - aegis_480124
+          - Cvt_Physical_Wing
           - Battle_Processor_
     Script: |
       bonus bLongAtkRate,5;
@@ -21906,31 +21906,31 @@ Body:
       bonus bAtkRate,7;
   - Combos:
       - Combo:
-          - aegis_480124
+          - Cvt_Physical_Wing
           - Deepblue_Sunglasses
     Script: |
       bonus bVariableCastrate,-15;
       bonus bAtkRate,7;
   - Combos:
       - Combo:
-          - aegis_480125
+          - Cvt_Magical_Wing
           - Victory_Wing_Ear
     Script: |
       bonus bDelayrate,-15;
       bonus bMatkRate,7;
   - Combos:
       - Combo:
-          - aegis_480125
+          - Cvt_Magical_Wing
           - Battle_Processor
       - Combo:
-          - aegis_480125
+          - Cvt_Magical_Wing
           - Battle_Processor_
     Script: |
       bonus2 bMagicAtkEle,Ele_All,5;
       bonus bMatkRate,7;
   - Combos:
       - Combo:
-          - aegis_480125
+          - Cvt_Magical_Wing
           - Deepblue_Sunglasses
     Script: |
       bonus bVariableCastrate,-15;
