@@ -6538,7 +6538,6 @@
 	export_constant(IG_COSTUMEMILEAGE_PACKAGE3);
 	export_constant(IG_COMP_TRANS_SCROLL);
 	export_constant(IG_MINUS_STATUS_BOX);
-	export_constant(IG_S_IGNITION_CUBE);
 	export_constant(IG_S_W_BREATH_CUBE);
 	export_constant(IG_S_F_BREATH_CUBE);
 	export_constant(IG_S_SONIC_CUBE);

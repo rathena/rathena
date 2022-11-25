@@ -62850,22 +62850,6 @@ Body:
       getgroupitem(IG_SEASON_EVT_REWARD_9);
   - Id: 100951
     AegisName: S_Ignition_Cube
-    Name: Ignition Shadow Cube    # !todo check english name
-    Type: Usable
-    Flags:
-      Container: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getgroupitem(IG_S_IGNITION_CUBE);
-  - Id: 100951
-    AegisName: S_Ignition_Cube
     Name: Ignition Shadow Cube
     Type: Usable
     Weight: 0

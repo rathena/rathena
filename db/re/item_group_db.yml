@@ -48211,13 +48211,6 @@ Body:
           - Item: Trans_Scroll_Gazeti
           - Item: Trans_Scroll_Kobold_Archer
           - Item: Trans_Scroll_Necromancer
-  - Group: S_IGNITION_CUBE
-    SubGroups:
-      - SubGroup: 0
-        List:
-          - Item: S_Ignition_Weapon
-          - Item: S_Ignition_Pendant
-          - Item: S_Ignition_Earing
   - Group: S_W_BREATH_CUBE
     SubGroups:
       - SubGroup: 0
