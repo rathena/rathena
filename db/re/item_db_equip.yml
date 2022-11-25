@@ -145692,14 +145692,6 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus2 bAddSize,Size_All,BaseLevel/10;
-  - Id: 420163
-    AegisName: C_Protect_Cloth_B
-    Name: Costume Protect Cloth
-    Type: Armor
-    Locations:
-      Costume_Head_Low: true
-    ArmorLevel: 1
-    View: 2272
   - Id: 420164
     AegisName: aegis_420164
     Name: Red Sleep Sheep
