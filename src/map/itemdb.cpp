@@ -4621,7 +4621,7 @@ void itemdb_gen_itemmoveinfo()
 	os.close();
 
 	auto currenttime = std::chrono::system_clock::now();
-	ShowInfo("itemdb_gen_itemmoveinfo: Done generating itemmoveinfov5.txt. The process took %ums\n", std::chrono::duration_cast<std::chrono::milliseconds>(currenttime - starttime));
+	ShowInfo("itemdb_gen_itemmoveinfo: Done generating itemmoveinfov5.txt. The process took %ldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(currenttime - starttime));
 }
 
 /**
