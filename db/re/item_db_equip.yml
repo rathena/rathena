@@ -89236,7 +89236,7 @@ Body:
     EquipLevelMin: 1
     View: 264
   - Id: 19597
-    AegisName: C_Magic_Eyes
+    AegisName: C_Magic_Eyes_J
     Name: Costume Magic Eyes
     Type: Armor
     Locations:
@@ -90292,7 +90292,7 @@ Body:
     EquipLevelMin: 1
     View: 33
   - Id: 19720
-    AegisName: C_Romantic_Gent
+    AegisName: C_Oldman's_Romance
     Name: Costume Romantic Gent
     Type: Armor
     Buy: 10
@@ -91149,7 +91149,7 @@ Body:
     EquipLevelMin: 1
     View: 296
   - Id: 19803
-    AegisName: C_Windtoy_Hat
+    AegisName: C_Pinwheel_Cap
     Name: Costume Windtoy Hat
     Type: Armor
     Locations:
@@ -91220,7 +91220,7 @@ Body:
     EquipLevelMin: 1
     View: 422
   - Id: 19811
-    AegisName: C_Beer_Hat
+    AegisName: C_Beer_Cap
     Name: Costume Beer Hat
     Type: Armor
     Locations:
@@ -91910,6 +91910,38 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 169
+  - Id: 19892
+    AegisName: C_Night_Sparrow_Hat
+    Name: Costume Night Sparrow Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 913
+  - Id: 19893
+    AegisName: C_Black_Mage_Hat
+    Name: Costume Ordinary Black Magician Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 912
+  - Id: 19894
+    AegisName: C_Shrine_Maiden_Hat
+    Name: Costume Shrine Maiden Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 908
+  - Id: 19895
+    AegisName: C_Sorc_Night_Cap
+    Name: Costume Magician's Night Cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 911
   - Id: 19900
     AegisName: Special_Eyepatch
     Name: Cool Pirate Eyepatch
@@ -94021,7 +94053,7 @@ Body:
     EquipLevelMin: 1
     View: 962
   - Id: 20110
-    AegisName: C_Coiledup_Snake
+    AegisName: C_Coiledup_Snake_Hat1
     Name: Costume Coiledup Snake
     Type: Armor
     Locations:
@@ -130122,7 +130154,7 @@ Body:
     EquipLevelMin: 1
     View: 984
   - Id: 31119
-    AegisName: C_Blue_Magicianhat
+    AegisName: C_Blue_Wizardry_Hat
     Name: Costume Magician Hat Blue
     Type: Armor
     Locations:
@@ -130909,7 +130941,7 @@ Body:
     EquipLevelMin: 1
     View: 1602
   - Id: 31204
-    AegisName: C_Drooping_White_Cat
+    AegisName: C_Drooping_White_Kitty
     Name: C Drooping White Cat
     Type: Armor
     Locations:
@@ -131876,7 +131908,7 @@ Body:
     EquipLevelMin: 1
     View: 1232
   - Id: 31309
-    AegisName: C_Pure_White_Marching_Hat
+    AegisName: C_PW_Marching_Hat
     Name: C Pure White Marching Hat
     Type: Armor
     Locations:
@@ -134494,7 +134526,7 @@ Body:
     EquipLevelMin: 1
     View: 931
   - Id: 31595
-    AegisName: C_Book_File_Hat
+    AegisName: C_Book_of_Soyga
     Name: C Book File Hat
     Type: Armor
     Locations:
@@ -134503,7 +134535,7 @@ Body:
     EquipLevelMin: 1
     View: 423
   - Id: 31596
-    AegisName: C_Spider_Seduction
+    AegisName: C_Spider_Temp_TW
     Name: C Spider Seduction
     Type: Armor
     Locations:
@@ -134512,7 +134544,7 @@ Body:
     EquipLevelMin: 1
     View: 1711
   - Id: 31597
-    AegisName: C_Golden_Fish_Hat
+    AegisName: C_GoldFish_Hat
     Name: C Golden Fish Hat
     Type: Armor
     Locations:
@@ -134606,7 +134638,7 @@ Body:
     EquipLevelMin: 1
     View: 1119
   - Id: 31607
-    AegisName: C_Cat_Ear_Witch_Hat
+    AegisName: C_B_EarWitchHat
     Name: C Cat Ear Witch Hat
     Type: Armor
     Locations:
