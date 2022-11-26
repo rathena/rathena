@@ -381,6 +381,75 @@ uint64 ReputationDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 ReputationDatabase reputation_db;
 
+const std::string ReputationGroupDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/reputation_group.yml";
+}
+
+uint64 ReputationGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
+	int64 id;
+
+	if (!this->asInt64(node, "Id", id)) {
+		return 0;
+	}
+
+	std::shared_ptr<s_reputationgroup> group = this->find(id);
+	bool exists = group != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, {"Name", "ReputeList"})) {
+			return 0;
+		}
+
+		group = std::make_shared<s_reputationgroup>();
+		group->id = id;
+	}
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+		if (!this->asString(node, "Name", name)) {
+			return 0;
+		}
+		group->name = name;
+	}
+
+	if (this->nodeExists(node, "ScriptName")) {
+		std::string script_name;
+		if (!this->asString(node, "ScriptName", script_name)) {
+			return 0;
+		}
+		group->script_name = script_name;
+	}
+
+	if (this->nodeExists(node, "ReputeList")) {
+		const auto& reputelist = node[c4::to_csubstr("ReputeList")];
+		for (const auto& repute : reputelist) {
+			int64 repute_id;
+			try {
+				repute >> repute_id;
+			} catch (std::runtime_error const&) {
+				this->invalidWarning(node, "Value \"%s\" cannot be parsed as int64.\n", repute.val().str);
+				continue;
+			}
+
+			if (!reputation_db.find(repute_id)) {
+				this->invalidWarning(node, "Reputation id %lld does not exist in reputation_db!\n", repute_id);
+				continue;
+			}
+
+			group->reputations.push_back(repute_id);
+		}
+	}
+
+
+	if (!exists) {
+		this->put(id, group);
+	}
+
+	return 1;
+}
+
+ReputationGroupDatabase reputationgroup_db;
+
 void pc_reputation_generate() {
 #ifdef MAP_GENERATOR
 	const std::string filePrefix = "generated/clientside/data/contentdata/";
@@ -422,6 +491,32 @@ void pc_reputation_generate() {
 	}
 
 	reputation_file.write((const char *)&bson[0], bson.size());
+
+	auto reputeGroupInfo = nlohmann::json::object();
+	for (const auto& pair : reputationgroup_db) {
+		auto id = pair.first;
+		auto group = pair.second;
+		nlohmann::json node;
+
+		node["ID"] = group->script_name;
+		node["Name"] = group->name;
+		node["ReputeList"] = group->reputations;
+
+		reputeGroupInfo[std::to_string(id)] = node;
+	}
+	j = nlohmann::json::object();
+	j["ReputeGroup"] = reputeGroupInfo;
+	// std::cout << j.dump(2) << "\n";
+	bson = nlohmann::json::to_bson(j);
+	auto reputation_group_file = std::ofstream(filePrefix + "./reputegroupdata.bson", std::ios::binary);
+	if (!reputation_group_file) {
+		ShowError("Failed to create reputation group file.\n");
+		ShowError("Maybe the file directory \"%s\" does not exist?\n", filePrefix.c_str());
+		ShowInfo("Create the directory and rerun map-server-generator\n");
+		exit(1);
+	}
+
+	reputation_group_file.write((const char *)&bson[0], bson.size());
 #endif
 }
 
@@ -15498,6 +15593,9 @@ void do_final_pc(void) {
 
 	attendance_db.clear();
 	reputation_db.clear();
+#ifdef MAP_GENERATOR
+	reputationgroup_db.clear();
+#endif
 	penalty_db.clear();
 	captcha_db.clear();
 }
@@ -15510,6 +15608,9 @@ void do_init_pc(void) {
 	pc_read_motd(); // Read MOTD [Valaris]
 	attendance_db.load();
 	reputation_db.load();
+#ifdef MAP_GENERATOR
+	reputationgroup_db.load();
+#endif
 	captcha_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");

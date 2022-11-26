@@ -1292,6 +1292,27 @@ public:
 
 extern ReputationDatabase reputation_db;
 
+struct s_reputationgroup {
+	int64 id;
+	std::string script_name;
+	std::string name;
+	std::vector<int64> reputations;
+};
+
+class ReputationGroupDatabase : public TypesafeYamlDatabase<int64, s_reputationgroup> {
+public:
+	ReputationGroupDatabase() : TypesafeYamlDatabase("REPUTATION_GROUP_DB", 1) {
+#ifdef MAP_GENERATOR
+	setGenerator(true);
+#endif
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+};
+
+extern ReputationGroupDatabase reputationgroup_db;
+
 struct s_statpoint_entry{
 	uint16 level;
 	uint32 statpoints;
