@@ -388,7 +388,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	StringBuf_Destroy(&buf);
 
 	clif_openvending(sd,sd->bl.id,sd->vending);
-	clif_showvendingboard(&sd->bl,message,0);
+	clif_showvendingboard( *sd );
 
 	idb_put(vending_db, sd->status.char_id, sd);
 

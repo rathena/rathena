@@ -284,7 +284,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 			// Trigger monster skill condition for non-skill attacks.
 			if (!status_isdead(target) && src != target) {
 				if (damage > 0)
-					mobskill_event(md, src, tick, attack_type);
+					mobskill_event(md, src, tick, attack_type, damage);
 				if (skill_id > 0)
 					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
 			}
@@ -1450,9 +1450,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;
 
-	if (sc && sc->data[SC_MAXPAIN])
-		return 0;
-
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
@@ -1845,8 +1842,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (bl->type == BL_MOB) { // Reduces damage received for Green Aura MVP
 		mob_data *md = BL_CAST(BL_MOB, bl);
 
-		if (md && md->db->damagetaken != 100)
-			damage = i64max(damage * md->db->damagetaken / 100, 1);
+		if (md && md->damagetaken != 100)
+			damage = i64max(damage * md->damagetaken / 100, 1);
 	}
 
 	return damage;
@@ -2483,6 +2480,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
+		case NPC_MAXPAIN_ATK:
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -6359,6 +6357,12 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		if (!tsc)
 			return;
 
+		if (tsc->data[SC_MAXPAIN]) {
+			tsc->data[SC_MAXPAIN]->val2 = (int)damage;
+			if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && (wd->flag&BF_SHORT))) //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
+				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
+		}
+		
 		// Calculate skill reflect damage separately
 		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILLIMMUNE))
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
@@ -6368,12 +6372,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 			if (sc && sc->data[SC_VITALITYACTIVATION])
 				rdamage /= 2;
-			if (tsc->data[SC_MAXPAIN]) {
-				tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
-				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, wd->flag);
-				tsc->data[SC_MAXPAIN]->val2 = 0;
-			}
-			else if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
+			if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
 				rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
@@ -6674,6 +6673,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			break;
 		case MH_EQC:
 			ATK_ADD(wd.damage, wd.damage2, 6000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
+			break;
+		case NPC_MAXPAIN_ATK:
+			if (sc && sc->data[SC_MAXPAIN]) {
+				if (sc->data[SC_MAXPAIN]->val2)
+					wd.damage = sc->data[SC_MAXPAIN]->val2 * skill_lv / 10;
+				else if (sc->data[SC_MAXPAIN]->val3)
+					wd.damage = sc->data[SC_MAXPAIN]->val3 * skill_lv / 10;
+			}
+			else 
+				wd.damage = 0;
 			break;
 	}
 
@@ -8149,12 +8158,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if (status_bl_has_mode(target, MD_STATUSIMMUNE))
 				md.damage /= 10;
 			break;
-		case NPC_MAXPAIN_ATK:
-			if (ssc && ssc->data[SC_MAXPAIN])
-				md.damage = ssc->data[SC_MAXPAIN]->val2;
-			else
-				md.damage = 0;
-			break;
 		case NPC_WIDESUCK:
 			md.damage = tstatus->max_hp * 15 / 100;
 			break;
@@ -8425,7 +8428,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 						return 0;
 				}
 			}
-			if ( tsc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
+			if ( tsc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION && skill_id != NPC_MAXPAIN_ATK ) {
 				// Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
 				if (!skill_id && battle_config.devotion_rdamage_skill_only && tsc->data[SC_REFLECTSHIELD]->val4)
 					rdamage = 0;
@@ -8473,11 +8476,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 		}
 	}
 
-	if (tsc) {
-		if (tsc->data[SC_MAXPAIN])
-			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
-	}
-
 	// Config damage adjustment
 	map_data *mapdata = map_getmapdata(src->m);
 
@@ -8493,7 +8491,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 1);
+		rdamage = i64max(rdamage, 0);
 	}
 
 	if (rdamage == 0)
@@ -10269,7 +10267,15 @@ static const struct _battle_data {
 
 	{ "feature.barter",                     &battle_config.feature_barter,                  1,      0,      1,              },
 	{ "feature.barter_extended",            &battle_config.feature_barter_extended,         1,      0,      1,              },
+	{ "feature.itemlink",                   &battle_config.feature_itemlink,                1,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
+	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
+	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
+
+	{ "feature.dynamicnpc_timeout",         &battle_config.feature_dynamicnpc_timeout,      1000,   60000,  INT_MAX,        },
+	{ "feature.dynamicnpc_rangex",          &battle_config.feature_dynamicnpc_rangex,       2,      0,      INT_MAX,        },
+	{ "feature.dynamicnpc_rangey",          &battle_config.feature_dynamicnpc_rangey,       2,      0,      INT_MAX,        },
+	{ "feature.dynamicnpc_direction",       &battle_config.feature_dynamicnpc_direction,    0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -10473,7 +10479,7 @@ void battle_adjust_conf()
 		ShowWarning("Battle setting 'custom_cell_stack_limit' takes no effect as this server was compiled without Cell Stack Limit support.\n");
 #endif
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	battle_config.dynamic_mobs = 1;
 #endif
 }

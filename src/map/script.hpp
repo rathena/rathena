@@ -328,6 +328,7 @@ struct script_state {
 	unsigned op2ref : 1;// used by op_2
 	unsigned npc_item_flag : 1;
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
+	unsigned clear_cutin : 1;
 	char* funcname; // Stores the current running function name
 	unsigned int id;
 };
@@ -494,6 +495,7 @@ enum unitdata_mobtypes {
 	UMOB_IGNORE_CELL_STACK_LIMIT,
 	UMOB_RES,
 	UMOB_MRES,
+	UMOB_DAMAGETAKEN,
 };
 
 enum unitdata_homuntypes {

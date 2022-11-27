@@ -431,8 +431,9 @@ hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try
 to 'mes 0x10' it will print '16'.
 
 Number values can't exceed the limits of an integer variable: Any number
-greater than INT_MAX (2147483647) or smaller than INT_MIN (-2147483648) will
-be capped to those values and will cause a warning to be reported.
+greater than INT64_MAX (9223372036854775807) or smaller than INT64_MIN
+(-9223372036854775808) will be capped to those values and will cause a warning
+to be reported.
 
 Variables
 ---------
@@ -1225,6 +1226,12 @@ make it stop in some other manner.
 	end;
 
 Don't expect things to run smoothly if you don't make your scripts 'end'.
+
+---------------------------------------
+
+*close3;
+
+The command is similar to 'close' but the cutin (if any) is cleared after closing.
 
 ---------------------------------------
 
@@ -3580,6 +3587,32 @@ skills a character has.
 
 This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
 
+---------------------------------------
+
+*getrandmobid(<type>{,<flag>{,<level>}})
+
+This command returns a random monster ID from the random monster group.
+With <flag> you can apply certain restrictions which monsters of the group can be returned.
+Returns 0 if one of the parameters is invalid or no monster could be found with the given parameters.
+
+Valid <type> are:
+	MOBG_BRANCH_OF_DEAD_TREE
+	MOBG_PORING_BOX
+	MOBG_BLOODY_DEAD_BRANCH
+	MOBG_RED_POUCH_OF_SURPRISE
+	MOBG_CLASSCHANGE
+	MOBG_TAEKWON_MISSION
+	
+Valid <flag> are:
+	RMF_NONE            = 0x00 - Apply no flags
+	RMF_DB_RATE         = 0x01 - Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV    = 0x02 - Apply a monster level check
+	RMF_MOB_NOT_BOSS    = 0x04 - Selected monster should not be a Boss type (default)
+	                           - (except those from MOBG_BLOODY_DEAD_BRANCH)
+	RMF_MOB_NOT_SPAWN   = 0x08 - Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT   = 0x10 - Selected monster should not be a Plant type
+	RMF_ALL             = 0xFF - Apply all flags
+	
 ---------------------------------------
 
 *getmonsterinfo(<mob ID>,<type>)
@@ -6277,6 +6310,28 @@ it just removes non-permanent script.
 
 ---------------------------------------
 
+*plagiarizeskill <skill_id>,<level>;
+
+Enable the player to plagiarize specific skills that are copyable.
+Return 1 on success, 0 otherwise.
+
+Note:
+ - Plagiarism only able to copy skill while SC_PRESERVE is not active and skill is copyable by Plagiarism.
+ - Reproduce can copy skill if SC__REPRODUCE is active and the skill is copyable by Reproduce.
+
+---------------------------------------
+
+*plagiarizeskillreset <flag>;
+
+Remove a plagiarized skill from the player.
+Return 1 on success, 0 otherwise.
+
+Flag constants:
+	1 - Use for Plagiarism Skill
+	2 - Use for Reproduce Skill
+
+---------------------------------------
+
 *skill <skill id>,<level>{,<flag>};
 *skill "<skill name>",<level>{,<flag>};
 *addtoskill <skill id>,<level>{,<flag>};
@@ -6840,6 +6895,29 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC name>","<map>",<x>,<y>{,"<Duplicate NPC name>"{,<sprite>{,<dir>{,<xs>{,<xy>}}}}};
+
+This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
+If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+ 
+*duplicate_dynamic("<NPC name>"{,<character ID>});
+
+This command will duplicate the NPC with the given <NPC name> near the attached player or the player with the given <character ID>.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
@@ -8251,6 +8329,13 @@ Gets the reputation points for reputation group <type> for the attached player o
 
 ---------------------------------------
 
+*add_reputation_points(<type>,<points>{,<char id>})
+
+Adds the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
 *item_reform({<item id>{,<char id>}})
 *item_reform({<"item name">{,<char id>}})
 
@@ -8527,6 +8612,7 @@ Parameters (indexes) for monsters are:
 	UMOB_IGNORE_CELL_STACK_LIMIT
 	UMOB_RES
 	UMOB_MRES
+	UMOB_DAMAGETAKEN
 
 -----
 
@@ -8951,6 +9037,18 @@ Example:
 
 	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
 	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
+
+---------------------------------------
+
+*cap_value(<number>, <min>, <max>)
+
+Returns the number but capped between <min> and <max>.
+
+Example:
+	// capped between 0 ~ 100
+	.@value = cap_value(10, 0, 100);   // .@value will be equal to 10
+	.@value = cap_value(1000, 0, 100); // .@value will be equal to 100
+	.@value = cap_value(-10, 3, 100);  // .@value will be equal to 3
 
 ---------------------------------------
 
@@ -10184,7 +10282,7 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
- PETINFO_ID - Pet ID
+ PETINFO_ID - Pet unique ID
  PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.yml' - will tell you what kind of a pet it is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
@@ -10866,6 +10964,29 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
+*itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+
+Generates an item link string for an item that can be used for npctalk, message,
+dispbottom, and broadcast commands. The result is a clickable-item name just
+like SHIFT+Click from a player's inventory/cart/equipment window. This command can be
+used with mes but the item name will not be clickable. You should use the normal client
+tags for displaying item links in mes dialogues, if the client supports them. 
+
+
+Examples:
+
+	npctalk "Knife [3] : "+itemlink(1201)+"";
+	npctalk "+16 Knife [3] : "+itemlink(1201,16)+"";
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 : "+itemlink(18110,13,4147,4407,4833,4832)+"";
+	setarray .@opt_ids[0],RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATTMPOWER,0,0;
+	setarray .@opt_values[0],3,5,20,0,0;
+	setarray .@opt_params[0],0,0,0,0,0;
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 + 3 Options : "+itemlink(18110,13,4147,4407,4833,4832,0,.@opt_ids,.@opt_values,.@opt_params)+"";
+
+
+RandomIDArray, RandomValueArray, and RandomParamArray only works if the
+client (and server) supports the Item Random Options feature (PACKETVER >= 20150225).
+
 ========================
 |14.- Channel commands.|
 ========================
@@ -11112,5 +11233,32 @@ See 'achievementinfo' for valid <type> values.
 - ACHIEVEINFO_COMPLETE, ACHIEVEINFO_COMPLETEDATE, and ACHIEVEINFO_GOTREWARD require the
   specific value returned from 'gettimetick(2)'.
 - Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
+
+---------------------------------------
+
+*addfame(<amount>,{,<char id>})
+
+Increases the fame of the attached player or the supplied <char id> by the <amount> given.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfame({<char id>})
+
+Gets the fame points of the attached player or the supplied <char id>.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfamerank({<char id>})
+
+Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*isdead({<account id>})
+
+Returns true if the player is dead else false.
 
 ---------------------------------------

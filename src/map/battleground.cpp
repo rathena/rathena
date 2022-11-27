@@ -507,7 +507,7 @@ bool bg_team_join(int bg_id, struct map_session_data *sd, bool is_queue)
 
 		for (const auto &pl_sd : bgteam->members) {
 			if (pl_sd.sd != sd)
-				clif_hpmeter_single(sd->fd, pl_sd.sd->bl.id, pl_sd.sd->battle_status.hp, pl_sd.sd->battle_status.max_hp);
+				clif_hpmeter_single( *sd, pl_sd.sd->bl.id, pl_sd.sd->battle_status.hp, pl_sd.sd->battle_status.max_hp );
 		}
 
 		clif_bg_hp(sd);

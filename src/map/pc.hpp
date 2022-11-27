@@ -120,6 +120,60 @@ enum e_additem_result : uint8 {
 	ADDITEM_STACKLIMIT
 };
 
+#ifndef CAPTCHA_ANSWER_SIZE
+	#define CAPTCHA_ANSWER_SIZE 16
+#endif
+#ifndef CAPTCHA_BMP_SIZE
+	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
+#endif
+#ifndef MAX_CAPTCHA_CHUNK_SIZE
+	#define MAX_CAPTCHA_CHUNK_SIZE 1024
+#endif
+
+struct s_captcha_data {
+	uint16 index;
+	uint16 image_size;
+	char image_data[CAPTCHA_BMP_SIZE];
+	char captcha_answer[CAPTCHA_ANSWER_SIZE];
+	script_code *bonus_script;
+
+	~s_captcha_data() {
+		if (this->bonus_script)
+			script_free_code(this->bonus_script);
+	}
+};
+
+struct s_macro_detect {
+	std::shared_ptr<s_captcha_data> cd;
+	int32 reporter_aid;
+	int32 retry;
+	int32 timer;
+};
+
+enum e_macro_detect_status : uint8 {
+	MCD_TIMEOUT = 0,
+	MCD_INCORRECT = 1,
+	MCD_GOOD = 2,
+};
+
+enum e_macro_report_status : uint8 {
+	MCR_MONITORING = 0,
+	MCR_NO_DATA = 1,
+	MCR_INPROGRESS = 2,
+};
+
+class CaptchaDatabase : public TypesafeYamlDatabase<int16, s_captcha_data> {
+public:
+	CaptchaDatabase() : TypesafeYamlDatabase("CAPTCHA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+};
+
+extern CaptchaDatabase captcha_db;
+
 struct skill_cooldown_entry {
 	unsigned short skill_id;
 	int timer;
@@ -437,6 +491,7 @@ struct map_session_data {
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
+	int npc_id_dynamic;
 	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
@@ -870,6 +925,13 @@ struct map_session_data {
 		int target;
 	} skill_keep_using;
 
+	struct {
+		std::shared_ptr<s_captcha_data> cd;
+		uint16 upload_size;
+	} captcha_upload;
+
+	s_macro_detect macro_detect;
+
 	std::vector<uint32> party_booking_requests;
 };
 
@@ -1086,7 +1148,7 @@ static bool pc_cant_act( struct map_session_data* sd ){
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
 #ifdef VIP_ENABLE
-	#define pc_isvip(sd)      ( sd->vip.enabled ? true : false )
+	#define pc_isvip(sd)      ( (sd)->vip.enabled ? true : false )
 #else
 	#define pc_isvip(sd)      ( false )
 #endif
@@ -1213,12 +1275,17 @@ struct s_reputation{
 	std::string variable;
 	int64 minimum;
 	int64 maximum;
+#ifdef MAP_GENERATOR
+	enum e_visibility {ALWAYS, NEVER, EXIST} visibility;
+#endif
 };
 
 class ReputationDatabase : public TypesafeYamlDatabase<int64, s_reputation>{
 public:
 	ReputationDatabase() : TypesafeYamlDatabase( "REPUTATION_DB", 1 ){
-
+#ifdef MAP_GENERATOR
+	setGenerator(true);
+#endif
 	}
 
 	const std::string getDefaultLocation() override;
@@ -1226,6 +1293,27 @@ public:
 };
 
 extern ReputationDatabase reputation_db;
+
+struct s_reputationgroup {
+	int64 id;
+	std::string script_name;
+	std::string name;
+	std::vector<int64> reputations;
+};
+
+class ReputationGroupDatabase : public TypesafeYamlDatabase<int64, s_reputationgroup> {
+public:
+	ReputationGroupDatabase() : TypesafeYamlDatabase("REPUTATION_GROUP_DB", 1) {
+#ifdef MAP_GENERATOR
+	setGenerator(true);
+#endif
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+};
+
+extern ReputationGroupDatabase reputationgroup_db;
 
 struct s_statpoint_entry{
 	uint16 level;
@@ -1372,6 +1460,8 @@ enum e_addskill_type {
 };
 
 bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
+bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv);
+bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -1633,5 +1723,21 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
+
+// Captcha Register
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
+
+// Macro Detector
+void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_disconnect(map_session_data &sd);
+
+// Macro Reporter
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
+void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
+
+#ifdef MAP_GENERATOR
+void pc_reputation_generate();
+#endif
 
 #endif /* PC_HPP */

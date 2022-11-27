@@ -799,7 +799,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
  * @return 0 - Cannot be copied; 1 - Can be copied by Plagiarism 2 - Can be copied by Reproduce
  * @author Aru - for previous check; Jobbie for class restriction idea; Cydh expands the copyable skill
  */
-static int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
+int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_id) {
 	uint16 skill_idx = skill_get_index(skill_id);
 
 	if (!skill_idx)
@@ -1595,7 +1595,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case BD_LULLABY:
-		sc_start(src,bl,SC_SLEEP,15+sstatus->int_/3,skill_lv,skill_get_time2(skill_id,skill_lv)); //(custom chance) "Chance is increased with INT", iRO Wiki
+		status_change_start(src, bl, SC_SLEEP, (sstatus->int_ * 2 + rnd_value(100, 300)) * 10, skill_lv, 0, 0, 0, skill_get_time2(skill_id, skill_lv), SCSTART_NONE);
 		break;
 
 	case DC_UGLYDANCE:
@@ -1657,9 +1657,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			break;
 		}
 	// Equipment breaking monster skills [Celest]
-	case NPC_WEAPONBRAKER:
-		skill_break_equip(src,bl, EQP_WEAPON, 150*skill_lv, BCT_ENEMY);
-		break;
 	case NPC_ARMORBRAKE:
 		skill_break_equip(src,bl, EQP_ARMOR, 150*skill_lv, BCT_ENEMY);
 		break;
@@ -1803,7 +1800,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src, bl, SC_MAGIC_POISON, 100, skill_lv, 20000);
 		break;
 	case NPC_COMET:
-		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
+		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_JACKFROST:
 		sc_start(src,bl,SC_FREEZE,200,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -2226,8 +2223,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			rate = 0;
 			if( sd )
 				rate += sd->bonus.break_weapon_rate;
-			if( sc && sc->data[SC_MELTDOWN] )
-				rate += sc->data[SC_MELTDOWN]->val2;
+			if (sc) {
+				if (sc->data[SC_MELTDOWN])
+					rate += sc->data[SC_MELTDOWN]->val2;
+				if (sc->data[SC_WEAPONBREAKER])
+					rate += sc->data[SC_WEAPONBREAKER]->val2;
+			}
 			if( rate )
 				skill_break_equip(src,bl, EQP_WEAPON, rate, BCT_ENEMY);
 
@@ -3673,6 +3674,13 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	damage = dmg.damage + dmg.damage2;
 
+	if ((dmg.flag & BF_MAGIC) && tsc && tsc->data[SC_MAXPAIN]) {
+		tsc->data[SC_MAXPAIN]->val3 = (int)damage;
+		tsc->data[SC_MAXPAIN]->val2 = 0;
+		if (!tsc->data[SC_KYOMU]) //SC_KYOMU invalidates reflecting ability.
+			skill_castend_damage_id(bl, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, flag);
+	}
+
 	if( (skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
 		skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
 		skill_id == MER_INCAGI || skill_id == MER_BLESSING) && tsc && tsc->data[SC_CHANGEUNDEAD] )
@@ -3963,6 +3971,14 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			if (skill_id > 0)
 				mobskill_event(BL_CAST(BL_MOB, bl), src, tick, MSC_SKILLUSED | (skill_id << 16));
 		}
+	}
+
+	// Trigger monster skill condition for damage skills.
+	if (bl->type == BL_MOB && src != bl && !status_isdead(bl)) {
+		if (damage > 0)
+			mobskill_event(BL_CAST(BL_MOB, bl), src, tick, dmg.flag, damage);
+		if (skill_id > 0)
+			mobskill_event(BL_CAST(BL_MOB, bl), src, tick, MSC_SKILLUSED | (skill_id << 16), damage);
 	}
 
 	if (tsc  && skill_id != NPC_EVILLAND && skill_id != SP_SOULEXPLOSION && skill_id != SJ_NOVAEXPLOSING
@@ -5070,7 +5086,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_UNDEADATTACK:
 	case NPC_CHANGEUNDEAD:
 	case NPC_ARMORBRAKE:
-	case NPC_WEAPONBRAKER:
 	case NPC_HELMBRAKE:
 	case NPC_SHIELDBRAKE:
 	case NPC_BLINDATTACK:
@@ -7609,6 +7624,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
+	case CR_REFLECTSHIELD:
+	case MS_REFLECTSHIELD:
+		if (tsc && tsc->data[SC_DARKCROW]) { // SC_DARKCROW prevents using reflecting skills
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+			break;
+		}
 	case PR_SLOWPOISON:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
@@ -7621,8 +7643,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case KN_ONEHAND:
 	case MER_QUICKEN:
 	case CR_SPEARQUICKEN:
-	case CR_REFLECTSHIELD:
-	case MS_REFLECTSHIELD:
 	case AS_POISONREACT:
 #ifndef RENEWAL
 	case MC_LOUD:
@@ -7666,6 +7686,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
 	case NPC_KEEPING:
+	case NPC_WEAPONBRAKER:
 	case NPC_BARRIER:
 	case NPC_INVINCIBLE:
 	case NPC_INVINCIBLEOFF:
@@ -8737,7 +8758,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case BA_PANGVOICE:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,50,7,skill_get_time(skill_id,skill_lv)));
+		clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,70,7,skill_get_time(skill_id,skill_lv)));
 #ifdef RENEWAL
 		sc_start(src, bl, SC_BLEEDING, 30, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: Confirm success rate
 #endif
@@ -8745,7 +8766,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case DC_WINKCHARM:
 		if( dstsd ) {
-			clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,30,7,skill_get_time2(skill_id,skill_lv)));
+			clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,10,7,skill_get_time2(skill_id,skill_lv)));
 #ifdef RENEWAL
 			sc_start(src, bl, SC_HALLUCINATION, 30, skill_lv, skill_get_time(skill_id, skill_lv)); // TODO: Confirm success rate and duration
 #endif
@@ -8755,7 +8776,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( status_get_lv(src) > status_get_lv(bl)
 			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_ANGEL)
 			&&  !status_has_mode(tstatus,MD_STATUSIMMUNE) )
-				clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start2(src,bl,type,70,skill_lv,src->id,skill_get_time(skill_id,skill_lv)));
+				clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start2(src,bl,type,(status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 			else
 			{
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
@@ -9567,7 +9588,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_RANDOMMOVE:
 		if (md) {
 			md->next_walktime = tick - 1;
-			mob_randomwalk(md,tick);
+			if (md->special_state.ai == AI_SPHERE)
+				unit_escape(&md->bl, bl, 7, 2);
+			else
+				mob_randomwalk(md,tick);
 		}
 		break;
 
@@ -9665,7 +9689,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_SIEGEMODE:
-		// not sure what it does
+		// Not implemented/used: Gives EFST_SIEGEMODE which reduces speed to 1000.
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
 
@@ -21133,12 +21157,12 @@ void skill_unit_move_unit_group(std::shared_ptr<s_skill_unit_group> group, int16
  */
 short skill_can_produce_mix(struct map_session_data *sd, t_itemid nameid, int trigger, int qty)
 {
-	short i, j;
-
 	nullpo_ret(sd);
 
-	if (!nameid || !itemdb_exists(nameid))
+	if (!item_db.exists(nameid))
 		return 0;
+
+	short i, j;
 
 	for (i = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
 		if (skill_produce_db[i].nameid == nameid) {
@@ -21267,9 +21291,9 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 
 	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
 		short x, j;
-		t_itemid id;
+		t_itemid id = skill_produce_db[idx].mat_id[i];
 
-		if (!(id = skill_produce_db[idx].mat_id[i]) || !itemdb_exists(id))
+		if (!item_db.exists(id))
 			continue;
 		num++;
 		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * skill_produce_db[idx].mat_amount[i];
@@ -24230,7 +24254,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const ryml::NodeRef& node) {
  * @return Spell data or nullptr otherwise
  */
 std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(t_itemid nameid) {
-	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.empty())
+	if (!item_db.exists(nameid) || reading_spellbook_db.empty())
 		return nullptr;
 
 	for (const auto &spell : reading_spellbook_db) {
@@ -24319,7 +24343,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 		return true;
 	}
 
-	if (!itemdb_exists(nameid)) {
+	if (!item_db.exists(nameid)) {
 		ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
 		return false;
 	}
