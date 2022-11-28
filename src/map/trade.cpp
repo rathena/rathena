@@ -381,7 +381,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( !itemdb_cantrade(item, src_lv, dst_lv) && // Can't trade
 		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) { // Can't partner-trade
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(sd, index+2, 2);
 		return;
 	}
 
@@ -390,13 +390,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	if( item->expire_time ) { // Rental System
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(sd, index+2, 2);
 		return;
 	}
 
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(sd, index+2, 2);
 		return;
 	}
 
@@ -411,7 +411,6 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
 
