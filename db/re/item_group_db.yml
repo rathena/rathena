@@ -42273,7 +42273,6 @@ Body:
       - SubGroup: 0
         List:
           - Item: Cachua_Coupon
-    SubGroups:
       - SubGroup: 1
         List:
           - Item: Sillit_Pong_Box
