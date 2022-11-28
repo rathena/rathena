@@ -48164,20 +48164,3 @@ Body:
             Rate: 1
           - Item: Cvt_Physical_Wing
             Rate: 1
-  - Group: KACHUA_SECRET_BOX
-    AnnounceBoxItemId: 23914
-    SubGroups:
-      - SubGroup: 0
-        List:
-          - Item: Cachua_Coupon
-      - SubGroup: 1
-        List:
-          - Item: Red_Potion
-            Rate: 4
-          - Item: Yellow_Potion
-            Rate: 3
-          - Item: White_Potion
-            Rate: 2
-          - Item: Blue_Potion
-            Rate: 1
-            Announced: true

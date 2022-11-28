@@ -1745,7 +1745,6 @@ enum e_random_item_group {
 	IG_AEGIS_101923,
 	IG_AEGIS_101924,
 	IG_AEGIS_101925,
-	IG_KACHUA_SECRET_BOX,
 
 	IG_MAX,
 };
