@@ -4673,12 +4673,12 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 ///     2 = trade canceled
 void clif_tradeitemok(struct map_session_data& sd, int index, e_exitem_add_result result)
 {
-	PACKET_ZC_ACK_ADD_EXCHANGE_ITEM* p = reinterpret_cast<PACKET_ZC_ACK_ADD_EXCHANGE_ITEM*>(packet_buffer);
-	p->packetType = HEADER_ZC_ACK_ADD_EXCHANGE_ITEM;
-	p->index = client_index(index);
-	p->result = static_cast<uint8>(result);
+	PACKET_ZC_ACK_ADD_EXCHANGE_ITEM p = {};
+	p.packetType = HEADER_ZC_ACK_ADD_EXCHANGE_ITEM;
+	p.index = client_index(index);
+	p.result = static_cast<uint8>(result);
 
-	clif_send(p, sizeof(p), &sd.bl, SELF);
+	clif_send(&p, sizeof(p), &sd.bl, SELF);
 }
 
 
