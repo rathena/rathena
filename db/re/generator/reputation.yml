@@ -23,10 +23,9 @@
 #
 ###########################################################################
 # - Id                                  Client side index.
-#   Name                                Name of the reputation type.
-#   Variable                            Name of the variable that will store the reputation. (Default: RepPoints<id>)
-#   Minimum                             Minimum amount of points. (Default: INT64_MIN)
-#   Maximum                             Maximum amount of points. (Default: INT64_MAX)
+#   Visibility                          Always = Always show
+#                                       Never = Never show
+#                                       Exist = Only show if greater than 0
 ###########################################################################
 
 Header:
@@ -35,27 +34,10 @@ Header:
 
 Body:
   - Id: 1
-    Name: Orc Village
-    Variable: RepPointsOrc
-    Minimum: -3000
-    Maximum: 3000
+    Visibility: Always
   - Id: 2
-    Name: Goblin Village
-    Variable: RepPointsGoblin
-    Minimum: -3000
-    Maximum: 3000
+    Visibility: Always
   - Id: 3
-    Name: Grey Wolf Village
-    Variable: RepPointsWolf
-    Minimum: -5000
-    Maximum: 5000
+    Visibility: Exist
   - Id: 4
-    Name: Isgard
-    Variable: RepPointsIsgard
-    Minimum: -3000
-    Maximum: 3000
-
-Footer:
-  Imports:
-  - Path: db/re/generator/reputation.yml
-    Generator: true
+    Visibility: Exist

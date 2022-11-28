@@ -79,7 +79,6 @@ static inline int32 client_exp(t_exp exp) {
 static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
-int packet_db_ack[MAX_ACK_FUNC + 1];
 // Reuseable global packet buffer to prevent too many allocations
 // Take socket.cpp::socket_max_client_packet into consideration
 static int8 packet_buffer[UINT16_MAX];
@@ -2491,25 +2490,13 @@ void clif_scriptclose(struct map_session_data *sd, int npcid)
  * @param sd : player pointer
  * @param npcid : npc gid to close
  */
-void clif_scriptclear(struct map_session_data *sd, int npcid)
-{
-	struct s_packet_db* info;
-	int16 len;
-	int cmd = 0;
-	int fd;
+void clif_scriptclear( struct map_session_data& sd, int npcid ){
+	struct PACKET_ZC_CLEAR_DIALOG p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_CLEAR_DIALOG;
+	p.GID = npcid;
 
-	cmd = packet_db_ack[ZC_CLEAR_DIALOG];
-	if(!cmd) cmd = 0x8d6; //default
-	info = &packet_db[cmd];
-	len = info->len;
-	fd = sd->fd;
-
-	WFIFOHEAD(fd, len);
-	WFIFOW(fd,0)=0x8d6;
-	WFIFOL(fd,info->pos[0])=npcid;
-	WFIFOSET(fd,len);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
  }
 
 /*==========================================
@@ -4134,48 +4121,22 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val) {
 ///     0 = failure
 ///     1 = success
 ///     2 = failure due to low level
-void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag)
-{
-	int fd = 0, cmd = 0, look = 0;
-	struct s_packet_db *info = NULL;
+void clif_equipitemack( struct map_session_data& sd, uint8 flag, int index, int pos ){
+	struct PACKET_ZC_REQ_WEAR_EQUIP_ACK p = {};
 
-	nullpo_retv(sd);
-
-	cmd = packet_db_ack[ZC_WEAR_EQUIP_ACK];
-	if (!cmd || !(info = &packet_db[cmd]) || !info->len)
-		return;
-
-	fd = sd->fd;
-
-	if (flag == ITEM_EQUIP_ACK_OK && sd->inventory_data[n]->equip&EQP_VISIBLE)
-		look = sd->inventory_data[n]->look;
-
-	WFIFOHEAD(fd, info->len);
-	WFIFOW(fd, 0) = cmd;
-	WFIFOW(fd, info->pos[0]) = n+2;
-	switch (cmd) {
-		case 0xaa:
-			WFIFOW(fd, info->pos[1]) = pos;
-#if PACKETVER < 20100629
-			WFIFOW(fd, info->pos[2]) = (flag == ITEM_EQUIP_ACK_OK ? 1 : 0);
-#else
-			WFIFOL(fd, info->pos[2]) = look;
-			WFIFOW(fd, info->pos[3]) = (flag == ITEM_EQUIP_ACK_OK ? 1 : 0);
-#endif
-			break;
-		case 0x8d0:
-			if (flag == ITEM_EQUIP_ACK_FAILLEVEL)
-				flag = 1;
-		case 0x999:
-			if (cmd == 0x999)
-				WFIFOL(fd, info->pos[1]) = pos;
-			else
-				WFIFOW(fd, info->pos[1]) = pos;
-			WFIFOL(fd, info->pos[2]) = look;
-			WFIFOW(fd, info->pos[3]) = flag;
-			break;
+	p.PacketType = HEADER_ZC_REQ_WEAR_EQUIP_ACK;
+	p.index = client_index( index );
+	p.wearLocation = pos;
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20100629
+	if( flag == ITEM_EQUIP_ACK_OK && sd.inventory_data[index]->equip&EQP_VISIBLE ){
+		p.wItemSpriteNumber = sd.inventory_data[index]->look;
+	}else{
+		p.wItemSpriteNumber = 0;
 	}
-	WFIFOSET(fd, info->len);
+#endif
+	p.result = flag;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -7346,16 +7307,15 @@ void clif_cart_additem_ack(struct map_session_data *sd, uint8 flag)
 }
 
 // 09B7 <unknow data> (ZC_ACK_OPEN_BANKING)
-void clif_bank_open(struct map_session_data *sd){
-	int fd;
+void clif_bank_open( struct map_session_data& sd ){
+#if PACKETVER >= 20130717
+	struct PACKET_ZC_ACK_OPEN_BANKING p = {};
 
-	nullpo_retv(sd);
-	fd = sd->fd;
+	p.packetType = HEADER_ZC_ACK_OPEN_BANKING;
+	p.unknown = 0;
 
-	WFIFOHEAD(fd,4);
-	WFIFOW(fd,0) = 0x09b7;
-	WFIFOW(fd,2) = 0;
-	WFIFOSET(fd,4);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /*
@@ -7378,23 +7338,21 @@ void clif_parse_BankOpen(int fd, struct map_session_data* sd) {
 			//request save ?
 			//chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
 			//on succes open bank ?
-			clif_bank_open(sd);
+			clif_bank_open( *sd );
 		}
 	}
 }
 
 // 09B9 <unknow data> (ZC_ACK_CLOSE_BANKING)
+void clif_bank_close( struct map_session_data& sd ){
+#if PACKETVER >= 20130717
+	struct PACKET_ZC_ACK_CLOSE_BANKING p = {};
 
-void clif_bank_close(struct map_session_data *sd){
-	int fd;
+	p.packetType = HEADER_ZC_ACK_CLOSE_BANKING;
+	p.unknown = 0;
 
-	nullpo_retv(sd);
-	fd = sd->fd;
-
-	WFIFOHEAD(fd,4);
-	WFIFOW(fd,0) = 0x09B9;
-	WFIFOW(fd,2) = 0;
-	WFIFOSET(fd,4);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /*
@@ -7412,33 +7370,24 @@ void clif_parse_BankClose(int fd, struct map_session_data* sd) {
 	}
 	if(sd->status.account_id == aid){
 		sd->state.banking = 0;
-		clif_bank_close(sd);
+		clif_bank_close( *sd );
 	}
 }
 
 /*
  * Display how much we got in bank (I suppose)
-  09A6 <Bank_Vault>Q <Reason>W (PACKET_ZC_BANKING_CHECK)
+ * 09A6 <Bank_Vault>Q <Reason>W (ZC_BANKING_CHECK)
  */
-void clif_Bank_Check(struct map_session_data* sd) {
-	unsigned char buf[13];
-	struct s_packet_db* info;
-	int16 len;
-	int cmd = 0;
+void clif_Bank_Check( struct map_session_data& sd ){
+#if PACKETVER >= 20130717
+	struct PACKET_ZC_BANKING_CHECK p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_BANKING_CHECK;
+	p.money = sd.bank_vault;
+	p.reason = 0;
 
-	cmd = packet_db_ack[ZC_BANKING_CHECK];
-	if(!cmd) cmd = 0x09A6; //default
-	info = &packet_db[cmd];
-	len = info->len;
-	if(!len) return; //version as packet disable
-	// sd->state.banking = 1; //mark opening and closing
-
-	WBUFW(buf,0) = cmd;
-	WBUFQ(buf,info->pos[0]) = sd->bank_vault; //value
-	WBUFW(buf,info->pos[1]) = 0; //reason
-	clif_send(buf,len,&sd->bl,SELF);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /*
@@ -7456,7 +7405,7 @@ void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
 		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
 		if(sd->status.account_id == aid) //since we have it let check it for extra security
-			clif_Bank_Check(sd);
+			clif_Bank_Check( *sd );
 	}
 }
 
@@ -7464,25 +7413,17 @@ void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
  * Acknowledge of deposit some money in bank
   09A8 <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_DEPOSIT)
  */
-void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason) {
-	unsigned char buf[17];
-	struct s_packet_db* info;
-	int16 len;
-	int cmd =0;
+void clif_bank_deposit( struct map_session_data& sd, enum e_BANKING_DEPOSIT_ACK reason ){
+#if PACKETVER >= 20130717
+	struct PACKET_ZC_ACK_BANKING_DEPOSIT p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_ACK_BANKING_DEPOSIT;
+	p.money = sd.bank_vault;
+	p.zeny = sd.status.zeny;
+	p.reason = reason;
 
-	cmd = packet_db_ack[ZC_ACK_BANKING_DEPOSIT];
-	if(!cmd) cmd = 0x09A8;
-	info = &packet_db[cmd];
-	len = info->len;
-	if(!len) return; //version as packet disable
-
-	WBUFW(buf,0) = cmd;
-	WBUFW(buf,info->pos[0]) = (short)reason;
-	WBUFQ(buf,info->pos[1]) = sd->bank_vault;/* money in the bank */
-	WBUFL(buf,info->pos[2]) = sd->status.zeny;/* how much zeny char has after operation */
-	clif_send(buf,len,&sd->bl,SELF);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /*
@@ -7503,7 +7444,7 @@ void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
 
 		if(sd->status.account_id == aid){
 			enum e_BANKING_DEPOSIT_ACK reason = pc_bank_deposit(sd,max(0,money));
-			clif_bank_deposit(sd,reason);
+			clif_bank_deposit( *sd, reason );
 		}
 	}
 }
@@ -7512,26 +7453,17 @@ void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
  * Acknowledge of withdrawing some money from bank
   09AA <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_WITHDRAW)
  */
-void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason) {
-	unsigned char buf[17];
-	struct s_packet_db* info;
-	int16 len;
-	int cmd;
+void clif_bank_withdraw( struct map_session_data& sd, enum e_BANKING_WITHDRAW_ACK reason ){
+#if PACKETVER >= 20130717
+	struct PACKET_ZC_ACK_BANKING_WITHDRAW p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_ACK_BANKING_WITHDRAW;
+	p.reason = reason;
+	p.money = sd.bank_vault;
+	p.zeny = sd.status.zeny;
 
-	cmd = packet_db_ack[ZC_ACK_BANKING_WITHDRAW];
-	if(!cmd) cmd = 0x09AA;
-	info = &packet_db[cmd];
-	len = info->len;
-	if(!len) return; //version as packet disable
-
-	WBUFW(buf,0) = cmd;
-	WBUFW(buf,info->pos[0]) = (short)reason;
-	WBUFQ(buf,info->pos[1]) = sd->bank_vault;/* money in the bank */
-	WBUFL(buf,info->pos[2]) = sd->status.zeny;/* how much zeny char has after operation */
-
-	clif_send(buf,len,&sd->bl,SELF);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /*
@@ -7550,7 +7482,7 @@ void clif_parse_BankWithdraw(int fd, struct map_session_data* sd) {
 		int money = RFIFOL(fd,info->pos[1]);
 		if(sd->status.account_id == aid){
 			enum e_BANKING_WITHDRAW_ACK reason = pc_bank_withdraw(sd,max(0,money));
-			clif_bank_withdraw(sd,reason);
+			clif_bank_withdraw( *sd, reason );
 		}
 	}
 }
@@ -11088,8 +11020,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			map_getmapflag(sd->state.pmap, MF_BEXP) != mapdata->flag[MF_BEXP]
 			)
 		{
-			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+			clif_display_pinfo( *sd );
 		}
 #endif
 
@@ -12094,7 +12025,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 		return;
 
 	if(!sd->inventory.u.items_inventory[index].identify) {
-		clif_equipitemack(sd,index,0,ITEM_EQUIP_ACK_FAIL);	// fail
+		clif_equipitemack( *sd, ITEM_EQUIP_ACK_FAIL, index ); // fail
 		return;
 	}
 
@@ -19957,19 +19888,16 @@ void clif_update_rankingpoint(map_session_data &sd, int rankingtype, int point) 
  *   0 - map adjustment (bexp mapflag), 1 - Premium/VIP adjustment, 2 - Server rate adjustment, 3 - None
 */
 #ifdef VIP_ENABLE
-void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
-	if (sd) {
-		struct s_packet_db* info;
-		int16 len, szdetails = 13, maxinfotype = PINFO_MAX;
-		int cmd = 0, fd, i = 0;
-		int tot_baseexp = 100, tot_penalty = 100, tot_drop = 100, factor = 1000;
+void clif_display_pinfo( struct map_session_data& sd ){
+#if PACKETVER_MAIN_NUM >= 20110627 || PACKETVER_RE_NUM >= 20110628 || defined(PACKETVER_ZERO)
+	// TODO: Whoever wants to take the blame, fix this crappy logic below - and yes I know indentation is wrong, but CANT TOUCH THIS! *sings* [Lemongrass]
 		int details_bexp[PINFO_MAX], details_drop[PINFO_MAX], details_penalty[PINFO_MAX];
 
 		/**
 		 * EXP
 		 */
 		//0:PCRoom
-		details_bexp[PINFO_BASIC] = map_getmapflag(sd->bl.m, MF_BEXP);
+		details_bexp[PINFO_BASIC] = map_getmapflag( sd.bl.m, MF_BEXP );
 		if (details_bexp[PINFO_BASIC] == 100 || !details_bexp[PINFO_BASIC])
 			details_bexp[PINFO_BASIC] = 0;
 		else {
@@ -19981,7 +19909,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		}
 
 		//1:Premium
-		if (pc_isvip(sd)) {
+		if( pc_isvip( &sd ) ){
 			details_bexp[PINFO_PREMIUM] = battle_config.vip_base_exp_increase * battle_config.base_exp_rate / 100;
 			if (details_bexp[PINFO_PREMIUM] < 0)
 				details_bexp[PINFO_PREMIUM] = 0 - details_bexp[PINFO_PREMIUM];
@@ -20010,7 +19938,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		details_drop[PINFO_BASIC] = 0;
 
 		//1:Premium
-		if (pc_isvip(sd)) {
+		if( pc_isvip( &sd ) ){
 			details_drop[PINFO_PREMIUM] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
 			if (details_drop[PINFO_PREMIUM] < 0)
 				details_drop[PINFO_PREMIUM] = 0 - details_drop[PINFO_PREMIUM];
@@ -20040,7 +19968,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		details_penalty[PINFO_BASIC] = 0;
 
 		//1:Premium
-		if (pc_isvip(sd)) {
+		if( pc_isvip( &sd ) ){
 			details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base;
 			if (details_penalty[PINFO_PREMIUM] == 100)
 				details_penalty[PINFO_PREMIUM] = 0;
@@ -20071,53 +19999,40 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		//3:TPLUS
 		details_penalty[PINFO_CAFE] = 0;
 
-		cmd = packet_db_ack[cmdtype];
-		info = &packet_db[cmd];
-		len = info->len; //this is the base len without details
-		if(!len) return; //version as packet disable
+	struct PACKET_ZC_PERSONAL_INFOMATION* p = (struct PACKET_ZC_PERSONAL_INFOMATION*)packet_buffer;
 
-		if (cmdtype == ZC_PERSONAL_INFOMATION && cmd == 0x08cb) { //0x08cb version
-			szdetails = 7;
-			factor = 1;
-		}
-		else if (cmd == 0x097b) {
-			tot_baseexp *= factor;
-			tot_drop *= factor;
-			tot_penalty *= factor;
-		}
+	p->packetType = HEADER_ZC_PERSONAL_INFOMATION;
+	p->length = sizeof( *p ) + PINFO_MAX * sizeof( p->details[0] );
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
+	p->total_exp = 100 * 1000;
+	p->total_death = 100 * 1000;
+	p->total_drop = 100 * 1000;
+#else
+	p->total_exp = 100;
+	p->total_death = 100;
+	p->total_drop = 100;
+#endif
 
-		fd = sd->fd;
-		WFIFOHEAD(fd,len+maxinfotype*szdetails);
-		WFIFOW(fd,0) = cmd;
+	for( int i = PINFO_BASIC; i < PINFO_MAX; i++ ){
+		p->details[i].type = i; // infotype 0 PCRoom, 1 Premium, 2 Server, 3 TPlus
 
-		for (i = 0; i < maxinfotype; i++) {
-			WFIFOB(fd,info->pos[4]+(i*szdetails)) = i; //infotype //0 PCRoom, 1 Premium, 2 Server, 3 TPlus
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
+		p->details[i].exp = details_bexp[i] * 1000;
+		p->details[i].death = details_penalty[i] * 1000;
+		p->details[i].drop = details_drop[i] * 1000;
+#else
+		p->details[i].exp = details_bexp[i];
+		p->details[i].death = details_penalty[i];
+		p->details[i].drop = details_drop[i];
+#endif
 
-			WFIFOL(fd,info->pos[5]+(i*szdetails)) = details_bexp[i]*factor;
-			WFIFOL(fd,info->pos[6]+(i*szdetails)) = details_penalty[i]*factor;
-			WFIFOL(fd,info->pos[7]+(i*szdetails)) = details_drop[i]*factor;
-
-			tot_baseexp += details_bexp[i]*factor;
-			tot_drop += details_drop[i]*factor;
-			tot_penalty += details_penalty[i]*factor;
-
-			len += szdetails;
-		}
-		WFIFOW(fd,info->pos[0])  = len; //packetlen
-		if (cmd == 0x08cb) { //0x08cb version
-			WFIFOW(fd,info->pos[1])  = tot_baseexp;
-			WFIFOW(fd,info->pos[2])  = tot_penalty;
-			WFIFOW(fd,info->pos[3])  = tot_drop;
-		}
-		else { //2013-08-07aRagexe uses 0x097b
-			WFIFOL(fd,info->pos[1])  = tot_baseexp;
-			WFIFOL(fd,info->pos[2])  = tot_penalty;
-			WFIFOL(fd,info->pos[3])  = tot_drop;
-		}
-		if (cmdtype == ZC_PERSONAL_INFOMATION_CHN)
-			WFIFOW(fd,info->pos[8])  = 0; //activity rate case of event ??
-		WFIFOSET(fd,len);
+		p->total_exp += p->details[i].exp;
+		p->total_death += p->details[i].death;
+		p->total_drop += p->details[i].drop;
 	}
+
+	clif_send( p, p->length, &sd.bl, SELF );
+#endif
 }
 #endif
 
@@ -20134,46 +20049,36 @@ void clif_parse_GMFullStrip(int fd, struct map_session_data *sd) {
 * @param fd
 * @param bl Crimson Marker target
 **/
-void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove) {
-	struct s_packet_db* info;
-	int cmd = 0;
-	int16 len;
-	unsigned char buf[11];
+void clif_crimson_marker( struct map_session_data& sd, struct block_list& bl, bool remove ){
+#if PACKETVER_MAIN_NUM >= 20130731 || PACKETVER_RE_NUM >= 20130707 || defined(PACKETVER_ZERO)
+	struct PACKET_ZC_C_MARKERINFO p = {};
 
-	nullpo_retv(sd);
+	p.PacketType = HEADER_ZC_C_MARKERINFO;
+	p.AID = bl.id;
+	if( remove ){
+		p.xPos = -1;
+		p.yPos = -1;
+	}else{
+		p.xPos = bl.x;
+		p.yPos = bl.y;
+	}
 
-	cmd = packet_db_ack[ZC_C_MARKERINFO];
-	if (!cmd)
-		cmd = 0x09C1; //default
-	info = &packet_db[cmd];
-	if (!(len = info->len))
-		return;
-
-	WBUFW(buf, 0) = cmd;
-	WBUFL(buf, info->pos[0]) = bl->id;
-	WBUFW(buf, info->pos[1]) = (remove ? -1 : bl->x);
-	WBUFW(buf, info->pos[2]) = (remove ? -1 : bl->y);
-	clif_send(buf, len, &sd->bl, SELF);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /**
  * 02d3 <index>.W (ZC_NOTIFY_BIND_ON_EQUIP)
  **/
-void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
-	struct s_packet_db *info = NULL;
-	int cmd = 0;
+void clif_notify_bindOnEquip( struct map_session_data& sd, int16 index ){
+#if PACKETVER >= 20070227
+	struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_NOTIFY_BIND_ON_EQUIP;
+	p.index = client_index( index );
 
-	cmd = packet_db_ack[ZC_NOTIFY_BIND_ON_EQUIP];
-	info = &packet_db[cmd];
-	if (!cmd || !info->len)
-		return;
-
-	WFIFOHEAD(sd->fd, info->len);
-	WFIFOW(sd->fd, 0) = cmd;
-	WFIFOW(sd->fd, info->pos[0]) = n+2;
-	WFIFOSET(sd->fd, info->len);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /**
@@ -20707,25 +20612,21 @@ void clif_parse_roulette_item( int fd, struct map_session_data* sd ){
  * @param fd
  * @param sd
  **/
-void clif_merge_item_ack(struct map_session_data *sd, unsigned short index, unsigned short count, enum MERGE_ITEM_ACK type) {
-	unsigned char buf[9];
-	struct s_packet_db *info = NULL;
-	short cmd = 0;
+void clif_merge_item_ack( struct map_session_data &sd, enum MERGE_ITEM_ACK type, uint16 index = 0, uint16 count = 0 ){
+#if PACKETVER_MAIN_NUM >= 20120314 || PACKETVER_RE_NUM >= 20120221 || defined(PACKETVER_ZERO)
+	struct PACKET_ZC_ACK_MERGE_ITEM p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_ACK_MERGE_ITEM;
+	if( type == MERGE_ITEM_SUCCESS ){
+		p.index = client_index( index );
+	}else{
+		p.index = index;
+	}
+	p.amount = count;
+	p.reason = type;
 
-	if (!clif_session_isValid(sd))
-		return;
-	if (!(cmd = packet_db_ack[ZC_ACK_MERGE_ITEM]))
-		return;
-	if (!(info = &packet_db[cmd]) || info->len == 0)
-		return;
-
-	WBUFW(buf, 0) = cmd;
-	WBUFW(buf, info->pos[0]) = index;
-	WBUFW(buf, info->pos[1]) = count;
-	WBUFB(buf, info->pos[2]) = type;
-	clif_send(buf, info->len, &sd->bl, SELF);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /**
@@ -20773,41 +20674,37 @@ static bool clif_merge_item_check(struct item_data *id, struct item *it) {
  * ZC 096D <size>.W { <index>.W }* (ZC_MERGE_ITEM_OPEN)
  * @param sd
  **/
-void clif_merge_item_open(struct map_session_data *sd) {
-	unsigned char buf[4 + MAX_INVENTORY*2] = { 0 };
-	unsigned short cmd = 0, n = 0, i = 0, indexes[MAX_INVENTORY] = { 0 };
-	int len = 0;
-	struct s_packet_db *info = NULL;
-	struct item *it;
+void clif_merge_item_open( struct map_session_data& sd ){
+#if PACKETVER_MAIN_NUM >= 20120314 || PACKETVER_RE_NUM >= 20120221 || defined(PACKETVER_ZERO)
+	struct PACKET_ZC_MERGE_ITEM_OPEN* p = (struct PACKET_ZC_MERGE_ITEM_OPEN*)packet_buffer;
 
-	nullpo_retv(sd);
-	if (!clif_session_isValid(sd))
-		return;
-	if (!(cmd = packet_db_ack[ZC_MERGE_ITEM_OPEN]))
-		return;
-	if (!(info = &packet_db[cmd]) || info->len == 0)
-		return;
+	p->packetType = HEADER_ZC_MERGE_ITEM_OPEN;
+	p->packetLen = sizeof( *p );
+
+	int n = 0;
 
 	// Get entries
-	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (!clif_merge_item_check(sd->inventory_data[i], (it = &sd->inventory.u.items_inventory[i])))
+	for( int i = 0; i < MAX_INVENTORY; i++ ){
+		struct item* it = &sd.inventory.u.items_inventory[i];
+
+		if( !clif_merge_item_check( sd.inventory_data[i], it ) ){
 			continue;
-		if (clif_merge_item_has_pair(sd, it))
-			indexes[n++] = i;
+		}
+
+		if( clif_merge_item_has_pair( &sd, it ) ){
+			p->items[n++].index = client_index( i );
+			p->packetLen += sizeof( p->items[0] );
+		}
 	}
 
-	if (n < 2) { // No item need to be merged
-		clif_msg(sd, MERGE_ITEM_NOT_AVAILABLE);
+	// No item need to be merged
+	if( n < 2 ){
+		clif_msg( &sd, MERGE_ITEM_NOT_AVAILABLE );
 		return;
 	}
 
-	WBUFW(buf, 0) = cmd;
-	WBUFW(buf, info->pos[0]) = (len = 4 + n*2);
-	for (i = 0; i < n; i++) {
-		WBUFW(buf, info->pos[1] + i*2) = indexes[i]+2;
-	}
-
-	clif_send(buf, len, &sd->bl, SELF);
+	clif_send( p, p->packetLen, &sd.bl, SELF );
+#endif
 }
 
 /**
@@ -20846,7 +20743,7 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 			continue;
 		indexes[j] = idx;
 		if (j && id->nameid != sd->inventory_data[indexes[0]]->nameid) { // Only can merge 1 kind at once
-			clif_merge_item_ack(sd, 0, 0, MERGE_ITEM_FAILED_NOT_MERGE);
+			clif_merge_item_ack( *sd, MERGE_ITEM_FAILED_NOT_MERGE );
 			return;
 		}
 		count += sd->inventory.u.items_inventory[idx].amount;
@@ -20859,7 +20756,7 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 	}
 
 	if (count >= (id->stack.amount ? id->stack.amount : MAX_AMOUNT)) {
-		clif_merge_item_ack(sd, 0, 0, MERGE_ITEM_FAILED_MAX_COUNT);
+		clif_merge_item_ack( *sd, MERGE_ITEM_FAILED_MAX_COUNT );
 		return;
 	}
 
@@ -20873,7 +20770,7 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 	}
 	sd->inventory.u.items_inventory[indexes[0]].amount = count;
 
-	clif_merge_item_ack(sd, indexes[0]+2, count, MERGE_ITEM_SUCCESS);
+	clif_merge_item_ack( *sd, MERGE_ITEM_SUCCESS, indexes[0], count );
 }
 
 /**
@@ -25079,7 +24976,6 @@ void packetdb_addpacket( uint16 cmd, uint16 length, void (*func)(int, struct map
  *------------------------------------------*/
 void packetdb_readdb(){
 	memset(packet_db,0,sizeof(packet_db));
-	memset(packet_db_ack,0,sizeof(packet_db_ack));
 
 #include "clif_packetdb.hpp"
 #include "clif_shuffle.hpp"
