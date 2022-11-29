@@ -1823,12 +1823,18 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Shadow_Cross) {
+      switch( Class ) {
+      case Job_Assassin_Cross:
+      case Job_Guillotine_Cross:
+      case Job_Guillotine_Cross_T:
+      case Job_Shadow_Cross:
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
-      }
-      else
+         break;
+      Default:
          percentheal -100,-100;
+         break;
+      }
   - Id: 679
     AegisName: Gold_Pill
     Name: Pilule
@@ -50362,7 +50368,6 @@ Body:
     AegisName: Poison_Bottle_B
     Name: Poison Bottle
     Type: Usable
-    Buy: 10
     Weight: 100
     Trade:
       NoDrop: true
@@ -50372,12 +50377,18 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) {
+      switch( Class ) {
+      case Job_Assassin_Cross:
+      case Job_Guillotine_Cross:
+      case Job_Guillotine_Cross_T:
+      case Job_Shadow_Cross:
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
-      }
-      else
+         break;
+      Default:
          percentheal -100,-100;
+         break;
+      }
   - Id: 22550
     AegisName: Cookie_Bag_B
     Name: Sweets Pocket

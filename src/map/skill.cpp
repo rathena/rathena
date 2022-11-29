@@ -17915,6 +17915,18 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 			}
 			break;
 		}
+#ifdef RENEWAL
+		case ASC_EDP:
+			if(sd) {
+				int16 item_edp = itemdb_group.item_exists_pc(sd, IG_EDP);
+				if (item_edp < 0) {
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					return false;
+				} else
+					pc_delitem(sd, item_edp, 1, 0, 1, LOG_TYPE_CONSUME);
+			}
+			break;
+#endif
 	}
 
 	status = &sd->battle_status;

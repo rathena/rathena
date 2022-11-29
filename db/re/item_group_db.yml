@@ -48211,3 +48211,9 @@ Body:
           - Item: Trans_Scroll_Gazeti
           - Item: Trans_Scroll_Kobold_Archer
           - Item: Trans_Scroll_Necromancer
+  - Group: EDP
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Poison_Bottle
+          - Item: Poison_Bottle_B

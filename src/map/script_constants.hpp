@@ -6538,6 +6538,7 @@
 	export_constant(IG_COSTUMEMILEAGE_PACKAGE3);
 	export_constant(IG_COMP_TRANS_SCROLL);
 	export_constant(IG_MINUS_STATUS_BOX);
+	export_constant(IG_EDP);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
