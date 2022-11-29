@@ -1823,11 +1823,12 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      switch( Class ) {
-      case Job_Assassin_Cross:
-      case Job_Guillotine_Cross:
-      case Job_Guillotine_Cross_T:
-      case Job_Shadow_Cross:
+      switch( eaclass() ) {
+      case EAJ_ASSASSIN_CROSS:
+      case EAJ_GUILLOTINE_CROSS:
+      case EAJ_GUILLOTINE_CROSS_T:
+      case EAJ_BABY_GUILLOTINE_CROSS:
+      case EAJ_SHADOW_CROSS:
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
          break;
@@ -50377,11 +50378,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      switch( Class ) {
-      case Job_Assassin_Cross:
-      case Job_Guillotine_Cross:
-      case Job_Guillotine_Cross_T:
-      case Job_Shadow_Cross:
+      switch( eaclass() ) {
+      case EAJ_ASSASSIN_CROSS:
+      case EAJ_GUILLOTINE_CROSS:
+      case EAJ_GUILLOTINE_CROSS_T:
+      case EAJ_BABY_GUILLOTINE_CROSS:
+      case EAJ_SHADOW_CROSS:
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
          break;
