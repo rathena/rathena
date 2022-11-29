@@ -407,6 +407,12 @@ struct PACKET_ZC_ACK_OPEN_BANKING{
 	int16 unknown;
 } __attribute__((packed));
 
+struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM {
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -416,6 +422,7 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_CHAT, 0x8d)
 DEFINE_PACKET_HEADER(ZC_BROADCAST, 0x9a)
 DEFINE_PACKET_HEADER(ZC_ITEM_ENTRY, 0x9d)
 DEFINE_PACKET_HEADER(ZC_PC_PURCHASE_RESULT, 0xca)
+DEFINE_PACKET_HEADER(ZC_ACK_ADD_EXCHANGE_ITEM, 0xea)
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_ITEM, 0x10a)
 DEFINE_PACKET_HEADER(CZ_REQ_CHANGE_MEMBERPOS, 0x155)
 DEFINE_PACKET_HEADER(CZ_REQMAKINGITEM, 0x18e)
