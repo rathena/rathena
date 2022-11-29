@@ -1823,19 +1823,11 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      switch( eaclass() ) {
-      case EAJ_ASSASSIN_CROSS:
-      case EAJ_GUILLOTINE_CROSS:
-      case EAJ_GUILLOTINE_CROSS_T:
-      case EAJ_BABY_GUILLOTINE_CROSS:
-      case EAJ_SHADOW_CROSS:
+      if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
-         break;
-      Default:
+      } else
          percentheal -100,-100;
-         break;
-      }
   - Id: 679
     AegisName: Gold_Pill
     Name: Pilule
@@ -50378,19 +50370,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      switch( eaclass() ) {
-      case EAJ_ASSASSIN_CROSS:
-      case EAJ_GUILLOTINE_CROSS:
-      case EAJ_GUILLOTINE_CROSS_T:
-      case EAJ_BABY_GUILLOTINE_CROSS:
-      case EAJ_SHADOW_CROSS:
+      if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
-         break;
-      Default:
+      } else
          percentheal -100,-100;
-         break;
-      }
   - Id: 22550
     AegisName: Cookie_Bag_B
     Name: Sweets Pocket
