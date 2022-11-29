@@ -362,7 +362,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	}
 
 	if( !amount ) { // Why do this.. ~.~ just send an ack, the item won't display on the trade window.
-		clif_tradeitemok(*sd, index, EXITEM_ADD_SUCCEED);
+		clif_tradeitemok(*sd, -2, EXITEM_ADD_SUCCEED); // We pass -2 which will becomes 0 in clif_tradeitemok (Official behavior)
 		return;
 	}
 
