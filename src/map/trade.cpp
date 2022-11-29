@@ -362,11 +362,9 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	}
 
 	if( !amount ) { // Why do this.. ~.~ just send an ack, the item won't display on the trade window.
-		clif_tradeitemok(sd, index, 0);
+		clif_tradeitemok(*sd, -2, EXITEM_ADD_SUCCEED); // We pass -2 which will becomes 0 in clif_tradeitemok (Official behavior)
 		return;
 	}
-
-	index -= 2; // 0 is for zeny, 1 is unknown. Gravity, go figure...
 
 	// Item checks...
 	if( index < 0 || index >= MAX_INVENTORY )
@@ -381,7 +379,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( !itemdb_cantrade(item, src_lv, dst_lv) && // Can't trade
 		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) { // Can't partner-trade
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
@@ -390,13 +388,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	if( item->expire_time ) { // Rental System
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
@@ -411,13 +409,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		clif_tradeitemok(sd, index+2, 1);
+		// clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT); // We do not know if the server respond with this or not since the official client prevents this case client-side.
 		return;
 	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
 	if( target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight ) { // fail to add item -- the player was over weighted.
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
 		return;
 	}
 
@@ -435,7 +433,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	sd->deal.weight += trade_weight;
 
-	clif_tradeitemok(sd, index+2, 0); // Return the index as it was received
+	clif_tradeitemok(*sd, index, EXITEM_ADD_SUCCEED); // Return the index as it was received
 	clif_tradeadditem(sd, target_sd, index+2, amount);
 }
 
@@ -486,7 +484,7 @@ void trade_tradeok(struct map_session_data *sd)
 	}
 
 	sd->state.deal_locked = 1;
-	clif_tradeitemok(sd, 0, 0);
+	clif_tradeitemok(*sd, 0, EXITEM_ADD_SUCCEED);
 	clif_tradedeal_lock(sd, 0);
 	clif_tradedeal_lock(target_sd, 1);
 }
