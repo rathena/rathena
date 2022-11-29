@@ -12975,7 +12975,7 @@
 3804,ILL_TURTLE_GENERAL@NPC_STUNATTACK,attack,179,5,2000,0,5000,no,target,always,0,,,,,,6,
 3804,ILL_TURTLE_GENERAL@NPC_SUMMONSLAVE,attack,196,1,10000,700,10000,no,self,slavele,3,,,,,,,
 3804,ILL_TURTLE_GENERAL@WZ_WATERBALL,attack,86,10,2000,500,20000,no,target,always,0,,,,,,18,
-3804,ILL_TURTLE_GENERAL@NPC_BLEEDING2,attack,764,2,500,0,5000,yes,target,always,0,,,,,,,
+// 3804,ILL_TURTLE_GENERAL@NPC_BLEEDING2,attack,764,2,500,0,5000,yes,target,always,0,,,,,,,
 
 // Poring Village instance
 3810,MD_KING_PORING@SM_BASH,attack,5,3,1000,1000,9000,yes,target,always,0,,,,,,,60
