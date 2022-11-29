@@ -56,39 +56,42 @@ tur_dun05,0,0	monster	Assaulter	1315,1,5000
 //==================================================
 // Illusion of Turtle
 //==================================================
-tur_d03_i	monster	Ominous Permeter	3800,15
-tur_d03_i	monster	Ominous Freezer	3801,40
-tur_d03_i	monster	Ominous Assulter	3799,35
 tur_d03_i	monster	Ominous Solider	3802,40
-tur_d03_i	monster	Ominous Heater	3803,10
+tur_d03_i	monster	Ominous Permeter	3800,50
 
-tur_d04_i	monster	Ominous Permeter	3800,4,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Freezer	3801,15,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Assulter	3799,42,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Solider	3802,1,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Heater	3803,33,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Permeter	3800,16,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Freezer	3801,36,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Assulter	3799,16,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Solider	3802,16,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Heater	3803,36,5000,0,"illusion_turtle_boss::OnEvent"
 
 // boss spawn
 -	script	illusion_turtle_boss	-1,{
 	end;
 OnEvent:
-	if (.boss)
+	if (playerattached() == 0 || .boss)
 		end;
-	.count++;
-	if (.count < 1000)	// todo unknown amount
+	if (.mob_count[killedrid] >= 2500)
+		end;
+	.mob_count[killedrid]++;
+	if (.mob_count[3799] < 2500 || .mob_count[3800] < 2500 || .mob_count[3801] < 2500 || .mob_count[3802] < 2500 || .mob_count[3803] < 2500)
 		end;
 	.boss = 1;
+	.mob_count[3799] = 0;
+	.mob_count[3800] = 0;
+	.mob_count[3801] = 0;
+	.mob_count[3802] = 0;
+	.mob_count[3803] = 0;
 	// mapannounce "tur_d04_i", "", bc_map, "0x70dbdb";	// todo unknown announce
-	monster "tur_d04_i",0,0,"Ominous Turtle General",3804,1, "illusion_turtle_boss::OnBoss";	// todo unknown location
+	getunitdata( killedgid, .@data );
+	monster "tur_d04_i",.@data[UMOB_X],.@data[UMOB_Y],"Ominous Turtle General",3804,1, "illusion_turtle_boss::OnBoss";
 	end;
 OnBoss:
-	.count = 0;
 	killmonster "tur_d04_i", "illusion_turtle_boss::OnBoss";
 	initnpctimer;
 	end;
 OnTimer3600000:
 	stopnpctimer;
 	.boss = 0;
-	.count = 0;
 	end;
 }

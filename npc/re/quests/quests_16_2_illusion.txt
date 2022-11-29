@@ -5740,16 +5740,16 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 			mes "[Knight Aylvar]";
 			mes "Oh, if you go there again, please check Leiphen is ok as well.";
 			ill_turtle = 12;
-			setquest 16114;	// Talk with Eilbar
-			completequest 16114;	// Talk with Eilbar
+			setquest 16114;	// Talk with Aylvar
+			completequest 16114;	// Talk with Aylvar
 			close;
 		}
 		mes "[Knight Aylvar]";
 		mes "Please come back again, " + .@player_name$ + ".";
 		mes "On the way, please check Leiphen is doing good.";
 		ill_turtle = 12;
-		setquest 16114;	// Talk with Eilbar
-		completequest 16114;	// Talk with Eilbar
+		setquest 16114;	// Talk with Aylvar
+		completequest 16114;	// Talk with Aylvar
 		close2;
 		warp "tur_d03_i",132,187;
 		end;
@@ -6247,7 +6247,7 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		erasequest 16117;	// Continuous story 2
 		setquest 16105;	// A short break, and a promise
 		getitem 25271,5;	// IllusionStone
-		getexp 3600000,2400000;	// todo unknown exp (irowiki values)
+		getexp 2880000,1920000;
 		close2;
 		npctalk "Archeologist Leiphen : Okay, see you again!", "Archeologist Leiphen#illtur01", bc_self;
 		cloakonnpcself( "Archeologist Leiphen#illtur01" );
