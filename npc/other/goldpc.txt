@@ -5,52 +5,50 @@
 //===== Changelog: ===========================================
 //= 1.0 Initial release [Lemongrass]
 //= 1.1 Replay version [eppc0330]
+//= 1.2 Translation of the replay version [Lemongrass]
 //============================================================
 
-prontera,0,0,0	script	골드포인트매니저::GOLDPCCAFE	4_F_02,{
+prontera,0,0,0	script	Goldpoint Manager::GOLDPCCAFE	4_F_02,{
 	.@point = Goldpc_Points;
-	.@npcName$ = "[골드포인트매니저]";
+	.@npcName$ = "[Goldpoint Manager]";
 
 	// ID:AMOUNT:PRICE
 	setarray .items$[1],
-	"25464:1:2", //월드 이동권 1
-	"23919:1:10",  //카츄아의 비밀열쇠 1
-	"23919:11:100",//카츄아의 비밀열쇠 11
-	"23919:33:300";//카츄아의 비밀열쇠 33
+	"25464:1:2", // World_Tour_Ticket 1
+	"23919:1:10",  // K_Secret_Key 1
+	"23919:11:100",// K_Secret_Key 11
+	"23919:33:300";// K_Secret_Key 33
 
-	.@menu$ = "현재포인트 조회";
+	.@menu$ = "View current points";
 
 	for(.@i = 1; .@i < getarraysize(.items$); .@i++) {
 		explode(.@array$, .items$[.@i], ":");
 		.@cost = atoi(.@array$[2]);
-		.@menu$ += ":"+(.@cost)+"포인트 선물"+((.@point<.@cost)?" ^ff0000(포인트부족)^000000":"");
+		.@menu$ += ":"+(.@cost)+" points gift"+((.@point<.@cost)?" ^ff0000(not enough points)^000000":"");
 	}
 	mes .@npcName$;
-	mes "현재 ^0000ff"+.@point+"^000000 점의 포인트를 보유 중이시군요.";
-	mes "어떤 상품을 원하십니까?";
+	mes "You currently have ^0000ff"+.@point+"^000000 points.";
+	mes "What reward do you want?";
 	next;
 	.@s = select(.@menu$)-1;
 	if(.@s == 0) {
-	mes .@npcName$;
-		mes "현재 ^0000ff"+.@point+"^000000 점의 포인트를 보유 중이십니다";
+		mes .@npcName$;
+		mes "You currently have ^0000ff"+.@point+"^000000 points.";
 		close;
 	}
 	explode(.@array$, .items$[.@s], ":");
 	.@itemid = atoi(.@array$[0]);
 	.@amount = atoi(.@array$[1]);
 	.@cost = atoi(.@array$[2]);
-	explode(.@array2$, .items2$[.@s], ":");
-	.@itemid2 = atoi(.@array2$[0]);
-	.@amount2 = atoi(.@array2$[1]);
 	if(.@point < .@cost) {
 		mes .@npcName$;
-			mes "현재 남은 포인트는 ^0000ff"+.@point+"^000000 점 입니다";
-			mes "이 점수로는 상품을 받으실 수 없겠군요";
-			close;
+		mes "You have ^0000ff"+.@point+"^000000 points remaining.";
+		mes "You cannot get the prize with this amount of points.";
+		close;
 	}
 	mes .@npcName$;
-	mes ""+.@cost+"포인트 선물을 고르셨군요. 지금 바로 지급해드리겠습니다";
-	mes "남은 포인트는 ^0000ff"+(.@point-.@cost)+"^000000 점 입니다";
+	mes "You chose the "+.@cost+" points gift. We will reward you immediately.";
+	mes "You have ^0000ff"+(.@point-.@cost)+"^000000 points remaining.";
 	Goldpc_Points -= .@cost;
 	getitem .@itemid,.@amount;
 	close;
