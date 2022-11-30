@@ -2156,27 +2156,15 @@ TIMER_FUNC(pc_goldpc_update){
 
 	// TODO: add mapflag to disable?
 
-	int32 points = (int32)pc_readreg2( sd, GOLDPC_POINT_VAR );
+	int64 points = pc_readparam( sd, SP_GOLDPC_POINTS );
 
-	if( points < battle_config.feature_goldpc_max_points ){
-		if( battle_config.feature_goldpc_vip && pc_isvip( sd ) ){
-			points += 2;
-		}else{
-			points += 1;
-		}
-
-		points = std::min( points, battle_config.feature_goldpc_max_points );
-
-		pc_setreg2( sd, GOLDPC_POINT_VAR, points );
-		pc_setreg2( sd, GOLDPC_SECONDS_VAR, 0 );
-
-		if( points < battle_config.feature_goldpc_max_points ){
-			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
-		}
-
-		// Update the client
-		clif_goldpc_info( *sd );
+	if( battle_config.feature_goldpc_vip && pc_isvip( sd ) ){
+		points += 2;
+	}else{
+		points += 1;
 	}
+
+	pc_setparam( sd, SP_GOLDPC_POINTS, points );
 
 	return 0;
 }
@@ -10103,6 +10091,7 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 #endif
 		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
 		case SP_ADD_ITEM_SPHEAL_RATE: val = sd->bonus.itemsphealrate2; break;
+		case SP_GOLDPC_POINTS: val = pc_readreg2( sd, GOLDPC_POINT_VAR ); break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
@@ -10353,6 +10342,26 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		val = cap_value(val, 0, 1999);
 		sd->cook_mastery = val;
 		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
+		return true;
+	case SP_GOLDPC_POINTS:
+		val = cap_value( val, 0, battle_config.feature_goldpc_max_points );
+
+		pc_setreg2( sd, GOLDPC_POINT_VAR, val );
+		pc_setreg2( sd, GOLDPC_SECONDS_VAR, 0 );
+
+		// Make sure to always delete the timer
+		if( sd->goldpc_tid != INVALID_TIMER ){
+			delete_timer( sd->goldpc_tid, pc_goldpc_update );
+			sd->goldpc_tid = INVALID_TIMER;
+		}
+
+		// If the system is enabled and the player can still earn some points restart the timer
+		if( battle_config.feature_goldpc_active && val < battle_config.feature_goldpc_max_points ){
+			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
+		}
+
+		// Update the client
+		clif_goldpc_info( *sd );
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%lld'.\n", type);

@@ -24807,7 +24807,7 @@ void clif_goldpc_info( struct map_session_data& sd ){
 		}else{
 			p.unitPoint = 1;
 		}
-		p.point = (int32)pc_readreg2( &sd, GOLDPC_POINT_VAR );
+		p.point = (int32)pc_readparam( &sd, SP_GOLDPC_POINTS );
 		if( sd.goldpc_tid != INVALID_TIMER ){
 			p.accumulatePlaySecond = (int32)( 3600 - battle_config.feature_goldpc_time + pc_readreg2( &sd, GOLDPC_SECONDS_VAR ) );
 		}else{
