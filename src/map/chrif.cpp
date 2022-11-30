@@ -344,6 +344,9 @@ int chrif_save(struct map_session_data *sd, int flag) {
 				delete_timer( sd->goldpc_tid, pc_goldpc_update );
 				sd->goldpc_tid = INVALID_TIMER;
 			}
+		}else{
+			// Invalid timer anyway
+			sd->goldpc_tid = INVALID_TIMER;
 		}
 	}
 
