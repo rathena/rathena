@@ -1343,32 +1343,32 @@ OnTouch:
 //============================================================
 
 // Exchange npc
-alberta,226,28,3	script	An equipment researcher	4_TOWER_15,{
+alberta,226,28,3	script	Equipment Researcher	4_TOWER_15,{
 	disable_items;
 
 	.@illusion_stone_name$ = getitemname(25271);
 
-	mes "[An equipment researcher]";
-	mes "I'm the one who rearch " + .@illusion_stone_name$ + " to enhance armors and weapons.";
+	mes "[Equipment Researcher]";
+	mes "I'm the one who researches " + .@illusion_stone_name$ + " to enhance armors and weapons.";
 	mes "If you have the materials I need for my research, wouldn't you hand them over?";
 	mes "If you give me some equipment and some materials, I'll exchange them for my reinforced equipment.";
 	next;
 	switch( select( "What are you doing here?", "Exchange Weapon", "Exchange Armor" ) ) {
 	case 1:
-		mes "[An equipment researcher]";
-		mes "I'm working on how to use an " + .@illusion_stone_name$ + " to strengthen the equipment.";
-		mes "I happened to go to the place where " + .@illusion_stone_name$ + " was found, and it just happened to come back..";
+		mes "[Equipment Researcher]";
+		mes "I'm working on how to use an " + .@illusion_stone_name$ + " to strengthen equipment.";
+		mes "I went to go to the place where " + .@illusion_stone_name$ + " was found, and I barely got back..";
 		next;
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "I think I met a girl...";
 		mes "Anyway, after that, I couldn't find a way to go back.";
 		mes "Here, we're getting research materials from adventurers with " + .@illusion_stone_name$ + ", and I'm offering enhanced equipment instead.";
 		close;
 	case 2:
-		mes "[An equipment researcher]";
-		mes "You mean the weapon I can exchange? Wait a minute. I'll name on them.";
+		mes "[Equipment Researcher]";
+		mes "What are the weapons I can exchange? Wait a minute. I'll name them.";
 		next;
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "<ITEM>Illusion Immaterial Sword<INFO>13469</INFO></ITEM>,";
 		mes "<ITEM>Illusion War Axe<INFO>1326</INFO></ITEM>,";
 		mes "<ITEM>Illusion Pole Axe<INFO>32005</INFO></ITEM>,";
@@ -1376,13 +1376,13 @@ alberta,226,28,3	script	An equipment researcher	4_TOWER_15,{
 		mes "<ITEM>Illusion Iron Driver<INFO>16065</INFO></ITEM>.";
 		mes "Each has two slots.";
 		next;
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "As a material, you can bring ^0000CDexisting weapons that have been refined over +9.^000000";
 		mes "And I need some ^0000CD" + .@illusion_stone_name$ + " and other materials.^000000";
 		mes "If you pick the weapon you want, I'll tell you in detail.";
 		next;
-		mes "[An equipment researcher]";
-		mes "Of course, we're giving you new weapons, so don't forget that all the existing ^0000CDsmelting and reinforcement^000000 will disappear.";
+		mes "[Equipment Researcher]";
+		mes "Of course, we're giving you new weapons, so don't forget that all the existing ^0000CDsmelting and enchantments^000000 will disappear.";
 		mes "I need to see the performance of the weapons to be exchanged, so you must ^0000CDwear them^000000.";
 		mes "So, what kind of weapon do you want?";
 		next;
@@ -1433,9 +1433,9 @@ alberta,226,28,3	script	An equipment researcher	4_TOWER_15,{
 				25313,200;			// Old Turtle Shells
 			break;
 		}
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "<ITEM>" + getitemname(.@reward) + "<INFO>" + .@reward + "</INFO></ITEM>?";
-		mes "I need an ^0000CD+9 " + getitemname(.@eq_req) + " ^000000,";
+		mes "I need " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^0000CD+9 " + getitemname(.@eq_req) + " ^000000,";
 		mes "^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + "ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + "ea^000000 as materials.";
 		break;
 	case 3:
@@ -1447,25 +1447,25 @@ alberta,226,28,3	script	An equipment researcher	4_TOWER_15,{
 			25271,50,			// Illusion Stones
 			25312,50;			// Pretty Old Doll
 
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "You can only exchange one type of armor, <ITEM>" + getitemname(.@reward) + "<INFO>" + .@reward + "</INFO></ITEM>. It has 1 slot.";
-		mes "I need an ^0000CD" + getitemname(.@eq_req) + "^000000,";
+		mes "I need " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^0000CD" + getitemname(.@eq_req) + "^000000,";
 		mes "^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + " ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + " ea^000000 as materials.";
 		next;
-		mes "[An equipment researcher]";
-		mes "Of course, we're giving you new weapons, so don't forget that all the existing ^0000CDsmelting and reinforcement^000000 will disappear.";
+		mes "[Equipment Researcher]";
+		mes "Of course, we're giving you new weapons, so don't forget that all the existing ^0000CDsmelting and enchantments^000000 will disappear.";
 		mes "I need to see the performance of the weapons to be exchanged, so you must ^0000CDwear them^000000.";
 		break;
 	}
 	mes "Would you like to exchange it right now?";
 	next;
 	if (select( "Exchange " + getitemname(.@reward), "Cancel" ) == 2) {
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "Yeah, come back if you change your mind.";
 		close;
 	}
 	if (countitem(.@items_req[0]) < .@items_req[1] || countitem(.@items_req[2]) < .@items_req[3]) {
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "Well... you're running out of ingredients.";
 		mes "Bring me ^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + "ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + " ea^000000. Then I'll exchange it for you..";
 		close;
@@ -1473,7 +1473,7 @@ alberta,226,28,3	script	An equipment researcher	4_TOWER_15,{
 	// custom texts and checks
 	.@equip_id = getequipid(.@part);
 	if (.@equip_id == -1) {
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		if (.@part == EQI_HAND_R)
 			mes "Where's your weapon?";
 		else
@@ -1481,16 +1481,16 @@ alberta,226,28,3	script	An equipment researcher	4_TOWER_15,{
 		close;
 	}
 	if (.@equip_id != .@eq_req) {
-		mes "[An equipment researcher]";
-		mes "Please equip a ^4d4fff+9 " + getitemname(.@eq_req) + ".^000000";
+		mes "[Equipment Researcher]";
+		mes "Please equip " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^4d4fff+9 " + getitemname(.@eq_req) + ".^000000";
 		close;
 	}
 	if (getequiprefinerycnt(.@part) < 9) {
-		mes "[An equipment researcher]";
+		mes "[Equipment Researcher]";
 		mes "I can only upgrade equipment that is ^4d4fffrefined to at least +9.^000000";
 		close;
 	}
-	mes "[An equipment researcher]";
+	mes "[Equipment Researcher]";
 	mes "There you go.";
 	delequip .@part;
 	delitem .@items_req[0], .@items_req[1];
