@@ -2164,6 +2164,9 @@ TIMER_FUNC(pc_goldpc_update){
 		points += 1;
 	}
 
+	// Reset the seconds
+	pc_setreg2( sd, GOLDPC_SECONDS_VAR, 0 );
+	// Update the points and trigger a new timer if necessary
 	pc_setparam( sd, SP_GOLDPC_POINTS, points );
 
 	return 0;
@@ -10347,21 +10350,23 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		val = cap_value( val, 0, battle_config.feature_goldpc_max_points );
 
 		pc_setreg2( sd, GOLDPC_POINT_VAR, val );
-		pc_setreg2( sd, GOLDPC_SECONDS_VAR, 0 );
 
-		// Make sure to always delete the timer
-		if( sd->goldpc_tid != INVALID_TIMER ){
-			delete_timer( sd->goldpc_tid, pc_goldpc_update );
-			sd->goldpc_tid = INVALID_TIMER;
+		// If you do not check this, some funny things happen (circle logics, timer mismatches, etc...)
+		if( !sd->state.connect_new ){
+			// Make sure to always delete the timer
+			if( sd->goldpc_tid != INVALID_TIMER ){
+				delete_timer( sd->goldpc_tid, pc_goldpc_update );
+				sd->goldpc_tid = INVALID_TIMER;
+			}
+
+			// If the system is enabled and the player can still earn some points restart the timer
+			if( battle_config.feature_goldpc_active && val < battle_config.feature_goldpc_max_points && !sd->state.autotrade ){
+				sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
+			}
+
+			// Update the client
+			clif_goldpc_info( *sd );
 		}
-
-		// If the system is enabled and the player can still earn some points restart the timer
-		if( battle_config.feature_goldpc_active && val < battle_config.feature_goldpc_max_points && !sd->state.autotrade ){
-			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
-		}
-
-		// Update the client
-		clif_goldpc_info( *sd );
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%lld'.\n", type);
