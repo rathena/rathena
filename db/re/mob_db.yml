@@ -74251,7 +74251,7 @@ Body:
         Rate: 2
       - Item: Quadrille_
         Rate: 1
-      - Item: Menswear
+      - Item: Lounge_Suit
         Rate: 1
       - Item: One_Eyed_Glass_
         Rate: 10
@@ -74329,7 +74329,7 @@ Body:
         Rate: 1
       - Item: Sword_Stick
         Rate: 1
-      - Item: Menswear
+      - Item: Lounge_Suit
         Rate: 3
       - Item: One_Eyed_Glass_
         Rate: 10
@@ -77764,7 +77764,7 @@ Body:
         Rate: 10
       - Item: Quadrille_
         Rate: 5
-      - Item: Menswear
+      - Item: Lounge_Suit
         Rate: 3
       - Item: One_Eyed_Glass_
         Rate: 20
@@ -80621,7 +80621,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 500
       - Item: C_Circlet_Of_Bone
         Rate: 50
@@ -80672,7 +80672,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 500
       - Item: C_Mitra
         Rate: 50
@@ -80721,7 +80721,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 500
       - Item: C_Magic_Stone_Hat
         Rate: 50
@@ -80770,7 +80770,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 500
       - Item: C_Camouflage_RabbitHood
         Rate: 50
@@ -80821,7 +80821,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 500
       - Item: C_Driver_Band_R
         Rate: 50
@@ -80872,7 +80872,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 500
       - Item: C_Rune_Circlet
         Rate: 50
@@ -81116,11 +81116,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 10000
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 10000
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 10000
       - Item: GuillotineCross_Card
         Rate: 1
@@ -81168,11 +81168,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 10000
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 10000
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 10000
       - Item: Archbishop_Card
         Rate: 1
@@ -81221,11 +81221,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
       - Item: Ranger_Card
         Rate: 1
@@ -81274,11 +81274,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 10000
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 10000
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 10000
       - Item: Mechanic_Card
         Rate: 1
@@ -81327,11 +81327,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 10000
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 10000
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 10000
       - Item: Warlock_Card
         Rate: 1
@@ -81379,11 +81379,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 10000
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 10000
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 10000
       - Item: RuneKnight_Card
         Rate: 1
@@ -81422,7 +81422,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 500
       - Item: C_Protect_Of_Crown
         Rate: 50
@@ -81473,7 +81473,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 500
       - Item: C_Midas_Whisper
         Rate: 50
@@ -81524,7 +81524,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 500
       - Item: C_Wind_Whisper
         Rate: 50
@@ -81575,7 +81575,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 500
       - Item: C_Blazing_Soul
         Rate: 50
@@ -81626,7 +81626,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 500
       - Item: C_Shadow_Handicraft
         Rate: 50
@@ -81677,7 +81677,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 500
       - Item: C_Minstrel_Song_Hat
         Rate: 50
@@ -81728,7 +81728,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 500
       - Item: C_Dying_Swan
         Rate: 50
@@ -82005,11 +82005,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 10000
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 10000
-      - Item: Swordman_Soul
+      - Item: Soul_Of_Swordman
         Rate: 10000
       - Item: RoyalGuard_Card
         Rate: 1
@@ -82057,11 +82057,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 10000
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 10000
-      - Item: Merchant_Soul
+      - Item: Soul_Of_Merchant
         Rate: 10000
       - Item: Genetic_Card
         Rate: 1
@@ -82109,11 +82109,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 10000
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 10000
-      - Item: Mage_Soul
+      - Item: Soul_Of_Magicion
         Rate: 10000
       - Item: Sorcerer_Card
         Rate: 1
@@ -82161,11 +82161,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 10000
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 10000
-      - Item: Acolyte_Soul
+      - Item: Soul_Of_Acolyte
         Rate: 10000
       - Item: Sura_Card
         Rate: 1
@@ -82213,11 +82213,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 10000
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 10000
-      - Item: Thief_Soul
+      - Item: Soul_Of_Thief
         Rate: 10000
       - Item: ShadowChaser_Card
         Rate: 1
@@ -82265,11 +82265,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
       - Item: Minstrel_Card
         Rate: 1
@@ -82317,11 +82317,11 @@ Body:
         Rate: 500
       - Item: Pieces_Of_Sentiment
         Rate: 5000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
-      - Item: Archer_Soul
+      - Item: Soul_Of_Archer
         Rate: 10000
       - Item: Wanderer_Card
         Rate: 1
