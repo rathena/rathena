@@ -24809,7 +24809,19 @@ void clif_goldpc_info( struct map_session_data& sd ){
 		}
 		p.point = (int32)pc_readparam( &sd, SP_GOLDPC_POINTS );
 		if( sd.goldpc_tid != INVALID_TIMER ){
-			p.accumulatePlaySecond = (int32)( 3600 - battle_config.feature_goldpc_time + pc_readreg2( &sd, GOLDPC_SECONDS_VAR ) );
+			const struct TimerData* td = get_timer( sd.goldpc_tid );
+
+			if( td != nullptr ){
+				// Get the remaining milliseconds until the next reward
+				t_tick remaining = td->tick - gettick();
+
+				// Always round up to full second
+				remaining += ( remaining % 1000 );
+
+				p.accumulatePlaySecond = (int32)( 3600 - ( remaining / 1000 ) );
+			}else{
+				p.accumulatePlaySecond = 0;
+			}
 		}else{
 			p.accumulatePlaySecond = 3600;
 		}
