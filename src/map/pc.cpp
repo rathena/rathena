@@ -10356,7 +10356,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		}
 
 		// If the system is enabled and the player can still earn some points restart the timer
-		if( battle_config.feature_goldpc_active && val < battle_config.feature_goldpc_max_points ){
+		if( battle_config.feature_goldpc_active && val < battle_config.feature_goldpc_max_points && !sd->state.autotrade ){
 			sd->goldpc_tid = add_timer( gettick() + battle_config.feature_goldpc_time * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
 		}
 
