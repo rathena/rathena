@@ -24797,6 +24797,8 @@ void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status styp
 
 void clif_goldpc_info( struct map_session_data& sd ){
 #if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
+	const static int32 client_max_seconds = 3600;
+
 	if( battle_config.feature_goldpc_active ){
 		struct PACKET_ZC_GOLDPCCAFE_POINT p = {};
 
@@ -24818,12 +24820,12 @@ void clif_goldpc_info( struct map_session_data& sd ){
 				// Always round up to full second
 				remaining += ( remaining % 1000 );
 
-				p.accumulatePlaySecond = (int32)( 3600 - ( remaining / 1000 ) );
+				p.accumulatePlaySecond = (int32)( client_max_seconds - ( remaining / 1000 ) );
 			}else{
 				p.accumulatePlaySecond = 0;
 			}
 		}else{
-			p.accumulatePlaySecond = 3600;
+			p.accumulatePlaySecond = client_max_seconds;
 		}
 
 		clif_send( &p, sizeof( p ), &sd.bl, SELF );
