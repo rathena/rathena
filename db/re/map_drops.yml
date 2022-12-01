@@ -129,7 +129,8 @@ Body:
 #           RandomOptionGroup: BILA
           - Index: 4
             Item: IllusionStone
-            Rate: 15000
+            Rate: 1
+            # Rate: 15000
           - Index: 5
             Item: War_Axe_IL
             Rate: 5000
@@ -225,7 +226,8 @@ Body:
 #           RandomOptionGroup: BILA
           - Index: 4
             Item: IllusionStone
-            Rate: 15000
+            Rate: 1
+            # Rate: 15000
           - Index: 5
             Item: War_Axe_IL
             Rate: 5000
