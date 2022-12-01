@@ -5826,12 +5826,9 @@ tur_d03_i,132,194,3	script	Portal#illtur02	4_ENERGY_RED,{
 			completequest 16115;	// Talk with girl
 			close;
 		}
-		// todo unknown text
+		mes " - ^424242He nodded and recalled the clumsy piece he had now kept in his heart. The sea breeze from the harbor blows by his ears...^000000 - ";
 		setquest 16115;	// Talk with girl
 		completequest 16115;	// Talk with girl
-		mes " - ^424242I will come back again. I put my hands together on my chest.^000000 - ";
-		next;
-		mes " - ^424242The consciousness became far away, and the salty, slightly fishy smell of Alberta Harbor tickled my nose.^000000 - ";
 		close2;
 		warp "alberta",219,31;
 		end;
@@ -7236,7 +7233,8 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 	}
 	if (ill_turtle > 10) {
 		switch( isbegin_quest(16106) ) {
-		case 0:	// todo text
+		case 0:
+			npctalk "Archeologist Leiphen : If " + .@player_name$ + " soothes the entangled spirits, I'd like to talk with them someday. About this place...", "", bc_self;
 			end;
 		case 1:
 			npctalk "Archeologist Leiphen : Hello, " + .@player_name$ + ".", "", bc_self;
@@ -7336,10 +7334,17 @@ OnTouch:
 		setnpcdisplay( "#illturg22", CLEAR_NPC );
 		break;
 	case 23:
-		// todo unknown text
+		setnpcdisplay( "#illturg23", 4_M_NFDEADSWDMAN );
+		sleep2 1000;
+		npctalk "Ahahahahahahahahahahahahahahahaha", "#illturg23", bc_self;
+		setnpcdisplay( "#illturg23", CLEAR_NPC );
 		break;
 	case 24:
-		// todo unknown text
+		setnpcdisplay( "#illturg24", 4_M_NFDEADSWDMAN );
+		npctalk "Did you wait? Did you wait for me?", "#illturg24", bc_self;
+		sleep2 1000;
+		npctalk "It's late, it's already too late.", "#illturg24", bc_self;
+		setnpcdisplay( "#illturg24", CLEAR_NPC );
 		break;
 	}
 	sleep 4000;
@@ -7347,7 +7352,10 @@ OnTouch:
 	end;
 }
 
-tur_d03_i,142,229,1	duplicate(dummy_npc)	#illturg12	CLEAR_NPC	// todo unknown text onclick
+tur_d03_i,142,229,1	script	#illturg12	CLEAR_NPC,{
+	mes " - ^424242It seems to be getting a little cold.^000000 -";
+	close;
+}
 tur_d03_i,146,223,0	duplicate(#illturgg11)	#illturgg12	HIDDEN_WARP_NPC,5,5
 
 tur_d03_i,214,105,7	script	#illturg13	CLEAR_NPC,{
@@ -7356,7 +7364,10 @@ tur_d03_i,214,105,7	script	#illturg13	CLEAR_NPC,{
 }
 tur_d03_i,207,104,0	duplicate(#illturgg11)	#illturgg13	HIDDEN_WARP_NPC,5,5
 
-tur_d04_i,99,153,7	duplicate(dummy_npc)	#illturg21	CLEAR_NPC	// todo unknown text onclick
+tur_d04_i,99,153,7	script	#illturg21	CLEAR_NPC,{
+	mes " - ^424242...?^000000 -";
+	close;
+}
 tur_d04_i,99,160,0	duplicate(#illturgg11)	#illturgg21	HIDDEN_WARP_NPC,3,3
 
 tur_d04_i,37,137,7	script	#illturg22	CLEAR_NPC,{
@@ -7365,7 +7376,10 @@ tur_d04_i,37,137,7	script	#illturg22	CLEAR_NPC,{
 }
 tur_d04_i,45,137,0	duplicate(#illturgg11)	#illturgg22	HIDDEN_WARP_NPC,3,3
 
-tur_d04_i,76,35,7	duplicate(dummy_npc)	#illturg23	CLEAR_NPC	// todo unknown text onclick
+tur_d04_i,76,35,7	script	#illturg23	CLEAR_NPC,{
+	mes " - ^424242I'm in a bad mood...^000000 -";
+	close;
+}
 tur_d04_i,69,31,0	duplicate(#illturgg11)	#illturgg23	HIDDEN_WARP_NPC,3,3
 
 tur_d04_i,135,133,1	script	#illturg24	CLEAR_NPC,{
