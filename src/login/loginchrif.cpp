@@ -683,9 +683,6 @@ int logchrif_parse_reqvipdata(int fd) {
 			if( now < vip_time ) { //isvip
 				if(acc.group_id != login_config.vip_sys.group){ //only upd this if we're not vip already
 					acc.old_group = acc.group_id;
-					if( acc.char_slots == 0 ){
-						acc.char_slots = MIN_CHARS;
-					}
 					acc.char_slots += login_config.vip_sys.char_increase;
 				}
 				acc.group_id = login_config.vip_sys.group;
