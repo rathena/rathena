@@ -82,16 +82,12 @@ OnEvent:
 	.mob_count[3801] = 0;
 	.mob_count[3802] = 0;
 	.mob_count[3803] = 0;
-	// mapannounce "tur_d04_i", "", bc_map, "0x70dbdb";	// todo unknown announce
+	mapannounce "tur_d04_i", "Ominous Turtle General : Who interferes with my authority!!!", bc_map, "0x70dbdb";
 	getunitdata( killedgid, .@data );
 	monster "tur_d04_i",.@data[UMOB_X],.@data[UMOB_Y],"Ominous Turtle General",3804,1, "illusion_turtle_boss::OnBoss";
 	end;
 OnBoss:
 	killmonster "tur_d04_i", "illusion_turtle_boss::OnBoss";
-	initnpctimer;
-	end;
-OnTimer3600000:
-	stopnpctimer;
 	.boss = 0;
 	end;
 }

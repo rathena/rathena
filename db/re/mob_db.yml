@@ -92763,6 +92763,7 @@ Body:
     AttackDelay: 900
     AttackMotion: 1000
     DamageMotion: 500
+    # DamageTaken: 10   # TODO check
     Ai: 21
     Class: Boss
     Modes:
