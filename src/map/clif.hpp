@@ -59,25 +59,6 @@ enum e_PacketDBVersion { // packet DB
 #endif
 };
 
-enum e_packet_ack : uint8_t{
-	ZC_ACK_OPEN_BANKING = 0,
-	ZC_ACK_CLOSE_BANKING,
-	ZC_ACK_BANKING_DEPOSIT,
-	ZC_ACK_BANKING_WITHDRAW,
-	ZC_BANKING_CHECK,
-	ZC_PERSONAL_INFOMATION,
-	ZC_PERSONAL_INFOMATION_CHN,
-	ZC_CLEAR_DIALOG,
-	ZC_C_MARKERINFO,
-	ZC_NOTIFY_BIND_ON_EQUIP,
-	ZC_WEAR_EQUIP_ACK,
-	ZC_MERGE_ITEM_OPEN,
-	ZC_ACK_MERGE_ITEM,
-	ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,
-	//add other here
-	MAX_ACK_FUNC //auto upd len
-};
-
 struct s_packet_db {
 	short len;
 	void (*func)(int, struct map_session_data *);
@@ -214,7 +195,6 @@ enum class e_purchase_result : uint8{
 
 #define packet_len(cmd) packet_db[cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
-extern int packet_db_ack[MAX_ACK_FUNC + 1];
 
 // local define
 enum send_target : uint8_t {
@@ -516,9 +496,15 @@ enum clif_messages : uint16_t {
 	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
 
 	// clif_equipitemack flags
+#if PACKETVER_MAIN_NUM >= 20121205 || PACKETVER_RE_NUM >= 20121107 || defined(PACKETVER_ZERO)
 	ITEM_EQUIP_ACK_OK = 0,
-	ITEM_EQUIP_ACK_FAIL = 1,
-	ITEM_EQUIP_ACK_FAILLEVEL = 2,
+	ITEM_EQUIP_ACK_FAIL = 2,
+	ITEM_EQUIP_ACK_FAILLEVEL = 1,
+#else
+	ITEM_EQUIP_ACK_OK = 1,
+	ITEM_EQUIP_ACK_FAIL = 0,
+	ITEM_EQUIP_ACK_FAILLEVEL = 0,
+#endif
 	/* -end- */
 
 	//! NOTE: These values below need client version validation
@@ -610,6 +596,14 @@ enum e_memorial_dungeon_command : uint16 {
 	COMMAND_MEMORIALDUNGEON_DESTROY_FORCE = 0x3,
 };
 
+enum e_exitem_add_result : uint8 {
+	EXITEM_ADD_SUCCEED,
+	EXITEM_ADD_FAILED_OVERWEIGHT,
+	EXITEM_ADD_FAILED_CLOSED,
+	EXITEM_ADD_FAILED_OVERCOUNT,
+	EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -645,7 +639,7 @@ void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd);
 void clif_scriptmes( struct map_session_data& sd, uint32 npcid, const char *mes );
 void clif_scriptnext( struct map_session_data& sd, uint32 npcid );
 void clif_scriptclose(struct map_session_data *sd, int npcid);	//self
-void clif_scriptclear(struct map_session_data *sd, int npcid);	//self
+void clif_scriptclear( struct map_session_data& sd, int npcid ); //self
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes);	//self
 void clif_scriptinput(struct map_session_data *sd, int npcid);	//self
 void clif_scriptinputstr(struct map_session_data *sd, int npcid);	// self
@@ -669,7 +663,7 @@ void clif_arrowequip(struct map_session_data *sd,int val); //self
 void clif_arrow_fail(struct map_session_data *sd,int type); //self
 void clif_arrow_create_list(struct map_session_data *sd);	//self
 void clif_statusupack(struct map_session_data *sd,int type,int ok,int val);	// self
-void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag);	// self
+void clif_equipitemack( struct map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
 void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect(struct block_list* bl,int type);	// area
 void clif_changeoption_target(struct block_list* bl, struct block_list* target);
@@ -704,7 +698,7 @@ void clif_hotkeys_send(struct map_session_data *sd, int tab);
 void clif_traderequest(struct map_session_data* sd, const char* name);
 void clif_tradestart(struct map_session_data* sd, uint8 type);
 void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd, int index, int amount);
-void clif_tradeitemok(struct map_session_data* sd, int index, int fail);
+void clif_tradeitemok(struct map_session_data& sd, int index, e_exitem_add_result result);
 void clif_tradedeal_lock(struct map_session_data* sd, int fail);
 void clif_tradecancelled(struct map_session_data* sd);
 void clif_tradecompleted(struct map_session_data* sd, int fail);
@@ -1042,8 +1036,6 @@ void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index);
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
 
 /* Bank System [Yommy/Hercules] */
-void clif_bank_deposit (struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason);
-void clif_bank_withdraw (struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason);
 void clif_parse_BankDeposit (int fd, struct map_session_data *sd);
 void clif_parse_BankWithdraw (int fd, struct map_session_data *sd);
 void clif_parse_BankCheck (int fd, struct map_session_data *sd);
@@ -1074,7 +1066,7 @@ void clif_search_store_info_click_ack(struct map_session_data* sd, short x, shor
 void clif_cashshop_result( struct map_session_data* sd, t_itemid item_id, uint16 result );
 void clif_cashshop_open( struct map_session_data* sd, int tab );
 
-void clif_display_pinfo(struct map_session_data *sd, int type);
+void clif_display_pinfo( struct map_session_data& sd );
 
 /// Roulette
 void clif_roulette_open(struct map_session_data* sd);
@@ -1140,15 +1132,15 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 void clif_ranklist(struct map_session_data *sd, int16 rankingType);
 void clif_update_rankingpoint(map_session_data &sd, int rankingtype, int point);
 
-void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove);
+void clif_crimson_marker( struct map_session_data& sd, struct block_list& bl, bool remove );
 
 void clif_showscript(struct block_list* bl, const char* message, enum send_target flag);
 void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, int new_leader_aid);
 
 void clif_account_name(int fd, uint32 account_id, const char* accname);
-void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
+void clif_notify_bindOnEquip( struct map_session_data& sd, int16 index );
 
-void clif_merge_item_open(struct map_session_data *sd);
+void clif_merge_item_open( struct map_session_data& sd );
 
 void clif_broadcast_obtain_special_item(const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
