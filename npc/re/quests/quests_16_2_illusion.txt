@@ -5860,7 +5860,7 @@ tur_d03_i,132,194,3	script	Portal#illtur02	4_ENERGY_RED,{
 tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 	if (checkweight(1201,1) == 0) {
 		mes "[Girl]";
-		mes "What are you doing with the heavy bag? empty it.";
+		mes "What are you doing with such a heavy bag? Clear some out.";
 		close;
 	}
 	if (ill_turtle == 0)
@@ -5876,23 +5876,23 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		npctalk "Girl : That piece.", "", bc_self;
 		next;
 		emotion ET_PROFUSELY_SWAT, .@account_id;
-		unittalk .@account_id, "" + .@player_name$ + " : Who are you? This piece did something? Where am I? How can I come?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Who are you? This piece did something? Where am I? How did I get here?", bc_self;
 		mes "[Girl]";
 		mes "You have a lot of questions, but no need to know.";
 		next;
-		npctalk "Girl : You don't need to know. You shouldn't be here. The things you shouldn't know.", "", bc_self;
+		npctalk "Girl : You don't need to know. You shouldn't be here. There are things you shouldn't know.", "", bc_self;
 		mes "[Girl]";
-		mes "But ^0000CDthere is someone like you^000000. The one shouldn't be here.";
-		mes "Go back with ^0000CDa scholar who has blue hair^000000. You know him?";
+		mes "But ^0000CDthere is someone here like you^000000. One who shouldn't be here.";
+		mes "Go back with ^0000CDa scholar who has blue hair^000000. Do you know him?";
 		next;
 		select( "I am here to find him.", "Do you know Archeologist Leiphen?" );
 		mes "[Girl]";
-		mes "Good. I don't know his name and where he is, but I can guess some points.";
-		mes "^0000CDHere, two points, and the below two points^000000. Go for find and take him. And Do not come back.";
+		mes "Good. I don't know his name and where he is, but I can guess.";
+		mes "^0000CDThere are two locations^000000. Go find and take him. And do not come back.";
 		next;
 		switch( select( "Ok, but I have some questions.", "How can I believe you?", "Let me know the way to go back." ) ) {
 		case 1:
-			unittalk .@account_id, "" + .@player_name$ + " : Who are you? How you know him? Where am I?", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Who are you? How do you know him? Where am I?", bc_self;
 			mes "[Girl]";
 			mes "You will be gone for good. No need to know.";
 			next;
@@ -5901,13 +5901,13 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 			specialeffect2 EF_DETECT3;
 			specialeffect2 EF_CIRCLEPOWER8;
 			sleep2 500;
-			unittalk .@account_id, "" + .@player_name$ + " : Uh, what is it??", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Uh, what was that??", bc_self;
 			mes "[Girl]";
 			mes "A spell that will protect you for a moment.";
-			mes "However they are always with you. curious killed the cat. Don't look something unclear. Don't look back, Don't talk at someone's back.";
+			mes "It will follow you around. Curiosity killed the cat. Don't look into something that is unclear. Don't look back, or talk behind someone's back.";
 			next;
 			mes "[Girl]";
-			mes "^FF0000Don't get caught that you breathe strangely.^000000";
+			mes "^FF0000Don't be alarmed that you may breathe strangely.^000000";
 			unittalk .@account_id, "" + .@player_name$ + " : What do you mean?", bc_self;
 			ill_turtle = 2;
 			erasequest 16096;	// To the unknown tortoise island
@@ -5918,10 +5918,10 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		case 2:
 			emotion ET_THINK;
 			mes "[Girl]";
-			mes "I don't know. I don't know you came from where, how could I know?";
+			mes "I don't know. I don't know where you came from, how could I know?";
 			next;
 			mes "[Girl]";
-			mes "However, there, empty door... might have something, you might know well.";
+			mes "However, there, the empty door... might have something, you might know about.";
 			next;
 			mes " - ^424242The girl glanced toward the back of where she was standing. Looking closely, it seems that something reddish is floating in front of the black hole. Let's go and look.^000000 - ";
 			close;
@@ -5931,18 +5931,18 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 			mes "......";
 			next;
 			mes "[Girl]";
-			mes "Go back alone. It's danerous here.";
+			mes "Go back. It's dangerous here.";
 			next;
-			mes " - ^424242The girl said briefly and stop talking. She looks sad....^000000 - ";
+			mes " - ^424242The girl said briefly and stopped talking. She looks sad....^000000 - ";
 			close;
 		}
 	}
 	if (ill_turtle < 8) {
 		mes "[Girl]";
-		mes "...You, still alive.";
+		mes "...You, still alive?";
 		next;
 		mes "[Girl]";
-		mes "Before get in danger, take the one you were looking for and leave.";
+		mes "Before you get in danger, get the person you were looking for and leave.";
 		close;
 	}
 	if (ill_turtle == 8) {
@@ -5960,46 +5960,46 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		mes "Then, go back. To the place you came.";
 		mes "And forget everything.";
 		next;
-		npctalk "Archeologist Leiphen : How can I forget here!?", "Archeologist Leiphen#illtur01", bc_self;
+		npctalk "Archeologist Leiphen : How can I forget this place!?", "Archeologist Leiphen#illtur01", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Huh? What do you mean? I will come here again.";
-		mes "Until I found out all of the secrets here.";
+		mes "Huh? What do you mean? I will come back again.";
+		mes "Until I find out all of the secrets here.";
 		next;
 		mes "[Girl]";
-		mes "Why, do you doing that? Arrogant.";
+		mes "Why do you ignore my warnings? Arrogant.";
 		emotion ET_HNG, getnpcid(0,"Archeologist Leiphen#illtur01");
 		npctalk "Archeologist Leiphen : I am a professor of archeology.", "Archeologist Leiphen#illtur01", bc_self;
-		mes "You are a professor that does not give the right to walk around here.";
+		mes "You may be a professor but that does not give you the right to walk around here.";
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "......Do you know somthing?";
-		mes "Please tell me. Where am I? What just happen?";
-		npctalk "Girl : You don't need to listen, you are going to leave anyway...", "", bc_self;
+		mes "......Do you know something?";
+		mes "Please tell me. Where am I? What just happened here?";
+		npctalk "Girl : You don't need to know, you are going to leave anyway...", "", bc_self;
 		next;
-		if (select( "Stop saying like that.", "You are the arrogant one." ) == 2) {
+		if (select( "Stop saying that.", "You are the arrogant one." ) == 2) {
 			mes "[Girl]";
-			mes "Stop? I didn't say something wrong. You are going to leave and forget everything soon. You never come back.... right?";
+			mes "Stop? I didn't say anything wrong. You are going to leave and forget everything soon. You will never come back.... right?";
 		}
 		else {
 			npctalk "Girl : What are you saying? I am the arrogant one?", "", bc_self;
 			mes "[Girl]";
-			mes "......Fine. Arrogant or what. Think freely. I don't care anyway.";
+			mes "......Fine. Arrogant or not. Think freely. I don't care anyway.";
 		}
 		next;
 		mes "[Girl]";
-		mes "I said before.... but no one is back. I am not expecting now.";
-		npctalk "Girl : If you don't expect, there's nothing to disappoint.", "", bc_self;
+		mes "I said before.... but no one has returned. I am not expecting anyone to.";
+		npctalk "Girl : If you don't expect, there's nothing to be disappoint about.", "", bc_self;
 		next;
 		emotion ET_QUESTION, .@account_id;
 		sleep2 1000;
 		emotion ET_THINK, .@account_id;
-		unittalk .@account_id, "" + .@player_name$ + " : You mean, you want us to be back.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : You mean, you want us to return home.", bc_self;
 		mes "[Girl]";
-		mes "......No one come back. It's better to be not back. It's danger.";
+		mes "......No one comes back. It's better to not come here. It's full of danger.";
 		next;
 		emotion ET_SURPRISE, getnpcid(0,"Archeologist Leiphen#illtur01");
 		mes "[Archeologist Leiphen]";
-		mes "You want, still someone is coming back to here.";
+		mes "You want that, but still someone is going to come back here.";
 		sleep2 1000;
 		emotion ET_ANGER;
 		npctalk "Girl : ......Think what you want.", "", bc_self;
@@ -6008,11 +6008,11 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		mes "Whew.........";
 		next;
 		mes "[Girl]";
-		mes "Ok. Fine. Let me tell you. Promise me to go back after listening. It's not that I want to talk much.";
+		mes "Ok. Fine. Let me tell you. Promise me you will go back after listening. It's not like I want to talk a lot.";
 		next;
 		npctalk "Girl : I'm just telling you because you're so persistent.", "", bc_self;
 		mes "[Girl]";
-		mes "...Give me a sec. I need time to think clearly. It's been a long time, not to talk....";
+		mes "...Give me a sec. I need time to think clearly. It's been a long time not talking....";
 		next;
 		npctalk "Archeologist Leiphen : Then let me look around here for a while.", "Archeologist Leiphen#illtur01", bc_self;
 		sleep2 1000;
@@ -6033,7 +6033,7 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		setpcblock PCBLOCK_NPC, false;
 
 		npctalk "Archeologist Leiphen : Ugh, monster!", "Archeologist Leiphen#illtur01", bc_self;
-		unittalk .@account_id, "" + .@player_name$ + " : Ugh! You are not a kid. It's danger here. Stop moving!", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Ugh! You are not a kid. It's dangerous here. Stop wandering around!", bc_self;
 		mes "[Narin]";
 		mes "Thank you for waiting...";
 		mes "It would be better to start introducing myself. I am Narin. ^0000CDOld Ghost.^000000";
@@ -6042,15 +6042,15 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		unittalk .@account_id, "" + .@player_name$ + " : ......", bc_self;
 		mes "[Narin]";
 		mes "You look like you have been through a lot of things before. I can see you are able to talk normally.";
-		mes "Ordinary people like a professor can't even see us";
+		mes "Ordinary people like a professor can't even see us.";
 		next;
 		mes "[Narin]";
-		mes "All the residents here are spirits bound by the bridle of resentment. When you're dead, obsessed with something you desperately want, and you'll always do the same thing without realizing it..";
+		mes "All the residents here are spirits bound by the burden of resentment. When you're dead, obsessed with something you desperately want, and you'll always do the same thing without realizing it..";
 		npctalk "Narin : I'm lucky, so sometimes I can get out, but eventually I go back and repeat.", "", bc_self;
 		next;
 		mes "[Narin]";
-		mes "We hate. Alive. Those who are not bound by the bridle of resentment, those who breathe strangely. We want to hear the last breath of yours.";
-		mes "But unless you realize us, we cannot realize you either. It's good thing.";
+		mes "We hate life. Those who are not bound by the burden of resentment, those who breathe strangely. We want to hear your last breath.";
+		mes "But unless you realize us, we cannot realize you either. It's a good thing.";
 		next;
 		mes "[Narin]";
 		mes "It doesn't last long. The longer you stay here, the more you notice each other. Gradually.";
@@ -6060,17 +6060,17 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		mes "The professor got my stuff, so I could recognize it right away. Normally I wouldn't have known.";
 		npctalk "Archeologist Leiphen : Narin's stuff...?", "Archeologist Leiphen#illtur01", bc_self;
 		sleep2 1000;
-		npctalk "Narin : Yes, turtle shell, sculpture.", "", bc_self;
+		npctalk "Narin : Yes, turtle shell, my sculpture.", "", bc_self;
 		next;
 		mes "[Archeologist Leiphen]";
 		mes "Oh, I knew it...!!";
-		mes "It was you who save Aylvar. Thank you for help my friend!";
+		mes "It was you who saved Aylvar. Thank you for helping my friend!";
 		next;
 		npctalk "Narin : I did it for me. No need to say thanks.", "", bc_self;
 		mes "[Narin]";
 		mes "I wanted to do it.  My obsession is...";
-		mes "^0000CDU I don't want anyone get die here. I want to save all.^000000......";
-		mes "It was like that.";
+		mes "^0000CDU I don't want anyone get die here. I want to save all life.^000000......";
+		mes "It was just that.";
 		next;
 		emotion ET_ANGER;
 		mes "[Narin]";
@@ -6089,33 +6089,34 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 	}
 	if (ill_turtle == 10) {
 		mes "[Narin]";
-		mes "Thank you for waiting. It's ok now. Let me finish.";
+		mes "Thank you for waiting. I'm good now. Let me finish.";
 		next;
 		cloakoffnpcself( "Archeologist Leiphen#illtur01" );
 		emotion ET_DELIGHT, getnpcid(0,"Archeologist Leiphen#illtur01");
-		npctalk "Archeologist Leiphen : I'm all good. There are a lot of interesting things around here.", "Archeologist Leiphen#illtur01", bc_self;
+		npctalk "Archeologist Leiphen : I'm ready. There are a lot of interesting things around here.", "Archeologist Leiphen#illtur01", bc_self;
 		mes "[Narin]";
-		mes "It's not the first time, someone is here. It's rare happening. When I first time saw someone, I remind what I want.";
+		mes "It's not the first time, someone is here. It's a rare event. When I first saw someone, I remembered what I wanted.";
 		next;
 		mes "[Narin]";
-		mes "The man was afraid deathly. But he was alive and left this place.";
+		mes "The man was deathly afraid, but he was alive and left this place.";
 		mes "After that... I could stay a little longer.";
 		next;
 		mes "[Narin]";
-		mes "It's been a while, I haven't lose my mind. I was not swept away by resentment, and neither reason nor emotion is lost.";
+		mes "It's been a while, I haven't lost my mind. I was not swept away by resentment and neither reason nor emotion was lost.";
 		next;
 		mes "[Narin]";
-		mes "So I want to save all. Those who have flowed in, and even those trapped in the bridle forever.";
-		mes "But I realized. All those I saved, they went back to where they were.";
-		npctalk "Narin : And I leave alone. knowing and feeling who am I, what I am doing.", "", bc_self;
+		mes "So I want to save all life. Those who have flowed in and even those trapped by the burden forever.";
+		mes "I realized that all those I saved went back to where they came from.";
+		npctalk "Narin : And I am alone knowing and feeling who I am, what I am doing.", "", bc_self;
 		next;
-		mes "[Narin]It's... it's hard. Even I envy those trapped in bridles. But... I couldn't turn it off. The people in danger.";
+		mes "[Narin]";
+		mes "It's... it's hard. Even I envy those trapped by this burden. But... I couldn't turn it off. The people who are in danger.";
 		mes "....";
-		mes "But I don't want to expect. If you expect... betrayed.";
-		npctalk "Narin : ......This is the end, my story. Now give me the pieces, and you two going back..", "", bc_self;
+		mes "But I don't want to hope. If you hope... you can be betrayed.";
+		npctalk "Narin : ......This is the end of my story. Now give me the pieces and you two will be going back..", "", bc_self;
 		next;
 		mes "[Narin]";
-		mes "Oh, I almost forgot. Let me spell you again. It's weak, not stay long.";
+		mes "Oh, I almost forgot. Let me cast my spell on you again. It's weak, so it will not last long.";
 		mes "Just get out before it's over.";
 		specialeffect EF_DETECT3;
 		sleep2 1000;
@@ -6124,31 +6125,31 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		specialeffect2 EF_CIRCLEPOWER8;
 		specialeffect EF_CIRCLEPOWER8, AREA, "Archeologist Leiphen#illtur01";
 		next;
-		if (select( "It's been hard for you alone.", "I am not going back." ) == 2) {
+		if (select( "It's been hard on you being alone.", "I am not going back." ) == 2) {
 			mes "[Narin]";
 			mes "......I didn't tell you the long story to hear that...";
-			mes "Please don't care....";
+			mes "Please don't care about me....";
 			next;
-			unittalk .@account_id, "" + .@player_name$ + " : Please do care. So I will be glad when I get back again. I will be sad, if you are cold when I came here again.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Please, we do care. I will be glad when I get back again. I will be sad if you are cold when I come here again.", bc_self;
 			mes "[Archeologist Leiphen]";
-			mes "" + .@player_name$ + " It turns out that you speak well.";
+			mes "" + .@player_name$ + ", it turns out that you speak very well.";
 		}
 		else {
 			mes "[Narin]";
-			mes "What are you talking about?! I said go back after listen whole story...!";
-			mes "I don't want to expect anymore!";
+			mes "What are you talking about?! I said go back after you listen to my whole story...!";
+			mes "I don't want to worry anymore!";
 			next;
-			unittalk .@account_id, "" + .@player_name$ + " : Please do expect. Me and Archeologist Leiphen will meet your expectation.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Please, we do care. Archeologist Leiphen and myself will meet your expectations.", bc_self;
 			mes "[Archeologist Leiphen]";
-			mes "Yes. That's what I want to say.";
+			mes "Yes. That's what I wanted to say.";
 		}
 		next;
 		mes "[Narin]";
 		mes "What do you mean...?";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : We will come back. Do not be alone.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : We will come back. Do not feel alone.", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Let us help other souls here, like you, Narin, close to themselves.";
+		mes "Let us help other souls here like you, Narin, resolve themselves.";
 		next;
 		mes "[Narin]";
 		mes "Oh really...";
@@ -6157,23 +6158,23 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		next;
 		mes "[Archeologist Leiphen]";
 		mes "We will see. Right?";
-		unittalk .@account_id, "" + .@player_name$ + " : of course. And if it doesn't work, we'll come back again and again to try.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Of course. And if it doesn't work, we'll come back to try again and again.", bc_self;
 		next;
-		npctalk "Narin : No, Don't. Here is danger. Do not try to come back.", "", bc_self;
+		npctalk "Narin : No, don't. It is very dangerous here. Do not try to come back.", "", bc_self;
 		mes "[Narin]";
 		mes "It's ok. I will forget both of you. All the souls here are made like that.";
 		mes "I might remember a little longer. But I forget eventually.";
 		next;
 		emotion ET_SURPRISE, .@account_id;
-		unittalk .@account_id, "" + .@player_name$ + " : But you still remember the back shell pieces. You can remember again.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : But you still remember the turtle shell pieces. You can remember again.", bc_self;
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "There we can guess one fact. All the lost memories are in still the subconscious mind of Narin.";
-		unittalk .@account_id, "" + .@player_name$ + " : You said you want to save all. If you haven't given up on that wish, you can surely remember it.", bc_self;
+		mes "We can guess one fact. All the lost memories are in the subconscious mind of Narin.";
+		unittalk .@account_id, "" + .@player_name$ + " : You said you want to save all life. If you haven't given up on that wish, you can surely remember it.", bc_self;
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : If you forget us, we will remind you. As much as you forget.", bc_self;
 		sleep2 2000;
-		unittalk .@account_id, "" + .@player_name$ + " : I'll help you when you feel lonely. Don't make you to put everything back.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I'll help you when you feel lonely. You won't have to forget everything.", bc_self;
 		mes "[Archeologist Leiphen]";
 		mes "I will come back. For research and for you, Narin.";
 		next;
@@ -6183,7 +6184,7 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		mes "[Narin]";
 		mes "I don't need to be ... alone...?";
 		next;
-		select( "I am not leave you alone.", "Don't worry.", "I promise.", "I will come back." );	// note: the selection doesn't change the dialog
+		select( "I won't leave you alone.", "Don't worry.", "I promise.", "I will come back." );	// note: the selection doesn't change the dialog
 		mes "[Narin]";
 		mes ".........";
 		next;
@@ -6200,31 +6201,31 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		emotion ET_SURPRISE, getnpcid(0,"Archeologist Leiphen#illtur01");
 		mes "[Archeologist Leiphen]";
 		mes "Hu? Huh? It's just gone. The " + getitemname(25315) + ".";
-		mes "Suddenly on my hand... like it melted away.";
+		mes "Suddenly from my hands... like it melted away.";
 		next;
 		mes "[Narin]";
 		mes "It has my wishes. Now... It doesn't need to exist.";
-		npctalk "Archeologist Leiphen : What does it mean?", "Archeologist Leiphen#illtur01", bc_self;
+		npctalk "Archeologist Leiphen : What does that mean?", "Archeologist Leiphen#illtur01", bc_self;
 		next;
 		emotion ET_ANGER;
 		mes "[Narin]";
-		mes "...I, I dont know the specific... Just It might be.";
+		mes "...I, I don't know the specifics reason... Just that it might be that way.";
 		next;
 		mes "[Narin]";
-		mes "...Oh, right. Here... I give it to you. Here, you too professor.";
+		mes "...Oh, right. Here... I give this to you. Here, you too professor.";
 		unittalk .@account_id, "" + .@player_name$ + " : What's this?", bc_self;
 		npctalk "Archeologist Leiphen : It... It's an " + getitemname(25271) + "!", "Archeologist Leiphen#illtur01", bc_self;
 		next;
 		npctalk "Narin : ...Is it? In fact, I had it because it was pretty.", "", bc_self;
 		mes "[Narin]";
-		mes "It's a sign of promise. I will try to remember two of you. So come... come and find me.";
-		mes "Tomorrow, And the day after tomorrow... I'll be waiting...  Bro, And professor.";
+		mes "It's a sign of promise. I will try to remember the two of you. So come... come and find me.";
+		mes "Tomorrow, and the day after tomorrow... I'll be waiting... Brother and professor.";
 		next;
 		mes "[Narin]";
-		mes "And other... you said you would help them. I'll show you how. How can you help...";
+		mes "And the others... you said you would help them. I'll show you how. How you can help...";
 		next;
 		mes "[Narin]";
-		mes "^0000CDListen to what they want. Bro Even if you look very trivial, do something they'll be pleased.^000000";
+		mes "^0000CDListen to what they want. Brother, even if you look very trivial, do something they'll be pleased by.^000000";
 		mes "Please... Maybe one day...";
 		next;
 		select("Don't worry. I will.");
@@ -6232,13 +6233,13 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		mes ":)...";
 		next;
 		mes "[Narin]";
-		mes "I, I was able to stand alone so far, because I could meet you two someday?";
+		mes "I, I was able to stay alone so far, because I could meet you two again someday?";
 		emotion ET_OK;
 		mes "I will... remember... Please... come back.";
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "I will be here untill I found the secrets.";
-		mes "Don't worry. Me, and " + .@player_name$ + " Do not forget Narin.";
+		mes "I will be here until I find all of the secrets.";
+		mes "Don't worry. " + .@player_name$ + " and myself will not forget about you Narin.";
 		unittalk .@account_id, "" + .@player_name$ + " : We must remember.", bc_self;
 		ill_turtle = 11;
 		erasequest 16117;	// Continuous story 2
@@ -6256,11 +6257,11 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 	case 0:
 	case 1:
 		mes "[Narin]";
-		mes "I asked you come back... but go back today. It's dangerous to be longer.";
-		mes "There is a limit to the protect spell.";
+		mes "I asked you to come back... but you must leave today. It's dangerous to be here any longer.";
+		mes "There is a limit to the protection spell.";
 		next;
 		mes "[Narin]";
-		mes "The dawn is over and you two come together. I'll give you a new spell.";
+		mes "The day is over and you two stay together. I'll give you a new spell.";
 		mes "If I forget again... Please I will try to remember...";
 		close;
 	case 2:
@@ -6273,10 +6274,10 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 	case 0:
 	case 1:
 		mes "[Narin]";
-		mes "Bro... Are you still here? The spell will be gone after a day, please come back after the dawn.";
+		mes "Brother... Are you still here? The spell will be gone after a day, please come back after dawn.";
 		next;
 		mes "[Narin]";
-		mes "Even if I forget you Bro, don't just go away...please.";
+		mes "Even if I forget you brother, don't go away...please.";
 		close;
 	case 2:
 		erasequest 16108;	// A memory that should not be forgotten - Cooldown
@@ -6286,38 +6287,38 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 	case 0:
 		mes "[Narin]";
 		mes "Again... Stranger.";
-		mes "Go back. It's danger...";
+		mes "Go back. It's dangerous...";
 		next;
-		mes " - ^424242She can't remember. But even if you don't remember, it's different from other ghost.^000000 -";
+		mes " - ^424242She can't remember, but even if she doesn't remember, she's different from the other ghosts.^000000 -";
 		next;
 		mes "[Narin]";
-		mes "......What are you mumbling like that?";
-		mes "Go back. You are not belong here.";
+		mes "......Why are you mumbling like that?";
+		mes "Go back. You do not belong here.";
 		next;
-		if (select( "What was She wants...", "Go back now." ) == 2) {
-			mes " - ^424242Let's go back now. It seems like nothing has happened to the professor yet. I will come back later.^000000 -";
+		if (select( "What does was she want...", "Go back now." ) == 2) {
+			mes " - ^424242Let's go back now. It looks like nothing has happened to the professor, yet. I will come back later.^000000 -";
 			next;
 			mes "[Narin]";
 			mes "Go back, stranger. And never be back.";
 			close;
 		}
-		mes " - ^424242...She wants me to back with Archeologist Leiphen. Then she will remember...";
-		mes "The professor will be there as before. Let's find him.^000000 -";
+		mes " - ^424242...She wants me to leave with Archeologist Leiphen. Then she will remember...";
+		mes "The professor will just come back. Let's find him.^000000 -";
 		setquest 16106;	// A memory that should not be forgotten 1
 		close;
 	case 1:
 		mes "[Narin]";
-		mes "Go back. ...you should be here.";
+		mes "Go back. ...you not should be here.";
 		next;
-		mes " - ^424242...She wants me to back with Archeologist Leiphen. Then she will remember...";
-		mes "The professor will be there as before. Let's find him.^000000 -";
+		mes " - ^424242...She wants me to leave with Archeologist Leiphen. Then she will remember...";
+		mes "The professor will just come back. Let's find him.^000000 -";
 		close;
 	case 2:
 		cloakoffnpcself( "Archeologist Leiphen#illtur01" );
 		mes "[Archeologist Leiphen]";
 		mes "I came here again. Well, everyday.";
 		sleep2 500;
-		unittalk .@account_id, "" + .@player_name$ + " : I am here too. Doing well?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I am here too. Are you doing well?", bc_self;
 		next;
 		mes "[Narin]";
 		mes "......";
@@ -6337,9 +6338,9 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		mes "......Again ...I forgot again.....";
 		unittalk .@account_id, "" + .@player_name$ + " : It's ok. We are here again.", bc_self;
 		next;
-		npctalk "Narin : I was waiting as long as remember... Certainly.", "", bc_self;
+		npctalk "Narin : I was waiting as long as I can remember...", "", bc_self;
 		mes "[Narin]";
-		mes "Thank you... Um, let me spell on you. You will go to the others as well today?";
+		mes "Thank you... Um, let me cast a spell on you. You will go to the others as well today?";
 		next;
 		mes "[Narin]";
 		mes "Hope you two will be safe...";
@@ -6351,8 +6352,8 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		specialeffect EF_CIRCLEPOWER8, AREA, "Archeologist Leiphen#illtur01";
 		next;
 		mes "[Narin]";
-		mes "And here, sign of promise. Professor, and Bro. I'm glad you came.";
-		mes "I will be waiting tomorrow.";
+		mes "And here, a sign of promise. Professor and brother. I'm glad you came.";
+		mes "I will be waiting for tomorrow.";
 		npctalk "Archeologist Leiphen : See you tomorrow, Narin. and you.", "Archeologist Leiphen#illtur01", bc_self;
 		erasequest 16106;	// A memory that should not be forgotten 1
 		erasequest 16107;	// A memory that should not be forgotten 2
