@@ -293,7 +293,7 @@ Body:
   - Combos:
       - Combo:
           - Kafra_Uniform
-          - Band_Of_Kafra_
+          - Kafra_Employee_Band
     Script: |
       bonus2 bExpAddClass,Class_All,5;
       bonus2 bDropAddClass,Class_All,5;
@@ -636,7 +636,7 @@ Body:
   - Combos:
       - Combo:
           - Sword_Stick
-          - Menswear
+          - Lounge_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus bDelayrate,-10-min(.@r,10);
@@ -755,16 +755,16 @@ Body:
           - Gust_Bow_
           - Elemental_Crown
       - Combo:
-          - Elemental_Crown_
+          - Elemental_Crown_K
           - Burning_Bow
       - Combo:
-          - Elemental_Crown_
+          - Elemental_Crown_K
           - Frozen_Bow
       - Combo:
-          - Elemental_Crown_
+          - Elemental_Crown_K
           - Earth_Bow
       - Combo:
-          - Elemental_Crown_
+          - Elemental_Crown_K
           - Gust_Bow
       - Combo:
           - Elemental_Crown__
@@ -3404,7 +3404,7 @@ Body:
   - Combos:
       - Combo:
           - Eremes_Memory
-          - Ripper_Cross
+          - Reaper_Cross
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",7*.@r;
@@ -3431,7 +3431,7 @@ Body:
   - Combos:
       - Combo:
           - Catherine_Memory
-          - Staff_of_Miracle
+          - Staff_Of_Miracle
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"MG_SOULSTRIKE",10*.@r;
@@ -3472,7 +3472,7 @@ Body:
   - Combos:
       - Combo:
           - Margaretha_Memory
-          - Penitentia
+          - Ponitendtia
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"PR_MAGNUS",10*.@r;
@@ -3512,7 +3512,7 @@ Body:
   - Combos:
       - Combo:
           - Randel_Memory
-          - Fortridge
+          - Fortrage
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"LG_OVERBRAND",10*.@r;
@@ -3552,7 +3552,7 @@ Body:
   - Combos:
       - Combo:
           - Gertie_Memory
-          - Rapid_Fire
+          - Rapid_Fire_C_Bow
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",7*.@r;
@@ -3594,7 +3594,7 @@ Body:
   - Combos:
       - Combo:
           - Celia_Memory
-          - Boltijin
+          - Boltigin
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"WZ_EARTHSPIKE",10*.@r;
@@ -3602,7 +3602,7 @@ Body:
   - Combos:
       - Combo:
           - Chen_Memory
-          - Bright_Pendulum
+          - Bright_Mace
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"MO_FINGEROFFENSIVE",10*.@r;
@@ -3612,7 +3612,7 @@ Body:
   - Combos:
       - Combo:
           - Chen_Memory
-          - Raging_Dragon_Fist
+          - Combo_Fist
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"MO_CHAINCOMBO",10*.@r;
@@ -3621,7 +3621,7 @@ Body:
   - Combos:
       - Combo:
           - Chen_Memory
-          - Dedicated_Bandage
+          - Asura_Bandage
     Script: |
       .@r= getequiprefinerycnt(EQI_HAND_R)/3;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",7*.@r;
@@ -3899,7 +3899,7 @@ Body:
       bonus bAspd,1;
   - Combos:
       - Combo:
-          - Greed_Brooch
+          - Brooch_Greed
           - Succubus_Card
     Script: |
       bonus bVit,-3;
@@ -3907,7 +3907,7 @@ Body:
       bonus bMaxHP,1000;
   - Combos:
       - Combo:
-          - Greed_Brooch
+          - Brooch_Greed
           - Succubus_Card
           - Incubus_Card
     Script: |
@@ -3919,7 +3919,7 @@ Body:
       bonus bMaxSP,150;
   - Combos:
       - Combo:
-          - Greed_Brooch
+          - Brooch_Greed
           - Incubus_Card
     Script: |
       bonus bInt,-3;
@@ -4778,10 +4778,10 @@ Body:
           - Angra_Mantis_Card
           - Chaotic_Killer_Mantis_Card
       - Combo:
-          - Shiver_Katar_K
+          - Shiver_Katar
           - Mobster_Card
       - Combo:
-          - Shiver_Katar_K
+          - Shiver_Katar
           - Sedora_Card
       - Combo:
           - Fafnir_Skin
@@ -8094,8 +8094,8 @@ Body:
           - Illusion_Armor_A
           - Illusion_Leg_A
       - Combo:
-          - Agnes_Lugenburg_Card
-          - Skia_Nerius_Card
+          - S_Agnes_Card
+          - S_Skia_Card
       - Combo:
           - E_Illusion_Leg_A
           - E_Illusion_Armor_A
@@ -8567,7 +8567,7 @@ Body:
       bonus2 bSubSize,Size_All,5;
   - Combos:
       - Combo:
-          - Poring_Sunglasses_     # 19117
+          - Poring_Sunglasses_K
           - AngelPoring_Boots     # 22101
     Script: |
       bonus2 bDropAddRace,RC_All,5;
@@ -8577,7 +8577,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - Poring_Sunglasses__     # 19118
+          - Poring_Sunglasses_K_
           - AngelPoring_Boots     # 22101
     Script: |
       bonus2 bDropAddRace,RC_All,4;
@@ -9041,10 +9041,10 @@ Body:
       bonus bFixedCast,-500;
   - Combos:
       - Combo:
-          - Neko_Headress
+          - Cat_Lace_Hairband_K
           - Blush
       - Combo:
-          - Neko_Headress
+          - Cat_Lace_Hairband_K
           - Blush_
     Script: |
       bonus bHealPower,5;
@@ -9779,7 +9779,7 @@ Body:
       bonus bBaseAtk,-5*readparam(bStr)/10;
   - Combos:
       - Combo:
-          - Oxygen_Bottle
+          - Oxygen_Bomb_K
           - Scuba_Mask
     Script: |
       bonus bAspd,1;
@@ -10226,7 +10226,7 @@ Body:
   - Combos:
       - Combo:
           - AngelPoring_Boots     # 22101
-          - Leo_Stone     # 29148
+          - AngelPoring_Purple
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10243,7 +10243,7 @@ Body:
   - Combos:
       - Combo:
           - AngelPoring_Boots     # 22101
-          - Pisces_Stone     # 29149
+          - AngelPoring_SkyBlue
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10260,7 +10260,7 @@ Body:
   - Combos:
       - Combo:
           - AngelPoring_Boots     # 22101
-          - Capricorn_Stone     # 29150
+          - AngelPoring_Green
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10277,7 +10277,7 @@ Body:
   - Combos:
       - Combo:
           - AngelPoring_Boots     # 22101
-          - Aquarius_Stone     # 29151
+          - AngelPoring_Pink
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10294,7 +10294,7 @@ Body:
   - Combos:
       - Combo:
           - AngelPoring_Boots     # 22101
-          - Scorpio_Stone     # 29152
+          - AngelPoring_DeepRed
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10311,7 +10311,7 @@ Body:
   - Combos:
       - Combo:
           - AngelPoring_Boots     # 22101
-          - Taurus_Stone     # 29153
+          - AngelPoring_Clear
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10711,7 +10711,7 @@ Body:
           - SoulWeight
       - Combo:
           - Ancient_Hero_Boots
-          - Exoricists_Bible_
+          - Demon_Hunting_Bible_K
       - Combo:
           - Ancient_Hero_Boots
           - Magic_Sword
@@ -10735,7 +10735,7 @@ Body:
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
-          - Katar_of_Shiver
+          - Shiver_Katar_K
     Script: |
       autobonus "{ bonus bLuk,20; bonus bCritAtkRate,10; }",30,7000;
   - Combos:
@@ -11048,14 +11048,14 @@ Body:
       - Combo:
           - S_Spiritual_Earring
           - S_Spiritual_Pendent
-          - S_Spiritual_Weapon_II
+          - S2_Spiritual_Weapon
     Script: |
       bonus2 bSPDrainRate,10,1+(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L))/10;
   - Combos:
       - Combo:
           - S_Spiritual_Earring
           - S_Spiritual_Pendent
-          - S_Spirit_Magic_Executioner_Weapon
+          - S2_Spirit_M_E_Weapon
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
@@ -11076,7 +11076,7 @@ Body:
       - Combo:
           - S_Malicious_Shoes
           - S_Malicious_Shield
-          - S_Malicious_Armor_II
+          - S2_Malicious_Armor
     Script: |
       bonus2 bHPDrainRate,40,2+(getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES))/5;
   - Combos:
@@ -11101,7 +11101,7 @@ Body:
           - S_Gemstone_Shield
           - S_Gemstone_Weapon
           - S_Gemstone_Pendent
-          - S_Gemstone_Earring_II
+          - S2_Gemstone_Earring
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
       bonus bAllStats,1;
@@ -11186,7 +11186,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Plasterer's_Armor_II
+          - S2_Plasterer's_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,50;
@@ -11196,7 +11196,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Insomniac_Shoes_II
+          - S2_Insomniac_Shoes
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bDef,50;
@@ -11206,7 +11206,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Peerless_Armor_II
+          - S2_Peerless_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,50;
@@ -11216,7 +11216,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Adulate_Shoes_II
+          - S2_Adurate_Shoes
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bDef,50;
@@ -11226,7 +11226,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Unfreezing_Weapon_II
+          - Unfreez_Weapon_S2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON);
       bonus bDef,50;
@@ -11236,7 +11236,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Vitality_Earring_II
+          - Vitality_Earing_S2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ACC_R);
       bonus bDef,50;
@@ -11246,7 +11246,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Neutral_Weapon_II
+          - S2_Neutral_Weapon
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON);
       bonus bDef,50;
@@ -11256,7 +11256,7 @@ Body:
   - Combos:
       - Combo:
           - S_Stability_Shield
-          - S_Uncursed_Pendant_II
+          - S2_Curse_Lift_Pendent
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       bonus bDef,50;
@@ -11279,7 +11279,7 @@ Body:
       - Combo:
           - S_Spell_Flow_Shoes
           - S_Spell_Flow_Armor
-          - S_Spellflow_Shield_II
+          - S2_Spell_Flow_Shield
     Script: |
       bonus bNoCastCancel;
       bonus bUseSPrate,40-getequiprefinerycnt(EQI_SHADOW_SHIELD)-getequiprefinerycnt(EQI_SHADOW_ARMOR)-getequiprefinerycnt(EQI_SHADOW_SHOES);
@@ -11403,7 +11403,7 @@ Body:
       - Combo:
           - S_Penetration_Earring
           - S_Penetration_Pendent
-          - S_Force_Executioner_Weapon
+          - S2_Force_Ex_Weapon
     Script: |
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25) {
          bonus bIgnoreDefRace,RC_DemiHuman;
@@ -11412,7 +11412,7 @@ Body:
       - Combo:
           - S_Tempest_Earring
           - S_Tempest_Pendent
-          - S_Spirit_Magic_Executioner_Weapon
+          - S2_Spirit_M_E_Weapon
     Script: |
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25) {
          bonus bIgnoreMDefRace,RC_DemiHuman;
@@ -11543,7 +11543,7 @@ Body:
           - S_Bearers_Shield
           - S_Bearers_Weapon
           - S_Bearers_Earring
-          - S_Bearer's_Pendant_II
+          - S2_Bearers_Pendent
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
       bonus bAllStats,1;
@@ -11632,7 +11632,7 @@ Body:
   - Combos:
       - Combo:
           - S_Hasty_Armor
-          - S_Hasty_Shoes_II
+          - S2_Hasty_Shoes
     Script: |
       bonus bFlee,5;
       if ((getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES)) >= 15) {
@@ -11693,7 +11693,7 @@ Body:
       - Combo:
           - S_Force_Earring
           - S_Force_Pendant
-          - S_Force_Executioner_Weapon
+          - S2_Force_Ex_Weapon
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
@@ -11770,7 +11770,7 @@ Body:
       - Combo:
           - S_Caster_Shoes
           - S_Caster_Shield
-          - S_Caster_Armor_II
+          - S2_Caster_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bVariableCastrate,-.@r/5;
@@ -11791,7 +11791,7 @@ Body:
       - Combo:
           - S_Reload_Shoes
           - S_Reload_Shield
-          - S_Reload_Armor_II
+          - S2_Reload_Armor
     Script: |
       bonus bDelayrate,(getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR) >= 25?-6:-1);
   - Combos:
@@ -11838,9 +11838,9 @@ Body:
       bonus bMaxHPrate,.@val;
   - Combos:
       - Combo:
-          - S_Bearer's_Pendant_II
-          - S_Bearer's_Armor_II
-          - S_Bearer's_Shoes_II
+          - S2_Bearers_Pendent
+          - S2_Bearers_Armor
+          - S2_Bearers_Shoes
     Script: |
       bonus bAllStats,1;
       .@r = getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
@@ -11892,9 +11892,9 @@ Body:
       }
   - Combos:
       - Combo:
-          - S_Gemstone_Earring_II
-          - S_Gemstone_Weapon_II
-          - S_Gemstone_Shield_II
+          - S2_Gemstone_Earring
+          - S2_Gemstone_Weapon
+          - S2_Gemstone_Shield
     Script: |
       bonus bAllStats,1;
       .@r = getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD);
@@ -11904,8 +11904,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - S_All_Race_Shoes
-          - S_All_Race_Shield
+          - S_AllRace_Shoes
+          - S_AllRace_Shield
       - Combo:
           - EXPStone_Top
           - EXPStone_Middle
@@ -11927,7 +11927,7 @@ Body:
       - Combo:
           - S_Tempest_Shield
           - S_Tempest_Shoes
-          - S_Magic_Executioner_Holy_Water_Armor
+          - S_M_ExeHoly_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
@@ -11939,7 +11939,7 @@ Body:
       - Combo:
           - S_Tempest_Shield
           - S_Tempest_Shoes
-          - S_Magic_Exorcist_Corrupted_Armor
+          - S_M_ExoCorrupt_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
@@ -11951,7 +11951,7 @@ Body:
       - Combo:
           - S_Tempest_Shield
           - S_Tempest_Shoes
-          - S_Magic_Vibration_Dragon_Killer_Armor
+          - S_M_DragonVib_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
@@ -11963,7 +11963,7 @@ Body:
       - Combo:
           - S_Tempest_Shield
           - S_Tempest_Shoes
-          - S_Magic_Scissor_Hunting_Armor
+          - S_M_SciHunting_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
@@ -11976,7 +11976,7 @@ Body:
       - Combo:
           - S_Tempest_Shield
           - S_Tempest_Shoes
-          - S_Magic_Fishing_Insect_Net_Armor
+          - S_M_FishInsect_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
@@ -12017,7 +12017,7 @@ Body:
   - Combos:
       - Combo:
           - S_Restore_Earring
-          - S_Restore_Pendant
+          - S_Restore_Pendent
     Script: |
       if ((getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L)) >= 15) {
          bonus bHPrecovRate,50;
@@ -12025,9 +12025,9 @@ Body:
       }
   - Combos:
       - Combo:
-          - S_Mortal_Blow_Weapon
-          - S_Mortal_Blow_Earring
-          - S_Mortal_Blow_Pendant
+          - S_MortalBlow_Weapon
+          - S_MortalBlow_Earring
+          - S_MortalBlow_Pendent
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       .@val = 2;
@@ -12042,7 +12042,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Executioner_Holy_Water_Armor
+          - S_ExeHoly_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;
@@ -12054,7 +12054,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Exorcist_Corrupted_Armor
+          - S_ExoCorrupt_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;
@@ -12066,7 +12066,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Vibration_Dragon_Killer_Armor
+          - S_DragonVib_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;
@@ -12078,7 +12078,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Scissor_Hunting_Armor
+          - S_SciHunting_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;
@@ -12091,7 +12091,7 @@ Body:
       - Combo:
           - S_Penetration_Shoes
           - S_Penetration_Shield
-          - S_Fishing_Insect_Net_Armor
+          - S_FishInsect_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bDef,5;
@@ -12180,8 +12180,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - S_Immune_Athena_Shield
-          - S_Hard_Champion_Shoes
+          - S_ImmunedAthena_Shield
+          - S_HardChamption_Shoes
     Script: |
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES);
       if (.@r >= 16) {
@@ -12196,12 +12196,12 @@ Body:
       }
   - Combos:
       - Combo:
-          - S_Temporal_Transcendent_Weapon
-          - S_Temporal_Transcendent_Armor
-          - S_Temporal_Transcendent_Shield
-          - S_Temporal_Transcendent_Shoes
-          - S_Temporal_Transcendent_Earring
-          - S_Temporal_Transcendent_Pendant
+          - S_Timeoverload_Weapon
+          - S_Timeoverload_Armor
+          - S_Timeoverload_Shield
+          - S_Timeoverload_Shoes
+          - S_Timeoverload_Earing
+          - S_Timeoverload_Pandent
     Script: |
       bonus bAspd,2;
       bonus bVariableCastrate,-10;
@@ -12647,8 +12647,8 @@ Body:
           - Human_Kimera_Card
           - Matter_Kimera_Card
       - Combo:
-          - Nihil_M_Heine_Card
-          - Kronecker_G_Heine_Card
+          - S_Nihil_Card
+          - S_Kronecker_Card
     Script: |
       bonus bDelayrate,-3;
   - Combos:
@@ -12703,16 +12703,16 @@ Body:
       bonus2 bMagicAddSize,Size_Small,10;
   - Combos:
       - Combo:
-          - Nihil_M_Heine_Card
-          - Spica_Nerius_Card
+          - S_Nihil_Card
+          - S_Spica_Card
     Script: |
       bonus2 bMagicAddSize,Size_Small,5;
       bonus2 bMagicAddRace,RC_Brute,5;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
   - Combos:
       - Combo:
-          - Agnes_Lugenburg_Card
-          - Jurgen_Wigner_Card
+          - S_Agnes_Card
+          - S_Jurgen_Card
     Script: |
       bonus2 bAddSize,Size_Small,5;
       bonus2 bAddRace,RC_Brute,5;
@@ -14156,8 +14156,8 @@ Body:
           - ILL_Sword_Fish_Card
           - Sword_Fish_Card
       - Combo:
-          - aegis_300308
-          - Kronecker_G_Heine_Card
+          - S_Meyer_Card
+          - S_Kronecker_Card
     Script: |
       bonus bMatkRate,3;
   - Combos:
@@ -15110,10 +15110,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Sword
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bAspd,2;
       bonus2 bAddSize,Size_All,10;
@@ -15122,10 +15122,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Sword
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bMaxHPrate,10;
       bonus bVariableCastrate,-10;
@@ -15134,10 +15134,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Dagger
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus2 bMagicAddSize,Size_All,10;
@@ -15146,10 +15146,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Dagger
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bAtkRate,5;
       bonus bDelayrate,-15;
@@ -15158,10 +15158,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Nindo
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus bVariableCastrate,-10;
@@ -15173,10 +15173,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Nindo
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bBaseAtk,20;
       bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-1000;
@@ -15185,10 +15185,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Axe
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bDelayrate,-10;
       bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
@@ -15197,10 +15197,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Axe
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
@@ -15209,10 +15209,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Spear
-          - Defender_Booster_Robe_
-          - Defender_Booster_Shoes_
-          - Defender_Booster_Muffler_
-          - Defender_Booster_Earring
+          - Defn_Robe
+          - Defn_Shoes
+          - Defn_Muffler
+          - Defn_Earing
     Script: |
       bonus bMatk,20;
       bonus bDelayrate,-10;
@@ -15221,10 +15221,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Spear
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bAspd,2;
       bonus bLongAtkRate,10;
@@ -15233,10 +15233,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Spellbook
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus2 bMagicAddSize,Size_All,10;
@@ -15245,10 +15245,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Spellbook
-          - Defender_Booster_Robe_
-          - Defender_Booster_Shoes_
-          - Defender_Booster_Muffler_
-          - Defender_Booster_Earring
+          - Defn_Robe
+          - Defn_Shoes
+          - Defn_Muffler
+          - Defn_Earing
     Script: |
       bonus bMatk,20;
       bonus bAspd,2;
@@ -15260,10 +15260,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Book
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bBaseAtk,20;
       bonus2 bAddSize,Size_All,10;
@@ -15272,10 +15272,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Book
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bBaseAtk,20;
       bonus bAspd,2;
@@ -15284,10 +15284,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Rod
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus2 bMagicAddSize,Size_All,10;
@@ -15296,10 +15296,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Rod
-          - Defender_Booster_Robe_
-          - Defender_Booster_Shoes_
-          - Defender_Booster_Muffler_
-          - Defender_Booster_Earring
+          - Defn_Robe
+          - Defn_Shoes
+          - Defn_Muffler
+          - Defn_Earing
     Script: |
       bonus bMatk,20;
       bonus bVariableCastrate,-10;
@@ -15308,10 +15308,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Foxtail
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus2 bMagicAddSize,Size_All,10;
@@ -15320,10 +15320,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Foxtail
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bBaseAtk,20;
       bonus bDelayrate,-10;
@@ -15332,10 +15332,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Knuckles
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bMaxHPrate,10;
       bonus2 bMagicAddSize,Size_All,10;
@@ -15344,10 +15344,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Knuckles
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bMaxSPrate,10;
       bonus bDelayrate,-15;
@@ -15356,10 +15356,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Guitar
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus bDelayrate,-10;
@@ -15368,16 +15368,16 @@ Body:
   - Combos:
       - Combo:
           - Boost_Guitar
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
       - Combo:
           - Boost_Whip
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bBaseAtk,20;
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
@@ -15386,10 +15386,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Whip
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus bDelayrate,-10;
@@ -15398,10 +15398,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Mace
-          - Defender_Booster_Robe_
-          - Defender_Booster_Shoes_
-          - Defender_Booster_Muffler_
-          - Defender_Booster_Earring
+          - Defn_Robe
+          - Defn_Shoes
+          - Defn_Muffler
+          - Defn_Earing
     Script: |
       bonus bMatk,20;
       bonus2 bSkillAtk,"AB_JUDEX",30;
@@ -15410,10 +15410,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Mace
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bAspd,2;
       bonus bCritAtkRate,10;
@@ -15422,10 +15422,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_TH_Sword
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bAspd,2;
       bonus bCritAtkRate,10;
@@ -15434,10 +15434,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_TH_Sword
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bMaxHPrate,10;
       bonus bDelayrate,-15;
@@ -15448,10 +15448,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Katar
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bAspd,2;
       bonus bCritAtkRate,10;
@@ -15460,10 +15460,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Katar
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bAtkRate,10;
       bonus bDelayrate,-15;
@@ -15472,10 +15472,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Staff
-          - Elemental_Booster_Robe_
-          - Elemental_Booster_Shoes_
-          - Elemental_Booster_Muffler_
-          - Elemental_Booster_Earring
+          - Ele_Robe
+          - Ele_Shoes
+          - Ele_Muffler
+          - Ele_Earing
     Script: |
       bonus bMatk,20;
       bonus2 bMagicAddSize,Size_All,10;
@@ -15484,10 +15484,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Staff
-          - Defender_Booster_Robe_
-          - Defender_Booster_Shoes_
-          - Defender_Booster_Muffler_
-          - Defender_Booster_Earring
+          - Defn_Robe
+          - Defn_Shoes
+          - Defn_Muffler
+          - Defn_Earing
     Script: |
       bonus bMatk,20;
       bonus bDelayrate,-10;
@@ -15496,10 +15496,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Bow
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bAspd,2;
       bonus bCritAtkRate,10;
@@ -15508,10 +15508,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Bow
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bMaxHPrate,10;
       bonus bDelayrate,-15;
@@ -15520,10 +15520,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Gatling
-          - Attacker_Booster_Plate_
-          - Attacker_Booster_Greaves_
-          - Attacker_Booster_Manteau_
-          - Attacker_Booster_Ring
+          - Atker_Plate
+          - Atker_Greave
+          - Atker_Manteau
+          - Atker_Ring
     Script: |
       bonus bBaseAtk,20;
       bonus2 bAddSize,Size_All,10;
@@ -15532,10 +15532,10 @@ Body:
   - Combos:
       - Combo:
           - Boost_Gatling
-          - Ranger_Booster_Suits_
-          - Ranger_Booster_Boots_
-          - Ranger_Booster_Manteau_
-          - Range_Booster_Brooch
+          - Ran_Suits
+          - Ran_Boots
+          - Ran_Manteau
+          - Ran_Brooch
     Script: |
       bonus bBaseAtk,20;
       bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000;
@@ -17420,7 +17420,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_LG
-          - Fortridge
+          - Fortrage
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500;
@@ -17437,7 +17437,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_WL
-          - Staff_of_Miracle
+          - Staff_Of_Miracle
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bMagicAtkEle,Ele_Ghost,3;
@@ -17480,7 +17480,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_SO
-          - Boltijin
+          - Boltigin
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bMatkRate,2;
@@ -17616,7 +17616,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_AB
-          - Penitentia
+          - Ponitendtia
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bMagicAtkEle,Ele_Holy,10;
@@ -17624,7 +17624,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_SR
-          - Raging_Dragon_Fist
+          - Combo_Fist
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bAddSize,Size_All,10;
@@ -17632,7 +17632,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_SR
-          - Dedicated_Bandage
+          - Asura_Bandage
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,10;
@@ -17640,7 +17640,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_SR
-          - Bright_Pendulum
+          - Bright_Mace
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,10;
@@ -17648,7 +17648,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_SC
-          - Rapid_Fire
+          - Rapid_Fire_C_Bow
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,10;
@@ -17671,7 +17671,7 @@ Body:
   - Combos:
       - Combo:
           - BioWeapon_Helm_GC
-          - Ripper_Cross
+          - Reaper_Cross
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,20;
@@ -19119,15 +19119,15 @@ Body:
       bonus2 bSkillAtk,"RG_RAID",15;
   - Combos:
       - Combo:
-          - aegis_27394
-          - Nihil_M_Heine_Card
-          - Spica_Nerius_Card
+          - S_Kathryn_Card
+          - S_Nihil_Card
+          - S_Spica_Card
     Script: |
       bonus2 bMagicAddRace,RC_Brute,7;
       bonus2 bMagicAddSize,Size_Small,7;
   - Combos:
       - Combo:
-          - aegis_27394
+          - S_Kathryn_Card
           - S_Wolf_Card
           - S_Poe_Card
     Script: |
@@ -19135,14 +19135,14 @@ Body:
       bonus bDelayrate,-5;
   - Combos:
       - Combo:
-          - aegis_27396
-          - Agnes_Lugenburg_Card
-          - Jurgen_Wigner_Card
+          - S_Issac_Card
+          - S_Agnes_Card
+          - S_Jurgen_Card
     Script: |
       bonus2 bAddSize,Size_Small,7;
   - Combos:
       - Combo:
-          - aegis_27396
+          - S_Issac_Card
           - S_Wolf_Card
           - S_Poe_Card
     Script: |
@@ -19489,18 +19489,18 @@ Body:
       bonus bShortWeaponDamageReturn,(getequiprefinerycnt(EQI_HEAD_TOP)/2);
   - Combos:
       - Combo:
-          - Surfer_Swimsuit
+          - Supper_Swimsuit_K
           - Scuba_Mask
     Script: |
       bonus bVariableCastrate,-10;
       bonus bFlee2,10;
   - Combos:
       - Combo:
-          - Scuba_Mask_
-          - Oxygen_Bottle
+          - Scuba_Mask_K
+          - Oxygen_Bomb_K
       - Combo:
-          - Scuba_Mask_
-          - Surfer_Swimsuit
+          - Scuba_Mask_K
+          - Supper_Swimsuit_K
     Script: |
       bonus2 bCriticalAddRace,RC_Fish,50;
       bonus bAspdRate,10;
@@ -20323,7 +20323,7 @@ Body:
   - Combos:
       - Combo:
           - S_Helmut_Card
-          - Skia_Nerius_Card
+          - S_Skia_Card
     Script: |
       bonus2 bAddRace,RC_All,3;
   - Combos:
@@ -22206,7 +22206,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490164
+          - Hero_Token_SHC
           - Blade_Katar_LT
     Script: |
       bonus2 bAddSize,Size_All,15;
@@ -22221,7 +22221,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490164
+          - Hero_Token_SHC
           - Shiver_Katar_K_LT
     Script: |
       bonus2 bAddSize,Size_All,15;
@@ -22236,7 +22236,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490165
+          - Hero_Token_ABC
           - Magic_Sword_LT
     Script: |
       bonus2 bMagicAddSize,Size_All,15;
@@ -22251,7 +22251,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490165
+          - Hero_Token_ABC
           - Fatalist_LT
     Script: |
       bonus2 bAddSize,Size_All,15;
@@ -30333,7 +30333,7 @@ Body:
           - G_Strings    # 2339
       - Combo:
           - Etran_Shirt_TW    # 20910
-          - G_Strings    # 2371
+          - G_Strings_    # 2371
     Script: |
       .@r =  getequiprefinerycnt(EQI_ARMOR);
       bonus bInt,15;
@@ -30367,3 +30367,21 @@ Body:
     Script: |
       if (getequiprefinerycnt(EQI_SHOES) >= 6)
          bonus2 bSkillUseSP,"MC_CARTREVOLUTION",4;
+  - Combos:
+      - Combo:
+          - aegis_300422   # 300422
+          - S_Helmut_Card   # 300310
+    Script: |
+      bonus bShortAtkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_300424   # 300424
+          - S_Meyer_Card   # 300308
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Combos:
+      - Combo:
+          - aegis_300426   # 300426
+          - S_Helmut_Card   # 300310
+    Script: |
+      bonus bLongAtkRate,5;

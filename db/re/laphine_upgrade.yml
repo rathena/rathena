@@ -475,46 +475,46 @@ Body:
       - Item: S_DoramMagical_Shield
       - Item: S_SuperNovice_Shield
       - Item: S_Gunslinger_Shield
-      - Item: S_Hasty_Shoes_II
-      - Item: S_Bearer's_Pendant_II
-      - Item: S_Gemstone_Earring_II
-      - Item: S_Spellflow_Shield_II
-      - Item: S_Spiritual_Weapon_II
-      - Item: S_Malicious_Armor_II
+      - Item: S2_Hasty_Shoes
+      - Item: S2_Bearers_Pendent
+      - Item: S2_Gemstone_Earring
+      - Item: S2_Spell_Flow_Shield
+      - Item: S2_Spiritual_Weapon
+      - Item: S2_Malicious_Armor
       - Item: S_Sigrun_Armor
       - Item: S_Sigrun_Shield
-      - Item: S_Force_Executioner_Weapon
-      - Item: S_Spirit_Magic_Executioner_Weapon
-      - Item: S_Caster_Armor_II
-      - Item: S_Reload_Armor_II
+      - Item: S2_Force_Ex_Weapon
+      - Item: S2_Spirit_M_E_Weapon
+      - Item: S2_Caster_Armor
+      - Item: S2_Reload_Armor
       - Item: S_Critical_Shield
       - Item: S_Critical_Shoes
-      - Item: S_Magic_Compose_Armor
-      - Item: S_Gemstone_Weapon_II
-      - Item: S_Gemstone_Shield_II
-      - Item: S_Bearer's_Armor_II
-      - Item: S_Bearer's_Shoes_II
+      - Item: S_MagicCompose_Armor
+      - Item: S2_Gemstone_Weapon
+      - Item: S2_Gemstone_Shield
+      - Item: S2_Bearers_Armor
+      - Item: S2_Bearers_Shoes
       - Item: S_AllMighty_Earring
       - Item: S_AllMighty_Pendant
-      - Item: S_All_Race_Shoes
-      - Item: S_All_Race_Shield
+      - Item: S_AllRace_Shoes
+      - Item: S_AllRace_Shield
       - Item: S_Blitz_Weapon
       - Item: S_Blitz_Armor
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
-      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
-      - Item: S_Plasterer's_Armor_II
-      - Item: S_Insomniac_Shoes_II
-      - Item: S_Peerless_Armor_II
-      - Item: S_Adulate_Shoes_II
-      - Item: S_Unfreezing_Weapon_II
-      - Item: S_Vitality_Earring_II
-      - Item: S_Neutral_Weapon_II
-      - Item: S_Uncursed_Pendant_II
+      - Item: S_M_ExeHoly_Armor
+      - Item: S_M_ExoCorrupt_Armor
+      - Item: S_M_DragonVib_Armor
+      - Item: S_M_SciHunting_Armor
+      - Item: S_M_FishInsect_Armor
+      - Item: S2_Plasterer's_Armor
+      - Item: S2_Insomniac_Shoes
+      - Item: S2_Peerless_Armor
+      - Item: S2_Adurate_Shoes
+      - Item: Unfreez_Weapon_S2
+      - Item: Vitality_Earing_S2
+      - Item: S2_Neutral_Weapon
+      - Item: S2_Curse_Lift_Pendent
       - Item: S_Tension_Weapon
       - Item: S_Tension_Earring
       - Item: S_Tension_Pendent
@@ -524,17 +524,17 @@ Body:
       - Item: S_Healing_Shield
       - Item: S_Healing_Shoes
       - Item: S_Restore_Earring
-      - Item: S_Restore_Pendant
-      - Item: S_Mortal_Blow_Weapon
-      - Item: S_Mortal_Blow_Earring
-      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Restore_Pendent
+      - Item: S_MortalBlow_Weapon
+      - Item: S_MortalBlow_Earring
+      - Item: S_MortalBlow_Pendent
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
-      - Item: S_Executioner_Holy_Water_Armor
-      - Item: S_Exorcist_Corrupted_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
-      - Item: S_Scissor_Hunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_ExeHoly_Armor
+      - Item: S_ExoCorrupt_Armor
+      - Item: S_DragonVib_Armor
+      - Item: S_SciHunting_Armor
+      - Item: S_FishInsect_Armor
       - Item: Sentimental_Weapone_S
       - Item: Sentimental_Earring_S
       - Item: Sentimental_Pendant_S
@@ -548,8 +548,8 @@ Body:
       - Item: S_Magical_Shoes
       - Item: S_Magical_Shield
       - Item: S_Magical_Armor
-      - Item: S_Immune_Athena_Shield
-      - Item: S_Hard_Champion_Shoes
+      - Item: S_ImmunedAthena_Shield
+      - Item: S_HardChamption_Shoes
       - Item: S_KingbirdAncient_Armor
       - Item: S_CriticalHit_Armor
       - Item: S_Thief_earring
@@ -1207,46 +1207,46 @@ Body:
       - Item: S_Reload_Shoes
       - Item: S_Reload_Shield
       - Item: S_Reload_Armor
-      - Item: S_Hasty_Shoes_II
-      - Item: S_Bearer's_Pendant_II
-      - Item: S_Gemstone_Earring_II
-      - Item: S_Spellflow_Shield_II
-      - Item: S_Spiritual_Weapon_II
-      - Item: S_Malicious_Armor_II
+      - Item: S2_Hasty_Shoes
+      - Item: S2_Bearers_Pendent
+      - Item: S2_Gemstone_Earring
+      - Item: S2_Spell_Flow_Shield
+      - Item: S2_Spiritual_Weapon
+      - Item: S2_Malicious_Armor
       - Item: S_Sigrun_Armor
       - Item: S_Sigrun_Shield
-      - Item: S_Force_Executioner_Weapon
-      - Item: S_Spirit_Magic_Executioner_Weapon
-      - Item: S_Caster_Armor_II
-      - Item: S_Reload_Armor_II
+      - Item: S2_Force_Ex_Weapon
+      - Item: S2_Spirit_M_E_Weapon
+      - Item: S2_Caster_Armor
+      - Item: S2_Reload_Armor
       - Item: S_Critical_Shield
       - Item: S_Critical_Shoes
-      - Item: S_Magic_Compose_Armor
-      - Item: S_Gemstone_Weapon_II
-      - Item: S_Gemstone_Shield_II
-      - Item: S_Bearer's_Armor_II
-      - Item: S_Bearer's_Shoes_II
+      - Item: S_MagicCompose_Armor
+      - Item: S2_Gemstone_Weapon
+      - Item: S2_Gemstone_Shield
+      - Item: S2_Bearers_Armor
+      - Item: S2_Bearers_Shoes
       - Item: S_AllMighty_Earring
       - Item: S_AllMighty_Pendant
-      - Item: S_All_Race_Shoes
-      - Item: S_All_Race_Shield
+      - Item: S_AllRace_Shoes
+      - Item: S_AllRace_Shield
       - Item: S_Blitz_Weapon
       - Item: S_Blitz_Armor
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
-      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
-      - Item: S_Plasterer's_Armor_II
-      - Item: S_Insomniac_Shoes_II
-      - Item: S_Peerless_Armor_II
-      - Item: S_Adulate_Shoes_II
-      - Item: S_Unfreezing_Weapon_II
-      - Item: S_Vitality_Earring_II
-      - Item: S_Neutral_Weapon_II
-      - Item: S_Uncursed_Pendant_II
+      - Item: S_M_ExeHoly_Armor
+      - Item: S_M_ExoCorrupt_Armor
+      - Item: S_M_DragonVib_Armor
+      - Item: S_M_SciHunting_Armor
+      - Item: S_M_FishInsect_Armor
+      - Item: S2_Plasterer's_Armor
+      - Item: S2_Insomniac_Shoes
+      - Item: S2_Peerless_Armor
+      - Item: S2_Adurate_Shoes
+      - Item: Unfreez_Weapon_S2
+      - Item: Vitality_Earing_S2
+      - Item: S2_Neutral_Weapon
+      - Item: S2_Curse_Lift_Pendent
       - Item: S_Tension_Weapon
       - Item: S_Tension_Earring
       - Item: S_Tension_Pendent
@@ -1256,17 +1256,17 @@ Body:
       - Item: S_Healing_Shield
       - Item: S_Healing_Shoes
       - Item: S_Restore_Earring
-      - Item: S_Restore_Pendant
-      - Item: S_Mortal_Blow_Weapon
-      - Item: S_Mortal_Blow_Earring
-      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Restore_Pendent
+      - Item: S_MortalBlow_Weapon
+      - Item: S_MortalBlow_Earring
+      - Item: S_MortalBlow_Pendent
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
-      - Item: S_Executioner_Holy_Water_Armor
-      - Item: S_Exorcist_Corrupted_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
-      - Item: S_Scissor_Hunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_ExeHoly_Armor
+      - Item: S_ExoCorrupt_Armor
+      - Item: S_DragonVib_Armor
+      - Item: S_SciHunting_Armor
+      - Item: S_FishInsect_Armor
       - Item: Sentimental_Weapone_S
       - Item: Sentimental_Earring_S
       - Item: Sentimental_Pendant_S
@@ -1280,8 +1280,8 @@ Body:
       - Item: S_Magical_Shoes
       - Item: S_Magical_Shield
       - Item: S_Magical_Armor
-      - Item: S_Immune_Athena_Shield
-      - Item: S_Hard_Champion_Shoes
+      - Item: S_ImmunedAthena_Shield
+      - Item: S_HardChamption_Shoes
       - Item: S_KingbirdAncient_Armor
       - Item: S_CriticalHit_Armor
       - Item: S_Tempest_Weapon
@@ -2017,46 +2017,46 @@ Body:
       - Item: S_DoramMagical_Shield
       - Item: S_SuperNovice_Shield
       - Item: S_Gunslinger_Shield
-      - Item: S_Hasty_Shoes_II
-      - Item: S_Bearer's_Pendant_II
-      - Item: S_Gemstone_Earring_II
-      - Item: S_Spellflow_Shield_II
-      - Item: S_Spiritual_Weapon_II
-      - Item: S_Malicious_Armor_II
+      - Item: S2_Hasty_Shoes
+      - Item: S2_Bearers_Pendent
+      - Item: S2_Gemstone_Earring
+      - Item: S2_Spell_Flow_Shield
+      - Item: S2_Spiritual_Weapon
+      - Item: S2_Malicious_Armor
       - Item: S_Sigrun_Armor
       - Item: S_Sigrun_Shield
-      - Item: S_Force_Executioner_Weapon
-      - Item: S_Spirit_Magic_Executioner_Weapon
-      - Item: S_Caster_Armor_II
-      - Item: S_Reload_Armor_II
+      - Item: S2_Force_Ex_Weapon
+      - Item: S2_Spirit_M_E_Weapon
+      - Item: S2_Caster_Armor
+      - Item: S2_Reload_Armor
       - Item: S_Critical_Shield
       - Item: S_Critical_Shoes
-      - Item: S_Magic_Compose_Armor
-      - Item: S_Gemstone_Weapon_II
-      - Item: S_Gemstone_Shield_II
-      - Item: S_Bearer's_Armor_II
-      - Item: S_Bearer's_Shoes_II
+      - Item: S_MagicCompose_Armor
+      - Item: S2_Gemstone_Weapon
+      - Item: S2_Gemstone_Shield
+      - Item: S2_Bearers_Armor
+      - Item: S2_Bearers_Shoes
       - Item: S_AllMighty_Earring
       - Item: S_AllMighty_Pendant
-      - Item: S_All_Race_Shoes
-      - Item: S_All_Race_Shield
+      - Item: S_AllRace_Shoes
+      - Item: S_AllRace_Shield
       - Item: S_Blitz_Weapon
       - Item: S_Blitz_Armor
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
-      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
-      - Item: S_Plasterer's_Armor_II
-      - Item: S_Insomniac_Shoes_II
-      - Item: S_Peerless_Armor_II
-      - Item: S_Adulate_Shoes_II
-      - Item: S_Unfreezing_Weapon_II
-      - Item: S_Vitality_Earring_II
-      - Item: S_Neutral_Weapon_II
-      - Item: S_Uncursed_Pendant_II
+      - Item: S_M_ExeHoly_Armor
+      - Item: S_M_ExoCorrupt_Armor
+      - Item: S_M_DragonVib_Armor
+      - Item: S_M_SciHunting_Armor
+      - Item: S_M_FishInsect_Armor
+      - Item: S2_Plasterer's_Armor
+      - Item: S2_Insomniac_Shoes
+      - Item: S2_Peerless_Armor
+      - Item: S2_Adurate_Shoes
+      - Item: Unfreez_Weapon_S2
+      - Item: Vitality_Earing_S2
+      - Item: S2_Neutral_Weapon
+      - Item: S2_Curse_Lift_Pendent
       - Item: S_Tension_Weapon
       - Item: S_Tension_Earring
       - Item: S_Tension_Pendent
@@ -2066,17 +2066,17 @@ Body:
       - Item: S_Healing_Shield
       - Item: S_Healing_Shoes
       - Item: S_Restore_Earring
-      - Item: S_Restore_Pendant
-      - Item: S_Mortal_Blow_Weapon
-      - Item: S_Mortal_Blow_Earring
-      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Restore_Pendent
+      - Item: S_MortalBlow_Weapon
+      - Item: S_MortalBlow_Earring
+      - Item: S_MortalBlow_Pendent
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
-      - Item: S_Executioner_Holy_Water_Armor
-      - Item: S_Exorcist_Corrupted_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
-      - Item: S_Scissor_Hunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_ExeHoly_Armor
+      - Item: S_ExoCorrupt_Armor
+      - Item: S_DragonVib_Armor
+      - Item: S_SciHunting_Armor
+      - Item: S_FishInsect_Armor
       - Item: Sentimental_Weapone_S
       - Item: Sentimental_Earring_S
       - Item: Sentimental_Pendant_S
@@ -2090,8 +2090,8 @@ Body:
       - Item: S_Magical_Shoes
       - Item: S_Magical_Shield
       - Item: S_Magical_Armor
-      - Item: S_Immune_Athena_Shield
-      - Item: S_Hard_Champion_Shoes
+      - Item: S_ImmunedAthena_Shield
+      - Item: S_HardChamption_Shoes
       - Item: S_KingbirdAncient_Armor
       - Item: S_CriticalHit_Armor
       - Item: S_Thief_earring
@@ -2499,8 +2499,8 @@ Body:
       - Item: Iron_Staff
       - Item: Oriental_Sword
       - Item: Undine_Spear_K
-      - Item: Exoricists_Bible_
-      - Item: Katar_of_Shiver
+      - Item: Demon_Hunting_Bible_K
+      - Item: Shiver_Katar_K
       - Item: OneSkyOneSun
       - Item: SoulWeight
       - Item: MeawFoxtail
@@ -2573,8 +2573,8 @@ Body:
       - Item: Iron_Staff
       - Item: Oriental_Sword
       - Item: Undine_Spear_K
-      - Item: Exoricists_Bible_
-      - Item: Katar_of_Shiver
+      - Item: Demon_Hunting_Bible_K
+      - Item: Shiver_Katar_K
       - Item: OneSkyOneSun
       - Item: SoulWeight
       - Item: MeawFoxtail
@@ -2639,18 +2639,18 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: Attacker_Booster_Plate_
-      - Item: Attacker_Booster_Manteau_
-      - Item: Attacker_Booster_Greaves_
-      - Item: Ranger_Booster_Suits_
-      - Item: Ranger_Booster_Manteau_
-      - Item: Ranger_Booster_Boots_
-      - Item: Elemental_Booster_Robe_
-      - Item: Elemental_Booster_Muffler_
-      - Item: Elemental_Booster_Shoes_
-      - Item: Defender_Booster_Robe_
-      - Item: Defender_Booster_Muffler_
-      - Item: Defender_Booster_Shoes_
+      - Item: Atker_Plate
+      - Item: Atker_Manteau
+      - Item: Atker_Greave
+      - Item: Ran_Suits
+      - Item: Ran_Manteau
+      - Item: Ran_Boots
+      - Item: Ele_Robe
+      - Item: Ele_Muffler
+      - Item: Ele_Shoes
+      - Item: Defn_Robe
+      - Item: Defn_Muffler
+      - Item: Defn_Shoes
   - Item: Boost_Up_2
     ResultRefine: 10
     CardsAllowed: true
@@ -3884,8 +3884,8 @@ Body:
       - Item: Iron_Staff
       - Item: Oriental_Sword
       - Item: Undine_Spear_K
-      - Item: Exoricists_Bible_
-      - Item: Katar_of_Shiver
+      - Item: Demon_Hunting_Bible_K
+      - Item: Shiver_Katar_K
       - Item: OneSkyOneSun
       - Item: SoulWeight
       - Item: MeawFoxtail
@@ -4091,41 +4091,41 @@ Body:
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
-      - Item: Staff_of_Miracle
+      - Item: Staff_Of_Miracle
       - Item: Gravitation_Staff
       - Item: Adorare_Staff
       - Item: Volar
       - Item: Vernan
-      - Item: Ripper_Cross
+      - Item: Reaper_Cross
       - Item: Agudo_Filo
       - Item: Maxi_Spanner
-      - Item: Rapid_Fire
+      - Item: Rapid_Fire_C_Bow
       - Item: Sharp_Star_Bow
       - Item: Aiming_Bow
       - Item: Falken_Shooter
       - Item: Wind_Gale
       - Item: Golden_Wrench
-      - Item: Raging_Dragon_Fist
-      - Item: Dedicated_Bandage
+      - Item: Combo_Fist
+      - Item: Asura_Bandage
       - Item: Engine_Pilebuncker
       - Item: Coolant_Injection
       - Item: Gene_Rod
       - Item: Lucis_Flail
-      - Item: Bright_Pendulum
+      - Item: Bright_Mace
       - Item: Crimson_Rose_Stick
       - Item: Psychic_Spear_Rod
       - Item: Dust_Grave
-      - Item: Penitentia
+      - Item: Ponitendtia
       - Item: Heart_Whip
       - Item: Scarlet_Ribbon
-      - Item: Boltijin
+      - Item: Boltigin
       - Item: Judgement_Slasher
       - Item: Repent_Slasher
       - Item: Jack_The_Knife
       - Item: Platinum_Dagger
       - Item: Argen_Blanco
       - Item: Harve
-      - Item: Fortridge
+      - Item: Fortrage
       - Item: Black_Circle
       - Item: Antique_Cello
       - Item: Farthezan

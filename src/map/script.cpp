@@ -4967,7 +4967,7 @@ BUILDIN_FUNC(clear)
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_scriptclear(sd, st->oid);
+	clif_scriptclear( *sd, st->oid );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -4977,18 +4977,24 @@ BUILDIN_FUNC(clear)
 /// close;
 BUILDIN_FUNC(close)
 {
-	TBL_PC* sd;
+	struct map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
+	const char* command = script_getfuncname( st );
+
 	if( !st->mes_active ) {
 		st->state = END; // Keep backwards compatibility.
-		ShowWarning("Incorrect use of 'close' command!\n");
+		ShowWarning("buildin_close: Incorrect use of '%s' command!\n", command);
 		script_reportsrc(st);
 	} else {
 		st->state = CLOSE;
 		st->mes_active = 0;
+	}
+
+	if( !strcmp(command, "close3") ){
+		st->clear_cutin = true;
 	}
 
 	clif_scriptclose(sd, st->oid);
@@ -18406,58 +18412,48 @@ BUILDIN_FUNC(checkidlemer)
 
 BUILDIN_FUNC(searchitem)
 {
-	struct script_data* data = script_getdata(st, 2);
-	const char *itemname = script_getstr(st,3);
-	std::map<t_itemid, std::shared_ptr<item_data>> items;
-	int count;
-
-	char* name;
-	int32 start;
-	int32 id;
-	int32 i;
-	TBL_PC* sd = NULL;
-
-	if ((items[0] = item_db.find(strtoul(itemname, nullptr, 10))))
-		count = 1;
-	else
-		count = itemdb_searchname_array(items, MAX_SEARCH, itemname);
-
-	if (!count) {
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
+	script_data* data = script_getdata(st, 2);
+	const char *name = reference_getname(data);
 
 	if( !data_isreference(data) )
 	{
-		ShowError("script:searchitem: not a variable\n");
+		ShowError("buildin_searchitem: Argument %s is not a variable.\n", name);
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;// not a variable
 	}
 
-	id = reference_getid(data);
-	start = reference_getindex(data);
-	name = reference_getname(data);
-
-	if( not_server_variable(*name) && !script_rid2sd(sd) )
-	{
-		return SCRIPT_CMD_SUCCESS;// no player attached
-	}
-
 	if( is_string_variable(name) )
 	{// string array
-		ShowError("script:searchitem: not an integer array reference\n");
+		ShowError("buildin_searchitem: Argument %s is not an integer array.\n", name);
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;// not supported
 	}
 
-	for( i = 0; i < count; ++start, ++i )
-	{// Set array
-		set_reg_num( st, sd, reference_uid( id, start ), name, items[i]->nameid, reference_getref( data ) );
+	map_session_data *sd = nullptr;
+
+	if (not_server_variable(*name) && !script_rid2sd(sd))
+	{
+		return SCRIPT_CMD_SUCCESS;// no player attached
 	}
 
-	script_pushint(st, count);
+	const char *itemname = script_getstr(st, 3);
+	std::map<t_itemid, std::shared_ptr<item_data>> items;
+
+	itemdb_searchname_array(items, MAX_SEARCH, itemname);
+
+	if (!items.empty()) {
+		int32 id = reference_getid(data);
+		int32 start = reference_getindex(data);
+
+		for (const auto &it : items) { // Set array
+			set_reg_num(st, sd, reference_uid(id, start), name, it.first, reference_getref(data));
+			start++;
+		}
+	}
+
+	script_pushint64(st, items.size());
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19868,29 +19864,6 @@ BUILDIN_FUNC(unittalk)
 		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), target);
 		StringBuf_Destroy(&sbuf);
 	}
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/// Makes the unit do an emotion.
-///
-/// unitemote <unit_id>,<emotion>;
-///
-/// @see ET_* in script_constants.hpp
-BUILDIN_FUNC(unitemote)
-{
-	int emotion;
-	struct block_list* bl;
-
-	emotion = script_getnum(st,3);
-
-	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (script_rid2bl(2,bl))
-		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23633,7 +23606,7 @@ BUILDIN_FUNC(mergeitem) {
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_merge_item_open(sd);
+	clif_merge_item_open( *sd );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25230,7 +25203,7 @@ BUILDIN_FUNC(duplicate_dynamic){
 
 	if( dnd == nullptr ){
 		script_pushstrcopy( st, "" );
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 	}else{
 		script_pushstrcopy( st, dnd->exname );
 		return SCRIPT_CMD_SUCCESS;
@@ -26774,6 +26747,41 @@ BUILDIN_FUNC(item_enchant){
 #endif
 }
 
+/**
+* Generate item link string for client
+* itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+* @author [Cydh]
+**/
+BUILDIN_FUNC(itemlink)
+{
+	struct item item = {};
+
+	item.nameid = script_getnum(st, 2);
+	
+	if( !item_db.exists( item.nameid ) ){
+		ShowError( "buildin_itemlink: Item ID %u does not exists.\n", item.nameid );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	FETCH(3, item.refine);
+	FETCH(4, item.card[0]);
+	FETCH(5, item.card[1]);
+	FETCH(6, item.card[2]);
+	FETCH(7, item.card[3]);
+	FETCH(8, item.enchantgrade);
+
+#if PACKETVER >= 20150225
+	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == false) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+#endif
+
+	std::string itemlstr = item_db.create_item_link(item);
+	script_pushstrcopy(st, itemlstr.c_str());
+	return SCRIPT_CMD_SUCCESS;
+}
 
 BUILDIN_FUNC(addfame) {
 	struct map_session_data *sd;
@@ -26806,6 +26814,17 @@ BUILDIN_FUNC(getfamerank) {
 		return SCRIPT_CMD_FAILURE;
 
 	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_UPPERMASK));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(isdead) {
+	struct map_session_data *sd;
+
+	if (!script_mapid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st, pc_isdead(sd));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -26867,6 +26886,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(clear,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
+	BUILDIN_DEF2(close, "close3", ""),
 	BUILDIN_DEF(menu,"sl*"),
 	BUILDIN_DEF(select,"s*"), //for future jA script compatibility
 	BUILDIN_DEF(prompt,"s*"),
@@ -27277,7 +27297,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
-	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
 	BUILDIN_DEF(unitskilluseid,"ivi????"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii???"), // [Celest]
 // <--- [zBuffer] List of unit control commands
@@ -27558,9 +27577,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(add_reputation_points, "ii?"),
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
+	BUILDIN_DEF(itemlink, "i?????????"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
+	BUILDIN_DEF(isdead, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
