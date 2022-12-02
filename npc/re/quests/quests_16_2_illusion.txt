@@ -5580,16 +5580,16 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 
 	disable_items;
 	if (ill_turtle == 0) {
-		npctalk "Aylvar : I need your help. Please quickly!", "", bc_self;
+		npctalk "Aylvar : I need your help. Please, quickly!", "", bc_self;
 		mes "[Knight Aylvar]";
 		mes "Um.. Are you an adventurer?? I have a favor to ask you...";
 		next;
 		if (BaseLevel < 150) {
 			mes "[Knight Aylvar]";
 			mes "...Oh, you need more experience. Excuse me.";
-			mes "It's a highly risk job.";
+			mes "It's a high risk job.";
 			next;
-			mes " - ^0000CDLevel 150 over can do this quest.^000000 - ";
+			mes " - ^0000CDLevel 150 and over can do this quest.^000000 - ";
 			close;
 		}
 		if (select( "What's going on?", "I'm very busy." ) == 2) {
@@ -5601,23 +5601,23 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 		}
 		npctalk "Aylvar : Adventurer? Ah. It's you, " + .@player_name$ + ".", "", bc_self;
 		mes "[Knight Aylvar]";
-		mes "Sorry for all sudden.";
-		mes "I am the Alberta Guard of 1st Knights Division, Knight Aylvar.";
+		mes "Sorry for the sudden request.";
+		mes "I am from the Alberta Guard of the 1st Knights Division, Knight Aylvar.";
 		next;
 		mes "[Knight Aylvar]";
-		mes "Under the command of the Knights, I am on a mission to search Alberta's 2nd Knights, who had disappeared in Turtle Island.";
-		mes "However, after meeting a violent storm for a while ago, I arrived at a turtle island, but it seems not a turtle island.";
+		mes "Under the command of the Knights, I am on a mission to search for Alberta's 2nd Knights Division, who had disappeared in Turtle Island.";
+		mes "However, after meeting a violent storm, I arrived at a Turtle Island, but it didn't seem like the normal Turtle Island.";
 		emotion ET_QUESTION, .@account_id;
-		unittalk .@account_id, "" + .@player_name$ + " : What does it mean? it seems not a turtle island?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : What does it mean? It didn't seem like the normal Turtle Island?", bc_self;
 		sleep2 1500;
-		npctalk "Aylvar : It's hard to explain, it's clearly a turtle island, but I got goose bumps.", "", bc_self;
+		npctalk "Aylvar : It's hard to explain, it's clearly a Turtle Island, but I got goose bumps.", "", bc_self;
 		next;
 		mes "[Knight Aylvar]";
 		mes "I was in danger, but someone helped me out.";
 		next;
 		mes "[Knight Aylvar]";
-		mes "As I woke up, I was standing in middle of sea breeze at Alberta's harbor... In my hands, only two pieces of this turtle shell were held in my hands.";
-		npctalk "Aylvar : I'm not sure, but I knew that I was barely back to alive.", "", bc_self;
+		mes "As I woke up, I felt the sea breeze from Alberta's harbor... In my hands, two pieces of this turtle shell.";
+		npctalk "Aylvar : I'm not sure how, but I knew that I barely escaped with my life.", "", bc_self;
 		next;
 		mes "[Knight Aylvar]";
 		mes "Here is only one piece I have right now.";
@@ -5626,37 +5626,37 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 		if (select( "Is your friend in trouble?", "It's unbelievable." ) == 2) {
 			emotion ET_PROFUSELY_SWAT;
 			mes "[Knight Aylvar]";
-			mes "I understand. Even for me, I am bewildered. But please hear me out. I think my friend is in danger";
+			mes "I understand. Even for me, I am bewildered, but please hear me out. I think my friend is in danger";
 		}
 		else {
 			emotion ET_PROFUSELY_SWAT;
 			mes "[Knight Aylvar]";
-			mes "Yes, it's about my friend. Sorry for such a long story, just a little more hear me out.";
+			mes "Yes, it's about my friend. Sorry for such a long story, just a little more, hear me out.";
 		}
 		next;
 		npctalk "Leiphen: I'm Leiphen, a professor of archeology at Juno.", "", bc_self;
 		mes "[Knight Aylvar]";
-		mes "I show this pieces to my friend, ^0000CDLeiphen^000000.";
-		mes "He shows big interest. ^0000CDHe said that it was made from the shell of a turtle living only in Turtle Island.";
+		mes "I show these pieces to my friend, ^0000CDLeiphen^000000.";
+		mes "He shows big interest. ^0000CDHe said that it was made from the shell of a turtle living only on Turtle Island.";
 		next;
 		mes "[Knight Aylvar]";
-		mes "After I passed the pieces to him....";
-		mes "My friend Leiphen who was looking at the piece, suddenly disappeared to somewhere.";
+		mes "After I handed the pieces to him....";
+		mes "My friend Leiphen who was looking at the pieces suddenly disappeared.";
 		npctalk "Aylvar : I saw it with my own eyes. It was right here.", "", bc_self;
 		next;
 		mes "[Knight Aylvar]";
-		mes "That happening was already ^FF0000half a day ago^000000.";
-		mes "In the meantime, I contacted Juno University and went to Turtle Island, but I haven't achieved any results... I hope I could find a clue, so I was in a position where Leiphen disappeared.";
+		mes "It happened ^FF0000half a day ago^000000.";
+		mes "In the meantime, I contacted Juno University and went to Turtle Island, but I haven't achieved any results... I was hoping I could find a clue so I figure out where Leiphen disappeared to.";
 		next;
 		mes "[Knight Aylvar]";
-		mes "" + .@player_name$ + ", Please help us. Can you help me to find my friend?";
+		mes "" + .@player_name$ + ", please help us. Can you help me find my friend?";
 		mes "This piece might be a clue. Please take a look.";
 		next;
-		select("Please tell me what dose your friend looks like.");
+		select("Please tell me your friend looks like.");
 		mes "[Knight Aylvar]";
-		mes "^0000CDHe wore glasses^000000 and blue short hair. ^0000CDHis face is just like a scholar^000000so you can recognize him.";
+		mes "^0000CDHe wears glasses^000000 and has blue short hair. ^0000CDHis face is just like a scholar^000000 so you should be able to recognize him.";
 		next;
-		if (select( "Show me the piece. Let me take a look.", "Sorry but i'm busy." ) == 2) {
+		if (select( "Show me the piece. Let me take a look.", "Sorry but I'm busy." ) == 2) {
 			npctalk "Aylvar : Leiphen, my friend... Please be safe.", "", bc_self;
 			mes "[Knight Aylvar]";
 			mes "Sorry to bother you.";
@@ -5664,22 +5664,22 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 			close;
 		}
 		if (checkweight(25315,1) == 0) {
-			mes " - ^424242E stopped to hand over the piece in your hand.^000000 - ";
+			mes " - ^424242EStopped handing the piece over.^000000 - ";
 			next;
 			mes "[Knight Aylvar]";
-			mes "I am sorry, " + .@player_name$ + ". You already have too many stuff. I figure it's difficult to find my friend right now.";
+			mes "I am sorry, " + .@player_name$ + ". You already have too much stuff. I figure it's difficult to find my friend right now.";
 			next;
 			mes "[Knight Aylvar]";
-			mes "Can you clear up a little bit? I will be right here waiting for you.";
+			mes "Can you clear up your inventory a little bit? I will be right here waiting for you.";
 			close;
 		}
-		mes " - ^424242I grabbed the piece handed over by the knight. A small leaf is carved on the tortoise shell. It's a clumsy piece, but somehow looks warm.^000000 - ";
+		mes " - ^424242I grabbed the piece handed over by the knight. A small leaf is carved on the turtle shell. It's a bulky piece, but somehow feels warm.^000000 - ";
 		next;
 		mes " - ^424242I was looking at the piece for a while, but suddenly something seemed to appear in my head. Suddenly a gust blows and my vision gets darker.^000000 - ";
 		next;
 		emotion ET_KEK;
-		npctalk "Aylvar : Ugh, it's the same wind like before. " + .@player_name$ + " are you ok?", "", bc_self;
-		mes " - ^424242E's voice is getting smaller and I felt dizzy. It started to smell like wet clay....^000000 - ";
+		npctalk "Aylvar : Ugh, it's the same wind like before. " + .@player_name$ + ", are you ok?", "", bc_self;
+		mes " - ^424242EAylvar's voice is getting smaller and I felt dizzy. It's starting to smell like wet clay....^000000 - ";
 		ill_turtle = 1;
 		setquest 16096;	// To the unknown tortoise island
 		close2;
@@ -5689,10 +5689,10 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 	}
 	if (ill_turtle < 11) {
 		mes "[Knight Aylvar]";
-		mes "" + .@player_name$ + "! Oh, you are ok! I am... worried. After Leiphen, " + .@player_name$ + " you also disappeared, I was really surprised.";
+		mes "" + .@player_name$ + "! Oh, you are ok! I am... worried. After Leiphen, " + .@player_name$ + ", you also disappeared, I was really concerned.";
 		sleep2 500;
 		if (ill_turtle > 5) {
-			unittalk .@account_id, "" + .@player_name$ + " : It's ok, Ph.D. Leiphen seems to be where I went.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : It's ok, Archeologist Leiphen's location seems to be where I went.", bc_self;
 			sleep2 1000;
 			npctalk "Aylvar : Really? Oh. Leiphen...!", "", bc_self;
 		}
@@ -5703,24 +5703,24 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 		}
 		next;
 		mes "[Knight Aylvar]";
-		mes "Are you going there to find Leiphen again?";
-		npctalk "Aylvar : is there a way to go there with me?", "", bc_self;
+		mes "Are you going back to find Leiphen again?";
+		npctalk "Aylvar : Is there a way for me to go there?", "", bc_self;
 		sleep2 1000;
 		unittalk .@account_id, "" + .@player_name$ + " : I think it's hard for you to go there.", bc_self;
 		next;
 		if (select( "Let me go there again.", "I will go there later." ) == 2) {
 			mes "[Knight Aylvar]";
 			mes "Please save Leiphen.";
-			mes "If I can go there, I will save him by myself.";
+			mes "If I can go there, I will save him myself.";
 			close;
 		}
 		mes "[Knight Aylvar]";
 		mes "Thank you. Thank you so much.";
 		mes "Please save Leiphen.";
 		next;
-		mes " - ^424242As the girl who was there told me, I squeezed the piece of the back shell, I felt the wind blowing my hair again.^000000 - ";
+		mes " - ^424242As the girl who was there told me, I squeezed the piece of the turtle shell, I felt the wind blowing my hair again.^000000 - ";
 		next;
-		npctalk "Aylvar : Please be careful. " + .@player_name$ + "!", "", bc_self;
+		npctalk "Aylvar : " + .@player_name$ + ", please be careful!", "", bc_self;
 		mes " - ^424242Before my eyes were completely dark, my cheeks felt the cooler air from the cave....^000000 -";
 		close2;
 		warp "tur_d03_i",132,187;
@@ -5728,17 +5728,17 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 	}
 	if (ill_turtle == 11) {
 		mes "[Knight Aylvar]";
-		mes "" + .@player_name$ + ", Hi. I have heard every story from Leiphen.";
-		mes "He made me worry, but he went there again. He said He would come back after find the secret of the place.";
+		mes "Hi " + .@player_name$ + ". I have heard every story from Leiphen.";
+		mes "I am worried because he went there again. He said he would come back after finds out the secret of that place.";
 		next;
 		mes "[Knight Aylvar]";
-		mes "Not only Leiphen but also a kid who named Narin... you also helped. You are a great adventurer.";
-		mes "Are you go there again?";
+		mes "Not only Leiphen but also a kid named Narin... who you also helped. You are a great adventurer.";
+		mes "Are you going there again?";
 		next;
-		if (select( "Yes. I go there.", "Not right now." ) == 2) {
+		if (select( "Yes. I am going there.", "Not right now." ) == 2) {
 			emotion ET_SURPRISE;
 			mes "[Knight Aylvar]";
-			mes "Oh, if you go there again, please check Leiphen is ok as well.";
+			mes "Oh, since you are going there again, please make sure Leiphen is ok as well.";
 			ill_turtle = 12;
 			setquest 16114;	// Talk with Aylvar
 			completequest 16114;	// Talk with Aylvar
@@ -5746,7 +5746,7 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 		}
 		mes "[Knight Aylvar]";
 		mes "Please come back again, " + .@player_name$ + ".";
-		mes "On the way, please check Leiphen is doing good.";
+		mes "On the way, please make sure Leiphen is doing good.";
 		ill_turtle = 12;
 		setquest 16114;	// Talk with Aylvar
 		completequest 16114;	// Talk with Aylvar
@@ -5754,19 +5754,19 @@ alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
 		warp "tur_d03_i",132,187;
 		end;
 	}
-	npctalk "Aylvar : He is such a guy that research is more important than himself, so I want to be stay closer to him.", "", bc_self;
+	npctalk "Aylvar : He is a guy where research is more important than himself, so I want to stay closer to him.", "", bc_self;
 	mes "[Knight Aylvar]";
-	mes "I see you again. I have reported the happening to Knights Division, and now my job is supporting Leiphen's research.";
-	mes "Are you go there again?";
+	mes "Glad to see you again. I have reported the information to the Knights Division and now my job is to support Leiphen's research.";
+	mes "Are you going there again?";
 	next;
-	if (select( "Yes. I go there.", "Not right now." ) == 2) {
+	if (select( "Yes. I am going there.", "Not right now." ) == 2) {
 		mes "[Knight Aylvar]";
-		mes "When I heard his story, I want to go there too... but I can't do as his explain. I am so sad.";
+		mes "When I heard his story, I wanted to go there too... but I can't do as he explained. I am so sad.";
 		close;
 	}
 	mes "[Knight Aylvar]";
 	mes "Please come back again, " + .@player_name$ + ".";
-	mes "If you find Leiphen, please check he eat alright.";
+	mes "If you find Leiphen, please make sure he is eating.";
 	close2;
 	emotion ET_KEK;
 	warp "tur_d03_i",132,187;
@@ -5784,23 +5784,23 @@ tur_d04_i,99,191,0	warp	illtur04_03	 2,2,tur_d03_i,217,82
 
 tur_d03_i,132,194,3	script	Portal#illtur02	4_ENERGY_RED,{
 	if (ill_turtle < 11) {
-		mes " - ^424242Beyond the door, it appears black, and nothing seems to exist. A reddish glow is floating in front of the black sky. Girl looked a little nervous at this.^000000 - ";
+		mes " - ^424242Beyond the door, it appears black, and nothing seems to exist. A reddish glow is floating in front of the black sky. A nervous looking girl appears.^000000 - ";
 		next;
 		npctalk "Girl : The piece will help you. Hold tight.", "Girl#illtur01", bc_self;
 		mes "[Girl]";
-		mes "...It is the place.";
+		mes "...It is this place.";
 		mes "Hopeless, desperate, and poisonous.";
 		next;
-		mes " - ^424242It's an ambiguous story, but it's about to help. As the girl told me, I held the back shell.^000000 - ";
+		mes " - ^424242It's a puzzling response, but it might help. As the girl told me, I held onto the turtle shell.^000000 - ";
 		next;
-		if (select( "I will back to Alberta.", "I will be left here." ) == 2) {
+		if (select( "Back to Alberta.", "Stay here." ) == 2) {
 			unittalk getcharid(3), "" + strcharinfo(0) + " : I have something to do here.", bc_self;
 			mes "[Girl]";
 			mes "......Not going to back?";
 			close;
 		}
 		npctalk "Girl : Yes. Just... Go.", "Girl#illtur01", bc_self;
-		mes " - ^424242The smell of salty wind lifted the hem. You can hear the waves of Alberta Harbor and the sound of seagulls....^000000 - ";
+		mes " - ^424242The smell of salty wind lifted the hem of my clothing. You can hear the waves of Alberta Harbor and the sound of seagulls....^000000 - ";
 		close2;
 		warp "alberta",219,31;
 		end;
@@ -5808,43 +5808,43 @@ tur_d03_i,132,194,3	script	Portal#illtur02	4_ENERGY_RED,{
 	if (isbegin_quest(16115) == 0) {
 		mes " - ^424242This red light is invisible to Narin. It just seems to disappear.^000000 - ";
 		next;
-		mes " - ^424242If I don't come back, she will forget. Just right before I walk into the light, Narin's voice came from my back.^000000 - ";
+		mes " - ^424242If I don't come back, she will forget. Just right before I walk into the light, Narin's voice echoed from behind me.^000000 - ";
 		next;
 		mes "[Narin]";
 		mes "I will remember... Come back. Please. Bro...!";
 		next;
-		if (select( "Nodded and go to Alberta.", "Nodded and turned." ) == 2) {
-			mes " - ^424242Turning around with a small smile, Narin, who held her fists and looking at here, was surprised and turned to her eyes.^000000 - ";
+		if (select( "Nod and go to Alberta.", "Nod and turn." ) == 2) {
+			mes " - ^424242Turning around with a small smile, Narin, holding her hands, was surprised and glanced over.^000000 - ";
 			next;
 			mes "[Narin]";
 			mes "Ah? Not going back?";
 			next;
-			unittalk getcharid(3), "" + strcharinfo(0) + " : Seems like still need me. Did you call me? I didn't hear clearly, can you call me again?", bc_self;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Seems like you still need me. Did you call me? I didn't hear clearly, can you tell me again?", bc_self;
 			mes "[Narin]";
-			mes "Hay!";
+			mes "Hey!";
 			setquest 16115;	// Talk with girl
 			completequest 16115;	// Talk with girl
 			close;
 		}
-		mes " - ^424242He nodded and recalled the clumsy piece he had now kept in his heart. The sea breeze from the harbor blows by his ears...^000000 - ";
+		mes " - ^424242I nodded and recalled the bulky piece I had now kept by my heart. The sea breeze from the harbor blows by my ears...^000000 - ";
 		setquest 16115;	// Talk with girl
 		completequest 16115;	// Talk with girl
 		close2;
 		warp "alberta",219,31;
 		end;
 	}
-	mes " - ^424242Now I stand in front of the familiar light. Lightly waved her hands to Narin, she closed her eyes and held both hands together.^000000 - ";
+	mes " - ^424242Now I stand in front of the familiar light. Lightly waved my hand to Narin, she closed her eyes and held both hands together.^000000 - ";
 	next;
-	mes " - ^424242With empty hands, I think of the clumsy but warm piece left in my heart.^000000 - ";
+	mes " - ^424242With empty hands, I think of the bulky but warm piece left in my heart.^000000 - ";
 	next;
 	if (select( "Go back to Alberta.", "Stay here." ) == 2) {
 		// todo - unknown text
-		mes " - ^424242Turning around with a small smile, Narin, who held her fists and looking at here, was surprised and turned to her eyes.^000000 - ";
+		mes " - ^424242Turning around with a small smile, Narin, holding her hands, was surprised and glanced over.^000000 - ";
 		next;
 		mes "[Narin]";
 		mes "Ah? Not going back?";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Seems like still need me. Did you call me? I didn't hear clearly, can you call me again?", bc_self;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Seems like you still need me. Did you call me? I didn't hear clearly, can you tell me again?", bc_self;
 		mes "[Narin]";
 		mes "Hay!";
 		close;
