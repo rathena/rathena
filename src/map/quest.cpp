@@ -777,7 +777,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 				continue;
 			if (it->rate < 10000 && rnd()%10000 >= it->rate)
 				continue; // TODO: Should this be affected by server rates?
-			if (!itemdb_exists(it->nameid))
+			if (!item_db.exists(it->nameid))
 				continue;
 
 			struct item entry = {};
@@ -795,7 +795,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 
 			if ((result = pc_additem(sd, &entry, 1, LOG_TYPE_QUEST)) != ADDITEM_SUCCESS) // Failed to obtain the item
 				clif_additem(sd, 0, 0, result);
-//			else if (it.isAnnounced || itemdb_exists(it.nameid)->flag.broadcast)
+//			else if (it.isAnnounced || item_db.find(it.nameid)->flag.broadcast)
 //				intif_broadcast_obtain_special_item(sd, it.nameid, it.mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
