@@ -6383,69 +6383,69 @@ OnInit:
 tur_d03_i,136,187,5	duplicate(dummy_cloaked_npc)	Archeologist Leiphen#illtur01	2_M_ALCHE
 
 
-tur_d03_i,80,180,1	script	An impatient man#illtur	4_M_URGENT_MAN,{
+tur_d03_i,80,180,1	script	Impatient Man#illtur	4_M_URGENT_MAN,{
 	if (ill_turtle == 2) {
 		.@account_id = getcharid(3);
 		.@player_name$ = strcharinfo(0);
 
-		mes "[An impatient man]";
-		mes "Lost her, lost her. My baby. My pretty baby. Where are you? My baby. What's the name? My daughter. Daughter? My baby.";
+		mes "[Impatient Man]";
+		mes "I lost her. I lost her. My baby. My pretty baby. Where are you? My baby. What's her name? My daughter. Daughter? My baby.";
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : Hey, hello?", bc_self;
-		mes " - ^424242As she told me, there is someone... but he doesn't look like Archeologist Leiphen.^000000 - ";
+		mes " - ^424242As she told me, there are others... but he doesn't look like Archeologist Leiphen.^000000 - ";
 		next;
-		mes "[An impatient man]";
-		mes "Who was it? My baby, where are you? My daughter? My.... daughter? Ha, hahaha. Lost it, lost it.";
+		mes "[Impatient Man]";
+		mes "Who was it? My baby, where are you? My daughter? My.... daughter? Ha, hahaha. I lost her. I lost her";
 		next;
 		npctalk "My baby is gone... My baby. My lovely baby.", "", bc_self;
-		unittalk .@account_id, "" + .@player_name$ + " : Does he lost his baby...?", bc_self;
-		select( "Are you looking for baby?", "Do you want my help?" );
-		npctalk "My baby, I lost. I lost my baby. Where are you?", "", bc_self;
-		mes "[An impatient man]";
+		unittalk .@account_id, "" + .@player_name$ + " : Did he lose his baby...?", bc_self;
+		select( "Are you looking for your baby?", "Do you want my help?" );
+		npctalk "My baby, I lost her. I lost my baby. Where are you?", "", bc_self;
+		mes "[Impatient Man]";
 		mes "No. ^FF0000You can't^000000.";
 		next;
 		npctalk "My baby? Baby? I lost, lost, my daughter... baby. Where... where?", "", bc_self;
 		unittalk .@account_id, "" + .@player_name$ + " : ...Excuse me?", bc_self;
-		mes "[An impatient man]";
-		mes "No^FF0000. No. ^000000Can't find her.";
+		mes "[Impatient Man]";
+		mes "No. ^FF0000No.^000000 Can't find her.";
 		next;
-		mes "[An impatient man]";
-		mes "Now ^FF0000 can't. My daughter^000000. Baby... Baby? No. Ha, ha^FF0000haha. No. Ha,ha^000000, My ^FF0000pretty baby,^000000, baby, My ^FF0000 pretty baby, No^000000. No.";
+		mes "[Impatient Man]";
+		mes "No ^FF0000it can't be. My daughter.^000000 Baby... Baby? No. Ha, ha^FF0000haha. No. Ha, ha.^000000 My ^FF0000pretty baby,^000000, baby. My ^FF0000 pretty baby. No.^000000 No.";
 		ill_turtle = 3;
 		erasequest 16097;	// Stranger on Turtle Island 1
 		questinfo_refresh();
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : It's...a strange man.", bc_self;
-		mes " - ^424242Hard to communication...^000000 - ";
+		unittalk .@account_id, "" + .@player_name$ + " : He's...a strange man.", bc_self;
+		mes " - ^424242Hard to communicate with...^000000 - ";
 		mes " - ^424242Let me check the other point. Let's go...^000000 - ";
 		close;
 	}
 	if (ill_turtle == 3) {
-		mes "[An impatient man]";
-		mes "^FF0000No, my daughter. My^000000 pretty baby. No. Lost^FF0000Lost her^000000. Lost. Boohoo... My ^FF0000pretty...baby.. Can't^000000 find^FF0000, can't^000000 find, Can't, ^FF0000find^000000......";
+		mes "[Impatient Man]";
+		mes "^FF0000No, my daughter. My ^000000pretty baby. No. Lost, ^FF0000lost her^000000. Lost. Boohoo... My ^FF0000pretty...baby.. Can't ^000000find, ^FF0000can't^000000 find, can't... ^FF0000find^000000......";
 		if (!.talk)
-			donpcevent "An impatient man#illtur::OnTalk";
+			donpcevent "Impatient Man#illtur::OnTalk";
 		close;
 	}
-	mes "[An impatient man]";
-	mes "Lost her, lost her. My baby. My pretty baby. Where are you go? My baby. What's the name? My daughter. Daughter? My baby.";
+	mes "[Impatient Man]";
+	mes "I lost her. I lost her. My baby. My pretty baby. Where are you? My baby. What's her name? My daughter. Daughter? My baby.";
 	next;
-	mes "[An impatient man]";
+	mes "[Impatient Man]";
 	mes "Who was it? My baby... who?";
 	if (!.talk)
-		donpcevent "An impatient man#illtur::OnTalk";
+		donpcevent "Impatient Man#illtur::OnTalk";
 	close;
 
 OnTalk:
 	.talk = 1;
 	switch( rand(2) ) {
 	case 0:
-		npctalk "I can't. find. My baby. Gone. My. lovely daughter.";
+		npctalk "I can't... find. My baby. Gone. My... lovely daughter.";
 		sleep 3000;
 		npctalk "I can't find. Gone... My daughter, my... daughter? My? baby...";
 		break;
 	case 1:
-		npctalk "My baby, I lost. I lost my baby. Where are you?";
+		npctalk "My baby, I lost her. I lost my baby. Where are you?";
 		sleep 3000;
 		npctalk "My baby? Baby? I lost, lost, my daughter... baby. Where... where?";
 		break;
