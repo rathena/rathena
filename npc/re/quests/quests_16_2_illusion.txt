@@ -7073,45 +7073,45 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 	.@player_name$ = strcharinfo(0);
 
 	if (ill_turtle == 5) {
-		unittalk .@account_id, "" + .@player_name$ + " : Dr. Leiphen! You are the Archeologist Leiphen, right?", bc_self;
-		mes " - ^424242The man...? I find him finally.^000000 -";
+		unittalk .@account_id, "" + .@player_name$ + " : Dr. Leiphen! You are Archeologist Leiphen, right?", bc_self;
+		mes " - ^424242The guy...? I finally found him.^000000 -";
 		next;
 		emotion ET_SURPRISE, .@account_id;
 		mes "[Archeologist Leiphen]";
-		mes "Oh my god... Human, a human? Real human?";
-		mes "Oh Thanks god! Thank you. I thought I'm going to die here!";
-		npctalk "Archeologist Leiphen : How did you know me?", "", bc_self;
+		mes "Oh my god... Human, a human? A real human?";
+		mes "Oh thank God! Thank you. I thought I was going to die here!";
+		npctalk "Archeologist Leiphen : How did you know it was me?", "", bc_self;
 		sleep2 1000;
-		unittalk .@account_id, "" + .@player_name$ + " : Aylvar send me, to looking for you. I'm an adventurer " + .@player_name$ + ".", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Aylvar sent me to look for you. I'm adventurer " + .@player_name$ + ".", bc_self;
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "huu... without Aylvar and " + .@player_name$ + ", I almost die.";
+		mes "huu... without Aylvar and " + .@player_name$ + " I would have died.";
 		mes "^FF0000I couldn't sleep^000000 and eat for several days. I was wandering around.";
 		next;
 		sleep2 1000;
 		emotion ET_QUESTION, .@account_id;
-		unittalk .@account_id, "" + .@player_name$ + " : I have heard you are missing for a half of day...", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I heard you were missing for half a day...", bc_self;
 		mes " - ^424242Several days? It's weird.^000000 -";
 		next;
 		npctalk "Archeologist Leiphen : This Turtle Island is, not the Turtle Island we know.", "", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Anyway have heard from Aylvar? I was dubious when I heard.";
+		mes "Anyway, have you heard from Aylvar? I was hesitant when I heard.";
 		mes "...Aylvar was right about this place.";
 		next;
 		mes "[Archeologist Leiphen]";
 		mes "There are a lot of things I'd like to research, but it's better to go back for now.";
-		mes "I'm exhausted, and don't have some tools to make a record, it's better to prepare and come back.";
+		mes "I'm exhausted and don't have some tools to make proper reasoning. It's better to prepare and come back.";
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : Come back here?", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Of course I have to come back. Isn't it a place where I can discover completely new facts about the history of Turtle Island.";
+		mes "Of course I have to come back. It's a place where I can discover all new facts about the history of Turtle Island.";
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : ...You are an implacable scholar after all.", bc_self;
 		emotion ET_HNG;
 		mes "[Archeologist Leiphen]";
 		mes "I'll take that as a compliment.";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : Well, then you are going back for now? let me guide to get out...", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Well, then you are going back for now? Let me guide you out...", bc_self;
 		sleep2 1000;
 		npctalk "Archeologist Leiphen : Stomach growling...", "", bc_self;
 		emotion ET_SWEAT;
@@ -7123,10 +7123,10 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 		sleep2 500;
 		unittalk .@account_id, "" + .@player_name$ + " : You want me to hunt?", bc_self;
 		sleep2 1000;
-		npctalk "Archeologist Leiphen : After a long research trip, I am able to resolve a few meals at the survey site..", "", bc_self;
+		npctalk "Archeologist Leiphen : After a long research expedition, I was able to have a few meals at the survey site..", "", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "The essence is a turtle, so I can eat. But I couldn't hunt alone, so I starved all the time....";
-		mes "The monsters here are much stronger than the monsters on the turtle island we know. Please?";
+		mes "The essence is a turtle, so I can eat but I couldn't hunt alone, so I starved all this time....";
+		mes "The monsters here are much stronger than the monsters on the Turtle Island we know. Please?";
 		next;
 		if (select( "What kind of monster do you want?", "I think it's better to just go." ) == 1) {
 			mes "[Archeologist Leiphen]";
@@ -7136,21 +7136,21 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 		}
 		else {
 			mes "[Archeologist Leiphen]";
-			mes "Well, but if the monster hunting is too cumbersome... you can carry me out..";
+			mes "Well, if the monster hunting is too cumbersome... you can carry me out..";
 			unittalk .@account_id, "" + .@player_name$ + " : I will hunt the monster.", bc_self;
 		}
 		emotion ET_FRET, .@account_id;
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "Thank you for accepting. Well, I think it's better to think of these monsters are different from turtle island.";
+		mes "Thank you for accepting. Well, I think it's better to think of these monsters as different ones from Turtle Island.";
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ". ^0000CD10monsters each.^000000Please.";
-		mes "And ^0000CDthe meat ^000000for ^0000CD10pieces^000000 please.";
+		mes "^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ". ^0000CD10 monsters each.^000000 Please.";
+		mes "And ^0000CDthe meat^000000, ^0000CD10 pieces^000000 please.";
 		next;
 		mes "[Archeologist Leiphen]";
 		mes "In the meantime, I will make a fire.";
-		mes "Phew... I'm struggle all suddenly. I'm an archaeologist, not a hero of adventure story.";
+		mes "Phew... I'm struggling all of a sudden. I'm an archaeologist, not a hero of an adventure story.";
 		ill_turtle = 6;
 		erasequest 16100;	// Stranger on Turtle Island 4
 		setquest 16101;	// Emergency food procurement 1
@@ -7159,12 +7159,12 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 	}
 	if (ill_turtle == 6) {
 		if (checkquest(16101,HUNTING) != 2 || checkquest(16102,HUNTING) != 2 || countitem(7564) < 10) {
-			npctalk "Archeologist Leiphen : Oh, you come back. I was waiting.", "", bc_self;
+			npctalk "Archeologist Leiphen : Oh, you came back. I was waiting.", "", bc_self;
 			unittalk .@account_id, "" + .@player_name$ + " : ...It's too bad. Leiphen, the flesh of the hunted monster is all rotten..", bc_self;
 			mes "[Archeologist Leiphen]";
-			mes "Oops... The fire doesn't go well. I can't burn books or tools.";
+			mes "Oops... The fire didn't go well. I can't burn books or tools.";
 			next;
-			unittalk .@account_id, "" + .@player_name$ + " : No matter how much I hant, all I got is the rotten meat.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : No matter how much I hunt all I got is rotten meat.", bc_self;
 			mes "[Archeologist Leiphen]";
 			mes "No way... All of it?";
 			mes "^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ", ^000000ALL?";
@@ -7174,17 +7174,17 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 			mes "I can't move without chewing and swallowing something...";
 			npctalk "Archeologist Leiphen : Or you can carry me out...", "", bc_self;
 			sleep2 1500;
-			unittalk .@account_id, "" + .@player_name$ + " : Let me go for the hunting.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Let me go hunt more.", bc_self;
 			close;
 		}
-		npctalk "Archeologist Leiphen : Oh, You came back, " + .@player_name$ + ".", "", bc_self;
+		npctalk "Archeologist Leiphen : Oh, you came back, " + .@player_name$ + ".", "", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Too bad. There was nothing to burn... So I can't make the fire.";
+		mes "Too bad. There was nothing to burn... So I can't make a fire.";
 		next;
 		sleep2 1000;
-		unittalk .@account_id, "" + .@player_name$ + " : I hunt the monsters by type, but all I got was rotten. I brought only " + getitemname(7564) + ".", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I hunted the monsters by the type but all I got was rotten. I brought only " + getitemname(7564) + ".", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "That's really weird. You hunt alive monster, but how come it's only rotten meat?";
+		mes "That's really weird. You hunt living monsters, but somehow it only gives rotten meat?";
 		mes "I can't cook the rotten meat, but I can try to eat!";
 		sleep2 1500;
 		npctalk "Archeologist Leiphen : Chewing on... Yuck... ??!", "", bc_self;
@@ -7196,27 +7196,27 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 		mes "Ugh... I can't eat. Sorry... You tried for nothing...";
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "There is no one around here except me and you, right? I've been around for days ^FF0000but I can't meet anyone^000000.";
-		mes "If there are someone, I can ask for help.";
+		mes "There is no one around here except me and you, right? I've been around here for days ^FF0000but I haven't seen anyone^000000.";
+		mes "If there are others, I can ask for their help.";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : Umm, I saw some people from here.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Umm, I saw some people here.", bc_self;
 		sleep2 500;
 		emotion ET_HUK;
 		npctalk "Archeologist Leiphen : Really? Some people?", "", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Did you see people? Oh, you should tell me earlier, where did you see them? Let's go and talk now!";
-		mes "I want to ask something!";
+		mes "Did you see people? Oh, you should have told me earlier. Where did you see them? Let's go and talk now!";
+		mes "I want to ask them something!";
 		next;
 		sleep2 500;
-		unittalk .@account_id, "" + .@player_name$ + " : You said you want me to carry out...?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : You said you want me to carry you out...?", bc_self;
 		sleep2 1000;
 		unittalk .@account_id, "" + .@player_name$ + " : But, there are some weird people. I'm not sure we can talk...", bc_self;
 		mes "[Archeologist Leiphen]";
 		mes "I'm ok now! Let's go!";
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "Even if we can't talk, still I can figure something by looking at people's lifestyle.";
-		mes "Okay, Let's go! Please show the way! To the nearest place!";
+		mes "Even if we can't talk, I can still figure something out by looking at people's lifestyle.";
+		mes "Okay, let's go! Please show me the way! To the nearest place!";
 		next;
 		emotion ET_SCRATCH, .@account_id;
 		mes " - ^424242I didn't mean that about the talking part, but let's go anyway.";
@@ -7229,13 +7229,13 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 		close;
 	}
 	if (ill_turtle == 7) {
-		npctalk "Archeologist Leiphen : You said, the nearest place is somewhere here? I'm all good. Show me the way!", "", bc_self;
+		npctalk "Archeologist Leiphen : You said the nearest place is somewhere here? I'm all good. Show me the way!", "", bc_self;
 		end;
 	}
 	if (ill_turtle > 10) {
 		switch( isbegin_quest(16106) ) {
 		case 0:
-			npctalk "Archeologist Leiphen : If " + .@player_name$ + " soothes the entangled spirits, I'd like to talk with them someday. About this place...", "", bc_self;
+			npctalk "Archeologist Leiphen : If " + .@player_name$ + " can sooth the entangled spirits, I'd like to talk with them someday. About this place...", "", bc_self;
 			end;
 		case 1:
 			npctalk "Archeologist Leiphen : Hello, " + .@player_name$ + ".", "", bc_self;
@@ -7247,7 +7247,7 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 			mes "As I told you, I'm not going to leave until I found the secret of this place.";
 			mes "Are you here to go to Narin?";
 			next;
-			npctalk "Archeologist Leiphen : Well, eating and sleeping are solved in Alberta. I got a decent accommodation.", "", bc_self;
+			npctalk "Archeologist Leiphen : Well, eating and sleeping were solved in Alberta. I got a decent accommodation.", "", bc_self;
 			sleep2 1000;
 			unittalk .@account_id, "" + .@player_name$ + " : Don't you have a class?", bc_self;
 			mes "[Archeologist Leiphen]";
@@ -7262,7 +7262,7 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 			setquest 16107;	// A memory that should not be forgotten 2
 			close;
 		case 2:
-			npctalk "Archeologist Leiphen : Are you go to the turtles village to meet Narin? Let's hurry!", "", bc_self;
+			npctalk "Archeologist Leiphen : Are you going to the Turtle Island to meet Narin? Let's hurry!", "", bc_self;
 			end;
 		}
 		end;
@@ -7372,7 +7372,7 @@ tur_d04_i,99,153,7	script	#illturg21	CLEAR_NPC,{
 tur_d04_i,99,160,0	duplicate(#illturgg11)	#illturgg21	HIDDEN_WARP_NPC,3,3
 
 tur_d04_i,37,137,7	script	#illturg22	CLEAR_NPC,{
-	mes " - ^424242I feel weird, but nothing here...^000000 -";
+	mes " - ^424242I feel weird, but nothing is here...^000000 -";
 	close;
 }
 tur_d04_i,45,137,0	duplicate(#illturgg11)	#illturgg22	HIDDEN_WARP_NPC,3,3
@@ -7384,7 +7384,7 @@ tur_d04_i,76,35,7	script	#illturg23	CLEAR_NPC,{
 tur_d04_i,69,31,0	duplicate(#illturgg11)	#illturgg23	HIDDEN_WARP_NPC,3,3
 
 tur_d04_i,135,133,1	script	#illturg24	CLEAR_NPC,{
-	mes " - ^424242I have heard something.^000000 -";
+	mes " - ^424242I heard something.^000000 -";
 	close;
 }
 tur_d04_i,137,126,0	duplicate(#illturgg11)	#illturgg24	HIDDEN_WARP_NPC,3,3
