@@ -6459,40 +6459,40 @@ OnInit:
 }
 
 
-tur_d03_i,235,187,7	script	An susceptible soldier#	4_M_KEEN_SOLDIER,{
+tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 	if (ill_turtle == 3) {
 		.@account_id = getcharid(3);
 		.@player_name$ = strcharinfo(0);
 
-		mes "[An susceptible soldier]";
-		mes "Murmur.... ^FF0000Munch^000000, Munch. ^FF0000Murmur^000000...";
-		mes "The Damn^BDBDBDhuh^000000Mon..^BDBDBDDmonster^000000...";
+		mes "[Susceptible Soldier]";
+		mes "Murmur.... ^FF0000Munch^000000, munch. ^FF0000Murmur^000000...";
+		mes "The damn^BDBDBDuh..^000000 Mon..^BDBDBDDmonster^000000...";
 		next;
-		mes "[An susceptible soldier]";
-		mes "It's all ... mine ^BDBDBDIt's all^000000 can^BDBDBDbe^000000mine...";
+		mes "[Susceptible Soldier]";
+		mes "It's all ... mine. ^BDBDBDIt all^000000 can ^BDBDBDbe^000000 mine...";
 		mes "My...my precious ^BDBDBDtreasure^000000... ^FF0000Murmur^000000...";
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : Hum... Hey, hello?", bc_self;
-		mes " - ^424242There is someone. He seems to be muttering, but can't hear clearly. He doesn't look like Archeologist Leiphen^000000 - ";
+		mes " - ^424242There is someone. He seems to be muttering something but I can't hear clearly. He doesn't look like Archeologist Leiphen^000000 - ";
 		next;
-		mes " - ^424242Nail biting and the fingertips are messed up.....^000000 - ";
+		mes " - ^424242Biting nails and the fingertips are messed up.....^000000 - ";
 		next;
-		npctalk "My treasure, if the " + strmobinfo(1,3799) + " was gone... All, Munch... Muunch....", "An susceptible soldier#", bc_self;
-		mes "[An susceptible soldier]";
-		mes "Munch, Munch... Murmur... My^BDBDBDtreasure^000000... My ^BDBDBDprecious^000000treasure... It's ^BDBDBDall^000000mine...";
+		npctalk "My treasure, if the " + strmobinfo(1,3799) + " was gone... All, Munch... Muunch....", "Susceptible Soldier#", bc_self;
+		mes "[Susceptible Soldier]";
+		mes "Munch, Munch... Murmur... My ^BDBDBDtreasure^000000... My ^BDBDBDprecious^000000 treasure... It's ^BDBDBDall^000000 mine...";
 		next;
-		select( "Have you see this person?", "Are... are you ok?" );
+		select( "Have you seen this person?", "Are... are you ok?" );
 		specialeffect EF_SCREEN_QUAKE;
-		mes "[An susceptible soldier]";
-		mes "^BDBDBDA ^000000human? A^BDBDBDhuuu^000000man? There would ^BDBDBDbe^000000 nothing^BDBDBDno such thing^000000!!!!!";
-		mes "Damn^BDBDBDyou^000000! Don't^BDBDBDlook ^000000at me ^BDBDBDlike^000000that...^BDBDBDDon't^000000look!";
+		mes "[Susceptible Soldier]";
+		mes "^BDBDBDA^000000 human? A ^BDBDBDhuuu^000000man? There would ^BDBDBDbe no such thing^000000!!!!!";
+		mes "Damn ^BDBDBDyou^000000! Don't ^BDBDBDlook^000000 at me ^BDBDBDlike^000000 that... ^BDBDBDDon't^000000 look!";
 		next;
-		npctalk "Munch... Muunch, Treasure... My treasure... Munch... Muunch...", "An susceptible soldier#", bc_self;
+		npctalk "Munch... Muunch, treasure... My treasure... Munch... Muunch...", "Susceptible Soldier#", bc_self;
 		sleep2 1500;
-		unittalk .@account_id, "" + .@player_name$ + " : Ugh, it'll be difficult to stay for a while. Avoid.", bc_self;
-		mes "[An susceptible soldier]";
-		mes "Damn^BDBDBDit^000000... ^BDBDBDDamn^000000it...";
-		mes "Munch, Murmur... ^FF0000munch^000000, munch...";
+		unittalk .@account_id, "" + .@player_name$ + " : Ugh, it'll be difficult to stay much longer. Need to avoid.", bc_self;
+		mes "[Susceptible Soldier]";
+		mes "Damn ^BDBDBDit^000000... ^BDBDBDDamn^000000 it...";
+		mes "Munch, murmur... ^FF0000Munch^000000, munch...";
 		ill_turtle = 4;
 		erasequest 16098;	// Stranger on Turtle Island 2
 		questinfo_refresh();
@@ -6501,36 +6501,36 @@ tur_d03_i,235,187,7	script	An susceptible soldier#	4_M_KEEN_SOLDIER,{
 		close;
 	}
 	if (ill_turtle == 4) {
-		mes "[An susceptible soldier]";
-		mes "Munch, Murmur... ^FF0000munch^000000, munch.^FF0000munch^000000...";
-		mes "The Damn^BDBDBDhuh^000000Mon..^BDBDBDDmonster^000000...";
+		mes "[Susceptible Soldier]";
+		mes "Munch, murmur... ^FF0000Munch^000000, munch. ^FF0000Munch^000000...";
+		mes "The damn^BDBDBDuh^000000 mon..^BDBDBDDmonster^000000...";
 		next;
-		mes "[An susceptible soldier]";
-		mes "It's all mine ^BDBDBDCould be^000000 all^BDBDBDmine^000000...";
-		mes "My... my treasure^BDBDBDall^000000of...my... ^FF0000munch,munch^000000...";
+		mes "[Susceptible Soldier]";
+		mes "It's all mine. ^BDBDBDCould be^000000 all^ BDBDBDmine^000000...";
+		mes "My... my treasure. ^BDBDBDAll^000000 of...my... ^FF0000munch, munch^000000...";
 		if (!.talk)
-			donpcevent "An susceptible soldier#::OnTalk";
+			donpcevent "Susceptible Soldier#::OnTalk";
 		close;
 	}
 	if (ill_turtle > 10) {
 		if (checkweight(1201,1) == 0) {
-			mes "[An susceptible soldier]";
-			mes "What are you doing with the heavy bag? empty it.";
+			mes "[Susceptible Soldier]";
+			mes "What are you doing with such a heavy bag? Clear some space.";
 			close;
 		}
 		if (!.talk)
-			donpcevent "An susceptible soldier#::OnTalk";
+			donpcevent "Susceptible Soldier#::OnTalk";
 
 		switch( checkquest(16105,PLAYTIME) ) {
 		case -1:
 			break;
 		case 0:
 		case 1:
-			mes "[An susceptible soldier]";
-			mes "It's^BDBDBDit^000000was... alive^BDBDBDit's^000000alive... Damn! ^BDBDBDAlive^000000alive?! I am!!! I am^BDBDBDdeath^000000, death!!";
-			mes "I can't forgive^BDBDBDyou^000000!!! I will^BDBDBDfind^000000and ^BDBDBDkill^000000you all!! ^FF0000munch^000000... munch...";
+			mes "[Susceptible Soldier]";
+			mes "It's..^BDBDBDit^000000 was... alive. ^BDBDBDIt's^000000 alive... Damn! ^BDBDBDAlive,^000000 alive?! I am!!! I am^BDBDBDdead^000000, dead!!";
+			mes "I can't forgive ^BDBDBDyou^000000!!! I will^BDBDBDfind^000000 and ^BDBDBDkill^000000 you all!! ^FF0000munch^000000... munch...";
 			next;
-			mes " - ^424242 Still better not to be close. Let's wait for a day. After dawn, come back again.^000000 - ";
+			mes " - ^424242Still a good idea to not get close. Let's wait for a day. After dawn, come back again.^000000 - ";
 			close;
 		case 2:
 			erasequest 16105;	// A short break, and a promise
@@ -6542,15 +6542,15 @@ tur_d03_i,235,187,7	script	An susceptible soldier#	4_M_KEEN_SOLDIER,{
 			break;
 		case 0:
 		case 1:
-			mes "[An susceptible soldier]";
-			mes "Ha... Ha^BDBDBDhu^000000, my^BDBDBDtreasure^000000... My treasure...";
-			mes "Finally^BDBDBDI^000000 got^BDBDBDit^000000... Finally^BDBDBDI^000000got...";
+			mes "[Susceptible Soldier]";
+			mes "Ha... Ha ^BDBDBDuh^000000, my ^BDBDBDtreasure^000000... My treasure...";
+			mes "Finally ^BDBDBDI^000000 got ^BDBDBDit^000000... Finally ^BDBDBDI^000000 got...";
 			next;
-			mes "[An susceptible soldier]";
-			mes "Who^BDBDBDare^000000you! Why^BDBDBDare^000000you here!";
-			mes "Don't look my^BDBDBDtreasure^000000 ^BDBDBDI^000000can't let you!!!!! Munch, ^FF0000munch^000000, munch...";
+			mes "[Susceptible Soldier]";
+			mes "Who ^BDBDBDare^000000 you!? Why ^BDBDBDare^000000 you here!";
+			mes "Don't look at my ^BDBDBDtreasure^000000! ^BDBDBDI^000000 won't let you!!!!! Munch, ^FF0000munch^000000, munch...";
 			next;
-			mes " - ^424242He seems feel good. ..Good? Just let him. Come back after dawn.^000000 -";
+			mes " - ^424242He seems ok. ..Ok? Just leave him be. Come back after dawn.^000000 -";
 			close;
 		case 2:
 			erasequest 16110;	// Vain Desire - Cooldown
@@ -6569,31 +6569,31 @@ tur_d03_i,235,187,7	script	An susceptible soldier#	4_M_KEEN_SOLDIER,{
 		case 0:
 		case 1:
 			specialeffect EF_SCREEN_QUAKE;
-			mes "[An susceptible soldier]";
+			mes "[Susceptible Soldier]";
 			mes "^FF0000I need more!!!!!!!!!!^000000";
 			next;
-			mes "[An susceptible soldier]";
+			mes "[Susceptible Soldier]";
 			mes "^FF0000My treasure... My revenge...";
 			mes "Not enough!!!^000000";
 			next;
 			mes " - ^424242Did I forget something? ^0000CD" + getitemname(25316) + " 5 pieces ^424242and ^0000CDkill 10 " + strmobinfo(1,3799) + ".^000000 -";
 			close;
 		case 2:
-			mes "[An susceptible soldier]";
-			mes "Did you payback? To the^BDBDBDterrible^000000monsters?";
-			mes "And my treasure... ^FF0000Munch^000000, Munch... You brought^BDBDBDmy^000000treasure?";
+			mes "[Susceptible Soldier]";
+			mes "Did you get payback? To the ^BDBDBDterrible^000000 monsters?";
+			mes "And my treasure... ^FF0000Munch^000000, munch... You brought ^BDBDBDmy^000000 treasure?";
 			next;
 			specialeffect EF_SCREEN_QUAKE;
-			mes "[An susceptible soldier]";
+			mes "[Susceptible Soldier]";
 			mes "^FF0000Give me^000000! My treasure!";
 			next;
-			mes "[An susceptible soldier]";
+			mes "[Susceptible Soldier]";
 			mes "Ha... Haha... Haha^BDBDBDha^000000ha...... Haha^BDBDBDha^000000hahaha......";
 			mes "It's shiny... shiny... It's pretty, so pretty.";
 			next;
-			mes "[An susceptible soldier]";
+			mes "[Susceptible Soldier]";
 			mes "Take this. I don't need it.";
-			mes "I have my treasure^BDBDBDnow^000000... It's shiny... Pretty.";
+			mes "I have my treasure ^BDBDBDnow^000000... It's shiny... Pretty.";
 			next;
 			mes " - ^424242As exchange, I took the " + getitemname(25271) + ". How could he have become obsessed with such empty garbage without seeing anything really valuable?^000000 -";
 			next;
@@ -6605,52 +6605,52 @@ tur_d03_i,235,187,7	script	An susceptible soldier#	4_M_KEEN_SOLDIER,{
 			getexp 1200000,1000000;	// todo unknown exp (irowiki values)
 			close;
 		}
-		mes "[An susceptible soldier]";
-		mes "Munch, Murmur... ^FF0000munch^000000, munch.^FF0000munch^000000...";
-		mes "The Damn^BDBDBDhuh^000000Mon..^BDBDBDDmonster^000000...";
+		mes "[Susceptible Soldier]";
+		mes "Munch, murmur... ^FF0000munch^000000, munch. ^FF0000Munch^000000...";
+		mes "The damn^BDBDBDuh^000000.. mon..^BDBDBDDmonster^000000...";
 		next;
-		mes "[An susceptible soldier]";
-		mes "It's all mine ^BDBDBDCould be^000000 all^BDBDBDmine^000000...";
-		mes "My... my treasure^BDBDBDall^000000of...my... ^FF0000munch,munch^000000...";
+		mes "[Susceptible Soldier]";
+		mes "It's all mine. ^BDBDBDCould be^000000 all^BDBDBDmine^000000...";
+		mes "My... my treasure. ^BDBDBDAll^000000 of... my... ^FF0000munch, munch^000000...";
 		next;
 		select( "What treasure?", "What monster?" );	// note: the selection doesn't change the dialog
-		mes "[An susceptible soldier]";
-		mes "The Damn^BDBDBDhuh^000000Mon.. ^FF0000" + strmobinfo(1,3799) + " monster^000000...";
-		mes "They take^BDBDBDmy^000000treasure^BDBDBDD.... My!! treasure^000000...!!";
+		mes "[Susceptible Soldier]";
+		mes "The damn^BDBDBDuh^000000.. mon.. ^FF0000" + strmobinfo(1,3799) + " monster^000000...";
+		mes "They took ^BDBDBDmy^000000 treasure^BDBDBDD.... My!! treasure^000000...!!";
 		next;
-		mes "[An susceptible soldier]";
-		mes "Munch, Murmur... ^FF0000munch^000000, munch.";
-		mes "Munch,  ^FF0000Munch^000000... Murmur...";
+		mes "[Susceptible Soldier]";
+		mes "Munch, murmur... ^FF0000munch^000000, munch.";
+		mes "Munch, ^FF0000munch^000000... Murmur...";
 		next;
-		if (select( "Let me find.", "Okay." ) == 2) {
-			mes "[An susceptible soldier]";
-			mes "Yes... It's mine^BDBDBDhuh^000000... My^BDBDBDtreasure^000000...";
-			mes "I couldn't have ^BDBDBDit^000000... The Damn ^BDBDBDmon^000000monsters...";
-			mes "Munch, ^FF0000Munch Munch Munch^000000...";
+		if (select( "Let me search.", "Okay." ) == 2) {
+			mes "[Susceptible Soldier]";
+			mes "Yes... It's mine.. ^BDBDBDuh^000000... My ^BDBDBDtreasure^000000...";
+			mes "I couldn't get ^BDBDBDit^000000... The damn ^BDBDBDmon^000000.. monsters...";
+			mes "Munch, ^FF0000munch munch munch^000000...";
 			close;
 		}
-		mes "[An susceptible soldier]";
-		mes "You? Are^BDBDBDyou^000000 going?";
-		mes "Go ^BDBDBDgo^000000get it! My^BDBDBDtreasure^000000! You can find it from them! My^BDBDBDtreasure^000000!";
+		mes "[Susceptible Soldier]";
+		mes "You? Are ^BDBDBDyou^000000 going?";
+		mes "Go, ^BDBDBDgo^000000 get it! My ^BDBDBDtreasure^000000! You can take it from them! My ^BDBDBDtreasure^000000!";
 		next;
-		mes "[An susceptible soldier]";
-		mes "And payback to " + strmobinfo(1,3799) + ". ^FF0000Revenge^000000... Munch Munch... My^BDBDBDrevenge^000000.. Please...";
-		mes "Get rid of 10... monsters! Munch, ^FF0000Munch Munch^000000... Get ^BDBDBDrid^000000of them!!!";
+		mes "[Susceptible Soldier]";
+		mes "And payback to " + strmobinfo(1,3799) + ". ^FF0000Revenge^000000... Munch munch... My ^BDBDBDrevenge^000000.. Please...";
+		mes "Get rid of 10... monsters! Munch, ^FF0000munch munch^000000... Get ^BDBDBDrid^000000 of them!!!";
 		next;
-		mes " - ^424242Narin said, I can get some ^0000CD" + getitemname(25316) + "^424242 from here, it would be enough. ^0000CDLet me prepare^424242 5 pieces.^000000 - ";
-		mes " - ^0000CDI need to get rid of ^42424210 " + strmobinfo(1,3799) + " monsters.^000000 - ";
+		mes " - ^424242Narin said, I can get some ^0000CD" + getitemname(25316) + "^424242 from here. It would be enough for him. ^0000CDLet me prepare^424242 5 pieces.^000000 - ";
+		mes " - ^0000CDI need to get rid of the ^42424210 " + strmobinfo(1,3799) + " monsters.^000000 - ";
 		setquest 16109;	// Vain Desire
 		close;
 	}
 	mes "[An susceptible soldier]";
-	mes "Murmur.... ^FF0000Munch^000000, Munch. ^FF0000Murmur^000000...";
-	mes "The Damn ^BDBDBDhuh^000000 Mon..^BDBDBDmonster^000000...";
+	mes "Murmur.... ^FF0000Munch^000000, munch. ^FF0000Murmur^000000...";
+	mes "The damn ^BDBDBDuh^000000.. mon..^BDBDBDmonster^000000...";
 	next;
-	mes "[An susceptible soldier]";
-	mes "It's all ... mine ^BDBDBDIt's all^000000 can ^BDBDBDbe^000000 mine...";
-	mes "My...my precious ^BDBDBDtreasure^000000... ^FF0000Murmur^000000...";
+	mes "[Susceptible Soldier]";
+	mes "It's all... mine. ^BDBDBDIt all^000000 can ^BDBDBDbe^000000 mine...";
+	mes "My... my precious ^BDBDBDtreasure^000000... ^FF0000Murmur^000000...";
 	if (!.talk)
-		donpcevent "An susceptible soldier#::OnTalk";
+		donpcevent "Susceptible Soldier#::OnTalk";
 	close;
 
 OnTalk:
@@ -6669,7 +6669,7 @@ OnTalk:
 	case 2:
 		npctalk "Revenge... Revenge... Munch... Muunch... Munch... Muunch...";
 		sleep 3000;
-		npctalk "I will payback... to... " + strmobinfo(1,3799) + "... They took my treasure!";
+		npctalk "I will get payback... on... " + strmobinfo(1,3799) + "... They took my treasure!";
 		break;
 	}
 	.talk = 0;
