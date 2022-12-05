@@ -6595,7 +6595,7 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 			mes "Take this. I don't need it.";
 			mes "I have my treasure ^BDBDBDnow^000000... It's shiny... Pretty.";
 			next;
-			mes " - ^424242As exchange, I took the " + getitemname(25271) + ". How could he have become obsessed with such empty garbage without seeing anything really valuable?^000000 -";
+			mes " - ^424242As exchange, I took the " + getitemname(25271) + ". How could he have become obsessed with such worthless garbage without seeing anything really valuable?^000000 -";
 			next;
 			mes " - ^424242Well, it might be just the idea of a living person that the " + getitemname(25271) + " is precious.^000000 -";
 			delitem 25316,5;	// Shabby_Metal_Chip
@@ -6695,21 +6695,21 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 	.@player_name$ = strcharinfo(0);
 
 	if (ill_turtle == 4) {
-		mes " - ^424242Oops. It's not the Archeologist Leiphen for sure.^000000 -";
+		mes " - ^424242Oops. It's not Archeologist Leiphen for sure.^000000 -";
 		next;
 		mes "[Fragile Woman]";
 		mes "I'm hungry. Help me. I'm so hungry.";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : I'm glad that I find someone who can speak.", bc_self;
-		select( "How can I help you?", "I'll help you anyway.", "Please help me." );
-		npctalk "I will starve to death. If I don't eat something, will die.", "", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I'm glad that I found someone who can speak.", bc_self;
+		select( "How can I help you?", "Let me help you.", "Please help me." );
+		npctalk "I'm starving to death. If I don't eat something, I will die.", "", bc_self;
 		sleep2 3000;
 		npctalk "I'm hungry. Please help me. Please...", "", bc_self;
 		mes "[Fragile Woman]";
 		mes "I haven't had a meal today, yesterday, and the day before yesterday.";
 		mes "I'm going to die. Please help me... Please.";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : I'll help. Let me share some food? Are there any animals I can hunt around?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I'll help. Let me share some food. Are there any animals I can hunt around?", bc_self;
 		mes "[Fragile Woman]";
 		mes "I'm going to die. Starving.";
 		mes "I'm hungry. I'm starving.";
@@ -6717,11 +6717,11 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		select( "So what do you want...", "Please talk clearly!" );
 		npctalk "I can eat anthing now. Please give me something.", "", bc_self;
 		mes "[Fragile Woman]";
-		mes "I haven't had a meal today. I starved all the way yesterday. My child was starving too. My husband was also starving.";
-		mes "I'm going to die. We all die.";
+		mes "I haven't had a meal today. I was starving all day yesterday. My child was starving too. My husband was also starving.";
+		mes "I'm going to die. We are all going die.";
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : Haha... I can't communicate... I want to go home.", bc_self;
-		mes " - ^424242She told me the other place, ^0000CDthe other^000000point. ^0000CDTurtle Palace^424242is it, Nearby?^000000 -";
+		mes " - ^424242She told me the other place, ^0000CDthe other^000000 point. Is ^0000CDTurtle Palace^424242 nearby?^000000 -";
 		ill_turtle = 5;
 		erasequest 16099;	// Stranger on Turtle Island 3
 		setquest 16100;	// Stranger on Turtle Island 4
@@ -6730,15 +6730,15 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 	if (ill_turtle == 7) {
 		setpcblock PCBLOCK_NPC, true;
 		cloakoffnpcself( "Archeologist Leiphen#illtur03" );
-		npctalk "Archeologist Leiphen : Is the place? I've been here a few times...", "Archeologist Leiphen#illtur03", bc_self;
+		npctalk "Archeologist Leiphen : Is this the place? I've been here a few times...", "Archeologist Leiphen#illtur03", bc_self;
 		sleep2 1000;
 		setpcblock PCBLOCK_NPC, false;
 		unittalk .@account_id, "" + .@player_name$ + " : Yes. Just right here. Hello, are you ok?", bc_self;
 
 		mes "[Fragile Woman]";
-		mes "I'm hungry. I'm starving for long times... I'm going to die. Please, please help me.";
+		mes "I'm hungry. I've been starving for a long time... I'm going to die. Please, please help me.";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : Well, This is the woman here.. Professor Leiphen.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Well, this is the woman here, Professor Leiphen.", bc_self;
 		mes "[Archeologist Leiphen]";
 		mes "......um.. Hey?";
 		next;
@@ -6750,24 +6750,24 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		next;
 		mes "[Archeologist Leiphen]";
 		mes "Who are you talking to now?";
-		mes "Nobody is here except two of us.";
+		mes "Nobody is here except the two of us.";
 		npctalk "I'm going to die. Die. Die.", "", bc_self;
 		sleep2 1000;
 		unittalk .@account_id, "" + .@player_name$ + " : ......", bc_self;
 		next;
-		npctalk "Ah-ha, I find.", "", bc_self;
+		npctalk "Ah-ha, I found.", "", bc_self;
 		cloakonnpcself( "Fragile Woman#illtur" );
 		specialeffect EF_SCREEN_QUAKE, AREA, "Rancorous Ghost#illtur01";
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur01";
 		cloakoffnpcself( "Rancorous Ghost#illtur01" );
 		mes "[Archeologist Leiphen]";
-		mes "What... sound... this...";
+		mes "What... is... that... sound...";
 		next;
 		specialeffect EF_SCREEN_QUAKE, AREA, "Rancorous Ghost#illtur02";
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur02";
 		cloakoffnpcself( "Rancorous Ghost#illtur02" );
 		sleep2 800;
-		npctalk "I find.", "Rancorous Ghost#illtur03", bc_self;
+		npctalk "I found.", "Rancorous Ghost#illtur03", bc_self;
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur03";
 		cloakoffnpcself( "Rancorous Ghost#illtur03" );
 		sleep2 800;
@@ -6776,7 +6776,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur04";
 		cloakoffnpcself( "Rancorous Ghost#illtur04" );
 		sleep2 800;
-		npctalk "Find alive.", "Rancorous Ghost#illtur05", bc_self;
+		npctalk "Found alive.", "Rancorous Ghost#illtur05", bc_self;
 		cloakoffnpcself( "Rancorous Ghost#illtur05" );
 		sleep2 800;
 		npctalk "Catch!", "Rancorous Ghost#illtur06", bc_self;
@@ -6788,53 +6788,53 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur07";
 		cloakoffnpcself( "Rancorous Ghost#illtur07" );
 		sleep2 800;
-		npctalk "Make a piece!", "Rancorous Ghost#illtur01", bc_self;
+		npctalk "Make into pieces!", "Rancorous Ghost#illtur01", bc_self;
 		mes "[Archeologist Leiphen]";
-		mes "Aargh! What is it!";
+		mes "Aargh! What is this!";
 		next;
 		cloakoffnpcself( "Girl#illtur02" );
-		unittalk .@account_id, "" + .@player_name$ + " : Holy, it's dangerous!", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Look out, it's dangerous!", bc_self;
 		mes "[Girl]";
 		mes "Put this in your mouth. Shh, quietly!";
 		next;
-		unittalk .@account_id, "" + .@player_name$ + " : Oop, you are the girl? What is it, a backshell?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Hey, you are the girl from before? What is it, a turtle shell?", bc_self;
 		mes "[Girl]";
-		mes "Don't breath. You too.";
+		mes "Don't breathe. You too.";
 		next;
-		npctalk "Archeologist Leiphen : is there an other one?", "Archeologist Leiphen#illtur03", bc_self;
+		npctalk "Archeologist Leiphen : Is there another one?", "Archeologist Leiphen#illtur03", bc_self;
 		sleep2 1000;
-		npctalk "Girl : Don't breath! Don't talk!", "Girl#illtur02", bc_self;
+		npctalk "Girl : Don't breathe! Don't talk!", "Girl#illtur02", bc_self;
 		sleep2 1000;
-		npctalk "Archeologist Leiphen : h...", "Archeologist Leiphen#illtur03", bc_self;
+		npctalk "Archeologist Leiphen : H...", "Archeologist Leiphen#illtur03", bc_self;
 		specialeffect EF_CLOAKING, AREA, "Archeologist Leiphen#illtur03";
 		sleep2 1000;
 		npctalk "Where are they?", "Rancorous Ghost#illtur02", bc_self;
-		npctalk "They just gone.", "Rancorous Ghost#illtur04", bc_self;
+		npctalk "They just vanished.", "Rancorous Ghost#illtur04", bc_self;
 		npctalk "They are gone.", "Rancorous Ghost#illtur06", bc_self;
-		npctalk "How could it?", "Rancorous Ghost#illtur01", bc_self;
+		npctalk "How could it be?", "Rancorous Ghost#illtur01", bc_self;
 		npctalk "Who did it?", "Rancorous Ghost#illtur05", bc_self;
 		sleep2 1000;
-		npctalk "Disappear!", "Rancorous Ghost#illtur03", bc_self;
+		npctalk "Disappeared!", "Rancorous Ghost#illtur03", bc_self;
 		npctalk "Gone. Completely gone!", "Rancorous Ghost#illtur07", bc_self;
-		npctalk "I saw the living things?", "Rancorous Ghost#illtur05", bc_self;
-		npctalk "I find them!", "Rancorous Ghost#illtur04", bc_self;
-		npctalk "Should have kill!", "Rancorous Ghost#illtur06", bc_self;
+		npctalk "I saw living things?", "Rancorous Ghost#illtur05", bc_self;
+		npctalk "I will find them!", "Rancorous Ghost#illtur04", bc_self;
+		npctalk "Should have killed!", "Rancorous Ghost#illtur06", bc_self;
 		mes "[Girl]";
-		mes "Now I can't see both of you... But don't go. I'm speaking in a small voice.";
+		mes "Now I can't see both of you... But don't go. I'm speaking in a quiet voice.";
 		next;
-		npctalk "Girl : ......You are here?", "Girl#illtur02", bc_self;
+		npctalk "Girl : ......Are you here?", "Girl#illtur02", bc_self;
 		mes "[Girl]";
-		mes "Here, right?";
-		mes "I'm speaking it once, so listen carefully.";
-		next;
-		mes "[Girl]";
-		mes "You won't be caught if you bite that and hold breath.";
-		mes "Just get out from here quickly. And come back where we met.";
+		mes "You are here, right?";
+		mes "I'm saying this once, so listen carefully.";
 		next;
 		mes "[Girl]";
-		mes "The place first time you met me... Remember? I'll be waiting.";
+		mes "You won't be caught if you bite on that and hold your breath.";
+		mes "Just get out of here, quickly. Go back to where we met.";
 		next;
-		npctalk "Gone. The live people.", "Rancorous Ghost#illtur05", bc_self;
+		mes "[Girl]";
+		mes "The place where you met me for the first time... Remember? I'll be waiting.";
+		next;
+		npctalk "Gone. The living people.", "Rancorous Ghost#illtur05", bc_self;
 		sleep2 1000;
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur03";
 		cloakonnpcself( "Rancorous Ghost#illtur03" );
@@ -6842,7 +6842,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		sleep2 1000;
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur07";
 		cloakonnpcself( "Rancorous Ghost#illtur07" );
-		npctalk "Here all death.", "Rancorous Ghost#illtur07", bc_self;
+		npctalk "All here are dead.", "Rancorous Ghost#illtur07", bc_self;
 		sleep2 1000;
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur04";
 		cloakonnpcself( "Rancorous Ghost#illtur04" );
@@ -6862,15 +6862,15 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		sleep2 1000;
 		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur01";
 		cloakonnpcself( "Rancorous Ghost#illtur01" );
-		npctalk "It's all death...", "Rancorous Ghost#illtur06", bc_self;
+		npctalk "It's all dead...", "Rancorous Ghost#illtur06", bc_self;
 		sleep2 1000;
 		cloakonnpcself( "Rancorous Ghost#illtur06" );
 		sleep2 3000;
-		unittalk .@account_id, "" + .@player_name$ + " : We don't have choice, just believe her. Let's go upward!", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : We don't have a choice, just believe her. Let's go upward!", bc_self;
 		mes "[Archeologist Leiphen]";
 		mes "Let's gooo!";
 		next;
-		mes " - ^424242Archeologist Leiphen hold his breath and nodded.^000000 - ";
+		mes " - ^424242Archeologist Leiphen held his breath and nodded.^000000 - ";
 		ill_turtle = 8;
 		erasequest 16103;	// The Secret of Strangers
 		setquest 16104;	// A long-forgotten story
@@ -6888,7 +6888,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 			mes "I'm hungry... Hungry. I'm going to die.";
 			next;
 			mes "[Fragile Woman]";
-			mes "I can eat anything in front of me. From head to teo...";
+			mes "I can eat anything in front of me. From head to toe...";
 			next;
 			mes " - ^424242I should be closer. After dawn, maybe calmer.";
 			close2;
@@ -6904,10 +6904,10 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		case 0:
 		case 1:
 			mes "[Fragile Woman]";
-			mes "Meat... Easily digesible meat. Hungry. Hungry. Too good. Meat...";
+			mes "Meat... Easily digestible meat. Hungry. Hungry. Too good. Meat...";
 			mes "I'm hungry. Want more. Yummy. Too tasty.";
 			next;
-			unittalk .@account_id, "" + .@player_name$ + " : Looking at the happiness with " + getitemname(7564) + ".... I feel sorry.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Looking at the happiness she gets with " + getitemname(7564) + ".... I feel sorry.", bc_self;
 			mes " - ^424242Still... satisfied. Let's come back after dawn.^000000 -";
 			close;
 		case 2:
@@ -6933,12 +6933,12 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 			npctalk "I'm going to die. Die. Die.", "", bc_self;
 			mes "[Fragile Woman]";
 			mes "Give me. ^0000CDThe " + getitemname(7564) + ". 10 pieces.^000000";
-			mes "It's ok the " + getitemname(7564) + ", or I will just die. Starving and suffering.";
+			mes "It's ok. I need " + getitemname(7564) + ", or I will just die. Starving and suffering.";
 			close;
 		case 2:
 			if (checkweight(1201,1) == 0) {
 				mes "[Fragile Woman]";
-				mes "What are you doing with the heavy bag? empty it.";
+				mes "What are you doing with such a heavy bag? Clear it out some.";
 				close;
 			}
 			setpcblock PCBLOCK_NPC, true;
@@ -6948,15 +6948,15 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 			unittalk .@account_id, "" + .@player_name$ + " : I came back. I finished the hunting.", bc_self;
 
 			mes "[Fragile Woman]";
-			mes "Ah..ah.. the nice smell. Meat smell.";
-			mes "It smells delicious. It looks so delicious. Please give it to me. Hungry. hurry.";
+			mes "Ah..ah.. The nice smell of meat.";
+			mes "It smells delicious. It looks so delicious. Please give it to me. Hungry. Hurry.";
 			next;
 			unittalk .@account_id, "" + .@player_name$ + " : ...It smells rotten...", bc_self;
 			mes "[Fragile Woman]";
-			mes "Delicious. It's so delicious. happy. It's really good.";
+			mes "Delicious. It's so delicious. Happy. It's really good.";
 			next;
-			npctalk "Women : chomp chomp, munch....", "", bc_self;
-			mes " - ^424242......she is holding with bare hands, and eating..^000000 -";
+			npctalk "Woman : chomp chomp, munch....", "", bc_self;
+			mes " - ^424242......she is holding it with her bare hands and eating..^000000 -";
 			next;
 			mes "[Fragile Woman]";
 			mes "Ahah, I'm full. I'm not die now. I'm full.";
@@ -6966,7 +6966,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 			sleep2 500;
 			unittalk .@account_id, "" + .@player_name$ + " : ... " + getitemname(25271) + "?", bc_self;
 			mes "[Fragile Woman]";
-			mes "I ate everything. Sorry. That's only one thing I can give to you.";
+			mes "I ate everything. Sorry. That's the only thing I can give you.";
 			delitem 7564,10;	// Rotten_Meat
 			erasequest 16111;	// Endless Hunger 1
 			erasequest 16112;	// Endless Hunger 2
@@ -6980,17 +6980,17 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		next;
 		unittalk .@account_id, "" + .@player_name$ + " : How.. can I help you?", bc_self;
 		mes "[Fragile Woman]";
-		mes "...Help me? Really? You don't let me die?";
+		mes "...Help me? Really? You won't let me die?";
 		next;
 		mes "[Fragile Woman]";
 		mes "Then please hunt turtles. ^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ". 10 monsters each.^000000";
-		mes "Please take meat. " + getitemname(7564) + ". 10pieces.";
+		mes "Please take the meat. " + getitemname(7564) + ". 10pieces.";
 		next;
 		npctalk "I'm hungry. Please help me. I'm hungry.", "", bc_self;
 		sleep2 500;
 		unittalk .@account_id, "" + .@player_name$ + " : It's all rotten meat.", bc_self;
 		mes "[Fragile Woman]";
-		mes "It's ok. Or I'm die. Starving...";
+		mes "It's ok. Or I will die. Starving...";
 		mes "Take the meat. ^0000CDThe " + getitemname(7564) + ". 10 pieces.^000000";
 		next;
 		mes " - ^424242Archeologist Leiphen couldn't eat... But according to Narin, she will be happy. I can only get the " + getitemname(7564) + " in here.^000000 -";
@@ -6998,22 +6998,22 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		npctalk "I'm going to die. Die. Die.", "", bc_self;
 		if (select( "I will take it.", "I can't help you now." ) == 2) {
 			mes "[Fragile Woman]";
-			mes "I'm going to die. Starving to die.";
+			mes "I'm going to die. Starve to death.";
 			next;
 			mes "[Fragile Woman]";
-			mes "^FF0000I can eat anything. Really anything. I can eat cham champ.^000000";
+			mes "^FF0000I can eat anything. Really anything. I can eat.. chomp chomp.^000000";
 			close;
 		}
 		mes "[Fragile Woman]";
 		mes "Thank you. Meat, I will die if I can't eat.";
-		mes "I can live more.";
+		mes "I can now live some more.";
 		unittalk .@account_id, "" + .@player_name$ + " : ......", bc_self;
 		setquest 16111;	// Endless Hunger 1
 		setquest 16112;	// Endless Hunger 2
 		close;
 	}
 	mes "[Fragile Woman]";
-	mes "Hungry. I'm hungry so I can't move..";
+	mes "Hungry. I'm so hungry I can't move..";
 	mes "Please... please have mercy. I've been starving for too long...";
 	if (!.talk)
 		donpcevent "Fragile Woman#illtur::OnTalk";
@@ -7028,7 +7028,7 @@ OnTalk:
 		npctalk "I can eat anthing now. Please give me something.";
 		break;
 	case 1:
-		npctalk "I will starve to death. If I don't eat something, will die.";
+		npctalk "I will starve to death. If I don't eat something, I will die.";
 		sleep 3000;
 		npctalk "I'm hungry. Please help me. Please...";
 		break;
