@@ -1637,6 +1637,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NPC_BLEEDING:
 		sc_start(src,bl,SC_BLEEDING,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
+	case NPC_BLEEDING2:
+		sc_start(src,bl,SC_BLEEDING,(50+10*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
+		break;
 	case NPC_CHANGEUNDEAD:
 		sc_start(src, bl, SC_CHANGEUNDEAD, (10 * skill_lv), skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
@@ -5130,6 +5133,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
 	case NPC_BLEEDING:
+	case NPC_BLEEDING2:
 	case NPC_CRITICALWOUND:
 	case NPC_HELLPOWER:
 	case RK_SONICWAVE:

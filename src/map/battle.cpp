@@ -3009,6 +3009,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case NPC_CURSEATTACK:
 			case NPC_SLEEPATTACK:
 			case NPC_BLEEDING:
+			case NPC_BLEEDING2:
 				hitrate += hitrate * 20 / 100;
 				break;
 			case NPC_FIREBREATH:

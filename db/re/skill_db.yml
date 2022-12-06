@@ -17907,6 +17907,20 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 764
+    Name: NPC_BLEEDING2
+    Description: Bleeding
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: -9
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    Duration2: 108000
+    Status: Bleeding
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
