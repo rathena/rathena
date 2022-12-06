@@ -10464,6 +10464,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_WIDEFREEZE2:
 	case NPC_WIDESLEEP:
 	case NPC_WIDESILENCE:
+	case NPC_WIDESILENCE2:
 	case NPC_WIDESTONE:
 	case NPC_WIDESTUN:
 	case NPC_SLOWCAST:
