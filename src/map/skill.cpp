@@ -10456,6 +10456,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			break;
 		}
 	case NPC_WIDEBLEEDING:
+	case NPC_WIDEBLEEDING2:
 	case NPC_WIDECONFUSE:
 	case NPC_WIDECURSE:
 	case NPC_WIDEFREEZE:
