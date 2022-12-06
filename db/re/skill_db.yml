@@ -17985,6 +17985,33 @@ Body:
         Area: 14
     Duration2: 4500
     Status: Stun
+  - Id: 759
+    Name: NPC_WIDESTONE2
+    Description: Wide Petrify
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration1: 100
+    Duration2: 17000
+    Status: StoneWait
   - Id: 762
     Name: NPC_WIDECONFUSE2
     Description: Wide Confusion
