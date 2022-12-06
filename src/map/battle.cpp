@@ -3014,6 +3014,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				break;
 			case NPC_FIREBREATH:
 			case NPC_ICEBREATH:
+			case NPC_ICEBREATH2:
 			case NPC_THUNDERBREATH:
 			case NPC_ACIDBREATH:
 			case NPC_DARKNESSBREATH:
@@ -4098,6 +4099,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NPC_DARKNESSBREATH:
 		case NPC_FIREBREATH:
 		case NPC_ICEBREATH:
+		case NPC_ICEBREATH2:
 		case NPC_THUNDERBREATH:
 		case NPC_HELLJUDGEMENT:
 		case NPC_HELLJUDGEMENT2:

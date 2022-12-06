@@ -1649,6 +1649,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NPC_ICEBREATH:
 		sc_start(src,bl,SC_FREEZE,70,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
+	case NPC_ICEBREATH2:
+		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
+		break;
 	case NPC_MENTALBREAKER:
 		{	//Based on observations by Tharis, Mental Breaker should do SP damage
 			//equal to Matk*skLevel.
@@ -5335,6 +5338,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_DARKNESSBREATH:
 	case NPC_FIREBREATH:
 	case NPC_ICEBREATH:
+	case NPC_ICEBREATH2:
 	case NPC_THUNDERBREATH:
 	case AG_STORM_CANNON:
 	case AG_CRIMSON_ARROW:
@@ -19433,6 +19437,7 @@ int skill_attack_area(struct block_list *bl, va_list ap)
 		case NPC_DARKNESSBREATH:
 		case NPC_FIREBREATH:
 		case NPC_ICEBREATH:
+		case NPC_ICEBREATH2:
 		case NPC_THUNDERBREATH:
 			return (int)skill_attack(atk_type,src,dsrc,bl,skill_id,skill_lv,tick,flag);
 		default:
