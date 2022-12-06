@@ -4100,6 +4100,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NPC_ICEBREATH:
 		case NPC_THUNDERBREATH:
 		case NPC_HELLJUDGEMENT:
+		case NPC_HELLJUDGEMENT2:
 		case NPC_PULSESTRIKE:
 			skillratio += 100 * (skill_lv - 1);
 			break;

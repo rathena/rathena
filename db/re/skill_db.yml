@@ -17921,6 +17921,24 @@ Body:
     Element: Neutral
     Duration2: 108000
     Status: Bleeding
+  - Id: 768
+    Name: NPC_HELLJUDGEMENT2
+    Description: Hell's Judgement
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    SplashArea: 14
+    Duration2: 18000
+    Status: Curse
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
