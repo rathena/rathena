@@ -2987,6 +2987,9 @@ void pc_delautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_
 				// Not all required items equipped anymore
 				restore = false;
 			}
+		} else {
+			// Not all required items equipped anymore
+			restore = false;
 		}
 
 		if( restore ){

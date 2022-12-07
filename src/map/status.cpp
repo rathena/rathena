@@ -3686,7 +3686,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				return 1;
 		}
 	}
-	
+
 	// Process and check item combos
 	if (!sd->combos.empty()) {
 		for (const auto &combo : sd->combos) {
