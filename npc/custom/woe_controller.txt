@@ -130,18 +130,21 @@ OnInit:
 		Castle("schg_cas03", "Manager#schg_cas03::OnAgitEnd2", "Steward#sc03::OnStartArena", "sch_gld",97,196);
 		Castle("schg_cas04", "Manager#schg_cas04::OnAgitEnd2", "Steward#sc04::OnStartArena", "sch_gld",137,90);
 		Castle("schg_cas05", "Manager#schg_cas05::OnAgitEnd2", "Steward#sc05::OnStartArena", "sch_gld",71,315);
-	Region("Prontera (TE)");
-		Castle("te_prtcas01", "Manager_TE#Gaebolg::OnAgitEnd3",	"Manager_TE#Gaebolg::OnAgitBreak",	"te_prt_gld",134,65);
-		Castle("te_prtcas02", "Manager_TE#Richard::OnAgitEnd3",	"Manager_TE#Richard::OnAgitBreak",	"te_prt_gld",240,128);
-		Castle("te_prtcas03", "Manager_TE#Wigner::OnAgitEnd3",	"Manager_TE#Wigner::OnAgitBreak",	"te_prt_gld",153,137);
-		Castle("te_prtcas04", "Manager_TE#Heine::OnAgitEnd3",	"Manager_TE#Heine::OnAgitBreak",	"te_prt_gld",111,240);
-		Castle("te_prtcas05", "Manager_TE#Nerious::OnAgitEnd3",	"Manager_TE#Nerious::OnAgitBreak",	"te_prt_gld",208,240);
-	Region("Aldebaran (TE)");
-		Castle("te_aldecas1", "Manager_TE#Glaris::OnAgitEnd3",	"Manager_TE#Glaris::OnAgitBreak",	"te_alde_gld",48,83);
-		Castle("te_aldecas2", "Manager_TE#Defolty::OnAgitEnd3",	"Manager_TE#Defolty::OnAgitBreak",	"te_alde_gld",95,249);
-		Castle("te_aldecas3", "Manager_TE#Sorin::OnAgitEnd3",	"Manager_TE#Sorin::OnAgitBreak",	"te_alde_gld",142,85);
-		Castle("te_aldecas4", "Manager_TE#Bennit::OnAgitEnd3",	"Manager_TE#Bennit::OnAgitBreak",	"te_alde_gld",239,242);
-		Castle("te_aldecas5", "Manager_TE#W::OnAgitEnd3",		"Manager_TE#W::OnAgitBreak",		"te_alde_gld",264,90);
+
+	if (checkre(0)) {
+		Region("Prontera (TE)");
+			Castle("te_prtcas01", "Manager_TE#Gaebolg::OnAgitEnd3",	"Manager_TE#Gaebolg::OnAgitBreak",	"te_prt_gld",134,65);
+			Castle("te_prtcas02", "Manager_TE#Richard::OnAgitEnd3",	"Manager_TE#Richard::OnAgitBreak",	"te_prt_gld",240,128);
+			Castle("te_prtcas03", "Manager_TE#Wigner::OnAgitEnd3",	"Manager_TE#Wigner::OnAgitBreak",	"te_prt_gld",153,137);
+			Castle("te_prtcas04", "Manager_TE#Heine::OnAgitEnd3",	"Manager_TE#Heine::OnAgitBreak",	"te_prt_gld",111,240);
+			Castle("te_prtcas05", "Manager_TE#Nerious::OnAgitEnd3",	"Manager_TE#Nerious::OnAgitBreak",	"te_prt_gld",208,240);
+		Region("Aldebaran (TE)");
+			Castle("te_aldecas1", "Manager_TE#Glaris::OnAgitEnd3",	"Manager_TE#Glaris::OnAgitBreak",	"te_alde_gld",48,83);
+			Castle("te_aldecas2", "Manager_TE#Defolty::OnAgitEnd3",	"Manager_TE#Defolty::OnAgitBreak",	"te_alde_gld",95,249);
+			Castle("te_aldecas3", "Manager_TE#Sorin::OnAgitEnd3",	"Manager_TE#Sorin::OnAgitBreak",	"te_alde_gld",142,85);
+			Castle("te_aldecas4", "Manager_TE#Bennit::OnAgitEnd3",	"Manager_TE#Bennit::OnAgitBreak",	"te_alde_gld",239,242);
+			Castle("te_aldecas5", "Manager_TE#W::OnAgitEnd3",		"Manager_TE#W::OnAgitBreak",		"te_alde_gld",264,90);
+	}
 
 	setarray .Days$[0],"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday";
 

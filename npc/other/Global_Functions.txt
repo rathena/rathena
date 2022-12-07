@@ -46,6 +46,7 @@
 //= 2.26 Added "F_getpositionname". [Capuche]
 //= 2.27 Added "F_GetPlatinumSkills". [mazvi]
 //= 2.28 Added "close3". [Capuche]
+//= 2.29 Updated "F_IsCharm" to support all latest enchants [Everade]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -260,7 +261,7 @@ function	script	F_Load2Skills	{
 // -- callfunc "F_GetArmorType",<item ID>
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetWeaponType	{
-	switch(getiteminfo(getarg(0),11)) {
+	switch(getiteminfo(getarg(0), ITEMINFO_VIEW)) {
 		case 1: return "Dagger"; break;
 		case 2: return "One-handed Sword"; break;
 		case 3: return "Two-handed Sword"; break;
@@ -288,7 +289,7 @@ function	script	F_GetWeaponType	{
 	end;
 }
 function	script	F_GetArmorType	{
-	switch(getiteminfo(getarg(0),5)) {
+	switch(getiteminfo(getarg(0), ITEMINFO_LOCATIONS)) {
 		case EQP_HEAD_LOW:
 			return "Lower Headgear";
 		case EQP_HAND_R:
@@ -752,18 +753,9 @@ function	script	F_GetPlatinumSkills	{
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-// Shortcut : close button and clear cutin.
-//////////////////////////////////////////////////////////////////////////////////
-function	script	close3	{
-	close2;
-	cutin "",255;
-	end;
-}
-
-//////////////////////////////////////////////////////////////////////////////////
 // Return true if the card is a charm (enchant card), false otherwise.
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_IsCharm	{
 	.@id = getarg(0);
-	return ((.@id >= 4700 && .@id < 5000) || (.@id >= 29000 && .@id <= 29162));
+	return ((.@id >= 4700 && .@id <= 4999) || (.@id >= 29000 && .@id <= 29689) || (.@id >= 310000 && .@id <= 311091 ));
 }

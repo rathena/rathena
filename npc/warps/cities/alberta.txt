@@ -16,7 +16,6 @@
 //Alberta City
 alberta,15,234,0	warp	alb001	2,5,pay_fild03,388,63
 alberta,117,38,0	warp	alb01	2,2,alberta_in,180,30
-alberta,134,38,0	warp	alb02	1,1,alberta_in,70,141
 alberta,170,170,0	warp	alb03	1,1,alb_ship,26,168
 alberta,178,165,0	warp	alb04	1,2,alb_ship,39,163
 alberta,209,173,0	warp	alb05	1,2,alb_ship,162,171
@@ -34,7 +33,6 @@ alberta_in,189,89,0	warp	alb09-1	2,2,alberta,102,153
 alberta_in,114,130,0	warp	alb08-1	2,2,alberta,93,201
 alberta_in,14,141,0	warp	alb07-1	2,3,alberta,61,233
 alberta_in,180,34,0	warp	alb01-1	2,2,alberta,117,42
-alberta_in,73,141,0	warp	alb02-1	2,3,alberta,137,37
 alberta_in,78,44,0	warp	alb06-1	2,5,alberta,37,41
 alberta_in,125,161,0	warp	alb10-1	2,2,alberta,102,222
 alberta_in,114,183,0	warp	alb11	1,1,alberta_in,148,186

@@ -250,7 +250,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			mes "You need to bring some money to initialize!!";
 			close;
 		}
-		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
+		if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) != CARD_ENCHANT) {
 			mes "This item is not enchanted!";
 			close;
 		}

@@ -1,0 +1,13 @@
+//===== rAthena Script =======================================
+//= Werner Laboratory
+//===== Description: =========================================
+//= Werner Laboratory Monster Spawn Script.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//      Venomous Chimera spawn timer is custom. [Capuche]
+//============================================================
+
+slabw01	monster	Human Chimera	3631,45
+slabw01	monster	Material Chimera	3632,45
+// unknown timer
+slabw01	monster	Venomous Chimera	3633,1,18000000,600000,0

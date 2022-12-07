@@ -7,8 +7,16 @@
 //= 1.0 First version [Aleos]
 //= 1.1 Removed re-roll behavior and fetch materials from db
 //=     [Secret]
+//= 1.2 Added Refine UI [Atemo, Lemongrass]
 //============================================================
 -	script	::ShadowBlacksmith	-1,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Shadow Blacksmith]";
+		mes "Now Basta is in charge of refinement for shadow items.";
+		mes "If you'd like to refine a shadow item, please visit him.";
+		close;
+	}
+
 	.@zeny_cost = 200000; // Zeny cost is 200,000 according to official script [Secret]
 	disable_items;
 	mes "[Shadow Blacksmith]";

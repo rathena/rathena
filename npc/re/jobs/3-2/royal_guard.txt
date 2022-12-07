@@ -455,7 +455,7 @@ gl_church,173,88,0	script	Delicate trace#01	844,{
 			getitem 7049,1; //Stone
 		else {
 			mes "While investigating, the topography breaks. It would be better to dig other places for a while.";
-			disablenpc strnpcinfo(0);
+			disablenpc();
 			initnpctimer;
 			close;
 		}
@@ -463,7 +463,7 @@ gl_church,173,88,0	script	Delicate trace#01	844,{
 	mes "There is a trace that someone has already dug here.";
 	close;
 OnTimer60000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 OnTimer1000:
 OnTimer20000:

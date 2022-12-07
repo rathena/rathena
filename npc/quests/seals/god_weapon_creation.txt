@@ -811,7 +811,7 @@ OnDisable:
 
 que_god01,154,67,0	script	god_failwarp#1	-1,4,7,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTouch_:
 	warp "prontera",156,324;

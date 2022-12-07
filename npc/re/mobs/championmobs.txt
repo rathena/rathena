@@ -195,8 +195,8 @@ lou_dun01,0,0	monster	Elusive Jing Guai	2778,2,300000
 mosk_dun02,0,0	monster	Swift Les	2779,1,300000
 gld_dun01,0,0	monster	Solid Leib Olmai	2780,2,300000
 ayo_dun01,0,0	monster	Leaf Cat Ringleader	2781,2,300000
-//teg_dun02,0,0	monster	[PH] 분노의 로그 휘케바인	2782,2,300000,0
-//teg_dun01,0,0	monster	[PH] 떠도는 어세신 에르메스	2783,2,300000,0
+teg_dun02,0,0	monster	Furious Wickebine Tres	2782,2,300000,0
+teg_dun01,0,0	monster	Elusive Eremes	2783,2,300000,0
 ra_fild06,0,0	monster	Swift Kobold Archer	2784,3,300000
 ra_fild05,0,0	monster	Solid Kobold	2785,3,300000
 thor_v02,0,0	monster	Knocker Ringleader	2786,1,300000

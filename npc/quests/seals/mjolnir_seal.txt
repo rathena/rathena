@@ -1965,6 +1965,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 				.@equip_id = getequipid(.@part);
+				.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
 				.@equip_refine = getequiprefinerycnt(.@part);
 				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 				if (.@equip_refine >= 10) {
@@ -1983,16 +1984,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "element of risk!";
 					close;
 				}
-				if ((getequipweaponlv(.@part) <= 1) && (getequipweaponlv(.@part) >= 3 )){
-					mes "[Vestri]";
-					mes "Hey...";
-					mes "Don't insult me by expecting me to work on anything less than a Level 4 weapon.";
-					next;
-					mes "[Vestri]";
-					mes "Bring me a Level 4 weapon for me to work on next time, got it?";
-					close;
-				}
-				if (getequipweaponlv(.@part) == 0){
+				if( .@itemtype != IT_WEAPON ){
 					mes "[Vestri]";
 					mes "Armor?!";
 					mes "Didn't I tell";
@@ -2002,6 +1994,15 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "[Vestri]";
 					mes "You can have a human";
 					mes "Blacksmith work on that kind of stuff! Now, a Dwarf like me needs something that's more of a challenge!";
+					close;
+				}
+				if( getequipweaponlv( .@part ) != 4 ){
+					mes "[Vestri]";
+					mes "Hey...";
+					mes "Don't insult me by expecting me to work on anything less than a Level 4 weapon.";
+					next;
+					mes "[Vestri]";
+					mes "Bring me a Level 4 weapon for me to work on next time, got it?";
 					close;
 				}
 
@@ -2189,6 +2190,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 				.@equip_id = getequipid(.@part);
+				.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
 				.@equip_refine = getequiprefinerycnt(.@part);
 				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 				if (.@equip_refine >= 10) {
@@ -2207,21 +2209,21 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "element of risk!";
 					close;
 				}
-				if ((getequipweaponlv(.@part) <= 1) && (getequipweaponlv(.@part) >= 3 )){
+				if( .@itemtype != IT_WEAPON ){
+					mes "[Vestri]";
+					mes "Armor?!";
+					mes "Didn't I tell";
+					mes "you that I only work";
+					mes "on Level 4 weapons?";
+					close;
+				}
+				if( getequipweaponlv( .@part ) != 4 ){
 					mes "[Vestri]";
 					mes "Hey...";
 					mes "Don't insult me by expecting me to work on anything less than a Level 4 weapon.";
 					next;
 					mes "[Vestri]";
 					mes "Bring me a Level 4 weapon for me to work on next time, got it?";
-					close;
-				}
-				if (getequipweaponlv(.@part) == 0){
-					mes "[Vestri]";
-					mes "Armor?!";
-					mes "Didn't I tell";
-					mes "you that I only work";
-					mes "on Level 4 weapons?";
 					close;
 				}
 				mes "[Vestri]";

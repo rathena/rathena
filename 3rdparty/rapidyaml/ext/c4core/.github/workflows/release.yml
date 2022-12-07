@@ -1,0 +1,199 @@
+name: release
+
+defaults:
+  #if: "!contains(github.event.head_commit.message, 'skip ci')"  # SKIP
+  run:
+    # Use a bash shell so we can use the same syntax for environment variable
+    # access regardless of the host operating system
+    shell: bash -e -x {0}
+
+on:
+  # https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
+  workflow_dispatch:
+  push:
+    tags:
+      - v0.*
+      - v1.*
+      - v2.*
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  PROJ_PKG_NAME: c4core-
+  PROJ_PFX_TARGET: c4core-
+  PROJ_PFX_CMAKE: C4CORE_
+  CMAKE_FLAGS:
+  NUM_JOBS_BUILD: # 4
+
+
+# useful to iterate when fixing the release:
+# ver=0.2.1 ; ( set -x ; git tag -d v$ver ; git push origin :v$ver ) ; (set -x ; set -e ; tbump --only-patch --non-interactive $ver ; git add -u ; git commit --amend --no-edit ; git tag --annotate --message "v$ver" "v$ver" ; git push -f --tags origin )
+
+jobs:
+
+  gettag:
+    runs-on: ubuntu-latest
+    steps:
+      # use fetch-depth to ensure all tags are fetched
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive, fetch-depth: 0}}
+      - name: Variables (from tag)
+        if: contains(github.ref, 'tags/v')
+        run: |
+          # https://github.community/t/how-to-get-just-the-tag-name/16241/11
+          SRC_TAG=${GITHUB_REF#refs/tags/}
+          SRC_VERSION=${GITHUB_REF#refs/tags/v}
+          cat <<EOF > vars.sh
+          export SRC_TAG=$SRC_TAG
+          export SRC_VERSION=$SRC_VERSION
+          EOF
+      - name: Variables (from commit, no tag)
+        if: ${{ !contains(github.ref, 'tags/v') }}
+        run: |
+          set -x
+          branch_name=${GITHUB_REF#refs/heads/}
+          # builds triggered from PRs have the branch_name like this: refs/pull/150/merge
+          # so filter to eg pr0150_merge
+          branch_name=`echo $branch_name | sed "s:refs/pull/\([0-9]*\)/\(.*\):pr0\1_\2:"`
+          # sanitize the branch name; eg merge/foo-bar -> merge_foo_bar
+          branch_name=`echo $branch_name | sed 's:[/.-]:_:g'`
+          SRC_TAG=$(git describe || git rev-parse --short HEAD)  # eg v0.2.0-110-gda837e0
+          SRC_VERSION="${branch_name}-${SRC_TAG}"
+          cat <<EOF > vars.sh
+          export SRC_TAG=$SRC_TAG
+          export SRC_VERSION=$SRC_VERSION
+          EOF
+      - name: Verify vars.sh
+        run: cat vars.sh ; source vars.sh ; echo $SRC_TAG ; echo $SRC_VERSION
+      - name: Save vars.sh
+        uses: actions/upload-artifact@v1
+        with: {name: vars.sh, path: ./vars.sh}
+
+  #----------------------------------------------------------------------------
+  # create source packages
+  src:
+    needs: gettag
+    runs-on: ubuntu-latest
+    steps:
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}
+      - name: Download vars.sh
+        uses: actions/download-artifact@v1
+        with: {name: vars.sh, path: ./}
+      - name: Install python 3.9
+        uses: actions/setup-python@v2
+        with: { python-version: 3.9 }
+      - name: Install requirements
+        run: |
+          sudo -E pip install git-archive-all
+      - name: Create source packages
+        run: |
+          pwd
+          ls -lFhp
+          source vars.sh
+          echo SRC_TAG=$SRC_TAG
+          echo SRC_VERSION=$SRC_VERSION
+          id=${PROJ_PKG_NAME}${SRC_VERSION}
+          name=${id}-src
+          mkdir -p assets
+          git-archive-all --prefix $name assets/$name.tgz
+          git-archive-all --prefix $name assets/$name.zip
+          python --version
+          python tools/amalgamate.py assets/$id.hpp
+      - name: Save source artifacts
+        uses: actions/upload-artifact@v1
+        with: {name: assets, path: assets}
+
+  #----------------------------------------------------------------------------
+  # create c++ packages
+  cpp:
+    name: cpp/${{matrix.config.os}}/${{matrix.config.gen}}
+    needs: gettag
+    runs-on: ${{matrix.config.os}}
+    env: {DEV: OFF, BT: Release, OS: "${{matrix.config.os}}", CXX_: "${{matrix.config.cxx}}", GEN: "${{matrix.config.gen}}"}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          #  name of the artifact    | suffix (gen)    | suffix (package)         | cpack gen | mime type                      | os              | cxx
+          # ubuntu 20.04 is disabled because of a problem installing libc++:i386:
+          #- {name: Ubuntu 20.04 deb  , sfxg: unix64-shared-Release.deb, sfxp: ubuntu-20.04.deb   , gen: DEB  , mime: vnd.debian.binary-package, os: ubuntu-20.04             }
+          - {name: Ubuntu 18.04 deb  , sfxg: unix64-shared-Release.deb, sfxp: ubuntu-18.04.deb   , gen: DEB  , mime: vnd.debian.binary-package, os: ubuntu-18.04             }
+          - {name: Windows VS2019 zip, sfxg: win64-shared-Release.zip , sfxp: windows-vs2019.zip , gen: ZIP  , mime: zip                      , os: windows-2019, cxx: vs2019}
+          - {name: MacOSX sh         , sfxg: apple64-shared-Release.sh, sfxp: macosx-xcode.sh    , gen: STGZ , mime: x-sh                     , os: macos-11.0  , cxx: xcode }
+    steps:
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}
+      - name: Download vars.sh
+        uses: actions/download-artifact@v1
+        with: {name: vars.sh, path: ./}
+      - {name: install requirements, run: source .github/reqs.sh && c4_install_test_requirements $OS}
+      - {name: show info, run: source .github/setenv.sh && c4_show_info }
+      - name: shared64-configure---------------------------------------------------
+        run: source .github/setenv.sh && c4_cfg_test shared64
+      - {name: shared64-build, run: source .github/setenv.sh && c4_build_target shared64}
+      - name: shared64-pack
+        run: source .github/setenv.sh && c4_package shared64 $GEN
+      - name: shared64-normalize
+        run: |
+          set -x
+          source vars.sh
+          mkdir -p assets
+          asset_src=`ls -1 ./build/shared64/${PROJ_PFX_TARGET}*-${{matrix.config.sfxg}}`
+          asset_dst=./assets/${PROJ_PKG_NAME}${SRC_VERSION}-${{matrix.config.sfxp}}
+          [ ! -f $asset_src ] && exit 1
+          cp -fav $asset_src $asset_dst
+      - name: Save artifacts
+        uses: actions/upload-artifact@v1
+        with: {name: assets, path: assets}
+
+  #----------------------------------------------------------------------------
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - src
+      - cpp
+    steps:
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}
+      - name: Gather artifacts - ./assets
+        uses: actions/download-artifact@v2
+        with: {name: assets, path: assets}
+      - name: Verify existing artifacts
+        run: |
+          ls -lFhp assets/
+      #
+      # Github
+      - name: Restore vars.sh
+        if: contains(github.ref, 'tags/v')
+        uses: actions/download-artifact@v1
+        with: {name: vars.sh, path: ./}
+      - name: Save vars for following steps
+        if: contains(github.ref, 'tags/v')
+        id: vars
+        run: |
+          source vars.sh
+          version_body=${{github.workspace}}/changelog/$SRC_VERSION.md
+          if [ ! -f $version_body ] ; then
+            echo "version body file was not found: $version_body"
+            exit 1
+          fi
+          echo "::set-output name=VERSION::$SRC_VERSION"
+          echo "::set-output name=VERSION_BODY::$version_body"
+      - name: Create Github Release
+        if: contains(github.ref, 'tags/v')
+        id: create_release
+        uses: actions/create-release@v1
+        env: { GITHUB_TOKEN: "${{secrets.GITHUB_TOKEN}}" }
+        with:
+          tag_name: ${{github.ref}}
+          release_name: Release ${{steps.vars.outputs.VERSION}}
+          body_path: ${{steps.vars.outputs.VERSION_BODY}}
+          draft: true
+          prerelease: ${{contains(github.ref, 'rc')}}
+      - name: Upload assets to Github Release
+        if: contains(github.ref, 'tags/v')
+        uses: dwenegar/upload-release-assets@v1
+        env: { GITHUB_TOKEN: "${{secrets.GITHUB_TOKEN}}" }
+        with:
+          release_id: ${{steps.create_release.outputs.id}}
+          assets_path: ./assets/

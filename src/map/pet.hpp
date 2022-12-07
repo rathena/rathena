@@ -22,16 +22,16 @@
 
 struct s_pet_evo_data {
 	uint16 target_mob_id;
-	std::unordered_map<uint16, uint32> requirements;
+	std::unordered_map<t_itemid, uint16> requirements;
 };
 
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	uint16 itemID; ///< Lure ID
-	uint16 EggID; ///< Egg ID
-	uint16 AcceID; ///< Accessory ID
-	uint16 FoodID; ///< Food ID
+	t_itemid itemID; ///< Lure ID
+	t_itemid EggID; ///< Egg ID
+	t_itemid AcceID; ///< Accessory ID
+	t_itemid FoodID; ///< Food ID
 	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
 	uint32 hungry_delay; ///< Hunger value decrease each x seconds
 	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
@@ -135,12 +135,50 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+
+	// Additional
 	bool reload();
 };
 
 extern PetDatabase pet_db;
+
+TIMER_FUNC(pet_endautobonus);
+
+/// Pet AutoBonus bonus struct
+struct s_petautobonus {
+	int16 rate;
+	uint16 atk_type;
+	std::string bonus_script, other_script;
+	t_tick duration;
+	int32 timer;
+
+	~s_petautobonus() {
+		if (this->timer != INVALID_TIMER) {
+			delete_timer(this->timer, pet_endautobonus);
+			this->timer = INVALID_TIMER;
+		}
+
+		this->bonus_script.clear();
+		this->other_script.clear();
+	}
+
+};
+
+/// Pet Autobonus database wrapper
+struct s_pet_autobonus_wrapper {
+	script_code *script;
+
+	~s_pet_autobonus_wrapper() {
+		if (this->script != nullptr) {
+			script_free_code(this->script);
+			this->script = nullptr;
+		}
+	}
+};
+
+extern std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
 
 struct pet_data {
 	struct block_list bl;
@@ -148,7 +186,7 @@ struct pet_data {
 	struct view_data vd;
 	struct s_pet pet;
 	struct status_data status;
-	struct mob_db *db;
+	std::shared_ptr<s_mob_db> db;
 	int pet_hungry_timer;
 	int target_id;
 	struct {
@@ -163,6 +201,7 @@ struct pet_data {
 	struct pet_skill_attack* a_skill;
 	struct pet_skill_support* s_skill;
 	struct pet_loot* loot;
+	std::vector<std::shared_ptr<s_petautobonus>> autobonus, autobonus2, autobonus3;
 
 	int masterteleport_timer;
 	struct map_session_data *master;
@@ -184,7 +223,7 @@ struct pet_data {
 	}
 };
 
-bool pet_create_egg(struct map_session_data *sd, unsigned short item_id);
+bool pet_create_egg(struct map_session_data *sd, t_itemid item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
@@ -217,6 +256,10 @@ void pet_clear_support_bonuses(struct map_session_data *sd);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
+
+bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
+void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus);
+void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> &bonus, bool restore);
 
 void do_init_pet(void);
 void do_final_pet(void);

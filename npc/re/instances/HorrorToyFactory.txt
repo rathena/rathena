@@ -510,7 +510,7 @@ OnTouch_:
 	end;
 
 OnTimer45000:
-	enablenpc instance_npcname( strnpcinfo(0) );
+	enablenpc();
 	killmonster 'xm_d_map$, instance_npcname( strnpcinfo(0) ) +"::OnMyMobDead";
 	stopnpctimer;
 	end;
@@ -753,7 +753,7 @@ OnStart:
 			break;
 		}
 		sleep2 3000;
-		disablenpc instance_npcname( strnpcinfo(0) );
+		disablenpc();
 		if ('worker[.@num] == 0) {
 			'worker[.@num] = 1;
 			donpcevent instance_npcname("#fac2wpc") + "::OnStart";
@@ -1360,7 +1360,7 @@ OnStart:
 
 1@xm_d,210,141,3	script	Packaged Present#1	4_TREASURE_BOX,{
 	specialeffect EF_COIN;
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	initnpctimer;
 	end;
 

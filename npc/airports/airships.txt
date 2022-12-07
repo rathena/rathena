@@ -24,11 +24,11 @@ airplane,243,73,0	script	#AirshipWarp-1	45,1,1,{
 OnInit:
 OnHide:
 	specialeffect EF_BASH;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnUnhide:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_SUMMONSLAVE;
 	end;
 
@@ -670,11 +670,11 @@ OnTouch_:
 OnInit:
 OnHide:
 	specialeffect EF_BASH;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 	
 OnUnhide:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_SUMMONSLAVE;
 	end;
 }

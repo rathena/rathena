@@ -4,6 +4,8 @@
 #ifndef STORAGE_HPP
 #define STORAGE_HPP
 
+#include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "../common/cbasetypes.hpp"
@@ -13,8 +15,7 @@ struct s_storage;
 struct item;
 struct map_session_data;
 
-extern struct s_storage_table *storage_db;
-extern int storage_count;
+extern std::unordered_map<uint16, std::shared_ptr<struct s_storage_table>> storage_db;
 
 enum e_storage_add {
 	STORAGE_ADD_OK,
@@ -86,7 +87,6 @@ void storage_guild_storagesaved(int guild_id); //Ack from char server that guild
 void storage_premiumStorage_open(struct map_session_data *sd);
 bool storage_premiumStorage_load(struct map_session_data *sd, uint8 num, uint8 mode);
 void storage_premiumStorage_save(struct map_session_data *sd);
-void storage_premiumStorage_saved(struct map_session_data *sd);
 void storage_premiumStorage_close(struct map_session_data *sd);
 void storage_premiumStorage_quit(struct map_session_data *sd);
 

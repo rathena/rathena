@@ -7,9 +7,9 @@
 //= 1.0 First Version. [Lemongrass]
 //============================================================
 
-//=======================================
-// Available source maps
-//=======================================
+//============================================================
+// Available Sources
+//============================================================
 abbey01	mapflag	privateairship_source
 abbey02	mapflag	privateairship_source
 abbey03	mapflag	privateairship_source
@@ -358,9 +358,9 @@ yuno_fild09	mapflag	privateairship_source
 yuno_fild11	mapflag	privateairship_source
 yuno_fild12	mapflag	privateairship_source
 
-//=======================================
-// Available destination maps
-//=======================================
+//============================================================
+// Available Destinations
+//============================================================
 abbey01	mapflag	privateairship_destination
 abbey02	mapflag	privateairship_destination
 abbey03	mapflag	privateairship_destination

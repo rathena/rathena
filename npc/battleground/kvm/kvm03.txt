@@ -111,6 +111,9 @@ OnTouch:
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_c03";
+	mapwarp "bat_c03","bat_room",154,150;
 	setwall "bat_c03",54,122,6,7,0,"batc03wall_a";
 	setwall "bat_c03",55,122,5,7,0,"batc03wall_b";
 	setwall "bat_c03",140,56,6,7,0,"batc03wall_c";
@@ -333,6 +336,9 @@ OnTimer55000:
 
 OnTimer60000:
 	stopnpctimer;
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_c03", true;
+	mapwarp "bat_c03","bat_room",154,150;
 	set getvariableofnpc(.Croix_Count,"KvM03_BG"), 0;
 	set getvariableofnpc(.Guillaume_Count,"KvM03_BG"), 0;
 	set $@KvM03BG_Victory, 0;
@@ -342,9 +348,8 @@ OnTimer60000:
 		bg_unbook "bat_c03";
 	disablenpc "KVM Officer#KVM03A";
 	disablenpc "KVM Officer#KVM03B";
-	mapwarp "bat_c03","bat_room",154,150;
-	maprespawnguildid "bat_c03",0,3; // Just in case someone else
 	set $@KvM03BG, 0;
+	end;
 
 OnGuillaumeJoin:
 OnCroixJoin:

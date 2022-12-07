@@ -476,7 +476,7 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		mes "[Demon Hunter]";
 		mes "You see, we're having some financial problems. Let's see, we're short on these items...";
 		next;
-		if (checkre(RENEWAL) == true)
+		if (checkre(0) == true)
 			.@i = 1;
 		switch( rand(1,7) ) {
 		case 1:
@@ -532,7 +532,7 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		close;
 	}
 	else if (HNTR_Q >= 3 && HNTR_Q <= 9) {
-		if (checkre(RENEWAL) == true)
+		if (checkre(0) == true)
 			.@i = 1;
 		switch(HNTR_Q) {
 		case 3:

@@ -1,0 +1,4868 @@
+//===== rAthena Script =======================================
+//= Terra Gloria - Illusion
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Quest NPCs for Episode 16.2 - Illusion series
+//
+//- Note: Probably missing some questinfo on Illusion of Vampire.
+//===== Changelog: ===========================================
+//= 1.0 Illusion of Moonlight initial release [crazyarashi]
+//= 1.1 Script & function cleanup [Everade]
+//= 1.2 Added Illusion of Vampire [Capuche]
+//============================================================
+
+//============================================================
+//= Illusion of Moonlight
+//============================================================
+payon,164,229,5	script	Elder Sanyul#illusion_moonlight	1_F_ORIENT_04,{
+	if (BaseLevel < 100) {
+		mes "[ Sanyul ]";
+		mes "Mm, I have a feeling something suspicious is about to happen.";
+		mes "I wish you were stronger. Then, I would've been able to tell you about it.";
+		next;
+		mes "^4D4DFFYou must be Level 100 or above to perform this quest.^000000";
+		close;
+	}
+	if (illusion_moonlight == 0) {
+	OnStart:
+		mes "[ Jagyeom ]";
+		mes "This matter is out of our hands now.";
+		mes "We can't let it keep happening like this.";
+		next;
+		mes "[ Sanyul ]";
+		mes "Let's wait for ^0000FFMuyeon^000000 now.";
+		mes "Her safety is more important than anything else.";
+		next;
+		select("Excuse me.");
+		mes "[ Sanyul ]";
+		mes "Hm? You're an adventurer.";
+		mes "Did you happen to hear our conversation?";
+		next;
+		mes "[ Sanyul ]";
+		mes "I see.";
+		mes "Maybe it's faith that you overheard us.";
+		next;
+		mes "[ Sanyul ]";
+		mes "There's a cave near the Archer Village in the back of Payon.";
+		mes "It's a haunted cave, so we've been preforming rituals and exorcism there regularly.";
+		next;
+		mes "[ Sanyul ]";
+		mes "But the Nine-tailed foxes spirits are more enraged than we thought.";
+		mes "Every time someone tries to preform a ritual to the fox beads, they get nightmares.";
+		npctalk "It's as if the spirits were antagonized by them.","Elder Jagyeom#illusion_moonlight",bc_self;
+		next;
+		mes "[ Sanyul ]";
+		mes "And this time, she's completely lost her mind and entered the cave.";
+		mes "That's why we're worried about her.";
+		next;
+		select("Is it about Muyeon?");
+		npctalk "Maybe we should send someone else.","Elder Jagyeom#illusion_moonlight",bc_self;
+		mes "[ Sanyul ]";
+		mes "Yes. She's the Soul Linker who performs the ritual regularly.";
+		mes "We've asked a soldier to find her.";
+		mes "They must be near the cave by now.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "Could you go check up ^0000FFMuyeon^000000 for us?";
+		next;
+		npctalk "Yes. could you?","",bc_self;
+		if (select("Sure, I will:Sorry, I'm afraid of ghost.") == 2) {
+			mes "[ Sanyul ]";
+			mes "Huh? We didn't say anything about ghost. Or did we?";
+			close;
+		}
+		mes "[ Jagyeom ]";
+		mes "I hope the soldier will find her before she goes deep inside the ruined village.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "Please go to the cave and see if Muyeon and the soldier are outside already.";
+		mes "A young scholar followed the soldier, but she doesn't seem reliable at all.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "Talk to the scholar, maybe he could give you an information on the situation.";
+		illusion_moonlight = 1;
+		setquest 7776;
+		close;
+	}
+	if (illusion_moonlight == 1) {
+		mes "[ Jagyeom ]";
+		mes "I hope the soldier will find her before she goes deep inside the ruined village.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "Please go to the cave and see if Muyeon and the soldier are outside already.";
+		mes "A young scholar followed the soldier, but she doesn't seem reliable at all.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "Talk to the scholar, maybe he could give you an information on the situation.";
+		close;
+	}
+	mes "[ Sanyul ]";
+	mes "I hope everything will be okay.";
+	mes "Huh? I was talking about the cave in the back.";
+	mes "I'm worried about what's happening there.";
+	close;
+
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"BaseLevel >= 100 && illusion_moonlight < 1";
+	end;
+}
+
+payon,167,229,3	script	Elder Jagyeom#illusion_moonlight	4_M_HUOLDARMY,{
+	if (BaseLevel < 100) {
+		mes "[ Jagyeom ]";
+		mes "I hope everything will be okay.";
+		mes "Seeing that you're an adventurer, I assume you're familiar with the ^0000FFPayon Cave^000000.";
+		mes "Be careful, something bad is happening inside.";
+		next;
+		mes "^0000FFYou must be Level 100 or above to perform this quest.";
+		close;
+	}
+	if (illusion_moonlight == 0) {
+		doevent "Elder Sanyul#illusion_moonlight::OnStart";
+		end;
+	}
+	if (illusion_moonlight == 1) {
+		mes "[ Sanyul ]";
+		mes "Please go to the cave's entrance in the Archer Village.";
+		mes "Ask the young scholar there about Muyeon's whereabouts.";
+		close;
+	}
+	mes "[ Jagyeom ]";
+	mes "Maybe it's time we leave things to the younger generations.";
+	mes "There is nothing we old folk could do.";
+	close;
+}
+
+pay_arche,48,137,4	script	Young Scholar#ill_moon_arch	4_F_03,{
+	if (illusion_moonlight == 0) {
+		npctalk "Why aren't they coming out already...","",bc_self;
+		end;
+	}
+	if (illusion_moonlight == 1) {
+		npctalk "Why are they still not coming out...","",bc_self;
+		mes "[ Young Scholar ]";
+		mes "Ah, today must be my lucky day!";
+		mes "An adventurer showed up, just when I needed one!";
+		next;
+		mes "[ Young Scholar ]";
+		mes "Excuse me.";
+		mes "I've heard adventurers do many things for others. Is that true?";
+		next;
+		select("It is, but I'm pretty busy for now.:Decline.");
+		mes "[ Young Scholar ]";
+		mes "...Oh, I see.";
+		mes "You must be busy.";
+		mes "I'm sorry I bothered you.";
+		mes "By the way, what brings you here?";
+		next;
+		select("Have you seen someone named Muyeon?");
+		mes "[ Young Scholar ]";
+		mes "Muyeon? Do you mean Muyeon the Soul Linker?";
+		mes "Well, technically, she's still an apprentice, but that's not important.";
+		next;
+		mes "[ Young Scholar ]";
+		mes "I'm waiting for her right now.";
+		mes "She ran into the cave, as if she was possessed by something.";
+		next;
+		mes "[ Young Scholar ]";
+		mes "Junghee? I mean, a soldier followed her in, but neither of them came out yet.";
+		mes "I was debating if I should go after them.";
+		next;
+		mes "[ Young Scholar ]";
+		mes "I hope nothing bad happens to those two.";
+		cloakoffnpc "Payon Soldier#ill_moon_arch",getcharid(0);
+		cloakoffnpc "Muyeon#ill_moon_arch",getcharid(0);
+		sleep2 750;
+		npctalk "There they are! They look fine!","Young Scholar#ill_moon_arch",bc_self;
+		sleep2 1500;
+		npctalk "Ugh, I don't want to train anymore!","Muyeon#ill_moon_arch",bc_self;
+		npctalk "...","Payon Soldier#ill_moon_arch",bc_self;
+		next;
+		mes "[ Muyeon ]";
+		mes "Chunghae, what are you doing out here?";
+		npctalk "I was worried about you..","",bc_self;
+		next;
+		mes "[ Muyeon ]";
+		mes "You were worried about me, but this is as far you were willing to follow me?";
+		mes "Forget it. No matter how miserable I am, I don't need your help!";
+		sleep2 500;
+		npctalk "Now, that's enough.","Payon Soldier#ill_moon_arch",bc_self;
+		sleep2 500;
+		npctalk "Th-this is unfair...","",bc_self;
+		next;
+		npctalk "Bye!","Muyeon#ill_moon_arch",bc_self;
+		mes "[ Muyeon ]";
+		mes "Ah, I'm not going to do this anymore. Tell that to the old geezers!";
+		next;
+		npctalk "Sigh. I'll go after her. Talk to the Elders, will you?","Payon Soldier#ill_moon_arch",bc_self;
+		sleep2 1500;
+		cloakonnpc "Payon Soldier#ill_moon_arch",getcharid(0);
+		cloakonnpc "Muyeon#ill_moon_arch",getcharid(0);
+		mes "[ Young Scholar ]";
+		mes "That's....!";
+		mes "She left without telling us what happened.";
+		next;
+		mes "[ Young Scholar ]";
+		mes "Ah, Junghee!";
+		mes "By the way adventurer, weren't you looking for Muyeon?";
+		next;
+		select("I guess I have to leave now.");
+		mes "[ Young Scholar ]";
+		mes "Muyeon must have gone to the ^0000CDDetached Payon Palace.^000000";
+		mes "I'm going there do you want to come with me?";
+		next;
+		illusion_moonlight = 2;
+		erasequest 7776;
+		setquest 7777;
+        if (select("Go with him.:Go separately.") == 2) {
+			mes "[ Young Scholar ]";
+			mes "Muyeon must have gone to the ^0000CDDetached Payon Palace.^000000";
+			mes "Why don't you go talk to her?";
+			mes "I'll talk to the Elders.";
+			close;
+        }
+		mes "[ Young Scholar ]";
+		mes "Then let's go to the ^0000CDDetached Payon Palace.^000000";
+        close2;
+        warp "payon",105,320;
+        end;
+	}
+	if (illusion_moonlight == 2) {
+		mes "[ Young Scholar ]";
+		mes "Muyeon must have gone to the ^0000CDDetached Payon Palace.^000000";
+		mes "Why don't you go talk to her?";
+		mes "I'll talk to the Elders.";
+		close;
+	}
+	if (illusion_moonlight < 6) {
+		mes "[ Young Scholar ]";
+		mes "Legend says a nine-tailed fox gained enlightment and became a sacred creature, and that Moonlight Flowers have descended from her.  I think it's a story worth looking into.";
+		close;
+	}
+	mes "[ Young Scholar ]";
+	mes "Let's go investigate the ruined village!";
+	mes "Would you like to come with me?";
+	next;
+	if (select("Go with him.:Go separately.") == 2) {
+		mes "[ Young Scholar ]";
+		mes "I'll call Junghee, and we'll follow you soon.";
+		close;
+	}
+	mes "[ Young Scholar ]";
+	mes "Let's go!";
+	close2;
+	warp "pay_dun03",145,43;
+	end;
+
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 1";
+	end;
+}
+
+pay_arche,44,133,7	duplicate(dummy_cloaked_npc)	Payon Soldier#ill_moon_arch	4_M_PAY_SOLDIER
+pay_arche,46,135,5	duplicate(dummy_cloaked_npc)	Muyeon#ill_moon_arch	4_F_TAEKWON
+
+payon_in03,33,95,3	script	Muyeon#ill_moon_pin	4_F_TAEKWON,{
+	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "- You're carrying too many items to proceed with this quest. -";
+		close;
+	}
+	if (illusion_moonlight < 2) {
+		mes "[ Muyeon ]";
+		mes "If you're looking for the teacher, she's in the other room.";
+		close;
+	}
+	if (illusion_moonlight == 2) {
+		.@elder$ = "Jagyeom#ill_moon_pin";
+		.@scholar$ = "Young Scholar#ill_moon_pin";
+		setpcblock PCBLOCK_ALL,true;
+		npctalk "Whatever you say, I'm not doing it anymore.","",bc_self;
+		sleep2 2500;
+		npctalk "This is the third time I had nightmares. I can't take it anymore!","",bc_self;
+		sleep2 1000;
+		unittalk getcharid(3),"What nightmares?",bc_self;
+		npctalk "What nightmares?",.@scholar$,bc_self;
+		sleep2 2000;
+		npctalk "Nightmares about about the foxes? Nine tails and Moonlight flowers?","",bc_self;
+		sleep2 2000;
+		npctalk "Those nightmares are just too horrifying. I don't want to experience it anymore.","",bc_self;
+		sleep2 2000;
+		npctalk "But we have no one else left to perform the ritual.",.@elder$,bc_self;
+		sleep2 2000;
+		npctalk "Everyone gave up after the first try. You did it three times.",.@elder$,bc_self;
+		sleep2 2000;
+		npctalk "Elder Jaegyom, nightmares weren't the only thing occurred to me this time.","",bc_self;
+		sleep2 2000;
+		npctalk "It was different from the other two times I performed the ritual.","",bc_self;
+		sleep2 2000;
+		npctalk "How different?",.@scholar$,bc_self;
+		sleep2 2000;
+		npctalk "...","",bc_self;
+		sleep2 2000;
+		npctalk "It felt as if the nightmares is happening in reality.","",bc_self;
+		sleep2 2000;
+		npctalk "What do you mean? You were only trying to give peace to the angered spirits of the nine tailed foxes.",.@elder$,bc_self;
+		sleep2 2000;
+		npctalk "What did you see in the cave?",.@elder$,bc_self;
+		sleep2 2000;
+		npctalk "I can't explain what I saw. You have to see it to believe it.","",bc_self;
+		sleep2 2000;
+		npctalk "We need someone strong to go in there, like that adventurer over there, should go in the cave.","",bc_self;
+		illusion_moonlight = 3;
+		completequest 7777;
+		setquest 7778;
+		setpcblock PCBLOCK_ALL,false;
+		end;
+	}
+	if (illusion_moonlight == 3) {
+		mes "[ Muyeon ]";
+		mes "Okay, I'll tell you the story.";
+		mes "The Payon Cave is used to be a part of a village that was buried under a landslide.";
+		next;
+		mes "[ Muyeon ]";
+		mes "As you can guess many people were buried with it, and their spirits are hunting the cave.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Some of them were the nine-tailed foxes. The foxes anger is beyond normal.";
+		mes "That's the reason we have been performing a ritual in regular basis.";
+		next;
+		mes "[ Muyeon ]";
+		mes "But now the problem is,";
+		mes "The foxes spirits are getting more resentful by time, and no one knows the reason why.";
+		mes "Maybe the ritual is the reason they are angry, it's not working as we hoped it would.";
+		next;
+		mes "[ Muyeon ]";
+		mes "And, every time I performed the ritual, I had nightmares about the resentful spirits and wailing nine-tailed foxes.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Soul Linkers communicates with the spirits for a living, Having nightmares is just occurs normally.";
+		next;
+		mes "[ Muyeon ]";
+		mes "So when my first nightmare occurred, I thought it was under the same boat as the others.";
+		mes "But now I know the difference, It also has nothing to do with my health.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Whatever it is the reason that agitates the spirits of the nine-tailed foxes.";
+		mes "It drove me from sanity and sent me going to the ruined village.";
+		next;
+		mes "[ Muyeon ]";
+		mes "And, I saw something.";
+		mes "It's an image of another world, different from ours.";
+		mes "We must shut that place down, so no one will be able to access it.";
+		next;
+		mes "[ Muyeon ]";
+		mes "I have an uneasy feeling that a dreadful is going to take place.";
+		mes "Or maybe it's already taking place..";
+		next;
+		mes "[ Muyeon ]";
+		mes "The vague image I saw is indistinguishable from hell.";
+		mes "I saw it after the last ritual that I did.";
+		next;
+		mes "[ Muyeon ]";
+		mes "I beg of you, don't ask me to return doing that again.";
+		mes "I'm not mentally strong enough to handle such nightmares.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Much less on what's taking place inside the cave.";
+		next;
+		mes "[ Muyeon ]";
+		mes "If you want to go, you'll have to go alone and see it for yourself.";
+		mes "I still carry the fox bead that I tried to purify. Let me know when you are ready.";
+		illusion_moonlight = 4;
+		completequest 7778;
+		setquest 7779;
+		close;
+	}
+	if (illusion_moonlight == 4) {
+		mes "[ Muyeon ]";
+		mes "Are you ready?";
+		next;
+		if (select("Yes.:Not yet.") == 2) {
+			mes "[ Muyeon ]";
+			mes "Let me know when you're ready.";
+			close;
+		}
+		mes "[ Muyeon ]";
+		mes "Okay, this fox bead is not completely purged yet.";
+		mes "Place it in your hand.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Relax... and focus your mind on it ... open your mind to its energy.";
+		close2;
+		setpcblock PCBLOCK_ALL,true;
+		npctalk "Wandering souls, listen and behold!","",bc_self;
+		sleep2 250;
+		specialeffect EF_PORTAL4;
+		specialeffect EF_GROUNDSAMPLE;
+		sleep2 1800;
+		npctalk "Look at the other side of the Netherworld River.","",bc_self;
+		sleep2 250;
+		specialeffect EF_PORTAL5;
+		specialeffect EF_QUAKEBODY2;
+		for (.@i = 0; .@i < 4; .@i++) {
+			cloakoffnpc "Nine Tail Spirit#ill_moon_" + .@i,getcharid(0);
+			specialeffect EF_REDBODY,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			specialeffect EF_QUAKEBODY2,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			sleep2 250;
+		}
+		sleep2 1500;
+		npctalk "Poor souls, cover your eyes and block your ears.","",bc_self;
+		sleep2 150;
+		specialeffect2 EF_DEVIL1;
+		for (.@i = 0; .@i < 4; .@i++) {
+			specialeffect EF_QUAKEBODY2,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			sleep2 30;
+		}
+		npctalk "Die!","Nine Tail Spirit#ill_moon_0",bc_self;
+		sleep2 100;
+		specialeffect2 EF_DEVIL6;
+		sleep2 100;
+		for (.@i = 0; .@i < 4; .@i++) {
+			specialeffect EF_QUAKEBODY2,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			sleep2 30;
+		}
+		sleep2 150;
+		npctalk "Die!","Nine Tail Spirit#ill_moon_1",bc_self;
+		sleep2 1000;
+		npctalk "Leave this realm.","",bc_self;
+		sleep2 150;
+		specialeffect2 EF_DEVIL10;
+		for (.@i = 0; .@i < 4; .@i++) {
+			specialeffect EF_QUAKEBODY2,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			sleep2 30;
+		}
+		npctalk "Die!","Nine Tail Spirit#ill_moon_2",bc_self;
+		sleep2 150;
+		specialeffect EF_BLUELINE;
+		sleep2 150;
+		npctalk "Die!","Nine Tail Spirit#ill_moon_3",bc_self;
+		sleep2 700;
+		npctalk "Unload your burden.","",bc_self;
+		sleep2 150;
+		for (.@i = 0; .@i < 4; .@i++) {
+			specialeffect EF_MAP_GHOST,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			sleep2 30;
+		}
+		for (.@i = 0; .@i < 4; .@i++)
+			npctalk "DIE!!!","Nine Tail Spirit#ill_moon_" + .@i,bc_self;
+		sleep2 1200;
+		specialeffect EF_BLUELINE;
+		sleep2 500;
+		specialeffect EF_SCREEN_QUAKE;
+		sleep2 1200;
+		npctalk "Fly to the other side of the river.","",bc_self;
+		for (.@i = 0; .@i < 4; .@i++) {
+			specialeffect EF_MADNESS_RED,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
+			sleep2 30;
+		}
+		for (.@i = 0; .@i < 4; .@i++) {
+			npctalk "DIEEE!", "Nine Tail Spirit#ill_moon_" + .@i, bc_self;
+			sleep2 50;
+			specialeffect EF_SCREEN_QUAKE;
+			sleep2 300;
+		}
+		sleep2 1000;
+		for (.@i = 0; .@i < 4; .@i++) {
+			npctalk "DIEEE!", "Nine Tail Spirit#ill_moon_" + .@i, bc_self;
+			sleep2 100;
+		}
+		specialeffect2 EF_JUMPBODY1;
+		sleep2 150;
+		completequest 7779;
+		setquest 7780;
+		illusion_moonlight = 5;
+		setpcblock PCBLOCK_ALL,false;
+		warp "pay_dun03",145,43;
+		end;
+	}
+	if (illusion_moonlight == 5) {
+		mes "[ Muyeon ]";
+		mes "Now you know what I've been through.";
+		mes "If you want to look further into this, you'll have to visit the ruined village.";
+		next;
+		mes "[ Muyeon ]";
+		mes "If you decide to do it, it'll make you one of us, very ecstatic. Probably because he is a fool.";
+		close;
+	}
+	if (illusion_moonlight < 8) {
+		mes "[ Muyeon ]";
+		mes "If you're looking for the teacher, she's in the other room.";
+		close;
+	}
+	if (illusion_moonlight == 8) {
+		mes "[ Muyeon ]";
+		mes "I see.";
+		mes "So They've come true.";
+		mes "You don't know why, do you?";
+		next;
+		mes "[ Muyeon ]";
+		mes "Maybe it's because the walls between reality and dreams have collapsed.";
+		mes "Otherwise, how could you go in and out of someone else's dream?";
+		next;
+		mes "[ Muyeon ]";
+		mes "I know they're ^0000FFdreamt by the Moonlight Flowers.^000000";
+		mes "I don't know how they've become reality. I doubt anyone knows, really.";
+		next;
+		mes "[ Muyeon ]";
+		mes "As far as I remember, nothing like this has ever happened before. If we want to figure this out, we're on our own.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Well, I'll let Chunghae figure it out.";
+		mes "Alright, then I'd better go get some rest.";
+		next;
+		mes "[ Muyeon ]";
+		mes "Now that I know that those nightmares really originated from Moonlight Flowers, I feel better.";
+		mes "I can sleep at last.";
+		next;
+		mes "[ Muyeon ]";
+		mes "We won't need more rituals once we deal with the nightmares.";
+		mes "Does this mean I'm free? Free at last!";
+		mes "I don't even know how to thank you.";
+		next;
+		mes "[ Muyeon ]";
+		mes "I've found this strange stones while I was there. It's not much,";
+		mes "but maybe you can find an use for those?";
+		mes "Thank you so much adventurer.";
+		illusion_moonlight = 9;
+		completequest 7788;
+		getitem 25271,5;
+		getexp 500000,500000;
+		close;
+	}
+	mes "[ Muyeon ]";
+	mes "Good luck investigating the phenomenon with Chunghae!";
+	mes "Once the nightmares are gone, we won't need to perform the ritual anymore!";
+	next;
+	mes "[ Muyeon ]";
+	mes "How can I be sure, you ask?";
+	mes "I'm not sure. Heh heh.";
+	mes "They might not go away completely.";
+	mes "Who knows?";
+	close;
+
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 2";
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 3";
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 4";
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 8";
+	end;
+}
+
+payon_in03,30,96,5	script	Jagyeom#ill_moon_pin	4_M_HUOLDARMY,{
+	if (illusion_moonlight == 2) {
+		npctalk "Muyeon... If you can't do it, no one else can!","",bc_self;
+		end;
+	}
+	if (illusion_moonlight == 3 || illusion_moonlight == 4) {
+		npctalk "Let's listen for now.","",bc_self;
+		end;
+	}
+	if (illusion_moonlight == 5 || illusion_moonlight == 8) {
+		mes "[ Jagyeom ]";
+		mes "We should grasp the situation first.";
+		mes "It'll be great if you can help us, Adventurer.";
+		close;
+	}
+	if (illusion_moonlight == 9) {
+		mes "[ Jagyeom ]";
+		mes "The Moonlight Flower are recreating the past in their nightmares.";
+		mes "In a way, they're also victims.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "I'll make sure no villagers gets close to the collapsed walls of reality and dreams.";
+		close;
+	}
+	mes "[ Jagyeom ]";
+	mes "Please observe proper manners inside the palace.";
+	close;
+}
+
+payon_in03,33,93,1	script	Young Scholar#ill_moon_pin	4_F_03,{
+	if (illusion_moonlight < 2) {
+		mes "[ Young Scholar ]";
+		mes "Payon is home for sacred creatures since ancient times.";
+		mes "A town isolated from the world by the mountains, the people of Payon way of thinking is different from the outside.";
+		close;
+	}
+	if (illusion_moonlight == 2) {
+		npctalk "Muyeon is really upset. We should ask her what happened.","",bc_self;
+		end;
+	}
+	if (illusion_moonlight < 5) {
+		npctalk "We should ask Muyeon what happened.";
+		end;
+	}
+	if (illusion_moonlight == 5) {
+		mes "[ Young Scholar ]";
+		mes "This is terrible.";
+		mes "I can't belive Muyeon had to deal with it on her own.";
+		mes "Those foxes must be angrier than I thought.";
+		next;
+		mes "[ Young Scholar ]";
+		mes "We need to look into this further. I'd better go to the ruined village.";
+		close;
+	}
+	mes "[ Young Scholar ]";
+	mes "I'm going to stay in the ruined village and investigate this phenomenon.";
+	mes "But I'll need some form of protection. I'm going to take Junghee with me.";
+	next;
+	mes "[ Young Scholar ]";
+	mes "It'd be great if you join us again. See you at the ruined village.";
+	close;
+}
+
+payon_in03,30,96,5	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_0	NINE_TAIL
+payon_in03,35,96,3	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_1	NINE_TAIL
+payon_in03,30,93,7	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_2	NINE_TAIL
+payon_in03,35,93,1	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_3	NINE_TAIL
+
+pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
+	if (illusion_moonlight < 5) {
+		mes "- The air is brimming with strange energy. -";
+		mes "It's giving me an anxiety feeling.";
+		close;
+	}
+	if (illusion_moonlight == 5) {
+		mes "There's a shimmering portal in the air.";
+		next;
+		cloakoffnpc "Young Scholar#ill_moon_pdun",getcharid(0);
+		cloakoffnpc "Junghee#ill_moon_pdun",getcharid(0);
+		npctalk "*Panting* You're here.","Young Scholar#ill_moon_pdun",bc_self;
+		mes "[ Young Scholar ]";
+		mes "I was alarmed when you suddenly disappeared.";
+		mes "Do you think this is one of the nightmares that Muyeon...";
+		next;
+		select("I'll have to figure that out.");
+		npctalk "Me? What if I don't want to?","Junghee#ill_moon_pdun",bc_self;
+		mes "[ Young Scholar ]";
+		mes "Then, do you mind if I tag along?";
+		mes "You don't have to worry about me. Junghee can keep me safe.";
+		next;
+		npctalk "D-Don't touch anything!","Junghee#ill_moon_pdun",bc_self;
+		mes "[ Young Scholar ]";
+		mes "Then... should I touch this?";
+		illusion_moonlight = 6;
+		completequest 7780;
+		setquest 7781;
+		close2;
+		setpcblock PCBLOCK_NPC, true;
+		specialeffect EF_SPINMOVE,AREA,"Young Scholar#ill_moon_pdun";
+		specialeffect EF_DQ9_CHARGE,AREA,"Young Scholar#ill_moon_pdun";
+		sleep2 350;
+		npctalk "Arghhhhh-!","",bc_self;
+		cloakonnpc "Young Scholar#ill_moon_pdun",getcharid(0);
+		sleep2 500;
+		npctalk "Chunghae!","Junghee#ill_moon_pdun",bc_self;
+		sleep2 2000;
+		npctalk "That careless klutz!","Junghee#dun_dummy",bc_self;
+		sleep2 500;
+		specialeffect EF_SPINMOVE,AREA,"Junghee#ill_moon_pdun";
+		specialeffect EF_DQ9_CHARGE,AREA,"Junghee#ill_moon_pdun";
+		sleep2 350;
+		setpcblock PCBLOCK_NPC, false;
+		cloakonnpc "Junghee#ill_moon_pdun",getcharid(0);
+		end;
+	}
+	mes "There is something on the other side of the shimmering portal.";
+	mes "What should I do?";
+	next;
+	if (select("Enter the portal.:Quit.") == 2) {
+		mes "Quit investigating.";
+		close;
+	}
+	warp "pay_d03_i",140,44;
+	end;
+
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 5";
+	end;
+}
+
+pay_dun03,143,45,4	duplicate(dummy_cloaked_npc)	Junghee#ill_moon_pdun	4_M_PAY_SOLDIER
+pay_dun03,138,43,7	duplicate(dummy_cloaked_npc)	Young Scholar#ill_moon_pdun	4_F_03
+
+pay_d03_i,140,46,0	script	Shimmering Portal#ill_moon_out	4_ENERGY_BLUE,{
+	mes "I can go back to the ruined village.";
+	mes "What should I do?";
+	next;
+	if (select("Exit.:Do not exit.") == 2)
+		end;
+	warp "pay_dun03",140,44;
+	end;
+}
+
+pay_d03_i,149,45,4	script	Scholar Chunghae#ill_moon_ind	4_F_03,{
+	if (illusion_moonlight < 6)
+		end;
+	if (illusion_moonlight == 6) {
+		mes "[ Chunghae ]";
+		mes "Look at this place!";
+		mes "It looks exactly like the ruined village we were in a moments ago, and yet... it's different!";
+		next;
+		mes "[ Chunghae ]";
+		mes "Also, there's something off about people and foxes here, and I saw a strange-looking mage among them.";
+		mes "What if he's responsible for this incident.";
+		next;
+		mes "[ Chunghae ]";
+		mes "These foxes, villagers, and angry spirits...";
+		mes "They reminded me of the time when the village was buried under landslide.";
+		next;
+		mes "[ Chunghae ]";
+		mes "We need to look around for more clues.";
+		mes "You'll help, won't you?";
+		next;
+		mes "[ Chunghae ]";
+		mes "Let me know when you're ready.";
+		illusion_moonlight = 7;
+		completequest 7781;
+		close;
+	}
+	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "- You're carrying too many items to proceed with this quest. -";
+		close;
+	}
+	switch (checkquest(7783,PLAYTIME)) {
+		case -1:
+			break;
+
+		case 0:
+		case 1:
+			mes "[ Chunghae ]";
+			mes "Now I know this is not the ruined village.";
+			mes "Are we really inside a Moonlight Flower's nightmare?";
+			next;
+			mes "[ Chunghae ]";
+			mes "That's what Muyeon said.";
+			mes "Their nightmares are coming true.";
+			next;
+			mes "[ Chunghae ]";
+			mes "This place is a worth of a serious study.";
+			close;
+
+		case 2:
+			mes "[ Chunghae ]";
+			mes "Let's begin our investigation for the day, shall we?";
+			mes "Maybe it's because this is a dream, but nothing about it has changed.";
+			erasequest 7783;
+			next;
+			mes "[ Chunghae ]";
+			mes "Let me know when you're ready.";
+			close;
+	}
+	switch (checkquest(7782,HUNTING)) {
+		case -1:
+			mes "[ Chunghae ]";
+			mes "I've talked to the villagers,";
+			mes "and many of them told me about some strange mage.";
+			next;
+			mes "[ Chunghae ]";
+			mes "They said he casts powerful spells wherever he goes, and it was one of his spells that shook the ground and caused the fatal landslide. As a result, a lot of the villagers and foxes died.";
+			next;
+			mes "[ Chunghae ]";
+			mes "I'm convinced that the mage is responsible for these rampant nightmares.";
+			mes "Maybe the nightmares would stop materializing if we get rid of their cause.";
+			next;
+			mes "[ Chunghae ]";
+			mes "Of course, I could be wrong.";
+			mes "He could just be another character in the nightmares.";
+			next;
+			mes "[ Chunghae ]";
+			mes "I want to know more than anything what tore the walls between reality and dreams.";
+			mes "Maybe this is even happening in other places too?";
+			next;
+			mes "[ Chunghae ]";
+			mes "Anyway, please take care of the ^0000FFWizard of the Truth^000000 in this place.";
+			mes "It's time we deal with this quasi-reality.";
+			next;
+			mes "[ Chunghae ]";
+			mes "He is pretty formidable. I wouldn't recommend ^0000FFfight him alone.^000000";
+			next;
+			if (select("Will do.:No, thanks.") == 2) {
+				mes "[ Chunghae ]";
+				mes "Err, then I'll have to investigate something else.";
+				mes "But I won't resent you for this. I promise.";
+				close;
+			}
+			mes "[ Chunghae ]";
+			mes "Good luck.";
+			mes "That wizard looks pretty strong.";
+			mes "Please be careful.";
+			setquest 7782;
+			close;
+
+		case 0:
+		case 1:
+			mes "[ Chunghae ]";
+			mes "That ^0000CDenlightened mage^000000 looks dangerous.";
+			mes "Please stop him.";
+			close;
+
+		case 2:
+			mes "[ Chunghae ]";
+			mes "You're as experienced as I've heard.";
+			mes "Now, let's see how this affects the situation.";
+			next;
+			if (illusion_moonlight == 7) {
+				mes "[ Chunghae ]";
+				mes "Remember what Muyeon said?";
+				mes "About the foxes' nightmares coming true, I mean.";
+				next;
+				mes "[ Chunghae ]";
+				mes "I was thinking while looking around.";
+				mes "I think it's possible we're inside a Moonlight Flower's dream.";
+				next;
+				mes "[ Chunghae ]";
+				mes "I don't know how it has been connected to reality,";
+				mes "but I'm certain of one thing:";
+				next;
+				mes "[ Chunghae ]";
+				mes "The spirits of the Moonlight Flowers are still living in the past.";
+				mes "Back when their village was buried..";
+				next;
+				mes "[ Chunghae ]";
+				mes "They died such a horrible death that they're unable to move on to the Netherworld.";
+				mes "And something has ignited their pent-up anger.";
+				next;
+				mes "[ Chunghae ]";
+				mes "Here, there are truths that we cannot find anywhere else.";
+				mes "I guess I'll be staying here until I find them all.";
+				next;
+				mes "[ Chunghae ]";
+				mes "Please deliver the news to Muyeon in the Detached Payon Palace.";
+				mes "Junghee and I will explore this place further.";
+				illusion_moonlight = 8;
+				setquest 7788;
+				next;
+			}
+			mes "[ Chunghae ]";
+			mes "I hope we can find an answer to this phenomenon.";
+			erasequest 7782;
+			setquest 7783;
+			getitem 25271,1;
+			getexp 300000,300000;
+			close;
+	}
+	end;
+
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 6";
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 7 && checkquest(7782,HUNTING) == -1";
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"illusion_moonlight == 7 && checkquest(7782,HUNTING) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"iillusion_moonlight > 7 && checkquest(7783,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"iillusion_moonlight > 7 && checkquest(7782,HUNTING) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"iillusion_moonlight > 7 && checkquest(7783,PLAYTIME) == -1 && checkquest(7782,HUNTING) == -1";
+	end;
+}
+
+pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
+	if (illusion_moonlight < 6)
+		end;
+	if (illusion_moonlight == 6) {
+		mes "[ Junghee ]";
+		mes "I knew coming in that I'd better stay close to Chunghae.";
+		mes "I was right.";
+		next;
+		mes "[ Junghee ]";
+		mes "I'm sensing really bad vibes from these foxes and ghosts.";
+		mes "This is not good.";
+		close;
+	}
+	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "- You're carrying too many items to proceed with this quest. -";
+		close;
+	}
+	if (checkquest(7784,HUNTING) == 2) {
+		mes "[ Junghee ]";
+		mes "It doesn't matter if they're real or not. They're just as threatening.";
+		mes "Good Job.";
+		next;
+		mes "[ Junghee ]";
+		mes "Chunghae's almost done investigating this place. I'd better get ready to leave.";
+		erasequest 7784;
+		setquest 7785;
+		getitem 25271,1;
+		close;
+	}
+	if (checkquest(7786,HUNTING)  == 2) {
+		mes "[ Junghee ]";
+		mes "It doesn't matter if they're real or not.";
+		mes "I can symphatize with the soldier.";
+		next;
+		mes "[ Junghee ]";
+		mes "All he wanted to do was protect others, and he died without fulfilling that wish.";
+		mes "Thank you for helping them rest.";
+		erasequest 7786;
+		setquest 7787;
+		getitem 25271,1;
+		close;
+	}
+	mes "[ Junghee ]";
+	mes "There's another portal that looks just like the one we came through.";
+	mes "I touched it, and it sent me back to the original ruined village.";
+	next;
+	switch( select( "About the angry Nine Tails.", "About the angry Soldiers." ) ) {
+	case 1:
+		switch( checkquest(7785,PLAYTIME) ) {
+		case -1:
+			if (checkquest(7784,HUNTING) == -1) {
+				mes "[ Junghee ]";
+				mes "Chunghae is having a problem investigating this place because of the angry foxes.";
+				mes "I'll appreciate if you can take care of them.";
+				break;
+			}
+			mes "[ Junghee ]";
+			mes "Please hunt the ^0000FFAngry Nine Tails^000000 around this place.";
+			mes "That'll ensure Chunghae's safety during his investigation.";
+			close;
+		case 0:
+		case 1:
+			mes "[ Junghee ]";
+			mes "Chunghae said we're inside a Moonlight Flower's nightmare.";
+			mes "They may not be real, but if they pose any threat to the living, then they must be taken care of.";
+			next;
+			mes "[ Junghee ]";
+			mes "And that has nothing to do with the symphathy I feel for them.";
+			mes "Now if you'll excuse me, Chunghae and I'll go investigate other places.";
+			close;
+		case 2:
+			erasequest 7785;
+			mes "[ Junghee ]";
+			mes "Did you get some rest?";
+			mes "Everything's just the same as when you left it, but I want to clear this place,";
+			mes "so Chunghae can investigate it.";
+			mes "Could you hunt some ^4d4dffAngry Nine Tails^000000?";
+			break;
+		}
+		next;
+		if (select( "Accept.", "Decline." ) == 2) {
+			mes "[ Junghee ]";
+			mes "Then Chunghae won't be able to fully investigate this place.";
+			close;
+		}
+		mes "[ Junghee ]";
+		mes "Thank you.";
+		mes "I understand why those ^0000FFfoxes are angry^000000, but this has to be done.";
+		setquest 7784;
+		close;
+	case 2:
+		switch( checkquest(7787,PLAYTIME) ) {
+		case -1:
+			if (checkquest(7786,HUNTING) == -1) {
+				mes "[ Junghee ]";
+				mes "These soldiers tried to protect their villagers until the last moment,";
+				mes "and got buried with them. No wonder they're so angry.";
+				break;
+			}
+			mes "[ Junghee ]";
+			mes "Please take care of the ^0000FFAngry Soldiers^000000 in this place.";
+			mes "I mean... send them to Heaven.";
+			close;
+		case 0:
+		case 1:
+			mes "[ Junghee ]";
+			mes "If we're really inside Moonlight Flower's nightmare, like Chunghae thinks,";
+			mes "then the angry soldier over there must have been the guard of this village.";
+			next;
+			mes "[ Junghee ]";
+			mes "It doesn't matter if this is real or not. Watching my ancestors suffer is difficult.";
+			mes "I may end up wasting our time, but I want to try to help them rest.";
+			close;
+		case 2:
+			erasequest 7787;
+			mes "[ Junghee ]";
+			mes "What can we do to get rid of these nightmares?";
+			mes "I told you it's difficult for me to look at those soldiers without feeling pain.";
+			break;
+		}
+		next;
+		mes "[ Junghee ]";
+		mes "Would you be so kind as to put them to rest for me?";
+		next;
+		if (select( "Accept.", "Decline." ) == 2) {
+			mes "[ Junghee ]";
+			mes "I really don't want to deal with them myself,";
+			mes "but I guess I'll have to.";
+			close;
+		}
+		mes "[ Junghee ]";
+		mes "Thank you.";
+		mes "I'll leave the ^0000FFAngry Soldiers^000000 to you.";
+		mes "Please send them to heaven.";
+		setquest 7786;
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"illusion_moonlight > 6 && checkquest(7785,PLAYTIME) == -1 && checkquest(7784,HUNTING) == -1";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"illusion_moonlight > 6 && checkquest(7787,PLAYTIME) == -1 && checkquest(7786,HUNTING) == -1";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"illusion_moonlight > 6 && checkquest(7785,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"illusion_moonlight > 6 && checkquest(7787,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"illusion_moonlight > 6 && checkquest(7784,HUNTING) == 2";
+	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"illusion_moonlight > 6 && checkquest(7786,HUNTING) == 2";
+	end;
+}
+
+//= Illusion Moonlight Spawn
+pay_d03_i,43,150,5	script	Villager#ill_moon_0	1_F_ORIENT_01,{
+	mes "[ Villager ]";
+	mes "Adventurer?";
+	mes "Are you with the subjugation party?";
+	mes "Why can't you just leave us alone?";
+	next;
+	mes "[ Villager ]";
+	mes "We don't worship monsters.";
+	mes "We're not enthralled by monsters!";
+	next;
+	mes "[ Villager ]";
+	mes "Ah...";
+	mes "The light... The magic... Please stop that magic...";
+	close2;
+	initnpctimer;
+	disablenpc();
+	specialeffect EF_QUAKEBODY2;
+	npctalk "Ah... Ah... Aaahhh...";
+	areamonster "pay_d03_i",42,149,44,151,"Resentful Sohee",3762,3;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+
+pay_d03_i,82,237,3	script	Villager#ilp17	1_F_ORIENT_01,5,5,{
+	end;
+
+OnTouch:
+	specialeffect EF_QUAKEBODY2;
+	npctalk "Ahhh... Ahhhhh!!";
+	initnpctimer;
+	disablenpc();
+	areamonster "pay_d03_i",81,236,83,238,"Resentful Sohee",3762,3;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+
+pay_d03_i,254,206,3	script	Villager#ilp18	4_F_01,5,5,{
+	end;
+
+OnTouch:
+	specialeffect EF_QUAKEBODY2;
+	npctalk "Something is not right!";
+	sleep2 2000;
+	npctalk "Stop it... It's coming, agh!!";
+	areamonster "pay_d03_i",252,204,255,208,"Resentful Munak",3760,3;
+	disablenpc();
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+
+pay_d03_i,81,136,3	script	Villager#ill_moon_3	1_M_ORIENT01,{
+	mes "[ Villager ]";
+	mes "Are you here to subjugate us?!";
+	mes "We've done nothing wrong!";
+	mes "Can't you tell from the sacred creatures!";
+	next;
+	mes "[ Villager ]";
+	mes "Ah... The fox lady...";
+	close2;
+	initnpctimer;
+	disablenpc();
+	npctalk "H-help!! I don't want to die!";
+	areamonster "pay_d03_i",79,136,81,138,"Resentful Bongun",3761,3;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+
+pay_d03_i,160,260,3	script	Villager#ill_moon_4	1_M_ORIENT01,{
+	mes "[ Villager ]";
+	mes "You...";
+	mes "Who's that strange mage?";
+	mes "Why do you...?";
+	next;
+	mes "[ Villager ]";
+	mes "You! You're no better than them!";
+	mes "What have we done to you?";
+	close2;
+	initnpctimer;
+	disablenpc();
+	npctalk "Arrgghh-!";
+	areamonster "pay_d03_i",158,258,162,262,"Resentful Bongun",3761,3;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+
+
+//============================================================
+//= Illusion of Vampire
+//============================================================
+gef_dun01,134,224,1	script	Mojo#ilgf	2_F_MAGICMASTER,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Mojo]";
+		mes "Are you sure you can carry all that stuff? Why don't you lighten your bag?";
+		close;
+	}
+	if (ill_vampire == 0) {
+		mes "[Mojo]";
+		mes "Mm, you're an adventurer. What brings you to me? I'm sorry, I'm kind of busy. Could you talk to the priest over there instead?";
+		close;
+	}
+	if (ill_vampire < 16) {
+		mes "[Mojo]";
+		mes "The notebook... I want to see the notebook... If you want to enter the notebook, then you should talk to Father Grimm. If you want, I can go with you.";
+		close;
+	}
+	switch( checkquest(14680,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Mojo]";
+		mes "Hello, Adventurer.";
+		next;
+		mes "[Mojo]";
+		mes "Oh, I'm sorry, but I can't talk right now. I'm too busy examining the things you brought to me.";
+		next;
+		mes "[Mojo]";
+		mes "Could you come back after dawn?";
+		close;
+	case 2:
+		mes "[Mojo]";
+		mes "Hello, Adventurer. How are you?";
+		next;
+		mes "[Mojo]";
+		mes "Whew, I stayed up all night examining the Dried Yggdrasil Leaves and the Suspicious Pentacles. I wouldn't have to, if Father Grimm left me alone.";
+		next;
+		mes "[Mojo]";
+		mes "Anyway they're so old and poorly preserved that they easily crumble to dust. I couldn't finish my research.";
+		next;
+		mes "[Mojo]";
+		mes "So I'm thinking... Could you bring me some more today? I need ^0000cd10 Dried Yggdrasil Leaves and 10 Suspicious Pentacles^000000.";
+		next;
+		mes "[Mojo]";
+		mes "Also, please hunt 5 zombies of each kind for that nagging priest.";
+		next;
+		mes "[Mojo]";
+		mes "In the meantime I'll catch some Z's.";
+		erasequest 14680;// Time to Research
+		setquest 14679;// Send the Dead Back to Earth
+		close;
+	}
+	switch( checkquest(14679,HUNTING) ) {
+	case -1:
+		mes "[Mojo]";
+		mes "Adventurer, how did you feel when you touched the notebook? How do you think it works?";
+		next;
+		mes "[Mojo]";
+		mes "I've got so many questions, but that mean priest wouldn't let me touch it.";
+		next;
+		mes "[Mojo]";
+		mes "Adventurer, could you take me with you the next time you enter the notebook? I swear I'm not going to steal the notebook. I'm just really curious about it.";
+		next;
+		mes "[Grimm]";
+		mes "I can hear you. Give up your obsession with it. That would be best for you.";
+		next;
+		mes "[Mojo]";
+		mes "Who says I'm obsessed with it?";
+		next;
+		mes "[Mojo]";
+		mes "Adventurer, please? Don't I look pitiful?";
+		next;
+		if (select( "What do you want to know the most?", "I don't want to get between you two." ) == 2) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "Sorry, but I don't want to get between you two. You both have a point, and I can't side with either one of you.";
+			next;
+			mes "[Mojo]";
+			mes "Hmpf, alright, but if you ever feel pity for me, then come back and help me. Promise?";
+			close;
+		}
+		mes "[Mojo]";
+		mes "About those walking corpses, of course!";
+		next;
+		mes "[Mojo]";
+		mes "I really want to know what keeps them moving, what kind of experiments my predecessors did on them, and what kind of state they're in.";
+		next;
+		mes "[Mojo]";
+		mes "Such experiments are prohibited now, and all the old records were destroyed.";
+		next;
+		mes "[Grimm]";
+		mes "They were destroyed for good reason. So stop wondering about them.";
+		next;
+		mes "[Mojo]";
+		mes "Oh, that's right! Adventurer, could you capture a zombie for me? Alive, that is.";
+		npctalk "Wait, it can't be alive. It's already dead.", "", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "No. Don't even think about it. Mojo, you're so close to crossing the line.";
+		next;
+		mes "[Mojo]";
+		mes "I wasn't asking you! Unless you're going to let me touch the notebook, stay out of my hair!";
+		next;
+		mes "[Grimm]";
+		mes "You just asked this adventurer to capture a zombie alive.";
+		next;
+		mes "[Grimm]";
+		mes "You're not thinking about what kind of danger it might pose when it arrives here. You just want it because you're curious about it.";
+		next;
+		mes "[Grimm]";
+		mes "Did you forget why Brother Jojo wanted you to stay here and stay away from the notebook?";
+		next;
+		mes "[Mojo]";
+		mes "So I'm asking this adventurer. You keep telling me don't do this, don't do that. Is there anything I can do without you saying no?";
+		npctalk "You just want me to stand here, breathing. Is that it?", "", bc_self;
+		sleep2 1000;
+		npctalk "Sure, why not?", "Grimm#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "You can't bring anything from the world inside the book. If you do, I'll get rid of them.";
+		next;
+		mes "[Grimm]";
+		mes "If you really want to experiment on those blasphemous creatures, then I suggest you talk with Brother Jojo and the others first.";
+		next;
+		mes "[Mojo]";
+		mes "When are they coming back?";
+		next;
+		mes "[Grimm]";
+		mes "Beats me.";
+		npctalk "You should've become a politician. You would've been more successful at that.", "", bc_self;
+		sleep2 500;
+		npctalk "I'll take that as a compliment.", "Grimm#ilgf", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "Adventurer, I read in the notebook that the owner used some materials to experiment on zombies. I think they're Yggdrasil leaves and some drawings.";
+		next;
+		select("You mean dried Yggdrasil leaves and some pentacles.");
+		mes "[Mojo]";
+		mes "Yes. Could you at least procure them for me?";
+		next;
+		mes "[Mojo]";
+		mes "Maybe I can use them to figure out the experiment she did and the force that reanimates the dead.";
+		npctalk "Secretly from that priest, of course.", "", bc_self;
+		sleep2 500;
+		npctalk "I still can hear you.", "Grimm#ilgf", bc_self;
+		sleep2 1000;
+		npctalk "Stop eavesdropping on people.", "", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "Why are you obsessed with this? Do you really want to let these unholy creature loose on the continent? Do you not understand why the Tower has banned the experiments?";
+		next;
+		mes "[Mojo]";
+		mes "Look, I'm not going to experiment on the zombies. I just want to take a look at the materials she used.";
+		next;
+		mes "[Mojo]";
+		mes "And who knows? I might find out a way to exterminate these zombies at once.";
+		npctalk "I may not look it, but I'm pretty smart.", "", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "You agreed that our enthusiasm for magic has contributed to the development of our country.";
+		next;
+		mes "[Grimm]";
+		mes "...";
+		npctalk "I'll take that as a yes.", "", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "I promise I'm not going to do anything dangerous. I'll just take a look at the materials.";
+		next;
+		mes "[Grimm]";
+		mes "I'm going to watch you.";
+		next;
+		mes "[Mojo]";
+		mes "Sure, be my guest.";
+		npctalk "Ooh, I'm going to be studying with you breathing down my neck, how exciting!", "", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "And you will stop asking me for this notebook, yes?";
+		next;
+		mes "[Mojo]";
+		mes "Huh? But that's... I'd love to take a look at it.";
+		npctalk "Do you think you can?", "Grimm#ilgf", bc_self;
+		sleep2 500;
+		npctalk "Maybe one day, yes.", "", bc_self;
+		sleep2 1000;
+		npctalk "I swear to Odin that day will never come.", "Grimm#ilgf", bc_self;
+		sleep2 1000;
+		npctalk "Bah!", "", bc_self;
+		next;
+		select("So have you come to an agreement?");
+		mes "[Mojo]";
+		mes "Yes, we have. Please bring me some dried Yggdrasil leaves and pentacles. 10 for each sounds good.";
+		next;
+		mes "[Grimm]";
+		mes "Are you sure that's enough?";
+		next;
+		mes "[Mojo]";
+		mes "Mm, I'm not sure yet. Do you mind if I ask you for more later? Okay, then please bring me ^0000cd10 Dried Yggdrasil Leaves and 10 Suspicious Pentacles^000000.";
+		next;
+		mes "[Mojo]";
+		mes "Oh, and while you're at it, could you hunt some zombies for that scowling priest as well? Just 5 of each kind. I don't want to burden you.";
+		npctalk "You're already burdening him.", "Grimm#ilgf", bc_self;
+		sleep2 500;
+		npctalk "Yeah, but look at you, your face lit up when I offered.", "", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "Adventurer, thank you for doing this for us.";
+		setquest 14679;// Send the Dead Back to Earth
+		close;
+	case 0:
+	case 1:
+		break;
+	case 2:
+		if (countitem(25266) < 10 || countitem(25267) < 10)
+			break;
+		mes "[Mojo]";
+		mes "Adventurer, welcome back! I've been waiting for you for so long! Did you bring the things I asked? Come on, let me see them!";
+		next;
+		mes "[Mojo]";
+		mes "Wow, these are so old and fragile, I'm afraid they might crumble in my hands.";
+		next;
+		mes "[Grimm]";
+		mes "Are you happy now? They don't look any different from the ones you're using, though.";
+		next;
+		mes "[Mojo]";
+		mes "You priests are the least curious kind I know. I asked for these because I wanted to compare them to the ones I have, and it takes a keen eye to catch minute differences.";
+		next;
+		mes "[Mojo]";
+		mes "Adventurer, could you bring me some more tomorrow? I'm worried I might end up damaging all these you brought today. Even if I don't, I can always use more samples.";
+		next;
+		mes "[Mojo]";
+		mes "Thank you so much. See you tomorrow!";
+		delitem 25266,10;	// Dried_Yggdrasil_Leaf
+		delitem 25267,10;	// SuspiciousMagicCircle
+		erasequest 14679;	// Curious by Nature
+		setquest 14680;		// Time to Research
+		getexp 500000,500000;
+		getitem 25271,1;// Illusion Stone
+		close;
+	}
+	mes "[Mojo]";
+	mes "Adventurer, welcome back! I've been waiting for you for so long! Did you bring the things I asked? Come on, let me see them!";
+	next;
+	mes "[Mojo]";
+	mes "Mm, this isn't enough. Please bring me ^0000cd10 Dried Yggdrasil Leaves and 10 Suspicious Pentacles^000000.";
+	next;
+	mes "[Mojo]";
+	mes "Also, could you hunt 5 zombies of each kind for that scowling priest over there? Thanks!";
+	close;
+
+OnInit:
+	.@main_completed$ = "isbegin_quest(14666) == 2";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14680,PLAYTIME) == -1 && checkquest(14679,HUNTING) == -1") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14679,HUNTING) == 2 && countitem(25266) > 9 && countitem(25267) > 9") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14680,PLAYTIME) == 2") );
+	end;
+}
+gef_dun01,133,221,1	duplicate(dummy_cloaked_npc)	Mojo#ilgf01	2_F_MAGICMASTER
+gef_dun01,130,222,5	duplicate(dummy_cloaked_npc)	Mojo#ilgf02	2_F_MAGICMASTER
+gef_dun01,130,224,5	duplicate(dummy_cloaked_npc)	Mojo#ilgf03	2_F_MAGICMASTER
+
+gef_dun01,132,223,5	script	Grimm#ilgf	4_M_MINISTER,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Grimm]";
+		mes "Are you sure you can carry all that stuff? Why don't you lighten your bag?";
+		close;
+	}
+	if (BaseLevel < 130) {
+		mes "[Grimm]";
+		mes "This place is too dangerous for you. Pleae come back when you're stronger.";
+		close;
+	}
+	if (ill_vampire == 0) {
+		mes "[Mojo]";
+		mes "Just let me read it. I'll go bring them out afterward. Please?";
+		npctalk "Please?", "Mojo#ilgf", bc_self;
+		sleep2 500;
+		cloakonnpc( "Mojo#ilgf", getcharid(0) );
+		cloakoffnpc( "Mojo#ilgf01", getcharid(0) );
+		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf01");
+		npctalk "Please?", "Mojo#ilgf01", bc_self;
+		sleep2 500;
+		cloakonnpc( "Mojo#ilgf01", getcharid(0) );
+		cloakoffnpc( "Mojo#ilgf02", getcharid(0) );
+		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf02");
+		npctalk "Please?", "Mojo#ilgf02", bc_self;
+		sleep2 500;
+		cloakonnpc( "Mojo#ilgf02", getcharid(0) );
+		cloakoffnpc( "Mojo#ilgf03", getcharid(0) );
+		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf03");
+		npctalk "Please?", "Mojo#ilgf03", bc_self;
+		sleep2 500;
+		cloakonnpc( "Mojo#ilgf03", getcharid(0) );
+		cloakoffnpc( "Mojo#ilgf", getcharid(0) );
+		npctalk "Please?", "Mojo#ilgf", bc_self;
+		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf");
+		next;
+		mes "[Grimm]";
+		mes "Just leave me alone! I know you're going to run away with it if I give it to you.";
+		npctalk "Bah!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "I swear I'll give it back to you. Just for one minute. How about thirty seconds? Ten seconds, then?";
+		next;
+		mes "[Grimm]";
+		mes "No! I'm not even going to let you touch it!";
+		next;
+		mes "[Mojo]";
+		mes "Come on, it's me, Mojo. Don't you trust me?";
+		next;
+		mes "[Grimm]";
+		mes "No, I don't. I may trust Mojo, my sister in faith, but not Mojo, the mage.";
+		next;
+		mes "[Mojo]";
+		mes "Oh, come on! You're a priest? You're supposed to have faith in everyone! Why are you treating me like a thief?";
+		emotion ET_CRY, getnpcid(0, "Mojo#ilgf");
+		npctalk "Boohoo! Oh, God! I'm being treated so unfairly!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "I only have faith in Him, and He's telling me not to trust you.";
+		npctalk "He's still whispering that to me.";
+		next;
+		mes "[Mojo]";
+		mes "I'm not hearing anything!";
+		next;
+		mes "[Grimm]";
+		mes "Of course not. Only His servants can hear him.";
+		emotion ET_FRET, getnpcid(0, "Mojo#ilgf");
+		npctalk "Wow, I smell lies and it's coming from your mouth.", "Mojo#ilgf", bc_self;
+		sleep2 1000;
+		npctalk "That's blasphemy!";
+		next;
+		select("Would you be so kind as to heal me?");
+		emotion ET_SMILE;
+		mes "[Grimm]";
+		mes "Sure thing. Any time you want, " + ( Sex ? "Brother." : "Sister." );
+		specialeffect2 EF_HEAL2;
+		npctalk "He's such a hypocrite. I can never trust priests again, and it's his fault.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Thank you. I'm sorry, but I've heard you fighting, even from that far corner of this dungeon.";
+		next;
+		mes "[Grimm]";
+		mes "You have? We must have been really loud. I suppose that wasn't very smart of us.";
+		next;
+		mes "[Mojo]";
+		mes "Oh, this is great! Instead of fighting, why don't we ask this adventurer who is right?";
+		next;
+		mes "[Mojo]";
+		mes "Adventurer, if you're not busy, would you hear us out?";
+		npctalk "If you're busy, we'll understand.", "Mojo#ilgf", bc_self;
+		next;
+		if (select( "Let me hear it.", "I have to leave." ) == 2) {
+			mes "[Grimm]";
+			mes "I see. It's a shame that you can't seize on such a great opportunity.";
+			next;
+			mes "[Grimm]";
+			mes "Please feel free to come back if you change your mind.";
+			close;
+		}
+		mes "[" + strcharinfo(0) + "]";
+		mes "Let me hear it.";
+		next;
+		mes "[Grimm]";
+		mes "Okay, this is going to be a long story. Let me have some water first.";
+		ill_vampire = 1;	// the variable must be updated here to use setquest to update questinfo
+		setquest 14652;// Detailed Account 01
+		close;
+	}
+	if (ill_vampire == 1) {
+		mes "[Grimm]";
+		mes "Adventurer, did you know these catacombs under Geffen once were quiet and filled with special energy instead of monsters?";
+		next;
+		mes "[Grimm]";
+		mes "Back then, only a couple of monsters showed up once every decade or so.";
+		next;
+		select("What changed that?");
+		emotion ET_OHNO;
+		mes "[Grimm]";
+		mes "*Glances at Mojo*";
+		next;
+		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "Why are you looking at me?";
+		npctalk "I had nothing to do with it.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "Some mages decided to erect an ivory tower of their own. They searched everywhere in the continent and settled on the ground above these catacombs.";
+		next;
+		mes "[Grimm]";
+		mes "That was the beginning of the tragedy.";
+		emotion ET_ANGER, getnpcid(0, "Mojo#ilgf");
+		npctalk "Oh geez, here it goes again.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "It's been said all mammals have curiosity that rivals their appetite, but mages... are the worst. ";
+		npctalk "Enough with the lecturing. Get to the point already.", "Mojo#ilgf", bc_self;
+		sleep2 500;
+		npctalk "Everything has a cause and effect. How can you expect the adventurer to understand what this is about without knowing the cause?";
+		next;
+		mes "[Grimm]";
+		mes "Anyway, these mages, after they built the Geffen Tower, took notice of the blasphemous creatures that sometimes appeared in the catacombs.";
+		next;
+		mes "[Grimm]";
+		mes "They conducted various experiments to understand the special energy that reanimated the dead.";
+		npctalk "They were just studying.", "Mojo#ilgf", bc_self;
+		sleep2 500;
+		npctalk "Just studying? They could've turned the entire continent into an unholy breeding ground!";
+		next;
+		mes "[Grimm]";
+		mes "And as if that wasn't enough, those mages used their magic and replicated the reanimating process.";
+		next;
+		mes "[Grimm]";
+		mes "That went horribly wrong. The special energy that surrounded the catacombs exploded, bringing back all the dead buried in them.";
+		next;
+		mes "[Grimm]";
+		mes "Those arrogant mages crossed the line! They tried to play God!";
+		next;
+		emotion ET_ANGER, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "Hey, I'm one of them, and I'm not going to let you talk bad about my predecessors like that!";
+		next;
+		mes "[Grimm]";
+		mes "How am I defaming them when I'm only telling the truth?";
+		npctalk "It's not telling the truth when you're only telling it from your point of view!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "What do you think, Adventurer? Would you trust someone so reckless with important tasks?";
+		next;
+		select("...No.");
+		mes "[Mojo]";
+		mes "But wait, Adventurer. You haven't heard my side of the story.";
+		npctalk "You've got to listen to both sides before you judge!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "We understand the things that we want to study can be dangerous, so we try our best to be careful.";
+		npctalk "Apparently, trying your best wasn't enough in this case.";
+		sleep2 500;
+		npctalk "Why are you saying that? I'm talking about my predecessors!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Mojo]";
+		mes "My predecessors may have been too enthusiastic to study what's underneath their tower, but it was that enthusiasm that made Geffen grow into the city of magic that it is.";
+		next;
+		mes "[Mojo]";
+		mes "Rune-Midgarts is flanked by Arunafeltz and Schwarzwald, the two strongest nations of the continent, and its magic power is what keeps them at bay.";
+		next;
+		mes "[Grimm]";
+		mes "And that's the only reason that kept the Church from further pressing this matter,";
+		next;
+		mes "[Grimm]";
+		mes "even though it doesn't change the fact that you woke the dead.";
+		npctalk "Father Grimm, could you stop cutting in?", "Mojo#ilgf", bc_self;
+		sleep2 500;
+		npctalk "I can't. You're twisting the facts to make yourself look good.";
+		next;
+		mes "[Mojo]";
+		mes "Curiosity is what fuels our life. It's the seed of development. Adventurer, would you hesitate to go to a new world because it's dangerous?";
+		next;
+		select("I wouldn't be an adventurer if I did.");
+		mes "[Mojo]";
+		mes "We mages are just like you adventurers in that sense. I knew you'd understand me.";
+		emotion ET_OK, getnpcid(0, "Mojo#ilgf");
+		next;
+		mes "[Mojo]";
+		mes "You heard that, Father Grimm. Now show me the notebook.";
+		next;
+		mes "[Grimm]";
+		mes "No. Adventurer, you agreed with me that she's not trustworthy.";
+		next;
+		mes "[Mojo]";
+		mes "You also agreed with me on the value of curiosity.";
+		next;
+		select("So, what is this about?");
+		mes "[" + strcharinfo(0) + "]";
+		mes "I've heard both of you, but neither of you told me what you were fighting for.";
+		next;
+		mes "[Grimm]";
+		mes "Oh, I'm sorry. The Church of Rune-Midgarts periodically sends its priests out to these catacombs to maintain peace.";
+		next;
+		mes "[Grimm]";
+		mes "I'm one of them, and I happened to pick up a ^0000cdnotebook^000000 just before you found us.";
+		next;
+		select("A notebook?");
+		mes "[Grimm]";
+		mes "Yes. It looks like it belongs to one of the Geffen Tower mages. It has ^0000cdBomi^000000 written on its cover, which I think is the name of its owner.";
+		next;
+		mes "[Mojo]";
+		mes "But none of my guildsmen has such a name. I read the book, and she did sound like she was one of us. ^0000cdNot anymore^000000, though.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Not anymore?";
+		next;
+		emotion ET_OK, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "You're pretty sharp, Adventurer. That's right. I checked with my guild and found out there was someone named Bomi. She just disappeared one day, though.";
+		npctalk "And that was a long, long time ago.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you think this notebook belongs to her? But why was it here?";
+		next;
+		mes "[Mojo]";
+		mes "That was the same question we asked at first. That didn't matter anymore once we read what was written in the book.";
+		next;
+		mes "[Grimm]";
+		mes "What's written in it is unsettling, but what's more serious is? You'll have to read it yourself. Just don't open the ^0000cdlast page^000000.";
+		next;
+		mes "[Mojo]";
+		mes "So you're okay with this adventurer reading it, but not me.";
+		npctalk "You know that's discrimination, right? You should be ashamed of yourself!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "Please take a look.";
+		erasequest 14652;// Detailed Account 01
+		setquest 14653;// Detailed Account 02
+		ill_vampire = 2;
+		close;
+	}
+	if (ill_vampire == 2) {
+		mes "I placed my hand on the book Father Grimm was holding. Suddenly I felt dizzy as the air around me shimmered. Carefully, I opened the notebook.";
+		next;
+		mes "[Daily Journal]";
+		mes "I fainted in the middle of learning a new spell, again.";
+		mes "My low stamina and insufficient mana are always the problem. I thought I could make up for my weak constitution with magic. Of course, even that required some minimal stamina, but I didn't have even that.";
+		mes "I'm too tired...";
+		next;
+		mes "[Daily Journal]";
+		mes "I saw Sophia drinking a mana potion. Maybe potions are the answer to my never-ending search for physical support. ";
+		mes "I wonder if there are special potions that could improve me physically. Then, I could become stronger at last.";
+		next;
+		mes "[Daily Journal]";
+		mes "All the potions I found didn't help improve my weak constitution. All they do is boost strength that's already there.";
+		mes "Maybe I should try to formulate stamina and mana potions on my own.";
+		next;
+		mes "[Daily Journal]";
+		mes "I learned about the catacombs under the Geffen Tower while I was in the library, reading about the tower's history.";
+		mes "How are the dead reanimated? What kind of vital force keeps them moving?";
+		mes "I need permission to enter the catacombs. I'm going to check them tomorrow.";
+		next;
+		mes "[Daily Journal]";
+		mes "The dead don't talk. There's nothing I can find out from them.";
+		mes "I've found traces of experiments everywhere. Some of my peers must have been here before I have.";
+		mes "I'm especially tired today. I'm going to bed early tonight.";
+		next;
+		mes "[Daily Journal]";
+		mes "The bats in the catacombs drink blood from the zombies, probably because there's nothing else to eat.";
+		mes "Every day, I spend most of my energy keeping the bloodthirsty bats at bay. I'd get killed if I didn't stay near the exit.";
+		mes "I'm tired.";
+		next;
+		mes "[Daily Journal]";
+		mes "Today, I heard some strange noise in the catacombs. The zombies and bats were strangely quiet.";
+		mes "Maybe I should explore deeper into the catacombs tomorrow, while the monsters hide from whatever that noise is.";
+		next;
+		mes "That was the last entry. I took my hand off the notebook. Father Grimm closed the notebook.";
+		erasequest 14653;// Detailed Account 02
+		setquest 14654;// Detailed Account 03
+		ill_vampire = 3;
+		close;
+	}
+	if (ill_vampire == 3) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "This is notebook is both ^0000cda diary and research journal^000000.";
+		next;
+		mes "[Grimm]";
+		mes "Indeed. It shows how its owner studied those blasphemous creatures to ^0000cdcreate stamina and mana enhancers^000000.";
+		next;
+		select("Interesting.");
+		emotion ET_OK, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "Yes, it is. My guild would love to study this notebook. Most records from the same era have been lost.";
+		npctalk "I'd love to read it myself as well.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "The content of this notebook isn't what causes me alarm. Didn't you detect some ^0000cdstrange energy^000000 when you touch it?";
+		next;
+		mes "[Grimm]";
+		mes "This book is sustained with its owner's spiritual energy, and it's pulling those who gaze upon it into ^0000cdthe world inside it^000000.";
+		next;
+		mes "[Mojo]";
+		mes "And that's why I want to see the notebook so badly. I want to know how it contains a world inside it and why it was only discovered now.";
+		npctalk "So please let me have it. I'll give it back to you after I figure that all out.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "Mage, you stay out of this! This notebook is taking people to some place we don't know. And the gateway is in the last page.";
+		npctalk "Oh, you don't even bother calling me by name anymore.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "I scanned it for any malicious intent, but I didn't sense any. I think its owner just ^0000cdneeds help with some unfinished business^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "So were you arguing about which one of you should go to that place?";
+		next;
+		mes "[Grimm]";
+		mes "No. The other members of my group and two mages are already there. They just haven't returned.";
+		npctalk "So I told you, I'll go bring them back. I'm stronger than I look. I can do this on my own.", "Mojo#ilgf", bc_self;
+		sleep2 500;
+		npctalk "No. I'd rather wait until they return.";
+		next;
+		select("How about I go?");
+		mes "[Grimm]";
+		mes "You? Well, you're more reliable than this sister here, but are you sure?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I want to repay you for healing me. Also, after listening to you both, I think it's better I go. Do you want me to go bring back your colleagues?";
+		next;
+		mes "[Grimm]";
+		mes "No. I just want you to ^0000cdfind them^000000 and make sure they're okay. If they need help, please provide it to them. If they have a message for me, then please let me know.";
+		npctalk "Take me with you!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "I wish I could go with you, but my group needs me here.";
+		npctalk "*Glances at Mojo*";
+		sleep2 500;
+		npctalk "Why are you staring at me?", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "I can't trust her with the notebook. If something happens to it, the people inside it might not be able to come back.";
+		next;
+		emotion ET_ANGER, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "This does it! Father Grimm, put that book down. Let's fight!";
+		sleep2 500;
+		npctalk "*Snort* Why would I do that? You're just going to run away with it.";
+		next;
+		mes "[Mojo]";
+		mes "Then I'm going to go with the Adventurer!";
+		next;
+		mes "[Grimm]";
+		mes "No. You're staying with me. Don't you dare touch the book.";
+		next;
+		emotion ET_CRY, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "Why are you doing this to me? What have I done to you?";
+		next;
+		mes "[Grimm]";
+		mes "Brother Jojo asked me to never let you touch the book. Do you not remember that?";
+		npctalk "He was really worried about you.";
+		next;
+		mes "[Mojo]";
+		mes "No, I don't remember. When Sister Gem returns, I'm going to tell on you!";
+		npctalk "Go ahead.";
+		next;
+		mes "[Grimm]";
+		mes "Now, Adventurer. Let me know when you're ready.";
+		erasequest 14654;// Detailed Account 03
+		setquest 14655;// I'm Ready
+		ill_vampire = 4;
+		close;
+	}
+	if (ill_vampire < 15) {
+		mes "[Grimm]";
+		mes "Do you want to enter the notebook? Are you ready?";
+		next;
+		if (select( "Yes. Send me there.", "No." ) == 2) {
+			mes "[Grimm]";
+			mes "Not a problem. Just let me know when you are ready.";
+			close;
+		}
+		mes "[Grimm]";
+		mes "Then, let me open it.";
+		next;
+		mes "I placed my hand on the notebook, and Father Grimm opened it to the last page. Suddenly, my vision got blurry as I felt my body being transported to some place.";
+		if (ill_vampire == 4) {
+			erasequest 14655;// I'm Ready
+			setquest 14656;// Finding Father Grimm's Colleagues
+			ill_vampire = 5;
+		}
+		close2;
+		warp "gef_d01_i",114,216;
+		end;
+	}
+	if (ill_vampire == 15) {
+		mes "[Grimm]";
+		mes "Listen to me, or you can always go back to the Tower.";
+		next;
+		emotion ET_MERONG, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "No!";
+		next;
+		select("Are you two still fighting?");
+		mes "[Mojo]";
+		mes "Ah, there you are! How was that place?";
+		next;
+		mes "[Grimm]";
+		mes "I'm glad you came back safely. Is everyone in there okay?";
+		npctalk "Please tell us already. I'm dying to know!", "Mojo#ilgf", bc_self;
+		next;
+		mes "I relayed what happened in the notebook to Father Grimm and Mojo, and told them that the others decided to stay to keep an eye on the vampires.";
+		next;
+		emotion ET_SPARK, getnpcid(0, "Mojo#ilgf");
+		mes "[Mojo]";
+		mes "Wow, the same place in another plane of existence! I've never heard of this before! How does it work? This notebook has got to have something to do with it.";
+		next;
+		mes "[Mojo]";
+		mes "And vampires who understand humans? My goodness!";
+		next;
+		mes "[Mojo]";
+		mes "I can't stay here. Father Grimm, I have to go in there. Let me go, please!";
+		npctalk "Let me have the notebook.", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "No. Never. Keep your hands to yourself.";
+		npctalk "Argh! Why are you being so stubborn? I don't deserve this!", "Mojo#ilgf", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "Adventurer, thank you for venturing into that mysterious place for us. It'll be greatly appreciated if you visit my colleagues there and bring news from them to me sometimes.";
+		next;
+		mes "[Mojo]";
+		mes "I can do that too, you know. You just have to give me a chance!";
+		npctalk "Sister Mojo, please stay out of this.", "", bc_self;
+		next;
+		mes "[Grimm]";
+		mes "Adventurer, thank you. Feel free to come to me if you want to ^0000cdenter the notebook again^000000.";
+		completequest 14666;// Warden's Role
+		getexp 2000000,2000000;
+		ill_vampire = 16;
+		getitem 25271,5;// Illusion Stone
+		close;
+	}
+	if (ill_vampire == 16) {
+		mes "[Grimm]";
+		mes "Adventurer, do you want to enter the notebook?";
+		next;
+		if (select( "Yes.", "No." ) == 2) {
+			mes "[Grimm]";
+			mes "Not a problem. Just let me know when you are ready.";
+			close;
+		}
+		mes "[Grimm]";
+		mes "Good luck.";
+		close2;
+		warp "gef_d01_i",114,216;
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_vampire == 0 && BaseLevel >= 130" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(14666) == 1" );
+	end;
+}
+
+gef_d01_i,94,133,0	script	#illcon01	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	if (ill_vampire == 5) {
+		if (strnpcinfo(0) == "#ilgf01")
+			specialeffect2 EF_BIG_PORTAL;
+	}
+	else if (ill_vampire == 6) {
+		.@char_id = getcharid(0);
+		cloakoffnpc( "Priest#ilgf01", .@char_id );
+		for ( .@i = 3; .@i < 10; ++.@i )
+			cloakoffnpc( "Marina#ilgf0" + .@i, .@char_id );
+	}
+	else if (ill_vampire == 7) {
+		.@char_id = getcharid(0);
+		cloakoffnpc( "Undead#ilgf06", .@char_id );
+		cloakoffnpc( "Wizard#ilgf06", .@char_id );
+		cloakoffnpc( "Wizard#ilgf07", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf08", .@char_id );
+		cloakoffnpc( "Nameless Catacomb#ilgf01", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf09", .@char_id );
+		cloakoffnpc( "Wizard#ilgf10", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf11", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf12", .@char_id );
+		cloakoffnpc( "Wizard#ilgf13", .@char_id );
+		cloakoffnpc( "Nameless Catacomb#ilgf02", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf14", .@char_id );
+		cloakoffnpc( "Wizard#ilgf15", .@char_id );
+		cloakoffnpc( "Nameless Catacomb#ilgf03", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf16", .@char_id );
+		cloakoffnpc( "Wizard#ilgf17", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf18", .@char_id );
+		cloakoffnpc( "Someone's Dream#ilgf18", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf19", .@char_id );
+		cloakoffnpc( "Wizard#ilgf20", .@char_id );
+		cloakoffnpc( "Undead#ilgf05", .@char_id );
+
+		cloakoffnpc( "Undead#ilgf02", .@char_id );
+		cloakoffnpc( "Undead#ilgf03", .@char_id );
+		cloakoffnpc( "Undead#ilgf04", .@char_id );
+		cloakoffnpc( "Wizard#ilgf21", .@char_id );
+		cloakoffnpc( "Wizard#ilgf22", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf23", .@char_id );
+		cloakoffnpc( "Fast Undead#ilgf01", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf24", .@char_id );
+		cloakoffnpc( "Shining Mushroom#ilgf01", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf25", .@char_id );
+		cloakoffnpc( "Wizard#ilgf26", .@char_id );
+		cloakoffnpc( "Undead#ilgf01", .@char_id );
+
+		cloakoffnpc( "Wizard#ilgf27", .@char_id );
+		cloakoffnpc( "Wizard#ilgf28", .@char_id );
+	}
+	else if (ill_vampire == 10) {
+		cloakoffnpcself( "Dracula#ilgf02" );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
+	}
+	else if (ill_vampire == 12 || ill_vampire == 13) {
+		.@char_id = getcharid(0);
+		cloakoffnpc( "Gem#ilgf02", .@char_id );
+		cloakoffnpc( "Marina#ilgf02", .@char_id );
+		cloakoffnpc( "Antoine#ilgf02", .@char_id );
+		if (ill_vampire == 13) {
+			cloakoffnpc( "Dracula#ilgf03", .@char_id );
+			cloakoffnpc( "King#ilgf02", .@char_id );
+			cloakoffnpc( "Jojo#ilgf01", .@char_id );
+		}
+	}
+	if (ill_vampire > 13) {
+		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		cloakoffnpc( "Wizard#ilgf02", getcharid(0) );
+		cloakoffnpc( "Dracula#ilgf02", getcharid(0) );
+	}
+	end;
+}
+gef_d01_i,114,216,0	duplicate(#illcon01)	#ilgf01	HIDDEN_WARP_NPC,3,0
+
+gef_d01_i,81,135,0	duplicate(#illcon01)	#illcon02	HIDDEN_WARP_NPC,5,5
+gef_d01_i,86,113,0	duplicate(#illcon01)	#illcon03	HIDDEN_WARP_NPC,5,5
+gef_d01_i,95,121,0	duplicate(#illcon01)	#illcon04	HIDDEN_WARP_NPC,5,5
+gef_d01_i,148,56,0	duplicate(#illcon01)	#illcon05	HIDDEN_WARP_NPC,5,5
+gef_d01_i,188,97,0	duplicate(#illcon01)	#illcon06	HIDDEN_WARP_NPC,5,5
+gef_d01_i,209,94,0	duplicate(#illcon01)	#illcon07	HIDDEN_WARP_NPC,5,5
+gef_d01_i,205,117,0	duplicate(#illcon01)	#illcon08	HIDDEN_WARP_NPC,5,5
+gef_d01_i,183,82,0	duplicate(#illcon01)	#illcon09	HIDDEN_WARP_NPC,5,5
+gef_d01_i,197,80,0	duplicate(#illcon01)	#illcon10	HIDDEN_WARP_NPC,5,5
+gef_d01_i,172,86,0	duplicate(#illcon01)	#illcon11	HIDDEN_WARP_NPC,5,5
+
+gef_d01_i,112,228,5	script	Marina#ilgf01	4_F_MONK,{
+	mes "[Marina]";
+	mes "Do you want to leave?";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Marina]";
+		mes "I see. Just let me know when you want to leave.";
+		close;
+	}
+	mes "[Marina]";
+	mes "So, you're in a hurry to leave. Did something happen?";
+	close2;
+	warp "gef_dun01",133,219;
+	end;
+}
+
+gef_d01_i,116,228,3	script	Antoine#ilgf01	4_GEFFEN_01,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Antoine]";
+		mes "Are you sure you can carry all that stuff? Why don't you lighten your bag?";
+		close;
+	}
+	if (ill_vampire < 6) {
+		mes "[Antoine]";
+		mes "Sister Gem, please listen to me!";
+		close;
+	}
+	if (ill_vampire == 6) {
+		mes "[Antoine]";
+		mes "I'm worried about those two. They should be fine, right?";
+		close;
+	}
+	if (ill_vampire == 7) {
+		mes "[Antoine]";
+		mes "Have you found Jojo? Where is he? Jubilee has left to treat his wounds.";
+		close;
+	}
+	if (ill_vampire < 16) {
+		mes "[Antoine]";
+		mes "This place has so many things I want to study, I don't know where to begin. Oh my, look at that Nightmare!";
+		close;
+	}
+	switch( checkquest(14670,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Antoine]";
+		mes "Adventurer, I don't want you to strain yourself. Why don't you go get some rest?";
+		next;
+		mes "[Antoine]";
+		mes "Have a good night's sleep, and come back after dawn.";
+		close;
+	case 2:
+		mes "[Antoine]";
+		mes "Adventurer. Did you have good dreams last night? I had nightmares, probably from looking at those manes all day.";
+		next;
+		mes "[Antoine]";
+		mes "But I'm not about to give up!";
+		mes "Please bring me ^0000cd20 Wavy Manes^000000 as usual.";
+		next;
+		mes "[Antoine]";
+		mes "Oh, and it'll be great if you also can get rid of ^0000cd10 Sweet Nightmares^000000. I want to know how that'll affect dreams. Thank you!";
+		erasequest 14670;// Time for Dreaming
+		setquest 14669;// Sweet Dreams
+		close;
+	}
+	switch( checkquest(14669,HUNTING) ) {
+	case -1:
+		mes "[Antoine]";
+		mes "Adventurer, can I talk to you for a second? I want your opinion on something.";
+		next;
+		if (select( "Sure thing.", "I'm kind of busy." ) == 2) {
+			mes "[Antoine]";
+			mes "Oh, are you? No problem. I can wait until you have some time for me.";
+			close;
+		}
+		mes "[Antoine]";
+		mes "You've seen those Nightmares and Drainliars, right? Did you notice how they look different from the kinds outside this place? Why do you think that is?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't know.";
+		next;
+		mes "[Antoine]";
+		mes "Everything in this place is interesting. Especially those Sweet Nightmares. They're full of contradictions.";
+		next;
+		emotion ET_SPARK;
+		mes "[Antoine]";
+		mes "Have you taken a look at their wavy mane? Look at it long enough, and you'll see flashes of images, which I believe are from other people's dreams.";
+		next;
+		mes "[Antoine]";
+		mes "Sweet Nightmares... Even their name is a contradiction. Maybe their mane is the source of all nightmares.";
+		next;
+		mes "[Antoine]";
+		mes "Or it could just reflect the dreams of the dead.";
+		next;
+		mes "[Antoine]";
+		mes "Those two ladies may not agree, but I don't have to stay here. I'm only staying because of ^0000cdSweet Nightmares^000000.";
+		next;
+		mes "[Antoine]";
+		mes "I want to get rid of their manes and see if it affects our dreams.";
+		next;
+		mes "[Antoine]";
+		mes "And I want to do that without having to leave my colleagues to fend for themselves. Do you know what I mean?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you want me to ^0000cdget their manes for you^000000?";
+		next;
+		mes "[Antoine]";
+		mes "Yes, please! ^0000cd20^000000 should suffice!";
+		next;
+		mes "[Antoine]";
+		mes "And while you're at it, please hunt ^0000cd10 Sweet Nightmares^000000 as well. I want to know how that affects dreams.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I'll do that.";
+		next;
+		emotion ET_THANKS;
+		mes "[Antoine]";
+		mes "Thank you. In return, I'll give you some stones I've picked up from this place.";
+		next;
+		mes "[Antoine]";
+		mes "I don't know if they have any purpose, but they sure look beautiful and mysterious. Maybe someone outside this place can recognize its value.";
+		next;
+		mes "[Antoine]";
+		mes "Anyway, thank you for doing this for me!";
+		setquest 14669;// Sweet Dreams
+		close;
+	case 0:
+	case 1:
+		break;
+	case 2:
+		if (countitem(25270) < 20)
+			break;
+		mes "[Antoine]";
+		mes "Adventurer, I've been waiting for you! Did you get what I asked?";
+		next;
+		mes "[Antoine]";
+		mes "You brought all of them. I hope I can find something out from them.";
+		next;
+		mes "[Antoine]";
+		mes "These are found only inside this place. Please bring them to me whenever you can. Dreams disappear when you wake up, you know.";
+		next;
+		mes "[Antoine]";
+		mes "Thank you so much. You should get some rest now.";
+		delitem 25270,20;// Wavy_Mane
+		erasequest 14669;// Sweet Dreams
+		setquest 14670;// Time for Dreaming
+		getexp 500000,500000;
+		getitem 25271,1;// Illusion Stone
+		close;
+	}
+	mes "[Antoine]";
+	mes "Adventurer, I've been waiting for you! Did you get what I asked?";
+	next;
+	mes "[Antoine]";
+	mes "Um, you haven't found it, I see.";
+	next;
+	mes "[Antoine]";
+	mes "Please bring me ^0000cd20 Wavy Manes^000000 from ^0000cdSweet Nightmares^000000.";
+	next;
+	mes "[Antoine]";
+	mes "Oh, and it'll be great if you also can get rid of ^0000cd10 Sweet Nightmares^000000. I want to know how that'll affect dreams. Thank you!";
+	close;
+
+OnInit:
+	.@main_completed$ = "isbegin_quest(14666) == 2";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14670,PLAYTIME) == -1 && checkquest(14669,HUNTING) == -1") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14669,HUNTING) == 2 && countitem(25270) > 19") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14670,PLAYTIME) == 2") );
+	end;
+}
+
+gef_d01_i,113,230,5	script	Gem#ilgf01	1_F_PRIEST,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Gem]";
+		mes "Are you sure you can carry all that stuff? Why don't you lighten your bag?";
+		close;
+	}
+	if (ill_vampire == 5) {
+		mes "[Gem]";
+		mes "Brother Antoine, you stay here. Sister Marina and I will go. Do either of you have a problem with that?";
+		npctalk "Even if you do, I won't hear it.", "", bc_self;
+		next;
+		mes "[Marina]";
+		mes "Brother Antoine and I will go. We're trained to fight. You are not.";
+		npctalk "Plus, I'm fast on my feet.", "Marina#ilgf01", bc_self;
+		next;
+		mes "[Antoine]";
+		mes "Marina, why don't you stay? Sister Gem and I will go. I think that'd be best, considering our abilities.";
+		npctalk "One of us can search while the other covers for them.", "Antoine#ilgf01", bc_self;
+		next;
+		mes "[Gem]";
+		mes "No. This place is overrun with unholy creatures. It's better if two servants of God look for them.";
+		next;
+		mes "[Antoine]";
+		mes "What's that supposed to mean? Are you saying that I can't fight zombies because I'm not a servant of God?";
+		next;
+		mes "[Marina]";
+		mes "How about two of us stay and one goes?";
+		next;
+		mes "[Gem]";
+		mes "No. It has to be two, so they can look out for each other.";
+		next;
+		mes "[Antoine]";
+		mes "What about the person left behind? They have no one to look out for them.";
+		next;
+		select("Excuse me. I came here on behalf of Father Grimm.");
+		mes "[Marina]";
+		mes "Did you come to help us?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "He's worried that you haven't come out. He asked me to help you if you need it. Did something happen?";
+		next;
+		mes "[Marina]";
+		mes "We need to find some people.";
+		next;
+		mes "[Antoine]";
+		mes "You can't just tell him that. Adventurer, you know what kind of place this is, don't you? We're in a hurry, so let me explain the situation to you quickly.";
+		next;
+		mes "[Antoine]";
+		mes "This place is the spitting image of the Geffen catacombs, and it probably exists inside the notebook's owner's memory.";
+		next;
+		mes "[Antoine]";
+		mes "We came here to find out how and why this place was created.";
+		next;
+		mes "[Antoine]";
+		mes "We didn't find anything peculiar about this place. We want to leave, but a couple of us, ^0000cda priest and a wizard^000000 hasn't returned to join us.";
+		next;
+		mes "[Antoine]";
+		mes "We've searched around, but the notebook's owner's memory of this place is rather hazy and inconsistent. Illusions of different wizards keep appearing, frequently and in masses.";
+		next;
+		mes "[Antoine]";
+		mes "We thought it'd take forever to find them, so we decided to split up. We were discussing how we'd go about doing it when you showed up.";
+		next;
+		mes "[Antoine]";
+		mes "I can't say how glad I am to have you here. Now that there are four of us, ^0000cdtwo of us can stay while the other two look^000000.";
+		next;
+		select("What do the missing members look like?");
+		mes "[Gem]";
+		mes "The missing priest is called ^0000cdJubilee^000000 and the wizard is ^0000cdJojo^000000. They're the typical priest and wizard. You won't miss them.";
+		next;
+		mes "[Marina]";
+		mes "Adventurer, let's go!";
+		next;
+		mes "[Gem]";
+		mes "Let me pray for you before you leave. Dear God, please watch over your children...";
+		erasequest 14656;// Finding Father Grimm's Colleagues
+		setquest 14657;// Jojo Is the Mage's Name
+		setquest 14658;// Jubilee Is the Priest's Name
+		npcskill "AL_INCAGI",10,0,0;
+		npcskill "AL_BLESSING",10,0,0;
+		ill_vampire = 6;
+		.@char_id = getcharid(0);
+		cloakoffnpc( "Priest#ilgf01", .@char_id );
+		for ( .@i = 3; .@i < 10; ++.@i )
+			cloakoffnpc( "Marina#ilgf0" + .@i, .@char_id );
+		close;
+	}
+	if (ill_vampire == 6) {
+		.@char_id = getcharid(0);
+		cloakoffnpc( "Priest#ilgf01", .@char_id );
+		for ( .@i = 3; .@i < 10; ++.@i )
+			cloakoffnpc( "Marina#ilgf0" + .@i, .@char_id );
+		mes "[Gem]";
+		mes "I hope Brother Jubilee and Brother Jojo are safe.";
+		next;
+		mes "[Gem]";
+		mes "If you have to leave, let Sister Marina know. She'll send you back to where you came from.";
+		close;
+	}
+	if (ill_vampire == 7) {
+		mes "[Gem]";
+		mes "Brother Jubilee has left to treat his wounds, but Brother Jojo hasn't returned. I really hope he's safe.";
+		next;
+		mes "[Gem]";
+		mes "If you have to leave, let Sister Marina know. She'll send you back to where you came from.";
+		close;
+	}
+	if (ill_vampire < 14) {
+		mes "[Gem]";
+		mes "I really hope Brother Jojo is safe.";
+		next;
+		mes "[Gem]";
+		mes "If you have to leave, let Sister Marina know. She'll send you back to where you came from.";
+		close;
+	}
+	if (ill_vampire == 14) {
+		mes "[Gem]";
+		mes "Adventurer, are you leaving now?";
+		next;
+		select("Father Grimm must be getting anxious by now.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. Now that I know you're safe, it's time I return to Father Grimm.";
+		next;
+		mes "[Gem]";
+		mes "According to our assessment, what happens inside this place doesn't seem to ^0000cdaffect^000000 the outside world.";
+		next;
+		mes "[Gem]";
+		mes "That's good, but someone still has to stay here to keep an eye on them. You understand us, right? Please let Brother Grimm know.";
+		next;
+		select("I was surprised.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "You're from the Church. I didn't think you'd let those vampires live.";
+		next;
+		mes "[Marina]";
+		mes "If we play by the rules, then we shouldn't allow them to live.";
+		next;
+		mes "[Gem]";
+		mes "She's right. We shouldn't. But looking at them... I wasn't sure if they deserved to die.";
+		next;
+		mes "[Gem]";
+		mes "It's something we need to think about.";
+		next;
+		emotion ET_STARE, getnpcid(0, "Marina#ilgf01");
+		mes "[Marina]";
+		mes "But if they make even the slightest mistake, we'll get rid of them!";
+		next;
+		emotion ET_OK, getnpcid(0, "Antoine#ilgf01");
+		mes "[Antoine]";
+		mes "If that happens, I'll let you take care of them by yourself.";
+		next;
+		mes "[Gem]";
+		mes "Please tell Brother Grimm that we've decided to stay to keep an eye on them.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I will. Stay safe.";
+		erasequest 14665;// Is the Fight Over?
+		setquest 14666;// Warden's Role
+		ill_vampire = 15;
+		close2;
+		warp "gef_dun01",133,219;
+		end;
+	}
+	if (ill_vampire == 15) {
+		mes "[Gem]";
+		mes "Please tell Brother Grimm that we've decided to stay";
+		next;
+		mes "[Gem]";
+		mes "If you want to leave, ask Sister Marina to let you out.";
+		close;
+	}
+	switch( checkquest(14668,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Gem]";
+		mes "Adventurer, not enough time has passed since you hunted last time. You need rest.";
+		next;
+		mes "[Gem]";
+		mes "Please come back ^0000cdafter dawn^000000 tomorrow.";
+		close;
+	case 2:
+		mes "[Gem]";
+		mes "Adventurer, welcome back.";
+		next;
+		mes "[Gem]";
+		mes "As usual, I'd like you to exterminate ^0000cdRestless Deads^000000. There are ^0000cdthree different kinds: Small, Fast, and Big. Please exterminate 10 each.^000000.";
+		erasequest 14668;// Get Some Rest
+		setquest 14667;// Send the Dead Back to Earth
+		close;
+	}
+	switch( checkquest(14667,HUNTING) ) {
+	case -1:
+		mes "[Gem]";
+		mes "Adventurer, are you busy?";
+		next;
+		mes "[Gem]";
+		mes "Even if you are busy, please spare me a moment of your time.";
+		next;
+		if (select( "Sure, why not?", "But I'm too busy.") == 2) {
+			mes "[Gem]";
+			mes "Okay, then I'll wait until you have some time for me.";
+			close;
+		}
+		mes "[Gem]";
+		mes "As you know, we're here to keep an eye on them.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes.";
+		next;
+		mes "[Gem]";
+		mes "Now, that's interfering with our original mission, which is to keep this place clear of the unholy.";
+		next;
+		mes "[Gem]";
+		mes "We've been trying to do both, and it's hard to do that between just the three of us.";
+		next;
+		mes "[Gem]";
+		mes "The dead belong in the ground. We are here to ^0000cdput the undead back to eternal sleep^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You mean you need help.";
+		next;
+		mes "[Gem]";
+		mes "Yes, we do.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What kinds of monsters do you want me to take care of?";
+		next;
+		mes "[Gem]";
+		mes "Please exterminate ^0000cdRestless Dead^000000. There are ^0000cdthree different kinds: Small, Fast, and Big. Please exterminate 10 each.^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Got it. I was thinking, now that I'm  here, I might as well help you while I can. I'm glad that I can. I'll be back.";
+		setquest 14667;// Send the Dead Back to Earth
+		close;
+	case 0:
+	case 1:
+		mes "[Gem]";
+		mes "Adventurer, did you take care of what I asked?";
+		next;
+		mes "[Gem]";
+		mes "Or did you forget what I asked you to do?";
+		next;
+		mes "[Gem]";
+		mes "Please exterminate ^0000cdRestless Deads^000000. There are ^0000cdthree different kinds: Small, Fast, and Big. Please exterminate 10 each.^000000.";
+		next;
+		mes "[Gem]";
+		mes "All the dead must return to the earth.";
+		close;
+	case 2:
+		mes "[Gem]";
+		mes "Adventurer, you took care of them all. Thank you. They will also thank you from Heaven.";
+		next;
+		mes "[Gem]";
+		mes "Why don't you go get some rest and come back after dawn?";
+		erasequest 14667;// Send the Dead Back to Earth
+		setquest 14668;// Get Some Rest
+		getexp 500000,500000;
+		getitem 25271,1;// Illusion Stone
+		close;
+	}
+	end;
+
+OnInit:
+	.@main_completed$ = "isbegin_quest(14666) == 2";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(14656) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(14665) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14668,PLAYTIME) == -1 && checkquest(14667,HUNTING) == -1") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14667,HUNTING) == 2") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14668,PLAYTIME) == 2") );
+	end;
+}
+
+// Jubilee Is the Priest's Name
+gef_d01_i,93,178,5	script	Marina#ilgf03	4_F_MONK,5,5,{
+	end;
+OnTouch:
+	if (ill_vampire == 6) {
+		setpcblock PCBLOCK_NPC, true;
+		.@num = atoi( replacestr( strnpcinfo(2), "ilgf0", "" ) );
+		if (.@num == 3)
+			npctalk "I'm sensing some faint energy in the east. Let's go.", "", bc_self;
+		else if (.@num == 4)
+			npctalk "Whoever is in the east, their energy is getting stronger. Let's hurry!", "", bc_self;
+		else if (.@num == 5)
+			npctalk "I'm sensing faint energy in the south. Let's hurry!", "", bc_self;
+		else if (.@num == 6)
+			npctalk "I'm sensing some faint energy in the east. Let's go.", "", bc_self;
+		else if (.@num == 7)
+			npctalk "Farther east! We're almost there!", "", bc_self;
+		else if (.@num == 8)
+			npctalk "Let's go north!", "", bc_self;
+		else if (.@num == 9)
+			npctalk "Let's go south!", "", bc_self;
+		sleep2 1500;
+		specialeffect EF_TELEPORTATION2;
+		cloakonnpc( strnpcinfo(0), getcharid(0) );
+		setpcblock PCBLOCK_NPC, false;
+	}
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,127,153,5	duplicate(Marina#ilgf03)	Marina#ilgf04	4_F_MONK,5,5
+gef_d01_i,213,237,5	duplicate(Marina#ilgf03)	Marina#ilgf05	4_F_MONK,5,5
+gef_d01_i,150,224,5	duplicate(Marina#ilgf03)	Marina#ilgf06	4_F_MONK,5,5
+gef_d01_i,208,144,5	duplicate(Marina#ilgf03)	Marina#ilgf07	4_F_MONK,5,5
+gef_d01_i,250,130,5	duplicate(Marina#ilgf03)	Marina#ilgf08	4_F_MONK,5,5
+gef_d01_i,255,202,5	duplicate(Marina#ilgf03)	Marina#ilgf09	4_F_MONK,5,5
+
+
+
+gef_d01_i,250,164,0	script	#ilgf06	HIDDEN_WARP_NPC,3,5,{
+	end;
+OnTouch:
+	if (ill_vampire == 6)
+		cloakoffnpc( "Priest#ilgf01", getcharid(0) );
+	end;
+}
+
+gef_d01_i,254,162,1	duplicate(dummy_cloaked_npc)	Undead#ilgf08	ILL_ZOMBIE
+gef_d01_i,252,160,1	duplicate(dummy_cloaked_npc)	Undead#ilgf09	ILL_ZOMBIE
+gef_d01_i,253,165,3	duplicate(dummy_cloaked_npc)	Marina#ilgf10	4_F_MONK
+
+gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
+	if (ill_vampire != 6)
+		end;
+	.@char_id = .@char_id;
+	mes "[Priest]";
+	mes "What do I do? I can't walk because of my leg. I can't teleport because I don't have enough energy left.";
+	next;
+	emotion ET_CRY;
+	mes "[Priest]";
+	mes "*Gasp* Am I going to die? Am I? I can't believe I'm going to die in a place like this!";
+	sleep2 500;
+	cloakoffnpc( "Undead#ilgf08", .@char_id );
+	cloakoffnpc( "Undead#ilgf09", .@char_id );
+	npctalk "Grr...", "Undead#ilgf08", bc_self;
+	npctalk "Grrgghh...", "Undead#ilgf09", bc_self;
+	next;
+	mes "[Priest]";
+	mes "YELP! Not again! Help!";
+	next;
+	select("Typical priest... Wait, is that him?");
+	mes "[" + strcharinfo(0) + "]";
+	mes "Could he be Father Jubilee?";
+	mes "Marina, I think we've found him!";
+	sleep2 500;
+	cloakoffnpc( "Marina#ilgf10", .@char_id );
+	specialeffect EF_TELEPORTATION2, AREA, "Marina#ilgf10";
+	npctalk "What are you doing here?", "Marina#ilgf10", bc_self;
+	next;
+	mes "[Marina]";
+	mes "Brother Jubilee?";
+	next;
+	mes "[Jubilee]";
+	mes "Ah, Sister Marina! Help! You've got to help me if you don't want to feel guilt over my death later!";
+	npctalk "Let's secure this place first.", "Marina#ilgf10", bc_self;
+	sleep2 500;
+	specialeffect EF_GLASSWALL2;
+	sleep2 1000;
+	npctalk "Adventurer?", "Marina#ilgf10", bc_self;
+	sleep2 1000;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Yes, I'm ready!", bc_self;
+	next;
+	mes "[Marina]";
+	mes "The dead shall return to the earth!";
+	npctalk "Turn Undead!", "Marina#ilgf10", bc_self;
+	sleep2 1000;
+	specialeffect EF_TURNUNDEAD, AREA, "Undead#ilgf08";
+	specialeffect EF_TURNUNDEAD, AREA, "Undead#ilgf09";
+	npctalk "RAWR!", "Undead#ilgf08", bc_self;
+	npctalk "GRRRR!", "Undead#ilgf09", bc_self;
+	sleep2 1000;
+	specialeffect EF_DEVIL, AREA, "Undead#ilgf08";
+	specialeffect EF_DEVIL, AREA, "Undead#ilgf09";
+	cloakonnpc( "Undead#ilgf08", .@char_id );
+	cloakonnpc( "Undead#ilgf09", .@char_id );
+	next;
+	npctalk "Brother, are you all right?", "Marina#ilgf10", bc_self;
+	sleep2 1000;
+	npctalk "Whew, I am now. Thank you.", "", bc_self;
+	next;
+	mes "[Marina]";
+	mes "What happened? Where's Brother Jojo?";
+	next;
+	mes "[Jubilee]";
+	mes "He and I were checking this place when we found some fluorescent mushrooms. Brother Jojo's eyes gleamed and...";
+	npctalk "*Shakes her head* Wizards.", "Marina#ilgf10", bc_self;
+	next;
+	mes "[Jubilee]";
+	mes "He touched one of the mushrooms, and it exploded.";
+	npctalk "What? A mushroom exploded? And?", "Marina#ilgf10", bc_self;
+	next;
+	mes "[Jubilee]";
+	mes "When I came back to my senses, he was gone and I couldn't move my leg.";
+	next;
+	mes "[Marina]";
+	mes "Oh no, were you hit by the shrapnel?";
+	next;
+	mes "[Jubilee]";
+	mes "Sister Marina, have you seen the mushrooms in this place? They're not like the mushrooms we know. They're miniature bombs that blow up when touched.";
+	next;
+	select("I'm glad they only grow here.");
+	mes "[Marina]";
+	mes "Brother Jubilee, do you think you can move?";
+	next;
+	mes "[Jubilee]";
+	mes "If I could, I would've found my way back to you already.";
+	next;
+	select("I thought priests could heal themselves.");
+	mes "[Marina]";
+	mes "We take basic training to be servants of God, but what each one of us can do depends on our natural ability.";
+	next;
+	mes "[Jubilee]";
+	mes "I specialize in singing. It's my purpose in life. I feel my greatest joy when I sing Odin's praises.";
+	next;
+	mes "[Marina]";
+	mes "Don't be surprised. His singing voice really inspires courage and gives strength. He's here with us for a reason.";
+	npctalk "I've been singing since I found out Brother Jojo was missing.", "", bc_self;
+	sleep2 500;
+	npctalk "You shouldn't have wasted your precious voice on these unholy creatures.", "Marina#ilgf10", bc_self;
+	next;
+	mes "[Marina]";
+	mes "Adventurer, I'm going to take Brother Jubilee to Sister Gem. Could you take a look around this place? I'll be back as soon as I can.";
+	next;
+	mes "[Jubilee]";
+	mes "Watch for illusions. The notebook's owner's memories manifest themselves sporadically around here.";
+	next;
+	mes "[Jubilee]";
+	mes "Also, I've sensed an evil presence. Please be careful.";
+	next;
+	mes "[Marina]";
+	mes "Let's go.";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : I'd better look for Jojo.", bc_self;
+	specialeffect EF_TELEPORTATION2, AREA, "Marina#ilgf10";
+	specialeffect EF_TELEPORTATION2;
+	cloakonnpc( "Marina#ilgf10", .@char_id );
+	cloakonnpc( "Priest#ilgf01", .@char_id );
+	erasequest 14658;// Jubilee Is the Priest's Name
+	ill_vampire = 7;
+
+	for ( .@i = 3; .@i < 10; ++.@i )
+		cloakonnpc( "Marina#ilgf0" + .@i, .@char_id );
+
+	cloakoffnpc( "Undead#ilgf06", .@char_id );
+	cloakoffnpc( "Wizard#ilgf06", .@char_id );
+	cloakoffnpc( "Wizard#ilgf07", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf08", .@char_id );
+	cloakoffnpc( "Nameless Catacomb#ilgf01", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf09", .@char_id );
+	cloakoffnpc( "Wizard#ilgf10", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf11", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf12", .@char_id );
+	cloakoffnpc( "Wizard#ilgf13", .@char_id );
+	cloakoffnpc( "Nameless Catacomb#ilgf02", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf14", .@char_id );
+	cloakoffnpc( "Wizard#ilgf15", .@char_id );
+	cloakoffnpc( "Nameless Catacomb#ilgf03", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf16", .@char_id );
+	cloakoffnpc( "Wizard#ilgf17", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf18", .@char_id );
+	cloakoffnpc( "Someone's Dream#ilgf18", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf19", .@char_id );
+	cloakoffnpc( "Wizard#ilgf20", .@char_id );
+	cloakoffnpc( "Undead#ilgf05", .@char_id );
+
+	cloakoffnpc( "Undead#ilgf02", .@char_id );
+	cloakoffnpc( "Undead#ilgf03", .@char_id );
+	cloakoffnpc( "Undead#ilgf04", .@char_id );
+	cloakoffnpc( "Wizard#ilgf21", .@char_id );
+	cloakoffnpc( "Wizard#ilgf22", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf23", .@char_id );
+	cloakoffnpc( "Fast Undead#ilgf01", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf24", .@char_id );
+	cloakoffnpc( "Shining Mushroom#ilgf01", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf25", .@char_id );
+	cloakoffnpc( "Wizard#ilgf26", .@char_id );
+	cloakoffnpc( "Undead#ilgf01", .@char_id );
+
+	cloakoffnpc( "Wizard#ilgf27", .@char_id );
+	cloakoffnpc( "Wizard#ilgf28", .@char_id );
+	close;
+
+OnTouch:
+	if (ill_vampire == 6)
+		npctalk "This is bad, really bad!", "", bc_self;
+	end;
+
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+/*
+// never enabled?
+gef_d01_i,131,155,3	duplicate(dummy_npc)	Wizard#ilgf03	4_F_BOMI,5,5
+gef_d01_i,129,154,7	duplicate(dummy_npc)	Wizard#ilgf04	4_GEFFEN_05
+gef_d01_i,113,97,7	duplicate(dummy_npc)	Wizard#ilgf05	2_M_SAGE_B,5,5
+gef_d01_i,116,96,1	duplicate(dummy_npc)	Undead#ilgf07	GHOUL
+*/
+
+gef_d01_i,49,113,3	script	Wizard#ilgf06	4_GEFFEN_01,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	specialeffect 1033, AREA, "Undead#ilgf06";
+	cloakonnpc( "Undead#ilgf06", getcharid(0) );
+	sleep2 1000;
+	npctalk "Ah, it died!", "", bc_self;
+	sleep2 1500;
+	npctalk "Maybe Yggdrasil leaves kill the undead.", "Wizard#ilgf07", bc_self;
+	sleep2 1500;
+	npctalk "I think so. This means we can use them to take care of the undead.", "", bc_self;
+	sleep2 1500;
+	npctalk "You're a genius!", "Wizard#ilgf07", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf07";
+	// specialeffect EF_GUARD2, AREA, "Undead#ilgf06";	// already hidden
+	cloakonnpc( "Wizard#ilgf06", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf07", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,46,112,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf07	4_M_ARUNA_NFM1
+gef_d01_i,47,110,7	duplicate(dummy_cloaked_npc)	Undead#ilgf06	GHOUL
+
+
+gef_d01_i,137,60,3	script	Wizard#ilgf08	1_M_WIZARD,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	specialeffect EF_TEMP_FAIL, AREA, "Nameless Catacomb#ilgf01";
+	sleep2 1500;
+	npctalk "Um, even this can't raise the dead. Then what brought those creatures back from the dead?", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf08";
+	specialeffect EF_GUARD2, AREA, "Nameless Catacomb#ilgf01";
+	cloakonnpc( "Wizard#ilgf08", getcharid(0) );
+	cloakonnpc( "Nameless Catacomb#ilgf01", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,136,58,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf01	4_SOIL
+
+
+gef_d01_i,67,85,5	script	Wizard#ilgf09	4_M_JOB_WIZARD,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Maybe I should crush and mix these gemstones together, and see if I can use the mixture to separate the souls of the undead from their bodies.", "", bc_self;
+	sleep2 1500;
+	npctalk "I don't think those zombies have souls.", "Wizard#ilgf10", bc_self;
+	sleep2 1500;
+	npctalk "Then what can explain their mobility? Every living thing that moves has a soul.", "", bc_self;
+	sleep2 1500;
+	npctalk "Muscle spasm?", "Wizard#ilgf10", bc_self;
+	sleep2 1500;
+	npctalk "No. It's clear their souls have returned to their dead bodies. If we can attach and detach our souls freely from our bodies, we can forever escape from physical pain!", "", bc_self;
+	sleep2 1500;
+	npctalk "But our bodies don't need souls for their survival. I still think those corpses are just?", "Wizard#ilgf10", bc_self;
+	sleep2 1500;
+	npctalk "Just stop talking, and take care of these.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf10";
+	cloakonnpc( "Wizard#ilgf09", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf10", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,67,83,1	duplicate(dummy_cloaked_npc)	Wizard#ilgf10	4_GEFFEN_05
+
+
+gef_d01_i,156,234,3	script	Wizard#ilgf11	4_M_SIT_NOVICE,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Hello. Are you an adventurer? How old are you? Is this your first time in this place?", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This place is too dangerous for Novices like you. You'd better leave as soon as possible.", bc_self;
+	sleep2 1500;
+	npctalk "Do I look like a Novice? You're cute.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : What's this?", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	cloakonnpc( "Wizard#ilgf11", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+
+gef_d01_i,48,255,5	script	Wizard#ilgf12	1_M_WIZARD,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "This is the forty-eighth attempt. Now, let me sprinkle holy water.", "", bc_self;
+	sleep2 1500;
+	specialeffect EF_BASH3D5, AREA, "Nameless Catacomb#ilgf02";
+	emotion ET_THINK, getnpcid(0, "Nameless Catacomb#ilgf02");
+	sleep2 1500;
+	npctalk "Nothing happened. I'll increase the amount of holy water for the forty-ninth attempt.", "", bc_self;
+	sleep2 1500;
+	npctalk "Wouldn't it be better if we let a priest handle this?", "Wizard#ilgf13", bc_self;
+	sleep2 1500;
+	npctalk "No. Priests will try to get rid of these. Just focus on recording this process.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf13";
+	specialeffect EF_GUARD2, AREA, "Nameless Catacomb#ilgf02";
+	cloakonnpc( "", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf13", getcharid(0) );
+	cloakonnpc( "Nameless Catacomb#ilgf02", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,50,257,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf13	2_F_MAGICMASTER
+gef_d01_i,50,254,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf02	4_SOIL
+
+
+gef_d01_i,112,267,3	script	Wizard#ilgf14	4_M_JOB_WIZARD,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Rise!", "", bc_self;
+	// specialeffect , AREA, "Nameless Catacomb#ilgf03";	// todo?
+	sleep2 1500;
+	npctalk "It doesn't work.", "", bc_self;
+	sleep2 1500;
+	npctalk "I told you, I used 457 amulets on them, and none of them worked. They're fueled by something else.", "Wizard#ilgf15", bc_self;
+	sleep2 1500;
+	npctalk "Like what?", "", bc_self;
+	sleep2 1500;
+	npctalk "I don't know.", "Wizard#ilgf15", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf15";
+	specialeffect EF_GUARD2, AREA, "Nameless Catacomb#ilgf03";
+	cloakonnpc( "Wizard#ilgf14", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf15", getcharid(0) );
+	cloakonnpc( "Nameless Catacomb#ilgf03", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,110,266,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf15	4_M_ARUNA_NFM1
+gef_d01_i,111,264,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf03	4_SOIL
+
+
+gef_d01_i,55,167,3	script	Wizard#ilgf16	4_M_ARUNA_NFM1,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "I miss my Happy. When we finally make this work, I want to bring back Happy first.", "", bc_self;
+	sleep2 1500;
+	npctalk "Don't. Look at them. They're not normal. Happy will probably chew on you instead of his chew toy.", "Wizard#ilgf17", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf16";
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf16";
+	cloakonnpc( "Wizard#ilgf16", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf17", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,53,166,7	duplicate(dummy_cloaked_npc)	Wizard#ilgf17	2_F_MAGICMASTER
+
+
+gef_d01_i,236,235,1	script	Wizard#ilgf18	1_M_WIZARD,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "*Whine*", "Someone's Dream#ilgf18", bc_self;
+	sleep2 1500;
+	npctalk "Ah, I'm sorry! Aww, this is just too creepy. Just kill me already. I can't watch the dreams you show me anymore.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf18";
+	specialeffect EF_GUARD2, AREA, "Someone's Dream#ilgf18";
+	cloakonnpc( "Wizard#ilgf18", getcharid(0) );
+	cloakonnpc( "Someone's Dream#ilgf18", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,233,237,5	duplicate(dummy_cloaked_npc)	Someone's Dream#ilgf18	NIGHTMARE
+
+
+gef_d01_i,255,201,5	script	Wizard#ilgf19	4_GEFFEN_05,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	specialeffect EF_GLASSWALL2;
+	specialeffect EF_GLASSWALL2, AREA, "Wizard#ilgf20";
+	npctalk "Ah, what do we do? They're stronger than I thought.", "", bc_self;
+	sleep2 1500;
+	npctalk "When can we leave?", "Wizard#ilgf20", bc_self;
+	sleep2 1500;
+	npctalk "After they go away. They'll kill us if we move now.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf20";
+	specialeffect EF_GUARD2, AREA, "Undead#ilgf05";
+	cloakonnpc( "Wizard#ilgf19", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf20", getcharid(0) );
+	cloakonnpc( "Undead#ilgf05", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,254,200,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf20	2_F_MAGICMASTER
+gef_d01_i,256,198,1	duplicate(dummy_cloaked_npc)	Undead#ilgf05	GHOUL
+
+
+gef_d01_i,204,146,1	script	Wizard#ilgf21	4_GEFFEN_05,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	emotion ET_HUK;
+	npctalk "Hey, there are too many of them! I told you to lure just one, not this many!", "", bc_self;
+	sleep2 1500;
+	emotion ET_HELP, getnpcid(0, "Wizard#ilgf22");
+	npctalk "I can't stop them from following me!", "Wizard#ilgf22", bc_self;
+	sleep2 1500;
+	npctalk "Get down!", "", bc_self;
+	sleep2 1500;
+	specialeffect EF_FIREPILLARBOMB, AREA, "Undead#ilgf02";
+	specialeffect EF_FIREPILLARBOMB, AREA, "Undead#ilgf03";
+	specialeffect EF_FIREPILLARBOMB, AREA, "Undead#ilgf04";
+	sleep2 1500;
+	cloakonnpc( "Undead#ilgf02", getcharid(0) );
+	cloakonnpc( "Undead#ilgf03", getcharid(0) );
+	cloakonnpc( "Undead#ilgf04", getcharid(0) );
+	npctalk "Whew, thanks!", "Wizard#ilgf22", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf22";
+	cloakonnpc( "Wizard#ilgf21", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf22", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,202,149,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf22	4_M_ARUNA_NFM1
+gef_d01_i,202,152,5	duplicate(dummy_cloaked_npc)	Undead#ilgf02	GHOUL
+gef_d01_i,200,151,5	duplicate(dummy_cloaked_npc)	Undead#ilgf03	ZOMBIE
+gef_d01_i,204,151,3	duplicate(dummy_cloaked_npc)	Undead#ilgf04	GHOUL
+
+
+gef_d01_i,257,110,1	script	Wizard#ilgf23	4_F_BOMI,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Why is that one so fast? I might die before I have a chance to take a look at it.", "", bc_self;
+	sleep2 1500;
+	specialeffect EF_QUAGMIRE, AREA, "Fast Undead#ilgf01";
+	sleep2 1500;
+	npctalk "How can I catch it? I wish there was a way to take it to my lab...", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Fast Undead#ilgf01";
+	cloakonnpc( "Wizard#ilgf23", getcharid(0) );
+	cloakonnpc( "Fast Undead#ilgf01", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,253,112,5	duplicate(dummy_cloaked_npc)	Fast Undead#ilgf01	GHOUL
+
+
+gef_d01_i,230,76,3	script	Wizard#ilgf24	4_M_BIBI,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "I'd better be careful. I don't want to die because I was gathering some mushroom spores.", "", bc_self;
+	sleep2 1500;
+	specialeffect EF_HATED, AREA, "Shining Mushroom#ilgf01";
+	sleep2 1500;
+	npctalk "This should be enough to illuminate a room.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Shining Mushroom#ilgf01";
+	cloakonnpc( "Wizard#ilgf24", getcharid(0) );
+	cloakonnpc( "Shining Mushroom#ilgf01", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,228,75,3	duplicate(dummy_cloaked_npc)	Shining Mushroom#ilgf01	ILL_BLACK_MUSHROOM
+
+
+gef_d01_i,93,34,1	script	Wizard#ilgf25	4_F_BOMI,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Let's use a scroll and a Yggdrasil leaf at the same time this time. I'll activate the scroll from here. You use the leaf from there.", "", bc_self;
+	sleep2 1500;
+	npctalk "Okay.", "Wizard#ilgf26", bc_self;
+	sleep2 1500;
+	specialeffect EF_POISONHIT, AREA, "Undead#ilgf01";
+	sleep2 1500;
+	npctalk "Did we fail again?", "", bc_self;
+	sleep2 1500;
+	npctalk "Why wouldn't it turn into a human? If the dead can come back to life, then it should be able to turn into a human.", "Wizard#ilgf26", bc_self;
+	sleep2 1500;
+	npctalk "Let's calm down, and try something else.", "", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_GUARD2;
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf26";
+	specialeffect EF_GUARD2, AREA, "Undead#ilgf01";
+	cloakonnpc( "Wizard#ilgf25", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf26", getcharid(0) );
+	cloakonnpc( "Undead#ilgf01", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+gef_d01_i,94,37,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf26	1_M_WIZARD
+gef_d01_i,91,35,5	duplicate(dummy_cloaked_npc)	Undead#ilgf01	GHOUL
+
+// gef_d01_i,101,124,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf27	4_F_BOMI,5,5	// npc has official range. Effect ?
+gef_d01_i,101,124,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf27	4_F_BOMI
+gef_d01_i,99,122,7	script	Wizard#ilgf28	4_F_BOMI,5,5,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "We can't experiment in a place like this. Why don't we capture one and bring it to our lab?", "Wizard#ilgf27", bc_self;
+	sleep2 1500;
+	npctalk "Don't you feel the energy in the air?", "Wizard#ilgf28", bc_self;
+	sleep2 1500;
+	npctalk "What are you saying?", "Wizard#ilgf27", bc_self;
+	sleep2 1500;
+	npctalk "Imagine what we can do with this power.", "Wizard#ilgf28", bc_self;
+	sleep2 1500;
+	npctalk "...Oh, you're right.", "Wizard#ilgf27", bc_self;
+	sleep2 1500;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
+	sleep2 2500;
+	setpcblock PCBLOCK_NPC, false;
+
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf27";
+	specialeffect EF_GUARD2, AREA, "Wizard#ilgf28";
+	cloakonnpc( "Wizard#ilgf27", getcharid(0) );
+	cloakonnpc( "Wizard#ilgf28", getcharid(0) );
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+// End of the "Wizard illusions"
+
+
+gef_d01_i,80,139,5	duplicate(dummy_cloaked_npc)	Gem#ilgf02	1_F_PRIEST,5,5
+gef_d01_i,86,133,1	duplicate(dummy_cloaked_npc)	Marina#ilgf02	4_F_MONK,5,5
+gef_d01_i,85,139,3	duplicate(dummy_cloaked_npc)	Antoine#ilgf02	4_GEFFEN_01,5,5
+gef_d01_i,84,135,3	duplicate(dummy_cloaked_npc)	Dracula#ilgf03	4_DRACULA,5,5
+gef_d01_i,87,137,3	duplicate(dummy_cloaked_npc)	King#ilgf02	4_NFBAT,5,5
+gef_d01_i,80,132,7	duplicate(dummy_cloaked_npc)	Jojo#ilgf01	4_M_JOB_WIZARD,5,5
+
+
+gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Bomi]";
+		mes "Are you sure you can carry all that stuff? Why don't you lighten your bag?";
+		close;
+	}
+	.@player_name$ = strcharinfo(0);
+	if (ill_vampire < 7) {
+		mes "[Wizard]";
+		mes "This one has a different color from Neon Mushrooms. Is it a new kind? I'd better pick it carefully...";
+		close;
+	}
+	if (ill_vampire == 7) {
+		mes "[Wizard]";
+		mes "This one has a different color from Neon Mushrooms. Is it a new kind? I'd better pick it carefully...";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "^0000cdTypical wizard^000000... Could that be ^0000cdJojo^000000?";
+		next;
+		select("Jojo?");
+		mes "[Wizard]";
+		mes "...? Are you a human?";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Jojo? You're Jojo, right? Your colleagues are worried about you. Let's go back. You're not hurt, are you?";
+		next;
+		mes "[Wizard]";
+		mes "No, I'm not Jojo.";
+		next;
+		mes "[Wizard]";
+		mes "Do I look like a ^0000cdhuman^000000?";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Of course.";
+		next;
+		mes "[Wizard]";
+		mes "...";
+		next;
+		emotion ET_HUK, playerattached();
+		select("...Are you not a human?");
+		mes "[Wizard]";
+		mes "I'm... My name is ^0000cdBomi^000000. I'm sorry I'm not the person you're looking for.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Bomi? Wait, you're that Bomi?";
+		next;
+		mes "[Bomi]";
+		mes "Do you know me?";
+		next;
+		select("I've picked up your notebook.");
+		mes "[" + .@player_name$ + "]";
+		mes "I didn't mean to be nosy. I had to know who it belonged to, so I could?";
+		next;
+		mes "[Bomi]";
+		mes "I threw it away.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Why did you throw it away? Why are you staying here?";
+		next;
+		mes "[Bomi]";
+		mes "Because I'm a monster. I belong here.";
+		next;
+		select("Why do you think you're a monster?");
+		mes "[Bomi]";
+		mes "Because I'm a vampire.";
+		next;
+		select("A vampire?!");
+		mes "[" + .@player_name$ + "]";
+		mes "What happened? You were a human.";
+		next;
+		mes "[Bomi]";
+		mes "I got betrayed by my best friend.";
+		unittalk getcharid(3), "" + .@player_name$ + " : ...You got betrayed?", bc_self;
+		next;
+		mes "[Bomi]";
+		mes "Most people try to make the most out of life because they know they can't live forever.";
+		next;
+		mes "[Bomi]";
+		mes "I was given a shorter time to live than most. Ever since I was born, I'd been told I'd never outlive my parents.";
+		next;
+		mes "[Bomi]";
+		mes "People desire what they don't have. I desired ^0000cdstrength^000000 because I was too small and frail to live like others my age.";
+		next;
+		mes "[Bomi]";
+		mes "I became a wizard because I thought magic could compensate for my physical weakness.";
+		next;
+		mes "[Bomi]";
+		mes "I didn't realize a strong mind comes from a strong body, though...";
+		next;
+		mes "[Bomi]";
+		mes "Magic was exhausting to both my mind and my body. I reached my limits more quickly than I thought. But I wasn't upset. I thought I could remedy that.";
+		unittalk getcharid(3), "" + .@player_name$ + " : Oh. That's why you were studying the zombies in these catacombs.", bc_self;
+		next;
+		mes "[Bomi]";
+		mes "Yes. Doing that, I felt more alive than ever. My burning desire for life made me who I was.";
+		next;
+		mes "[Bomi]";
+		mes "Then, one day, while I was here, I met an ^0000cdentity^000000 who was not human.";
+		next;
+		mes "Bomi is gathering her thoughts. I should talk to her later.";
+		erasequest 14657;// Jojo Is the Mage's Name
+		setquest 14659;// Lost in Thought
+		ill_vampire = 8;
+		// note: the "old memories" npcs are not automatically cloakoff
+		close;
+	}
+	if (ill_vampire == 8) {
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "Do you know what I found here?", "", bc_self;
+		sleep2 1000;
+		unittalk getcharid(3), "" + .@player_name$ + " : Nightmares, mushrooms, zombies...", bc_self;
+		sleep2 2000;
+		npctalk "There's one more.", "", bc_self;
+		sleep2 1000;
+		unittalk getcharid(3), "" + .@player_name$ + " : Are you talking about Dracula? I've heard of him.", bc_self;
+		sleep2 2500;
+		npctalk "When I first met him, he was close to perishing. His vulnerability reminded me strongly of my own. ", "", bc_self;
+		sleep2 2000;
+		npctalk "That's why I fed him my blood and tended to his wounds, even though I knew I shouldn't.", "", bc_self;
+		sleep2 2000;
+		npctalk "Later, I met him again and we got close. He was my first real friend.", "", bc_self;
+		sleep2 1500;
+		cloakoffnpc( "Dracula#ilgf01", getcharid(0) );
+		specialeffect EF_GUARD2, AREA, "Dracula#ilgf01";
+		specialeffect EF_BLUELIGHTBODY, AREA, "Dracula#ilgf01";
+		npctalk "Why did you save me?", "Dracula#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "It's hard to explain. Let's just say we humans like to save others.", "", bc_self;
+		sleep2 2000;
+		npctalk "That's not true. Others of your kind just want to kill me.", "Dracula#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "Not all of us are made the same.", "", bc_self;
+		sleep2 1500;
+		npctalk "How about I give you a gift in return for your favor? I know you want a strong body and longevity.", "Dracula#ilgf01", bc_self;
+		sleep2 1500;
+		npctalk "But how? Wait, are you offering...? No, thanks.", "", bc_self;
+		sleep2 1500;
+		npctalk "You want them so badly that you're risking your life by studying in a place like this.", "Dracula#ilgf01", bc_self;
+		sleep2 1500;
+		npctalk "I do, but I don't want to give up my humanity for them.", "", bc_self;
+		sleep2 2000;
+		npctalk "But you're afraid of dying. And your days are numbered.", "Dracula#ilgf01", bc_self;
+		sleep2 1500;
+		npctalk "My fear of death is what keeps me going. It's made me who I am.", "", bc_self;
+		sleep2 2000;
+		npctalk "Giving up my humanity for eternal life goes against my beliefs, all my hard work up till now, and everything I tried hard to protect.", "", bc_self;
+		sleep2 2000;
+		npctalk "Above all, I'll be giving up on myself, and I can't do that.", "", bc_self;
+		sleep2 2000;
+		npctalk "Even if you're turned, you'll still be you.", "Dracula#ilgf01", bc_self;
+		sleep2 1500;
+		npctalk "On the outside, maybe. But I will no longer fear death, and therefore have no desire to live.", "", bc_self;
+		sleep2 2000;
+		npctalk "It pains me to see you wither away, day by day.", "Dracula#ilgf01", bc_self;
+		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
+
+		npctalk "I can't say I understand your logic, but I'll respect your wishes.", "Dracula#ilgf01", bc_self;
+		mes "[Bomi]";
+		mes "So he ^0000cdpromised^000000. Then one day, some people came here looking for him, and they fought.";
+		next;
+		mes "[Bomi]";
+		mes "And the next thing I knew, I was turned. Dracula broke his promise.";
+		next;
+		npctalk "How could you do this to me?!", "", bc_self;
+		sleep2 1000;
+		npctalk "I'm sorry.", "Dracula#ilgf01", bc_self;
+		sleep2 1500;
+		specialeffect EF_GUARD2, AREA, "Dracula#ilgf01";
+		cloakonnpc( "Dracula#ilgf01", getcharid(0) );
+		mes "[Bomi]";
+		mes "I couldn't believe he turned me into a monster. I trusted him!";
+		next;
+		mes "[Bomi]";
+		mes "People in the outside world must think I skipped town. How long has it been since I left?";
+		next;
+		mes "[Bomi]";
+		mes "Sigh, maybe they all forgot about me, as if I never existed. That's what pains me the most.";
+		next;
+		mes "[Bomi]";
+		mes "I try to ignore my reality, but this ever-present hunger and thirst keep reminding me what kind of terrible monster I am.";
+		next;
+		mes "[Bomi]";
+		mes "If I go back to the outside world, I won't be able to stop myself from hurting people.";
+		next;
+		select("How did you sustain yourself so far?");
+		mes "[Bomi]";
+		mes "I studied ^0000cdpharmaceutical formulation^000000 to make up for my weak stamina with potions.";
+		next;
+		mes "[Bomi]";
+		mes "I drink fake blood that I make with the ingredients I can find here. I may look ^0000cdhuman enough^000000, but I'm not. Not really.";
+		next;
+		mes "[Bomi]";
+		mes "I'm sorry I bored you with my story.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Not at all.";
+		next;
+		mes "[Bomi]";
+		mes "Adventurer, I don't want to impose on your kindness, but may I ask you a favor?";
+		next;
+		select("Sure, anything for you.");
+		mes "[Bomi]";
+		mes "You shouldn't say that. What if I ask for your blood?";
+		emotion ET_SWEAT, playerattached();
+		next;
+		mes "[Bomi]";
+		mes "I was joking. I'm in the middle of collecting the fake blood ingredients, but right now I want to examine this mushroom. I've never seen it before. I want to check it while it's still fresh.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "What kinds of ingredients do you need? I'll get them for you.";
+		next;
+		mes "[Bomi]";
+		mes "Thank you. I need ^0000cd10 Sticky Bloods from Matte Drainliars and 10 Mushroom Saps from Neon Mushrooms^000000. Thank you for doing this for me.";
+		erasequest 14659;// Lost in Thought
+		setquest 14660;// Ingredients for Fake Blood
+		ill_vampire = 9;
+		close;
+	}
+	if (ill_vampire == 9) {
+		mes "[" + .@player_name$ + "]";
+		mes "Here, I brought the things you asked.";
+		next;
+		mes "[Bomi]";
+		mes "Let's see...";
+		next;
+		if (countitem(25268) < 10 || countitem(25269) < 10) {
+			mes "[Bomi]";
+			mes "This isn't enough.";
+			next;
+			mes "[Bomi]";
+			mes "Thank you. I need ^0000cd10 Sticky Bloods from Matte Drainliars and 10 Mushroom Saps from Neon Mushrooms^000000. Thank you for doing this for me.";
+			close;
+		}
+		mes "[Bomi]";
+		mes "Thank you.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "How's the mushroom?";
+		next;
+		mes "[Bomi]";
+		mes "It turned out to be an ordinary, invaluable mushroom.";
+		next;
+		select("How do you make artificial blood?");
+		mes "[Bomi]";
+		mes "Matte Drainliars feed on the blood of the reanimated corpses in this place.";
+		next;
+		mes "[Bomi]";
+		mes "Did you get it? But their blood is highly toxic. So I use these mushrooms to detoxify it.";
+		next;
+		mes "[Bomi]";
+		mes "Like this!";
+		specialeffect EF_PHARMACY_OK;
+		next;
+		mes "[Bomi]";
+		mes "But even their sap cannot completely remove the toxins in the blood. And when I ingest too much toxins...";
+		next;
+		select("Maybe you should've chosen a different career path.");
+		mes "[" + .@player_name$ + "]";
+		mes "Like alchemist, for example.";
+		next;
+		mes "[Bomi]";
+		mes "I didn't know I was talented at this. If I had ^0000cdenough time to live^000000, I would've had many different experiences. I might have chosen a different path.";
+		next;
+		mes "[Bomi]";
+		mes "Oh, by the way, weren't you looking for someone? What did you say his name was? Juju?";
+		next;
+		select("Jojo.");
+		mes "[Bomi]";
+		mes "I haven't seen any other humans around here, but if I do, I'll let him know you're looking for him.";
+		next;
+		mes "[Bomi]";
+		mes "I hope you'll find him soon. I'm not the only one here, you know. If you haven't found him, maybe he's?";
+		next;
+		mes "[Bomi]";
+		mes "Never mind. Good luck finding him. Maybe you should check the catacombs in the south.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Thank you. I'll see you.";
+		next;
+		mes "[Bomi]";
+		mes "You'd better hurry.";
+		cloakoffnpcself( "Dracula#ilgf02" );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
+		delitem 25268,10;// Sticky_Blood
+		delitem 25269,10;// Mushroom_Sap
+		erasequest 14660;// Ingredients for Fake Blood
+		setquest 14661;// Jojo Is the Mage's Name 02
+		ill_vampire = 10;
+		close;
+	}
+	if (ill_vampire < 12) {
+		cloakoffnpcself( "Dracula#ilgf02" );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
+		mes "[Bomi]";
+		mes "I hope you'll find your friend soon. Why don't you check the catacombs in the south? He might be there.";
+		close;
+	}
+	if (ill_vampire == 12) {
+		viewpoint 2,85,131,1,0x00FF00;
+		cloakoffnpc( "Gem#ilgf02", getcharid(0) );
+		cloakoffnpc( "Marina#ilgf02", getcharid(0) );
+		cloakoffnpc( "Antoine#ilgf02", getcharid(0) );
+
+		mes "[Bomi]";
+		mes "Stay away from me, and I won't hurt you.";
+		next;
+		mes "[Marina]";
+		mes "One of us is missing. You hurt him, didn't you?";
+		next;
+		mes "[Bomi]";
+		mes "I've never hurt anyone, and I won't start now.";
+		next;
+		mes "[Marina]";
+		mes "Even if you won't, we're not going to let you go! Your existence in itself goes against His will!";
+		next;
+		mes "[Bomi]";
+		mes "His will? God loves us all. Isn't that what you preach?";
+		next;
+		mes "[Marina]";
+		mes "The dead belong in the ground, and you're one of them. What do you think you are?";
+		next;
+		mes "[Bomi]";
+		mes "...But... But I really didn't hurt anyone.";
+		next;
+		mes "[Marina]";
+		mes "That doesn't guarantee you won't in the future.";
+		next;
+		mes "[Gem]";
+		mes "Wait, Sister Marina. Calm yourself.";
+		next;
+		mes "[Marina]";
+		mes "Why aren't we getting rid of her already? The dead shall return to the earth! Brother Antoine!";
+		npctalk "Sigh, Sister Marina is right.", "Antoine#ilgf02", bc_self;
+		npctalk "Guillotine Fist!", "Marina#ilgf02", bc_self;
+		sleep2 1000;
+		cloakoffnpc( "Dracula#ilgf03", getcharid(0) );
+		specialeffect EF_M01, AREA, "Dracula#ilgf03";
+		specialeffect EF_BOTTOM_MAG, AREA, "Dracula#ilgf03";
+		specialeffect EF_BEGINASURA, AREA, "Dracula#ilgf03";
+		sleep2 1000;
+		specialeffect EF_DRAGONFEAR, AREA, "Dracula#ilgf03";
+		specialeffect EF_BLEEDING, AREA, "Dracula#ilgf03";
+		specialeffect EF_COLDTHROW, AREA, "Dracula#ilgf03";
+		specialeffect EF_TEIHIT1X, AREA, "Dracula#ilgf03";
+		npctalk "Ugh!", "Dracula#ilgf03", bc_self;
+		next;
+		cloakoffnpc( "King#ilgf02", getcharid(0) );
+		specialeffect EF_M01, AREA, "King#ilgf02";
+		emotion ET_ANGER, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "Argh, I can't believe you threw yourself in the middle of that! This is why I can't leave you alone!";
+		next;
+		mes "[Bomi]";
+		mes "...Dracula? Why?";
+		next;
+		mes "[Marina]";
+		mes "There's another vampire! No wonder why this place felt so off it's filled with vampires!";
+		npctalk "Hey, you bat, the one over there! Are you also a vampire?", "Marina#ilgf02", bc_self;
+		sleep2 1000;
+		npctalk "Did the vampire call for help?", "Antoine#ilgf02", bc_self;
+		next;
+		emotion ET_FRET, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "Human, did you just call me a bat? How dare you?";
+		next;
+		mes "[Gem]";
+		mes "Wait, Sister Marina. I said, calm yourself.";
+		next;
+		mes "[Marina]";
+		mes "We have to act now. We've already incapacitated one out of the three.";
+		next;
+		mes "[Gem]";
+		mes "But one of them doesn't want to fight. She wants to talk.";
+		next;
+		mes "[King]";
+		mes "Who wants to talk? Because I don't! I'm not going to go down without a fight!";
+		specialeffect EF_TEIHIT1X, AREA, "King#ilgf02";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Marina#ilgf02";
+		specialeffect EF_DARKBREATH, AREA, "Marina#ilgf02";
+		next;
+		mes "[Marina]";
+		mes "Grr, let me go! Enough is enough!";
+		next;
+		cloakoffnpc( "Jojo#ilgf01", getcharid(0) );
+		specialeffect EF_TELEPORTATION2, AREA, "Jojo#ilgf01";
+		emotion ET_CONFUSE, getnpcid(0, "Jojo#ilgf01");
+		mes "[Jojo]";
+		mes "Oh geez, how do you move so fast?";
+		next;
+		mes "[Jojo]";
+		mes "Everyone, calm the hell down!";
+		next;
+		mes "[Gem]";
+		mes "Brother Jojo! You're safe!";
+		next;
+		mes "[Marina]";
+		mes "Where were you? We couldn't find you, and we looked everywhere!";
+		next;
+		mes "[Antoine]";
+		mes "It's true. His wounds are almost fully healed.";
+		next;
+		mes "[Dracula]";
+		mes "Don't touch Bomi... She... I... We don't want to hurt anyone... She's taught me that...";
+		npctalk "Hmpf, you should worry about yourself, you're dying!", "King#ilgf02", bc_self;
+		next;
+		mes "[Bomi]";
+		mes "Dracula! Dracula! Let me heal you!";
+		next;
+		mes "[Marina]";
+		mes "I'm not going to let you do that!";
+		next;
+		mes "[Gem]";
+		mes "Leave them be. They saved Jojo.";
+		next;
+		mes "[Marina]";
+		mes "But they could be using him as bait!";
+		next;
+		mes "[Gem]";
+		mes "Even if they try to attack us, there are more of us than them.";
+		npctalk "You're delusional if you think there's no strength in numbers.", "King#ilgf02", bc_self;
+		next;
+		mes "[Antoine]";
+		mes "I agree with Sister Gem. Also, it's not an everyday opportunity that we can see vampires from this close.";
+		next;
+		mes "[Gem]";
+		mes "You're Bomi, right? I read your notebook. What happened? What did these vampires do to you?";
+		next;
+		select("I can explain.");
+		mes "I relayed Bomi and Dracula's story to Nun Gem and the others.";
+		next;
+		mes "[Gem]";
+		mes "So you're saying they really are innocent.";
+		next;
+		mes "[Bomi]";
+		mes "Dracula, hang on. Drink this.";
+		next;
+		mes "[Marina]";
+		mes "Whose blood is that? You can't let him drink that!";
+		next;
+		mes "[Bomi]";
+		mes "It's not real blood! He needs it! Can't you see he's dying?";
+		next;
+		mes "[Marina]";
+		mes "You're dead already!";
+		next;
+		mes "[King]";
+		mes "Gosh, you're so stubborn. Feed him. I'll keep them at bay.";
+		npctalk "Let me help.", "Jojo#ilgf01", bc_self;
+		sleep2 500;
+		npctalk "You may feed him.", "Gem#ilgf02", bc_self;
+		next;
+		mes "[Marina]";
+		mes "You're letting her feed him, that vampire? Sister Gem, have you forgotten your duty as our leader?";
+		next;
+		mes "[Jojo]";
+		mes "Marina, I don't care who they are. They saved me and asked for nothing in return.";
+		next;
+		mes "[Jojo]";
+		mes "I didn't understand why vampires would help humans, but now I know. Dracula learned from Bomi how to be more human.";
+		next;
+		mes "[Jojo]";
+		mes "He said he wanted to understand humans, so he could better understand her. And I think he's achieved his goal.";
+		next;
+		mes "[Jojo]";
+		mes "He helped me and expected nothing in return. Such a random act of kindness is a human trait, isn't it?";
+		next;
+		mes "[Jojo]";
+		mes "And you shouldn't help someone because of who they are. Marina, are you really going to let him die because he's not one of us?";
+		next;
+		mes "[Marina]";
+		mes "That only applies to us humans. They're vampires!";
+		next;
+		mes "[King]";
+		mes "Now I understand why Dracula was so distrustful of you humans. I thought he was being too picky.";
+		next;
+		mes "[King]";
+		mes "Hey, you monk, over there. What do you think makes you human? What do you think makes a vampire a vampire? What if there's a vampire that's never hurt anyone in their life?";
+		next;
+		mes "[Marina]";
+		mes "I'll get rid of them.";
+		next;
+		mes "[King]";
+		mes "What if there's a human who did nothing but hurt others. What would you do about them?";
+		next;
+		mes "[Marina]";
+		mes "I'll let justice decide their fate.";
+		next;
+		mes "[King]";
+		mes "When I hunt, I treated all humans equally because I'm a vampire. That's my rule.";
+		next;
+		mes "[King]";
+		mes "Their rule is to help anyone who needs help regardless of who they are. Simple, isn't it?";
+		next;
+		mes "[Marina]";
+		mes "...";
+		next;
+		mes "[Dracula]";
+		mes "Mm... Bomi?";
+		npctalk "Dracula, how are you feeling?", "King#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "Whew, he's out of the woods now.", "Jojo#ilgf01", bc_self;
+		next;
+		mes "[Dracula]";
+		mes "Did you... save me? I thought you wanted me to die.";
+		next;
+		mes "[Bomi]";
+		mes "No, and now I understand why you made that decision. You couldn't just let me die, could you?";
+		next;
+		mes "[Bomi]";
+		mes "Because I couldn't do it, either.";
+		next;
+		mes "[Dracula]";
+		mes "...";
+		npctalk "What are you guys doing?", "King#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "Leave them alone. They're reconciling with each other.", "Jojo#ilgf01", bc_self;
+		next;
+		mes "[Gem]";
+		mes "Brothers. Sisters. We need to talk.";
+		erasequest 14663;// Bloody Fight
+		setquest 14664;// Deep Misunderstanding
+		ill_vampire = 13;
+		close;
+	}
+	if (ill_vampire == 13) {
+		mes "[Bomi]";
+		mes "Thank you, and I'm sorry.";
+		next;
+		mes "[Dracula]";
+		mes "I'm sorry I broke my promise. But even if I could go back in time, I would do it again.";
+		next;
+		mes "[Bomi]";
+		mes "I understand now why you did that.";
+		next;
+		mes "[Jojo]";
+		mes "Did you guys make up? Dracula, the worst is over. You just need to rest and regain your energy.";
+		next;
+		mes "[Dracula]";
+		mes "Thank you.";
+		next;
+		mes "[King]";
+		mes "*Snort* You can't beat mushrooms, but you can save vampires.";
+		npctalk "They weren't mushrooms, they were zombies!", "Jojo#ilgf01", bc_self;
+		sleep2 500;
+		npctalk "Mushrooms and zombies. Same difference to me.", "King#ilgf02", bc_self;
+		next;
+		emotion ET_GO, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "Drac, let's go. I know you're not hurting anymore. We should really go back to our castle this time.";
+		next;
+		mes "[Dracula]";
+		mes "I'm going to stay.";
+		next;
+		mes "[King]";
+		mes "What? No! You've made up with her. It's time to leave!";
+		next;
+		mes "[Gem]";
+		mes "Please hear me out.";
+		npctalk "What more do you have to say?", "King#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "Just listen, will you?", "Jojo#ilgf01", bc_self;
+		next;
+		mes "[Gem]";
+		mes "We know you haven't hurt anyone, and you want to keep it that way. And we appreciate you saved Brother Jojo.";
+		npctalk "And?", "King#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "Just hush!", "Jojo#ilgf01", bc_self;
+		next;
+		mes "[Gem]";
+		mes "But that doesn't change the fact that your existence in itself defies our god's will. We can't leave you alone.";
+		next;
+		emotion ET_ANGER, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "Drac, they won't leave us alone. Let's just get rid of them!";
+		npctalk "No!", "", bc_self;
+		npctalk "No!", "Dracula#ilgf03", bc_self;
+		next;
+		mes "[Marina]";
+		mes "Sister Gem, this is just a waste of time. They're going to kill us the first chance they get. Let's get rid of of them before they do!";
+		next;
+		mes "[Antoine]";
+		mes "Sisters, let me talk. Your tendency to jump to conclusions is not helping this situation.";
+		next;
+		mes "[Antoine]";
+		mes "We understand you don't want to hurt anyone.";
+		next;
+		mes "[Antoine]";
+		mes "But you're dangerous to others, whether you like it or not.";
+		next;
+		emotion ET_FRET, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "Why are you looking at me? I didn't do anything!";
+		next;
+		mes "[Antoine]";
+		mes "Now that we know you exist, we can't ignore you. I can, but these people here can't. Their church won't allow it.";
+		npctalk "So what's your point?", "King#ilgf02", bc_self;
+		next;
+		mes "[Antoine]";
+		mes "We're not going to make any decision. Instead, we'll ^0000cdstay here with you^000000.";
+		next;
+		emotion ET_ANGER, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "So you can keep an eye on us. Drac, I can't take this anymore!";
+		specialeffect EF_PORTAL4, AREA, "King#ilgf02";
+		cloakoffnpc( "King#ilgf02", getcharid(0) );
+		specialeffect EF_M01, AREA, "King#ilgf02";
+		sleep2 1000;
+		npctalk "I'm going to kill them all!", "King#ilgf02", bc_self;
+		sleep2 1000;
+		npctalk "Okay.", "", bc_self;
+		next;
+		emotion ET_FRET, getnpcid(0, "King#ilgf02");
+		mes "[King]";
+		mes "What? Drac! Stop acting like a human! We're proud, dignified vampires!";
+		next;
+		mes "[Dracula]";
+		mes "Let's go back. I'm tired. I want to sleep.";
+		npctalk "Let me go with you. I want to stay with you until you fully recover.", "Jojo#ilgf01", bc_self;
+		next;
+		emotion ET_ANGER, getnpcid(0, "King#ilgf02");
+		specialeffect EF_PORTAL4, AREA, "King#ilgf02";
+		cloakoffnpc( "King#ilgf02", getcharid(0) );
+		specialeffect EF_M01, AREA, "King#ilgf02";
+		mes "[King]";
+		mes "I'm not happy with this arrangement, Drac. I'm going back to our castle once you get better, got it?";
+		next;
+		mes "[Gem]";
+		mes "So we've come to an agreement. We'll leave now.";
+		specialeffect EF_TELEPORTATION2, AREA, "Gem#ilgf02";
+		sleep2 500;
+		cloakonnpc( "Gem#ilgf02", getcharid(0) );
+		next;
+		mes "[Marina]";
+		mes "You! I'm watching you! Better keep your coffin lid shut tight while you sleep!";
+		specialeffect EF_TELEPORTATION2, AREA, "Marina#ilgf02";
+		sleep2 500;
+		cloakonnpc( "Marina#ilgf02", getcharid(0) );
+		next;
+		npctalk "What? Hey, you stop right there!", "King#ilgf02", bc_self;
+		mes "[Antoine]";
+		mes "I should leave too. Excuse me.";
+		specialeffect EF_TELEPORTATION2, AREA, "Antoine#ilgf02";
+		sleep2 500;
+		cloakonnpc( "Antoine#ilgf02", getcharid(0) );
+		next;
+		mes "[King]";
+		mes "Argh! I don't ever want to see them again! Let's go!";
+		specialeffect EF_M01, AREA, "King#ilgf02";
+		sleep2 500;
+		cloakonnpc( "King#ilgf02", getcharid(0) );
+		next;
+		mes "[Jojo]";
+		mes "Let's go.";
+		next;
+		mes "[Dracula]";
+		mes "Bomi, I'll see you when I get better.";
+		next;
+		mes "[Jojo]";
+		mes "Okay, go.";
+		specialeffect EF_TELEPORTATION2, AREA, "Jojo#ilgf01";
+		specialeffect EF_M01, AREA, "Dracula#ilgf03";
+		sleep2 500;
+		cloakonnpc( "Jojo#ilgf01", getcharid(0) );
+		cloakonnpc( "Dracula#ilgf03", getcharid(0) );
+		next;
+		select("Finally, they all left. That was close.");
+		mes "[Bomi]";
+		mes "Thank you, Adventurer. Everything went well, and no one got hurt because of you.";
+		next;
+		select("You asked me if you looked like a human. Remember?");
+		mes "[Bomi]";
+		mes "I do.";
+		next;
+		select("What do you think defines a human?");
+		mes "[" + .@player_name$ + "]";
+		mes "I didn't know you when you were a human, but I don't think you were different from who you are now. You're still trying to protect what's important to you.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "I think you're more human than anyone else I know. You also taught a vampire humanity.";
+		next;
+		mes "[Bomi]";
+		mes "...Thank you. I never imagined someone would say such kind words to me one day, but I've longed to hear them.";
+		next;
+		mes "[Bomi]";
+		mes "I couldn't get over the fact that I became a monster, but now I know better. I may not be a human anymore, but I'm still me.";
+		next;
+		mes "[Bomi]";
+		mes "Thank you.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "I should go. It's time I report back.";
+		next;
+		mes "[Bomi]";
+		mes "Okay. Travel safely. And thank you for your help.";
+		erasequest 14664;// Deep Misunderstanding
+		setquest 14665;// Is the Fight Over?
+		ill_vampire = 14;
+		close;
+	}
+	if (ill_vampire == 14 || ill_vampire == 15) {
+		mes "[Bomi]";
+		mes "Didn't you say you have to report back? Go to the exit. I smelled your friends there.";
+		close;
+	}
+	switch( checkquest(14674,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
+			mes "[Bomi]";
+			mes "Adventurer, thank you for trying to help me, but I don't want you to strain yourself. Why don't you rest for now?";
+			next;
+			mes "[Bomi]";
+			mes "You can come back after dawn.";
+			close;
+		}
+		mes "[Bomi]";
+		mes "I'm away right now. Please come back after dawn.";
+		close;
+	case 2:
+		if (mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
+			mes "[Bomi]";
+			mes "Adventurer, welcome back. Could you help me today as usual?";
+			.@npc_name$ = "Bomi";
+		}
+		else {
+			mes "[" + .@player_name$ + "]";
+			mes "Bomi is away. She has left a note.";
+			.@npc_name$ = "Bomi's Note";
+		}
+		next;
+		mes "[" + .@npc_name$ + "]";
+		mes "I need ^0000cd10 Sticky Bloods from Matte Drainliars and 10 Mushroom Saps from Neon Mushrooms^000000. You can get them if you hunt at least ^0000cd5 Matte Drainliars and 5 Neon Mushrooms^000000.";
+		next;
+		mes "[" + .@npc_name$ + "]";
+		mes "Thank you for your help.";
+		erasequest 14674;// Time to Digest
+		setquest 14671;// Unreliable Fake Blood
+		close;
+	}
+	switch( checkquest(14671,HUNTING) ) {
+	case -1:
+		//if (mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") > 0) {// unknown text
+		mes "[Bomi]";
+		mes "Adventurer, did you report already? Do you have something else to do here?";
+		next;
+		mes "[Bomi]";
+		mes "If you're not busy, could you help me with something?";
+		next;
+		if (select( "Sure thing.", "I'm kind of busy at the moment.") == 2) {
+			mes "[Bomi]";
+			mes "Oh, are you? I'm sorry. Maybe you could come back later? no, never mind.";
+			close;
+		}
+		mes "[Bomi]";
+		mes "As you know, I live on that fake blood that I make with the ingredients I find around here. I'm thinking I'll make some more for Dracula as well.";
+		next;
+		mes "[Bomi]";
+		mes "But since this fake blood is not pure, drinking it regularly causes your body to accumulate toxins, which drive you insane until they are completely purged from your system.";
+		next;
+		mes "[Bomi]";
+		mes "But maybe that only happens to me. I'm a new vampire, and I'm weak. Dracula has lived for a long time, and he's anything but weak. ";
+		setquest 14671;// Unreliable Fake Blood
+		next;
+		mes "[Bomi]";
+		mes "Anyway, I need ^0000cd10 Sticky Bloods from Matte Drainliars and 10 Mushroom Saps from Neon Mushrooms^000000.";
+		next;
+		mes "[Bomi]";
+		mes "You can find them if you hunt at least ^0000cd5 Matte Drainliars and 5 Neon Mushrooms^000000.";
+		close;
+	case 0:
+	case 1:
+		if (mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") > 0) {
+			mes "[" + .@player_name$ + "]";
+			mes "Bomi is away. I'll just leave these here.";
+			next;
+			mes "[" + .@player_name$ + "]";
+			mes "I think I forgot something.";
+			close;
+		}
+		mes "[Bomi]";
+		mes "Adventurer, did you forget what I asked? I need ^0000cd10 Sticky Bloods from Matte Drainliars and 10 Mushroom Saps from Neon Mushrooms^000000. Thank you.";
+		close;
+	case 2:
+		if (countitem(25268) < 10 || countitem(25269) < 10) {
+			if (mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") > 0) {
+				mes "[" + .@player_name$ + "]";
+				mes "Bomi is away. I'll just leave these here.";
+				next;
+				mes "[" + .@player_name$ + "]";
+				mes "I think I forgot something.";
+				close;
+			}
+			mes "[Bomi]";
+			mes "Adventurer, did you forget what I asked? I need ^0000cd10 Sticky Bloods from Matte Drainliars and 10 Mushroom Saps from Neon Mushrooms^000000. Thank you.";
+			close;
+		}
+		if (mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") > 0) {
+			mes "[" + .@player_name$ + "]";
+			mes "Bomi is away. I'll just leave these here.";
+			delitem 25268,10;// Sticky_Blood
+			delitem 25269,10;// Mushroom_Sap
+			erasequest 14671;// Unreliable Fake Blood
+			setquest 14674;// Time to Digest
+			getexp 500000,500000;
+			getitem 25271,1;// Illusion Stone
+			close;
+		}
+		mes "[Bomi]";
+		mes "Adventurer, thank you for bringing these to me.";
+		delitem 25268,10;// Sticky_Blood
+		delitem 25269,10;// Mushroom_Sap
+		erasequest 14671;// Unreliable Fake Blood
+		setquest 14674;// Time to Digest
+		getexp 500000,500000;
+		getitem 25271,1;// Illusion Stone
+		if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
+			if (.bomi_count < 30)
+				.bomi_count++;
+		}
+		next;
+		if (.bomi_count == 29) {
+			mes "[Bomi]";
+			mes "By the way, I told you about the dangers of this fake blood. Remember? It leaves toxins in my system.";
+			next;
+			mes "[Bomi]";
+			mes "Right now, there are so many toxins in my body that I can feel like I'm turning into a monster.";
+			next;
+			mes "[Bomi]";
+			mes "I can't wait it out like I used to.";
+			mes "Not when there are people to worry about.";
+			next;
+			mes "[Bomi]";
+			mes "When I turn into a monster, I want you to stop me from hurting them. Please, help me.";
+			next;
+			mes "[Bomi]";
+			mes "Then please come back after dawn.";
+			close;
+		}
+		if (.bomi_count == 30) {
+			mes "[Bomi]";
+			mes "I ran out of the ingredients I had.";
+			next;
+			mes "[Bomi]";
+			mes "If I mix them like this and drink...";
+			specialeffect EF_PHARMACY_OK;
+			next;
+			disablenpc( "Wizard#ilgf01" );
+			specialeffect EF_DEVIL;
+			mes "[Bomi]";
+			mes "Oh, no! There is too many toxins in my body. It's getting dangerous!";
+			if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
+				.bomi_count = 0;
+				donpcevent "ill_vampire_spawn_bomi::OnStart";
+			}
+			close;
+		}
+		mes "[Bomi]";
+		mes "If I drink this toxic blood about thirty times, I might turn? oh, never mind.";
+		next;
+		mes "[Bomi]";
+		mes "Then please come back after dawn.";
+		close;
+	}
+	end;
+
+OnTouch:
+	if (ill_vampire == 7) {
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "This one has a different color from Neon Mushrooms. Is it a new kind? I'd better pick it carefully...", "", bc_self;
+		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Typical wizard... Wait, could that be Jojo??", bc_self;
+	}
+	else if (ill_vampire == 12 || ill_vampire == 13) {
+		cloakoffnpc( "Gem#ilgf02", getcharid(0) );
+		cloakoffnpc( "Marina#ilgf02", getcharid(0) );
+		cloakoffnpc( "Antoine#ilgf02", getcharid(0) );
+		if (ill_vampire == 13) {
+			cloakoffnpc( "Dracula#ilgf03", getcharid(0) );
+			cloakoffnpc( "King#ilgf02", getcharid(0) );
+			cloakoffnpc( "Jojo#ilgf01", getcharid(0) );
+		}
+	}
+	end;
+
+OnInit:
+	// todo: missing questinfo ?
+
+	.@main_completed$ = "isbegin_quest(14666) == 2";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14674,PLAYTIME) == -1 && checkquest(14671,HUNTING) == -1") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14671,HUNTING) == 2 && countitem(25268) > 9 && countitem(25269) > 9") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14674,PLAYTIME) == 2") );
+
+	if (strnpcinfo(0) == "Wizard#ilgf001")
+		disablenpc();
+	end;
+}
+gef_d01_i,81,135,3	duplicate(Wizard#ilgf01)	Wizard#ilgf001	4_NFCOFFIN,5,5
+
+gef_d01_i,82,132,3	duplicate(dummy_npc)	Mushroom#ilgf01	ILL_BLACK_MUSHROOM
+gef_d01_i,86,133,1	duplicate(dummy_cloaked_npc)	Dracula#ilgf01	4_DRACULA
+
+
+// Boss spawn
+gef_d01_i,1,1,5	script	ill_vampire_spawn_bomi	-1,{
+	end;
+OnStart:
+	sleep 1000;
+	mapannounce "gef_d01_i", "Oh, no...	I can feel the toxins spreading through my body...!", bc_map, 0xFF0000;
+	if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
+		monster "gef_d01_i",84,135,"Berserk Bomi",3756,1,"ill_vampire_spawn_bomi::OnMobDead";
+	}
+	end;
+OnMobDead:
+	enablenpc( "Wizard#ilgf001" );
+	disablenpc( "Dracula#ilgf02" );
+	mapannounce "gef_d01_i", "Bomi is falling into a long, deep sleep.", bc_map, 0x00ff00;
+	mapannounce "gef_d01_i", "Angry Dracula: Who dares hurt my Bomi?!", bc_map, 0x00ff00;
+	sleep 1000;
+	if (rand(2) == 1)
+		mapannounce "gef_d01_i", "Angry Dracula: Leave Bomi alone! Fight me instead!", bc_map, 0xFF0000;
+	else
+		mapannounce "gef_d01_i", "Angry Dracula: Bomi needs rest. I'll deal with you!", bc_map, 0xFF0000;
+	killmonster "gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead";
+	killmonster "gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead";
+	monster "gef_d01_i",0,0,"Angry Dracula",3757,1,"ill_vampire_spawn_dracula::OnMobDead";
+	end;
+}
+
+gef_d01_i,1,1,5	script	ill_vampire_spawn_dracula	-1,{
+	end;
+OnMobDead:
+	killmonster "gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead";
+	killmonster "gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead";
+	mapannounce "gef_d01_i", "Angry Dracula: It's about time for Bomi to wake up. Humans, don't forget your promise!", bc_map, 0x00ff00;
+	sleep 2000;
+	mapannounce "gef_d01_i", "Bomi is stirring from her long, deep sleep.", bc_map, 0x00ff00;
+	if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1) {
+		disablenpc( "Wizard#ilgf001" );
+		enablenpc( "Wizard#ilgf01" );
+        enablenpc "Dracula#ilgf02";
+	}
+	end;
+}
+
+gef_d01_i,185,97,5	script	King#ilgf01	4_NFBAT,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[King]";
+		mes "Hey, why are you carrying so much? Go lighten your bag first.";
+		close;
+	}
+	if (ill_vampire < 11) {
+		mes "[King]";
+		mes "What, do you have business with me? If not, shoo!";
+		close;
+	}
+	if (ill_vampire == 11) {
+		mes "[King]";
+		mes "I smell ^0000cdblood^000000! Human blood!";
+		next;
+		mes "[Jojo]";
+		mes "You can't be smelling me. I'm not bleeding anymore. I already healed!";
+		next;
+		mes "[King]";
+		mes "No. It's from somewhere else, and I'm smelling more than one human. ...A ^0000cdfight^000000! A fight broke out somewhere! Blood! Let's go!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "A fight? ...No. What if the people from the Church found Bomi?";
+		next;
+		mes "[Dracula]";
+		mes "What people from the Church?";
+		next;
+		emotion ET_GO;
+		mes "[King]";
+		mes "*Sniff* This way! The smell is coming from this way!";
+		erasequest 14662;// You're Scaring Me
+		setquest 14663;// Bloody Fight
+		ill_vampire = 12;
+		close2;
+		viewpoint 1,85,131,1,0x00FF00;
+		end;
+	}
+	if (ill_vampire == 12 || ill_vampire == 13) {
+		mes "[King]";
+		mes "*Sniff* This way! The smell is coming from this way!";
+		close2;
+		viewpoint 1,85,131,1,0x00FF00;
+		end;
+	}
+	if (ill_vampire == 14 || ill_vampire == 15) {
+		mes "[King]";
+		mes "Why are you looking at me like that? Dracula needs more rest. Do not disturb him.";
+		close;
+	}
+	// if (ill_vampire == 16) {
+	switch( checkquest(14676,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Jojo]";
+		mes "Adventurer, you're back already.";
+		next;
+		mes "[King]";
+		mes "Yes, why did you come back so quickly? I don't want to be disturbed right now. Come back later.";
+		close;
+	case 2:
+		mes "[King]";
+		mes "The adventurer is here!";
+		next;
+		mes "[Jojo]";
+		mes "The adventurer is here!";
+		next;
+		select("Why are you so excited to see me?");
+		mes "[King]";
+		mes "You'll take care of those Matte Drainliars like you did the last time, right? They're too loud.";
+		next;
+		mes "[Jojo]";
+		mes "And you'll get some ^0000cdShort Bat Hairs^000000 too, right? I need a lot more than what you brought last time.";
+		next;
+		mes "[King]";
+		mes "^0000cd10 Matte Drainliars^000000!";
+		next;
+		mes "[Jojo]";
+		mes "Thank you in advance!";
+		erasequest 14676;// Break Time
+		setquest 14675;// Noisy Neighbors
+		close;
+	}
+	switch( checkquest(14675,HUNTING) ) {
+	case -1:
+		mes "[Jojo]";
+		mes "Ah, Adventurer. Good to see you again! Dracula is doing better, though he sleeps all day.";
+		next;
+		mes "[King]";
+		mes "He's fully recovered, but he still doesn't want to leave. I don't know why he's so infatuated with that turned human.";
+		next;
+		mes "[Jojo]";
+		mes "Oh, do you mean Bomi? I thought she was a vampire like Dracula.";
+		next;
+		mes "[King]";
+		mes "Not all vampires are the same. We're different from her. By the way, why are you still here? Dracula doesn't need you anymore.";
+		next;
+		mes "[Jojo]";
+		mes "Well, there are things around here that I want to study, and...";
+		next;
+		mes "[King]";
+		mes "Do you have a death wish? Haven't you noticed how hungry and ferocious these bats are? They latch onto anything that moves, these creeps! Take care of them for me, will you?";
+		next;
+		if (select( "They're annoying.", "Um, I'm kind of busy.") == 2) {
+			mes "[King]";
+			mes "Oh, are you? Then go. Go away.";
+			next;
+			mes "[Jojo]";
+			mes "King, you don't have to be so mean.";
+			next;
+			mes "[King]";
+			mes "He was mean to me first! And he said he's busy. That's why I said go. Go!";
+			close;
+		}
+		mes "[Jojo]";
+		mes "Well, they don't bother me as long as I stay close to Dracula and King.";
+		next;
+		mes "[King]";
+		mes "But they drink zombie blood! Yuk! I'll never drink dead blood, no matter how hungry I am. That's disgraceful!";
+		next;
+		mes "[Jojo]";
+		mes "So you're hating your own kind.";
+		npctalk "What? You, human.", "", bc_self;
+		sleep2 1000;
+		npctalk "Yes...?", "Wizard#ilgf02", bc_self;
+		sleep2 1000;
+		npctalk "Am I a bat?", "", bc_self;
+		sleep2 1000;
+		npctalk "...No.", "Wizard#ilgf02", bc_self;
+		next;
+		mes "[King]";
+		mes "In case you have forgotten, do you know how you're still standing there, breathing?";
+		next;
+		mes "[Jojo]";
+		mes "...How?";
+		next;
+		mes "[King]";
+		mes "Because I let you. And I'm letting you breathe not because you're worth living, but because I'm too lazy to kill you.";
+		next;
+		emotion ET_SWEAT, getnpcid(0, "Wizard#ilgf02");
+		mes "[Jojo]";
+		mes "...Oh. Thank you for everything. Um, I think it's time I should rejoin my group.";
+		next;
+		mes "[King]";
+		mes "I'm still talking to you. You're not afraid of me because I'm in bat form, are you? You humans are so stupid, you can't get past what you see.";
+		npctalk "No, no, that's not true.", "Wizard#ilgf02", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "I agree that these bats are disgraceful, shameless, and disgusting animals.";
+		next;
+		mes "[King]";
+		mes "Did you just call me a disgusting animal?";
+		next;
+		mes "[Jojo]";
+		mes "No, no. Not you. I'm talking about Matte Drainliars.";
+		npctalk "Good, because you don't want to make me angry.", "", bc_self;
+		sleep2 1000;
+		npctalk "It seems you already identify yourself as a bat.", "Wizard#ilgf02", bc_self;
+		sleep2 1000;
+		npctalk "What?", "", bc_self;
+		next;
+		select("I have a question for you, King.");
+		mes "[King]";
+		mes "What is it?";
+		next;
+		select("Why are you in bat form?");
+		mes "[Jojo]";
+		mes "Yes. If you hate them so much, then why don't you go back to your original form?";
+		next;
+		mes "[King]";
+		mes "That's because this form is more efficient. I don't have to drink a lot to get full, I'm inconspicuous, and people, like that numskull over there, let their guard down around me.";
+		next;
+		mes "[Jojo]";
+		mes "I'm not a numskull. I wouldn't have become a wizard if I was. And don't forget, I saved Dracula!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But why a bat? There are other small animals.";
+		next;
+		mes "[King]";
+		mes "Because bats are stealthy, and they can fly. Oh, speaking of which, did you know the short hair of Matte Drainliars is used for making cloaking capes?";
+		next;
+		select("Huh? No, I've never heard that.");
+		mes "[Jojo]";
+		mes "Cloaking capes? Thieves and their ilk must love those.";
+		next;
+		mes "[King]";
+		mes "I can't believe how simple-minded you are.";
+		next;
+		mes "[Jojo]";
+		mes "Erm, how can I get the hair? By hunting Matte Drainliars?";
+		next;
+		mes "[King]";
+		mes "Why, do you want to quit magic and turn to thievery?";
+		next;
+		mes "[Jojo]";
+		mes "No. But it's always been my dream to conquer all the dungeons on the continent and become the greatest mage.";
+		next;
+		mes "[King]";
+		mes "...That's a big dream, an impossible dream. Well, anyone can dream big.";
+		npctalk "Argh, come on!", "Wizard#ilgf02", bc_self;
+		sleep2 1000;
+		npctalk "Come on, what?", "", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "Even if it's not for my dream, a cloaking cape will come in handy in various situations.";
+		next;
+		mes "[King]";
+		mes "I didn't know there was an aspiring thief among us. Huh.";
+		next;
+		mes "[Jojo]";
+		mes "I said that's not what I want. Adventurer, are you busy?";
+		next;
+		mes "[King]";
+		mes "What, you're going to ask him? Do it yourself!";
+		next;
+		mes "[Jojo]";
+		mes "I have other things to do.";
+		next;
+		mes "[King]";
+		mes "Like what? Eating, sleeping, and pooping?";
+		next;
+		mes "[Jojo]";
+		mes "Oh, come on! You know I've been busy studying things!";
+		next;
+		mes "[King]";
+		mes "You mean, studying me and Dracula.";
+		next;
+		mes "[Jojo]";
+		mes "...How did you...?";
+		next;
+		mes "[King]";
+		mes "I've known that from the beginning. Your face is so transparent, you can't hide anything. I just didn't say anything because I found it funny that you nervously kept glancing at us.";
+		next;
+		mes "[Jojo]";
+		mes "...Oh. Then can I ask you questions?";
+		npctalk "No.", "", bc_self;
+		sleep2 1000;
+		npctalk "Why not?!", "Wizard#ilgf02", bc_self;
+		next;
+		mes "[King]";
+		mes "Adventurer, are you going to get the bat hair for him? Good, that means you'll take care of those Matte Drainliars. Their flapping their wings keep me awake at night.";
+		next;
+		mes "[Jojo]";
+		mes "Why can't you do it yourself? All you have to do is just flick your finger.";
+		next;
+		mes "[King]";
+		mes "I can flick my finger at you if you want.";
+		next;
+		mes "[Jojo]";
+		mes "Adventurer, please bring me the bat hair. King, I mean, Mr. King, how much bat hair do I need?";
+		next;
+		mes "[King]";
+		mes "That depends on what kind of cape you want. Just know that it's tough to make stuff with hair.";
+		next;
+		mes "[Jojo]";
+		mes "Um, okay, then please bring me ^0000cd20 Short Bat Hairs^000000 for starters.";
+		next;
+		mes "[King]";
+		mes "While you're at it, hunt the ^0000cdMatte Drainliars^000000 around us. There are at least ^0000cd10^000000.";
+		next;
+		mes "[Jojo]";
+		mes "Happy hunting, Adventurer!";
+		setquest 14675;// Noisy Neighbors
+		npctalk "Ah, Adventurer! Wait!", "Wizard#ilgf02", bc_self;
+		close;
+	case 0:
+	case 1:
+		break;
+	case 2:
+		if (countitem(25263) < 20)
+			break;
+		mes "[King]";
+		mes "You came back quickly. I hope you didn't forget anything.";
+		next;
+		mes "[King]";
+		mes "Wizard! The adventurer has brought the hair.";
+		next;
+		mes "[Jojo]";
+		mes "What am I supposed to do now?";
+		next;
+		mes "[King]";
+		mes "That's for you to figure out. I'm not a cape maker, am I? But I know you would need more than that.";
+		next;
+		mes "[Jojo]";
+		mes "Um... Adventurer?";
+		next;
+		mes "[King]";
+		mes "He just came back from hunting. You should let him rest, at least for the rest of the day.";
+		next;
+		mes "[King]";
+		mes "Adventurer, come back tomorrow and hunt more Matte Drainliars for me, will you? It's so quiet without them.";
+		next;
+		mes "[Jojo]";
+		mes "Th-then see you tomorrow, Adventurer...";
+		delitem 25263,20;// Short_Bat_Fur
+		erasequest 14675;// Noisy Neighbors
+		setquest 14676;// Break Time
+		getexp 500000,500000;
+		getitem 25271,1;// Illusion Stone
+		close;
+	}
+	mes "[King]";
+	mes "You came back quickly. I hope you didn't forget anything.";
+	next;
+	mes "[King]";
+	mes "Look what we've got here. Did you forget what I asked? I told you to ^0000cdhunt 10 Matte Drainliars and bring 20 Short Bat Hairs^000000.";
+	next;
+	mes "[King]";
+	mes "Go get it done.";
+	close;
+
+OnInit:
+	cloakonnpc();
+
+	.@main_completed$ = "isbegin_quest(14666) == 2";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14676,PLAYTIME) == -1 && checkquest(14675,HUNTING) == -1") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14675,HUNTING) == 2 && countitem(25263) > 19") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14676,PLAYTIME) == 2") );
+	end;
+}
+
+gef_d01_i,191,96,3	script	Wizard#ilgf02	4_M_JOB_WIZARD,5,5,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Jojo]";
+		mes "Are you sure you can carry all that stuff? Why don't you lighten your bag?";
+		close;
+	}
+	if (ill_vampire < 10) {
+		mes "[Jojo]";
+		mes "Aww, my wounds are fully healed, but I'm still in pain.";
+		close;
+	}
+	if (ill_vampire == 10) {
+		mes "[Jojo]";
+		mes "How's Mojo doing? Heh, she's so curious, I feel sorry for Brother Grimm for having to deal with her.";
+		next;
+		mes "[Jojo]";
+		mes "I can't leave here just yet. There are still many things in this place I want to know about.";
+		close;
+	}
+	if (ill_vampire == 11) {
+		mes "[Jojo]";
+		mes "King has smelled blood. Even though that's how he found me when I was bleeding to death, it still scares me that he can do that.";
+		close;
+	}
+	if (ill_vampire == 12 || ill_vampire == 13) {
+		mes "[Jojo]";
+		mes "A fight has broken out somewhere over there. Don't you want to go check?";
+		close2;
+		viewpoint 1,85,131,1,0x00FF00;
+		end;
+	}
+	if (ill_vampire == 14 || ill_vampire == 15) {
+		mes "[Jojo]";
+		mes "I'm going to stay here for a while. It'll take for a while before Dracula fully regains his energy, and personally, there are many things that I want to know about these people.";
+		next;
+		mes "[Jojo]";
+		mes "Please let Nun Gem and Mojo know.";
+		close;
+	}
+	// if (ill_vampire == 16) {
+	switch( checkquest(14678,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Jojo]";
+		mes "Adventurer, see this luminous glow over here? It's from the shining spores you brought to me.";
+		next;
+		mes "[Jojo]";
+		mes "I feel as if I traveled back in time, studying by this dim light.";
+		next;
+		mes "[Jojo]";
+		mes "I still have enough light left in these shining spores. Please come back after dawn.";
+		close;
+	case 2:
+		mes "[Jojo]";
+		mes "Adventurer! You are the light of my life!";
+		next;
+		mes "[King]";
+		mes "You're scaring him.";
+		next;
+		mes "[Jojo]";
+		mes "Could you get me shining spores again today?";
+		next;
+		mes "[Jojo]";
+		mes "Please bring me ^0000cd10 Shining Spores^000000 from Neon Mushrooms and ^0000cd10 Clusters of Nightmares^000000 from Sweet Nightmares. Thank you.";
+		erasequest 14678;// Time to Study
+		setquest 14677;// Studying in Dim Light
+		close;
+	}
+	switch( isbegin_quest(14677) ) {
+	case 0:
+		mes "[Jojo]";
+		mes "Adventurer, wait!";
+		next;
+		mes "[King]";
+		mes "You misspelled that.";
+		next;
+		mes "[Jojo]";
+		mes "Where? Oh, I did it again.";
+		next;
+		mes "[King]";
+		mes "Tsk, tsk. I don't know how you've become a wizard when you can't even spell correctly.";
+		next;
+		mes "[Jojo]";
+		mes "This is only because it's too dark to see. And stop peeking at what I'm doing!";
+		next;
+		mes "[King]";
+		mes "It's not like you're writing something important.";
+		next;
+		select("You two get along as well as I remember.");
+		mes "[King]";
+		mes "What are you doing here? Don't you have things to do?";
+		next;
+		if (select( "Jojo wanted to see me.", "Actually, I'm busy.") == 2) {
+			mes "[Jojo]";
+			mes "Are you? I was going to ask you a favor, but I can wait.";
+			next;
+			mes "[King]";
+			mes "Then you'd better go attend to your business.";
+			close;
+		}
+		mes "[King]";
+		mes "Why?";
+		next;
+		mes "[Jojo]";
+		mes "Since we're underground, it's too dark for me to write and read. I have a lot of information that I want to catalog, but I keep misspelling words because I can't see them clearly.";
+		next;
+		mes "[King]";
+		mes "You should be able to do that with your eyes closed. You're a wizard. Didn't you learn how to summon light? But of course, if you use magic in front of me, I'll burn you to ashes.";
+		npctalk "I... I'm still a wizard!", "Wizard#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "What? I can't hear you.", "King#ilgf01", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "I completed my guild's official wizard training program. I'm strong enough to have a contest with you!";
+		next;
+		mes "[King]";
+		mes "Oh, really? Good for you!";
+		next;
+		mes "[King]";
+		mes "Be honest, though. Did you really study hard? Did you attend every class, study all night, and practice hard? You'd better tell me the truth.";
+		next;
+		mes "[King]";
+		mes "Can you honestly say that you tried to push past your limits?";
+		next;
+		mes "[Jojo]";
+		mes "...";
+		next;
+		mes "[King]";
+		mes "No, you didn't. That's why you had your butt handed to you by those mushrooms.";
+		next;
+		mes "[Jojo]";
+		mes "I said they were zombies, not mushrooms!";
+		next;
+		mes "[King]";
+		mes "Zombies and mushrooms. Same difference to me.";
+		next;
+		mes "[King]";
+		mes "You're not good enough to earn your keep. I can't believe your guild actually invested in you.";
+		npctalk "I've been earning my keep just fine.", "", bc_self;
+		sleep2 500;
+		npctalk "Yeah, right.", "King#ilgf01", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "Then what about you? I know you can transform. But what else can you do?";
+		npctalk "Do you really want me to show you? Right now?", "King#ilgf01", bc_self;
+		sleep2 1000;
+		npctalk "...No.", "", bc_self;
+		next;
+		mes "[King]";
+		mes "Maybe you keep questioning me because you can't trust me. How about I teach you to be the greatest mage among humans? Would you trust me, then?";
+		next;
+		mes "[Jojo]";
+		mes "Erm, you want to teach me?";
+		next;
+		mes "[King]";
+		mes "Sure.";
+		next;
+		mes "[Jojo]";
+		mes "Why?";
+		next;
+		mes "[King]";
+		mes "I've studied a lot. Why do you think I have?";
+		next;
+		mes "[Jojo]";
+		mes "To become smarter?";
+		next;
+		mes "[King]";
+		mes "No. Because I was bored to death!";
+		next;
+		mes "[Jojo]";
+		mes "You have all the time in the world. I'm envious of that.";
+		next;
+		mes "[King]";
+		mes "If you don't want me to teach you, that's fine by me.";
+		next;
+		mes "[Jojo]";
+		mes "No, no! I'd love to! But, erm, you're not going to ask for my blood in return, are you?";
+		next;
+		mes "[King]";
+		mes "*Snort* If I drink anything because I'm hungry, I wouldn't be any better than those Matte Drainliars now, would I?";
+		npctalk "Did you just compare me to zombies?", "", bc_self;
+		sleep2 500;
+		npctalk "So you're not as stupid as I thought.", "King#ilgf01", bc_self;
+		next;
+		select("Jojo?");
+		mes "[Jojo]";
+		mes "Oh, I'm sorry, I didn't mean to keep you standing there. Could you get me some spores from Neon Mushrooms? I need some light to see what I'm writing.";
+		npctalk "Why those?", "King#ilgf01", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "Oh, you know how those spores glow. I want to use them to illuminate this place.";
+		next;
+		mes "[King]";
+		mes "Well, then go get them yourself. Don't dump things on this adventurer.";
+		next;
+		mes "[Jojo]";
+		mes "Oh, well... I'm... Neon Mushrooms are... You know.";
+		npctalk "You said you were attacked by zombies.", "King#ilgf01", bc_self;
+		sleep2 500;
+		npctalk "I was.", "", bc_self;
+		next;
+		mes "[King]";
+		mes "Where are you going to put the spores, anyway?";
+		next;
+		mes "[Jojo]";
+		mes "I have an empty bottle? oh, I forgot I lost my bag when I was attacked.";
+		next;
+		mes "[Jojo]";
+		mes "Adventurer, could you get me some Clusters of Nightmares as well? I can mix them with the spores to make a paste and apply it on the wall.";
+		next;
+		mes "[King]";
+		mes "What? That's so tacky.";
+		next;
+		mes "[Jojo]";
+		mes "But effective nonetheless. You didn't know you could use them like that, did you?";
+		next;
+		mes "[King]";
+		mes "Because I didn't need to.";
+		next;
+		mes "[Jojo]";
+		mes "Then, Adventurer, please bring me ^0000cd10 Shining Spores^000000 from Neon Mushrooms and ^0000cd10 Clusters of Nightmares^000000 from Sweet Nightmares.";
+		setquest 14677;// Studying in Dim Light
+		close;
+	case 1:
+	case 2:
+		mes "[Jojo]";
+		mes "Adventurer, welcome back!";
+		next;
+		if (countitem(25264) < 10 || countitem(25265) < 10)	{
+			mes "[King]";
+			mes "I can tell that's not enough, just by looking at it.";
+			next;
+			mes "[Jojo]";
+			mes "Oh, you're right. You must have forgotten what I asked.";
+			next;
+			mes "[Jojo]";
+			mes "Please bring me ^0000cd10 Shining Spores^000000 from Neon Mushrooms and ^0000cd10 Clusters of Nightmares^000000 from Sweet Nightmares. Thank you.";
+			close;
+		}
+		mes "[King]";
+		mes "I can tell he brought everything you asked. Come on, make a paste and apply it to the wall already.";
+		next;
+		mes "[Jojo]";
+		mes "Adventurer, thank you for helping me study. These glowing spores don't last long. Could you come back tomorrow and get me more of them?";
+		delitem 25264,10;// NightmareOfLump
+		delitem 25265,10;// Shining_Spore
+		erasequest 14677;// Studying in Dim Light
+		setquest 14678;// Time to Study
+		getexp 500000,500000;
+		getitem 25271,1;// Illusion Stone
+		close;
+	}
+	end;
+
+OnTouch:
+	if (ill_vampire == 16 && isbegin_quest(14677) == 0)
+		npctalk "Ah, Adventurer! Wait!", "Wizard#ilgf02", bc_self;
+	if (ill_vampire > 13) {
+		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		cloakoffnpc( "Wizard#ilgf02", getcharid(0) );
+		cloakoffnpc( "Dracula#ilgf02", getcharid(0) );
+	}
+	end;
+
+OnInit:
+	cloakonnpc();
+
+	.@main_completed$ = "isbegin_quest(14666) == 2";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14678,PLAYTIME) == -1 && isbegin_quest(14677) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && isbegin_quest(14677) == 1 && countitem(25264) > 9 && countitem(25265) > 9") );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, (.@main_completed$ + " && checkquest(14678,PLAYTIME) == 2") );
+	end;
+}
+
+gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
+	if (ill_vampire < 10) {
+		mes "[Dracula]";
+		mes "What brings you? I suggest you stay away out of this place.";
+		close;
+	}
+	if (ill_vampire == 10) {
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "Let's drink from this one.", "King#ilgf01", bc_self;
+		sleep2 1500;
+		emotion ET_SWEAT, getnpcid(0, "Wizard#ilgf02");
+		npctalk "Oh, no. That's?", "Wizard#ilgf02", bc_self;
+		sleep2 1500;
+		npctalk "King, I told you, we are not drinking from people anymore. And that's not a polite thing to say. I apologize on his behalf.", "", bc_self;
+		sleep2 2000;
+		npctalk "I-it's okay.", "Wizard#ilgf02", bc_self;
+		sleep2 1500;
+		npctalk "Humans die eventually. Is it so bad to die a little bit earlier? Come on, let's have a drink. This one doesn't smell good, though.", "King#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "Do you mind if I get rid of that bat?", "Wizard#ilgf02", bc_self;
+		sleep2 1500;
+		npctalk "No one hurts anyone in front of me.", "", bc_self;
+		emotion ET_FRET, getnpcid(0, "King#ilgf01");
+		npctalk "Human, are you blind? I'm not a bat.", "King#ilgf01", bc_self;
+		sleep2 1500;
+		npctalk "Then what are you?", "Wizard#ilgf02", bc_self;
+		specialeffect EF_PORTAL4, AREA, "King#ilgf01";
+		specialeffect EF_M01, AREA, "King#ilgf01";
+		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		sleep2 1500;
+		npctalk "Now, what do I look like?", "King#ilgf01", bc_self;
+		sleep2 1500;
+		emotion ET_HUK, getnpcid(0, "Wizard#ilgf02");
+		npctalk "*Gasp* What the hell are you?!", "Wizard#ilgf02", bc_self;
+		sleep2 1500;
+		npctalk "Why, is this too scary? Then how about this?", "King#ilgf01", bc_self;
+		specialeffect EF_PORTAL4, AREA, "King#ilgf01";
+		specialeffect EF_M01, AREA, "King#ilgf01";
+		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		sleep2 1500;
+		emotion ET_CRY, getnpcid(0, "Wizard#ilgf02");
+		npctalk "Y-y-you're me? D-d-d-doppelganger! A-am I going to die?!", "Wizard#ilgf02", bc_self;
+		sleep2 1500;
+		npctalk "You're afraid of yourself. Why?", "King#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "You love yourself so much that you don't accept anyone that doesn't look like you. But when you see someone that looks exactly like you, you can't tolerate it. Why?", "King#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "Seeing other humans and seeing a clone of myself are two different things!", "Wizard#ilgf02", bc_self;
+		sleep2 1500;
+		npctalk "King, that's enough. Stop torturing him.", "", bc_self;
+		sleep2 2000;
+		emotion ET_OHNO, getnpcid(0, "King#ilgf01");
+		npctalk "Tsk, tsk. You're too softhearted when it comes to humans.", "King#ilgf01", bc_self;
+		specialeffect EF_PORTAL4, AREA, "King#ilgf01";
+		specialeffect EF_M01, AREA, "King#ilgf01";
+		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		sleep2 1000;
+		npctalk "Um... I can move fine now. Can I go?", "Wizard#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "Yes, you can leave.", "", bc_self;
+		npctalk "No!", "King#ilgf01", bc_self;
+		sleep2 500;
+		npctalk "Why not?", "", bc_self;
+		sleep2 1500;
+		npctalk "He's a human, and humans move in groups. He's going to bring his friends to attack us. Did you forget that already?", "King#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "No, I'm not going to do that. I never forget favors. You've saved me. I promise I won't hurt you. Please believe me.", "Wizard#ilgf02", bc_self;
+		sleep2 2000;
+		npctalk "Humans can't be trusted, ever.", "King#ilgf01", bc_self;
+		sleep2 2000;
+		npctalk "I agree that he might bring his friends, but not all humans are untrustworthy.", "", bc_self;
+		npctalk "Whose side are you on? Me or him?", "King#ilgf01", bc_self;
+		setpcblock PCBLOCK_NPC, false;
+
+		mes "[" + strcharinfo(0) + "]";
+		mes "Typical wizard... Wait, could that be Jojo??";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Typical wizard... Wait, could that be Jojo??", bc_self;
+		next;
+		select("Jojo? Are you Jojo?");
+		mes "[Jojo]";
+		mes "Wh-who are you?";
+		npctalk "See, I told you! One of his friends already showed up! This is why I don't trust humans!", "King#ilgf01", bc_self;
+		npctalk "A human?", "", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "No, no! He's not my friend! I've never seen him before in my life, I swear!";
+		next;
+		mes "[King]";
+		mes "He could be sent by your friends. Human, answer me!";
+		next;
+		select("Jojo's colleagues are looking for him.");
+		mes "[Stranger]";
+		mes "I see. We found him injured and unconscious, so we took him here and treated him. He's well enough to leave now.";
+		npctalk "No! They're going to put us in danger!", "King#ilgf01", bc_self;
+		next;
+		select("You saved Jojo.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "Let me thank you on behalf of his colleagues. May I ask your name?";
+		next;
+		mes "[King]";
+		mes "You're here, and yet you don't know who he is. He's Dracula. Didn't you come to challenge him to a battle?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Dracula? You mean the Dracula?";
+		next;
+		mes "[Dracula]";
+		mes "You have a familiar smell about you, Adventurer. I've yearned for this smell for a long time.";
+		npctalk "Are you saying he smells delicious? Can I drink from him?", "King#ilgf01", bc_self;
+		next;
+		mes "[Dracula]";
+		mes "I mean he smells like a friend, Little One.";
+		npctalk "What friend? I thought I was the only friend you had.", "King#ilgf01", bc_self;
+		next;
+		select("I met Bomi before I came here.");
+		mes "[Dracula]";
+		mes "...I see. How is she?";
+		npctalk "What? Bomi?", "King#ilgf01", bc_self;
+		npctalk "You mean the owner of the notebook?", "Wizard#ilgf02", bc_self;
+		sleep2 500;
+		npctalk "Did she tell you anything about... me?", "", bc_self;
+		next;
+		mes "[King]";
+		mes "Wow, so you've been hanging around here all this time because of that ungrateful girl. Is that it?";
+		npctalk "She's not ungrateful. She never wanted what I gave her.", "", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "What did you give her?";
+		next;
+		mes "[King]";
+		mes "Eternal life.";
+		next;
+		mes "[Jojo]";
+		mes "Eternal life...!";
+		next;
+		mes "[King]";
+		mes "That's the normal reaction from humans! She's ungrateful!";
+		npctalk "Why, do you want it? I can give it to you.", "King#ilgf01", bc_self;
+		next;
+		select("She said Dracula betrayed her.");
+		emotion ET_FRET, getnpcid(0, "King#ilgf01");
+		mes "[King]";
+		mes "Betrayed her? Hah? Where is she? He should've just let her die!";
+		next;
+		mes "[Dracula]";
+		mes "She still hasn't forgiven me. But I did what I had to do.";
+		next;
+		select("There must be some misunderstanding.");
+		mes "[Dracula]";
+		mes "I needed humans to survive. I hid among them and hunted them whenever I needed.";
+		next;
+		mes "[Dracula]";
+		mes "One day, people from the Church found me. They were bent on killing me in the name of justice.";
+		npctalk "They were persistent.", "King#ilgf01", bc_self;
+		next;
+		mes "[Dracula]";
+		mes "I was gravely injured by them, and somehow I ended up in this place full of death and mysterious energy.";
+		next;
+		mes "[Dracula]";
+		mes "I thought I was going to die here, but then Lady Luck finally turned her gaze upon me.";
+		npctalk "Somebody please shut him up. I hate this story.", "King#ilgf01", bc_self;
+		next;
+		mes "[Dracula]";
+		mes "Bomi saved me. She fed me her blood, so I could regain my strength. I'm not a living being, but that day, she gave me new life.";
+		next;
+		mes "[Jojo]";
+		mes "Why didn't you leave afterward?";
+		next;
+		mes "[Dracula]";
+		mes "Even though Bomi was a strong woman, her body was failing her. It pained me to see her waste away day by day. I offered her eternal life, and she rejected it.";
+		next;
+		mes "[Dracula]";
+		mes "I stayed because I wanted to be there for her when she died as a human.";
+		next;
+		mes "[Dracula]";
+		mes "For the first time in my long existence, I really thought about humans, and what made them who they were. They also have this impulse to help others, expecting nothing in return.";
+		next;
+		mes "[Dracula]";
+		mes "I'd learned about them through Bomi. What I'd learned didn't make sense, and I didn't really understand it.";
+		next;
+		mes "[Dracula]";
+		mes "But it was different from what I previously thought of humans. I was starting to understand them.";
+		npctalk "Why? What good would understanding them do you?", "King#ilgf01", bc_self;
+		next;
+		mes "[Jojo]";
+		mes "Then why did you turn her against her wish?";
+		next;
+		mes "[Dracula]";
+		mes "There was an accident. The people who almost killed me found me again.";
+		npctalk "The people from the Church?", "Wizard#ilgf02", bc_self;
+		next;
+		mes "[Dracula]";
+		mes "Bad luck follows me wherever I go. Bomi even made me a lucky charm, but it didn't work.";
+		next;
+		mes "[Dracula]";
+		mes "By then, I'd fully regained my strength, and those humans weren't a match for me. But Bomi... she didn't want anyone to get hurt.";
+		next;
+		mes "[Dracula]";
+		mes "Long story short, she got caught in the crossfire. She was dying and I panicked.";
+		next;
+		mes "[Dracula]";
+		mes "I wasn't ready to let her go. Before I had time to think about what I was doing, I turned her. ";
+		next;
+		mes "[Jojo]";
+		mes "You did it because you didn't want to lose her. I would've done the same in that situation.";
+		npctalk "Why?", "King#ilgf01", bc_self;
+		sleep2 1000;
+		npctalk "That's what people do, to protect those they love.", "Wizard#ilgf02", bc_self;
+		next;
+		mes "[King]";
+		mes "But that stubborn girl refuses to acknowledge that!";
+		next;
+		mes "[King]";
+		mes "I don't understand her logic. How could she possibly want to die as a human than live as a vampire? How could she think the gift of eternal life is a betrayal?";
+		next;
+		mes "[Jojo]";
+		mes "I think I know. People tend to take things for granted. If I could live forever, I think I'd lose all my motivation. I mean, you have nothing but time.";
+		next;
+		mes "[Jojo]";
+		mes "I think you guys need to talk it out with each other. Have you tried to talk to her?";
+		next;
+		mes "[Dracula]";
+		mes "When she was brought back to life, she was so shocked and angry that she wouldn't listen to me.";
+		next;
+		mes "[Dracula]";
+		mes "I did what I did to save her, and I understand she resents me for it.";
+		npctalk "You need to stop hanging with humans. You sound like one of them now.", "King#ilgf01", bc_self;
+		next;
+		mes "[King]";
+		mes "Dracula, what's that human to you? Why do you insist on staying in a place like this";
+		npctalk "when she won't even talk to you?", "King#ilgf01", bc_self;
+		next;
+		mes "[Dracula]";
+		mes "I'm not?";
+		next;
+		emotion ET_SURPRISE, getnpcid(0, "King#ilgf01");
+		mes "[King]";
+		mes "Everyone, hush. I smell something.";
+		erasequest 14661;// Jojo Is the Mage's Name 02
+		setquest 14662;// You're Scaring Me
+		ill_vampire = 11;
+		close;
+	}
+	if (ill_vampire == 11) {
+		mes "[Dracula]";
+		mes "King? What is it?";
+		close;
+	}
+	if (ill_vampire == 12 || ill_vampire == 13) {
+		mes "[Dracula]";
+		mes "A fight? Oh no, we'd better hurry!";
+		close2;
+		viewpoint 1,85,131,1,0x00FF00;
+		end;
+	}
+	if (ill_vampire == 14 || ill_vampire == 15) {
+		mes "[Dracula]";
+		mes "I've decided to wait for her. I could use some rest, anyway.";
+		close;
+	}
+	mes "[Dracula]";
+	mes "The bat blood she drinks sometimes causes her to go out of her mind. She calms down after a while, but if the people from the Church see her in that vulnerable state, they will try to kill her.";
+	close;
+OnInit:
+	cloakonnpc();
+	end;
+}
