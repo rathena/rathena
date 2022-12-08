@@ -596,6 +596,14 @@ enum e_memorial_dungeon_command : uint16 {
 	COMMAND_MEMORIALDUNGEON_DESTROY_FORCE = 0x3,
 };
 
+enum e_exitem_add_result : uint8 {
+	EXITEM_ADD_SUCCEED,
+	EXITEM_ADD_FAILED_OVERWEIGHT,
+	EXITEM_ADD_FAILED_CLOSED,
+	EXITEM_ADD_FAILED_OVERCOUNT,
+	EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -690,7 +698,7 @@ void clif_hotkeys_send(struct map_session_data *sd, int tab);
 void clif_traderequest(struct map_session_data* sd, const char* name);
 void clif_tradestart(struct map_session_data* sd, uint8 type);
 void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd, int index, int amount);
-void clif_tradeitemok(struct map_session_data* sd, int index, int fail);
+void clif_tradeitemok(struct map_session_data& sd, int index, e_exitem_add_result result);
 void clif_tradedeal_lock(struct map_session_data* sd, int fail);
 void clif_tradecancelled(struct map_session_data* sd);
 void clif_tradecompleted(struct map_session_data* sd, int fail);

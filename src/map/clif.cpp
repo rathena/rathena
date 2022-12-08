@@ -4671,17 +4671,14 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 ///     0 = success
 ///     1 = overweight
 ///     2 = trade canceled
-void clif_tradeitemok(struct map_session_data* sd, int index, int fail)
+void clif_tradeitemok(struct map_session_data& sd, int index, e_exitem_add_result result)
 {
-	int fd;
-	nullpo_retv(sd);
+	PACKET_ZC_ACK_ADD_EXCHANGE_ITEM p = {};
+	p.packetType = HEADER_ZC_ACK_ADD_EXCHANGE_ITEM;
+	p.index = client_index(index);
+	p.result = static_cast<uint8>(result);
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0xea));
-	WFIFOW(fd,0) = 0xea;
-	WFIFOW(fd,2) = index;
-	WFIFOB(fd,4) = fail;
-	WFIFOSET(fd,packet_len(0xea));
+	clif_send(&p, sizeof(p), &sd.bl, SELF);
 }
 
 
@@ -12435,7 +12432,7 @@ void clif_parse_TradeAddItem(int fd,struct map_session_data *sd)
 	if( index == 0 )
 		trade_tradeaddzeny(sd, amount);
 	else
-		trade_tradeadditem(sd, index, (short)amount);
+		trade_tradeadditem(sd, server_index(index), (short)amount);
 }
 
 
@@ -23639,12 +23636,12 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
 
 		// Check if it has to be announced
-		if( enchantgradelevel->announce ){
+		if( enchantgradelevel->announceSuccess ){
 			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], true );
 		}
 	}else{
 		// Check if it has to be announced (has to be done before deleting the item from inventory)
-		if( enchantgradelevel->announce ){
+		if( enchantgradelevel->announceFail ){
 			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
 		}
 
