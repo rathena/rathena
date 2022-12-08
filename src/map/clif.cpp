@@ -6444,12 +6444,11 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 	for (unsigned char i = 0; i < sc_display_count; i++) {
 		enum sc_type type = sc_display[i]->type;
 		struct status_change *sc = status_get_sc(bl);
-		const TimerData *td_total = (sc && sc->data[type] ? get_timer(sc->data[type]->tick_total) : nullptr);
 		const TimerData *td = (sc && sc->data[type] ? get_timer(sc->data[type]->timer) : nullptr);
 		t_tick tick_total = 0, tick = 0, cur_tick = gettick();
 
-		if (td_total != nullptr)
-			tick_total = DIFF_TICK(td_total->tick, cur_tick);
+		tick_total = DIFF_TICK(sc->data[type]->tick_total, cur_tick);
+
 		if (td != nullptr)
 			tick = DIFF_TICK(td->tick, cur_tick);
 
