@@ -145764,6 +145764,14 @@ Body:
       bonus bMaxSPrate,5;
       bonus bLongAtkDef,5;
       bonus bHealPower2,5;
+  - Id: 420133
+    AegisName: C_Dreaming_Rose_Long
+    Name: Costume Dreaming Bara Long    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2247
   - Id: 420134
     AegisName: aegis_420134
     Name: The Spirit Of World
@@ -145937,6 +145945,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2271
+  - Id: 420162
+    AegisName: aegis_420162
+    Name: Costume Starry Sky Ribbon Twintails    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2270
   - Id: 420163
     AegisName: C_Protect_Cloth_B
     Name: "Costume: Protect Cloth"
