@@ -422,7 +422,7 @@ sp_rudus3,380,42,3	script	Pion#rudus4	4_M_REBELLION3,{
 	mes "Zzz... Huh! Shi, excuse me!";
 	mes "Are you sure you want to go down to the 4th floor of Rudus?";
 	next;
-	if (select( "Move", "Do not move" ) ) {
+	if (select( "Move", "Do not move" ) == 2) {
 		mes "[Pion]";
 		mes "I see. Ha-am....";
 		close;
