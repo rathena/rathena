@@ -25,7 +25,7 @@ prontera,146,95,3	script	Mergician#pron	64,{
 		close;
 	}
 	mes "[Mergician]";
-	mes "Do you believe in the miracle of Merge god?? If so, repeat my spell loudly as I pronunce it!!!";
+	mes "Do you believe in the miracle of Merge god?? If so, repeat my spell loudly as I pronounce it!!!";
 	mes "Merge Merge, Merrrrge!!!";
 	next;
 	switch(select("What is the miracle of Merge?:Merrrrge!!!!:Abandon...")) {

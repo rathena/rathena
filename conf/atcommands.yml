@@ -664,6 +664,9 @@ Body:
   - Command: refine
     Help: |
       Params: <equip position> <+/- amount>
+  - Command: grade
+    Help: |
+      Params: <equip position> <+/- amount>
   - Command: produce
     Help: |
       Params: <equip name or equip ID> <element> <# of very's>
@@ -1013,6 +1016,9 @@ Body:
   - Command: enchantgradeui
     Help: |
       Opens the enchantgrade UI.
+  - Command: roulette
+    Help: |
+      Opens the roulette UI.
 
 Footer:
   Imports:

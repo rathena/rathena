@@ -144,6 +144,42 @@ public:
 
 extern PetDatabase pet_db;
 
+TIMER_FUNC(pet_endautobonus);
+
+/// Pet AutoBonus bonus struct
+struct s_petautobonus {
+	int16 rate;
+	uint16 atk_type;
+	std::string bonus_script, other_script;
+	t_tick duration;
+	int32 timer;
+
+	~s_petautobonus() {
+		if (this->timer != INVALID_TIMER) {
+			delete_timer(this->timer, pet_endautobonus);
+			this->timer = INVALID_TIMER;
+		}
+
+		this->bonus_script.clear();
+		this->other_script.clear();
+	}
+
+};
+
+/// Pet Autobonus database wrapper
+struct s_pet_autobonus_wrapper {
+	script_code *script;
+
+	~s_pet_autobonus_wrapper() {
+		if (this->script != nullptr) {
+			script_free_code(this->script);
+			this->script = nullptr;
+		}
+	}
+};
+
+extern std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
+
 struct pet_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -165,6 +201,7 @@ struct pet_data {
 	struct pet_skill_attack* a_skill;
 	struct pet_skill_support* s_skill;
 	struct pet_loot* loot;
+	std::vector<std::shared_ptr<s_petautobonus>> autobonus, autobonus2, autobonus3;
 
 	int masterteleport_timer;
 	struct map_session_data *master;
@@ -219,6 +256,10 @@ void pet_clear_support_bonuses(struct map_session_data *sd);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
+
+bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
+void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus);
+void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> &bonus, bool restore);
 
 void do_init_pet(void);
 void do_final_pet(void);

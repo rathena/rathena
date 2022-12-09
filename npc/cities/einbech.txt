@@ -743,7 +743,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 	}
 }
 
-einbech,48,107,4	duplicate(EinMonsters)	Luda#ein	850,{
+einbech,48,107,4	duplicate(EinMonsters)	Luda#ein	850
 
 einbech,148,242,5	script	Jung#ein	855,{
 	mes "[Jung]";

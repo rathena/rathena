@@ -2827,3 +2827,8 @@ SC_PACKING_ENVELOPE9	(EFST_PACKING_ENVELOPE9)
 SC_PACKING_ENVELOPE10	(EFST_PACKING_ENVELOPE10)
 	desc: Increases HIT
 	val1: + HIT
+
+SC_WEAPONBREAKER
+	desc: Bonus given when using NPC_WEAPONBRAKER skill
+	val1: Skill level
+	val2: val1 * 2 weapon break chance
