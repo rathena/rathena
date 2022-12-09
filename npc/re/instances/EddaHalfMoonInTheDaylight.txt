@@ -300,23 +300,20 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 rachel,176,145,6	script	Dream#poent	PORTAL,{
 	switch (checkquest(14586,PLAYTIME)) {
 	case -1:
-		if (is_party_leader()) {
-			mes "[Dream Path]";
-			mes "Hello, I am a pathway to dreams. How can I help you?";
-			next;
-			switch ( select("Let me enter your dreams.:Cancel") ) {
-			case 1:
-				break;
-			case 2:
-				mes "[Dream Path]";
-				mes "Okay, I got it. Please come back again if you change your mind.";
-				close;
-			}
-		} else {
+		if (!is_party_leader()) {
 			mes "[Dream Path]";
 			mes "Only party leaders may enter.";
 			close;
 		}
+		mes "[Dream Path]";
+		mes "Hello, I am a pathway to dreams. How can I help you?";
+		next;
+		if (select( "Let me enter your dreams.", "Cancel" ) == 2) {
+			mes "[Dream Path]";
+			mes "Okay, I got it. Please come back again if you change your mind.";
+			close;
+		}
+		break;
 	case 0:
 	case 1:
 		mes "[Dream Path]";
