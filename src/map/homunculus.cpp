@@ -1904,60 +1904,63 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 			if (this->nodeExists(skill, "Required")) {
 				const ryml::NodeRef &required = skill["Required"];
-				uint16 skill_id = 0, skill_lv = 0;
 
-				if (this->nodeExists(required, "Skill")) {
-					std::string skill_name;
+				for (const ryml::NodeRef &prereqskill : required) {
+					uint16 skill_id = 0, skill_lv = 0;
 
-					if (!this->asString(required, "Skill", skill_name))
-						return 0;
+					if (this->nodeExists(prereqskill, "Skill")) {
+						std::string skill_name;
 
-					if (skill_name2id(skill_name.c_str()) == 0) {
-						this->invalidWarning(required["Skill"], "Invalid homunculus skill %s, skipping.\n", skill_name.c_str());
-						return 0;
-					}
+						if (!this->asString(prereqskill, "Skill", skill_name))
+							return 0;
 
-					skill_id = skill_name2id(skill_name.c_str());
+						if (skill_name2id(skill_name.c_str()) == 0) {
+							this->invalidWarning(prereqskill["Skill"], "Invalid homunculus skill %s, skipping.\n", skill_name.c_str());
+							return 0;
+						}
 
-					if (skill_id == 0) {
-						this->invalidWarning(required["Skill"], "Invalid homunculus skill %s, skipping.\n", skill_name.c_str());
-						return 0;
-					}
+						skill_id = skill_name2id(skill_name.c_str());
 
-					if (!SKILL_CHK_HOMUN(skill_id)) {
-						this->invalidWarning(required["Skill"], "Homunculus skill %s (%u) is out of the homunculus skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, HM_SKILLBASE, HM_SKILLBASE + MAX_HOMUNSKILL - 1);
-						return 0;
-					}
-				}
+						if (skill_id == 0) {
+							this->invalidWarning(prereqskill["Skill"], "Invalid homunculus skill %s, skipping.\n", skill_name.c_str());
+							return 0;
+						}
 
-				if (this->nodeExists(required, "Clear")) {
-					bool found = false;
-
-					for (auto &skit : hom->skill_tree) {
-						auto it = skit.need.begin();
-
-						while (it != skit.need.end()) {
-							if (it->first == skill_id) { // Skill found, remove it from the skill tree.
-								it = skit.need.erase(it);
-								found = true;
-							} else {
-								it++;
-							}
+						if (!SKILL_CHK_HOMUN(skill_id)) {
+							this->invalidWarning(prereqskill["Skill"], "Homunculus skill %s (%u) is out of the homunculus skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, HM_SKILLBASE, HM_SKILLBASE + MAX_HOMUNSKILL - 1);
+							return 0;
 						}
 					}
 
-					if (!found)
-						this->invalidWarning(required["Clear"], "Failed to remove nonexistent prerequisite skill %s from homunuculus %s.\n", skill_db.find(skill_id)->name, class_name.c_str());
-					continue;
-				}
+					if (this->nodeExists(prereqskill, "Clear")) {
+						bool found = false;
 
-				if (this->nodeExists(required, "Level")) {
-					if (!this->asUInt16(required, "Level", skill_lv))
-						return 0;
-				}
+						for (auto &skit : hom->skill_tree) {
+							auto it = skit.need.begin();
 
-				if (skill_id > 0 && skill_lv > 0)
-					entry.need.emplace(skill_id, static_cast<uint8>(skill_lv));
+							while (it != skit.need.end()) {
+								if (it->first == skill_id) { // Skill found, remove it from the skill tree.
+									it = skit.need.erase(it);
+									found = true;
+								} else {
+									it++;
+								}
+							}
+						}
+
+						if (!found)
+							this->invalidWarning(prereqskill["Clear"], "Failed to remove nonexistent prerequisite skill %s from homunuculus %s.\n", skill_db.find(skill_id)->name, class_name.c_str());
+						continue;
+					}
+
+					if (this->nodeExists(prereqskill, "Level")) {
+						if (!this->asUInt16(prereqskill, "Level", skill_lv))
+							return 0;
+					}
+
+					if (skill_id > 0 && skill_lv > 0)
+						entry.need.emplace(skill_id, static_cast<uint8>(skill_lv));
+				}
 			}
 
 			hom->skill_tree.push_back(entry);

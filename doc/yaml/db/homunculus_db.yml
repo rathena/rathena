@@ -83,11 +83,11 @@
 #         Max               Maximum Evolution LUK bonus. (Default: 0)
 #     SkillTree:            Skill tree for homunculus.
 #       - Skill             Skill name.
+#         Clear             True to remove the given skill name. (Optional)
 #         MaxLevel          Maximum level of skill.
 #         RequiredLevel     Required base level of homunculus to learn. (Default: 0)
 #         RequiredIntimacy  Required intimacy of homunculus to learn. (Default: 0)
 #         Required:         Prerequisite skills. (Default: null)
-#         Clear             True to remove the given skill name. (Optional)
 #           - Skill         Prerequisite skill name.
 #             Level         Level of prerequisite skill.
 #             Clear         True to remove the given prerequisite skill name. (Optional)
