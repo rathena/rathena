@@ -31,81 +31,83 @@
 #     Race                  Homunculus race. (Default: Demihuman)
 #     Element               Homunculus element. (Default: Neutral)
 #     Size:                 Homunculus size.
-#       Base                Base size of the homunculus.
-#       Evolution           Evolution size of the homunculus.
+#       Base                Base size of the homunculus. (Default: Small)
+#       Evolution           Evolution size of the homunculus. (Default: Small)
 #     BaseAspd              Homunculus base ASPD. (Default: 700)
 #     Hp:                   HP stats.
 #       Base                Base HP.
 #       GrowthBonus:        Growth HP bonus.
-#         Min               Minimum Growth HP bonus.
-#         Max               Maximum Growth HP bonus.
+#         Min               Minimum Growth HP bonus. (Default: 0)
+#         Max               Maximum Growth HP bonus. (Default: 0)
 #       EvolutionBonus:     Evolution HP bonus.
-#         Min               Minimum Evolution HP bonus.
-#         Max               Maximum Evolution HP bonus.
+#         Min               Minimum Evolution HP bonus. (Default: 0)
+#         Max               Maximum Evolution HP bonus. (Default: 0)
 #     Sp:                   SP stats.
 #       Base                Base SP.
 #       GrowthBonus:        Growth SP bonus.
-#         Min               Minimum Growth SP bonus.
-#         Max               Maximum Growth SP bonus.
+#         Min               Minimum Growth SP bonus. (Default: 0)
+#         Max               Maximum Growth SP bonus. (Default: 0)
 #       EvolutionBonus:     Evolution SP bonus.
-#         Min               Minimum Evolution SP bonus.
-#         Max               Maximum Evolution SP bonus.
+#         Min               Minimum Evolution SP bonus. (Default: 0)
+#         Max               Maximum Evolution SP bonus. (Default: 0)
 #     Str:                  STR stats.
 #       Base                Base STR.
 #       GrowthBonus:        Growth STR bonus.
-#         Min               Minimum Growth STR bonus.
-#         Max               Maximum Growth STR bonus.
+#         Min               Minimum Growth STR bonus. (Default: 0)
+#         Max               Maximum Growth STR bonus. (Default: 0)
 #       EvolutionBonus:     Evolution STR bonus.
-#         Min               Minimum Evolution STR bonus.
-#         Max               Maximum Evolution STR bonus.
+#         Min               Minimum Evolution STR bonus. (Default: 0)
+#         Max               Maximum Evolution STR bonus. (Default: 0)
 #     Agi:                  AGI stats.
 #       Base                Base AGI.
 #       GrowthBonus:        Growth AGI bonus.
-#         Min               Minimum Growth AGI bonus.
-#         Max               Maximum Growth AGI bonus.
+#         Min               Minimum Growth AGI bonus. (Default: 0)
+#         Max               Maximum Growth AGI bonus. (Default: 0)
 #       EvolutionBonus:     Evolution AGI bonus.
-#         Min               Minimum Evolution AGI bonus.
-#         Max               Maximum Evolution AGI bonus.
+#         Min               Minimum Evolution AGI bonus. (Default: 0)
+#         Max               Maximum Evolution AGI bonus. (Default: 0)
 #     Vit:                  VIT stats.
 #       Base                Base VIT.
 #       GrowthBonus:        Growth VIT bonus.
-#         Min               Minimum Growth VIT bonus.
-#         Max               Maximum Growth VIT bonus.
+#         Min               Minimum Growth VIT bonus. (Default: 0)
+#         Max               Maximum Growth VIT bonus. (Default: 0)
 #       EvolutionBonus:     Evolution VIT bonus.
-#         Min               Minimum Evolution VIT bonus.
-#         Max               Maximum Evolution VIT bonus.
+#         Min               Minimum Evolution VIT bonus. (Default: 0)
+#         Max               Maximum Evolution VIT bonus. (Default: 0)
 #     Int:                  INT stats.
 #       Base                Base INT.
 #       GrowthBonus:        Growth INT bonus.
-#         Min               Minimum Growth INT bonus.
-#         Max               Maximum Growth INT bonus.
+#         Min               Minimum Growth INT bonus. (Default: 0)
+#         Max               Maximum Growth INT bonus. (Default: 0)
 #       EvolutionBonus:     Evolution INT bonus.
-#         Min               Minimum Evolution INT bonus.
-#         Max               Maximum Evolution INT bonus.
+#         Min               Minimum Evolution INT bonus. (Default: 0)
+#         Max               Maximum Evolution INT bonus. (Default: 0)
 #     Dex:                  DEX stats.
 #       Base                Base DEX.
 #       GrowthBonus:        Growth DEX bonus.
-#         Min               Minimum Growth DEX bonus.
-#         Max               Maximum Growth DEX bonus.
+#         Min               Minimum Growth DEX bonus. (Default: 0)
+#         Max               Maximum Growth DEX bonus. (Default: 0)
 #       EvolutionBonus:     Evolution DEX bonus.
-#         Min               Minimum Evolution DEX bonus.
-#         Max               Maximum Evolution DEX bonus.
+#         Min               Minimum Evolution DEX bonus. (Default: 0)
+#         Max               Maximum Evolution DEX bonus. (Default: 0)
 #     Luk:                  LUK stats.
 #       Base                Base LUK.
 #       GrowthBonus:        Growth LUK bonus.
-#         Min               Minimum Growth LUK bonus.
-#         Max               Maximum Growth LUK bonus.
+#         Min               Minimum Growth LUK bonus. (Default: 0)
+#         Max               Maximum Growth LUK bonus. (Default: 0)
 #       EvolutionBonus:     Evolution LUK bonus.
-#         Min               Minimum Evolution LUK bonus.
-#         Max               Maximum Evolution LUK bonus.
+#         Min               Minimum Evolution LUK bonus. (Default: 0)
+#         Max               Maximum Evolution LUK bonus. (Default: 0)
 #     SkillTree:            Skill tree for homunculus.
 #       - Skill             Skill name.
 #         MaxLevel          Maximum level of skill.
 #         RequiredLevel     Required base level of homunculus to learn. (Default: 0)
 #         RequiredIntimacy  Required intimacy of homunculus to learn. (Default: 0)
 #         Required:         Prerequisite skills. (Default: null)
+#         Clear             True to remove the given skill name. (Optional)
 #           - Skill         Prerequisite skill name.
 #             Level         Level of prerequisite skill.
+#             Clear         True to remove the given prerequisite skill name. (Optional)
 ###########################################################################
 
 Header:

@@ -366,6 +366,7 @@ void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 	}
 
 	auto homun_current = homunculus_db.find(hd->homunculus.class_);
+
 	if (homun_current == nullptr)
 		return;
 
@@ -1534,7 +1535,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Status")) {
 		const YAML::Node &status = node["Status"];
 
-		if (!exists && !this->nodesExist(status, { "Race", "Element", "Size", "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" }))
+		if (!exists && !this->nodesExist(status, { "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" }))
 			return 0;
 
 		if (this->nodeExists(status, "Race")) {
@@ -1552,6 +1553,9 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			hom->race = static_cast<e_race>(constant);
+		} else {
+			if (!exists)
+				hom->race = RC_DEMIHUMAN;
 		}
 
 		if (this->nodeExists(status, "Element")) {
@@ -1569,6 +1573,9 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			hom->element = static_cast<e_element>(constant);
+		} else {
+			if (!exists)
+				hom->element = ELE_NEUTRAL;
 		}
 
 		if (this->nodeExists(status, "Size")) {
@@ -1590,10 +1597,17 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 						constant = SZ_SMALL;
 					}
 
-					if (sizeit.compare("Base") == 0)
-						hom->base_size = static_cast<e_size>(constant);
-					else
-						hom->evo_size = static_cast<e_size>(constant);
+					if (sizeit.compare("Base") == 0) {
+						if (!exists)
+							hom->base_size = SZ_SMALL;
+						else
+							hom->base_size = static_cast<e_size>(constant);
+					} else {
+						if (!exists)
+							hom->evo_size = SZ_SMALL;
+						else
+							hom->evo_size = static_cast<e_size>(constant);
+					}
 				}
 			}
 		}
@@ -1643,6 +1657,11 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 						hom->base.dex = static_cast<uint16>(base);
 					else if (statit.compare("Luk") == 0)
 						hom->base.luk = static_cast<uint16>(base);
+				} else {
+					if (!exists) {
+						this->invalidWarning(bonus["Base"], "Base stats must be defined for homunculus, skipping.\n");
+						return 0;
+					}
 				}
 
 				if (this->nodeExists(bonus, "GrowthBonus")) {
@@ -1814,6 +1833,24 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 				entry.id = skill_id;
 			}
 
+			if (this->nodeExists(skill, "Clear")) {
+				auto it = hom->skill_tree.begin();
+				bool found = false;
+
+				while (it != hom->skill_tree.end()) {
+					if (it->id == entry.id) { // Skill found, remove it from the skill tree.
+						it = hom->skill_tree.erase(it);
+						found = true;
+					} else {
+						it++;
+					}
+				}
+
+				if (!found)
+					this->invalidWarning(skill["Clear"], "Failed to remove nonexistent skill %s from homunuculus %s.\n", skill_db.find(entry.id)->name, class_name.c_str());
+				continue;
+			}
+
 			if (this->nodeExists(skill, "MaxLevel")) {
 				uint16 level;
 
@@ -1857,6 +1894,9 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				entry.intimacy = intimacy;
+			} else {
+				if (!exists)
+					entry.intimacy = 0;
 			}
 
 			if (this->nodeExists(skill, "Required")) {
@@ -1885,6 +1925,27 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 						this->invalidWarning(required["Skill"], "Homunculus skill %s (%u) is out of the homunculus skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, HM_SKILLBASE, HM_SKILLBASE + MAX_HOMUNSKILL - 1);
 						return 0;
 					}
+				}
+
+				if (this->nodeExists(required, "Clear")) {
+					bool found = false;
+
+					for (auto &skit : hom->skill_tree) {
+						auto it = skit.need.begin();
+
+						while (it != skit.need.end()) {
+							if (it->first == skill_id) { // Skill found, remove it from the skill tree.
+								it = skit.need.erase(it);
+								found = true;
+							} else {
+								it++;
+							}
+						}
+					}
+
+					if (!found)
+						this->invalidWarning(required["Clear"], "Failed to remove nonexistent prerequisite skill %s from homunuculus %s.\n", skill_db.find(skill_id)->name, class_name.c_str());
+					continue;
 				}
 
 				if (this->nodeExists(required, "Level")) {
