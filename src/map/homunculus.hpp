@@ -5,6 +5,7 @@
 #define HOMUNCULUS_HPP
 
 #include <string>
+
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
 
@@ -189,7 +190,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 extern HomunculusDatabase homunculus_db;

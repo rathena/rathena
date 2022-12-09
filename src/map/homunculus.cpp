@@ -1446,7 +1446,7 @@ const std::string HomunculusDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	std::string class_name;
 
 	if (!this->asString(node, "BaseClass", class_name))
@@ -1533,7 +1533,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Status")) {
-		const YAML::Node &status = node["Status"];
+		const ryml::NodeRef &status = node["Status"];
 
 		if (!exists && !this->nodesExist(status, { "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" }))
 			return 0;
@@ -1579,7 +1579,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(status, "Size")) {
-			const YAML::Node &sizeNode = status["Size"];
+			const ryml::NodeRef &sizeNode = status["Size"];
 			std::vector<std::string> size_list = { "Base", "Evolution" };
 
 			for (const auto &sizeit : size_list) {
@@ -1593,7 +1593,9 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 					int64 constant;
 
 					if (!script_get_constant(size_constant.c_str(), &constant)) {
-						this->invalidWarning(sizeNode[sizeit], "Invalid homunculus %s Size %s, defaulting to Small.\n", sizeit.c_str(), size.c_str());
+						c4::csubstr size_name = c4::to_csubstr(sizeit);
+
+						this->invalidWarning(sizeNode[size_name], "Invalid homunculus %s Size %s, defaulting to Small.\n", sizeit.c_str(), size.c_str());
 						constant = SZ_SMALL;
 					}
 
@@ -1633,7 +1635,8 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 
 		for (const auto &statit : stat_list) {
 			if (this->nodeExists(status, statit)) {
-				const YAML::Node &bonus = status[statit];
+				c4::csubstr stat_name = c4::to_csubstr(statit);
+				const ryml::NodeRef &bonus = status[stat_name];
 
 				if (this->nodeExists(bonus, "Base")) {
 					uint32 base;
@@ -1665,7 +1668,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				if (this->nodeExists(bonus, "GrowthBonus")) {
-					const YAML::Node &growth = bonus["GrowthBonus"];
+					const ryml::NodeRef &growth = bonus["GrowthBonus"];
 
 					if (this->nodeExists(growth, "Min")) {
 						uint32 gbonus;
@@ -1717,7 +1720,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 				
 				if (this->nodeExists(bonus, "EvolutionBonus")) {
-					const YAML::Node &evolution = bonus["EvolutionBonus"];
+					const ryml::NodeRef &evolution = bonus["EvolutionBonus"];
 
 					if (this->nodeExists(evolution, "Min")) {
 						uint32 ebonus;
@@ -1807,9 +1810,9 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "SkillTree")) {
-		const YAML::Node &skillsNode = node["SkillTree"];
+		const ryml::NodeRef &skillsNode = node["SkillTree"];
 
-		for (const YAML::Node &skill : skillsNode) {
+		for (const ryml::NodeRef &skill : skillsNode) {
 			s_homun_skill_tree_entry entry;
 
 			if (this->nodeExists(skill, "Skill")) {
@@ -1900,7 +1903,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(skill, "Required")) {
-				const YAML::Node &required = skill["Required"];
+				const ryml::NodeRef &required = skill["Required"];
 				uint16 skill_id = 0, skill_lv = 0;
 
 				if (this->nodeExists(required, "Skill")) {
