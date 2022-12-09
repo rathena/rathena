@@ -35,38 +35,65 @@
 #   MinRate                   Minimum rate after status change reduction (10000 = 100%). (Default: 0)
 #   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
 #   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
-#   End:                      List of Status Changes that will end when the status activates. (Optional)
-#   EndReturn                 If the status has an End list and succeeds to remove these status changes, it won't give its effect. (Default: false)
+#   EndOnStart:               List of Status Changes that will end when the status activates. (Optional)
+#   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
+#   EndOnEnd:                 List of Status Changes that will end when the status becomes inactive. (Optional)
 ###########################################################################
 
 Header:
   Type: STATUS_DB
-  Version: 1
+  Version: 3
 
 Body:
   - Status: Stone
     DurationLookup: NPC_PETRIFYATTACK
     States:
       NoMove: true
-      NoMoveCond: true
       NoCast: true
       NoAttack: true
     CalcFlags:
       Def_Ele: true
       Def: true
       Mdef: true
+    Opt1: Stone
     Flags:
       SendOption: true
       BossResist: true
       StopAttacking: true
       StopCasting: true
+      RemoveOnDamaged: true
     Fail:
       Refresh: true
       Inspiration: true
       Power_Of_Gaia: true
       Gvg_Stone: true
-    End:
-      Dancing: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+    EndOnStart:
+      Aeterna: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
+  - Status: StoneWait
+    DurationLookup: NPC_PETRIFYATTACK
+    States:
+      NoCast: true
+      NoAttack: true
+    Opt1: StoneWait
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopAttacking: true
+    Fail:
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
   - Status: Freeze
     DurationLookup: NPC_WIDEFREEZE
     States:
@@ -89,8 +116,13 @@ Body:
       Inspiration: true
       Warmer: true
       Gvg_Freez: true
-    End:
-      Dancing: true
+      Stone: true
+      StoneWait: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+    EndOnStart:
       Aeterna: true
   - Status: Stun
     DurationLookup: NPC_STUNATTACK
@@ -104,13 +136,11 @@ Body:
       BossResist: true
       StopAttacking: true
       StopCasting: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
       Gvg_Stun: true
-    End:
-      Dancing: true
+      Stun: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -124,13 +154,11 @@ Body:
       StopAttacking: true
       StopCasting: true
       RemoveOnDamaged: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
       Gvg_Sleep: true
-    End:
-      Dancing: true
+      Sleep: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -142,10 +170,11 @@ Body:
       SendOption: true
       BossResist: true
       StopAttacking: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
+      Poison: true
+      Dpoison: true
   - Status: Curse
     DurationLookup: NPC_CURSEATTACK
     CalcFlags:
@@ -158,11 +187,11 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
       Gvg_Curse: true
+      Curse: true
   - Status: Silence
     DurationLookup: NPC_SILENCEATTACK
     States:
@@ -173,21 +202,20 @@ Body:
       SendOption: true
       BossResist: true
       StopCasting: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
       Gvg_Silence: true
+      Silence: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
     Flags:
       BossResist: true
       StopWalking: true
-      RemoveOnDamaged: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
+    EndReturn:
       Confusion: true
   - Status: Blind
     DurationLookup: NPC_BLINDATTACK
@@ -199,12 +227,12 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
       Fear: true
       Gvg_Blind: true
+      Blind: true
   - Status: Bleeding
     Icon: EFST_BLOODING
     DurationLookup: NPC_BLEEDING
@@ -217,7 +245,6 @@ Body:
       BossResist: true
       NoSave: true
       NoClearance: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -231,7 +258,6 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -247,6 +273,11 @@ Body:
       BossResist: true
       Debuff: true
       NoSaveInfinite: true
+    EndOnStart:
+      Freeze: true
+      Stone: true
+      Sleep: true
+      TrickDead: true
   - Status: Endure
     Icon: EFST_ENDURE
     DurationLookup: SM_ENDURE
@@ -297,7 +328,7 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
-    End:
+    EndOnStart:
       Closeconfine: true
       Closeconfine2: true
   - Status: Cloaking
@@ -323,13 +354,17 @@ Body:
     DurationLookup: AS_ENCHANTPOISON
     CalcFlags:
       Atk_Ele: true
-    Fail:
+    Flags:
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Aspersio: true
       Fireweapon: true
       Waterweapon: true
       Windweapon: true
       Earthweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Enchantarms: true
   - Status: Poisonreact
     Icon: EFST_POISONREACT
     DurationLookup: AS_POISONREACT
@@ -347,7 +382,7 @@ Body:
       Debuff: true
     Fail:
       Speedup1: true
-    End:
+    EndOnStart:
       Loud: true
       Concentrate: true
       Truesight: true
@@ -403,7 +438,7 @@ Body:
       TaekwonAngel: true
     Fail:
       Quagmire: true
-    End:
+    EndOnStart:
       Decreaseagi: true
       Adoramus: true
   - Status: Decreaseagi
@@ -418,7 +453,7 @@ Body:
       Debuff: true
     Fail:
       Speedup1: true
-    End:
+    EndOnStart:
       Cartboost: true
       Gn_Cartboost: true
       Increaseagi: true
@@ -441,7 +476,7 @@ Body:
       Watk: true
     Flags:
       SuperNoviceAngel: true
-    End:
+    EndOnStart:
       Impositio: true
   - Status: Suffragium
     Icon: EFST_SUFFRAGIUM
@@ -453,6 +488,17 @@ Body:
     DurationLookup: PR_ASPERSIO
     CalcFlags:
       Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Enchantarms: true
   - Status: Benedictio
     Icon: EFST_BENEDICTIO
     DurationLookup: PR_BENEDICTIO
@@ -461,12 +507,13 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
+      #RemoveOnUnequipArmor: true
   - Status: Kyrie
     Icon: EFST_KYRIE
     DurationLookup: PR_KYRIE
     Flags:
       SuperNoviceAngel: true
-    End:
+    EndOnStart:
       Assumptio: true
   - Status: Magnificat
     Icon: EFST_MAGNIFICAT
@@ -477,8 +524,6 @@ Body:
       FailedMado: true
       NoSave: true
       SuperNoviceAngel: true
-    Fail:
-      Offertorium: true
   - Status: Gloria
     Icon: EFST_GLORIA
     DurationLookup: PR_GLORIA
@@ -492,6 +537,7 @@ Body:
     Flags:
       NoSave: true
     Fail:
+      Stone: true
       Freeze: true
   - Status: Adrenaline
     Icon: EFST_ADRENALINE
@@ -544,7 +590,7 @@ Body:
       NoSave: true
       NoClearance: true
       RemoveOnChangeMap: true
-    End:
+    EndOnStart:
       Dancing: true
   - Status: Loud
     Icon: EFST_SHOUT
@@ -708,6 +754,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Stripshield
     Icon: EFST_NOEQUIPSHIELD
     DurationLookup: RG_STRIPSHIELD
@@ -719,6 +766,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Striparmor
     Icon: EFST_NOEQUIPARMOR
     DurationLookup: RG_STRIPARMOR
@@ -730,6 +778,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Striphelm
     Icon: EFST_NOEQUIPHELM
     DurationLookup: RG_STRIPHELM
@@ -741,6 +790,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Cp_Weapon
     Icon: EFST_PROTECTWEAPON
     DurationLookup: AM_CP_WEAPON
@@ -789,7 +839,7 @@ Body:
     Flags:
       NoClearance: true
       RequireShield: true
-    End:
+    EndOnStart:
       Reflectdamage: true
   - Status: Splasher
     Icon: EFST_SPLASHER
@@ -815,6 +865,8 @@ Body:
     Flags:
       NoSave: true
   - Status: Spellbreaker
+    Flags:
+      NoWarning: true
   - Status: Autospell
     Icon: EFST_AUTOSPELL
     DurationLookup: SA_AUTOSPELL
@@ -824,6 +876,8 @@ Body:
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Sighttrasher
+    Flags:
+      NoWarning: true
   - Status: Autoberserk
     Icon: EFST_AUTOBERSERK
     DurationLookup: SM_AUTOBERSERK
@@ -884,6 +938,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoSave: true
   - Status: Explosionspirits
     Icon: EFST_EXPLOSIONSPIRITS
     DurationLookup: MO_EXPLOSIONSPIRITS
@@ -895,6 +950,7 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
+      NoSave: true
   - Status: Combo
     Flags:
       NoClearbuff: true
@@ -931,28 +987,60 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Waterweapon
     Icon: EFST_PROPERTYWATER
     DurationLookup: SA_FROSTWEAPON
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Windweapon
     Icon: EFST_PROPERTYWIND
     DurationLookup: SA_LIGHTNINGLOADER
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Earthweapon
     Icon: EFST_PROPERTYGROUND
     DurationLookup: SA_SEISMICWEAPON
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Volcano
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
@@ -1003,9 +1091,10 @@ Body:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
-      OverlapFail: true
       NoClearance: true
       NoForcedEnd: true
+    Fail:
+      Nochat: true
   - Status: Protectexp
     Icon: EFST_PROTECTEXP
     DurationLookup: WE_BABY
@@ -1074,6 +1163,8 @@ Body:
       Saturdaynightfever: true
       _Bloodylust: true
   - Status: Fury
+    Flags:
+      NoWarning: true
   - Status: Gospel
     Icon: EFST_GOSPEL
     DurationLookup: PA_GOSPEL
@@ -1090,7 +1181,7 @@ Body:
     DurationLookup: HP_ASSUMPTIO
     Opt3:
       Assumptio: true
-    End:
+    EndOnStart:
       Kyrie: true
       Kaite: true
   - Status: Basilica
@@ -1115,7 +1206,7 @@ Body:
       Matk: true
     Flags:
       NoSave: true
-    End:
+    EndOnStart:
       Magicpower: true
   - Status: Edp
     Icon: EFST_EDP
@@ -1178,9 +1269,8 @@ Body:
     Fail:
       Quagmire: true
       Dontforgetme: true
-    End:
+    EndReturn:
       Decreaseagi: true
-    EndReturn: true
   - Status: Chasewalk
     Icon: EFST_CHASEWALK
     DurationLookup: ST_CHASEWALK
@@ -1216,7 +1306,8 @@ Body:
       Marionette: true
     Flags:
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Marionette: true
   - Status: Marionette2
     Icon: EFST_MARIONETTE
     DurationLookup: CG_MARIONETTE
@@ -1231,7 +1322,8 @@ Body:
       Marionette: true
     Flags:
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Marionette2: true
   - Status: Changeundead
     Icon: EFST_PROPERTYUNDEAD
     DurationLookup: NPC_CHANGEUNDEAD
@@ -1242,7 +1334,8 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
-    End:
+      NoSave: true
+    EndOnStart:
       Blessing: true
       Increaseagi: true
   - Status: Jointbeat
@@ -1266,6 +1359,10 @@ Body:
     Flags:
       NoSave: true
       Debuff: true
+    EndOnStart:
+      Freeze: true
+      Stone: true
+      Sleep: true
   - Status: Memorize
     Icon: EFST_MEMORIZE
     DurationLookup: PF_MEMORIZE
@@ -1281,6 +1378,8 @@ Body:
   - Status: Spiderweb
     Icon: EFST_SPIDERWEB
     DurationLookup: PF_SPIDERWEB
+    States:
+      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
@@ -1298,6 +1397,11 @@ Body:
       NoSave: true
       RemoveOnChangeMap: true
       OverlapIgnoreLevel: true
+    EndOnEnd:
+      Autoguard: true
+      Defender: true
+      ReflectShield: true
+      Endure: true
   - Status: Sacrifice
     DurationLookup: PA_SACRIFICE
   - Status: Steelbody
@@ -1310,16 +1414,17 @@ Body:
       Mdef: true
       Aspd: true
       Speed: true
+    Flags:
+      NoSave: true
     Opt3:
       SteelBody: true
   - Status: Orcish
     DurationLookup: SA_REVERSEORCISH
     Flags:
       Debuff: true
+      SendOption: true
     Options:
       Orcish: true
-    Flags:
-      SendOption: true
   - Status: Readystorm
     Icon: EFST_STORMKICK_ON
     DurationLookup: TK_READYSTORM
@@ -1383,6 +1488,14 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Ghostweapon: true
   - Status: Adrenaline2
     Icon: EFST_ADRENALINE2
     DurationLookup: BS_ADRENALINE2
@@ -1403,6 +1516,14 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
+    EndOnStart:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
   - Status: Kaizel
     Icon: EFST_KAIZEL
     DurationLookup: SL_KAIZEL
@@ -1412,7 +1533,7 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
-    End:
+    EndOnStart:
       Kaahi: true
   - Status: Kaupe
     Icon: EFST_KAUPE
@@ -1433,7 +1554,7 @@ Body:
       RequireWeapon: true
     Fail:
       Decreaseagi: true
-    End:
+    EndOnStart:
       Aspdpotion0: true
       Aspdpotion1: true
       Aspdpotion2: true
@@ -1488,7 +1609,7 @@ Body:
     Flags:
       MadoCancel: true
       NoSave: true
-    End:
+    EndOnStart:
       Overthrust: true
   - Status: Longing
     Icon: EFST_LONGING
@@ -1550,7 +1671,8 @@ Body:
       NoSave: true
       NoRemoveOnDead: true
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Closeconfine2: true
   - Status: Dancing
     Icon: EFST_BDPLAYING
     DurationLookup: BD_ENCORE
@@ -1568,6 +1690,8 @@ Body:
       RemoveOnChangeMap: true
       RequireWeapon: true
       OverlapIgnoreLevel: true
+    EndOnEnd:
+      Longing: true
   - Status: Elementalchange
     Icon: EFST_ARMOR_PROPERTY
     DurationLookup: NPC_ATTRICHANGE
@@ -1695,7 +1819,7 @@ Body:
       NoClearance: true
     Fail:
       Speedup1: true
-    End:
+    EndOnStart:
       Increaseagi: true
       Adrenaline: true
       Adrenaline2: true
@@ -1924,7 +2048,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Str_Cash: true
   - Status: Agifood
     Icon: EFST_FOOD_AGI
@@ -1935,7 +2059,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Agi_Cash: true
   - Status: Vitfood
     Icon: EFST_FOOD_VIT
@@ -1946,7 +2070,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Vit_Cash: true
   - Status: Intfood
     Icon: EFST_FOOD_INT
@@ -1957,7 +2081,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Int_Cash: true
   - Status: Dexfood
     Icon: EFST_FOOD_DEX
@@ -1968,7 +2092,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Dex_Cash: true
   - Status: Lukfood
     Icon: EFST_FOOD_LUK
@@ -1979,7 +2103,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Luk_Cash: true
   - Status: Hitfood
     Icon: EFST_FOOD_BASICHIT
@@ -2078,7 +2202,7 @@ Body:
     Flags:
       SendOption: true
       NoRemoveOnDead: true
-    End:
+    EndOnStart:
       Spirit: true
   - Status: Skillrate_Up
     DurationLookup: SG_FRIEND
@@ -2099,7 +2223,7 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
-    End:
+    EndOnStart:
       Assumptio: true
   - Status: Swoo
     Icon: EFST_SWOO
@@ -2152,7 +2276,7 @@ Body:
     Fail:
       P_Alter: true
       Heat_Barrel: true
-    End:
+    EndOnStart:
       Adjustment: true
   - Status: Adjustment
     Icon: EFST_GS_ADJUSTMENT
@@ -2163,8 +2287,8 @@ Body:
     Flags:
       NoDispell: true
       NoBanishingBuster: true
-    End:
-      Madnesscancel: true
+    EndOnStart:
+      MadnessCancel: true
   - Status: Increasing
     Icon: EFST_GS_ACCURACY
     DurationLookup: GS_INCREASING
@@ -2209,6 +2333,8 @@ Body:
       NoSave: true
       NoClearance: true
   - Status: Kaensin
+    Flags:
+      NoWarning: true
   - Status: Suiton
     Icon: EFST_NJ_SUITON
     DurationLookup: NJ_SUITON
@@ -2319,6 +2445,10 @@ Body:
     Flags:
       SendVal1: true
       OverlapIgnoreLevel: true
+      RemoveOnUnequipWeapon: true
+    EndOnStart:
+      Enchantarms: true
+      Aspersio: true
   - Status: Magicalattack
     DurationLookup: NPC_MAGICALATTACK
     CalcFlags:
@@ -2387,7 +2517,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnMapWarp: true
-      OverlapFail: true
+    Fail:
+      Bossmapinfo: true
   - Status: Lifeinsurance
     Icon: EFST_CASH_DEATHPENALTY
     States:
@@ -2444,11 +2575,14 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Ksprotected
+    Flags:
+      NoWarning: true
   - Status: Armor_Resist
     CalcFlags:
       All: true
     Flags:
       OverlapIgnoreLevel: true
+      RemoveOnUnequipArmor: true
   - Status: Spcost_Rate
     Icon: EFST_ATKER_BLOOD
     CalcFlags:
@@ -2553,16 +2687,18 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoRemoveOnDead: true
+    Fail:
+      S_Lifepotion: true
   - Status: L_Lifepotion
     Icon: EFST_L_LIFEPOTION
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoRemoveOnDead: true
+    Fail:
+      L_Lifepotion: true
   - Status: Jexpboost
     Icon: EFST_CASH_PLUSONLYJOBEXP
     Flags:
@@ -2590,7 +2726,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Invincibleoff: true
   - Status: Invincibleoff
     DurationLookup: NPC_INVINCIBLEOFF
@@ -2600,7 +2736,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Invincible: true
   - Status: Manu_Atk
     Icon: EFST_MANU_ATK
@@ -2654,7 +2790,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Strfood: true
   - Status: Food_Agi_Cash
     Icon: EFST_FOOD_AGI_CASH
@@ -2666,7 +2802,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Agifood: true
   - Status: Food_Vit_Cash
     Icon: EFST_FOOD_VIT_CASH
@@ -2678,7 +2814,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Vitfood: true
   - Status: Food_Dex_Cash
     Icon: EFST_FOOD_DEX_CASH
@@ -2690,7 +2826,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Intfood: true
   - Status: Food_Int_Cash
     Icon: EFST_FOOD_INT_CASH
@@ -2702,7 +2838,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Dexfood: true
   - Status: Food_Luk_Cash
     Icon: EFST_FOOD_LUK_CASH
@@ -2714,7 +2850,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Lukfood: true
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
@@ -2727,15 +2863,16 @@ Body:
     Flags:
       BossResist: true
       StopWalking: true
-      OverlapFail: true
       Debuff: true
     Fail:
       Inspiration: true
-    End:
+    EndOnStart:
       Blind: true
   - Status: Burning
     Icon: EFST_BURNT
     DurationLookup: RK_DRAGONBREATH
+    CalcFlags:
+      Mdef: true
     Opt1: Burning
     Flags:
       SendOption: true
@@ -2743,13 +2880,10 @@ Body:
       RemoveOnLuxAnima: true
       BossResist: true
       Debuff: true
-      OverlapFail: true
     MinDuration: 10000
     Fail:
       Refresh: true
       Inspiration: true
-    CalcFlags:
-      Mdef: true
   - Status: Freezing
     Icon: EFST_FROSTMISTY
     DurationLookup: WL_FROSTMISTY
@@ -2766,13 +2900,12 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     MinDuration: 6000
     Fail:
       Refresh: true
       Inspiration: true
       Warmer: true
-    End:
+    EndOnStart:
       Burning: true
   - Status: Enchantblade
     Icon: EFST_ENCHANTBLADE
@@ -2817,7 +2950,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Giantgrowth
     Icon: EFST_GIANTGROWTH
@@ -2868,7 +3000,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Fightingspirit: true
   - Status: Abundance
     Icon: EFST_ABUNDANCE
@@ -2878,7 +3010,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
   - Status: Adoramus
     Icon: EFST_ADORAMUS
     DurationLookup: AB_ADORAMUS
@@ -2888,7 +3019,7 @@ Body:
     Flags:
       BossResist: true
       Debuff: true
-    End:
+    EndOnStart:
       Decreaseagi: true
   - Status: Epiclesis
     Icon: EFST_EPICLESIS
@@ -2963,13 +3094,8 @@ Body:
       SetStand: true
       StopWalking: true
       StopAttacking: true
-      OverlapFail: true
-    End:
-      Dancing: true
-      Burning: true
+    EndOnStart:
       Freezing: true
-      Freeze: true
-      Stone: true
   - Status: Marshofabyss
     Icon: EFST_MARSHOFABYSS
     DurationLookup: WL_MARSHOFABYSS
@@ -2987,7 +3113,7 @@ Body:
     MinDuration: 5000
     Fail:
       Refresh: true
-    End:
+    EndOnStart:
       Increaseagi: true
       Windwalk: true
       Aspdpotion0: true
@@ -3033,6 +3159,8 @@ Body:
       DisplayPc: true
       NoClearance: true
   - Status: Reading_Sb
+    Flags:
+      NoWarning: true
   - Status: Freeze_Sp
     Icon: EFST_FREEZE_SP
     Flags:
@@ -3059,7 +3187,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoSave: true
-      OverlapFail: true
       NoClearance: true
   - Status: Wugdash
     Icon: EFST_WUGDASH
@@ -3310,7 +3437,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
   - Status: Paralyse
     Icon: EFST_PARALYSE
     CalcFlags:
@@ -3324,7 +3450,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3335,7 +3460,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Venombleed
     Icon: EFST_VENOMBLEED
     CalcFlags:
@@ -3347,7 +3472,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3358,7 +3482,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Magicmushroom
     Icon: EFST_MAGICMUSHROOM
     CalcFlags:
@@ -3370,7 +3494,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3381,7 +3504,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Deathhurt
     Icon: EFST_DEATHHURT
     CalcFlags:
@@ -3393,7 +3516,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3404,7 +3526,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Pyrexia
     Icon: EFST_PYREXIA
     CalcFlags:
@@ -3416,7 +3538,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3427,7 +3548,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Oblivioncurse
     Icon: EFST_OBLIVIONCURSE
     States:
@@ -3442,7 +3563,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3453,7 +3573,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Leechesend
     Icon: EFST_LEECHESEND
     Flags:
@@ -3463,7 +3583,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3474,7 +3593,7 @@ Body:
       Deathhurt: true
       Pyrexia: true
       Oblivioncurse: true
-      Leechesend: true
+      LeechesEnd: true
   - Status: Reflectdamage
     Icon: EFST_LG_REFLECTDAMAGE
     DurationLookup: LG_REFLECTDAMAGE
@@ -3482,7 +3601,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       RequireShield: true
-    End:
+    EndOnStart:
       Reflectshield: true
   - Status: Forceofvanguard
     Icon: EFST_FORCEOFVANGUARD
@@ -3496,13 +3615,13 @@ Body:
   - Status: Shieldspell_Hp
     Icon: EFST_SHIELDSPELL_DEF
     DurationLookup: LG_SHIELDSPELL
-    End:
+    EndOnStart:
       Shieldspell_Sp: true
       Shieldspell_Atk: true
   - Status: Shieldspell_Sp
     Icon: EFST_SHIELDSPELL_MDEF
     DurationLookup: LG_SHIELDSPELL
-    End:
+    EndOnStart:
       Shieldspell_Hp: true
       Shieldspell_Atk: true
   - Status: Shieldspell_Atk
@@ -3511,7 +3630,7 @@ Body:
     CalcFlags:
       Watk: true
       Matk: true
-    End:
+    EndOnStart:
       Shieldspell_Hp: true
       Shieldspell_Sp: true
   - Status: Exeedbreak
@@ -3535,11 +3654,10 @@ Body:
       Regen: true
     Flags:
       DisplayPc: true
-      OverlapFail: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Prestige: true
   - Status: Banding_Defence
     Icon: EFST_BANDING_DEFENCE
@@ -3547,7 +3665,6 @@ Body:
       Speed: true
     Flags:
       BossResist: true
-      OverlapFail: true
   - Status: Earthdrive
     Icon: EFST_EARTHDRIVE
     DurationLookup: LG_EARTHDRIVE
@@ -3596,7 +3713,6 @@ Body:
       BossResist: true
       StopWalking: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3615,7 +3731,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Crystalize: true
       Freezing: true
       Freeze: true
@@ -3652,7 +3768,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Symphonyoflover: true
       Moonlitserenade: true
       Rushwindmill: true
@@ -3667,7 +3783,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Swingdance: true
       Moonlitserenade: true
       Rushwindmill: true
@@ -3682,7 +3798,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Swingdance: true
       Symphonyoflover: true
       Rushwindmill: true
@@ -3698,7 +3814,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Swingdance: true
       Symphonyoflover: true
       Moonlitserenade: true
@@ -3713,7 +3829,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Swingdance: true
       Symphonyoflover: true
       Moonlitserenade: true
@@ -3729,7 +3845,7 @@ Body:
       Int: true
       Dex: true
       Luk: true
-    End:
+    EndOnStart:
       Swingdance: true
       Symphonyoflover: true
       Moonlitserenade: true
@@ -3743,7 +3859,7 @@ Body:
       DisplayPc: true
       StopAttacking: true
     MinDuration: 10000
-    End:
+    EndOnStart:
       Deepsleep: true
       Gloomyday: true
       Gloomyday_Sk: true
@@ -3777,12 +3893,11 @@ Body:
       RemoveOnDamaged: true
       NoSave: true
       Debuff: true
-      OverlapFail: true
     MinDuration: 5000
     Fail:
       Refresh: true
       Inspiration: true
-    End:
+    EndOnStart:
       Dancing: true
       Voiceofsiren: true
       Gloomyday: true
@@ -3798,7 +3913,7 @@ Body:
   - Status: Sircleofnature
     Icon: EFST_SIRCLEOFNATURE
     DurationLookup: WM_SIRCLEOFNATURE
-    End:
+    EndOnStart:
       Deepsleep: true
       Gloomyday: true
       Gloomyday_Sk: true
@@ -3819,7 +3934,7 @@ Body:
       Flee: true
       Speed: true
       Aspd: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Songofmana: true
@@ -3834,7 +3949,7 @@ Body:
   - Status: Songofmana
     Icon: EFST_SONG_OF_MANA
     DurationLookup: WM_SONG_OF_MANA
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3853,7 +3968,7 @@ Body:
     DurationLookup: WM_DANCE_WITH_WUG
     CalcFlags:
       Aspd: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3883,7 +3998,7 @@ Body:
     Fail:
       Berserk: true
       Inspiration: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3904,7 +4019,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3926,7 +4041,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3948,7 +4063,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3967,7 +4082,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
       Gloomyday: true
@@ -3994,7 +4109,6 @@ Body:
       DisplayPc: true
       BossResist: true
       StopWalking: true
-      OverlapFail: true
       Debuff: true
   - Status: Crescentelbow
     Icon: EFST_CRESCENTELBOW
@@ -4036,7 +4150,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
   - Status: Lightningwalk
     Icon: EFST_LIGHTNINGWALK
     DurationLookup: SR_LIGHTNINGWALK
@@ -4073,7 +4186,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Gt_Revitalize: true
   - Status: Gt_Revitalize
     Icon: EFST_GENTLETOUCH_REVITALIZE
@@ -4085,7 +4198,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Gt_Change: true
   - Status: Gn_Cartboost
     Icon: EFST_GN_CARTBOOST
@@ -4099,9 +4212,8 @@ Body:
     Fail:
       Quagmire: true
       Dontforgetme: true
-    End:
+    EndReturn:
       Decreaseagi: true
-    EndReturn: true
   - Status: Thornstrap
     Icon: EFST_THORNS_TRAP
     DurationLookup: GN_THORNS_TRAP
@@ -4156,7 +4268,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -4406,7 +4517,6 @@ Body:
       Batk: true
       Watk: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4419,7 +4529,6 @@ Body:
       Aspd: true
       Hit: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4431,7 +4540,6 @@ Body:
     States:
       NoCast: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4444,7 +4552,6 @@ Body:
       Flee: true
       Speed: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4457,7 +4564,6 @@ Body:
       Cri: true
       Flee2: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4469,7 +4575,6 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4955,6 +5060,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       OverlapIgnoreLevel: true
       NoForcedEnd: true
   - Status: Spellbook1
@@ -5108,7 +5214,6 @@ Body:
       StopWalking: true
       NoSave: true
       RemoveOnChangeMap: true
-      OverlapFail: true
   - Status: Cbc
     Icon: EFST_CBC
     DurationLookup: MH_CBC
@@ -5124,7 +5229,7 @@ Body:
       MaxHp: true
     Flags:
       NoSave: true
-    End:
+    EndOnStart:
       Tinder_Breaker2: true
   - Status: Goldene_Ferse
     Icon: EFST_GOLDENE_FERSE
@@ -5163,7 +5268,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Overed_Boost: true
   - Status: Light_Of_Regene
     Icon: EFST_LIGHT_OF_REGENE
@@ -5237,14 +5342,10 @@ Body:
     Icon: EFST_SET_NUM_DEF
     CalcFlags:
       Def: true
-    Flags:
-      OverlapFail: true
   - Status: Mdefset
     Icon: EFST_SET_NUM_MDEF
     CalcFlags:
       Mdef: true
-    Flags:
-      OverlapFail: true
   - Status: Darkcrow
     Icon: EFST_DARKCROW
     DurationLookup: GC_DARKCROW
@@ -5295,7 +5396,7 @@ Body:
       NoConsumeItem: true
     Flags:
       StopAttacking: true
-    End:
+    EndOnStart:
       Poison: true
       Blind: true
       Freeze: true
@@ -5330,7 +5431,7 @@ Body:
       DisplayPc: true
     Fail:
       Magnificat: true
-    End:
+    EndOnStart:
       Magnificat: true
       Blind: true
       Curse: true
@@ -5344,7 +5445,7 @@ Body:
       Paralyse: true
       Pyrexia: true
       Deathhurt: true
-      Leechesend: true
+      LeechesEnd: true
       Venombleed: true
       Toxin: true
       Magicmushroom: true
@@ -5361,6 +5462,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       NoForcedEnd: true
   - Status: Angel_Protect
     Icon: EFST_ANGEL_PROTECT
@@ -5416,7 +5518,7 @@ Body:
       NoClearance: true
     Fail:
       P_Alter: true
-      Madnesscancel: true
+      MadnessCancel: true
   - Status: P_Alter
     Icon: EFST_P_ALTER
     DurationLookup: RL_P_ALTER
@@ -5427,7 +5529,7 @@ Body:
       NoClearance: true
     Fail:
       Heat_Barrel: true
-      Madnesscancel: true
+      MadnessCancel: true
   - Status: E_Chain
     Icon: EFST_E_CHAIN
     DurationLookup: RL_E_CHAIN
@@ -5618,9 +5720,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
-    End:
+    EndReturn:
       All_Riding: true
-    EndReturn: true
   - Status: Teargas_Sob
     Flags:
       BossResist: true
@@ -5700,7 +5801,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Food_Str_Cash: true
       Food_Agi_Cash: true
       Food_Vit_Cash: true
@@ -5795,7 +5896,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_B
     Icon: EFST_REUSE_LIMIT_B
@@ -5805,7 +5905,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_C
     Icon: EFST_REUSE_LIMIT_C
@@ -5815,7 +5914,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_D
     Icon: EFST_REUSE_LIMIT_D
@@ -5825,7 +5923,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_E
     Icon: EFST_REUSE_LIMIT_E
@@ -5835,7 +5932,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_F
     Icon: EFST_REUSE_LIMIT_F
@@ -5845,7 +5941,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_G
     Icon: EFST_REUSE_LIMIT_G
@@ -5855,7 +5950,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_H
     Icon: EFST_REUSE_LIMIT_H
@@ -5865,7 +5959,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_Mtf
     Icon: EFST_REUSE_LIMIT_MTF
@@ -5875,7 +5968,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_Aspd_Potion
     Icon: EFST_REUSE_LIMIT_ASPD_POTION
@@ -5885,7 +5977,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Millenniumshield
     Icon: EFST_REUSE_MILLENNIUMSHIELD
@@ -5895,7 +5986,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Crushstrike
     Icon: EFST_REUSE_CRUSHSTRIKE
@@ -5905,7 +5995,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Stormblast
     Icon: EFST_REUSE_STORMBLAST
@@ -5915,7 +6004,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: All_Riding_Reuse_Limit
     Icon: EFST_ALL_RIDING_REUSE_LIMIT
@@ -5925,7 +6013,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_Ecl
     Icon: EFST_REUSE_LIMIT_ECL
@@ -5935,7 +6022,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Reuse_Limit_Recall
     Icon: EFST_REUSE_LIMIT_RECALL
@@ -5945,7 +6031,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
   - Status: Promote_Health_Reserch
     Icon: EFST_PROMOTE_HEALTH_RESERCH
@@ -5957,8 +6042,6 @@ Body:
       MaxSp: true
   - Status: Norecover_State
     Icon: EFST_HANDICAPSTATE_NORECOVER
-    Flags:
-      OverlapFail: true
   - Status: Suhide
     Icon: EFST_SUHIDE
     DurationLookup: SU_HIDE
@@ -6041,6 +6124,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       NoForcedEnd: true
   - Status: Ljosalfar
     Icon: EFST_LJOSALFAR
@@ -6147,31 +6231,31 @@ Body:
     Icon: EFST_GVG_GOLEM
   - Status: Gvg_Stun
     Icon: EFST_GVG_STUN
-    End:
+    EndOnStart:
       Gvg_Stun: true
   - Status: Gvg_Stone
     Icon: EFST_GVG_STONE
-    End:
+    EndOnStart:
       Stone: true
   - Status: Gvg_Freez
     Icon: EFST_GVG_FREEZ
-    End:
+    EndOnStart:
       Freeze: true
   - Status: Gvg_Sleep
     Icon: EFST_GVG_SLEEP
-    End:
+    EndOnStart:
       Sleep: true
   - Status: Gvg_Curse
     Icon: EFST_GVG_CURSE
-    End:
+    EndOnStart:
       Curse: true
   - Status: Gvg_Silence
     Icon: EFST_GVG_SILENCE
-    End:
+    EndOnStart:
       Silence: true
   - Status: Gvg_Blind
     Icon: EFST_GVG_BLIND
-    End:
+    EndOnStart:
       Blind: true
   - Status: Clan_Info
     Icon: EFST_CLAN_INFO
@@ -6196,6 +6280,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnEnd:
+      Clan_Info: true
   - Status: Arcwandclan
     Icon: EFST_ARCWANDCLAN
     CalcFlags:
@@ -6209,6 +6295,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnEnd:
+      Clan_Info: true
   - Status: Goldenmaceclan
     Icon: EFST_GOLDENMACECLAN
     CalcFlags:
@@ -6222,6 +6310,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnEnd:
+      Clan_Info: true
   - Status: Crossbowclan
     Icon: EFST_CROSSBOWCLAN
     CalcFlags:
@@ -6235,6 +6325,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnEnd:
+      Clan_Info: true
   - Status: Jumpingclan
     Icon: EFST_JUMPINGCLAN
     CalcFlags:
@@ -6250,6 +6342,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnEnd:
+      Clan_Info: true
   - Status: Tarotcard
     Icon: EFST_TAROTCARD
     DurationLookup: CG_TAROTCARD
@@ -6316,7 +6410,6 @@ Body:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoBanishingBuster: true
-      OverlapFail: true
       NoDispell: true
       NoClearance: true
   - Status: Doram_Buf_02
@@ -6327,7 +6420,6 @@ Body:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoBanishingBuster: true
-      OverlapFail: true
       NoDispell: true
       NoClearance: true
   - Status: Hiss
@@ -6352,7 +6444,7 @@ Body:
       Flee: true
     Flags:
       NoRemoveOnDead: true
-    End:
+    EndOnStart:
       Stun: true
       Freeze: true
       Stone: true
@@ -6389,6 +6481,8 @@ Body:
     CalcFlags:
       Flee2: true
   - Status: Doram_Svsp
+    Flags:
+      NoWarning: true
   - Status: Fallen_Angel
     DurationLookup: RL_FALLEN_ANGEL
   - Status: Cheerup
@@ -6499,6 +6593,8 @@ Body:
     CalcFlags:
       Regen: true
   - Status: Earthshaker
+    Flags:
+      NoWarning: true
   - Status: Weaponblock_On
     Icon: EFST_WEAPONBLOCK_ON
     Flags:
@@ -6542,19 +6638,19 @@ Body:
   - Status: Lightofmoon
     Icon: EFST_LIGHTOFMOON
     DurationLookup: SJ_LIGHTOFMOON
-    End:
+    EndOnStart:
       Lunarstance: true
       Universestance: true
   - Status: Lightofsun
     Icon: EFST_LIGHTOFSUN
     DurationLookup: SJ_LIGHTOFSUN
-    End:
+    EndOnStart:
       Lightofsun: true
       Universestance: true
   - Status: Lightofstar
     Icon: EFST_LIGHTOFSTAR
     DurationLookup: SJ_LIGHTOFSTAR
-    End:
+    EndOnStart:
       Starstance: true
       Universestance: true
   - Status: Lunarstance
@@ -6562,7 +6658,7 @@ Body:
     DurationLookup: SJ_LUNARSTANCE
     CalcFlags:
       MaxHp: true
-    End:
+    EndOnStart:
       Sunstance: true
       Starstance: true
       Universestance: true
@@ -6576,7 +6672,7 @@ Body:
       Int: true
       Dex: true
       Luk: true
-    End:
+    EndOnStart:
       Sunstance: true
       Lunarstance: true
       Starstance: true
@@ -6586,7 +6682,7 @@ Body:
     CalcFlags:
       Batk: true
       Watk: true
-    End:
+    EndOnStart:
       Lunarstance: true
       Starstance: true
       Universestance: true
@@ -6619,7 +6715,7 @@ Body:
     DurationLookup: SJ_STARSTANCE
     CalcFlags:
       Aspd: true
-    End:
+    EndOnStart:
       Sunstance: true
       Lunarstance: true
       Universestance: true
@@ -6629,7 +6725,11 @@ Body:
     Flags:
       NoClearance: true
   - Status: Dimension1
+    Flags:
+      NoWarning: true
   - Status: Dimension2
+    Flags:
+      NoWarning: true
   - Status: Creatingstar
     Icon: EFST_CREATINGSTAR
     DurationLookup: SJ_BOOKOFCREATINGSTAR
@@ -6684,7 +6784,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Spirit: true
       Soulgolem: true
       Soulfalcon: true
@@ -6699,7 +6799,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Spirit: true
       Soulgolem: true
       Soulshadow: true
@@ -6715,7 +6815,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Spirit: true
       Soulgolem: true
       Soulshadow: true
@@ -6731,7 +6831,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Spirit: true
       Soulshadow: true
       Soulfalcon: true
@@ -6771,7 +6871,6 @@ Body:
     DurationLookup: GN_HELLS_PLANT
     Flags:
       NoSave: true
-      RemoveOnChangeMap: true
       DisplayPc: true
       BlEffect: true
   - Status: Increase_Maxhp
@@ -6808,7 +6907,6 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
-      OverlapFail: true
       NoRemoveOnDead: true
       NoClearbuff: true
   - Status: Ensemblefatigue
@@ -6853,3 +6951,5 @@ Body:
       NoDispell: true
       NoClearance: true
       NoClearbuff: true
+  - Status: WeaponBreaker
+    DurationLookup: NPC_WEAPONBRAKER

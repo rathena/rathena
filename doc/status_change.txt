@@ -669,13 +669,16 @@ SC_WINKCHARM	()
 	desc:
 	val1:
 
-SC_CLOSECONFINE	()
-	desc:
-	val1:
+SC_CLOSECONFINE	(EFST_RG_CCONFINE_M)
+	desc: Flee bonus and counter for confined enemies
+	val1: Skill level
+	val2: Confined enemy count
+	val3: +50 Flee
 
-SC_CLOSECONFINE2	()
-	desc:
-	val1:
+SC_CLOSECONFINE2	(EFST_RG_CCONFINE_S)
+	desc: Confines target in place
+	val1: Skill level
+	val2: MapID of caster
 
 SC_DANCING	()
 	desc:
@@ -2824,3 +2827,8 @@ SC_PACKING_ENVELOPE9	(EFST_PACKING_ENVELOPE9)
 SC_PACKING_ENVELOPE10	(EFST_PACKING_ENVELOPE10)
 	desc: Increases HIT
 	val1: + HIT
+
+SC_WEAPONBREAKER
+	desc: Bonus given when using NPC_WEAPONBRAKER skill
+	val1: Skill level
+	val2: val1 * 2 weapon break chance

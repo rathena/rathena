@@ -4,6 +4,7 @@
 #ifndef PC_HPP
 #define PC_HPP
 
+#include <bitset>
 #include <memory>
 #include <vector>
 
@@ -19,6 +20,7 @@
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "map.hpp" // RC_ALL
 #include "mob.hpp" //e_size
+#include "pc_groups.hpp" // s_player_group
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // unit_data
@@ -117,6 +119,60 @@ enum e_additem_result : uint8 {
 	ADDITEM_REFUSED_TIME,
 	ADDITEM_STACKLIMIT
 };
+
+#ifndef CAPTCHA_ANSWER_SIZE
+	#define CAPTCHA_ANSWER_SIZE 16
+#endif
+#ifndef CAPTCHA_BMP_SIZE
+	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
+#endif
+#ifndef MAX_CAPTCHA_CHUNK_SIZE
+	#define MAX_CAPTCHA_CHUNK_SIZE 1024
+#endif
+
+struct s_captcha_data {
+	uint16 index;
+	uint16 image_size;
+	char image_data[CAPTCHA_BMP_SIZE];
+	char captcha_answer[CAPTCHA_ANSWER_SIZE];
+	script_code *bonus_script;
+
+	~s_captcha_data() {
+		if (this->bonus_script)
+			script_free_code(this->bonus_script);
+	}
+};
+
+struct s_macro_detect {
+	std::shared_ptr<s_captcha_data> cd;
+	int32 reporter_aid;
+	int32 retry;
+	int32 timer;
+};
+
+enum e_macro_detect_status : uint8 {
+	MCD_TIMEOUT = 0,
+	MCD_INCORRECT = 1,
+	MCD_GOOD = 2,
+};
+
+enum e_macro_report_status : uint8 {
+	MCR_MONITORING = 0,
+	MCR_NO_DATA = 1,
+	MCR_INPROGRESS = 2,
+};
+
+class CaptchaDatabase : public TypesafeYamlDatabase<int16, s_captcha_data> {
+public:
+	CaptchaDatabase() : TypesafeYamlDatabase("CAPTCHA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+};
+
+extern CaptchaDatabase captcha_db;
 
 struct skill_cooldown_entry {
 	unsigned short skill_id;
@@ -243,8 +299,8 @@ struct s_autospell {
 /// AddEff and AddEff2 bonus struct
 struct s_addeffect {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		arrow_rate; /// Arrow rate
+	int rate; /// Rate
+	short arrow_rate; /// Arrow rate
 	unsigned char flag; /// Flag
 	unsigned int duration; /// Duration the effect applied
 };
@@ -252,8 +308,8 @@ struct s_addeffect {
 /// AddEffOnSkill bonus struct
 struct s_addeffectonskill {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		skill_id; /// Skill ID
+	int rate; /// Rate
+	short skill_id; /// Skill ID
 	unsigned char target; /// Target
 	unsigned int duration; /// Duration the effect applied
 };
@@ -385,12 +441,16 @@ struct map_session_data {
 		bool stylist_open;
 		bool barter_open;
 		bool barter_extended_open;
+		bool enchantgrade_open; // Whether the enchantgrade window is open or not
 		unsigned int block_action : 10;
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
 		t_itemid laphine_synthesis;
 		t_itemid laphine_upgrade;
+		bool roulette_open;
+		t_itemid item_reform;
+		uint64 item_enchant_index;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -408,8 +468,9 @@ struct map_session_data {
 	} special_state;
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
-	int group_id, group_pos, group_level;
-	unsigned int permissions;/* group permissions */
+	int group_id;
+	std::shared_ptr<s_player_group> group;
+	std::bitset<PC_PERM_MAX> permissions; // group permissions have to be copied, because they might be adjusted by atcommand addperm
 	int count_rewarp; //count how many time we being rewarped
 
 	int langtype;
@@ -430,6 +491,7 @@ struct map_session_data {
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
+	int npc_id_dynamic;
 	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
@@ -602,6 +664,7 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
+		uint8 absorb_dmg_maxhp2;
 		short critical_rangeatk;
 		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;
@@ -861,6 +924,13 @@ struct map_session_data {
 		uint16 level;
 		int target;
 	} skill_keep_using;
+
+	struct {
+		std::shared_ptr<s_captcha_data> cd;
+		uint16 upload_size;
+	} captcha_upload;
+
+	s_macro_detect macro_detect;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -992,13 +1062,13 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
 struct s_job_info {
 	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
-	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	uint32 hp_factor, hp_increase, sp_increase, max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
@@ -1012,12 +1082,12 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
 
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1061,7 +1131,9 @@ static bool pc_cant_act2( struct map_session_data* sd ){
 		|| sd->state.trading || sd->state.storage_flag || sd->state.prevend || sd->state.refineui_open
 		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
 		|| sd->state.barter_open || sd->state.barter_extended_open
-		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade;
+		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
+		|| sd->state.roulette_open || sd->state.enchantgrade_open
+		|| sd->state.item_reform || sd->state.item_enchant_index;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
@@ -1074,7 +1146,7 @@ static bool pc_cant_act( struct map_session_data* sd ){
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
 #ifdef VIP_ENABLE
-	#define pc_isvip(sd)      ( sd->vip.enabled ? true : false )
+	#define pc_isvip(sd)      ( (sd)->vip.enabled ? true : false )
 #else
 	#define pc_isvip(sd)      ( false )
 #endif
@@ -1190,10 +1262,56 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern AttendanceDatabase attendance_db;
+
+struct s_reputation{
+	int64 id;
+	std::string name;
+	std::string variable;
+	int64 minimum;
+	int64 maximum;
+#ifdef MAP_GENERATOR
+	enum e_visibility {ALWAYS, NEVER, EXIST} visibility;
+#endif
+};
+
+class ReputationDatabase : public TypesafeYamlDatabase<int64, s_reputation>{
+public:
+	ReputationDatabase() : TypesafeYamlDatabase( "REPUTATION_DB", 1 ){
+#ifdef MAP_GENERATOR
+	setGenerator(true);
+#endif
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+};
+
+extern ReputationDatabase reputation_db;
+
+struct s_reputationgroup {
+	int64 id;
+	std::string script_name;
+	std::string name;
+	std::vector<int64> reputations;
+};
+
+class ReputationGroupDatabase : public TypesafeYamlDatabase<int64, s_reputationgroup> {
+public:
+	ReputationGroupDatabase() : TypesafeYamlDatabase("REPUTATION_GROUP_DB", 1) {
+#ifdef MAP_GENERATOR
+	setGenerator(true);
+#endif
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+};
+
+extern ReputationGroupDatabase reputationgroup_db;
 
 struct s_statpoint_entry{
 	uint16 level;
@@ -1208,7 +1326,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1237,7 +1355,7 @@ bool pc_can_give_bounded_items(struct map_session_data *sd);
 bool pc_can_trade_item(map_session_data *sd, int index);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
-#define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
+bool pc_has_permission( struct map_session_data* sd, e_pc_permission permission );
 bool pc_should_log_commands(struct map_session_data *sd);
 
 void pc_setrestartvalue(struct map_session_data *sd, char type);
@@ -1258,6 +1376,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
+e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
 uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
@@ -1339,6 +1458,8 @@ enum e_addskill_type {
 };
 
 bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
+bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv);
+bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -1484,7 +1605,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1545,7 +1666,7 @@ int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
 bool pc_isautolooting(struct map_session_data *sd, t_itemid nameid);
 
-void pc_overheat(struct map_session_data *sd, int16 heat);
+void pc_overheat(map_session_data &sd, int16 heat);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
 uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
@@ -1600,5 +1721,21 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
+
+// Captcha Register
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
+
+// Macro Detector
+void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_disconnect(map_session_data &sd);
+
+// Macro Reporter
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
+void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
+
+#ifdef MAP_GENERATOR
+void pc_reputation_generate();
+#endif
 
 #endif /* PC_HPP */

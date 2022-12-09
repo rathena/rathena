@@ -227,6 +227,7 @@ void elemental_summon_init(s_elemental_data *ed) {
  */
 int elemental_data_received(s_elemental *ele, bool flag) {
 	map_session_data *sd;
+	t_tick tick = gettick();
 
 	if( (sd = map_charid2sd(ele->char_id)) == NULL )
 		return 0;
@@ -260,6 +261,10 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 		ed->bl.x = ed->ud.to_x;
 		ed->bl.y = ed->ud.to_y;
 
+		// Ticks need to be initialized before adding bl to map_addiddb
+		ed->regen.tick.hp = tick;
+		ed->regen.tick.sp = tick;
+
 		map_addiddb(&ed->bl);
 		status_calc_elemental(ed,SCO_FIRST);
 		ed->last_spdrain_time = ed->last_thinktime = gettick();
@@ -279,7 +284,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
 		clif_elemental_updatestatus(sd,SP_HP);
-		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
+		clif_hpmeter_single( *sd, ed->bl.id, ed->battle_status.hp, ed->battle_status.max_hp );
 		clif_elemental_updatestatus(sd,SP_SP);
 	}
 
@@ -663,7 +668,7 @@ const std::string ElementalDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	int32 id;
 
 	if (!this->asInt32(node, "Id", id))
@@ -1054,10 +1059,11 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 	elemental->status.aspd_rate = 1000;
 
 	if (this->nodeExists(node, "Mode")) {
-		const YAML::Node &ModeNode = node["Mode"];
+		const ryml::NodeRef& ModeNode = node["Mode"];
 
 		for (const auto &Modeit : ModeNode) {
-			std::string mode_name = Modeit.first.as<std::string>();
+			std::string mode_name;
+			c4::from_chars(Modeit.key(), &mode_name);
 
 			std::string mode_constant = "EL_SKILLMODE_" + mode_name;
 			int64 constant;
@@ -1075,7 +1081,7 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!mode_exists)
 				entry = std::make_shared<s_elemental_skill>();
 
-			const YAML::Node &SkillNode = ModeNode[mode_name];
+			const ryml::NodeRef& SkillNode = ModeNode[Modeit.key()];
 			std::string skill_name;
 
 			if (!this->asString(SkillNode, "Skill", skill_name))

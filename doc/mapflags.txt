@@ -145,16 +145,26 @@ Notes:
 ---------------------------------------
 
 *nochat
+
+Disables chatroom creation on a map.
+
+---------------------------------------
+
 *novending
 
-Disables chatroom and shop creation on a map.
+Disables shop creation on a map from the MC_VENDING skill.
+
+---------------------------------------
+
+*nobuyingstore
+
+Disables shop creation on a map from the ALL_BUYING_STORE skill.
 
 ---------------------------------------
 
 *nousecart
 
 Disables cart usage on a map.
-[Not fully implemented.]
 
 ---------------------------------------
 
@@ -215,10 +225,9 @@ Disables Star Gladiator's "Solar, Lunar, and Stellar Miracle" from occurring on 
 
 ---------------------------------------
 
-*nomineeffect
+*forcemineffect
 
-Disables mine effects on a map.
-[More information needed.]
+Forces simpler skill effects, just like the command /mineffect.
 
 ---------------------------------------
 

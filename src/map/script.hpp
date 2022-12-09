@@ -4,6 +4,9 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include <ryml_std.hpp>
+#include <ryml.hpp>
+
 #include "../common/database.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -36,6 +39,8 @@
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
 /// Pushes an int into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
+/// Pushes an int64 into the stack
+#define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
 /// Pushes a string into the stack (script engine frees it automatically)
 #define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
 /// Pushes a copy of a string into the stack
@@ -206,6 +211,9 @@ struct Script_Config {
 	// Instance related
 	const char* instance_init_event_name;
 	const char* instance_destroy_event_name;
+
+	// Navigation related
+	const char* navi_generate_name;
 };
 extern struct Script_Config script_config;
 
@@ -320,6 +328,7 @@ struct script_state {
 	unsigned op2ref : 1;// used by op_2
 	unsigned npc_item_flag : 1;
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
+	unsigned clear_cutin : 1;
 	char* funcname; // Stores the current running function name
 	unsigned int id;
 };
@@ -371,7 +380,8 @@ enum monsterinfo_types {
 	MOB_RACE,
 	MOB_ELEMENT,
 	MOB_MODE,
-	MOB_MVPEXP
+	MOB_MVPEXP,
+	MOB_ID,
 };
 
 enum petinfo_types {
@@ -485,6 +495,7 @@ enum unitdata_mobtypes {
 	UMOB_IGNORE_CELL_STACK_LIMIT,
 	UMOB_RES,
 	UMOB_MRES,
+	UMOB_DAMAGETAKEN,
 };
 
 enum unitdata_homuntypes {
@@ -1845,6 +1856,47 @@ enum e_special_effects {
 	EF_TIME_ACCESSORY,
 	EF_SPRITEMABLE,
 	EF_TUNAPARTY,
+	EF_FRESHSHRIMP,
+
+	EF_SU_GROOMING = 1123,
+	EF_SU_CHATTERING,
+
+	EF_FIREDANCE = 1133,
+	EF_RICHS_COIN_A,
+
+	EF_E_CHAIN = 1137,
+	EF_HEAT_BARREL,
+	EF_H_MINE,
+	EF_FALLEN_ANGEL,
+
+	EF_IMMUNE_PROPERTY = 1149,
+	EF_MOVE_COORDINATE,
+
+	EF_LIGHTSPHERE_SUN = 1197,
+	EF_LIGHTSPHERE_MOON,
+	EF_LIGHTSPHERE_STAR,
+
+	EF_NOVAEXPLOSING = 1202,
+	EF_STAR_EMPEROR,
+	EF_SMA_BLACK,
+
+	EF_ENERGYDRAIN_BLACK = 1208,
+	EF_BLINK_BODY,
+
+	EF_SOLARBURST = 1218,
+	EF_SJ_DOCUMENT,
+	EF_FALLING_STAR,
+
+	EF_STORMKICK8 = 1223,
+
+	EF_NEWMOON_KICK = 1229,
+	EF_FULLMOON_KICK,
+	EF_BOOK_OF_DIMENSION,
+
+	EF_CURSE_EXPLOSION = 1233,
+	EF_SOUL_REAPER,
+
+	EF_SOUL_EXPLOSION = 1242,
 	EF_MAX
 };
 
@@ -2074,7 +2126,7 @@ public:
 
 	void clear() override{ }
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 /**
@@ -2119,6 +2171,7 @@ void script_free_state(struct script_state* st);
 struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
+void script_run_petautobonus(const std::string &autobonus, map_session_data &sd);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int64* value);

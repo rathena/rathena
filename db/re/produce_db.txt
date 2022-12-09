@@ -388,14 +388,14 @@
 
 //===== Elemental Converters === ItemLV=23 =====
 
-//-- Fire Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Scorpion Tail
-142,12114,23,1007,1,7433,1,904,3
-//-- Water Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Snail's Shell
-143,12115,23,1007,1,7433,1,946,3
-//-- Earth Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Horn
-144,12116,23,1007,1,7433,1,947,3
-//-- Wind Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Rainbow Shell
-145,12117,23,1007,1,7433,1,1013,3
+//-- Fire Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Red Blood
+142,12114,23,1007,1,7433,1,990,1
+//-- Water Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Crystal Blue
+143,12115,23,1007,1,7433,1,991,1
+//-- Earth Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Green Live
+144,12116,23,1007,1,7433,1,992,1
+//-- Wind Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Wind of Verdure
+145,12117,23,1007,1,7433,1,993,1
 
 //==============================================
 

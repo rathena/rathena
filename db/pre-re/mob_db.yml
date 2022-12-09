@@ -40631,10 +40631,10 @@ Body:
     BaseExp: 74288
     JobExp: 77950
     MvpExp: 37144
-    Attack: 1060
-    Attack2: 2022
-    Defense: 7
-    MagicDefense: 36
+    Attack: 3304
+    Attack2: 4266
+    Defense: 32
+    MagicDefense: 66
     Str: 140
     Agi: 99
     Vit: 30
@@ -40645,42 +40645,49 @@ Body:
     SkillRange: 10
     ChaseRange: 12
     Size: Large
-    Race: Formless
+    Race: Brute
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 200
-    AttackDelay: 1150
-    AttackMotion: 1150
-    DamageMotion: 288
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 576
     Ai: 21
     Class: Boss
     Modes:
       Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5500
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2000
     Drops:
       - Item: Treasure_Box
         Rate: 5000
-      - Item: Elunium
-        Rate: 1000
-      - Item: Oridecon
-        Rate: 1000
-      - Item: Yggdrasilberry
-        Rate: 500
       - Item: Hurricane_Fury
         Rate: 100
       - Item: Hunting_Spear
         Rate: 100
+      - Item: Yggdrasilberry
+        Rate: 500
+      - Item: Elunium
+        Rate: 1000
+      - Item: Oridecon
+        Rate: 1000
       - Item: Hell_Fire
         Rate: 100
   - Id: 2069
     AegisName: IARA
     Name: Iara
     Level: 79
-    Hp: 5890
-    BaseExp: 1070
-    JobExp: 890
-    Attack: 171
-    Attack2: 270
-    MagicDefense: 39
+    Hp: 18952
+    BaseExp: 5517
+    JobExp: 1500
+    Attack: 614
+    Attack2: 713
+    MagicDefense: 76
     Str: 69
     Agi: 14
     Vit: 41
@@ -40695,36 +40702,36 @@ Body:
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
-    AttackDelay: 672
-    AttackMotion: 380
+    AttackDelay: 384
+    AttackMotion: 672
     DamageMotion: 288
     Ai: 17
     Drops:
+      - Item: Mistic_Frozen
+        Rate: 5
       - Item: Heart_Of_Mermaid
         Rate: 9000
       - Item: Fin
         Rate: 500
-      - Item: Crystal_Mirror
-        Rate: 100
       - Item: Witherless_Rose
         Rate: 50
+      - Item: Crystal_Mirror
+        Rate: 100
       - Item: Illusion_Flower
         Rate: 10
-      - Item: Mistic_Frozen
-        Rate: 5
       - Item: Mage_Coat
         Rate: 1
   - Id: 2070
     AegisName: PIRANHA
     Name: Piranha
     Level: 75
-    Hp: 4522
-    BaseExp: 899
-    JobExp: 1023
-    Attack: 182
-    Attack2: 223
-    Defense: 2
-    MagicDefense: 10
+    Hp: 15882
+    BaseExp: 3877
+    JobExp: 2023
+    Attack: 549
+    Attack2: 590
+    Defense: 7
+    MagicDefense: 12
     Str: 69
     Agi: 45
     Vit: 30
@@ -40734,41 +40741,41 @@ Body:
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Medium
+    Size: Large
     Race: Fish
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
     AttackDelay: 768
-    AttackMotion: 768
-    DamageMotion: 384
-    Ai: 20
+    AttackMotion: 480
+    DamageMotion: 864
+    Ai: 04
     Drops:
-      - Item: Sharp_Scale
-        Rate: 9000
       - Item: Gill
         Rate: 600
+      - Item: Mistic_Frozen
+        Rate: 5
+      - Item: Sharp_Scale
+        Rate: 9000
       - Item: Tooth_Of_Ancient_Fish
         Rate: 500
       - Item: Lip_Of_Ancient_Fish
         Rate: 500
-      - Item: Mistic_Frozen
-        Rate: 5
-      - Item: Fisherman's_Dagger
-        Rate: 5
       - Item: Scalpel
         Rate: 1
+      - Item: Fisherman's_Dagger
+        Rate: 5
   - Id: 2071
     AegisName: HEADLESS_MULE
     Name: Headless Mule
     Level: 80
-    Hp: 6620
-    BaseExp: 1011
-    JobExp: 1120
-    Attack: 210
-    Attack2: 267
-    Defense: 7
-    MagicDefense: 27
+    Hp: 20065
+    BaseExp: 6666
+    JobExp: 4111
+    Attack: 903
+    Attack2: 960
+    Defense: 33
+    MagicDefense: 44
     Str: 68
     Agi: 51
     Vit: 50
@@ -40792,29 +40799,29 @@ Body:
     Drops:
       - Item: Burning_Horse_Shoe
         Rate: 4000
+      - Item: Plate_Armor_
+        Rate: 5
       - Item: Burning_Heart
         Rate: 1000
       - Item: Hot_Hair
         Rate: 1000
-      - Item: Plate_Armor_
-        Rate: 5
-      - Item: Jamadhar_
-        Rate: 2
       - Item: Inverse_Scale
         Rate: 1
       - Item: Plate_Armor_
         Rate: 1
+      - Item: Jamadhar_
+        Rate: 2
   - Id: 2072
     AegisName: JAGUAR
     Name: Jaguar
     Level: 71
-    Hp: 3914
-    BaseExp: 720
-    JobExp: 512
-    Attack: 192
-    Attack2: 234
-    Defense: 9
-    MagicDefense: 12
+    Hp: 12590
+    BaseExp: 1820
+    JobExp: 1012
+    Attack: 538
+    Attack2: 580
+    Defense: 44
+    MagicDefense: 15
     Str: 69
     Agi: 30
     Vit: 45
@@ -40829,10 +40836,10 @@ Body:
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1250
-    AttackMotion: 580
-    DamageMotion: 360
-    Ai: 04
+    AttackDelay: 576
+    AttackMotion: 1248
+    DamageMotion: 480
+    Ai: 17
     Drops:
       - Item: Leopard_Skin
         Rate: 3000
@@ -40848,13 +40855,13 @@ Body:
     AegisName: TOUCAN
     Name: Toucan
     Level: 70
-    Hp: 3640
-    BaseExp: 659
-    JobExp: 544
-    Attack: 166
-    Attack2: 201
-    Defense: 3
-    MagicDefense: 10
+    Hp: 10555
+    BaseExp: 1002
+    JobExp: 1552
+    Attack: 478
+    Attack2: 513
+    Defense: 12
+    MagicDefense: 12
     Str: 54
     Agi: 14
     Vit: 40
@@ -40864,37 +40871,37 @@ Body:
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Small
+    Size: Medium
     Race: Brute
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 155
-    AttackDelay: 1450
-    AttackMotion: 960
-    DamageMotion: 480
-    Ai: 04
+    AttackDelay: 960
+    AttackMotion: 1440
+    DamageMotion: 960
+    Ai: 03
     Drops:
       - Item: Talon
         Rate: 3000
       - Item: Cyfar
         Rate: 1000
-      - Item: Flower_Ring
-        Rate: 200
-      - Item: Yellow_Herb
-        Rate: 100
       - Item: Blue_Herb
         Rate: 50
+      - Item: Yellow_Herb
+        Rate: 100
+      - Item: Flower_Ring
+        Rate: 200
   - Id: 2074
     AegisName: CURUPIRA
     Name: Curupira
     Level: 68
-    Hp: 3096
-    BaseExp: 622
-    JobExp: 450
-    Attack: 140
-    Attack2: 175
-    Defense: 9
-    MagicDefense: 10
+    Hp: 8669
+    BaseExp: 1209
+    JobExp: 850
+    Attack: 409
+    Attack2: 444
+    Defense: 42
+    MagicDefense: 12
     Str: 32
     Agi: 23
     Vit: 38
@@ -40905,27 +40912,25 @@ Body:
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
-    Race: Demon
+    Race: Demihuman
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 250
-    AttackDelay: 530
-    AttackMotion: 530
+    AttackDelay: 528
+    AttackMotion: 480
     DamageMotion: 384
     Ai: 07
-    Modes:
-      Detector: true
     Drops:
       - Item: Meat
         Rate: 3000
-      - Item: Tiger_Skin_Panties
-        Rate: 500
       - Item: Elunium_Stone
         Rate: 250
-      - Item: Mace_
-        Rate: 100
       - Item: Emveretarcon
         Rate: 10
+      - Item: Tiger_Skin_Panties
+        Rate: 500
+      - Item: Mace_
+        Rate: 100
 #  - Id: 2075
 #    AegisName: E_VADON_X
 #    Name: Vadon
@@ -41086,12 +41091,16 @@ Body:
     AegisName: E_HYDRA
     Name: Strange Hydra
     JapaneseName: Suspicious Hydra
-    Level: 34
-    Hp: 854
-    Attack: 1
-    Attack2: 2
+    Level: 14
+    Hp: 660
+    Attack: 22
+    Attack2: 28
     Defense: 100
     MagicDefense: 100
+    Agi: 14
+    Vit: 14
+    Dex: 40
+    Luk: 2
     AttackRange: 7
     SkillRange: 10
     ChaseRange: 12
@@ -41108,11 +41117,11 @@ Body:
     AegisName: G_PIRANHA
     Name: Piranha
     Level: 75
-    Hp: 4522
-    Attack: 182
-    Attack2: 223
-    Defense: 2
-    MagicDefense: 10
+    Hp: 15882
+    Attack: 549
+    Attack2: 590
+    Defense: 7
+    MagicDefense: 12
     Str: 69
     Agi: 45
     Vit: 30
@@ -41122,14 +41131,14 @@ Body:
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Medium
+    Size: Large
     Race: Fish
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
     AttackDelay: 768
-    AttackMotion: 768
-    DamageMotion: 384
+    AttackMotion: 480
+    DamageMotion: 864
     Ai: 20
   - Id: 2158
     AegisName: S_HORNET
