@@ -4741,7 +4741,7 @@
 #endif
 	parseable_packet(0x0368,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0369,6,clif_parse_SolveCharName,2);
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	parseable_packet( 0x0436, 23, clif_parse_WantToConnection, 2, 6, 10, 14, 22 );
 #else
 	parseable_packet( 0x0436, 19, clif_parse_WantToConnection, 2, 6, 10, 14, 18 );

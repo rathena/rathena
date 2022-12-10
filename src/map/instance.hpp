@@ -63,9 +63,9 @@ struct s_instance_data {
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
-	unsigned int keep_limit; ///< Life time of instance
+	int64 keep_limit; ///< Life time of instance
 	int keep_timer; ///< Life time ID
-	unsigned int idle_limit; ///< Idle time of instance
+	int64 idle_limit; ///< Idle time of instance
 	int idle_timer; ///< Idle timer ID
 	bool nonpc;
 	bool nomapflag;
@@ -89,7 +89,7 @@ struct s_instance_data {
 struct s_instance_db {
 	int id; ///< Instance DB ID
 	std::string name; ///< Instance name
-	uint32 limit, ///< Duration limit
+	int64 limit, ///< Duration limit
 		timeout; ///< Timeout limit
 	bool nonpc;
 	bool nomapflag;

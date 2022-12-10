@@ -211,6 +211,9 @@ struct Script_Config {
 	// Instance related
 	const char* instance_init_event_name;
 	const char* instance_destroy_event_name;
+
+	// Navigation related
+	const char* navi_generate_name;
 };
 extern struct Script_Config script_config;
 
@@ -325,6 +328,7 @@ struct script_state {
 	unsigned op2ref : 1;// used by op_2
 	unsigned npc_item_flag : 1;
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
+	unsigned clear_cutin : 1;
 	char* funcname; // Stores the current running function name
 	unsigned int id;
 };
@@ -376,7 +380,8 @@ enum monsterinfo_types {
 	MOB_RACE,
 	MOB_ELEMENT,
 	MOB_MODE,
-	MOB_MVPEXP
+	MOB_MVPEXP,
+	MOB_ID,
 };
 
 enum petinfo_types {
@@ -490,6 +495,7 @@ enum unitdata_mobtypes {
 	UMOB_IGNORE_CELL_STACK_LIMIT,
 	UMOB_RES,
 	UMOB_MRES,
+	UMOB_DAMAGETAKEN,
 };
 
 enum unitdata_homuntypes {
@@ -2165,6 +2171,7 @@ void script_free_state(struct script_state* st);
 struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
+void script_run_petautobonus(const std::string &autobonus, map_session_data &sd);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int64* value);
