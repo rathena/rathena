@@ -16,6 +16,7 @@
 #   HeadTop                 Item name of headgear (if Sprite is a player). (Default: 0)
 #   HeadMid                 Item name of headgear (if Sprite is a player). (Default: 0)
 #   HeadLow                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   Robe                    Item name of robe (if Sprite is a player). (Default: 0)
 #   PetEquip                Item name of pet equipment (if Mob is a valid pet). (Default: 0)
 #   Options:                Set an option for an object. (Optional)
 #     <Option>: bool

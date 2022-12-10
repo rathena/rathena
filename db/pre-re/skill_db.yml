@@ -8272,7 +8272,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 60000
-    Duration2: 15000
+    Duration2: 30000
     Requires:
       SpCost: 20
       Weapon:
@@ -8281,7 +8281,7 @@ Body:
     Unit:
       Id: Lullaby
       Layout: 4
-      Interval: 6000
+      Interval: 4000
       Target: Enemy
       Flag:
         Ensemble: true
@@ -9325,15 +9325,13 @@ Body:
     Name: NPC_WEAPONBRAKER
     Description: Break weapon
     MaxLevel: 10
-    Type: Weapon
-    TargetType: Attack
+    TargetType: Self
     Flags:
       IsNpc: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    Element: Weapon
-    Status: BrokenWeapon
+    Duration: 30000
+    Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
     Description: Break armor

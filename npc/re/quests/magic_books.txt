@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao, Muad_Dib (translation)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -17,6 +17,8 @@
 //=	 Aegis & fixed a bracket issue. [Capuche]
 //= 1.2 Updates Magic Books gained from Lea. [Aleos]
 //= 1.3 Fixes checkquest calls. [Everade]
+//= 1.4 Added EAJ_WARLOCK so that jobs after Warlock such as 
+//      Arch Mage can enter. [Mazvi]
 //============================================================ 
 
 // Main Quest :: war_book
@@ -36,7 +38,7 @@ geffen_in,176,105,4	script	Master Velofos	1_M_WIZARD,{
 		mes "I'm not here to babysit. Get lost!";
 		close;
 	}
-	if ((Class != Job_Warlock) && (Class != Job_Warlock_T) && (Class != Job_Baby_Warlock)) {
+	if ((eaclass()&EAJ_THIRDMASK)!=EAJ_WARLOCK) {
 		mes "[Master Velofos]";
 		mes "Ha ha, are you also seeking new knowledge?";
 		next;
@@ -276,7 +278,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 		mes "You're overweight with items. Please lose some item weight first.";
 		close;
 	}
-	if (wm_book > 0 && (Class == Job_Warlock || Class == Job_Warlock_T || Class == Job_Baby_Warlock)) {
+	if (wm_book > 0 && ((eaclass()&EAJ_THIRDMASK)==EAJ_WARLOCK)) {
 		mes "[Lea]";
 		mes "How may I help you?";
 		next;
@@ -411,7 +413,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 		mes "I'm not here to babysit. Get lost!";
 		close;
 	}
-	if ((Class != Job_Warlock) && (Class != Job_Warlock_T) && (Class != Job_Baby_Warlock)) {
+	if ((eaclass()&EAJ_THIRDMASK)!=EAJ_WARLOCK) {
 		mes "[Galfos]";
 		mes "My right arm feels hot while my left arm feels cold. I can never get used to this weird weather!";
 		close;

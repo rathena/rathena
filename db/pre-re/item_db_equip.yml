@@ -44,6 +44,7 @@
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
+#   Gradable                If the item can be graded. (Default: false)
 #   View                    View sprite of an item. (Default: 0)
 #   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
 #   Flags:                  Item flags. (Default: null)
@@ -85,7 +86,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Id: 1101
@@ -844,7 +845,6 @@ Body:
     Refineable: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,5;
       bonus2 bAddRace,RC_Player_Human,5;
   - Id: 1131
@@ -10432,8 +10432,9 @@ Body:
       bonus bDex,1;
       bonus bAtkEle,Ele_Undead;
       bonus bMatkRate,20;
-      bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+getrefine();
-      if (getrefine()>=9) {
+      .@r = getrefine();
+      bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+.@r;
+      if (.@r>=9) {
          bonus bMatkRate,3;
          bonus bMaxSP,300;
       }
@@ -10485,8 +10486,9 @@ Body:
     Script: |
       bonus bInt,4;
       bonus bMatkRate,15;
-      bonus2 bIgnoreMdefClassRate,Class_Normal,10+getrefine();
-      bonus2 bIgnoreMdefClassRate,Class_Boss,10+getrefine();
+      .@r = getrefine();
+      bonus2 bIgnoreMdefClassRate,Class_Normal,10+.@r;
+      bonus2 bIgnoreMdefClassRate,Class_Boss,10+.@r;
   - Id: 1627
     AegisName: Staffy
     Name: Staffy
@@ -10781,9 +10783,10 @@ Body:
       bonus bInt,3;
       bonus bDex,3;
       bonus bMatkRate,20;
-      bonus2 bIgnoreMdefClassRate,Class_Normal,getrefine();
-      bonus2 bIgnoreMdefClassRate,Class_Boss,getrefine();
-      bonus bDelayRate,-(getrefine()*3/2);
+      .@r = getrefine();
+      bonus2 bIgnoreMdefClassRate,Class_Normal,.@r;
+      bonus2 bIgnoreMdefClassRate,Class_Boss,.@r;
+      bonus bDelayRate,-(.@r*3/2);
   - Id: 1637
     AegisName: Eraser
     Name: Eraser
@@ -10908,12 +10911,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMatkRate,15;
       bonus2 bMagicAddRace,RC_DemiHuman,15;
       bonus2 bMagicAddRace,RC_Player_Human,15;
-      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25 + ((getrefine()>5) ? 5 : 0);
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25 + ((getrefine()>5) ? 5 : 0);
+      .@r = getrefine();
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25 + ((.@r>5) ? 5 : 0);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25 + ((.@r>5) ? 5 : 0);
       bonus bUnbreakableWeapon;
-      if (getrefine()>8) {
+      if (.@r>8) {
          bonus bCastrate,-5;
          bonus bDelayRate,-5;
          bonus bMatkRate,5;
@@ -10948,17 +10953,19 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMatkRate,15;
       bonus bHealPower,14;
       bonus bDelayRate,-10;
       bonus bUnbreakableWeapon;
-      if (getrefine()>5) {
+      .@r = getrefine();
+      if (.@r>5) {
          bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5;
          bonus2 bIgnoreMdefRaceRate,RC_Player_Human,5;
-         bonus bHealPower,5+(getrefine()-5)*2;
+         bonus bHealPower,5+(.@r-5)*2;
       }
-      if (getrefine()>8)
+      if (.@r>8)
          bonus5 bAutoSpellOnSkill,"AL_HEAL","AL_HEAL",10,100,1;
-      if (getrefine()>9) {
+      if (.@r>9) {
          bonus bHealPower,10;
       }
   - Id: 1642
@@ -11016,10 +11023,11 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
-      bonus bMatk,15;
+      bonus bMatkRate,15;
       bonus bInt,4;
-      if (getrefine()>5) {
-         bonus bInt,getrefine()-5;
+      .@r = getrefine();
+      if (.@r>5) {
+         bonus bInt,.@r-5;
          bonus bMaxHP,-200;
          bonus bMaxSP,-100;
       }
@@ -11057,8 +11065,9 @@ Body:
     Script: |
       bonus bInt,4;
       bonus bMatkRate,15;
-      bonus2 bIgnoreMdefClassRate,Class_Normal,10+getrefine();
-      bonus2 bIgnoreMdefClassRate,Class_Boss,10+getrefine();
+      .@r = getrefine();
+      bonus2 bIgnoreMdefClassRate,Class_Normal,10+.@r;
+      bonus2 bIgnoreMdefClassRate,Class_Boss,10+.@r;
   - Id: 1645
     AegisName: Lich_Bone_Wand_M
     Name: Lich's Bone Wand
@@ -11096,8 +11105,9 @@ Body:
       bonus bDex,1;
       bonus bAtkEle,Ele_Undead;
       bonus bMatkRate,20;
-      bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+getrefine();
-      if (getrefine()>=9) {
+      .@r = getrefine();
+      bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+.@r;
+      if (.@r>=9) {
          bonus bMatkRate,3;
          bonus bMaxSP,300;
       }
@@ -11125,9 +11135,10 @@ Body:
     Script: |
       bonus bInt,4;
       bonus bMatkRate,15;
-      bonus bMdef,getrefine();
-      bonus2 bSkillAtk,"WZ_STORMGUST",getrefine();
-      if (getrefine()>9)
+      .@r = getrefine();
+      bonus bMdef,.@r;
+      bonus2 bSkillAtk,"WZ_STORMGUST",.@r;
+      if (.@r>9)
          bonus2 bCastrate,"WZ_STORMGUST",-8;
   - Id: 1647
     AegisName: Croce_Staff
@@ -14223,11 +14234,12 @@ Body:
     EquipLevelMin: 80
     Refineable: true
     Script: |
-      bonus bMatkRate,25+getrefine()/2;
+      .@r = getrefine();
+      bonus bMatkRate,25+(.@r/2);
       bonus bInt,3;
       bonus bAgi,10;
-      bonus bUseSPrate,(getrefine()*2);
-      bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(getrefine()*20);
+      bonus bUseSPrate,(.@r*2);
+      bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(.@r*20);
       bonus2 bCastrate,"HW_MAGICPOWER",-50;
   - Id: 2001
     AegisName: Divine_Cross
@@ -14281,19 +14293,20 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bMatkRate,getrefine();
+      .@r = getrefine();
+      bonus bMatkRate,15 + .@r;
       bonus2 bMagicAddRace,RC_DemiHuman,15;
       bonus2 bMagicAddRace,RC_Player_Human,15;
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25;
       bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25;
       bonus bUnbreakableWeapon;
-      if (getrefine()>5) {
-         bonus2 bMagicAddRace,RC_DemiHuman,(getrefine()-5)*2;
-         bonus2 bMagicAddRace,RC_Player_Human,(getrefine()-5)*2;
-         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+(getrefine()-5)*2;
-         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,5+(getrefine()-5)*2;
+      if (.@r>5) {
+         bonus2 bMagicAddRace,RC_DemiHuman,(.@r-5)*2;
+         bonus2 bMagicAddRace,RC_Player_Human,(.@r-5)*2;
+         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+(.@r-5)*2;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,5+(.@r-5)*2;
       }
-      if (getrefine()>8) {
+      if (.@r>8) {
          bonus5 bAutoSpellOnSkill,"WZ_STORMGUST","MG_SAFETYWALL",10,200,1;
          bonus5 bAutoSpellOnSkill,"WZ_METEOR","MG_SAFETYWALL",10,200,1;
          bonus5 bAutoSpellOnSkill,"WZ_VERMILION","MG_SAFETYWALL",10,200,1;
@@ -14326,11 +14339,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bMatkRate,25+getrefine()/2;
+      .@r = getrefine();
+      bonus bMatkRate,25+(.@r/2);
       bonus bInt,3;
       bonus bAgi,10;
-      bonus bUseSPrate,(getrefine()*2);
-      bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(getrefine()*20);
+      bonus bUseSPrate,(.@r*2);
+      bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(.@r*20);
       bonus2 bCastrate,"HW_MAGICPOWER",-50;
   - Id: 2004
     AegisName: Kronos
@@ -14353,9 +14367,10 @@ Body:
     EquipLevelMin: 50
     Refineable: true
     Script: |
+      .@r = getrefine();
       bonus bMatkRate,20;
-      bonus bInt,3+(getrefine()/2);
-      bonus bMaxHP,300+(50*getrefine()/2);
+      bonus bInt,3+(.@r/2);
+      bonus bMaxHP,300+(50*.@r/2);
       autobonus "{ bonus bMatkRate,12; bonus buseSPRate,20; }",1,5000,BF_MAGIC,"{ specialeffect2 EF_ENHANCE; }";
   - Id: 2005
     AegisName: Dea_Staff
@@ -14384,29 +14399,6 @@ Body:
       bonus bInt,6;
       bonus bVit,2;
       autobonus3 "{ }",20,1000,"AL_HEAL","{ specialeffect2 EF_MAGICALATTHIT; heal 0,200; }";
-  - Id: 2006
-    AegisName: G_Staff_Of_Light
-    Name: Staff Of Light
-    Type: Weapon
-    SubType: 2hStaff
-    Buy: 20
-    Weight: 1900
-    Attack: 80
-    Range: 1
-    Jobs:
-      Mage: true
-      Sage: true
-      SoulLinker: true
-      Wizard: true
-    Locations:
-      Both_Hand: true
-    WeaponLevel: 4
-    EquipLevelMin: 60
-    Refineable: true
-    Script: |
-      /* bonus bMatk,150;
-      */ bonus bAtkEle,Ele_Holy;
-      bonus bInt,6;
   - Id: 2101
     AegisName: Guard
     Name: Guard
@@ -24702,7 +24694,6 @@ Body:
     Script: |
       bonus bMaxSP,100;
       skill "TF_DOUBLE",3;
-      bonus bDoubleRate,15;
       skill "TF_STEAL",1;
       skill "TF_HIDING",1;
       skill "TF_POISON",1;
@@ -29767,7 +29758,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,50;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus2 bSubRace,RC_DemiHuman,3;
       bonus2 bSubRace,RC_Player_Human,3;
   - Id: 5284
@@ -31728,7 +31718,6 @@ Body:
       NoGuildStorage: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
   - Id: 5389
     AegisName: Angel_Spirit
     Name: Angel Spirit
@@ -34171,9 +34160,7 @@ Body:
     View: 525
     Script: |
       bonus bDex,2;
-      .@bonus = max(getskilllv("TF_DOUBLE"), 5);
-      skill "TF_DOUBLE",.@bonus;
-      bonus bDoubleRate,.@bonus * 5;
+      skill "TF_DOUBLE",5;
   - Id: 5532
     AegisName: Pirate_Dagger_J
     Name: Pirate Dagger
@@ -39963,7 +39950,6 @@ Body:
     WeaponLevel: 4
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,40;
       bonus2 bAddRace,RC_Player_Human,40;
   - Id: 13408
@@ -40350,14 +40336,16 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bInt,getrefine()-5;
+      .@r = getrefine();
+      bonus bInt,6;
+      bonus bInt,.@r-5;
       bonus bMatkRate,10;
       bonus bUnbreakableWeapon;
-      if (getrefine()>5)
+      if (.@r>5)
          bonus bUseSPrate,-10;
-      if (getrefine()>8)
+      if (.@r>8)
          bonus4 bAutoSpellOnSkill,"PA_PRESSURE","PR_LEXAETERNA",1,1000;
-      if (getrefine()>9)
+      if (.@r>9)
          bonus bInt,5;
   - Id: 13419
     AegisName: Holy_Saber

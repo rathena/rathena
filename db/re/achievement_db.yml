@@ -1784,6 +1784,12 @@ Body:
     Rewards:
       TitleId: 1034
     Score: 10
+  - Id: 130005 # TODO (Terra Gloria: give achievement when player visit the coronation ceremony)
+    Group: Chatting
+    Name: Who made the king
+    Rewards:
+      TitleID: 1046
+    Score: 10
   - Id: 170000
     Group: Chatting
     Name: Song chamber is not an accident
@@ -1902,7 +1908,7 @@ Body:
     Name: Elite Adventurer! (1)
     Condition: " Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 50
   - Id: 200012
@@ -1910,7 +1916,7 @@ Body:
     Name: Transcendentaler! (1)
     Condition: " Class >= JOB_RUNE_KNIGHT_T && Class <= JOB_GUILLOTINE_CROSS_T "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 60
   - Id: 200013
@@ -1918,7 +1924,7 @@ Body:
     Name: Elite Adventurer! (2)
     Condition: " Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 50
   - Id: 200014
@@ -1926,7 +1932,7 @@ Body:
     Name: Transcendentaler! (2)
     Condition: " Class >= JOB_ROYAL_GUARD_T && Class <= JOB_SHADOW_CHASER_T "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 60
   - Id: 200015
@@ -1941,7 +1947,7 @@ Body:
     Name: This is My way!
     Condition: " Class == JOB_STAR_GLADIATOR || Class == JOB_SOUL_LINKER || Class == JOB_KAGEROU || Class == JOB_OBORO || Class == JOB_REBELLION "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 20
   - Id: 200017
@@ -2021,7 +2027,7 @@ Body:
     Name: Incarnation of Love and Hate
     Condition: " BaseLevel == 99 && Class == JOB_NOVICE "
     Rewards:
-      Item: Abrasive_Box_10
+      Item: E_Abrasive_Box10
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
     Score: 30
   - Id: 200030
@@ -2029,7 +2035,7 @@ Body:
     Name: I really love it!
     Condition: " BaseLevel == 99 && (Class >= JOB_SWORDMAN && Class <= JOB_THIEF) "
     Rewards:
-      Item: Bubble_Gum_Box_10
+      Item: E_Bubble_Gum_Box
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
     Score: 30
   - Id: 200031
@@ -2037,30 +2043,38 @@ Body:
     Name: Reborn in Valhalla!
     Condition: " Class == JOB_NOVICE_HIGH "
     Rewards:
-    #  Item: Adventurer_Box_1
+      Item: Adventurer_Box_1
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 10
   - Id: 200032
     Group: Goal_Level
     Name: The start of another adventure!
     Condition: " BaseLevel == 100 "
-    #Rewards:
-    #  Item: Rebeginer_Box_100
+    Rewards:
+      Item: Rebeginer_Box_100
     Score: 10
   - Id: 200033
     Group: Goal_Level
     Name: With a new mind!(1)
     Condition: " BaseLevel == 170 && (Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS_T) "
-    #Rewards:
-    #  Item: Costume_Ticket
+    Rewards:
+      Item: Costume_Ticket
     Score: 50
   - Id: 200034
     Group: Goal_Level
     Name: With a new mind!(2)
     Condition: " BaseLevel == 170 && (Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER_T) "
-    #Rewards:
-    #  Item: Costume_Ticket
+    Rewards:
+      Item: Costume_Ticket
     Score: 50
+  - Id: 200035
+    Group: Goal_Level
+    Name: Level 200 achieved!
+    Condition: " BaseLevel == 200 "
+    Rewards:
+      Item: C_Magestic_Goat2
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+    Score: 100
   - Id: 220000
     Group: Chatting_Create
     Name: Community begin

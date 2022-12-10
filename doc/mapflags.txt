@@ -165,7 +165,6 @@ Disables shop creation on a map from the ALL_BUYING_STORE skill.
 *nousecart
 
 Disables cart usage on a map.
-[Not fully implemented.]
 
 ---------------------------------------
 

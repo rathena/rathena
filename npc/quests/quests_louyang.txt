@@ -2464,7 +2464,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 			case 1:
 				mes "[Nagash Arses]";
 				mes "Ah, have you";
-				mes "head of this poem?";
+				mes "heard of this poem?";
 				mes "As I grow older, my";
 				mes "memory also grows worse,";
 				mes "but I really like this poem";
@@ -2478,12 +2478,12 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				set .@question_poet,rand(1,4);
 				if (.@question_poet == 1) {
 					mes "[Nagash Arses]";
-					mes "'^3355FFAs I lay^000000 ^3355FFlooking up at the moonlight^000000.' In this first line, what word should be in [ ]?";
+					mes "'^3355FFAs I lay^000000 [ ] ^3355FFlooking up at the moonlight^000000.' In this first line, what word should be in [ ]?";
 					next;
 					if (select("on the ground:with you:in bed:in the stars") == 3)
 						set .@answer_poet,.@answer_poet + 10;
 					mes "[Nagash Arses]";
-					mes "'^3355FFIt looks like the^000000 ^3355FFon the ground^000000.' In the second line, which word should be in [ ]?";
+					mes "'^3355FFIt looks like the^000000 [ ] ^3355FFon the ground^000000.' In the second line, which word should be in [ ]?";
 					next;
 					if (select("frost:dew:pebbles:snow") == 1)
 						set .@answer_poet,.@answer_poet + 10;
@@ -2523,7 +2523,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				}
 				else if (.@question_poet == 2) {
 					mes "[Nagash Arses]";
-					mes "'^3355FFIt looks like the^000000 ^3355FFon the ground^000000.' In the second line, which word should be in [ ]?";
+					mes "'^3355FFIt looks like the^000000 [ ] ^3355FFon the ground^000000.' In the second line, which word should be in [ ]?";
 					next;
 					if (select("frost:dew:pebbles:snow") == 1)
 						set .@answer_poet,.@answer_poet + 10;
@@ -2571,7 +2571,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				}
 				else if (.@question_poet == 3) {
 					mes "[Nagash Arses]";
-					mes "'^3355FFIt looks like the^000000 ^3355FFon the ground^000000.' In the second line, which word should be in [ ]?";
+					mes "'^3355FFIt looks like the^000000 [ ] ^3355FFon the ground^000000.' In the second line, which word should be in [ ]?";
 					next;
 					if (select("frost:dew:pebbles:snow") == 1)
 						set .@answer_poet,.@answer_poet + 10;
@@ -2617,14 +2617,14 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				}
 				else {
 					mes "[Nagash Arses]";
-					mes "'^3355FFIt looks like the^000000 ^3355FFon the ground^000000.' In the second line,";
+					mes "'^3355FFIt looks like the^000000 [ ] ^3355FFon the ground^000000.' In the second line,";
 					mes "which word should be in [ ]?";
 					next;
 					if (select("frost:dew:pebbles:snow") == 1)
 						set .@answer_poet,.@answer_poet + 10;
 					next;
 					mes "[Nagash Arses]";
-					mes "'^3355FFI lift my^000000 ^3355FFto look at the bright moon^000000.' In the third line, which word should be in [ ]?";
+					mes "'^3355FFI lift my^000000 [ ] ^3355FFto look at the bright moon^000000.' In the third line, which word should be in [ ]?";
 					next;
 					if (select("eyes:head:gaze:sights") == 2)
 						set .@answer_poet,.@answer_poet + 10;
@@ -3315,8 +3315,8 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "This is a journal that I have been writing for 15 years about my feelings of guilt, and what really happened in the past. I hope you can deliver this to the lord for me.";
 		next;
 		mes "^3355FFYou obtained";
-		mes "^0000FFPoison King,";
-		mes "Nagash Arses' Jounal^000000.";
+		mes "^0000FFPoison King";
+		mes "Nagash Arses' Journal^000000.";
 		set ch_poison,18;
 		changequest 11080,11081;
 		close;
