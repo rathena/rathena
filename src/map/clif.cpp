@@ -9378,26 +9378,23 @@ void clif_wedding_effect(struct block_list *bl)
 
 /// Notifies the client of the name of the partner character (ZC_COUPLENAME).
 /// 01e6 <partner name>.24B
-void clif_callpartner(struct map_session_data *sd)
+void clif_callpartner(struct map_session_data& sd)
 {
-	unsigned char buf[26];
+	PACKET_ZC_COUPLENAME p = { 0 };
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_COUPLENAME;
 
-	WBUFW(buf,0) = 0x1e6;
-
-	if( sd->status.partner_id ) {
-		const char *p = map_charid2nick(sd->status.partner_id);
-		struct map_session_data *p_sd = pc_get_partner(sd);
-		if( p != NULL && p_sd != NULL && !p_sd->state.autotrade )
-			safestrncpy(WBUFCP(buf,2), p, NAME_LENGTH);
+	if( sd.status.partner_id ) {
+		struct map_session_data *p_sd = pc_get_partner(&sd);
+		if (p_sd != nullptr && !p_sd->state.autotrade)
+			safestrncpy(p.name, p_sd->status.name, NAME_LENGTH);
 		else
-			WBUFB(buf,2) = 0;
+			p.name[0] = 0;
 	} else {// Send zero-length name if no partner, to initialize the client buffer.
-		WBUFB(buf,2) = 0;
+		p.name[0] = 0;
 	}
 
-	clif_send(buf, packet_len(0x1e6), &sd->bl, AREA);
+	clif_send(&p, sizeof(p), &sd.bl, AREA);
 }
 
 
