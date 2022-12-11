@@ -2452,7 +2452,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
  * @param mob: monster
  * @return Modified drop rate
  */
-int getsizedropmodifier(mob_data* md)
+int mob_getsizedropmodifier(mob_data* md)
 {
 	int size_rate = 100;
 	if (battle_config.mob_size_influence) {  // Change drops depending on monsters size [Valaris]
@@ -2795,7 +2795,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		int drop_rate, drop_modifier = 100;
-		int size_drop_modifier = getsizedropmodifier(md);
+		int size_drop_modifier = mob_getsizedropmodifier(md);
 
 #ifdef RENEWAL_DROP
 		drop_modifier = pc_level_penalty_mod( mvp_sd != nullptr ? mvp_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
