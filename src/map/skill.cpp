@@ -3117,11 +3117,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		// Item-based reflection - Bypasses Boss check
 		if (sd && sd->bonus.magic_damage_return && type && rnd()%100 < sd->bonus.magic_damage_return)
 			return 1;
-	}
 
-	// Magic Mirror reflection - Bypasses Boss check
-	if (sc && sc->data[SC_MAGICMIRROR] && rnd()%100 < sc->data[SC_MAGICMIRROR]->val2)
-		return 1;
+		// Magic Mirror reflection - Bypasses Boss check
+		if (sc && sc->data[SC_MAGICMIRROR] && rnd()%100 < sc->data[SC_MAGICMIRROR]->val2)
+			return 1;
+	}
 
 	if( status_get_class_(src) == CLASS_BOSS )
 		return 0;
@@ -3582,7 +3582,10 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		}
 	}
 
-	if( dmg.flag&BF_MAGIC && ( skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) )
+	if(
+		(dmg.flag & BF_MAGIC || (tsc && tsc->data[SC_MAGICMIRROR] && skill_get_type(skill_id) == BF_MAGIC)) &&
+		(skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1))
+	)
 	{ // Earthquake on multiple targets is not counted as a target skill. [Inkfish]
 		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
@@ -3646,9 +3649,19 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
 				}
 
-				if (dmg.damage > 0 && tsd && tsd->bonus.reduce_damage_return != 0) {
-					dmg.damage -= dmg.damage * tsd->bonus.reduce_damage_return / 100;
-					dmg.damage = i64max(dmg.damage, 1);
+				int64 reduce = 0;
+
+				if (tsd && tsd->bonus.reduce_damage_return != 0) {
+					reduce += tsd->bonus.reduce_damage_return;
+				}
+				if (tsc && tsc->data[SC_REFLECTDAMAGE]) {
+					reduce += (tsc->data[SC_REFLECTDAMAGE]->val2);
+				}
+				if (tsc && tsc->data[SC_REF_T_POTION])
+					reduce += 100;
+				if (dmg.damage > 0) {
+					dmg.damage -= dmg.damage * i64min(100,reduce) / 100;
+					dmg.damage = i64max(dmg.damage, dmg.div_);
 				}
 			}
 #endif
