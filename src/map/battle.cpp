@@ -2458,6 +2458,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
+	struct status_change* tsc = status_get_sc(target);
+	if (tsc && tsc->data[SC_MAGICMIRROR] && skill_get_type(skill_id) == BF_MAGIC)
+		return BF_SHORT;
+
 	switch (skill_id) {
 		case AC_SHOWER:
 		case AM_DEMONSTRATION:
@@ -6379,8 +6383,8 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 				// It appears that official servers give skill reflect damage a longer delay
-				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay ,true, false);
-				skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
+				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, wd->flag, skill_id, skill_lv, rdamage, ATK_DEF, rdelay ,true, false);
+				skill_additional_effect(target, (!d_bl) ? src : d_bl, skill_id, skill_lv, wd->flag, ATK_DEF, tick);
 			}
 		}
 	}
@@ -6812,7 +6816,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	ad.amotion = (skill_get_inf(skill_id)&INF_GROUND_SKILL ? 0 : sstatus->amotion); //Amotion should be 0 for ground skills.
 	ad.dmotion = tstatus->dmotion;
 	ad.blewcount = skill_get_blewcount(skill_id, skill_lv);
-	ad.flag = BF_MAGIC|BF_SKILL;
 	ad.dmg_lv = ATK_DEF;
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -6828,6 +6831,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	s_elemental_data* ed = BL_CAST(BL_ELEM, src);
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
+
+	if (tsc && tsc->data[SC_MAGICMIRROR]) {
+		ad.flag = BF_WEAPON|BF_SKILL|BF_NORMAL;
+	} else {
+		ad.flag = BF_MAGIC|BF_SKILL;
+	}
 
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
@@ -8403,8 +8412,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (sc) {
 		if (sc->data[SC_HELLS_PLANT])
 			return 0;
-		if (sc->data[SC_REF_T_POTION])
-			return 1; // Returns 1 damage
 	}
 
 	map_session_data *tsd = BL_CAST(BL_PC, tbl);
@@ -8434,7 +8441,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					rdamage = 0;
 				else {
 					rdamage += damage * tsc->data[SC_REFLECTSHIELD]->val2 / 100;
-					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8453,26 +8459,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	} else {
 		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
 			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (rdamage > 0) {
-		map_session_data* sd = BL_CAST(BL_PC, src);
-		if (sd && sd->bonus.reduce_damage_return != 0) {
-			rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (sc) {
-		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
-			rdamage -= damage * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0) {
-			rdamage -= damage * sc->data[SC_VENOMBLEED]->val2 / 100;
-			rdamage = i64max(rdamage, 1);
 		}
 	}
 
@@ -8491,7 +8477,29 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 0);
+	}
+
+	int64 reduce = 0;
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd && sd->bonus.reduce_damage_return != 0) {
+		reduce += (sd->bonus.reduce_damage_return);
+	}
+
+	if (sc) {
+		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
+			reduce += sc->data[SC_REFLECTDAMAGE]->val2;
+		}
+		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0) {
+			reduce += sc->data[SC_VENOMBLEED]->val2;
+		}
+		if (sc->data[SC_REF_T_POTION])
+			reduce += 100;
+	}
+
+	if (rdamage > 0) {
+		rdamage -= rdamage * i64min(100, reduce) / 100;
+		rdamage = i64max(rdamage, 1);
 	}
 
 	if (rdamage == 0)
