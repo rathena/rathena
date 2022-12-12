@@ -2447,22 +2447,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 #endif
 }
-/**
- * Get modified drop rate
- * @param mob: monster
- * @return Modified drop rate
- */
-int mob_getsizedropmodifier(mob_data* md)
-{
-	int size_rate = 100;
-	if (battle_config.mob_size_influence) {  // Change drops depending on monsters size [Valaris]
-		if (md->special_state.size == SZ_MEDIUM)
-			size_rate /= 2; // SZ_MEDIUM actually is small size modification... this is not a bug!
-		else if (md->special_state.size == SZ_BIG)
-			size_rate *= 2;
-	}
-	return size_rate;
-}
+
 /**
  * Get modified drop rate
  * @param src: Source object
@@ -2471,9 +2456,15 @@ int mob_getsizedropmodifier(mob_data* md)
  * @param drop_modifier: RENEWAL_DROP level modifier
  * @return Modified drop rate
  */
-int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int base_rate, int drop_modifier)
+int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int base_rate, int drop_modifier, int mob_size)
 {
 	int drop_rate = base_rate;
+	if (battle_config.mob_size_influence) {  // Change drops depending on monsters size [Valaris]
+		if (mob_size == SZ_MEDIUM && drop_rate >= 2)
+			drop_rate /= 2; // SZ_MEDIUM actually is small size modification... this is not a bug!
+		else if (mob_size == SZ_BIG)
+			drop_rate *= 2;
+	}
 	if (src) {
 		if (battle_config.drops_by_luk) // Drops affected by luk as a fixed increase [Valaris]
 			drop_rate += status_get_luk(src) * battle_config.drops_by_luk / 100;
@@ -2795,7 +2786,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		int drop_rate, drop_modifier = 100;
-		int size_drop_modifier = mob_getsizedropmodifier(md);
 
 #ifdef RENEWAL_DROP
 		drop_modifier = pc_level_penalty_mod( mvp_sd != nullptr ? mvp_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
@@ -2817,7 +2807,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if ( it == nullptr )
 				continue;
 
-			drop_rate = mob_getdroprate(src, md->db, apply_rate(md->db->dropitem[i].rate,size_drop_modifier), drop_modifier);
+			drop_rate = mob_getdroprate(src, md->db, md->db->dropitem[i].rate, drop_modifier, md->special_state.size);
 
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
