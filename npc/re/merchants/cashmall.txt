@@ -25,7 +25,14 @@ prontera,137,125,4	script	Cash Sales Guide#prontera::cashmall_warper	4_M_HUMAN_0
 			mes "Oops, I forgot. When you come out be sure to come back here.";
 			mes "Rember this~";
 			close2;
-			// TODO: store city you came from
+			setarray .@maparray$[0], "prontera", "morocc", "moc_ruins", "geffen", "payon", "lighthalzen", "rachel";
+			.@return = inarray(.@maparray$[0], strcharinfo(3));
+
+			if (.@return >= 0)
+				cashmall_return = .@return + 1;
+			else // Default to Prontera if not found
+				cashmall_return = 1;
+
 			warp "itemmall",22,43;
 			end;
 		case 2:
@@ -55,7 +62,39 @@ itemmall,21,45,4	script	Exit Guide#cashmall_exit	4_M_HUMAN_02,{
 			mes "Thank you for coming.";
 			mes "I'll send you back from where you came from.";
 			close2;
-			warp "prontera",116,72; // TODO: if multiple duplicates to warp you in, warp to correct location, per city you came from
+			switch(cashmall_return) {
+				default:
+				case 1:
+					.@returnmap$ = "prontera";
+					setarray .@xy[0],116,72;
+					break;
+				case 2:
+					.@returnmap$ = "morocc";
+					setarray .@xy[0],159,46;
+					break;
+				case 3:
+					.@returnmap$ = "moc_ruins";
+					setarray .@xy[0],109,137;
+					break;
+				case 4:
+					.@returnmap$ = "geffen";
+					setarray .@xy[0],120,38;
+					break;
+				case 5:
+					.@returnmap$ = "payon";
+					setarray .@xy[0],161,58;
+					break;
+				case 6:
+					.@returnmap$ = "lighthalzen";
+					setarray .@xy[0],159,95;
+					break;
+				case 7:
+					.@returnmap$ = "rachel";
+					setarray .@xy[0],115,125;
+					break;
+			}
+			cashmall_return = 0;
+			warp .@returnmap$,.@xy[0],.@xy[1];
 			end;
 		case 2:
 			mes "[Guide]";
@@ -65,7 +104,7 @@ itemmall,21,45,4	script	Exit Guide#cashmall_exit	4_M_HUMAN_02,{
 	}
 }
 
-itemmall,41,53,3	script	Cat Hand Salesman Macaroon	4_M_MERCAT1,{
+itemmall,41,53,3	script	Cat Hand Salesman Macaroon#cashmall	4_M_MERCAT1,{
 	mes "[Macaroon]";
 	mes "Welcome!";
 	mes "Today doesn't come every day!";
@@ -139,3 +178,10 @@ itemmall,41,53,3	script	Cat Hand Salesman Macaroon	4_M_MERCAT1,{
 			end;
 	}
 }
+
+morocc,164,39,4	duplicate(cashmall_warper)	Cash Sales Guide#morocc	899
+moc_ruins,115,143,4	duplicate(cashmall_warper)	Cash Sales Guide#moc_ruins	899
+geffen,115,168,4	duplicate(cashmall_warper)	Cash Sales Guide#geffen	899
+payon,164,157,4	duplicate(cashmall_warper)	Cash Sales Guide#payon	899
+lighthalzen,206,144,4	duplicate(cashmall_warper)	Cash Sales Guide#lighthalzen	899
+rachel,128,144,4	duplicate(cashmall_warper)	Cash Sales Guide#rachel	899
