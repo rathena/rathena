@@ -219,6 +219,10 @@ Refineable: Defines if the item can be refined.
 
 ---------------------------------------
 
+Gradable: Defines if the item can be graded.
+
+---------------------------------------
+
 View: For normal items, defines a replacement view-sprite for the item.
 
 ---------------------------------------

@@ -503,6 +503,10 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 		function module_check;
 		.@s -= 2;
 		.@equip_id = getequipid(.@part);
+		.@refine = getequiprefinerycnt(.@part);
+		for (.@i = 0; .@i < 4; .@i++)
+			.@card[.@i] = getequipcardid(.@part,.@i);
+		copyarray .@check[0],.@card[0],4;
 		if (!.@equip_id || .@id[0] != .@equip_id && .@id[1] != .@equip_id) {
 			mes "[RS26]";
 			mes "The equipment needs to be checked. That thing is not something this device can work with.";
@@ -542,9 +546,6 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 					mes "Then, please visit me again when you need my help~";
 					close;
 				}
-				for (.@i = 0; .@i < 4; .@i++)
-					.@card[.@i] = getequipcardid(.@part,.@i);
-				copyarray .@check[0],.@card[0],4;
 				for (.@i = 1; .@i < 4; .@i++) {
 					if (.@card[.@i] == 0) {
 						.@augment_slot = .@i;

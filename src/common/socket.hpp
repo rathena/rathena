@@ -133,6 +133,7 @@ int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 
 int do_sockets(t_tick next);
+int do_wait(t_tick next);
 void do_close(int fd);
 void socket_init(void);
 void socket_final(void);

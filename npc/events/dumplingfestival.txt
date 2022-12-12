@@ -53,7 +53,7 @@ L_SORRY:
   
 M_FIN:
 	mes "[Exorcist Master Fahae]";
-	mes "The path of fully venquishing evil is far, help me in the way of God.";
+	mes "The path of fully vanquishing evil is far, help me in the way of God.";
 	close;
   
 M_HERB:
