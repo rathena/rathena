@@ -413,6 +413,11 @@ struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM {
 	uint8 result;
 } __attribute__((packed));
 
+struct PACKET_ZC_COUPLENAME {
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -439,6 +444,7 @@ DEFINE_PACKET_HEADER(ZC_BROADCAST2, 0x1c3)
 #else
 	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x1b4)
 #endif
+DEFINE_PACKET_HEADER(ZC_COUPLENAME, 0x1e6);
 DEFINE_PACKET_HEADER(ZC_FRIENDS_LIST, 0x201)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_WEAPONITEMLIST, 0x221)
 DEFINE_PACKET_HEADER(ZC_ACK_WEAPONREFINE, 0x223)
