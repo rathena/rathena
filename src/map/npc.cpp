@@ -3528,7 +3528,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 		struct map_session_data* owner = map_charid2sd( nd->dynamicnpc.owner_char_id );
 
 		if( owner != nullptr ){
-			owner->npc_id_dynamic = 0;
+			util::vector_erase_if_exists(owner->npc_id_dynamic, nd->bl.id);
 		}
 	}
 
@@ -4515,7 +4515,8 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 
 	if( owner != nullptr ){
 		nd->dynamicnpc.owner_char_id = owner->status.char_id;
-		owner->npc_id_dynamic = nd->bl.id;
+		if (!util::vector_exists(owner->npc_id_dynamic, nd->bl.id))
+			owner->npc_id_dynamic.push_back(nd->bl.id);
 	}
 
 	switch( type ) {
@@ -5790,7 +5791,7 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 			return 0;
 		}
 
-		sd->npc_id_dynamic = 0;
+		util::vector_erase_if_exists(sd->npc_id_dynamic, nd->bl.id);
 	}
 
 	// Delete the NPC
@@ -5802,9 +5803,15 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 }
 
 struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, struct map_session_data& sd ){
-	if( sd.npc_id_dynamic != 0 ){
-		clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
-		return nullptr;
+	int src_id = nd.src_id > 0 ? nd.src_id : nd.bl.id;
+
+	for (const auto &it : sd.npc_id_dynamic) {
+		struct npc_data* src_nd = map_id2nd( it );
+
+		if( src_nd != nullptr && src_nd->src_id == src_id ){
+			clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
+			return nullptr;
+		}
 	}
 
 	if( map_getmapflag( sd.bl.m, MF_NODYNAMICNPC ) ){
