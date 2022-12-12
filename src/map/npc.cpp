@@ -4515,8 +4515,7 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 
 	if( owner != nullptr ){
 		nd->dynamicnpc.owner_char_id = owner->status.char_id;
-		if (!util::vector_exists(owner->npc_id_dynamic, nd->bl.id))
-			owner->npc_id_dynamic.push_back(nd->bl.id);
+		owner->npc_id_dynamic.push_back(nd->bl.id);
 	}
 
 	switch( type ) {
