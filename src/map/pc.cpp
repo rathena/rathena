@@ -15245,11 +15245,11 @@ void pc_jail(map_session_data &sd, int32 duration) {
 	int16 x, y;
 
 	switch (rnd() % 2) { // Jail Locations
-		case 0: // Default jail
+		case 0: // Jail #1
 			x = 49;
 			y = 75;
 			break;
-		default: // Jail #1
+		default: // Default Jail
 			x = 24;
 			y = 75;
 			break;
