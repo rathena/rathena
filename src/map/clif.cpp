@@ -24776,7 +24776,7 @@ void clif_parse_macro_reporter_ack(int fd, map_session_data *sd) {
 		return;
 	}
 
-	pc_macro_reporter_process(*sd, *tsd);
+	pc_macro_reporter_process(*tsd, sd->status.account_id);
 	clif_macro_reporter_status(*sd, MCR_MONITORING);
 #endif
 }
