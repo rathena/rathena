@@ -6059,6 +6059,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_N_FLY_WING:
 		case ITEMID_E_GIANT_FLY_WING:
 		case ITEMID_F_GIANT_FLY_WING:
+		case ITEMID_C_WING_OF_FLY:
 		case ITEMID_N_FLY_WING_:
 		case ITEMID_COMPRESSED_WING_OF_FLY:
 		case ITEMID_COMP_WING_OF_FLY:
@@ -6112,6 +6113,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				nameid != ITEMID_N_FLY_WING &&
 				nameid != ITEMID_E_GIANT_FLY_WING &&
 				nameid != ITEMID_F_GIANT_FLY_WING &&
+				nameid != ITEMID_C_WING_OF_FLY &&
 				nameid != ITEMID_N_FLY_WING_ &&
 				nameid != ITEMID_COMPRESSED_WING_OF_FLY &&
 				nameid != ITEMID_COMP_WING_OF_FLY
