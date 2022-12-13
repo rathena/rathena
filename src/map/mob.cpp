@@ -2456,14 +2456,15 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
  * @param drop_modifier: RENEWAL_DROP level modifier
  * @return Modified drop rate
  */
-int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int base_rate, int drop_modifier)
+int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int base_rate, int drop_modifier, mob_data* md)
 {
 	int drop_rate = base_rate;
 
-	if (battle_config.mob_size_influence) { // Change drops depending on monsters size [Valaris]
-		if (mob->status.size == SZ_MEDIUM && drop_rate >= 2)
+	if (md && battle_config.mob_size_influence) {  // Change drops depending on monsters size [Valaris]
+		unsigned int mob_size = md->special_state.size;
+		if (mob_size == SZ_MEDIUM && drop_rate >= 2)
 			drop_rate /= 2; // SZ_MEDIUM actually is small size modification... this is not a bug!
-		else if (mob->status.size == SZ_BIG)
+		else if (mob_size == SZ_BIG)
 			drop_rate *= 2;
 	}
 
@@ -2809,7 +2810,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if ( it == nullptr )
 				continue;
 			
-			drop_rate = mob_getdroprate(src, md->db, md->db->dropitem[i].rate, drop_modifier);
+			drop_rate = mob_getdroprate(src, md->db, md->db->dropitem[i].rate, drop_modifier, md);
 
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
