@@ -6057,11 +6057,19 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
 		case ITEMID_N_FLY_WING:
+		case ITEMID_E_GIANT_FLY_WING:
+		case ITEMID_F_GIANT_FLY_WING:
+		case ITEMID_N_FLY_WING_:
+		case ITEMID_COMPRESSED_WING_OF_FLY:
+		case ITEMID_COMP_WING_OF_FLY:
 			if( mapdata->flag[MF_NOTELEPORT] || mapdata_flag_gvg2(mapdata) ) {
 				clif_skill_teleportmessage(sd,0);
 				return false;
 			}
-			if (nameid == ITEMID_GIANT_FLY_WING) {
+			if (nameid == ITEMID_GIANT_FLY_WING ||
+				nameid == ITEMID_E_GIANT_FLY_WING ||
+				nameid == ITEMID_F_GIANT_FLY_WING
+			) {
 				struct party_data *pd = party_search(sd->status.party_id);
 
 				if (pd) {
@@ -6098,7 +6106,16 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( mapdata->flag[MF_NORETURN] && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
+			if( mapdata->flag[MF_NORETURN] &&
+				nameid != ITEMID_WING_OF_FLY &&
+				nameid != ITEMID_GIANT_FLY_WING &&
+				nameid != ITEMID_N_FLY_WING &&
+				nameid != ITEMID_E_GIANT_FLY_WING &&
+				nameid != ITEMID_F_GIANT_FLY_WING &&
+				nameid != ITEMID_N_FLY_WING_ &&
+				nameid != ITEMID_COMPRESSED_WING_OF_FLY &&
+				nameid != ITEMID_COMP_WING_OF_FLY
+			)
 				return false;
 			break;
 		case ITEMID_MERCENARY_RED_POTION:
