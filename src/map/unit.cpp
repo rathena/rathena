@@ -3428,6 +3428,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 					struct npc_data* nd = map_id2nd( it );
 
 					if( nd != nullptr ){
+						// Erase the owner first to prevent loops from npc_unload
+						nd->dynamicnpc.owner_char_id = 0;
+
 						// Delete the NPC
 						npc_unload( nd, true );
 					}

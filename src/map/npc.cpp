@@ -5790,7 +5790,7 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 			return 0;
 		}
 
-		util::vector_erase_if_exists(sd->npc_id_dynamic, nd->bl.id);
+		// npc id from sd->npc_id_dynamic is removed in npc_unload
 	}
 
 	// Delete the NPC
