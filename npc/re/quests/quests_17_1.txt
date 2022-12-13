@@ -6905,10 +6905,13 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		cutin "",255;
 		end;
 	case 2:
+		break;
 	}
 	// Episode 17.2 - START - (Walkthrough Conversion)
-	switch (isbegin_quest(18000)) {
-	case 0:
+	if (BaseLevel < 130) {
+		// todo
+	}
+	if (ep17_2_main == 0) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "You're welcome.";
@@ -6934,12 +6937,14 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "... Hmm, for some reason, I feel like I'm always playing the role of a gatekeeper?";
 		mes "Is it only for adventurers? You must be feeling bad, huh? Ha-ha-ha-ha";
+		ep17_2_main = 1;
 		setquest 18000;
 		next;
 		mes "[Rookie]";
 		mes "I'll open the door anytime you need to need, adventurer. Just let me know.";
 		close3;
-	case 1:
+	}
+	if (ep17_2_main == 1) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "Shall we go?";
@@ -6981,15 +6986,15 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		next;
 		mes "[Rookie]";
 		mes "Then, this way.";
+		ep17_2_main = 2;
 		completequest 18000;
 		setquest 18001;
 		close2;
 		cutin "",255;
 		warp "ba_pw02",275,20;
 		end;
-	case 2:
 	}
-	if (isbegin_quest(18001) == 1) {
+	if (ep17_2_main == 2) {
 		mes "[Rookie]";
 		mes "Go ahead and enter the mansion through this sewer.";
 		mes "Most of the colleagues who went in first cleaned up already.";
@@ -7003,8 +7008,6 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 	mes "The path we took with you adventurer is a fresh feeling for me.";
 	mes "I feel really alive these days.";
 	close;
-	// Episode 17.2 - END
-	end;
 
 OnInit:
 	questinfo (QTYPE_QUEST, QMARK_YELLOW, " isbegin_quest(16360) == 1 ");

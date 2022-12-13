@@ -13,7 +13,7 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	mes "[ Lisa ]";
 	mes "Welcome welcome~";
 	next;
-	switch (select("Explore Devices:Automatic Engine Wing Enhancement:Automatic Armor Enhancement:Automatic Leg Enhancement:Automatic Accessories(R) Enhancement:Automatic Accessories(L) Enhancement")) {
+	switch( select( "Explore Devices", "Automatic Engine Wing Enhancement", "Automatic Armor Enhancement", "Automatic Leg Enhancement", "Automatic Accessories(R) Enhancement", "Automatic Accessories(L) Enhancement" ) ) {
 		case 1:
 			mes "[ Lisa ]";
 			mes "If you bring automatic equipment and reinforcement modules, we can enchant the appropriate module on the equipment.";
@@ -34,9 +34,9 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	.@equip_id = getequipid(.@part);
 	.@equip_name$ = getequipname(.@part);
 	.@refine = getequiprefinerycnt(.@part);
-	for (.@i = 0; .@i < 4; .@i++)
+	for ( .@i = 0; .@i < 4; ++.@i )
 		.@card[.@i] = getequipcardid(.@part,.@i);
-	for (.@i = 0; .@i < 4; .@i++)
+	for ( .@i = 0; .@i < 4; ++.@i )
 		.@check[.@i] = getequipcardid(.@part,.@i);
 	mes "[ Lisa ]";
 	mes "If you bring automatic equipment and reinforcement modules, we can enchant the appropriate module on the equipment.";
@@ -45,7 +45,7 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	mes strcharinfo(0) + ".";
 	mes "Please select the grade of module that you want to use.";
 	next;
-	.@s = select("Cancel:Normal Grade:Rare Grade:Unique Grade:Legendary Grade:Epic Grade 1:Epic Grade 2:Epic Grade 3");
+	.@s = select( "Cancel", "Normal Grade", "Rare Grade", "Unique Grade", "Legendary Grade", "Epic Grade 1", "Epic Grade 2", "Epic Grade 3" );
 	if (.@s == 1) {
 		mes "[ Lisa ]";
 		mes "Stopping conversation.";
@@ -54,7 +54,7 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	.@menu$ = "Cancel:";
 	.@s -= 2;
 	explode(.@T$,.menu$[.@s],",");
-	for (.@i = 0; .@i < getarraysize(.@T$); .@i++) {
+	for ( .@i = 0; .@i < getarraysize(.@T$); ++.@i ) {
 		.@item_id = atoi(.@T$[.@i]);
 		if (!countitem(.@item_id))
 			.@menu$ += "^808080Module Amount 0^000000" + ":";
@@ -85,7 +85,7 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 	}
 	function enchant_check;
 	.@error = enchant_check(.@part,.@module_id);
-	switch (.@error) {
+	switch( .@error ) {
 		case 1:
 			mes "[ Lisa ]";
 			mes "You can not enchant this module to this automatic equipment.";
@@ -107,14 +107,14 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 			break;
 	}
 	mes "[ Lisa ]";
-	mes "Are you sure you want to enchance your ^FF0000" +.@equip_name$+"^000000 with ^0000CD" + getitemname(.@module_id) + "^000000? This process cannot be reversed.";
+	mes "Are you sure you want to enchance your ^FF0000" +.@equip_name$ + "^000000 with ^0000CD" + getitemname(.@module_id) + "^000000? This process cannot be reversed.";
 	next;
-	if (select("Wait... Don't:I'm sure. Do it.") == 1) {
+	if (select( "Wait... Don't", "I'm sure. Do it." ) == 1) {
 		mes "[ Lisa ]";
 		mes "Stopping conversation.";
 		close;
 	}
-	for (.@i = 3; .@i > 0; .@i--) {
+	for ( .@i = 3; .@i > 0; .@i--) {
 		if (.@card[.@i] == 0) {
 			.@augment_slot = .@i;
 			break;
@@ -133,9 +133,9 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 
 
 OnInit:
-	for (.@i = 310082; .@i < 310180; .@i++)
+	for ( .@i = 310082; .@i < 310180; ++.@i )
 		.auto_o[getarraysize(.auto_o)] = .@i;
-	for (.@i = 1000105; .@i < 1000203; .@i++) {
+	for ( .@i = 1000105; .@i < 1000203; ++.@i ) {
 		if (.@i == 1000150 || .@i == 1000151)
 			continue;
 		.auto_m[getarraysize(.auto_m)] = .@i;
@@ -147,7 +147,7 @@ OnInit:
 	setarray .leg_enchant,1000105,3,1000106,3,1000119,2,1000120,2,1000121,2,1000134,1,1000141,1,1000144,1,1000145,1,1000146,1,1000147,1,1000148,1,1000149,1;
 	setarray .legendary_enchant,1000144,1000145,1000146,1000147,1000148,1000149;
 	setarray .acce_enchant,1000107,3,1000108,3,1000109,3,1000110,3,1000111,3,1000112,3,1000113,2,1000114,2,1000115,1,1000116,1,1000117,1,1000118,1,1000136,1,1000137,1,1000138,1,1000139,1,1000143,1;
-	for (.@i = 1000152; .@i < 1000203; .@i++) {
+	for ( .@i = 1000152; .@i < 1000203; ++.@i ) {
 		.armor_enchant[getarraysize(.armor_enchant)] = .@i;
 		.armor_enchant[getarraysize(.armor_enchant)] = 2;
 		.epic_enchant[getarraysize(.epic_enchant)] = .@i;
@@ -162,11 +162,11 @@ OnInit:
 function	enchant_check	{
 	.@part = getarg(0);
 	.@module_id = getarg(1);
-	for (.@i = 0; .@i < 4; .@i++)
+	for ( .@i = 0; .@i < 4; ++.@i )
 		.@card[.@i] = getequipcardid(.@part,.@i);
 	if (.@card[1] > 0)
 		return 3;
-	switch (.@part) {
+	switch( .@part ) {
 		case EQI_GARMENT:
 			.@array$ = "wing_enchant";
 			break;
@@ -192,20 +192,20 @@ function	enchant_check	{
 		mes "Unknown error has occured.";
 		close;
 	}
-	for (.@i = 0; .@i < 4; .@i++) {
+	for ( .@i = 0; .@i < 4; ++.@i ) {
 		if (.@card[.@i] == .auto_o[.@index])
 			.@count++;
 	}
 	.@c_index = .@arr_id + 1;
-	.@total = getd("." + .@array$ + "["+.@c_index+"]");
+	.@total = getd("." + .@array$ + "[" + .@c_index + "]");
 	if (.@count >= .@total)
 		return 2;
 	if (.@part == EQI_SHOES) {
 		.@legendary = inarray(.legendary_enchant,.@module_id);
 		if (.@legendary >= 0) {
-			for (.@x = 0; .@x < getarraysize(.legendary_enchant); .@x++) {
+			for ( .@x = 0; .@x < getarraysize(.legendary_enchant); .@x++) {
 				.@l_index = inarray(.auto_m,.legendary_enchant[.@x]);
-				for (.@i = 0; .@i < 4; .@i++) {
+				for ( .@i = 0; .@i < 4; ++.@i ) {
 					if (.@card[.@i] == .auto_o[.@l_index])
 						.@legend++;
 				}
@@ -217,10 +217,10 @@ function	enchant_check	{
 	if (.@part == EQI_ARMOR) {
 		.@epic = inarray(.epic_enchant,.@module_id);
 		if (.@epic >= 0) {
-			for (.@x = 0; .@x < getarraysize(.epic_enchant); .@x++) {
+			for ( .@x = 0; .@x < getarraysize(.epic_enchant); .@x++) {
 				.@epic_g = 0;
 				.@e_index = inarray(.auto_m,.epic_enchant[.@x]);
-				for (.@i = 0; .@i < 4; .@i++) {
+				for ( .@i = 0; .@i < 4; ++.@i ) {
 					if (.@card[.@i] == .auto_o[.@e_index])
 						.@epic_g++;
 				}
@@ -238,26 +238,26 @@ function	enchant_check	{
 //= Merchants
 -	marketshop	ep172littlemanager00	-1,1000227:172:999999
 
-ba_in01,87,386,3	script	Child Manager ß#ep172_pet	EP17_2_CHILD_ADMIN1,{
-	mes "[ Child Manager ß ]";
+ba_in01,87,386,3	script	Child Manager ?ep172_pet	EP17_2_CHILD_ADMIN1,{
+	mes "[ Child Manager ?]";
 	mes "I have a whole bunch of little stuffs!";
 	next;
 	switch( select( "Little Manager", "Cloud Cotton", "Little Headress", "Cancel" ) ) {
 	case 1:
-		mes "[ Child Manager ß ]";
+		mes "[ Child Manager ?]";
 		mes "If you want to play with the little manager, it would cost you 30 Barmeal Tickets.";
 		next;
-		if (select("Exchange.", "Stop.") == 2) {
-			mes "[ Child Manager ß ]";
+		if (select( "Exchange.", "Stop." ) == 2) {
+			mes "[ Child Manager ?]";
 			mes "Then, it's time for me to play!";
 			close;
 		}
 		if (countitem(1000103) < 30) {
-			mes "[ Child Manager ß ]";
+			mes "[ Child Manager ?]";
 			mes "Like I said, if you want to play with the little manager, you'll need 30 Barmeal Tickets!";
 			close;
 		}
-		mes "[ Child Manager ß ]";
+		mes "[ Child Manager ?]";
 		mes "Have fun with your new friend!";
 		delitem 1000103,30;
 		getitem 9123,1;
@@ -269,7 +269,7 @@ ba_in01,87,386,3	script	Child Manager ß#ep172_pet	EP17_2_CHILD_ADMIN1,{
 		callshop "barter_Ep_17_2_C_Admin_Acc";
 		end;
 	case 4:
-		mes "[ Child Manager ß ]";
+		mes "[ Child Manager ?]";
 		mes "Then, it's time for me to play!";
 		close;
 	}
@@ -362,7 +362,7 @@ ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
 		mes "I will exchange 1 random Automatic Module excluding the epic grade modules for " + .@price + " <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM>.";
 		next;
 		cutin "",255;
-		if (select("Exchange Barmeal Ticket.", "Do not exchange") == 2) {
+		if (select( "Exchange Barmeal Ticket.", "Do not exchange" ) == 2) {
 			mes "[ Yecheon ]";
 			mes "Transaction ended.";
 			close3;

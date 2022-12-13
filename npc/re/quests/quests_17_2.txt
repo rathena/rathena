@@ -9,7 +9,7 @@
 //============================================================
 
 ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
-	if (isbegin_quest(18001) == 1) {
+	if (ep17_2_main == 2) {
 		cutin "bu_du5",2;
 		mes "[ ??????????????? ]";
 		mes "Urrrrrrrrrrrr!!!!";
@@ -28,13 +28,14 @@ ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
 			end;
 		}
 		mes "- It seems he is already incapable to do any action. Let's go get him a piece of Yggdrasil Leaf. -";
+		ep17_2_main = 3;
 		erasequest 18001;
 		setquest 11615;
 		close2;
 		cloakonnpcself( "Dew#ep172_bapw2-00" );
 		end;
 	}
-	if (isbegin_quest(11615) == 1) {
+	if (ep17_2_main == 3) {
 		if (countitem(610) < 1) {
 			mes "- It seems he is already incapable to do any action. Let's go get him a piece of Yggdrasil Leaf. -";
 			close;
@@ -44,6 +45,7 @@ ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
 		mes "Cough cough!!!!";
 		mes "Eeeeeek.";
 		delitem 610,1;
+		ep17_2_main = 4;
 		erasequest 11615;
 		setquest 11616;
 		next;
@@ -94,7 +96,7 @@ ba_pw02,90,93,0	script	???????????????#ep172_bapw2-00	4_ENERGY_BLUE,{
 		mes "I can't believe this place has been hidden so far...";
 		next;
 	}
-	if (isbegin_quest(11616) == 1) {
+	if (ep17_2_main == 4) {
 		cloakoffnpcself( "Dew#ep172_bapw2-01" );
 		cutin "bu_du1",2;
 		mes "[ Dew ]";
@@ -136,7 +138,7 @@ ba_pw02,93,93,3	duplicate(dummy_cloaked_npc)	Dew#ep172_bapw2-01	4_M_REDMAN
 ba_pw01,14,115,0	script	#ep172_ev_00	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (isbegin_quest(11616) == 1) {
+	if (ep17_2_main == 4) {
 		cloakoffnpcself( "Magi#ep172_bapw1-00" );
 		cutin "bu_maggi4",2;
 		mes "[ Magi ]";
@@ -254,6 +256,7 @@ OnTouch:
 		next;
 		mes "[ Mark ]";
 		mes "I've got a notice from Alp... that they found the door on their way back, so let's get up there before it gets any more dangerous.";
+		ep17_2_main = 5;
 		erasequest 11616;
 		setquest 11617;
 		close2;
@@ -265,7 +268,7 @@ OnTouch:
 		navigateto("ba_pw01",87,290);
 		end;
 	}
-	if (isbegin_quest(11617) == 1) {
+	if (ep17_2_main == 5) {
 		cloakoffnpcself( "Mark#ep172_bapw1-00" );
 		cutin "bu_mark1",2;
 		mes "[ Mark ]";
@@ -289,33 +292,26 @@ ba_pw01,20,119,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bapw1-00	4_F_PINKWOMAN
 ba_pw01,19,119,3	duplicate(dummy_cloaked_npc)	Lasis#ep172_bapw1-00	4_M_REBELLION
 
 ba_pw01,87,290,3	script	Alp#ep172_bapw1-00	4_M_BLACKMAN,{
-	if (isbegin_quest(11618) == 1 || isbegin_quest(11620) > 0) {
+	if (ep17_2_main < 5) {
 		cutin "bu_alp3",2;
 		mes "[ Alp ]";
-		mes "You're here...";
-		mes "This way...";
-		close2;
-		cutin "",255;
-		warp "ba_in01",23,315;
-		end;
+		mes "This devices can supply energy for a city... no, it can supply energy on a country level scale.";
+		mes "What the hell is this devices for?";
+		close3;
 	}
-	if (isbegin_quest(11617) == 1) {
+	if (ep17_2_main == 5) {
+		ep17_2_main = 6;
 		erasequest 11617;
 		setquest 11618;
-		cutin "bu_alp3",2;
-		mes "[ Alp ]";
-		mes "You're here...";
-		mes "This way...";
-		close2;
-		cutin "",255;
-		warp "ba_in01",23,315;
-		end;
 	}
 	cutin "bu_alp3",2;
 	mes "[ Alp ]";
-	mes "This devices can supply energy for a city... no, it can supply energy on a country level scale.";
-	mes "What the hell is this devices for?";
-	close3;
+	mes "You're here...";
+	mes "This way...";
+	close2;
+	cutin "",255;
+	warp "ba_in01",23,315;
+	end;
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11617) == 1" );
@@ -323,7 +319,7 @@ OnInit:
 }
 
 ba_in01,20,319,3	script	Lasis#ep172_bain1-00	4_M_REBELLION,{
-	if (isbegin_quest(11618) == 1 || isbegin_quest(11620) == 1) {
+	if (ep17_2_main == 6 || ep17_2_main == 7) {
 		mes "[ Lasis ]";
 		mes "We're finally here.";
 		mes "I've got someone to wait, let's split up here.";
@@ -347,7 +343,8 @@ ba_in01,20,319,3	script	Lasis#ep172_bain1-00	4_M_REBELLION,{
 		cutin "bu_mark2",2;
 		mes "[ Mark ]";
 		mes "The door that goes to the inside is locked, so let's go outside.";
-		if (isbegin_quest(11618) == 1) {
+		if (ep17_2_main == 6) {
+			ep17_2_main = 7;
 			erasequest 11618;
 			setquest 11620;
 		}
@@ -374,7 +371,13 @@ ba_in01,18,323,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bain01-00	4_F_PINKWOMAN
 
 
 ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
-	if (isbegin_quest(11620) == 1) {
+	if (ep17_2_main < 7) {
+		cutin "ep172_tamarin01",2;
+		mes "[ Tamarin ]";
+		mes "I heard that the Varmundt's mansion was burned down during the uprising of mercenaries... I think it's a lot different from what's written in the books.";
+		close3;
+	}
+	if (ep17_2_main == 7 || ep17_2_main == 8) {
 		cutin "ep172_tamarin02",2;
 		mes "[ Tamarin ]";
 		mes "You came?";
@@ -408,7 +411,8 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		mes "[ Tamarin ]";
 		mes "Stop laughing and register immediately.";
 		mes "Talk to Alpha near the door, She'll register you as guests.";
-		if (isbegin_quest(11620) == 1) {
+		if (ep17_2_main == 7) {
+			ep17_2_main = 8;
 			completequest 11620;
 			getitem 1000103,5;
 			getexp 300000,300000;
@@ -420,7 +424,9 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		cloakonnpcself( "Magi#ep172_bamaison-00" );
 		end;
 	}
-	if (isbegin_quest(17333) > 0 && isbegin_quest(11621) == 0) {
+	// Library Quest
+	switch( isbegin_quest(11621) ) {
+	case 0:
 		cloakoffnpcself( "Dew#ep172_bamaison-00" );
 		cloakoffnpcself( "Mark#ep172_bamaison-00" );
 		cloakoffnpcself( "Magi#ep172_bamaison-00" );
@@ -492,8 +498,7 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		cloakonnpcself( "Magi#ep172_bamaison-00" );
 		navigateto("ba_maison",85,111);
 		end;
-	}
-	if (isbegin_quest(11621) == 1) {
+	case 1:
 		cutin "ep172_tamarin02",2;
 		mes "[ Tamarin ]";
 		mes "Keh!!!!!!";
@@ -545,6 +550,8 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		cutin "",255;
 		navigateto("ba_maison",85,111);
 		end;
+	case 2:
+		break;
 	}
 	if (isbegin_quest(11633) == 2) {
 		cutin "ep172_tamarin01",2;
@@ -597,14 +604,10 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 			close3;
 		}
 	}
-	cutin "ep172_tamarin01",2;
-	mes "[ Tamarin ]";
-	mes "I heard that the Varmundt's mansion was burned down during the uprising of mercenaries... I think it's a lot different from what's written in the books.";
-	close3;
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11620) == 1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(11621) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(11621) == 0" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11639,PLAYTIME) == -1 && checkquest(11638,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11639,PLAYTIME) == 2 && checkquest(11638,HUNTING) == -1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11638,HUNTING) == 2" );
@@ -616,13 +619,13 @@ ba_maison,66,145,5	duplicate(dummy_cloaked_npc)	Mark#ep172_bamaison-00	4_M_BLUEM
 ba_maison,68,146,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bamaison-00	4_F_PINKWOMAN
 
 ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
-	if (isbegin_quest(11620) < 2) {
+	if (ep17_2_main < 8) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "If you are a guest to the mansion, please complete a guest registration first. Please understand that we are not responsible for any mishap that is caused by mistaking you as an intruder.";
 		close3;
 	}
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main == 8) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "Welcome. It's a pleasure to meet you. I was worried that you got lost in the mansion.";
@@ -737,10 +740,11 @@ ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "I'm sorry, please wait a moment.";
+		ep17_2_main = 9;
 		setquest 17333;
 		close3;
 	}
-	if (isbegin_quest(17333) == 1) {
+	if (ep17_2_main == 9) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "Again... trouble...";
@@ -875,20 +879,21 @@ ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
 		next;
 		mes "[ Mansion Manager ес ]";
 		mes "Then, please.";
-		completequest 17333;
+		ep17_2_main = 10;
+		erasequest 17333;
 		setquest 17334;
 		close2;
 		cutin "",255;
 		navigateto("ba_maison",146,109);
 		end;
 	}
-	if (isbegin_quest(17335) < 2) {
+	if (ep17_2_main == 10) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "First, the nearest is the <NAVI>[restaurant]<INFO>ba_maison,146,109,0,101,0</INFO></NAVI>. You should go over there. If you tell the nearest automatic doll near the repeater about the problem, they will take care of it for you.";
 		close3;
 	}
-	if (isbegin_quest(17336) < 2) {
+	if (ep17_2_main < 13) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "The <NAVI>[pavilion]<INFO>ba_maison,334,143,0,101,0</INFO></NAVI> is this way. automatic doll over there will take care of the broken repeater if you deliver it.";
@@ -896,13 +901,13 @@ ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
 		cloakonnpcself( "Meimei#ep172_bamaison00" );
 		close3;
 	}
-	if (isbegin_quest(17337) < 2) {
+	if (ep17_2_main == 13) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "Tell the problem to the automatic doll near the broken repeater on the <NAVI>[central garden]<INFO>ba_maison,245,206,0,0,0</INFO></NAVI> area and it will take care of it.";
 		close3;
 	}
-	if (isbegin_quest(17338) == 1) {
+	if (ep17_2_main == 14) {
 		cutin "ep172_alpha",2;
 		mes "[ Mansion Manager ес ]";
 		mes "" + strcharinfo(0) + ", welcome back. Have you looked around the mansion? Also, did you delivered the message to the automatic dolls near the broken repeater's area?";
@@ -972,7 +977,8 @@ ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
 		next;
 		mes "[ Mansion Manager ес ]";
 		mes "If you have any inconvenience in the mansion, please feel free to tell any automatic dolls. Please take this Barmeal Ticket, as a token of appreciation for your hard work.";
-		completequest 17338;
+		ep17_2_main = 15;
+		erasequest 17338;
 		setquest 17381;
 		getitem 1000103,5;
 		close3;
@@ -981,7 +987,7 @@ ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
 	mes "[ Mansion Manager ес ]";
 	mes "Welcome, " + strcharinfo(0) + ".";
 	next;
-	if (isbegin_quest(17381) == 1) {
+	if (ep17_2_main == 15) {
 		mes "[ Mansion Manager ес ]";
 		mes "Those who came before you are now staying at the <NAVI>[tea house]<INFO>ba_maison,102,65,0,101,0</INFO></NAVI>, please take a look around and talk with them.";
 		next;
@@ -1092,12 +1098,12 @@ ba_maison,74,150,3	script	Mansion Manager ес#ep172_bamaison-00	4_EP17_MASTER_A,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11620) == 2 && isbegin_quest(17333) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11620) == 2 && ep17_2_main < 9" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17338) == 1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(17338) == 2 && checkquest(17341,PLAYTIME) == -1 && isbegin_quest(17340) == 0" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(17338) == 2 && checkquest(17341,PLAYTIME) == 2 && isbegin_quest(17340) == 0" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17338) == 2 && isbegin_quest(17340) == 1 && countitem(1000232) >= 10" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ep17_2_main == 15 && checkquest(17341,PLAYTIME) == -1 && isbegin_quest(17340) == 0" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ep17_2_main == 15 && checkquest(17341,PLAYTIME) == 2 && isbegin_quest(17340) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main == 15 && isbegin_quest(17340) == 1 && countitem(1000232) >= 10" );
 	end;
 }
 
@@ -1123,7 +1129,7 @@ OnInit:
 }
 
 ba_maison,146,109,5	script	Tasty#ep172_bamaison-00	4_EP17_BASIC_B,{
-	if (isbegin_quest(17334) == 1) {
+	if (ep17_2_main == 10) {
 		mes "[ Tasty ]";
 		mes "Ugh! Now, wait. What is that? Tch, the intruder?";
 		emotion ET_HUK;
@@ -1257,7 +1263,8 @@ ba_maison,146,109,5	script	Tasty#ep172_bamaison-00	4_EP17_BASIC_B,{
 		mes "Everyone has been doing that ever since the intruders showed up. Even if " + strcharinfo(0) + " doesn't do it, it's all up to us automatic dolls.";
 		mes "It's nice to work a little bit.";
 		next;
-		completequest 17334;
+		ep17_2_main = 11;
+		erasequest 17334;
 		setquest 17335;
 		mes "[ Tasty ]";
 		mes "Please take care of the Broken Beta and bring ^0000CD1 Automatic Doll Communication Chip^000000.";
@@ -1267,7 +1274,7 @@ ba_maison,146,109,5	script	Tasty#ep172_bamaison-00	4_EP17_BASIC_B,{
 		npctalk "Oh, it ran away! Just grab another broken one and bring it to me.", "", bc_self;
 		close;
 	}
-	if (isbegin_quest(17335) == 1) {
+	if (ep17_2_main == 11) {
 		mes "[ Tasty ]";
 		mes "What about the communication chip?";
 		next;
@@ -1295,7 +1302,8 @@ ba_maison,146,109,5	script	Tasty#ep172_bamaison-00	4_EP17_BASIC_B,{
 		mes "[ Tasty ]";
 		mes "Do you happen to have a Barmeal Ticket? It's use to eat at the restaurant. I'll give you this, so come and eat later! I'll prepare a good food for you! As thanks!";
 		delitem 1000232,countitem(1000232);
-		completequest 17335;
+		ep17_2_main = 12;
+		erasequest 17335;
 		setquest 17336;
 		getitem 1000103,5;
 		getexp 300000,300000;
@@ -1303,7 +1311,7 @@ ba_maison,146,109,5	script	Tasty#ep172_bamaison-00	4_EP17_BASIC_B,{
 		navigateto("ba_maison",334,143);
 		end;
 	}
-	if (isbegin_quest(17336) == 1) {
+	if (ep17_2_main == 12) {
 		mes "[ Tasty ]";
 		mes "Go ahead to the <NAVI>[pavilion]<INFO>ba_maison,334,143,0,0,0</INFO></NAVI> first. It's the closest one here. Just follow this road over here.";
 		next;
@@ -1324,7 +1332,7 @@ OnInit:
 ba_maison,148,107,3	duplicate(dummy_cloaked_npc)	Strange Automatic Doll#ep172_bamaison-00	4_EP17_BASIC_B_NG
 
 ba_maison,334,143,3	script	Repeater#ep172_bamaison-00	2_POSTBOX,{
-	if (isbegin_quest(17336) == 1) {
+	if (ep17_2_main == 12) {
 		mes "[ " + strcharinfo(0) + " ]";
 		mes "There's no one here...? What should I do with this? Is the automatic doll communication chip broken again...?";
 		next;
@@ -1420,7 +1428,7 @@ ba_maison,334,143,3	script	Repeater#ep172_bamaison-00	2_POSTBOX,{
 		next;
 		mes "[ Kimchi ]";
 		mes "Thank you for letting me know in person. Here, atleast, take this. Are there any other places where it doesn't work? I don't think there's only one or two places.";
-		emotion ET_OHNO,getnpcid(0,"Kimchi#ep172_repeater-01");
+		emotion ET_OHNO, getnpcid(0,"Kimchi#ep172_repeater-01");
 		next;
 		select("The garden in front of the mansion.");
 		mes "[ Kimchi ]";
@@ -1433,14 +1441,15 @@ ba_maison,334,143,3	script	Repeater#ep172_bamaison-00	2_POSTBOX,{
 		sleep2 1000;
 		cloakonnpcself( "Worry#ep172_repeater-00" );
 		cloakonnpcself( "Kimchi#ep172_repeater-01" );
-		completequest 17336;
+		ep17_2_main = 13;
+		erasequest 17336;
 		setquest 17337;
 		getitem 1000103,5;
 		close2;
 		navigateto("ba_maison",245,206);
 		end;
 	}
-	if (isbegin_quest(17337) == 1) {
+	if (ep17_2_main == 13) {
 		mes "[ " + strcharinfo(0) + " ]";
 		mes "The doll told me to go up from this road and turn left to go to the <NAVI>[central garden]<INFO>ba_maison,245,206,0,0,0</INFO></NAVI>.";
 		close;
@@ -1457,11 +1466,11 @@ ba_maison,333,144,5	duplicate(dummy_cloaked_npc)	Worry#ep172_repeater-00	4_EP17_
 ba_maison,331,145,5	duplicate(dummy_cloaked_npc)	Kimchi#ep172_repeater-01	4_EP17_TABLET
 
 ba_maison,245,206,5	script	Gabriel#ep172_bamaison-00	4_EP17_GUARD_B,5,5,{
-	if (isbegin_quest(17333) < 2) {
+	if (ep17_2_main < 10) {
 		npctalk "Only authorize persons are allowed to access this area.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(17338) == 1) {
+	if (ep17_2_main == 14) {
 		mes "[ Gabriel ]";
 		mes "If this is the last one, please report back to <NAVI>[Alpha]<INFO>ba_maison,74,150,0,0,0</INFO></NAVI>.";
 		close;
@@ -1473,11 +1482,11 @@ ba_maison,245,206,5	script	Gabriel#ep172_bamaison-00	4_EP17_GUARD_B,5,5,{
 	close;
 
 OnTouch:
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		npctalk "Only authorize persons are allowed to access this area.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(17337) == 1) {
+	if (ep17_2_main == 13) {
 		mes "[ Gabriel ]";
 		mes "Don't come any closer.";
 		mes "This place is accessible only to authorized personnels.";
@@ -1563,24 +1572,22 @@ OnTouch:
 		next;
 		mes "[ Gabriel ]";
 		mes "If this is the last one, please report back to <NAVI>[Alpha]<INFO>ba_maison,74,150,0,0,0</INFO></NAVI>. Also... Welcome to the Varmundt's Mansion. If you need assistance, feel free to ask any automatic doll.";
-		completequest 17337;
+		ep17_2_main = 14;
+		erasequest 17337;
 		setquest 17338;
 		getitem 1000103,5;
 		close2;
 		navigateto("ba_maison",74,150);
 		end;
 	}
-	if (isbegin_quest(17338) == 1) {
+	if (ep17_2_main == 14) {
 		mes "[ Gabriel ]";
 		mes "If this is the last one, please report back to <NAVI>[Alpha]<INFO>ba_maison,74,150,0,0,0</INFO></NAVI>.";
 		close;
 	}
-	if (isbegin_quest(17339) > 0) {
-		mes "[ Gabriel ]";
-		mes "Hello, adventurer.";
-		close;
-	}
-	end;
+	mes "[ Gabriel ]";
+	mes "Hello, adventurer.";
+	close;
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17337) == 1" );
@@ -1590,20 +1597,19 @@ OnInit:
 ba_in01,221,116,0	script	#ep172_tea_ev	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	setarray .@quest[0],16442,16443,16444,16445,16453;
-	for ( .@i = 0; .@i < getarraysize(.@quest); .@i++ )
-		if (isbegin_quest(.@quest[.@i]) != 2) .@miss++;
-	if (.@miss || isbegin_quest(16448) > 0 && isbegin_quest(16452) < 1)
+	if (ep17_2_main == 17 && (isbegin_quest(16442) == 1 || isbegin_quest(16443) == 1 || isbegin_quest(16444) == 1 || isbegin_quest(16445) == 1 || isbegin_quest(16453) == 1))
 		cloakonnpcself( "Kaya Toss#ep172_bain01-00" );
-	if (isbegin_quest(16452) > 0)
+	if (ep17_2_main >= 20 && ep17_2_main < 24)
+		cloakonnpcself( "Kaya Toss#ep172_bain01-00" );
+	if (ep17_2_main >= 24)
 		cloakoffnpcself( "Tatio#ep172_bain01-00" );
-	if (isbegin_quest(16452) == 2)
+	if (ep17_2_main == 25)
 		cloakonnpcself( "Rookie#ep172_bain01-00" );
 	end;
 }
 
 ba_in01,206,106,3	script	Philofontes#ep172_bain01-00	4_M_PHILOFONTES,{
-	if (isbegin_quest(17381) == 0) {
+	if (ep17_2_main < 15) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Can you meet Alpha first and then come back here at the teahouse?";
@@ -1611,7 +1617,7 @@ ba_in01,206,106,3	script	Philofontes#ep172_bain01-00	4_M_PHILOFONTES,{
 		mes "- A preceding quest still exist. -";
 		close3;
 	}
-	if (isbegin_quest(17381) == 1) {
+	if (ep17_2_main == 15) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Dien, please check the authenticity again.";
@@ -1650,11 +1656,12 @@ ba_in01,206,106,3	script	Philofontes#ep172_bain01-00	4_M_PHILOFONTES,{
 		next;
 		mes "[ Tess ]";
 		mes "I'm talking with the Rebellion <NAVI>[Elders]<INFO>ba_maison,203,103,0,0,0</INFO></NAVI>, but it's difficult to verify events that happened in the past...";
-		completequest 17381;
+		ep17_2_main = 16;
+		erasequest 17381;
 		setquest 16440;
 		close3;
 	}
-	if (isbegin_quest(16440) == 1) {
+	if (ep17_2_main == 16) {
 		cutin "ep16_tes03",2;
 		mes "[ Tess ]";
 		mes "I'm talking with the Rebellion <NAVI>[Elders]<INFO>ba_maison,203,103,0,0,0</INFO></NAVI>, but they're quite stubborn, perhaps because they're already seniors.";
@@ -1664,21 +1671,21 @@ ba_in01,206,106,3	script	Philofontes#ep172_bain01-00	4_M_PHILOFONTES,{
 		mes "Hey! Who are you calling seniors?";
 		close3;
 	}
-	if (isbegin_quest(16446) == 0) {
+	if (ep17_2_main == 17) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Adventurer, please go to the managers of the mansion and find out what happened about the time when the mercenaries stayed here in Varmdunt Mansion.";
 		close3;
 	}
-	if (isbegin_quest(16446) == 1) {
+	if (ep17_2_main == 18) {
 		npctalk "Tess : Please pay attention to Ridsh.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16447) == 1) {
+	if (ep17_2_main == 19) {
 		npctalk "Tess : I think Kaya Toss has something to say.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16452) < 2) {
+	if (ep17_2_main < 25) {
 		npctalk "Tess : All of us were playing in the hands of the corporate.", "", bc_self;
 		end;
 	}
@@ -1691,14 +1698,14 @@ OnInit:
 }
 
 ba_in01,203,103,5	script	Dien#ep172_bain01-00	4_F_DIENE,{
-	if (isbegin_quest(16440) == 0) {
+	if (ep17_2_main < 16) {
 		cutin "ep162_dn02",2;
 		mes "[ Dien ]";
 		mes "If you're looking for a high-quality tea, this mansion is the place you're looking for.";
 		mes "The tea that I'm drinking in Einbech is not bad, but it's incomparable from the tea here.";
 		close3;
 	}
-	if (isbegin_quest(16440) == 1) {
+	if (ep17_2_main == 16) {
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
 		mes "Hmm... Hey, gentleman from the government. Why do you keep asking for evidence when you don't believe what we're saying?";
@@ -1805,28 +1812,31 @@ ba_in01,203,103,5	script	Dien#ep172_bain01-00	4_F_DIENE,{
 		mes "I look forward to the truth that is given by a neutral party.";
 		close2;
 		cutin "",255;
-		completequest 16440;
-		setarray .@quest[0],16441,16442,16443,16444,16445;
-		for ( .@i = 0; .@i < getarraysize(.@quest); .@i++ )
-			setquest .@quest[.@i];
+		ep17_2_main = 17;
+		erasequest 16440;
+		setquest 16441;
+		setquest 16442;
+		setquest 16443;
+		setquest 16444;
+		setquest 16445;
 		end;
 	}
-	if (isbegin_quest(16446) == 0) {
+	if (ep17_2_main == 17) {
 		cutin "ep162_dn02",2;
 		mes "[ Dien ]";
 		mes "Thank you, adventurer. It seems you're left with the troublesome work again.";
 		mes "I look forward to the truth that is given by a neutral party.";
 		close3;
 	}
-	if (isbegin_quest(16446) == 1) {
+	if (ep17_2_main == 18) {
 		npctalk "Dien : Would you mind listening to Ridsh's story?", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16447) == 1) {
+	if (ep17_2_main == 19) {
 		npctalk "Dien : Let's hear what the corporate has to say.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16452) < 2) {
+	if (ep17_2_main < 25) {
 		npctalk "Dien : I have nothing to say right now, please excuse me.", "", bc_self;
 		end;
 	}
@@ -1839,17 +1849,12 @@ OnInit:
 }
 
 ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
-	if (isbegin_quest(16440) < 2) {
+	if (ep17_2_main < 17) {
 		npctalk "Rookie : Well, we made a lot of progress. It's all thanks to your help adventurer.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16441) == 1) {
-		setarray .@quest[0],16442,16443,16444,16445,16453;
-		for ( .@i = 0; .@i < getarraysize(.@quest); .@i++ ) {
-			if (isbegin_quest(.@quest[.@i]) != 2)
-				.@miss++;
-		}
-		if (.@miss) {
+	if (ep17_2_main == 17) {
+		if (isbegin_quest(16442) == 1 || isbegin_quest(16443) == 1 || isbegin_quest(16444) == 1 || isbegin_quest(16445) == 1 || isbegin_quest(16453) == 1) {
 			cutin "16loo_01",2;
 			mes "[ Rookie ]";
 			mes "The managers knows the truth about the mercenary war.";
@@ -1888,7 +1893,7 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 		mes "[ Tess ]";
 		mes "..................";
 		mes "..................";
-		emotion ET_SURPRISE,getnpcid(0,"Philofontes#ep172_bain01-00");
+		emotion ET_SURPRISE, getnpcid(0,"Philofontes#ep172_bain01-00");
 		next;
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
@@ -1926,7 +1931,7 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 			cutin "ep16_tes02",2;
 			mes "[ Tess ]";
 			mes "Why would someone from the government kill the one they sent?";
-			emotion ET_QUESTION,getnpcid(0,"Philofontes#ep172_bain01-00");
+			emotion ET_QUESTION, getnpcid(0,"Philofontes#ep172_bain01-00");
 			next;
 			cutin "ep16_tes03",2;
 			mes "[ Tess ]";
@@ -1936,7 +1941,7 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 			cutin "ep162_dn03",2;
 			mes "[ Dien ]";
 			mes "No, the mercenaries didn't even know it was a person from the government. Even the body was found late.";
-			emotion ET_SURPRISE,getnpcid(0,"Dien#ep172_bain01-00");
+			emotion ET_SURPRISE, getnpcid(0,"Dien#ep172_bain01-00");
 			next;
 			mes "[ Dien ]";
 			mes "It wasn't the mercenaries.";
@@ -1949,7 +1954,7 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 		mes "But, the mercenaries are not the culprit.";
 		next;
 		cutin "",255;
-		emotion ET_SURPRISE,getnpcid(0,"Dien#ep172_bain01-00");
+		emotion ET_SURPRISE, getnpcid(0,"Dien#ep172_bain01-00");
 		select("It's probably the mercenaries.");
 		cutin "ep162_dn03",2;
 		mes "[ Dien ]";
@@ -1973,13 +1978,13 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 		cutin "ep171_kaya03",2;
 		mes "[ Kaya Toss ]";
 		mes "Thats... No, it's an envelope with the corporate's seal on it. It's badly crumpled. Where did you get this envelope? It's an item that's strictly forbidden to leak outside of Rekenber.";
-		emotion ET_SURPRISE,getnpcid(0,"Kaya Toss#ep172_bain01-00");
+		emotion ET_SURPRISE, getnpcid(0,"Kaya Toss#ep172_bain01-00");
 		next;
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
 		mes "Look at the contents of the envelope. That's what's important.";
 		mes "It's been a long time since I've last read, but I can read it perfectly, like it's a command book.";
-		emotion ET_SURPRISE,getnpcid(0,"Dien#ep172_bain01-00");
+		emotion ET_SURPRISE, getnpcid(0,"Dien#ep172_bain01-00");
 		next;
 		cutin "ep162_dn03",2;
 		mes "[ Dien ]";
@@ -1993,7 +1998,7 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 		cutin "ep171_kaya02",2;
 		mes "[ Kaya Toss ]";
 		mes "..........";
-		emotion ET_THINK,getnpcid(0,"Kaya Toss#ep172_bain01-00");
+		emotion ET_THINK, getnpcid(0,"Kaya Toss#ep172_bain01-00");
 		next;
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
@@ -2003,23 +2008,24 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 		mes "[ Kaya Toss ]";
 		mes "...I need some time, I have something that I want to check.";
 		mes "I'll get in touch with my secretary, please continue without me.";
-		emotion ET_THINK,getnpcid(0,"Kaya Toss#ep172_bain01-00");
+		emotion ET_THINK, getnpcid(0,"Kaya Toss#ep172_bain01-00");
 		cloakonnpcself( "Kaya Toss#ep172_bain01-00" );
 		close2;
 		cutin "",255;
-		completequest 16441;
+		ep17_2_main = 18;
+		erasequest 16441;
 		setquest 16446;
 		end;
 	}
-	if (isbegin_quest(16446) == 1) {
+	if (ep17_2_main == 18) {
 		npctalk "Rookie : Let's listen to Ridsh.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16447) == 1) {
+	if (ep17_2_main == 19) {
 		npctalk "Rookie : Let's listen to the corporate representative.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16448) == 1) {
+	if (ep17_2_main == 20) {
 		cutin "16loo_03",2;
 		mes "[ Rookie ]";
 		mes "Adventurer, Hey. Mr. Kaya was quite depressed. do you mind checking on Mr. Kaya?";
@@ -2030,11 +2036,12 @@ ba_in01,202,108,5	script	Rookie#ep172_bain01-00	4_M_ROOKIE,{
 		mes "I'd be reassured if could take a look at the <NAVI>[garden]<INFO>ba_maison,103,92,0,101,0</INFO></NAVI>.";
 		close2;
 		cutin "",255;
-		completequest 16448;
+		ep17_2_main = 21;
+		erasequest 16448;
 		setquest 16449;
 		end;
 	}
-	if (isbegin_quest(16452) < 2) {
+	if (ep17_2_main < 25) {
 		npctalk "Rookie : Well, at this point, I'd rather refrain from speaking, right?", "", bc_self;
 		end;
 	}
@@ -2048,13 +2055,13 @@ OnInit:
 }
 
 ba_in01,208,110,3	script	Ridsh#ep172_bain01-00	4_F_LEEDSH,{
-	if (isbegin_quest(16446) == 0) {
+	if (ep17_2_main == 17) {
 		cutin "ep162_rds02",2;
 		mes "[ Ridsh ]";
 		mes "I hope you're not thinking that we're stuck.";
 		close3;
 	}
-	if (isbegin_quest(16446) == 1) {
+	if (ep17_2_main == 18) {
 		cutin "ep162_rds01",2;
 		mes "[ Ridsh ]";
 		mes "Is there anything else suspicious about the mercenary?";
@@ -2136,15 +2143,16 @@ ba_in01,208,110,3	script	Ridsh#ep172_bain01-00	4_F_LEEDSH,{
 		mes "It's a shame...";
 		close2;
 		cutin "",255;
-		completequest 16446;
+		ep17_2_main = 19;
+		erasequest 16446;
 		setquest 16447;
 		end;
 	}
-	if (isbegin_quest(16447) == 1) {
+	if (ep17_2_main == 19) {
 		npctalk "Ridsh : The corporate guy wants to say something.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16452) < 2) {
+	if (ep17_2_main < 25) {
 		npctalk "Ridsh : I have nothing to say right now.", "", bc_self;
 		end;
 	}
@@ -2158,11 +2166,11 @@ OnInit:
 }
 
 ba_in01,207,102,3	script	Kaya Toss#ep172_bain01-00	4_EP17_KAYA,{
-	if (isbegin_quest(16440) == 1) {
+	if (ep17_2_main == 16) {
 		npctalk "Kaya Toss : Please listen to the elders.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16447) == 1) {
+	if (ep17_2_main == 19) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya Toss ]";
 		mes "All contextual, and material evidence evidence leads to the corporate.";
@@ -2205,10 +2213,11 @@ ba_in01,207,102,3	script	Kaya Toss#ep172_bain01-00	4_EP17_KAYA,{
 		mes "Hohoho, Then I'm off too.";
 		close2;
 		cutin "",255;
-		completequest 16447;
+		ep17_2_main = 20;
+		erasequest 16447;
 		setquest 16448;
-		cloakonnpcself( "Kaya Toss#ep172_bain01-00" );
 		npctalk "Kaya Toss : I'll come back after I organize my thoughts for a moment.", "", bc_self;
+		cloakonnpcself( "Kaya Toss#ep172_bain01-00" );
 		end;
 	}
 	cutin "ep171_kaya01",2;
@@ -2222,7 +2231,7 @@ OnInit:
 }
 
 ba_in01,205,109,3	script	Tatio#ep172_bain01-00	4_M_TATIO,{
-	if (isbegin_quest(16452) == 1) {
+	if (ep17_2_main == 24) {
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
 		mes "We've got a new visitor after our walk.";
@@ -2346,6 +2355,7 @@ ba_in01,205,109,3	script	Tatio#ep172_bain01-00	4_M_TATIO,{
 		close2;
 		cutin "",255;
 		cloakonnpcself( "Rookie#ep172_bain01-00" );
+		ep17_2_main = 25;
 		completequest 16452;
 		getitem 1000103,15;
 		end;
@@ -2360,21 +2370,21 @@ OnInit:
 }
 
 ba_in01,204,113,5	script	Cotnes#ep172_bain01-00	4_F_COATNEIS,{
-	if (isbegin_quest(16446) == 0) {
+	if (ep17_2_main == 17) {
 		cutin "ep162_ctn01",2;
 		mes "[ Cotnes ]";
 		mes "I don't have the luxury, to listen to your stories.";
 		close3;
 	}
-	if (isbegin_quest(16446) == 1) {
+	if (ep17_2_main == 18) {
 		npctalk "Cotnes : It looks like Ridsh has something to say.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16447) == 1) {
+	if (ep17_2_main == 19) {
 		npctalk "Cotnes : Hohoho, I think the corporate representative has something to say.", "", bc_self;
 		end;
 	}
-	if (isbegin_quest(16452) < 2) {
+	if (ep17_2_main < 25) {
 		npctalk "Cotnes : Well, I have nothing to say right now.", "", bc_self;
 		end;
 	}
@@ -2383,7 +2393,7 @@ ba_in01,204,113,5	script	Cotnes#ep172_bain01-00	4_F_COATNEIS,{
 }
 
 ba_maison,103,92,3	script	Kaya Toss#ep172_bamaison-00	4_EP17_KAYA,{
-	if (isbegin_quest(16449) == 1) {
+	if (ep17_2_main == 21) {
 		cloakoffnpcself( "Assassin#ep172_bamaison-00" );
 		mes "[ ??? ]";
 		mes "To think you're really going to take out the liver and gallbladder for everyone.";
@@ -2453,19 +2463,19 @@ ba_maison,103,92,3	script	Kaya Toss#ep172_bamaison-00	4_EP17_KAYA,{
 		cutin "ep162_dn03",2;
 		mes "[ Dien ]";
 		mes "It's dangerous!";
-		emotion ET_SURPRISE,getnpcid(0,"Dien#ep172_bamaison-00");
+		emotion ET_SURPRISE, getnpcid(0,"Dien#ep172_bamaison-00");
 		next;
 		cloakoffnpcself( "Ridsh#ep172_bamaison-00" );
 		cutin "ep162_rds02",2;
 		mes "[ Ridsh ]";
 		mes "I've come here to see what's wrong, and looks like a rat appeared.";
-		emotion ET_SURPRISE,getnpcid(0,"Ridsh#ep172_bamaison-00");
+		emotion ET_SURPRISE, getnpcid(0,"Ridsh#ep172_bamaison-00");
 		next;
 		cloakoffnpcself( "Cotnes#ep172_bamaison-00" );
 		cutin "ep162_ctn02",2;
 		mes "[ Cotnes ]";
 		mes "Who are you! I'm not going to let you go!";
-		emotion ET_SURPRISE,getnpcid(0,"Cotnes#ep172_bamaison-00");
+		emotion ET_SURPRISE, getnpcid(0,"Cotnes#ep172_bamaison-00");
 		next;
 		cutin "",255;
 		mes "[ ??? ]";
@@ -2481,11 +2491,12 @@ ba_maison,103,92,3	script	Kaya Toss#ep172_bamaison-00	4_EP17_KAYA,{
 		mes "The only path for the corporate is clearing the past and improving the present.";
 		close2;
 		cutin "",255;
-		completequest 16449;
+		ep17_2_main = 22;
+		erasequest 16449;
 		setquest 16450;
 		end;
 	}
-	if (isbegin_quest(16450) == 1) {
+	if (ep17_2_main == 22) {
 		cloakoffnpcself( "Dien#ep172_bamaison-00" );
 		cloakoffnpcself( "Ridsh#ep172_bamaison-00" );
 		cloakoffnpcself( "Cotnes#ep172_bamaison-00" );
@@ -2495,7 +2506,7 @@ ba_maison,103,92,3	script	Kaya Toss#ep172_bamaison-00	4_EP17_KAYA,{
 		mes "The only path for the corporate is clearing the past and improving the present.";
 		close3;
 	}
-	if (isbegin_quest(16451) == 1) {
+	if (ep17_2_main == 23) {
 		cloakoffnpcself( "Dien#ep172_bamaison-00" );
 		cloakoffnpcself( "Ridsh#ep172_bamaison-00" );
 		cloakoffnpcself( "Cotnes#ep172_bamaison-00" );
@@ -2529,7 +2540,8 @@ ba_maison,103,92,3	script	Kaya Toss#ep172_bamaison-00	4_EP17_KAYA,{
 		cloakonnpcself( "Dien#ep172_bamaison-00" );
 		cloakonnpcself( "Ridsh#ep172_bamaison-00" );
 		cloakonnpcself( "Cotnes#ep172_bamaison-00" );
-		completequest 16451;
+		ep17_2_main = 24;
+		erasequest 16451;
 		setquest 16452;
 		getitem 1000103,15;
 		end;
@@ -2546,7 +2558,7 @@ OnInit:
 }
 
 ba_maison,100,90,7	script	Dien#ep172_bamaison-00	4_F_DIENE,{
-	if (isbegin_quest(16450) == 1) {
+	if (ep17_2_main == 22) {
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
 		mes "I've heard your opinions.";
@@ -2569,15 +2581,16 @@ ba_maison,100,90,7	script	Dien#ep172_bamaison-00	4_F_DIENE,{
 		mes "For starter, show us what you can do with your first step.";
 		close2;
 		cutin "",255;
-		completequest 16450;
+		ep17_2_main = 23;
+		erasequest 16450;
 		setquest 16451;
 		end;
 	}
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16450) == 1" );
 	cloakonnpc();
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16450) == 1" );
 	end;
 }
 
@@ -2603,7 +2616,7 @@ ba_maison,100,95,5	duplicate(dummy_cloaked_npc)	Assassin#ep172_bamaison-00	4_M_M
 
 //= Managers
 ba_maison,189,56,3	script	Yunas#ep172_bamaison-00	4_EP17_BASIC_B,{
-	if (isbegin_quest(16441) == 1) {
+	if (ep17_2_main == 17) {
 		cutin "ep172_beta",2;
 		mes "[ Yunas ]";
 		mes "Welcome, honored guest, I'm an automatic doll with an identifier called Yunas.";
@@ -2634,30 +2647,30 @@ ba_maison,189,56,3	script	Yunas#ep172_bamaison-00	4_EP17_BASIC_B,{
 		next;
 		mes "[ Mercenary ]";
 		mes "How did we get here?";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "A mansion... of someone you never knew.";
 		mes "I have never been in a mansion like this before.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_1");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "What kind of person is Varmdunt, who accepted us willingly?";
-		emotion ET_QUESTION,getnpcid(0,"Mercenary#172_yunas_0");
+		emotion ET_QUESTION, getnpcid(0,"Mercenary#172_yunas_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "Oh, you should've asked who it is.";
 		mes "Aren't you the one who saved us when we thought we're all going to die?";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_1");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "Yes, we're alive thanks to Mr. Varmdunt and Mr. H";
 		mes "If Mr.H hadn't asked us to come here, we'd all be dead by now.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "Let's regain our strength here and prepare for the fight.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_1");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_1");
 		next;
 		mes "..................";
 		mes "..................";
@@ -2687,28 +2700,28 @@ ba_maison,189,56,3	script	Yunas#ep172_bamaison-00	4_EP17_BASIC_B,{
 		mes "[ Mercenary ]";
 		mes "... I think I've finally calm down.";
 		mes "Everyone was furious.";
-		emotion ET_SWEAT,getnpcid(0,"Mercenary#172_yunas_2");
+		emotion ET_SWEAT, getnpcid(0,"Mercenary#172_yunas_2");
 		next;
 		mes "[ Mercenary ]";
 		mes "But it was something that had to be done.";
 		mes "People simply died like that, people... There was blood everywhere and their eyes turned over.";
 		mes "Now that I think about it, I deeply regret it.";
-		emotion ET_KEK,getnpcid(0,"Mercenary#172_yunas_3");
+		emotion ET_KEK, getnpcid(0,"Mercenary#172_yunas_3");
 		next;
 		mes "[ Mercenary ]";
 		mes "We used the substitute plan and we took more casualty than we should have.";
 		mes "I should have stopped Mr. H.";
 		mes "Everyone started yelling and panicking that we had to get rid of them first...";
-		emotion ET_SCRATCH,getnpcid(0,"Mercenary#172_yunas_2");
+		emotion ET_SCRATCH, getnpcid(0,"Mercenary#172_yunas_2");
 		next;
 		mes "[ Mercenary ]";
 		mes "Neither Mr.H and we are not so bled up back then.";
 		mes "Don't blame Mr.H too much.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_3");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_3");
 		next;
 		mes "[ Mercenary ]";
 		mes "Well, that's true... Let's stop talking about, dwelling on it will just be hard on us.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_yunas_2");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_yunas_2");
 		next;
 		mes "..................";
 		mes "..................";
@@ -2730,8 +2743,8 @@ ba_maison,189,56,3	script	Yunas#ep172_bamaison-00	4_EP17_BASIC_B,{
 		close2;
 		cutin "",255;
 		if (isbegin_quest(16442) == 1)
-			completequest 16442;
-		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+			erasequest 16442;
+		if (isbegin_quest(16442) == 0 && isbegin_quest(16443) == 0 && isbegin_quest(16444) == 0 && isbegin_quest(16445) == 0)
 			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
@@ -2755,7 +2768,7 @@ ba_maison,187,54,5	duplicate(dummy_cloaked_npc)	Mercenary#172_yunas_2	1_M_JOBGUI
 ba_maison,190,54,3	duplicate(dummy_cloaked_npc)	Mercenary#172_yunas_3	1_M_SMITH
 
 ba_maison,318,169,5	script	Skippy#ep172_bamaison-00	4_EP17_BASIC_B,{
-	if (isbegin_quest(16441) == 1) {
+	if (ep17_2_main == 17) {
 		cutin "ep172_beta",2;
 		mes "[ Skippy ]";
 		mes "Do you want any records from a guest from the past?";
@@ -2782,27 +2795,27 @@ ba_maison,318,169,5	script	Skippy#ep172_bamaison-00	4_EP17_BASIC_B,{
 		next;
 		mes "[ Mercenary ]";
 		mes "A body was found near the wall of the mansion.";
-		emotion ET_SURPRISE,getnpcid(0,"Mercenary#172_skippy_0");
+		emotion ET_SURPRISE, getnpcid(0,"Mercenary#172_skippy_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "What's that horrible story?";
 		mes "Whose body is it?";
-		emotion ET_SURPRISE,getnpcid(0,"Mercenary#172_skippy_1");
+		emotion ET_SURPRISE, getnpcid(0,"Mercenary#172_skippy_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "Well, no one knows. Even the managers doesn't know.";
 		mes "The body was neatly dressed, and doesn't look like a mercenary at all.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_skippy_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_skippy_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "Do you think they're already here?";
 		mes "But the corporate people aren't going to dress up and visit us.";
-		emotion ET_QUESTION,getnpcid(0,"Mercenary#172_skippy_1");
+		emotion ET_QUESTION, getnpcid(0,"Mercenary#172_skippy_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "I know, it's just an apparition that's grumbling,";
 		mes "I hope it's not a big deal...";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_skippy_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_skippy_0");
 		next;
 		mes "..................";
 		mes "..................";
@@ -2825,8 +2838,8 @@ ba_maison,318,169,5	script	Skippy#ep172_bamaison-00	4_EP17_BASIC_B,{
 		close2;
 		cutin "",255;
 		if (isbegin_quest(16443) == 1)
-			completequest 16443;
-		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+			erasequest 16443;
+		if (isbegin_quest(16442) == 0 && isbegin_quest(16443) == 0 && isbegin_quest(16444) == 0 && isbegin_quest(16445) == 0)
 			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
@@ -2845,7 +2858,7 @@ ba_maison,321,168,3	duplicate(dummy_cloaked_npc)	Mercenary#172_skippy_0	1_M_02
 ba_maison,322,165,3	duplicate(dummy_cloaked_npc)	Mercenary#172_skippy_1	1_F_04
 
 ba_maison,249,161,3	script	Adore#ep172_bamaison-00	4_EP17_BASIC_B,{
-	if (isbegin_quest(16441) == 1) {
+	if (ep17_2_main == 17) {
 		cutin "ep172_beta",2;
 		mes "[ Adore ]";
 		mes "Hello, guest. Can I help you?";
@@ -2877,39 +2890,39 @@ ba_maison,249,161,3	script	Adore#ep172_bamaison-00	4_EP17_BASIC_B,{
 		mes "[ Mercenary ]";
 		mes "By the way, where's Mr. H?";
 		mes "I've been looking for him for a while, but...";
-		emotion ET_QUESTION,getnpcid(0,"Mercenary#172_adore_0");
+		emotion ET_QUESTION, getnpcid(0,"Mercenary#172_adore_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "It seems his away often.";
 		mes "I have to talk to him someday. What if the corporates suddenly comes in.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_adore_1");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_adore_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "Not long ago, I saw Mr. H talking with someone I don't know.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_adore_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_adore_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "A person you don't know, where would you find a person a random person here?";
-		emotion ET_QUESTION,getnpcid(0,"Mercenary#172_adore_1");
+		emotion ET_QUESTION, getnpcid(0,"Mercenary#172_adore_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "That's why it's weird. He was also thoroughly checking the perimeter, but I'm good at hiding.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_adore_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_adore_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "What did they talk about?";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_adore_1");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_adore_1");
 		next;
 		mes "[ Mercenary ]";
 		mes "I didn't hear it because it was too far.";
-		emotion ET_THINK,getnpcid(0,"Mercenary#172_adore_0");
+		emotion ET_THINK, getnpcid(0,"Mercenary#172_adore_0");
 		next;
 		mes "[ Mercenary ]";
 		mes "You didn't hide well, you were just far away!";
 		mes "Anyway, that's really suspicious. What the hell is going on?";
 		mes "..................";
 		mes "..................";
-		emotion ET_SWEAT,getnpcid(0,"Mercenary#172_adore_1");
+		emotion ET_SWEAT, getnpcid(0,"Mercenary#172_adore_1");
 		next;
 		cloakonnpcself( "Mercenary#172_adore_0" );
 		cloakonnpcself( "Mercenary#172_adore_1" );
@@ -2934,10 +2947,10 @@ ba_maison,249,161,3	script	Adore#ep172_bamaison-00	4_EP17_BASIC_B,{
 		close2;
 		cutin "",255;
 		if (isbegin_quest(16444) == 1) {
-			completequest 16444;
+			erasequest 16444;
 			setquest 16453;
 		}
-		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+		if (isbegin_quest(16442) == 0 && isbegin_quest(16443) == 0 && isbegin_quest(16444) == 0 && isbegin_quest(16445) == 0)
 			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
@@ -2960,7 +2973,7 @@ ba_maison,246,158,5	duplicate(dummy_cloaked_npc)	Mercenary#172_adore_0	1_M_02
 ba_maison,249,158,3	duplicate(dummy_cloaked_npc)	Mercenary#172_adore_1	1_M_ORIENT01
 
 ba_maison,232,310,5	script	Nono#ep172_bamaison-00	4_EP17_BASIC_B,{
-	if (isbegin_quest(16441) == 1) {
+	if (ep17_2_main == 17) {
 		mes "- Do you remember any of the guests' conversations? -";
 		next;
 		cutin "ep172_beta",2;
@@ -2991,28 +3004,28 @@ ba_maison,232,310,5	script	Nono#ep172_bamaison-00	4_EP17_BASIC_B,{
 			next;
 			mes "[ Mercenary ]";
 			mes "There is a mercenary who was almost thrown out while trying to go deep into the mansion. Who is it?";
-			emotion ET_QUESTION,getnpcid(0,"Mercenary#172_nono_0");
+			emotion ET_QUESTION, getnpcid(0,"Mercenary#172_nono_0");
 			next;
 			mes "[ Mercenary ]";
 			mes "I think it was Mr. H. Why would he do such a thing.";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_1");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_1");
 			next;
 			mes "[ Mercenary ]";
 			mes "Yeah. The supply that was provided to us are enough to get by already.";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_0");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_0");
 			next;
 			mes "[ Mercenary ]";
 			mes "Did H. needed more Barmeal Tickets?";
 			mes "Even if he didn't need it, I would still have shared it to him if he asked.";
-			emotion ET_QUESTION,getnpcid(0,"Mercenary#172_nono_1");
+			emotion ET_QUESTION, getnpcid(0,"Mercenary#172_nono_1");
 			next;
 			mes "[ Mercenary ]";
 			mes "I'm suspicious of Mr. H. Don't you think he's only doing that stands out?";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_0");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_0");
 			next;
 			mes "[ Mercenary ]";
 			mes "Come on, don't say that. We should trust each other.";
-			emotion ET_BLABLA,getnpcid(0,"Mercenary#172_nono_1");
+			emotion ET_BLABLA, getnpcid(0,"Mercenary#172_nono_1");
 			close2;
 			cloakonnpcself( "Mercenary#172_nono_0" );
 			cloakonnpcself( "Mercenary#172_nono_1" );
@@ -3026,20 +3039,20 @@ ba_maison,232,310,5	script	Nono#ep172_bamaison-00	4_EP17_BASIC_B,{
 			mes "[ Mercenary ]";
 			mes "Another suspicious trace was found near the mansion.";
 			mes "This time, someone said it's the trace of a fierce battle, but none of us got hurt or went missing.";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_2");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_2");
 			next;
 			mes "[ Mercenary ]";
 			mes "I've heard it too. It must have been those corporate guys! We musn't stay here and clean up out there.";
-			emotion ET_ANGER,getnpcid(0,"Mercenary#172_nono_3");
+			emotion ET_ANGER, getnpcid(0,"Mercenary#172_nono_3");
 			next;
 			mes "[ Mercenary ]";
 			mes "Calm down. You don't even know what happened, do you?";
 			mes "No one was hurt but they found a lot of blood stains. The leaders are still investigating it.";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_2");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_2");
 			next;
 			mes "[ Mercenary ]";
 			mes "How can we not know anything when there is a lot of mess happening out there. I'm so frustrating, very frustrating!!";
-			emotion ET_STARE,getnpcid(0,"Mercenary#172_nono_3");
+			emotion ET_STARE, getnpcid(0,"Mercenary#172_nono_3");
 			close2;
 			cloakonnpcself( "Mercenary#172_nono_2" );
 			cloakonnpcself( "Mercenary#172_nono_3" );
@@ -3052,21 +3065,21 @@ ba_maison,232,310,5	script	Nono#ep172_bamaison-00	4_EP17_BASIC_B,{
 			next;
 			mes "[ Mercenary ]";
 			mes "I thought that the goverment will mediate in the case of an incident, but it's as if we didn't exist in the goverment's eyes.";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_4");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_4");
 			next;
 			mes "[ Mercenary ]";
 			mes "There's no movement at all, let alone mediation.";
 			mes "Are we not citizens? How could they do this!";
-			emotion ET_ANGER,getnpcid(0,"Mercenary#172_nono_5");
+			emotion ET_ANGER, getnpcid(0,"Mercenary#172_nono_5");
 			next;
 			mes "[ Mercenary ]";
 			mes "There's been a lot of bloodshed, and such big commotions.";
 			mes "If the government doesn't come forward at times like this, someone has to step up and advance the government forward.";
-			emotion ET_SURPRISE,getnpcid(0,"Mercenary#172_nono_4");
+			emotion ET_SURPRISE, getnpcid(0,"Mercenary#172_nono_4");
 			next;
 			mes "[ Mercenary ]";
 			mes "But no one's stepping up. The government is not like a real government, it's not moving forward at all.";
-			emotion ET_THINK,getnpcid(0,"Mercenary#172_nono_5");
+			emotion ET_THINK, getnpcid(0,"Mercenary#172_nono_5");
 			close2;
 			cloakonnpcself( "Mercenary#172_nono_4" );
 			cloakonnpcself( "Mercenary#172_nono_5" );
@@ -3074,7 +3087,7 @@ ba_maison,232,310,5	script	Nono#ep172_bamaison-00	4_EP17_BASIC_B,{
 		}
 		if (isbegin_quest(16445) == 1)
 			completequest 16445;
-		if (isbegin_quest(16442) == 2 && isbegin_quest(16443) == 2 && isbegin_quest(16444) == 2 && isbegin_quest(16445) == 2)
+		if (isbegin_quest(16442) == 0 && isbegin_quest(16443) == 0 && isbegin_quest(16444) == 0 && isbegin_quest(16445) == 0)
 			unittalk getcharid(3), "" + strcharinfo(0) + " : I think I've heard enough stories. Should I go back to the teahouse now?", bc_self;
 		end;
 	}
@@ -3108,7 +3121,7 @@ ba_maison,357,291,3	script	Cleaning Robot#ep172_bamaison-00	4_EP17_CLEANER_W,{
 		mes "- Carefully, I took out the envelope to not tear it. -";
 		close2;
 		cutin "",255;
-		completequest 16453;
+		erasequest 16453;
 		end;
 	}
 	cutin "ep172_omega",2;
@@ -3122,9 +3135,8 @@ OnInit:
 
 ba_maison,106,65,0	script	#ep172_maison_ev-00	HIDDEN_WARP_NPC,3,3,{
 	end;
-
 OnTouch:
-	if (isbegin_quest(16452) == 2 && isbegin_quest(18002) == 0) {
+	if (ep17_2_main == 25) {
 		cloakoffnpcself( "Rookie#ep172_bamaison-00" );
 		cloakoffnpcself( "Manager#ep172_bamaison-00" );
 		end;
@@ -3133,7 +3145,7 @@ OnTouch:
 }
 
 ba_maison,116,67,5	script	Rookie#ep172_bamaison-00	4_M_ROOKIE,{
-	if (isbegin_quest(16452) == 2 && isbegin_quest(18002) == 0) {
+	if (ep17_2_main == 25) {
 		setpcblock PCBLOCK_ALL,true;
 		sleep2 2000;
 		npctalk "I'm looking forward to your kind cooperation.", "Manager#ep172_bamaison-00", bc_self;
@@ -3259,6 +3271,7 @@ ba_maison,116,67,5	script	Rookie#ep172_bamaison-00	4_M_ROOKIE,{
 		mes "[ Rookie ]";
 		mes "Let's meet up  at the lake on the eastern end of the road and wrap it up.";
 		mes "Then, I'll get going first.";
+		ep17_2_main = 26;
 		setquest 18002;
 		close2;
 		cutin "",255;
@@ -3268,8 +3281,8 @@ ba_maison,116,67,5	script	Rookie#ep172_bamaison-00	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16452) == 2 && isbegin_quest(18002) == 0" );
 	cloakonnpc();
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main == 25" );
 	end;
 }
 
@@ -3281,7 +3294,7 @@ ba_maison,150,47,0	script	#ep172_body-0	CLEAR_NPC,{
 	.@id = atoi(replacestr(strnpcinfo(2),"ep172_body-",""));
 	.@quest = 18003 + .@id;
 	.@count = countitem(1000226);
-	if (isbegin_quest(18002) == 1 && isbegin_quest(.@quest) == 0 && .@count < 5) {
+	if (ep17_2_main == 26 && isbegin_quest(.@quest) == 0 && .@count < 5) {
 		cloakonnpcself();
 		cloakoffnpcself( "#ep172_beta-" + .@id );
 		mes "The body of Manager Beta is hidden under the landscapes.";
@@ -3295,7 +3308,8 @@ ba_maison,150,47,0	script	#ep172_body-0	CLEAR_NPC,{
 			mes "Let's look for more.";
 		else {
 			mes "I've recovered enough cores.";
-			completequest 18002;
+			ep17_2_main = 27;
+			erasequest 18002;
 			setquest 18013;
 		}
 		close;
@@ -3331,7 +3345,7 @@ ba_maison,64,187,3	duplicate(dummy_cloaked_npc)	#ep172_beta-8	4_EP17_BROKENBETA
 ba_maison,70,256,3	duplicate(dummy_cloaked_npc)	#ep172_beta-9	4_EP17_BROKENBETA
 
 ba_maison,303,141,3	script	Elena Bolkova#ep172_bamaison-00	4_F_ELENA,{
-	if (isbegin_quest(18013) == 1) {
+	if (ep17_2_main == 27) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "Hey, adventurer, this way. Did you get any results?";
@@ -3452,7 +3466,8 @@ ba_maison,303,141,3	script	Elena Bolkova#ep172_bamaison-00	4_F_ELENA,{
 		mes "Huh? Where will I bring this guy?";
 		mes "Ah, the guesthouse. We are currently using it as a prison.";
 		mes "Follow me. Also, I'll take all the cores with me.";
-		completequest 18013;
+		ep17_2_main = 28;
+		erasequest 18013;
 		setquest 18014;
 		delitem 1000226,countitem(1000226);
 		getitem 1000103,10;
@@ -3463,7 +3478,7 @@ ba_maison,303,141,3	script	Elena Bolkova#ep172_bamaison-00	4_F_ELENA,{
 		cloakonnpcself( "Eisen Werner#ep172_bamaison-00" );
 		end;
 	}
-	if (isbegin_quest(18014) == 1) {
+	if (ep17_2_main == 28) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "I'll see you at the guesthouse.";
@@ -3486,7 +3501,7 @@ OnInit:
 ba_maison,301,148,5	duplicate(dummy_cloaked_npc)	Eisen Werner#ep172_bamaison-00	4_M_EISEN
 
 ba_in01,35,142,5	script	Rebellion#guesthouse_to_jail	4_M_REBELLION3,{
-	if (isbegin_quest(18014) == 0) {
+	if (ep17_2_main < 28) {
 		mes "[ Rebellion ]";
 		mes "There is nothing particular here.";
 		close;
@@ -3499,14 +3514,14 @@ ba_in01,35,142,5	script	Rebellion#guesthouse_to_jail	4_M_REBELLION3,{
 		mes "I'll stay here and keep this place safe.";
 		close;
 	}
-	if (isbegin_quest(18014) > 1 && isbegin_quest(18017) < 2)
+	if (ep17_2_main > 28 && ep17_2_main < 32)
 		cloakoffnpcself( "Eisen Werner#ep172_bain-00" );
 	warp "ba_in01",28,144;
 	end;
 }
 
 ba_in01,20,145,3	script	Elena Bolkova#ep172_bain01-00	4_F_ELENA,{
-	if (isbegin_quest(18014) == 1) {
+	if (ep17_2_main == 28) {
 		cutin "162elena_02",2;
 		mes "[ Elena Bolkova ]";
 		mes "Oh, here you are, this way, is Lucky not here yet?";
@@ -3668,7 +3683,8 @@ ba_in01,20,145,3	script	Elena Bolkova#ep172_bain01-00	4_F_ELENA,{
 		mes "[ Elena Bolkova ]";
 		mes "Then I'll stay here and protect this place, and when he wakes up, shouldn't someone stay here and knock him out again?";
 		mes "You two, can leave it to me. Don't worry about this place.";
-		completequest 18014;
+		ep17_2_main = 29;
+		erasequest 18014;
 		setquest 18015;
 		close2;
 		cutin "",255;
@@ -3678,14 +3694,14 @@ ba_in01,20,145,3	script	Elena Bolkova#ep172_bain01-00	4_F_ELENA,{
 		cloakonnpcself( "Rookie#ep172_bain01-01" );
 		end;
 	}
-	if (isbegin_quest(18016) == 1) {
+	if (ep17_2_main == 30) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "Erst is probably right in the front lounge.";
 		mes "Go ahead and meet with Erst first, and I'll join later.";
 		close3;
 	}
-	if (isbegin_quest(18018) == 1 && isbegin_quest(18019) == 1) {
+	if (isbegin_quest(18019) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena ]";
 		mes "Oh, where is Eisen Werner.";
@@ -3712,7 +3728,7 @@ OnInit:
 ba_in01,14,145,1	duplicate(dummy_cloaked_npc)	Rookie#ep172_bain01-01	4_M_ROOKIE
 
 ba_in01,13,149,5	script	Eisen Werner#ep172_bain-00	4_M_EISEN,{
-	if (isbegin_quest(18015)) {
+	if (ep17_2_main >= 29) {
 		mes "He is thoroughly constrained for what he has done.";
 		close;
 	}
@@ -3724,14 +3740,14 @@ OnInit:
 }
 
 ba_in01,15,147,3	script	Elyumina#ep172_bain01-00	4_EP17_ELYUMINA,{
-	if (isbegin_quest(18014) == 1) {
+	if (ep17_2_main == 28) {
 		cutin "ep171_elyumina01",2;
 		mes "[ Elyumina ]";
 		mes "Now you're safe, and all you have to do is chase those traitors to the end.";
 		mes "Hahahahaha!! I'll be the winner who survived until the end.";
 		close3;
 	}
-	if (isbegin_quest(18015) == 1) {
+	if (ep17_2_main == 29) {
 		if (countitem(7110) < 10 || countitem(7326) < 10) {
 			cutin "ep171_elyumina04",2;
 			mes "[ Elyumina ]";
@@ -3778,13 +3794,14 @@ ba_in01,15,147,3	script	Elyumina#ep172_bain01-00	4_EP17_ELYUMINA,{
 		mes "Go ahead and meet with Erst.";
 		delitem 7110,10;
 		delitem 7326,10;
-		completequest 18015;
+		ep17_2_main = 30;
+		erasequest 18015;
 		setquest 18016;
 		getitem 1000092,1; //Elyumina Tracker
 		getitem 1000103,10;
 		close3;
 	}
-	if (isbegin_quest(18018) == 1) {
+	if (ep17_2_main == 32) {
 		cutin "ep171_elyumina01",2;
 		mes "[ Elyumina ]";
 		mes "I've heard the news. Those bastards.";
@@ -3807,7 +3824,7 @@ OnInit:
 }
 
 ba_in01,51,157,3	script	Est#ep172_bain01-00	4_F_ESTLOVELOY,{
-	if (isbegin_quest(18016) == 1) {
+	if (ep17_2_main == 30) {
 		cutin "ep162_est01",2;
 		mes "[ Est ]";
 		mes "Adventurer, what's that?";
@@ -3837,72 +3854,76 @@ ba_in01,51,157,3	script	Est#ep172_bain01-00	4_F_ESTLOVELOY,{
 		mes "If you have no objection, we'll proceed as it is.";
 		mes "You should get ready for the operation.";
 		mes "Talk to me when you're ready.";
-		completequest 18016;
+		ep17_2_main = 31;
+		erasequest 18016;
 		setquest 18017;
 		close3;
 	}
-	if (checkquest(18017,HUNTING) == 1) {
-		.@party_id = getcharid(1);
-		if (.@party_id < 1) {
-			mes "^0000CDThis is a memorial dungeon.^000000";
-			mes "Please create a party and try again.";
-			mes "^0000CDA party can be created using the /organize partyname command.^000000";
-			close;
-		}
-		cutin "ep162_est01",2;
-		mes "[ Est ]";
-		mes "Shall we go?";
-		next;
-		.@md_name$ = "Twilight Garden";
-		.@party_name$ = getpartyname(.@party_id);
-		if (select( "Create '" + .@md_name$ + "'.", "Enter '" + .@md_name$ + "'.'" ) == 1) {
-			if (!is_party_leader()) {
-				mes "^4D4DFFThis place is a memorial dungeon.";
-				mes "You have to be a party leader to create a memorial dungeon.^000000";
+	if (ep17_2_main == 31) {
+		switch( checkquest(18017,HUNTING) ) {
+		case -1:
+			end;	// shouldn't happen
+		case 0:
+		case 1:
+			if (getcharid(1) < 1) {
+				mes "^0000CDThis is a memorial dungeon.^000000";
+				mes "Please create a party and try again.";
+				mes "^0000CDA party can be created using the /organize partyname command.^000000";
 				close;
 			}
-			if (instance_create(.@md_name$) == -3)
-				dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 			cutin "ep162_est01",2;
 			mes "[ Est ]";
-			mes "Then, let's proceed quietly.";
-			close3;
-		}
-		if (instance_enter(.@md_name$) == IE_OK)
-			mapannounce "ba_in01", strcharinfo(0) + " of the party, " + .@party_name$ + ", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
-		else {
+			mes "Shall we go?";
+			next;
+			.@md_name$ = "Twilight Garden";
+			if (select( "Create '" + .@md_name$ + "'.", "Enter '" + .@md_name$ + "'.'" ) == 1) {
+				if (!is_party_leader()) {
+					mes "^4D4DFFThis place is a memorial dungeon.";
+					mes "You have to be a party leader to create a memorial dungeon.^000000";
+					close;
+				}
+				if (instance_create(.@md_name$) == -3)
+					dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
+				cutin "ep162_est01",2;
+				mes "[ Est ]";
+				mes "Then, let's proceed quietly.";
+				close3;
+			}
+			if (instance_enter(.@md_name$) == IE_OK) {
+				mapannounce "ba_in01", strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+				end;
+			}
 			cutin "ep162_est01",2;
 			mes "[ Est ]";
 			mes "Let's wait out a little longer before going out... We can't be careless.";
-			close2;
+			close3;
+		case 2:
+			cutin "ep162_est03",2;
+			mes "[ Est ]";
+			mes "We handed the prisoner to Alpha.";
+			mes "By the way, I've prepared a trap to cause a commotion, and to catch the non-officer members.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Est ]";
+			mes "They're not easy to catch...";
+			mes "Alpha is going to do some more research on the airship hangar, so go check it out.";
+			next;
+			mes "[ Est ]";
+			mes "Let's take a break for now.";
+			mes "Sigh... You did a great job.";
+			ep17_2_main = 32;
+			erasequest 18017;
+			setquest 18018;
+			delitem 1000092,1;
+			next;
+			mes "[ Est ]";
+			mes "Oh, I'll also take the Radar.";
+			mes "It'll be helpful for looking for the rest of the members.";
+			close3;
 		}
-		cutin "",255;
 		end;
 	}
-	if (checkquest(18017,HUNTING) == 2) {
-		cutin "ep162_est03",2;
-		mes "[ Est ]";
-		mes "We handed the prisoner to Alpha.";
-		mes "By the way, I've prepared a trap to cause a commotion, and to catch the non-officer members.";
-		next;
-		cutin "ep162_est01",2;
-		mes "[ Est ]";
-		mes "They're not easy to catch...";
-		mes "Alpha is going to do some more research on the airship hangar, so go check it out.";
-		next;
-		mes "[ Est ]";
-		mes "Let's take a break for now.";
-		mes "Sigh... You did a great job.";
-		completequest 18017;
-		setquest 18018;
-		delitem 1000092,1;
-		next;
-		mes "[ Est ]";
-		mes "Oh, I'll also take the Radar.";
-		mes "It'll be helpful for looking for the rest of the members.";
-		close3;
-	}
-	if (isbegin_quest(18018) == 1) {
+	if (ep17_2_main == 32) {
 		cutin "ep162_est01",2;
 		mes "We're going to investigate the airship hangar.";
 		mes "I'm going to explain to the rest of the Rebellion first, so go ahead and take care of it.";
@@ -3915,12 +3936,12 @@ ba_in01,51,157,3	script	Est#ep172_bain01-00	4_F_ESTLOVELOY,{
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18016) == 1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18017) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18017) == 1" );	// todo check
 	end;
 }
 
 ba_in01,26,266,3	script	Smart Ellie#172_hangar_0	4_EP17_TABLET,{
-	if (isbegin_quest(18018) == 1) {
+	if (ep17_2_main == 32) {
 		cutin "ep172_beta",2;
 		mes "[ Ellie ]";
 		mes "Hello, guest.";
@@ -3937,7 +3958,7 @@ ba_in01,26,266,3	script	Smart Ellie#172_hangar_0	4_EP17_TABLET,{
 		mes "[ Ellie ]";
 		mes "The leader of the 'intruders' had freely access the area for the master's collection 3...";
 		mes "I returned here to manage it.";
-		npctalk "Sounds troublesome.", "", bc_self;;
+		npctalk "Sounds troublesome.", "", bc_self;
 		next;
 		mes "[ Ellie ]";
 		mes "We are currently tracking the expected path after receiving the incident report.";
@@ -4020,6 +4041,7 @@ ba_in01,26,266,3	script	Smart Ellie#172_hangar_0	4_EP17_TABLET,{
 		mes "As always, you did great.";
 		mes "We were close, but next time we'll catch the rest of them.";
 		mes "I've been collecting these, I'll let you have it, adventurer.";
+		ep17_2_main = 33;
 		completequest 18018;
 		getitem 1000103,15;
 		next;
@@ -4043,24 +4065,21 @@ ba_in01,26,266,3	script	Smart Ellie#172_hangar_0	4_EP17_TABLET,{
 		cloakonnpcself( "Rookie#172_hangar_0" );
 		end;
 	}
-	if (isbegin_quest(18018) == 2 && isbegin_quest(8681) == 0 && BaseLevel < 170) {
-		cutin "ep172_beta",2;
-		mes "[ Ellie ]";
-		mes "No intermittent signal has been received yet.";
-		mes "The whereabouts of the master's collection 3 are also being tracked at the same time.";
-		next;
-		mes "[ Ellie ]";
-		mes "Don't worry.";
-		mes "Time is on our side.";
-		next;
-		mes "[ Ellie ]";
-		mes "Me and Alpha will analyze the information properly, so I'd like you to clean up the intruders remnant.";
-		close3;
-	}
-	end;
+	cutin "ep172_beta",2;
+	mes "[ Ellie ]";
+	mes "No intermittent signal has been received yet.";
+	mes "The whereabouts of the master's collection 3 are also being tracked at the same time.";
+	next;
+	mes "[ Ellie ]";
+	mes "Don't worry.";
+	mes "Time is on our side.";
+	next;
+	mes "[ Ellie ]";
+	mes "Me and Alpha will analyze the information properly, so I'd like you to clean up the intruders remnant.";
+	close3;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18018) == 2 && isbegin_quest(8681) == 0 && BaseLevel >= 170" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18018) == 1" );
 	end;
 }
 
@@ -4068,7 +4087,7 @@ ba_in01,22,262,5	duplicate(dummy_cloaked_npc)	Est#172_hangar_0	4_F_ESTLOVELOY
 ba_in01,24,262,7	duplicate(dummy_cloaked_npc)	Rookie#172_hangar_0	4_M_ROOKIE
 
 ba_in01,28,255,5	script	Manager Beta Almond#172_hangar_0	4_EP17_BASIC_B,{
-	if (isbegin_quest(18018) < 2) {
+	if (ep17_2_main < 33) {
 		cutin "ep172_beta",2;
 		mes "[ Almond ]";
 		mes "Hello? It's nice to see you again~";
@@ -4166,7 +4185,7 @@ OnInit:
 }
 
 ba_in01,33,250,3	script	Sweety#172_hangar_0	4_EP17_SWEETY,{
-	if (isbegin_quest(18018) < 2) {
+	if (ep17_2_main < 33) {
 		cutin "ep172_beta",2;
 		mes "[ Almond ]";
 		mes "His body's base is the same as ours, so it's easy to repair.";
@@ -4377,9 +4396,8 @@ ba_in01,30,248,3	script	Automatic Doll Guard Beta#ep172_hangar_2	4_EP17_GUARD_B,
 
 ba_maison,33,220,0	script	#ep172_maison_ev-01	HIDDEN_WARP_NPC,3,3,{
 	end;
-
 OnTouch:
-	if (isbegin_quest(18018) == 2 && isbegin_quest(18021) == 0) {
+	if (ep17_2_main == 33) {
 		cloakoffnpcself( "Philofontes#ep172_bamaison-01" );
 		cloakoffnpcself( "Crux#ep172_bamaison-00" );
 		end;
@@ -4400,7 +4418,7 @@ OnInit:
 }
 
 ba_maison,38,219,5	script	Crux#ep172_bamaison-00	4_EP16_CRUX,{
-	if (isbegin_quest(18018) == 2 && isbegin_quest(18021) == 0) {
+	if (ep17_2_main == 33) {
 		cutin "ep16_crux_findel02",2;
 		mes "[ Crux ]";
 		mes "Adventurer! Long time no see!";
@@ -4425,6 +4443,7 @@ ba_maison,38,219,5	script	Crux#ep172_bamaison-00	4_EP16_CRUX,{
 		next;
 		mes "[ Crux ]";
 		mes "Shall we go?";
+		ep17_2_main = 34;
 		setquest 18021;
 		next;
 		if (select( "Let's go right now.", "Let's go a bit later." ) == 2) {
@@ -4473,15 +4492,14 @@ OnInit:
 
 ba_in01,37,138,0	script	#ep172_bain01-02	HIDDEN_WARP_NPC,2,2,{
 	end;
-
 OnTouch:
-	if (isbegin_quest(18021) == 1)
+	if (ep17_2_main == 34)
 		cloakoffnpcself( "Crux#ep172_bain-00" );
 	end;
 }
 
 ba_in01,48,146,3	script	Crux#ep172_bain-00	4_EP16_CRUX,{
-	if (isbegin_quest(18021) == 1) {
+	if (ep17_2_main == 34) {
 		cutin "ep16_crux_findel02",2;
 		mes "[ Crux ]";
 		mes "It's cozy and nice here.";
@@ -4513,12 +4531,10 @@ OnInit:
 
 prt_cas,138,342,0	script	#172_prtcas_ev	HIDDEN_WARP_NPC,3,3,{
 	end;
-
 OnTouch:
-	if (isbegin_quest(18021) == 1) {
+	if (ep17_2_main == 34) {
 		setpcblock PCBLOCK_ALL,true;
 		sleep2 2000;
-		specialeffect2 EF_DEVIL10;
 		specialeffect2 EF_DEVIL10;
 		setpcblock PCBLOCK_ALL,false;
 		mes "I arrived with Crux to the Prontera Palace, the palace was filled with a strange excitement.";
@@ -4549,6 +4565,7 @@ OnTouch:
 		mes "I knew you'd stand in the way of the future, you're not assertive and knows how to seek help.";
 		next;
 		mes "You will be a great king.";
+		ep17_2_main = 35;
 		completequest 18021;
 		close2;
 		cutin "",255;
@@ -4559,7 +4576,7 @@ OnTouch:
 }
 
 prt_cas,140,344,3	script	Chamberlain Bell#ep172_prtcas	4_M_RUSMAN1,{
-	if (isbegin_quest(18021) < 2)
+	if (ep17_2_main < 35)
 		end;
 	mes "[ Bell ]";
 	mes "I was waiting for your return.";
@@ -4578,9 +4595,9 @@ prt_cas,140,344,3	script	Chamberlain Bell#ep172_prtcas	4_M_RUSMAN1,{
 }
 
 prt_cas,325,263,3	script	Nyhill M. Heine#ep172_prtcas	4_EP17_NIHIL_K,{
-	if (isbegin_quest(18021) < 2)
+	if (ep17_2_main < 35)
 		end;
-	if (isbegin_quest(18020) == 0) {
+	if (ep17_2_main == 35) {
 		cutin "ep171_nihil01",2;
 		mes "[ Nyhill ]";
 		mes "What a surprise guest!";
@@ -4607,6 +4624,7 @@ prt_cas,325,263,3	script	Nyhill M. Heine#ep172_prtcas	4_EP17_NIHIL_K,{
 		mes "[ Nyhill ]";
 		mes "Feel free rest whenever you want.";
 		mes "After all, you're not alone.";
+		ep17_2_main = 36;
 		setquest 18020;
 		completequest 18020;
 		close3;
@@ -4624,53 +4642,6 @@ prt_cas,325,263,3	script	Nyhill M. Heine#ep172_prtcas	4_EP17_NIHIL_K,{
 
 //= Library Quest
 ba_maison,85,111,0	script	Fountain#ep172_bamaison-00	4_ENERGY_BLUE,{
-	if (isbegin_quest(11622) == 1) {
-		cloakoffnpcself( "Mark#ep172_fountain" );
-		cloakoffnpcself( "Magi#ep172_fountain" );
-		cloakoffnpcself( "Dew#ep172_fountain" );
-		cloakoffnpcself( "Alp#ep172_fountain" );
-		cloakoffnpcself( "Oliver#ep172_fountain" );
-		cutin "bu_mark1",2;
-		mes "[ Mark ]";
-		mes "Where should we go first...";
-		next;
-		mes "[ Oliver ]";
-		mes "Of course it's the library!";
-		next;
-		cutin "bu_alp3",2;
-		mes "[ Alp ]";
-		mes "Oh!";
-		mes "As expected, you know something!!! It's the great sage Varmdunt!!! He's a legend, that no one has ever surpassed him during and after his time.";
-		next;
-		mes "[ Alp ]";
-		mes "It's said that the science and technology are only maintaining the foundation that he has established, but they can't implement things that have no data left from his research.";
-		mes "It's a library that holds that research that he loved!!! It's a privately owned library, but I heard it's bigger than the Geffen Library!!! It's been a while since I've been this excited!!!";
-		next;
-		cutin "bu_du5",2;
-		mes "[ Dew ]";
-		mes "Ugh...";
-		mes "It came out...";
-		mes "The bookmania...";
-		next;
-		cutin "bu_maggi1",2;
-		mes "[ Magi ]";
-		mes "Me too!!!";
-		mes "I wonder how many magic books are there!";
-		next;
-		cutin "bu_mark2",2;
-		mes "[ Mark ]";
-		mes "The Great Sage Varmdunt is said to excel in magic and healing, right?";
-		mes "Come on! Let's go to the library.";
-		close2;
-		cutin "",255;
-		cloakonnpcself( "Mark#ep172_fountain" );
-		cloakonnpcself( "Magi#ep172_fountain" );
-		cloakonnpcself( "Dew#ep172_fountain" );
-		cloakonnpcself( "Alp#ep172_fountain" );
-		cloakonnpcself( "Oliver#ep172_fountain" );
-		navigateto("ba_in01",211,83);
-		end;
-	}
 	if (isbegin_quest(11621) == 1) {
 		cloakoffnpcself( "Dew#ep172_fountain" );
 		cutin "bu_du5",2;
@@ -4796,6 +4767,53 @@ ba_maison,85,111,0	script	Fountain#ep172_bamaison-00	4_ENERGY_BLUE,{
 		navigateto("ba_in01",211,83);
 		end;
 	}
+	if (isbegin_quest(11622) == 1) {
+		cloakoffnpcself( "Mark#ep172_fountain" );
+		cloakoffnpcself( "Magi#ep172_fountain" );
+		cloakoffnpcself( "Dew#ep172_fountain" );
+		cloakoffnpcself( "Alp#ep172_fountain" );
+		cloakoffnpcself( "Oliver#ep172_fountain" );
+		cutin "bu_mark1",2;
+		mes "[ Mark ]";
+		mes "Where should we go first...";
+		next;
+		mes "[ Oliver ]";
+		mes "Of course it's the library!";
+		next;
+		cutin "bu_alp3",2;
+		mes "[ Alp ]";
+		mes "Oh!";
+		mes "As expected, you know something!!! It's the great sage Varmdunt!!! He's a legend, that no one has ever surpassed him during and after his time.";
+		next;
+		mes "[ Alp ]";
+		mes "It's said that the science and technology are only maintaining the foundation that he has established, but they can't implement things that have no data left from his research.";
+		mes "It's a library that holds that research that he loved!!! It's a privately owned library, but I heard it's bigger than the Geffen Library!!! It's been a while since I've been this excited!!!";
+		next;
+		cutin "bu_du5",2;
+		mes "[ Dew ]";
+		mes "Ugh...";
+		mes "It came out...";
+		mes "The bookmania...";
+		next;
+		cutin "bu_maggi1",2;
+		mes "[ Magi ]";
+		mes "Me too!!!";
+		mes "I wonder how many magic books are there!";
+		next;
+		cutin "bu_mark2",2;
+		mes "[ Mark ]";
+		mes "The Great Sage Varmdunt is said to excel in magic and healing, right?";
+		mes "Come on! Let's go to the library.";
+		close2;
+		cutin "",255;
+		cloakonnpcself( "Mark#ep172_fountain" );
+		cloakonnpcself( "Magi#ep172_fountain" );
+		cloakonnpcself( "Dew#ep172_fountain" );
+		cloakonnpcself( "Alp#ep172_fountain" );
+		cloakonnpcself( "Oliver#ep172_fountain" );
+		navigateto("ba_in01",211,83);
+		end;
+	}
 	mes "- It's the fountain where Dew washed his body.";
 	mes "Fortunately, it seems that it has been cleaned already. -";
 	close;
@@ -4815,11 +4833,11 @@ ba_maison,84,109,5	duplicate(dummy_cloaked_npc)	Oliver#ep172_fountain	4_M_OLIVER
 ba_in01,211,183,0	script	#libent_to_library	WARPNPC,2,2,{
 	end;
 OnTouch:
-	if (isbegin_quest(11622) == 0) {
+	switch( isbegin_quest(11622) ) {
+	case 0:
 		mes "The pile of fire in front of door prevent us from going forward.";
 		close;
-	}
-	if (isbegin_quest(11622) == 1) {
+	case 1:
 		cloakoffnpcself( "Mark#ep172_libent" );
 		cloakoffnpcself( "Magi#ep172_libent" );
 		cloakoffnpcself( "Dew#ep172_libent" );
@@ -4916,6 +4934,8 @@ OnTouch:
 		cloakonnpcself( "Oliver#ep172_libent" );
 		cloakonnpcself( "Alp#ep172_libent" );
 		end;
+	case 2:
+		break;
 	}
 	if (isbegin_quest(11623) == 1) {
 		cutin "bu_du2",2;
@@ -4951,7 +4971,10 @@ ba_in01,212,186,3	duplicate(dummy_npc)	#ep172_firepit-2	4_BONFIRE
 ba_in01,213,186,3	duplicate(dummy_npc)	#ep172_firepit-3	4_BONFIRE
 
 ba_lib,157,19,5	script	Mansion Manager ет#ep172_balib	4_EP17_BASIC_B,{
-	if (isbegin_quest(11623) == 1) {
+	switch( isbegin_quest(11623) ) {
+	case 0:
+		end;	// no access, shouldn't happen
+	case 1:
 		cutin "ep172_beta",2;
 		mes "[ Mansion Manager ет ]";
 		mes "Please be quiet inside the library. Also, you need to register to use the library. If you don't register, you won't be able to read any book inside the library.";
@@ -4983,16 +5006,10 @@ ba_lib,157,19,5	script	Mansion Manager ет#ep172_balib	4_EP17_BASIC_B,{
 		setquest 11627;
 		setquest 11628;
 		close3;
+	case 2:
+		break;
 	}
-	for ( .@i = 11629; .@i < 11634; .@i++ ) {
-		if (isbegin_quest(.@i) == 0)
-			.@miss++;
-		else if (isbegin_quest(.@i) == 1)
-			.@done++;
-		else
-			continue;
-	}
-	if (isbegin_quest(11623) == 2 && .@miss > 0) {
+	if (queststatus_between(11624,11628) != 0) {
 		cutin "ep172_beta",2;
 		mes "[ Mansion Manager ет ]";
 		mes "Please be quiet inside the library. Also, you need to register to use the library. If you don't register, you won't be able to read any book inside the library.";
@@ -5017,16 +5034,17 @@ ba_lib,157,19,5	script	Mansion Manager ет#ep172_balib	4_EP17_BASIC_B,{
 		mes "While you're looking around, let the other guys know that they need to register... See you later~~~";
 		close3;
 	}
-	if (isbegin_quest(11623) == 2 && .@done == 5) {
+	if (queststatus_between(11629,11633) == 1) {
 		cutin "ep172_beta",2;
 		mes "[ Mansion Manager ет ]";
 		mes "Thank you for your party confirmation.";
 		mes "" + strcharinfo(0) + " and 4... 5... 4... 6... 7... 4... 3... people has been registered.";
 		mes "Thank you for your cooperation.";
-		for ( .@i = 11629; .@i < 11634; .@i++ ) {
-			if (isbegin_quest(.@i) == 1)
-				completequest .@i;
-		}
+		erasequest 11629;
+		erasequest 11630;
+		erasequest 11631;
+		erasequest 11632;
+		erasequest 11633;
 		getitem 1000103,5;
 		close3;
 	}
@@ -5134,12 +5152,12 @@ S_Menu:
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11629) == 1 && isbegin_quest(11630) == 1 && isbegin_quest(11631) == 1 && isbegin_quest(11632) == 1 && isbegin_quest(11633) == 1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11634,HUNTING) == -1 && checkquest(11635,PLAYTIME) == -1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11634,HUNTING) == -1 && checkquest(11635,PLAYTIME) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11634,HUNTING) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11636,HUNTING) == -1 && checkquest(11637,PLAYTIME) == -1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11636,HUNTING) == -1 && checkquest(11637,PLAYTIME) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11633) == 2 && checkquest(11636,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 2 && queststatus_between(11624,11633) == 0 && checkquest(11634,HUNTING) == -1 && checkquest(11635,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 2 && queststatus_between(11624,11633) == 0 && checkquest(11634,HUNTING) == -1 && checkquest(11635,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 2 && queststatus_between(11624,11633) == 0 && checkquest(11634,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 2 && queststatus_between(11624,11633) == 0 && checkquest(11636,HUNTING) == -1 && checkquest(11637,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 2 && queststatus_between(11624,11633) == 0 && checkquest(11636,HUNTING) == -1 && checkquest(11637,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11623) == 2 && queststatus_between(11624,11633) == 0 && checkquest(11636,HUNTING) == 2" );
 	end;
 }
 
@@ -5151,8 +5169,7 @@ ba_lib,159,19,5	script	Dew#ep172_balib	4_M_REDMAN,{
 }
 
 ba_lib,84,85,3	script	Mark#ep172_balib	4_M_BLUEMAN,{
-	.@quest_id = 11624;
-	if (isbegin_quest(.@quest_id) == 1) {
+	if (isbegin_quest(11624) == 1) {
 		cutin "bu_mark2",2;
 		mes "[ Mark ]";
 		mes "This is unbelievable!!!!";
@@ -5162,17 +5179,18 @@ ba_lib,84,85,3	script	Mark#ep172_balib	4_M_BLUEMAN,{
 		mes "[ Mark ]";
 		mes "You need to register? I was in a hurry, I didn't even take a look into it.";
 		mes "I'll go ahead and register first.";
-		completequest .@quest_id;
-		setquest .@quest_id + 5;
+		erasequest 11624;
+		setquest 11629;
 		close3;
 	}
-	if (isbegin_quest(.@quest_id + 5) == 1) {
+	if (isbegin_quest(11629) == 1) {
 		cutin "bu_mark1",2;
 		mes "[ Mark ]";
 		mes "You need to register? I was in a hurry, I didn't even take a look into it.";
 		mes "I'll go ahead and register first.";
 		close3;
 	}
+	// todo
 	end;
 
 OnInit:
@@ -5181,8 +5199,7 @@ OnInit:
 }
 
 ba_lib,96,208,5	script	Tamarin#ep172_balib	4_EP17_TAMARIN,{
-	.@quest_id = 11627;
-	if (isbegin_quest(.@quest_id) == 1 || isbegin_quest(.@quest_id + 5) == 1) {
+	if (isbegin_quest(11627) == 1 || isbegin_quest(11632) == 1) {
 		cutin "ep172_tamarin02",2;
 		mes "[ Tamarin ]";
 		mes "Library registration... I was so excited about the library that I just came in. There are so many books that I want to read... I'll go register as soon as possible.";
@@ -5218,16 +5235,15 @@ ba_lib,96,208,5	script	Tamarin#ep172_balib	4_EP17_TAMARIN,{
 		mes "Yeah, yeah~";
 		mes "I got it already.";
 		mes "I'll look for it myself!";
-		if (isbegin_quest(.@quest_id) == 1) {
-			completequest .@quest_id;
-			setquest .@quest_id + 5;
+		if (isbegin_quest(11627) == 1) {
+			erasequest 11627;
+			setquest 11632;
 		}
 		close2;
 		cutin "",255;
 		cloakonnpcself( "????????#ep172_balib-0" );
 		end;
 	}
-
 	cutin "ep172_tamarin02",2;
 	mes "[ Tamarin ]";
 	mes "Do I really look like one of the managers here?";
@@ -5242,8 +5258,7 @@ OnInit:
 ba_lib,99,209,3	duplicate(dummy_cloaked_npc)	????????#ep172_balib-0	4_EP17_BOY_B
 
 ba_lib,199,233,3	script	Oliver#ep172_balib	4_M_OLIVER,{
-	.@quest_id = 11628;
-	if (isbegin_quest(.@quest_id) == 1 || isbegin_quest(.@quest_id + 5) == 1) {
+	if (isbegin_quest(11628) == 1 || isbegin_quest(11633) == 1) {
 		cutin "bu_oliver5",2;
 		mes "[ Oliver ]";
 		mes "Hmm...";
@@ -5287,9 +5302,9 @@ ba_lib,199,233,3	script	Oliver#ep172_balib	4_M_OLIVER,{
 		mes "[ Oliver ]";
 		mes "That brother was quite strange...";
 		mes "Then I'll decide with this book as the brother said!!!";
-		if (isbegin_quest(.@quest_id) == 1) {
-			completequest .@quest_id;
-			setquest .@quest_id + 5;
+		if (isbegin_quest(11628) == 1) {
+			erasequest 11628;
+			setquest 11633;
 		}
 		close3;
 	}
@@ -5305,10 +5320,8 @@ OnInit:
 
 ba_lib,202,232,1	duplicate(dummy_cloaked_npc)	????????#ep172_balib-1	4_EP17_BOY_A
 
-
 ba_lib,112,266,5	script	Magi#ep172_balib	4_F_PINKWOMAN,{
-	.@quest_id = 11625;
-	if (isbegin_quest(.@quest_id) == 1 || isbegin_quest(.@quest_id + 5) == 1) {
+	if (isbegin_quest(11625) == 1 || isbegin_quest(11630) == 1) {
 		cutin "bu_maggi3",2;
 		mes "[ Magi ]";
 		mes "It's amazing!!!";
@@ -5321,12 +5334,13 @@ ba_lib,112,266,5	script	Magi#ep172_balib	4_F_PINKWOMAN,{
 		cutin "bu_maggi2",2;
 		mes "[ Magi ]";
 		mes "Wait a minute... I'll just look at this a little bit more and go register!!!";
-		if (isbegin_quest(.@quest_id) == 1) {
-			completequest .@quest_id;
-			setquest .@quest_id + 5;
+		if (isbegin_quest(11625) == 1) {
+			erasequest 11625;
+			setquest 11630;
 		}
 		close3;
 	}
+	// todo
 	end;
 
 OnInit:
@@ -5335,17 +5349,16 @@ OnInit:
 }
 
 ba_lib,293,234,3	script	Alp#ep172_balib	4_M_BLACKMAN,{
-	.@quest_id = 11626;
-	if (isbegin_quest(.@quest_id) == 1 || isbegin_quest(.@quest_id + 5) == 1) {
+	if (isbegin_quest(11626) == 1 || isbegin_quest(11631) == 1) {
 		cutin "bu_alp1",2;
 		mes "[ Alp ]";
 		mes "Haha~";
 		next;
 		cutin "",255;
 		mes "- I'd better not talk to him right now. -";
-		if (isbegin_quest(.@quest_id) == 1) {
-			completequest .@quest_id;
-			setquest .@quest_id + 5;
+		if (isbegin_quest(11626) == 1) {
+			erasequest 11626;
+			setquest 11631;
 		}
 		close;
 	}
@@ -5358,19 +5371,21 @@ OnInit:
 
 //Daily Quest
 ba_in01,24,322,3	script	Cleaning Robot е╪#ep172_bain-00	20640,{
+	// todo checkweight
+	// todo exp
 	npctalk "(еш_еш?) в╧ Loading..", "", bc_self;
 	sleep2 1000;
 	npctalk "Cleaning Robot е╪ : Communication is in progress for user recognition.", "", bc_self;
 	sleep2 2000;
 	npctalk "(в┴_в┴*) в╧ Connect !!", "", bc_self;
 	sleep2 1000;
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		npctalk "Cleaning Robot е╪ :  Unauthorized user. Communication terminated.", "", bc_self;
 		end;
 	}
 	npctalk "Cleaning Robot е╪ : User authorized. Nice to meet you.";
 	sleep2 1000;
-	if (isbegin_quest(5892) < 2) {
+	if (isbegin_quest(5892) == 0) {
 		mes "[ Cleaning Robot е╪ ]";
 		mes "Hello, Guest! Nice to meet you~ I'm Cleaning Robot е╪~";
 		next;
@@ -5600,7 +5615,7 @@ OnMove:
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 &&  isbegin_quest(5892) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 &&  isbegin_quest(5892) == 0" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5896,PLAYTIME) == -1 && checkquest(5893,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(5892) == 2 && checkquest(5896,PLAYTIME) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(5893,HUNTING) == 2 && checkquest(5894,HUNTING) == 2 && checkquest(5895,HUNTING) == 2" );
@@ -5615,6 +5630,8 @@ OnInit:
 
 //= 160 Daily
 ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
+	// todo exp first time
+	// todo checkw
 	if (BaseLevel < 160) {
 		cutin "ep172_beta",2;
 		mes "[ Chirp ]";
@@ -5624,13 +5641,14 @@ ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
 		mes "- You must be atleast level 160 to perform this quest. -";
 		close3;
 	}
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		cutin "ep172_beta",2;
 		mes "[ Chirp ]";
 		mes "Since all places are open to special guests, we can't stop you from coming in here. However, if you're going to look around the warehouse, you shouldn't touch anything here.";
 		close3;
 	}
-	if (isbegin_quest(17342) == 0) {
+	switch( isbegin_quest(17342) ) {
+	case 0:
 		cutin "ep172_beta",2;
 		mes "[ Chirp ]";
 		mes "What a mess is this.";
@@ -5868,8 +5886,7 @@ ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
 		mes "I hope you find pleasure on it.";
 		setquest 17342;
 		close3;
-	}
-	if (isbegin_quest(17342) == 1) {
+	case 1:
 		if (checkquest(17342,HUNTING) < 2) {
 			cutin "ep172_beta",2;
 			mes "[ Chirp ]";
@@ -6020,7 +6037,7 @@ ba_2whs01,150,51,5	script	Chirp#ep172_2whs01-00	4_EP17_BASKET,{
 		mes "[ Chirp ]";
 		mes "Oh, I forgot to tell you this.";
 		mes "The warehouse is very dangerous, so you have to be very careful. Okay?";
-		completequest 17344;
+		erasequest 17344;
 		getitem 1000103,3;
 		setquest 17345;
 		setquest 17346;
@@ -6269,8 +6286,8 @@ S_Menu:
 	return .@menu$;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && isbegin_quest(17333) > 0 && checkquest(17342,HUNTING) == -1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && isbegin_quest(17333) > 0 && checkquest(17342,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && ep17_2_main >= 9 && checkquest(17342,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && ep17_2_main >= 9 && checkquest(17342,HUNTING) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17344) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17358) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17358) == 2 && checkquest(17359,HUNTING) == -1 && checkquest(17360,PLAYTIME) == -1" );
@@ -6332,7 +6349,6 @@ ba_2whs01,222,257,0	duplicate(Emergency Key#ep172_0)	Emergency Key#ep172_2	4_ENE
 
 ba_2whs01,110,218,0	script	#ep172_key_ev_0	HIDDEN_WARP_NPC,3,3,{
 	end;
-
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"ep172_key_ev_",""));
 	.@quest_id = (17345 + .@id);
@@ -6359,7 +6375,7 @@ ba_2whs01,276,290,0	script	Lock#ep172_2whs01-00	4_ENERGY_BLUE,{
 		mes "- W... who... -";
 		next;
 		mes "- I heard a slighly clearer sound than I heard at the entrance. But I can't go down and check because I have no key. Let's go back and ask. -";
-		completequest 17343;
+		erasequest 17343;
 		setquest 17344;
 		close;
 	}
@@ -6566,7 +6582,6 @@ OnInit:
 
 ba_2whs02,37,312,3	script	#ep172_ev2whs01	HIDDEN_WARP_NPC,5,5,{
 	end;
-
 OnTouch:
 	cloakoffnpcself( "Head#ep172_2whs01" );
 	if (isbegin_quest(17349) == 1)
@@ -6682,7 +6697,7 @@ ba_maison,79,278,3	script	Europa#ep172_dq180	4_EP17_BASIC_B,{
 		mes "- You must be atleast level 180 to take this quest. -";
 		close;
 	}
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		cutin "ep172_beta",2;
 		mes "[ Europa ]";
 		mes "The reactor are open to all special guests, however I recommend not going inside at the moment.";
@@ -6853,18 +6868,18 @@ ba_maison,79,278,3	script	Europa#ep172_dq180	4_EP17_BASIC_B,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && BaseLevel >= 180 && isbegin_quest(3389) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && BaseLevel >= 180 && isbegin_quest(3389) == 0" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3389) == 1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(3390) == 1 && countitem(1000225) >= 10" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(3392) == 1 && countitem(1000225) >= 10" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(3390) == 2 && isbegin_quest(3392) == 0 && checkquest(3391,PLAYTIME) == -1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(3390) == 2 && isbegin_quest(3392) == 0 && checkquest(3391,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(3390) == 1 && countitem(1000225) >= 10" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(3392) == 1 && countitem(1000225) >= 10" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(3390) == 2 && isbegin_quest(3392) == 0 && checkquest(3391,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(3390) == 2 && isbegin_quest(3392) == 0 && checkquest(3391,PLAYTIME) == 2" );
 	end;
 }
 
 //= Bath
 ba_in01,384,38,3	script	Shrine#ep172_bath_0	4_EP17_BUCKETS,5,5,{
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		mes "[ Shrine ]";
 		mes "I apologize, but the bath house is currently closed due to an internal condition, and we cannot assure the reopening time. Please come back later. If you would like a quiet bath, please use the private bathroom provided with your guest room.";
 		close;
@@ -7090,7 +7105,7 @@ ba_in01,384,38,3	script	Shrine#ep172_bath_0	4_EP17_BUCKETS,5,5,{
 	close;
 
 OnTouch:
-	if (isbegin_quest(17333) > 0 && isbegin_quest(17363) == 0) {
+	if (ep17_2_main >= 9 && isbegin_quest(17363) == 0) {
 		cloakoffnpcself( "Rookie#ep172_bath_0" );
 		cloakoffnpcself( "Denny#ep172_bath_0" );
 		cloakoffnpcself( "Molar#ep172_bath_0" );
@@ -7103,7 +7118,7 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(17363) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(17363) == 0" );
 	end;
 }
 
@@ -7330,7 +7345,6 @@ OnInit:
 
 ba_bath,203,58,0	script	#ep172_bath_ev_1	HIDDEN_WARP_NPC,5,5,{
 	end;
-
 OnTouch:
 	if (isbegin_quest(17367) == 1)
 		cloakoffnpcself( "Rookie#ep172_bath_3" );
@@ -8754,7 +8768,6 @@ ba_bath,289,64,5	duplicate(dummy_cloaked_npc)	Valve#ep172_bath_1	4_EP17_CLEANER_
 
 ba_bath,270,94,0	script	#ep172_bath_ev_0	HIDDEN_WARP_NPC,5,5,{
 	end;
-
 OnTouch:
 	if (isbegin_quest(17365) == 1)
 		cloakoffnpcself( "Rookie#ep172_bath_2" );
@@ -8816,7 +8829,7 @@ ba_bath,31,276,5	script	Cold Spring#ep172_bathinfo	4_BOARD3,{
 
 //= Water Garden
 ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		mes "[ Lensis ]";
 		mes "Users who are not registered as guests are considered enemy.";
 		next;
@@ -8830,7 +8843,7 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 		mes "I just realized, My way of thinking is wrong. This guy called Varmundt isn't he amazing?";
 		mes "To think these beautiful automatic dolls exist. I should've come in more earlier.";
 		npctalk "Elyumina : If I had, I wouldn't have been caught.", "Elyumina#ep172_bapw2-0", bc_self;
-		emotion ET_SURPRISE,getnpcid(0,"Elyumina#ep172_bapw2-0");
+		emotion ET_SURPRISE, getnpcid(0,"Elyumina#ep172_bapw2-0");
 		next;
 		mes "[ Elyumina ]";
 		mes "It's beautiful, this form of connection that allows the core entity to freely control sub-objects deployed throughout the mansion with centralized network control method...";
@@ -8839,14 +8852,14 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 		mes "[ Elyumina ]";
 		mes "and yet, it's operating in a way that makes the individuality of the sub-objects stands out.";
 		mes "It's fun. I wonder what kind of machine it works with.";
-		emotion ET_BIGTHROB,getnpcid(0,"Elyumina#ep172_bapw2-0");
+		emotion ET_BIGTHROB, getnpcid(0,"Elyumina#ep172_bapw2-0");
 		next;
 		cloakoffnpcself( "Rookie#ep172_bapw2-0" );
 		cloakoffnpcself( "Lazy#ep172_bapw2-0" );
 		cutin "16loo_03",2;
 		mes "[ Rookie ]";
 		mes "You seem happy. I don't know what makes you happy though.";
-		emotion ET_SWEAT,getnpcid(0,"Rookie#ep172_bapw2-0");
+		emotion ET_SWEAT, getnpcid(0,"Rookie#ep172_bapw2-0");
 		next;
 		mes "[ Rookie ]";
 		mes "Be careful anyway. There's a near toxic sewage running right under this thin sheet of iron.";
@@ -8859,7 +8872,7 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 		mes "[ Elyumina ]";
 		mes "Are you an automatic doll that manages this place? Can I talk to you for a moment?";
 		mes "Don't worry, I'm not a suspicious person.";
-		emotion ET_DELIGHT,getnpcid(0,"Elyumina#ep172_bapw2-0");
+		emotion ET_DELIGHT, getnpcid(0,"Elyumina#ep172_bapw2-0");
 		next;
 		cutin "16lei_02",2;
 		mes "[ Lazy ]";
@@ -8875,13 +8888,13 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 		mes "[ Elyumina ]";
 		mes "Wait, wait a minute. I'm properly licensed... Argh!";
 		specialeffect EF_ICECRASH, AREA, "Elyumina#ep172_bapw2-0";
-		emotion ET_HUK,getnpcid(0,"Elyumina#ep172_bapw2-0");
+		emotion ET_HUK, getnpcid(0,"Elyumina#ep172_bapw2-0");
 		next;
 		cloakonnpcself( "Rookie#ep172_bapw2-0" );
 		cutin "16loo_03",2;
 		mes "[ Rookie ]";
 		mes "Oh, it's dangerous!";
-		emotion ET_HUK,getnpcid(0,"Rookie#ep172_bapw2-0");
+		emotion ET_HUK, getnpcid(0,"Rookie#ep172_bapw2-0");
 		next;
 		cloakoffnpcself( "Elyumina#ep172_bapw2-0" );
 		cloakoffnpcself( "Rookie#ep172_bapw2-0" );
@@ -8889,7 +8902,7 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 		mes "[ Elyumina ]";
 		mes "Ugh! Cough, cough, cough!";
 		mes "Argh! What the hell is this? I almost died! I can't believe you did it in such a lovely way. You're all wet!";
-		emotion ET_KEK,getnpcid(0,"Elyumina#ep172_bapw2-0");
+		emotion ET_KEK, getnpcid(0,"Elyumina#ep172_bapw2-0");
 		next;
 		mes "[ Elyumina ]";
 		mes "You know how to be forgiven for just being pretty, don't you? The world is not that easy! ... wh, what kind of headache is this?";
@@ -8923,7 +8936,7 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 		mes "[ Rookie ]";
 		mes "What should we do. The sewage around here is coming for the laboratory, that's why it's almost toxic.";
 		mes "I can't believe you fell into the water that looks very bad even at first glance.";
-		emotion ET_THINK,getnpcid(0,"Rookie#ep172_bapw2-0");
+		emotion ET_THINK, getnpcid(0,"Rookie#ep172_bapw2-0");
 		next;
 		cutin "",255;
 		select("Shouldn't you see a doctor?");
@@ -8965,7 +8978,7 @@ ba_pw02,42,267,5	script	Lensis#ep172_bapw2-0	20629,{
 	close3;
 
 OnInit:
-	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(16427) == 0");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(16427) == 0");
 	end;
 }
 
@@ -9142,7 +9155,7 @@ ba_maison,169,270,5	script	Need#ep172_bamaison-00	4_EP17_BASIC_B,{
 	close3;
 
 OnInit:
-	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) == 2 && isbegin_quest(16427) == 1");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 10 && isbegin_quest(16427) == 1");
 	end;
 }
 
@@ -10024,7 +10037,7 @@ ba_maison,311,206,3	script	Luina#172_lost_0	4_EP17_BASIC_B,{
 		mes "- This quest is for level 150 or higher -";
 		close;
 	}
-	if (isbegin_quest(17333) == 0) {
+	if (ep17_2_main < 9) {
 		mes "- I've met eyes with the automatic doll in front of the farming facility. -";
 		next;
 		mes "- The doll looked at me up and down, and turn its head. -";
@@ -10265,7 +10278,7 @@ ba_maison,311,206,3	script	Luina#172_lost_0	4_EP17_BASIC_B,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17333) > 0 && isbegin_quest(8586) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main >= 9 && isbegin_quest(8586) == 0" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8586) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8589) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8586) == 2 && checkquest(8587,PLAYTIME) == -1" );
@@ -10402,7 +10415,6 @@ ba_maison,309,206,5	script	Kitty#172_lost_0	20653,{
 //= Hidden Garden
 ba_maison,120,320,0	script	#172_hgd_ev	HIDDEN_WARP_NPC,3,3,{
 	end;
-
 OnTouch:
 	cloakoffnpcself( "#172_hgd_rep" );
 	specialeffect EF_WHITEBODY, AREA, "#172_hgd_rep";

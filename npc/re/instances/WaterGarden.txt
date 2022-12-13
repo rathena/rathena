@@ -14,11 +14,11 @@
 
 OnInstanceInit:
 	'map$ = instance_mapname("1@ghg");
-	for (.@i = 1; .@i < 5; .@i++) {
+	for ( .@i = 1; .@i < 5; ++.@i ) {
 		disablenpc instance_npcname("#172_wg_warp_" + .@i);
 		disablenpc instance_npcname("Gardener#172_wg_" + .@i);
 	}
-	for (.@i = 0; .@i < 3; .@i++) {
+	for ( .@i = 0; .@i < 3; ++.@i ) {
 		disablenpc instance_npcname("#172_light_blue_" + .@i);
 		disablenpc instance_npcname("#172_light_red_" + .@i);
 	}
@@ -67,12 +67,12 @@ OnTouch:
 		close;
 	}
 	.@id = atoi(replacestr(strnpcinfo(2),"172_wg_warp_",""));
-	switch (.@id) {
+	switch( .@id) {
 		case 0: .@x = 208; .@y = 57; break;
 		case 1: .@x = 311; .@y = 67; break;
 		case 2: .@x = 343; .@y = 139; break;
 		case 3:
-			switch (rand(1,4)) {
+			switch( rand(1,4)) {
 				case 1: .@x = 345; .@y = 235; break;
 				case 2: .@x = 345; .@y = 278; break;
 				case 3: .@x = 305; .@y = 310; break;
@@ -265,7 +265,7 @@ OnTouch:
 
 OnSummon:
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	switch ('summon) {
+	switch( 'summon) {
 		case 0:
 			setarray .@xy,247,89,'aries,257,90,'aries,228,89,'aries,227,93,'aries,238,54,'aries,245,52,'aries,251,89,'violet,253,92,'violet,244,53,'violet,227,96,'violet,226,83,'violet,244,59,'violet;
 			break;
@@ -279,22 +279,22 @@ OnSummon:
 			break;
 
 	}
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1, .@event$;
 	end;
 
 OnMobKill:
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	if (!mobcount('map$,.@event$)) {
+	if (!mobcount('map$, .@event$)) {
 		'summon += 1;
 		'water_garden += 1;
-		switch ('summon) {
+		switch( 'summon) {
 			case 1:
 				specialeffect EF_READYPORTAL,AREA,instance_npcname("#172_wg_warp_1");
 				enablenpc instance_npcname("#172_wg_warp_1");
 				donpcevent instance_npcname("#172_wg_area_1") + "::OnStop";
 				enablenpc instance_npcname("Gardener#172_wg_1");
-				mapannounce 'map$,"Cleanup is complete. Please proceed to the next area.",bc_map,0xFFFF99;
+				mapannounce 'map$, "Cleanup is complete. Please proceed to the next area.",bc_map,0xFFFF99;
 				break;
 
 			case 2:
@@ -303,13 +303,13 @@ OnMobKill:
 				donpcevent instance_npcname("#172_wg_area_2") + "::OnStop";
 				enablenpc instance_npcname("Gardener#172_wg_2");
 				enablenpc instance_npcname("Gardener#172_wg_3");
-				mapannounce 'map$,"You have eliminated all the obstructions. Please proceed to the next area.",bc_map,0xFFFF99;
+				mapannounce 'map$, "You have eliminated all the obstructions. Please proceed to the next area.",bc_map,0xFFFF99;
 				break;
 
 			case 3:
 				specialeffect EF_READYPORTAL,AREA,instance_npcname("#172_wg_warp_2");
 				enablenpc instance_npcname("#172_wg_warp_4");
-				mapannounce 'map$,"The final garden has opened. Please proceed to the next area.",bc_map,0xFFFF99;
+				mapannounce 'map$, "The final garden has opened. Please proceed to the next area.",bc_map,0xFFFF99;
 				enablenpc instance_npcname("Gardener#172_wg_5");
 				break;
 		}
@@ -322,14 +322,14 @@ OnMobKill:
 
 OnSummon:
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnBossKill";
-	monster 'map$,181,286,"--ja--",'boss,1,.@event$;
+	monster 'map$,181,286,"--ja--",'boss,1, .@event$;
 	'gid = $@mobid[0];
 	donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonSlave";
 	end;
 
 OnBossKill:
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnDead";
-	killmonster 'map$,.@event$;
+	killmonster 'map$, .@event$;
 	stopnpctimer;
 	'water_garden = 10;
 	hideoffnpc instance_npcname("Gardener#172_wg_5");
@@ -340,12 +340,12 @@ OnSummonSlave:
 	.@red = rand(3);
 	.@blue = rand(3);
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnDead";
-	monster 'map$,182,286,"Papilla Ruba",'red,1,.@event$;
-	monster 'map$,182,286,"Papilla Cae",'blue,1,.@event$;
+	monster 'map$,182,286,"Papilla Ruba",'red,1, .@event$;
+	monster 'map$,182,286,"Papilla Cae",'blue,1, .@event$;
 	enablenpc instance_npcname("#172_light_blue_" + .@blue);
 	enablenpc instance_npcname("#172_light_red_" + .@red);
 	sleep 15000;
-	switch (rand(1,4)) {
+	switch( rand(1,4)) {
 		case 1: .@x = 152; .@y = 287; break;
 		case 2: .@x = 182; .@y = 256; break;
 		case 3: .@x = 182; .@y = 310; break;
@@ -359,9 +359,9 @@ OnSummonSlave:
 	instance_warpall 'map$,.@x,.@y,instance_id();
 	disablenpc instance_npcname("#172_wg_hpreducer");
 	sleep 2000;
-	monster 'map$,.@x,.@y,"",2537,1,.@event$;
+	monster 'map$,.@x,.@y,"",2537,1, .@event$;
 	sleep 10000;
-	killmonster 'map$,.@event$;
+	killmonster 'map$, .@event$;
 	initnpctimer;
 OnDead:
 	end;
@@ -420,7 +420,7 @@ OnTouchNPC:
 
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"172_wg_trap_",""));
-	switch (.@id) {
+	switch( .@id) {
 		case 0: setarray .@xy,315,150,317,149,317,150; break;
 		case 1: setarray .@xy,298,148,294,150,296,147; break;
 		case 2: setarray .@xy,274,148,276,148,278,147; break;
@@ -432,7 +432,7 @@ OnTouch:
 		case 8: setarray .@xy,316,173,316,174,314,173; break;
 	}
 	disablenpc instance_npcname(strnpcinfo(0));
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 2)
 		monster 'map$,.@xy[.@i],.@xy[.@i+1],"",'snail,1;
 	end;
 }
@@ -451,7 +451,7 @@ OnTouch:
 	end;
 
 OnEvent:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
 	setarray .@xy,
 	240,73,20676,9,
 	225,59,20676,4,
@@ -461,7 +461,7 @@ OnEvent:
 	227,80,20673,4,
 	223,92,20673,6,
 	261,54,20673,4;
-	switch (rand(1,8)) {
+	switch( rand(1,8)) {
 		case 1: .@x = 240; .@y = 73; break;
 		case 2: .@x = 225; .@y = 59; break;
 		case 3: .@x = 253; .@y = 91; break;
@@ -473,29 +473,29 @@ OnEvent:
 	}
 	instance_warpall 'map$,.@x,.@y,instance_id();
 	sleep 2000;
-	mapannounce 'map$,"The magic of the Papilla's has activated. Be careful!",bc_map,0xFFFF99;
+	mapannounce 'map$, "The magic of the Papilla's has activated. Be careful!",bc_map,0xFFFF99;
 	sleep 2000;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 4) {
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"",.@xy[.@i+2],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 4) {
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"",.@xy[.@i+2],1, .@event$;
 		if (unitexists($@mobid[0]))
 			unitskillusepos $@mobid[0],"NPC_RAINOFMETEOR",.@xy[.@i+3],.@xy[.@i],.@xy[.@i+1],-10000;
 	}
 	sleep 5000;
-	killmonster 'map$,.@event$;
+	killmonster 'map$, .@event$;
 	initnpctimer;
 OnMobKill:
 	end;
 
 OnStop:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
 	stopnpctimer;
-	killmonster 'map$,.@event$;
+	killmonster 'map$, .@event$;
 	disablenpc();
 	end;
 
 OnTimer15000:
-	.@event$ = instance_npcname("#172_wg_mob")+"::OnMobKill";
-	if (!mobcount('map$,.@event$))
+	.@event$ = instance_npcname("#172_wg_mob") + "::OnMobKill";
+	if (!mobcount('map$, .@event$))
 		stopnpctimer;
 	else
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent";
@@ -514,21 +514,21 @@ OnEvent:
 	"320:76","325:76","330:76","335:76","340:76","345:76",
 	"320:71","325:71","330:71","335:71","340:71","345:71",
 	"320:66","325:66","330:66","335:66","340:66","345:66";
-	for (.@i = 0; .@i < 3; .@i++) {
+	for ( .@i = 0; .@i < 3; ++.@i ) {
 		.@val = rand(1,25);
 		while (inarray(.@index,.@val) >= 0)
 			.@val = rand(1,25);
 		.@index[.@i] = .@val;
 		.@mob[.@i] = (rand(1,2) == 1 ? 20673 : 20676);
 	}
-	mapannounce 'map$,"The Papilla's has returned!",bc_map,0xFFFF99;
-	for (.@i = 0; .@i < 3; .@i++) {
+	mapannounce 'map$, "The Papilla's has returned!",bc_map,0xFFFF99;
+	for ( .@i = 0; .@i < 3; ++.@i ) {
 		explode(.@T$,.@xy$[.@index[.@i]],":");
-		monster 'map$,atoi(.@T$[0]),atoi(.@T$[1]),"Papilla",.@mob[.@i],1,.@event$;
+		monster 'map$,atoi(.@T$[0]),atoi(.@T$[1]),"Papilla",.@mob[.@i],1, .@event$;
 		.@gid[.@i] = $@mobid[0];
 	}
 	sleep 5000;
-	for (.@i = 0; .@i < 3; .@i++) {
+	for ( .@i = 0; .@i < 3; ++.@i ) {
 		if (.@mob[.@i] == 20673)
 			.@level = 1; //Cross Pattern
 		else
@@ -537,21 +537,21 @@ OnEvent:
 		sleep 600;
 	}
 	sleep 5000;
-	killmonster 'map$,.@event$;
+	killmonster 'map$, .@event$;
 	initnpctimer;
 OnMobKill:
 	end;
 
 OnStop:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
 	stopnpctimer;
-	killmonster 'map$,.@event$;
+	killmonster 'map$, .@event$;
 	disablenpc();
 	end;
 
 OnTimer15000:
-	.@event$ = instance_npcname("#172_wg_mob")+"::OnMobKill";
-	if (!mobcount('map$,.@event$))
+	.@event$ = instance_npcname("#172_wg_mob") + "::OnMobKill";
+	if (!mobcount('map$, .@event$))
 		stopnpctimer;
 	else
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent";

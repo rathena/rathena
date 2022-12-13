@@ -6,13 +6,12 @@
 
 ba_in01,12,321,0	script	#lobby_to_maison	WARPNPC,1,1,{
 	end;
-	
 OnTouch:
-	if(isbegin_quest(11618) < 2)
+	if (ep17_2_main < 7)
 		mes "There is still some work to be done here. Let's look around more.";
 	else
 		warp "ba_maison",75,146;
-end;
+	end;
 }
 
 ba_maison,78,146,0	warp	#maison_to_lobby	1,1,ba_in01,15,321
@@ -59,13 +58,12 @@ ba_in01,307,31,0	warp	#bathent_to_underground	1,1,ba_in01,255,351
 //============================================================
 ba_maison,33,225,0	script	#maison_to_airship	WARPNPC,1,1,{
 	end;
-	
 OnTouch:
-	if(isbegin_quest(18018) == 0)
+	if (ep17_2_main < 32)
 		warp "ba_in01",63,255;
 	else
 		warp "ba_in01",13,255;
-end;
+	end;
 }
 ba_in01,60,255,0	warp	#airship_to_maison-0	1,1,ba_maison,33,222
 ba_in01,10,255,0	warp	#airship_to_maison-1	1,1,ba_maison,33,222
@@ -99,8 +97,8 @@ ba_bath,159,22,0	warp	#babath_to_bathent	1,1,ba_in01,382,38
 // Forgotten Valley
 //============================================================
 ba_maison,314,203,0	script	#maison_to_balost	WARPNPC,1,1,{
-	if(isbegin_quest(8586) != 2)
-		npctalk "Luina : Just a moment, If you want to get in there, I need to talk to you first...","Luina#172_lost_0",bc_self;
+	if (isbegin_quest(8586) != 2)
+		npctalk "Luina : Just a moment, If you want to get in there, I need to talk to you first...", "Luina#172_lost_0", bc_self;
 	else
 		warp "ba_lost",162,37;
 	end;

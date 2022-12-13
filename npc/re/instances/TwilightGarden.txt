@@ -20,15 +20,15 @@ OnInstanceInit:
 	disablenpc instance_npcname("Sweety#172_hst");
 	disablenpc instance_npcname("#tgd_navi_0");
 	disablenpc instance_npcname("#tgd_navi_1");
-	for (.@i = 0; .@i < 5; .@i++) {
+	for ( .@i = 0; .@i < 5; ++.@i ) {
 		disablenpc instance_npcname("Heart Hunter#172_tgd_" + .@i);
 		disablenpc instance_npcname("Est#172_tgd_" + .@i);
 	}
-	for (.@i = 0; .@i < 4; .@i++) {
+	for ( .@i = 0; .@i < 4; ++.@i ) {
 		disablenpc instance_npcname("Rebellion#172_tgdm_1-" + .@i);
 		disablenpc instance_npcname("Rebellion#172_tgdm_2-" + .@i);
 	}
-	for (.@i = 0; .@i < 3; .@i++) {
+	for ( .@i = 0; .@i < 3; ++.@i ) {
 		disablenpc instance_npcname("Heart Hunter#172_tgdm_1-" + .@i);
 		disablenpc instance_npcname("Heart Hunter#172_mob_" + .@i);
 		disablenpc instance_npcname("Intruder#172_tgd_" + .@i);
@@ -41,12 +41,12 @@ OnInstanceInit:
 
 OnStory01:
 	'twilight_story = 2;
-	for (.@i = 0; .@i < 5; .@i++)
+	for ( .@i = 0; .@i < 5; ++.@i )
 		enablenpc instance_npcname("Heart Hunter#172_tgd_" + .@i);
 	end;
 
 OnStory02:
-	for (.@i = 0; .@i < 5; .@i++)
+	for ( .@i = 0; .@i < 5; ++.@i )
 		disablenpc instance_npcname("Heart Hunter#172_tgd_" + .@i);
 	donpcevent instance_npcname("#twilight_story_mob") + "::OnSpawn00";
 	end;
@@ -60,16 +60,16 @@ OnStory03:
 
 OnStory04:
 	'twilight_story = 15;
-	for (.@i = 0; .@i < 4; .@i++)
+	for ( .@i = 0; .@i < 4; ++.@i )
 		enablenpc instance_npcname("Rebellion#172_tgdm_1-" + .@i);
-	for (.@i = 0; .@i < 3; .@i++)
+	for ( .@i = 0; .@i < 3; ++.@i )
 		enablenpc instance_npcname("Heart Hunter#172_tgdm_1-" + .@i);
 	end;
 
 OnStory05:
 	'twilight_story = 18;
 	enablenpc instance_npcname("Est#172_tgd_3");
-	for (.@i = 0; .@i < 3; .@i++) {
+	for ( .@i = 0; .@i < 3; ++.@i ) {
 		enablenpc instance_npcname("Rebellion#172_tgdm_2-" + .@i);
 		enablenpc instance_npcname("Heart Hunter#172_mob_" + .@i);
 	}
@@ -87,7 +87,6 @@ OnStory06:
 
 1@bamn,100,320,0	script	#172_tgd_ev	HIDDEN_WARP_NPC,2,2,{
 	end;
-
 OnTouch:
 	if (!is_party_leader())
 		end;
@@ -151,7 +150,6 @@ OnTouch:
 
 1@bamn,119,299,3	script	Heart Hunter#172_tgd_0	20681,3,3,{
 	end;
-
 OnTouch:
 	if ('twilight_story == 2) {
 		'twilight_story = 3;
@@ -177,9 +175,9 @@ OnTouch:
 		mes "Activate the tracker that we got from Elyumina.";
 		next;
 		cutin "",255;
-		unittalk getcharid(3),strcharinfo(0) + " : Tracker : According to the intuition of the great Elyumina... Too Doo Too Doo Too~";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Tracker : According to the intuition of the great Elyumina... Too Doo Too Doo Too~";
 		sleep2 2000;
-		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Over there!! Beep!";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Tracker : Over there!! Beep!";
 		navigateto("1@bamn",206,273);
 		sleep2 2000;
 		cutin "ep162_est01",2;
@@ -246,14 +244,14 @@ OnTouch:
 		'twilight_story = 7;
 		npcspeed 200;
 		npctalk "Then, let us go.";
-		unitwalk 'guide,199,248,instance_npcname(strnpcinfo(0))+"::OnEvent00";
+		unitwalk 'guide,199,248, instance_npcname(strnpcinfo(0)) + "::OnEvent00";
 		enablenpc instance_npcname("Intruder#172_tgd_0");
 		end;
 	}
 	if ('twilight_story == 8) {
 		'twilight_story = 9;
-		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Pyo-o-o-o-o! There!!";
-		setpcblock PCBLOCK_ALL,true;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Tracker : Pyo-o-o-o-o! There!!";
+		setpcblock PCBLOCK_ALL, true;
 		navigateto("1@bamn",242,206);
 		sleep2 2000;
 		npctalk "Ahahaha, it's noisy.";
@@ -262,10 +260,10 @@ OnTouch:
 		sleep2 2000;
 		npctalk "Guest, there is an intruder!";
 		donpcevent instance_npcname("#twilight_story_mob") + "::OnSpawn02";
-		setpcblock PCBLOCK_ALL,false;
+		setpcblock PCBLOCK_ALL, false;
 		sleep 200;
 		npcspeed 80;
-		unitwalk 'guide,245,229,instance_npcname(strnpcinfo(0))+"::OnEvent02";
+		unitwalk 'guide,245,229, instance_npcname(strnpcinfo(0)) + "::OnEvent02";
 		end;
 	}
 	if ('twilight_story == 10 || 'twilight_story == 11) {
@@ -275,21 +273,21 @@ OnTouch:
 	if ('twilight_story == 12) {
 		'twilight_story = 13;
 		npcspeed 200;
-		setpcblock PCBLOCK_ALL,true;
+		setpcblock PCBLOCK_ALL, true;
 		npctalk "Let's go check the repeater.";
 		sleep2 2000;
-		setpcblock PCBLOCK_ALL,false;
+		setpcblock PCBLOCK_ALL, false;
 		sleep2 1000;
-		unitwalk 'guide,244,208,instance_npcname(strnpcinfo(0))+"::OnEvent04";
+		unitwalk 'guide,244,208, instance_npcname(strnpcinfo(0)) + "::OnEvent04";
 		end;
 	}
 	if ('twilight_story == 14) {
-		setpcblock PCBLOCK_ALL,true;
+		setpcblock PCBLOCK_ALL, true;
 		donpcevent instance_npcname("#twilight_garden_control") + "::OnStory04";
-		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Kakakakakakakil! The culprit is around! They're on my radar! It's that way!";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Tracker : Kakakakakakakil! The culprit is around! They're on my radar! It's that way!";
 		navigateto("1@bamn",332,143);
 		sleep2 2000;
-		setpcblock PCBLOCK_ALL,false;
+		setpcblock PCBLOCK_ALL, false;
 		sleep2 1000;
 		npcspeed 80;
 		npctalk "There's another intruder! No wonder I'm starting to get excited~!";
@@ -299,7 +297,7 @@ OnTouch:
 		npcspeed 200;
 		'twilight_story = 19;
 		npctalk "Are you all right, adventurer? Then, we can keep going.";
-		unitwalk 'guide,332,143,instance_npcname(strnpcinfo(0))+"::OnEvent11";
+		unitwalk 'guide,332,143, instance_npcname(strnpcinfo(0)) + "::OnEvent11";
 	}
 	if ('twilight_story == 20) {
 		npctalk "Shouldn't you talk to Est? Looks like she've been waiting.";
@@ -310,11 +308,11 @@ OnTouch:
 OnEvent00:
 	npctalk "This way.";
 	sleep 1000;
-	unitwalk 'guide,225,248,instance_npcname(strnpcinfo(0))+"::OnFollow00";
+	unitwalk 'guide,225,248, instance_npcname(strnpcinfo(0)) + "::OnFollow00";
 	end;
 
 OnFollow00:
-	unitwalk 'guide,245,248,instance_npcname(strnpcinfo(0))+"::OnEvent01";
+	unitwalk 'guide,245,248, instance_npcname(strnpcinfo(0)) + "::OnEvent01";
 	end;
 
 OnEvent01:
@@ -326,7 +324,7 @@ OnEvent01:
 
 OnEvent02:
 	npctalk "Adventurer, there's an intruder!";
-	unitwalk 'guide,245,215,instance_npcname(strnpcinfo(0))+"::OnEvent03";
+	unitwalk 'guide,245,215, instance_npcname(strnpcinfo(0)) + "::OnEvent03";
 	end;
 
 OnEvent03:
@@ -346,35 +344,35 @@ OnEvent04:
 	sleep 2000;
 	npctalk "Shall we go to the repeater?";
 	sleep 2000;
-	unitwalk 'guide,245,204,instance_npcname(strnpcinfo(0))+"::OnEvent05";
+	unitwalk 'guide,245,204, instance_npcname(strnpcinfo(0)) + "::OnEvent05";
 	end;
 
 OnEvent05:
 	npctalk "Adventurer. Do you like Almonds? A customer who liked almonds named me. Does it suit me?";
 	sleep 3000;
-	unitwalk 'guide,265,204,instance_npcname(strnpcinfo(0))+"::OnEvent06";
+	unitwalk 'guide,265,204, instance_npcname(strnpcinfo(0)) + "::OnEvent06";
 	end;
 
 OnEvent06:
 	npctalk "That kid a while ago, I've seen him before.";
-	unitwalk 'guide,285,204,instance_npcname(strnpcinfo(0))+"::OnEvent07";
+	unitwalk 'guide,285,204, instance_npcname(strnpcinfo(0)) + "::OnEvent07";
 	end;
 
 OnEvent07:
 	npctalk "But he always ran so well, It's the first time I've seen him properly~";
-	unitwalk 'guide,300,204,instance_npcname(strnpcinfo(0))+"::OnEvent08";
+	unitwalk 'guide,300,204, instance_npcname(strnpcinfo(0)) + "::OnEvent08";
 	end;
 
 OnEvent08:
 	npctalk "The Pitaya's here is cute~ They say Almonds is delicious? Have you eaten almonds before?";
 	sleep 2000;
 	npctalk "This way.";
-	unitwalk 'guide,300,190,instance_npcname(strnpcinfo(0))+"::OnEvent09";
+	unitwalk 'guide,300,190, instance_npcname(strnpcinfo(0)) + "::OnEvent09";
 	end;
 
 OnEvent09:
 	npctalk "It's been a while since I've been this comfortable~";
-	unitwalk 'guide,327,189,instance_npcname(strnpcinfo(0))+"::OnEvent10";
+	unitwalk 'guide,327,189, instance_npcname(strnpcinfo(0)) + "::OnEvent10";
 	end;
 
 OnEvent10:
@@ -395,31 +393,31 @@ OnEvent11:
 	sleep 2000;
 	npctalk "Let's go to the next repeater~";
 	sleep 2000;
-	unitwalk 'guide,320,139,instance_npcname(strnpcinfo(0))+"::OnFollow12";
+	unitwalk 'guide,320,139, instance_npcname(strnpcinfo(0)) + "::OnFollow12";
 	end;
 
 OnFollow12:
-	unitwalk 'guide,300,139,instance_npcname(strnpcinfo(0))+"::OnEvent12";
+	unitwalk 'guide,300,139, instance_npcname(strnpcinfo(0)) + "::OnEvent12";
 	end;
 
 OnEvent12:
 	npctalk "It's the kid from before, right? He's an intruder. That's weird, kind of like almonds...";
-	unitwalk 'guide,285,139,instance_npcname(strnpcinfo(0))+"::OnEvent13";
+	unitwalk 'guide,285,139, instance_npcname(strnpcinfo(0)) + "::OnEvent13";
 	end;
 
 OnEvent13:
 	npctalk "Shall we go faster? There's a sound coming from over there...";
-	unitwalk 'guide,285,118,instance_npcname(strnpcinfo(0))+"::OnEvent14";
+	unitwalk 'guide,285,118, instance_npcname(strnpcinfo(0)) + "::OnEvent14";
 	end;
 
 OnEvent14:
 	npctalk "It's more quiet than I thought. Where did the intruders go?";
-	unitwalk 'guide,285,98,instance_npcname(strnpcinfo(0))+"::OnEvent15";
+	unitwalk 'guide,285,98, instance_npcname(strnpcinfo(0)) + "::OnEvent15";
 	end;
 
 OnEvent15:
 	npctalk "This way.";
-	unitwalk 'guide,261,98,instance_npcname(strnpcinfo(0))+"::OnEvent16";
+	unitwalk 'guide,261,98, instance_npcname(strnpcinfo(0)) + "::OnEvent16";
 	end;
 
 OnEvent16:
@@ -449,44 +447,43 @@ OnEvent16:
 
 1@bamn,331,161,3	script	Rebellion#172_tgdm_1-0	4_F_REBELLION,7,7,{
 	end;
-
 OnTouch:
 	if ('twilight_story == 15) {
 		'twilight_story = 16;
 		npctalk "We'll take over this place, just watch!";
 		sleep 1000;
-		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#172_tgdm_1-2");
+		specialeffect EF_DESPERADO, AREA, instance_npcname("Heart Hunter#172_tgdm_1-2");
 		sleep 1000;
-		npctalk "Kakaka, Let's beat them down with a blast!",instance_npcname("Rebellion#172_tgdm_1-2");
-		specialeffect EF_TRIPLEACTION,AREA,instance_npcname("Heart Hunter#172_tgdm_1-1");
+		npctalk "Kakaka, Let's beat them down with a blast!", instance_npcname("Rebellion#172_tgdm_1-2");
+		specialeffect EF_TRIPLEACTION, AREA, instance_npcname("Heart Hunter#172_tgdm_1-1");
 		sleep 1000;
-		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#172_tgdm_1-1");
+		specialeffect EF_DESPERADO, AREA, instance_npcname("Heart Hunter#172_tgdm_1-1");
 		sleep 2000;
-		npctalk "Thank you for showing yourselves! You bastards!",instance_npcname("Rebellion#172_tgdm_1-1");
+		npctalk "Thank you for showing yourselves! You bastards!", instance_npcname("Rebellion#172_tgdm_1-1");
 		sleep 2000;
-		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#172_tgdm_1-0");
+		specialeffect EF_DESPERADO, AREA, instance_npcname("Heart Hunter#172_tgdm_1-0");
 		sleep 2000;
-		npctalk "...",instance_npcname("Heart Hunter#172_tgdm_1-1");
+		npctalk "...", instance_npcname("Heart Hunter#172_tgdm_1-1");
 		sleep 2000;
-		npctalk "...(Nods)",instance_npcname("Heart Hunter#172_tgdm_1-2");
+		npctalk "...(Nods)", instance_npcname("Heart Hunter#172_tgdm_1-2");
 		sleep 1000;
-		npctalk "...",instance_npcname("Heart Hunter#172_tgdm_1-0");
+		npctalk "...", instance_npcname("Heart Hunter#172_tgdm_1-0");
 		sleep 1000;
 		npctalk "What signal are you sending to each other?";
 		sleep 1000;
-		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#172_tgdm_1-1");
-		for (.@i = 0; .@i < 4; .@i++)
-			specialeffect EF_SPREADATTACK,AREA,instance_npcname("Rebellion#172_tgdm_1-" + .@i);
+		specialeffect EF_DESPERADO, AREA, instance_npcname("Heart Hunter#172_tgdm_1-1");
+		for ( .@i = 0; .@i < 4; ++.@i )
+			specialeffect EF_SPREADATTACK, AREA, instance_npcname("Rebellion#172_tgdm_1-" + .@i);
 		sleep 1000;
-		for (.@i = 0; .@i < 3; .@i++)
+		for ( .@i = 0; .@i < 3; ++.@i )
 			disablenpc instance_npcname("Heart Hunter#172_tgdm_1-" + .@i);
 		sleep 1000;
 		npctalk "What? Did they ran?! Move out!";
 		sleep 2000;
-		for (.@i = 0; .@i < 4; .@i++)
+		for ( .@i = 0; .@i < 4; ++.@i )
 			disablenpc instance_npcname("Rebellion#172_tgdm_1-" + .@i);
 		enablenpc instance_npcname("Intruder#172_tgd_1");
-		npctalk "What...?",instance_npcname("Intruder#172_tgd_1");
+		npctalk "What...?", instance_npcname("Intruder#172_tgd_1");
 	}
 	end;
 }
@@ -507,10 +504,10 @@ OnTouch:
 		sleep 2000;
 		npctalk "You're pretty good, aren't you?";
 		sleep 2000;
-		npctalk "Repeater : (... .. ..)",instance_npcname("Repeater#twilight_garden_0");
+		npctalk "Repeater : (... .. ..)", instance_npcname("Repeater#twilight_garden_0");
 		npctalk "Oh, there's a message. Stay there for a while. Yes, Hello.";
 		sleep 2000;
-		npctalk "Repeater : (... … ... ….)",instance_npcname("Repeater#twilight_garden_0");
+		npctalk "Repeater : (... ??... ??)", instance_npcname("Repeater#twilight_garden_0");
 		sleep 2000;
 		npctalk "Now? More time... Yes, no... Ah...";
 		sleep 2000;
@@ -595,10 +592,9 @@ OnTouch:
 
 1@bamn,67,173,0	script	#tgd_navi_0	HIDDEN_WARP_NPC,5,5,{
 	end;
-
 OnTouch:
 	if ('twilight_story == 21) {
-		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Pyo-o-o-o-o! That way! Pyo-pyo~!";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Tracker : Pyo-o-o-o-o! That way! Pyo-pyo~!";
 		navigateto("1@bamn",33,224);
 	}
 	end;
@@ -608,10 +604,9 @@ OnTouch:
 
 1@bamn,61,214,7	script	Heart Hunter#172_mob_0	20699,5,5,{
 	end;
-
 OnTouch:
 	.@type = atoi(replacestr(strnpcinfo(2),"172_mob_",""));
-	switch (.@type) {
+	switch( .@type ) {
 		case 0:
 			setarray .@xy,61,214,20699,64,214,20699,58,212,20699;
 			break;
@@ -625,7 +620,7 @@ OnTouch:
 			break;
 	}
 	emotion ET_GO;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
 		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter Commander",.@xy[.@i+2],1;
 	disablenpc();
 	end;
@@ -637,7 +632,7 @@ OnTouch:
 
 1@bamq,125,39,3	script	Intruder#172_tgd_2	4_EP17_SWEETY,{
 	if ('twilight_story == 21) {
-		setpcblock PCBLOCK_ALL,true;
+		setpcblock PCBLOCK_ALL, true;
 		'twilight_story = 22;
 		npctalk "You're too late. You idiots!";
 		sleep2 2000;
@@ -645,7 +640,7 @@ OnTouch:
 		sleep2 2000;
 		npctalk "Now, I, Sweety will take care of the idiots that just came in!";
 		sleep2 2000;
-		setpcblock PCBLOCK_ALL,false;
+		setpcblock PCBLOCK_ALL, false;
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnBossSummon";
 		end;
 	}
@@ -658,7 +653,7 @@ OnTouch:
 
 OnBossSummon:
 	hideonnpc();
-	monster instance_mapname("1@bamq"),125,39,"Sweety",20642,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+	monster instance_mapname("1@bamq"),125,39,"Sweety",20642,1, instance_npcname(strnpcinfo(0)) + "::OnBossKill";
 	setunitdata $@mobid[0],UMOB_HP,500000;
 	end;
 
@@ -708,7 +703,7 @@ OnBossKill:
 	mes "I will take care of moving Sweety.";
 	mes "Do you want to wrap up now?";
 	next;
-	if (select("Let's wrap up.:I'll explore the garden first.") == 2) {
+	if (select( "Let's wrap up.", "I'll explore the garden first." ) == 2) {
 		mes "[ Almond ]";
 		mes "There is still some intruders out there.";
 		mes "Are you aware of it?";
@@ -729,7 +724,7 @@ OnBossKill:
 		mes "Come at me anytime.";
 		mes "I'm sure I'll feel better once I beat you.";
 		next;
-		if (select("Wait a bit.:Let's go!") == 1) {
+		if (select( "Wait a bit.", "Let's go!" ) == 1) {
 			mes "[ Sweety ]";
 			mes "What, did you come here to explore the garden?";
 			mes "The heart hunter don't know what happened to me, but...";
@@ -757,7 +752,7 @@ OnBossKill:
 
 OnSummon:
 	hideonnpc();
-	monster instance_mapname("1@bamq"),32,49,"Sweety",20642,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+	monster instance_mapname("1@bamq"),32,49,"Sweety",20642,1, instance_npcname(strnpcinfo(0)) + "::OnBossKill";
 	end;
 
 OnBossKill:
@@ -768,7 +763,6 @@ OnBossKill:
 
 1@bamn,33,224,0	script	#tgd_bamn_to_bamnq	WARPNPC,1,1,{
 	end;
-
 OnTouch:
 	if ('twilight_story == 21)
 		warp instance_mapname("1@bamq"),103,39;
@@ -777,7 +771,6 @@ OnTouch:
 
 1@bamn,33,224,0	script	#tgd_bamn_to_bamnq2	WARPNPC,1,1,{
 	end;
-
 OnTouch:
 	warp instance_mapname("1@bamq"),13,39;
 	end;
@@ -785,7 +778,6 @@ OnTouch:
 
 1@bamq,101,39,0	script	#tgd_bamq_exit	WARPNPC,1,1,{
 	end;
-
 OnTouch:
 	warp "ba_maison",33,220;
 	end;
@@ -793,7 +785,6 @@ OnTouch:
 
 1@bamq,8,39,0	script	#tgd_bamq_exit2	WARPNPC,1,1,{
 	end;
-
 OnTouch:
 	if (!'summon) {
 		'summon = 1;
@@ -822,7 +813,7 @@ OnTouch:
 	end;
 
 OnInstanceInit:
-	questinfo QTYPE_CLICKME,QMARK_YELLOW,"isbegin_quest(18024) == 1";
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(18024) == 1" );
 	end;
 }
 
@@ -840,30 +831,30 @@ OnInstanceInit:
 	end;
 
 OnSpawn00:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill00";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
 	setarray .@xy,118,293,20681,124,294,20681,121,300,20681,119,308,20681,128,308,20681;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1, .@event$;
 	end;
 
 OnMobKill00:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill00";
-	if (!mobcount('map$,.@event$)) {
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
+	if (!mobcount('map$, .@event$)) {
 		disablenpc instance_npcname("Est#172_tgd_0");
 		enablenpc instance_npcname("Est#172_tgd_1");
 	}
 	end;
 
 OnSpawn01:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill01";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill01";
 	setarray .@xy,210,282,20681,208,283,20681,210,285,20681,213,284,20681,213,281,20681;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1, .@event$;
 	end;
 
 OnMobKill01:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill01";
-	if (!mobcount('map$,.@event$)) {
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill01";
+	if (!mobcount('map$, .@event$)) {
 		'twilight_story = 5;
 		enablenpc instance_npcname("Est#172_tgd_2");
 		enablenpc instance_npcname("Almond#172_tgd_0");
@@ -871,37 +862,37 @@ OnMobKill01:
 	end;
 
 OnSpawn02:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill02";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill02";
 	setarray .@xy,246,208,20681,248,208,20681,248,206,20681,246,206,20681;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1, .@event$;
 	end;
 
 OnMobKill02:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill02";
-	if (!mobcount('map$,.@event$))
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill02";
+	if (!mobcount('map$, .@event$))
 		'twilight_story = 11;
 	end;
 
 OnSpawn03:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill03";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill03";
 	setarray .@xy,248,208,20699,248,206,20699;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter Commander",.@xy[.@i+2],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter Commander",.@xy[.@i+2],1, .@event$;
 	end;
 
 OnMobKill03:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill03";
-	if (!mobcount('map$,.@event$))
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill03";
+	if (!mobcount('map$, .@event$))
 		'twilight_story = 12;
 	end;
 
 OnSummonDaily:
-	.@event$ = instance_npcname(strnpcinfo(0))+"::OnDailyKill";
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnDailyKill";
 	setarray .@xy,20681,120,257,20681,130,255,20681,130,244,20681,127,184,20699,188,240,20699,203,248,20699,203,252,20681,301,234,20681,302,239,
 	20681,297,244,20699,197,52,20681,120,83,20681,117,84,20681,137,176,20681,143,181,20699,62,165;
-	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i+1],.@xy[.@i+2],"--ja--",.@xy[.@i],1,.@event$;
+	for ( .@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i+1],.@xy[.@i+2],"--ja--",.@xy[.@i],1, .@event$;
 OnDailyKill:
 	end;
 }

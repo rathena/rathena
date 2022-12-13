@@ -15,8 +15,8 @@ ba_2whs02,63,300,0	warp	#ba2whslab_to_ba2whs02-0	2,2,ba_2whs02,69,300
 ba_2whs02,63,325,0	warp	#ba2whslab_to_ba2whs02-1	2,2,ba_2whs02,69,325
 
 ba_2whs02,66,300,0	script	#ba2whs02_to_ba2whslab-0	WARPNPC,2,2,{
-	if(isbegin_quest(17349) == 1){
-		unittalk getcharid(3),strcharinfo(0) + " : There is a sound in this area. The locked door was opened with an emergency key.",bc_self;
+	if (isbegin_quest(17349) == 1) {
+		unittalk getcharid(3), "" + strcharinfo(0) + " : There is a sound in this area. The locked door was opened with an emergency key.", bc_self;
 		sleep2 1000;
 	}
 	warp "ba_2whs02",60,300;
