@@ -1316,7 +1316,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	if(rnd()%10000 < pet_catch_rate) {
 		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
-		unit_remove_map(&md->bl,CLR_OUTSIGHT);
+		unit_remove_map(&md->bl,CLR_OUTSIGHT, false);
 		status_kill(&md->bl);
 		clif_pet_roulette(sd,1);
 
@@ -2299,7 +2299,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	clif_additem(sd, idx, 1, 0);
 
 	// Remove the old pet from sight
-	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT);
+	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT, false);
 
 	// Prepare the new pet
 	sd->pd->pet.class_ = pet_id;

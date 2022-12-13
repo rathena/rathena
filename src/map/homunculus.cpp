@@ -313,7 +313,7 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	status_change_end(&sd->bl, SC_HOMUN_TIME);
 #endif
 
-	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+	return unit_remove_map(&hd->bl, CLR_OUTSIGHT, false);
 }
 
 /**
@@ -339,7 +339,7 @@ int hom_delete(struct homun_data *hd, int emote)
 	// Send homunculus_dead to client
 	hd->homunculus.hp = 0;
 	clif_hominfo(sd, hd, 0);
-	return unit_remove_map(&hd->bl,CLR_OUTSIGHT);
+	return unit_remove_map(&hd->bl,CLR_OUTSIGHT, false);
 }
 
 /**
@@ -660,7 +660,7 @@ int hom_evolution(struct homun_data *hd)
 	hom->luk += 10*rnd_value(min->luk, max->luk);
 	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
-	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+	unit_remove_map(&hd->bl, CLR_OUTSIGHT, false);
 	if (map_addblock(&hd->bl))
 		return 0;
 
@@ -711,7 +711,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 		return 0;
 	}
 
-	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+	unit_remove_map(&hd->bl, CLR_OUTSIGHT, false);
 	if(map_addblock(&hd->bl))
 		return 0;
 
