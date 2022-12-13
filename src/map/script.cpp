@@ -26843,7 +26843,7 @@ BUILDIN_FUNC(macro_detector) {
 	}
 
 	// Reporter Account ID as -1 for server.
-	pc_macro_reporter_process(*sd, -1);
+	pc_macro_reporter_process(*sd);
 
 	return SCRIPT_CMD_SUCCESS;
 }

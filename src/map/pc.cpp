@@ -15242,20 +15242,28 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
  */
 void pc_jail(map_session_data &sd, int32 duration) {
 	uint16 m_index = mapindex_name2id(MAP_JAIL);
-	int32 x, y;
+	int16 x, y;
 
 	switch (rnd() % 2) { // Jail Locations
 		case 0: // Default jail
-			x = 24;
+			x = 49;
 			y = 75;
 			break;
 		default: // Jail #1
-			x = 49;
+			x = 24;
 			y = 75;
 			break;
 	}
 
-	sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, (duration != INT_MAX && duration != 0 ? 60000 : 1000));
+	duration = i32max(0, duration); // Can't be less than 0 seconds.
+
+	// If duration > 0 then triggered via jailfor which checks every minute.
+	// If duration == INT_MAX then triggered via jail for infinite duration.
+	// If duration == 0 then triggered via unjail and end status.
+	if (duration > 0)
+		sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, 60000);
+	else
+		status_change_end(&sd.bl, SC_JAILED);
 }
 
 /**
@@ -15274,22 +15282,22 @@ static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status styp
 		duration = static_cast<int32>(solve_time(time));
 	}
 
+	// Delete the timer
+	if (sd.macro_detect.timer != INVALID_TIMER)
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+
+	// Clear the macro detect data
+	sd.macro_detect = {};
+	sd.macro_detect.timer = INVALID_TIMER;
+
+	// Unblock all actions for the player
+	sd.state.block_action &= ~PCBLOCK_ALL;
+	sd.state.block_action &= ~PCBLOCK_IMMUNE;
+
 	if (battle_config.macro_detection_punishment == 0) { // Ban
 		clif_macro_detector_status(sd, stype);
 		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
 	} else { // Jail
-		// Delete the timer
-		if (sd.macro_detect.timer != INVALID_TIMER)
-			delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
-
-		// Clear the macro detect data
-		sd.macro_detect = {};
-		sd.macro_detect.timer = INVALID_TIMER;
-
-		// Unblock all actions for the player
-		sd.state.block_action &= ~PCBLOCK_ALL;
-		sd.state.block_action &= ~PCBLOCK_IMMUNE;
-
 		// Send success to close the window without closing the client
 		clif_macro_detector_status(sd, MCD_GOOD);
 
@@ -15459,7 +15467,7 @@ void pc_macro_detector_disconnect(map_session_data &sd) {
 		sd.macro_detect.timer = INVALID_TIMER;
 	}
 
-	// If the player disconnects before clearing the challenge the account is banned/jailed.
+	// If the player disconnects before clearing the challenge the player is punished.
 	if (sd.macro_detect.retry != 0)
 		pc_macro_punishment(sd, MCD_TIMEOUT);
 }
