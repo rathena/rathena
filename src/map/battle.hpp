@@ -714,12 +714,15 @@ struct Battle_Config
 	int break_mob_equip;
 	int macro_detection_retry;
 	int macro_detection_timeout;
-	int mob_respawn_time;
+	int macro_detection_punishment;
+	int macro_detection_punishment_time;
 
 	int feature_dynamicnpc_timeout;
 	int feature_dynamicnpc_rangex;
 	int feature_dynamicnpc_rangey;
 	int feature_dynamicnpc_direction;
+
+	int mob_respawn_time;
 
 #include "../custom/battle_config_struct.inc"
 };

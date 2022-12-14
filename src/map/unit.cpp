@@ -769,7 +769,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	unit_stop_attack(bl); //Sets target to 0
 
 	status_change* sc = status_get_sc(bl);
-	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
+	if (sc && sc->getSCE(SC_CONFUSION)) // Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
 
 	if(ud->walktimer != INVALID_TIMER) {
@@ -879,7 +879,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 	unit_stop_attack(bl); //Sets target to 0
 
 	status_change *sc = status_get_sc(bl);
-	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
+	if (sc && sc->getSCE(SC_CONFUSION)) // Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
 
 	if(ud->walktimer != INVALID_TIMER) {
@@ -912,7 +912,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
  */
 void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type)
 {
-	int lv = sc->data[type]->val1;
+	int lv = sc->getSCE(type)->val1;
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if (type == SC_RUN)
@@ -948,7 +948,7 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 
 	sc = status_get_sc(bl);
 
-	if (!(sc && sc->data[type]))
+	if (!(sc && sc->getSCE(type)))
 		return false;
 
 	if (!unit_can_move(bl)) {
@@ -956,8 +956,8 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 		return false;
 	}
 
-	dir_x = dirx[sc->data[type]->val2];
-	dir_y = diry[sc->data[type]->val2];
+	dir_x = dirx[sc->getSCE(type)->val2];
+	dir_y = diry[sc->getSCE(type)->val2];
 
 	// Determine destination cell
 	to_x = bl->x;
@@ -1252,7 +1252,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 
 #ifndef RENEWAL
 				// Basilica caster can't be knocked-back by normal monsters.
-				if( !(flag&0x4) && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
+				if( !(flag&0x4) && sd->sc.getSCE(SC_BASILICA) && sd->sc.getSCE(SC_BASILICA)->val4 == sd->bl.id)
 					return UB_TARGET_BASILICA;
 #endif
 				// Target has special_state.no_knockback (equip)
@@ -1638,14 +1638,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		return 0;
 
 	// temp: used to signal combo-skills right now.
-	if (sc && sc->data[SC_COMBO] &&
+	if (sc && sc->getSCE(SC_COMBO) &&
 		skill_is_combo(skill_id) &&
-		(sc->data[SC_COMBO]->val1 == skill_id ||
+		(sc->getSCE(SC_COMBO)->val1 == skill_id ||
 		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) )) {
 		if (skill_is_combo(skill_id) == 2 && target_id == src->id && ud->target > 0)
 			target_id = ud->target;
-		else if (sc->data[SC_COMBO]->val2)
-			target_id = sc->data[SC_COMBO]->val2;
+		else if (sc->getSCE(SC_COMBO)->val2)
+			target_id = sc->getSCE(SC_COMBO)->val2;
 		else if (target_id == src->id || ud->target > 0)
 			target_id = ud->target;
 
@@ -1665,21 +1665,21 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 		switch(skill_id) { // Check for skills that auto-select target
 			case MO_CHAINCOMBO:
-				if (sc && sc->data[SC_BLADESTOP]) {
-					if ((target=map_id2bl(sc->data[SC_BLADESTOP]->val4)) == NULL)
+				if (sc && sc->getSCE(SC_BLADESTOP)) {
+					if ((target=map_id2bl(sc->getSCE(SC_BLADESTOP)->val4)) == NULL)
 						return 0;
 				}
 				break;
 			case GC_WEAPONCRUSH:
-				if (sc && sc->data[SC_WEAPONBLOCK_ON]) {
-					if ((target = map_id2bl(sc->data[SC_WEAPONBLOCK_ON]->val1)) == nullptr)
+				if (sc && sc->getSCE(SC_WEAPONBLOCK_ON)) {
+					if ((target = map_id2bl(sc->getSCE(SC_WEAPONBLOCK_ON)->val1)) == nullptr)
 						return 0;
 					combo = 1;
 				}
 				break;
 			case RL_QD_SHOT:
-				if (sc && sc->data[SC_QD_SHOT_READY]) {
-					if ((target = map_id2bl(sc->data[SC_QD_SHOT_READY]->val1)) == nullptr)
+				if (sc && sc->getSCE(SC_QD_SHOT_READY)) {
+					if ((target = map_id2bl(sc->getSCE(SC_QD_SHOT_READY)->val1)) == nullptr)
 						return 0;
 					combo = 1;
 				}
@@ -1717,8 +1717,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			case MH_TINDER_BREAKER: {
 				int skill_id2 = ((skill_id==MH_SONIC_CRAW)?MH_MIDNIGHT_FRENZY:MH_EQC);
 
-				if(sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_id2) { // It's a combo
-					target_id = sc->data[SC_COMBO]->val2;
+				if(sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == skill_id2) { // It's a combo
+					target_id = sc->getSCE(SC_COMBO)->val2;
 					combo = 1;
 					casttime = -1;
 				}
@@ -1907,17 +1907,17 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				casttime += casttime * min(skill_lv, sd->spiritball);
 		break;
 		case MO_EXTREMITYFIST:
-			if (sc && sc->data[SC_COMBO] &&
-			   (sc->data[SC_COMBO]->val1 == MO_COMBOFINISH ||
-				sc->data[SC_COMBO]->val1 == CH_TIGERFIST ||
-				sc->data[SC_COMBO]->val1 == CH_CHAINCRUSH))
+			if (sc && sc->getSCE(SC_COMBO) &&
+			   (sc->getSCE(SC_COMBO)->val1 == MO_COMBOFINISH ||
+				sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST ||
+				sc->getSCE(SC_COMBO)->val1 == CH_CHAINCRUSH))
 				casttime = -1;
 			combo = 1;
 		break;
 		case SR_GATEOFHELL:
 		case SR_TIGERCANNON:
-			if (sc && sc->data[SC_COMBO] &&
-			   sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
+			if (sc && sc->getSCE(SC_COMBO) &&
+			   sc->getSCE(SC_COMBO)->val1 == SR_FALLENEMPIRE)
 				casttime = -1;
 			combo = 1;
 		break;
@@ -1926,17 +1926,17 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		break;
 #ifndef RENEWAL_CAST
 		case ST_CHASEWALK:
-			if (sc && sc->data[SC_CHASEWALK])
+			if (sc && sc->getSCE(SC_CHASEWALK))
 				casttime = -1;
 		break;
 #endif
 		case TK_RUN:
-			if (sc && sc->data[SC_RUN])
+			if (sc && sc->getSCE(SC_RUN))
 				casttime = -1;
 		break;
 #ifndef RENEWAL
 		case HP_BASILICA:
-			if( sc && sc->data[SC_BASILICA] )
+			if( sc && sc->getSCE(SC_BASILICA) )
 				casttime = -1; // No Casting time on basilica cancel
 		break;
 #endif
@@ -1955,14 +1955,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				casttime *= 2;
 			break;
 		case RA_WUGDASH:
-			if (sc && sc->data[SC_WUGDASH])
+			if (sc && sc->getSCE(SC_WUGDASH))
 				casttime = -1;
 			break;
 		case DK_SERVANT_W_PHANTOM: { // Stops servants from being consumed on unmarked targets.
 				status_change *tsc = status_get_sc(target);
 
 				// Only allow to attack if the enemy has a sign mark given by the caster.
-				if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
+				if( tsc == nullptr || tsc->getSCE(SC_SERVANT_SIGN) == nullptr || tsc->getSCE(SC_SERVANT_SIGN)->val1 != src->id ){
 					clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 					return 0;
 				}
@@ -2056,17 +2056,17 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
- 		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING && skill_id != SHC_SHADOW_STAB) {
+ 		if( sc->getSCE(SC_CLOAKING) && !(sc->getSCE(SC_CLOAKING)->val4&4) && skill_id != AS_CLOAKING && skill_id != SHC_SHADOW_STAB) {
 			status_change_end(src, SC_CLOAKING);
 
 			if (!src->prev)
 				return 0; // Warped away!
-		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
+		} else if( sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
 			status_change_end(src,SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
 				return 0;
-		} else if (sc->data[SC_NEWMOON] && skill_id != SJ_NEWMOONKICK) {
+		} else if (sc->getSCE(SC_NEWMOON) && skill_id != SJ_NEWMOONKICK) {
 			status_change_end(src, SC_NEWMOON);
 			if (!src->prev)
 				return 0; // Warped away!
@@ -2238,17 +2238,17 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
-		if (sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4)) {
+		if (sc->getSCE(SC_CLOAKING) && !(sc->getSCE(SC_CLOAKING)->val4&4)) {
 			status_change_end(src, SC_CLOAKING);
 
 			if (!src->prev)
 				return 0; // Warped away!
-		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
+		} else if (sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4&4)) {
 			status_change_end(src, SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
 				return 0;
-		} else if (sc->data[SC_NEWMOON]) {
+		} else if (sc->getSCE(SC_NEWMOON)) {
 			status_change_end(src, SC_NEWMOON);
 
 			if (!src->prev)
@@ -2871,7 +2871,7 @@ bool unit_can_attack(struct block_list *bl, int target_id) {
 	if (!(sc = status_get_sc(bl)))
 		return true;
 
-	if (sc->cant.attack || (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id))
+	if (sc->cant.attack || (sc->getSCE(SC_VOICEOFSIREN) && sc->getSCE(SC_VOICEOFSIREN)->val2 == target_id))
 		return false;
 
 	return true;
@@ -2904,7 +2904,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND)))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.getSCE(SC_UNLIMITEDHUMMINGVOICE) || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND)))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 
@@ -3076,9 +3076,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			status_change_end(bl, SC_CLOAKING);
 			status_change_end(bl, SC_CLOAKINGEXCEED);
 		}
-		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
+		if (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL);
-		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->val4 == 1)
+		if (sc->getSCE(SC_PROVOKE) && sc->getSCE(SC_PROVOKE)->val4 == 1)
 			status_change_end(bl, SC_PROVOKE); //End infinite provoke to prevent exploit
 	}
 
@@ -3691,8 +3691,8 @@ void unit_addshadowscar(unit_data &ud, int interval) {
 	status_change *sc = status_get_sc(ud.bl);
 
 	if (sc != nullptr) {
-		if (sc->data[SC_SHADOW_SCAR] != nullptr) {
-			sc->data[SC_SHADOW_SCAR]->val1 = static_cast<int>(ud.shadow_scar_timer.size());
+		if (sc->getSCE(SC_SHADOW_SCAR) != nullptr) {
+			sc->getSCE(SC_SHADOW_SCAR)->val1 = static_cast<int>(ud.shadow_scar_timer.size());
 		} else {
 			sc_start(ud.bl, ud.bl, SC_SHADOW_SCAR, 100, 1, INFINITE_TICK);
 		}
