@@ -27605,8 +27605,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 9
-    Hit: Single
-    HitCount: -3
+    Hit: Multi_Hit
+    HitCount: 3
     Element: Wind
     SplashArea:
       - Level: 1

@@ -1722,17 +1722,20 @@ bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
 
+void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
+
 // Captcha Register
 void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
 
 // Macro Detector
+TIMER_FUNC(pc_macro_detector_timeout);
 void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
-void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
+void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id = -1);
 
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();

@@ -5218,8 +5218,7 @@ ACMD_FUNC(servertime)
 ACMD_FUNC(jail)
 {
 	struct map_session_data *pl_sd;
-	int x, y;
-	unsigned short m_index;
+
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -5244,21 +5243,7 @@ ACMD_FUNC(jail)
 		return -1;
 	}
 
-	switch(rnd() % 2) { //Jail Locations
-	case 0:
-		m_index = mapindex_name2id(MAP_JAIL);
-		x = 24;
-		y = 75;
-		break;
-	default:
-		m_index = mapindex_name2id(MAP_JAIL);
-		x = 49;
-		y = 75;
-		break;
-	}
-
-	//Duration of INT_MAX to specify infinity.
-	sc_start4(NULL,&pl_sd->bl,SC_JAILED,100,INT_MAX,m_index,x,y,1000);
+	pc_jail(*pl_sd);
 	clif_displaymessage(pl_sd->fd, msg_txt(sd,117)); // GM has send you in jails.
 	clif_displaymessage(fd, msg_txt(sd,118)); // Player warped in jails.
 	return 0;
@@ -5296,7 +5281,7 @@ ACMD_FUNC(unjail)
 	}
 
 	//Reset jail time to 1 sec.
-	sc_start(NULL,&pl_sd->bl,SC_JAILED,100,1,1000);
+	pc_jail(*pl_sd, 0);
 	clif_displaymessage(pl_sd->fd, msg_txt(sd,120)); // A GM has discharged you from jail.
 	clif_displaymessage(fd, msg_txt(sd,121)); // Player unjailed.
 	return 0;
@@ -5305,8 +5290,8 @@ ACMD_FUNC(unjail)
 ACMD_FUNC(jailfor) {
 	struct map_session_data *pl_sd = NULL;
 	char * modif_p;
-	int jailtime = 0,x,y;
-	short m_index = 0;
+	int jailtime = 0;
+
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -5363,19 +5348,8 @@ ACMD_FUNC(jailfor) {
 		return -1;
 	}
 
-	// Jail locations, add more as you wish.
-	switch(rnd()%2) {
-		case 1: // Jail #1
-			m_index = mapindex_name2id(MAP_JAIL);
-			x = 49; y = 75;
-			break;
-		default: // Default Jail
-			m_index = mapindex_name2id(MAP_JAIL);
-			x = 24; y = 75;
-			break;
-	}
+	pc_jail(*pl_sd, jailtime);
 
-	sc_start4(NULL,&pl_sd->bl,SC_JAILED,100,jailtime,m_index,x,y,jailtime?60000:1000); //jailtime = 0: Time was reset to 0. Wait 1 second to warp player out (since it's done in status_change_timer).
 	return 0;
 }
 
