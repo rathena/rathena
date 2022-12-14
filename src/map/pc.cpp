@@ -15236,6 +15236,76 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 }
 
 /**
+ * Send a player to jail and determine the location to send in jail.
+ * @param sd: Player data
+ * @param duration: Duration in minutes (default INT_MAX = infinite)
+ */
+void pc_jail(map_session_data &sd, int32 duration) {
+	uint16 m_index = mapindex_name2id(MAP_JAIL);
+	int16 x, y;
+
+	switch (rnd() % 2) { // Jail Locations
+		case 0: // Jail #1
+			x = 49;
+			y = 75;
+			break;
+		default: // Default Jail
+			x = 24;
+			y = 75;
+			break;
+	}
+
+	duration = i32max(0, duration); // Can't be less than 0 seconds.
+
+	// If duration > 0 then triggered via jailfor which checks every minute.
+	// If duration == INT_MAX then triggered via jail for infinite duration.
+	// If duration == 0 then triggered via unjail and end status.
+	if (duration > 0)
+		sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, 60000);
+	else
+		status_change_end(&sd.bl, SC_JAILED);
+}
+
+/**
+ * Determine the punishment type when failing macro checks.
+ * @param sd: Player data
+ * @param stype: Macro detection status type (for banning)
+ */
+static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status stype) {
+	int32 duration = 0;
+
+	// Determine if there's a unique duration
+	if (battle_config.macro_detection_punishment_time > 0) {
+		char time[13];
+
+		safesnprintf(time, 13, "+%dnm", battle_config.macro_detection_punishment_time);
+		duration = static_cast<int32>(solve_time(time));
+	}
+
+	// Delete the timer
+	if (sd.macro_detect.timer != INVALID_TIMER)
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+
+	// Clear the macro detect data
+	sd.macro_detect = {};
+	sd.macro_detect.timer = INVALID_TIMER;
+
+	// Unblock all actions for the player
+	sd.state.block_action &= ~PCBLOCK_ALL;
+	sd.state.block_action &= ~PCBLOCK_IMMUNE;
+
+	if (battle_config.macro_detection_punishment == 0) { // Ban
+		clif_macro_detector_status(sd, stype);
+		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
+	} else { // Jail
+		// Send success to close the window without closing the client
+		clif_macro_detector_status(sd, MCD_GOOD);
+
+		pc_jail(sd, (duration == 0 ? INT_MAX : duration / 60));
+	}
+}
+
+/**
  * Save a captcha image to memory via /macro_register.
  * @param sd: Player data
  * @param image_size: Captcha image size
@@ -15320,9 +15390,8 @@ TIMER_FUNC(pc_macro_detector_timeout) {
 	sd->macro_detect.retry -= 1;
 
 	if (sd->macro_detect.retry == 0) {
-		// All attempts have been exhausted block the user
-		clif_macro_detector_status(*sd, MCD_TIMEOUT);
-		chrif_req_login_operation(sd->macro_detect.reporter_aid, sd->status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+		// All attempts have been exhausted, punish the user
+		pc_macro_punishment(*sd, MCD_TIMEOUT);
 	} else {
 		// Update the client
 		clif_macro_detector_request_show(*sd);
@@ -15373,10 +15442,9 @@ void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[
 		// Deduct an answering attempt
 		sd.macro_detect.retry -= 1;
 
-		// All attempts have been exhausted block the user
+		// All attempts have been exhausted, punish the user
 		if (sd.macro_detect.retry <= 0) {
-			clif_macro_detector_status(sd, MCD_INCORRECT);
-			chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+			pc_macro_punishment(sd, MCD_INCORRECT);
 			return;
 		}
 
@@ -15399,9 +15467,9 @@ void pc_macro_detector_disconnect(map_session_data &sd) {
 		sd.macro_detect.timer = INVALID_TIMER;
 	}
 
-	// If the player disconnects before clearing the challenge the account is banned.
+	// If the player disconnects before clearing the challenge the player is punished.
 	if (sd.macro_detect.retry != 0)
-		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, CHRIF_OP_LOGIN_BLOCK, 0, 0, 0);
+		pc_macro_punishment(sd, MCD_TIMEOUT);
 }
 
 /**
@@ -15438,10 +15506,10 @@ void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const in
 
 /**
  * Send out captcha check to player.
- * @param ssd: Source player data
- * @param tsd: Target player data
+ * @param sd: Target player data
+ * @param reporter_account_id: Account ID of reporter
  */
-void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd) {
+void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id) {
 	if (captcha_db.empty())
 		return;
 
@@ -15449,18 +15517,18 @@ void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd) {
 	const std::shared_ptr<s_captcha_data> cd = captcha_db.random();
 
 	// Set macro detection data.
-	tsd.macro_detect.cd = cd;
-	tsd.macro_detect.reporter_aid = ssd.status.account_id;
-	tsd.macro_detect.retry = battle_config.macro_detection_retry;
+	sd.macro_detect.cd = cd;
+	sd.macro_detect.reporter_aid = reporter_account_id;
+	sd.macro_detect.retry = battle_config.macro_detection_retry;
 
 	// Block all actions for the target player.
-	tsd.state.block_action |= (PCBLOCK_ALL | PCBLOCK_IMMUNE);
+	sd.state.block_action |= (PCBLOCK_ALL | PCBLOCK_IMMUNE);
 
 	// Open macro detect client side.
-	clif_macro_detector_request(tsd);
+	clif_macro_detector_request(sd);
 
 	// Start the timeout timer.
-	tsd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, tsd.bl.id, 0);
+	sd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd.bl.id, 0);
 }
 
 /**

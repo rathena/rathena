@@ -6579,6 +6579,28 @@ Examples:
 
 ---------------------------------------
 
+macro_detector({<account ID>});
+macro_detector({"<character name>"});
+
+This command will display the captcha UI challenge onto the invoking character or the given <account ID>/<character name>.
+
+Example:
+	// Use 'getareaunits' to gather an area of players to test.
+	// Build an int array of the account IDs.
+	.@num = getareaunits(BL_PC, "prontera", 150, 150, 160, 160, .@array[0]);
+
+	mes "The number of Players in Prontera in between 150x150 and 160x160 is " + .@num + " .";
+	mes "Players to challenge:";
+	freeloop(1); // If the list is too big
+	for(.@i = 0; .@i < getarraysize(.@array); .@i++) {
+		mes (.@i + 1) + " " + convertpcinfo(.@array[.@i], CPC_NAME);
+		macro_detector .@array[.@i];
+	}
+	freeloop(0);
+	end;
+
+---------------------------------------
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================
