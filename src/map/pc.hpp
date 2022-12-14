@@ -372,7 +372,8 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
-struct map_session_data {
+class map_session_data {
+public:
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
@@ -1151,7 +1152,7 @@ static bool pc_cant_act( struct map_session_data* sd ){
 	#define pc_isvip(sd)      ( false )
 #endif
 #ifdef NEW_CARTS
-	#define pc_iscarton(sd)       ( (sd)->sc.data[SC_PUSH_CART] )
+	#define pc_iscarton(sd)       ( (sd)->sc.getSCE(SC_PUSH_CART) )
 #else
 	#define pc_iscarton(sd)       ( (sd)->sc.option&OPTION_CART )
 #endif
@@ -1232,14 +1233,14 @@ enum e_mado_type : uint16 {
 	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
 #define pc_leftside_matk(sd) \
     (\
-    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
-		?((sd)->battle_status.matk_min * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
+    ((sd)->sc.getSCE(SC_MAGICPOWER) && (sd)->sc.getSCE(SC_MAGICPOWER)->val4) \
+		?((sd)->battle_status.matk_min * 100 + 50) / ((sd)->sc.getSCE(SC_MAGICPOWER)->val3+100) \
         :(sd)->battle_status.matk_min \
     )
 #define pc_rightside_matk(sd) \
     (\
-    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
-		?((sd)->battle_status.matk_max * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
+    ((sd)->sc.getSCE(SC_MAGICPOWER) && (sd)->sc.getSCE(SC_MAGICPOWER)->val4) \
+		?((sd)->battle_status.matk_max * 100 + 50) / ((sd)->sc.getSCE(SC_MAGICPOWER)->val3+100) \
         :(sd)->battle_status.matk_max \
     )
 #endif
@@ -1722,17 +1723,20 @@ bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
 
+void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
+
 // Captcha Register
 void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
 
 // Macro Detector
+TIMER_FUNC(pc_macro_detector_timeout);
 void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
-void pc_macro_reporter_process(map_session_data &ssd, map_session_data &tsd);
+void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id = -1);
 
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();
