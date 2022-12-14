@@ -5238,7 +5238,7 @@ ACMD_FUNC(jail)
 		return -1;
 	}
 
-	if (pl_sd->sc.data[SC_JAILED]) {
+	if (pl_sd->sc.getSCE(SC_JAILED)) {
 		clif_displaymessage(fd, msg_txt(sd,118)); // Player warped in jails.
 		return -1;
 	}
@@ -5275,7 +5275,7 @@ ACMD_FUNC(unjail)
 		return -1;
 	}
 
-	if (!pl_sd->sc.data[SC_JAILED]) {
+	if (!pl_sd->sc.getSCE(SC_JAILED)) {
 		clif_displaymessage(fd, msg_txt(sd,119)); // This player is not in jails.
 		return -1;
 	}
@@ -5323,8 +5323,8 @@ ACMD_FUNC(jailfor) {
 	}
 
 	// Added by Coltaro
-	if(pl_sd->sc.data[SC_JAILED] && pl_sd->sc.data[SC_JAILED]->val1 != INT_MAX) { // Update the player's jail time
-		jailtime += pl_sd->sc.data[SC_JAILED]->val1;
+	if(pl_sd->sc.getSCE(SC_JAILED) && pl_sd->sc.getSCE(SC_JAILED)->val1 != INT_MAX) { // Update the player's jail time
+		jailtime += pl_sd->sc.getSCE(SC_JAILED)->val1;
 		if (jailtime <= 0) {
 			jailtime = 0;
 			clif_displaymessage(pl_sd->fd, msg_txt(sd,120)); // GM has discharge you.
@@ -5361,26 +5361,26 @@ ACMD_FUNC(jailtime){
 
 	nullpo_retr(-1, sd);
 
-	if (!sd->sc.data[SC_JAILED]) {
+	if (!sd->sc.getSCE(SC_JAILED)) {
 		clif_displaymessage(fd, msg_txt(sd,1139)); // You are not in jail.
 		return -1;
 	}
 
-	if (sd->sc.data[SC_JAILED]->val1 == INT_MAX) {
+	if (sd->sc.getSCE(SC_JAILED)->val1 == INT_MAX) {
 		clif_displaymessage(fd, msg_txt(sd,1140)); // You have been jailed indefinitely.
 		return 0;
 	}
 
-	if (sd->sc.data[SC_JAILED]->val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
+	if (sd->sc.getSCE(SC_JAILED)->val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
 		clif_displaymessage(fd, msg_txt(sd,1141)); // You have been jailed for an unknown amount of time.
 		return -1;
 	}
 
 	// Get remaining jail time
-	split_time(sd->sc.data[SC_JAILED]->val1*60,&year,&month,&day,&hour,&minute,&second);
+	split_time(sd->sc.getSCE(SC_JAILED)->val1*60,&year,&month,&day,&hour,&minute,&second);
 	sprintf(atcmd_output,msg_txt(sd,402),msg_txt(sd,1142),year,month,day,hour,minute); // You will remain in jail for %d years, %d months, %d days, %d hours and %d minutes
 	clif_displaymessage(fd, atcmd_output);
-	timestamp2string(timestr,20,now+sd->sc.data[SC_JAILED]->val1*60,"%Y-%m-%d %H:%M");
+	timestamp2string(timestr,20,now+sd->sc.getSCE(SC_JAILED)->val1*60,"%Y-%m-%d %H:%M");
 	sprintf(atcmd_output,"Release date is: %s",timestr);
 	clif_displaymessage(fd, atcmd_output);
 
@@ -5425,7 +5425,7 @@ ACMD_FUNC(disguise)
 		return -1;
 	}
 
-	if (sd->sc.data[SC_MONSTER_TRANSFORM] || sd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]) {
+	if (sd->sc.getSCE(SC_MONSTER_TRANSFORM) || sd->sc.getSCE(SC_ACTIVE_MONSTER_TRANSFORM)) {
 		clif_displaymessage(fd, msg_txt(sd,730)); // Character cannot be disguised while in monster transform.
 		return -1;
 	}
@@ -7412,7 +7412,7 @@ ACMD_FUNC(unmute)
 		return -1;
 	}
 
-	if(!pl_sd->sc.data[SC_NOCHAT]) {
+	if(!pl_sd->sc.getSCE(SC_NOCHAT)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1235)); // Player is not muted.
 		return -1;
 	}
@@ -9707,7 +9707,7 @@ ACMD_FUNC(charcommands) {
 /* for new mounts */
 ACMD_FUNC(mount2) {
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
-	if (!sd->sc.data[SC_ALL_RIDING]) {
+	if (!sd->sc.getSCE(SC_ALL_RIDING)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
 		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK);
 	} else {
@@ -10306,7 +10306,7 @@ ACMD_FUNC(changedress){
 	};
 
 	for( sc_type type : name2id ) {
-		if( sd->sc.data[type] ) {
+		if( sd->sc.getSCE(type) ) {
 			status_change_end( &sd->bl, type );
 			// You should only be able to have one - so we cancel here
 			break;
@@ -10337,7 +10337,7 @@ ACMD_FUNC(costume) {
 
 	if( !message || !*message ) {
 		for( k = 0; k < len; k++ ) {
-			if( sd->sc.data[name2id[k]] ) {
+			if( sd->sc.getSCE(name2id[k]) ) {
 				sprintf(atcmd_output, msg_txt(sd, 727), names[k]); // '%s' Costume removed.
 				clif_displaymessage(sd->fd, atcmd_output);
 				status_change_end(&sd->bl, (sc_type)name2id[k]);
@@ -10354,7 +10354,7 @@ ACMD_FUNC(costume) {
 	}
 
 	for( k = 0; k < len; k++ ) {
-		if( sd->sc.data[name2id[k]] ) {
+		if( sd->sc.getSCE(name2id[k]) ) {
 			sprintf(atcmd_output, msg_txt(sd, 724), names[k]); // You're already wearing a(n) '%s' costume, type '@costume' to remove it.
 			clif_displaymessage(sd->fd, atcmd_output);
 			return -1;
@@ -11283,7 +11283,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		return false;
 
 	//Block NOCHAT but do not display it as a normal message
-	if ( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCOMMAND )
+	if ( sd->sc.getSCE(SC_NOCHAT) && sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOCOMMAND )
 		return true;
 
 	// skip 10/11-langtype's codepage indicator, if detected

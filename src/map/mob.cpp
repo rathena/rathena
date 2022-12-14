@@ -573,7 +573,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		if( md->get_bosstype() == BOSSTYPE_MVP || md->master_id )
 			return false; // MVP, Slaves mobs ignores KS
 
-		if( (sce = md->sc.data[SC_KSPROTECTED]) == nullptr )
+		if( (sce = md->sc.getSCE(SC_KSPROTECTED)) == nullptr )
 			break; // No KS Protected
 
 		if( sd->bl.id == sce->val1 || // Same Owner
@@ -1709,7 +1709,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return false;
 	}
 
-	if (md->sc.count && md->sc.data[SC_BLIND])
+	if (md->sc.count && md->sc.getSCE(SC_BLIND))
 		view_range = 3;
 	else
 		view_range = md->db->range2;
@@ -1744,9 +1744,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		{	//Rude attacked check.
 			if( !battle_check_range(&md->bl, tbl, md->status.rhw.range)
 			&&  ( //Can't attack back and can't reach back.
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
-						|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
-						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.getSCE(SC_SPIDERWEB)
+						|| md->sc.getSCE(SC_BITE) || md->sc.getSCE(SC_VACUUM_EXTREME) || md->sc.getSCE(SC_THORNSTRAP)
+						|| md->sc.getSCE(SC__MANHOLE) // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
 					)
 					|| !mob_can_reach(md, tbl, md->min_chase)
@@ -1769,9 +1769,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
 				|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
 				&& ( // Reach check
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
-						|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
-						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.getSCE(SC_SPIDERWEB)
+						|| md->sc.getSCE(SC_BITE) || md->sc.getSCE(SC_VACUUM_EXTREME) || md->sc.getSCE(SC_THORNSTRAP)
+						|| md->sc.getSCE(SC__MANHOLE) // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
 					)
 					|| !mob_can_reach(md, abl, dist+md->db->range3)
@@ -2487,8 +2487,8 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			drop_rate_bonus += sd->indexed_bonus.dropaddclass[mob->status.class_] + sd->indexed_bonus.dropaddclass[CLASS_ALL];
 			drop_rate_bonus += sd->indexed_bonus.dropaddrace[mob->status.race] + sd->indexed_bonus.dropaddrace[RC_ALL];
 
-			if (sd->sc.data[SC_ITEMBOOST])
-				drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
+			if (sd->sc.getSCE(SC_ITEMBOOST))
+				drop_rate_bonus += sd->sc.getSCE(SC_ITEMBOOST)->val1;
 
 			int cap;
 
@@ -2634,15 +2634,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
 #ifndef RENEWAL
-		if (md->sc.data[SC_RICHMANKIM])
-			bonus += md->sc.data[SC_RICHMANKIM]->val2;
+		if (md->sc.getSCE(SC_RICHMANKIM))
+			bonus += md->sc.getSCE(SC_RICHMANKIM)->val2;
 #else
-		if (sd && sd->sc.data[SC_RICHMANKIM])
-			bonus += sd->sc.data[SC_RICHMANKIM]->val2;
+		if (sd && sd->sc.getSCE(SC_RICHMANKIM))
+			bonus += sd->sc.getSCE(SC_RICHMANKIM)->val2;
 #endif
 		if(sd) {
 			temp = status_get_class(&md->bl);
-			if(sd->sc.data[SC_MIRACLE]) i = 2; //All mobs are Star Targets
+			if(sd->sc.getSCE(SC_MIRACLE)) i = 2; //All mobs are Star Targets
 			else
 			ARR_FIND(0, MAX_PC_FEELHATE, i, temp == sd->hate_mob[i] &&
 				(battle_config.allow_skill_without_day || sg_info[i].day_func()));
@@ -3059,7 +3059,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
-	rebirth =  ( md->sc.data[SC_KAIZEL] || md->sc.data[SC_ULTIMATE_S] || (md->sc.data[SC_REBIRTH] && !md->state.rebirth) );
+	rebirth =  ( md->sc.getSCE(SC_KAIZEL) || md->sc.getSCE(SC_ULTIMATE_S) || (md->sc.getSCE(SC_REBIRTH) && !md->state.rebirth) );
 	if( !rebirth ) { // Only trigger event on final kill
 		if( src ) {
 			switch( src->type ) { //allowed type
@@ -3656,11 +3656,11 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	if( cond2==-1 ){
 		int j;
 		for(j=SC_COMMON_MIN;j<=SC_COMMON_MAX && !flag;j++){
-			if ((flag=(md->sc.data[j] != NULL))) //Once an effect was found, break out. [Skotlex]
+			if ((flag=(md->sc.getSCE(j) != NULL))) //Once an effect was found, break out. [Skotlex]
 				break;
 		}
 	}else
-		flag=( md->sc.data[cond2] != NULL );
+		flag=( md->sc.getSCE(cond2) != NULL );
 	if( flag^( cond1==MSC_FRIENDSTATUSOFF ) )
 		(*fr)=md;
 
@@ -3768,10 +3768,10 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 						flag = 0;
 					} else if (ms[i]->cond2 == -1) {
 						for (j = SC_COMMON_MIN; j <= SC_COMMON_MAX; j++)
-							if ((flag = (md->sc.data[j]!=NULL)) != 0)
+							if ((flag = (md->sc.getSCE(j)!=NULL)) != 0)
 								break;
 					} else {
-						flag = (md->sc.data[ms[i]->cond2]!=NULL);
+						flag = (md->sc.getSCE(ms[i]->cond2)!=NULL);
 					}
 					flag ^= (ms[i]->cond1 == MSC_MYSTATUSOFF); break;
 				case MSC_FRIENDHPLTMAXRATE:	// friend HP < maxhp%
