@@ -1339,7 +1339,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
 			data.tick = INFINITE_TICK; //Infinite duration
-		data.tick_total = sc->data[i]->tick_total;
+		data.tick_total = sc->getSCE(i)->tick_total;
 		data.type = i;
 		data.val1 = sce->val1;
 		data.val2 = sce->val2;
