@@ -171,6 +171,7 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 			if (node->sd->regs.arrays)
 				node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
 
+			node->sd->~map_session_data();
 			aFree(node->sd);
 		}
 
@@ -1325,10 +1326,11 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 	WFIFOL(char_fd,8) = sd->status.char_id;
 
 	for (i = 0; i < SC_MAX; i++) {
-		if (!sc->data[i])
+		auto sce = sc->getSCE(static_cast<sc_type>(i));
+		if (!sce)
 			continue;
-		if (sc->data[i]->timer != INVALID_TIMER) {
-			timer = get_timer(sc->data[i]->timer);
+		if (sce->timer != INVALID_TIMER) {
+			timer = get_timer(sce->timer);
 			if (timer == NULL || timer->func != status_change_timer)
 				continue;
 			if (DIFF_TICK(timer->tick,tick) > 0)
@@ -1338,10 +1340,10 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 		} else
 			data.tick = INFINITE_TICK; //Infinite duration
 		data.type = i;
-		data.val1 = sc->data[i]->val1;
-		data.val2 = sc->data[i]->val2;
-		data.val3 = sc->data[i]->val3;
-		data.val4 = sc->data[i]->val4;
+		data.val1 = sce->val1;
+		data.val2 = sce->val2;
+		data.val3 = sce->val3;
+		data.val4 = sce->val4;
 		memcpy(WFIFOP(char_fd,14 +count*sizeof(struct status_change_data)),
 			&data, sizeof(struct status_change_data));
 		count++;
