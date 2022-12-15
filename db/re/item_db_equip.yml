@@ -186639,13 +186639,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",7*(.@r/2);
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",7*(.@r/2);
       bonus2 bSkillAtk,"RL_BANISHING_BUSTER",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
       if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
          if (.@g >= ENCHANTGRADE_C) {
-            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
@@ -186917,18 +186917,18 @@ Body:
       bonus bAtkRate,5;
       bonus bCon,2;
       bonus bSplashRange,1;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
       if (.@r>=5) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
          if (.@r>=7) {
             bonus bLongAtkRate,5;
             if (.@r>=9) {
-               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
                if (.@r>=10) {
                   bonus bAspdRate,10;
                   if (.@r>=11) {
                      bonus bLongAtkRate,15;
-                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
                   }
                }
             }
@@ -187343,7 +187343,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bAtkRate,10;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
       bonus2 bSkillAtk,"RL_R_TRIP",3*(.@r/2);
       if (.@r>=7) {
@@ -187356,15 +187356,15 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",3;
+            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",3;
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
-               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
                bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
             }
          }
@@ -187550,18 +187550,18 @@ Body:
       .@r = getrefine();
       bonus bAtkRate,5;
       bonus bCon,2;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
       if (.@r>=5) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
          if (.@r>=7) {
             bonus bLongAtkRate,5;
             if (.@r>=9) {
-               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
                if (.@r>=10) {
                   bonus bDelayrate,-10;
                   if (.@r>=11) {
                      bonus bLongAtkRate,15;
-                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
                   }
                }
             }

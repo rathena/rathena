@@ -23129,10 +23129,10 @@ Body:
     Script: |
       bonus bLongAtkRate,10;
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",7*(.@r_weapon/3);
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",7*(.@r_weapon/3);
       bonus2 bSkillAtk,"RL_R_TRIP",5*(.@r_weapon/3);
       if (getenchantgrade(EQI_HAND_R) >= ENCHANTGRADE_C) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",15;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
       }
   - Combos:
       - Combo:
@@ -23473,12 +23473,12 @@ Body:
       bonus2 bAddSize,Size_All,15;
       if (getequiprefinerycnt(EQI_HAND_R) >= 10) {
          bonus bLongAtkRate,10;
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
       }
       if (getenchantgrade(EQI_HAND_R) >= ENCHANTGRADE_C) {
          bonus bPAtk,5;
          bonus bPow,5;
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
       }
   - Combos:
       - Combo:
@@ -30389,6 +30389,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_DK   # 400374
           - Justice_Power   # 312014
+          - Luppiter_Spear   # 630027
     Script: |
       bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",20;
       bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",15;
@@ -30396,6 +30397,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_DK   # 400374
           - Injustice_Power   # 312021
+          - Execution_Great_Sword   # 600041
     Script: |
       bonus2 bSkillAtk,"DK_STORMSLASH",20;
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",15;
@@ -30425,6 +30427,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_IG   # 400375
           - Justice_Power   # 312014
+          - Holy_Raise_Spear   # 530045
     Script: |
       bonus bShortAtkRate,20;
       bonus2 bSkillAtk,"IG_OVERSLASH",15;
@@ -30432,6 +30435,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_IG   # 400375
           - Injustice_Power   # 312021
+          - Devil_Guardian_Sword   # 500072
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,20;
       bonus2 bSkillAtk,"IG_CROSS_RAIN",15;
@@ -30461,6 +30465,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_AG   # 400376
           - Justice_Power   # 312014
+          - Destiny_Staff   # 640037
     Script: |
       bonus2 bSkillAtk,"AG_RAIN_OF_CRYSTAL",20;
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",15;
@@ -30468,6 +30473,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_AG   # 400376
           - Injustice_Power   # 312021
+          - Devil_Wing_Staff   # 640036
     Script: |
       bonus2 bSkillAtk,"AG_MYSTERY_ILLUSION",20;
       bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",15;
@@ -30497,6 +30503,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_EM   # 400377
           - Justice_Power   # 312014
+          - Blessed_Bible   # 540060
     Script: |
       bonus2 bSkillAtk,"EM_TERRA_DRIVE",20;
       bonus2 bSkillAtk,"EM_DIAMOND_STORM",15;
@@ -30504,6 +30511,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_EM   # 400377
           - Injustice_Power   # 312021
+          - Doom_Bible   # 540059
     Script: |
       bonus2 bSkillAtk,"EM_CONFLAGRATION",20;
       bonus2 bSkillAtk,"EM_VENOM_SWAMP",15;
@@ -30533,6 +30541,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_CD   # 400378
           - Justice_Power   # 312014
+          - Saint_Bringer   # 550088
     Script: |
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",20;
       bonus2 bSkillAtk,"CD_FRAMEN",15;
@@ -30540,6 +30549,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_CD   # 400378
           - Injustice_Power   # 312021
+          - Sealed_Bible   # 540053
     Script: |
       bonus bCritAtkRate,25;
       bonus2 bSkillAtk,"CD_PETITIO",15;
@@ -30569,6 +30579,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_IQ   # 400379
           - Justice_Power   # 312014
+          - Punish_Hall   # 590045
     Script: |
       bonus2 bSkillAtk,"IQ_FIRST_BRAND",20;
       bonus2 bSkillAtk,"IQ_THIRD_PUNISH",15;
@@ -30576,6 +30587,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_IQ   # 400379
           - Injustice_Power   # 312021
+          - Demonic_Claw   # 560036
     Script: |
       bonus2 bSkillAtk,"IQ_OLEUM_SANCTUM",20;
       bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",15;
@@ -30615,17 +30627,19 @@ Body:
   - Combos:
       - Combo:
           - GoodnEvil_Circlet_MT   # 400380
-          - Justice_Power   # 312014
-    Script: |
-      bonus2 bSkillAtk,"MT_AXE_STOMP",20;
-      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",15;
-  - Combos:
-      - Combo:
-          - GoodnEvil_Circlet_MT   # 400380
+          - Destruction_Axe   # 1341
           - Injustice_Power   # 312021
     Script: |
       bonus bCritAtkRate,25;
       bonus2 bSkillAtk,"MT_TRIPLE_LASER",15;
+  - Combos:
+      - Combo:
+          - GoodnEvil_Circlet_MT   # 400380
+          - Justice_Power   # 312014
+          - Divine_Buster   # 620022
+    Script: |
+      bonus2 bSkillAtk,"MT_AXE_STOMP",20;
+      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",15;
   - Combos:
       - Combo:
           - GoodnEvil_Circlet_MT   # 400380
@@ -30641,6 +30655,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_BO   # 400381
           - Justice_Power   # 312014
+          - Victory_Sword   # 500066
     Script: |
       bonus bShortAtkRate,20;
       bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",15;
@@ -30648,6 +30663,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_BO   # 400381
           - Injustice_Power   # 312021
+          - Blood_Rapier   # 500065
     Script: |
       bonus bCritAtkRate,25;
       bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",15;
@@ -30677,6 +30693,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SHC   # 400382
           - Justice_Power   # 312014
+          - Shining_Light_Katar   # 610045
     Script: |
       bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",15;
       bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",20;
@@ -30684,6 +30701,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SHC   # 400382
           - Injustice_Power   # 312021
+          - The_Reaper   # 610044
     Script: |
       bonus bShortAtkRate,20;
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",15;
@@ -30713,6 +30731,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_ABC   # 400383
           - Justice_Power   # 312014
+          - Holy_Light_Dagger   # 510092
     Script: |
       bonus2 bSkillAtk,"ABC_DEFT_STAB",20;
       bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",15;
@@ -30720,6 +30739,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_ABC   # 400383
           - Injustice_Power   # 312021
+          - Dark_Angel_Ray_Bow   # 700066
     Script: |
       bonus2 bSkillAtk,"ABC_FRENZY_SHOT",20;
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",15;
@@ -30749,6 +30769,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_WH   # 400384
           - Justice_Power   # 312014
+          - Angel_Wing_Bow   # 700065
     Script: |
       bonus2 bSkillAtk,"WH_GALESTORM",20;
       bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",15;
@@ -30756,6 +30777,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_WH   # 400384
           - Injustice_Power   # 312021
+          - Underworld_Knife   # 510091
     Script: |
       bonus2 bSkillAtk,"WH_DEEPBLINDTRAP",20;
       bonus2 bSkillAtk,"WH_SWIFTTRAP",20;
@@ -30790,6 +30812,11 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_TR   # 400385
           - Justice_Power   # 312014
+          - Light_Power_Harp   # 570037
+      - Combo:
+          - GoodnEvil_Circlet_TR   # 400385
+          - Justice_Power   # 312014
+          - Light_Power_Spark   # 580038
     Script: |
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",20;
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",15;
@@ -30797,6 +30824,11 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_TR   # 400385
           - Injustice_Power   # 312021
+          - Crime_Violine   # 570036
+      - Combo:
+          - GoodnEvil_Circlet_TR   # 400385
+          - Injustice_Power   # 312021
+          - Crime_Whip   # 580037
     Script: |
       bonus2 bSkillAtk,"TR_SOUNDBLEND",20;
       bonus2 bSkillAtk,"TR_METALIC_FURY",15;
@@ -30832,6 +30864,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SS   # 400386
           - Justice_Power   # 312014
+          - Humma_Brilliance   # 650034
     Script: |
       bonus2 bSkillAtk,"SS_FUUMASHOUAKU",20;
       bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",15;
@@ -30839,6 +30872,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SS   # 400386
           - Injustice_Power   # 312021
+          - Devil_Claw   # 650033
     Script: |
       bonus2 bSkillAtk,"SS_SEKIENHOU",20;
       bonus2 bSkillAtk,"SS_ANTENPOU",15;
@@ -30868,6 +30902,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SKE   # 400387
           - Justice_Power   # 312014
+          - Orign_Of_Life   # 540055
     Script: |
       bonus2 bSkillAtk,"SKE_SUNSET_BLAST",20;
       bonus2 bSkillAtk,"SKE_NOON_BLAST",15;
@@ -30875,6 +30910,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SKE   # 400387
           - Injustice_Power   # 312021
+          - Darkness_Tablet   # 540054
     Script: |
       bonus2 bSkillAtk,"SKE_DAWN_BREAK",20;
       bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",15;
@@ -30904,6 +30940,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SOA   # 400388
           - Justice_Power   # 312014
+          - Soul_Liberator   # 550094
     Script: |
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",20;
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",15;
@@ -30911,6 +30948,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SOA   # 400388
           - Injustice_Power   # 312021
+          - Soul_Harvest   # 550093
     Script: |
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",20;
       bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",15;
@@ -30940,6 +30978,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_HN   # 400389
           - Justice_Power   # 312014
+          - Guardian_Saber   # 500063
     Script: |
       bonus2 bSkillAtk,"HN_SPIRAL_PIERCE_MAX",20;
       bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",15;
@@ -30947,6 +30986,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_HN   # 400389
           - Injustice_Power   # 312021
+          - Devil_Cursed_Sword   # 500062
     Script: |
       bonus2 bSkillAtk,"HN_GROUND_GRAVITATION",20;
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",15;
@@ -30976,6 +31016,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SH   # 400390
           - Justice_Power   # 312014
+          - Lightforce_Foxtail_Wand   # 550116
     Script: |
       bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",20;
       bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",15;
@@ -30983,6 +31024,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_SH   # 400390
           - Injustice_Power   # 312021
+          - Darkness_Foxtail_Model   # 550115
     Script: |
       bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",20;
       bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",15;
@@ -31012,6 +31054,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW   # 400391
           - Justice_Power   # 312014
+          - Justice_Bomber   # 840021
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_WILD_FIRE",15;
@@ -31019,6 +31062,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW   # 400391
           - Injustice_Power   # 312021
+          - Devil_L_Launcher   # 840020
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",15;
@@ -31048,6 +31092,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW2   # 400392
           - Justice_Power   # 312014
+          - Devil_Hunter   # 800027
     Script: |
       bonus bCritAtkRate,25;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",15;
@@ -31055,6 +31100,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW2   # 400392
           - Injustice_Power   # 312021
+          - Devils_Bullet   # 800026
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",15;
@@ -31084,6 +31130,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW3   # 400393
           - Justice_Power   # 312014
+          - Lighting_Splatter   # 830026
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",15;
@@ -31091,6 +31138,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW3   # 400393
           - Injustice_Power   # 312021
+          - RG_5649   # 830025
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
@@ -31120,6 +31168,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW4   # 400394
           - Justice_Power   # 312014
+          - Road_Of_Glory   # 820021
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
@@ -31127,6 +31176,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW4   # 400394
           - Injustice_Power   # 312021
+          - Outlaw_Cursed_Shotgun   # 820020
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"NW_WILD_FIRE",15;
@@ -31156,6 +31206,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW5   # 400395
           - Justice_Power   # 312014
+          - Last_Dawn   # 810027
     Script: |
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",20;
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",15;
@@ -31163,6 +31214,7 @@ Body:
       - Combo:
           - GoodnEvil_Circlet_NW5   # 400395
           - Injustice_Power   # 312021
+          - Screaming_Rifle   # 810026
     Script: |
       bonus2 bSkillAtk,"NW_GRENADES_DROPPING",20;
       bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",15;
