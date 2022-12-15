@@ -31093,7 +31093,7 @@ Body:
           - Injustice_Power   # 312021
     Script: |
       bonus bLongAtkRate,20;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",15;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
   - Combos:
       - Combo:
           - GoodnEvil_Circlet_NW3   # 400393
@@ -31101,9 +31101,9 @@ Body:
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,5*(.@r_weapon/3);
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",4*(.@r_weapon/3);
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",4*(.@r_weapon/3);
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_B) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
       }
   - Combos:
       - Combo:
@@ -31122,7 +31122,7 @@ Body:
           - Justice_Power   # 312014
     Script: |
       bonus bLongAtkRate,20;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",15;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
   - Combos:
       - Combo:
           - GoodnEvil_Circlet_NW4   # 400394
@@ -31148,9 +31148,9 @@ Body:
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,5*(.@r_weapon/3);
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",4*(.@r_weapon/3);
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",4*(.@r_weapon/3);
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_B) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
       }
   - Combos:
       - Combo:
