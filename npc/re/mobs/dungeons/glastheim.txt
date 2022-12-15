@@ -184,11 +184,11 @@ gl_step,0,0	monster	Mimic	1191,6,5000
 //==================================================
 // gl_cas02_ - Nightmare Mode 2f
 //==================================================
-gl_cas02_,0,0	monster	Evil Druid (Nightmare)	2480,4,0,0,0
-gl_cas02_,0,0	monster	Chimera (Nightmare)	2485,1,0,0,0
-gl_cas02_,0,0	monster	Mimic (Nightmare)	2479,19,0,0,0
-gl_cas02_,0,0	monster	Rideword (Nightmare)	2478,10,0,0,0
-gl_cas02_,0,0	monster	Wanderer (Nightmare)	2477,60,0,0,0
+gl_cas02_,0,0	monster	Evil Druid (Nightmare)	2480,4,5000
+gl_cas02_,0,0	monster	Chimera (Nightmare)	2485,1,5000
+gl_cas02_,0,0	monster	Mimic (Nightmare)	2479,19,5000
+gl_cas02_,0,0	monster	Rideword (Nightmare)	2478,10,5000
+gl_cas02_,0,0	monster	Wanderer (Nightmare)	2477,60,5000
 gl_cas02_,0,0	monster	Mysteltainn	1203,1,7200000,3600000
 gl_cas02_,0,0	monster	Alice	1275,1,5000
 gl_cas02_,102,180	monster	Whisper	1185,1,1800000,900000
@@ -197,8 +197,8 @@ gl_cas02_,0,0	monster	Baphomet (Nightmare)	2483,1,7200000,0,0
 //==================================================
 // gl_chyard_ - Nightmare Mode Churchyard
 //==================================================
-gl_chyard_,0,0	monster	Wraith Dead (Nightmare)	2481,91,0,0,0
-gl_chyard_,0,0	monster	Wraith Dead	1291,31,0,0,0
+gl_chyard_,0,0	monster	Wraith Dead (Nightmare)	2481,91,5000
+gl_chyard_,0,0	monster	Wraith Dead	1291,31,5000
 gl_chyard_,0,0	monster	Evil Druid (Nightmare)	2480,22,60000,0,0
 gl_chyard_,0,0	monster	Mimic (Nightmare)	2479,34,60000,0,0
 gl_chyard_,0,0,0,0	boss_monster	Dark Lord	1272,1,3600000,600000,1

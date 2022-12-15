@@ -722,6 +722,8 @@ struct Battle_Config
 	int feature_dynamicnpc_rangey;
 	int feature_dynamicnpc_direction;
 
+	int mob_respawn_time;
+
 #include "../custom/battle_config_struct.inc"
 };
 
