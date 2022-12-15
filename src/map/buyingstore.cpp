@@ -73,7 +73,7 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 1;
 	}
 
-	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	if( sd->sc.getSCE(SC_NOCHAT) && (sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
 		return 2;
 	}
@@ -140,7 +140,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 		return 6;
 	}
 
-	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	if( sd->sc.getSCE(SC_NOCHAT) && (sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
 		return 2;
 	}
