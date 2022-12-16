@@ -3,6 +3,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 Initial version from replays. [Lemongrass]
 //= 1.1 Cash Hair Stylist [Kisuka]
+//= 1.2 Updated Hair Stylist [Lemongrass]
 //============================================================
 
 prontera,137,125,4	script	Cash Sales Guide#prontera::cashmall_warper	4_M_HUMAN_02,{
@@ -212,6 +213,21 @@ itemmall,24,74,5	script	Blacksmith Brock#im	4_M_HUMAN_01,{
 }
 
 itemmall,19,74,5	script	Stylist#cash	91,{
+	if( getbattleflag( "feature.stylist" ) ){
+		mes "[Jeremy]";
+		mes "Hello cutie~";
+		mes "I would like you to call me Head Stylist Jeremy.";
+		next;
+		if( select( "Change style:End conversation" ) == 2 ){
+			mes "[Jeremy]";
+			mes "My shop is always open, so please come back anytime.";
+			close;
+		}
+		close2;
+		openstylist();
+		end;
+	}
+
 	mes "[Stylist]";
 	mes "Hey, I'm Kaniki.";
 	mes "I'm here to start a new";
