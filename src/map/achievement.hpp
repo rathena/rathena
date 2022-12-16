@@ -15,7 +15,7 @@
 #include "../common/database.hpp"
 #include "../common/db.hpp"
 
-struct map_session_data;
+class map_session_data;
 struct block_list;
 
 enum e_achievement_group {
@@ -134,17 +134,17 @@ public:
 
 extern AchievementLevelDatabase achievement_level_db;
 
-void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
-struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
-bool achievement_remove(struct map_session_data *sd, int achievement_id);
-bool achievement_update_achievement(struct map_session_data *sd, int achievement_id, bool complete);
-void achievement_check_reward(struct map_session_data *sd, int achievement_id);
-void achievement_free(struct map_session_data *sd);
-int achievement_check_progress(struct map_session_data *sd, int achievement_id, int type);
-int *achievement_level(struct map_session_data *sd, bool flag);
-bool achievement_check_condition(struct script_code* condition, struct map_session_data* sd);
+void achievement_get_reward(map_session_data *sd, int achievement_id, time_t rewarded);
+struct achievement *achievement_add(map_session_data *sd, int achievement_id);
+bool achievement_remove(map_session_data *sd, int achievement_id);
+bool achievement_update_achievement(map_session_data *sd, int achievement_id, bool complete);
+void achievement_check_reward(map_session_data *sd, int achievement_id);
+void achievement_free(map_session_data *sd);
+int achievement_check_progress(map_session_data *sd, int achievement_id, int type);
+int *achievement_level(map_session_data *sd, bool flag);
+bool achievement_check_condition(struct script_code* condition, map_session_data* sd);
 void achievement_get_titles(uint32 char_id);
-void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
+void achievement_update_objective(map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
 int achievement_update_objective_sub(block_list *bl, va_list ap);
 void achievement_read_db(void);
 void achievement_db_reload(void);
