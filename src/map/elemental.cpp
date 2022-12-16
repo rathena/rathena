@@ -284,7 +284,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
 		clif_elemental_updatestatus(sd,SP_HP);
-		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
+		clif_hpmeter_single( *sd, ed->bl.id, ed->battle_status.hp, ed->battle_status.max_hp );
 		clif_elemental_updatestatus(sd,SP_SP);
 	}
 
@@ -583,7 +583,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 
 	int master_dist, view_range;
 
-	if( ed->sc.count && ed->sc.data[SC_BLIND] )
+	if( ed->sc.count && ed->sc.getSCE(SC_BLIND) )
 		view_range = 3;
 	else
 		view_range = ed->db->range2;

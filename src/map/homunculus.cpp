@@ -270,7 +270,7 @@ int hom_dead(struct homun_data *hd)
 	clif_emotion(&sd->bl, ET_CRY);
 
 #ifdef RENEWAL
-	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_HOMUN_TIME);
 #endif
 
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
@@ -310,7 +310,7 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	hom_save(hd);
 
 #ifdef RENEWAL
-	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_HOMUN_TIME);
 #endif
 
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);

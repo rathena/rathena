@@ -8,10 +8,17 @@
 #include <math.h>
 #include <stdlib.h>
 
+#ifdef MAP_GENERATOR
+#include <fstream>
+#include <iostream>
+#include <nlohmann/json.hpp>
+#endif
+
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
 #include "../common/database.hpp"
 #include "../common/ers.hpp"  // ers_destroy
+#include "../common/grfio.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp" //NAME_LENGTH
 #include "../common/nullpo.hpp"
@@ -50,6 +57,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp" // pet_unlocktarget()
 #include "quest.hpp"
+#include "skill.hpp" // skill_isCopyable()
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // OPTION_*, struct weapon_atk
@@ -60,6 +68,9 @@
 using namespace rathena;
 
 JobDatabase job_db;
+
+CaptchaDatabase captcha_db;
+const char *macro_allowed_answer_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
@@ -203,7 +214,7 @@ uint64 AttendanceDatabase::parseBodyNode(const ryml::NodeRef& node){
 					continue;
 				}
 
-				if( item_id == 0 || !itemdb_exists( item_id ) ){
+				if( !item_db.exists( item_id ) ){
 					ShowError( "pc_attendance_load: Unknown item ID %u for day %d.\n", item_id, day + 1 );
 					continue;
 				}
@@ -338,6 +349,29 @@ uint64 ReputationDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 	}
 
+#ifdef MAP_GENERATOR
+	if (this->nodeExists(node, "Visibility")) {
+		std::string visibility;
+		if (!this->asString(node, "Visibility", visibility)) {
+			return 0;
+		}
+		if (visibility == "Always")
+			reputation->visibility = s_reputation::e_visibility::ALWAYS;
+		else if (visibility == "Never")
+			reputation->visibility = s_reputation::e_visibility::NEVER;
+		else if (visibility == "Exist")
+			reputation->visibility = s_reputation::e_visibility::EXIST;
+		else {
+			this->invalidWarning(node, "Visibility \"%s\" unknown.\n", visibility.c_str());
+			return 0;
+		}
+	} else {
+		if (!exists) {
+			reputation->visibility = s_reputation::e_visibility::ALWAYS;
+		}
+	}
+#endif
+
 	if( !exists ){
 		this->put( id, reputation );
 	}
@@ -346,6 +380,145 @@ uint64 ReputationDatabase::parseBodyNode( const ryml::NodeRef& node ){
 }
 
 ReputationDatabase reputation_db;
+
+const std::string ReputationGroupDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/reputation_group.yml";
+}
+
+uint64 ReputationGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
+	int64 id;
+
+	if (!this->asInt64(node, "Id", id)) {
+		return 0;
+	}
+
+	std::shared_ptr<s_reputationgroup> group = this->find(id);
+	bool exists = group != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, {"Name", "ReputeList"})) {
+			return 0;
+		}
+
+		group = std::make_shared<s_reputationgroup>();
+		group->id = id;
+	}
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+		if (!this->asString(node, "Name", name)) {
+			return 0;
+		}
+		group->name = name;
+	}
+
+	if (this->nodeExists(node, "ScriptName")) {
+		std::string script_name;
+		if (!this->asString(node, "ScriptName", script_name)) {
+			return 0;
+		}
+		group->script_name = script_name;
+	}
+
+	if (this->nodeExists(node, "ReputeList")) {
+		const auto& reputelist = node[c4::to_csubstr("ReputeList")];
+		for (const auto& repute : reputelist) {
+			int64 repute_id;
+			try {
+				repute >> repute_id;
+			} catch (std::runtime_error const&) {
+				this->invalidWarning(node, "Value \"%s\" cannot be parsed as int64.\n", repute.val().str);
+				continue;
+			}
+
+			if (!reputation_db.find(repute_id)) {
+				this->invalidWarning(node, "Reputation id %lld does not exist in reputation_db!\n", repute_id);
+				continue;
+			}
+
+			group->reputations.push_back(repute_id);
+		}
+	}
+
+
+	if (!exists) {
+		this->put(id, group);
+	}
+
+	return 1;
+}
+
+ReputationGroupDatabase reputationgroup_db;
+
+void pc_reputation_generate() {
+#ifdef MAP_GENERATOR
+	const std::string filePrefix = "generated/clientside/data/contentdata/";
+	auto reputeInfo = nlohmann::json::object();
+	for (const auto& pair : reputation_db) {
+		auto id = pair.first;
+		auto rep = pair.second;
+		nlohmann::json node;
+		switch (rep->visibility) {
+		case s_reputation::e_visibility::ALWAYS:
+			node["Invisible"] = "VISIBLE_TRUE";
+			break;
+		case s_reputation::e_visibility::NEVER:
+			node["Invisible"] = "VISIBLE_FALSE";
+			break;
+		case s_reputation::e_visibility::EXIST:
+			node["Invisible"] = "VISIBLE_EXIST";
+			break;
+		}
+		node["MaxPoint_Negative"] = std::abs(rep->minimum);
+		node["MaxPoint_Positive"] = std::abs(rep->maximum);
+		node["Name"] = rep->name;
+
+		reputeInfo[std::to_string(id)] = node;
+	}
+
+	auto j = nlohmann::json::object();
+	j["reputeInfo"] = reputeInfo;
+	// std::cout << j.dump(2) << "\n";
+
+	auto bson = nlohmann::json::to_bson(j);
+
+	auto reputation_file = std::ofstream(filePrefix + "./reputeinfodata.bson", std::ios::binary);
+	if (!reputation_file) {
+		ShowError("Failed to create reputation file.\n");
+		ShowError("Maybe the file directory \"%s\" does not exist?\n", filePrefix.c_str());
+		ShowInfo("Create the directory and rerun map-server-generator\n");
+		exit(1);
+	}
+
+	reputation_file.write((const char *)&bson[0], bson.size());
+
+	auto reputeGroupInfo = nlohmann::json::object();
+	for (const auto& pair : reputationgroup_db) {
+		auto id = pair.first;
+		auto group = pair.second;
+		nlohmann::json node;
+
+		node["ID"] = group->script_name;
+		node["Name"] = group->name;
+		node["ReputeList"] = group->reputations;
+
+		reputeGroupInfo[std::to_string(id)] = node;
+	}
+	j = nlohmann::json::object();
+	j["ReputeGroup"] = reputeGroupInfo;
+	// std::cout << j.dump(2) << "\n";
+	bson = nlohmann::json::to_bson(j);
+	auto reputation_group_file = std::ofstream(filePrefix + "./reputegroupdata.bson", std::ios::binary);
+	if (!reputation_group_file) {
+		ShowError("Failed to create reputation group file.\n");
+		ShowError("Maybe the file directory \"%s\" does not exist?\n", filePrefix.c_str());
+		ShowInfo("Create the directory and rerun map-server-generator\n");
+		exit(1);
+	}
+
+	reputation_group_file.write((const char *)&bson[0], bson.size());
+#endif
+}
 
 const std::string PenaltyDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/level_penalty.yml";
@@ -743,7 +916,7 @@ int pc_addsoulball(map_session_data *sd, int max)
 
 	status_change *sc = status_get_sc(&sd->bl);
 
-	if (sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+	if (sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr) {
 		sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, 0, skill_get_time2(SP_SOULCOLLECT, 1));
 		sd->soulball = 0;
 	}
@@ -776,14 +949,14 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 
 	status_change *sc = status_get_sc(&sd->bl);
 
-	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+	if (sd->soulball <= 0 || sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr) {
 		sd->soulball = 0;
 	}else{
 		sd->soulball -= cap_value(count, 0, sd->soulball);
 		if (sd->soulball == 0)
-			status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULENERGY);
 		else
-			sc->data[SC_SOULENERGY]->val1 = sd->soulball;
+			sc->getSCE(SC_SOULENERGY)->val1 = sd->soulball;
 	}
 
 	if (!type)
@@ -1134,7 +1307,7 @@ void pc_makesavestatus(struct map_session_data *sd) {
 #else
 	sd->status.option = sd->sc.option&(OPTION_INVISIBLE|OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR);
 #endif
-	if (sd->sc.data[SC_JAILED]) { //When Jailed, do not move last point.
+	if (sd->sc.getSCE(SC_JAILED)) { //When Jailed, do not move last point.
 		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd, 0);
 		} else {
@@ -1343,7 +1516,7 @@ void pc_setequipindex(struct map_session_data *sd)
 //{
 //	int i;
 //	struct item *item = &sd->inventory.u.items_inventory[eqindex];
-//	struct item_data *data;
+//	std::shared_ptr<item_data> data;
 //
 //	//Crafted/made/hatched items.
 //	if (itemdb_isspecial(item->card[0]))
@@ -1353,7 +1526,7 @@ void pc_setequipindex(struct map_session_data *sd)
 //	if( item->card[MAX_SLOTS - 1] && s < MAX_SLOTS - 1 )
 //		s = MAX_SLOTS - 1;
 //
-//	ARR_FIND( 0, s, i, item->card[i] && (data = itemdb_exists(item->card[i])) != NULL && data->flag.no_equip&flag );
+//	ARR_FIND( 0, s, i, item->card[i] && (data = item_db.find(item->card[i])) != NULL && data->flag.no_equip&flag );
 //	return( i < s ) ? 0 : 1;
 //}
 
@@ -1652,24 +1825,24 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 	}
 
 	if (sd->sc.count) {
-		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]
+		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.getSCE(SC_STRIPWEAPON)) // Also works with left-hand weapons [DracoRPG]
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_SHIELD && item->type == IT_ARMOR && sd->sc.data[SC_STRIPSHIELD])
+		if(item->equip & EQP_SHIELD && item->type == IT_ARMOR && sd->sc.getSCE(SC_STRIPSHIELD))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_ARMOR && sd->sc.data[SC_STRIPARMOR])
+		if(item->equip & EQP_ARMOR && sd->sc.getSCE(SC_STRIPARMOR))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_HEAD_TOP && sd->sc.data[SC_STRIPHELM])
+		if(item->equip & EQP_HEAD_TOP && sd->sc.getSCE(SC_STRIPHELM))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
+		if(item->equip & EQP_ACC && sd->sc.getSCE(SC__STRIPACCESSORY))
 			return ITEM_EQUIP_ACK_FAIL;
-		if (item->equip & EQP_ARMS && sd->sc.data[SC__WEAKNESS])
+		if (item->equip & EQP_ARMS && sd->sc.getSCE(SC__WEAKNESS))
 			return ITEM_EQUIP_ACK_FAIL;
-		if (item->equip & EQP_SHADOW_GEAR && sd->sc.data[SC_SHADOW_STRIP])
+		if (item->equip & EQP_SHADOW_GEAR && sd->sc.getSCE(SC_SHADOW_STRIP))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
+		if(item->equip && (sd->sc.getSCE(SC_KYOUGAKU) || sd->sc.getSCE(SC_SUHIDE)))
 			return ITEM_EQUIP_ACK_FAIL;
 
-		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SUPERNOVICE) {
+		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
 			//Spirit of Super Novice equip bonuses. [Skotlex]
 			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
 				return ITEM_EQUIP_ACK_OK; //Can equip all helms
@@ -1747,6 +1920,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->autotrade_tid = INVALID_TIMER;
 	sd->respawn_tid = INVALID_TIMER;
 	sd->tid_queue_active = INVALID_TIMER;
+	sd->macro_detect.timer = INVALID_TIMER;
 
 	sd->skill_keep_using.tid = INVALID_TIMER;
 	sd->skill_keep_using.skill_id = 0;
@@ -1863,7 +2037,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
 	         CONVIP(ip), sd->group_id);
 	// Send friends list
-	clif_friendslist_send(sd);
+	clif_friendslist_send( *sd );
 
 	if( !changing_mapservers ) {
 
@@ -2063,15 +2237,15 @@ void pc_reg_received(struct map_session_data *sd)
 		}
 	}
 
-#if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
-	if (sd->instance_id > 0)
-		instance_reqinfo(sd, sd->instance_id);
 	if (sd->status.party_id > 0)
 		party_member_joined(sd);
 	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
 	if (sd->status.clan_id > 0)
 		clan_member_joined(sd);
+#if !( PACKETVER_MAIN_NUM >= 20190403 || PACKETVER_RE_NUM >= 20190320 || PACKETVER_ZERO_NUM >= 20190410 )
+	// Before those clients you could send out the instance info even when the client was still loading the map, afterwards you need to send it later
+	clif_instance_info( *sd );
 #endif
 
 	// pet
@@ -2354,7 +2528,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 				if (!sd->status.skill[sk_idx].lv && (
 					(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
 					skill->inf2[INF2_ISWEDDING] ||
-					(skill->inf2[INF2_ISSPIRIT] && !sd->sc.data[SC_SPIRIT])
+					(skill->inf2[INF2_ISSPIRIT] && !sd->sc.getSCE(SC_SPIRIT))
 				))
 					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
 
@@ -2401,7 +2575,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	}
 
 	// Enable Bard/Dancer spirit linked skills.
-	if (sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER) {
+	if (sd->sc.count && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_BARDDANCER) {
 		std::vector<std::vector<uint16>> linked_skills = { { BA_WHISTLE, DC_HUMMING },
 														   { BA_ASSASSINCROSS, DC_DONTFORGETME },
 														   { BA_POEMBRAGI, DC_FORTUNEKISS },
@@ -2481,7 +2655,7 @@ static void pc_check_skilltree(struct map_session_data *sd)
 			if( !sd->status.skill[sk_idx].lv && (
 				(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
 				skill->inf2[INF2_ISWEDDING] ||
-				(skill->inf2[INF2_ISSPIRIT] && !sd->sc.data[SC_SPIRIT])
+				(skill->inf2[INF2_ISSPIRIT] && !sd->sc.getSCE(SC_SPIRIT))
 			) )
 				continue; //Cannot be learned via normal means.
 
@@ -2642,7 +2816,7 @@ void pc_updateweightstatus(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	old_overweight = (sd->sc.data[SC_WEIGHT90]) ? 2 : (sd->sc.data[SC_WEIGHT50]) ? 1 : 0;
+	old_overweight = (sd->sc.getSCE(SC_WEIGHT90)) ? 2 : (sd->sc.getSCE(SC_WEIGHT50)) ? 1 : 0;
 #ifdef RENEWAL
 	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is70overweight(sd)) ? 1 : 0;
 #else
@@ -2654,9 +2828,9 @@ void pc_updateweightstatus(struct map_session_data *sd)
 
 	// stop old status change
 	if( old_overweight == 1 )
-		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WEIGHT50);
 	else if( old_overweight == 2 )
-		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WEIGHT90);
 
 	// start new status change
 	if( new_overweight == 1 )
@@ -2920,7 +3094,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
 		return;
 	}
-	if (nameid && !itemdb_exists(nameid)) {
+	if (!item_db.exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %u\n",nameid);
 		return;
 	}
@@ -5082,6 +5256,93 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 	}
 	return true;
 }
+
+/**
+ * Set's a player's plagiarized skill.
+ * @param sd: Player
+ * @param skill_id: Skill to be plagiarized
+ * @param skill_lv: Skill level to be plagiarized
+ * @return True on success or false otherwise
+ */
+bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
+{
+	skill_id = skill_dummy2skill_id(skill_id);
+	uint16 idx = skill_get_index(skill_id);
+
+	// Use skill index, avoiding out-of-bound array [Cydh]
+	if (idx == 0) {
+		ShowWarning("pc_skill_plagiarism: invalid skill idx 0 for skill %d.\n", skill_id);
+		return false;
+	}
+
+	skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
+
+	int type = skill_isCopyable(&sd, skill_id);
+	if (type == 1) {
+		pc_skill_plagiarism_reset(sd, type);
+
+		sd.cloneskill_idx = idx;
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM_LV), skill_lv);
+	} else if (type == 2) {
+		pc_skill_plagiarism_reset(sd, type);
+
+		sd.reproduceskill_idx = idx;
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE), skill_id);
+		pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE_LV), skill_lv);
+	} else {
+		ShowWarning("pc_skill_plagiarism: skill %d is not copyable.\n", skill_id);
+		return false;
+	}
+
+	sd.status.skill[idx].id = skill_id;
+	sd.status.skill[idx].lv = static_cast<uint8>(skill_lv);
+	sd.status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
+	clif_addskill(&sd, skill_id);
+
+	return true;
+}
+
+/**
+ * Clear plagiarized skills from a player.
+ * @param sd: Player
+ * @param type: 1 for Plagiarism or 2 for Reproduce
+ * @return True on success or false otherwise
+ */
+bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
+{
+	uint16 idx;
+	if (type == 1) 
+		idx = sd.cloneskill_idx;
+	else if (type == 2)
+		idx = sd.reproduceskill_idx;
+	else {
+		ShowError("pc_skill_plagiarism_reset: Unknown type %d.\n", type);
+		return false;
+	}
+
+	if (sd.status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
+		uint16 skill_id = sd.status.skill[idx].id;
+		sd.status.skill[idx].id = 0;
+		sd.status.skill[idx].lv = 0;
+		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;
+		clif_deleteskill(&sd, skill_id);
+		
+		if (type == 1) {
+			sd.cloneskill_idx = 0;
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM), 0);
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
+		}
+		else if (type == 2) {
+			sd.reproduceskill_idx = 0;
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE), 0);
+			pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
+		}
+	}
+	
+	return true;
+}
+
 /*==========================================
  * Append a card to an item ?
  *------------------------------------------*/
@@ -5951,7 +6212,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume > 0 ) {
-		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.getSCE(SC_ALL_RIDING) )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -6289,7 +6550,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_MOB_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].rate
+		if( item_db.exists(md->db->dropitem[i].nameid) && !md->db->dropitem[i].steal_protected && rnd() % 10000 < md->db->dropitem[i].rate
 #ifndef RENEWAL
 		* rate/100.
 #endif
@@ -6351,8 +6612,8 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	md = (TBL_MOB*)target;
 	target_lv = status_get_lv(target);
 
-	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || md->sc.data[SC_HANDICAPSTATE_FROSTBITE] || 
-		md->sc.data[SC_HANDICAPSTATE_SWOONING] || md->sc.data[SC_HANDICAPSTATE_LIGHTNINGSTRIKE] || md->sc.data[SC_HANDICAPSTATE_CRYSTALLIZATION] || 
+	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) || 
+		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) || 
 		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE))
 		return 0;
 
@@ -6430,12 +6691,12 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 				return SETPOS_MAPINDEX; // You may not get out!
 
 			for (const auto &it : status_db) {
-				if (sc->data[it.first]) {
+				if (sc->getSCE(it.first)) {
 					if (it.second->flag[SCF_REMOVEONMAPWARP])
-						status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+						status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 
 					if (it.second->flag[SCF_RESTARTONMAPWARP] && it.second->skill_id > 0) {
-						status_change_entry *sce = sd->sc.data[it.first];
+						status_change_entry *sce = sd->sc.getSCE(it.first);
 
 						if (sce->timer != INVALID_TIMER)
 							delete_timer(sce->timer, status_change_timer);
@@ -6727,7 +6988,7 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	if (skill_id == SJ_NOVAEXPLOSING) {
 		struct status_change *sc = status_get_sc(&sd->bl);
 
-		if (sc && sc->data[SC_DIMENSION])
+		if (sc && sc->getSCE(SC_DIMENSION))
 			return 0;
 	}
 
@@ -6874,13 +7135,13 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		if (flag[SCF_REQUIREWEAPON]) { // Skills requiring specific weapon types
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
-			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
-				status_change_end(&sd->bl, status, INVALID_TIMER);
+			if (sd->sc.getSCE(status) && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
+				status_change_end(&sd->bl, status);
 		}
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
-			if (sd->sc.data[status] && sd->status.shield <= 0)
-				status_change_end(&sd->bl, status, INVALID_TIMER);
+			if (sd->sc.getSCE(status) && sd->status.shield <= 0)
+				status_change_end(&sd->bl, status);
 		}
 	}
 }
@@ -7813,10 +8074,10 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 	}
 
 	// Give EXPBOOST for quests even if src is NULL.
-	if (sd->sc.data[SC_EXPBOOST]) {
-		bonus += sd->sc.data[SC_EXPBOOST]->val1;
+	if (sd->sc.getSCE(SC_EXPBOOST)) {
+		bonus += sd->sc.getSCE(SC_EXPBOOST)->val1;
 		if (battle_config.vip_bm_increase && pc_isvip(sd)) // Increase Battle Manual EXP rate for VIP
-			bonus += (sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase);
+			bonus += (sd->sc.getSCE(SC_EXPBOOST)->val1 / battle_config.vip_bm_increase);
 	}
 
 	if (*base_exp) {
@@ -7825,8 +8086,8 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
-	if (sd->sc.data[SC_JEXPBOOST])
-		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
+	if (sd->sc.getSCE(SC_JEXPBOOST))
+		bonus += sd->sc.getSCE(SC_JEXPBOOST)->val1;
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
@@ -8876,7 +9137,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART) )
 			i &= ~OPTION_CART;
 #else
-		if( sd->sc.data[SC_PUSH_CART] )
+		if( sd->sc.getSCE(SC_PUSH_CART) )
 			pc_setcart(sd, 0);
 #endif
 		if( i != sd->sc.option )
@@ -8885,10 +9146,10 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( hom_is_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN) )
 			hom_vaporize(sd, HOM_ST_ACTIVE);
 
-		if (sd->sc.data[SC_SPRITEMABLE] && pc_checkskill(sd, SU_SPRITEMABLE))
-			status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
-		if (sd->sc.data[SC_SOULATTACK] && pc_checkskill(sd, SU_SOULATTACK))
-			status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
+		if (sd->sc.getSCE(SC_SPRITEMABLE) && pc_checkskill(sd, SU_SPRITEMABLE))
+			status_change_end(&sd->bl, SC_SPRITEMABLE);
+		if (sd->sc.getSCE(SC_SOULATTACK) && pc_checkskill(sd, SU_SOULATTACK))
+			status_change_end(&sd->bl, SC_SOULATTACK);
 	}
 
 	for (const auto &skill : skill_db) {
@@ -9165,7 +9426,7 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 		if (sd->st) {
 			if (sd->st->state == CLOSE) {
 				clif_scriptclose(sd, sd->npc_id);
-				clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
+				clif_scriptclear( *sd, sd->npc_id ); // [Ind/Hercules]
 				sd->st->state = END; // Force to end now
 			}
 			if (sd->st->state == END) { // free attached scripts that are waiting
@@ -9209,7 +9470,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if (sd->devotion[k]){
 			struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
 			if (devsd)
-				status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
+				status_change_end(&devsd->bl, SC_DEVOTION);
 			sd->devotion[k] = 0;
 		}
 	}
@@ -9219,7 +9480,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			struct map_session_data *smarksd = map_id2sd(sd->stellar_mark[k]);
 
 			if (smarksd)
-				status_change_end(&smarksd->bl, SC_FLASHKICK, INVALID_TIMER);
+				status_change_end(&smarksd->bl, SC_FLASHKICK);
 			sd->stellar_mark[k] = 0;
 		}
 	}
@@ -9229,7 +9490,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			struct map_session_data *usoulsd = map_id2sd(sd->united_soul[k]);
 
 			if (usoulsd)
-				status_change_end(&usoulsd->bl, SC_SOULUNITY, INVALID_TIMER);
+				status_change_end(&usoulsd->bl, SC_SOULUNITY);
 			sd->united_soul[k] = 0;
 		}
 	}
@@ -9239,13 +9500,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			struct map_session_data *ssignsd = map_id2sd(sd->servant_sign[k]);
 
 			if (ssignsd)
-				status_change_end(&ssignsd->bl, SC_SERVANT_SIGN, INVALID_TIMER);
+				status_change_end(&ssignsd->bl, SC_SERVANT_SIGN);
 			sd->servant_sign[k] = 0;
 		}
 	}
 
 	if(sd->shadowform_id) { //if we were target of shadowform
-		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
+		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM);
 		sd->shadowform_id = 0; //should be remove on status end anyway
 	}
 
@@ -9292,7 +9553,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setdead(sd);
 
-	clif_party_dead( sd );
+	clif_party_dead( *sd );
 
 	pc_setparam(sd, SP_PCDIECOUNTER, sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
@@ -9572,15 +9833,15 @@ bool pc_revive_item(struct map_session_data *sd) {
 	if (!pc_isdead(sd) || sd->respawn_tid != INVALID_TIMER)
 		return false;
 
-	if (sd->sc.data[SC_HELLPOWER]) // Cannot resurrect while under the effect of SC_HELLPOWER.
+	if (sd->sc.getSCE(SC_HELLPOWER)) // Cannot resurrect while under the effect of SC_HELLPOWER.
 		return false;
 
 	int16 item_position = itemdb_group.item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
 	uint8 hp = 100, sp = 100;
 
 	if (item_position < 0) {
-		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {
-			hp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+		if (sd->sc.getSCE(SC_LIGHT_OF_REGENE)) {
+			hp = sd->sc.getSCE(SC_LIGHT_OF_REGENE)->val2;
 			sp = 0;
 		}
 		else
@@ -9591,7 +9852,7 @@ bool pc_revive_item(struct map_session_data *sd) {
 		return false;
 
 	if (item_position < 0)
-		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE);
 	else
 		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 
@@ -9965,7 +10226,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		if( val < 0 )
 			sc_start(NULL, &sd->bl, SC_NOCHAT, 100, 0, 0);
 		else {
-			status_change_end(&sd->bl, SC_NOCHAT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_NOCHAT);
 			clif_manner_message(sd, 5);
 		}
 		return true; // status_change_start/status_change_end already sends packets warning the client
@@ -10096,7 +10357,7 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag == 2) {
 			bonus += bonus * 50 / 100;
-			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
+			if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_ROGUE)
 				bonus += bonus; // Receive an additional +100% effect from ranked potions to HP only
 		}
 		//All item bonuses.
@@ -10111,15 +10372,17 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 			}
 		}
 		// Recovery Potion
-		if (sd->sc.data[SC_INCHEALRATE])
-			bonus += bonus * sd->sc.data[SC_INCHEALRATE]->val1 / 100;
+		if (sd->sc.getSCE(SC_INCHEALRATE))
+			bonus += bonus * sd->sc.getSCE(SC_INCHEALRATE)->val1 / 100;
 		// 2014 Halloween Event : Pumpkin Bonus
-		if (sd->sc.data[SC_MTF_PUMPKIN]) {
+		if (sd->sc.getSCE(SC_MTF_PUMPKIN)) {
 			if (itemid == ITEMID_PUMPKIN)
-				bonus += bonus * sd->sc.data[SC_MTF_PUMPKIN]->val1 / 100;
+				bonus += bonus * sd->sc.getSCE(SC_MTF_PUMPKIN)->val1 / 100;
 			else if (itemid == ITEMID_COOKIE_BAT)
-				bonus += sd->sc.data[SC_MTF_PUMPKIN]->val2;
+				bonus += sd->sc.getSCE(SC_MTF_PUMPKIN)->val2;
 		}
+		if (sd->sc.getSCE(SC_VITALIZE_POTION))
+			bonus += bonus * 10 / 100;
 
 		tmp = hp * bonus / 100; // Overflow check
 		if (bonus != 100 && tmp > hp)
@@ -10149,26 +10412,26 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 	}
 	if (sd->sc.count) {
 		// Critical Wound and Death Hurt stack
-		if (sd->sc.data[SC_CRITICALWOUND])
-			penalty += sd->sc.data[SC_CRITICALWOUND]->val2;
+		if (sd->sc.getSCE(SC_CRITICALWOUND))
+			penalty += sd->sc.getSCE(SC_CRITICALWOUND)->val2;
 
-		if (sd->sc.data[SC_DEATHHURT] && sd->sc.data[SC_DEATHHURT]->val3 == 1)
+		if (sd->sc.getSCE(SC_DEATHHURT) && sd->sc.getSCE(SC_DEATHHURT)->val3 == 1)
 			penalty += 20;
 
-		if (sd->sc.data[SC_NORECOVER_STATE])
+		if (sd->sc.getSCE(SC_NORECOVER_STATE))
 			penalty = 100;
 
-		if (sd->sc.data[SC_VITALITYACTIVATION])
+		if (sd->sc.getSCE(SC_VITALITYACTIVATION))
 			hp += hp / 2; // 1.5 times
 
-		if (sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2) {
+		if (sd->sc.getSCE(SC_WATER_INSIGNIA) && sd->sc.getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
 			hp += hp / 10;
 			sp += sp / 10;
 		}
 
 #ifdef RENEWAL
-		if (sd->sc.data[SC_APPLEIDUN])
-			hp += sd->sc.data[SC_APPLEIDUN]->val3 / 100;
+		if (sd->sc.getSCE(SC_APPLEIDUN))
+			hp += sd->sc.getSCE(SC_APPLEIDUN)->val3 / 100;
 #endif
 
 		if (penalty > 0) {
@@ -10177,10 +10440,10 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 		}
 
 #ifdef RENEWAL
-		if (sd->sc.data[SC_EXTREMITYFIST2])
+		if (sd->sc.getSCE(SC_EXTREMITYFIST2))
 			sp = 0;
 #endif
-		if (sd->sc.data[SC_BITESCAR])
+		if (sd->sc.getSCE(SC_BITESCAR))
 			hp = 0;
 	}
 
@@ -10295,27 +10558,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if(sd->cloneskill_idx > 0) {
-		if( sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[sd->cloneskill_idx].id = 0;
-			sd->status.skill[sd->cloneskill_idx].lv = 0;
-			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM))));
-		}
-		sd->cloneskill_idx = 0;
-		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
-		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
+		pc_skill_plagiarism_reset(*sd, 1);
 	}
 
 	if(sd->reproduceskill_idx > 0) {
-		if( sd->status.skill[sd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[sd->reproduceskill_idx].id = 0;
-			sd->status.skill[sd->reproduceskill_idx].lv = 0;
-			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE))));
-		}
-		sd->reproduceskill_idx = 0;
-		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
-		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
+		pc_skill_plagiarism_reset(*sd, 2);
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
@@ -10448,7 +10695,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	if( i&OPTION_CART && !pc_checkskill(sd, MC_PUSHCART) )
 		i&=~OPTION_CART;
 #else
-	if( sd->sc.data[SC_PUSH_CART] && !pc_checkskill(sd, MC_PUSHCART) )
+	if( sd->sc.getSCE(SC_PUSH_CART) && !pc_checkskill(sd, MC_PUSHCART) )
 		pc_setcart(sd, 0);
 #endif
 	if(i != sd->sc.option)
@@ -10457,12 +10704,12 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	if(hom_is_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
 		hom_vaporize(sd, HOM_ST_ACTIVE);
 
-	if (sd->sc.data[SC_SPRITEMABLE] && !pc_checkskill(sd, SU_SPRITEMABLE))
-		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
-	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
-		status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
-	if( sd->sc.data[SC_SPIRIT] ){
-		status_change_end( &sd->bl, SC_SPIRIT, INVALID_TIMER );
+	if (sd->sc.getSCE(SC_SPRITEMABLE) && !pc_checkskill(sd, SU_SPRITEMABLE))
+		status_change_end(&sd->bl, SC_SPRITEMABLE);
+	if (sd->sc.getSCE(SC_SOULATTACK) && !pc_checkskill(sd, SU_SOULATTACK))
+		status_change_end(&sd->bl, SC_SOULATTACK);
+	if( sd->sc.getSCE(SC_SPIRIT) ){
+		status_change_end( &sd->bl, SC_SPIRIT );
 	}
 
 	if(sd->status.manner < 0)
@@ -10481,7 +10728,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 			if( i < MAX_PARTY ){
 				p->party.member[i].class_ = sd->status.class_;
-				clif_party_job_and_level(sd);
+				clif_party_job_and_level( *sd );
 			}
 		}
 	}
@@ -10637,7 +10884,7 @@ void pc_setoption(struct map_session_data *sd,int type, int subtype)
 	if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
 		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, subtype, INFINITE_TICK);
 	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-		status_change_end(&sd->bl, SC_MADOGEAR, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_MADOGEAR);
 	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
@@ -10684,13 +10931,13 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 
 	switch( type ) {
 		case 0:
-			if( !sd->sc.data[SC_PUSH_CART] )
+			if( !sd->sc.getSCE(SC_PUSH_CART) )
 				return 0;
-			status_change_end(&sd->bl,SC_PUSH_CART,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_PUSH_CART);
 			clif_clearcart(sd->fd);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if( !sd->sc.data[SC_PUSH_CART] ) { /* first time, so fill cart data */
+			if( !sd->sc.getSCE(SC_PUSH_CART) ) { /* first time, so fill cart data */
 				clif_cartlist(sd);
 				status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 			}
@@ -10730,7 +10977,7 @@ void pc_setfalcon(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 void pc_setriding(struct map_session_data* sd, int flag)
 {
-	if( sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.getSCE(SC_ALL_RIDING) )
 		return;
 
 	if( flag ){
@@ -11173,7 +11420,7 @@ void pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i] != INVALID_TIMER && strcmp(
 			(char *)(get_timer(sd->eventtimer[i])->data), name)==0 ){
-				addt_tickimer(sd->eventtimer[i],tick);
+				addtick_timer(sd->eventtimer[i],tick);
 				break;
 		}
 }
@@ -11433,7 +11680,8 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
-			clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
+			// Does not deserve an answer... [Lemongrass]
+			//clif_equipitemack( sd, ITEM_EQUIP_ACK_FAIL, n );
 		}
 		return false;
 	}
@@ -11441,7 +11689,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
-			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
+			clif_equipitemack( *sd, ITEM_EQUIP_ACK_FAIL, n );
 		}
 		return false;
 	}
@@ -11457,7 +11705,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, res );
 		}else{
-			clif_equipitemack(sd,n,0,res);	// fail
+			clif_equipitemack( *sd, res, n );	// fail
 		}
 		return false;
 	}
@@ -11471,15 +11719,15 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
-			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);	// fail
+			clif_equipitemack( *sd, ITEM_EQUIP_ACK_FAIL, n );	// fail
 		}
 		return false;
 	}
-	if( sd->sc.count && (sd->sc.cant.equip || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
+	if( sd->sc.count && (sd->sc.cant.equip || (sd->sc.getSCE(SC_PYROCLASTIC) && sd->inventory_data[n]->type == IT_WEAPON)) ) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
-			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL); //Fail
+			clif_equipitemack( *sd, ITEM_EQUIP_ACK_FAIL, n ); //Fail
 		}
 		return false;
 	}
@@ -11488,7 +11736,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 
 	if ( !equipswitch && id->flag.bindOnEquip && !sd->inventory.u.items_inventory[n].bound) {
 		sd->inventory.u.items_inventory[n].bound = (char)battle_config.default_bind_on_equip;
-		clif_notify_bindOnEquip(sd,n);
+		clif_notify_bindOnEquip( *sd, n );
 	}
 
 	if(pos == EQP_ACC) { //Accessories should only go in one of the two.
@@ -11571,7 +11819,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 			clif_arrow_fail(sd,3);
 		}
 		else
-			clif_equipitemack(sd,n,pos,ITEM_EQUIP_ACK_OK);
+			clif_equipitemack( *sd, ITEM_EQUIP_ACK_OK, n, pos );
 
 		sd->inventory.u.items_inventory[n].equip = pos;
 	}
@@ -11753,8 +12001,8 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
-	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
-		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
+	if (sd->sc.getSCE(SC_SIGNUMCRUCIS) && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
+		status_change_end(&sd->bl, SC_SIGNUMCRUCIS);
 
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
@@ -11807,7 +12055,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
-		(sd->sc.data[SC_PYROCLASTIC] &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
+		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;
@@ -11827,13 +12075,13 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if( !battle_config.dancing_weaponswitch_fix )
-			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
+			status_change_end(&sd->bl, SC_DANCING); // Unequipping => stop dancing.
 #ifdef RENEWAL
 		if (battle_config.switch_remove_edp&2) {
 #else
 		if (battle_config.switch_remove_edp&1) {
 #endif
-			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_EDP);
 		}
 	}
 	if(pos & EQP_HAND_L) {
@@ -11888,12 +12136,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	// On equipment change
 #ifndef RENEWAL
 	if (!(flag&4))
-		status_change_end(&sd->bl, SC_CONCENTRATION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CONCENTRATION);
 #endif
 
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
-		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_P_ALTER);
 
 	pc_unequipitem_sub(sd, n, flag);
 
@@ -12505,17 +12753,17 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 
 	// Cannot stand yet
 	// TODO: Move to SCS_NOSTAND [Cydh]
-	if (!force && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+	if (!force && (sd->sc.getSCE(SC_SITDOWN_FORCE) || sd->sc.getSCE(SC_BANANA_BOMB_SITDOWN)))
 		return false;
 
-	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_TENSIONRELAX);
 	clif_status_load(&sd->bl,EFST_SIT,0);
 	clif_standing(&sd->bl); //Inform area PC is standing
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	if( pc_isdead( sd ) ){
 		sd->state.dead_sit = sd->vd.dead_sit = 0;
-		clif_party_dead( sd );
+		clif_party_dead( *sd );
 	}else{
 		sd->state.dead_sit = sd->vd.dead_sit = 0;
 	}
@@ -12528,15 +12776,15 @@ bool pc_setstand(struct map_session_data *sd, bool force){
  * @param heat: Amount of Heat to adjust
  **/
 void pc_overheat(map_session_data &sd, int16 heat) {
-	status_change_entry *sce = sd.sc.data[SC_OVERHEAT_LIMITPOINT];
+	status_change_entry *sce = sd.sc.getSCE(SC_OVERHEAT_LIMITPOINT);
 
 	if (sce) {
 		sce->val1 += heat;
 		sce->val1 = cap_value(sce->val1, 0, 1000);
 
 		if (heat < 0 && sce->val1 == 0) { // Cooling device used.
-			status_change_end(&sd.bl, SC_OVERHEAT_LIMITPOINT, INVALID_TIMER);
-			status_change_end(&sd.bl, SC_OVERHEAT, INVALID_TIMER);
+			status_change_end(&sd.bl, SC_OVERHEAT_LIMITPOINT);
+			status_change_end(&sd.bl, SC_OVERHEAT);
 		}
 	} else if (heat > 0)
 		sc_start(&sd.bl, &sd.bl, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
@@ -14022,8 +14270,8 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick 
 		return pc_itemcd_add(sd, id, tick, n);
 
 	// Send reply of delay remains
-	if (sc->data[id->delay.sc]) {
-		const struct TimerData *timer = get_timer(sc->data[id->delay.sc]->timer);
+	if (sc->getSCE(id->delay.sc)) {
+		const struct TimerData *timer = get_timer(sc->getSCE(id->delay.sc)->timer);
 		clif_msg_value(sd, ITEM_REUSE_LIMIT, (int)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99));
 		return 1;
 	}
@@ -14115,7 +14363,7 @@ void pc_scdata_received(struct map_session_data *sd) {
 
 	clif_weight_limit( sd );
 
-	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
+	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) && pc_attendance_counter(sd) < 200 ){
 		clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 	}
 
@@ -14131,8 +14379,8 @@ void pc_scdata_received(struct map_session_data *sd) {
 		status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 	}
 
-	if (sd->sc.data[SC_SOULENERGY])
-		sd->soulball = sd->sc.data[SC_SOULENERGY]->val1;
+	if (sd->sc.getSCE(SC_SOULENERGY))
+		sd->soulball = sd->sc.getSCE(SC_SOULENERGY)->val1;
 }
 
 /**
@@ -14291,7 +14539,7 @@ void pc_crimson_marker_clear(struct map_session_data *sd) {
 	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
 		struct block_list *bl = NULL;
 		if (sd->c_marker[i] && (bl = map_id2bl(sd->c_marker[i])))
-			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
+			status_change_end(bl,SC_C_MARKER);
 		sd->c_marker[i] = 0;
 	}
 }
@@ -14383,7 +14631,7 @@ struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, co
 			if (strcmpi(script_str, StringBuf_Value(entry->script_buf)) == 0) {
 				t_tick newdur = gettick() + dur;
 				if (flag&BSF_FORCE_REPLACE && entry->tick < newdur) { // Change duration
-					sett_tickimer(entry->tid, newdur);
+					settick_timer(entry->tid, newdur);
 					script_free_code(script);
 					return NULL;
 				}
@@ -14536,10 +14784,10 @@ void pc_cell_basilica(struct map_session_data *sd) {
 #endif
 
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (sd->sc.data[type])
-			status_change_end(&sd->bl, type,INVALID_TIMER);
+		if (sd->sc.getSCE(type))
+			status_change_end(&sd->bl, type);
 	}
-	else if (!sd->sc.data[type])
+	else if (!sd->sc.getSCE(type))
 		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
 }
 
@@ -14987,6 +15235,419 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	clif_attendence_response( sd, attendance_counter );
 }
 
+/**
+ * Send a player to jail and determine the location to send in jail.
+ * @param sd: Player data
+ * @param duration: Duration in minutes (default INT_MAX = infinite)
+ */
+void pc_jail(map_session_data &sd, int32 duration) {
+	uint16 m_index = mapindex_name2id(MAP_JAIL);
+	int16 x, y;
+
+	switch (rnd() % 2) { // Jail Locations
+		case 0: // Jail #1
+			x = 49;
+			y = 75;
+			break;
+		default: // Default Jail
+			x = 24;
+			y = 75;
+			break;
+	}
+
+	duration = i32max(0, duration); // Can't be less than 0 seconds.
+
+	// If duration > 0 then triggered via jailfor which checks every minute.
+	// If duration == INT_MAX then triggered via jail for infinite duration.
+	// If duration == 0 then triggered via unjail and end status.
+	if (duration > 0)
+		sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, 60000);
+	else
+		status_change_end(&sd.bl, SC_JAILED);
+}
+
+/**
+ * Determine the punishment type when failing macro checks.
+ * @param sd: Player data
+ * @param stype: Macro detection status type (for banning)
+ */
+static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status stype) {
+	int32 duration = 0;
+
+	// Determine if there's a unique duration
+	if (battle_config.macro_detection_punishment_time > 0) {
+		char time[13];
+
+		safesnprintf(time, 13, "+%dnm", battle_config.macro_detection_punishment_time);
+		duration = static_cast<int32>(solve_time(time));
+	}
+
+	// Delete the timer
+	if (sd.macro_detect.timer != INVALID_TIMER)
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+
+	// Clear the macro detect data
+	sd.macro_detect = {};
+	sd.macro_detect.timer = INVALID_TIMER;
+
+	// Unblock all actions for the player
+	sd.state.block_action &= ~PCBLOCK_ALL;
+	sd.state.block_action &= ~PCBLOCK_IMMUNE;
+
+	if (battle_config.macro_detection_punishment == 0) { // Ban
+		clif_macro_detector_status(sd, stype);
+		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
+	} else { // Jail
+		// Send success to close the window without closing the client
+		clif_macro_detector_status(sd, MCD_GOOD);
+
+		pc_jail(sd, (duration == 0 ? INT_MAX : duration / 60));
+	}
+}
+
+/**
+ * Save a captcha image to memory via /macro_register.
+ * @param sd: Player data
+ * @param image_size: Captcha image size
+ * @param captcha_answer: Answer to captcha
+ */
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+	nullpo_retv(captcha_answer);
+
+	sd.captcha_upload.cd = nullptr;
+	sd.captcha_upload.upload_size = 0;
+
+	if (strlen(captcha_answer) < 4 || image_size == 0 || image_size > CAPTCHA_BMP_SIZE) {
+		clif_captcha_upload_request(sd); // Notify client of failure.
+		return;
+	}
+
+	std::shared_ptr<s_captcha_data> cd = std::make_shared<s_captcha_data>();
+	sd.captcha_upload.cd = cd;
+
+	cd->image_size = image_size;
+	safestrncpy(cd->captcha_answer, captcha_answer, sizeof(cd->captcha_answer));
+	memset(cd->image_data, 0, sizeof(cd->image_data));
+
+	// Request the image data from the client.
+	clif_captcha_upload_request(sd);
+}
+
+/**
+ * Save captcha image to server.
+ * @param sd: Player data
+ * @param captcha_key: Captcha ID
+ * @param upload_size: Captcha size
+ * @param upload_data: Image data
+ */
+void pc_macro_captcha_register_upload(map_session_data &sd, uint16 upload_size, char *upload_data) {
+	nullpo_retv(upload_data);
+
+	memcpy(&sd.captcha_upload.cd->image_data[sd.captcha_upload.upload_size], upload_data, upload_size);
+	sd.captcha_upload.upload_size += upload_size;
+
+	// Notify that the image finished uploading.
+	if (sd.captcha_upload.upload_size == sd.captcha_upload.cd->image_size) {
+		// Tell the client that the upload was finished
+		clif_captcha_upload_end(sd);
+
+		// Look for a free key
+		uint16 index;
+
+		for (index = 0; index < UINT16_MAX; index++) {
+			if (!captcha_db.exists(index)) {
+				break;
+			}
+		}
+
+		if (index == UINT16_MAX) {
+			// no free key found...
+			sd.captcha_upload.cd = nullptr;
+			sd.captcha_upload.upload_size = 0;
+			return;
+		}
+
+		captcha_db.put(index, sd.captcha_upload.cd);
+		sd.captcha_upload.cd = nullptr;
+		sd.captcha_upload.upload_size = 0;
+		
+		// TODO: write YAML and BMP file?
+	}
+}
+
+/**
+ * Timer attached to target player with attempts to confirm captcha.
+ */
+TIMER_FUNC(pc_macro_detector_timeout) {
+	map_session_data *sd = map_id2sd(id);
+
+	nullpo_ret(sd);
+
+	// Remove the current timer
+	sd->macro_detect.timer = INVALID_TIMER;
+
+	// Deduct an answering attempt
+	sd->macro_detect.retry -= 1;
+
+	if (sd->macro_detect.retry == 0) {
+		// All attempts have been exhausted, punish the user
+		pc_macro_punishment(*sd, MCD_TIMEOUT);
+	} else {
+		// Update the client
+		clif_macro_detector_request_show(*sd);
+
+		// Start a new timer
+		sd->macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd->bl.id, 0);
+	}
+	return 0;
+}
+
+/**
+ * Check player's captcha answer.
+ * @param sd: Player data
+ * @param captcha_answer: Captcha answer entered by player
+ */
+void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+	nullpo_retv(captcha_answer);
+
+	const std::shared_ptr<s_captcha_data> cd = sd.macro_detect.cd;
+
+	// Has no captcha request
+	if (cd == nullptr) {
+		return;
+	}
+
+	// Correct answer
+	if (strcmp(captcha_answer, cd->captcha_answer) == 0) {
+		// Delete the timer
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+
+		// Clear the macro detect data
+		sd.macro_detect = {};
+		sd.macro_detect.timer = INVALID_TIMER;
+
+		// Unblock all actions for the player
+		sd.state.block_action &= ~PCBLOCK_ALL;
+		sd.state.block_action &= ~PCBLOCK_IMMUNE;
+
+		// Assign temporary macro variable to check failures
+		pc_setreg(&sd, add_str("@captcha_retries"), battle_config.macro_detection_retry - sd.macro_detect.retry);
+
+		// Grant bonuses via script
+		run_script(cd->bonus_script, 0, sd.bl.id, fake_nd->bl.id);
+
+		// Notify the client
+		clif_macro_detector_status(sd, MCD_GOOD);
+	} else {
+		// Deduct an answering attempt
+		sd.macro_detect.retry -= 1;
+
+		// All attempts have been exhausted, punish the user
+		if (sd.macro_detect.retry <= 0) {
+			pc_macro_punishment(sd, MCD_INCORRECT);
+			return;
+		}
+
+		// Incorrect response, update the client
+		clif_macro_detector_request_show(sd);
+
+		// Reset the timer
+		addtick_timer(sd.macro_detect.timer, gettick() + battle_config.macro_detection_timeout);
+	}
+}
+
+/**
+ * Determine if a player tries to log out during a captcha check.
+ * @param sd: Player data
+ */
+void pc_macro_detector_disconnect(map_session_data &sd) {
+	// Delete the timeout timer
+	if (sd.macro_detect.timer != INVALID_TIMER) {
+		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
+		sd.macro_detect.timer = INVALID_TIMER;
+	}
+
+	// If the player disconnects before clearing the challenge the player is punished.
+	if (sd.macro_detect.retry != 0)
+		pc_macro_punishment(sd, MCD_TIMEOUT);
+}
+
+/**
+ * Save a list of players from an area select via /macro_detector.
+ */
+int pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
+	nullpo_retr(0, bl);
+
+	if (bl->type != BL_PC)
+		return 0;
+
+	std::vector<uint32> *aid_list = va_arg(ap, std::vector<uint32> *);
+
+	nullpo_ret(aid_list);
+
+	aid_list->push_back(bl->id);
+	return 0;
+}
+
+/**
+ * Area select via /macro_detector.
+ * @param sd: Player data
+ * @param x: X location
+ * @param y: Y location
+ * @param radius: Area
+ */
+void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius) {
+	std::vector<uint32> aid_list;
+
+	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.bl.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
+
+	clif_macro_reporter_select(sd, aid_list);
+}
+
+/**
+ * Send out captcha check to player.
+ * @param sd: Target player data
+ * @param reporter_account_id: Account ID of reporter
+ */
+void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id) {
+	if (captcha_db.empty())
+		return;
+
+	// Pick a random image from the database.
+	const std::shared_ptr<s_captcha_data> cd = captcha_db.random();
+
+	// Set macro detection data.
+	sd.macro_detect.cd = cd;
+	sd.macro_detect.reporter_aid = reporter_account_id;
+	sd.macro_detect.retry = battle_config.macro_detection_retry;
+
+	// Block all actions for the target player.
+	sd.state.block_action |= (PCBLOCK_ALL | PCBLOCK_IMMUNE);
+
+	// Open macro detect client side.
+	clif_macro_detector_request(sd);
+
+	// Start the timeout timer.
+	sd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd.bl.id, 0);
+}
+
+/**
+ * Parse a BMP image to memory.
+ * @param filepath: Image file location
+ * @param cd: Captcha data
+ */
+bool pc_macro_read_captcha_db_loadbmp(const std::string &filepath, std::shared_ptr<s_captcha_data> cd) {
+	if (cd == nullptr)
+		return false;
+
+	FILE *fp = fopen(filepath.c_str(), "rb");
+
+	if (fp == nullptr) {
+		ShowError("%s: Failed to open file \"%s\"\n", __func__, filepath.c_str());
+		return false;
+	}
+
+	// Load the file data and verify magic
+	char bmp_data[CAPTCHA_BMP_SIZE];
+
+	if (fread(bmp_data, CAPTCHA_BMP_SIZE, 1, fp) != 1) {
+		ShowError("%s: Failed to read data from \"%s\"\n", __func__, filepath.c_str());
+		fclose(fp);
+		return false;
+	}
+
+	fclose(fp);
+
+	if (bmp_data[0] != 'B' || bmp_data[1] != 'M') {
+		ShowError("%s: Invalid BMP file header given at \"%s\"\n", __func__, filepath.c_str());
+		return false;
+	}
+
+	// Compress the data into the destination
+	unsigned long com_size = sizeof(cd->image_data);
+
+	encode_zip(cd->image_data, &com_size, bmp_data, CAPTCHA_BMP_SIZE);
+	cd->image_size = static_cast<int16>(com_size);
+
+	return true;
+}
+
+const std::string CaptchaDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/captcha_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the captcha_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
+	uint16 index;
+
+	if (!this->asUInt16(node, "Id", index))
+		return 0;
+
+	std::shared_ptr<s_captcha_data> cd = captcha_db.find(index);
+	bool exists = cd != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Filename", "Answer" }))
+			return 0;
+
+		cd = std::make_shared<s_captcha_data>();
+		cd->index = index;
+	}
+
+	if (this->nodeExists(node, "Filename")) {
+		std::string filename;
+
+		if (!this->asString(node, "Filename", filename))
+			return 0;
+
+		if (!pc_macro_read_captcha_db_loadbmp(filename, cd)) {
+			this->invalidWarning(node["Filename"], "Failed to parse BMP image, skipping...\n");
+			return 0;
+		}
+	}
+
+	if (this->nodeExists(node, "Answer")) {
+		std::string answer;
+
+		if (!this->asString(node, "Answer", answer))
+			return 0;
+
+		if (answer.length() < 4 || answer.length() > CAPTCHA_ANSWER_SIZE) {
+			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...", CAPTCHA_ANSWER_SIZE);
+			return 0;
+		}
+
+		safestrncpy(cd->captcha_answer, answer.c_str(), sizeof(cd->captcha_answer));
+	}
+
+	if (this->nodeExists(node, "Bonus")) {
+		std::string script;
+
+		if (!this->asString(node, "Bonus", script)) {
+			return 0;
+		}
+
+		if (cd->bonus_script) {
+			script_free_code(cd->bonus_script);
+			cd->bonus_script = nullptr;
+		}
+
+		cd->bonus_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Bonus"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+	} else {
+		if (!exists)
+			cd->bonus_script = parse_script("specialeffect2 EF_BLESSING; sc_start SC_BLESSING,600000,10; specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,600000,10;", "macro_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+	}
+
+	if (!exists)
+		captcha_db.put(index, cd);
+
+	return 1;
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
@@ -15000,7 +15661,11 @@ void do_final_pc(void) {
 
 	attendance_db.clear();
 	reputation_db.clear();
+#ifdef MAP_GENERATOR
+	reputationgroup_db.clear();
+#endif
 	penalty_db.clear();
+	captcha_db.clear();
 }
 
 void do_init_pc(void) {
@@ -15011,6 +15676,10 @@ void do_init_pc(void) {
 	pc_read_motd(); // Read MOTD [Valaris]
 	attendance_db.load();
 	reputation_db.load();
+#ifdef MAP_GENERATOR
+	reputationgroup_db.load();
+#endif
+	captcha_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");
@@ -15025,6 +15694,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
+	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

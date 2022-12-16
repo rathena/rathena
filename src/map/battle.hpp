@@ -216,6 +216,7 @@ struct Battle_Config
 	int guild_exp_limit;
 	int guild_max_castles;
 	int guild_skill_relog_delay;
+	int guild_skill_relog_type;
 	int emergency_call;
 	int guild_aura;
 	int pc_invincible_time;
@@ -562,6 +563,7 @@ struct Battle_Config
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
+	int feature_itemlink;
 
 	// autotrade persistency
 	int feature_autotrade;
@@ -710,6 +712,17 @@ struct Battle_Config
 	int feature_barter;
 	int feature_barter_extended;
 	int break_mob_equip;
+	int macro_detection_retry;
+	int macro_detection_timeout;
+	int macro_detection_punishment;
+	int macro_detection_punishment_time;
+
+	int feature_dynamicnpc_timeout;
+	int feature_dynamicnpc_rangex;
+	int feature_dynamicnpc_rangey;
+	int feature_dynamicnpc_direction;
+
+	int mob_respawn_time;
 
 #include "../custom/battle_config_struct.inc"
 };
