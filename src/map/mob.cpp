@@ -3631,14 +3631,39 @@ struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int64 rate)
 
 	return NULL;
 }
+
+bool mob_getstatus_sub( struct mob_data& md, e_mob_skill_condition condition, sc_type type ){
+	bool found = false;
+
+	if( type == SC_NONE ){
+		for( int i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++ ){
+			if( md.sc.getSCE( i ) != nullptr ){
+				// Once an effect was found, break out. [Skotlex]
+				found = true;
+				break;
+			}
+		}
+	}else{
+		found = md.sc.getSCE( type ) != nullptr;
+	}
+
+	switch( condition ){
+		case MSC_MYSTATUSON:
+		case MSC_FRIENDSTATUSON:
+			return found;
+		case MSC_MYSTATUSOFF:
+		case MSC_FRIENDSTATUSOFF:
+			return !found;
+		default:
+			return false;
+	}
+}
+
 /*==========================================
  * What a status state suits by nearby MOB is looked for.
  *------------------------------------------*/
-int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
-{
-	int64 cond1,cond2;
-	struct mob_data **fr, *md, *mmd;
-	int flag=0;
+int mob_getfriendstatus_sub( struct block_list *bl, va_list ap ){
+	struct mob_data *md, *mmd;
 
 	nullpo_ret(bl);
 	nullpo_ret(md=(struct mob_data *)bl);
@@ -3649,19 +3674,14 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 
 	if (battle_check_target(&mmd->bl,bl,BCT_ENEMY)>0)
 		return 0;
-	cond1=va_arg(ap,int64);
-	cond2=va_arg(ap,int64);
-	fr=va_arg(ap,struct mob_data **);
-	if( cond2==-1 ){
-		int j;
-		for(j=SC_COMMON_MIN;j<=SC_COMMON_MAX && !flag;j++){
-			if ((flag=(md->sc.getSCE(j) != NULL))) //Once an effect was found, break out. [Skotlex]
-				break;
-		}
-	}else
-		flag=( md->sc.getSCE(cond2) != NULL );
-	if( flag^( cond1==MSC_FRIENDSTATUSOFF ) )
-		(*fr)=md;
+
+	int64 cond1 = va_arg( ap, int64 );
+	int64 cond2 = va_arg( ap, int64 );
+	struct mob_data** fr = va_arg( ap, struct mob_data** );
+
+	if( mob_getstatus_sub( *md, static_cast<e_mob_skill_condition>( cond1 ), static_cast<sc_type>( cond2 ) ) ){
+		*fr = md;
+	}
 
 	return 0;
 }
@@ -3763,16 +3783,14 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 					break;
 				case MSC_MYSTATUSON:		// status[num] on
 				case MSC_MYSTATUSOFF:		// status[num] off
-					if (!md->sc.count) {
+					if( !md->sc.count ){
 						flag = 0;
-					} else if (ms[i]->cond2 == -1) {
-						for (j = SC_COMMON_MIN; j <= SC_COMMON_MAX; j++)
-							if ((flag = (md->sc.getSCE(j)!=NULL)) != 0)
-								break;
-					} else {
-						flag = (md->sc.getSCE(ms[i]->cond2)!=NULL);
+					}else if( mob_getstatus_sub( *md, static_cast<e_mob_skill_condition>( ms[i]->cond1 ), static_cast<sc_type>( ms[i]->cond2 ) ) ){
+						flag = 1;
+					}else{
+						flag = 0;
 					}
-					flag ^= (ms[i]->cond1 == MSC_MYSTATUSOFF); break;
+					break;
 				case MSC_FRIENDHPLTMAXRATE:	// friend HP < maxhp%
 					flag = ((fbl = mob_getfriendhprate(md, 0, ms[i]->cond2)) != NULL); break;
 				case MSC_FRIENDHPINRATE	:
