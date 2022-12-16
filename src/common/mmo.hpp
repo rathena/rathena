@@ -693,14 +693,14 @@ struct party {
 	struct party_member member[MAX_PARTY];
 };
 
-struct map_session_data;
+class map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
 	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
-	struct map_session_data *sd;
+	map_session_data *sd;
 	unsigned char modified;
 	uint32 last_login;
 };
@@ -1121,7 +1121,7 @@ struct clan{
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];
 	short max_member, connect_member;
-	struct map_session_data *members[MAX_CLAN];
+	map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
 	unsigned short instance_id;
 };
