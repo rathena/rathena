@@ -604,6 +604,14 @@ enum e_exitem_add_result : uint8 {
 	EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT,
 };
 
+enum e_dynamicnpc_result : int32{
+	DYNAMICNPC_RESULT_SUCCESS,
+	DYNAMICNPC_RESULT_UNKNOWN,
+	DYNAMICNPC_RESULT_UNKNOWNNPC,
+	DYNAMICNPC_RESULT_DUPLICATE,
+	DYNAMICNPC_RESULT_OUTOFTIME
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -1234,5 +1242,7 @@ void clif_macro_detector_status(map_session_data &sd, e_macro_detect_status styp
 // Macro Reporter
 void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> &aid_list);
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
+
+void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 
 #endif /* CLIF_HPP */
