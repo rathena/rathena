@@ -542,7 +542,6 @@ enum clif_messages : uint16_t {
 	MSG_ATTENDANCE_DISABLED = 0xd92,
 
 	// Unofficial names
-	C_DYNAMICNPC_TWICE = 0xa47, /// <"Is already in service. Please try again in a few minutes."
 	C_ITEM_EQUIP_SWITCH = 0xbc7,
 	C_ITEM_NOEQUIP = 0x174,	/// <"You can't put this item on."
 	C_ENCHANT_OVERWEIGHT = 0xEFD,
