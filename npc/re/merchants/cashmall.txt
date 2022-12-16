@@ -185,3 +185,27 @@ geffen,115,168,4	duplicate(cashmall_warper)	Cash Sales Guide#geffen	899
 payon,164,157,4	duplicate(cashmall_warper)	Cash Sales Guide#payon	899
 lighthalzen,206,144,4	duplicate(cashmall_warper)	Cash Sales Guide#lighthalzen	899
 rachel,128,144,4	duplicate(cashmall_warper)	Cash Sales Guide#rachel	899
+
+itemmall,24,77,4	script	Blacksmith Basta#pr	4_M_DWARF,{
+	if( !getbattleflag( "feature.refineui" ) ){
+		end;
+	}
+
+	mes "[Blacksmith Basta]";
+	mes "I have taken over the work of Mighty Hammer, Brock and the Shadow Blacksmith. I will be busy from now on.";
+	close2;
+	refineui();
+	end;
+}
+
+itemmall,27,77,4	script	Mighty Hammer#im	4_M_DWARF,{
+	mes "[Blacksmith Mighty Hammer]";
+	mes "If it is about refining, ask Basta. I am retired.";
+	close;
+}
+
+itemmall,24,74,5	script	Blacksmith Brock#im	4_M_HUMAN_01,{
+	mes "[Blacksmith Brock]";
+	mes "I am retired now. If it is about refining, make a request to Basta over there.";
+	close;
+}
