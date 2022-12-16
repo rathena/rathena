@@ -14825,7 +14825,10 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			continue;
 		// &SCCB_BUFFS : Clears buffs
 		if (!(type&SCCB_BUFFS) && !(flag[SCF_DEBUFF]))
-			continue;		
+			continue;
+		// &SCCB_HERMODE : Cleared by CG_HERMODE
+		if (!(type & SCCB_HERMODE) && flag[SCF_REMOVEONHERMODE])
+			continue;
 		if (status == SC_SATURDAYNIGHTFEVER || status == SC_BERSERK) // Mark to not lose HP
 			sc->getSCE(status)->val2 = 0;
 		status_change_end(bl, status);

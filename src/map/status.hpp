@@ -2854,6 +2854,7 @@ enum e_status_change_clear_buffs_flags : int64 {
 	SCCB_REFRESH      = 0x04,
 	SCCB_CHEM_PROTECT = 0x08,
 	SCCB_LUXANIMA     = 0x10,
+	SCCB_HERMODE      = 0x20,
 };
 
 ///Enum for bonus_script's flag [Cydh]
@@ -2936,6 +2937,7 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONUNEQUIP,
 	SCF_REMOVEONUNEQUIPWEAPON,
 	SCF_REMOVEONUNEQUIPARMOR,
+	SCF_REMOVEONHERMODE,
 	SCF_MAX
 };
 
