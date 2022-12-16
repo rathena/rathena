@@ -3551,9 +3551,8 @@ Body:
       itemheal rand(325,405),0;
   - Id: 11566
     AegisName: Yellow_Potion_B
-    Name: Yellow Potion
+    Name: "[Not For Sale] Yellow Potion"
     Type: Healing
-    Buy: 10
     Weight: 130
     Trade:
       NoDrop: true
@@ -3598,9 +3597,8 @@ Body:
       itemheal rand(45,65),0;
   - Id: 11569
     AegisName: Orange_Potion_B
-    Name: Orange Potion
+    Name: "[Not For Sale] Orange Potion"
     Type: Healing
-    Buy: 10
     Weight: 100
     Trade:
       NoDrop: true
@@ -3614,9 +3612,8 @@ Body:
       itemheal rand(105,145),0;
   - Id: 11570
     AegisName: Red_Potion_B
-    Name: Red Potion
+    Name: "[Not For Sale] Red Potion"
     Type: Healing
-    Buy: 10
     Weight: 70
     Trade:
       NoDrop: true
@@ -3649,9 +3646,8 @@ Body:
       sc_end SC_CONFUSION;
   - Id: 11572
     AegisName: Blue_Potion_B
-    Name: Blue Potion
+    Name: "[Not For Sale] Blue Potion"
     Type: Healing
-    Buy: 10
     Weight: 150
     Trade:
       NoDrop: true
@@ -50252,9 +50248,8 @@ Body:
       NoAuction: true
   - Id: 22542
     AegisName: Center_Potion_B
-    Name: Concentration Potion
+    Name: "[Not For Sale] Concentration Potion"
     Type: Usable
-    Buy: 10
     Weight: 100
     Trade:
       NoDrop: true
@@ -50267,13 +50262,25 @@ Body:
       sc_start SC_ASPDPOTION0,1800000,4;
   - Id: 22543
     AegisName: Berserk_Potion_B
-    Name: Berserk Potion
+    Name: "[Not For Sale] Berserk Potion"
     Type: Usable
-    Buy: 10
     Weight: 200
     Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Gunslinger: true
+      Knight: true
       Mage: true
+      Merchant: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      StarGladiator: true
       Swordman: true
+      Taekwon: true
+      Wizard: true
+    EquipLevelMin: 85
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50285,10 +50292,36 @@ Body:
       sc_start SC_ASPDPOTION2,1800000,9;
   - Id: 22544
     AegisName: Awakening_Potion_B
-    Name: Awakening Potion
+    Name: "[Not For Sale] Awakening Potion"
     Type: Usable
-    Buy: 10
     Weight: 150
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Gunslinger: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Monk: true
+      Ninja: true
+      Novice: true
+      Rebellion: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      StarGladiator: true
+      Summoner: true
+      SuperNovice: true
+      Swordman: true
+      Taekwon: true
+      Thief: true
+      Wizard: true
+    EquipLevelMin: 40
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56296,7 +56329,6 @@ Body:
     Name: First aid Box (5)
     Type: Usable
     EquipLevelMin: 5
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56316,7 +56348,6 @@ Body:
     Name: First aid Box (10)
     Type: Usable
     EquipLevelMin: 10
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56336,7 +56367,6 @@ Body:
     Name: First aid Box (15)
     Type: Usable
     EquipLevelMin: 15
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56356,7 +56386,6 @@ Body:
     Name: First aid Box (20)
     Type: Usable
     EquipLevelMin: 20
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56376,7 +56405,6 @@ Body:
     Name: First aid Box (25)
     Type: Usable
     EquipLevelMin: 25
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56396,7 +56424,6 @@ Body:
     Name: First aid Box (30)
     Type: Usable
     EquipLevelMin: 30
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56416,7 +56443,6 @@ Body:
     Name: First aid Box (35)
     Type: Usable
     EquipLevelMin: 35
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56435,7 +56461,6 @@ Body:
     Name: First aid Box (40)
     Type: Usable
     EquipLevelMin: 40
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56454,7 +56479,6 @@ Body:
     Name: First aid Box (45)
     Type: Usable
     EquipLevelMin: 45
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56473,7 +56497,6 @@ Body:
     Name: First aid Box (50)
     Type: Usable
     EquipLevelMin: 50
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56492,7 +56515,6 @@ Body:
     Name: First aid Box (55)
     Type: Usable
     EquipLevelMin: 55
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56511,7 +56533,6 @@ Body:
     Name: First aid Box (60)
     Type: Usable
     EquipLevelMin: 60
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56529,7 +56550,6 @@ Body:
     Name: First aid Box (65)
     Type: Usable
     EquipLevelMin: 65
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56547,7 +56567,6 @@ Body:
     Name: First aid Box (70)
     Type: Usable
     EquipLevelMin: 70
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56565,7 +56584,6 @@ Body:
     Name: First aid Box (75)
     Type: Usable
     EquipLevelMin: 75
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56583,7 +56601,6 @@ Body:
     Name: First aid Box (80)
     Type: Usable
     EquipLevelMin: 80
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56601,7 +56618,6 @@ Body:
     Name: First aid Box (85)
     Type: Usable
     EquipLevelMin: 85
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56620,7 +56636,6 @@ Body:
     Name: First aid Box (90)
     Type: Usable
     EquipLevelMin: 90
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56639,7 +56654,6 @@ Body:
     Name: First aid Box (95)
     Type: Usable
     EquipLevelMin: 95
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56654,9 +56668,8 @@ Body:
       getitem 23506,8;
   - Id: 23503
     AegisName: Red_Potion_B_20
-    Name: "[Event] Crate of 20 Red Potions"
+    Name: "[Not For Sale] Crate of 20 Red Potions"
     Type: Usable
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56669,9 +56682,8 @@ Body:
       getitem 11570,20;
   - Id: 23504
     AegisName: Orange_Potion_B_20
-    Name: "[Event] Crate of 20 Orange Potions"
+    Name: "[Not For Sale] Crate of 20 Orange Potions"
     Type: Usable
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56684,7 +56696,7 @@ Body:
       getitem 11569,20;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
-    Name: "[Event] Crate of 20 Yellow Potions"
+    Name: "[Not For Sale] Crate of 20 Yellow Potions"
     Type: Usable
     Trade:
       NoDrop: true
@@ -56697,7 +56709,7 @@ Body:
       getitem 11566,20;
   - Id: 23506
     AegisName: White_Potion_B_20
-    Name: "[Event] Box of 20 White Potion"
+    Name: "[Not For Sale] Box of 20 White Potion"
     Type: Usable
     Trade:
       NoDrop: true
