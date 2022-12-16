@@ -7017,7 +7017,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			case NPC_ICEMINE:
 			case NPC_FLAMECROSS:
-				ad.damage = sstatus->rhw.atk * 20 * skill_lv;
+				ad.damage = static_cast<int64>( sstatus->rhw.atk ) * static_cast<int64>( 20 ) * static_cast<int64>( skill_lv );
 				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {

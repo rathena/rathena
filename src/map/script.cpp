@@ -16954,10 +16954,6 @@ BUILDIN_FUNC(explode)
 BUILDIN_FUNC(implode)
 {
 	struct script_data* data = script_getdata(st, 2);
-	const char *name;
-	uint32 glue_len = 0, array_size, id;
-	char *output;
-	TBL_PC* sd = NULL;
 
 	if( !data_isreference(data) ) {
 		ShowError("script:implode: not a variable\n");
@@ -16966,8 +16962,8 @@ BUILDIN_FUNC(implode)
 		return SCRIPT_CMD_FAILURE;// not a variable
 	}
 
-	id = reference_getid(data);
-	name = reference_getname(data);
+	uint32 id = reference_getid( data );
+	const char* name = reference_getname( data );
 
 	if( !is_string_variable(name) ) {
 		ShowError("script:implode: not string array\n");
@@ -16975,24 +16971,25 @@ BUILDIN_FUNC(implode)
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;// data type mismatch
 	}
+	
+	map_session_data* sd = nullptr;
 
 	if( not_server_variable(*name) && !script_rid2sd(sd) ) {
 		return SCRIPT_CMD_SUCCESS;// no player attached
 	}
 
 	//count chars
-	array_size = script_array_highest_key(st, sd, name, reference_getref(data)) - 1;
+	size_t array_size = script_array_highest_key( st, sd, name, reference_getref( data ) ) - 1;
 
 	if(array_size == -1) { //empty array check (AmsTaff)
 		ShowWarning("script:implode: array length = 0\n");
-		output = (char*)aMalloc(sizeof(char)*5);
-		sprintf(output,"%s","NULL");
+		script_pushstrcopy( st, "NULL" );
 	} else {
-		const char *glue = NULL, *temp;
-		size_t len = 0;
-		int i, k = 0;
+		const char *glue = nullptr, *temp;
+		size_t len = 0, glue_len = 0;
+		int k = 0;
 
-		for(i = 0; i <= array_size; ++i) {
+		for( int i = 0; i <= array_size; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len += strlen(temp);
 			// Remove stack entry from get_val2_str
@@ -17003,12 +17000,13 @@ BUILDIN_FUNC(implode)
 		if( script_hasdata(st,3) ) {
 			glue = script_getstr(st,3);
 			glue_len = strlen(glue);
-			len += glue_len * (array_size);
+			len += glue_len * array_size;
 		}
-		output = (char*)aMalloc(len + 1);
+
+		char* output = (char*)aMalloc( len + 1 );
 
 		//build output
-		for(i = 0; i < array_size; ++i) {
+		for( int i = 0; i < array_size; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len = strlen(temp);
 			memcpy(&output[k], temp, len);
@@ -17029,9 +17027,10 @@ BUILDIN_FUNC(implode)
 		output[k] = '\0';
 		// Remove stack entry from get_val2_str
 		script_removetop( st, -1, 0 );
+
+		script_pushstr( st, output );
 	}
 
-	script_pushstr(st, output);
 	return SCRIPT_CMD_SUCCESS;
 }
 
