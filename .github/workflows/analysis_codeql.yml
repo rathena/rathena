@@ -1,6 +1,10 @@
 name: Analyse servers with CodeQL
 # analysis_codeql.yml
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
