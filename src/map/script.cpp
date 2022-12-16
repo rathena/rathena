@@ -16986,8 +16986,7 @@ BUILDIN_FUNC(implode)
 		script_pushstrcopy( st, "NULL" );
 	} else {
 		const char *glue = nullptr, *temp;
-		size_t len = 0, glue_len = 0;
-		int k = 0;
+		size_t len = 0, glue_len = 0, k = 0;
 
 		for( int i = 0; i <= array_size; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
