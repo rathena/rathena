@@ -9100,6 +9100,9 @@
 	export_constant(HAT_EF_C_SAMBA_CARNIVAL);
 	export_constant(HAT_EF_POISON_MASTER);
 	export_constant(HAT_EF_C_SWIRLING_FLAME);
+	export_constant(HAT_EF_C_MELODY_WING);
+	export_constant(HAT_EF_C_SPOT_LIGHT);
+	export_constant(HAT_EF_C_ASTRA_BLESSING);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
