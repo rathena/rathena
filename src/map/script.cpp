@@ -22208,7 +22208,7 @@ BUILDIN_FUNC(pushpc)
 	}
 	else if(cells<0)
 	{// pushing backwards
-		dir = (dir+DIR_MAX/2)%DIR_MAX;  // turn around
+		dir = direction_opposite( static_cast<enum directions>( dir ) ); // turn around
 		cells     = -cells;
 	}
 
