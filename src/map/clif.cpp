@@ -24794,6 +24794,17 @@ void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status styp
 #endif
 }
 
+void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result ){
+#if PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
+	struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT p = {};
+
+	p.packetType = HEADER_ZC_DYNAMICNPC_CREATE_RESULT;
+	p.result = result;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

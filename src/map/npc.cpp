@@ -5816,7 +5816,7 @@ struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, map_session_
 
 		// Check if the source NPC id of currently active duplicates already exists.
 		if( src_nd != nullptr && src_nd->src_id == src_id ){
-			clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
+			clif_dynamicnpc_result( sd, DYNAMICNPC_RESULT_DUPLICATE );
 			return nullptr;
 		}
 	}
