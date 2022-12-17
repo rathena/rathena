@@ -5717,23 +5717,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 				case SHC_SAVAGE_IMPACT:
 				case SHC_FATAL_SHADOW_CROW: {
-					int16 x, y;
-					uint8 dir = map_calc_dir(src, bl->x, bl->y);
+					uint8 dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
 
-					// Move 1 cell (From target)
-					if (dir > 0 && dir < 4)
-						x = 1;
-					else if (dir > 4)
-						x = -1;
-					else
-						x = 0;
-					if (dir > 2 && dir < 6)
-						y = 1;
-					else if (dir == 7 || dir < 2)
-						y = -1;
-					else
-						y = 0;
-					if (skill_check_unit_movepos(5, src, bl->x + x, bl->y + y, 0, 1))
+					// Move the player 1 cell near the target, between the target and the player
+					if (skill_check_unit_movepos(5, src, bl->x + dirx[dir], bl->y + diry[dir], 0, 1))
 						clif_blown(src);
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
 					break;
@@ -6275,16 +6262,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		}
 		break;
-	case GC_CROSSIMPACT:
-		if (skill_check_unit_movepos(0, src, bl->x, bl->y, 1, 1)) {
-			skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_IGNORE_NO_KNOCKBACK); // Target position is actually one cell next to the target
+	case GC_CROSSIMPACT: {
+		uint8 dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
+
+		if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1)) {
+			clif_blown(src);
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		} else {
 			if (sd)
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 		}
 		break;
-
+	}
 	case GC_PHANTOMMENACE:
 		if (flag&1) { // Only Hits Invisible Targets
 			if(tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD))) {
