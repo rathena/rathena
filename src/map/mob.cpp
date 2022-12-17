@@ -537,7 +537,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 bool mob_ksprotected (struct block_list *src, struct block_list *target)
 {
 	struct block_list *s_bl, *t_bl;
-	struct map_session_data
+	map_session_data
 		*sd,    // Source
 		*t_sd;  // Mob Target
 	struct mob_data *md;
@@ -563,7 +563,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 
 	do {
 		struct status_change_entry *sce;
-		struct map_session_data *pl_sd; // Owner
+		map_session_data *pl_sd; // Owner
 		struct map_data *mapdata = map_getmapdata(md->bl.m);
 		char output[128];
 		
@@ -662,7 +662,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 /*==========================================
  * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
+int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
 {
 	struct mob_data* md = nullptr;
 	int count, lv;
@@ -714,7 +714,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 /*==========================================
  * Spawn mobs in the specified area.
  *------------------------------------------*/
-int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
+int mob_once_spawn_area(map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
 {
 	int i, max, id = 0;
 	int lx = -1, ly = -1;
@@ -1994,7 +1994,7 @@ static int mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
 /*==========================================
  * Serious processing for mob in PC field of view (foreachclient)
  *------------------------------------------*/
-static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
+static int mob_ai_sub_foreachclient(map_session_data *sd,va_list ap)
 {
 	t_tick tick=va_arg(ap,t_tick);
 	map_foreachinallrange(mob_ai_sub_hard_timer,&sd->bl, AREA_SIZE+ACTIVE_AI_RANGE, BL_MOB, sd->status.char_id, tick);
@@ -2296,7 +2296,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 	{
 		case BL_PC:
 		{
-			struct map_session_data *sd = (TBL_PC*)src;
+			map_session_data *sd = (TBL_PC*)src;
 			char_id = sd->status.char_id;
 			if( damage )
 				md->attacked_id = src->id;
@@ -2338,7 +2338,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 			struct mob_data* md2 = (TBL_MOB*)src;
 			if( md2->special_state.ai && md2->master_id )
 			{
-				struct map_session_data* msd = map_id2sd(md2->master_id);
+				map_session_data* msd = map_id2sd(md2->master_id);
 				if( msd )
 					char_id = msd->status.char_id;
 			}
@@ -2439,7 +2439,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			clif_summon_hp_bar(*md);
 		}
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
-			struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);
+			map_session_data *sd = map_charid2sd(md->dmglog[i].id);
 			if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
 				clif_monster_hp_bar(md, sd->fd);
 		}
@@ -2474,7 +2474,7 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			drop_rate += (int)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
 
 		if (src->type == BL_PC) { // Player specific drop rate adjustments
-			struct map_session_data *sd = (struct map_session_data*)src;
+			map_session_data *sd = (map_session_data*)src;
 			int drop_rate_bonus = 100;
 
 			// In PK mode players get an additional drop chance bonus of 25% if there is a 20 level difference
@@ -2532,8 +2532,8 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 int mob_dead(struct mob_data *md, struct block_list *src, int type)
 {
 	struct status_data *status;
-	struct map_session_data *sd = NULL, *tmpsd[DAMAGELOG_SIZE];
-	struct map_session_data *mvp_sd = NULL, *second_sd = NULL, *third_sd = NULL;
+	map_session_data *sd = NULL, *tmpsd[DAMAGELOG_SIZE];
+	map_session_data *mvp_sd = NULL, *second_sd = NULL, *third_sd = NULL;
 
 	struct {
 		struct party_data *p;
@@ -2550,7 +2550,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	status = &md->status;
 
 	if( src && src->type == BL_PC ) {
-		sd = (struct map_session_data *)src;
+		sd = (map_session_data *)src;
 		mvp_sd = sd;
 	}
 
@@ -2574,7 +2574,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
 	for(i = 0, count = 0, mvp_damage = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
-		struct map_session_data* tsd = NULL;
+		map_session_data* tsd = NULL;
 		if (md->dmglog[i].flag == MDLF_SELF) {
 			//Self damage counts as exp tap
 			count++;
@@ -3405,7 +3405,7 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 		}
 		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 			if( md->dmglog[i].id ) {
-				struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);
+				map_session_data *sd = map_charid2sd(md->dmglog[i].id);
 				if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
 					clif_monster_hp_bar(md, sd->fd);
 			}
@@ -3631,14 +3631,39 @@ struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int64 rate)
 
 	return NULL;
 }
+
+bool mob_getstatus_sub( struct mob_data& md, e_mob_skill_condition condition, sc_type type ){
+	bool found = false;
+
+	if( type == SC_NONE ){
+		for( int i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++ ){
+			if( md.sc.getSCE( i ) != nullptr ){
+				// Once an effect was found, break out. [Skotlex]
+				found = true;
+				break;
+			}
+		}
+	}else{
+		found = md.sc.getSCE( type ) != nullptr;
+	}
+
+	switch( condition ){
+		case MSC_MYSTATUSON:
+		case MSC_FRIENDSTATUSON:
+			return found;
+		case MSC_MYSTATUSOFF:
+		case MSC_FRIENDSTATUSOFF:
+			return !found;
+		default:
+			return false;
+	}
+}
+
 /*==========================================
  * What a status state suits by nearby MOB is looked for.
  *------------------------------------------*/
-int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
-{
-	int64 cond1,cond2;
-	struct mob_data **fr, *md, *mmd;
-	int flag=0;
+int mob_getfriendstatus_sub( struct block_list *bl, va_list ap ){
+	struct mob_data *md, *mmd;
 
 	nullpo_ret(bl);
 	nullpo_ret(md=(struct mob_data *)bl);
@@ -3649,19 +3674,14 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 
 	if (battle_check_target(&mmd->bl,bl,BCT_ENEMY)>0)
 		return 0;
-	cond1=va_arg(ap,int64);
-	cond2=va_arg(ap,int64);
-	fr=va_arg(ap,struct mob_data **);
-	if( cond2==-1 ){
-		int j;
-		for(j=SC_COMMON_MIN;j<=SC_COMMON_MAX && !flag;j++){
-			if ((flag=(md->sc.getSCE(j) != NULL))) //Once an effect was found, break out. [Skotlex]
-				break;
-		}
-	}else
-		flag=( md->sc.getSCE(cond2) != NULL );
-	if( flag^( cond1==MSC_FRIENDSTATUSOFF ) )
-		(*fr)=md;
+
+	int64 cond1 = va_arg( ap, int64 );
+	int64 cond2 = va_arg( ap, int64 );
+	struct mob_data** fr = va_arg( ap, struct mob_data** );
+
+	if( mob_getstatus_sub( *md, static_cast<e_mob_skill_condition>( cond1 ), static_cast<sc_type>( cond2 ) ) ){
+		*fr = md;
+	}
 
 	return 0;
 }
@@ -3763,16 +3783,14 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 					break;
 				case MSC_MYSTATUSON:		// status[num] on
 				case MSC_MYSTATUSOFF:		// status[num] off
-					if (!md->sc.count) {
+					if( !md->sc.count ){
 						flag = 0;
-					} else if (ms[i]->cond2 == -1) {
-						for (j = SC_COMMON_MIN; j <= SC_COMMON_MAX; j++)
-							if ((flag = (md->sc.getSCE(j)!=NULL)) != 0)
-								break;
-					} else {
-						flag = (md->sc.getSCE(ms[i]->cond2)!=NULL);
+					}else if( mob_getstatus_sub( *md, static_cast<e_mob_skill_condition>( ms[i]->cond1 ), static_cast<sc_type>( ms[i]->cond2 ) ) ){
+						flag = 1;
+					}else{
+						flag = 0;
 					}
-					flag ^= (ms[i]->cond1 == MSC_MYSTATUSOFF); break;
+					break;
 				case MSC_FRIENDHPLTMAXRATE:	// friend HP < maxhp%
 					flag = ((fbl = mob_getfriendhprate(md, 0, ms[i]->cond2)) != NULL); break;
 				case MSC_FRIENDHPINRATE	:
@@ -3994,7 +4012,7 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 //If mode is not passed, a default aggressive mode is used.
 //If master_id is passed, clone is attached to him.
 //Returns: ID of newly crafted copy.
-int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
+int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
 {
 	int mob_id;
 	int inf, fd;
