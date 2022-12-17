@@ -30,7 +30,9 @@
 #           Refine                      Required refine level.
 #           Chance                      Base chance of success out of 0~10000.
 #           Bonus                       Enchantgrade bonus. (Default: 0)
-#           Announce                    Announce if someone tries to increase the enchantgrade. (Default: true)
+#           AnnounceSuccess             Announce on upgrade success. (Default: true)
+#           AnnounceFail                Announce on upgrade failure. (Default: false)
+#           Announce                    Announce on upgrade success and failure.
 #           Catalyst:                   Catalyst item to increase chance of success.
 #             Item                      The item that can be used.
 #             AmountPerStep             Amount of Item needed.
@@ -49,7 +51,7 @@
 
 Header:
   Type: ENCHANTGRADE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Type: Armor
@@ -98,6 +100,7 @@ Body:
             Refine: 11
             Chance: 5000
             Bonus: 50
+            AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 5
@@ -117,6 +120,7 @@ Body:
             Refine: 11
             Chance: 4000
             Bonus: 100
+            AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 7
@@ -178,6 +182,7 @@ Body:
             Refine: 11
             Chance: 5000
             Bonus: 50
+            AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 5
@@ -197,6 +202,7 @@ Body:
             Refine: 11
             Chance: 4000
             Bonus: 100
+            AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 7

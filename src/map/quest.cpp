@@ -501,7 +501,7 @@ std::shared_ptr<s_quest_db> quest_search(int quest_id)
  * @param sd : Player's data
  * @return 0 in case of success, nonzero otherwise (i.e. the player has no quests)
  */
-int quest_pc_login(struct map_session_data *sd)
+int quest_pc_login(map_session_data *sd)
 {
 	if (!sd->avail_quests)
 		return 1;
@@ -552,7 +552,7 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
  * @param quest_id : ID of the quest to add.
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_add(struct map_session_data *sd, int quest_id)
+int quest_add(map_session_data *sd, int quest_id)
 {
 	std::shared_ptr<s_quest_db> qi = quest_search(quest_id);
 
@@ -598,7 +598,7 @@ int quest_add(struct map_session_data *sd, int quest_id)
  * @param qid2 : New quest to add
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_change(struct map_session_data *sd, int qid1, int qid2)
+int quest_change(map_session_data *sd, int qid1, int qid2)
 {
 	std::shared_ptr<s_quest_db> qi = quest_search(qid2);
 
@@ -647,7 +647,7 @@ int quest_change(struct map_session_data *sd, int qid1, int qid2)
  * @param quest_id : ID of the quest to remove
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_delete(struct map_session_data *sd, int quest_id)
+int quest_delete(map_session_data *sd, int quest_id)
 {
 	int i;
 
@@ -695,7 +695,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 
-	struct map_session_data *sd = BL_CAST(BL_PC, bl);
+	map_session_data *sd = BL_CAST(BL_PC, bl);
 
 	nullpo_ret(sd);
 
@@ -719,7 +719,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
  * @param mob_size: Monster Size
  * @param mob_element: Monster Element
  */
-void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
+void quest_update_objective(map_session_data *sd, struct mob_data* md)
 {
 	nullpo_retv(sd);
 
@@ -811,7 +811,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
  * @return 0 in case of success, nonzero otherwise
  * @author [Inkfish]
  */
-int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status)
+int quest_update_status(map_session_data *sd, int quest_id, e_quest_state status)
 {
 	int i;
 
@@ -860,7 +860,7 @@ int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state
  *              1 if the quest's timeout has expired
  *              0 otherwise
  */
-int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type)
+int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
 {
 	int i;
 
@@ -902,7 +902,7 @@ int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type ty
  * @param sd : Character's data
  * @param ap : Ignored
  */
-static int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
+static int quest_reload_check_sub(map_session_data *sd, va_list ap)
 {
 	nullpo_ret(sd);
 

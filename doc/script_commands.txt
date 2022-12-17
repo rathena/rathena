@@ -159,7 +159,8 @@ executed, it is affected by spawn rates in 'battle_athena.conf'.
 Delay1 and delay2 control monster respawn delays - the first one is the fixed
 base respawn time, and the second is random variance on top of the base time.
 Both values are given in milliseconds (1000 = 1 second).
-Note that the server also enforces a minimum respawn delay of 5 seconds.
+Note that the server also enforces a minimum respawn delay of 1 second (See
+/conf/battle/monster.conf::mob_respawn_time).
 
 Event is a script event to be executed when the mob is killed. The event must
 be in the form "NPCName::OnEventName" to execute, and the event name label
@@ -6576,6 +6577,28 @@ Examples:
 
 	if (getpcblock() & PCBLOCK_CHAT)
 		mes "You can't chat.";
+
+---------------------------------------
+
+macro_detector({<account ID>});
+macro_detector({"<character name>"});
+
+This command will display the captcha UI challenge onto the invoking character or the given <account ID>/<character name>.
+
+Example:
+	// Use 'getareaunits' to gather an area of players to test.
+	// Build an int array of the account IDs.
+	.@num = getareaunits(BL_PC, "prontera", 150, 150, 160, 160, .@array[0]);
+
+	mes "The number of Players in Prontera in between 150x150 and 160x160 is " + .@num + " .";
+	mes "Players to challenge:";
+	freeloop(1); // If the list is too big
+	for(.@i = 0; .@i < getarraysize(.@array); .@i++) {
+		mes (.@i + 1) + " " + convertpcinfo(.@array[.@i], CPC_NAME);
+		macro_detector .@array[.@i];
+	}
+	freeloop(0);
+	end;
 
 ---------------------------------------
 
