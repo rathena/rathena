@@ -8,7 +8,7 @@
 #include "../common/mmo.hpp"
 
 struct block_list;
-struct map_session_data;
+class map_session_data;
 struct mob_data;
 struct item;
 
@@ -76,19 +76,19 @@ enum e_log_feeding_type : uint8
 };
 
 /// new logs
-void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, struct item* itm);
+void log_pick_pc(map_session_data* sd, e_log_pick_type type, int amount, struct item* itm);
 void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm);
-void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount);
-void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount );
+void log_zeny(map_session_data* sd, e_log_pick_type type, map_session_data* src_sd, int amount);
+void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount );
 void log_npc( struct npc_data* nd, const char* message );
-void log_npc(struct map_session_data* sd, const char *message);
+void log_npc(map_session_data* sd, const char *message);
 void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
-void log_atcommand(struct map_session_data* sd, const char* message);
-void log_feeding(struct map_session_data *sd, e_log_feeding_type type, t_itemid nameid);
+void log_atcommand(map_session_data* sd, const char* message);
+void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid);
 
 /// old, but useful logs
-void log_branch(struct map_session_data* sd);
-void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp);
+void log_branch(map_session_data* sd);
+void log_mvpdrop(map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp);
 
 int log_config_read(const char* cfgName);
 

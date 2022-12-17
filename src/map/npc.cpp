@@ -900,7 +900,7 @@ bool npc_isnear(struct block_list * bl) {
     return false;
 }
 
-int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
+int npc_ontouch_event(map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
 
@@ -922,7 +922,7 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 	return npc_event(sd,name,1);
 }
 
-int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
+int npc_ontouch2_event(map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
 
@@ -933,7 +933,7 @@ int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 	return npc_event(sd,name,2);
 }
 
-int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data *nd);
+int npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data *nd);
 
 /*==========================================
  * Sub-function of npc_enable, runs OnTouch event when enabled
@@ -952,7 +952,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	return 0;
 }
 
-bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd) {
+bool npc_is_cloaked(struct npc_data* nd, map_session_data* sd) {
 	bool npc_cloaked = (nd->sc.option & OPTION_CLOAK) ? true : false;
 
 	if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id) != sd->cloaked_npc.end())
@@ -960,17 +960,17 @@ bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd) {
 	return npc_cloaked;
 }
 
-bool npc_is_hidden_dynamicnpc( struct npc_data& nd, struct map_session_data& tsd ){
+bool npc_is_hidden_dynamicnpc( struct npc_data& nd, map_session_data& tsd ){
 	// If the NPC is dynamic and the target character is not the owner of the dynamic NPC
 	return nd.dynamicnpc.owner_char_id != 0 && nd.dynamicnpc.owner_char_id != tsd.status.char_id;
 }
 
 static int npc_cloaked_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	nullpo_ret(bl);
-	nullpo_ret(sd = (struct map_session_data *)bl);
+	nullpo_ret(sd = (map_session_data *)bl);
 	int id = va_arg(ap, int);
 
 	auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), id);
@@ -1080,7 +1080,7 @@ struct npc_data* npc_name2id(const char* name)
  * Timer to check for idle time and timeout the dialog if necessary
  **/
 TIMER_FUNC(npc_secure_timeout_timer){
-	struct map_session_data* sd = NULL;
+	map_session_data* sd = NULL;
 	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
 	t_tick cur_tick = gettick(); //ensure we are on last tick
 
@@ -1120,7 +1120,7 @@ TIMER_FUNC(npc_secure_timeout_timer){
 /*==========================================
  * Dequeue event and add timer for execution (100ms)
  *------------------------------------------*/
-int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack)
+int npc_event_dequeue(map_session_data* sd,bool free_script_stack)
 {
 	nullpo_ret(sd);
 
@@ -1192,7 +1192,7 @@ static int npc_event_export(struct npc_data *nd, int i)
 	return 0;
 }
 
-int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char* eventname); //[Lance]
+int npc_event_sub(map_session_data* sd, struct event_data* ev, const char* eventname); //[Lance]
 
 /**
  * Exec name (NPC events) on player or global
@@ -1421,7 +1421,7 @@ TIMER_FUNC(npc_timerevent){
 	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
 	struct npc_timerevent_list *te;
 	struct timer_event_data *ted = (struct timer_event_data*)data;
-	struct map_session_data *sd=NULL;
+	map_session_data *sd=NULL;
 
 	if( nd == NULL )
 	{
@@ -1490,7 +1490,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 {
 	int j;
 	t_tick tick = gettick();
-	struct map_session_data *sd = NULL; //Player to whom script is attached.
+	map_session_data *sd = NULL; //Player to whom script is attached.
 
 	nullpo_ret(nd);
 
@@ -1545,7 +1545,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
  *------------------------------------------*/
 int npc_timerevent_stop(struct npc_data* nd)
 {
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 	int *tid;
 
 	nullpo_ret(nd);
@@ -1583,7 +1583,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 /*==========================================
  * Aborts a running NPC timer that is attached to a player.
  *------------------------------------------*/
-void npc_timerevent_quit(struct map_session_data* sd)
+void npc_timerevent_quit(map_session_data* sd)
 {
 	const struct TimerData *td;
 	struct npc_data* nd;
@@ -1669,7 +1669,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 {
 	bool flag;
 	int old_rid;
-	//struct map_session_data *sd = NULL;
+	//map_session_data *sd = NULL;
 
 	nullpo_ret(nd);
 
@@ -1689,7 +1689,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 	return 0;
 }
 
-int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char* eventname)
+int npc_event_sub(map_session_data* sd, struct event_data* ev, const char* eventname)
 {
 	if ( sd->npc_id != 0 )
 	{
@@ -1738,7 +1738,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 /*==========================================
  * NPC processing event type
  *------------------------------------------*/
-int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
+int npc_event(map_session_data* sd, const char* eventname, int ontouch)
 {
 	struct event_data* ev = (struct event_data*)strdb_get(ev_db, eventname);
 	struct npc_data *nd;
@@ -1774,7 +1774,7 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
  *------------------------------------------*/
 int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
+	map_session_data *sd;
 	int pc_id;
 	char *name;
 
@@ -1802,7 +1802,7 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
  * Chk if sd is still touching his assigned npc.
  * If not, it unsets it and searches for another player in range.
  *------------------------------------------*/
-int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
+int npc_touchnext_areanpc(map_session_data* sd, bool leavemap)
 {
 	if (sd->npc_ontouch_.empty())
 		return 0;
@@ -1840,7 +1840,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 	return found;
 }
 
-int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data *nd)
+int npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data *nd)
 {
 	nullpo_retr(0, sd);
 	nullpo_retr(0, nd);
@@ -1902,7 +1902,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 /*==========================================
  * Exec OnTouch for player if in range of area event
  *------------------------------------------*/
-int npc_touch_area_allnpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
+int npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y)
 {
 	nullpo_retr(1, sd);
 
@@ -2087,7 +2087,7 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
  * Chk if player not too far to access the npc.
  * Returns npc_data (success) or NULL (fail).
  *------------------------------------------*/
-struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl)
+struct npc_data* npc_checknear(map_session_data* sd, struct block_list* bl)
 {
 	struct npc_data *nd;
 
@@ -2128,7 +2128,7 @@ int npc_globalmessage(const char* name, const char* mes)
 }
 
 // MvP tomb [GreenBox]
-void run_tomb(struct map_session_data* sd, struct npc_data* nd)
+void run_tomb(map_session_data* sd, struct npc_data* nd)
 {
 	char buffer[200];
 	char time[10];
@@ -2156,7 +2156,7 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
  * NPC 1st call when clicking on npc
  * Do specific action for NPC type (openshop, run scripts...)
  *------------------------------------------*/
-int npc_click(struct map_session_data* sd, struct npc_data* nd)
+int npc_click(map_session_data* sd, struct npc_data* nd)
 {
 	nullpo_retr(1, sd);
 
@@ -2236,7 +2236,7 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 /*==========================================
  *
  *------------------------------------------*/
-bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
+bool npc_scriptcont(map_session_data* sd, int id, bool closing){
 	struct block_list *target = map_id2bl(id);
 	struct npc_data* nd = BL_CAST( BL_NPC, target );
 
@@ -2331,7 +2331,7 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
  * @param type: 0 - Buy, 1 - Sell
  * @return 0 on success or 1 on failure
  */
-int npc_buysellsel(struct map_session_data* sd, int id, int type)
+int npc_buysellsel(map_session_data* sd, int id, int type)
 {
 	struct npc_data *nd;
 
@@ -2370,7 +2370,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
  * @param sd Player data
  * @return e_CASHSHOP_ACK
  **/
-static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int price, int points, struct map_session_data *sd) {
+static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int price, int points, map_session_data *sd) {
 	int cost[2] = { 0, 0 };
 
 	npc_shop_currency_type(sd, nd, cost, false);
@@ -2455,7 +2455,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
  * @param item_list: List of items to purchase
  * @return clif_cashshop_ack value to display
  */
-int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s_npc_buy_list>& item_list ){
+int npc_cashshop_buylist( map_session_data *sd, int points, std::vector<s_npc_buy_list>& item_list ){
 	int i, j, amount, new_, w, vt;
 	t_itemid nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
@@ -2553,7 +2553,7 @@ int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s
  * @param cost: Reference to cost variable
  * @param display: Display cost type to player?
  */
-void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display)
+void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int cost[2], bool display)
 {
 	nullpo_retv(sd);
 
@@ -2615,7 +2615,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
  * @param points: Cost of total items
  * @return clif_cashshop_ack value to display
  */
-int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, int points)
+int npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int amount, int points)
 {
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	int i, price, w;
@@ -2707,7 +2707,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
  * @param item_list: List of items
  * @param nd: Attached NPC
  */
-static int npc_buylist_sub(struct map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd) {
+static int npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd) {
 	char npc_ev[EVENT_NAME_LENGTH];
 	int key_nameid = 0, key_amount = 0;
 
@@ -2735,7 +2735,7 @@ static int npc_buylist_sub(struct map_session_data* sd, std::vector<s_npc_buy_li
  * @param item_list: List of items
  * @return result code for clif_parse_NpcBuyListSend/clif_npc_market_purchase_ack
  */
-e_purchase_result npc_buylist( struct map_session_data* sd, std::vector<s_npc_buy_list>& item_list ){
+e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>& item_list ){
 	struct npc_data* nd;
 	struct npc_item_list *shop = NULL;
 	double z;
@@ -2890,7 +2890,7 @@ e_purchase_result npc_buylist( struct map_session_data* sd, std::vector<s_npc_bu
 }
 
 /// npc_selllist for script-controlled shops
-static int npc_selllist_sub(struct map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list, struct npc_data* nd)
+static int npc_selllist_sub(map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list, struct npc_data* nd)
 {
 	char npc_ev[EVENT_NAME_LENGTH];
 	char card_slot[NAME_LENGTH];
@@ -2974,7 +2974,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int list_length, PACKET
 ///
 /// @param item_list 'n' pairs <index,amount>
 /// @return result code for clif_parse_NpcSellListSend
-uint8 npc_selllist(struct map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list)
+uint8 npc_selllist(map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list)
 {
 	double z;
 	int i,skill;
@@ -3083,7 +3083,7 @@ uint8 npc_selllist(struct map_session_data* sd, int list_length, PACKET_CZ_PC_SE
 	return 0;
 }
 
-e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases ){
+e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases ){
 	uint64 requiredZeny = 0;
 	uint32 requiredWeight = 0;
 	uint32 reducedWeight = 0;
@@ -3467,7 +3467,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 
 		iter = mapit_geteachpc();
 		for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
-			struct map_session_data *sd = ((TBL_PC*)bl);
+			map_session_data *sd = ((TBL_PC*)bl);
 			if( sd && sd->npc_timer_id != INVALID_TIMER ) {
 				const struct TimerData *td = get_timer(sd->npc_timer_id);
 
@@ -3525,10 +3525,10 @@ int npc_unload(struct npc_data* nd, bool single) {
 	}
 
 	if( nd->dynamicnpc.owner_char_id != 0 ){
-		struct map_session_data* owner = map_charid2sd( nd->dynamicnpc.owner_char_id );
+		map_session_data* owner = map_charid2sd( nd->dynamicnpc.owner_char_id );
 
 		if( owner != nullptr ){
-			owner->npc_id_dynamic = 0;
+			util::vector_erase_if_exists(owner->npc_id_dynamic, nd->bl.id);
 		}
 	}
 
@@ -4446,7 +4446,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// shop/cashshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>
 /// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
-const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, struct map_session_data* owner = nullptr ){
+const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, map_session_data* owner = nullptr ){
 	short x, y, m, xs = -1, ys = -1;
 	int16 dir;
 	char srcname[128];
@@ -4515,7 +4515,7 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 
 	if( owner != nullptr ){
 		nd->dynamicnpc.owner_char_id = owner->status.char_id;
-		owner->npc_id_dynamic = nd->bl.id;
+		owner->npc_id_dynamic.push_back(nd->bl.id);
 	}
 
 	switch( type ) {
@@ -4995,7 +4995,7 @@ void npc_setclass(struct npc_data* nd, short class_)
 }
 
 // @commands (script based)
-int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname)
+int npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname)
 {
 	struct event_data* ev = (struct event_data*)strdb_get(ev_db, eventname);
 	struct npc_data *nd;
@@ -5698,7 +5698,7 @@ int npc_parsesrcfile(const char* filepath)
 	return 1;
 }
 
-int npc_script_event(struct map_session_data* sd, enum npce_event type){
+int npc_script_event(map_session_data* sd, enum npce_event type){
 	if (type == NPCE_MAX)
 		return 0;
 	if (!sd) {
@@ -5726,7 +5726,7 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
  * dir: Facing direction of duplicate NPC
  * Returns duplicate NPC data on success
  */
-npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys, struct map_session_data* owner ){
+npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys, map_session_data* owner ){
 	static char w1[128], w2[128], w3[128], w4[128];
 	const char* stat_buf = "- call from duplicate subsystem -\n";
 	char exname[NPC_NAME_LENGTH + 1];
@@ -5778,7 +5778,7 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 
 	nd->dynamicnpc.removal_tid = INVALID_TIMER;
 
-	struct map_session_data* sd = map_charid2sd( nd->dynamicnpc.owner_char_id );
+	map_session_data* sd = map_charid2sd( nd->dynamicnpc.owner_char_id );
 
 	if( sd != nullptr ){
 		// Still talking to the NPC
@@ -5796,7 +5796,7 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 			return 0;
 		}
 
-		sd->npc_id_dynamic = 0;
+		// npc id from sd->npc_id_dynamic is removed in npc_unload
 	}
 
 	// Delete the NPC
@@ -5807,10 +5807,18 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 	return 0;
 }
 
-struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, struct map_session_data& sd ){
-	if( sd.npc_id_dynamic != 0 ){
-		clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
-		return nullptr;
+struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, map_session_data& sd ){
+	// A duplicate of a duplicate is still a duplicate of the same NPC
+	int src_id = nd.src_id > 0 ? nd.src_id : nd.bl.id;
+
+	for (const auto &it : sd.npc_id_dynamic) {
+		struct npc_data* src_nd = map_id2nd( it );
+
+		// Check if the source NPC id of currently active duplicates already exists.
+		if( src_nd != nullptr && src_nd->src_id == src_id ){
+			clif_msg_color( &sd, C_DYNAMICNPC_TWICE, color_table[COLOR_LIGHT_YELLOW] );
+			return nullptr;
+		}
 	}
 
 	if( map_getmapflag( sd.bl.m, MF_NODYNAMICNPC ) ){
