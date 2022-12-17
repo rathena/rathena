@@ -10,8 +10,8 @@
 pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 	if (BaseLevel < 200) {
 		mes "[Yulma]";
-		mes "Uh... who was it?";
-		mes "Sorry, I'm not good at remembering people's faces! But I think it's not good enough to ask about my work here.";
+		mes "Uh... who are you?";
+		mes "Sorry, I'm not good at remembering people's faces! But I think you are not good enough to ask about my work here.";
 		next;
 		mes " - This is a quest that can be performed at level 200 or higher - ";
 		close;
@@ -61,7 +61,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		next;
 		mes "[Yulma]";
 		mes "So I was looking for someone to help.";
-		mes "To be precise, " + strcharinfo(0) + ", you!";
+		mes "To be precise you, " + strcharinfo(0) + "!";
 		next;
 		mes "[Yulma]";
 		mes "Do you need a job? I know everything~";
@@ -69,7 +69,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		next;
 		mes "[Yulma]";
 		mes "<NAVI>[Pion]<INFO>sp_rudus3,380,42,0,101,0</INFO></NAVI> is in control of the path leading down to the fourth floor.";
-		mes "Go and say I sent it, and find out if it's worth it and come!";
+		mes "Go and tell him I sent you, and find out if it's worth it to come!";
 		setquest 16521;
 		close2;
 		navigateto("sp_rudus3",380,42);
@@ -81,7 +81,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		next;
 		mes "[Yulma]";
 		mes "<NAVI>[Pion]<INFO>sp_rudus3,380,42,0,101,0</INFO></NAVI> is in control of the path leading down to the fourth floor.";
-		mes "Go and say I sent it, and find out if it's worth it and come!";
+		mes "Go and tell him I sent you, and find out if it's worth it to come!";
 		close;
 	case 2:
 		break;
@@ -89,17 +89,17 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 	if (isbegin_quest(16522) == 1) {
 		mes "[Yulma]";
 		mes "Oh, you went down to the 4th floor of Rudus. How was it?";
-		mes "Is the pian doing well? Did the subjects feel a bit worthy of a fight?";
+		mes "Is Pian doing well? Did the subjects feel a bit worthy of a fight?";
 		next;
 		mes "[Yulma]";
-		mes "Then help me study the people on the wings of the secret.";
-		mes "I was looking for someone to hunt because it was not enough to catch and research monsters myself.";
+		mes "Then help me study the people from the wings of the secret.";
+		mes "I was looking for someone to hunt them, because I was not enough to catch and research monsters myself.";
 		next;
 		select( "Ask if I can just hunt" );
 		emotion ET_KEK;
 		mes "[Yulma]";
 		mes "Oh, I almost forgot.";
-		mes "If you attach this chip somewhere on your body and hunt it, researchers can receive data.";
+		mes "If you attach this chip somewhere on your body and hunt them, researchers can receive data.";
 		next;
 		mes "[Yulma]";
 		mes "New material, eco-friendly, non-toxic, safe material, so you don't have to worry about it.";
@@ -108,7 +108,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		select( "Earlobe", "Back neck", "Back of hand", "Forehead" );
 		mes "[Yulma]";
 		mes "Okay, I'll attach it well so it doesn't bother you.";
-		mes "Okay, that's it! Then...";
+		mes "Okay, that's it then...";
 		completequest 16522;
 		next;
 	}
@@ -116,7 +116,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 	mes "Please take good care of me today!";
 	mes "So, what kind of research would you like to help with today?";
 	next;
-	switch( select("Abyssal Solitude", "Transformation and Evolution", "Data Backup", "Doesn't help" ) ) {
+	switch( select("Abyssal Solitude", "Transformation and Evolution", "Data Backup", "Don't help" ) ) {
 	case 1:
 		switch( checkquest(16523,PLAYTIME) ) {
 		case -1:
@@ -125,7 +125,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		case 1:
 			mes "[Yulma]";
 			mes "Secret Wings researchers are resting.";
-			mes "So, " + strcharinfo(0) + ", how about coming home after a little rest?";
+			mes "So, " + strcharinfo(0) + ", how about coming back after a little rest?";
 			next;
 			mes "[Yulma]";
 			mes "The 4th floor of Rudus is not a comfortable place to go in and out easily.";
@@ -138,7 +138,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		switch( checkquest(16524,HUNTING) ) {
 		case -1:
 			mes "[Yulma]";
-			mes "A place where only strong individuals survive and bite stronger ones...";
+			mes "A place where only strong individuals survive and bite weaker ones...";
 			mes "Like a deep, dark pit of solitude.";
 			next;
 			emotion ET_SWEAT;
@@ -147,12 +147,12 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			mes "My job is to deliver the requests of researchers.";
 			next;
 			mes "[Yulma]";
-			mes "Researchers want to know how different the subjects of Rudus are from those distributed on the 4th floor.";
+			mes "Researchers want to know how the subjects of Rudus differ from those distributed on the 4th floor.";
 			next;
 			emotion ET_PROFUSELY_SWAT;
 			mes "[Yulma]";
-			mes "How much more has it lost its original form, and whether it has changed itself after the experiment.";
-			mes "<FONT SIZE = 9>Um... these researchers look a little dangerous too? I think that's where all researchers are, to a person like me.</FONT>";
+			mes "How much more has it lost it's original form, and whether it has changed itself after the experiment.";
+			mes "<FONT SIZE = 9>Um... these researchers look a little dangerous too? I think that's how all researchers are, to a person like me.</FONT>";
 			next;
 			mes "[Yulma]";
 			mes "Anyway, you want to collect <FONT COLOR = 0000CD>Dolorian, Plagarion, and Deadre</FONT> data.";
@@ -165,7 +165,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 				close;
 			}
 			mes "[Yulma]";
-			mes "Okay, if you go hunting and hunting, data will be gathered.";
+			mes "Okay, if you go hunting and from hunting, data will be gathered.";
 			mes "And my allowance will be accumulating!";
 			setquest 16524;
 			close;
@@ -178,19 +178,19 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		case 2:
 			mes "[Yulma]";
 			mes "Today's hunting seems to be successful!";
-			mes "How did you know, " + strcharinfo(0) + ", the chip you put on him worked today.";
+			mes "How did you know, " + strcharinfo(0) + ", the chip I put on you worked today.";
 			next;
 			emotion ET_DELIGHT;
 			mes "[Yulma]";
 			mes "I see it every time, but every time it's amazing, how the chip works.";
-			mes "Well, you should pay for the work you did today.";
+			mes "Well, I should pay you for the work you did today.";
 			next;
 			mes "[Yulma]";
 			mes "Here you are!";
 			mes "Then you're done with a bath, so let's get some rest and come back. Please take care of me tomorrow as well~";
 			erasequest 16524;
 			setquest 16523;
-			getexp 15915940,11141160;	// TODO: the amount has been changed which the monster update
+			getexp 15915940,11141160;	// TODO: the amount has been changed with the monster update
 			close;
 		}
 		end;
@@ -201,8 +201,8 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		case 0:
 		case 1:
 			mes "[Yulma]";
-			mes "Secret Wings researchers left work after work.";
-			mes "So, " + strcharinfo(0) + ", how about coming home after a little rest?";
+			mes "Secret Wings researchers left work already.";
+			mes "So, " + strcharinfo(0) + ", how about coming back after a little rest?";
 			next;
 			mes "[Yulma]";
 			mes "The 4th floor of Rudus is not a comfortable place to go in and out easily.";
@@ -215,20 +215,20 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		switch( checkquest(16526,HUNTING) ) {
 		case -1:
 			mes "[Yulma]";
-			mes "Twin Carput and Venenum, the 4th-floor entities are greatly altered from the other-floor entities.";
+			mes "The 4th-floor entities Giant Caput and Venedi are greatly altered from the other-floor entities";
 			mes "to become gigantic, or to harbor more venom...";
 			next;
 			emotion ET_PROFUSELY_SWAT;
 			mes "[Yulma]";
-			mes "Researchers must be very interested in these guys.";
-			mes "That's why I asked you to hunt.";
+			mes "Researchers seem to be very interested in these guys.";
+			mes "That's why I ask you to hunt them.";
 			mes "<FONT SIZE = 9>Um...why don't we do it? There must be something complicated at the upper level. I don't know.</FONT>";
 			next;
 			mes "[Yulma]";
-			mes "Can you hunt 15 <FONT COLOR = 0000CD>Giant Kaput and Venedi</FONT> each?";
+			mes "Can you hunt 15 <FONT COLOR = 0000CD>Giant Caput and Venedi</FONT> each?";
 			mes "Data will be collected automatically, so you just need to focus on hunting.";
 			next;
-			if (select( "I'll come hunting", "I refuse" ) == 2) {
+			if (select( "I'll hunt them", "I refuse" ) == 2) {
 				mes "[Yulma]";
 				mes "We're already comrades on the same boat~?";
 				mes "Isn't that right, comrade? Think again!";
@@ -236,13 +236,13 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			}
 			mes "[Yulma]";
 			mes "Okay, go and hunt hard!";
-			mes "Your performance is my bonus!";
+			mes "My bonus depends on your performance!";
 			setquest 16526;
 			close;
 		case 0:
 		case 1:
 			mes "[Yulma]";
-			mes "Can you hunt 15 <FONT COLOR = 0000CD>Giant Kaput and Venedi</FONT> each?";
+			mes "Can you hunt 15 <FONT COLOR = 0000CD>Giant Caput and Venedi</FONT> each?";
 			mes "Data will be collected automatically, so you just need to focus on hunting.";
 			close;
 		case 2:
@@ -252,14 +252,14 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			next;
 			mes "[Yulma]";
 			mes "Looks like good data has been gathered.";
-			mes "Then you should pay for the work you did today.";
+			mes "Then I should pay you for the work you did today.";
 			next;
 			mes "[Yulma]";
 			mes "Here you are!";
 			mes "You worked hard today, so get a good rest and come back. Let's work hard tomorrow!";
 			erasequest 16526;
 			setquest 16525;
-			getexp 15176970,11001900;	// TODO: the amount has been changed which the monster update
+			getexp 15176970,11001900;	// TODO: the amount has been changed with the monster update
 			close;
 		}
 		end;
@@ -271,7 +271,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		case 1:
 			mes "[Yulma]";
 			mes "Your researcher, you said you have withdrawn now. Chip maintenance once a day is enough!";
-			mes "So, " + strcharinfo(0) + ", how about coming home after a little rest?";
+			mes "So, " + strcharinfo(0) + ", how about coming back after a little rest?";
 			next;
 			mes "[Yulma]";
 			mes "The 4th floor of Rudus is not a comfortable place to go in and out easily.";
@@ -292,9 +292,9 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			next;
 			mes "[Yulma]";
 			mes "I'll introduce you to a researcher who is currently in the field, would you like to go directly?";
-			mes "Probably disguised to observe monsters, but I'll give you the location, so go check it out!";
+			mes "He is probably disguised to observe monsters, but I'll give you the location, so go check it out!";
 			next;
-			if (select( "Find", "Does not find" ) == 2) {
+			if (select( "Look for him", "Don' look for him" ) == 2) {
 				mes "[Yulma]";
 				mes "Working only with me, isn't it frustrating?";
 				mes "It wouldn't be a bad idea to meet the researchers working in the field in person...";
@@ -304,18 +304,18 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			mes "Yeah! Isn't it frustrating to only meet with me to get work delivered?";
 			next;
 			mes "[Yulma]";
-			mes "I'm on my way to see you, so if you have any questions, you can ask them directly!";
-			mes "<NAVI>[Researcher] I heard that <INFO>sp_rudus4,192,204,0,101,0</INFO></NAVI> mostly burrow around the center of the 4th floor of Rudus.";
+			mes "I'm on my way to see him, so if you have any questions, you can ask him directly!";
+			mes "I heard that <NAVI>[Researcher]<INFO>sp_rudus4,192,204,0,101,0</INFO></NAVI> mostly burrows around the center of the 4th floor of Rudus.";
 			setquest 16528;
 			close;
 		case 1:
 			mes "[Yulma]";
-			mes "I'm on my way to meet the secret wing researcher, so if you have any questions, you can ask them directly!";
-			mes "<NAVI>[Researcher] I heard that <INFO>sp_rudus4,192,204,0,101,0</INFO></NAVI> mostly burrow around the center of the 4th floor of Rudus.";
+			mes "I'm on my way to meet the secret wing researcher, so if you have any questions, you can ask him directly!";
+			mes "I heard that <NAVI>[Researcher]<INFO>sp_rudus4,192,204,0,101,0</INFO></NAVI> mostly burrows around the center of the 4th floor of Rudus.";
 			close;
 		case 2:
 			mes "[Yulma]";
-			mes "Have you been? Did you talk a bit?";
+			mes "Have you been there? Did you talk a bit?";
 			mes "Is the researcher hiding well?";
 			next;
 			mes "[Yulma]";
@@ -326,7 +326,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			mes "Because this is also a job... Since I replaced it safely, the superiors told me to take care of some allowances.";
 			next;
 			mes "[Yulma]";
-			mes "Well, it's good that you come back to me too!";
+			mes "Well, it's good that you came back to me too!";
 			mes "Then have a good day and see you tomorrow!";
 			erasequest 16528;
 			erasequest 16540;
