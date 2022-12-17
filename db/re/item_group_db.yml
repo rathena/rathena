@@ -25723,7 +25723,7 @@ Body:
             Rate: 140
           - Item: C_Pig_Nose
             Rate: 140
-          - Item: C_Cat_Ears_Hat
+          - Item: C_Cat_Ear_Hat
             Rate: 140
           - Item: C_Valkyrie_Circlet
             Rate: 140
@@ -25996,7 +25996,7 @@ Body:
             Rate: 140
           - Item: C_Poring_On_Shoulder
             Rate: 140
-          - Item: Costume_Yawata_Seal
+          - Item: C_FortunetellinSealed
             Rate: 140
           - Item: C_Pretty_Bear_WH
             Rate: 140
@@ -26008,7 +26008,7 @@ Body:
             Rate: 140
           - Item: C_Dark_Snake_Lord_Stall
             Rate: 140
-          - Item: Costume_Twin_Cannon
+          - Item: C_Twin_Canon
             Rate: 140
           - Item: C_Picnic_Basket
             Rate: 140
@@ -26070,13 +26070,13 @@ Body:
             Rate: 140
           - Item: C_LittleGarden
             Rate: 140
-          - Item: Costume_Twinkling_Red_Eyes
+          - Item: C_Blinking_Eyes_RD
             Rate: 140
           - Item: C_Blink_Eyes_Sakura
             Rate: 140
-          - Item: Costume_Angola_Intention
+          - Item: C_Angola_Intention
             Rate: 140
-          - Item: C_Stole_Of_Dominion
+          - Item: C_Stall_Of_Dominions
             Rate: 140
           - Item: C_Flowery_Vision_TH
             Rate: 140
@@ -26100,7 +26100,7 @@ Body:
             Rate: 130
           - Item: C_Blessings_Of_Soul
             Rate: 130
-          - Item: C_Crow
+          - Item: C_Gossip_Raven
             Rate: 130
           - Item: C_Halloween_Hat
             Rate: 130
@@ -26118,7 +26118,7 @@ Body:
             Rate: 130
           - Item: C_Gift_Of_Snow
             Rate: 130
-          - Item: C_Large_Ribbon_Muffler_Red
+          - Item: C_L_RibbonMuff_Red
             Rate: 130
           - Item: C_Imperial_Glory
             Rate: 130
