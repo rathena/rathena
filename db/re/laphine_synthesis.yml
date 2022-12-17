@@ -1387,7 +1387,7 @@ Body:
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
-      - Item: Spirit_Jewel
+      - Item: SpritJewel
         Amount: 10
       - Item: Snowball
         Amount: 10
