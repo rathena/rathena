@@ -2781,14 +2781,27 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 	if (random == nullptr)
 		return nullptr;
 
-	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
-		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
-			return entry;
+	if (random->data.size() == 0) {
+		return nullptr;
 	}
 
-	return util::umap_random(random->data);
+	if (random->total_rate == 0)
+	{
+		// Only item group 0 has no total rate, pick random item
+		return util::umap_random(random->data);
+	}
+
+	int rndVal = rnd() % random->total_rate;
+
+	for (const auto& entry : random->data)
+	{
+		if (rndVal < entry.second->rate) {
+			return entry.second;
+		}
+		rndVal -= entry.second->rate;
+	}
+
+	return nullptr;
 }
 
 /**
@@ -4301,7 +4314,7 @@ bool RandomOptionGroupDatabase::add_option(const ryml::NodeRef& node, std::share
 	}
 
 	if (entry->min_value > entry->max_value) {
-		this->invalidWarning(node["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
+		this->invalidWarning(node, "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
 		entry->max_value = entry->min_value + 1;
 	}
 
@@ -4316,15 +4329,15 @@ bool RandomOptionGroupDatabase::add_option(const ryml::NodeRef& node, std::share
 		entry->param = 0;
 	}
 
-	if (this->nodeExists(node, "Chance")) {
-		uint16 chance;
+	if (this->nodeExists(node, "Rate")) {
+		uint16 rate;
 
-		if (!this->asUInt16Rate(node, "Chance", chance))
+		if (!this->asUInt16Rate(node, "Rate", rate))
 			return false;
 
-		entry->chance = chance;
+		entry->rate = rate;
 	} else {
-		entry->chance = 0;
+		entry->rate = 1;
 	}
 
 	return true;
@@ -4346,38 +4359,22 @@ void s_random_opt_group::apply( struct item& item ){
 
 	// Apply Must options
 	for( size_t i = 0; i < this->slots.size(); i++ ){
-		// Try to apply an entry
-		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
-			if( rnd() % 10000 < option->chance ){
-				apply_sub( item.option[i], option );
+		if (!(rnd() % 10000 < this->slots[static_cast<uint16>(i)]->chance))
+			continue;
+		
+		if (this->slots[static_cast<uint16>(i)]->data.size() == 0 || this->slots[static_cast<uint16>(i)]->total_rate == 0)
+			continue;
+
+		int rndVal = rnd() % this->slots[static_cast<uint16>(i)]->total_rate;
+
+		for (const auto& option : this->slots[static_cast<uint16>(i)]->data)
+		{
+			if (rndVal < option->rate) {
+				apply_sub(item.option[i], option);
 				break;
 			}
-		}
-
-		// If no entry was applied, assign one
-		if( item.option[i].id == 0 ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
-
-			// Apply an entry without checking the chance
-			apply_sub( item.option[i], option );
-		}
-	}
-
-	// Apply Random options (if available)
-	if( this->max_random > 0 ){
-		for( size_t i = 0; i < min( this->max_random, MAX_ITEM_RDM_OPT ); i++ ){
-			// If item already has an option in this slot, skip it
-			if( item.option[i].id > 0 ){
-				continue;
-			}
-
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
-
-			if( rnd() % 10000 < option->chance ){
-				apply_sub( item.option[i], option );
-			}
+			rndVal -= option->rate;
 		}
 	}
 
@@ -4462,58 +4459,61 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (slot < 1 || slot > MAX_ITEM_RDM_OPT) {
-				this->invalidWarning(slotNode["Slot"], "Invalid Random Opton Slot number %hu given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
+				this->invalidWarning(slotNode["Slot"], "Invalid Random Option Slot number %hu given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
 				return 0;
 			}
 
-			if (!this->nodeExists(slotNode, "Options")) {
+			std::shared_ptr<s_random_opt_random> random = util::map_find(randopt->slots, static_cast<uint16>(slot-1));
+
+			if (random == nullptr) {
+				random = std::make_shared<s_random_opt_random>();
+				randopt->slots[slot - 1] = random;
+			}
+
+			if (this->nodeExists(slotNode, "Inherit")) {
+				uint16 inheritSlot = 0;
+				if (!this->asUInt16Rate(slotNode, "Inherit", inheritSlot))
+					return false;
+
+				if (inheritSlot < 1 || inheritSlot > slot - 1) {
+					this->invalidWarning(slotNode["Inherit"], "Invalid Random Option Inherit Slot number %hu given, must be between 1~%d, skipping.\n", inheritSlot, slot - 1);
+					return 0;
+				}
+				
+				std::shared_ptr<s_random_opt_random> inheritRandom = util::map_find(randopt->slots, static_cast<uint16>(inheritSlot - 1));
+				random->data = inheritRandom->data;
+			}
+			else if (!this->nodeExists(slotNode, "Options")) {
 				this->invalidWarning(slotNode, "Random option slot does not contain Options node, skipping.\n");
 				return 0;
 			}
 
-			std::vector<std::shared_ptr<s_random_opt_group_entry>> entries;
-			const auto& optionsNode = slotNode["Options"];
-			for (const auto& optionNode : optionsNode) {
-				std::shared_ptr<s_random_opt_group_entry> entry;
+			if (this->nodeExists(slotNode, "Options")) {
+				std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = random->data;
+				const auto& optionsNode = slotNode["Options"];
+				for (const auto& optionNode : optionsNode) {
+					std::shared_ptr<s_random_opt_group_entry> entry;
 
-				if (!this->add_option(optionNode, entry))
-					return 0;
+					if (!this->add_option(optionNode, entry))
+						return 0;
 
-				entries.push_back(entry);
+					entries.push_back(entry);
+				}
+
+				random->data = entries;
 			}
 
-			randopt->slots[slot - 1] = entries;
-		}
-	}
+			if (this->nodeExists(slotNode, "Chance")) {
+				uint16 chance;
 
-	if (this->nodeExists(node, "MaxRandom")) {
-		uint16 max;
+				if (!this->asUInt16Rate(slotNode, "Chance", chance))
+					return false;
 
-		if (!this->asUInt16(node, "MaxRandom", max))
-			return 0;
-
-		if (max > MAX_ITEM_RDM_OPT) {
-			this->invalidWarning(node["MaxRandom"], "Exceeds the maximum of %d Random Option group options, capping to MAX_ITEM_RDM_OPT.\n", MAX_ITEM_RDM_OPT);
-			max = MAX_ITEM_RDM_OPT;
-		}
-
-		randopt->max_random = max;
-	} else {
-		if (!exists)
-			randopt->max_random = 0;
-	}
-
-	if (this->nodeExists(node, "Random")) {
-		randopt->random_options.clear();
-
-		const auto& randomNode = node["Random"];
-		for (const auto& randomNode : randomNode) {
-			std::shared_ptr<s_random_opt_group_entry> entry;
-
-			if (!this->add_option(randomNode, entry))
-				return 0;
-
-			randopt->random_options.push_back(entry);
+				random->chance = chance;
+			}
+			else {
+				random->chance = 10000;
+			}
 		}
 	}
 
@@ -4521,6 +4521,17 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		this->put(id, randopt);
 
 	return 1;
+}
+
+void RandomOptionGroupDatabase::loadingFinished() {
+	for (const auto& group : *this) {
+		for (const auto& random : group.second->slots) {
+			random.second->total_rate = 0;
+			for (const auto& it : random.second->data) {
+				random.second->total_rate += it->rate;
+			}
+		}
+	}
 }
 
 RandomOptionGroupDatabase random_option_group;

@@ -78,12 +78,8 @@ std::unordered_map<t_itemid, s_item_stack_csv2yaml> item_stack;
 std::unordered_map<t_itemid, s_item_nouse_csv2yaml> item_nouse;
 std::unordered_map<t_itemid, s_item_trade_csv2yaml> item_trade;
 
-struct s_random_opt_group_csv : s_random_opt_group {
-	std::vector<uint16> rate;
-};
-
 std::unordered_map<uint16, std::string> rand_opt_db;
-std::unordered_map<uint16, s_random_opt_group_csv> rand_opt_group;
+std::unordered_map<uint16, s_random_opt_group> rand_opt_group;
 
 struct s_randomsummon_entry_csv2yaml {
 	std::string mob_name;
