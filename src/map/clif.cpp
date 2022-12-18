@@ -20623,7 +20623,13 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// Player has not claimed his prize yet
+	if( sd->roulette.claimPrize ){
+		clif_roulette_getitem( sd );
+	}
+
 	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL){
+		// Make sure everything is reset
 		sd->roulette.stage = 0;
 		sd->roulette.claimPrize = false;
 		sd->roulette.prizeStage = 0;
