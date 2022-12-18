@@ -3733,223 +3733,235 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv)
+static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv)
 {
-	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
-	map_session_data *sd = BL_CAST(BL_PC, src);
-	map_session_data *tsd = BL_CAST(BL_PC, target);
+	status_change* sc = status_get_sc(src);
+	struct status_data* sstatus = status_get_status_data(src);
+	struct status_data* tstatus = status_get_status_data(target);
+	map_session_data* sd = BL_CAST(BL_PC, src);
+	map_session_data* tsd = BL_CAST(BL_PC, target);
 
 	uint16 i;
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
 	switch (skill_id) {	//Calc base damage according to skill
-		case PA_SACRIFICE:
-			wd->damage = sstatus->max_hp* 9/100;
-			wd->damage2 = 0;
+	case PA_SACRIFICE:
+		wd->damage = sstatus->max_hp * 9 / 100;
+		wd->damage2 = 0;
 #ifdef RENEWAL
-			wd->weaponAtk = wd->damage;
-			wd->weaponAtk2 = wd->damage2;
+		wd->weaponAtk = wd->damage;
+		wd->weaponAtk2 = wd->damage2;
 #endif
-			break;
+		break;
 #ifdef RENEWAL
-		case LK_SPIRALPIERCE:
-		case ML_SPIRALPIERCE:
-			if (sd) {
-				short index = sd->equip_index[EQI_HAND_R];
+	case LK_SPIRALPIERCE:
+	case ML_SPIRALPIERCE:
+		if (sd) {
+			short index = sd->equip_index[EQI_HAND_R];
 
-				if (index >= 0 &&
-					sd->inventory_data[index] &&
-					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->equipAtk += sd->inventory_data[index]->weight*7/100; // weight from spear is treated as equipment ATK on official [helvetica]
+			if (index >= 0 &&
+				sd->inventory_data[index] &&
+				sd->inventory_data[index]->type == IT_WEAPON)
+				wd->equipAtk += sd->inventory_data[index]->weight * 7 / 100; // weight from spear is treated as equipment ATK on official [helvetica]
 
-				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
-				wd->masteryAtk = 0; // weapon mastery is ignored for spiral
+			battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
+			wd->masteryAtk = 0; // weapon mastery is ignored for spiral
 
-				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-					case SZ_SMALL: //Small: 115%
-						ATK_RATE(wd->damage, wd->damage2, 115);
-						RE_ALLATK_RATE(wd, 115);
-						break;
-					//case SZ_MEDIUM: //Medium: 100%
-					case SZ_BIG: //Large: 85%
-						ATK_RATE(wd->damage, wd->damage2, 85);
-						RE_ALLATK_RATE(wd, 85);
-						break;
-				}
-			} else {
-				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
-			}
-#else
-		case NJ_ISSEN:
-			wd->damage = 40 * sstatus->str + sstatus->hp * 8 * skill_lv / 100;
-			wd->damage2 = 0;
-			break;
-		case LK_SPIRALPIERCE:
-		case ML_SPIRALPIERCE:
-			if (sd) {
-				short index = sd->equip_index[EQI_HAND_R];
-
-				if (index >= 0 &&
-					sd->inventory_data[index] &&
-					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->damage = sd->inventory_data[index]->weight*8/100; //80% of weight
-
-				ATK_ADDRATE(wd->damage, wd->damage2, 50*skill_lv); //Skill modifier applies to weight only.
-			} else {
-				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
-			}
-
-			i = sstatus->str/10;
-			i*=i;
-			ATK_ADD(wd->damage, wd->damage2, i); //Add str bonus.
 			switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-				case SZ_SMALL: //Small: 125%
-					ATK_RATE(wd->damage, wd->damage2, 125);
-					break;
+			case SZ_SMALL: //Small: 115%
+				ATK_RATE(wd->damage, wd->damage2, 115);
+				RE_ALLATK_RATE(wd, 115);
+				break;
 				//case SZ_MEDIUM: //Medium: 100%
-				case SZ_BIG: //Large: 75%
-					ATK_RATE(wd->damage, wd->damage2, 75);
-					break;
+			case SZ_BIG: //Large: 85%
+				ATK_RATE(wd->damage, wd->damage2, 85);
+				RE_ALLATK_RATE(wd, 85);
+				break;
 			}
-#endif
-			break;
-		case CR_SHIELDBOOMERANG:
-		case PA_SHIELDCHAIN:
-			wd->damage = sstatus->batk;
-			if (sd) {
-				short index = sd->equip_index[EQI_HAND_L];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
-					ATK_ADD(wd->damage, wd->damage2, sd->inventory_data[index]->weight / 10);
-#ifdef RENEWAL
-					ATK_ADD(wd->weaponAtk, wd->weaponAtk2, sd->inventory_data[index]->weight / 10);
-#endif
-				}
-			} else
-				ATK_ADD(wd->damage, wd->damage2, sstatus->rhw.atk2); //Else use Atk2
-			break;
-		case RK_DRAGONBREATH:
-		case RK_DRAGONBREATH_WATER:
-			{
-				int damagevalue = (sstatus->hp / 50 + status_get_max_sp(src) / 4) * skill_lv;
-
-				if(status_get_lv(src) > 100)
-					damagevalue = damagevalue * status_get_lv(src) / 100;
-				if(sd) //TODO Need official scaling. [Muh]
-					damagevalue = damagevalue * (90 + 10 * pc_checkskill(sd, RK_DRAGONTRAINING) + (pc_checkskill(sd, DK_DRAGONIC_AURA) >= 1 ? (sstatus->pow / 4 + sstatus->patk / 2 ): 0)) / 100;
-				if (sc && sc->getSCE(SC_DRAGONIC_AURA))// Need official damage increase. [Rytech]
-					damagevalue += damagevalue * 50 / 100;
-				ATK_ADD(wd->damage, wd->damage2, damagevalue);
-#ifdef RENEWAL
-				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
-#endif
-				wd->flag |= BF_LONG;
-			}
-			break;
-		case NC_SELFDESTRUCTION: {
-				int damagevalue = (skill_lv + 1) * ((sd ? pc_checkskill(sd,NC_MAINFRAME) : 0) + 8) * (status_get_sp(src) + sstatus->vit);
-
-				if(status_get_lv(src) > 100)
-					damagevalue = damagevalue * status_get_lv(src) / 100;
-				damagevalue = damagevalue + sstatus->hp;
-				ATK_ADD(wd->damage, wd->damage2, damagevalue);
-#ifdef RENEWAL
-				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
-#endif
-			}
-			break;
-		case KO_HAPPOKUNAI:
-			if(sd) {
-				short index = sd->equip_index[EQI_AMMO];
-				int damagevalue = 3 * (
-#ifdef RENEWAL
-					2 *
-#endif
-					sstatus->batk + sstatus->rhw.atk + (index >= 0 && sd->inventory_data[index] ?
-						sd->inventory_data[index]->atk : 0)) * (skill_lv + 5) / 5;
-				if (sc && sc->getSCE(SC_KAGEMUSYA))
-					damagevalue += damagevalue * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-				ATK_ADD(wd->damage, wd->damage2, damagevalue);
-#ifdef RENEWAL
-				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
-#endif
-			} else
-				ATK_ADD(wd->damage, wd->damage2, 5000);
-			break;
-		case HFLI_SBR44:	//[orn]
-			if(src->type == BL_HOM)
-				wd->damage = ((TBL_HOM*)src)->homunculus.intimacy ;
-			break;
-
-		default:
-#ifdef RENEWAL
-			if (sd)
-				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
-			else {
-				i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
-					(!skill_id && sc && sc->getSCE(SC_CHANGE)?4:0);
-
-				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
-				if (is_attack_left_handed(src, skill_id))
-					wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
-			}
+		}
+		else {
+			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
+		}
 #else
-			i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
-				(is_skill_using_arrow(src, skill_id)?2:0)|
-				(skill_id == HW_MAGICCRASHER?4:0)|
-				(!skill_id && sc && sc->getSCE(SC_CHANGE)?4:0)|
-				(skill_id == MO_EXTREMITYFIST?8:0)|
-				(sc && sc->getSCE(SC_WEAPONPERFECTION)?8:0);
-			if (is_skill_using_arrow(src, skill_id) && sd) {
-				switch(sd->status.weapon) {
-					case W_BOW:
-					case W_REVOLVER:
-					case W_RIFLE:
-					case W_GATLING:
-					case W_SHOTGUN:
-					case W_GRENADE:
-						break;
-					default:
-						i |= 16; // for ex. shuriken must not be influenced by DEX
-						break;
-				}
+	case NJ_ISSEN:
+		wd->damage = 40 * sstatus->str + sstatus->hp * 8 * skill_lv / 100;
+		wd->damage2 = 0;
+		break;
+	case LK_SPIRALPIERCE:
+	case ML_SPIRALPIERCE:
+		if (sd) {
+			short index = sd->equip_index[EQI_HAND_R];
+
+			if (index >= 0 &&
+				sd->inventory_data[index] &&
+				sd->inventory_data[index]->type == IT_WEAPON)
+				wd->damage = sd->inventory_data[index]->weight * 8 / 100; //80% of weight
+
+			ATK_ADDRATE(wd->damage, wd->damage2, 50 * skill_lv); //Skill modifier applies to weight only.
+		}
+		else {
+			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
+		}
+
+		i = sstatus->str / 10;
+		i *= i;
+		ATK_ADD(wd->damage, wd->damage2, i); //Add str bonus.
+		switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
+		case SZ_SMALL: //Small: 125%
+			ATK_RATE(wd->damage, wd->damage2, 125);
+			break;
+			//case SZ_MEDIUM: //Medium: 100%
+		case SZ_BIG: //Large: 75%
+			ATK_RATE(wd->damage, wd->damage2, 75);
+			break;
+		}
+#endif
+		break;
+	case CR_SHIELDBOOMERANG:
+	case PA_SHIELDCHAIN:
+		wd->damage = sstatus->batk;
+		if (sd) {
+			short index = sd->equip_index[EQI_HAND_L];
+
+			if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
+				ATK_ADD(wd->damage, wd->damage2, sd->inventory_data[index]->weight / 10);
+#ifdef RENEWAL
+				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, sd->inventory_data[index]->weight / 10);
+#endif
 			}
+		}
+		else
+			ATK_ADD(wd->damage, wd->damage2, sstatus->rhw.atk2); //Else use Atk2
+		break;
+	case RK_DRAGONBREATH:
+	case RK_DRAGONBREATH_WATER:
+	{
+		int damagevalue = (sstatus->hp / 50 + status_get_max_sp(src) / 4) * skill_lv;
+
+		if (status_get_lv(src) > 100)
+			damagevalue = damagevalue * status_get_lv(src) / 100;
+		if (sd)
+			damagevalue = damagevalue * (90 + 10 * pc_checkskill(sd, RK_DRAGONTRAINING)) / 100;
+		if (sc && sc->getSCE(SC_DRAGONIC_AURA))// Need official damage increase. [Rytech]
+			damagevalue += damagevalue * 50 / 100;
+		ATK_ADD(wd->damage, wd->damage2, damagevalue);
+#ifdef RENEWAL
+		ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
+#endif
+		wd->flag |= BF_LONG;
+	}
+	break;
+	case NC_SELFDESTRUCTION: {
+		int damagevalue = (skill_lv + 1) * ((sd ? pc_checkskill(sd, NC_MAINFRAME) : 0) + 8) * (status_get_sp(src) + sstatus->vit);
+
+		if (status_get_lv(src) > 100)
+			damagevalue = damagevalue * status_get_lv(src) / 100;
+		damagevalue = damagevalue + sstatus->hp;
+		ATK_ADD(wd->damage, wd->damage2, damagevalue);
+#ifdef RENEWAL
+		ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
+#endif
+	}
+						   break;
+	case KO_HAPPOKUNAI:
+		if (sd) {
+			short index = sd->equip_index[EQI_AMMO];
+			int damagevalue = 3 * (
+#ifdef RENEWAL
+				2 *
+#endif
+				sstatus->batk + sstatus->rhw.atk + (index >= 0 && sd->inventory_data[index] ?
+					sd->inventory_data[index]->atk : 0)) * (skill_lv + 5) / 5;
+			if (sc && sc->getSCE(SC_KAGEMUSYA))
+				damagevalue += damagevalue * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
+			ATK_ADD(wd->damage, wd->damage2, damagevalue);
+#ifdef RENEWAL
+			ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
+#endif
+		}
+		else
+			ATK_ADD(wd->damage, wd->damage2, 5000);
+		break;
+	case HFLI_SBR44:	//[orn]
+		if (src->type == BL_HOM)
+			wd->damage = ((TBL_HOM*)src)->homunculus.intimacy;
+		break;
+
+	default:
+#ifdef RENEWAL
+		if (sd)
+			battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
+		else {
+			i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false) ? 1 : 0) |
+				(!skill_id && sc && sc->getSCE(SC_CHANGE) ? 4 : 0);
+
 			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
 			if (is_attack_left_handed(src, skill_id))
 				wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
+		}
+#else
+		i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false) ? 1 : 0) |
+			(is_skill_using_arrow(src, skill_id) ? 2 : 0) |
+			(skill_id == HW_MAGICCRASHER ? 4 : 0) |
+			(!skill_id && sc && sc->getSCE(SC_CHANGE) ? 4 : 0) |
+			(skill_id == MO_EXTREMITYFIST ? 8 : 0) |
+			(sc && sc->getSCE(SC_WEAPONPERFECTION) ? 8 : 0);
+		if (is_skill_using_arrow(src, skill_id) && sd) {
+			switch (sd->status.weapon) {
+			case W_BOW:
+			case W_REVOLVER:
+			case W_RIFLE:
+			case W_GATLING:
+			case W_SHOTGUN:
+			case W_GRENADE:
+				break;
+			default:
+				i |= 16; // for ex. shuriken must not be influenced by DEX
+				break;
+			}
+		}
+		wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
+		if (is_attack_left_handed(src, skill_id))
+			wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
 #endif
-			if (nk[NK_SPLASHSPLIT]){ // Divide ATK among targets
-				if(wd->miscflag > 0) {
-					wd->damage /= wd->miscflag;
+		if (nk[NK_SPLASHSPLIT]) { // Divide ATK among targets
+			if (wd->miscflag > 0) {
+				wd->damage /= wd->miscflag;
 #ifdef RENEWAL
-					wd->statusAtk /= wd->miscflag;
-					wd->weaponAtk /= wd->miscflag;
-					wd->equipAtk /= wd->miscflag;
-					wd->masteryAtk /= wd->miscflag;
-#endif
-				} else
-					ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
-			}
-
-			//Add any bonuses that modify the base atk (pre-skills)
-			if(sd) {
-				int skill;
-
-#ifndef RENEWAL
-				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
-					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
-				}
-#endif
-				if((skill=pc_checkskill(sd,TK_POWER)) > 0) {
-						ATK_ADDRATE(wd->damage, wd->damage2, 10+15*skill);
-						RE_ALLATK_ADDRATE(wd, 10+15*skill);
-				}
+				wd->statusAtk /= wd->miscflag;
+				wd->weaponAtk /= wd->miscflag;
+				wd->equipAtk /= wd->miscflag;
+				wd->masteryAtk /= wd->miscflag;
 #endif
 			}
+			else
+				ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
+		}
+
+		//Add any bonuses that modify the base atk (pre-skills)
+		if (sd) {
+			int skill;
+
 #ifndef RENEWAL
-			if(tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
+			if (sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+				ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
+			}
+			if (sd->status.party_id && (skill = pc_checkskill(sd, TK_POWER)) > 0) {
+				if ((i = party_foreachsamemap(party_sub_count, sd, 0)) > 1) { // exclude the player himself [Inkfish]
+					// Reduce count by one (self) [Tydus1]
+					i -= 1;
+					ATK_ADDRATE(wd->damage, wd->damage2, 2 * skill * i);
+					}
+				}
+#else
+			if ((skill = pc_checkskill(sd, TK_POWER)) > 0) {
+				ATK_ADDRATE(wd->damage, wd->damage2, 10 + 15 * skill);
+				RE_ALLATK_ADDRATE(wd, 10 + 15 * skill);
+				}
+#endif
+			}
+#ifndef RENEWAL
+			if (tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
 			}
 #endif
