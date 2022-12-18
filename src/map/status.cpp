@@ -4872,9 +4872,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 		if (sc->getSCE(SC_PORK_RIB_STEW))
 			sd->dsprate -= 2;
-		if( sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS] ) {
+		if( sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)) {
 			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH, ELE_NEUTRAL };
-			int bonus = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
+			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
 			for( e_element element : elements ){
 				sd->indexed_bonus.magic_atk_ele[(int)element] += bonus;
@@ -4882,8 +4882,8 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				sd->left_weapon.addele[(int)element] += bonus;
 			}
 		}
-		if( sc->data[SC_HEAVEN_AND_EARTH] ) {
-			i = sc->data[SC_HEAVEN_AND_EARTH]->val2;
+		if( sc->getSCE(SC_HEAVEN_AND_EARTH)) {
+			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
 			sd->right_weapon.addele[ELE_ALL] += i;
 			sd->left_weapon.addele[ELE_ALL] += i;
 			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
@@ -7500,7 +7500,7 @@ static signed short status_calc_hit(struct block_list *bl, status_change *sc, in
 		hit += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_ACARAJE))
 		hit += 5;
-	if (sc->data[SC_INTENSIVE_AIM])
+	if (sc->getSCE(SC_INTENSIVE_AIM))
 		hit += 250;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
@@ -7620,7 +7620,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 		flee += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_MYSTICPOWDER))
 		flee += 20;
-	if (sc->data[SC_HANDICAPSTATE_DEEPBLIND])
+	if (sc->getSCE(SC_HANDICAPSTATE_DEEPBLIND))
 		flee -= flee * 30 / 100;
 
 	return (short)cap_value(flee,1,SHRT_MAX);
@@ -8062,9 +8062,9 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 				val = max(val, sc->getSCE(SC_SP_SHA)->val2);
 			if (sc->getSCE(SC_CREATINGSTAR))
 				val = max(val, 90);
-			if (sc->data[SC_SHIELDCHAINRUSH])
+			if (sc->getSCE(SC_SHIELDCHAINRUSH))
 				val = max(val, 20);
-			if (sc->data[SC_GROUNDGRAVITY])
+			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -8130,7 +8130,7 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 		if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // Permanent item-based speedup
 			val = max( val, -(sd->bonus.speed_rate + sd->bonus.speed_add_rate) );
 
-		if (sc->data[SC_HANDICAPSTATE_LASSITUDE])
+		if (sc->getSCE(SC_HANDICAPSTATE_LASSITUDE))
 			val = val * 130 / 100;
 		speed_rate -= val;
 
@@ -8506,7 +8506,7 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		aspd_rate -= sc->getSCE(SC_SKF_ASPD)->val1 * 10;
 	if( sc->getSCE(SC_PORK_RIB_STEW) )
 		aspd_rate -= 50;
-	if (sc->data[SC_HANDICAPSTATE_DEEPSILENCE])
+	if (sc->getSCE(SC_HANDICAPSTATE_DEEPSILENCE))
 		aspd_rate += 50;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
@@ -8675,8 +8675,8 @@ static signed short status_calc_hplus(struct block_list *bl, status_change *sc, 
 	if (!sc || !sc->count)
 		return cap_value(hplus, 0, SHRT_MAX);
 
-	if (sc->data[SC_TEMPORARY_COMMUNION])
-		hplus += sc->data[SC_TEMPORARY_COMMUNION]->val2;
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+		hplus += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
 	return (short)cap_value(hplus, 0, SHRT_MAX);
 }
 
@@ -13934,7 +13934,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4-- > 0) {
 			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);
 			int lv = sce->val1;
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->data[SC_TEMPORARY_COMMUNION]))
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 			{
 				i += 2;
 				lv += skill_get_max(SH_KI_SUL_RAMPAGE);
@@ -14956,7 +14956,7 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_INTENSIVE_AIM:
-		if (!sc || !sc->data[SC_INTENSIVE_AIM_COUNT])
+		if (!sc || !sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 			sce->val4 = 0;
 		if (sce->val4 < 10) {
 			sce->val4++;
