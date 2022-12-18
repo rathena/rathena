@@ -43942,8 +43942,6 @@ Body:
           Amount: 84
       Ammo:
         Kunai: true
-      Weapon:
-        Huuma: true
     Unit:
       Id: FUUMASHOUAKU
       Range:
@@ -44012,8 +44010,6 @@ Body:
           Amount: 65
       Ammo:
         Kunai: true
-      Weapon:
-        Huuma: true
   - Id: 5485
     Name: SS_KUNAIWAIKYOKU
     Description: Kunai - Distortion
