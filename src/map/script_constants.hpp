@@ -6538,6 +6538,9 @@
 	export_constant(IG_COSTUMEMILEAGE_PACKAGE3);
 	export_constant(IG_COMP_TRANS_SCROLL);
 	export_constant(IG_MINUS_STATUS_BOX);
+	export_constant(IG_MF_NOTELEPORT);
+	export_constant(IG_MF_NORETURN);
+	export_constant(IG_GIANT_FLY_WING);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
