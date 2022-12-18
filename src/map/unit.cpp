@@ -782,12 +782,12 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 
 	if (sd) {
-		if (sd->sc.data[SC_KI_SUL_RAMPAGE])
+		if (sd->sc.getSCE(SC_KI_SUL_RAMPAGE))
 			status_change_end(bl, SC_KI_SUL_RAMPAGE, INVALID_TIMER);
 	}
 
 	if (sd) {
-		if (sd->sc.data[SC_KI_SUL_RAMPAGE])
+		if (sd->sc.getSCE(SC_KI_SUL_RAMPAGE))
 			status_change_end(bl, SC_KI_SUL_RAMPAGE, INVALID_TIMER);
 	}
 

@@ -882,7 +882,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 
 	if( sd->sc.getSCE(SC_ALL_RIDING) )
 		return true; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
-	if (sd->sc.data[SC_HANDICAPSTATE_MISFORTUNE] && rand() % 100 < 30) {
+	if (sd->sc.getSCE(SC_HANDICAPSTATE_MISFORTUNE) && rand() % 100 < 30) {
 		clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		return true;
 	}
@@ -5928,7 +5928,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					//TODO: does this buff start before or after dealing damage? [Muh]
 					sc_start(src,src,SC_RUSH_QUAKE2,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 					break;
-				case SHC_SAVAGE_IMPACT:
 				case SHC_FATAL_SHADOW_CROW: {
 					uint8 dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
 
