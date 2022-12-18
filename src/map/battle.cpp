@@ -591,13 +591,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					ratio += 50;
 #else
 					damage += (int64)(damage * 50 / 100);
-#endif
-				if (tsc->getSCE(SC_MISTYFROST))
-#ifdef RENEWAL
-					ratio += 15;
-#else
-					damage += (int64)(damage * 15 / 100);
-#endif
+
 				break;
 			case ELE_EARTH:
 				if (tsc->getSCE(SC_WIND_INSIGNIA))
