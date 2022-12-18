@@ -20350,7 +20350,7 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 /// Roulette System
 /// Author: Yommy
 
-void roulette_generate_bonus( struct map_session_data& sd ){
+void roulette_generate_bonus( map_session_data& sd ){
 	if( battle_config.feature_roulette_bonus_reward && sd.roulette.bonusItemID == 0 ){
 		int next_stage = 0;
 
