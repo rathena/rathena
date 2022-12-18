@@ -72,8 +72,8 @@ int party_leave(map_session_data *sd);
 int party_removemember(map_session_data *sd,uint32 account_id,char *name);
 int party_removemember2(map_session_data *sd,uint32 char_id,int party_id);
 int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
-bool party_isleader( struct map_session_data* sd );
-void party_join( struct map_session_data* sd, int party_id );
+bool party_isleader( map_session_data* sd );
+void party_join( map_session_data* sd, int party_id );
 bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booking_requirement* booking );
 int party_reply_invite(map_session_data *sd,int party_id,int flag);
 #define party_add_member(party_id,sd) party_reply_invite(sd,party_id,1)

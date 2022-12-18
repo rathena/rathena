@@ -24800,7 +24800,7 @@ void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result ){
 #endif
 }
 
-void clif_partybooking_ask( struct map_session_data* sd, struct map_session_data* joining_sd ){
+void clif_partybooking_ask( map_session_data* sd, map_session_data* joining_sd ){
 #if PACKETVER >= 20191204
 	struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN p = { 0 };
 
@@ -24815,7 +24815,7 @@ void clif_partybooking_ask( struct map_session_data* sd, struct map_session_data
 #endif
 }
 
-void clif_parse_partybooking_join( int fd, struct map_session_data* sd ){
+void clif_parse_partybooking_join( int fd, map_session_data* sd ){
 #if PACKETVER >= 20191204
 	struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
 
@@ -24824,7 +24824,7 @@ void clif_parse_partybooking_join( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct map_session_data* tsd = map_charid2sd( p->CID );
+	map_session_data* tsd = map_charid2sd( p->CID );
 
 	// Target player is offline
 	if( tsd == nullptr ){
@@ -24861,7 +24861,7 @@ void clif_parse_partybooking_join( int fd, struct map_session_data* sd ){
 #endif
 }
 
-void clif_partybooking_reply( struct map_session_data* sd, struct map_session_data* party_leader_sd, bool accepted ){
+void clif_partybooking_reply( map_session_data* sd, map_session_data* party_leader_sd, bool accepted ){
 #if PACKETVER >= 20191204
 	struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER p = { 0 };
 
@@ -24885,11 +24885,11 @@ void clif_partybooking_reply( struct map_session_data* sd, struct map_session_da
 #endif
 }
 
-void clif_parse_partybooking_reply( int fd, struct map_session_data* sd ){
+void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 #if PACKETVER >= 20191204
 	struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
 
-	struct map_session_data* tsd = map_charid2sd( p->CID );
+	map_session_data* tsd = map_charid2sd( p->CID );
 
 	// Target player is offline
 	if( tsd == nullptr ){

@@ -453,7 +453,7 @@ int party_invite(map_session_data *sd,map_session_data *tsd)
 	return 1;
 }
 
-bool party_isleader( struct map_session_data* sd ){
+bool party_isleader( map_session_data* sd ){
 	if( sd == nullptr ){
 		return false;
 	}
@@ -477,7 +477,7 @@ bool party_isleader( struct map_session_data* sd ){
 	return false;
 }
 
-void party_join( struct map_session_data* sd, int party_id ){
+void party_join( map_session_data* sd, int party_id ){
 	nullpo_retv( sd );
 
 	// Player is in a party already now
