@@ -26269,6 +26269,11 @@ BUILDIN_FUNC(mob_setidleevent){
 
 BUILDIN_FUNC( openstylist ){
 #if PACKETVER >= 20151104
+	if( !battle_config.feature_stylist ){
+		ShowError( "buildin_openstylist: stylist is disabled.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	map_session_data* sd;
 
 	if( !script_charid2sd( 2, sd ) ){
