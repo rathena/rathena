@@ -49,8 +49,8 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		}
 		next;
 		mes "[Yulma]";
-		mes "By the way, the 4th floor of Ludus is quite amazing...";
-		mes "Somehow, among the test subjects abandoned in Ludus, only particularly strong ones seem to be gathered.";
+		mes "By the way, the 4th floor of Rupus is quite amazing...";
+		mes "Somehow, among the test subjects abandoned in Rupus, only particularly strong ones seem to be gathered.";
 		next;
 		mes "[Yulma]";
 		mes "Researchers of the Secret Wing say that after fierce competition among the subjects, the strongest subjects seem to have settled there.";
