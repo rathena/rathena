@@ -1868,6 +1868,79 @@
 	export_constant(SC_PORK_RIB_STEW);
 	export_constant(SC_WEAPONBREAKER);
 
+	export_constant(SC_RUSH_QUAKE1);
+	export_constant(SC_RUSH_QUAKE2);
+	// 2021 Mutated Homunculus Skills
+	export_constant(SC_TOXIN_OF_MANDARA);
+	export_constant(SC_GOLDENE_TONE);
+	export_constant(SC_TEMPERING);
+
+	// Hyper Novice
+	export_constant(SC_SHIELDCHAINRUSH);
+	export_constant(SC_MISTYFROST);
+	export_constant(SC_GROUNDGRAVITY);
+	export_constant(SC_BREAKINGLIMIT);
+	export_constant(SC_RULEBREAK);
+	export_constant(SC_HNNOWEAPON);
+
+	// Sky Emperor
+	export_constant(SC_RISING_SUN);
+	export_constant(SC_NOON_SUN);
+	export_constant(SC_SUNSET_SUN);
+	export_constant(SC_RISING_MOON);
+	export_constant(SC_MIDNIGHT_MOON);
+	export_constant(SC_DAWN_MOON);
+	export_constant(SC_STAR_BURST);
+	export_constant(SC_SKY_ENCHANT);
+
+	// Soul Ascetic
+	export_constant(SC_TALISMAN_OF_PROTECTION);
+	export_constant(SC_TALISMAN_OF_WARRIOR);
+	export_constant(SC_TALISMAN_OF_MAGICIAN);
+	export_constant(SC_TALISMAN_OF_FIVE_ELEMENTS);
+	export_constant(SC_TOTEM_OF_TUTELARY);
+	export_constant(SC_T_FIRST_GOD);
+	export_constant(SC_T_SECOND_GOD);
+	export_constant(SC_T_THIRD_GOD);
+	export_constant(SC_T_FOURTH_GOD);
+	export_constant(SC_T_FIFTH_GOD);
+	export_constant(SC_HEAVEN_AND_EARTH);
+
+	// Night Watch
+	export_constant(SC_INTENSIVE_AIM);
+	export_constant(SC_INTENSIVE_AIM_COUNT);
+	export_constant(SC_GRENADE_FRAGMENT_1);
+	export_constant(SC_GRENADE_FRAGMENT_2);
+	export_constant(SC_GRENADE_FRAGMENT_3);
+	export_constant(SC_GRENADE_FRAGMENT_4);
+	export_constant(SC_GRENADE_FRAGMENT_5);
+	export_constant(SC_GRENADE_FRAGMENT_6);
+	export_constant(SC_AUTO_FIRING_LAUNCHER);
+	export_constant(SC_HIDDEN_CARD);
+
+	// Shinkiro/Shiranui
+	export_constant(SC_SHADOW_CLOCK);
+	export_constant(SC_SHINKIROU_CALL);
+	export_constant(SC_NIGHTMARE);
+	export_constant(SC_SBUNSHIN);
+
+	// Spirit Handler
+	export_constant(SC_HOGOGONG);
+	export_constant(SC_MARINE_FESTIVAL);
+	export_constant(SC_SANDY_FESTIVAL);
+	export_constant(SC_KI_SUL_RAMPAGE);
+	export_constant(SC_COLORS_OF_HYUN_ROK_1);
+	export_constant(SC_COLORS_OF_HYUN_ROK_2);
+	export_constant(SC_COLORS_OF_HYUN_ROK_3);
+	export_constant(SC_COLORS_OF_HYUN_ROK_4);
+	export_constant(SC_COLORS_OF_HYUN_ROK_5);
+	export_constant(SC_COLORS_OF_HYUN_ROK_6);
+	export_constant(SC_COLORS_OF_HYUN_ROK_BUFF);
+	export_constant(SC_TEMPORARY_COMMUNION);
+	export_constant(SC_BLESSING_OF_M_CREATURES);
+	export_constant(SC_BLESSING_OF_M_C_DEBUFF);
+
+
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -4920,7 +4993,7 @@
 	export_constant(ADOPT_MORE_CHILDREN);
 	export_constant(ADOPT_LEVEL_70);
 	export_constant(ADOPT_MARRIED);
-	
+
 	/* directions */
 	export_constant(DIR_NORTH);
 	export_constant(DIR_NORTHWEST);
@@ -4983,13 +5056,13 @@
 	export_constant(STOR_MODE_NONE);
 	export_constant(STOR_MODE_GET);
 	export_constant(STOR_MODE_PUT);
-	
+
 	/* instance enter */
 	export_constant(IE_OK);
 	export_constant(IE_NOMEMBER);
 	export_constant(IE_NOINSTANCE);
 	export_constant(IE_OTHER);
-	
+
 	/* months */
 	export_constant(JANUARY);
 	export_constant(FEBRUARY);
@@ -5003,7 +5076,7 @@
 	export_constant(OCTOBER);
 	export_constant(NOVEMBER);
 	export_constant(DECEMBER);
-	
+
 	/* days of the week */
 	export_constant(SUNDAY);
 	export_constant(MONDAY);
@@ -5012,7 +5085,7 @@
 	export_constant(THURSDAY);
 	export_constant(FRIDAY);
 	export_constant(SATURDAY);
-	
+
 	/* date types */
 	export_constant(DT_SECOND);
 	export_constant(DT_MINUTE);
@@ -6538,101 +6611,6 @@
 	export_constant(IG_COSTUMEMILEAGE_PACKAGE3);
 	export_constant(IG_COMP_TRANS_SCROLL);
 	export_constant(IG_MINUS_STATUS_BOX);
-	export_constant(IG_S_W_BREATH_CUBE);
-	export_constant(IG_S_F_BREATH_CUBE);
-	export_constant(IG_S_SONIC_CUBE);
-	export_constant(IG_S_STRAIN_CUBE);
-	export_constant(IG_S_JACK_CUBE);
-	export_constant(IG_S_CHAIN_CUBE);
-	export_constant(IG_S_CRIMSON_CUBE);
-	export_constant(IG_S_VULCAN_CUBE);
-	export_constant(IG_S_BOOMERANG_CUBE);
-	export_constant(IG_S_ARMS_CUBE);
-	export_constant(IG_S_TORNADO_CUBE);
-	export_constant(IG_S_DUPLELIGHT_CUBE);
-	export_constant(IG_S_MAGNUS_CUBE);
-	export_constant(IG_S_ADORAMUS_CUBE);
-	export_constant(IG_S_JUDEX_CUBE);
-	export_constant(IG_S_ROLLING_CUBE);
-	export_constant(IG_S_RIPPER_CUBE);
-	export_constant(IG_S_SLASH_CUBE);
-	export_constant(IG_S_KATAR_CUBE);
-	export_constant(IG_S_SHOOTING_CUBE);
-	export_constant(IG_S_ARROW_CUBE);
-	export_constant(IG_S_AIMED_CUBE);
-	export_constant(IG_S_CLUSTER_CUBE);
-	export_constant(IG_S_BANISH_CANNON_CUBE);
-	export_constant(IG_S_BRAND_CUBE);
-	export_constant(IG_S_GENESIS_CUBE);
-	export_constant(IG_S_CHAIN_PRESS_CUBE);
-	export_constant(IG_S_GRAVE_CUBE);
-	export_constant(IG_S_DUST_CUBE);
-	export_constant(IG_S_VARETYR_CUBE);
-	export_constant(IG_S_PSYCHIC_CUBE);
-	export_constant(IG_S_SPORE_BOMB_CUBE);
-	export_constant(IG_S_CANNON_CART_CUBE);
-	export_constant(IG_S_CRAZY_CUBE);
-	export_constant(IG_S_CART_TORNADO_CUBE);
-	export_constant(IG_S_KNUCKLEARROW_CUBE);
-	export_constant(IG_S_SKYNETBLOW_CUBE);
-	export_constant(IG_S_RAMPAGE_CUBE);
-	export_constant(IG_S_TIGERCANNON_CUBE);
-	export_constant(IG_S_MENACE_CUBE);
-	export_constant(IG_S_SHADOWSPELL_CUBE);
-	export_constant(IG_S_TRIANGLE_CUBE);
-	export_constant(IG_S_PAINT_CUBE);
-	export_constant(IG_S_RAINSTORM_CUBE);
-	export_constant(IG_S_METALIC_CUBE);
-	export_constant(IG_S_ARROWVULCAN_CUBE);
-	export_constant(IG_S_REVERBERATION_CUBE);
-	export_constant(IG_S_MOONLIGHT_CUBE);
-	export_constant(IG_S_SUNSHINE_CUBE);
-	export_constant(IG_S_STARDUST_CUBE);
-	export_constant(IG_S_S_CUBE);
-	export_constant(IG_S_EVILCURSE_CUBE);
-	export_constant(IG_S_SYURIKEN_CUBE);
-	export_constant(IG_S_KUNAI_CUBE);
-	export_constant(IG_S_HUUSOUKA_CUBE);
-	export_constant(IG_S_KAMAENRAKU_CUBE);
-	export_constant(IG_S_GOD_HAMMER_CUBE);
-	export_constant(IG_S_SHATTER_BUSTER_CUBE);
-	export_constant(IG_S_TAIL_DRAGON_CUBE);
-	export_constant(IG_S_TRIP_CUBE);
-	export_constant(IG_S_FLARE_DANCE_CUBE);
-	export_constant(IG_S_SUPER_MAGIC_CUBE);
-	export_constant(IG_S_SUPER_POWER_CUBE);
-	export_constant(IG_S_SILVERVINE_CUBE);
-	export_constant(IG_S_CATNIP_CUBE);
-	export_constant(IG_S_SAVAGERABBIT_CUBE);
-	export_constant(IG_S_PICKYRUSH_CUBE);
-	export_constant(IG_S_RUNEKNIGHT_CUBE);
-	export_constant(IG_S_ROYALGUARD_CUBE);
-	export_constant(IG_S_WARLOCK_CUBE);
-	export_constant(IG_S_SORCERER_CUBE);
-	export_constant(IG_S_MECHANIC_CUBE);
-	export_constant(IG_S_GENERIC_CUBE);
-	export_constant(IG_S_ARCHBISHOP_CUBE);
-	export_constant(IG_S_SURA_CUBE);
-	export_constant(IG_S_GUILLOTINECROSS_CUBE);
-	export_constant(IG_S_SHADOWCHASER_CUBE);
-	export_constant(IG_S_RANGER_CUBE);
-	export_constant(IG_S_WANDERER_CUBE);
-	export_constant(IG_S_MINSTREL_CUBE);
-	export_constant(IG_S_STAR_EMPEROR_CUBE);
-	export_constant(IG_S_SOUL_REAPER_CUBE);
-	export_constant(IG_S_KAGEROU_CUBE);
-	export_constant(IG_S_OBORO_CUBE);
-	export_constant(IG_S_REBELLION_CUBE);
-	export_constant(IG_S_SUPERNOVICE_CUBE);
-	export_constant(IG_S_DORAM_CUBE);
-	export_constant(IG_S_MAMMOTH_CUBE);
-	export_constant(IG_S_GEMSTONE_CUBE);
-	export_constant(IG_S_PENE1_CUBE);
-	export_constant(IG_S_PENE2_CUBE);
-	export_constant(IG_S_TEMP1_CUBE);
-	export_constant(IG_S_TEMP2_CUBE);
-	export_constant(IG_BLACKSMITH_BLESS_BOX_3);
-	export_constant(IG_SHADOW_HAMMER_BOX_3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9195,9 +9173,6 @@
 	export_constant(HAT_EF_C_SAMBA_CARNIVAL);
 	export_constant(HAT_EF_POISON_MASTER);
 	export_constant(HAT_EF_C_SWIRLING_FLAME);
-	export_constant(HAT_EF_C_MELODY_WING);
-	export_constant(HAT_EF_C_SPOT_LIGHT);
-	export_constant(HAT_EF_C_ASTRA_BLESSING);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -9646,6 +9621,20 @@
 	export_constant(UNT_SOLIDTRAP);
 	export_constant(UNT_SWIFTTRAP);
 	export_constant(UNT_FLAMETRAP);
+
+	export_constant(UNT_TWINKLING_GALAXY);
+	export_constant(UNT_STAR_CANNON);
+	export_constant(UNT_GRENADES_DROPPING);
+	export_constant(UNT_FUUMASHOUAKU);
+	export_constant(UNT_MISSION_BOMBARD);
+	export_constant(UNT_TOTEM_OF_TUTELARY);
+	export_constant(UNT_HYUN_ROKS_BREEZE);
+	export_constant(UNT_SHINKIROU);
+	export_constant(UNT_JACK_FROST_NOVA);
+	export_constant(UNT_GROUND_GRAVITATION);
+	export_constant(UNT_KUNAIKAITEN);
+	export_constant(UNT_KUNAIWAIKYOKU);
+	export_constant(UNT_STAR_BURST);
 
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
