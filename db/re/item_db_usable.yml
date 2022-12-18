@@ -3551,9 +3551,8 @@ Body:
       itemheal rand(325,405),0;
   - Id: 11566
     AegisName: Yellow_Potion_B
-    Name: Yellow Potion
+    Name: "[Not For Sale] Yellow Potion"
     Type: Healing
-    Buy: 10
     Weight: 130
     Trade:
       NoDrop: true
@@ -3598,9 +3597,8 @@ Body:
       itemheal rand(45,65),0;
   - Id: 11569
     AegisName: Orange_Potion_B
-    Name: Orange Potion
+    Name: "[Not For Sale] Orange Potion"
     Type: Healing
-    Buy: 10
     Weight: 100
     Trade:
       NoDrop: true
@@ -3614,9 +3612,8 @@ Body:
       itemheal rand(105,145),0;
   - Id: 11570
     AegisName: Red_Potion_B
-    Name: Red Potion
+    Name: "[Not For Sale] Red Potion"
     Type: Healing
-    Buy: 10
     Weight: 70
     Trade:
       NoDrop: true
@@ -3649,9 +3646,8 @@ Body:
       sc_end SC_CONFUSION;
   - Id: 11572
     AegisName: Blue_Potion_B
-    Name: Blue Potion
+    Name: "[Not For Sale] Blue Potion"
     Type: Healing
-    Buy: 10
     Weight: 150
     Trade:
       NoDrop: true
@@ -50252,9 +50248,8 @@ Body:
       NoAuction: true
   - Id: 22542
     AegisName: Center_Potion_B
-    Name: Concentration Potion
+    Name: "[Not For Sale] Concentration Potion"
     Type: Usable
-    Buy: 10
     Weight: 100
     Trade:
       NoDrop: true
@@ -50267,13 +50262,25 @@ Body:
       sc_start SC_ASPDPOTION0,1800000,4;
   - Id: 22543
     AegisName: Berserk_Potion_B
-    Name: Berserk Potion
+    Name: "[Not For Sale] Berserk Potion"
     Type: Usable
-    Buy: 10
     Weight: 200
     Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Gunslinger: true
+      Knight: true
       Mage: true
+      Merchant: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      StarGladiator: true
       Swordman: true
+      Taekwon: true
+      Wizard: true
+    EquipLevelMin: 85
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50285,10 +50292,36 @@ Body:
       sc_start SC_ASPDPOTION2,1800000,9;
   - Id: 22544
     AegisName: Awakening_Potion_B
-    Name: Awakening Potion
+    Name: "[Not For Sale] Awakening Potion"
     Type: Usable
-    Buy: 10
     Weight: 150
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Gunslinger: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Monk: true
+      Ninja: true
+      Novice: true
+      Rebellion: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      StarGladiator: true
+      Summoner: true
+      SuperNovice: true
+      Swordman: true
+      Taekwon: true
+      Thief: true
+      Wizard: true
+    EquipLevelMin: 40
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56296,7 +56329,6 @@ Body:
     Name: First aid Box (5)
     Type: Usable
     EquipLevelMin: 5
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56316,7 +56348,6 @@ Body:
     Name: First aid Box (10)
     Type: Usable
     EquipLevelMin: 10
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56336,7 +56367,6 @@ Body:
     Name: First aid Box (15)
     Type: Usable
     EquipLevelMin: 15
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56356,7 +56386,6 @@ Body:
     Name: First aid Box (20)
     Type: Usable
     EquipLevelMin: 20
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56376,7 +56405,6 @@ Body:
     Name: First aid Box (25)
     Type: Usable
     EquipLevelMin: 25
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56396,7 +56424,6 @@ Body:
     Name: First aid Box (30)
     Type: Usable
     EquipLevelMin: 30
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56416,7 +56443,6 @@ Body:
     Name: First aid Box (35)
     Type: Usable
     EquipLevelMin: 35
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56435,7 +56461,6 @@ Body:
     Name: First aid Box (40)
     Type: Usable
     EquipLevelMin: 40
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56454,7 +56479,6 @@ Body:
     Name: First aid Box (45)
     Type: Usable
     EquipLevelMin: 45
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56473,7 +56497,6 @@ Body:
     Name: First aid Box (50)
     Type: Usable
     EquipLevelMin: 50
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56492,7 +56515,6 @@ Body:
     Name: First aid Box (55)
     Type: Usable
     EquipLevelMin: 55
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56511,7 +56533,6 @@ Body:
     Name: First aid Box (60)
     Type: Usable
     EquipLevelMin: 60
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56529,7 +56550,6 @@ Body:
     Name: First aid Box (65)
     Type: Usable
     EquipLevelMin: 65
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56547,7 +56567,6 @@ Body:
     Name: First aid Box (70)
     Type: Usable
     EquipLevelMin: 70
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56565,7 +56584,6 @@ Body:
     Name: First aid Box (75)
     Type: Usable
     EquipLevelMin: 75
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56583,7 +56601,6 @@ Body:
     Name: First aid Box (80)
     Type: Usable
     EquipLevelMin: 80
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56601,7 +56618,6 @@ Body:
     Name: First aid Box (85)
     Type: Usable
     EquipLevelMin: 85
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56620,7 +56636,6 @@ Body:
     Name: First aid Box (90)
     Type: Usable
     EquipLevelMin: 90
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56639,7 +56654,6 @@ Body:
     Name: First aid Box (95)
     Type: Usable
     EquipLevelMin: 95
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56654,9 +56668,8 @@ Body:
       getitem 23506,8;
   - Id: 23503
     AegisName: Red_Potion_B_20
-    Name: "[Event] Crate of 20 Red Potions"
+    Name: "[Not For Sale] Crate of 20 Red Potions"
     Type: Usable
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56669,9 +56682,8 @@ Body:
       getitem 11570,20;
   - Id: 23504
     AegisName: Orange_Potion_B_20
-    Name: "[Event] Crate of 20 Orange Potions"
+    Name: "[Not For Sale] Crate of 20 Orange Potions"
     Type: Usable
-    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56684,7 +56696,7 @@ Body:
       getitem 11569,20;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
-    Name: "[Event] Crate of 20 Yellow Potions"
+    Name: "[Not For Sale] Crate of 20 Yellow Potions"
     Type: Usable
     Trade:
       NoDrop: true
@@ -56697,7 +56709,7 @@ Body:
       getitem 11566,20;
   - Id: 23506
     AegisName: White_Potion_B_20
-    Name: "[Event] Box of 20 White Potion"
+    Name: "[Not For Sale] Box of 20 White Potion"
     Type: Usable
     Trade:
       NoDrop: true
@@ -62850,8 +62862,9 @@ Body:
       getgroupitem(IG_SEASON_EVT_REWARD_9);
   - Id: 100951
     AegisName: S_Ignition_Cube
-    Name: Ignition Shadow Cube    # !todo check english name
+    Name: Ignition Shadow Cube
     Type: Usable
+    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -62863,7 +62876,1622 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_S_IGNITION_CUBE);
+      getgroupitem(IG_S_Ignition_Cube);
+  - Id: 100952
+    AegisName: S_W_Breath_Cube
+    Name: Cold Breath Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_W_Breath_Cube);
+  - Id: 100954
+    AegisName: S_F_Breath_Cube
+    Name: Fire Breath Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_F_Breath_Cube);
+  - Id: 100955
+    AegisName: S_Sonic_Cube
+    Name: Sonic Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Sonic_Cube);
+  - Id: 100956
+    AegisName: S_Banish_Cannon_Cube
+    Name: Vanishing Cannon Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Banish_Cannon_Cube);
+  - Id: 100957
+    AegisName: S_Brand_Cube
+    Name: Brand Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Brand_Cube);
+  - Id: 100958
+    AegisName: S_Genesis_Cube
+    Name: Genesis Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Genesis_Cube);
+  - Id: 100959
+    AegisName: S_Chain_Press_Cube
+    Name: Chain Press Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Chain_Press_Cube);
+  - Id: 100960
+    AegisName: S_Strain_Cube
+    Name: Strain Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Strain_Cube);
+  - Id: 100961
+    AegisName: S_Jack_Cube
+    Name: Jack Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Jack_Cube);
+  - Id: 100962
+    AegisName: S_Chain_Cube
+    Name: Chain Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Chain_Cube);
+  - Id: 100963
+    AegisName: S_Crimson_Cube
+    Name: Crimson Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Crimson_Cube);
+  - Id: 100964
+    AegisName: S_Grave_Cube
+    Name: Grave Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Grave_Cube);
+  - Id: 100965
+    AegisName: S_Dust_Cube
+    Name: Dust Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Dust_Cube);
+  - Id: 100966
+    AegisName: S_Varetyr_Cube
+    Name: Varetyr Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Varetyr_Cube);
+  - Id: 100967
+    AegisName: S_Psychic_Cube
+    Name: Psychic Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Psychic_Cube);
+  - Id: 100968
+    AegisName: S_Vulcan_Cube
+    Name: Vulcan Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Vulcan_Cube);
+  - Id: 100969
+    AegisName: S_Boomerang_Cube
+    Name: Boomerang Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Boomerang_Cube);
+  - Id: 100970
+    AegisName: S_Arms_Cube
+    Name: Arm Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Arms_Cube);
+  - Id: 100971
+    AegisName: S_Tornado_Cube
+    Name: Tornado Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Tornado_Cube);
+  - Id: 100972
+    AegisName: S_Spore_Bomb_Cube
+    Name: Spore Bomb Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Spore_Bomb_Cube);
+  - Id: 100973
+    AegisName: S_Cannon_Cart_Cube
+    Name: Cannon Cart Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Cannon_Cart_Cube);
+  - Id: 100974
+    AegisName: S_Crazy_Cube
+    Name: Crazy Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Crazy_Cube);
+  - Id: 100975
+    AegisName: S_Cart_Tornado_Cube
+    Name: Tornado Cart Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Cart_Tornado_Cube);
+  - Id: 100976
+    AegisName: S_Duplelight_Cube
+    Name: Duple Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Duplelight_Cube);
+  - Id: 100977
+    AegisName: S_Magnus_Cube
+    Name: Magnus Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Magnus_Cube);
+  - Id: 100978
+    AegisName: S_Adoramus_Cube
+    Name: Adora Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Adoramus_Cube);
+  - Id: 100979
+    AegisName: S_Judex_Cube
+    Name: Judex Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Judex_Cube);
+  - Id: 100980
+    AegisName: S_Knucklearrow_Cube
+    Name: Knuckle Arrow Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Knucklearrow_Cube);
+  - Id: 100981
+    AegisName: S_Skynetblow_Cube
+    Name: Sky Blow Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Skynetblow_Cube);
+  - Id: 100982
+    AegisName: S_Rampage_Cube
+    Name: Rampage Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Rampage_Cube);
+  - Id: 100983
+    AegisName: S_TigerCannon_Cube
+    Name: Tiger Cannon Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_TigerCannon_Cube);
+  - Id: 100984
+    AegisName: S_Rolling_Cube
+    Name: Rolling Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Rolling_Cube);
+  - Id: 100985
+    AegisName: S_Ripper_Cube
+    Name: Ripper Slasher Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Ripper_Cube);
+  - Id: 100986
+    AegisName: S_Slash_Cube
+    Name: Slash Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Slash_Cube);
+  - Id: 100987
+    AegisName: S_Katar_Cube
+    Name: Katar Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Katar_Cube);
+  - Id: 100988
+    AegisName: S_Menace_Cube
+    Name: Menace Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Menace_Cube);
+  - Id: 100989
+    AegisName: S_Shadowspell_Cube
+    Name: Shadow Spell Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Shadowspell_Cube);
+  - Id: 100990
+    AegisName: S_Triangle_Cube
+    Name: Triangle Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Triangle_Cube);
+  - Id: 100991
+    AegisName: S_Paint_Cube
+    Name: Feint Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Paint_Cube);
+  - Id: 100992
+    AegisName: S_Shooting_Cube
+    Name: Katar Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Shooting_Cube);
+  - Id: 100994
+    AegisName: S_Arrow_Cube
+    Name: Arrow Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Arrow_Cube);
+  - Id: 100995
+    AegisName: S_Aimed_Cube
+    Name: Aimed Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Aimed_Cube);
+  - Id: 100996
+    AegisName: S_Cluster_Cube
+    Name: Cluster Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Cluster_Cube);
+  - Id: 100997
+    AegisName: S_Rainstorm_Cube
+    Name: Rainstorm Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Rainstorm_Cube);
+  - Id: 100998
+    AegisName: S_Metalic_Cube
+    Name: Metallic Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Metalic_Cube);
+  - Id: 100999
+    AegisName: S_Arrowvulcan_Cube
+    Name: Arrow Vulcan Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Arrowvulcan_Cube);
+  - Id: 101000
+    AegisName: S_Reverberation_Cube
+    Name: Reverberation Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Reverberation_Cube);
+  - Id: 101001
+    AegisName: S_Moonlight_Cube
+    Name: Moonlight Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Moonlight_Cube);
+  - Id: 101002
+    AegisName: S_Sunshine_Cube
+    Name: Sunshine Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Sunshine_Cube);
+  - Id: 101003
+    AegisName: S_Stardust_Cube
+    Name: Stardust Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Stardust_Cube);
+  - Id: 101004
+    AegisName: S_S_Cube
+    Name: Es Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_S_Cube);
+  - Id: 101005
+    AegisName: S_Evilcurse_Cube
+    Name: Evil Curse Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Evilcurse_Cube);
+  - Id: 101006
+    AegisName: S_Syuriken_Cube
+    Name: Cross Shuriken Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Syuriken_Cube);
+  - Id: 101007
+    AegisName: S_Kunai_Cube
+    Name: Kunai Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Kunai_Cube);
+  - Id: 101008
+    AegisName: S_Huusouka_Cube
+    Name: Wind Spear Petal Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Huusouka_Cube);
+  - Id: 101009
+    AegisName: S_Kamaenraku_Cube
+    Name: First Exploding Draft Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Kamaenraku_Cube);
+  - Id: 101010
+    AegisName: S_God_Hammer_Cube
+    Name: God Hammer Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_God_Hammer_Cube);
+  - Id: 101011
+    AegisName: S_Shatter_Buster_Cube
+    Name: Shatter Buster Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Shatter_Buster_Cube);
+  - Id: 101012
+    AegisName: S_Tail_Dragon_Cube
+    Name: Tail Dragon Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Tail_Dragon_Cube);
+  - Id: 101013
+    AegisName: S_Trip_Cube
+    Name: Trip Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Trip_Cube);
+  - Id: 101014
+    AegisName: S_Flare_Dance_Cube
+    Name: Flare Dance Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Flare_Dance_Cube);
+  - Id: 101015
+    AegisName: S_Super_Magic_Cube
+    Name: Super Magic Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Super_Magic_Cube);
+  - Id: 101016
+    AegisName: S_Super_Power_Cube
+    Name: Super Power Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Super_Power_Cube);
+  - Id: 101017
+    AegisName: S_Silvervine_Cube
+    Name: Silvervine Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Silvervine_Cube);
+  - Id: 101018
+    AegisName: S_Catnip_Cube
+    Name: Catnip Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Catnip_Cube);
+  - Id: 101019
+    AegisName: S_SavageRabbit_Cube
+    Name: Savage Rabbit Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_SavageRabbit_Cube);
+  - Id: 101020
+    AegisName: S_Pickyrush_Cube
+    Name: Picky Rush Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Pickyrush_Cube);
+  - Id: 101021
+    AegisName: S_RuneKnight_Cube
+    Name: Rune Knight Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_RuneKnight_Cube);
+  - Id: 101022
+    AegisName: S_RoyalGuard_Cube
+    Name: Royal Guard Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_RoyalGuard_Cube);
+  - Id: 101023
+    AegisName: S_Warlock_Cube
+    Name: Warlock Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Warlock_Cube);
+  - Id: 101024
+    AegisName: S_Sorcerer_Cube
+    Name: Sorcerer Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Sorcerer_Cube);
+  - Id: 101025
+    AegisName: S_Mechanic_Cube
+    Name: Mechanic Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Mechanic_Cube);
+  - Id: 101026
+    AegisName: S_Generic_Cube
+    Name: Genetic Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Generic_Cube);
+  - Id: 101027
+    AegisName: S_ArchBishop_Cube
+    Name: Arch Bishop Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_ArchBishop_Cube);
+  - Id: 101028
+    AegisName: S_Sura_Cube
+    Name: Sura Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Sura_Cube);
+  - Id: 101029
+    AegisName: S_GuillotineCross_Cube
+    Name: Guillotine Cross Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_GuillotineCross_Cube);
+  - Id: 101030
+    AegisName: S_ShadowChaser_Cube
+    Name: Shadow Chaser Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_ShadowChaser_Cube);
+  - Id: 101031
+    AegisName: S_Ranger_Cube
+    Name: Ranger Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Ranger_Cube);
+  - Id: 101032
+    AegisName: S_Wanderer_Cube
+    Name: Wanderer Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Wanderer_Cube);
+  - Id: 101033
+    AegisName: S_Minstrel_Cube
+    Name: Minstrel Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Minstrel_Cube);
+  - Id: 101034
+    AegisName: S_Star_Emperor_Cube
+    Name: Star Emperor Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Star_Emperor_Cube);
+  - Id: 101035
+    AegisName: S_Soul_Reaper_Cube
+    Name: Soul Reaper Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Soul_Reaper_Cube);
+  - Id: 101036
+    AegisName: S_Kagerou_Cube
+    Name: Kagerou Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Kagerou_Cube);
+  - Id: 101037
+    AegisName: S_Oboro_Cube
+    Name: Oboro Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Oboro_Cube);
+  - Id: 101038
+    AegisName: S_Rebellion_Cube
+    Name: Rebellion Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Rebellion_Cube);
+  - Id: 101039
+    AegisName: S_SuperNovice_Cube
+    Name: Super Novice Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_SuperNovice_Cube);
+  - Id: 101040
+    AegisName: S_Doram_Cube
+    Name: Doram Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Doram_Cube);
+  - Id: 101041
+    AegisName: S_Mammoth_Cube
+    Name: Mammoth Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Mammoth_Cube);
+  - Id: 101042
+    AegisName: S_Gemstone_Cube
+    Name: Gemstone Shadow Cube
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Gemstone_Cube);
+  - Id: 101043
+    AegisName: S_Pene1_Cube
+    Name: Penetration Shadow Cube I
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Pene1_Cube);
+  - Id: 101044
+    AegisName: S_Pene2_Cube
+    Name: Penetration Shadow Cube II
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Pene2_Cube);
+  - Id: 101045
+    AegisName: S_Temp1_Cube
+    Name: Tempest Shadow Cube I
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Temp1_Cube);
+  - Id: 101046
+    AegisName: S_Temp2_Cube
+    Name: Tempest Shadow Cube II
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_S_Temp2_Cube);
+  - Id: 101047
+    AegisName: Blacksmith_Bless_Box_3
+    Name: Blacksmith Blessing Box 3
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_Blacksmith_Bless_Box_3);
+  - Id: 101048
+    AegisName: Shadow_Hammer_Box_3
+    Name: Holgren's Shadow Smelting Hammer Box 3
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_Shadow_Hammer_Box_3);
   - Id: 101060
     AegisName: Select_Example1
     Name: TestA
