@@ -20449,10 +20449,32 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 /// Roulette System
 /// Author: Yommy
 
+void roulette_generate_bonus( struct map_session_data& sd ){
+	if( battle_config.feature_roulette_bonus_reward && sd.roulette.bonusItemID == 0 ){
+		int next_stage = 0;
+
+		if( sd.roulette_point.bronze > 0 ){
+			next_stage = 0;
+		}else if( sd.roulette_point.silver > 9 ){
+			next_stage = 2;
+		}else if( sd.roulette_point.gold > 9 ){
+			next_stage = 4;
+		}
+
+		// Get bonus item stage only from current stage or higher
+		int reward_stage = rnd_value( next_stage, MAX_ROULETTE_LEVEL - 1 );
+		sd.roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]];
+	}else{
+		sd.roulette.bonusItemID = 0;
+	}
+}
+
 /// Opens the roulette window
 /// 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
 void clif_roulette_open( struct map_session_data* sd ){
 	nullpo_retv( sd );
+
+	roulette_generate_bonus( *sd );
 
 	struct packet_roulette_open_ack p;
 
@@ -20461,7 +20483,7 @@ void clif_roulette_open( struct map_session_data* sd ){
 	p.Serial = 0; // serial
 	p.Step = (sd->roulette.claimPrize) ? sd->roulette.stage - 1 : 0;
 	p.Idx = (sd->roulette.claimPrize) ? sd->roulette.prizeIdx : -1;
-	p.AdditionItemID = -1; //! TODO: Display bonus item
+	p.AdditionItemID = sd->roulette.bonusItemID;
 	p.GoldPoint = sd->roulette_point.gold;
 	p.SilverPoint = sd->roulette_point.silver;
 	p.BronzePoint = sd->roulette_point.bronze;
@@ -20548,7 +20570,7 @@ static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_RO
 
 	p.PacketType = roulettercvitemackType;
 	p.Result = type;
-	p.AdditionItemID = 0; //! TODO: Additional item
+	p.AdditionItemID = sd->roulette.bonusItemID;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
@@ -20574,11 +20596,32 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	if (sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !(rd.flag[sd->roulette.prizeStage][sd->roulette.prizeIdx]&1))
-		factor = 2;
+	if( sd->roulette.bonusItemID != 0 ){
+		if( sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !( rd.flag[sd->roulette.prizeStage][sd->roulette.prizeIdx]&1 ) ){
+			factor = 2;
+			// Reset the Bonus Item to trigger new calculation
+			sd->roulette.bonusItemID = 0;
+		}else{
+			for( int i = 0; i < MAX_ROULETTE_LEVEL && sd->roulette.bonusItemID != 0; i++ ){
+				for( int j = 0; j < MAX_ROULETTE_COLUMNS - i && sd->roulette.bonusItemID != 0; j++ ){
+					if( rd.nameid[i][j] == sd->roulette.bonusItemID ){
+						// If you reached a equal or higher level than the first level with the bonus item in it, you missed your chance and a new bonus item will be calculated
+						if( sd->roulette.prizeStage >= i ){
+							// Reset the Bonus Item to trigger new calculation and to cancel the loops
+							sd->roulette.bonusItemID = 0;
+						}
+					}
+				}
+			}
+		}
+	}
 
 	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx] * factor, LOG_TYPE_ROULETTE)) == 0) {
 		; // onSuccess
+	}
+
+	if( sd->roulette.bonusItemID == 0 ){
+		roulette_generate_bonus( *sd );
 	}
 
 	sd->roulette.claimPrize = false;
@@ -20651,13 +20694,6 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 				sd->roulette_point.gold -= 10;
 				sd->roulette.stage = 4;
 				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
-			}
-			if( battle_config.feature_roulette_bonus_reward ){
-				// Get bonus item stage only from current stage or higher
-				int reward_stage = rnd_value( sd->roulette.stage, MAX_ROULETTE_LEVEL - 1 );
-				sd->roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]];
-			}else{
-				sd->roulette.bonusItemID = 0;
 			}
 		}
 
