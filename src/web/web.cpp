@@ -33,6 +33,7 @@
 
 
 using namespace rathena;
+using namespace rathena::server_core;
 using namespace rathena::server_web;
 
 #define WEB_MAX_MSG 30				/// Max number predefined in msg_conf
