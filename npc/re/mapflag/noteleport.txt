@@ -446,3 +446,9 @@ que_thr	mapflag	noteleport
 1@ch_u	mapflag	noteleport
 1@ch_u	mapflag	monster_noteleport
 1@ch_u	mapflag	monster_noteleport
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	noteleport
+itemmall	mapflag	monster_noteleport

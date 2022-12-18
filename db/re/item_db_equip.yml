@@ -5230,7 +5230,7 @@ Body:
       bonus bAtkEle,Ele_Holy;
       bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
   - Id: 1298
-    AegisName: Shiver_Katar_K
+    AegisName: Shiver_Katar
     Name: Shiver Katar
     Type: Weapon
     SubType: Katar
@@ -17778,7 +17778,7 @@ Body:
          bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
       }
   - Id: 1865
-    AegisName: Raging_Dragon_Fist
+    AegisName: Combo_Fist
     Name: Raging Dragon Fist
     Type: Weapon
     SubType: Knuckle
@@ -17808,7 +17808,7 @@ Body:
       if (.@r >= 11)
          bonus2 bSkillAtk,"CH_CHAINCRUSH",30;
   - Id: 1866
-    AegisName: Dedicated_Bandage
+    AegisName: Asura_Bandage
     Name: Dedicated Bandage
     Type: Weapon
     SubType: Knuckle
@@ -21172,8 +21172,7 @@ Body:
       SoulLinker: true
       Wizard: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -21401,8 +21400,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -21865,7 +21863,7 @@ Body:
          bonus2 bSkillCooldown,"WL_EARTHSTRAIN",-1000;
       }
   - Id: 2055
-    AegisName: Staff_of_Miracle
+    AegisName: Staff_Of_Miracle
     Name: Staff of Miracle
     Type: Weapon
     SubType: 2hStaff
@@ -21965,7 +21963,7 @@ Body:
          bonus2 bSubSize,Size_All,25;
       }
   - Id: 2058
-    AegisName: Detecting_Staff
+    AegisName: Ein_BHSTAFF
     Name: Detecting Staff
     Type: Weapon
     SubType: 2hStaff
@@ -38564,7 +38562,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 2983
-    AegisName: Greed_Brooch
+    AegisName: Brooch_Greed
     Name: Greed Brooch
     Type: Armor
     Buy: 10
@@ -54984,6 +54982,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 940
+  - Id: 5912
+    AegisName: C_Minions_Of_Devil
+    Name: Costume Servant Deviling
+    Type: Armor
+    Buy: 20
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1036
   - Id: 5914
     AegisName: Earmuff_Flowerform
     Name: C Flutter Butterfly
@@ -60231,8 +60238,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -60263,8 +60269,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -60372,8 +60377,7 @@ Body:
     Jobs:
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -62168,8 +62172,7 @@ Body:
       KagerouOboro: true
       Ninja: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -62283,8 +62286,7 @@ Body:
       KagerouOboro: true
       Ninja: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -62403,8 +62405,7 @@ Body:
     Jobs:
       KagerouOboro: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -66650,7 +66651,7 @@ Body:
       bonus bMaxHP,BaseLevel*3;
       bonus bMaxSP,BaseLevel/2;
   - Id: 15089
-    AegisName: Menswear
+    AegisName: Lounge_Suit
     Name: Menswear
     Type: Armor
     Buy: 10
@@ -67857,7 +67858,7 @@ Body:
       if (.@r > 9)
          bonus bUseSPrate,-5;
   - Id: 15162
-    AegisName: Lounge_Suit
+    AegisName: Lounge_Suit_
     Name: Lounge Suit
     Type: Armor
     Buy: 20
@@ -68037,7 +68038,7 @@ Body:
       if (.@r >= 9)
          bonus bDefEle,Ele_Holy;
   - Id: 15174
-    AegisName: Surfer_Swimsuit
+    AegisName: Supper_Swimsuit_K
     Name: Surfer Swimsuit
     Type: Armor
     Buy: 20
@@ -70025,6 +70026,18 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 1721
+  - Id: 15842
+    AegisName: C_Disapear_Time_J
+    Name: Costume Magic Time
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1998
+    Script: |
+      hateffect HAT_EF_C_Disapear_Time_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Disapear_Time_TW,false;
   - Id: 15843
     AegisName: Hunters_Dinner
     Name: Costume Hunter's Dinner    # !todo check english name
@@ -70033,6 +70046,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2024
+  - Id: 15847
+    AegisName: C_EXE_Wing_Cap_TH
+    Name: Costume Unknown Feather Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1597
   - Id: 15858
     AegisName: C_Choco_Banana
     Name: Costume Choco Banana Bonnet
@@ -72196,7 +72217,7 @@ Body:
          bonus3 bAutoSpell,"AB_JUDEX",max(2,getskilllv("AB_JUDEX")),50;
       /* Unknow Rates */
   - Id: 16096
-    AegisName: Bright_Pendulum
+    AegisName: Bright_Mace
     Name: Bright Pendulum
     Type: Weapon
     SubType: Mace
@@ -73200,8 +73221,7 @@ Body:
       BardDancer: true
       Hunter: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -73354,8 +73374,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -73388,8 +73407,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -73556,8 +73574,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -73588,8 +73605,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -73816,8 +73832,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -73855,8 +73870,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -73879,7 +73893,7 @@ Body:
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
       }
   - Id: 18184
-    AegisName: Rapid_Fire
+    AegisName: Rapid_Fire_C_Bow
     Name: Rapid Fire
     Type: Weapon
     SubType: Bow
@@ -83413,7 +83427,7 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH",(.@r>=8?45:(.@r>=6?30:15));
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",(.@r>=8?45:(.@r>=6?30:15));
   - Id: 19117
-    AegisName: Poring_Sunglasses_
+    AegisName: Poring_Sunglasses_K
     Name: Poring Sunglasses
     Type: Armor
     Weight: 10
@@ -83426,7 +83440,7 @@ Body:
       bonus2 bDropAddRace,RC_All,5;
       bonus2 bExpAddRace,RC_All,5;
   - Id: 19118
-    AegisName: Poring_Sunglasses__
+    AegisName: Poring_Sunglasses_K_
     Name: Poring Sunglasses
     Type: Armor
     Weight: 10
@@ -83938,7 +83952,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19148
-    AegisName: Santa_Poring_Balloon
+    AegisName: SantaPoring_Balloon
     Name: Santa Poring Balloon
     Type: Armor
     Buy: 20
@@ -83968,7 +83982,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19150
-    AegisName: Metalring_Balloon
+    AegisName: Metaling_Balloon
     Name: Metalring Balloon
     Type: Armor
     Buy: 20
@@ -83983,7 +83997,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19151
-    AegisName: Devilring_Balloon
+    AegisName: Deviling_Balloon
     Name: Devilring Balloon
     Type: Armor
     Buy: 20
@@ -83998,7 +84012,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19152
-    AegisName: Angelring_Balloon
+    AegisName: Angeling_Balloon
     Name: Angelring Balloon
     Type: Armor
     Buy: 20
@@ -84028,7 +84042,7 @@ Body:
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19154
-    AegisName: Arch_Angelring_Balloon
+    AegisName: Archangeling_Balloon
     Name: Arch Angelring Balloon
     Type: Armor
     Buy: 20
@@ -84139,7 +84153,7 @@ Body:
          }
       }
   - Id: 19162
-    AegisName: Scuba_Mask_
+    AegisName: Scuba_Mask_K
     Name: Scuba Mask
     Type: Armor
     Buy: 20
@@ -84270,7 +84284,7 @@ Body:
       bonus bMaxSP,140;
       bonus2 bSPRegenRate,6,4000;
   - Id: 19168
-    AegisName: Band_Of_Kafra_
+    AegisName: Kafra_Employee_Band
     Name: Kafra Staff Headband
     Type: Armor
     Buy: 20
@@ -84422,7 +84436,7 @@ Body:
       bonus2 bAddRace,RC_Angel,5;
       bonus2 bSubRace,RC_Angel,5;
   - Id: 19177
-    AegisName: Elemental_Crown_
+    AegisName: Elemental_Crown_K
     Name: Elemental Crown
     Type: Armor
     Weight: 500
@@ -85384,7 +85398,7 @@ Body:
     Refineable: true
     View: 873
   - Id: 19242
-    AegisName: Neko_Headress
+    AegisName: Cat_Lace_Hairband_K
     Name: Costume Neko Headress
     Type: Armor
     Weight: 100
@@ -85888,6 +85902,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 1370
+  - Id: 19290
+    AegisName: C_Elder_Devil_Horn
+    Name: Costume Elder Devil Horn
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 757
   - Id: 19291
     AegisName: C_Shiba_Inu
     Name: Costume Shiba Inu
@@ -89214,7 +89236,7 @@ Body:
     EquipLevelMin: 1
     View: 264
   - Id: 19597
-    AegisName: C_Magic_Eyes
+    AegisName: C_Magic_Eyes_J
     Name: Costume Magic Eyes
     Type: Armor
     Locations:
@@ -89864,7 +89886,7 @@ Body:
     Script: |
       bonus2 bAddItemHealRate,513,1100;
   - Id: 19667
-    AegisName: C_Dragon_Helm
+    AegisName: C_Helm_Of_Dragoon
     Name: Costume Dragon Helm
     Type: Armor
     Locations:
@@ -89956,6 +89978,23 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 388
+  - Id: 19679
+    AegisName: C_Round_Eyes_J
+    Name: Costume Blank Eyes
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 185
+  - Id: 19680
+    AegisName: C_Tongue_Mask
+    Name: Costume Tongue Mask
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 253
   - Id: 19682
     AegisName: C_Santa_Poring_Hat
     Name: Costume SantaPoring Cap
@@ -90253,7 +90292,7 @@ Body:
     EquipLevelMin: 1
     View: 33
   - Id: 19720
-    AegisName: C_Romantic_Gent
+    AegisName: C_Oldman's_Romance
     Name: Costume Romantic Gent
     Type: Armor
     Buy: 10
@@ -91091,7 +91130,7 @@ Body:
     EquipLevelMin: 1
     View: 878
   - Id: 19801
-    AegisName: C_Foxhat
+    AegisName: C_Fox_Hat_J
     Name: Costume Foxhat
     Type: Armor
     Locations:
@@ -91110,7 +91149,7 @@ Body:
     EquipLevelMin: 1
     View: 296
   - Id: 19803
-    AegisName: C_Windtoy_Hat
+    AegisName: C_Pinwheel_Cap
     Name: Costume Windtoy Hat
     Type: Armor
     Locations:
@@ -91181,7 +91220,7 @@ Body:
     EquipLevelMin: 1
     View: 422
   - Id: 19811
-    AegisName: C_Beer_Hat
+    AegisName: C_Beer_Cap
     Name: Costume Beer Hat
     Type: Armor
     Locations:
@@ -91253,7 +91292,7 @@ Body:
     EquipLevelMin: 1
     View: 600
   - Id: 19819
-    AegisName: C_Gang_Doogun
+    AegisName: C_Necromencer_Hood
     Name: Costume Gang Doogun
     Type: Armor
     Locations:
@@ -91275,7 +91314,7 @@ Body:
     EquipLevelMin: 1
     View: 375
   - Id: 19822
-    AegisName: C_Yellow_Doogun
+    AegisName: C_Yellow_Bandana
     Name: Costume Yellow Doogun
     Type: Armor
     Locations:
@@ -91871,6 +91910,38 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 169
+  - Id: 19892
+    AegisName: C_Night_Sparrow_Hat
+    Name: Costume Night Sparrow Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 913
+  - Id: 19893
+    AegisName: C_Black_Mage_Hat
+    Name: Costume Ordinary Black Magician Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 912
+  - Id: 19894
+    AegisName: C_Shrine_Maiden_Hat
+    Name: Costume Shrine Maiden Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 908
+  - Id: 19895
+    AegisName: C_Sorc_Night_Cap
+    Name: Costume Magician's Night Cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 911
   - Id: 19900
     AegisName: Special_Eyepatch
     Name: Cool Pirate Eyepatch
@@ -92406,7 +92477,7 @@ Body:
     EquipLevelMin: 1
     View: 420
   - Id: 19957
-    AegisName: C_Scooter_Hat
+    AegisName: C_Scooter_Hat_J
     Name: Costume Scooter Hat
     Type: Armor
     Locations:
@@ -93037,7 +93108,7 @@ Body:
     ArmorLevel: 1
     View: 212
   - Id: 20018
-    AegisName: C_Holo_Ear
+    AegisName: Horo_Ears
     Name: Costume Holo Ear
     Type: Armor
     Buy: 10
@@ -93982,7 +94053,7 @@ Body:
     EquipLevelMin: 1
     View: 962
   - Id: 20110
-    AegisName: C_Coiledup_Snake
+    AegisName: C_Coiledup_Snake_Hat1
     Name: Costume Coiledup Snake
     Type: Armor
     Locations:
@@ -95637,7 +95708,7 @@ Body:
     EquipLevelMin: 1
     View: 977
   - Id: 20282
-    AegisName: C_White_Student_Cap
+    AegisName: C_White_Boys_Hat
     Name: Costume White Student Cap
     Type: Armor
     Locations:
@@ -95688,7 +95759,7 @@ Body:
     EquipLevelMin: 1
     View: 1332
   - Id: 20287
-    AegisName: C_Mans_Medal_Gold
+    AegisName: C_Man_Medal_Gold
     Name: Costume Man's Medal(Gold)
     Type: Armor
     Locations:
@@ -95752,7 +95823,7 @@ Body:
     EquipLevelMin: 1
     View: 553
   - Id: 20295
-    AegisName: C_Poring_Sunglasses
+    AegisName: C_Poring_Sunglasses_J
     Name: Costume Poring Sunglasses
     Type: Armor
     Locations:
@@ -95853,6 +95924,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 720
+  - Id: 20306
+    AegisName: C_Artist_Hat
+    Name: Costume Artist's Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1344
   - Id: 20307
     AegisName: C_Beginner_Cap
     Name: Costume Beginner Cap
@@ -95872,7 +95951,7 @@ Body:
     EquipLevelMin: 1
     View: 873
   - Id: 20312
-    AegisName: C_Barons_Evil_Eye
+    AegisName: C_Baron_Evil_Eye
     Name: Costume Baron's Evil Eye
     Type: Armor
     Locations:
@@ -95890,7 +95969,7 @@ Body:
     EquipLevelMin: 1
     View: 815
   - Id: 20314
-    AegisName: C_New_Wave_Sunglasses
+    AegisName: C_New_Wave_Sunglass
     Name: Costume New Wave Sunglasses
     Type: Armor
     Locations:
@@ -96020,7 +96099,7 @@ Body:
     EquipLevelMin: 1
     View: 1365
   - Id: 20328
-    AegisName: C_Mackerel_Pike
+    AegisName: C_Golden_Fish
     Name: Costume Mackerel Pike
     Type: Armor
     Locations:
@@ -96110,7 +96189,7 @@ Body:
     EquipLevelMin: 1
     View: 1369
   - Id: 20340
-    AegisName: C_Straight_Pony_Black
+    AegisName: C_Straight_Pony_BL
     Name: Costume Straight Pony Black
     Type: Armor
     Locations:
@@ -96119,7 +96198,7 @@ Body:
     EquipLevelMin: 1
     View: 1371
   - Id: 20341
-    AegisName: C_Bouncing_Hair_Black
+    AegisName: C_Cowlick_BL
     Name: Costume Bouncing Hair Black
     Type: Armor
     Locations:
@@ -96128,7 +96207,7 @@ Body:
     EquipLevelMin: 1
     View: 1372
   - Id: 20342
-    AegisName: C_Loose_Wave_Twin
+    AegisName: C_Loose_Wave_Twin_BL
     Name: Costume Loose Wave Twin
     Type: Armor
     Locations:
@@ -96173,7 +96252,7 @@ Body:
     EquipLevelMin: 1
     View: 726
   - Id: 20348
-    AegisName: C_Sunday_Hat
+    AegisName: C_Picnic_Hat
     Name: Costume Sunday Hat
     Type: Armor
     Locations:
@@ -96461,7 +96540,7 @@ Body:
     EquipLevelMin: 1
     View: 1404
   - Id: 20380
-    AegisName: C_Mechanical_Feather_Hairband
+    AegisName: C_Mech_Feather_Hairband
     Name: Costume Mechanical Feather Hairband
     Type: Armor
     Locations:
@@ -96479,7 +96558,7 @@ Body:
     EquipLevelMin: 1
     View: 1406
   - Id: 20382
-    AegisName: C_Silver_Sniper_Doll
+    AegisName: C_Silversniper_Doll
     Name: Costume Silver Sniper Doll
     Type: Armor
     Locations:
@@ -96608,7 +96687,7 @@ Body:
     EquipLevelMin: 1
     View: 1287
   - Id: 20400
-    AegisName: C_Ichthys_Rosario
+    AegisName: C_Holy_Rosario
     Name: Costume Ichthys Rosario
     Type: Armor
     Locations:
@@ -96684,7 +96763,7 @@ Body:
     EquipLevelMin: 1
     View: 1418
   - Id: 20408
-    AegisName: C_Requiem_Crown_of_Light_and_Dark
+    AegisName: C_Bldy_Light_Dark_Crown
     Name: Costume Requiem Crown of Light and Dark
     Type: Armor
     Locations:
@@ -96939,7 +97018,7 @@ Body:
     EquipLevelMin: 1
     View: 825
   - Id: 20439
-    AegisName: C_New_Year_Shine
+    AegisName: C_Glow_Of_New_Year
     Name: Costume New Year Shine
     Type: Armor
     Locations:
@@ -96960,7 +97039,7 @@ Body:
     EquipLevelMin: 1
     View: 1447
   - Id: 20441
-    AegisName: C_Large_Ribbon_Muffler_Red
+    AegisName: C_L_RibbonMuff_Red
     Name: Costume Large Ribbon Muffler Red
     Type: Armor
     Locations:
@@ -96969,7 +97048,7 @@ Body:
     EquipLevelMin: 1
     View: 1448
   - Id: 20442
-    AegisName: C_Red_and_White_Mochiring_Hat
+    AegisName: C_RW_Mochiring_Hat
     Name: Costume Red and White Mochiring Hat
     Type: Armor
     Locations:
@@ -97335,7 +97414,7 @@ Body:
     EquipLevelMin: 1
     View: 215
   - Id: 20499
-    AegisName: C_Cat_Ears_Hat
+    AegisName: C_Cat_Ear_Hat
     Name: Costume Cat Ears Hat
     Type: Armor
     Locations:
@@ -97447,7 +97526,7 @@ Body:
     EquipLevelMin: 1
     View: 21
   - Id: 20512
-    AegisName: C_Bag_of_Adventurer_j
+    AegisName: C_Bravery_Bag
     Name: Costume Adventurer's Backpack
     Type: Armor
     Locations:
@@ -97551,7 +97630,7 @@ Body:
     ArmorLevel: 1
     View: 28
   - Id: 20524
-    AegisName: C_Shining_Angel_Wings
+    AegisName: C_Shining_Angel_Wing
     Name: Costume Shining Angel Wings
     Type: Armor
     Locations:
@@ -97714,7 +97793,7 @@ Body:
     UnEquipScript: |
       hateffect(HAT_EF_C_GHOST_EFFECT,false);
   - Id: 20548
-    AegisName: Costume_Popping_Poring_Aura
+    AegisName: C_Popping_Poring_Aura
     Name: Costume Popping Poring Aura
     Type: Armor
     Locations:
@@ -98016,6 +98095,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     EquipLevelMin: 1
+  - Id: 20574
+    AegisName: C_School_Bag_RD
+    Name: Costume Backpack (Red)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 51
   - Id: 20575
     AegisName: C_School_Bag_BL
     Name: Costume Backpack (Black)
@@ -98230,6 +98317,17 @@ Body:
     Script: |
       /*TODO: View ID*/
       bonus bUnbreakableHelm;
+  - Id: 20601
+    AegisName: C_99LV_Rune_Red
+    Name: Costume Red Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Rune_Red,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Rune_Red,false);
   - Id: 20602
     AegisName: C_Seraphim_Wing_TW
     Name: "Costume: Ace of Angel Wing (Sweet)"
@@ -100045,7 +100143,7 @@ Body:
             bonus bCritAtkRate,(.@r>=9)?15:10;
       }
   - Id: 20819
-    AegisName: Oxygen_Bottle
+    AegisName: Oxygen_Bomb_K
     Name: Oxygen Bottle
     Type: Armor
     Weight: 500
@@ -102638,8 +102736,7 @@ Body:
       Knight: true
       Swordman: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -102761,8 +102858,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -102821,8 +102917,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -102978,8 +103073,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -103351,7 +103445,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 21207
-    AegisName: C_Bullhead
+    AegisName: C_bullhead
     Name: Costume Bull Head
     Type: Armor
     Locations:
@@ -111413,7 +111507,7 @@ Body:
       if (.@r>=9)
          bonus bCritAtkRate,3;
   - Id: 24320
-    AegisName: S_Hasty_Shoes_II
+    AegisName: S2_Hasty_Shoes
     Name: Hasty Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111431,7 +111525,7 @@ Body:
       bonus bAtkRate,.@val;
       bonus bMatkRate,.@val;
   - Id: 24321
-    AegisName: S_Bearer's_Pendant_II
+    AegisName: S2_Bearers_Pendent
     Name: Bearer's Shadow Pendant II
     Type: Shadowgear
     Locations:
@@ -111450,7 +111544,7 @@ Body:
       }
       bonus bMaxHPrate,.@val;
   - Id: 24322
-    AegisName: S_Gemstone_Earring_II
+    AegisName: S2_Gemstone_Earring
     Name: Gemstone Shadow Earring II
     Type: Shadowgear
     Locations:
@@ -111469,7 +111563,7 @@ Body:
       bonus bMatk,5;
       bonus bUseSPrate,-.@val;
   - Id: 24323
-    AegisName: S_Spellflow_Shield_II
+    AegisName: S2_Spell_Flow_Shield
     Name: Spellflow Shadow Shield II
     Type: Shadowgear
     Locations:
@@ -111482,7 +111576,7 @@ Body:
       bonus bMatkRate,1 + (.@r >= 7);
       bonus bUseSPrate,-1;
   - Id: 24324
-    AegisName: S_Spiritual_Weapon_II
+    AegisName: S2_Spiritual_Weapon
     Name: Spiritual Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -111496,7 +111590,7 @@ Body:
       bonus bSPrecovRate,5;
       bonus bAtkRate,1 + (.@r >= 7);
   - Id: 24325
-    AegisName: S_Malicious_Armor_II
+    AegisName: S2_Malicious_Armor
     Name: Malicious Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111555,7 +111649,7 @@ Body:
          bonus bMaxSP,300;
       }
   - Id: 24328
-    AegisName: S_Force_Executioner_Weapon
+    AegisName: S2_Force_Ex_Weapon
     Name: Force Executioner Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -111568,7 +111662,7 @@ Body:
       bonus bBaseAtk,5+.@r;
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@r/2;
   - Id: 24329
-    AegisName: S_Spirit_Magic_Executioner_Weapon
+    AegisName: S2_Spirit_M_E_Weapon
     Name: Spirit Magic Executioner Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -111581,7 +111675,7 @@ Body:
       bonus bMatk,5+.@r;
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@r/2;
   - Id: 24330
-    AegisName: S_Caster_Armor_II
+    AegisName: S2_Caster_Armor
     Name: Caster Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111595,7 +111689,7 @@ Body:
       bonus bSPrecovRate,20;
       bonus bVariableCastrate,-.@r/2;
   - Id: 24331
-    AegisName: S_Reload_Armor_II
+    AegisName: S2_Reload_Armor
     Name: Reload Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111643,7 +111737,7 @@ Body:
          bonus bCritical,2;
       }
   - Id: 24334
-    AegisName: S_Magic_Compose_Armor
+    AegisName: S_MagicCompose_Armor
     Name: Magic Compose Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111662,7 +111756,7 @@ Body:
          bonus3 bAutoSpell,"WZ_EARTHSPIKE",.@val,(5+.@r);
       }
   - Id: 24335
-    AegisName: S_Gemstone_Weapon_II
+    AegisName: S2_Gemstone_Weapon
     Name: Gemstone Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -111681,7 +111775,7 @@ Body:
          bonus bUseSPrate,-2;
       }
   - Id: 24336
-    AegisName: S_Gemstone_Shield_II
+    AegisName: S2_Gemstone_Shield
     Name: Gemstone Shadow Shield II
     Type: Shadowgear
     Locations:
@@ -111699,7 +111793,7 @@ Body:
          bonus bUseSPrate,-2;
       }
   - Id: 24337
-    AegisName: S_Bearer's_Armor_II
+    AegisName: S2_Bearers_Armor
     Name: Bearer's Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111717,7 +111811,7 @@ Body:
          bonus bMaxHPrate,1;
       }
   - Id: 24338
-    AegisName: S_Bearer's_Shoes_II
+    AegisName: S2_Bearers_Shoes
     Name: Bearer's Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111759,7 +111853,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus bAllStats,.@r;
   - Id: 24341
-    AegisName: S_All_Race_Shoes
+    AegisName: S_AllRace_Shoes
     Name: All Race Shadow Shoes
     Type: Shadowgear
     Locations:
@@ -111780,7 +111874,7 @@ Body:
       bonus2 bAddRace,RC_All,.@val;
       bonus2 bMagicAddRace,RC_All,.@val;
   - Id: 24342
-    AegisName: S_All_Race_Shield
+    AegisName: S_AllRace_Shield
     Name: All Race Shadow Shield
     Type: Shadowgear
     Locations:
@@ -111861,7 +111955,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24347
-    AegisName: S_Magic_Executioner_Holy_Water_Armor
+    AegisName: S_M_ExeHoly_Armor
     Name: Magic Executioner Holy Water Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111875,7 +111969,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Undead,.@val;
   - Id: 24348
-    AegisName: S_Magic_Exorcist_Corrupted_Armor
+    AegisName: S_M_ExoCorrupt_Armor
     Name: Magic Exorcist Corrupted Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111889,7 +111983,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Angel,.@val;
   - Id: 24349
-    AegisName: S_Magic_Vibration_Dragon_Killer_Armor
+    AegisName: S_M_DragonVib_Armor
     Name: Magic Vibration Dragon Killer Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111903,7 +111997,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Dragon,.@val;
   - Id: 24350
-    AegisName: S_Magic_Scissor_Hunting_Armor
+    AegisName: S_M_SciHunting_Armor
     Name: Magic Scissor Hunting Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111918,7 +112012,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Brute,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,.@val;
   - Id: 24351
-    AegisName: S_Magic_Fishing_Insect_Net_Armor
+    AegisName: S_M_FishInsect_Armor
     Name: Magic Fishing Insect Net Shadow Armor
     Type: Shadowgear
     Locations:
@@ -111932,7 +112026,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Fish,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Insect,.@val;
   - Id: 24352
-    AegisName: S_Plasterer's_Armor_II
+    AegisName: S2_Plasterer's_Armor
     Name: Plasterer's Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111945,7 +112039,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Stone,100*.@r;
   - Id: 24353
-    AegisName: S_Insomniac_Shoes_II
+    AegisName: S2_Insomniac_Shoes
     Name: Insomniac Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111958,7 +112052,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Sleep,100*.@r;
   - Id: 24354
-    AegisName: S_Peerless_Armor_II
+    AegisName: S2_Peerless_Armor
     Name: Peerless Shadow Armor II
     Type: Shadowgear
     Locations:
@@ -111971,7 +112065,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Silence,100*.@r;
   - Id: 24355
-    AegisName: S_Adulate_Shoes_II
+    AegisName: S2_Adurate_Shoes
     Name: Adulate Shadow Shoes II
     Type: Shadowgear
     Locations:
@@ -111984,7 +112078,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Blind,100*.@r;
   - Id: 24356
-    AegisName: S_Unfreezing_Weapon_II
+    AegisName: Unfreez_Weapon_S2
     Name: Unfreezing Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -111998,7 +112092,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Freeze,100*.@r;
   - Id: 24357
-    AegisName: S_Vitality_Earring_II
+    AegisName: Vitality_Earing_S2
     Name: Vitality Shadow Earring II
     Type: Shadowgear
     Locations:
@@ -112011,7 +112105,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Bleeding,100*.@r;
   - Id: 24358
-    AegisName: S_Neutral_Weapon_II
+    AegisName: S2_Neutral_Weapon
     Name: Neutral Shadow Weapon II
     Type: Shadowgear
     Locations:
@@ -112025,7 +112119,7 @@ Body:
       bonus bDef,1;
       bonus2 bResEff,Eff_Stun,100*(.@r/2);
   - Id: 24359
-    AegisName: S_Uncursed_Pendant_II
+    AegisName: S2_Curse_Lift_Pendent
     Name: Uncursed Shadow Pendant II
     Type: Shadowgear
     Locations:
@@ -112178,7 +112272,7 @@ Body:
       }
       bonus bHPrecovRate,.@val;
   - Id: 24369
-    AegisName: S_Restore_Pendant
+    AegisName: S_Restore_Pendent
     Name: Restore Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -112198,7 +112292,7 @@ Body:
       }
       bonus bSPrecovRate,.@val;
   - Id: 24370
-    AegisName: S_Mortal_Blow_Weapon
+    AegisName: S_MortalBlow_Weapon
     Name: Mortal Blow Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -112219,7 +112313,7 @@ Body:
       }
       bonus bCritAtkRate,.@val;
   - Id: 24371
-    AegisName: S_Mortal_Blow_Earring
+    AegisName: S_MortalBlow_Earring
     Name: Mortal Blow Shadow Earring
     Type: Shadowgear
     Locations:
@@ -112239,7 +112333,7 @@ Body:
       }
       bonus bCritAtkRate,.@val;
   - Id: 24372
-    AegisName: S_Mortal_Blow_Pendant
+    AegisName: S_MortalBlow_Pendent
     Name: Mortal Blow Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -112283,7 +112377,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24375
-    AegisName: S_Executioner_Holy_Water_Armor
+    AegisName: S_ExeHoly_Armor
     Name: Executioner Holy Water Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112297,7 +112391,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Undead,.@val;
   - Id: 24376
-    AegisName: S_Exorcist_Corrupted_Armor
+    AegisName: S_ExoCorrupt_Armor
     Name: Exorcist Corrupted Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112311,7 +112405,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Angel,.@val;
   - Id: 24377
-    AegisName: S_Vibration_Dragon_Killer_Armor
+    AegisName: S_DragonVib_Armor
     Name: Vibration Dragon Killer Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112325,7 +112419,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Dragon,.@val;
   - Id: 24378
-    AegisName: S_Scissor_Hunting_Armor
+    AegisName: S_SciHunting_Armor
     Name: Scissor Hunting Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112339,7 +112433,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Plant,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Brute,.@val;
   - Id: 24379
-    AegisName: S_Fishing_Insect_Net_Armor
+    AegisName: S_FishInsect_Armor
     Name: Fishing Insect Net Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112675,7 +112769,7 @@ Body:
          bonus bMatkRate,2;
       }
   - Id: 24399
-    AegisName: S_Immune_Athena_Shield
+    AegisName: S_ImmunedAthena_Shield
     Name: Immune Athena Shadow Shield
     Type: Shadowgear
     Locations:
@@ -112687,7 +112781,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus bDef,50+20*(.@r/2);
   - Id: 24400
-    AegisName: S_Hard_Champion_Shoes
+    AegisName: S_HardChamption_Shoes
     Name: Hard Champion Shadow Shoes
     Type: Shadowgear
     Locations:
@@ -112958,7 +113052,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bSkillCooldown,"SP_SOULREAPER",-3000-1000*(.@r/2);
   - Id: 24416
-    AegisName: S_Temporal_Transcendent_Weapon
+    AegisName: S_Timeoverload_Weapon
     Name: Temporal Transcendent Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -112979,7 +113073,7 @@ Body:
       bonus bMatk,.@r;
       bonus bCritAtkRate,7;
   - Id: 24417
-    AegisName: S_Temporal_Transcendent_Armor
+    AegisName: S_Timeoverload_Armor
     Name: Temporal Transcendent Shadow Armor
     Type: Shadowgear
     Locations:
@@ -112998,7 +113092,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bAspd,1;
   - Id: 24418
-    AegisName: S_Temporal_Transcendent_Shield
+    AegisName: S_Timeoverload_Shield
     Name: Temporal Transcendent Shadow Shield
     Type: Shadowgear
     Locations:
@@ -113017,7 +113111,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bVariableCastrate,-10;
   - Id: 24419
-    AegisName: S_Temporal_Transcendent_Shoes
+    AegisName: S_Timeoverload_Shoes
     Name: Temporal Transcendent Shadow Shoes
     Type: Shadowgear
     Locations:
@@ -113036,7 +113130,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bAspdRate,7;
   - Id: 24420
-    AegisName: S_Temporal_Transcendent_Earring
+    AegisName: S_Timeoverload_Earing
     Name: Temporal Transcendent Shadow Earring
     Type: Shadowgear
     Locations:
@@ -113055,7 +113149,7 @@ Body:
       bonus bMaxHP,getrefine()*10;
       bonus bMatk,15;
   - Id: 24421
-    AegisName: S_Temporal_Transcendent_Pendant
+    AegisName: S_Timeoverload_Pandent
     Name: Temporal Transcendent Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -119006,6 +119100,48 @@ Body:
          bonus2 bExpAddRace,RC_All,5;
       }
       bonus2 bExpAddRace,RC_All,(.@r/2);
+  - Id: 24778
+    AegisName: aegis_24778
+    Name: Level 1 Armor Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+  - Id: 24779
+    AegisName: aegis_24779
+    Name: Level 1 Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+  - Id: 24780
+    AegisName: aegis_24780
+    Name: Level 1 Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+  - Id: 24781
+    AegisName: aegis_24781
+    Name: Level 1 Shoes Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+  - Id: 24782
+    AegisName: aegis_24782
+    Name: Level 1 Earring Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+  - Id: 24783
+    AegisName: aegis_24783
+    Name: Level 1 Pendant Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
   - Id: 26001
     AegisName: Toughen_Metal_Lance
     Name: Enhanced Metal Lance
@@ -119020,8 +119156,7 @@ Body:
       Knight: true
       Swordman: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -119171,8 +119306,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -120142,7 +120276,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,5;
       bonus2 bMagicAtkEle,Ele_Earth,5;
   - Id: 26161
-    AegisName: Penitentia
+    AegisName: Ponitendtia
     Name: Penitentia
     Type: Weapon
     SubType: Staff
@@ -120950,8 +121084,7 @@ Body:
     Jobs:
       Assassin: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -121094,8 +121227,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -121153,8 +121285,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Trade:
@@ -121234,7 +121365,7 @@ Body:
          }
       }
   - Id: 28039
-    AegisName: Katar_of_Shiver
+    AegisName: Shiver_Katar_K
     Name: Katar of Shiver
     Type: Weapon
     SubType: Katar
@@ -121283,8 +121414,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -121310,7 +121440,7 @@ Body:
          bonus2 bAddRace,RC_DemiHuman,15;
       }
   - Id: 28042
-    AegisName: Ripper_Cross
+    AegisName: Reaper_Cross
     Name: Ripper Cross
     Type: Weapon
     SubType: Katar
@@ -121735,8 +121865,7 @@ Body:
       Merchant: true
       Swordman: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -121897,8 +122026,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122119,8 +122247,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 99
     Trade:
@@ -122266,6 +122393,26 @@ Body:
     Refineable: true
     Script: |
       bonus2 bSkillAtk,"WS_CARTTERMINATION",30;
+  - Id: 28144
+    AegisName: aegis_28144
+    Name: Level 5 Two-Handed Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 28200
     AegisName: END_OF_HORIZON
     Name: End Of The Horizon
@@ -122387,8 +122534,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122421,8 +122567,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122456,8 +122601,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -122488,8 +122632,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
@@ -126231,7 +126374,7 @@ Body:
       bonus bVit,8;
       bonus bInt,8;
   - Id: 28602
-    AegisName: Demon_Hunting_Bible_K
+    AegisName: Demon_Hunting_Bible
     Name: Demon Hunting Bible
     Type: Weapon
     SubType: Book
@@ -126797,7 +126940,7 @@ Body:
          }
       }
   - Id: 28630
-    AegisName: Exoricists_Bible_
+    AegisName: Demon_Hunting_Bible_K
     Name: Exoricist's Bible
     Type: Weapon
     SubType: Book
@@ -126901,7 +127044,7 @@ Body:
          bonus2 bSkillAtk,"AB_DUPLELIGHT",30;
       }
   - Id: 28633
-    AegisName: Boltijin
+    AegisName: Boltigin
     Name: Boltijin
     Type: Weapon
     SubType: Book
@@ -129241,7 +129384,7 @@ Body:
     EquipLevelMin: 1
     View: 226
   - Id: 31038
-    AegisName: C_Cheks_Bandana
+    AegisName: C_Cheks_Vandana
     Name: Costume Cheks Bandana
     Type: Armor
     Locations:
@@ -129466,7 +129609,7 @@ Body:
     EquipLevelMin: 1
     View: 793
   - Id: 31061
-    AegisName: C_Nipper_Hairpin
+    AegisName: C_Forceps_Hairpin
     Name: Costume Nipper Hairpin
     Type: Armor
     Locations:
@@ -129765,7 +129908,7 @@ Body:
     EquipLevelMin: 1
     View: 845
   - Id: 31093
-    AegisName: C_Under_Lamp
+    AegisName: C_Underlamp
     Name: Costume Under Lamp
     Type: Armor
     Locations:
@@ -130011,7 +130154,7 @@ Body:
     EquipLevelMin: 1
     View: 984
   - Id: 31119
-    AegisName: C_Blue_Magicianhat
+    AegisName: C_Blue_Wizardry_Hat
     Name: Costume Magician Hat Blue
     Type: Armor
     Locations:
@@ -130147,7 +130290,7 @@ Body:
     EquipLevelMin: 1
     View: 1202
   - Id: 31134
-    AegisName: C_Happy_Parrot_J
+    AegisName: C_Chatty_Parrot
     Name: Costume Talkactive Parrot
     Type: Armor
     Locations:
@@ -130183,7 +130326,7 @@ Body:
     EquipLevelMin: 1
     View: 1556
   - Id: 31138
-    AegisName: C_Piamette_Red_Hood
+    AegisName: C_Piamette_Hood_Red
     Name: Costume Piamette's Red Hood
     Type: Armor
     Locations:
@@ -130397,7 +130540,7 @@ Body:
     EquipLevelMin: 1
     View: 1149
   - Id: 31160
-    AegisName: C_RuneHelm
+    AegisName: C_Rune_Helm
     Name: Costume Rune Helm
     Type: Armor
     Locations:
@@ -130461,7 +130604,7 @@ Body:
     EquipLevelMin: 1
     View: 1571
   - Id: 31167
-    AegisName: C_Lunatic_Hanging_Ear_BL
+    AegisName: C_Lunatic_Ear_Black
     Name: Costume Hanging Black Lunatic Ears
     Type: Armor
     Locations:
@@ -130798,7 +130941,7 @@ Body:
     EquipLevelMin: 1
     View: 1602
   - Id: 31204
-    AegisName: C_Drooping_White_Cat
+    AegisName: C_Drooping_White_Kitty
     Name: C Drooping White Cat
     Type: Armor
     Locations:
@@ -131262,7 +131405,7 @@ Body:
     EquipLevelMin: 1
     View: 1631
   - Id: 31255
-    AegisName: C_Sweet_Helmet
+    AegisName: C_Dalcom_Helmet
     Name: C Sweet Helmet
     Type: Armor
     Locations:
@@ -131361,7 +131504,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 31264
-    AegisName: C_Wings_of_Protector_Lower
+    AegisName: C_Shelterwing_Ears_V
     Name: C Wings of Protector Lower
     Type: Armor
     Locations:
@@ -131586,7 +131729,7 @@ Body:
     EquipLevelMin: 1
     View: 1398
   - Id: 31289
-    AegisName: C_Black_Wing_Ears_Lower
+    AegisName: C_Wing_Ear_BL_V
     Name: C Black Wing Ears Lower
     Type: Armor
     Locations:
@@ -131639,7 +131782,7 @@ Body:
     EquipLevelMin: 1
     View: 1652
   - Id: 31295
-    AegisName: C_Red_Wing_Hat
+    AegisName: C_Priest_Hat_J
     Name: C Red Wing Hat
     Type: Armor
     Locations:
@@ -131765,7 +131908,7 @@ Body:
     EquipLevelMin: 1
     View: 1232
   - Id: 31309
-    AegisName: C_Pure_White_Marching_Hat
+    AegisName: C_PW_Marching_Hat
     Name: C Pure White Marching Hat
     Type: Armor
     Locations:
@@ -131829,7 +131972,7 @@ Body:
     EquipLevelMin: 1
     View: 1664
   - Id: 31316
-    AegisName: C_C_FlutterButterfly_BL
+    AegisName: C_FlutterButterfly_BL
     Name: C Black Fluttering Butterfly
     Type: Armor
     Locations:
@@ -131912,7 +132055,7 @@ Body:
     EquipLevelMin: 1
     View: 853
   - Id: 31323
-    AegisName: C_Yellow_Hunting_Cap
+    AegisName: C_Love_Daddy
     Name: C Yellow Hunting Cap
     Type: Armor
     Locations:
@@ -131998,7 +132141,7 @@ Body:
     EquipLevelMin: 1
     View: 1675
   - Id: 31332
-    AegisName: Khalitzburg_KN_Helm_BL
+    AegisName: C_Khalitzburg_Helm_BL
     Name: C Black Khalitzburg Knight Helm
     Type: Armor
     Locations:
@@ -132342,7 +132485,7 @@ Body:
     EquipLevelMin: 1
     View: 1677
   - Id: 31369
-    AegisName: C_Straight_Long_WH_
+    AegisName: C_Straight_Long_WHK
     Name: Costume Straight Long White
     Type: Armor
     Locations:
@@ -132396,7 +132539,7 @@ Body:
     EquipLevelMin: 1
     View: 1414
   - Id: 31375
-    AegisName: C_Mystic_Eye
+    AegisName: C_Demons_Eye
     Name: C Mystic Eye
     Type: Armor
     Locations:
@@ -132441,7 +132584,7 @@ Body:
     EquipLevelMin: 1
     View: 1335
   - Id: 31380
-    AegisName: C_Crow
+    AegisName: C_Gossip_Raven
     Name: C Crow
     Type: Armor
     Locations:
@@ -132495,7 +132638,7 @@ Body:
     EquipLevelMin: 1
     View: 1685
   - Id: 31386
-    AegisName: C_Survive_Orb
+    AegisName: C_SurviveOrb
     Name: C Survive Orb
     Type: Armor
     Locations:
@@ -133059,7 +133202,7 @@ Body:
     EquipLevelMin: 1
     View: 913
   - Id: 31448
-    AegisName: C_Stings_Silk_Ribbon
+    AegisName: C_Sting_Silk_Ribbon
     Name: C Stings Silk Ribbon
     Type: Armor
     Locations:
@@ -133122,7 +133265,7 @@ Body:
     EquipLevelMin: 1
     View: 1717
   - Id: 31455
-    AegisName: C_Enchanted_Dog
+    AegisName: Enchanted_Dog
     Name: C Super Cute Dog
     Type: Armor
     Locations:
@@ -133159,7 +133302,7 @@ Body:
     EquipLevelMin: 1
     View: 1426
   - Id: 31459
-    AegisName: C_Sweet_Bonbon
+    AegisName: C_Sweets_Bonbon
     Name: Costume Sweets Bonbon
     Type: Armor
     Locations:
@@ -133203,7 +133346,7 @@ Body:
     EquipLevelMin: 1
     View: 1561
   - Id: 31464
-    AegisName: C_Bloom_Afro
+    AegisName: C_Mike_Hat
     Name: C Bloom Afro
     Type: Armor
     Locations:
@@ -133212,7 +133355,7 @@ Body:
     EquipLevelMin: 1
     View: 837
   - Id: 31465
-    AegisName: C_Robin_Egg_Minihat
+    AegisName: C_Egg_Minihat
     Name: C Robin Egg Minihat
     Type: Armor
     Locations:
@@ -133221,7 +133364,7 @@ Body:
     EquipLevelMin: 1
     View: 1722
   - Id: 31466
-    AegisName: C_Holy_Eggshell
+    AegisName: C_Holy_Egg_Hat
     Name: C Holy Egg Shell
     Type: Armor
     Locations:
@@ -133230,7 +133373,7 @@ Body:
     EquipLevelMin: 1
     View: 537
   - Id: 31467
-    AegisName: C_Evil_Eggshell
+    AegisName: C_Mimic_Egg_Shell
     Name: C Evil Eggshell
     Type: Armor
     Locations:
@@ -133475,7 +133618,7 @@ Body:
     EquipLevelMin: 1
     View: 1743
   - Id: 31494
-    AegisName: C_Volume_Low_Twin_Upper
+    AegisName: C_Volume_Low_TwinK
     Name: C Volume Low Twin
     Type: Armor
     Locations:
@@ -133484,7 +133627,7 @@ Body:
     EquipLevelMin: 1
     View: 1683
   - Id: 31495
-    AegisName: C_Lolita_Two_Side_Up_
+    AegisName: C_Lolita_Two_Side_UpK
     Name: C Lolita Two Side Up Upper
     Type: Armor
     Locations:
@@ -133610,7 +133753,7 @@ Body:
     EquipLevelMin: 1
     View: 1751
   - Id: 31510
-    AegisName: C_ShortHair_CatEar
+    AegisName: C_Cat_Ear_Short
     Name: C Short Haired Cat Ears
     Type: Armor
     Locations:
@@ -133619,7 +133762,7 @@ Body:
     EquipLevelMin: 1
     View: 1752
   - Id: 31511
-    AegisName: C_LongHair_CatEar
+    AegisName: C_Cat_Ear_Long
     Name: C Long Haired Cat Ears
     Type: Armor
     Locations:
@@ -133691,7 +133834,7 @@ Body:
     EquipLevelMin: 1
     View: 1763
   - Id: 31519
-    AegisName: C_Noodles_Hat
+    AegisName: C_Slurp_Slurp_Hat
     Name: C Noodles Hat
     Type: Armor
     Locations:
@@ -133763,7 +133906,7 @@ Body:
     EquipLevelMin: 1
     View: 596
   - Id: 31527
-    AegisName: C_Radiant_Rainbow_Wings
+    AegisName: C_14_RainbowWing
     Name: C Radiant Rainbow Wings
     Type: Armor
     Locations:
@@ -133868,7 +134011,7 @@ Body:
     EquipLevelMin: 1
     View: 1772
   - Id: 31538
-    AegisName: C_Lovely_Feeling
+    AegisName: C_Love_Feeling_J
     Name: C Lovely Feeling
     Type: Armor
     Locations:
@@ -133886,7 +134029,7 @@ Body:
     EquipLevelMin: 1
     View: 1773
   - Id: 31540
-    AegisName: C_GeminiS58_Eyes_Red
+    AegisName: C_Gemini_RedEyes
     Name: C GeminiS58 Eyes Red
     Type: Armor
     Locations:
@@ -133922,7 +134065,7 @@ Body:
     EquipLevelMin: 1
     View: 1774
   - Id: 31544
-    AegisName: C_Piamette_Curls
+    AegisName: C_Piamette_Roll_Hair
     Name: Costume Piamette Curls
     Type: Armor
     Locations:
@@ -133949,7 +134092,7 @@ Body:
     EquipLevelMin: 1
     View: 1777
   - Id: 31547
-    AegisName: C_Poporing_Mascot_Head
+    AegisName: C_Poporing_Mascot_Cos
     Name: C Poporing Mascot Head
     Type: Armor
     Locations:
@@ -134079,7 +134222,7 @@ Body:
     EquipLevelMin: 1
     View: 1359
   - Id: 31561
-    AegisName: C_Heavenly_Dark_Flame
+    AegisName: C_8Type_PurgatorialWing
     Name: C Heavenly Dark Flame
     Type: Armor
     Locations:
@@ -134124,7 +134267,7 @@ Body:
     EquipLevelMin: 1
     View: 1786
   - Id: 31566
-    AegisName: C_Stole_Of_Dominion
+    AegisName: C_Stall_Of_Dominions
     Name: C Stole Of Dominion
     Type: Armor
     Locations:
@@ -134205,7 +134348,7 @@ Body:
     EquipLevelMin: 1
     View: 1790
   - Id: 31575
-    AegisName: C_Electro_Two_Sides_Up
+    AegisName: C_Electro_Two_Side_Up
     Name: C Electro Two Sides Up
     Type: Armor
     Locations:
@@ -134251,7 +134394,7 @@ Body:
     EquipLevelMin: 1
     View: 1306
   - Id: 31580
-    AegisName: C_Autumn_Flavor
+    AegisName: C_Autumnal_Flavor
     Name: C Autumn Flavor
     Type: Armor
     Locations:
@@ -134383,7 +134526,7 @@ Body:
     EquipLevelMin: 1
     View: 931
   - Id: 31595
-    AegisName: C_Book_File_Hat
+    AegisName: C_Book_of_Soyga
     Name: C Book File Hat
     Type: Armor
     Locations:
@@ -134392,7 +134535,7 @@ Body:
     EquipLevelMin: 1
     View: 423
   - Id: 31596
-    AegisName: C_Spider_Seduction
+    AegisName: C_Spider_Temp_TW
     Name: C Spider Seduction
     Type: Armor
     Locations:
@@ -134401,7 +134544,7 @@ Body:
     EquipLevelMin: 1
     View: 1711
   - Id: 31597
-    AegisName: C_Golden_Fish_Hat
+    AegisName: C_GoldFish_Hat
     Name: C Golden Fish Hat
     Type: Armor
     Locations:
@@ -134495,7 +134638,7 @@ Body:
     EquipLevelMin: 1
     View: 1119
   - Id: 31607
-    AegisName: C_Cat_Ear_Witch_Hat
+    AegisName: C_B_EarWitchHat
     Name: C Cat Ear Witch Hat
     Type: Armor
     Locations:
@@ -134756,7 +134899,7 @@ Body:
     EquipLevelMin: 1
     View: 836
   - Id: 31635
-    AegisName: Costume_Flowing_Long_BD
+    AegisName: C_Fairy_Long_BD
     Name: C Flowing Long Blonde
     Type: Armor
     Locations:
@@ -134765,7 +134908,7 @@ Body:
     EquipLevelMin: 1
     View: 1832
   - Id: 31636
-    AegisName: Costume_Flowing_Long_SV
+    AegisName: C_Fairy_Long_SV
     Name: C Flowing Long Silver
     Type: Armor
     Locations:
@@ -134792,7 +134935,7 @@ Body:
     EquipLevelMin: 1
     View: 1835
   - Id: 31639
-    AegisName: Costume_Straight_Long_BD
+    AegisName: C_Straight_Long_GL
     Name: C Straight Long Blonde
     Type: Armor
     Locations:
@@ -135051,7 +135194,7 @@ Body:
     EquipLevelMin: 1
     View: 903
   - Id: 31667
-    AegisName: Costume_Poring_Beret
+    AegisName: C_PoringBeret_TW
     Name: C Poring Beret
     Type: Armor
     Locations:
@@ -135069,7 +135212,7 @@ Body:
     EquipLevelMin: 1
     View: 888
   - Id: 31669
-    AegisName: C_Adv_Whisper_Mask_M
+    AegisName: C_Adv_Whisper_Mask_J
     Name: C Evolved Whisper Mask Mid
     Type: Armor
     Locations:
@@ -135087,7 +135230,7 @@ Body:
     EquipLevelMin: 1
     View: 1864
   - Id: 31671
-    AegisName: Costume_Twin_Cannon
+    AegisName: C_Twin_Canon
     Name: C Twin Cannon
     Type: Armor
     Locations:
@@ -135114,7 +135257,7 @@ Body:
     EquipLevelMin: 1
     View: 1867
   - Id: 31674
-    AegisName: Costume_Jitterbug_Cap
+    AegisName: C_Jitterbug_Cap
     Name: C Jitterbug Cap
     Type: Armor
     Locations:
@@ -135204,7 +135347,7 @@ Body:
     EquipLevelMin: 1
     View: 733
   - Id: 31684
-    AegisName: Costume_Kururinpa_Tails
+    AegisName: C_Kururinpa_Hair
     Name: C Kururinpa Tails
     Type: Armor
     Locations:
@@ -135213,7 +135356,7 @@ Body:
     EquipLevelMin: 1
     View: 1873
   - Id: 31685
-    AegisName: Costume_Fluffy_Semi_Long
+    AegisName: C_Fluffy_Semi_Long
     Name: C Fluffy Semi Long
     Type: Armor
     Locations:
@@ -135222,7 +135365,7 @@ Body:
     EquipLevelMin: 1
     View: 1874
   - Id: 31686
-    AegisName: Costume_Desert_Wolf_Baby
+    AegisName: C_Desert_Wolf_B
     Name: C Desert Wolf Baby
     Type: Armor
     Locations:
@@ -135414,7 +135557,7 @@ Body:
     EquipLevelMin: 1
     View: 810
   - Id: 31707
-    AegisName: Costume_Nine_Tail_Fox_Hair
+    AegisName: C_Nine_Tail_Fox_Hair
     Name: C Nine Tail Fox Hair
     Type: Armor
     Locations:
@@ -135486,7 +135629,7 @@ Body:
     EquipLevelMin: 1
     View: 155
   - Id: 31715
-    AegisName: Costume_Orange_Rabbit
+    AegisName: C_Orange_Rabbit
     Name: C Orange Rabbit
     Type: Armor
     Locations:
@@ -135495,7 +135638,7 @@ Body:
     EquipLevelMin: 1
     View: 1887
   - Id: 31716
-    AegisName: Costume_Twinkling_Red_Eyes
+    AegisName: C_Blinking_Eyes_RD
     Name: Costume Twinkling Red Eyes
     Type: Armor
     Locations:
@@ -135504,7 +135647,7 @@ Body:
     EquipLevelMin: 1
     View: 1888
   - Id: 31717
-    AegisName: Costume_Medium_Wave_BD
+    AegisName: C_Medium_Wave_BD
     Name: C Medium Wave Blonde
     Type: Armor
     Locations:
@@ -135522,7 +135665,7 @@ Body:
     EquipLevelMin: 1
     View: 1720
   - Id: 31719
-    AegisName: Costume_Master_Of_Flames
+    AegisName: C_Cons_Of_Fire
     Name: C Master Of Flames
     Type: Armor
     Locations:
@@ -135531,7 +135674,7 @@ Body:
     EquipLevelMin: 1
     View: 1890
   - Id: 31720
-    AegisName: Costume_Vesper_Hat
+    AegisName: C_VesperHeadGear
     Name: C Vesper Hat
     Type: Armor
     Locations:
@@ -135612,7 +135755,7 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
   - Id: 31729
-    AegisName: Costume_Miracle_Plant
+    AegisName: C_Miracle_Plant
     Name: C Miracle Plant
     Type: Armor
     Locations:
@@ -135621,7 +135764,7 @@ Body:
     EquipLevelMin: 1
     View: 1893
   - Id: 31730
-    AegisName: Costume_Volume_Low_Twin_SK
+    AegisName: C_Volume_Low_Twin_CB
     Name: C Volume Low Twin Sakura
     Type: Armor
     Locations:
@@ -135630,7 +135773,7 @@ Body:
     EquipLevelMin: 1
     View: 1894
   - Id: 31731
-    AegisName: Costume_Sweets_Party
+    AegisName: C_SnackParty
     Name: C Sweets Party
     Type: Armor
     Locations:
@@ -135666,7 +135809,7 @@ Body:
     EquipLevelMin: 1
     View: 1900
   - Id: 31735
-    AegisName: Costume_Yawata_Seal
+    AegisName: C_FortunetellinSealed
     Name: C Yawata Seal
     Type: Armor
     Locations:
@@ -136147,7 +136290,7 @@ Body:
     EquipLevelMin: 1
     View: 1915
   - Id: 31788
-    AegisName: C_Piamette_Curls_SV
+    AegisName: C_Piamette_Roll_Hair_SV
     Name: C Piamette Curls Silver
     Type: Armor
     Locations:
@@ -136156,7 +136299,7 @@ Body:
     EquipLevelMin: 1
     View: 1916
   - Id: 31789
-    AegisName: Costume_Turkey_Hat
+    AegisName: C_Turkey_Hat
     Name: C Turkey Hat
     Type: Armor
     Locations:
@@ -136280,7 +136423,7 @@ Body:
     EquipLevelMin: 1
     View: 428
   - Id: 31803
-    AegisName: Costume_Master_Of_Wind
+    AegisName: C_Cons_Of_Wind
     Name: C Master of Wind
     Type: Armor
     Locations:
@@ -136370,7 +136513,7 @@ Body:
     EquipLevelMin: 1
     View: 1881
   - Id: 31814
-    AegisName: Costume_Lunatic_Family_Balloon
+    AegisName: C_RabbitFamilyBalloon
     Name: C Lunatic Family Balloon
     Type: Armor
     Locations:
@@ -136379,7 +136522,7 @@ Body:
     EquipLevelMin: 1
     View: 1809
   - Id: 31815
-    AegisName: Costume_Angola_Intention
+    AegisName: C_Angola_Intention
     Name: C Angola Intention
     Type: Armor
     Locations:
@@ -136388,7 +136531,7 @@ Body:
     EquipLevelMin: 1
     View: 1925
   - Id: 31816
-    AegisName: Costume_Moon_Messenger_Robe
+    AegisName: C_Rabbit_Winged_Robe
     Name: C Moon Messenger Robe
     Type: Armor
     Locations:
@@ -136423,7 +136566,7 @@ Body:
     EquipLevelMin: 1
     View: 1931
   - Id: 31823
-    AegisName: Costume_Nose_Glasses
+    AegisName: C_Nose_Glasses_J
     Name: C Nose Glasses
     Type: Armor
     Locations:
@@ -136459,7 +136602,7 @@ Body:
     EquipLevelMin: 1
     View: 1935
   - Id: 31827
-    AegisName: Costume_Durumagi
+    AegisName: Durumagi
     Name: C Durumagi
     Type: Armor
     Locations:
@@ -136477,7 +136620,7 @@ Body:
     EquipLevelMin: 1
     View: 1227
   - Id: 31831
-    AegisName: Costume_Disguise_Mantle
+    AegisName: C_Disguise_Mantle
     Name: C Disguise Mantle
     Type: Armor
     Locations:
@@ -136495,7 +136638,7 @@ Body:
     EquipLevelMin: 1
     View: 1938
   - Id: 31833
-    AegisName: C_Halloween_CatShort
+    AegisName: C_Halloween_Cat_Short
     Name: C Halloween Short Haired Cat Ears
     Type: Armor
     Locations:
@@ -137976,7 +138119,7 @@ Body:
          bonus2 bSkillAtk,"LG_SHIELDPRESS",20;
       }
   - Id: 32025
-    AegisName: Fortridge
+    AegisName: Fortrage
     Name: Fortridge
     Type: Weapon
     SubType: 1hSpear
@@ -139956,21 +140099,29 @@ Body:
     Script: |
       bonus2 bExpAddClass,Class_All,10;
   - Id: 400056
-    AegisName: VIP_Hair_Female
+    AegisName: C_VIP_Hair_Female
     Name: "Costume: Blue Devil Wig"
     Type: Armor
     View: 1990
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_VIP_HAIR,true;
+    UnEquipScript: |
+      hateffect HAT_EF_VIP_HAIR,false;
   - Id: 400057
-    AegisName: VIP_Hair_Male
+    AegisName: C_VIP_Hair_Male
     Name: "Costume: Red Lotus Demon Wig"
     Type: Armor
     View: 1989
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_VIP_HAIR,true;
+    UnEquipScript: |
+      hateffect HAT_EF_VIP_HAIR,false;
   - Id: 400059
     AegisName: Scorpio_Diadem_K
     Name: Scorpio Celestial Coronet
@@ -142148,6 +142299,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 2153
+  - Id: 400214
+    AegisName: C_Faith_Of_Yggdrasil
+    Name: "Costume: Faith of Yggdrasl"
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2198
   - Id: 400216
     AegisName: Viva_Adul_Hat_GC1
     Name: Helm of Faith (Guillotine Cross)
@@ -143387,6 +143546,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2248
+  - Id: 400278
+    AegisName: C_Drooping_Omega
+    Name: "Costume: Drooping Omega"
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2252
   - Id: 400280
     AegisName: C_AI_Nabi
     Name: "Costume: AI Nabi Minimi"
@@ -143588,6 +143755,26 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,-10;
       bonus2 bMagicAddRace,RC_Player_Doram,-10;
       bonus bDelayrate,-5;
+  - Id: 400359
+    AegisName: aegis_400359
+    Name: Level 1 Hat    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 16
+  - Id: 400360
+    AegisName: aegis_400360
+    Name: Level 2 Hat    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    Refineable: true
+    View: 16
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -143884,6 +144071,134 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2055
+  - Id: 410030
+    AegisName: C_Country_Tail_BU
+    Name: Costume Country Tail (Blue)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2039
+  - Id: 410031
+    AegisName: C_Country_Tail_RD
+    Name: Costume Country Tail (Red)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2040
+  - Id: 410032
+    AegisName: C_Country_Tail_YL
+    Name: Costume Country Tail (Yellow)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2041
+  - Id: 410033
+    AegisName: C_Country_Tail_GN
+    Name: Costume Country Tail (Green)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2042
+  - Id: 410034
+    AegisName: C_Country_Tail_BL
+    Name: Costume Country Tail (Black)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2043
+  - Id: 410035
+    AegisName: C_Country_Tail_WH
+    Name: Costume Country Tail (White)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2044
+  - Id: 410036
+    AegisName: C_Country_Tail_OM
+    Name: Costume Country Tail (Brown)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2045
+  - Id: 410037
+    AegisName: C_Country_Tail_PP
+    Name: Costume Country Tail (Purple)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2046
+  - Id: 410038
+    AegisName: C_Braid_Half_Up_BU
+    Name: Costume Braid Half Up (Blue)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2047
+  - Id: 410039
+    AegisName: C_Braid_Half_Up_RD
+    Name: Costume Braid Half Up (Red)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2048
+  - Id: 410040
+    AegisName: C_Braid_Half_Up_YL
+    Name: Costume Braid Half Up (Yellow)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2049
+  - Id: 410041
+    AegisName: C_Braid_Half_Up_GN
+    Name: Costume Braid Half Up (Green)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2050
+  - Id: 410042
+    AegisName: C_Braid_Half_Up_BL
+    Name: Costume Braid Half Up (Black)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2051
+  - Id: 410043
+    AegisName: C_Braid_Half_Up_WH
+    Name: Costume Braid Half Up (White)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2052
+  - Id: 410044
+    AegisName: C_Braid_Half_Up_OM
+    Name: Costume Braid Half Up (Brown)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2053
+  - Id: 410045
+    AegisName: C_Braid_Half_Up_PP
+    Name: Costume Braid Half Up (Purple)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2054
   - Id: 410048
     AegisName: C_Tiger
     Name: Costume Tiger
@@ -144020,6 +144335,14 @@ Body:
       hateffect HAT_EF_C_Released_Ground,true;
     UnEquipScript: |
       hateffect HAT_EF_C_Released_Ground,false;
+  - Id: 410082
+    AegisName: C_BirthDay_Balloon_TW
+    Name: Costume Happy Birthday Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2137
   - Id: 410084
     AegisName: Melon_Headphone_J_
     Name: Premium Melon Headphones
@@ -144274,7 +144597,7 @@ Body:
     EquipLevelMin: 1
     View: 2245
   - Id: 410133
-    AegisName: aegis_410133
+    AegisName: C_Belka_Strelka
     Name: Costume Puppy Diverse
     Type: Armor
     Locations:
@@ -144342,6 +144665,14 @@ Body:
             bonus bCritAtkRate,7;
          }
       }
+  - Id: 410144
+    AegisName: C_Omega_Golf_Bag
+    Name: "Costume: Omega Golf Bag"
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2251
   - Id: 410145
     AegisName: C_Agnes_Mini
     Name: "Costume: Agnes Minimi"
@@ -144390,6 +144721,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2262
+  - Id: 410160
+    AegisName: aegis_410160
+    Name: Costume Magic Orb    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2265
   - Id: 410169
     AegisName: aegis_410169
     Name: Costume Lovely Fox    # !todo check english name
@@ -144481,6 +144820,22 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2292
+  - Id: 410191
+    AegisName: C_Spica_Mini
+    Name: "Costume: Spica Nerius Minimi"
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2307
+  - Id: 410192
+    AegisName: C_Evil_Mini
+    Name: "Costume: Evil Minimi"
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2304
   - Id: 410193
     AegisName: aegis_410193
     Name: Costume Gullaring Mini Me    # !todo check english name
@@ -144489,6 +144844,56 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2293
+  - Id: 410205
+    AegisName: C_Marlbron_Mini
+    Name: "Costume: Marlbron Minimi"
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2306
+  - Id: 410206
+    AegisName: C_Lehar_Mini
+    Name: "Costume: Lehar Minimi"
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2305
+  - Id: 410208
+    AegisName: aegis_410208
+    Name: Level 1 Glasses    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 3
+  - Id: 410209
+    AegisName: aegis_410209
+    Name: Level 2 Glasses    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 2
+    View: 3
+  - Id: 410217
+    AegisName: aegis_410217
+    Name: Costume Magic Card    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2264
+  - Id: 410218
+    AegisName: C_Soccer_Ball
+    Name: Costume Soccer Ball    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2324
   - Id: 420000
     AegisName: aegis_420000
     Name: Isabella Carrot
@@ -144543,7 +144948,7 @@ Body:
     Script: |
       autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,80,1000; }",10,10000,BF_MAGIC;
   - Id: 420006
-    AegisName: aegis_420006
+    AegisName: Vassalage_Necklace
     Name: Collar of Slavery
     Type: Armor
     View: 2018
@@ -144806,6 +145211,22 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2141
+  - Id: 420046
+    AegisName: C_Royal_Mantle
+    Name: Costume Royal Mantle
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1697
+  - Id: 420047
+    AegisName: C_H_Knight_Cloak
+    Name: Costume Honorable Knight Cloak
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2059
   - Id: 420048
     AegisName: C_White_Corone
     Name: Costume White Coronet
@@ -144830,6 +145251,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2096
+  - Id: 420054
+    AegisName: C_Smokie_Muffler
+    Name: Costume Smokie Muffler
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2097
   - Id: 420055
     AegisName: Cherryblossom_Fan
     Name: Cherry Blossom Fan
@@ -144887,7 +145316,7 @@ Body:
     ArmorLevel: 1
     View: 2110
   - Id: 420062
-    AegisName: C_AB_Hair_PP
+    AegisName: C_Angel_Stairs
     Name: Costume Ponytail Hair(Purple)
     Type: Armor
     Locations:
@@ -144971,7 +145400,7 @@ Body:
     ArmorLevel: 1
     View: 1730
   - Id: 420076
-    AegisName: Vassalage_Necklace
+    AegisName: Choker_Of_Restriction
     Name: Bondage Necklace
     Type: Armor
     Weight: 10
@@ -144991,6 +145420,14 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2150
+  - Id: 420078
+    AegisName: C_Ghost_Bat_J
+    Name: Costume Ghost Bat(Lower)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2093
   - Id: 420079
     AegisName: C_Inner_Color_Long
     Name: Costume Inner Color Long
@@ -145032,7 +145469,7 @@ Body:
     ArmorLevel: 1
     View: 2181
   - Id: 420095
-    AegisName: C_Braid_Half_Up_WH
+    AegisName: C_Braid_Half_Up_WH_K
     Name: Costume Pigtails Half Up(White)
     Type: Armor
     Locations:
@@ -145040,7 +145477,7 @@ Body:
     ArmorLevel: 1
     View: 2052
   - Id: 420096
-    AegisName: C_Braid_Half_Up_OM
+    AegisName: C_Braid_Half_Up_OM_K
     Name: Costume Pigtails Half Up(Orange)
     Type: Armor
     Locations:
@@ -145048,7 +145485,7 @@ Body:
     ArmorLevel: 1
     View: 2053
   - Id: 420097
-    AegisName: C_Braid_Half_Up_PP
+    AegisName: C_Braid_Half_Up_PP_K
     Name: Costume Pigtails Half Up(Purple)
     Type: Armor
     Locations:
@@ -145056,7 +145493,7 @@ Body:
     ArmorLevel: 1
     View: 2054
   - Id: 420098
-    AegisName: C_Braid_Half_Up_BL
+    AegisName: C_Braid_Half_Up_BL_K
     Name: Costume Pigtails Half Up(Black)
     Type: Armor
     Locations:
@@ -145064,7 +145501,7 @@ Body:
     ArmorLevel: 1
     View: 2051
   - Id: 420099
-    AegisName: C_Braid_Half_Up_BU
+    AegisName: C_Braid_Half_Up_BU_K
     Name: Costume Pigtails Half Up(Blue)
     Type: Armor
     Locations:
@@ -145072,7 +145509,7 @@ Body:
     ArmorLevel: 1
     View: 2047
   - Id: 420100
-    AegisName: C_Braid_Half_Up_YL
+    AegisName: C_Braid_Half_Up_YL_K
     Name: Costume Pigtails Half Up(Yellow)
     Type: Armor
     Locations:
@@ -145080,7 +145517,7 @@ Body:
     ArmorLevel: 1
     View: 2049
   - Id: 420101
-    AegisName: C_Braid_Half_Up_RD
+    AegisName: C_Braid_Half_Up_RD_K
     Name: Costume Pigtails Half Up(Red)
     Type: Armor
     Locations:
@@ -145088,7 +145525,7 @@ Body:
     ArmorLevel: 1
     View: 2048
   - Id: 420102
-    AegisName: C_Braid_Half_Up_GN
+    AegisName: C_Braid_Half_Up_GN_K
     Name: Costume Pigtails Half Up(Green)
     Type: Armor
     Locations:
@@ -145327,6 +145764,14 @@ Body:
       bonus bMaxSPrate,5;
       bonus bLongAtkDef,5;
       bonus bHealPower2,5;
+  - Id: 420133
+    AegisName: C_Dreaming_Rose_Long
+    Name: Costume Dreaming Bara Long    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2247
   - Id: 420134
     AegisName: aegis_420134
     Name: The Spirit Of World
@@ -145472,6 +145917,14 @@ Body:
     Script: |
       bonus bCritical,3;
       bonus bCritAtkRate,5;
+  - Id: 420156
+    AegisName: C_Flower_L_Knitting
+    Name: Costume Star Cluster Flower Loose Braid    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2261
   - Id: 420160
     AegisName: aegis_420160
     Name: Tyrant of Earth
@@ -145484,6 +145937,30 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus2 bAddSize,Size_All,BaseLevel/10;
+  - Id: 420161
+    AegisName: C_Starry_Long_Wave
+    Name: Costume Starry Sky Long Wave    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2271
+  - Id: 420162
+    AegisName: aegis_420162
+    Name: Costume Starry Sky Ribbon Twintails    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2270
+  - Id: 420163
+    AegisName: C_Protect_Cloth_B
+    Name: "Costume: Protect Cloth"
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2272
   - Id: 420164
     AegisName: aegis_420164
     Name: Red Sleep Sheep
@@ -145501,8 +145978,33 @@ Body:
          bonus2 bSkillCooldown,"RA_UNLIMIT",-60000;
     UnEquipScript: |
       sc_end SC_UNLIMIT;
+  - Id: 420178
+    AegisName: aegis_420178
+    Name: 1Lv Mask    # !todo check english name
+    Type: Armor
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 8
+  - Id: 420179
+    AegisName: aegis_420179
+    Name: 2Lv Mask    # !todo check english name
+    Type: Armor
+    Locations:
+      Head_Low: true
+    ArmorLevel: 2
+    View: 8
+  - Id: 430005
+    AegisName: C_White_Tiger_Glass
+    Name: Costume white tiger glasses    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2325
   - Id: 436000
-    AegisName: aegis_436000
+    AegisName: Tha_Maero_MaskK
     Name: Thanatos's Maeror Mask
     Type: Armor
     View: 666
@@ -145517,7 +146019,7 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus bMatkRate,3;
   - Id: 436001
-    AegisName: aegis_436001
+    AegisName: Tha_Despero_MaskK
     Name: Thanatos's Despero Mask
     Type: Armor
     View: 693
@@ -145532,7 +146034,7 @@ Body:
       bonus2 bAddRace,RC_Player_Doram,10;
       bonus bAtkRate,3;
   - Id: 436002
-    AegisName: aegis_436002
+    AegisName: Thanatos_Mal_MaskK
     Name: Thanatos's Odium Mask
     Type: Armor
     View: 667
@@ -145816,7 +146318,7 @@ Body:
     Script: |
       bonus bMaxHP,100;
   - Id: 450001
-    AegisName: Attacker_Booster_Plate_
+    AegisName: Atker_Plate
     Name: Attacker Booster Plate
     Type: Armor
     Defense: 120
@@ -145843,7 +146345,7 @@ Body:
          bonus bDelayrate,-5;
       }
   - Id: 450002
-    AegisName: Elemental_Booster_Robe_
+    AegisName: Ele_Robe
     Name: Elemental Booster Robe
     Type: Armor
     Defense: 80
@@ -145870,7 +146372,7 @@ Body:
          bonus bVariableCastrate,-5;
       }
   - Id: 450003
-    AegisName: Defender_Booster_Robe_
+    AegisName: Defn_Robe
     Name: Defender Booster Robe
     Type: Armor
     Defense: 90
@@ -145897,7 +146399,7 @@ Body:
          bonus bVariableCastrate,-5;
       }
   - Id: 450004
-    AegisName: Ranger_Booster_Suits_
+    AegisName: Ran_Suits
     Name: Ranger Booster Suits
     Type: Armor
     Defense: 100
@@ -151375,6 +151877,24 @@ Body:
             }
          }
       }
+  - Id: 450249
+    AegisName: aegis_450249
+    Name: Level 1 Shirt    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    Refineable: true
+  - Id: 450250
+    AegisName: aegis_450250
+    Name: Level 2 Shirt    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    Refineable: true
   - Id: 460004
     AegisName: Illusion_Shield_A
     Name: Illusion Shield I
@@ -151682,8 +152202,28 @@ Body:
       bonus bBaseAtk,20;
       bonus2 bSubRace,RC_Player_Human,6-6;
       bonus2 bSubRace,RC_Player_Doram,6-6;
+  - Id: 460048
+    AegisName: aegis_460048
+    Name: Level 1 Shield    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 1
+  - Id: 460049
+    AegisName: aegis_460049
+    Name: Level 2 Shield    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 2
+    Refineable: true
+    View: 1
   - Id: 470000
-    AegisName: Attacker_Booster_Greaves_
+    AegisName: Atker_Greave
     Name: Attacker Booster Greaves
     Type: Armor
     Defense: 20
@@ -151707,7 +152247,7 @@ Body:
          bonus bFixedCast,-500;
       }
   - Id: 470001
-    AegisName: Elemental_Booster_Shoes_
+    AegisName: Ele_Shoes
     Name: Elemental Booster Shoes
     Type: Armor
     Defense: 15
@@ -151731,7 +152271,7 @@ Body:
          bonus bFixedCast,-500;
       }
   - Id: 470002
-    AegisName: Defender_Booster_Shoes_
+    AegisName: Defn_Shoes
     Name: Defender Booster Shoes
     Type: Armor
     Defense: 18
@@ -151755,7 +152295,7 @@ Body:
          bonus bFixedCast,-500;
       }
   - Id: 470003
-    AegisName: Ranger_Booster_Boots_
+    AegisName: Ran_Boots
     Name: Ranger Booster Boots
     Type: Armor
     Defense: 18
@@ -154211,8 +154751,26 @@ Body:
             }
          }
       }
+  - Id: 470178
+    AegisName: aegis_470178
+    Name: Level 1 Sandals    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    Refineable: true
+  - Id: 470179
+    AegisName: aegis_470179
+    Name: Level 2 Sandals    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    Refineable: true
   - Id: 480000
-    AegisName: Attacker_Booster_Manteau_
+    AegisName: Atker_Manteau
     Name: Attacker Booster Manteau
     Type: Armor
     Defense: 30
@@ -154235,7 +154793,7 @@ Body:
          bonus bDelayrate,-10;
       }
   - Id: 480001
-    AegisName: Elemental_Booster_Muffler_
+    AegisName: Ele_Muffler
     Name: Elemental Booster Muffler
     Type: Armor
     Defense: 20
@@ -154262,7 +154820,7 @@ Body:
          bonus bDelayrate,-10;
       }
   - Id: 480002
-    AegisName: Defender_Booster_Muffler_
+    AegisName: Defn_Muffler
     Name: Defender Booster Muffler
     Type: Armor
     Defense: 25
@@ -154289,7 +154847,7 @@ Body:
          bonus bDelayrate,-10;
       }
   - Id: 480003
-    AegisName: Ranger_Booster_Manteau_
+    AegisName: Ran_Manteau
     Name: Ranger Booster Manteau
     Type: Armor
     Defense: 30
@@ -154721,7 +155279,7 @@ Body:
     ArmorLevel: 1
     View: 72
   - Id: 480056
-    AegisName: aegis_480056
+    AegisName: C_Wing_Of_Angel_Move_BK
     Name: Costume Heavenly Fallen Angel Wings
     Type: Armor
     Locations:
@@ -154729,7 +155287,7 @@ Body:
     ArmorLevel: 1
     View: 73
   - Id: 480058
-    AegisName: aegis_480058
+    AegisName: C_Wing_Of_Angel_Move_GD
     Name: Costume Wavy Golden Angel Wings
     Type: Armor
     Locations:
@@ -155437,7 +155995,7 @@ Body:
     ArmorLevel: 1
     View: 104
   - Id: 480108
-    AegisName: aegis_480108
+    AegisName: C_Poring_Basket
     Name: Costume Poring Basket
     Type: Armor
     Locations:
@@ -155550,7 +156108,7 @@ Body:
          bonus2 bSubEle,Ele_Earth,.@bonus*.@c;
       }
   - Id: 480121
-    AegisName: aegis_480121
+    AegisName: C_Striking_Mikoshi
     Name: Costume Striking Mikoshi    # !todo check english name
     Type: Armor
     Locations:
@@ -155566,7 +156124,7 @@ Body:
     ArmorLevel: 1
     View: 112
   - Id: 480123
-    AegisName: aegis_480123
+    AegisName: C_Nydhog_Rumor
     Name: Costume Nydhog's Rumor
     Type: Armor
     Locations:
@@ -155664,6 +156222,10 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+    Script: |
+      hateffect(HAT_EF_C_Swirling_Flame,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Swirling_Flame,false);
   - Id: 480134
     AegisName: aegis_480134
     Name: Avareco
@@ -155744,7 +156306,7 @@ Body:
       bonus2 bAddSize,Size_Large,5*(.@r/5);
       bonus2 bMagicAddSize,Size_Large,5*(.@r/5);
   - Id: 480137
-    AegisName: aegis_480137
+    AegisName: C_Filir_Bag
     Name: Costume Filir Bag
     Type: Armor
     Locations:
@@ -156089,6 +156651,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 124
+  - Id: 480169
+    AegisName: C_Diabolic_Rock_Guitar
+    Name: Costume Diabolic Rock Guitar
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 125
   - Id: 480172
     AegisName: Subject_CapeMelee_TH
     Name: Subject Cape (Melee)
@@ -156370,6 +156940,10 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+    Script: |
+      hateffect(HAT_EF_C_Astra_Blessing,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Astra_Blessing,false);
   - Id: 480215
     AegisName: aegis_480215
     Name: Heroria Cloak    # !todo check english name
@@ -156466,6 +157040,14 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,-10;
       bonus2 bMagicAddRace,RC_Player_Doram,-10;
       bonus bHealPower,3;
+  - Id: 480223
+    AegisName: aegis_480223
+    Name: Costume Oriental Sword    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 147
   - Id: 480228
     AegisName: aegis_480228
     Name: Dia de Muertos
@@ -156659,8 +157241,34 @@ Body:
             }
          }
       }
+  - Id: 480236
+    AegisName: aegis_480236
+    Name: Costume Big Magic Book    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 149
+  - Id: 480249
+    AegisName: aegis_480249
+    Name: Level 1 Hood    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+  - Id: 480250
+    AegisName: aegis_480250
+    Name: Level 2 Hood    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    Refineable: true
   - Id: 490004
-    AegisName: Attacker_Booster_Ring
+    AegisName: Atker_Ring
     Name: Attacker Booster Ring
     Type: Armor
     Slots: 1
@@ -156674,7 +157282,7 @@ Body:
       bonus bMaxHPrate,3;
       bonus bCritAtkRate,5;
   - Id: 490005
-    AegisName: Elemental_Booster_Earring
+    AegisName: Ele_Earing
     Name: Elemental Booster Earrings
     Type: Armor
     Slots: 1
@@ -156692,7 +157300,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Ground,5;
       bonus2 bMagicAtkEle,Ele_Neutral,5;
   - Id: 490006
-    AegisName: Defender_Booster_Earring
+    AegisName: Defn_Earing
     Name: Defender Booster Earrings
     Type: Armor
     Slots: 1
@@ -156710,7 +157318,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Ghost,5;
       bonus2 bMagicAtkEle,Ele_Holy,5;
   - Id: 490007
-    AegisName: Range_Booster_Brooch
+    AegisName: Ran_Brooch
     Name: Range Booster Brooches
     Type: Armor
     Slots: 1
@@ -158685,7 +159293,7 @@ Body:
     Script: |
       bonus bAllStats,2;
   - Id: 490164
-    AegisName: aegis_490164
+    AegisName: Hero_Token_SHC
     Name: Heroic Token (Shadow Cross)
     Type: Armor
     Weight: 200
@@ -158704,7 +159312,7 @@ Body:
       bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490165
-    AegisName: aegis_490165
+    AegisName: Hero_Token_ABC
     Name: Heroic Token (Abyss Chaser)
     Type: Armor
     Weight: 200
@@ -159802,6 +160410,188 @@ Body:
     Script: |
       bonus bDelayRate,-5;
       bonus bLongAtkRate,6;
+  - Id: 490286
+    AegisName: aegis_490286
+    Name: Level 1 Clip    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+  - Id: 490287
+    AegisName: aegis_490287
+    Name: Level 2 Clip    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+  - Id: 490297
+    AegisName: aegis_490297
+    Name: Varmundt Rune Ring
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 200
+  - Id: 490299
+    AegisName: Barmund_Soul_Ring
+    Name: Varmundt Soul Rune Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490300
+    AegisName: Barmund_Venom_Ring
+    Name: Varmundt Venom Rune Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490301
+    AegisName: Barmund_Temple_Ring
+    Name: Varmundt Temple Rune Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490302
+    AegisName: Soul_Rune_Ring
+    Name: Soul Rune Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490303
+    AegisName: Venom_Rune_Ring
+    Name: Venom Rune Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490304
+    AegisName: Temple_Rune_Ring
+    Name: Temple Rune Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490305
+    AegisName: Soul_M_Ring
+    Name: Soul Magic Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490306
+    AegisName: Venom_M_Ring
+    Name: Venom Magic Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+  - Id: 490307
+    AegisName: Temple_M_Ring
+    Name: Temple Magic Ring
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
@@ -161644,6 +162434,200 @@ Body:
                bonus2 bAddRace,RC_All,10;
                if (.@g>=ENCHANTGRADE_A) {
                   bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 500067
+    AegisName: aegis_500067
+    Name: Level 1 One-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 500068
+    AegisName: aegis_500068
+    Name: Level 2 One-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 500069
+    AegisName: aegis_500069
+    Name: Level 3 One-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 500070
+    AegisName: aegis_500070
+    Name: Level 4 One-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 500071
+    AegisName: aegis_500071
+    Name: Level 5 One-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
+  - Id: 500072
+    AegisName: aegis_500072
+    Name: Devil Guardian Sword
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1800
+    Attack: 100
+    MagicAttack: 220
+    Range: 1
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bSpl,2;
+      bonus2 bSkillAtk,"IG_CROSS_RAIN",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"IG_CROSS_RAIN",10;
+         if (.@r>=7) {
+            bonus2 bMagicAtkEle,Ele_Holy,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"IG_CROSS_RAIN",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bMagicAtkEle,Ele_Holy,15;
+                     bonus2 bSkillAtk,"IG_CROSS_RAIN",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_All,10;
                }
             }
          }
@@ -163704,6 +164688,166 @@ Body:
             }
          }
       }
+  - Id: 510096
+    AegisName: aegis_510096
+    Name: Level 1 Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      Knight: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      SuperNovice: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 510097
+    AegisName: aegis_510097
+    Name: Level 2 Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      Knight: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      SuperNovice: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 510098
+    AegisName: aegis_510098
+    Name: Level 3 Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      Knight: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      SuperNovice: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 510099
+    AegisName: aegis_510099
+    Name: Level 4 Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      Knight: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      SuperNovice: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 510100
+    AegisName: aegis_510100
+    Name: Level 5 Dagger    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      Knight: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      SuperNovice: true
+      Rebellion: true
+      Rogue: true
+      SoulLinker: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 520000
     AegisName: Boost_Axe
     Name: Booster Axe
@@ -164069,6 +165213,121 @@ Body:
       bonus bLongAtkDef,5;
       bonus bAspdRate,10;
       bonus bDef,-150;
+  - Id: 520024
+    AegisName: aegis_520024
+    Name: Level 1 Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 520027
+    AegisName: aegis_520027
+    Name: Level 2 Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 520028
+    AegisName: aegis_520028
+    Name: Level 3 Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 520029
+    AegisName: aegis_520029
+    Name: Level 4 Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 520030
+    AegisName: aegis_520030
+    Name: Level 5 Axe    # !todo check english name
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 530000
     AegisName: Boost_Spear
     Name: Booster Spear
@@ -164755,6 +166014,159 @@ Body:
       bonus bLongAtkRate,10;
       bonus bAspdRate,5;
       bonus bHit,30;
+  - Id: 530040
+    AegisName: aegis_530040
+    Name: Level 1 One-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 530041
+    AegisName: aegis_530041
+    Name: Level 2 One-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 530042
+    AegisName: aegis_530042
+    Name: Level 3 One-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 530043
+    AegisName: aegis_530043
+    Name: Level 4 One-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 530044
+    AegisName: aegis_530044
+    Name: Level 5 One-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
+  - Id: 530045
+    AegisName: aegis_530045
+    Name: Holy Light Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 2000
+    Attack: 210
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"IG_OVERSLASH",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"IG_OVERSLASH",10;
+         if (.@r>=7) {
+            bonus bShortAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"IG_OVERSLASH",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus bShortAtkRate,15;
+                     bonus2 bSkillAtk,"IG_OVERSLASH",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 540000
     AegisName: Boost_Spellbook
     Name: Booster Spellbook
@@ -166783,6 +168195,91 @@ Body:
       bonus bLongAtkDef,-5;
       bonus bAspdRate,-5;
       bonus bHit,30;
+  - Id: 540068
+    AegisName: aegis_540068
+    Name: Level 1 Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 540069
+    AegisName: aegis_540069
+    Name: Level 2 Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 540071
+    AegisName: aegis_540071
+    Name: Level 3 Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 540072
+    AegisName: aegis_540072
+    Name: Level 4 Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 540073
+    AegisName: aegis_540073
+    Name: Level 5 Book    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 550001
     AegisName: Boost_Rod
     Name: Booster Rod
@@ -170050,6 +171547,230 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,-5+10;
       bonus bVariableCastrate,-10;
       bonus bUseSPrate,5;
+  - Id: 550108
+    AegisName: aegis_550108
+    Name: Level 1 Staff    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 550110
+    AegisName: aegis_550110
+    Name: Level 2 Staff    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 550111
+    AegisName: aegis_550111
+    Name: Level 3 Staff    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 550112
+    AegisName: aegis_550112
+    Name: Level 4 Staff    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 550113
+    AegisName: aegis_550113
+    Name: Level 5 Staff    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
+  - Id: 550115
+    AegisName: aegis_550115
+    Name: Darkness Foxtail Model
+    Type: Weapon
+    SubType: Staff
+    Weight: 1400
+    Attack: 150
+    MagicAttack: 330
+    Range: 1
+    Slots: 2
+    Jobs:
+      Summoner: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bSpl,2;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",10;
+         if (.@r>=7) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",10;
+               if (.@r>=10) {
+                  bonus bVariableCastrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",15;
+                     bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddRace,RC_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
+  - Id: 550116
+    AegisName: aegis_550116
+    Name: Lightforce Foxtail Wand
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 330
+    Range: 1
+    Slots: 2
+    Jobs:
+      Summoner: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",10;
+               if (.@r>=10) {
+                  bonus bCritical,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",5;
+                     bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",15;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 560000
     AegisName: Boost_Knuckles
     Name: Booster Knuckles
@@ -171125,6 +172846,86 @@ Body:
       bonus bLongAtkRate,10;
       bonus bAspdRate,10;
       bonus bCritical,-5;
+  - Id: 560043
+    AegisName: aegis_560043
+    Name: Level 1 Knuckle    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 560044
+    AegisName: aegis_560044
+    Name: Level 2 Knuckle    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 560045
+    AegisName: aegis_560045
+    Name: Level 3 Knuckle    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 560046
+    AegisName: aegis_560046
+    Name: Level 4 Knuckle    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 560047
+    AegisName: aegis_560047
+    Name: Level 5 Knuckle    # !todo check english name
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 570000
     AegisName: Boost_Guitar
     Name: Booster Guitar
@@ -172138,6 +173939,86 @@ Body:
             }
          }
       }
+  - Id: 570040
+    AegisName: aegis_570040
+    Name: Level 1 Instrument    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 570041
+    AegisName: aegis_570041
+    Name: Level 2 Instrument    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 570042
+    AegisName: aegis_570042
+    Name: Level 3 Instrument    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 570043
+    AegisName: aegis_570043
+    Name: Level 4 Instrument    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 570044
+    AegisName: aegis_570044
+    Name: Level 5 Instrument    # !todo check english name
+    Type: Weapon
+    SubType: Musical
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 580000
     AegisName: Boost_Whip
     Name: Booster Whip
@@ -173157,6 +175038,101 @@ Body:
             }
          }
       }
+  - Id: 580041
+    AegisName: aegis_580041
+    Name: Level 1 Whip    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Attack: 10
+    MagicAttack: 10
+    Range: 2
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 580042
+    AegisName: aegis_580042
+    Name: Level 2 Whip    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Attack: 10
+    MagicAttack: 10
+    Range: 2
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 580043
+    AegisName: aegis_580043
+    Name: Level 3 Whip    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Attack: 10
+    MagicAttack: 10
+    Range: 2
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 580044
+    AegisName: aegis_580044
+    Name: Level 4 Whip    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Attack: 10
+    MagicAttack: 10
+    Range: 2
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 580045
+    AegisName: aegis_580045
+    Name: Level 5 Whip    # !todo check english name
+    Type: Weapon
+    SubType: Whip
+    Attack: 10
+    MagicAttack: 10
+    Range: 2
+    Slots: 4
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 590000
     AegisName: Boost_Mace
     Name: Booster Mace
@@ -174538,6 +176514,131 @@ Body:
       bonus bShortAtkRate,-5;
       bonus bDelayrate,5;
       bonus bVariableCastrate,-10;
+  - Id: 590056
+    AegisName: aegis_590056
+    Name: Blunt Weapon Level 1    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 590057
+    AegisName: aegis_590057
+    Name: Blunt weapon level 2    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 590058
+    AegisName: aegis_590058
+    Name: Blunt Weapon Level 3    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 590059
+    AegisName: aegis_590059
+    Name: Blunt weapon level 4    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 590060
+    AegisName: aegis_590060
+    Name: Blunt weapon level 5    # !todo check english name
+    Type: Weapon
+    SubType: Mace
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      SuperNovice: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 600000
     AegisName: IDTest_bothhand
     Name: IDTest bothhand
@@ -174555,8 +176656,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 1
     # Flags:
       # BuyingStore: true
@@ -174743,8 +176843,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -175313,6 +177412,159 @@ Body:
       bonus bShortAtkRate,-7;
       bonus bAspdRate,15;
       bonus bMdef,-80;
+  - Id: 600035
+    AegisName: aegis_600035
+    Name: Level 1 Two-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 600036
+    AegisName: aegis_600036
+    Name: Level 2 Two-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 600037
+    AegisName: aegis_600037
+    Name: Level 3 Two-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 600038
+    AegisName: aegis_600038
+    Name: Level 4 Two-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 600039
+    AegisName: aegis_600039
+    Name: Level 5 Two-Handed Sword    # !todo check english name
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
+  - Id: 600041
+    AegisName: aegis_600041
+    Name: Execution Great Sword
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 4200
+    Attack: 280
+    Range: 1
+    Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
+         if (.@r>=7) {
+            bonus bShortAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
+               if (.@r>=10) {
+                  bonus bAspdRate,10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"DK_STORMSLASH",15;
+                     bonus2 bSkillAtk,"DK_HACKANDSLASHER",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 610000
     AegisName: Boost_Katar
     Name: Booster Katar
@@ -175517,8 +177769,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -176436,6 +178687,81 @@ Body:
             }
          }
       }
+  - Id: 610047
+    AegisName: aegis_610047
+    Name: Level 1 Katar    # !todo check english name
+    Type: Weapon
+    SubType: Katar
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 610049
+    AegisName: aegis_610049
+    Name: Level 2 Katar    # !todo check english name
+    Type: Weapon
+    SubType: Katar
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 610050
+    AegisName: aegis_610050
+    Name: Level 3 Katar    # !todo check english name
+    Type: Weapon
+    SubType: Katar
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 610051
+    AegisName: aegis_610051
+    Name: Level 4 Katar    # !todo check english name
+    Type: Weapon
+    SubType: Katar
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 610052
+    AegisName: aegis_610052
+    Name: Level 5 Katar    # !todo check english name
+    Type: Weapon
+    SubType: Katar
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 620003
     AegisName: PT_B_Axe
     Name: Power Swing Booster Axe
@@ -176449,8 +178775,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -177029,6 +179354,86 @@ Body:
             }
          }
       }
+  - Id: 620023
+    AegisName: aegis_620023
+    Name: Two-Handed Axe Level 1    # !todo check english name
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 620024
+    AegisName: aegis_620024
+    Name: Two-Handed Axe Level 2    # !todo check english name
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 620025
+    AegisName: aegis_620025
+    Name: Level 3 Two-Handed Axe    # !todo check english name
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 620026
+    AegisName: aegis_620026
+    Name: Level 4 Two-Handed Axe    # !todo check english name
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
   - Id: 630003
     AegisName: Ep172_Bh_Spear
     Name: Luxuria Pierce
@@ -177146,8 +179551,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -177477,6 +179881,159 @@ Body:
       bonus bLongAtkRate,15;
       bonus bVariableCastrate,7;
       bonus bHit,50;
+  - Id: 630021
+    AegisName: aegis_630021
+    Name: Level 1 Two-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 630022
+    AegisName: aegis_630022
+    Name: Level 2 Two-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 630023
+    AegisName: aegis_630023
+    Name: Level 3 Two-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 630024
+    AegisName: aegis_630024
+    Name: Level 4 Two-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 630025
+    AegisName: aegis_630025
+    Name: Level 5 Two-Handed Spear    # !todo check english name
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 10
+    MagicAttack: 10
+    Range: 3
+    Slots: 4
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
+  - Id: 630027
+    AegisName: aegis_630027
+    Name: Jupiter Spear
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 5000
+    Attack: 300
+    Range: 3
+    Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bPow,2;
+      bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",5;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",10;
+         if (.@r>=7) {
+            bonus bLongAtkRate,5;
+            if (.@r>=9) {
+               bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",10;
+               if (.@r>=10) {
+                  bonus bDelayrate,-10;
+                  if (.@r>=11) {
+                     bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",15;
+                     bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",5;
+                  }
+               }
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,10;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddSize,Size_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_All,10;
+               }
+            }
+         }
+      }
   - Id: 640000
     AegisName: Boost_Staff
     Name: Booster Staff
@@ -177595,8 +180152,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -177644,8 +180200,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -178705,6 +181260,96 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,-7+15;
       bonus bDelayrate,7;
       bonus bVariableCastrate,-15;
+  - Id: 640041
+    AegisName: aegis_640041
+    Name: Level 1 Two-Handed Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 640042
+    AegisName: aegis_640042
+    Name: Level 2 Two-Handed Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 640043
+    AegisName: aegis_640043
+    Name: Level 3 Two-Handed Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 640044
+    AegisName: aegis_640044
+    Name: Level 4 Two-Handed Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 640045
+    AegisName: aegis_640045
+    Name: Level 5 Two-Handed Staff    # !todo check english name
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 650003
     AegisName: Ep172_Bh_Huuma
     Name: Wrath Wheel
@@ -178718,8 +181363,7 @@ Body:
       KagerouOboro: true
       Ninja: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 150
     Refineable: true
@@ -179506,6 +182150,86 @@ Body:
             }
          }
       }
+  - Id: 650035
+    AegisName: aegis_650035
+    Name: Level 1 Wind Magic Shuriken    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 650036
+    AegisName: aegis_650036
+    Name: Level 2 Wind Magic Shuriken    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 650037
+    AegisName: aegis_650037
+    Name: Level 3 Wind Magic Shuriken    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 650038
+    AegisName: aegis_650038
+    Name: Level 4 Wind Magic Shuriken    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 650039
+    AegisName: aegis_650039
+    Name: Level 5 Wind Magic Shuriken    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Attack: 10
+    MagicAttack: 10
+    Range: 1
+    Slots: 4
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 700000
     AegisName: IDTest_bow
     Name: IDTest bow
@@ -179523,8 +182247,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 1
     # Flags:
       # BuyingStore: true
@@ -179733,8 +182456,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -179779,8 +182501,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -179823,8 +182544,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -179869,8 +182589,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -181327,6 +184046,101 @@ Body:
       bonus bAgi,3*.@r;
       bonus bDex,3*.@r;
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",BaseLevel;
+  - Id: 700070
+    AegisName: aegis_700070
+    Name: Level 1 Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Attack: 10
+    MagicAttack: 10
+    Range: 5
+    Slots: 4
+    Jobs:
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 700071
+    AegisName: aegis_700071
+    Name: Level 2 Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Attack: 10
+    MagicAttack: 10
+    Range: 5
+    Slots: 4
+    Jobs:
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 700072
+    AegisName: aegis_700072
+    Name: Level 3 Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Attack: 10
+    MagicAttack: 10
+    Range: 5
+    Slots: 4
+    Jobs:
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 700073
+    AegisName: aegis_700073
+    Name: Level 4 Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Attack: 10
+    MagicAttack: 10
+    Range: 5
+    Slots: 4
+    Jobs:
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 700074
+    AegisName: aegis_700074
+    Name: Level 5 Bow    # !todo check english name
+    Type: Weapon
+    SubType: Bow
+    Attack: 10
+    MagicAttack: 10
+    Range: 5
+    Slots: 4
+    Jobs:
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 800000
     AegisName: IDTest_gun
     Name: IDTest gun
@@ -181340,8 +184154,7 @@ Body:
       Gunslinger: true
       Rebellion: true
     Locations:
-      Right_Hand: true
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 1
     # Flags:
       # BuyingStore: true
@@ -181952,6 +184765,86 @@ Body:
             }
          }
       }
+  - Id: 800029
+    AegisName: aegis_800029
+    Name: Level 1 Revolver    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Attack: 10
+    MagicAttack: 10
+    Range: 7
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 800030
+    AegisName: aegis_800030
+    Name: Level 2 Revolver    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Attack: 10
+    MagicAttack: 10
+    Range: 7
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 800031
+    AegisName: aegis_800031
+    Name: Level 3 Revolver    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Attack: 10
+    MagicAttack: 10
+    Range: 7
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 800032
+    AegisName: aegis_800032
+    Name: Level 4 Revolver    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Attack: 10
+    MagicAttack: 10
+    Range: 7
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 800033
+    AegisName: aegis_800033
+    Name: Level 5 Revolver    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Attack: 10
+    MagicAttack: 10
+    Range: 7
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 810000
     AegisName: Ep172_1h_Rifle
     Name: Lust Pointer
@@ -182517,6 +185410,86 @@ Body:
             }
          }
       }
+  - Id: 810029
+    AegisName: aegis_810029
+    Name: Level 1 Rifle    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 810030
+    AegisName: aegis_810030
+    Name: Level 2 Rifle    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 810031
+    AegisName: aegis_810031
+    Name: Level 3 Rifle    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 810032
+    AegisName: aegis_810032
+    Name: Level 4 Rifle    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 810033
+    AegisName: aegis_810033
+    Name: Level 5 Rifle    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 820000
     AegisName: Ep172_1h_Shotgun
     Name: Lust Shatter
@@ -182981,6 +185954,86 @@ Body:
             }
          }
       }
+  - Id: 820023
+    AegisName: aegis_820023
+    Name: Level 1 Shotgun    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 820024
+    AegisName: aegis_820024
+    Name: Level 2 Shotgun    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 820025
+    AegisName: aegis_820025
+    Name: Level 3 Shotgun    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 820026
+    AegisName: aegis_820026
+    Name: Level 4 Shotgun    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 820027
+    AegisName: aegis_820027
+    Name: Level 5 shotgun    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 830000
     AegisName: Boost_Gatling
     Name: Booster Gatling
@@ -183587,6 +186640,86 @@ Body:
             }
          }
       }
+  - Id: 830028
+    AegisName: aegis_830028
+    Name: Level 1 Gatling Gun    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 830029
+    AegisName: aegis_830029
+    Name: Level 2 Gatling Gun    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 830030
+    AegisName: aegis_830030
+    Name: Level 3 Gatling Gun    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 830031
+    AegisName: aegis_830031
+    Name: Level 4 Gatling Gun    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 830032
+    AegisName: aegis_830032
+    Name: Level 5 Gatling Gun    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true
   - Id: 840000
     AegisName: Ep172_1h_Grenade
     Name: Lust Boom
@@ -184088,3 +187221,83 @@ Body:
             }
          }
       }
+  - Id: 840023
+    AegisName: aegis_840023
+    Name: Level 1 Grenade Launcher    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 1
+    Refineable: true
+  - Id: 840024
+    AegisName: aegis_840024
+    Name: Level 2 Grenade Launcher    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    Refineable: true
+  - Id: 840025
+    AegisName: aegis_840025
+    Name: Level 3 Grenade Launcher    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    Refineable: true
+  - Id: 840026
+    AegisName: aegis_840026
+    Name: Level 4 Grenade Launcher    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    Refineable: true
+  - Id: 840027
+    AegisName: aegis_840027
+    Name: Level 5 Grenade Launcher    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Attack: 10
+    MagicAttack: 10
+    Range: 9
+    Slots: 4
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    Refineable: true

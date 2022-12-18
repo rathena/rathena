@@ -7,7 +7,7 @@
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
 
-struct map_session_data;
+class map_session_data;
 
 //global var
 extern char atcommand_symbol;
@@ -19,9 +19,9 @@ enum AtCommandType : uint8 {
 	COMMAND_CHARCOMMAND = 2,
 } ;
 
-typedef int (*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
+typedef int (*AtCommandFunc)(const int fd, map_session_data* sd, const char* command, const char* message);
 
-bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type);
+bool is_atcommand(const int fd, map_session_data* sd, const char* message, int type);
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);
