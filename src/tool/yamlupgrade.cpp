@@ -8,6 +8,7 @@ using namespace rathena::tool_yamlupgrade;
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
 static bool upgrade_job_stats(std::string file, const uint32 source_version);
+static bool upgrade_status_db(std::string file, const uint32 source_version);
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -122,6 +123,12 @@ bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 		return upgrade_job_stats(path + name_ext, source_version);
 		})) {
 		return false;
+	}
+	
+	if (!process("STATUS_DB", 3, root_paths, "status", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_status_db(path + name_ext, source_version);
+		})) {
+		return 0;
 	}
 
 	return true;
@@ -289,6 +296,28 @@ static bool upgrade_job_stats(std::string file, const uint32 source_version) {
 	}
 
 	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' job stats in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_status_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 3
+		if (source_version < 3) {
+			// Rename End to EndOnStart
+			if (input["End"].IsDefined()) {
+				input["EndOnStart"] = input["End"];
+				input.remove("End");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' statuses in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

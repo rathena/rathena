@@ -23,6 +23,7 @@ private:
 	uint16 version;
 	uint16 minimumVersion;
 	std::string currentFile;
+	bool shouldLoadGenerator{false};
 
 	bool verifyCompatibility( const ryml::Tree& rootNode );
 	bool load( const std::string& path );
@@ -55,6 +56,8 @@ protected:
 	bool asString(const ryml::NodeRef& node, const std::string &name, std::string &out);
 	bool asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum=10000);
 	bool asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum=10000);
+
+	void setGenerator(bool shouldLoad);
 
 	virtual void loadingFinished();
 

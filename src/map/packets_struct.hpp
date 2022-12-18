@@ -4704,7 +4704,23 @@ struct PACKET_ZC_PERSONAL_INFOMATION {
 	struct PACKET_ZC_PERSONAL_INFOMATION_SUB details[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PERSONAL_INFOMATION, 0x097b);
-#endif  // PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
+#elif PACKETVER_MAIN_NUM >= 20110627 || PACKETVER_RE_NUM >= 20110628
+struct PACKET_ZC_PERSONAL_INFOMATION_SUB {
+	int8 type;
+	int16 exp;
+	int16 death;
+	int16 drop;
+} __attribute__((packed));
+struct PACKET_ZC_PERSONAL_INFOMATION {
+	int16 packetType;
+	int16 length;
+	int16 total_exp;
+	int16 total_death;
+	int16 total_drop;
+	struct PACKET_ZC_PERSONAL_INFOMATION_SUB details[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PERSONAL_INFOMATION, 0x08cb);
+#endif // PACKETVER_MAIN_NUM >= 20110627 || PACKETVER_RE_NUM >= 20110628
 
 struct PACKET_CZ_REQUEST_ACTNPC {
 	int16 packetType;
@@ -5000,7 +5016,7 @@ DEFINE_PACKET_HEADER(ZC_MYGUILD_BASIC_INFO, 0x014c);
 struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR {
 	int16 PacketType;
 	char answer[16];
-	int16 imageSize;
+	uint16 imageSize;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_UPLOAD_MACRO_DETECTOR, 0x0a52);
 #endif
@@ -5050,7 +5066,7 @@ DEFINE_PACKET_HEADER(ZC_ACK_APPLY_MACRO_DETECTOR, 0x0a57);
 #if PACKETVER >= 20160330
 struct PACKET_ZC_APPLY_MACRO_DETECTOR {
 	int16 PacketType;
-	int16 imageSize;
+	uint16 imageSize;
 	char captchaKey[4];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_APPLY_MACRO_DETECTOR, 0x0a58);
@@ -5110,7 +5126,7 @@ DEFINE_PACKET_HEADER(CZ_REQ_PREVIEW_MACRO_DETECTOR, 0x0a69);
 struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR {
 	int16 PacketType;
 	int captchaFlag;
-	int16 imageSize;
+	uint16 imageSize;
 	char captchaKey[4];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_PREVIEW_MACRO_DETECTOR, 0x0a6a);

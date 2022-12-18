@@ -10,12 +10,12 @@
 #include "../common/mmo.hpp" // t_itemid
 #include "../common/timer.hpp" // ShowWarning, ShowStatus
 
-struct map_session_data;
+class map_session_data;
 
 void do_init_cashshop( void );
 void do_final_cashshop( void );
 void cashshop_reloaddb( void );
-bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
 
 // Taken from AEGIS
 enum CASH_SHOP_TAB_CODE
@@ -94,7 +94,7 @@ extern struct sale_item_db sale_items;
 struct sale_item_data* sale_find_item(t_itemid nameid, bool onsale);
 enum e_sale_add_result sale_add_item(t_itemid nameid, int32 count, time_t from, time_t to);
 bool sale_remove_item(t_itemid nameid);
-void sale_notify_login( struct map_session_data* sd );
+void sale_notify_login( map_session_data* sd );
 #endif
 
 #endif /* CASHSHOP_HPP */

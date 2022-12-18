@@ -68,8 +68,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 			27184, 10000,		// Knight Sakray Card
 			23676, 50, 			// Gray Charcoal Melee (Melee)
 			23677, 50,			// Gray Charcoal Magic (Magic)
-			23678, 50,			// Gray Charcoal Range (Range)
-			27184, 10000;		// Knight Sakray Card
+			23678, 50;			// Gray Charcoal Range (Range)
 		break;
 	}
 	.@size = getarraysize(.@items);

@@ -25,7 +25,7 @@ struct homun_data;
 struct s_mercenary_data;
 struct s_elemental_data;
 struct npc_data;
-struct status_change;
+class status_change;
 
 /**
  * Max Refine available to your server
@@ -73,6 +73,8 @@ struct s_refine_level_info{
 	uint32 bonus;
 	uint32 randombonus_max;
 	uint16 blessing_amount;
+	bool broadcast_success;
+	bool broadcast_failure;
 	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
 };
 
@@ -92,7 +94,7 @@ private:
 	std::shared_ptr<s_refine_level_info> findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine );
 
 public:
-	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 2, 1 ){
 
 	}
 
@@ -166,7 +168,8 @@ struct s_enchantgradelevel{
 	uint16 refine;
 	uint16 chance;
 	uint16 bonus;
-	bool announce;
+	bool announceSuccess;
+	bool announceFail;
 	struct{
 		t_itemid item;
 		uint16 amountPerStep;
@@ -183,7 +186,7 @@ struct s_enchantgrade{
 
 class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{
 public:
-	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 1 ){
+	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 2, 1 ){
 
 	}
 
@@ -1252,6 +1255,8 @@ enum sc_type : int16 {
 	SC_SKF_CAST,
 	SC_BEEF_RIB_STEW,
 	SC_PORK_RIB_STEW,
+
+	SC_WEAPONBREAKER,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -2936,27 +2941,28 @@ enum e_status_change_flag : uint16 {
 
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
-	sc_type type;					///< SC_
-	efst_type icon;					///< EFST_
-	std::bitset<SCS_MAX> state;		///< SCS_
-	std::bitset<SCB_MAX> calc_flag;	///< SCB_ flags
-	uint16 opt1;					///< OPT1_
-	uint16 opt2;					///< OPT2_
-	uint32 opt3;					///< OPT3_
-	uint32 look;					///< OPTION_ Changelook
-	std::bitset<SCF_MAX> flag;		///< SCF_ Flags, enum e_status_change_flag
-	bool display;					///< Display status effect/icon (for certain state)
-	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
-	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
-	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
-	std::vector<sc_type> endreturn;	///< List of SC that will be ended when this SC is activated and then immediately return
-	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
-	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
+	sc_type type;						///< SC_
+	efst_type icon;						///< EFST_
+	std::bitset<SCS_MAX> state;			///< SCS_
+	std::bitset<SCB_MAX> calc_flag;		///< SCB_ flags
+	uint16 opt1;						///< OPT1_
+	uint16 opt2;						///< OPT2_
+	uint32 opt3;						///< OPT3_
+	uint32 look;						///< OPTION_ Changelook
+	std::bitset<SCF_MAX> flag;			///< SCF_ Flags, enum e_status_change_flag
+	bool display;						///< Display status effect/icon (for certain state)
+	uint16 skill_id;					///< Associated skill for (addeff) duration lookups
+	std::vector<sc_type> endonstart;	///< List of SC that will be ended when this SC is activated
+	std::vector<sc_type> fail;			///< List of SC that causing this SC cannot be activated
+	std::vector<sc_type> endreturn;		///< List of SC that will be ended when this SC is activated and then immediately return
+	std::vector<sc_type> endonend;		///< List of SC that will be ended when this SC ends
+	t_tick min_duration;				///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;					///< Minimum rate to be applied (after all status reduction)
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 3) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
@@ -2976,7 +2982,7 @@ public:
 	// Extras
 	efst_type getIcon(sc_type type);
 	std::bitset<SCB_MAX> getCalcFlag(sc_type type);
-	std::vector<sc_type> getEnd(sc_type type);
+	std::vector<sc_type> getEndOnStart(sc_type type);
 	uint16 getSkill(sc_type type);
 	bool hasSCF(status_change *sc, e_status_change_flag flag);
 	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
@@ -3127,7 +3133,8 @@ struct status_change_entry {
 };
 
 ///Status change
-struct status_change {
+class status_change {
+public:
 	unsigned int option;// effect state (bitfield)
 	unsigned int opt3;// skill state (bitfield)
 	unsigned short opt1;// body state
@@ -3158,7 +3165,16 @@ struct status_change {
 #ifndef RENEWAL
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
+private:
 	struct status_change_entry *data[SC_MAX];
+	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
+
+public:
+	status_change_entry * getSCE(enum sc_type type);
+	status_change_entry * getSCE(uint32 type);
+	status_change_entry * createSCE(enum sc_type type);
+	void deleteSCE(enum sc_type type);
+	void clearSCE(enum sc_type type);
 };
 
 int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id );
@@ -3264,7 +3280,7 @@ unsigned short status_get_speed(struct block_list *bl);
 #define status_get_crate(bl) status_get_status_data(bl)->crate
 #define status_get_element(bl) status_get_status_data(bl)->def_ele
 #define status_get_element_level(bl) status_get_status_data(bl)->ele_lv
-unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element);
+unsigned char status_calc_attack_element(struct block_list *bl, status_change *sc, int element);
 #define status_get_attack_sc_element(bl, sc) status_calc_attack_element(bl, sc, 0)
 #define status_get_attack_element(bl) status_get_status_data(bl)->rhw.ele
 #define status_get_attack_lelement(bl) status_get_status_data(bl)->lhw.ele
@@ -3290,7 +3306,7 @@ std::vector<e_race2> status_get_race2(struct block_list *bl);
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int class_);
 void status_change_init(struct block_list *bl);
-struct status_change *status_get_sc(struct block_list *bl);
+status_change *status_get_sc(struct block_list *bl);
 
 int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
@@ -3312,7 +3328,7 @@ TIMER_FUNC(status_change_timer);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
-void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
+void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
@@ -3323,12 +3339,12 @@ TIMER_FUNC(status_clear_lastEffect_timer);
 #define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
 
-bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
+bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
+bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int status_calc_mob_(struct mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
-int status_calc_pc_(struct map_session_data* sd, uint8 opt);
+int status_calc_pc_(map_session_data* sd, uint8 opt);
 int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
 int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
@@ -3347,8 +3363,8 @@ static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
-void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
-void status_calc_state(struct block_list *bl, struct status_change *sc, std::bitset<SCS_MAX> flag, bool start);
+void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, status_change *sc);
+void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
@@ -3361,7 +3377,7 @@ int status_change_spread(block_list *src, block_list *bl);
 unsigned short status_base_matk_min(const struct status_data* status);
 unsigned short status_base_matk_max(const struct status_data* status);
 #else
-unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd);
+unsigned int status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
 unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level);
