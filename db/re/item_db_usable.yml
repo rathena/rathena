@@ -1826,8 +1826,7 @@ Body:
       if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
-      }
-      else
+      } else
          percentheal -100,-100;
   - Id: 679
     AegisName: Gold_Pill
@@ -50407,8 +50406,7 @@ Body:
       if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
-      }
-      else
+      } else
          percentheal -100,-100;
   - Id: 22550
     AegisName: Cookie_Bag_B
