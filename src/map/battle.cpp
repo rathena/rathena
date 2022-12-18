@@ -10285,6 +10285,8 @@ static const struct _battle_data {
 
 	{ "mob_respawn_time",                   &battle_config.mob_respawn_time,                1000,   1000,   INT_MAX,        },
 
+	{ "feature.stylist",                    &battle_config.feature_stylist,                 1,      0,      1,              },
+
 #include "../custom/battle_config_init.inc"
 };
 
@@ -10419,6 +10421,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20151104
+	if( battle_config.feature_stylist ){
+		ShowWarning("conf/battle/feature.conf stylist is enabled but it requires PACKETVER 2015-11-04 or newer, disabling...\n");
+		battle_config.feature_stylist = 0;
 	}
 #endif
 

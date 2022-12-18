@@ -514,3 +514,11 @@ int distance_client(int dx, int dy)
 bool direction_diagonal( enum directions direction ){
 	return direction == DIR_NORTHWEST || direction == DIR_SOUTHWEST || direction == DIR_SOUTHEAST || direction == DIR_NORTHEAST;
 }
+
+bool direction_opposite( enum directions direction ){
+	if( direction == DIR_CENTER || direction == DIR_MAX ){
+		return direction;
+	}else{
+		return static_cast<enum directions>( ( direction + DIR_MAX / 2 ) % DIR_MAX );
+	}
+}
