@@ -16179,19 +16179,19 @@ BUILDIN_FUNC(getmapxy)
 				bl = map_id2bl(st->oid);
 			break;
 		case BL_PET:	//Get Pet Position
-			if (sd->pd && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
+			if (((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)) && sd->pd)
 				bl = &sd->pd->bl;
 			break;
 		case BL_HOM:	//Get Homun Position
-			if (sd->hd && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
+			if (((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)) && sd->hd)
 				bl = &sd->hd->bl;
 			break;
 		case BL_MER: //Get Mercenary Position
-			if (sd->md && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
+			if (((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)) && sd->md)
 				bl = &sd->md->bl;
 			break;
 		case BL_ELEM: //Get Elemental Position
-			if (sd->ed && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
+			if (((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)) && sd->ed)
 				bl = &sd->ed->bl;
 			break;
 		default:
