@@ -14,7 +14,8 @@
 
 #include "account.hpp"
 
-using namespace rathena::server_core;
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
 
 namespace rathena{
 	namespace server_login{
