@@ -2101,7 +2101,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
-      NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
   - Status: Incmhprate

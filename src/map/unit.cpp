@@ -67,7 +67,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 {
 	if( bl == NULL) return NULL;
 	switch(bl->type){
-	case BL_PC: return &((struct map_session_data*)bl)->ud;
+	case BL_PC: return &((map_session_data*)bl)->ud;
 	case BL_MOB: return &((struct mob_data*)bl)->ud;
 	case BL_PET: return &((struct pet_data*)bl)->ud;
 	case BL_NPC: return &((struct npc_data*)bl)->ud;
@@ -915,7 +915,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
  * Called by unit_run when an object is hit.
  * @param sd Required only when using SC_WUGDASH
  */
-void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type)
+void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd, enum sc_type type)
 {
 	int lv = sc->getSCE(type)->val1;
 
@@ -943,9 +943,9 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
  * @param sd: Required only when using SC_WUGDASH
  * @return true: Success (Finished running) false: Fail (Hit an object/Couldn't run)
  */
-bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type)
+bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type)
 {
-	struct status_change *sc;
+	status_change *sc;
 	short to_x, to_y, dir_x, dir_y;
 	int i;
 
@@ -1038,7 +1038,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 {
 	short dx,dy;
 	struct unit_data        *ud = NULL;
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 
 	nullpo_retr(false,bl);
 
@@ -1165,7 +1165,7 @@ uint8 unit_getdir(struct block_list *bl)
 int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag)
 {
 	if(count) {
-		struct map_session_data* sd;
+		map_session_data* sd;
 		struct skill_unit* su = NULL;
 		int nx, ny, result;
 
@@ -1253,7 +1253,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 				return UB_MD_KNOCKBACK_IMMUNE;
 			break;
 		case BL_PC: {
-				struct map_session_data *sd = BL_CAST(BL_PC, bl);
+				map_session_data *sd = BL_CAST(BL_PC, bl);
 
 #ifndef RENEWAL
 				// Basilica caster can't be knocked-back by normal monsters.
@@ -1474,9 +1474,9 @@ int unit_is_walking(struct block_list *bl)
  * @return True - can move; False - can't move
  */
 bool unit_can_move(struct block_list *bl) {
-	struct map_session_data *sd;
+	map_session_data *sd;
 	struct unit_data *ud;
-	struct status_change *sc;
+	status_change *sc;
 
 	nullpo_ret(bl);
 
@@ -1611,8 +1611,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 {
 	struct unit_data *ud;
 	struct status_data *tstatus;
-	struct status_change *sc;
-	struct map_session_data *sd = NULL;
+	status_change *sc;
+	map_session_data *sd = NULL;
 	struct block_list * target = NULL;
 	t_tick tick = gettick();
 	int combo = 0, range;
@@ -2114,9 +2114,9 @@ int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint
  */
 int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel)
 {
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 	struct unit_data        *ud = NULL;
-	struct status_change *sc;
+	status_change *sc;
 	struct block_list    bl;
 	t_tick tick = gettick();
 	int range;
@@ -2671,7 +2671,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 	struct block_list *target;
 	struct unit_data *ud;
 	struct status_data *sstatus;
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 	struct mob_data *md = NULL;
 	int range;
 
@@ -2861,7 +2861,7 @@ bool unit_can_attack(struct block_list *bl, int target_id) {
 			return false;
 	}
 
-	struct status_change *sc;
+	status_change *sc;
 
 	if (!(sc = status_get_sc(bl)))
 		return true;
@@ -2882,7 +2882,7 @@ bool unit_can_attack(struct block_list *bl, int target_id) {
  */
 int unit_skillcastcancel(struct block_list *bl, char type)
 {
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 	struct unit_data *ud = unit_bl2ud( bl);
 	t_tick tick = gettick();
 	int ret = 0, skill_id;
@@ -3034,7 +3034,7 @@ int unit_changetarget(struct block_list *bl, va_list ap) {
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
-	struct status_change *sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 
 	nullpo_ret(ud);
 
@@ -3079,7 +3079,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	switch( bl->type ) {
 		case BL_PC: {
-			struct map_session_data *sd = (struct map_session_data*)bl;
+			map_session_data *sd = (map_session_data*)bl;
 
 			if(sd->shadowform_id) { // If shadow target has leave the map
 			    struct block_list *d_bl = map_id2bl(sd->shadowform_id);
@@ -3318,7 +3318,7 @@ void unit_refresh(struct block_list *bl, bool walking) {
  *	0: Assume bl is being warped
  *	1: Death, appropriate cleanup performed
  */
-void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
+void unit_remove_map_pc(map_session_data *sd, clr_type clrtype)
 {
 	unit_remove_map(&sd->bl,clrtype);
 
@@ -3344,7 +3344,7 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
  * Also free his pets/homon/mercenary/elemental/etc if he have any
  * @param sd: Player
  */
-void unit_free_pc(struct map_session_data *sd)
+void unit_free_pc(map_session_data *sd)
 {
 	if (sd->pd)
 		unit_free(&sd->pd->bl,CLR_OUTSIGHT);
@@ -3382,7 +3382,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 	switch( bl->type ) {
 		case BL_PC: {
-			struct map_session_data *sd = (struct map_session_data*)bl;
+			map_session_data *sd = (map_session_data*)bl;
 			int i;
 
 			if( status_isdead(bl) )
@@ -3418,17 +3418,22 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->npc_id = 0;
 			}
 
-			if( sd->npc_id_dynamic != 0 ){
-				struct npc_data* nd = map_id2nd( sd->npc_id_dynamic );
+			if( !sd->npc_id_dynamic.empty() ){
+				for (const auto &it : sd->npc_id_dynamic) {
+					struct npc_data* nd = map_id2nd( it );
 
-				if( nd != nullptr ){
-					// Delete the NPC
-					npc_unload( nd, true );
-					// Update NPC event database
-					npc_read_event_script();
+					if( nd != nullptr ){
+						// Erase the owner first to prevent loops from npc_unload
+						nd->dynamicnpc.owner_char_id = 0;
+
+						// Delete the NPC
+						npc_unload( nd, true );
+					}
 				}
+				// Update NPC event database
+				npc_read_event_script();
 
-				sd->npc_id_dynamic = 0;
+				sd->npc_id_dynamic.clear();
 			}
 
 			sd->combos.clear();
@@ -3467,7 +3472,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		}
 		case BL_PET: {
 			struct pet_data *pd = (struct pet_data*)bl;
-			struct map_session_data *sd = pd->master;
+			map_session_data *sd = pd->master;
 
 			pet_delautobonus(*sd, pd->autobonus, false);
 			pet_delautobonus(*sd, pd->autobonus2, false);
@@ -3559,7 +3564,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		case BL_HOM:
 		{
 			struct homun_data *hd = (TBL_HOM*)bl;
-			struct map_session_data *sd = hd->master;
+			map_session_data *sd = hd->master;
 
 			hom_hungry_timer_delete(hd);
 
@@ -3586,7 +3591,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		}
 		case BL_MER: {
 			s_mercenary_data *md = (TBL_MER*)bl;
-			struct map_session_data *sd = md->master;
+			map_session_data *sd = md->master;
 
 			if( mercenary_get_lifetime(md) > 0 )
 				mercenary_save(md);
@@ -3609,7 +3614,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		}
 		case BL_ELEM: {
 			s_elemental_data *ed = (TBL_ELEM*)bl;
-			struct map_session_data *sd = ed->master;
+			map_session_data *sd = ed->master;
 
 			if( elemental_get_lifetime(ed) > 0 )
 				elemental_save(ed);
