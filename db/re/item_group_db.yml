@@ -48944,3 +48944,9 @@ Body:
         List:
           - Item: Shadow_Refine_Hammer
             Amount: 3
+  - Group: EDP
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Poison_Bottle
+          - Item: Poison_Bottle_B

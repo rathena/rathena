@@ -6633,6 +6633,7 @@
 	export_constant(IG_S_TEMP2_CUBE);
 	export_constant(IG_BLACKSMITH_BLESS_BOX_3);
 	export_constant(IG_SHADOW_HAMMER_BOX_3);
+	export_constant(IG_EDP);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
