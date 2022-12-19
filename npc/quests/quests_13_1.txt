@@ -7481,7 +7481,7 @@ OnTouch:
 	mes "Oh, please don't disturb";
 	mes "it's sleep. It hates that.";
 	mes "By the way, doesn't it";
-	mes "remind you of somehing?";
+	mes "remind you of something?";
 	mes "I mean, like maybe";
 	mes "a vagrant or a hobo?";
 	close;

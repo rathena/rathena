@@ -7366,13 +7366,13 @@ Body:
       Poring_Balloon: true
       Marin_Balloon: true
       Drops_Balloon: true
-      Santa_Poring_Balloon: true
+      SantaPoring_Balloon: true
       Poporing_Balloon: true
-      Metalring_Balloon: true
-      Devilring_Balloon: true
-      Angelring_Balloon: true
+      Metaling_Balloon: true
+      Deviling_Balloon: true
+      Angeling_Balloon: true
       Ghostring_Balloon: true
-      Arch_Angelring_Balloon: true
+      Archangeling_Balloon: true
     Reset:
       Chance: 100000
       Price: 500000

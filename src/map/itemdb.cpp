@@ -3,8 +3,13 @@
 
 #include "itemdb.hpp"
 
+#include <chrono>
+#include <fstream>
 #include <iostream>
+#include <map>
 #include <stdlib.h>
+#include <math.h>
+#include <unordered_map>
 
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
@@ -1237,6 +1242,98 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
 	}
 
 	return util::umap_find( this->nameToItemDataMap, lowername );
+}
+
+/**
+* Generates an item link string
+* @param data: Item info
+* @return <ITEML> string for the item
+* @author [Cydh]
+**/
+std::string ItemDatabase::create_item_link( struct item& item ){
+	std::shared_ptr<item_data> data = this->find( item.nameid );
+
+	if( data == nullptr ){
+		ShowError( "Tried to create itemlink for unknown item %u.\n", item.nameid );
+		return "Unknown item";
+	}
+
+// All these dates are unconfirmed
+#if PACKETVER >= 20100000
+	if( !battle_config.feature_itemlink ){
+		// Feature is disabled
+		return data->ename;
+	}
+
+	struct item_data* id = data.get();
+
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	const std::string start_tag = "<ITEML>";
+	const std::string closing_tag = "</ITEML>";
+#else // PACKETVER >= 20100000
+	const std::string start_tag = "<ITEMLINK>";
+	const std::string closing_tag = "</ITEMLINK>";
+#endif
+
+	std::string itemstr = start_tag;
+
+	itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
+	itemstr += itemdb_isequip2(id) ? "1" : "0";
+	itemstr += util::base62_encode(item.nameid);
+	if (item.refine > 0) {
+		itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
+	}
+	if (itemdb_isequip2(id)) {
+		itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
+	}
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	const std::string card_sep = ")";
+	const std::string optid_sep = "+";
+	const std::string optpar_sep = ",";
+	const std::string optval_sep = "-";
+#else
+	const std::string card_sep = "(";
+	const std::string optid_sep = "*";
+	const std::string optpar_sep = "+";
+	const std::string optval_sep = ",";
+#endif
+
+	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
+		itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
+	}
+
+#if PACKETVER >= 20150225
+	for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+		if (item.option[i].id == 0) {
+			break; // ignore options including ones beyond this one since the client won't even display them
+		}
+		// Option ID
+		itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
+		// Param
+		itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
+		// Value
+		itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
+	}
+#endif
+
+	itemstr += closing_tag;
+	return itemstr;
+#else
+	// Did not exist before that
+	return data->ename;
+#endif
+}
+
+std::string ItemDatabase::create_item_link( t_itemid id ){
+	struct item it = {};
+
+	it.nameid = id;
+
+	return this->create_item_link( it );
 }
 
 ItemDatabase item_db;
@@ -4283,6 +4380,36 @@ void s_random_opt_group::apply( struct item& item ){
 			}
 		}
 	}
+
+	// Fix any gaps, the client cannot handle this
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		// If an option is empty
+		if( item.option[i].id == 0 ){
+			// Check if any other options, after the empty option exist
+			size_t j;
+			for( j = i + 1; j < MAX_ITEM_RDM_OPT; j++ ){
+				if( item.option[j].id != 0 ){
+					break;
+				}
+			}
+
+			// Another option was found, after the empty option
+			if( j < MAX_ITEM_RDM_OPT ){
+				// Move the later option forward
+				item.option[i].id = item.option[j].id;
+				item.option[i].value = item.option[j].value;
+				item.option[i].param = item.option[j].param;
+
+				// Reset the option that was moved
+				item.option[j].id = 0;
+				item.option[j].value = 0;
+				item.option[j].param = 0;
+			}else{
+				// Cancel early
+				break;
+			}
+		}
+	}
 }
 
 /**
@@ -4501,12 +4628,38 @@ int item_data::inventorySlotNeeded(int quantity)
 	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
+void itemdb_gen_itemmoveinfo()
+{
+	ShowInfo("itemdb_gen_itemmoveinfo: Generating itemmoveinfov5.txt.\n");
+	auto starttime = std::chrono::system_clock::now();
+	auto os = std::ofstream("./generated/clientside/data/itemmoveinfov5.txt", std::ios::trunc);
+	std::map<t_itemid, std::shared_ptr<item_data>> sorted_itemdb(item_db.begin(), item_db.end());
+
+	os << "// ItemID,\tDrop,\tVending,\tStorage,\tCart,\tNpc Sale,\tMail,\tAuction,\tGuildStorage\n";
+	os << "// This format does not accept blank lines. Be careful.\n";
+
+	item_data tmp_id{};
+	for (auto it = sorted_itemdb.begin(); it != sorted_itemdb.end(); ++it) {
+		if (it->second->type == IT_UNKNOWN)
+			continue;
+		if (memcmp(&it->second->flag.trade_restriction, &tmp_id.flag.trade_restriction, sizeof(tmp_id.flag.trade_restriction)) == 0)
+			continue;
+
+		os << it->first << "\t" << it->second->flag.trade_restriction.drop << "\t" << it->second->flag.trade_restriction.trade << "\t" << it->second->flag.trade_restriction.storage << "\t" << it->second->flag.trade_restriction.cart << "\t" << it->second->flag.trade_restriction.sell << "\t" << it->second->flag.trade_restriction.mail << "\t" << it->second->flag.trade_restriction.auction << "\t" << it->second->flag.trade_restriction.guild_storage << "\t// " << it->second->name << "\n";
+	}
+
+	os.close();
+
+	auto currenttime = std::chrono::system_clock::now();
+	ShowInfo("itemdb_gen_itemmoveinfo: Done generating itemmoveinfov5.txt. The process took %lldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(currenttime - starttime).count());
+}
+
 /**
 * Reload Item DB
 */
 void itemdb_reload(void) {
 	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	do_final_itemdb();
 
@@ -4518,7 +4671,7 @@ void itemdb_reload(void) {
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
+	for( sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		sd->combos.clear(); // clear combo bonuses
 		pc_setinventorydata(sd);

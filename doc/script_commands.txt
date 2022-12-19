@@ -159,7 +159,8 @@ executed, it is affected by spawn rates in 'battle_athena.conf'.
 Delay1 and delay2 control monster respawn delays - the first one is the fixed
 base respawn time, and the second is random variance on top of the base time.
 Both values are given in milliseconds (1000 = 1 second).
-Note that the server also enforces a minimum respawn delay of 5 seconds.
+Note that the server also enforces a minimum respawn delay of 1 second (See
+/conf/battle/monster.conf::mob_respawn_time).
 
 Event is a script event to be executed when the mob is killed. The event must
 be in the form "NPCName::OnEventName" to execute, and the event name label
@@ -1226,6 +1227,12 @@ make it stop in some other manner.
 	end;
 
 Don't expect things to run smoothly if you don't make your scripts 'end'.
+
+---------------------------------------
+
+*close3;
+
+The command is similar to 'close' but the cutin (if any) is cleared after closing.
 
 ---------------------------------------
 
@@ -6573,6 +6580,28 @@ Examples:
 
 ---------------------------------------
 
+macro_detector({<account ID>});
+macro_detector({"<character name>"});
+
+This command will display the captcha UI challenge onto the invoking character or the given <account ID>/<character name>.
+
+Example:
+	// Use 'getareaunits' to gather an area of players to test.
+	// Build an int array of the account IDs.
+	.@num = getareaunits(BL_PC, "prontera", 150, 150, 160, 160, .@array[0]);
+
+	mes "The number of Players in Prontera in between 150x150 and 160x160 is " + .@num + " .";
+	mes "Players to challenge:";
+	freeloop(1); // If the list is too big
+	for(.@i = 0; .@i < getarraysize(.@array); .@i++) {
+		mes (.@i + 1) + " " + convertpcinfo(.@array[.@i], CPC_NAME);
+		macro_detector .@array[.@i];
+	}
+	freeloop(0);
+	end;
+
+---------------------------------------
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================
@@ -6893,6 +6922,17 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
 If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+ 
+*duplicate_dynamic("<NPC name>"{,<character ID>});
+
+This command will duplicate the NPC with the given <NPC name> near the attached player or the player with the given <character ID>.
 The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
 
 NOTE:
@@ -10265,7 +10305,7 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
- PETINFO_ID - Pet ID
+ PETINFO_ID - Pet unique ID
  PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.yml' - will tell you what kind of a pet it is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
@@ -10947,6 +10987,29 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
+*itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+
+Generates an item link string for an item that can be used for npctalk, message,
+dispbottom, and broadcast commands. The result is a clickable-item name just
+like SHIFT+Click from a player's inventory/cart/equipment window. This command can be
+used with mes but the item name will not be clickable. You should use the normal client
+tags for displaying item links in mes dialogues, if the client supports them. 
+
+
+Examples:
+
+	npctalk "Knife [3] : "+itemlink(1201)+"";
+	npctalk "+16 Knife [3] : "+itemlink(1201,16)+"";
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 : "+itemlink(18110,13,4147,4407,4833,4832)+"";
+	setarray .@opt_ids[0],RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATTMPOWER,0,0;
+	setarray .@opt_values[0],3,5,20,0,0;
+	setarray .@opt_params[0],0,0,0,0,0;
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 + 3 Options : "+itemlink(18110,13,4147,4407,4833,4832,0,.@opt_ids,.@opt_values,.@opt_params)+"";
+
+
+RandomIDArray, RandomValueArray, and RandomParamArray only works if the
+client (and server) supports the Item Random Options feature (PACKETVER >= 20150225).
+
 ========================
 |14.- Channel commands.|
 ========================
@@ -11214,5 +11277,11 @@ Note: Only works with classes that use the ranking system.
 
 Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
 Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*isdead({<account id>})
+
+Returns true if the player is dead else false.
 
 ---------------------------------------
