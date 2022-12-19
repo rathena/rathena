@@ -15361,17 +15361,18 @@ BUILDIN_FUNC(specialeffect)
 	{
 		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
 		if(nd)
-			clif_specialeffect(&nd->bl, type, target);
+			bl = &nd->bl;
+		else
+			return SCRIPT_CMD_SUCCESS;
 	}
-	else
-	{
-		if (target == SELF) {
-			TBL_PC *sd;
-			if (script_rid2sd(sd))
-				clif_specialeffect_single(bl,type,sd->fd);
-		} else {
-			clif_specialeffect(bl, type, target);
+
+	if (target == SELF) {
+		TBL_PC *sd;
+		if (script_rid2sd(sd)){
+			clif_specialeffect_single(bl,type,sd->fd);
 		}
+	} else {
+		clif_specialeffect(bl, type, target);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
