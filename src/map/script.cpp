@@ -15359,19 +15359,24 @@ BUILDIN_FUNC(specialeffect)
 
 	if( script_hasdata(st,4) )
 	{
-		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
+		const char* name = script_getstr( st, 4 );
+		npc_data* nd = npc_name2id( name );
 		if(nd)
-			clif_specialeffect(&nd->bl, type, target);
-	}
-	else
-	{
-		if (target == SELF) {
-			TBL_PC *sd;
-			if (script_rid2sd(sd))
-				clif_specialeffect_single(bl,type,sd->fd);
-		} else {
-			clif_specialeffect(bl, type, target);
+			bl = &nd->bl;
+		else{
+			ShowError( "buildin_specialeffect: Unknown NPC \"%s\"\n", name );
+			return SCRIPT_CMD_FAILURE;
 		}
+	}
+
+	if (target == SELF) {
+		map_session_data* sd;
+		if (!script_rid2sd(sd)){
+			return SCRIPT_CMD_FAILURE;
+		}
+		clif_specialeffect_single(bl,type,sd->fd);
+	} else {
+		clif_specialeffect(bl, type, target);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
