@@ -6986,7 +6986,7 @@ static int skill_apply_songs(struct block_list* target, va_list ap)
 			return skill_additional_effect(src, target, skill_id, skill_lv, BF_LONG | BF_SKILL | BF_MISC, ATK_DEF, tick);
 		default: // Buff/Debuff type songs
 			if (skill_id == CG_HERMODE && src->id != target->id)
-				status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
+				status_change_clear_buffs(target, SCCB_HERMODE); // Should dispell only allies.
 			return sc_start(src, target, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 	}
@@ -15208,7 +15208,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 
 		case UNT_HERMODE:
 			if (sg->src_id!=bl->id && battle_check_target(&unit->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
-				status_change_clear_buffs(bl, SCCB_BUFFS); //Should dispell only allies.
+				status_change_clear_buffs(bl, SCCB_HERMODE); //Should dispell only allies.
 		case UNT_RICHMANKIM:
 		case UNT_ETERNALCHAOS:
 		case UNT_DRUMBATTLEFIELD:
