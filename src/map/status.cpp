@@ -13429,12 +13429,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			}
 			break;
 		case SC_SPLASHER:
-		case SC_ROSEBLOSSOM:
 			{
 				struct block_list *src=map_id2bl(sce->val3);
 
 				if(src && tid != INVALID_TIMER)
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
+			}
+			break;
+		case SC_ROSEBLOSSOM:
+			{
+				struct block_list *src=map_id2bl(sce->val3);
+				if(src)
+					skill_castend_pos2(src, bl->x, bl->y, sce->val2, sce->val1, gettick(), SD_LEVEL);
 			}
 			break;
 		case SC_CLOSECONFINE2:{

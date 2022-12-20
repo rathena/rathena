@@ -2137,9 +2137,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case ABC_UNLUCKY_RUSH:
 		sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
-		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
-		break;
 	case TR_METALIC_FURY:
 		status_change_end(bl, SC_SOUNDBLEND);
 		break;
@@ -3832,6 +3829,10 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					sc_start(src, src, SC_CHARGINGPIERCE_COUNT, 100, 1, skill_get_time2(DK_CHARGINGPIERCE, 1));
 			}
 			break;
+		case TR_ROSEBLOSSOM: // Status should start even if target dies
+			if (damage > 0)
+				sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
+			break;
 	}
 
 	//combo handling
@@ -3972,6 +3973,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SPLASH);
 			break;
 		case TR_ROSEBLOSSOM_ATK:
+			//TODO dmg display is delayed if target dies from TR_ROSEBLOSSOM but shouldn't be [munkrej]
+			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SPLASH);
+			break;
 		case ABC_FROM_THE_ABYSS_ATK:
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_SPLASH);
 			break;
@@ -15140,6 +15144,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		unit_setdir(src, map_calc_dir_xy(src->x, src->y, x, y, unit_getdir(src)));
 		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), (enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK| BLOWN_DONT_SEND_PACKET));
 		clif_blown(src);
+		break;
+	case TR_ROSEBLOSSOM_ATK:
+		i = skill_get_splash(skill_id, skill_lv);
+		map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
+			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 		break;
 
 	default:
