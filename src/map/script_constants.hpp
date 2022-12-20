@@ -6634,6 +6634,9 @@
 	export_constant(IG_BLACKSMITH_BLESS_BOX_3);
 	export_constant(IG_SHADOW_HAMMER_BOX_3);
 	export_constant(IG_EDP);
+	export_constant(IG_MF_NOTELEPORT);
+	export_constant(IG_MF_NORETURN);
+	export_constant(IG_GIANT_FLY_WING);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
