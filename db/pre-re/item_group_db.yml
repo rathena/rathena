@@ -7463,8 +7463,8 @@ Body:
           - Item: E_WOB_Rachel
           - Item: F_WOB_Rachel
           - Item: WOB_Local
-          - Item: WOB_Local
-          - Item: WOB_Local
+          - Item: E_WOB_Local
+          - Item: F_WOB_Local
           - Item: Siege_Teleport_Scroll
           - Item: Siege_Teleport_Scroll2
           - Item: E_Siege_Teleport_Scroll
