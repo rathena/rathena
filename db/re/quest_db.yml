@@ -10221,14 +10221,14 @@ Body:
     Title: Award Garden-Waiting
     TimeLimit: 4h
   - Id: 16521
-    Title: 4th floor of Ludus, an organic field for waste specimens
+    Title: 4th floor of Rudus, an organic field for waste specimens
   - Id: 16522
-    Title: 4th floor of Ludus, an organic field for waste specimens
+    Title: 4th floor of Rudus, an organic field for waste specimens
   - Id: 16523
-    Title: The solitude of the abyss
+    Title: Abyssal Solitude - Standby
     TimeLimit: 4h
   - Id: 16524
-    Title: Abyss of Solitude
+    Title: Abyssal Solitude
     Targets:
       - Mob: DEADRE
         Count: 10
@@ -10237,10 +10237,10 @@ Body:
       - Mob: PLAGARION
         Count: 10
   - Id: 16525
-    Title: Transformation and development - Standby
+    Title: Transformation and Evolution - Standby
     TimeLimit: 4h
   - Id: 16526
-    Title: Transformation and development
+    Title: Transformation and Evolution
     Targets:
       - Mob: GIANT_CAPUT
         Count: 15

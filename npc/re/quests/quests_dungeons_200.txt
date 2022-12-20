@@ -49,8 +49,8 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 		}
 		next;
 		mes "[Yulma]";
-		mes "By the way, the 4th floor of Rupus is quite amazing...";
-		mes "Somehow, among the test subjects abandoned in Rupus, only particularly strong ones seem to be gathered.";
+		mes "By the way, the 4th floor of Rudus is quite amazing...";
+		mes "Somehow, among the test subjects abandoned in Rudus, only particularly strong ones seem to be gathered.";
 		next;
 		mes "[Yulma]";
 		mes "Researchers of the Secret Wing say that after fierce competition among the subjects, the strongest subjects seem to have settled there.";
@@ -319,7 +319,7 @@ pub_cat,94,43,5	script	Yulma#rudus4	4_F_ANYA,{
 			mes "Is the researcher hiding well?";
 			next;
 			mes "[Yulma]";
-			mes "He's known for hiding as well as he hid, even though he doesn't have the skills to hide.";
+			mes "He's known for hiding very well, even though he doesn't have the skills to hide.";
 			mes "That's why you're out in the field.";
 			next;
 			mes "[Yulma]";
