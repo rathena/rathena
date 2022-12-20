@@ -143718,7 +143718,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
@@ -143773,9 +143773,10 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSubSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
          if (.@r>=9) {
@@ -143940,9 +143941,10 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSubSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
          if (.@r>=9) {
@@ -143996,7 +143998,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
@@ -144050,7 +144052,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
@@ -144105,7 +144107,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
@@ -144160,7 +144162,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
@@ -144213,7 +144215,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
@@ -144268,7 +144270,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
@@ -144323,9 +144325,10 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSubSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
          if (.@r>=9) {
@@ -144378,9 +144381,10 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSubSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
          if (.@r>=9) {
@@ -144434,7 +144438,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
@@ -144541,10 +144545,11 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSubSize,Size_All,5*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
          if (.@r>=9) {
@@ -144598,10 +144603,11 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSubSize,Size_All,5*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
          if (.@r>=9) {
@@ -144656,7 +144662,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
@@ -144710,7 +144716,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
@@ -144764,7 +144770,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
@@ -144818,7 +144824,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
@@ -144872,7 +144878,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddSize,Size_All,5*(.@r/3);
+      bonus2 bAddRace,RC_All,5*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bRes,50;
