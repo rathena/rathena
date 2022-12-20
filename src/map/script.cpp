@@ -15363,8 +15363,10 @@ BUILDIN_FUNC(specialeffect)
 		npc_data* nd = npc_name2id( name );
 		if(nd)
 			bl = &nd->bl;
-		else
-			return SCRIPT_CMD_SUCCESS;
+		else{
+			ShowError( "buildin_specialeffect: Unknown NPC \"%s\"\n", name );
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	if (target == SELF) {
