@@ -614,6 +614,7 @@ struct Battle_Config
 	int homunculus_evo_intimacy_reset;
 	int monster_loot_search_type;
 	int feature_roulette;
+	int feature_roulette_bonus_reward;
 	int monster_hp_bars_info;
 	int min_body_style;
 	int max_body_style;

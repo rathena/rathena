@@ -48944,3 +48944,55 @@ Body:
         List:
           - Item: Shadow_Refine_Hammer
             Amount: 3
+  - Group: EDP
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Poison_Bottle
+          - Item: Poison_Bottle_B
+  - Group: MF_NOTELEPORT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wing_Of_Fly
+          - Item: Giant_Fly_Wing
+          - Item: N_Fly_Wing
+          - Item: E_Giant_Fly_Wing
+          - Item: F_Giant_Fly_Wing
+          - Item: C_Wing_Of_Fly
+          - Item: N_Fly_Wing_
+          - Item: Compressed_Wing_Of_Fly
+          - Item: Comp_Wing_Of_Fly
+  - Group: MF_NORETURN
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wing_Of_Butterfly
+          - Item: N_Butterfly_Wing
+          - Item: Dun_Tele_Scroll1
+          - Item: Dun_Tele_Scroll2
+          - Item: Dun_Tele_Scroll3
+          - Item: E_Dun_Tele_Scroll1
+          - Item: F_Dun_Tele_Scroll1
+          - Item: WOB_Rune
+          - Item: E_WOB_Rune
+          - Item: F_WOB_Rune
+          - Item: WOB_Schwaltz
+          - Item: E_WOB_Schwaltz
+          - Item: F_WOB_Schwaltz
+          - Item: WOB_Rachel
+          - Item: E_WOB_Rachel
+          - Item: F_WOB_Rachel
+          - Item: WOB_Local
+          - Item: E_WOB_Local
+          - Item: F_WOB_Local
+          - Item: Siege_Teleport_Scroll
+          - Item: Siege_Teleport_Scroll2
+          - Item: E_Siege_Teleport_Scroll
+  - Group: GIANT_FLY_WING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Giant_Fly_Wing
+          - Item: E_Giant_Fly_Wing
+          - Item: F_Giant_Fly_Wing
