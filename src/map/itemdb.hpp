@@ -1835,6 +1835,7 @@ enum e_random_item_group {
 	IG_S_TEMP2_CUBE,
 	IG_BLACKSMITH_BLESS_BOX_3,
 	IG_SHADOW_HAMMER_BOX_3,
+	IG_EDP,
 
 	IG_MAX,
 };

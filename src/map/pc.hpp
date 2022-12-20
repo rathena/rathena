@@ -905,6 +905,7 @@ public:
 	struct {
 		short stage;
 		int8 prizeIdx;
+		t_itemid bonusItemID;
 		short prizeStage;
 		bool claimPrize;
 		t_tick tick;
