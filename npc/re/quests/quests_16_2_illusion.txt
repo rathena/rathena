@@ -5838,7 +5838,6 @@ tur_d03_i,132,194,3	script	Portal#illtur02	4_ENERGY_RED,{
 	mes " - ^424242With empty hands, I think of the bulky but warm piece left in my heart.^000000 - ";
 	next;
 	if (select( "Go back to Alberta.", "Stay here." ) == 2) {
-		// todo - unknown text
 		mes " - ^424242Turning around with a small smile, Narin, holding her hands, was surprised and glanced over.^000000 - ";
 		next;
 		mes "[Narin]";
@@ -6359,7 +6358,7 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		erasequest 16107;	// A memory that should not be forgotten 2
 		setquest 16108;	// A memory that should not be forgotten - Cooldown
 		getitem 25271,1;	// IllusionStone
-		getexp 1200000,1000000;	// todo unknown exp (irowiki values)
+		getexp 1200000,1000000;
 		close2;
 		cloakonnpcself( "Archeologist Leiphen#illtur01" );
 		end;
@@ -6602,7 +6601,7 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 			erasequest 16109;	// Vain Desire
 			setquest 16110;	// Vain Desire - Cooldown
 			getitem 25271,1;	// IllusionStone
-			getexp 1200000,1000000;	// todo unknown exp (irowiki values)
+			getexp 1200000,1000000;
 			close;
 		}
 		mes "[Susceptible Soldier]";
@@ -6972,7 +6971,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 			erasequest 16112;	// Endless Hunger 2
 			setquest 16113;	// Endless Hunger - Cooldown
 			getitem 25271,1;	// IllusionStone
-			getexp 1200000,1000000;	// todo unknown exp (irowiki values)
+			getexp 1200000,1000000;
 			close;
 		}
 		mes "[Fragile Woman]";
