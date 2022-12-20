@@ -228,6 +228,7 @@ HANDLER_FUNC(partybooking_add){
 	if( SQL_ERROR == Sql_QueryStr( mhandle, StringBuf_Value( &buf ) ) ){
 		Sql_ShowDebug( mhandle );
 
+		StringBuf_Destroy( &buf );
 		msl.unlock();
 		res.status = HTTP_BAD_REQUEST;
 		res.set_content( "Error", "text/plain" );
@@ -235,6 +236,7 @@ HANDLER_FUNC(partybooking_add){
 		return;
 	}
 
+	StringBuf_Destroy( &buf );
 	msl.unlock();
 
 	res.set_content( "{ \"Type\": 1 }", "application/json" );
