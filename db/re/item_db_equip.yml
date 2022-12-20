@@ -6197,7 +6197,7 @@ Body:
     Script: |
       bonus2 bSkillAtk,"MC_MAMMONITE",30;
   - Id: 1341
-    AegisName: aegis_1341
+    AegisName: Destruction_Axe
     Name: Destruction axe    # !todo check english name
     Type: Weapon
     SubType: 1hAxe
@@ -56270,6 +56270,17 @@ Body:
     AegisName: Eddga_Egg2
     Name: Eddga Egg
     Type: PetEgg
+  - Id: 9144
+    AegisName: Larva_Violet_Egg
+    Name: Violet Egg
+    Type: PetEgg
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 10001
     AegisName: Skull_Helm
     Name: Skull Helm
@@ -143775,6 +143786,1243 @@ Body:
     ArmorLevel: 2
     Refineable: true
     View: 16
+  - Id: 400365
+    AegisName: C_Larva_Red
+    Name: "Costume: Larva (Red)"
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2319
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 400373
+    AegisName: aegis_400373
+    Name: Costume Frozen Laurel Wreath    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 933
+  - Id: 400374
+    AegisName: GoodnEvil_Circlet_DK
+    Name: Crown of Good and Evil (Dragon Knight)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400375
+    AegisName: GoodnEvil_Circlet_IG
+    Name: Crown of Good and Evil (Imperial Guard)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bAspdRate,5;
+            bonus bVariableCastrate,-5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400376
+    AegisName: GoodnEvil_Circlet_AG
+    Name: Crown of Good and Evil (Arch Mage)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Water,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Dark,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-10;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400377
+    AegisName: GoodnEvil_Circlet_EM
+    Name: Crown of Good and Evil (Elemental Master)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Fire,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Water,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Poison,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-10;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400378
+    AegisName: GoodnEvil_Circlet_CD
+    Name: Crown of Good and Evil (Cardinal)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400379
+    AegisName: GoodnEvil_Circlet_IQ
+    Name: Crown of Good and Evil (Inquisitor)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bCritical,10;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400380
+    AegisName: GoodnEvil_Circlet_MT
+    Name: Crown of Good and Evil (Meister)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bAspdRate,5;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400381
+    AegisName: GoodnEvil_Circlet_BO
+    Name: Crown of Good and Evil (Biolo)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bAspdRate,5;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400382
+    AegisName: GoodnEvil_Circlet_SHC
+    Name: Crown of Good and Evil (Shadow Cross)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bAspdRate,10;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400383
+    AegisName: GoodnEvil_Circlet_ABC
+    Name: Crown of Good and Evil (Abyss Chaser)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bAspdRate,5;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bSpl,2;
+               bonus bCon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400384
+    AegisName: GoodnEvil_Circlet_WH
+    Name: Crown of Good and Evil (Windhawk)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-5;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bSpl,2;
+               bonus bCon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400385
+    AegisName: GoodnEvil_Circlet_TR
+    Name: Crown of Good and Evil (Trouvere & Troubadour)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-10;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bSpl,2;
+               bonus bCon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400386
+    AegisName: GoodnEvil_Circlet_SS
+    Name: Crown of Good and Evil (Shinkiro & Shiranui)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bVariableCastrate,-5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400387
+    AegisName: GoodnEvil_Circlet_SKE
+    Name: Crown of Good and Evil (Sky Emperor)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bVariableCastrate,-5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400388
+    AegisName: GoodnEvil_Circlet_SOA
+    Name: Crown of Good and Evil (Soul Ascetic)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-10;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400389
+    AegisName: GoodnEvil_Circlet_HN
+    Name: Crown of Good and Evil (Hyper Novice)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      SuperNovice: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bVariableCastrate,-5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400390
+    AegisName: GoodnEvil_Circlet_SH
+    Name: Crown of Good and Evil (Spirit Handler)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-5;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400391
+    AegisName: GoodnEvil_Circlet_NW
+    # Name: Crown of Good and Evil (Night Watch - Grenade Launcher)
+    Name: Crown of Good and Evil (Night Watch - GL)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400392
+    AegisName: GoodnEvil_Circlet_NW2
+    Name: Crown of Good and Evil (Night Watch - Revolver)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400393
+    AegisName: GoodnEvil_Circlet_NW3
+    Name: Crown of Good and Evil (Night Watch - Gatling Gun)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400394
+    AegisName: GoodnEvil_Circlet_NW4
+    Name: Crown of Good and Evil (Night Watch - Shotgun)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 400395
+    AegisName: GoodnEvil_Circlet_NW5
+    Name: Crown of Good and Evil (Night Watch - Rifle)
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 215
+    Refineable: true
+    Gradable: true
+    View: 2332
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddRace,RC_All,5*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      if (.@r>=7) {
+         bonus bRes,50;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bAtkRate,5;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxHPrate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,3;
+            bonus bSMatk,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,2;
+               bonus bSMatk,2;
+               bonus bPow,2;
+               bonus bSpl,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+                  if (.@r>=12) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -144878,6 +146126,21 @@ Body:
       Head_Mid: true
     ArmorLevel: 2
     View: 3
+  - Id: 410214
+    AegisName: C_Larva_Yellow_Mini
+    Name: "Costume: Larva Yellow Minimi"
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2321
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 410217
     AegisName: aegis_410217
     Name: Costume Magic Card    # !todo check english name
@@ -146003,6 +147266,22 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2325
+  - Id: 435000
+    AegisName: C_Sausage
+    Name: Costume Sausage Princess    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2320
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 436000
     AegisName: Tha_Maero_MaskK
     Name: Thanatos's Maeror Mask
@@ -157267,6 +158546,21 @@ Body:
       Garment: true
     ArmorLevel: 2
     Refineable: true
+  - Id: 480258
+    AegisName: C_Rainbow_Shell
+    Name: Costume Rainbow Carapace    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 157
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 490004
     AegisName: Atker_Ring
     Name: Attacker Booster Ring
@@ -162224,7 +163518,7 @@ Body:
       bonus bCritical,-5;
       bonus bHit,30;
   - Id: 500062
-    AegisName: aegis_500062
+    AegisName: Devil_Cursed_Sword
     Name: Devil Cursed Sword
     Type: Weapon
     SubType: 1hSword
@@ -162280,7 +163574,7 @@ Body:
          }
       }
   - Id: 500063
-    AegisName: aegis_500063
+    AegisName: Guardian_Saber
     Name: Guardian Saber
     Type: Weapon
     SubType: 1hSword
@@ -162333,7 +163627,7 @@ Body:
          }
       }
   - Id: 500065
-    AegisName: aegis_500065
+    AegisName: Blood_Rapier
     Name: Blood Rapier    # !todo check english name
     Type: Weapon
     SubType: 1hSword
@@ -162386,7 +163680,7 @@ Body:
          }
       }
   - Id: 500066
-    AegisName: aegis_500066
+    AegisName: Victory_Sword
     Name: Victory Sword    # !todo check english name
     Type: Weapon
     SubType: 1hSword
@@ -162579,7 +163873,7 @@ Body:
     WeaponLevel: 5
     Refineable: true
   - Id: 500072
-    AegisName: aegis_500072
+    AegisName: Devil_Guardian_Sword
     Name: Devil Guardian Sword
     Type: Weapon
     SubType: 1hSword
@@ -164578,7 +165872,7 @@ Body:
     EquipLevelMin: 200
     Refineable: true
   - Id: 510091
-    AegisName: aegis_510091
+    AegisName: Underworld_Knife
     Name: Underworld Knife
     Type: Weapon
     SubType: Dagger
@@ -164636,7 +165930,7 @@ Body:
          }
       }
   - Id: 510092
-    AegisName: aegis_510092
+    AegisName: Holy_Light_Dagger
     Name: Holy Light Dagger
     Type: Weapon
     SubType: Dagger
@@ -166115,7 +167409,7 @@ Body:
     WeaponLevel: 5
     Refineable: true
   - Id: 530045
-    AegisName: aegis_530045
+    AegisName: Holy_Raise_Spear
     Name: Holy Light Spear
     Type: Weapon
     SubType: 1hSpear
@@ -167741,7 +169035,7 @@ Body:
          }
       }
   - Id: 540053
-    AegisName: aegis_540053
+    AegisName: Sealed_Bible
     Name: Sealed Bible
     Type: Weapon
     SubType: Book
@@ -167795,7 +169089,7 @@ Body:
          }
       }
   - Id: 540054
-    AegisName: aegis_540054
+    AegisName: Darkness_Tablet
     Name: Darkness Tablet
     Type: Weapon
     SubType: Book
@@ -167849,7 +169143,7 @@ Body:
          }
       }
   - Id: 540055
-    AegisName: aegis_540055
+    AegisName: Orign_Of_Life
     Name: Origin of Life
     Type: Weapon
     SubType: Book
@@ -167955,7 +169249,7 @@ Body:
       bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",25*.@r;
       bonus2 bSkillAtk,"WZ_EARTHSPIKE",25*.@r;
   - Id: 540059
-    AegisName: aegis_540059
+    AegisName: Doom_Bible
     Name: Doom Bible
     Type: Weapon
     SubType: Book
@@ -168012,7 +169306,7 @@ Body:
          }
       }
   - Id: 540060
-    AegisName: aegis_540060
+    AegisName: Blessed_Bible
     Name: Blessed Bible
     Type: Weapon
     SubType: Book
@@ -171018,7 +172312,7 @@ Body:
       bonus bMatk,15*(.@r/2);
       bonus2 bSkillAtk,"WZ_HEAVENDRIVE",30*(.@r/3);
   - Id: 550088
-    AegisName: aegis_550088
+    AegisName: Saint_Bringer
     Name: Saint Bringer
     Type: Weapon
     SubType: Staff
@@ -171125,7 +172419,7 @@ Body:
     Script: |
       bonus bUnbreakableWeapon;
   - Id: 550093
-    AegisName: aegis_550093
+    AegisName: Soul_Harvest
     Name: Soul Harvest
     Type: Weapon
     SubType: Staff
@@ -171180,7 +172474,7 @@ Body:
          }
       }
   - Id: 550094
-    AegisName: aegis_550094
+    AegisName: Soul_Liberator
     Name: Soul Liberator
     Type: Weapon
     SubType: Staff
@@ -171663,7 +172957,7 @@ Body:
     WeaponLevel: 5
     Refineable: true
   - Id: 550115
-    AegisName: aegis_550115
+    AegisName: Darkness_Foxtail_Model
     Name: Darkness Foxtail Model
     Type: Weapon
     SubType: Staff
@@ -171718,7 +173012,7 @@ Body:
          }
       }
   - Id: 550116
-    AegisName: aegis_550116
+    AegisName: Lightforce_Foxtail_Wand
     Name: Lightforce Foxtail Wand
     Type: Weapon
     SubType: Staff
@@ -172731,7 +174025,7 @@ Body:
          }
       }
   - Id: 560036
-    AegisName: aegis_560036
+    AegisName: Demonic_Claw
     Name: Demonic Claw
     Type: Weapon
     SubType: Knuckle
@@ -173831,7 +175125,7 @@ Body:
       bonus bDelayrate,-10;
       bonus bVariableCastrate,5;
   - Id: 570036
-    AegisName: aegis_570036
+    AegisName: Crime_Violine
     Name: Crime Violin
     Type: Weapon
     SubType: Musical
@@ -173886,7 +175180,7 @@ Body:
          }
       }
   - Id: 570037
-    AegisName: aegis_570037
+    AegisName: Light_Power_Harp
     Name: Light Power Harp
     Type: Weapon
     SubType: Musical
@@ -174930,7 +176224,7 @@ Body:
       bonus bDelayrate,-10;
       bonus bVariableCastrate,5;
   - Id: 580037
-    AegisName: aegis_580037
+    AegisName: Crime_Whip
     Name: Crime Whip
     Type: Weapon
     SubType: Whip
@@ -174985,7 +176279,7 @@ Body:
          }
       }
   - Id: 580038
-    AegisName: aegis_580038
+    AegisName: Light_Power_Spark
     Name: Light Power Spark
     Type: Weapon
     SubType: Whip
@@ -176314,7 +177608,7 @@ Body:
          }
       }
   - Id: 590045
-    AegisName: aegis_590045
+    AegisName: Punish_Hall
     Name: Punish Scepter
     Type: Weapon
     SubType: Mace
@@ -177513,7 +178807,7 @@ Body:
     WeaponLevel: 5
     Refineable: true
   - Id: 600041
-    AegisName: aegis_600041
+    AegisName: Execution_Great_Sword
     Name: Execution Great Sword
     Type: Weapon
     SubType: 2hSword
@@ -178582,7 +179876,7 @@ Body:
       bonus bDelayrate,7;
       bonus bAspdRate,15;
   - Id: 610044
-    AegisName: aegis_610044
+    AegisName: The_Reaper
     Name: The Ripper
     Type: Weapon
     SubType: Katar
@@ -178635,7 +179929,7 @@ Body:
          }
       }
   - Id: 610045
-    AegisName: aegis_610045
+    AegisName: Shining_Light_Katar
     Name: Shining Light Katar
     Type: Weapon
     SubType: Katar
@@ -179301,7 +180595,7 @@ Body:
       bonus bAspdRate,-7;
       bonus bHit,50;
   - Id: 620022
-    AegisName: aegis_620022
+    AegisName: Divine_Buster
     Name: Divine Buster    # !todo check english name
     Type: Weapon
     SubType: 2hAxe
@@ -179982,7 +181276,7 @@ Body:
     WeaponLevel: 5
     Refineable: true
   - Id: 630027
-    AegisName: aegis_630027
+    AegisName: Luppiter_Spear
     Name: Jupiter Spear
     Type: Weapon
     SubType: 2hSpear
@@ -181101,7 +182395,7 @@ Body:
     Script: |
       bonus bUnbreakableWeapon;
   - Id: 640036
-    AegisName: aegis_640036
+    AegisName: Devil_Wing_Staff
     Name: Devil Wing Staff
     Type: Weapon
     SubType: 2hStaff
@@ -181158,7 +182452,7 @@ Body:
          }
       }
   - Id: 640037
-    AegisName: aegis_640037
+    AegisName: Destiny_Staff
     Name: Destiny Staff
     Type: Weapon
     SubType: 2hStaff
@@ -182040,7 +183334,7 @@ Body:
       bonus bDelayrate,7;
       bonus bHit,50;
   - Id: 650033
-    AegisName: aegis_650033
+    AegisName: Devil_Claw
     Name: Devil Claw    # !todo check english name
     Type: Weapon
     SubType: Huuma
@@ -182097,7 +183391,7 @@ Body:
          }
       }
   - Id: 650034
-    AegisName: aegis_650034
+    AegisName: Humma_Brilliance
     Name: Wind Magic Shuriken Radiance    # !todo check english name
     Type: Weapon
     SubType: Huuma
@@ -183919,7 +185213,7 @@ Body:
       bonus bVariableCastrate,7;
       bonus bHit,50;
   - Id: 700065
-    AegisName: aegis_700065
+    AegisName: Angel_Wing_Bow
     Name: Angel Wing Bow
     Type: Weapon
     SubType: Bow
@@ -183972,7 +185266,7 @@ Body:
          }
       }
   - Id: 700066
-    AegisName: aegis_700066
+    AegisName: Dark_Angel_Ray_Bow
     Name: Dark Angel Ray Bow
     Type: Weapon
     SubType: Bow
@@ -184660,7 +185954,7 @@ Body:
       bonus bAspdRate,15;
       bonus bVariableCastrate,7;
   - Id: 800026
-    AegisName: aegis_800026
+    AegisName: Devils_Bullet
     Name: Devil's Bullet
     Type: Weapon
     SubType: Revolver
@@ -184713,7 +186007,7 @@ Body:
          }
       }
   - Id: 800027
-    AegisName: aegis_800027
+    AegisName: Devil_Hunter
     Name: Devil Hunter
     Type: Weapon
     SubType: Revolver
@@ -185305,7 +186599,7 @@ Body:
       bonus bDelayrate,7;
       bonus bHit,50;
   - Id: 810026
-    AegisName: aegis_810026
+    AegisName: Screaming_Rifle
     Name: Screaming Rifle
     Type: Weapon
     SubType: Rifle
@@ -185358,7 +186652,7 @@ Body:
          }
       }
   - Id: 810027
-    AegisName: aegis_810027
+    AegisName: Last_Dawn
     Name: Last Dawn
     Type: Weapon
     SubType: Rifle
@@ -185647,13 +186941,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",7*(.@r/2);
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",7*(.@r/2);
       bonus2 bSkillAtk,"RL_BANISHING_BUSTER",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
       if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
          if (.@g >= ENCHANTGRADE_C) {
-            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
@@ -185847,7 +187141,7 @@ Body:
       bonus bVariableCastrate,-15;
       bonus bHit,-25;
   - Id: 820020
-    AegisName: aegis_820020
+    AegisName: Outlaw_Cursed_Shotgun
     Name: Outlaw Cursed Shotgun
     Type: Weapon
     SubType: Shotgun
@@ -185901,7 +187195,7 @@ Body:
          }
       }
   - Id: 820021
-    AegisName: aegis_820021
+    AegisName: Road_Of_Glory
     Name: Lord of Glory
     Type: Weapon
     SubType: Shotgun
@@ -185925,18 +187219,18 @@ Body:
       bonus bAtkRate,5;
       bonus bCon,2;
       bonus bSplashRange,1;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
       if (.@r>=5) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
          if (.@r>=7) {
             bonus bLongAtkRate,5;
             if (.@r>=9) {
-               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
                if (.@r>=10) {
                   bonus bAspdRate,10;
                   if (.@r>=11) {
                      bonus bLongAtkRate,15;
-                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
                   }
                }
             }
@@ -186351,7 +187645,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bAtkRate,10;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
       bonus2 bSkillAtk,"RL_R_TRIP",3*(.@r/2);
       if (.@r>=7) {
@@ -186364,15 +187658,15 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",3;
+            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",3;
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
-               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
                bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
             }
          }
@@ -186535,7 +187829,7 @@ Body:
       bonus bAspdRate,15;
       bonus bHit,-25;
   - Id: 830025
-    AegisName: aegis_830025
+    AegisName: RG_5649
     Name: RG-5649
     Type: Weapon
     SubType: Gatling
@@ -186558,18 +187852,18 @@ Body:
       .@r = getrefine();
       bonus bAtkRate,5;
       bonus bCon,2;
-      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
       if (.@r>=5) {
-         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
          if (.@r>=7) {
             bonus bLongAtkRate,5;
             if (.@r>=9) {
-               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
+               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
                if (.@r>=10) {
                   bonus bDelayrate,-10;
                   if (.@r>=11) {
                      bonus bLongAtkRate,15;
-                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
+                     bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
                   }
                }
             }
@@ -186588,7 +187882,7 @@ Body:
          }
       }
   - Id: 830026
-    AegisName: aegis_830026
+    AegisName: Lighting_Splatter
     Name: Lightning Splatter
     Type: Weapon
     SubType: Gatling
@@ -187116,7 +188410,7 @@ Body:
       bonus bVariableCastrate,7;
       bonus bAtkRate,7;
   - Id: 840020
-    AegisName: aegis_840020
+    AegisName: Devil_L_Launcher
     Name: Devil Lord Launcher
     Type: Weapon
     SubType: Grenade
@@ -187169,7 +188463,7 @@ Body:
          }
       }
   - Id: 840021
-    AegisName: aegis_840021
+    AegisName: Justice_Bomber
     Name: Justice Bomber
     Type: Weapon
     SubType: Grenade

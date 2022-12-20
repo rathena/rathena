@@ -35602,7 +35602,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25298
-    AegisName: Spirit_Jewel
+    AegisName: SpritJewel
     Name: Spirit Jewel
     Type: Etc
     Weight: 10
@@ -35695,7 +35695,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25313
-    AegisName: Old_Shell
+    AegisName: OldShell
     Name: Old Shell
     Type: Etc
     Weight: 10
@@ -65517,6 +65517,16 @@ Body:
     SubType: Enchant
     Script: |
       bonus bWis,5;
+  - Id: 312014
+    AegisName: Justice_Power
+    Name: Good Spell
+    Type: Card
+    SubType: Enchant
+  - Id: 312021
+    AegisName: Injustice_Power
+    Name: Evil Spell
+    Type: Card
+    SubType: Enchant
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -69997,6 +70007,17 @@ Body:
     Name: Stamina Wisdom Stone (Dual)
     Type: Etc
     Weight: 100
+  - Id: 1001173
+    AegisName: Rusty_Bottle_Cap
+    Name: Rusty Bottle Cap    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001174
     AegisName: Ymir_Heart_TW
     Name: Imelo Heart Power Stone    # !todo check english name
