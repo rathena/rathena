@@ -15370,7 +15370,7 @@ BUILDIN_FUNC(specialeffect)
 	}
 
 	if (target == SELF) {
-		TBL_PC *sd;
+		map_session_data* sd;
 		if (script_rid2sd(sd)){
 			clif_specialeffect_single(bl,type,sd->fd);
 		}
