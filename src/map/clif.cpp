@@ -24910,10 +24910,13 @@ void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
 
 	if( nd == nullptr ){
 		ShowError( "clif_parse_dynamic_npc: Original NPC \"%s\" was not found.\n", npcname );
+		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_UNKNOWNNPC );
 		return;
 	}
 
-	npc_duplicate_npc_for_player( *nd, *sd );
+	if( npc_duplicate_npc_for_player( *nd, *sd ) != nullptr ){
+		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_SUCCESS );
+	}
 #endif
 }
 
