@@ -48972,35 +48972,23 @@ Body:
           - Item: Dun_Tele_Scroll1
           - Item: Dun_Tele_Scroll2
           - Item: Dun_Tele_Scroll3
-# TODO: Check (has no effect yet)
-#          - Item: E_Dun_Tele_Scroll1
-# TODO: Check
-#          - Item: F_Dun_Tele_Scroll1
+          - Item: E_Dun_Tele_Scroll1
+          - Item: F_Dun_Tele_Scroll1
           - Item: WOB_Rune
-# TODO: Check
-#          - Item: E_WOB_Rune
-# TODO: Check (has no effect yet)
-#          - Item: F_WOB_Rune
+          - Item: E_WOB_Rune
+          - Item: F_WOB_Rune
           - Item: WOB_Schwaltz
-# TODO: Check
-#          - Item: E_WOB_Schwaltz
-# TODO: Check (has no effect yet)
-#          - Item: F_WOB_Schwaltz
+          - Item: E_WOB_Schwaltz
+          - Item: F_WOB_Schwaltz
           - Item: WOB_Rachel
-# TODO: Check
-#          - Item: E_WOB_Rachel
-# TODO: Check (has no effect yet)
-#          - Item: F_WOB_Rachel
+          - Item: E_WOB_Rachel
+          - Item: F_WOB_Rachel
           - Item: WOB_Local
-# TODO: Check
-#          - Item: WOB_Local
-# TODO: Check (has no effect yet)
-#          - Item: WOB_Local
+          - Item: WOB_Local
+          - Item: WOB_Local
           - Item: Siege_Teleport_Scroll
-# TODO: Check (has no effect yet)
-#          - Item: Siege_Teleport_Scroll2
-# TODO: Check (has no effect yet)
-#          - Item: E_Siege_Teleport_Scroll
+          - Item: Siege_Teleport_Scroll2
+          - Item: E_Siege_Teleport_Scroll
   - Group: GIANT_FLY_WING
     SubGroups:
       - SubGroup: 0
