@@ -15371,8 +15371,8 @@ BUILDIN_FUNC(specialeffect)
 
 	if (target == SELF) {
 		map_session_data* sd;
-		if (script_rid2sd(sd)){
-			clif_specialeffect_single(bl,type,sd->fd);
+		if (!script_rid2sd(sd)){
+			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
 		clif_specialeffect(bl, type, target);
