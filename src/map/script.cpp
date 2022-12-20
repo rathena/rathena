@@ -15374,6 +15374,7 @@ BUILDIN_FUNC(specialeffect)
 		if (!script_rid2sd(sd)){
 			return SCRIPT_CMD_FAILURE;
 		}
+		clif_specialeffect_single(bl,type,sd->fd);
 	} else {
 		clif_specialeffect(bl, type, target);
 	}
