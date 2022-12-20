@@ -2734,17 +2734,12 @@ static void clif_addcards( struct EQUIPSLOTINFO* buf, struct item* item ){
 
 /// Fills in part of the item buffers that calls for variable bonuses data. [Napster]
 /// A maximum of 5 random options can be supported.
-static uint8 clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], struct item* it ){
-	nullpo_retr( 0, it );
-
-	uint8 count = 0;
-
+static void clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], struct item& it ){
 	for( int i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
-		if( it->option[i].id ){
-			buf[i].index = it->option[i].id;	// OptIndex
-			buf[i].value = it->option[i].value;	// Value
-			buf[i].param = it->option[i].param;	// Param1
-			count++;
+		if( it.option[i].id ){
+			buf[i].index = it.option[i].id; // OptIndex
+			buf[i].value = it.option[i].value; // Value
+			buf[i].param = it.option[i].param; // Param1
 		}else{
 			buf[i].index = 0;
 			buf[i].value = 0;
@@ -2759,8 +2754,6 @@ static uint8 clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], 
 		buf[i].param = 0;	// Param1
 	}
 #endif
-
-	return count;
 }
 
 /// Notifies the client, about a received inventory item or the result of a pick-up request.
@@ -2803,7 +2796,7 @@ void clif_additem( map_session_data *sd, int n, int amount, unsigned char fail )
 		 */
 		p.bindOnEquipType = sd->inventory.u.items_inventory[n].bound && !itemdb_isstackable2( sd->inventory_data[n] ) ? 2 : sd->inventory_data[n]->flag.bindOnEquip ? 1 : 0;
 #if PACKETVER >= 20150226
-		clif_add_random_options( p.option_data, &sd->inventory.u.items_inventory[n] );
+		clif_add_random_options( p.option_data, sd->inventory.u.items_inventory[n] );
 #if PACKETVER >= 20160921
 		p.favorite = sd->inventory.u.items_inventory[n].favorite;
 		p.look = sd->inventory_data[n]->look;
@@ -2918,7 +2911,9 @@ static void clif_item_equip( short idx, struct EQUIPITEM_INFO *p, struct item *i
 #endif
 
 #if PACKETVER >= 20150226
-	p->option_count = clif_add_random_options( p->option_data, it );
+	clif_add_random_options( p->option_data, *it );
+	// Client ingores the value anyway and recalculates it
+	p->option_count = 0;
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
@@ -4647,7 +4642,7 @@ void clif_tradeadditem( map_session_data* sd, map_session_data* tsd, int index, 
 		p.refine = sd->inventory.u.items_inventory[index].refine;
 		clif_addcards( &p.slot, &sd->inventory.u.items_inventory[index] );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p.option_data, &sd->inventory.u.items_inventory[index] );
+		clif_add_random_options( p.option_data, sd->inventory.u.items_inventory[index] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p.location = pc_equippoint_sub( sd, sd->inventory_data[index] );
 		p.look = sd->inventory_data[index]->look;
@@ -4791,7 +4786,7 @@ void clif_storageitemadded( map_session_data* sd, struct item* i, int index, int
 	p.refine = i->refine; //refine
 	clif_addcards( &p.slot, i );
 #if PACKETVER >= 20150226
-	clif_add_random_options( p.option_data, i );
+	clif_add_random_options( p.option_data, *i );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	p.enchantgrade = i->enchantgrade;
 #endif
@@ -7274,7 +7269,7 @@ void clif_cart_additem( map_session_data *sd, int n, int amount ){
 	p.refine = sd->cart.u.items_cart[n].refine;
 	clif_addcards( &p.slot, &sd->cart.u.items_cart[n] );
 #if PACKETVER >= 20150226
-	clif_add_random_options( p.option_data, &sd->cart.u.items_cart[n] );
+	clif_add_random_options( p.option_data, sd->cart.u.items_cart[n] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	p.grade = sd->cart.u.items_cart[n].enchantgrade;
 #endif
@@ -7599,7 +7594,7 @@ void clif_vendinglist( map_session_data* sd, map_session_data* vsd ){
 		p->items[i].refine = vsd->cart.u.items_cart[index].refine;
 		clif_addcards( &p->items[i].slot, &vsd->cart.u.items_cart[index] );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p->items[i].option_data, &vsd->cart.u.items_cart[index] );
+		clif_add_random_options( p->items[i].option_data, vsd->cart.u.items_cart[index] );
 #if PACKETVER >= 20160921
 		p->items[i].location = pc_equippoint_sub( sd, data );
 		p->items[i].viewSprite = data->look;
@@ -7692,7 +7687,7 @@ void clif_openvending( map_session_data* sd, int id, struct s_vending* vending )
 		p->items[i].refine = sd->cart.u.items_cart[index].refine;
 		clif_addcards( &p->items[i].slot, &sd->cart.u.items_cart[index] );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p->items[i].option_data, &sd->cart.u.items_cart[index] );
+		clif_add_random_options( p->items[i].option_data, sd->cart.u.items_cart[index] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p->items[i].grade = sd->cart.u.items_cart[index].enchantgrade;
 #endif
@@ -15624,7 +15619,7 @@ void clif_Mail_setattachment( map_session_data* sd, int index, int amount, uint8
 		p.IsDamaged = item->attribute ? 1 : 0;
 		p.refiningLevel = item->refine;
 		clif_addcards( &p.slot, item );
-		clif_add_random_options( p.optionData, item );
+		clif_add_random_options( p.optionData, *item );
 
 		p.weight = 0;
 		for( int i = 0; i < MAIL_MAX_ITEM; i++ ){
@@ -16145,7 +16140,7 @@ void clif_Mail_read( map_session_data *sd, int mail_id ){
 				mailitem->viewSprite = data->look;
 				mailitem->bindOnEquip = item->bound ? 2 : data->flag.bindOnEquip ? 1 : 0;
 				clif_addcards( &mailitem->slot, item );
-				clif_add_random_options( mailitem->option_data, item );
+				clif_add_random_options( mailitem->option_data, *item );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 				mailitem->grade = item->enchantgrade;
 #endif
@@ -19212,7 +19207,7 @@ void clif_search_store_info_ack( map_session_data* sd ){
 
 		clif_addcards( &p->items[i].slot, &it );
 #if PACKETVER >= 20150226
-		clif_add_random_options( p->items[i].option_data, &it );
+		clif_add_random_options( p->items[i].option_data, it );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p->items[i].grade = ssitem->enchantgrade;
 #endif
@@ -20350,10 +20345,32 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 /// Roulette System
 /// Author: Yommy
 
+void roulette_generate_bonus( map_session_data& sd ){
+	if( battle_config.feature_roulette_bonus_reward && sd.roulette.bonusItemID == 0 ){
+		int next_stage = 0;
+
+		if( sd.roulette_point.bronze > 0 ){
+			next_stage = 0;
+		}else if( sd.roulette_point.silver > 9 ){
+			next_stage = 2;
+		}else if( sd.roulette_point.gold > 9 ){
+			next_stage = 4;
+		}
+
+		// Get bonus item stage only from current stage or higher
+		int reward_stage = rnd_value( next_stage, MAX_ROULETTE_LEVEL - 1 );
+		sd.roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]];
+	}else{
+		sd.roulette.bonusItemID = 0;
+	}
+}
+
 /// Opens the roulette window
 /// 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
 void clif_roulette_open( map_session_data* sd ){
 	nullpo_retv( sd );
+
+	roulette_generate_bonus( *sd );
 
 	struct packet_roulette_open_ack p;
 
@@ -20362,7 +20379,7 @@ void clif_roulette_open( map_session_data* sd ){
 	p.Serial = 0; // serial
 	p.Step = (sd->roulette.claimPrize) ? sd->roulette.stage - 1 : 0;
 	p.Idx = (sd->roulette.claimPrize) ? sd->roulette.prizeIdx : -1;
-	p.AdditionItemID = -1; //! TODO: Display bonus item
+	p.AdditionItemID = sd->roulette.bonusItemID;
 	p.GoldPoint = sd->roulette_point.gold;
 	p.SilverPoint = sd->roulette_point.silver;
 	p.BronzePoint = sd->roulette_point.bronze;
@@ -20449,7 +20466,7 @@ static void clif_roulette_recvitem_ack(map_session_data *sd, enum RECV_ROULETTE_
 
 	p.PacketType = roulettercvitemackType;
 	p.Result = type;
-	p.AdditionItemID = 0; //! TODO: Additional item
+	p.AdditionItemID = sd->roulette.bonusItemID;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
@@ -20463,6 +20480,7 @@ static void clif_roulette_recvitem_ack(map_session_data *sd, enum RECV_ROULETTE_
 static uint8 clif_roulette_getitem(map_session_data *sd) {
 	struct item it;
 	uint8 res = 1;
+	unsigned short factor = 1;
 
 	nullpo_retr(1, sd);
 
@@ -20474,8 +20492,32 @@ static uint8 clif_roulette_getitem(map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_ROULETTE)) == 0) {
+	if( sd->roulette.bonusItemID != 0 ){
+		if( sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !( rd.flag[sd->roulette.prizeStage][sd->roulette.prizeIdx]&1 ) ){
+			factor = 2;
+			// Reset the Bonus Item to trigger new calculation
+			sd->roulette.bonusItemID = 0;
+		}else{
+			for( int i = 0; i < MAX_ROULETTE_LEVEL && sd->roulette.bonusItemID != 0; i++ ){
+				for( int j = 0; j < MAX_ROULETTE_COLUMNS - i && sd->roulette.bonusItemID != 0; j++ ){
+					if( rd.nameid[i][j] == sd->roulette.bonusItemID ){
+						// If you reached a equal or higher level than the first level with the bonus item in it, you missed your chance and a new bonus item will be calculated
+						if( sd->roulette.prizeStage >= i ){
+							// Reset the Bonus Item to trigger new calculation and to cancel the loops
+							sd->roulette.bonusItemID = 0;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx] * factor, LOG_TYPE_ROULETTE)) == 0) {
 		; // onSuccess
+	}
+
+	if( sd->roulette.bonusItemID == 0 ){
+		roulette_generate_bonus( *sd );
 	}
 
 	sd->roulette.claimPrize = false;
@@ -20496,7 +20538,7 @@ void clif_roulette_generate( map_session_data *sd, unsigned char result, short s
 	p.Result = result;
 	p.Step = stage;
 	p.Idx = prizeIdx;
-	p.AdditionItemID = bonusItemID;
+	p.AdditionItemID = battle_config.feature_roulette_bonus_reward ? bonusItemID : 0;
 	p.RemainGold = sd->roulette_point.gold;
 	p.RemainSilver = sd->roulette_point.silver;
 	p.RemainBronze = sd->roulette_point.bronze;
@@ -20520,7 +20562,13 @@ void clif_parse_roulette_generate( int fd, map_session_data* sd ){
 		return;
 	}
 
+	// Player has not claimed his prize yet
+	if( sd->roulette.claimPrize ){
+		clif_roulette_getitem( sd );
+	}
+
 	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL){
+		// Make sure everything is reset
 		sd->roulette.stage = 0;
 		sd->roulette.claimPrize = false;
 		sd->roulette.prizeStage = 0;
@@ -20559,7 +20607,7 @@ void clif_parse_roulette_generate( int fd, map_session_data* sd ){
 		}
 	}
 
-	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx), sd->roulette.bonusItemID);
 }
 
 /// Request to claim a prize
@@ -23186,7 +23234,7 @@ static void clif_item_preview( map_session_data *sd, int16 index ){
 	p.grade = item->enchantgrade;
 #endif
 	clif_addcards( &p.slot, item );
-	clif_add_random_options( p.option_data, item );
+	clif_add_random_options( p.option_data, *item );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
