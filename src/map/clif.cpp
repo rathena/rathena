@@ -24856,7 +24856,7 @@ void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result ){
 #endif
 }
 
-void clif_goldpc_info( struct map_session_data& sd ){
+void clif_goldpc_info( map_session_data& sd ){
 #if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
 	const static int32 client_max_seconds = 3600;
 
@@ -24894,7 +24894,7 @@ void clif_goldpc_info( struct map_session_data& sd ){
 #endif
 }
 
-void clif_parse_dynamic_npc( int fd, struct map_session_data* sd ){
+void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
 	struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST* p = (struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST*)RFIFOP( fd, 0 );
 

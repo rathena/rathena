@@ -2141,7 +2141,7 @@ bool pc_set_hate_mob(map_session_data *sd, int pos, struct block_list *bl)
 }
 
 TIMER_FUNC(pc_goldpc_update){
-	struct map_session_data* sd = map_id2sd( id );
+	map_session_data* sd = map_id2sd( id );
 
 	if( sd == nullptr ){
 		return 0;
