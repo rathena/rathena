@@ -15359,7 +15359,8 @@ BUILDIN_FUNC(specialeffect)
 
 	if( script_hasdata(st,4) )
 	{
-		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
+		const char* name = script_getstr( st, 4 );
+		npc_data* nd = npc_name2id( name );
 		if(nd)
 			bl = &nd->bl;
 		else
