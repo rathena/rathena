@@ -10633,7 +10633,7 @@ void clif_parse_WantToConnection(int fd, map_session_data* sd)
 		return;
 	}
 
-	if( runflag != MAPSERVER_ST_RUNNING ) {// not allowed
+	if( !global_core->is_running() ){ // not allowed
 		clif_authfail_fd(fd,1);// server closed
 		return;
 	}

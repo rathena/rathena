@@ -9917,6 +9917,7 @@
 	export_constant(SCF_REMOVEONUNEQUIP);
 	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
 	export_constant(SCF_REMOVEONUNEQUIPARMOR);
+	export_constant(SCF_REMOVEONHERMODE);
 
 	/* enchantgrades */
 	export_constant(ENCHANTGRADE_NONE);

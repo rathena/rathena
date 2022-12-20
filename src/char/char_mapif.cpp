@@ -458,7 +458,7 @@ int chmapif_parse_authok(int fd){
 		uint32 ip = RFIFOL(fd,14);
 		RFIFOSKIP(fd,18);
 
-		if( runflag != CHARSERVER_ST_RUNNING ){
+		if( !global_core->is_running() ){
 			chmapif_charselres(fd,account_id,0);
 		}else{
 			struct auth_node* node;
@@ -610,7 +610,7 @@ int chmapif_parse_reqchangemapserv(int fd){
 			char_data = (struct mmo_charstatus*)uidb_get(char_db_,RFIFOL(fd,14));
 		}
 
-		if( runflag == CHARSERVER_ST_RUNNING &&
+		if( global_core->is_running() &&
 			session_isActive(map_fd) &&
 			char_data )
 		{	//Send the map server the auth of this player.
@@ -1011,7 +1011,7 @@ int chmapif_parse_reqauth(int fd, int id){
 				char_mmo_char_fromsql(char_id, &char_dat, true);
 				cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
 		}
-		if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
+		if( global_core->is_running() && autotrade && cd ){
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
@@ -1027,7 +1027,7 @@ int chmapif_parse_reqauth(int fd, int id){
 			WFIFOSET(fd, WFIFOW(fd,2));
 
 			char_set_char_online(id, char_id, account_id);
-		} else if( runflag == CHARSERVER_ST_RUNNING &&
+		} else if( global_core->is_running() &&
 			cd != NULL &&
 			node != NULL &&
 			node->account_id == account_id &&

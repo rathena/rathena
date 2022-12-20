@@ -14809,23 +14809,29 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 		sc_type status = static_cast<sc_type>(it.first);
 		std::bitset<SCF_MAX> flag = it.second->flag;
 
-		if (!sc->getSCE(status) || flag[SCF_NOCLEARBUFF]) //Skip status with SCF_NOCLEARBUFF, no matter what
+		if (!sc->getSCE(status))
 			continue;
-		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA
-		if (!(type&SCCB_LUXANIMA) && flag[SCF_REMOVEONLUXANIMA])
+		// Skip status with SCF_NOCLEARBUFF, no matter what
+		if (flag[SCF_NOCLEARBUFF])
+			continue;
+		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA and has the SCF_REMOVEONLUXANIMA flag
+		if ((type & SCCB_LUXANIMA) && !flag[SCF_REMOVEONLUXANIMA])
 			continue;
 		// &SCCB_CHEM_PROTECT : Clears AM_CP_ARMOR/HELP/SHIELD/WEAPON
-		if (!(type&SCCB_CHEM_PROTECT) && flag[SCF_REMOVECHEMICALPROTECT])
+		if ((type & SCCB_CHEM_PROTECT) && !flag[SCF_REMOVECHEMICALPROTECT])
 			continue;
-		// &SCCB_REFRESH : Cleared by RK_REFRESH
-		if (!(type&SCCB_REFRESH) && flag[SCF_REMOVEONREFRESH])
+		// &SCCB_REFRESH : Cleared by RK_REFRESH and has the SCF_REMOVEONREFRESH flag
+		if ((type & SCCB_REFRESH) && !flag[SCF_REMOVEONREFRESH])
 			continue;
-		// &SCCB_DEBUFFS : Clears debuffs
-		if (!(type&SCCB_DEBUFFS) && flag[SCF_DEBUFF])
+		// &SCCB_DEBUFFS : Clears debuffs - skip if it is not a debuff
+		if (type & SCCB_DEBUFFS && !flag[SCF_DEBUFF] && !(type & SCCB_BUFFS))
 			continue;
-		// &SCCB_BUFFS : Clears buffs
-		if (!(type&SCCB_BUFFS) && !(flag[SCF_DEBUFF]))
-			continue;		
+		// &SCCB_BUFFS : Clears buffs - skip if it is a debuff
+		if (type & SCCB_BUFFS && flag[SCF_DEBUFF] && !(type & SCCB_DEBUFFS))
+			continue;
+		// &SCCB_HERMODE : Cleared by CG_HERMODE and has the SCF_REMOVEONHERMODE flag
+		if ((type & SCCB_HERMODE) && !flag[SCF_REMOVEONHERMODE])
+			continue;
 		if (status == SC_SATURDAYNIGHTFEVER || status == SC_BERSERK) // Mark to not lose HP
 			sc->getSCE(status)->val2 = 0;
 		status_change_end(bl, status);

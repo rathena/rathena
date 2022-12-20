@@ -37,6 +37,8 @@
 #include "int_storage.hpp"
 #include "packets.hpp"
 
+using namespace rathena::server_character;
+
 //definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
@@ -3142,9 +3144,7 @@ void char_do_final_msg(void){
 	_do_final_msg(CHAR_MAX_MSG,msg_table);
 }
 
-
-void do_final(void)
-{
+void CharacterServer::finalize(){
 	ShowStatus("Terminating...\n");
 
 	char_set_all_offline(-1);
@@ -3174,40 +3174,17 @@ void do_final(void)
 	ShowStatus("Finished.\n");
 }
 
-
-void set_server_type(void){
-	SERVER_TYPE = ATHENA_SERVER_CHAR;
-}
-
-//------------------------------
-// Function called when the server
-// has received a crash signal.
-//------------------------------
-void do_abort(void)
-{
-}
-
 /// Called when a terminate signal is received.
-void do_shutdown(void) {
-	if( runflag != CHARSERVER_ST_SHUTDOWN )
-	{
-		int id;
-		runflag = CHARSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
-		for( id = 0; id < ARRAYLENGTH(map_server); ++id )
-			chmapif_server_reset(id);
-		chlogif_check_shutdown();
-		flush_fifos();
-		runflag = CORE_ST_STOP;
-	}
+void CharacterServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+	// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
+	for( int id = 0; id < ARRAYLENGTH(map_server); ++id )
+		chmapif_server_reset(id);
+	flush_fifos();
 }
 
-
-int do_init(int argc, char **argv)
-{
+bool CharacterServer::initialize( int argc, char *argv[] ){
 	//Read map indexes
-	runflag = CHARSERVER_ST_STARTING;
 	mapindex_init();
 
 	// Init default value
@@ -3227,12 +3204,13 @@ int do_init(int argc, char **argv)
 	char_sql_config_read(SQL_CONF_NAME);
 	msg_config_read(MSG_CONF_NAME_EN);
 
-	// Skip this check if the server is run with run-once flag
-	if (runflag!=CORE_ST_STOP && strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
+#if !defined(BUILDBOT)
+	if (strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
+#endif
 
 	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
 
@@ -3289,7 +3267,7 @@ int do_init(int argc, char **argv)
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){
 		ShowFatalError("char : A tables is missing in sql-server, please fix it, see (sql-files main.sql for structure) \n");
-		exit(EXIT_FAILURE);
+		return false;
 	}
 	//Cleaning the tables for NULL entrys @ startup [Sirius]
 	//Chardb clean
@@ -3308,13 +3286,7 @@ int do_init(int argc, char **argv)
 
 	if( (char_fd = make_listen_bind(charserv_config.bind_ip,charserv_config.char_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",charserv_config.char_port);
-		exit(EXIT_FAILURE);
-	}
-
-	if( runflag != CORE_ST_STOP )
-	{
-		shutdown_callback = do_shutdown;
-		runflag = CHARSERVER_ST_RUNNING;
+		return false;
 	}
 
 	do_init_chcnslif();
@@ -3323,5 +3295,9 @@ int do_init(int argc, char **argv)
 
 	ShowStatus("The char-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %d).\n\n", charserv_config.char_port);
 
-	return 0;
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<CharacterServer>( argc, argv );
 }
