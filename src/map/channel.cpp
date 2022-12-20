@@ -143,8 +143,12 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 int channel_delete(struct Channel *channel, bool force) {
 	if(!channel)
 		return -1;
-	if(!force && channel->type == CHAN_TYPE_PUBLIC && runflag == MAPSERVER_ST_RUNNING) //only delete those serv stop
+
+	// only delete those serv stop
+	if( !force && channel->type == CHAN_TYPE_PUBLIC && global_core->is_running() ){
 		return -2;
+	}
+
 	if( db_size(channel->users)) {
 		map_session_data *sd;
 		DBIterator *iter = db_iterator(channel->users);

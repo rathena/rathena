@@ -54,6 +54,7 @@
 #include "trade.hpp"
 
 using namespace rathena;
+using namespace rathena::server_map;
 
 std::string default_codepage = "";
 
@@ -3937,7 +3938,7 @@ int parse_console(const char* buf){
 	}
 	else if( n == 2 && strcmpi("server", type) == 0 ){
 		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = 0;
+			global_core->signal_shutdown();
 		}
 	}
 	else if( strcmpi("ers_report", type) == 0 ){
@@ -4844,7 +4845,7 @@ static int cleanup_db_sub(DBKey key, DBData *data, va_list va)
 /*==========================================
  * map destructor
  *------------------------------------------*/
-void do_final(void){
+void MapServer::finalize(){
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
@@ -4955,8 +4956,7 @@ static int map_abort_sub(map_session_data* sd, va_list ap)
 // Function called when the server
 // has received a crash signal.
 //------------------------------
-void do_abort(void)
-{
+void MapServer::handle_crash(){
 	static int run = 0;
 	//Save all characters and then flush the inter-connection.
 	if (run) {
@@ -4996,14 +4996,6 @@ void display_helpscreen(bool do_exit)
 	ShowInfo("  --log-config <file>\t\tAlternative logging configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
-}
-
-/*======================================================
- * Map-Server Init and Command-line Arguments [Valaris]
- *------------------------------------------------------*/
-void set_server_type(void)
-{
-	SERVER_TYPE = ATHENA_SERVER_MAP;
 }
 
 /*======================================================
@@ -5126,29 +5118,19 @@ int mapgenerator_get_options(int argc, char** argv) {
 	return 1;
 }
 
-
 /// Called when a terminate signal is received.
-void do_shutdown(void)
-{
-	if( runflag != MAPSERVER_ST_SHUTDOWN )
-	{
-		runflag = MAPSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		{
-			map_session_data* sd;
-			struct s_mapiterator* iter = mapit_getallusers();
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-				clif_GM_kick(NULL, sd);
-			mapit_free(iter);
-			flush_fifos();
-		}
-		chrif_check_shutdown();
-	}
+void MapServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+
+	map_session_data* sd;
+	struct s_mapiterator* iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+		clif_GM_kick(NULL, sd);
+	mapit_free(iter);
+	flush_fifos();
 }
 
-int do_init(int argc, char *argv[])
-{
-	runflag = MAPSERVER_ST_STARTING;
+bool MapServer::initialize( int argc, char *argv[] ){
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif
@@ -5204,10 +5186,9 @@ int do_init(int argc, char *argv[])
 		char ip_str[16];
 		ip2str(addr_[0], ip_str);
 
-		// Skip this warning if the server is run with run-once flag
-		if( runflag != CORE_ST_STOP ){
-			ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
-		}
+#if !defined(BUILDBOT)
+		ShowWarning( "Not all IP addresses in map_athena.conf configured, autodetecting...\n" );
+#endif
 
 		if (naddr_ == 0)
 			ShowError("Unable to determine your IP address...\n");
@@ -5301,20 +5282,17 @@ int do_init(int argc, char *argv[])
 		itemdb_gen_itemmoveinfo();
 	if (gen_options.reputation)
 		pc_reputation_generate();
-	runflag = CORE_ST_STOP;
+	this->signal_shutdown();
 #endif
-
-	if( runflag != CORE_ST_STOP )
-	{
-		shutdown_callback = do_shutdown;
-		runflag = MAPSERVER_ST_RUNNING;
-	}
 
 	if( console ){ //start listening
 		add_timer_func_list(parse_console_timer, "parse_console_timer");
 		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
 	}
 
-	return 0;
+	return true;
 }
 
+int main( int argc, char *argv[] ){
+	return main_core<MapServer>( argc, argv );
+}

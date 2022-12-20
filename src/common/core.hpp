@@ -4,13 +4,19 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
+#include <string>
+#include <vector>
+
+#include "timer.hpp"
+
+#ifdef _WIN32
+	#include "winapi.hpp" // Console close event handling
+#endif
+
 /* so that developers with --enable-debug can raise signals from any section of the code they'd like */
 #ifdef DEBUG
 	#include <signal.h>
 #endif
-
-extern int arg_c;
-extern char **arg_v;
 
 #if defined(BUILDBOT)
 	extern int buildbotflag;
@@ -18,41 +24,82 @@ extern char **arg_v;
 
 #define UNKNOWN_VERSION '\x02'
 
-/// @see E_CORE_ST
-extern int runflag;
 extern char *SERVER_NAME;
 extern char db_path[12]; /// relative path for db from servers
 extern char conf_path[12]; /// relative path for conf from servers
 
-enum {
-	ATHENA_SERVER_NONE = 0,	// not defined
-	ATHENA_SERVER_LOGIN	= 1,	// login server
-	ATHENA_SERVER_CHAR = 2,	// char server
-	ATHENA_SERVER_INTER	= 4,	// inter server
-	ATHENA_SERVER_MAP = 8,	// map server
-	ATHENA_SERVER_WEB = 16, // web server
-};
-
-extern char SERVER_TYPE;
-
 extern int parse_console(const char* buf);
 const char *get_svn_revision(void);
 const char *get_git_hash(void);
-extern int do_init(int,char**);
-extern void set_server_type(void);
-extern void do_abort(void);
-extern void do_final(void);
 
-/// The main loop continues until runflag is CORE_ST_STOP
-enum E_CORE_ST
-{
-	CORE_ST_STOP = 0,
-	CORE_ST_RUN,
-	CORE_ST_LAST
-};
+namespace rathena{
+	namespace server_core{
+		enum class e_core_status{
+			NOT_STARTED,
+			CORE_INITIALIZING,
+			CORE_INITIALIZED,
+			SERVER_INITIALIZING,
+			SERVER_INITIALIZED,
+			RUNNING,
+			STOPPING,
+			SERVER_FINALIZING,
+			SERVER_FINALIZED,
+			CORE_FINALIZING,
+			CORE_FINALIZED,
+			STOPPED,
+		};
 
-/// Called when a terminate signal is received. (Ctrl+C pressed)
-/// If NULL, runflag is set to CORE_ST_STOP instead.
-extern void (*shutdown_callback)(void);
+		enum class e_core_type{
+			LOGIN,
+			CHARACTER,
+			MAP,
+			TOOL,
+			WEB
+		};
+
+		class Core{
+			private:
+				e_core_status status;
+				e_core_type type;
+				bool run_once;
+				bool crashed;
+
+			protected:
+				virtual bool initialize( int argc, char* argv[] );
+				virtual void handle_main( t_tick next );
+				virtual void finalize();
+				virtual void handle_crash();
+				virtual void handle_shutdown();
+				void set_status( e_core_status status );
+
+			public:
+				Core( e_core_type type ){
+					this->status = e_core_status::NOT_STARTED;
+					this->run_once = false;
+					this->crashed = false;
+					this->type = type;
+				}
+
+				e_core_status get_status();
+				e_core_type get_type();
+				bool is_running();
+				// TODO: refactor to protected
+				void set_run_once( bool run_once );
+				void signal_crash();
+				void signal_shutdown();
+				int start( int argc, char* argv[] );
+		};
+	}
+}
+
+extern rathena::server_core::Core* global_core;
+
+template <typename T> int main_core( int argc, char *argv[] ){
+	T server = {};
+
+	global_core = &server;
+
+	return server.start( argc, argv );
+}
 
 #endif /* CORE_HPP */

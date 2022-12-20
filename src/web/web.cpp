@@ -33,6 +33,8 @@
 
 
 using namespace rathena;
+using namespace rathena::server_core;
+using namespace rathena::server_web;
 
 #define WEB_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
@@ -318,9 +320,9 @@ int web_sql_close(void)
 
 /**
  * Login-serv destructor
- *  dealloc..., function called at exit of the login-serv
+ *  dealloc..., function called at exit of the web-server
  */
-void do_final(void) {
+void WebServer::finalize(){
 	ShowStatus("Terminating...\n");
 #ifdef WEB_SERVER_ENABLE
 	http_server->stop();
@@ -333,23 +335,10 @@ void do_final(void) {
 
 /**
  * Signal handler
- *  This function attempts to properly close the server when an interrupt signal is received.
- *  current signal catch : SIGTERM, SIGINT
- */
-void do_shutdown(void) {
-	if( runflag != WEBSERVER_ST_SHUTDOWN ) {
-		runflag = WEBSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		runflag = CORE_ST_STOP;
-	}
-}
-
-/**
- * Signal handler
  *  Function called when the server has received a crash signal.
  *  current signal catch : SIGSEGV, SIGFPE
  */
-void do_abort(void) {
+void WebServer::handle_crash(){
 #ifdef WEB_SERVER_ENABLE
 	http_server->stop();
 	svr_thr.join();
@@ -365,13 +354,6 @@ void display_helpscreen(bool do_exit)
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }
-
-
-// Is this still used ??
-void set_server_type(void) {
-	SERVER_TYPE = ATHENA_SERVER_WEB;
-}
-
 
 // called just before sending repsonse
 void logger(const Request & req, const Response & res) {
@@ -397,11 +379,11 @@ void logger(const Request & req, const Response & res) {
 }
 
 
-int do_init(int argc, char** argv) {
-	runflag = WEBSERVER_ST_STARTING;
+bool WebServer::initialize( int argc, char* argv[] ){
 #ifndef WEB_SERVER_ENABLE
-	ShowStatus("The web-server is " CL_GREEN "idling" CL_RESET " (PACKETVER too old to use).\n\n");
-	return 0;
+	ShowStatus("The web-server is " CL_GREEN "stopping" CL_RESET " (PACKETVER too old to use).\n\n");
+	this->signal_shutdown();
+	return true;
 #else
 	INTER_CONF_NAME="conf/inter_athena.conf";
 
@@ -432,17 +414,16 @@ int do_init(int argc, char** argv) {
 
 	// set up logger
 	http_server->set_logger(logger);
-	shutdown_callback = do_shutdown;
-
-	runflag = WEBSERVER_ST_STARTING;
 
 	svr_thr = std::thread([] {
 		http_server->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
 
 	for (int i = 0; i < 10; i++) {
-		if (runflag == CORE_ST_STOP)
-			return 0;
+		if( global_core->get_status() == e_core_status::STOPPING ){
+			return true;
+		}
+
 		if (http_server->is_running())
 			break;
 		ShowDebug("Web server not running, sleeping 1 second.\n");
@@ -451,12 +432,18 @@ int do_init(int argc, char** argv) {
 
 	if (!http_server->is_running()) {
 		ShowError("Web server hasn't started, stopping.\n");
-		runflag = CORE_ST_STOP;
-		return 0;
+		return false;
 	}
 
-	runflag = WEBSERVER_ST_RUNNING;
 	ShowStatus("The web-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", web_config.web_port);
-	return 0;
+	return true;
 #endif
+}
+
+void WebServer::handle_main( t_tick next ){
+	std::this_thread::sleep_for( std::chrono::milliseconds( next ) );
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<WebServer>( argc, argv );
 }

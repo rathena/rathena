@@ -123,25 +123,6 @@ char charserver_name[NAME_LENGTH];
 //This define should spare writing the check in every function. [Skotlex]
 #define chrif_check(a) { if(!chrif_isconnected()) return a; }
 
-
-/// Resets all the data.
-void chrif_reset(void) {
-	// TODO kick everyone out and reset everything [FlavioJS]
-	exit(EXIT_FAILURE);
-}
-
-
-/// Checks the conditions for the server to stop.
-/// Releases the cookie when all characters are saved.
-/// If all the conditions are met, it stops the core loop.
-void chrif_check_shutdown(void) {
-	if( runflag != MAPSERVER_ST_SHUTDOWN )
-		return;
-	if( auth_db->size(auth_db) > 0 )
-		return;
-	runflag = CORE_ST_STOP;
-}
-
 struct auth_node* chrif_search(uint32 account_id) {
 	return (struct auth_node*)idb_get(auth_db, account_id);
 }
@@ -246,12 +227,13 @@ void chrif_setpasswd(char *pwd) {
 
 // security check, prints warning if using default password
 void chrif_checkdefaultlogin(void) {
-	// Skip this check if the server is run with run-once flag
-	if ( runflag != CORE_ST_STOP && strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
+#if !defined(BUILDBOT)
+	if( strcmp( userid, "s1" ) == 0 && strcmp( passwd, "p1" ) == 0 ){
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
 		ShowNotice("and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)\n");
 	}
+#endif
 }
 
 // sets char-server's ip address
@@ -446,7 +428,6 @@ int chrif_removemap(int fd) {
 // received after a character has been "final saved" on the char-server
 static void chrif_save_ack(int fd) {
 	chrif_auth_delete(RFIFOL(fd,2), RFIFOL(fd,6), ST_LOGOUT);
-	chrif_check_shutdown();
 }
 
 // request to move a character between mapservers
@@ -571,8 +552,6 @@ void chrif_on_ready(void) {
 	ShowStatus("Map Server is now online.\n");
 
 	chrif_state = 2;
-
-	chrif_check_shutdown();
 
 	//If there are players online, send them to the char-server. [Skotlex]
 	send_users_tochar();
@@ -733,7 +712,7 @@ void chrif_authok(int fd) {
 
 	sd = node->sd;
 
-	if( runflag == MAPSERVER_ST_RUNNING &&
+	if( global_core->is_running() &&
 		node->char_dat == NULL &&
 		node->account_id == account_id &&
 		node->char_id == char_id &&
