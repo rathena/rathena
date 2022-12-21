@@ -36,56 +36,58 @@ create table `tmp_randomoptionfix` (
 insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 select
 	`id`,
-	row_number() over( partition by `id` ) - 1 as `new_index`,
+	row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 	`old_index`,
 	`option_id`,
 	`option_val`,
 	`option_parm`
 from (
-	select
-			`auction_id` as `id`,
-			0 as `old_index`,
-			`option_id0` as `option_id`,
-			`option_val0` as `option_val`,
-			`option_parm0` as `option_parm`
-		from `auction`
-		where `option_id0` <> 0
-	union
+	select * from (
 		select
-			`auction_id` as `id`,
-			1 as `old_index`,
-			`option_id1` as `option_id`,
-			`option_val1` as `option_val`,
-			`option_parm1` as `option_parm`
-		from `auction`
-		where `option_id1` <> 0
-	union
-		select
-			`auction_id` as `id`,
-			2 as `old_index`,
-			`option_id2` as `option_id`,
-			`option_val2` as `option_val`,
-			`option_parm2` as `option_parm`
-		from `auction`
-		where `option_id2` <> 0
-	union
-		select
-			`auction_id` as `id`,
-			3 as `old_index`,
-			`option_id3` as `option_id`,
-			`option_val3` as `option_val`,
-			`option_parm3` as `option_parm`
-		from `auction`
-		where `option_id3` <> 0
-	union
-		select
-			`auction_id` as `id`,
-			4 as `old_index`,
-			`option_id4` as `option_id`,
-			`option_val4` as `option_val`,
-			`option_parm4` as `option_parm`
-		from `auction`
-		where `option_id4` <> 0
+				`auction_id` as `id`,
+				0 as `old_index`,
+				`option_id0` as `option_id`,
+				`option_val0` as `option_val`,
+				`option_parm0` as `option_parm`
+			from `auction`
+			where `option_id0` <> 0
+		union
+			select
+				`auction_id` as `id`,
+				1 as `old_index`,
+				`option_id1` as `option_id`,
+				`option_val1` as `option_val`,
+				`option_parm1` as `option_parm`
+			from `auction`
+			where `option_id1` <> 0
+		union
+			select
+				`auction_id` as `id`,
+				2 as `old_index`,
+				`option_id2` as `option_id`,
+				`option_val2` as `option_val`,
+				`option_parm2` as `option_parm`
+			from `auction`
+			where `option_id2` <> 0
+		union
+			select
+				`auction_id` as `id`,
+				3 as `old_index`,
+				`option_id3` as `option_id`,
+				`option_val3` as `option_val`,
+				`option_parm3` as `option_parm`
+			from `auction`
+			where `option_id3` <> 0
+		union
+			select
+				`auction_id` as `id`,
+				4 as `old_index`,
+				`option_id4` as `option_id`,
+				`option_val4` as `option_val`,
+				`option_parm4` as `option_parm`
+			from `auction`
+			where `option_id4` <> 0
+	) t2
 	order by `id`, `old_index`
 ) t ;
 
@@ -146,56 +148,58 @@ delete from `tmp_randomoptionfix`;
 insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 select
 	`id`,
-	row_number() over( partition by `id` ) - 1 as `new_index`,
+	row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 	`old_index`,
 	`option_id`,
 	`option_val`,
 	`option_parm`
 from (
-	select
-			`id`,
-			0 as `old_index`,
-			`option_id0` as `option_id`,
-			`option_val0` as `option_val`,
-			`option_parm0` as `option_parm`
-		from `cart_inventory`
-		where `option_id0` <> 0
-	union
+	select * from (
 		select
-			`id`,
-			1 as `old_index`,
-			`option_id1` as `option_id`,
-			`option_val1` as `option_val`,
-			`option_parm1` as `option_parm`
-		from `cart_inventory`
-		where `option_id1` <> 0
-	union
-		select
-			`id`,
-			2 as `old_index`,
-			`option_id2` as `option_id`,
-			`option_val2` as `option_val`,
-			`option_parm2` as `option_parm`
-		from `cart_inventory`
-		where `option_id2` <> 0
-	union
-		select
-			`id`,
-			3 as `old_index`,
-			`option_id3` as `option_id`,
-			`option_val3` as `option_val`,
-			`option_parm3` as `option_parm`
-		from `cart_inventory`
-		where `option_id3` <> 0
-	union
-		select
-			`id`,
-			4 as `old_index`,
-			`option_id4` as `option_id`,
-			`option_val4` as `option_val`,
-			`option_parm4` as `option_parm`
-		from `cart_inventory`
-		where `option_id4` <> 0
+				`id`,
+				0 as `old_index`,
+				`option_id0` as `option_id`,
+				`option_val0` as `option_val`,
+				`option_parm0` as `option_parm`
+			from `cart_inventory`
+			where `option_id0` <> 0
+		union
+			select
+				`id`,
+				1 as `old_index`,
+				`option_id1` as `option_id`,
+				`option_val1` as `option_val`,
+				`option_parm1` as `option_parm`
+			from `cart_inventory`
+			where `option_id1` <> 0
+		union
+			select
+				`id`,
+				2 as `old_index`,
+				`option_id2` as `option_id`,
+				`option_val2` as `option_val`,
+				`option_parm2` as `option_parm`
+			from `cart_inventory`
+			where `option_id2` <> 0
+		union
+			select
+				`id`,
+				3 as `old_index`,
+				`option_id3` as `option_id`,
+				`option_val3` as `option_val`,
+				`option_parm3` as `option_parm`
+			from `cart_inventory`
+			where `option_id3` <> 0
+		union
+			select
+				`id`,
+				4 as `old_index`,
+				`option_id4` as `option_id`,
+				`option_val4` as `option_val`,
+				`option_parm4` as `option_parm`
+			from `cart_inventory`
+			where `option_id4` <> 0
+	) t2
 	order by `id`, `old_index`
 ) t ;
 
@@ -256,56 +260,58 @@ delete from `tmp_randomoptionfix`;
 insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 select
 	`id`,
-	row_number() over( partition by `id` ) - 1 as `new_index`,
+	row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 	`old_index`,
 	`option_id`,
 	`option_val`,
 	`option_parm`
 from (
-	select
-			`id`,
-			0 as `old_index`,
-			`option_id0` as `option_id`,
-			`option_val0` as `option_val`,
-			`option_parm0` as `option_parm`
-		from `guild_storage`
-		where `option_id0` <> 0
-	union
+	select * from (
 		select
-			`id`,
-			1 as `old_index`,
-			`option_id1` as `option_id`,
-			`option_val1` as `option_val`,
-			`option_parm1` as `option_parm`
-		from `guild_storage`
-		where `option_id1` <> 0
-	union
-		select
-			`id`,
-			2 as `old_index`,
-			`option_id2` as `option_id`,
-			`option_val2` as `option_val`,
-			`option_parm2` as `option_parm`
-		from `guild_storage`
-		where `option_id2` <> 0
-	union
-		select
-			`id`,
-			3 as `old_index`,
-			`option_id3` as `option_id`,
-			`option_val3` as `option_val`,
-			`option_parm3` as `option_parm`
-		from `guild_storage`
-		where `option_id3` <> 0
-	union
-		select
-			`id`,
-			4 as `old_index`,
-			`option_id4` as `option_id`,
-			`option_val4` as `option_val`,
-			`option_parm4` as `option_parm`
-		from `guild_storage`
-		where `option_id4` <> 0
+				`id`,
+				0 as `old_index`,
+				`option_id0` as `option_id`,
+				`option_val0` as `option_val`,
+				`option_parm0` as `option_parm`
+			from `guild_storage`
+			where `option_id0` <> 0
+		union
+			select
+				`id`,
+				1 as `old_index`,
+				`option_id1` as `option_id`,
+				`option_val1` as `option_val`,
+				`option_parm1` as `option_parm`
+			from `guild_storage`
+			where `option_id1` <> 0
+		union
+			select
+				`id`,
+				2 as `old_index`,
+				`option_id2` as `option_id`,
+				`option_val2` as `option_val`,
+				`option_parm2` as `option_parm`
+			from `guild_storage`
+			where `option_id2` <> 0
+		union
+			select
+				`id`,
+				3 as `old_index`,
+				`option_id3` as `option_id`,
+				`option_val3` as `option_val`,
+				`option_parm3` as `option_parm`
+			from `guild_storage`
+			where `option_id3` <> 0
+		union
+			select
+				`id`,
+				4 as `old_index`,
+				`option_id4` as `option_id`,
+				`option_val4` as `option_val`,
+				`option_parm4` as `option_parm`
+			from `guild_storage`
+			where `option_id4` <> 0
+	) t2
 	order by `id`, `old_index`
 ) t ;
 
@@ -366,56 +372,58 @@ delete from `tmp_randomoptionfix`;
 insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 select
 	`id`,
-	row_number() over( partition by `id` ) - 1 as `new_index`,
+	row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 	`old_index`,
 	`option_id`,
 	`option_val`,
 	`option_parm`
 from (
-	select
-			`id`,
-			0 as `old_index`,
-			`option_id0` as `option_id`,
-			`option_val0` as `option_val`,
-			`option_parm0` as `option_parm`
-		from `inventory`
-		where `option_id0` <> 0
-	union
+	select * from (
 		select
-			`id`,
-			1 as `old_index`,
-			`option_id1` as `option_id`,
-			`option_val1` as `option_val`,
-			`option_parm1` as `option_parm`
-		from `inventory`
-		where `option_id1` <> 0
-	union
-		select
-			`id`,
-			2 as `old_index`,
-			`option_id2` as `option_id`,
-			`option_val2` as `option_val`,
-			`option_parm2` as `option_parm`
-		from `inventory`
-		where `option_id2` <> 0
-	union
-		select
-			`id`,
-			3 as `old_index`,
-			`option_id3` as `option_id`,
-			`option_val3` as `option_val`,
-			`option_parm3` as `option_parm`
-		from `inventory`
-		where `option_id3` <> 0
-	union
-		select
-			`id`,
-			4 as `old_index`,
-			`option_id4` as `option_id`,
-			`option_val4` as `option_val`,
-			`option_parm4` as `option_parm`
-		from `inventory`
-		where `option_id4` <> 0
+				`id`,
+				0 as `old_index`,
+				`option_id0` as `option_id`,
+				`option_val0` as `option_val`,
+				`option_parm0` as `option_parm`
+			from `inventory`
+			where `option_id0` <> 0
+		union
+			select
+				`id`,
+				1 as `old_index`,
+				`option_id1` as `option_id`,
+				`option_val1` as `option_val`,
+				`option_parm1` as `option_parm`
+			from `inventory`
+			where `option_id1` <> 0
+		union
+			select
+				`id`,
+				2 as `old_index`,
+				`option_id2` as `option_id`,
+				`option_val2` as `option_val`,
+				`option_parm2` as `option_parm`
+			from `inventory`
+			where `option_id2` <> 0
+		union
+			select
+				`id`,
+				3 as `old_index`,
+				`option_id3` as `option_id`,
+				`option_val3` as `option_val`,
+				`option_parm3` as `option_parm`
+			from `inventory`
+			where `option_id3` <> 0
+		union
+			select
+				`id`,
+				4 as `old_index`,
+				`option_id4` as `option_id`,
+				`option_val4` as `option_val`,
+				`option_parm4` as `option_parm`
+			from `inventory`
+			where `option_id4` <> 0
+	) t2
 	order by `id`, `old_index`
 ) t ;
 
@@ -476,56 +484,58 @@ delete from `tmp_randomoptionfix`;
 insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 select
 	`id`,
-	row_number() over( partition by `id` ) - 1 as `new_index`,
+	row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 	`old_index`,
 	`option_id`,
 	`option_val`,
 	`option_parm`
 from (
-	select
-			`id`,
-			0 as `old_index`,
-			`option_id0` as `option_id`,
-			`option_val0` as `option_val`,
-			`option_parm0` as `option_parm`
-		from `mail_attachments`
-		where `option_id0` <> 0
-	union
+	select * from (
 		select
-			`id`,
-			1 as `old_index`,
-			`option_id1` as `option_id`,
-			`option_val1` as `option_val`,
-			`option_parm1` as `option_parm`
-		from `mail_attachments`
-		where `option_id1` <> 0
-	union
-		select
-			`id`,
-			2 as `old_index`,
-			`option_id2` as `option_id`,
-			`option_val2` as `option_val`,
-			`option_parm2` as `option_parm`
-		from `mail_attachments`
-		where `option_id2` <> 0
-	union
-		select
-			`id`,
-			3 as `old_index`,
-			`option_id3` as `option_id`,
-			`option_val3` as `option_val`,
-			`option_parm3` as `option_parm`
-		from `mail_attachments`
-		where `option_id3` <> 0
-	union
-		select
-			`id`,
-			4 as `old_index`,
-			`option_id4` as `option_id`,
-			`option_val4` as `option_val`,
-			`option_parm4` as `option_parm`
-		from `mail_attachments`
-		where `option_id4` <> 0
+				`id`,
+				0 as `old_index`,
+				`option_id0` as `option_id`,
+				`option_val0` as `option_val`,
+				`option_parm0` as `option_parm`
+			from `mail_attachments`
+			where `option_id0` <> 0
+		union
+			select
+				`id`,
+				1 as `old_index`,
+				`option_id1` as `option_id`,
+				`option_val1` as `option_val`,
+				`option_parm1` as `option_parm`
+			from `mail_attachments`
+			where `option_id1` <> 0
+		union
+			select
+				`id`,
+				2 as `old_index`,
+				`option_id2` as `option_id`,
+				`option_val2` as `option_val`,
+				`option_parm2` as `option_parm`
+			from `mail_attachments`
+			where `option_id2` <> 0
+		union
+			select
+				`id`,
+				3 as `old_index`,
+				`option_id3` as `option_id`,
+				`option_val3` as `option_val`,
+				`option_parm3` as `option_parm`
+			from `mail_attachments`
+			where `option_id3` <> 0
+		union
+			select
+				`id`,
+				4 as `old_index`,
+				`option_id4` as `option_id`,
+				`option_val4` as `option_val`,
+				`option_parm4` as `option_parm`
+			from `mail_attachments`
+			where `option_id4` <> 0
+	) t2
 	order by `id`, `old_index`
 ) t ;
 
@@ -586,56 +596,58 @@ delete from `tmp_randomoptionfix`;
 insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 select
 	`id`,
-	row_number() over( partition by `id` ) - 1 as `new_index`,
+	row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 	`old_index`,
 	`option_id`,
 	`option_val`,
 	`option_parm`
 from (
-	select
-			`id`,
-			0 as `old_index`,
-			`option_id0` as `option_id`,
-			`option_val0` as `option_val`,
-			`option_parm0` as `option_parm`
-		from `storage`
-		where `option_id0` <> 0
-	union
+	select * from (
 		select
-			`id`,
-			1 as `old_index`,
-			`option_id1` as `option_id`,
-			`option_val1` as `option_val`,
-			`option_parm1` as `option_parm`
-		from `storage`
-		where `option_id1` <> 0
-	union
-		select
-			`id`,
-			2 as `old_index`,
-			`option_id2` as `option_id`,
-			`option_val2` as `option_val`,
-			`option_parm2` as `option_parm`
-		from `storage`
-		where `option_id2` <> 0
-	union
-		select
-			`id`,
-			3 as `old_index`,
-			`option_id3` as `option_id`,
-			`option_val3` as `option_val`,
-			`option_parm3` as `option_parm`
-		from `storage`
-		where `option_id3` <> 0
-	union
-		select
-			`id`,
-			4 as `old_index`,
-			`option_id4` as `option_id`,
-			`option_val4` as `option_val`,
-			`option_parm4` as `option_parm`
-		from `storage`
-		where `option_id4` <> 0
+				`id`,
+				0 as `old_index`,
+				`option_id0` as `option_id`,
+				`option_val0` as `option_val`,
+				`option_parm0` as `option_parm`
+			from `storage`
+			where `option_id0` <> 0
+		union
+			select
+				`id`,
+				1 as `old_index`,
+				`option_id1` as `option_id`,
+				`option_val1` as `option_val`,
+				`option_parm1` as `option_parm`
+			from `storage`
+			where `option_id1` <> 0
+		union
+			select
+				`id`,
+				2 as `old_index`,
+				`option_id2` as `option_id`,
+				`option_val2` as `option_val`,
+				`option_parm2` as `option_parm`
+			from `storage`
+			where `option_id2` <> 0
+		union
+			select
+				`id`,
+				3 as `old_index`,
+				`option_id3` as `option_id`,
+				`option_val3` as `option_val`,
+				`option_parm3` as `option_parm`
+			from `storage`
+			where `option_id3` <> 0
+		union
+			select
+				`id`,
+				4 as `old_index`,
+				`option_id4` as `option_id`,
+				`option_val4` as `option_val`,
+				`option_parm4` as `option_parm`
+			from `storage`
+			where `option_id4` <> 0
+	) t2
 	order by `id`, `old_index`
 ) t ;
 
@@ -699,56 +711,58 @@ delete from `tmp_randomoptionfix`;
 	insert into `tmp_randomoptionfix` ( `id`, `new_index`, `old_index`, `option_id`, `option_val`, `option_parm` )
 	select
 		`id`,
-		row_number() over( partition by `id` ) - 1 as `new_index`,
+		row_number() over( partition by `id` order by `old_index` asc ) - 1 as `new_index`,
 		`old_index`,
 		`option_id`,
 		`option_val`,
 		`option_parm`
 	from (
-		select
-				`id`,
-				0 as `old_index`,
-				`option_id0` as `option_id`,
-				`option_val0` as `option_val`,
-				`option_parm0` as `option_parm`
-			from `${other_storage}`
-			where `option_id0` <> 0
-		union
+		select * from (
 			select
-				`id`,
-				1 as `old_index`,
-				`option_id1` as `option_id`,
-				`option_val1` as `option_val`,
-				`option_parm1` as `option_parm`
-			from `${other_storage}`
-			where `option_id1` <> 0
-		union
-			select
-				`id`,
-				2 as `old_index`,
-				`option_id2` as `option_id`,
-				`option_val2` as `option_val`,
-				`option_parm2` as `option_parm`
-			from `${other_storage}`
-			where `option_id2` <> 0
-		union
-			select
-				`id`,
-				3 as `old_index`,
-				`option_id3` as `option_id`,
-				`option_val3` as `option_val`,
-				`option_parm3` as `option_parm`
-			from `${other_storage}`
-			where `option_id3` <> 0
-		union
-			select
-				`id`,
-				4 as `old_index`,
-				`option_id4` as `option_id`,
-				`option_val4` as `option_val`,
-				`option_parm4` as `option_parm`
-			from `${other_storage}`
-			where `option_id4` <> 0
+					`id`,
+					0 as `old_index`,
+					`option_id0` as `option_id`,
+					`option_val0` as `option_val`,
+					`option_parm0` as `option_parm`
+				from `${other_storage}`
+				where `option_id0` <> 0
+			union
+				select
+					`id`,
+					1 as `old_index`,
+					`option_id1` as `option_id`,
+					`option_val1` as `option_val`,
+					`option_parm1` as `option_parm`
+				from `${other_storage}`
+				where `option_id1` <> 0
+			union
+				select
+					`id`,
+					2 as `old_index`,
+					`option_id2` as `option_id`,
+					`option_val2` as `option_val`,
+					`option_parm2` as `option_parm`
+				from `${other_storage}`
+				where `option_id2` <> 0
+			union
+				select
+					`id`,
+					3 as `old_index`,
+					`option_id3` as `option_id`,
+					`option_val3` as `option_val`,
+					`option_parm3` as `option_parm`
+				from `${other_storage}`
+				where `option_id3` <> 0
+			union
+				select
+					`id`,
+					4 as `old_index`,
+					`option_id4` as `option_id`,
+					`option_val4` as `option_val`,
+					`option_parm4` as `option_parm`
+				from `${other_storage}`
+				where `option_id4` <> 0
+		) t2
 		order by `id`, `old_index`
 	) t ;
 

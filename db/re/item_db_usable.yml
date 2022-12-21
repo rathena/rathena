@@ -1823,7 +1823,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Shadow_Cross) {
+      if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
       }
@@ -50470,7 +50470,6 @@ Body:
     AegisName: Poison_Bottle_B
     Name: Poison Bottle
     Type: Usable
-    Buy: 10
     Weight: 100
     Trade:
       NoDrop: true
@@ -50480,7 +50479,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) {
+      if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
       }

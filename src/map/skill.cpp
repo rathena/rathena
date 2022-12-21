@@ -6986,7 +6986,7 @@ static int skill_apply_songs(struct block_list* target, va_list ap)
 			return skill_additional_effect(src, target, skill_id, skill_lv, BF_LONG | BF_SKILL | BF_MISC, ATK_DEF, tick);
 		default: // Buff/Debuff type songs
 			if (skill_id == CG_HERMODE && src->id != target->id)
-				status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
+				status_change_clear_buffs(target, SCCB_HERMODE); // Should dispell only allies.
 			return sc_start(src, target, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 	}
@@ -15208,7 +15208,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 
 		case UNT_HERMODE:
 			if (sg->src_id!=bl->id && battle_check_target(&unit->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
-				status_change_clear_buffs(bl, SCCB_BUFFS); //Should dispell only allies.
+				status_change_clear_buffs(bl, SCCB_HERMODE); //Should dispell only allies.
 		case UNT_RICHMANKIM:
 		case UNT_ETERNALCHAOS:
 		case UNT_DRUMBATTLEFIELD:
@@ -17948,6 +17948,18 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 			}
 			break;
 		}
+#ifdef RENEWAL
+		case ASC_EDP:
+			if(sd) {
+				int16 item_edp = itemdb_group.item_exists_pc(sd, IG_EDP);
+				if (item_edp < 0) {
+					clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, 1, ITEMID_POISON_BOTTLE ); // [%s] required '%d' amount.
+					return false;
+				} else
+					pc_delitem(sd, item_edp, 1, 0, 1, LOG_TYPE_CONSUME);
+			}
+			break;
+#endif
 	}
 
 	status = &sd->battle_status;

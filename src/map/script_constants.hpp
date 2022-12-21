@@ -6633,6 +6633,10 @@
 	export_constant(IG_S_TEMP2_CUBE);
 	export_constant(IG_BLACKSMITH_BLESS_BOX_3);
 	export_constant(IG_SHADOW_HAMMER_BOX_3);
+	export_constant(IG_EDP);
+	export_constant(IG_MF_NOTELEPORT);
+	export_constant(IG_MF_NORETURN);
+	export_constant(IG_GIANT_FLY_WING);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9913,6 +9917,7 @@
 	export_constant(SCF_REMOVEONUNEQUIP);
 	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
 	export_constant(SCF_REMOVEONUNEQUIPARMOR);
+	export_constant(SCF_REMOVEONHERMODE);
 
 	/* enchantgrades */
 	export_constant(ENCHANTGRADE_NONE);

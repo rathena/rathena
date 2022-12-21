@@ -18,6 +18,7 @@
 #include "achievement.hpp"
 #include "atcommand.hpp"	//msg_txt()
 #include "battle.hpp"
+#include "chrif.hpp" // charserver_name
 #include "clif.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
@@ -450,6 +451,105 @@ int party_invite(map_session_data *sd,map_session_data *tsd)
 
 	clif_party_invite( *sd, *tsd );
 	return 1;
+}
+
+bool party_isleader( map_session_data* sd ){
+	if( sd == nullptr ){
+		return false;
+	}
+
+	if( sd->status.party_id == 0 ){
+		return false;
+	}
+
+	struct party_data* party = party_search( sd->status.party_id );
+
+	if( party == nullptr ){
+		return false;
+	}
+
+	for( int i = 0; i < MAX_PARTY; i++ ){
+		if( party->party.member[i].char_id == sd->status.char_id ){
+			return party->party.member[i].leader != 0;
+		}
+	}
+
+	return false;
+}
+
+void party_join( map_session_data* sd, int party_id ){
+	nullpo_retv( sd );
+
+	// Player is in a party already now
+	if( sd->status.party_id != 0 ){
+		return;
+	}
+
+	// Player is already associated with a party
+	if( sd->party_creating || sd->party_joining ){
+		return;
+	}
+
+	struct party_data* party = party_search( party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	int i;
+
+	if( battle_config.block_account_in_same_party ){
+		ARR_FIND( 0, MAX_PARTY, i, party->party.member[i].account_id == sd->status.account_id );
+
+		if( i < MAX_PARTY ){
+			// Player is in the party with a different character already
+			return;
+		}
+	}
+
+	// Confirm if there is an open slot in the party
+	ARR_FIND( 0, MAX_PARTY, i, party->party.member[i].account_id == 0 );
+
+	if( i == MAX_PARTY ){
+		// Party is already full
+		return;
+	}
+
+	struct party_member member = {};
+
+	sd->party_joining = true;
+	party_fill_member( &member, sd, 0 );
+	intif_party_addmember( party_id, &member );
+}
+
+bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booking_requirement* booking ){
+	char world_name[NAME_LENGTH * 2 + 1];
+
+	Sql_EscapeString( mmysql_handle, world_name, charserver_name );
+
+	if( Sql_Query( mmysql_handle, "SELECT `minimum_level`, `maximum_level` FROM `%s` WHERE `world_name` = '%s' AND `account_id` = '%u' AND `char_id` = '%u'", partybookings_table, world_name, account_id, char_id ) != SQL_SUCCESS) {
+		Sql_ShowDebug( mmysql_handle );
+
+		return false;
+	}
+
+	if( Sql_NextRow( mmysql_handle ) != SQL_SUCCESS ){
+		Sql_FreeResult( mmysql_handle );
+
+		return false;
+	}
+
+	char* data;
+
+	Sql_GetData( mmysql_handle, 0, &data, nullptr );
+	booking->minimum_level = (uint16)strtoul( data, nullptr, 10 );
+
+	Sql_GetData( mmysql_handle, 1, &data, nullptr );
+	booking->maximum_level = (uint16)strtoul( data, nullptr, 10 );
+
+	Sql_FreeResult( mmysql_handle );
+
+	return true;
 }
 
 int party_reply_invite(map_session_data *sd,int party_id,int flag)

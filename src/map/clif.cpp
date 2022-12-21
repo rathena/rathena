@@ -10633,7 +10633,7 @@ void clif_parse_WantToConnection(int fd, map_session_data* sd)
 		return;
 	}
 
-	if( runflag != MAPSERVER_ST_RUNNING ) {// not allowed
+	if( !global_core->is_running() ){ // not allowed
 		clif_authfail_fd(fd,1);// server closed
 		return;
 	}
@@ -20345,10 +20345,32 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 /// Roulette System
 /// Author: Yommy
 
+void roulette_generate_bonus( map_session_data& sd ){
+	if( battle_config.feature_roulette_bonus_reward && sd.roulette.bonusItemID == 0 ){
+		int next_stage = 0;
+
+		if( sd.roulette_point.bronze > 0 ){
+			next_stage = 0;
+		}else if( sd.roulette_point.silver > 9 ){
+			next_stage = 2;
+		}else if( sd.roulette_point.gold > 9 ){
+			next_stage = 4;
+		}
+
+		// Get bonus item stage only from current stage or higher
+		int reward_stage = rnd_value( next_stage, MAX_ROULETTE_LEVEL - 1 );
+		sd.roulette.bonusItemID = rd.nameid[reward_stage][rnd()%rd.items[reward_stage]];
+	}else{
+		sd.roulette.bonusItemID = 0;
+	}
+}
+
 /// Opens the roulette window
 /// 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
 void clif_roulette_open( map_session_data* sd ){
 	nullpo_retv( sd );
+
+	roulette_generate_bonus( *sd );
 
 	struct packet_roulette_open_ack p;
 
@@ -20357,7 +20379,7 @@ void clif_roulette_open( map_session_data* sd ){
 	p.Serial = 0; // serial
 	p.Step = (sd->roulette.claimPrize) ? sd->roulette.stage - 1 : 0;
 	p.Idx = (sd->roulette.claimPrize) ? sd->roulette.prizeIdx : -1;
-	p.AdditionItemID = -1; //! TODO: Display bonus item
+	p.AdditionItemID = sd->roulette.bonusItemID;
 	p.GoldPoint = sd->roulette_point.gold;
 	p.SilverPoint = sd->roulette_point.silver;
 	p.BronzePoint = sd->roulette_point.bronze;
@@ -20444,7 +20466,7 @@ static void clif_roulette_recvitem_ack(map_session_data *sd, enum RECV_ROULETTE_
 
 	p.PacketType = roulettercvitemackType;
 	p.Result = type;
-	p.AdditionItemID = 0; //! TODO: Additional item
+	p.AdditionItemID = sd->roulette.bonusItemID;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
@@ -20458,6 +20480,7 @@ static void clif_roulette_recvitem_ack(map_session_data *sd, enum RECV_ROULETTE_
 static uint8 clif_roulette_getitem(map_session_data *sd) {
 	struct item it;
 	uint8 res = 1;
+	unsigned short factor = 1;
 
 	nullpo_retr(1, sd);
 
@@ -20469,8 +20492,32 @@ static uint8 clif_roulette_getitem(map_session_data *sd) {
 	it.nameid = rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 	it.identify = 1;
 
-	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_ROULETTE)) == 0) {
+	if( sd->roulette.bonusItemID != 0 ){
+		if( sd->roulette.bonusItemID == it.nameid && battle_config.feature_roulette_bonus_reward && !( rd.flag[sd->roulette.prizeStage][sd->roulette.prizeIdx]&1 ) ){
+			factor = 2;
+			// Reset the Bonus Item to trigger new calculation
+			sd->roulette.bonusItemID = 0;
+		}else{
+			for( int i = 0; i < MAX_ROULETTE_LEVEL && sd->roulette.bonusItemID != 0; i++ ){
+				for( int j = 0; j < MAX_ROULETTE_COLUMNS - i && sd->roulette.bonusItemID != 0; j++ ){
+					if( rd.nameid[i][j] == sd->roulette.bonusItemID ){
+						// If you reached a equal or higher level than the first level with the bonus item in it, you missed your chance and a new bonus item will be calculated
+						if( sd->roulette.prizeStage >= i ){
+							// Reset the Bonus Item to trigger new calculation and to cancel the loops
+							sd->roulette.bonusItemID = 0;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if ((res = pc_additem(sd, &it, rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx] * factor, LOG_TYPE_ROULETTE)) == 0) {
 		; // onSuccess
+	}
+
+	if( sd->roulette.bonusItemID == 0 ){
+		roulette_generate_bonus( *sd );
 	}
 
 	sd->roulette.claimPrize = false;
@@ -20491,7 +20538,7 @@ void clif_roulette_generate( map_session_data *sd, unsigned char result, short s
 	p.Result = result;
 	p.Step = stage;
 	p.Idx = prizeIdx;
-	p.AdditionItemID = bonusItemID;
+	p.AdditionItemID = battle_config.feature_roulette_bonus_reward ? bonusItemID : 0;
 	p.RemainGold = sd->roulette_point.gold;
 	p.RemainSilver = sd->roulette_point.silver;
 	p.RemainBronze = sd->roulette_point.bronze;
@@ -20515,7 +20562,13 @@ void clif_parse_roulette_generate( int fd, map_session_data* sd ){
 		return;
 	}
 
+	// Player has not claimed his prize yet
+	if( sd->roulette.claimPrize ){
+		clif_roulette_getitem( sd );
+	}
+
 	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL){
+		// Make sure everything is reset
 		sd->roulette.stage = 0;
 		sd->roulette.claimPrize = false;
 		sd->roulette.prizeStage = 0;
@@ -20554,7 +20607,7 @@ void clif_parse_roulette_generate( int fd, map_session_data* sd ){
 		}
 	}
 
-	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx), sd->roulette.bonusItemID);
 }
 
 /// Request to claim a prize
@@ -24797,6 +24850,126 @@ void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result ){
 	p.result = result;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
+void clif_partybooking_ask( map_session_data* sd, map_session_data* joining_sd ){
+#if PACKETVER >= 20191204
+	struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN p = { 0 };
+
+	p.packetType = HEADER_ZC_PARTY_REQ_MASTER_TO_JOIN;
+	p.CID = joining_sd->status.char_id;
+	p.AID = joining_sd->status.account_id;
+	safestrncpy( p.name, joining_sd->status.name, NAME_LENGTH );
+	p.x = joining_sd->status.base_level;
+	p.y = joining_sd->status.class_;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+void clif_parse_partybooking_join( int fd, map_session_data* sd ){
+#if PACKETVER >= 20191204
+	struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
+
+	// Character is already in a party
+	if( sd->status.party_id != 0 ){
+		return;
+	}
+
+	map_session_data* tsd = map_charid2sd( p->CID );
+
+	// Target player is offline
+	if( tsd == nullptr ){
+		return;
+	}
+
+	if( tsd->status.account_id != p->AID ){
+		return;
+	}
+
+	struct s_party_booking_requirement requirement;
+
+	if( !party_booking_load( tsd->status.account_id, tsd->status.char_id, &requirement ) ){
+		return;
+	}
+
+	if( sd->status.base_level < requirement.minimum_level ){
+		return;
+	}
+
+	if( sd->status.base_level > requirement.maximum_level ){
+		return;
+	}
+
+	// Already requested to join this party
+	if( util::vector_exists( tsd->party_booking_requests, sd->status.char_id ) ){
+		return;
+	}
+
+	// Store information that the player tried to join the party
+	tsd->party_booking_requests.push_back( sd->status.char_id );
+
+	clif_partybooking_ask( tsd, sd );
+#endif
+}
+
+void clif_partybooking_reply( map_session_data* sd, map_session_data* party_leader_sd, bool accepted ){
+#if PACKETVER >= 20191204
+	struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER p = { 0 };
+
+	if( party_leader_sd->status.party_id == 0 ){
+		return;
+	}
+
+	struct party_data* party = party_search( party_leader_sd->status.party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	p.packetType = HEADER_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER;
+	safestrncpy( p.player_name, party_leader_sd->status.name, NAME_LENGTH );
+	safestrncpy( p.party_name, party->party.name, NAME_LENGTH );
+	p.AID = party_leader_sd->status.account_id;
+	p.refused = !accepted;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
+#if PACKETVER >= 20191204
+	struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
+
+	map_session_data* tsd = map_charid2sd( p->CID );
+
+	// Target player is offline
+	if( tsd == nullptr ){
+		return;
+	}
+
+	if( tsd->status.account_id != p->AID ){
+		return;
+	}
+
+	// Check if the player even requested to join the party
+	if( !util::vector_exists( sd->party_booking_requests, p->CID ) ){
+		return;
+	}
+
+	util::vector_erase_if_exists( sd->party_booking_requests, p->CID );
+
+	// Only party leaders can reply
+	if( !party_isleader( sd ) ){
+		return;
+	}
+
+	if( p->accept ){
+		party_join( tsd, sd->status.party_id );
+	}
+
+	clif_partybooking_reply( tsd, sd, p->accept );
 #endif
 }
 
