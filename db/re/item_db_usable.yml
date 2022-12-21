@@ -2194,10 +2194,17 @@ Body:
     Script: |
       getgroupitem(IG_EIN_UNDIUM);
   - Id: 9523
-    AegisName: Metal_Smelting_Ticket
+    AegisName: Metal_Rifine_Ticket
     Name: Metal Refining Ticket
     Type: Delayconsume
-    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       laphine_upgrade();
   - Id: 9529
@@ -10734,6 +10741,16 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_ITEMBOOST,3600000,100;
   - Id: 12563
     AegisName: BM75
     Name: BM75
@@ -13018,6 +13035,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_JEXPBOOST,1800000,25;
   - Id: 12767
     AegisName: Passion_FB_Hat_Box
     Name: Passion FB Hat Box
@@ -34260,6 +34279,22 @@ Body:
       if (getmapflag(strcharinfo(3), mf_noteleport) == 0) {
          warp strcharinfo(3),0,0;
       }
+  - Id: 14646
+    AegisName: Orleans_Full_Course
+    Name: Orleans Full Course
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_BASH3D;
+      sc_start SC_ALMIGHTY,1800000,10;
   - Id: 14663
     AegisName: Scroll_Sealed_Dark_Lord
     Name: Scroll Sealed Dark Lord
@@ -39887,6 +39922,16 @@ Body:
     Weight: 10
     Flags:
       UniqueId: true
+  - Id: 16633
+    AegisName: Bubble_Gum_Plus_10Box
+    Name: Bubble Gum Plus Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Flags:
+      UniqueId: true
+    Script: |
+      getitem 12562,10;
   - Id: 16634
     AegisName: Spiked_Scarf_Box2
     Name: Spiked Scarf BoxII
@@ -45869,6 +45914,21 @@ Body:
       NoAuction: true
     Script: |
       rentitem 14645,2592000;
+  - Id: 17290
+    AegisName: Orleans_Full_Course_Box
+    Name: Orleans Full Course Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14646,5;
   - Id: 17292
     AegisName: Shadow_Box
     Name: Shadow Box
@@ -48550,6 +48610,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Blessing_Scarlet_Scroll);
+  - Id: 17780
+    AegisName: Cash_Can_Box
+    Name: Cash Can Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 25308,1;
   - Id: 17712
     AegisName: 3_Life_Potion_pack9
     Name: Three Master Package IX
@@ -59236,12 +59311,28 @@ Body:
     AegisName: Boost_Up_1
     Name: Booster Armor UpgradeBox
     Type: Delayconsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       laphine_upgrade();
   - Id: 100044
     AegisName: Boost_Up_2
     Name: Booster Weapon UpgradeBox
     Type: Delayconsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       laphine_upgrade();
   - Id: 100045
