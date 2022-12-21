@@ -30538,25 +30538,26 @@ Body:
           - Sealed_Ring_TW    # 32278
           - Knight_Windstorm_Card    # 4318
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_DAGGER) {
+      .@view = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@view == W_DAGGER) {
          bonus bMaxHPrate,10;
          bonus bDelayrate,-8;
       }
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
+      if (.@view == W_1HSWORD || .@view == W_2HSWORD) {
          skill "SO_DIAMONDDUST",5;
          bonus2 bSkillCooldown,"SO_DIAMONDDUST",5000;
       }
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSPEAR || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSPEAR) {
+      if (.@view == W_1HSPEAR || .@view == W_2HSPEAR) {
          bonus2 bSubEle,Ele_Wind,20;
          bonus2 bSubEle,Ele_Water,20;
       }
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOOK) {
+      if (.@view == W_STAFF || .@view == W_2HSTAFF || .@view == W_BOOK) {
          bonus2 bSkillAtk,"MG_COLDBOLT",50;
          bonus2 bSkillAtk,"WL_JACKFROST",40;
          bonus2 bSkillCooldown,"SO_SUMMON_AQUA",-30000;
          autobonus3 "{ bonus2 bMagicAtkEle,Ele_Water,30; }",1000,60000,"SO_SUMMON_AQUA";
       }
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HAXE || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HAXE)
+      if (.@view == W_MACE || .@view == W_1HAXE || .@view == W_2HAXE)
          bonus2 bAddEff,Eff_Freeze,2000;
   - Combos:
       - Combo:

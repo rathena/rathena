@@ -39118,7 +39118,7 @@ Body:
       bonus bAgiVit,10;
       bonus bInt,5;
       bonus bLuk,20;
-      skill "NPC_HELLJUDGEMENT",10;
+      itemskill "NPC_HELLJUDGEMENT",10;
   - Id: 5014
     AegisName: Fin_Helm
     Name: Fin Helm
@@ -67495,8 +67495,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddRace,RC_Angel,3+(.@r-5);
-      bonus2 bMagicAddRace,RC_Angel,3+(.@r-5);
+      bonus2 bAddRace,RC_Angel,3+max(0,(.@r-5));
+      bonus2 bMagicAddRace,RC_Angel,3+max(0,(.@r-5));
   - Id: 15110
     AegisName: Supplement_Part_Str
     Name: Supplement Part Str
@@ -67588,8 +67588,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddRace,RC_Undead,3+(.@r-5);
-      bonus2 bMagicAddRace,RC_Undead,3+(.@r-5);
+      bonus2 bAddRace,RC_Undead,3+max(0,(.@r-5));
+      bonus2 bMagicAddRace,RC_Undead,3+max(0,(.@r-5));
   - Id: 15116
     AegisName: Airship_Armor
     Name: Airship's Armor
@@ -158705,11 +158705,12 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      .@a = (readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk))/100;
-      .@b = (readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk))/300;
-      .@c = (readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk))/400;
-      .@d = (readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk))/500;
-      .@e = (readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk))/600;
+      .@stats= (readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk));
+      .@a = .@stats/100;
+      .@b = .@stats/300;
+      .@c = .@stats/400;
+      .@d = .@stats/500;
+      .@e = .@stats/600;
       bonus2 bSubClass,Class_Boss,5;
       bonus2 bSubClass,Class_Normal,5;
       bonus2 bSubRace,RC_Player_Human,5;
