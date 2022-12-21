@@ -933,6 +933,8 @@ public:
 	} captcha_upload;
 
 	s_macro_detect macro_detect;
+
+	std::vector<uint32> party_booking_requests;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table

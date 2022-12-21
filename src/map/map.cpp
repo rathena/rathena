@@ -91,6 +91,7 @@ char sales_table[32] = "sales";
 char vendings_table[32] = "vendings";
 char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
+char partybookings_table[32] = "party_bookings";
 char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
 
@@ -4169,6 +4170,8 @@ int inter_config_read(const char *cfgName)
 			safestrncpy( vendings_table, w2, sizeof(vendings_table) );
 		else if( strcmpi( w1, "vending_items_table" ) == 0 )
 			safestrncpy(vending_items_table, w2, sizeof(vending_items_table));
+		else if( strcmpi( w1, "partybookings_table" ) == 0 )
+			safestrncpy(partybookings_table, w2, sizeof(partybookings_table));
 		else if( strcmpi(w1, "roulette_table") == 0)
 			safestrncpy(roulette_table, w2, sizeof(roulette_table));
 		else if (strcmpi(w1, "market_table") == 0)
