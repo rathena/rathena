@@ -83,7 +83,7 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 
 		struct auth_node* node = login_get_auth_node( account_id );
 
-		if( runflag == LOGINSERVER_ST_RUNNING &&
+		if( global_core->is_running() &&
 			node != nullptr &&
 			node->account_id == account_id &&
 			node->login_id1  == login_id1 &&

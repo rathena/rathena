@@ -4380,6 +4380,36 @@ void s_random_opt_group::apply( struct item& item ){
 			}
 		}
 	}
+
+	// Fix any gaps, the client cannot handle this
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		// If an option is empty
+		if( item.option[i].id == 0 ){
+			// Check if any other options, after the empty option exist
+			size_t j;
+			for( j = i + 1; j < MAX_ITEM_RDM_OPT; j++ ){
+				if( item.option[j].id != 0 ){
+					break;
+				}
+			}
+
+			// Another option was found, after the empty option
+			if( j < MAX_ITEM_RDM_OPT ){
+				// Move the later option forward
+				item.option[i].id = item.option[j].id;
+				item.option[i].value = item.option[j].value;
+				item.option[i].param = item.option[j].param;
+
+				// Reset the option that was moved
+				item.option[j].id = 0;
+				item.option[j].value = 0;
+				item.option[j].param = 0;
+			}else{
+				// Cancel early
+				break;
+			}
+		}
+	}
 }
 
 /**
@@ -4629,7 +4659,7 @@ void itemdb_gen_itemmoveinfo()
 */
 void itemdb_reload(void) {
 	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	do_final_itemdb();
 
@@ -4641,7 +4671,7 @@ void itemdb_reload(void) {
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
+	for( sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		sd->combos.clear(); // clear combo bonuses
 		pc_setinventorydata(sd);
