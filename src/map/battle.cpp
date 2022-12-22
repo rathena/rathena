@@ -8412,6 +8412,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (sc) {
 		if (sc->data[SC_HELLS_PLANT])
 			return 0;
+		if (sc->getSCE(SC_REF_T_POTION))
+			return 1; // Returns 1 damage
 	}
 
 	map_session_data *tsd = BL_CAST(BL_PC, tbl);
@@ -8440,7 +8442,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 				if (!skill_id && battle_config.devotion_rdamage_skill_only && tsc->data[SC_REFLECTSHIELD]->val4)
 					rdamage = 0;
 				else {
-					rdamage += damage * tsc->data[SC_REFLECTSHIELD]->val2 / 100;
+					rdamage += damage * tsc->getSCE(SC_REFLECTSHIELD)->val2 / 100;
+					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8459,6 +8462,26 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	} else {
 		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
 			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
+			rdamage = i64max(rdamage, 1);
+		}
+	}
+
+	if (rdamage > 0) {
+		map_session_data* sd = BL_CAST(BL_PC, src);
+		if (sd && sd->bonus.reduce_damage_return != 0) {
+			rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
+			rdamage = i64max(rdamage, 1);
+		}
+	}
+
+	if (sc) {
+		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
+			rdamage -= damage * sc->getSCE(SC_REFLECTDAMAGE)->val2 / 100;
+			rdamage = i64max(rdamage, 1);
+		}
+		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
+			rdamage -= damage * sc->getSCE(SC_VENOMBLEED)->val2 / 100;
+			rdamage = i64max(rdamage, 1);
 		}
 	}
 
