@@ -2458,8 +2458,8 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
-	struct status_change* tsc = status_get_sc(target);
-	if (tsc && tsc->data[SC_MAGICMIRROR] && skill_get_type(skill_id) == BF_MAGIC)
+	status_change* tsc = status_get_sc(target);
+	if (tsc && tsc->getSCE(SC_MAGICMIRROR) && skill_get_type(skill_id) == BF_MAGIC)
 		return BF_SHORT;
 
 	switch (skill_id) {
@@ -6836,7 +6836,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
 
-	if (tsc && tsc->data[SC_MAGICMIRROR]) {
+	if (tsc && tsc->getSCE(SC_MAGICMIRROR)) {
 		ad.flag = BF_WEAPON|BF_SKILL|BF_NORMAL;
 	} else {
 		ad.flag = BF_MAGIC|BF_SKILL;
@@ -8416,8 +8416,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (sc) {
 		if (sc->getSCE(SC_HELLS_PLANT))
 			return 0;
-		if (sc->getSCE(SC_REF_T_POTION))
-			return 1; // Returns 1 damage
 	}
 
 	map_session_data *tsd = BL_CAST(BL_PC, tbl);
@@ -8426,7 +8424,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && tsd && tsd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * tsd->bonus.short_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
 		} else if( status_reflect && tsc && tsc->count ) {
 			if( tsc->getSCE(SC_REFLECTSHIELD) ) {
 				status_change_entry *sce_d;
@@ -8447,7 +8444,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					rdamage = 0;
 				else {
 					rdamage += damage * tsc->getSCE(SC_REFLECTSHIELD)->val2 / 100;
-					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8466,26 +8462,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	} else {
 		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
 			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (rdamage > 0) {
-		map_session_data* sd = BL_CAST(BL_PC, src);
-		if (sd && sd->bonus.reduce_damage_return != 0) {
-			rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (sc) {
-		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
-			rdamage -= damage * sc->getSCE(SC_REFLECTDAMAGE)->val2 / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
-			rdamage -= damage * sc->getSCE(SC_VENOMBLEED)->val2 / 100;
-			rdamage = i64max(rdamage, 1);
 		}
 	}
 
@@ -8514,13 +8490,13 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	}
 
 	if (sc) {
-		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
-			reduce += sc->data[SC_REFLECTDAMAGE]->val2;
+		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
+			reduce += sc->getSCE(SC_REFLECTDAMAGE)->val2;
 		}
-		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0) {
-			reduce += sc->data[SC_VENOMBLEED]->val2;
+		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
+			reduce += sc->getSCE(SC_VENOMBLEED)->val2;
 		}
-		if (sc->data[SC_REF_T_POTION])
+		if (sc->getSCE(SC_REF_T_POTION))
 			reduce += 100;
 	}
 
