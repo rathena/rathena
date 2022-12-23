@@ -6382,9 +6382,9 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 #if PACKETVER >= 20090121
 	if (battle_config.display_status_timers > 0) {
 #if PACKETVER >= 20120618
-		p.Total = client_tick(tick_total);
+		p.Total = client_tick(tick);
 #endif
-		p.Left = client_tick(tick);
+		p.Left = client_tick(tick_total);
 		p.val1 = val1;
 		p.val2 = val2;
 		p.val3 = val3;
@@ -6445,8 +6445,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		enum sc_type type = sc_display[i]->type;
 		struct status_change *sc = status_get_sc(bl);
 		const TimerData *td = (sc && sc->getSCE(type) ? get_timer(sc->getSCE(type)->timer) : nullptr);
-		t_tick tick_total = 0, tick = 0, cur_tick = gettick();
-		tick_total = DIFF_TICK(sc->getSCE(type)->tick_total, cur_tick);
+		t_tick tick = 0, cur_tick = gettick();
 
 		if (td != nullptr)
 			tick = DIFF_TICK(td->tick, cur_tick);
@@ -6470,7 +6469,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		}
 
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick_total, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), sc->getSCE(type)->tick_total, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
 		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, tick sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif

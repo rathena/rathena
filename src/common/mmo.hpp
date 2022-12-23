@@ -403,6 +403,7 @@ struct status_change_data {
 	long val1, val2, val3, val4;
 	t_tick tick; //Remaining duration.
 	t_tick tick_total; // Total duration
+	t_tick tick_time; // Interval duration
 };
 
 #define MAX_BONUS_SCRIPT_LENGTH 512
