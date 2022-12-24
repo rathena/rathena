@@ -7433,3 +7433,45 @@ Body:
             Rate: 1
           - Item: Gold_Tiara_
             Rate: 1
+  - Group: MF_NOTELEPORT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wing_Of_Fly
+          - Item: Giant_Fly_Wing
+          - Item: N_Fly_Wing
+          - Item: E_Giant_Fly_Wing
+          - Item: F_Giant_Fly_Wing
+  - Group: MF_NORETURN
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wing_Of_Butterfly
+          - Item: N_Butterfly_Wing
+          - Item: Dun_Tele_Scroll1
+          - Item: Dun_Tele_Scroll2
+          - Item: Dun_Tele_Scroll3
+          - Item: E_Dun_Tele_Scroll1
+          - Item: F_Dun_Tele_Scroll1
+          - Item: WOB_Rune
+          - Item: E_WOB_Rune
+          - Item: F_WOB_Rune
+          - Item: WOB_Schwaltz
+          - Item: E_WOB_Schwaltz
+          - Item: F_WOB_Schwaltz
+          - Item: WOB_Rachel
+          - Item: E_WOB_Rachel
+          - Item: F_WOB_Rachel
+          - Item: WOB_Local
+          - Item: E_WOB_Local
+          - Item: F_WOB_Local
+          - Item: Siege_Teleport_Scroll
+          - Item: Siege_Teleport_Scroll2
+          - Item: E_Siege_Teleport_Scroll
+  - Group: GIANT_FLY_WING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Giant_Fly_Wing
+          - Item: E_Giant_Fly_Wing
+          - Item: F_Giant_Fly_Wing

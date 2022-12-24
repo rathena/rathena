@@ -54,6 +54,7 @@
 #include "trade.hpp"
 
 using namespace rathena;
+using namespace rathena::server_map;
 
 std::string default_codepage = "";
 
@@ -90,6 +91,7 @@ char sales_table[32] = "sales";
 char vendings_table[32] = "vendings";
 char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
+char partybookings_table[32] = "party_bookings";
 char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
 
@@ -106,12 +108,12 @@ struct inter_conf inter_config {};
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
-static DBMap* pc_db=NULL; /// int id -> struct map_session_data*
+static DBMap* pc_db=NULL; /// int id -> map_session_data*
 static DBMap* mobid_db=NULL; /// int id -> struct mob_data*
 static DBMap* bossid_db=NULL; /// int id -> struct mob_data* (MVP db)
 static DBMap* map_db=NULL; /// unsigned int mapindex -> struct map_data*
 static DBMap* nick_db=NULL; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
-static DBMap* charid_db=NULL; /// uint32 char_id -> struct map_session_data*
+static DBMap* charid_db=NULL; /// uint32 char_id -> map_session_data*
 static DBMap* regen_db=NULL; /// int id -> struct block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=NULL;
 
@@ -437,7 +439,7 @@ int map_delblock(struct block_list* bl)
 int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 {
 	int x0 = bl->x, y0 = bl->y;
-	struct status_change *sc = NULL;
+	status_change *sc = NULL;
 	int moveblock = ( x0/BLOCK_SIZE != x1/BLOCK_SIZE || y0/BLOCK_SIZE != y1/BLOCK_SIZE);
 
 	if (!bl->prev) {
@@ -1931,7 +1933,7 @@ void map_addnickdb(int charid, const char* nick)
 	safestrncpy(p->nick, nick, sizeof(p->nick));
 
 	while( p->requests ) {
-		struct map_session_data* sd;
+		map_session_data* sd;
 		struct charid_request* req;
 		req = p->requests;
 		p->requests = req->next;
@@ -1954,7 +1956,7 @@ void map_delnickdb(int charid, const char* name)
 
 	while( p->requests ) {
 		struct charid_request* req;
-		struct map_session_data* sd;
+		map_session_data* sd;
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
@@ -1968,11 +1970,11 @@ void map_delnickdb(int charid, const char* name)
 /// Notifies sd of the nick of charid.
 /// Uses the name in the character if online.
 /// Uses the name in nick_db if offline.
-void map_reqnickdb(struct map_session_data * sd, int charid)
+void map_reqnickdb(map_session_data * sd, int charid)
 {
 	struct charid2nick* p;
 	struct charid_request* req;
-	struct map_session_data* tsd;
+	map_session_data* tsd;
 
 	nullpo_retv(sd);
 
@@ -2052,7 +2054,7 @@ void map_deliddb(struct block_list *bl)
 /*==========================================
  * Standard call when a player connection is closed.
  *------------------------------------------*/
-int map_quit(struct map_session_data *sd) {
+int map_quit(map_session_data *sd) {
 	int i;
 
 	if (sd->state.keepshop == false) { // Close vending/buyingstore
@@ -2183,9 +2185,9 @@ int map_quit(struct map_session_data *sd) {
 /*==========================================
  * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
-struct map_session_data * map_id2sd(int id){
+map_session_data * map_id2sd(int id){
 	if (id <= 0) return NULL;
-	return (struct map_session_data*)idb_get(pc_db,id);
+	return (map_session_data*)idb_get(pc_db,id);
 }
 
 struct mob_data * map_id2md(int id){
@@ -2227,7 +2229,7 @@ struct chat_data* map_id2cd(int id){
 const char* map_charid2nick(int charid)
 {
 	struct charid2nick *p;
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	sd = map_charid2sd(charid);
 	if( sd )
@@ -2241,10 +2243,10 @@ const char* map_charid2nick(int charid)
 	return NULL;
 }
 
-/// Returns the struct map_session_data of the charid or NULL if the char is not online.
-struct map_session_data* map_charid2sd(int charid)
+/// Returns the map_session_data of the charid or NULL if the char is not online.
+map_session_data* map_charid2sd(int charid)
 {
-	return (struct map_session_data*)uidb_get(charid_db, charid);
+	return (map_session_data*)uidb_get(charid_db, charid);
 }
 
 /*==========================================
@@ -2252,10 +2254,10 @@ struct map_session_data* map_charid2sd(int charid)
  * (without sensitive case if necessary)
  * return map_session_data pointer or NULL
  *------------------------------------------*/
-struct map_session_data * map_nick2sd(const char *nick, bool allow_partial)
+map_session_data * map_nick2sd(const char *nick, bool allow_partial)
 {
-	struct map_session_data* sd;
-	struct map_session_data* found_sd;
+	map_session_data* sd;
+	map_session_data* found_sd;
 	struct s_mapiterator* iter;
 	size_t nicklen;
 	int qty = 0;
@@ -2344,13 +2346,13 @@ struct mob_data * map_id2boss(int id)
 
 /// Applies func to all the players in the db.
 /// Stops iterating if func returns -1.
-void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
+void map_foreachpc(int (*func)(map_session_data* sd, va_list args), ...)
 {
 	DBIterator* iter;
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	iter = db_iterator(pc_db);
-	for( sd = (struct map_session_data*)dbi_first(iter); dbi_exists(iter); sd = (struct map_session_data*)dbi_next(iter) )
+	for( sd = (map_session_data*)dbi_first(iter); dbi_exists(iter); sd = (map_session_data*)dbi_next(iter) )
 	{
 		va_list args;
 		int ret;
@@ -2746,10 +2748,10 @@ int map_addinstancemap(int src_m, int instance_id, bool no_mapflag)
  *------------------------------------------*/
 static int map_instancemap_leave(struct block_list *bl, va_list ap)
 {
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, sd = (struct map_session_data *)bl);
+	nullpo_retr(0, sd = (map_session_data *)bl);
 
 	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 
@@ -2765,7 +2767,7 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 	switch(bl->type) {
 		/*case BL_PC:
 		// BL_PET, BL_HOM, BL_MER, and BL_ELEM are moved when BL_PC warped out in map_instancemap_leave
-			map_quit((struct map_session_data *) bl);
+			map_quit((map_session_data *) bl);
 			break;*/
 		case BL_NPC:
 			npc_unload((struct npc_data *)bl,true);
@@ -3366,7 +3368,7 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable
 	return true;
 }
 
-void map_iwall_get(struct map_session_data *sd) {
+void map_iwall_get(map_session_data *sd) {
 	struct iwall_data *iwall;
 	DBIterator* iter;
 	int16 x1, y1;
@@ -3893,7 +3895,7 @@ int parse_console(const char* buf){
 	int16 x = 0;
 	int16 y = 0;
 	int n;
-	struct map_session_data sd;
+	map_session_data sd;
 
 	strcpy(sd.status.name, "console");
 
@@ -3937,7 +3939,7 @@ int parse_console(const char* buf){
 	}
 	else if( n == 2 && strcmpi("server", type) == 0 ){
 		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = 0;
+			global_core->signal_shutdown();
 		}
 	}
 	else if( strcmpi("ers_report", type) == 0 ){
@@ -4168,6 +4170,8 @@ int inter_config_read(const char *cfgName)
 			safestrncpy( vendings_table, w2, sizeof(vendings_table) );
 		else if( strcmpi( w1, "vending_items_table" ) == 0 )
 			safestrncpy(vending_items_table, w2, sizeof(vending_items_table));
+		else if( strcmpi( w1, "partybookings_table" ) == 0 )
+			safestrncpy(partybookings_table, w2, sizeof(partybookings_table));
 		else if( strcmpi(w1, "roulette_table") == 0)
 			safestrncpy(roulette_table, w2, sizeof(roulette_table));
 		else if (strcmpi(w1, "market_table") == 0)
@@ -4372,7 +4376,7 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 
 	switch(bl->type) {
 		case BL_PC:
-			map_quit((struct map_session_data *) bl);
+			map_quit((map_session_data *) bl);
 			break;
 		case BL_NPC:
 			npc_unload((struct npc_data *)bl,false);
@@ -4436,7 +4440,7 @@ void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) 
  */
 static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd = map_id2sd(bl->id);
+	map_session_data *sd = map_id2sd(bl->id);
 
 	nullpo_retr(0, sd);
 
@@ -4461,7 +4465,7 @@ static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
  */
 static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data* sd = map_id2sd(bl->id);
+	map_session_data* sd = map_id2sd(bl->id);
 
 	clif_pvpset(sd, 0, 0, 2);
 
@@ -4844,13 +4848,13 @@ static int cleanup_db_sub(DBKey key, DBData *data, va_list va)
 /*==========================================
  * map destructor
  *------------------------------------------*/
-void do_final(void){
+void MapServer::finalize(){
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
 	//Ladies and babies first.
 	struct s_mapiterator* iter = mapit_getallusers();
-	for( struct map_session_data* sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	for( map_session_data* sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		map_quit(sd);
 	mapit_free(iter);
 
@@ -4944,7 +4948,7 @@ void do_final(void){
 	ShowStatus("Finished.\n");
 }
 
-static int map_abort_sub(struct map_session_data* sd, va_list ap)
+static int map_abort_sub(map_session_data* sd, va_list ap)
 {
 	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	return 1;
@@ -4955,8 +4959,7 @@ static int map_abort_sub(struct map_session_data* sd, va_list ap)
 // Function called when the server
 // has received a crash signal.
 //------------------------------
-void do_abort(void)
-{
+void MapServer::handle_crash(){
 	static int run = 0;
 	//Save all characters and then flush the inter-connection.
 	if (run) {
@@ -4996,14 +4999,6 @@ void display_helpscreen(bool do_exit)
 	ShowInfo("  --log-config <file>\t\tAlternative logging configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
-}
-
-/*======================================================
- * Map-Server Init and Command-line Arguments [Valaris]
- *------------------------------------------------------*/
-void set_server_type(void)
-{
-	SERVER_TYPE = ATHENA_SERVER_MAP;
 }
 
 /*======================================================
@@ -5069,7 +5064,7 @@ int map_msg_config_read(const char *cfgName, int lang){
 	}
 	return 0;
 }
-const char* map_msg_txt(struct map_session_data *sd, int msg_number){
+const char* map_msg_txt(map_session_data *sd, int msg_number){
 	struct msg_data *mdb;
 	uint8 lang = 0; //default
 	if(sd && sd->langtype) lang = sd->langtype;
@@ -5126,29 +5121,19 @@ int mapgenerator_get_options(int argc, char** argv) {
 	return 1;
 }
 
-
 /// Called when a terminate signal is received.
-void do_shutdown(void)
-{
-	if( runflag != MAPSERVER_ST_SHUTDOWN )
-	{
-		runflag = MAPSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		{
-			struct map_session_data* sd;
-			struct s_mapiterator* iter = mapit_getallusers();
-			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-				clif_GM_kick(NULL, sd);
-			mapit_free(iter);
-			flush_fifos();
-		}
-		chrif_check_shutdown();
-	}
+void MapServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+
+	map_session_data* sd;
+	struct s_mapiterator* iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+		clif_GM_kick(NULL, sd);
+	mapit_free(iter);
+	flush_fifos();
 }
 
-int do_init(int argc, char *argv[])
-{
-	runflag = MAPSERVER_ST_STARTING;
+bool MapServer::initialize( int argc, char *argv[] ){
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif
@@ -5204,10 +5189,9 @@ int do_init(int argc, char *argv[])
 		char ip_str[16];
 		ip2str(addr_[0], ip_str);
 
-		// Skip this warning if the server is run with run-once flag
-		if( runflag != CORE_ST_STOP ){
-			ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
-		}
+#if !defined(BUILDBOT)
+		ShowWarning( "Not all IP addresses in map_athena.conf configured, autodetecting...\n" );
+#endif
 
 		if (naddr_ == 0)
 			ShowError("Unable to determine your IP address...\n");
@@ -5301,20 +5285,17 @@ int do_init(int argc, char *argv[])
 		itemdb_gen_itemmoveinfo();
 	if (gen_options.reputation)
 		pc_reputation_generate();
-	runflag = CORE_ST_STOP;
+	this->signal_shutdown();
 #endif
-
-	if( runflag != CORE_ST_STOP )
-	{
-		shutdown_callback = do_shutdown;
-		runflag = MAPSERVER_ST_RUNNING;
-	}
 
 	if( console ){ //start listening
 		add_timer_func_list(parse_console_timer, "parse_console_timer");
 		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
 	}
 
-	return 0;
+	return true;
 }
 
+int main( int argc, char *argv[] ){
+	return main_core<MapServer>( argc, argv );
+}

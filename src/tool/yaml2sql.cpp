@@ -53,6 +53,23 @@
 #include "../map/storage.hpp"
 
 using namespace rathena;
+using namespace rathena::server_core;
+
+namespace rathena{
+	namespace tool_yaml2sql{
+		class Yaml2SqlTool : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+
+			public:
+				Yaml2SqlTool() : Core( e_core_type::TOOL ){
+
+				}
+		};
+	}
+}
+
+using namespace rathena::tool_yaml2sql;
 
 #ifndef WIN32
 int getch( void ){
@@ -192,7 +209,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 	return true;
 }
 
-int do_init( int argc, char** argv ){
+bool Yaml2SqlTool::initialize( int argc, char* argv[] ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
@@ -220,34 +237,31 @@ int do_init( int argc, char** argv ){
 		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 			return item_db_yaml2sql(path + name_ext, table);
 		})) {
-			return 0;
+			return false;
 		}
 	}
 
 	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", item_import_table_name, item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 		return item_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	// TODO: add implementations ;-)
 
-	return 0;
-}
-
-void do_final(void){
+	return true;
 }
 
 bool fileExists( const std::string& path ){
@@ -934,4 +948,8 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<Yaml2SqlTool>( argc, argv );
 }

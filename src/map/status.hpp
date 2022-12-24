@@ -25,7 +25,7 @@ struct homun_data;
 struct s_mercenary_data;
 struct s_elemental_data;
 struct npc_data;
-struct status_change;
+class status_change;
 
 /**
  * Max Refine available to your server
@@ -2854,6 +2854,7 @@ enum e_status_change_clear_buffs_flags : int64 {
 	SCCB_REFRESH      = 0x04,
 	SCCB_CHEM_PROTECT = 0x08,
 	SCCB_LUXANIMA     = 0x10,
+	SCCB_HERMODE      = 0x20,
 };
 
 ///Enum for bonus_script's flag [Cydh]
@@ -2936,6 +2937,7 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONUNEQUIP,
 	SCF_REMOVEONUNEQUIPWEAPON,
 	SCF_REMOVEONUNEQUIPARMOR,
+	SCF_REMOVEONHERMODE,
 	SCF_MAX
 };
 
@@ -3282,7 +3284,7 @@ unsigned short status_get_speed(struct block_list *bl);
 #define status_get_crate(bl) status_get_status_data(bl)->crate
 #define status_get_element(bl) status_get_status_data(bl)->def_ele
 #define status_get_element_level(bl) status_get_status_data(bl)->ele_lv
-unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element);
+unsigned char status_calc_attack_element(struct block_list *bl, status_change *sc, int element);
 #define status_get_attack_sc_element(bl, sc) status_calc_attack_element(bl, sc, 0)
 #define status_get_attack_element(bl) status_get_status_data(bl)->rhw.ele
 #define status_get_attack_lelement(bl) status_get_status_data(bl)->lhw.ele
@@ -3308,7 +3310,7 @@ std::vector<e_race2> status_get_race2(struct block_list *bl);
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int class_);
 void status_change_init(struct block_list *bl);
-struct status_change *status_get_sc(struct block_list *bl);
+status_change *status_get_sc(struct block_list *bl);
 
 int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
@@ -3332,7 +3334,7 @@ TIMER_FUNC(status_change_tick_timer);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
-void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
+void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
@@ -3343,12 +3345,12 @@ TIMER_FUNC(status_clear_lastEffect_timer);
 #define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
 
-bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
+bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
+bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int status_calc_mob_(struct mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
-int status_calc_pc_(struct map_session_data* sd, uint8 opt);
+int status_calc_pc_(map_session_data* sd, uint8 opt);
 int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
 int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
@@ -3367,8 +3369,8 @@ static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
-void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
-void status_calc_state(struct block_list *bl, struct status_change *sc, std::bitset<SCS_MAX> flag, bool start);
+void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, status_change *sc);
+void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
@@ -3381,7 +3383,7 @@ int status_change_spread(block_list *src, block_list *bl);
 unsigned short status_base_matk_min(const struct status_data* status);
 unsigned short status_base_matk_max(const struct status_data* status);
 #else
-unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd);
+unsigned int status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
 unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level);
