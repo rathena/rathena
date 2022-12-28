@@ -1125,7 +1125,7 @@ int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason
 void check_ttl_wisdata(){
 	t_tick tick = gettick();
 
-	for( auto& it = wis_db.begin(); it != wis_db.end(); ){
+	for( auto it = wis_db.begin(); it != wis_db.end(); ){
 		std::shared_ptr<struct WisData> wd = it->second;
 
 		if( DIFF_TICK( tick, wd->tick ) > WISDATA_TTL ){
