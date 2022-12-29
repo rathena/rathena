@@ -10633,7 +10633,7 @@ void clif_parse_WantToConnection(int fd, map_session_data* sd)
 		return;
 	}
 
-	if( runflag != MAPSERVER_ST_RUNNING ) {// not allowed
+	if( !global_core->is_running() ){ // not allowed
 		clif_authfail_fd(fd,1);// server closed
 		return;
 	}
@@ -24850,6 +24850,126 @@ void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result ){
 	p.result = result;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
+void clif_partybooking_ask( map_session_data* sd, map_session_data* joining_sd ){
+#if PACKETVER >= 20191204
+	struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN p = { 0 };
+
+	p.packetType = HEADER_ZC_PARTY_REQ_MASTER_TO_JOIN;
+	p.CID = joining_sd->status.char_id;
+	p.AID = joining_sd->status.account_id;
+	safestrncpy( p.name, joining_sd->status.name, NAME_LENGTH );
+	p.x = joining_sd->status.base_level;
+	p.y = joining_sd->status.class_;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+void clif_parse_partybooking_join( int fd, map_session_data* sd ){
+#if PACKETVER >= 20191204
+	struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
+
+	// Character is already in a party
+	if( sd->status.party_id != 0 ){
+		return;
+	}
+
+	map_session_data* tsd = map_charid2sd( p->CID );
+
+	// Target player is offline
+	if( tsd == nullptr ){
+		return;
+	}
+
+	if( tsd->status.account_id != p->AID ){
+		return;
+	}
+
+	struct s_party_booking_requirement requirement;
+
+	if( !party_booking_load( tsd->status.account_id, tsd->status.char_id, &requirement ) ){
+		return;
+	}
+
+	if( sd->status.base_level < requirement.minimum_level ){
+		return;
+	}
+
+	if( sd->status.base_level > requirement.maximum_level ){
+		return;
+	}
+
+	// Already requested to join this party
+	if( util::vector_exists( tsd->party_booking_requests, sd->status.char_id ) ){
+		return;
+	}
+
+	// Store information that the player tried to join the party
+	tsd->party_booking_requests.push_back( sd->status.char_id );
+
+	clif_partybooking_ask( tsd, sd );
+#endif
+}
+
+void clif_partybooking_reply( map_session_data* sd, map_session_data* party_leader_sd, bool accepted ){
+#if PACKETVER >= 20191204
+	struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER p = { 0 };
+
+	if( party_leader_sd->status.party_id == 0 ){
+		return;
+	}
+
+	struct party_data* party = party_search( party_leader_sd->status.party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	p.packetType = HEADER_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER;
+	safestrncpy( p.player_name, party_leader_sd->status.name, NAME_LENGTH );
+	safestrncpy( p.party_name, party->party.name, NAME_LENGTH );
+	p.AID = party_leader_sd->status.account_id;
+	p.refused = !accepted;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
+#if PACKETVER >= 20191204
+	struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
+
+	map_session_data* tsd = map_charid2sd( p->CID );
+
+	// Target player is offline
+	if( tsd == nullptr ){
+		return;
+	}
+
+	if( tsd->status.account_id != p->AID ){
+		return;
+	}
+
+	// Check if the player even requested to join the party
+	if( !util::vector_exists( sd->party_booking_requests, p->CID ) ){
+		return;
+	}
+
+	util::vector_erase_if_exists( sd->party_booking_requests, p->CID );
+
+	// Only party leaders can reply
+	if( !party_isleader( sd ) ){
+		return;
+	}
+
+	if( p->accept ){
+		party_join( tsd, sd->status.party_id );
+	}
+
+	clif_partybooking_reply( tsd, sd, p->accept );
 #endif
 }
 

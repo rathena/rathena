@@ -59,7 +59,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	int size = 160;
 #endif
 
-	if( runflag != LOGINSERVER_ST_RUNNING ){
+	if( !global_core->is_running() ){
 		// players can only login while running
 		logclif_sent_auth_result(fd,1); // server closed
 		return;
@@ -420,7 +420,7 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 		login_log(session[fd]->client_addr, sd->userid, 100, message);
 
 		result = login_mmo_auth(sd, true);
-		if( runflag == LOGINSERVER_ST_RUNNING &&
+		if( global_core->is_running() &&
 			result == -1 &&
 			sd->sex == 'S' &&
 			sd->account_id < ARRAYLENGTH(ch_server) &&

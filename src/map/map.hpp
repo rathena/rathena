@@ -22,16 +22,29 @@
 #include "navi.hpp"
 #include "script.hpp"
 
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_map{
+		class MapServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_crash() override;
+				void handle_shutdown() override;
+
+			public:
+				MapServer() : Core( e_core_type::MAP ){
+
+				}
+		};
+	}
+}
+
 struct npc_data;
 struct item_data;
 struct Channel;
-
-enum E_MAPSERVER_ST {
-	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
-	MAPSERVER_ST_STARTING,
-	MAPSERVER_ST_SHUTDOWN,
-	MAPSERVER_ST_LAST
-};
 
 struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
@@ -1255,6 +1268,7 @@ extern char mob_skill2_table[32];
 extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
+extern char partybookings_table[32];
 extern char roulette_table[32];
 extern char guild_storage_log_table[32];
 

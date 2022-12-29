@@ -6053,54 +6053,57 @@ bool pc_isUseitem(map_session_data *sd,int n)
 	if (item->flag.dead_branch && (mapdata->flag[MF_NOBRANCH] || mapdata_flag_gvg2(mapdata)))
 		return false;
 
+	if( itemdb_group.item_exists( IG_MF_NOTELEPORT, nameid ) ){
+		if( ( mapdata->flag[MF_NOTELEPORT] || mapdata_flag_gvg2( mapdata ) ) ){
+			clif_skill_teleportmessage( sd, 0 );
+			return false;
+		}
+
+		if( sd->duel_group && !battle_config.duel_allow_teleport ){
+			clif_displaymessage( sd->fd, msg_txt( sd, 663 ) ); // Duel: Can't use this item in duel.
+			return false;
+		}
+	}
+
+	if( itemdb_group.item_exists( MF_NORETURN, nameid ) ){
+		if( mapdata->flag[MF_NORETURN] ){
+			return false;
+		}
+
+		if( sd->duel_group && !battle_config.duel_allow_teleport ){
+			clif_displaymessage( sd->fd, msg_txt( sd, 663 ) ); // Duel: Can't use this item in duel.
+			return false;
+		}
+	}
+
+	if( itemdb_group.item_exists( IG_GIANT_FLY_WING, nameid ) ){
+		struct party_data *pd = party_search( sd->status.party_id );
+
+		if( pd ){
+			int i;
+
+			ARR_FIND( 0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader );
+
+			// User is not party leader
+			if( i == MAX_PARTY ){
+				clif_msg( sd, ITEM_PARTY_MEMBER_NOT_SUMMONED );
+				return false;
+			}
+
+			ARR_FIND( 0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->bl.m == sd->bl.m && !pc_isdead( pd->data[i].sd ) );
+
+			// No party members found on same map
+			if( i == MAX_PARTY ){
+				clif_msg( sd, ITEM_PARTY_NO_MEMBER_IN_MAP );
+				return false;
+			}
+		}else{
+			clif_msg( sd, ITEM_PARTY_MEMBER_NOT_SUMMONED );
+			return false;
+		}
+	}
+
 	switch( nameid ) {
-		case ITEMID_WING_OF_FLY:
-		case ITEMID_GIANT_FLY_WING:
-		case ITEMID_N_FLY_WING:
-			if( mapdata->flag[MF_NOTELEPORT] || mapdata_flag_gvg2(mapdata) ) {
-				clif_skill_teleportmessage(sd,0);
-				return false;
-			}
-			if (nameid == ITEMID_GIANT_FLY_WING) {
-				struct party_data *pd = party_search(sd->status.party_id);
-
-				if (pd) {
-					int i;
-
-					ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader);
-					if (i == MAX_PARTY) { // User is not party leader
-						clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
-						break;
-					}
-
-					ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->bl.m == sd->bl.m && !pc_isdead(pd->data[i].sd));
-					if (i == MAX_PARTY) { // No party members found on same map
-						clif_msg(sd, ITEM_PARTY_NO_MEMBER_IN_MAP);
-						break;
-					}
-				} else {
-					clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
-					break;
-				}
-			}
-		// Fall through
-		case ITEMID_WING_OF_BUTTERFLY:
-		case ITEMID_N_BUTTERFLY_WING:
-		case ITEMID_DUN_TELE_SCROLL1:
-		case ITEMID_DUN_TELE_SCROLL2:
-		case ITEMID_DUN_TELE_SCROLL3:
-		case ITEMID_WOB_RUNE:
-		case ITEMID_WOB_SCHWALTZ:
-		case ITEMID_WOB_RACHEL:
-		case ITEMID_WOB_LOCAL:
-		case ITEMID_SIEGE_TELEPORT_SCROLL:
-			if( sd->duel_group && !battle_config.duel_allow_teleport ) {
-				clif_displaymessage(sd->fd, msg_txt(sd,663));
-				return false;
-			}
-			if( mapdata->flag[MF_NORETURN] && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
-				return false;
-			break;
 		case ITEMID_MERCENARY_RED_POTION:
 		case ITEMID_MERCENARY_BLUE_POTION:
 		case ITEMID_M_CENTER_POTION:

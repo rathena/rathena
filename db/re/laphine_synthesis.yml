@@ -1387,7 +1387,7 @@ Body:
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
-      - Item: Spirit_Jewel
+      - Item: SpritJewel
         Amount: 10
       - Item: Snowball
         Amount: 10
@@ -1419,7 +1419,7 @@ Body:
         Amount: 10
       - Item: Fine_Old_Doll
         Amount: 10
-      - Item: Old_Shell
+      - Item: OldShell
         Amount: 10
       - Item: Ein_SOLIDDUST
         Amount: 10

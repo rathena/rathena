@@ -423,6 +423,36 @@ struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT{
 	int32 result;
 } __attribute__((packed));
 
+struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN{
+	int16 packetType;
+	uint32 CID;
+	uint32 AID;
+} __attribute__((packed));
+
+struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN{
+	int16 packetType;
+	uint32 CID;
+	uint32 AID;
+	char name[NAME_LENGTH];
+	uint16 x;
+	uint16 y;
+} __attribute__((packed));
+
+struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN{
+	int16 packetType;
+	uint32 CID;
+	uint32 AID;
+	uint8 accept;
+} __attribute__((packed));
+
+struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER{
+	int16 packetType;
+	char player_name[NAME_LENGTH];
+	char party_name[NAME_LENGTH];
+	uint32 AID;
+	uint32 refused;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -480,6 +510,10 @@ DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE, 0xa46)
 DEFINE_PACKET_HEADER(ZC_STYLE_CHANGE_RES, 0xa47)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CLOSE, 0xa48)
 DEFINE_PACKET_HEADER(ZC_GROUP_ISALIVE, 0xab2)
+DEFINE_PACKET_HEADER(CZ_PARTY_REQ_MASTER_TO_JOIN, 0x0ae6)
+DEFINE_PACKET_HEADER(ZC_PARTY_REQ_MASTER_TO_JOIN, 0x0ae7)
+DEFINE_PACKET_HEADER(CZ_PARTY_REQ_ACK_MASTER_TO_JOIN, 0x0af8)
+DEFINE_PACKET_HEADER(ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER, 0x0afa)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE2, 0xafc)
 DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_TSTATUS_UP, 0x0b24)

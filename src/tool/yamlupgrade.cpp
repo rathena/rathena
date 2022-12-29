@@ -3,6 +3,8 @@
 
 #include "yamlupgrade.hpp"
 
+using namespace rathena::tool_yamlupgrade;
+
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
 static bool upgrade_job_stats(std::string file, const uint32 source_version);
@@ -70,7 +72,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 	return true;
 }
 
-int do_init(int argc, char** argv) {
+bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
@@ -108,19 +110,19 @@ int do_init(int argc, char** argv) {
 	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, uint32 source_version) -> bool {
 		return upgrade_achievement_db(path + name_ext, source_version);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("ITEM_DB", 3, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_item_db(path + name_ext, source_version);
 		})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("JOB_STATS", 2, root_paths, "job_stats", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_job_stats(path + name_ext, source_version);
 		})) {
-		return 0;
+		return false;
 	}
 	
 	if (!process("STATUS_DB", 3, root_paths, "status", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
@@ -129,10 +131,7 @@ int do_init(int argc, char** argv) {
 		return 0;
 	}
 
-	return 0;
-}
-
-void do_final(void) {
+	return true;
 }
 
 // Implementation of the upgrade functions
@@ -321,4 +320,8 @@ static bool upgrade_status_db(std::string file, const uint32 source_version) {
 	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' statuses in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<YamlUpgradeTool>( argc, argv );
 }

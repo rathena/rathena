@@ -60,7 +60,7 @@ Body:
 #      - Item: Ein_1HSWORD
 #      - Item: Ein_1HGUN
 #      - Item: Ein_1H_Foxtail
-  - Item: Metal_Smelting_Ticket
+  - Item: Metal_Rifine_Ticket
     ResultRefine: 7
     CardsAllowed: true
     TargetItems:
@@ -74,7 +74,7 @@ Body:
       - Item: Metal_Bow
       - Item: Metal_Two_Hand_Sword
       - Item: Metal_Revolver
-      - Item: Huuma_Metal_Shuriken
+      - Item: Metal_Huuma_Shuriken
       - Item: Metal_Foxtail
 #  - Item: Ein_Ddbox2
 #    TargetItems:
@@ -2657,21 +2657,21 @@ Body:
     TargetItems:
       - Item: Boost_TH_Sword
       - Item: Boost_Katar
-      - Item: Boost_Mace
+      - Item: Boost_Hall
       - Item: Boost_Staff
       - Item: Boost_Bow
       - Item: Boost_Spear
       - Item: Boost_Sword
       - Item: Boost_Dagger
-      - Item: Boost_Spellbook
+      - Item: Boost_Spl_Book
       - Item: Boost_Guitar
-      - Item: Boost_Knuckles
+      - Item: Boost_Knuckle
       - Item: Boost_Whip
       - Item: Boost_Nindo
       - Item: Boost_Gatling
       - Item: Boost_Axe
-      - Item: Boost_Book
-      - Item: Boost_Rod
+      - Item: Boost_Text
+      - Item: Boost_Soul_Rod
       - Item: Boost_Foxtail
   - Item: Metal_7_Ticket
     ResultRefine: 7
@@ -2689,7 +2689,7 @@ Body:
       - Item: Metal_Bow
       - Item: Metal_Foxtail
       - Item: Metal_Revolver
-      - Item: Huuma_Metal_Shuriken
+      - Item: Metal_Huuma_Shuriken
   - Item: Noblesse_Rifine_Ticket
     ResultRefine: 9
     CardsAllowed: true
