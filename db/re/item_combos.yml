@@ -30436,7 +30436,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_311883    # 311883
-          - Evil_Card_J    # 27141
+          - Silva_Papilia_Card    # 300099
     Script: |
       bonus2 bSubEle,Ele_Neutral,20;
       skill "GN_BLOOD_SUCKER",5;
@@ -31690,3 +31690,53 @@ Body:
           - Holy_Cannon_Ball    # 18001
     Script: |
       bonus2 bSubSize,Size_Small,8;
+  - Combos:
+      - Combo:
+          - Aferde_Card   # 300447
+          - Timbers_Card   # 300449
+    Script: |
+      bonus bLongAtkRate,8;
+  - Combos:
+      - Combo:
+          - Mocadas_Knife   # 510103
+          - Mocadas_Degger   # 510104
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HAND_L);
+      bonus bAtkRate,5;
+      bonus2 bSkillAtk,"SS_KAGEGISSEN",10;
+      if (.@sum>=14) {
+         bonus bShortAtkRate,10;
+         if (.@sum>=18) {
+            bonus2 bSkillAtk,"SS_KAGEGISSEN",10;
+            if (.@sum>=22) {
+               bonus2 bSkillAtk,"SS_KAGEGISSEN",10;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - F_Ein_1HDAGGER   # 510105
+          - F_Ein_1HDAGGER2   # 510106
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HAND_L);
+      bonus bAtkRate,10;
+      bonus2 bSkillAtk,"SHC_SHADOW_STAB",20;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",20;
+      if (.@sum>=14) {
+         bonus bAspdRate,10;
+         bonus bBaseAtk,70;
+         if (.@sum>=18) {
+            bonus2 bAddSize,Size_All,15;
+            bonus2 bSkillAtk,"SHC_SHADOW_STAB",10;
+            bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
+            bonus2 bSkillUseSP,"SHC_SHADOW_STAB",-15;
+            bonus2 bSkillUseSP,"GC_CROSSIMPACT",-15;
+            if (.@sum>=22) {
+               bonus bDelayrate,-15;
+               bonus2 bSkillAtk,"SHC_SHADOW_STAB",10;
+               bonus2 bSkillAtk,"GC_CROSSIMPACT",10;
+               bonus2 bSkillUseSP,"SHC_SHADOW_STAB",-15;
+               bonus2 bSkillUseSP,"GC_CROSSIMPACT",-15;
+            }
+         }
+      }
