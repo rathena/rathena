@@ -1286,15 +1286,61 @@ Body:
   - Id: 3406
     Title: Dragon Monster Hunt - Standby
     TimeLimit: 4h
+  - Id: 3407
+    Title: The Fishing Rod of the Missing Person
+  - Id: 3408
+    Title: Procurement of Abyssal Essence
+  - Id: 3409
+    Title: Vortex leading to the Deep Sea
+  - Id: 3410
+    Title: Sirud to the Surface
+  - Id: 3411
+    Title: Defeating Deep Sea Creatures
+    Targets:
+      - Mob: ILL_SROPHO
+        Count: 10
+      - Mob: ILL_MARSE
+        Count: 10
+      - Mob: ILL_DEVIACE
+        Count: 10
+  - Id: 3412
+    Title: Collect Abyssal Essence
+  - Id: 3413
+    Title: Collect Abyssal Essence - Daily
   - Id: 3414
     Title: Collect Abyssal Essence - Standby
     TimeLimit: 4h
+  - Id: 3415
+    Title: Defeat Deep Sea Creatures in the Upper Layers - Daily
+    Targets:
+      - Mob: ILL_SROPHO
+        Count: 10
+      - Mob: ILL_MARSE
+        Count: 10
+      - Mob: ILL_DEVIACE
+        Count: 10
   - Id: 3416
     Title: Defeat Deep Sea Creatures in the Upper Layers - Standby
     TimeLimit: 4h
+  - Id: 3417
+    Title: Defeat Deep Sea Creatures in the Lower Layers - Daily
+    Targets:
+      - Mob: ILL_SWORD_FISH
+        Count: 10
+      - Mob: ILL_PHEN
+        Count: 10
+      - Mob: ILL_KING_DRAMOH
+        Count: 10
   - Id: 3418
     Title: Defeat Deep Sea Creatures in the Lower Layers - Standby
     TimeLimit: 4h
+  - Id: 3419
+    Title: Defeat Deep Sea fishmen in the Lower Layers - Daily
+    Targets:
+      - Mob: ILL_SEDORA
+        Count: 15
+      - Mob: ILL_STROUF
+        Count: 15
   - Id: 3420
     Title: Defeat Deep Sea fishmen in the Lower Layers - Standby
     TimeLimit: 4h
