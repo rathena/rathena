@@ -95971,7 +95971,6 @@ Body:
     AttackDelay: 422
     AttackMotion: 870
     DamageMotion: 480
-    # DamageTaken: 10  # TODO check
     Ai: 21
     Class: Boss
     Modes:
@@ -96174,7 +96173,6 @@ Body:
     AttackDelay: 360
     AttackMotion: 1250
     DamageMotion: 480
-    # DamageTaken: 10  # TODO
     Ai: 21
     Class: Boss
     Modes:
