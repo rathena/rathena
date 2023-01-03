@@ -867,11 +867,11 @@ void clif_guild_broken(map_session_data *sd,int flag);
 void clif_guild_xy(map_session_data *sd);
 void clif_guild_xy_single(int fd, map_session_data *sd);
 void clif_guild_xy_remove(map_session_data *sd);
-void clif_guild_castle_list(struct map_session_data *sd);
-void clif_guild_castle_info(struct map_session_data *sd, int castle_id, int economy, int defense);
-void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_teleport_result result);
-void clif_parse_guild_castle_teleport_request(struct map_session_data *sd);
-void clif_parse_guild_castle_info_request(struct map_session_data *sd);
+void clif_guild_castle_list(map_session_data *sd);
+void clif_guild_castle_info(map_session_data *sd, int castle_id, int economy, int defense);
+void clif_guild_castle_teleport_res(map_session_data* sd, enum e_siege_teleport_result result);
+void clif_parse_guild_castle_teleport_request(map_session_data *sd);
+void clif_parse_guild_castle_info_request(map_session_data *sd);
 
 // Battleground
 void clif_bg_hp(map_session_data *sd);
