@@ -362,8 +362,19 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		uint16 warp_x;
 
 		if (!this->asUInt16(node, "WarpX", warp_x)) {
-			this->invalidWarning(node["WarpX"], "Invalid WarpX %hu, defaulting to 0.\n", warp_x);
-			gc->warp_x = 0;
+			return 0;
+		}
+
+		if( warp_x == 0 ){
+			this->invalidWarning( node["WarpX"], "WarpX has to be greater than zero.\n" );
+			return 0;
+		}
+
+		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
+
+		if( warp_x >= md->xs ){
+			this->invalidWarning( node["WarpX"], "WarpX has to be smaller than %hu.\n", md->xs );
+			return 0;
 		}
 
 		gc->warp_x = warp_x;
@@ -377,8 +388,19 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		uint16 warp_y;
 
 		if (!this->asUInt16(node, "WarpY", warp_y)) {
-			this->invalidWarning(node["WarpY"], "Invalid WarpY %hu, defaulting to 0.\n", warp_y);
-			gc->warp_y = 0;
+			return 0;
+		}
+
+		if( warp_y == 0 ){
+			this->invalidWarning( node["WarpY"], "WarpY has to be greater than zero.\n" );
+			return 0;
+		}
+
+		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
+
+		if( warp_y >= md->ys ){
+			this->invalidWarning( node["WarpY"], "WarpY has to be smaller than %hu.\n", md->xs );
+			return 0;
 		}
 
 		gc->warp_y = warp_y;
@@ -392,8 +414,7 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		uint32 zeny;
 
 		if (!this->asUInt32(node, "WarpCost", zeny)) {
-			this->invalidWarning(node["WarpCost"], "Invalid WarpCost %u, defaulting to 100.\n", zeny);
-			gc->zeny = 100;
+			return 0;
 		}
 
 		gc->zeny = zeny;
@@ -406,8 +427,7 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		uint32 zeny_siege;
 
 		if (!this->asUInt32(node, "WarpCostSiege", zeny_siege)) {
-			this->invalidWarning(node["WarpCostSiege"], "Invalid WarpCostSiege %u, defaulting to 100000.\n", zeny_siege);
-			gc->zeny_siege = 100000;
+			return 0;
 		}
 
 		gc->zeny_siege = zeny_siege;
