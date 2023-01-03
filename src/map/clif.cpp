@@ -3405,14 +3405,10 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd){
 
 	int zeny = gc->zeny;
 
-	if (map_getmapflag(map_mapindex2mapid(gc->mapindex), MF_GVG_CASTLE) && ((agit_flag == true && gc->castle_id <= 20) || (agit2_flag == true && gc->castle_id > 20)))
+	if (agit_flag || agit2_flag || agit3_flag)
 		zeny = gc->zeny_siege;
-	else if (map_getmapflag(gc->mapindex, MF_GVG_TE_CASTLE)) {
-		clif_guild_castle_teleport_res(*sd, SIEGE_TP_INVALID_MODE);
-		return;
-	}
 
-	if (zeny && pc_payzeny(sd, zeny, LOG_TYPE_OTHER, NULL)) {
+	if (zeny && pc_payzeny(sd, zeny, LOG_TYPE_OTHER, nullptr)) {
 		clif_guild_castle_teleport_res(*sd, SIEGE_TP_NOT_ENOUGH_ZENY);
 		return;
 	}
