@@ -35,7 +35,7 @@
 
 Header:
   Type: CASTLE_DB
-  Version: 1
+  Version: 2
 
 Body:
 # WOE FE castle

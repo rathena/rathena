@@ -118,7 +118,7 @@ void do_final_guild(void);
 
 class CastleDatabase : public TypesafeYamlDatabase <int32, guild_castle> {
 public:
-	CastleDatabase() : TypesafeYamlDatabase("CASTLE_DB", 1) {
+	CastleDatabase() : TypesafeYamlDatabase("CASTLE_DB", 2, 1) {
 
 	}
 
