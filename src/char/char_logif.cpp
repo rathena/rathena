@@ -96,15 +96,13 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
  */
 TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
-		std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& online_char_db = char_get_onlinedb();
-
 		// send account list to login server
-		int users = online_char_db.size();
+		int users = char_get_onlinedb().size();
 		int i = 0;
 
 		WFIFOHEAD(login_fd,8+users*4);
 		WFIFOW(login_fd,0) = 0x272d;
-		for( const auto& pair : online_char_db ){
+		for( const auto& pair : char_get_onlinedb() ){
 			std::shared_ptr<struct online_char_data> character = pair.second;
 
 			if( character->server > -1 ){

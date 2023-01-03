@@ -80,10 +80,10 @@ std::unordered_map<uint32, std::shared_ptr<struct auth_node>> auth_db;
 // uint32 account_id -> struct online_char_data*
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>> online_char_db;
 // uint32 char_id -> struct mmo_charstatus*
-std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>> char_db_;
+std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>> char_db;
 std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& char_get_authdb() { return auth_db; }
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb() { return online_char_db; }
-std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>>& char_get_chardb() { return char_db_; }
+std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>>& char_get_chardb() { return char_db; }
 
 online_char_data::online_char_data( uint32 account_id ){
 	this->account_id = account_id;
@@ -168,7 +168,7 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 
 		inter_guild_CharOffline(char_id, cp?cp->guild_id:-1);
 		if (cp)
-			char_db_.erase( char_id );
+			char_get_chardb().erase( char_id );
 
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='0' WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
 			Sql_ShowDebug(sql_handle);
@@ -233,7 +233,7 @@ void char_set_all_offline(int id){
 	else
 		ShowNotice("Sending users of map-server %d offline.\n",id);
 
-	for( const auto& pair : online_char_db ){
+	for( const auto& pair : char_get_onlinedb() ){
 		char_db_kickoffline( pair.second, id );
 	}
 
@@ -266,7 +266,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 	if( cp == nullptr ){
 		cp = std::make_shared<struct mmo_charstatus>();
 		cp->char_id = char_id;
-		char_db_[cp->char_id] = cp;
+		char_get_chardb()[cp->char_id] = cp;
 	}
 
 	StringBuf_Init(&buf);
@@ -1269,7 +1269,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	if( cp == nullptr ){
 		cp = std::make_shared<struct mmo_charstatus>();
 		cp->char_id = char_id;
-		char_db_[cp->char_id] = cp;
+		char_get_chardb()[cp->char_id] = cp;
 	}
 
 	memcpy( cp.get(), p, sizeof( struct mmo_charstatus ) );
@@ -2216,7 +2216,7 @@ TIMER_FUNC(char_chardb_waiting_disconnect){
 }
 
 TIMER_FUNC(char_online_data_cleanup){
-	for( auto it = online_char_db.begin(); it != online_char_db.end(); ){
+	for( auto it = char_get_onlinedb().begin(); it != char_get_onlinedb().end(); ){
 		std::shared_ptr<struct online_char_data> character = it->second;
 
 		// Character still connected
@@ -2231,7 +2231,7 @@ TIMER_FUNC(char_online_data_cleanup){
 
 		// Free data from players that have not been online for a while.
 		if( character->server < 0 ){
-			it = online_char_db.erase( it );
+			it = char_get_onlinedb().erase( it );
 		}else{
 			it++;
 		}
@@ -3160,9 +3160,9 @@ void CharacterServer::finalize(){
 	do_final_chmapif();
 	do_final_chlogif();
 
-	char_db_.clear();
-	online_char_db.clear();
-	auth_db.clear();
+	char_get_chardb().clear();
+	char_get_onlinedb().clear();
+	char_get_authdb().clear();
 
 	if( char_fd != -1 )
 	{

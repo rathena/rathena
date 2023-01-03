@@ -744,8 +744,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		}
 
 		// search authentification
-		std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& auth_db = char_get_authdb();
-		std::shared_ptr<struct auth_node> node = util::umap_find( auth_db, account_id );
+		std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), account_id);
 
 		if( node != nullptr &&
 			node->account_id == account_id &&
@@ -753,7 +752,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 			node->login_id2  == login_id2 /*&&
 			node->ip         == ipl*/ )
 		{// authentication found (coming from map server)
-			auth_db.erase( account_id );
+			char_get_authdb().erase(account_id);
 			char_auth_ok(fd, sd);
 		}
 		else
