@@ -208,6 +208,7 @@ struct CharServ_Config {
 	int mail_return_empty;
 
 	int allowed_job_flag;
+	int clear_parties;
 };
 extern struct CharServ_Config charserv_config;
 
