@@ -443,6 +443,48 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	return 1;
 }
 
+void CastleDatabase::loadingFinished(){
+	for( const auto& pair : *this ){
+		std::shared_ptr<guild_castle> castle = pair.second;
+
+		if( castle->client_id != 0 ){
+			// Check if ClientId is unique
+			for( const auto& pair2 : *this ){
+				std::shared_ptr<guild_castle> castle2 = pair2.second;
+
+				if( castle->castle_id == castle2->castle_id ){
+					continue;
+				}
+
+				if( castle->client_id == castle2->client_id ){
+					ShowWarning( "Castle ClientId %hu is ambigous.\n", castle->client_id );
+					break;
+				}
+			}
+		}
+
+		if( castle->warp_enabled ){
+			if( castle->client_id == 0 ){
+				ShowWarning( "Warping to castle %d is enabled, but no ClientId is set. Disabling...\n", castle->castle_id );
+				castle->warp_enabled = false;
+				continue;
+			}
+
+			if( castle->warp_x == 0 ){
+				ShowWarning( "Warping to castle %d is enabled, but no WarpX is set. Disabling...\n", castle->castle_id );
+				castle->warp_enabled = false;
+				continue;
+			}
+
+			if( castle->warp_y == 0 ){
+				ShowWarning( "Warping to castle %d is enabled, but no WarpY is set. Disabling...\n", castle->castle_id );
+				castle->warp_enabled = false;
+				continue;
+			}
+		}
+	}
+}
+
 /// lookup: guild id -> guild*
 struct guild* guild_search(int guild_id) {
 	return (struct guild*)idb_get(guild_db,guild_id);
