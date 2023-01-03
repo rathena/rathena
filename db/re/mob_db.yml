@@ -97737,7 +97737,6 @@ Body:
     AttackDelay: 864
     AttackMotion: 1000
     DamageMotion: 480
-    # DamageTaken: 10  # TODO check
     Ai: 21
     Drops:
       - Item: Dea_Staff
