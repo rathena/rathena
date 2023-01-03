@@ -2822,6 +2822,8 @@ void char_set_defaults(){
 #else
 	charserv_config.allowed_job_flag = 1;
 #endif
+
+	charserv_config.clear_parties = 0;
 }
 
 /**
@@ -3109,6 +3111,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_empty = config_switch(w2);
 		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
 			charserv_config.allowed_job_flag = atoi(w2);
+		} else if (strcmpi(w1, "clear_parties") == 0) {
+			charserv_config.clear_parties = config_switch(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
