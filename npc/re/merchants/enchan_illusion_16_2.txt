@@ -7,6 +7,7 @@
 //= 1.0 Initial release of Illusion of Moonlight [crazyarashi]
 //= 1.1 Cleanup and improvements [Everade]
 //= 1.2 Added Illusion of Vampire enchanter [Capuche]
+//= 1.3 Added Illusion of Twins enchanter [Capuche]
 //============================================================
 
 //============================================================
@@ -611,5 +612,33 @@ S_Accessory:	// the structure is slightly different from above
 
 OnProgress:
 	progressbar_npc "000000",1;
+	end;
+}
+
+//============================================================
+//= Illusion of Twins
+//============================================================
+// ant_d02_i,175,186,3	script	From#iltw	MECHANIC,{
+ant_d02_i,175,186,3	script	From#iltw	HIDDEN_NPC,{
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed with the quest because you have too many items. -";
+		close;
+	}
+	mes "[From]";
+	mes "I feel like I'm going crazy.";
+	mes "It's because of my mood. I'm human and it's not like you're mistaken.";
+	mes "I'll help you if you get a lot here.";
+	mes "Do you want to enhance your equipment?";
+	close2;
+	callshop( "barter_ill_twins" );
+	end;
+
+OnInit:
+	.@npc_id = getnpcid(0);
+	setunitdata .@npc_id, UNPC_CLASS, 4058;
+	setunitdata .@npc_id, UNPC_SEX, SEX_MALE;
+	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
+	setunitdata .@npc_id, UNPC_HAIRSTYLE, 11;
+	setunitdata .@npc_id, UNPC_HAIRCOLOR, 6;
 	end;
 }

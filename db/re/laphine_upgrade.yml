@@ -2412,13 +2412,13 @@ Body:
       - Item: Illusion_Butcher
       - Item: Illusion_Gold_Lux
       - Item: Infiltrator_IL
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
       - Item: Book_Of_The_Apo_IL
       - Item: Balistar_IL
-      - Item: Illusion_Wing_Shuriken
+      - Item: Huuma_Bird_Wing_IL
       - Item: Wizardy_Staff_IL
       - Item: Long_Mace_IL
       - Item: Huuma_Flutter_Snow_IL
@@ -2451,13 +2451,13 @@ Body:
       - Item: Illusion_Butcher
       - Item: Illusion_Gold_Lux
       - Item: Infiltrator_IL
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
       - Item: Book_Of_The_Apo_IL
       - Item: Balistar_IL
-      - Item: Illusion_Wing_Shuriken
+      - Item: Huuma_Bird_Wing_IL
       - Item: Wizardy_Staff_IL
       - Item: Long_Mace_IL
       - Item: Huuma_Flutter_Snow_IL
@@ -4303,12 +4303,12 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Wing_Shuriken
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
-      - Item: Illusion_Fancy_Flower
+      - Item: Huuma_Bird_Wing_IL
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
+      - Item: Fancy_Flower_IL
   - Item: S_Turtle_Is_Box_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
@@ -4316,12 +4316,12 @@ Body:
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Wing_Shuriken
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
-      - Item: Illusion_Fancy_Flower
+      - Item: Huuma_Bird_Wing_IL
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
+      - Item: Fancy_Flower_IL
   - Item: Teddy_Bear_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10
