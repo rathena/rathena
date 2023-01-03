@@ -3094,7 +3094,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
 		return;
 	}
-	if (!item_db.exists(nameid)) {
+	if (nameid && !item_db.exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %u\n",nameid);
 		return;
 	}

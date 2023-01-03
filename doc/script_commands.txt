@@ -2731,7 +2731,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 Given the database ID number of an item, this function will return the text
 stored in the 'Name' field in item_db_*.yml for text version
-or 'name_english' field for SQL version.
+or 'name_english' field for SQL version. The function returns "null" if the item doesn't exist.
 
 ---------------------------------------
 
@@ -9670,15 +9670,26 @@ returns an empty string instead.
 
 *instance_id({<instance mode>})
 
-Returns the unique instance ID of the given mode. By default it returns the
-attached script instance. If <instance mode> is provided then the instance
-of the currently attached player is used. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode.
+
+By default (no parameter given) the command returns the instance ID from the attached NPC.
+If <instance mode> is provided the instance ID of the currently attached player is returned.
+If that fails, the function will return 0.
+
+Please note that the command always requires the parameter <instance mode> to get the instance ID of an attached player!
 
 Instance Mode options:
  IM_CHAR:	Attached to character.
  IM_PARTY:	Attached to character's party.
  IM_GUILD:	Attached to character's guild.
  IM_CLAN:	Attached to character's clan.
+
+Examples:
+	// Example with an attached player :
+	npctalk "The current instance ID (mode party) from the attached player is : " + instance_id(IM_PARTY);
+
+	// Example with an attached NPC on an instance map :
+	npctalk "The current instance ID from the attached NPC is : " + instance_id();
 
 ---------------------------------------
 
