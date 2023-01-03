@@ -57,18 +57,16 @@ int logcnslif_get_options(int argc, char ** argv) {
 			} else if (strcmp(arg, "version") == 0) {
 				display_versionscreen(true);
 			} else if (strcmp(arg, "run-once") == 0){ // close the map-server as soon as its done.. for testing [Celest]
-				runflag = CORE_ST_STOP;
-			} else if (SERVER_TYPE & (ATHENA_SERVER_LOGIN)) { //login
-				if (strcmp(arg, "lan-config") == 0) {
-					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
-				} else if (strcmp(arg, "login-config") == 0) {
-					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
-				} else if (strcmp(arg, "msg-config") == 0) {
-					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
-				} else {
-					ShowError("Unknown option '%s'.\n", argv[i]);
-					exit(EXIT_FAILURE);
-				}
+				global_core->set_run_once( true );
+			} else if (strcmp(arg, "lan-config") == 0) {
+				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
+			} else if (strcmp(arg, "login-config") == 0) {
+				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
+			} else if (strcmp(arg, "msg-config") == 0) {
+				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
+			} else {
+				ShowError("Unknown option '%s'.\n", argv[i]);
+				exit(EXIT_FAILURE);
 			}
 		} else switch (arg[0]) {// short option
 			case '?':
@@ -112,7 +110,7 @@ int cnslif_parse(const char* buf){
 	if( n == 2 ){
 		if(strcmpi("server", type) == 0 ){
 			if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-				runflag = 0;
+				global_core->signal_shutdown();
 			}
 			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 				ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET"\n");

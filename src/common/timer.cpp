@@ -314,14 +314,14 @@ int delete_timer(int tid, TimerFunc func)
 
 /// Adjusts a timer's expiration time.
 /// Returns the new tick value, or -1 if it fails.
-t_tick addt_tickimer(int tid, t_tick tick)
+t_tick addtick_timer(int tid, t_tick tick)
 {
-	return sett_tickimer(tid, timer_data[tid].tick+tick);
+	return settick_timer(tid, timer_data[tid].tick+tick);
 }
 
 /// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
 /// Returns the new tick value, or -1 if it fails.
-t_tick sett_tickimer(int tid, t_tick tick)
+t_tick settick_timer(int tid, t_tick tick)
 {
 	size_t i;
 
@@ -329,7 +329,7 @@ t_tick sett_tickimer(int tid, t_tick tick)
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
 	if( i == BHEAP_LENGTH(timer_heap) )
 	{
-		ShowError("sett_tickimer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+		ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 

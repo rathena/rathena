@@ -1,6 +1,10 @@
 name: Build servers with CMake
 # build_servers_cmake.yml
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
 on:
   push:
     branches:
@@ -22,7 +26,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-20.04.
+          # The ubuntu-latest label currently points to ubuntu-22.04.
           # Available: ubuntu-22.04, ubuntu-20.04
           os: [ubuntu-latest]
 
