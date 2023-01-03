@@ -330,17 +330,18 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
-	if (this->nodeExists(node, "EnableClientWarp")) {
-		bool enable_client_warp;
+	if( this->nodeExists( node, "WarpId" ) ){
+		uint16 id;
 
-		if (!this->asBool(node, "EnableClientWarp", enable_client_warp))
+		if( !this->asUInt16( node, "WarpId", id ) ){
 			return 0;
+		}
 
-		gc->enable_client_warp = enable_client_warp;
-	}
-	else {
-		if (!exists)
-			gc->enable_client_warp = true;
+		gc->client_warp_id = id;
+	}else{
+		if( !exists ){
+			gc->client_warp_id = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "WarpX")) {

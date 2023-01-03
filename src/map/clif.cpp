@@ -3394,7 +3394,7 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd)
 
 	if (gc == nullptr)
 		return;
-	if (gc->enable_client_warp == false)
+	if (gc->client_warp_id == 0)
 		return;
 	if (gc->guild_id != g->guild_id)
 		return;
