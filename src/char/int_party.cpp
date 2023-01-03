@@ -920,7 +920,7 @@ int inter_party_CharOffline(uint32 char_id, int party_id) {
 	}
 
 	// Parties don't have any data that needs be saved at this point... so just remove it from memory.
-	if( !p->party.count ){
+	if( p->party.count == 0 ){
 		party_db.erase( party_id );
 	}
 

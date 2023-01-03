@@ -94,7 +94,7 @@ online_char_data::online_char_data( uint32 account_id ){
 }
 
 void char_set_charselect(uint32 account_id) {
-	std::shared_ptr<struct online_char_data> character = util::umap_find( online_char_db, account_id );
+	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id );
 
 	if( character == nullptr ){
 		character = std::make_shared<struct online_char_data>( account_id );
@@ -122,7 +122,7 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 		Sql_ShowDebug(sql_handle);
 
 	//Check to see for online conflicts
-	std::shared_ptr<struct online_char_data> character = util::umap_find( online_char_db, account_id );
+	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id );
 
 	if( character != nullptr ){
 		if( character->char_id != -1 && character->server > -1 && character->server != map_id ){
@@ -148,7 +148,7 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 		map_server[character->server].users++;
 
 	//Set char online in guild cache. If char is in memory, use the guild id on it, otherwise seek it.
-	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_db_, char_id );
+	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
 
 	inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
 
@@ -164,7 +164,7 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 	}
 	else
 	{
-		std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_db_, char_id );
+		std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
 
 		inter_guild_CharOffline(char_id, cp?cp->guild_id:-1);
 		if (cp)
@@ -174,7 +174,7 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 			Sql_ShowDebug(sql_handle);
 	}
 
-	std::shared_ptr<struct online_char_data> character = util::umap_find( online_char_db, account_id );
+	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id );
 
 	// We don't free yet to avoid aCalloc/aFree spamming during char change. [Skotlex]
 	if( character != nullptr ){	
@@ -261,7 +261,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 
 	if (char_id!=p->char_id) return 0;
 
-	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_db_, char_id );
+	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
 
 	if( cp == nullptr ){
 		cp = std::make_shared<struct mmo_charstatus>();
@@ -1264,7 +1264,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, StringBuf_Value(&msg_buf)); //ok. all data load successfully!
 	SqlStmt_Free(stmt);
 
-	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_db_, char_id );
+	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
 
 	if( cp == nullptr ){
 		cp = std::make_shared<struct mmo_charstatus>();
@@ -1997,7 +1997,7 @@ void char_set_session_flag_(int account_id, int val, bool set) {
 }
 
 void char_auth_ok(int fd, struct char_session_data *sd) {
-	std::shared_ptr<struct online_char_data> character = util::umap_find( online_char_db, sd->account_id );
+	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), sd->account_id );
 
 	// Check if character is not online already. [Skotlex]
 	if( character != nullptr ){
@@ -2205,7 +2205,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 //replies/disconnect the player we tried to kick. [Skotlex]
 //------------------------------------------------
 TIMER_FUNC(char_chardb_waiting_disconnect){
-	std::shared_ptr<struct online_char_data> character = util::umap_find( online_char_db, static_cast<uint32>( id ) );
+	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), static_cast<uint32>( id ) );
 
 	// Mark it offline due to timeout.
 	if( character != nullptr && character->waiting_disconnect == tid ){	

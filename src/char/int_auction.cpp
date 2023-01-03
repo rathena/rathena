@@ -214,7 +214,6 @@ void inter_auctions_fromsql(void)
 	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
 		struct item *item;
-
 		std::shared_ptr<struct auction_data> auction = std::make_shared<struct auction_data>();
 
 		Sql_GetData(sql_handle, 0, &data, NULL); auction->auction_id = atoi(data);
@@ -296,6 +295,7 @@ void mapif_parse_Auction_requestlist(int fd)
 
 	for( const auto& pair : auction_db ){
 		std::shared_ptr<struct auction_data> auction = pair.second;
+
 		if( (type == 0 && auction->type != IT_ARMOR && auction->type != IT_PETARMOR) ||
 			(type == 1 && auction->type != IT_WEAPON) ||
 			(type == 2 && auction->type != IT_CARD) ||

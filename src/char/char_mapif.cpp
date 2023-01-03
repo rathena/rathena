@@ -1007,8 +1007,6 @@ int chmapif_parse_reqauth(int fd, int id){
 		struct mmo_charstatus char_dat;
 		bool autotrade;
 
-		std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& auth_db = char_get_authdb();
-
 		account_id = RFIFOL(fd,2);
 		char_id    = RFIFOL(fd,6);
 		login_id1  = RFIFOL(fd,10);
@@ -1017,7 +1015,7 @@ int chmapif_parse_reqauth(int fd, int id){
 		autotrade  = RFIFOB(fd,19) != 0;
 		RFIFOSKIP(fd,20);
 
-		std::shared_ptr<struct auth_node> node = util::umap_find( auth_db, account_id );
+		std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), account_id );
 		std::shared_ptr<struct mmo_charstatus> cd = util::umap_find( char_get_chardb(), char_id );
 
 		if( cd == nullptr ){
@@ -1069,7 +1067,7 @@ int chmapif_parse_reqauth(int fd, int id){
 			WFIFOSET(fd, WFIFOW(fd,2));
 
 			// only use the auth once and mark user online
-			auth_db.erase( account_id );
+			char_get_authdb().erase( account_id );
 			char_set_char_online(id, char_id, account_id);
 		} else {// auth failed
 			WFIFOHEAD(fd,19);
