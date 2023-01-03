@@ -330,17 +330,31 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
-	if( this->nodeExists( node, "WarpId" ) ){
+	if( this->nodeExists( node, "ClientId" ) ){
 		uint16 id;
 
-		if( !this->asUInt16( node, "WarpId", id ) ){
+		if( !this->asUInt16( node, "ClientId", id ) ){
 			return 0;
 		}
 
-		gc->client_warp_id = id;
+		gc->client_id = id;
 	}else{
 		if( !exists ){
-			gc->client_warp_id = 0;
+			gc->client_id = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "WarpEnabled" ) ){
+		bool enabled;
+
+		if( !this->asBool( node, "WarpEnabled", enabled ) ){
+			return 0;
+		}
+
+		gc->warp_enabled = enabled;
+	}else{
+		if( !exists ){
+			gc->warp_enabled = false;
 		}
 	}
 
@@ -430,7 +444,7 @@ struct guild* guild_searchname(char* str) {
 
 /// lookup: map index -> castle*
 std::shared_ptr<guild_castle> CastleDatabase::mapindex2gc(int16 mapindex) {
-	for (const auto &it : castle_db) {
+	for (const auto &it : *this) {
 		if (it.second->mapindex == mapindex)
 			return it.second;
 	}
@@ -440,6 +454,16 @@ std::shared_ptr<guild_castle> CastleDatabase::mapindex2gc(int16 mapindex) {
 /// lookup: map name -> castle*
 std::shared_ptr<guild_castle> CastleDatabase::mapname2gc(const char* mapname) {
 	return castle_db.mapindex2gc(mapindex_name2id(mapname));
+}
+
+std::shared_ptr<guild_castle> CastleDatabase::find_by_clientid( uint16 client_id ){
+	for( const auto &it : *this ){
+		if( it.second->client_id == client_id ){
+			return it.second;
+		}
+	}
+
+	return nullptr;
 }
 
 map_session_data* guild_getavailablesd(struct guild* g) {

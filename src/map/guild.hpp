@@ -128,6 +128,7 @@ public:
 	// Additional
 	std::shared_ptr<guild_castle> mapname2gc(const char* mapname);
 	std::shared_ptr<guild_castle> mapindex2gc(int16 mapindex);
+	std::shared_ptr<guild_castle> find_by_clientid( uint16 client_id );
 };
 
 extern CastleDatabase castle_db;

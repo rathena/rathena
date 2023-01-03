@@ -3310,8 +3310,8 @@ void clif_guild_castle_list(map_session_data& sd){
 
 		int i = 0;
 		for (const auto& gc : castle_db) {
-			if (gc.second->guild_id == g->guild_id) {
-				p->castle_list[i] = static_cast<int8>( gc.second->castle_id );
+			if (gc.second->guild_id == g->guild_id && gc.second->client_id) {
+				p->castle_list[i] = static_cast<int8>( gc.second->client_id );
 				p->packetLength += static_cast<int16>( sizeof( p->castle_list[0] ) );
 				++i;
 			}
@@ -3327,10 +3327,14 @@ void clif_guild_castle_list(map_session_data& sd){
  *------------------------------------------*/
 void clif_guild_castleinfo(map_session_data& sd, std::shared_ptr<guild_castle> castle ){
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
+	if( castle->client_id == 0 ){
+		return;
+	}
+
 	struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT p = {};
 
 	p.packetType = HEADER_ZC_REQ_ACK_AGIT_INVESTMENT;
-	p.castle_id = static_cast<int8>( castle->castle_id );
+	p.castle_id = static_cast<int8>( castle->client_id );
 	p.economy = castle->economy;
 	p.defense = castle->defense;
 
@@ -3363,11 +3367,13 @@ void clif_parse_guild_castle_info_request(int fd, map_session_data* sd){
 	if (g == nullptr)
 		return;
 
-	std::shared_ptr<guild_castle> gc = castle_db.find(p->castle_id);
+	std::shared_ptr<guild_castle> gc = castle_db.find_by_clientid( p->castle_id );
+
 	if (gc == nullptr)
 		return;
 	if (gc->guild_id != g->guild_id)
 		return;
+
 	clif_guild_castleinfo(*sd, gc);
 #endif
 }
@@ -3375,8 +3381,7 @@ void clif_parse_guild_castle_info_request(int fd, map_session_data* sd){
 /*==========================================
  * Teleport to castle. [Asheraf] / [Balfear]
  *------------------------------------------*/
-void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd)
-{
+void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd){
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
 	const struct PACKET_CZ_REQ_MOVE_GUILD_AGIT* p = (struct PACKET_CZ_REQ_MOVE_GUILD_AGIT*)RFIFOP(fd, 0);
 	struct guild* g = sd->guild;
@@ -3384,11 +3389,11 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd)
 	if (g == nullptr)
 		return;
 
-	std::shared_ptr<guild_castle> gc = castle_db.find(p->castle_id);
+	std::shared_ptr<guild_castle> gc = castle_db.find_by_clientid( p->castle_id );
 
 	if (gc == nullptr)
 		return;
-	if (gc->client_warp_id == 0)
+	if (!gc->warp_enabled)
 		return;
 	if (gc->guild_id != g->guild_id)
 		return;
@@ -3411,6 +3416,7 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd)
 		clif_guild_castle_teleport_res(*sd, SIEGE_TP_NOT_ENOUGH_ZENY);
 		return;
 	}
+
 	pc_setpos(sd, gc->mapindex, gc->warp_x, gc->warp_y, CLR_OUTSIGHT);
 #endif
 }
