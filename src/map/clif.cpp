@@ -3293,26 +3293,26 @@ void clif_guild_xy_remove(map_session_data *sd)
 /*==========================================
  * Load castle list for guild UI. [Asheraf] / [Balfear]
  *------------------------------------------*/
-void clif_guild_castle_list(map_session_data& sd)
-{
+void clif_guild_castle_list(map_session_data& sd){
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
-
 	struct guild* g = sd.guild;
+
 	if (g == nullptr)
 		return;
 
 	int castle_count = guild_checkcastles(g);
 
 	if (castle_count > 0) {
-		int16 len = (int16)( sizeof(struct PACKET_ZC_GUILD_AGIT_INFO) + castle_count * sizeof(int8) );
 		struct PACKET_ZC_GUILD_AGIT_INFO* p = (struct PACKET_ZC_GUILD_AGIT_INFO*)packet_buffer;
+
 		p->packetType = HEADER_ZC_GUILD_AGIT_INFO;
-		p->packetLength = len;
+		p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_GUILD_AGIT_INFO ) );
 
 		int i = 0;
 		for (const auto& gc : castle_db) {
 			if (gc.second->guild_id == g->guild_id) {
-				p->castle_list[i] = gc.second->castle_id;
+				p->castle_list[i] = static_cast<int8>( gc.second->castle_id );
+				p->packetLength += static_cast<int16>( sizeof( p->castle_list[0] ) );
 				++i;
 			}
 		}
@@ -3325,14 +3325,15 @@ void clif_guild_castle_list(map_session_data& sd)
 /*==========================================
  * Send castle info Economy/Defence. [Asheraf] / [Balfear]
  *------------------------------------------*/
-void clif_guild_castleinfo(map_session_data& sd, int castle_id, int economy, int defense)
-{
+void clif_guild_castleinfo(map_session_data& sd, std::shared_ptr<guild_castle> castle ){
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
 	struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT p = {};
+
 	p.packetType = HEADER_ZC_REQ_ACK_AGIT_INVESTMENT;
-	p.castle_id = castle_id;
-	p.economy = economy;
-	p.defense = defense;
+	p.castle_id = static_cast<int8>( castle->castle_id );
+	p.economy = castle->economy;
+	p.defense = castle->defense;
+
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
 #endif
 }
@@ -3340,12 +3341,13 @@ void clif_guild_castleinfo(map_session_data& sd, int castle_id, int economy, int
 /*==========================================
  * Show teleport request result. [Asheraf] / [Balfear]
  *------------------------------------------*/
-void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result)
-{
+void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result){
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
 	struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT p = {};
+
 	p.packetType = HEADER_ZC_REQ_ACK_MOVE_GUILD_AGIT;
-	p.result = (int16)result;
+	p.result = static_cast<int16>( result );
+
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
 #endif
 }
@@ -3353,8 +3355,7 @@ void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_
 /*==========================================
  * Request castle info. [Asheraf] / [Balfear]
  *------------------------------------------*/
-void clif_parse_guild_castle_info_request(int fd, map_session_data* sd)
-{
+void clif_parse_guild_castle_info_request(int fd, map_session_data* sd){
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
 	const struct PACKET_CZ_REQ_AGIT_INVESTMENT* p = (struct PACKET_CZ_REQ_AGIT_INVESTMENT*)RFIFOP(fd, 0);
 	struct guild* g = sd->guild;
@@ -3367,7 +3368,7 @@ void clif_parse_guild_castle_info_request(int fd, map_session_data* sd)
 		return;
 	if (gc->guild_id != g->guild_id)
 		return;
-	clif_guild_castleinfo(*sd, gc->castle_id, gc->economy, gc->defense);
+	clif_guild_castleinfo(*sd, gc);
 #endif
 }
 
