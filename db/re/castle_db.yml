@@ -30,8 +30,8 @@
 #   WarpEnabled       If the warp to the castle is enabled. (Default: false)
 #   WarpX             X coordinate to warp to. (Default: 0)
 #   WarpY             Y coordinate to warp to. (Default: 0)
-#   WarpCost          The Zeny cost using the warp. (Default: 100)
-#   WarpCostSiege     The Zeny cost using the warp during WoE. (Default: 100000)
+#   WarpCost          Zeny cost to use the warp. (Default: 100)
+#   WarpCostSiege     Zeny cost to use the warp during WoE. (Default: 100000)
 ###########################################################################
 
 Header:

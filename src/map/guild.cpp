@@ -399,7 +399,7 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
 
 		if( warp_y >= md->ys ){
-			this->invalidWarning( node["WarpY"], "WarpY has to be smaller than %hu.\n", md->xs );
+			this->invalidWarning( node["WarpY"], "WarpY has to be smaller than %hu.\n", md->ys );
 			return 0;
 		}
 
