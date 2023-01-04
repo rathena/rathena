@@ -8346,7 +8346,7 @@ void clif_catch_collection_process(map_session_data* sd)
 
 	struct PACKET_ZC_START_COLLECTION p;
 
-	p.packetType = 0x08b4;
+	p.packetType = HEADER_ZC_START_COLLECTION;
 
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
@@ -8368,7 +8368,7 @@ void clif_collection_roulette(map_session_data* sd, int data)
 
 	struct PACKET_ZC_TRYCOLLECTION p;
 
-	p.packetType = 0x08b6;
+	p.packetType = HEADER_ZC_TRYCOLLECTION;
 	p.result = data;
 
 	clif_send(&p, sizeof(p), &sd->bl, SELF);

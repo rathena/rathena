@@ -453,6 +453,20 @@ struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER{
 	uint32 refused;
 } __attribute__((packed));
 
+struct PACKET_ZC_START_COLLECTION{
+	int16 packetType;
+} __attribute__((packed));
+
+struct PACKET_CZ_TRYCOLLECTION{
+	int16 packetType;
+	uint32 targetId;
+} __attribute__((packed));
+
+struct PACKET_ZC_TRYCOLLECTION{
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -489,6 +503,9 @@ DEFINE_PACKET_HEADER(ZC_CASH_ITEM_DELETE, 0x299)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_BIND_ON_EQUIP, 0x2d3)
 DEFINE_PACKET_HEADER(ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, 0x824)
 DEFINE_PACKET_HEADER(CZ_SSILIST_ITEM_CLICK, 0x83c)
+DEFINE_PACKET_HEADER(ZC_START_COLLECTION, 0x8b4)
+DEFINE_PACKET_HEADER(CZ_TRYCOLLECTION, 0x8b5)
+DEFINE_PACKET_HEADER(ZC_TRYCOLLECTION, 0x8b6)
 DEFINE_PACKET_HEADER(ZC_CLEAR_DIALOG, 0x8d6)
 DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e);
 DEFINE_PACKET_HEADER(ZC_BANKING_CHECK, 0x9a6)

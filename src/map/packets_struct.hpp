@@ -5702,23 +5702,6 @@ struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY {
 DEFINE_PACKET_HEADER(ZC_DISAPPEAR_BUYING_STORE_ENTRY, 0x0816);
 #endif
 
-struct PACKET_ZC_START_COLLECTION {
-	int16 packetType;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_START_CAPTURE, 0x08b4);
-
-struct PACKET_CZ_TRYCOLLECTION {
-	int16 packetType;
-	uint32 targetId;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(CZ_TRYCOLLECTION, 0x08b5);
-
-struct PACKET_ZC_TRYCOLLECTION {
-	int16 packetType;
-	uint8 result;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_TRYCOLLECTION, 0x08b6);
-
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris

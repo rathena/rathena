@@ -1769,7 +1769,7 @@
 
 // 2011-01-25aRagexe
 #if PACKETVER >= 20110125
-	parseable_packet(0x08b5, sizeof(struct PACKET_CZ_TRYCOLLECTION), clif_parse_CatchCollection, 2);
+	parseable_packet( HEADER_CZ_TRYCOLLECTION, sizeof( struct PACKET_CZ_TRYCOLLECTION ), clif_parse_CatchCollection, 0 );
 #endif
 
 // 2011-10-05aRagexeRE
