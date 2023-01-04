@@ -14,18 +14,30 @@
 
 #include "packets.hpp"
 
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_character{
+		class CharacterServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_shutdown() override;
+
+			public:
+				CharacterServer() : Core( e_core_type::CHARACTER ){
+
+				}
+		};
+	}
+}
+
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
 
 #define MAX_STARTPOINT 5
 #define MAX_STARTITEM 32
-
-enum E_CHARSERVER_ST {
-	CHARSERVER_ST_RUNNING = CORE_ST_LAST,
-	CHARSERVER_ST_STARTING,
-	CHARSERVER_ST_SHUTDOWN,
-	CHARSERVER_ST_LAST
-};
 
 enum e_char_delete {
 	CHAR_DEL_EMAIL = 1,
@@ -194,6 +206,7 @@ struct CharServ_Config {
 	int mail_return_empty;
 
 	int allowed_job_flag;
+	int clear_parties;
 };
 extern struct CharServ_Config charserv_config;
 

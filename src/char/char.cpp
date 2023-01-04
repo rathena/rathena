@@ -37,6 +37,8 @@
 #include "int_storage.hpp"
 #include "packets.hpp"
 
+using namespace rathena::server_character;
+
 //definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
@@ -346,18 +348,21 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->partner_id != cp->partner_id) || (p->father != cp->father) ||
 		(p->mother != cp->mother) || (p->child != cp->child) ||
  		(p->karma != cp->karma) || (p->manner != cp->manner) ||
-		(p->fame != cp->fame) || (p->inventory_slots != cp->inventory_slots)
+		(p->fame != cp->fame) || (p->inventory_slots != cp->inventory_slots) ||
+		(p->body_direction != cp->body_direction) || (p->disable_call != cp->disable_call)
 	)
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',"
 			"`hair`='%d', `hair_color`='%d', `clothes_color`='%d', `body`='%d',"
 			"`partner_id`='%u', `father`='%u', `mother`='%u', `child`='%u',"
-			"`karma`='%d',`manner`='%d', `fame`='%d', `inventory_slots`='%hu'"
+			"`karma`='%d',`manner`='%d', `fame`='%d', `inventory_slots`='%hu',"
+			"`body_direction`='%d',`disable_call`='%d'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->class_,
 			p->hair, p->hair_color, p->clothes_color, p->body,
 			p->partner_id, p->father, p->mother, p->child,
 			p->karma, p->manner, p->fame, p->inventory_slots,
+			p->body_direction, p->disable_call,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -936,7 +941,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 		"`robe`,`moves`,`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`title_id`,`show_equip`,"
 		"`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
-		"`inventory_slots`"
+		"`inventory_slots`,`body_direction`,`disable_call`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, NULL, NULL)
@@ -995,6 +1000,8 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 53, SQLDT_SHORT,  &p.con, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 54, SQLDT_SHORT,  &p.crt, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 55, SQLDT_UINT16, &p.inventory_slots, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 56, SQLDT_UINT8,  &p.body_direction, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 57, SQLDT_UINT16, &p.disable_call, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1064,7 +1071,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,`robe`, `moves`,"
 		"`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`clan_id`,`title_id`,`show_equip`,`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
-		"`inventory_slots`"
+		"`inventory_slots`,`body_direction`,`disable_call`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", schema_config.char_db)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
@@ -1141,6 +1148,8 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 70, SQLDT_SHORT,  &p->con, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 71, SQLDT_SHORT,  &p->crt, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 72, SQLDT_UINT16, &p->inventory_slots, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 73, SQLDT_UINT8,  &p->body_direction, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 74, SQLDT_UINT16, &p->disable_call, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -2334,7 +2343,7 @@ bool char_checkdb(void){
 		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`,`title_id`,`show_equip`,"
 		"`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
-		"`inventory_slots`"
+		"`inventory_slots`,`body_direction`,`disable_call`"
 		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2813,6 +2822,8 @@ void char_set_defaults(){
 #else
 	charserv_config.allowed_job_flag = 1;
 #endif
+
+	charserv_config.clear_parties = 0;
 }
 
 /**
@@ -3003,7 +3014,11 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.start_zeny = atoi(w2);
 			if (charserv_config.start_zeny < 0)
 				charserv_config.start_zeny = 0;
+#ifdef RENEWAL
 		} else if (strcmpi(w1, "start_items") == 0) {
+#else
+		} else if (strcmpi(w1, "start_items_pre") == 0) {
+#endif
 			char_config_split_startitem(w1, w2, charserv_config.start_items);
 #if PACKETVER >= 20151001
 		} else if (strcmpi(w1, "start_items_doram") == 0) {
@@ -3096,6 +3111,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_empty = config_switch(w2);
 		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
 			charserv_config.allowed_job_flag = atoi(w2);
+		} else if (strcmpi(w1, "clear_parties") == 0) {
+			charserv_config.clear_parties = config_switch(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -3131,9 +3148,7 @@ void char_do_final_msg(void){
 	_do_final_msg(CHAR_MAX_MSG,msg_table);
 }
 
-
-void do_final(void)
-{
+void CharacterServer::finalize(){
 	ShowStatus("Terminating...\n");
 
 	char_set_all_offline(-1);
@@ -3163,40 +3178,17 @@ void do_final(void)
 	ShowStatus("Finished.\n");
 }
 
-
-void set_server_type(void){
-	SERVER_TYPE = ATHENA_SERVER_CHAR;
-}
-
-//------------------------------
-// Function called when the server
-// has received a crash signal.
-//------------------------------
-void do_abort(void)
-{
-}
-
 /// Called when a terminate signal is received.
-void do_shutdown(void) {
-	if( runflag != CHARSERVER_ST_SHUTDOWN )
-	{
-		int id;
-		runflag = CHARSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
-		for( id = 0; id < ARRAYLENGTH(map_server); ++id )
-			chmapif_server_reset(id);
-		chlogif_check_shutdown();
-		flush_fifos();
-		runflag = CORE_ST_STOP;
-	}
+void CharacterServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+	// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
+	for( int id = 0; id < ARRAYLENGTH(map_server); ++id )
+		chmapif_server_reset(id);
+	flush_fifos();
 }
 
-
-int do_init(int argc, char **argv)
-{
+bool CharacterServer::initialize( int argc, char *argv[] ){
 	//Read map indexes
-	runflag = CHARSERVER_ST_STARTING;
 	mapindex_init();
 
 	// Init default value
@@ -3216,12 +3208,13 @@ int do_init(int argc, char **argv)
 	char_sql_config_read(SQL_CONF_NAME);
 	msg_config_read(MSG_CONF_NAME_EN);
 
-	// Skip this check if the server is run with run-once flag
-	if (runflag!=CORE_ST_STOP && strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
+#if !defined(BUILDBOT)
+	if (strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
+#endif
 
 	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
 
@@ -3278,7 +3271,7 @@ int do_init(int argc, char **argv)
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){
 		ShowFatalError("char : A tables is missing in sql-server, please fix it, see (sql-files main.sql for structure) \n");
-		exit(EXIT_FAILURE);
+		return false;
 	}
 	//Cleaning the tables for NULL entrys @ startup [Sirius]
 	//Chardb clean
@@ -3297,13 +3290,7 @@ int do_init(int argc, char **argv)
 
 	if( (char_fd = make_listen_bind(charserv_config.bind_ip,charserv_config.char_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",charserv_config.char_port);
-		exit(EXIT_FAILURE);
-	}
-
-	if( runflag != CORE_ST_STOP )
-	{
-		shutdown_callback = do_shutdown;
-		runflag = CHARSERVER_ST_RUNNING;
+		return false;
 	}
 
 	do_init_chcnslif();
@@ -3312,5 +3299,9 @@ int do_init(int argc, char **argv)
 
 	ShowStatus("The char-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %d).\n\n", charserv_config.char_port);
 
-	return 0;
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<CharacterServer>( argc, argv );
 }

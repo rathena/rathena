@@ -134,7 +134,7 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	time_t now = time(NULL);
 	struct sale_item_data* sale_item = NULL;
 
-	if( !itemdb_exists(nameid) ){
+	if( !item_db.exists(nameid) ){
 		ShowWarning( "sale_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return false;
 	}
@@ -380,7 +380,7 @@ struct sale_item_data* sale_find_item( t_itemid nameid, bool onsale ){
 	return sale_items.item[i];
 }
 
-void sale_notify_login( struct map_session_data* sd ){
+void sale_notify_login( map_session_data* sd ){
 	int i;
 
 	for( i = 0; i < sale_items.count; i++ ){
@@ -428,7 +428,7 @@ static void cashshop_read_db( void ){
  * @param item_list Array of item ID
  * @return true: success, false: fail
  */
-bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;

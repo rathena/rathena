@@ -366,7 +366,7 @@ dewata,95,203,6	script	Travel Guide#dew	536,{
 	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
-	mes "Even in modern times Borobudur temple is a pilgimage site for many monks worshiping the Buddha. It's also a major tourist attraction, as you can imagine.";
+	mes "Even in modern times Borobudur temple is a pilgrimage site for many monks worshiping the Buddha. It's also a major tourist attraction, as you can imagine.";
 	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";

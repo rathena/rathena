@@ -572,6 +572,7 @@ struct mmo_charstatus {
 	short shield; // view-id
 	short head_top,head_mid,head_bottom;
 	short robe;
+	uint8 body_direction;
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
@@ -589,7 +590,7 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party;
+	bool show_equip,allow_party, disable_call;
 	short rename;
 
 	time_t delete_date;
@@ -692,14 +693,14 @@ struct party {
 	struct party_member member[MAX_PARTY];
 };
 
-struct map_session_data;
+class map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
 	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
-	struct map_session_data *sd;
+	map_session_data *sd;
 	unsigned char modified;
 	uint32 last_login;
 };
@@ -1120,7 +1121,7 @@ struct clan{
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];
 	short max_member, connect_member;
-	struct map_session_data *members[MAX_CLAN];
+	map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
 	unsigned short instance_id;
 };
@@ -1135,11 +1136,8 @@ struct clan{
 #error MAX_PARTY is too small, you need at least 2 players for a party
 #endif
 
-#ifndef VIP_ENABLE
-	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
-	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
-	#define MAX_CHAR_BILLING 0
-	#define MAX_CHAR_VIP 0
+#ifndef MIN_CHARS
+	#define MIN_CHARS ( MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING ) // Default number of characters per account.
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS

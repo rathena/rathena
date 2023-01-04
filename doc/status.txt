@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220421
+//= 20221216
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -232,6 +232,7 @@ Flags: Various status flags for specific status change events.
 	RemoveOnUnequip       - Removed when unequipping any type of equipment.
 	RemoveOnUnequipWeapon - Removed when unequipping a weapon.
 	RemoveOnUnequipArmor  - Removed when unequipping an armor.
+	RemoveOnHermode       - Removed by CG_HERMODE.
 
 	StopAttacking         - Makes the unit stop attacking.
 	StopCasting           - Makes the unit stop casting skills.
@@ -266,13 +267,17 @@ Fail: List of status that causes the status to fail to activate.
 
 ---------------------------------------
 
-End: List of status that will end if the status activates.
+EndOnStart: List of status that will end if the status activates.
 
 ---------------------------------------
 
 EndReturn: List of status that will end if the status activates and it won't give its effect.
            The statuses checked in this list are done at the beginning of status_change_start(). If at least 1 status from this list
 		   is removed then it will return back and not check anything else.
+
+---------------------------------------
+
+EndOnEnd: List of status that will end when the status becomes inactive.
 
 ---------------------------------------
 

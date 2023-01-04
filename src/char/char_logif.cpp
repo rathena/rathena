@@ -813,16 +813,6 @@ void chlogif_reset(void){
 	exit(EXIT_FAILURE);
 }
 
-/// Checks the conditions for the server to stop.
-/// Releases the cookie when all characters are saved.
-/// If all the conditions are met, it stops the core loop.
-void chlogif_check_shutdown(void)
-{
-	if( runflag != CHARSERVER_ST_SHUTDOWN )
-		return;
-	runflag = CORE_ST_STOP;
-}
-
 /// Called when the connection to Login Server is disconnected.
 void chlogif_on_disconnect(void){
 	ShowWarning("Connection to Login Server lost.\n\n");
@@ -832,8 +822,6 @@ void chlogif_on_disconnect(void){
 void chlogif_on_ready(void)
 {
 	int i;
-
-	chlogif_check_shutdown();
 
 	//Send online accounts to login server.
 	chlogif_send_acc_tologin(INVALID_TIMER, gettick(), 0, 0);
