@@ -9929,13 +9929,13 @@
 
 	/* cash shop tabs */
 	export_constant(CASHSHOP_TAB_NEW);
-	export_constant2("CASHSHOP_TAB_HOT",CASHSHOP_TAB_POPULAR);
+	export_constant(CASHSHOP_TAB_HOT);
 	export_constant(CASHSHOP_TAB_LIMITED);
 	export_constant(CASHSHOP_TAB_RENTAL);
-	export_constant2("CASHSHOP_TAB_PERMANENT",CASHSHOP_TAB_PERPETUITY);
-	export_constant2("CASHSHOP_TAB_SCROLLS",CASHSHOP_TAB_BUFF);
-	export_constant2("CASHSHOP_TAB_CONSUMABLES",CASHSHOP_TAB_RECOVERY);
-	export_constant2("CASHSHOP_TAB_OTHER",CASHSHOP_TAB_ETC);
+	export_constant(CASHSHOP_TAB_PERMANENT);
+	export_constant(CASHSHOP_TAB_SCROLLS);
+	export_constant(CASHSHOP_TAB_CONSUMABLES);
+	export_constant(CASHSHOP_TAB_OTHER);
 	export_constant(CASHSHOP_TAB_SALE);
 
 	#undef export_constant
