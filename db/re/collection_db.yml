@@ -1,0 +1,72 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Renewal Collection Database
+###########################################################################
+#
+# Collection Settings
+#
+###########################################################################
+# - ConsumeItem              Consume Item.
+#   Target                   Monsters that can be used
+#   CaptureRate              Capture success rate. (10000 = 100%). Default: 100%
+#   RewardItemGroup          Item group reward if monster catched.
+###########################################################################
+
+Header:
+  Type: COLLECTION_DB
+  Version: 1
+
+Body:
+  - ConsumeItem: Leaf_Cat_Ball
+    Target:
+      E_CRAMP: true
+      E_HYDRA: true
+    RewardItemGroup: COLLECTION_E_HYDRA
+  - ConsumeItem: Empty_Potion_Bottle
+    Target:
+      E_SHINING_PLANT: true
+    RewardItemGroup: COLLECTION_E_SHINING_PLANT
+  - ConsumeItem: Binding_Rope
+    Target:
+      LOST_LAMB: true
+    RewardItemGroup: COLLECTION_LOST_LAMB
+  - ConsumeItem: Savage_Ora
+    Target:
+      SAVAGE: true
+    RewardItemGroup: COLLECTION_SAVAGE
+  - ConsumeItem: Grand_Peco_Ora
+    Target:
+      GRAND_PECO: true
+    RewardItemGroup: COLLECTION_GRAND_PECO
+  - ConsumeItem: Dest_Wolf_Ora
+    Target:
+      DESERT_WOLF: true
+    RewardItemGroup: COLLECTION_DESERT_WOLF
+  - ConsumeItem: Explosion_Proof_Equip
+    Target:
+      BOMBPORING: true
+    RewardItemGroup: COLLECTION_BOMBPORING
+  - ConsumeItem: Capture_Rope
+    Target:
+      MOON_RABBIT: true
+    RewardItemGroup: COLLECTION_MOON_RABBIT
+  - ConsumeItem: Savage_Trap
+    Target:
+      E_SAVAGE: true
+    RewardItemGroup: COLLECTION_E_SAVAGE

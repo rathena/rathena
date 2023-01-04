@@ -9148,7 +9148,7 @@ Body:
     Name: Hydra Ball
     Type: Usable
     Script: |
-      pet 2081;
+      collection "Leaf_Cat_Ball";
   - Id: 12409
     AegisName: Pork_Belly_H
     Name: 1st Class Pork Belly
@@ -13104,6 +13104,8 @@ Body:
     AegisName: Empty_Potion_Bottle
     Name: Empty Potion Bottle
     Type: Usable
+    Script: |
+      collection "Empty_Potion_Bottle";
   - Id: 12775
     AegisName: Ancient_Spirit_Agimat
     Name: Greater Agimat of Ancient Spirit
@@ -50673,6 +50675,54 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_EASTER_EGG);
+  - Id: 22589
+    AegisName: Savage_Ora
+    Name: Savage Trap
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      collection "Savage_Ora";
+  - Id: 22590
+    AegisName: Grand_Peco_Ora
+    Name: Grand Peco Trap
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      collection "Grand_Peco_Ora";
+  - Id: 22591
+    AegisName: Dest_Wolf_Ora
+    Name: Dest Wolf Trap
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      collection "Dest_Wolf_Ora";
   - Id: 22592
     AegisName: Happy_Call_Box
     Name: Happy Call Box
@@ -52609,7 +52659,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*Used to catch a Lost Sheep*/
+      collection "Binding_Rope";
   - Id: 22882
     AegisName: Choco_Tteokguk
     Name: Chocolate Rice Cake Soup
@@ -53245,6 +53295,12 @@ Body:
       NoAuction: true
     Script: |
       percentheal 30,30;
+  - Id: 22995 #Removed from kRo
+    AegisName: Explosion_Proof_Equip
+    Name: Explosion Proof Equip
+    Type: Usable
+    Script: |
+      collection "Explosion_Proof_Equip";
   - Id: 22996
     AegisName: Comp_Neuralizer
     Name: "[Gift] Neuralizer"
@@ -53456,6 +53512,12 @@ Body:
       NoAuction: true
     Script: |
       warp "rachel",120,125;
+  - Id: 23028
+    AegisName: Capture_Rope
+    Name: Capture Rope
+    Type: Usable
+    Script: |
+      collection "Capture_Rope";
   - Id: 23029
     AegisName: Cowlick_Box
     Name: Ponytail Gift Box
@@ -56376,6 +56438,12 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_INFINITY_SCROLL);
+  - Id: 23446
+    AegisName: Savage_Trap
+    Name: Savage Trap
+    Type: Usable
+    Script: |
+      collection "Savage_Trap";
   - Id: 23474
     AegisName: InfinityShadow_Mix
     Name: InfinityShadow Mix

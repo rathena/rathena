@@ -40,6 +40,7 @@
 #include "chrif.hpp"
 #include "clan.hpp"
 #include "clif.hpp"
+#include "collection.hpp"
 #include "date.hpp" // date type enum, date_get()
 #include "elemental.hpp"
 #include "guild.hpp"
@@ -12485,12 +12486,32 @@ BUILDIN_FUNC(catchpet)
 	int pet_id;
 	TBL_PC *sd;
 
-	if( !script_rid2sd(sd) )
+	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_SUCCESS;
 
-	pet_id= script_getnum(st,2);
+	pet_id = script_getnum(st, 2);
 
-	pet_catch_process1(sd,pet_id);
+	pet_catch_process1(sd, pet_id);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ *------------------------------------------*/
+BUILDIN_FUNC(catchcollection)
+{
+	std::shared_ptr<item_data> i_data;
+
+	if (script_isstring(st, 2))
+		i_data = item_db.search_aegisname(script_getstr(st, 2));
+	else
+		i_data = item_db.find(script_getnum(st, 2));
+
+	TBL_PC* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;
+
+	collection_catch_process1(sd, i_data->nameid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27119,6 +27140,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(birthpet,"bpet",""),
 	BUILDIN_DEF(catchpet,"i"),
 	BUILDIN_DEF(birthpet,""),
+	BUILDIN_DEF2(catchcollection, "collection", "v"),
+	BUILDIN_DEF(catchcollection,"v"),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),
 	BUILDIN_DEF(resetskill,"?"),

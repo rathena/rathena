@@ -1767,6 +1767,11 @@
 	packet(0x0858,-1);
 #endif
 
+// 2011-01-25aRagexe
+#if PACKETVER >= 20110125
+	parseable_packet( HEADER_CZ_TRYCOLLECTION, sizeof( struct PACKET_CZ_TRYCOLLECTION ), clif_parse_CatchCollection, 0 );
+#endif
+
 // 2011-10-05aRagexeRE
 #if PACKETVER >= 20111005
 	parseable_packet(0x0364,5,clif_parse_WalkToXY,2);

@@ -196,6 +196,7 @@
     <ClInclude Include="clif_obfuscation.hpp" />
     <ClInclude Include="clif_packetdb.hpp" />
     <ClInclude Include="clif_shuffle.hpp" />
+    <ClInclude Include="collection.hpp" />
     <ClInclude Include="date.hpp" />
     <ClInclude Include="duel.hpp" />
     <ClInclude Include="elemental.hpp" />
@@ -242,6 +243,7 @@
     <ClCompile Include="chrif.cpp" />
     <ClCompile Include="clan.cpp" />
     <ClCompile Include="clif.cpp" />
+    <ClCompile Include="collection.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="duel.cpp" />
     <ClCompile Include="elemental.cpp" />

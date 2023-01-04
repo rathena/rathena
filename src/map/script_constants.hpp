@@ -6637,6 +6637,15 @@
 	export_constant(IG_MF_NOTELEPORT);
 	export_constant(IG_MF_NORETURN);
 	export_constant(IG_GIANT_FLY_WING);
+	export_constant(IG_COLLECTION_E_HYDRA);
+	export_constant(IG_COLLECTION_E_SHINING_PLANT);
+	export_constant(IG_COLLECTION_LOST_LAMB);
+	export_constant(IG_COLLECTION_SAVAGE);
+	export_constant(IG_COLLECTION_GRAND_PECO);
+	export_constant(IG_COLLECTION_DESERT_WOLF);
+	export_constant(IG_COLLECTION_BOMBPORING);
+	export_constant(IG_COLLECTION_MOON_RABBIT);
+	export_constant(IG_COLLECTION_E_SAVAGE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

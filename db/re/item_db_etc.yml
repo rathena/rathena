@@ -33693,45 +33693,6 @@ Body:
     Name: Stops Buff Reset
     Type: Etc
     Buy: 10
-  - Id: 22589
-    AegisName: Savage_Ora
-    Name: Savage Ora Ora
-    Type: Etc
-    Buy: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 22590
-    AegisName: Grand_Peco_Ora
-    Name: Grand Peco Ora Ora
-    Type: Etc
-    Buy: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 22591
-    AegisName: Dest_Wolf_Ora
-    Name: Desert Wolf Ora Ora
-    Type: Etc
-    Buy: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 22654
     AegisName: Golden_Card
     Name: Golden Seal Card
@@ -34049,6 +34010,12 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25055
+    AegisName: Ice_Bomb
+    Name: Ice Bomb
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25058
     AegisName: TwinkleEffect_Top
     Name: Twinkle Effect (Upper)
