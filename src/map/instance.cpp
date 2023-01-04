@@ -178,9 +178,9 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		if (this->nodeExists(enterNode, "X")) {
-			int16 x;
+			uint16 x;
 
-			if (!this->asInt16(enterNode, "X", x))
+			if (!this->asUInt16(enterNode, "X", x))
 				return 0;
 
 			if (x == 0) {
@@ -199,9 +199,9 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		if (this->nodeExists(enterNode, "Y")) {
-			int16 y;
+			uint16 y;
 
-			if (!this->asInt16(enterNode, "Y", y))
+			if (!this->asUInt16(enterNode, "Y", y))
 				return 0;
 
 			if (y == 0) {
