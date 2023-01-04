@@ -17002,26 +17002,46 @@ void clif_parse_cashshop_close( int fd, map_session_data* sd ){
 //0846 <tabid>.W (CZ_REQ_SE_CASH_TAB_CODE))
 //08c0 <len>.W <openIdentity>.L <itemcount>.W (ZC_ACK_SE_CASH_ITEM_LIST2)
 void clif_parse_CashShopReqTab(int fd, map_session_data *sd) {
+#if PACKETVER_MAIN_NUM >= 20100824 || PACKETVER_RE_NUM >= 20100824 || defined(PACKETVER_ZERO)
+	struct PACKET_CZ_REQ_SE_CASH_TAB_CODE* p_in = (struct PACKET_CZ_REQ_SE_CASH_TAB_CODE*)RFIFOP( fd, 0 );
+
+// TODO: most likely wrong answer packet. Most likely HEADER_ZC_ACK_SE_CASH_ITEM_LIST (0x847) would be correct [Lemongrass]
 // [4144] packet exists only in 2011 and was dropped after
 #if PACKETVER >= 20110222 && PACKETVER < 20120000
-	short tab = RFIFOW(fd, packet_db[RFIFOW(fd,0)].pos[0]);
-	int j;
+	std::shared_ptr<s_cash_item_tab> tab = cash_shop_db.find( static_cast<e_cash_shop_tab>( p_in->tab ) );
 
-	if( tab < 0 || tab >= CASHSHOP_TAB_MAX )
+	if( tab == nullptr ){
 		return;
-
-	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * 6 ) );
-	WFIFOW(fd, 0) = 0x8c0;
-	WFIFOW(fd, 2) = 10 + ( cash_shop_items[tab].count * 6 );
-	WFIFOL(fd, 4) = tab;
-	WFIFOW(fd, 8) = cash_shop_items[tab].count;
-
-	for( j = 0; j < cash_shop_items[tab].count; j++ ) {
-		WFIFOW(fd, 10 + ( 6 * j ) ) = client_nameid( cash_shop_items[tab].item[j]->nameid );
-		WFIFOL(fd, 12 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->price;
 	}
 
-	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * 6 ));
+	// Skip empty tabs, the client only expects filled ones
+	if( tab->items.empty() ){
+		return;
+	}
+
+#if !(PACKETVER_SUPPORTS_SALES)
+	if( tab->tab == CASHSHOP_TAB_SALE ){
+		return;
+	}
+#endif
+
+	struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2* p = (struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2*)packet_buffer;
+
+	p->packetType = HEADER_ZC_ACK_SE_CASH_ITEM_LIST2;
+	p->packetLength = sizeof( struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2 );
+	p->tab = tab->tab;
+	p->count = 0;
+
+	for( std::shared_ptr<s_cash_item> item : tab->items ){
+		p->items[p->count].itemId = client_nameid( item->nameid );
+		p->items[p->count].price = item->price;
+
+		p->packetLength += sizeof( struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub );
+		p->count++;
+	}
+
+	clif_send( p, p->packetLength, &sd->bl, SELF );
+#endif
 #endif
 }
 
