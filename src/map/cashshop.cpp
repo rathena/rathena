@@ -484,8 +484,8 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct P
 			return false;
 		}
 
-#if PACKETVER_SUPPORTS_SALES
 		if( tab == CASHSHOP_TAB_SALE ){
+#if PACKETVER_SUPPORTS_SALES
 			struct sale_item_data* sale = sale_find_item( nameid, true );
 
 			if( sale == NULL ){
@@ -501,8 +501,11 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct P
 				clif_sale_amount( sale, &sd->bl, SELF );
 				return false;
 			}
-		}
+#else
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+			return false;
 #endif
+		}
 
 		switch( pc_checkadditem( sd, nameid, quantity ) ){
 			case CHKADDITEM_EXIST:

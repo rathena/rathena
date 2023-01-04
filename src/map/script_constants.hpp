@@ -9936,9 +9936,7 @@
 	export_constant2("CASHSHOP_TAB_SCROLLS",CASHSHOP_TAB_BUFF);
 	export_constant2("CASHSHOP_TAB_CONSUMABLES",CASHSHOP_TAB_RECOVERY);
 	export_constant2("CASHSHOP_TAB_OTHER",CASHSHOP_TAB_ETC);
-#if PACKETVER_SUPPORTS_SALES
 	export_constant(CASHSHOP_TAB_SALE);
-#endif
 
 	#undef export_constant
 	#undef export_constant2
