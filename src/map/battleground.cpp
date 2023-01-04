@@ -298,13 +298,45 @@ uint64 BattlegroundDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 
 					if (this->nodeExists(team[team_name], "RespawnX")) {
-						if (!this->asInt16(team[team_name], "RespawnX", team_ptr->warp_x))
+						uint16 warp_x;
+
+						if (!this->asUInt16(team[team_name], "RespawnX", warp_x))
 							return 0;
+
+						if (warp_x == 0) {
+							this->invalidWarning(node["RespawnX"], "RespawnX has to be greater than zero.\n");
+							return 0;
+						}
+
+						map_data *md = map_getmapdata(map_mapindex2mapid(map_entry.mapindex));
+
+						if (warp_x >= md->xs) {
+							this->invalidWarning(node["RespawnX"], "RespawnX has to be smaller than %hu.\n", md->xs);
+							return 0;
+						}
+
+						team_ptr->warp_x = warp_x;
 					}
 
 					if (this->nodeExists(team[team_name], "RespawnY")) {
-						if (!this->asInt16(team[team_name], "RespawnY", team_ptr->warp_y))
+						uint16 warp_y;
+
+						if (!this->asUInt16(team[team_name], "RespawnY", warp_y))
 							return 0;
+
+						if (warp_y == 0) {
+							this->invalidWarning(node["RespawnY"], "RespawnY has to be greater than zero.\n");
+							return 0;
+						}
+
+						map_data *md = map_getmapdata(map_mapindex2mapid(map_entry.mapindex));
+
+						if (warp_y >= md->ys) {
+							this->invalidWarning(node["RespawnY"], "RespawnY has to be smaller than %hu.\n", md->ys);
+							return 0;
+						}
+
+						team_ptr->warp_y = warp_y;
 					}
 
 					if (this->nodeExists(team[team_name], "DeathEvent")) {
