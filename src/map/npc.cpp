@@ -410,7 +410,7 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !exists ){
 		barter = std::make_shared<s_npc_barter>();
 		barter->name = npcname;
-		barter->nd = nullptr;
+		barter->npcid = 0;
 	}
 
 	if( this->nodeExists( node, "Map" ) ){
@@ -775,8 +775,8 @@ void BarterDatabase::loadingFinished(){
 
 		struct npc_data* nd = npc_create_npc( barter->m, barter->x, barter->y );
 
-		// Store nd for the destructor
-		barter->nd = nd;
+		// Store the npcid for the destructor
+		barter->npcid = nd->bl.id;
 
 		npc_parsename( nd, barter->name.c_str(), nullptr, nullptr, __FILE__ ":" QUOTE(__LINE__) );
 
@@ -847,11 +847,16 @@ void BarterDatabase::loadingFinished(){
 }
 
 s_npc_barter::~s_npc_barter(){
-	if( this->nd != nullptr ){
-		// Delete the NPC
-		npc_unload( nd, true );
-		// Update NPC event database
-		npc_read_event_script();
+	if( this->npcid != 0 ){
+		struct npc_data* nd = map_id2nd( this->npcid );
+
+		// Check if the NPC still exists or has been removed already
+		if( nd != nullptr ){
+			// Delete the NPC
+			npc_unload( nd, true );
+			// Update NPC event database
+			npc_read_event_script();
+		}
 	}
 }
 
