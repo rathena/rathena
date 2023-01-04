@@ -44,8 +44,8 @@ public:
 };
 
 
-int collection_catch_process1(struct map_session_data *sd, t_itemid item_id);
-int collection_catch_process2(struct map_session_data *sd, uint32 target_id);
+int collection_catch_process1(map_session_data *sd, t_itemid item_id);
+int collection_catch_process2(map_session_data *sd, uint32 target_id);
 
 void do_init_collection(void);
 void do_final_collection(void);

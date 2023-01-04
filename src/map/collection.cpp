@@ -149,7 +149,7 @@ CollectionDatabase collection_db;
  * @param target_class : monster ID of monster to catch
  * @return 0
  */
-int collection_catch_process1(struct map_session_data *sd, t_itemid item_id)
+int collection_catch_process1(map_session_data *sd, t_itemid item_id)
 {
 	nullpo_ret(sd);
 
@@ -165,7 +165,7 @@ int collection_catch_process1(struct map_session_data *sd, t_itemid item_id)
  * @param target_id : monster ID of monster to catch
  * @return 0:success, 1:failure
  */
-int collection_catch_process2(struct map_session_data* sd, uint32 target_id)
+int collection_catch_process2(map_session_data* sd, uint32 target_id)
 {
 	nullpo_retr(1, sd);
 

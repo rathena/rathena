@@ -917,8 +917,8 @@ void clif_pet_food(map_session_data *sd,int foodid,int fail);
 void clif_pet_autofeed_status(map_session_data* sd, bool force);
 
 //collection system
-void clif_catch_collection_process(struct map_session_data* sd);
-void clif_collection_roulette(struct map_session_data* sd, int data);
+void clif_catch_collection_process(map_session_data* sd);
+void clif_collection_roulette(map_session_data* sd, int data);
 
 //friends list
 int clif_friendslist_toggle_sub(map_session_data *sd,va_list ap);

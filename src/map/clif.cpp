@@ -8340,7 +8340,7 @@ void clif_pet_autofeed_status(map_session_data* sd, bool force) {
 
 /// Initiates the monster catch process (ZC_START_COLLECTION).
 /// 08b4
-void clif_catch_collection_process(struct map_session_data* sd)
+void clif_catch_collection_process(map_session_data* sd)
 {
 	nullpo_retv(sd);
 
@@ -8353,7 +8353,7 @@ void clif_catch_collection_process(struct map_session_data* sd)
 
 /// Attempt to catch a collection (CZ_TRYCOLLECTION).
 /// 0x08b5 <id>.L
-void clif_parse_CatchCollection(int fd, struct map_session_data* sd) {
+void clif_parse_CatchCollection(int fd, map_session_data* sd) {
 	const struct PACKET_CZ_TRYCOLLECTION* p = (struct PACKET_CZ_TRYCOLLECTION*)RFIFOP(fd, 0);
 	collection_catch_process2(sd, p->targetId);
 }
@@ -8362,7 +8362,7 @@ void clif_parse_CatchCollection(int fd, struct map_session_data* sd) {
 /// 08b6 <result>.B
 ///     0 = failure
 ///     1 = success
-void clif_collection_roulette(struct map_session_data* sd, int data)
+void clif_collection_roulette(map_session_data* sd, int data)
 {
 	nullpo_retv(sd);
 
