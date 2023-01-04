@@ -17037,6 +17037,12 @@ void clif_cashshop_list( map_session_data* sd ){
 			continue;
 		}
 
+#if !(PACKETVER_SUPPORTS_SALES)
+		if( tab->tab == CASHSHOP_TAB_SALE ){
+			continue;
+		}
+#endif
+
 		struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *p = (struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *)packet_buffer;
 
 		p->packetType = HEADER_ZC_ACK_SCHEDULER_CASHITEM;
