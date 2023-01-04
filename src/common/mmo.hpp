@@ -353,8 +353,8 @@ enum equip_pos : uint32 {
 };
 
 struct point {
-	unsigned short map;
-	short x,y;
+	uint16 map;
+	uint16 x,y;
 };
 
 struct startitem {
