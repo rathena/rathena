@@ -19,25 +19,39 @@
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
+#include "navi.hpp"
 #include "script.hpp"
+
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_map{
+		class MapServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_crash() override;
+				void handle_shutdown() override;
+
+			public:
+				MapServer() : Core( e_core_type::MAP ){
+
+				}
+		};
+	}
+}
 
 struct npc_data;
 struct item_data;
 struct Channel;
-
-enum E_MAPSERVER_ST {
-	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
-	MAPSERVER_ST_STARTING,
-	MAPSERVER_ST_SHUTDOWN,
-	MAPSERVER_ST_LAST
-};
 
 struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
 int map_msg_config_read(const char *cfgName,int lang);
-const char* map_msg_txt(struct map_session_data *sd,int msg_number);
+const char* map_msg_txt(map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
 
@@ -52,7 +66,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 200
+#define MAX_LEVEL 250
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -69,11 +83,13 @@ void map_msg_reload(void);
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
 #define JOBL_THIRD 0x4000 //16384
+#define JOBL_FOURTH 0x8000 //32768
 
 //for filtering and quick checking.
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
 #define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
+#define MAPID_FOURTHMASK (JOBL_FOURTH|MAPID_THIRDMASK|JOBL_UPPER)
 
 //First Jobs
 //Note the oddity of the novice:
@@ -220,6 +236,26 @@ enum e_mapid : uint64{
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
+//4-1 Jobs
+	MAPID_HYPER_NOVICE = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_SUPER_NOVICE,
+	MAPID_DRAGON_KNIGHT,
+	MAPID_ARCH_MAGE,
+	MAPID_WINDHAWK,
+	MAPID_CARDINAL,
+	MAPID_MEISTER,
+	MAPID_SHADOW_CROSS,
+	MAPID_SKY_EMPEROR,
+	MAPID_NIGHT_WATCH = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_REBELLION,
+	MAPID_SHINKIRO_SHIRANUI,
+	MAPID_SPIRIT_HANDLER = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|JOBL_2_1|MAPID_SUMMONER,
+//4-2 Jobs
+	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_CRUSADER,
+	MAPID_ELEMENTAL_MASTER,
+	MAPID_TROUBADOURTROUVERE,
+	MAPID_INQUISITOR,
+	MAPID_BIOLO,
+	MAPID_ABYSS_CHASER,
+	MAPID_SOUL_ASCETIC,
 // Additional constants
 	MAPID_ALL = UINT64_MAX
 };
@@ -273,6 +309,7 @@ enum npc_subtype : uint8{
 	NPCTYPE_POINTSHOP, /// Pointshop
 	NPCTYPE_TOMB, /// Monster tomb
 	NPCTYPE_MARKETSHOP, /// Marketshop
+	NPCTYPE_BARTER, /// Barter
 };
 
 enum e_race : int8{
@@ -322,6 +359,7 @@ enum e_race2 : uint8{
 	RC2_WERNER_LAB,
 	RC2_TEMPLE_DEMON,
 	RC2_ILLUSION_VAMPIRE,
+	RC2_MALANGDO,
 	RC2_MAX
 };
 
@@ -381,6 +419,9 @@ enum mob_ai {
 	AI_LEGION,
 	AI_FAW,
 	AI_GUILD,
+	AI_WAVEMODE,
+	AI_ABR,
+	AI_BIONIC,
 	AI_MAX
 };
 
@@ -462,6 +503,12 @@ enum _sp {
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
 
+	// 4th jobs
+	SP_POW=219, SP_STA, SP_WIS, SP_SPL, SP_CON, SP_CRT,	// 219-224
+	SP_PATK, SP_SMATK, SP_RES, SP_MRES, SP_HPLUS, SP_CRATE,	// 225-230
+	SP_TRAITPOINT, SP_AP, SP_MAXAP,	// 231-233
+	SP_UPOW=247, SP_USTA, SP_UWIS, SP_USPL, SP_UCON, SP_UCRT,	// 247-252
+
 	// original 1000-
 	SP_ATTACKRANGE=1000,	SP_ATKELE,SP_DEFELE,	// 1000-1002
 	SP_CASTRATE, SP_MAXHPRATE, SP_MAXSPRATE, SP_SPRATE, // 1003-1006
@@ -489,6 +536,7 @@ enum _sp {
 	SP_DELAYRATE,SP_HP_DRAIN_VALUE_RACE, SP_SP_DRAIN_VALUE_RACE, // 1083-1085
 	SP_IGNORE_MDEF_RACE_RATE,SP_IGNORE_DEF_RACE_RATE,SP_SKILL_HEAL2,SP_ADDEFF_ONSKILL, //1086-1089
 	SP_ADD_HEAL_RATE,SP_ADD_HEAL2_RATE, SP_EQUIP_ATK, //1090-1092
+	SP_PATK_RATE,SP_SMATK_RATE,SP_RES_RATE,SP_MRES_RATE,SP_HPLUS_RATE,SP_CRATE_RATE,SP_ALL_TRAIT_STATS,SP_MAXAPRATE,// 1093-1100
 
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_NO_MISC_DAMAGE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
@@ -515,7 +563,8 @@ enum _sp {
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
-	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN // 2098-2099
+	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
+	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2 // 2102-2103
 };
 
 enum _look {
@@ -596,7 +645,7 @@ enum e_mapflag : int16 {
 	MF_NOUSECART,
 	MF_NOITEMCONSUMPTION,
 	MF_NOSUNMOONSTARMIRACLE,
-	MF_NOMINEEFFECT,
+	MF_FORCEMINEFFECT,
 	MF_NOLOCKON,
 	MF_NOTOMB,
 	MF_SKILL_DAMAGE,	//60
@@ -609,6 +658,13 @@ enum e_mapflag : int16 {
 	MF_PRIVATEAIRSHIP_SOURCE,
 	MF_PRIVATEAIRSHIP_DESTINATION,
 	MF_SKILL_DURATION,
+	MF_NOCASHSHOP, // 70
+	MF_NORODEX,
+	MF_NORENEWALEXPPENALTY,
+	MF_NORENEWALDROPPENALTY,
+	MF_NOPETCAPTURE,
+	MF_NOBUYINGSTORE,
+	MF_NODYNAMICNPC,
 	MF_MAX
 };
 
@@ -671,7 +727,7 @@ enum cell_t{
 	CELL_NOCHAT,
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
-
+	CELL_NOBUYINGSTORE,
 };
 
 // used by map_getcell()
@@ -695,6 +751,7 @@ enum cell_chk : uint8 {
 	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
+	CELL_CHKNOBUYINGSTORE,	// Whether the cell denies ALL_BUYING_STORE skill
 
 };
 
@@ -714,7 +771,8 @@ struct mapcell
 		novending : 1,
 		nochat : 1,
 		maelstrom : 1,
-		icewall : 1;
+		icewall : 1,
+		nobuyingstore : 1;
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -745,7 +803,7 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::unordered_map<int16, int> flag;
+	std::vector<int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -769,6 +827,13 @@ struct map_data {
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
+#ifdef MAP_GENERATOR
+	struct {
+		std::vector<const struct npc_data *> npcs;
+		std::vector<const struct navi_link *> warps_into;
+		std::vector<const struct navi_link *> warps_outof;
+	} navi;
+#endif
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -780,6 +845,14 @@ struct map_data_other_server {
 	uint32 ip;
 	uint16 port;
 };
+
+struct inter_conf {
+	uint32 start_status_points;
+	bool emblem_woe_change;
+	uint32 emblem_transparency_limit;
+};
+
+extern struct inter_conf inter_config;
 
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk);
 int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
@@ -794,8 +867,6 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
-
-extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;
@@ -1036,7 +1107,7 @@ int map_get_new_object_id(void);
 int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
 bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
 //
-int map_quit(struct map_session_data *);
+int map_quit(map_session_data *);
 // npc
 bool map_addnpc(int16 m,struct npc_data *);
 
@@ -1047,7 +1118,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(int src_m, int instance_id);
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
@@ -1055,17 +1126,17 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
 // player to map session
 void map_addnickdb(int charid, const char* nick);
 void map_delnickdb(int charid, const char* nick);
-void map_reqnickdb(struct map_session_data* sd,int charid);
+void map_reqnickdb(map_session_data* sd,int charid);
 const char* map_charid2nick(int charid);
-struct map_session_data* map_charid2sd(int charid);
+map_session_data* map_charid2sd(int charid);
 
-struct map_session_data * map_id2sd(int id);
+map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
-struct mercenary_data* map_id2mc(int id);
+struct s_mercenary_data* map_id2mc(int id);
 struct pet_data* map_id2pd(int id);
-struct elemental_data* map_id2ed(int id);
+struct s_elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
@@ -1080,12 +1151,12 @@ int map_eraseipport(unsigned short map, uint32 ip, uint16 port);
 int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
-void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
+void map_foreachpc(int (*func)(map_session_data* sd, va_list args), ...);
 void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
-struct map_session_data * map_nick2sd(const char* nick, bool allow_partial);
+map_session_data * map_nick2sd(const char* nick, bool allow_partial);
 struct mob_data * map_getmob_boss(int16 m);
 struct mob_data * map_id2boss(int id);
 
@@ -1126,7 +1197,7 @@ void map_flags_init(void);
 
 bool map_iwall_exist(const char* wall_name);
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
-void map_iwall_get(struct map_session_data *sd);
+void map_iwall_get(map_session_data *sd);
 bool map_iwall_remove(const char *wall_name);
 
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
@@ -1163,7 +1234,7 @@ extern const char*MSG_CONF_NAME_POR;
 extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
-typedef struct map_session_data TBL_PC;
+typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
 typedef struct mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
@@ -1171,8 +1242,8 @@ typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct mercenary_data   TBL_MER;
-typedef struct elemental_data	TBL_ELEM;
+typedef struct s_mercenary_data   TBL_MER;
+typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
@@ -1185,6 +1256,7 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
+extern char barter_table[32];
 extern char buyingstores_table[32];
 extern char buyingstore_items_table[32];
 extern char item_table[32];
@@ -1196,6 +1268,7 @@ extern char mob_skill2_table[32];
 extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
+extern char partybookings_table[32];
 extern char roulette_table[32];
 extern char guild_storage_log_table[32];
 

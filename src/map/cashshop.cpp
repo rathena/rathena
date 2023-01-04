@@ -38,7 +38,7 @@ static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
 	int j;
 	struct cash_item_data* cid;
 
-	if( !itemdb_exists( nameid ) ){
+	if( !item_db.exists( nameid ) ){
 		ShowWarning( "cashshop_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return 0;
 	}
@@ -156,7 +156,7 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	time_t now = time(NULL);
 	struct sale_item_data* sale_item = NULL;
 
-	if( !itemdb_exists(nameid) ){
+	if( !item_db.exists(nameid) ){
 		ShowWarning( "sale_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return false;
 	}
@@ -409,7 +409,7 @@ struct sale_item_data* sale_find_item( t_itemid nameid, bool onsale ){
 	return sale_items.item[i];
 }
 
-void sale_notify_login( struct map_session_data* sd ){
+void sale_notify_login( map_session_data* sd ){
 	int i;
 
 	for( i = 0; i < sale_items.count; i++ ){
@@ -467,11 +467,10 @@ static void cashshop_read_db( void ){
  * @param item_list Array of item ID
  * @return true: success, false: fail
  */
-bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;
-	item_data *id;
 
 	if( sd == NULL || item_list == NULL || !cash_shop_defined){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_UNKNOWN );
@@ -502,7 +501,8 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 		}
 
 		nameid = item_list[i].itemId = cash_shop_items[tab].item[j]->nameid; //item_avail replacement
-		id = itemdb_exists(nameid);
+
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
 		if( !id ){
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );

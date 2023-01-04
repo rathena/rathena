@@ -3,7 +3,12 @@
 
 #include "yamlupgrade.hpp"
 
+using namespace rathena::tool_yamlupgrade;
+
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
+static bool upgrade_item_db(std::string file, const uint32 source_version);
+static bool upgrade_job_stats(std::string file, const uint32 source_version);
+static bool upgrade_status_db(std::string file, const uint32 source_version);
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -34,40 +39,40 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 
 			ShowNotice("Upgrade process has begun.\n");
 
-			std::ofstream out;
+			std::ofstream outFile;
 
 			body.~Emitter();
 			new (&body) YAML::Emitter();
-			out.open(to);
+			outFile.open(to);
 
-			if (!out.is_open()) {
+			if (!outFile.is_open()) {
 				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
-			prepareHeader(out, type, version, name);
+			prepareHeader(outFile, type, version, name);
 			if (inNode["Body"].IsDefined()) {
 				prepareBody();
 
 				if (!lambda(path, name_ext, source_version)) {
-					out.close();
+					outFile.close();
 					return false;
 				}
 
 				finalizeBody();
-				out << body.c_str();
+				outFile << body.c_str();
 			}
-			prepareFooter(out);
+			prepareFooter(outFile);
 			// Make sure there is an empty line at the end of the file for git
-			out << "\n";
-			out.close();
+			outFile << "\n";
+			outFile.close();
 		}
 	}
 
 	return true;
 }
 
-int do_init(int argc, char** argv) {
+bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
@@ -105,13 +110,28 @@ int do_init(int argc, char** argv) {
 	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, uint32 source_version) -> bool {
 		return upgrade_achievement_db(path + name_ext, source_version);
 	})) {
+		return false;
+	}
+
+	if (!process("ITEM_DB", 3, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_item_db(path + name_ext, source_version);
+		})) {
+		return false;
+	}
+
+	if (!process("JOB_STATS", 2, root_paths, "job_stats", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_job_stats(path + name_ext, source_version);
+		})) {
+		return false;
+	}
+	
+	if (!process("STATUS_DB", 3, root_paths, "status", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_status_db(path + name_ext, source_version);
+		})) {
 		return 0;
 	}
 
-	return 0;
-}
-
-void do_final(void) {
+	return true;
 }
 
 // Implementation of the upgrade functions
@@ -215,7 +235,93 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 		entries++;
 	}
 
-	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+static bool upgrade_item_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 2
+		if( source_version < 2 ){
+			// Add armor level to all equipments
+			if( input["Type"].IsDefined() && input["Type"].as<std::string>() == "Armor" ){
+				input["ArmorLevel"] = 1;
+			}
+		}
+
+		// TODO: this currently converts all scripts using Literal syntax to normal double quote strings
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_job_stats(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 2
+		if (source_version < 2) {
+			// Field name changes
+			if (input["HPFactor"].IsDefined()) {
+				input["HpFactor"] = input["HPFactor"].as<uint32>();
+				input.remove("HPFactor");
+			}
+			if (input["HpMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HpMultiplicator"].as<uint32>();
+				input.remove("HpMultiplicator");
+			}
+			if (input["HPMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HPMultiplicator"].as<uint32>();
+				input.remove("HPMultiplicator");
+			}
+			if (input["SpFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SpFactor"].as<uint32>();
+				input.remove("SpFactor");
+			}
+			if (input["SPFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SPFactor"].as<uint32>();
+				input.remove("SPFactor");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' job stats in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_status_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 3
+		if (source_version < 3) {
+			// Rename End to EndOnStart
+			if (input["End"].IsDefined()) {
+				input["EndOnStart"] = input["End"];
+				input.remove("End");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' statuses in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<YamlUpgradeTool>( argc, argv );
 }

@@ -1,0 +1,615 @@
+//===== rAthena Script =======================================
+//= Episode 16.2 - Illusion Enchants
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Illusion series related merchants and enchanters
+//===== Changelog: ===========================================
+//= 1.0 Initial release of Illusion of Moonlight [crazyarashi]
+//= 1.1 Cleanup and improvements [Everade]
+//= 1.2 Added Illusion of Vampire enchanter [Capuche]
+//============================================================
+
+//============================================================
+//= Illusion of Moonlight
+//============================================================
+pay_d03_i,160,45,3	script	Gemcutter#ilp20	4_TOWER_17,3,3,{
+	mes "[ Gemcutter ]";
+	mes "Do you have business with me?";
+	next;
+	switch (select("What are you doing here?:Upgrade Weapon.:Upgrade Armor.")) {
+	case 1:
+		mes "[ Gemcutter ]";
+		mes "I came to the ruined village,";
+		mes "looking for some materials. Touched some strange light, and now I'm here.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "I've decided to stick around for a little while. Figured I'd be safe so long as I stay close to this soldier.";
+		mes "I have a proposition for you. I want some materials that can only be found in this place.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Get them for me, and I'll improve your equipment in exchange. Just so you know, I can only improve certain types.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "If you're interested, we can discuss the details of our bargain.";
+		close;
+	case 2:
+		disable_items;
+		if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+			mes "- You're carrying too many items to proceed. -";
+			close;
+		}
+		setarray .@reward_id[0],
+			26109,		// Illusion Staff of Bordeaux
+			28725,		// Illusion Moonlight Dagger
+			16063,		// Illusion Long Mace
+			26007;		// Illusion Spectral Spear
+		.@size = getarraysize(.@reward_id);
+
+		.@refine_req = 9;
+
+		for ( .@i = 0; .@i < .@size; ++.@i )
+			.@reward_name$[.@i] = replacestr( getitemname(.@reward_id[.@i]), ":", "" );
+
+		mes "[ Gemcutter ]";
+		mes "The following is the list of equipment I can handle.";
+		for ( .@i = 0; .@i < .@size; ++.@i )
+			mes "<ITEM>" + .@reward_name$[.@i] + "<INFO>" + .@reward_id[.@i] + "</INFO></ITEM>";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Make sure ^0000FFyour equipment is refined to at least +" + .@refine_req + "^000000 before bringing it to me.";
+		mes "That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000";
+		mes "Otherwise, I can't evaluate its condition.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "As you may have guessed, your equipment will transform into something new after this.";
+		mes "In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
+		next;
+		mes "[ Gemcutter ]";
+		mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.";
+		mes "Pick an item you want and I'll tell you what I need.";
+		next;
+		switch( select( .@reward_name$[0], .@reward_name$[1], .@reward_name$[2], .@reward_name$[3] ) ) {
+		case 1:
+			.@reward = .@reward_id[0];		// Illusion Staff of Bordeaux
+			.@eq_req = 1648;				// Staff of Bordeaux
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,30,					// Illusion Stones
+				25256,100;					// Hazy Dreams
+			break;
+		case 2:
+			.@reward = .@reward_id[1];		// Illusion Moonlight Dagger
+			.@eq_req = 1234;				// Moonlight Dagger
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,60,					// Illusion Stones
+				25256,100;					// Hazy Dreams
+			break;
+		case 3:
+			.@reward = .@reward_id[2];		// Illusion Long Mace
+			.@eq_req = 1525;				// Long Mace
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,10,					// Illusion Stones
+				25256,20;					// Hazy Dreams
+			break;
+		case 4:
+			.@reward = .@reward_id[3];		// Illusion Spectral Spear
+			.@eq_req = 1477;				// Spectral Spear
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,20,					// Illusion Stones
+				25256,100;					// Hazy Dreams
+			break;
+		}
+		break;
+	case 3:
+		disable_items;
+		if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+			mes "- You're carrying too many items to proceed. -";
+			close;
+		}
+		setarray .@reward_id[0],
+			19209,		// Illusion Nurse Cap
+			19210,		// Illusion Apple of Archer
+			15195,		// Illusion Puente Robe
+			20838,		// Illusion Muffler [1]
+			22133;		// Illusion Shoes [1]
+		.@size = getarraysize(.@reward_id);
+
+		.@refine_req = 9;
+
+		for ( .@i = 0; .@i < .@size; ++.@i )
+			.@reward_name$[.@i] = replacestr( getitemname(.@reward_id[.@i]), ":", "" );
+
+		mes "[ Gemcutter ]";
+		mes "The following is the list of equipment I can handle.";
+		for ( .@i = 0; .@i < .@size; ++.@i )
+			mes "<ITEM>" + .@reward_name$[.@i] + "<INFO>" + .@reward_id[.@i] + "</INFO></ITEM>";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Make sure ^0000FFyour equipment is refined to at least +" + .@refine_req + "^000000 before bringing it to me.";
+		mes "That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000";
+		mes "Otherwise, I can't evaluate its condition.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "As you may have guessed, your equipment will transform into something new after this.";
+		mes "In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
+		next;
+		mes "[ Gemcutter ]";
+		mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.";
+		mes "Pick an item you want and I'll tell you what I need.";
+		next;
+		switch( select( .@reward_name$[0], .@reward_name$[1], .@reward_name$[2], .@reward_name$[3], .@reward_name$[4] ) ) {
+		case 1:
+			.@reward = .@reward_id[0];		// Illusion Nurse Cap
+			.@eq_req = 2277;				// Nurse Cap
+			.@part = EQI_HEAD_TOP;
+
+			setarray .@items_req[0],
+				25271,10,					// Illusion Stones
+				25257,100;					// Bloody_Love_Letter
+			break;
+		case 2:
+			.@reward = .@reward_id[1];		// Illusion Apple of Archer
+			.@eq_req = 2285;				// Apple of Archer
+			.@part = EQI_HEAD_TOP;
+
+			setarray .@items_req[0],
+				25271,10,					// Illusion Stones
+				25258,100;					// Broken_Arrow
+			break;
+		case 3:
+			.@reward = .@reward_id[2];		// Illusion Puente Robe
+			.@eq_req = 15012;				// Puente Robe
+			.@part = EQI_ARMOR;
+
+			setarray .@items_req[0],
+				25271,10,					// Illusion Stones
+				25256,100;					// Hazy Dreams
+			break;
+		case 4:
+			.@reward = .@reward_id[3];		// Illusion Muffler [1]
+			.@eq_req = 2504;				// Muffler
+			.@part = EQI_GARMENT;
+
+			setarray .@items_req[0],
+				25271,10,					// Illusion Stones
+				23228,100;					// Hazy_Mooncake
+			break;
+		case 5:
+			.@reward = .@reward_id[4];		// Illusion Shoes [1]
+			.@eq_req = 2404;				// Shoes
+			.@part = EQI_SHOES;
+
+			setarray .@items_req[0],
+				25271,10,					// Illusion Stones
+				23228,100;					// Hazy_Mooncake
+			break;
+		}
+		break;
+	}
+	mes "[Gemcutter]";
+	mes "For that equipment, I need the following materials.";
+	mes "^4d4fff +" + .@refine_req + " " + getitemname(.@eq_req) + "";
+	mes "" + .@items_req[1] + " " + getitemname(.@items_req[0]) + "";
+	mes "" + .@items_req[3] + " " + getitemname(.@items_req[2]) + "^000000";
+	mes "Do you want to continue?";
+	next;
+	if (select( "Continue.", "I'll bring those materials." ) == 2) {
+		mes "[Gemcutter]";
+		mes "Come back when you're ready.";
+		close;
+	}
+	if (countitem(.@items_req[0]) < .@items_req[1] || countitem(.@items_req[2]) < .@items_req[3]) {
+		mes "[Gemcutter]";
+		mes "You don't have all the materials.";
+		close;
+	}
+	.@equip_id = getequipid(.@part);
+	if (.@equip_id == -1) {
+		mes "[Gemcutter]";
+		if (.@part == EQI_HAND_R)
+			mes "Where's your weapon?";
+		else
+			mes "Why don't you go wear that equipment first?";
+		close;
+	}
+	if (.@equip_id != .@eq_req) {
+		mes "[Gemcutter]";
+		mes "Please equip a ^4d4fff+9 " + getitemname(.@eq_req) + ".^000000";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) < .@refine_req) {
+		mes "[Gemcutter]";
+		mes "I can only upgrade equipment that is ^4d4fffrefined to at least +" + .@refine_req + ".^000000";
+		close;
+	}
+	mes "[Gemcutter]";
+	mes "There you go.";
+	delequip .@part;
+	delitem .@items_req[0], .@items_req[1];
+	delitem .@items_req[2], .@items_req[3];
+	getitem .@reward,1;
+	close;
+
+OnTouch:
+	if (illusion_moonlight > 7)
+		npctalk "What kind of place is this?", "", bc_self;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Vampire
+//============================================================
+gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "[Great Merchant]";
+		mes "You don't seem to be able to carry any more stuff. Why don't you lighten your bag?";
+		close;
+	}
+	disable_items;
+	mes "[Great Merchant]";
+	mes "Adventurer, do you have ^0000cdIllusion Stones^000000? If you have a ^0000cdweapon, a piece armor^000000, or ^0000cdan accessory at Refining Level 9 or higher^000000, ";
+	mes "then I can exchange it for something better at the cost of some Illusion Stones and other materials.";
+	next;
+	mes "[Great Merchant]";
+	mes "Check the ^0000cdcatalog^000000 for the available equipment and necessary materials.";
+	next;
+	mes "[Great Merchant]";
+	mes "So, what do you want?";
+	next;
+	switch( select( "Weapon exchange (5 kinds)", "Armor exchange (1 kind)", "Accessory exchange (2 kinds)", "Check the catalog.", "What are Illusion Stones?", "Can I refine the equipment I get in exchange for my Illusion Stones?" ) ) {
+	case 1:
+		setarray .@item_req[0],		// item equipped aren't required to build the menu color
+			28022, 25271,80, 25261,20,			// Illusion_Infiltrator
+			28023, 25271,10, 25264,100,			// Illusion_Sharpened_Legbone_of_Ghoul
+			2039,  25271,40, 25261,100,			// Illusion_Wizardry_Staff
+			18149, 25271,50, 25265,100,			// Illusion_Ballista
+			28612, 25271,50, 25262,10;			// Illusion_Apocalypse
+		.@size = getarraysize(.@item_req);
+		for ( .@i = 0; .@i < .@size; .@i += 5 ) {
+			if (countitem(.@item_req[.@i+1]) < .@item_req[.@i+2] || countitem(.@item_req[.@i+3]) < .@item_req[.@i+4])
+				.@menu$ += "^aaaaaa" + getitemname(.@item_req[.@i]) + ".^000000:";
+			else
+				.@menu$ += getitemname(.@item_req[.@i]) + ".:";
+		}
+		switch( select(.@menu$) ) {
+		case 1:
+			mes "[Great Merchant]";
+			mes "Illusion Infiltrator, huh? That's a good weapon. Dreadful name, though. Let's see what you've got.";
+			callsub( S_WeaponArmor, 28022,	// Illusion_Infiltrator
+				EQI_HAND_R,
+				1266,						// Infiltrator_
+				25271,80,					// Illusion Stones
+				25261,20					// Torn_Diary
+			);
+		case 2:
+			mes "[Great Merchant]";
+			mes "Illusion Sharpened Legbone of Ghoul. It perfectly fits in this place. Let's see what you've got.";
+			callsub( S_WeaponArmor, 28023,	// Illusion_Sharpened_Legbone_of_Ghoul
+				EQI_HAND_R,
+				1260,						// Ghoul_Leg
+				25271,10,					// Illusion Stones
+				25264,100					// NightmareOfLump
+			);
+		case 3:
+			mes "[Great Merchant]";
+			mes "Illusion Wizardry Staff, huh? *Chuckle* Having that is every mage's dream. Let's see what you've got.";
+			callsub( S_WeaponArmor, 2039,	// Illusion_Wizardry_Staff
+				EQI_HAND_R,
+				1473,						// Wizardy_Staff
+				25271,40,					// Illusion Stones
+				25261,100					// SuspiciousMagicCircle
+			);
+		case 4:
+			mes "[Great Merchant]";
+			mes "Illusion Ballista... I would've loved to have this when, sigh, never mind. Let's see what you've got.";
+			callsub( S_WeaponArmor, 18149,	// Illusion_Ballista
+				EQI_HAND_R,
+				1727,						// Balistar_
+				25271,50,					// Illusion Stones
+				25265,100					// Shining_Spore
+			);
+		case 5:
+			mes "[Great Merchant]";
+			mes "Illusion Book of the Apocalypse, huh? It's been a long time since I heard the story behind this book. Anyway, let's see what you've got.";
+			callsub( S_WeaponArmor, 28612,	// Illusion_Apocalypse
+				EQI_HAND_R,
+				1557,						// Book_Of_The_Apocalypse
+				25271,50,					// Illusion Stones
+				25262,10					// Dried_Clover
+			);
+		}
+	case 2:
+		if (countitem(25271) < 30 || countitem(25263) < 200)
+			.@menu$ = "^aaaaaa" + getitemname(20840) + ".^000000";
+		else
+			.@menu$ = getitemname(20840);
+		select(.@menu$);
+		mes "[Great Merchant]";
+		mes "Illusion Ancient Cape. Someone in this place? *Ahem* Let's see what you've got.";
+		callsub( S_WeaponArmor, 20840,	// Illusion_Ancient_Cape
+			EQI_GARMENT,
+			2525,						// Cape_Of_Ancient_Lord_
+			25271,30,					// Illusion Stones
+			25263,200					// Short_Bat_Fur
+		);
+	case 3:
+		setarray .@item_req[0],		// item equipped aren't required to build the menu color
+			28508, 25271,50, 25266,400,			// Illusion_Skull_Ring
+			28509, 25271,50, 25267,400;			// Illusion_Ring
+		.@size = getarraysize(.@item_req);
+		for ( .@i = 0; .@i < .@size; .@i += 5 ) {
+			if (countitem(.@item_req[.@i+1]) < .@item_req[.@i+2] || countitem(.@item_req[.@i+3]) < .@item_req[.@i+4])
+				.@menu$ += "^aaaaaa" + getitemname(.@item_req[.@i]) + ".^000000:";
+			else
+				.@menu$ += getitemname(.@item_req[.@i]) + ".:";
+		}
+		switch( select(.@menu$) ) {
+		case 1:
+			mes "[Great Merchant]";
+			mes "Illusion Skull Ring. *Chuckle* I remember when I was young, my friends and I wore this ring and played pranks, hah hah, never mind. That was a long time ago. Anyway, let's see what you've got.";
+			callsub( S_Accessory, 28508,	// Illusion_Skull_Ring
+				2715,						// Skul_Ring_
+				25271,50,					// Illusion Stones
+				25266,400					// Dried_Yggdrasil_Leaf
+			);
+		case 2:
+			mes "[Great Merchant]";
+			mes "Illusion Ring... It may not look much, but it has an important meaning to me. Anyway, let's see what you've got.";
+			callsub( S_Accessory, 28509,	// Illusion_Ring
+				2621,						// Ring_
+				25271,50,					// Illusion Stones
+				25267,400					// SuspiciousMagicCircle
+			);
+		}
+	case 4:
+		while( true ) {
+			mes "[Great Merchant]";
+			mes "Do you want to see my catalog? Sure thing.";
+			next;
+			switch( select( "Weapons (5 kinds)", "Armor (1 kind)", "Accessory (2 kinds)", "Cancel." ) ) {
+			case 1:
+				switch( select( "Illusion Infiltrator", "Illusion Sharpened Legbone of Ghoul", "Illusion Wizardry Staff", "Illusion Ballista", "Illusion Book of the Apocalypse" ) ) {
+				case 1:
+					mes "<ITEM>Illusion Infiltrator<INFO>28022</INFO></ITEM>";
+					mes "***********************************";
+					mes "Necessary Items";
+					mes "^0000cd+9 or higher^000000 Infiltrator ^C71585[1]^000000 x1";
+					mes "Socket Artisan";
+					mes "<NAVI>: Seiyablem in Prontera<INFO>prt_in,33,70,000,0,</INFO></NAVI>";
+					mes "80 Illusion Stones";
+					mes "20 Torn Papers";
+					break;
+				case 2:
+					mes "<ITEM>Illusion Sharpened Legbone of Ghoul<INFO>28023</INFO></ITEM>";
+					mes "********************************";
+					mes "Necessary Items";
+					mes "^0000cd+9 or higher^000000 Sharpened Legbone of Ghoul x1";
+					mes "10 Illusion Stones";
+					mes "100 Clusters of Nightmares";
+					break;
+				case 3:
+					mes "<ITEM>Illusion Wizardry Staff<INFO>2039</INFO></ITEM>";
+					mes "********************************";
+					mes "Necessary Items";
+					mes "^0000cd+9 or higher^000000 Wizardry Staff x1";
+					mes "40 Illusion Stones";
+					mes "100 Suspicious Pentacles";
+					break;
+				case 4:
+					mes "<ITEM>Illusion Ballista<INFO>18149</INFO></ITEM>";
+					mes "*************************";
+					mes "Necessary Items";
+					mes "^0000cd+9 or higher^000000 Ballista ^C71585[1]^000000 x1";
+					mes "Socket Artisan";
+					mes "<NAVI>: Seiyablem in Prontera<INFO>prt_in,33,70,000,0,</INFO></NAVI>";
+					mes "50 Illusion Stones";
+					mes "100 Shining Spores";
+					break;
+				case 5:
+					mes "<ITEM>Illusion Book of the Apocalypse<INFO>28612</INFO></ITEM>";
+					mes "***********************";
+					mes "Necessary Items";
+					mes "^0000cd+9 or higher^000000 Book of the Apocalypse x1";
+					mes "50 Illusion Stones";
+					mes "10 Well-dried Clovers";
+					break;
+				}
+				break;
+			case 2:
+				select("Illusion Ancient Cape");
+				mes "<ITEM>Illusion Ancient Cape<INFO>20840</INFO></ITEM>";
+				mes "*******************************";
+				mes "Necessary Items";
+				mes "^0000cd+9 or higher^000000 Ancient Cape ^C71585[1]^000000 x1";
+				mes "Socket Artisan";
+				mes "<NAVI>: Leablem in Prontera<INFO>prontera,244,169,000,0,</INFO></NAVI>";
+				mes "30 Illusion Stones";
+				mes "200 Short Bat Hairs";
+				break;
+			case 3:
+				switch( select( "Illusion Skull Ring", "Illusion Ring" ) ) {
+				case 1:
+					mes "<ITEM>Illusion Skull Ring<INFO>28508</INFO></ITEM>";
+					mes "*************************";
+					mes "Necessary Items";
+					mes "Skull Ring ^C71585[1]^000000 x1";
+					mes "Socket Artisan";
+					mes "<NAVI>: Leablem in Prontera<INFO>prontera,244,169,000,0,</INFO></NAVI>";
+					mes "50 Illusion Stones";
+					mes "400 Dried Yggdrasil Leaves";
+					break;
+				case 2:
+					mes "<ITEM>Illusion Ring<INFO>28509</INFO></ITEM>";
+					mes "********************";
+					mes "Necessary Items";
+					mes "Ring ^C71585[1]^000000 x1";
+					mes "50 Illusion Stones";
+					mes "400 Suspicious Pentacles";
+					break;
+				}
+				break;
+			case 4:
+				mes "[Great Merchant]";
+				mes "Did you find something you like? Let me know if I can help you.";
+				close;
+			}
+			next;
+		}
+	case 5:
+		mes "[Great Merchant]";
+		mes "What are ^0000cdIllusion Stones^000000, you ask? Well... I don't think anyone knows exactly what they are.";
+		next;
+		mes "[Great Merchant]";
+		mes "I only know they're rare and can only be found in some special places, and I'm here to collect them for my clients.";
+		next;
+		mes "[Great Merchant]";
+		mes "My clients want to figure out what these stones are. They're paying me a lot of money,";
+		next;
+		mes "[Great Merchant]";
+		mes "so I could offer adventurers like you ^0000cdexpensive equipment in exchange for the stones^000000, and still fetch a profit.";
+		next;
+		mes "[Great Merchant]";
+		mes "Bring ^0000cda piece of refined equipment, Illusion Stones^000000, and various materials that are only found in this place. I'll ^0000cdupgrade the equipment, weapon, armor, or accessory?^000000for you.";
+		next;
+		mes "[Great Merchant]";
+		mes "This benefits both of us. Let me know if you're interested in my proposition.";
+		close;
+	case 6:
+		mes "[Great Merchant]";
+		mes "So, you want to reinforce the equipment you get. You're thorough. I like that!";
+		next;
+		mes "[Great Merchant]";
+		mes "A while ago, an adventurer who passed through this place told me that a chemist in Prontera refines the Illusion equipment in exchange for Illusion Stones.";
+		next;
+		mes "[Great Merchant]";
+		mes "It seems Illusion Stones are a popular topic everywhere. Everyone wants to know about what they are.";
+		next;
+		mes "[Great Merchant]";
+		mes "If you want to refine your equipment, then go to the <NAVI>Illusion Enchanter<INFO>prontera,90,115,000,0,</INFO></NAVI> near the Town Office.";
+		close;
+	}
+
+S_WeaponArmor:
+	.@reward = getarg(0);
+	.@part = getarg(1);
+	.@eq_req = getarg(2);
+
+	setarray .@items_req[0],
+		getarg(3),getarg(4),
+		getarg(5),getarg(6);
+
+	next;
+	donpcevent "Great Merchant#illgef::OnProgress";
+	sleep2 1000;
+	.@slots = getitemslots(.@eq_req);
+	.@eq_req_name$ = getitemname(.@eq_req) + ( .@slots ? "[" + .@slots + "]" : "" );
+	.@equip_id = getequipid(.@part);
+	if (.@equip_id == -1) {
+		mes "[Great Merchant]";
+		if (.@part == EQI_HAND_R)
+			mes "Oh, you must have been in a hurry: you forgot to bring a weapon.";
+		else
+			mes "Oh, you must have been in a hurry: you forgot to bring an armor.";
+		mes "Please come back equipped with a ^0000cd+9 " + .@eq_req_name$ + "^000000. I'll wait here.";
+		close;
+	}
+	if (.@equip_id != .@eq_req) {
+		mes "[Great Merchant]";
+		mes "Let's see... Mm? What did you bring? Come back equipped with a ^0000cd+9 " + .@eq_req_name$ + "^000000.";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) < 9) {
+		mes "[Great Merchant]";
+		if (.@part == EQI_HAND_R)
+			mes "Um, this one isn't refined enough. I told you the armor has to be ^0000cdrefined to as least +9^000000.";
+		else
+			mes "Um, this one isn't refined enough. I told you the weapon has to be ^0000cdrefined to as least +9^000000.";
+		close;
+	}
+	mes "[Great Merchant]";
+	mes "Ah, you're equipped with the correct item. Now, let me check the other materials.";
+	next;
+	if (countitem(.@items_req[0]) < .@items_req[1] || countitem(.@items_req[2]) < .@items_req[3]) {
+		mes "[Great Merchant]";
+		mes "Mm, you're so impatient. I told you, I need ^4d4fff" + .@items_req[1] + " " + getitemname(.@items_req[0]) + " and " + .@items_req[3] + " " + getitemname(.@items_req[2]) + "^000000. Check your inventory and bring all of them.";
+		close;
+	}
+	mes "[Great Merchant]";
+	mes "Alright, you've got everything.";
+	next;
+	mes "[Great Merchant]";
+	mes "Are you ready to make the exchange?";
+	next;
+	if (select( "Wait! Let me think.", "Yes, I am." ) == 1) {
+		mes "[Great Merchant]";
+		mes "Sure, no problem. Come back when you're ready.";
+		close;
+	}
+	mes "[Great Merchant]";
+	mes "Alright! Let's see...";
+	next;
+	mes "[Great Merchant]";
+	mes "Here, take this. I hope you'll enjoy. If you find more Illusion Stones, feel free to bring them to me! *Chuckle*";
+	delequip .@part;
+	delitem .@items_req[0], .@items_req[1];
+	delitem .@items_req[2], .@items_req[3];
+	getitem .@reward,1;
+	close;
+
+S_Accessory:	// the structure is slightly different from above
+	.@reward = getarg(0);
+	.@eq_req = getarg(1);
+
+	setarray .@items_req[0],
+		getarg(2),getarg(3),
+		getarg(4),getarg(5);
+
+	next;
+	donpcevent "Great Merchant#illgef::OnProgress";
+	sleep2 1000;
+	.@count = countitem(.@eq_req) - (getequipid(EQI_ACC_L) == .@eq_req) - (getequipid(EQI_ACC_R) == .@eq_req);
+	if (.@count < 1 || countitem(.@items_req[0]) < .@items_req[1] || countitem(.@items_req[2]) < .@items_req[3]) {
+		mes "[Great Merchant]";
+		mes "Mm, you're so impatient. I told you, I need ^4d4fff1 socketed " + getitemname(.@eq_req) + ", " + .@items_req[1] + " " + getitemname(.@items_req[0]) + " and " + .@items_req[3] + " " + getitemname(.@items_req[2]) + "^000000. Check your inventory and bring all of them.";
+		close;
+	}
+	mes "[Great Merchant]";
+	mes "Alright, you've got everything.";
+	next;
+	mes "[Great Merchant]";
+	mes "Are you ready to make the exchange?";
+	next;
+	if (select( "Wait! Let me think.", "Yes, I am." ) == 1) {
+		mes "[Great Merchant]";
+		mes "Sure, no problem. Come back when you're ready.";
+		close;
+	}
+	mes "[Great Merchant]";
+	mes "Alright! Let's see...";
+	next;
+	mes "[Great Merchant]";
+	mes "Here, take this. I hope you'll enjoy. If you find more Illusion Stones, feel free to bring them to me! *Chuckle*";
+	delitem .@eq_req,1;
+	delitem .@items_req[0], .@items_req[1];
+	delitem .@items_req[2], .@items_req[3];
+	getitem .@reward,1;
+	close;
+
+OnProgress:
+	progressbar_npc "000000",1;
+	end;
+}

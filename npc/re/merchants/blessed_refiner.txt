@@ -69,6 +69,7 @@
 		close;
 	}
 	.@equip_id = getequipid(.@part);
+	.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
 	.@equip_refine = getequiprefinerycnt(.@part);
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
@@ -77,34 +78,47 @@
 		mes "This equipment has refined to "+.@equip_refine+". I only handle items with refine levels from +6 to +12!";
 		close;
 	}
-	set .@equip_lv, getequipweaponlv(.@part);
-	switch(.@equip_lv) {
-	default:
-	case 0:
-		set .@price,20000;
-		set .@material,6439; //Unbreakable_Def
-		set .@type$,"Armor";
-		break;
-	case 1:
-		set .@price,1000;
-		set .@material,6438; //Unbreakable_Weap
-		set .@type$,"Weapon";
-		break;
-	case 2:
-		set .@price,2000;
-		set .@material,6438; //Unbreakable_Weap
-		set .@type$,"Weapon";
-		break;
-	case 3:
-		set .@price,20000;
-		set .@material,6438; //Unbreakable_Weap
-		set .@type$,"Weapon";
-		break;
-	case 4:
-		set .@price,40000;
-		set .@material,6438; //Unbreakable_Weap
-		set .@type$,"Weapon";
-		break;
+	if( .@itemtype == IT_ARMOR ){
+		.@equip_lv = getequiparmorlv( .@part );
+		.@type$ = "Armor";
+
+		switch(.@equip_lv) {
+			case 1:
+				set .@price,20000;
+				set .@material,6439; //Unbreakable_Def
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_WEAPON ){
+		.@equip_lv = getequipweaponlv( .@part );
+		.@type$ = "Weapon";
+
+		switch( .@equip_lv ){
+			case 1:
+				set .@price,1000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			case 2:
+				set .@price,2000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			case 3:
+				set .@price,20000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			case 4:
+				set .@price,40000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
 	}
 	set .@ore$,"^ff9999Blessed "+.@type$+" Ore^000000";
 	mes "[Blacksmith Dister]";
@@ -132,7 +146,7 @@
 	if (countitem(.@material) == 0 || Zeny < .@price) {
 		mes "[Blacksmith Dister]";
 		mes "Materials insufficient.";
-		mes "To refine "+((.@equip_lv)?"a level "+.@equip_lv+" weapon":"armor")+", I need "+.@ore$+" and a "+callfunc("F_InsertComma",.@price)+" zeny refining fee.";
+		mes "To refine a level "+.@equip_lv+" "+.@type$+", I need "+.@ore$+" and a "+callfunc("F_InsertComma",.@price)+" zeny refining fee.";
 		close;
 	}
 	delitem .@material,1;

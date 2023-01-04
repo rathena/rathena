@@ -30,6 +30,8 @@
 #           Bonus                       Refinement bonus. (Default: 0)
 #           RandomBonus                 Extra refinement bonus of 0~RandomBonus stacked on Bonus. (Default: 0)
 #           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
+#           BroadcastSuccess            Broadcast to the whole server when a refine attempt at this level succeeds. (Default: false)
+#           BroadcastFailure            Broadcast to the whole server when a refine attempt at this level fails. (Default: false)
 #           Chances:                    Success chance based on cost type. (Default: null)
 #             - Type                    Refinement cost type based on ore used.
 #               Rate                    Chance of success out of 0~10000. (Default: 0)
@@ -41,7 +43,7 @@
 
 Header:
   Type: REFINE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Group: Armor
@@ -252,6 +254,8 @@ Body:
           - Level: 13
             Bonus: 2800
             BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 800
@@ -267,6 +271,8 @@ Body:
           - Level: 14
             Bonus: 3200
             BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 800
@@ -281,6 +287,8 @@ Body:
                 DowngradeAmount: 1
           - Level: 15
             Bonus: 3600
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -295,6 +303,8 @@ Body:
                 DowngradeAmount: 1
           - Level: 16
             Bonus: 4000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -309,6 +319,8 @@ Body:
                 DowngradeAmount: 1
           - Level: 17
             Bonus: 4500
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -323,6 +335,8 @@ Body:
                 DowngradeAmount: 1
           - Level: 18
             Bonus: 5000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -337,6 +351,8 @@ Body:
                 DowngradeAmount: 1
           - Level: 19
             Bonus: 5500
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 500
@@ -351,6 +367,8 @@ Body:
                 DowngradeAmount: 1
           - Level: 20
             Bonus: 6000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 500
@@ -363,6 +381,285 @@ Body:
                 Price: 100000
                 Material: HD_Carnium
                 DowngradeAmount: 1
+      - Level: 2
+        RefineLevels:
+          - Level: 1
+            Bonus: 120
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 2
+            Bonus: 240
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 3
+            Bonus: 360
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 4
+            Bonus: 480
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 720
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 960
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 1200
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 1440
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 1800
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 2160
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 2520
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 2880
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 3360
+            BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 3840
+            BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 4320
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 4800
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 5400
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 6000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 6600
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 7200
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
   - Group: Weapon
     Levels:
       - Level: 1
@@ -568,6 +865,8 @@ Body:
             Bonus: 2600
             RandomBonus: 1800
             BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -584,6 +883,8 @@ Body:
             Bonus: 2800
             RandomBonus: 2100
             BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -599,6 +900,8 @@ Body:
           - Level: 15
             Bonus: 3000
             RandomBonus: 2400
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -614,6 +917,8 @@ Body:
           - Level: 16
             Bonus: 4800
             RandomBonus: 2700
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -629,6 +934,8 @@ Body:
           - Level: 17
             Bonus: 5100
             RandomBonus: 3000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -644,6 +951,8 @@ Body:
           - Level: 18
             Bonus: 5400
             RandomBonus: 3300
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -659,6 +968,8 @@ Body:
           - Level: 19
             Bonus: 5700
             RandomBonus: 3600
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1500
@@ -674,6 +985,8 @@ Body:
           - Level: 20
             Bonus: 6000
             RandomBonus: 3900
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1500
@@ -893,6 +1206,8 @@ Body:
             Bonus: 3900
             RandomBonus: 3500
             BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -909,6 +1224,8 @@ Body:
             Bonus: 4200
             RandomBonus: 4000
             BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -924,6 +1241,8 @@ Body:
           - Level: 15
             Bonus: 4500
             RandomBonus: 4500
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -939,6 +1258,8 @@ Body:
           - Level: 16
             Bonus: 8000
             RandomBonus: 5000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -954,6 +1275,8 @@ Body:
           - Level: 17
             Bonus: 8500
             RandomBonus: 5500
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -969,6 +1292,8 @@ Body:
           - Level: 18
             Bonus: 9000
             RandomBonus: 6000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -984,6 +1309,8 @@ Body:
           - Level: 19
             Bonus: 9500
             RandomBonus: 6500
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1500
@@ -999,6 +1326,8 @@ Body:
           - Level: 20
             Bonus: 10000
             RandomBonus: 7000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1500
@@ -1222,6 +1551,8 @@ Body:
             Bonus: 6500
             RandomBonus: 6400
             BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -1238,6 +1569,8 @@ Body:
             Bonus: 7000
             RandomBonus: 7200
             BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -1253,6 +1586,8 @@ Body:
           - Level: 15
             Bonus: 7500
             RandomBonus: 8000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1800
@@ -1268,6 +1603,8 @@ Body:
           - Level: 16
             Bonus: 11200
             RandomBonus: 8800
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -1283,6 +1620,8 @@ Body:
           - Level: 17
             Bonus: 11900
             RandomBonus: 9600
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -1298,6 +1637,8 @@ Body:
           - Level: 18
             Bonus: 12600
             RandomBonus: 10400
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1700
@@ -1313,6 +1654,8 @@ Body:
           - Level: 19
             Bonus: 13300
             RandomBonus: 11200
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1500
@@ -1328,6 +1671,8 @@ Body:
           - Level: 20
             Bonus: 14000
             RandomBonus: 12000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 1500
@@ -1555,6 +1900,8 @@ Body:
             Bonus: 9100
             RandomBonus: 12600
             BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 800
@@ -1571,6 +1918,8 @@ Body:
             Bonus: 9800
             RandomBonus: 14000
             BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 800
@@ -1586,6 +1935,8 @@ Body:
           - Level: 15
             Bonus: 10500
             RandomBonus: 15400
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -1601,6 +1952,8 @@ Body:
           - Level: 16
             Bonus: 16000
             RandomBonus: 16800
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -1616,6 +1969,8 @@ Body:
           - Level: 17
             Bonus: 17000
             RandomBonus: 18200
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -1631,6 +1986,8 @@ Body:
           - Level: 18
             Bonus: 18000
             RandomBonus: 19600
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 700
@@ -1646,6 +2003,8 @@ Body:
           - Level: 19
             Bonus: 19000
             RandomBonus: 21000
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 500
@@ -1661,6 +2020,8 @@ Body:
           - Level: 20
             Bonus: 20000
             RandomBonus: 22400
+            BroadcastSuccess: true
+            BroadcastFailure: true
             Chances:
               - Type: Normal
                 Rate: 500
@@ -1673,6 +2034,285 @@ Body:
                 Price: 100000
                 Material: HD_Bradium
                 DowngradeAmount: 1
+      - Level: 5
+        RefineLevels:
+          - Level: 1
+            Bonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 2
+            Bonus: 1600
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 3
+            Bonus: 2400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 4
+            Bonus: 3200
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 4000
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 4800
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 5600
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 6400
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 7200
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 8000
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 8800
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 9600
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 10400
+            BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 11200
+            BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 12000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 12800
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 13600
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 14400
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 15200
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 16000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
   - Group: Shadow_Armor
     Levels:
       - Level: 1

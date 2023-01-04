@@ -123,25 +123,6 @@ char charserver_name[NAME_LENGTH];
 //This define should spare writing the check in every function. [Skotlex]
 #define chrif_check(a) { if(!chrif_isconnected()) return a; }
 
-
-/// Resets all the data.
-void chrif_reset(void) {
-	// TODO kick everyone out and reset everything [FlavioJS]
-	exit(EXIT_FAILURE);
-}
-
-
-/// Checks the conditions for the server to stop.
-/// Releases the cookie when all characters are saved.
-/// If all the conditions are met, it stops the core loop.
-void chrif_check_shutdown(void) {
-	if( runflag != MAPSERVER_ST_SHUTDOWN )
-		return;
-	if( auth_db->size(auth_db) > 0 )
-		return;
-	runflag = CORE_ST_STOP;
-}
-
 struct auth_node* chrif_search(uint32 account_id) {
 	return (struct auth_node*)idb_get(auth_db, account_id);
 }
@@ -171,6 +152,7 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 			if (node->sd->regs.arrays)
 				node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
 
+			node->sd->~map_session_data();
 			aFree(node->sd);
 		}
 
@@ -222,7 +204,7 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state) {
 	return chrif_sd_to_auth(sd, state);
 }
 
-bool chrif_auth_finished(struct map_session_data* sd) {
+bool chrif_auth_finished(map_session_data* sd) {
 	struct auth_node *node= chrif_search(sd->status.account_id);
 
 	if ( node && node->sd == sd && node->state == ST_LOGIN ) {
@@ -245,12 +227,13 @@ void chrif_setpasswd(char *pwd) {
 
 // security check, prints warning if using default password
 void chrif_checkdefaultlogin(void) {
-	// Skip this check if the server is run with run-once flag
-	if ( runflag != CORE_ST_STOP && strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
+#if !defined(BUILDBOT)
+	if( strcmp( userid, "s1" ) == 0 && strcmp( passwd, "p1" ) == 0 ){
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
 		ShowNotice("and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)\n");
 	}
+#endif
 }
 
 // sets char-server's ip address
@@ -291,7 +274,7 @@ int chrif_isconnected(void) {
  *  CSAVE_INVENTORY: Character changed inventory data
  *  CSAVE_CART: Character changed cart data
  */
-int chrif_save(struct map_session_data *sd, int flag) {
+int chrif_save(map_session_data *sd, int flag) {
 	uint16 mmo_charstatus_len = 0;
 
 	nullpo_retr(-1, sd);
@@ -445,11 +428,10 @@ int chrif_removemap(int fd) {
 // received after a character has been "final saved" on the char-server
 static void chrif_save_ack(int fd) {
 	chrif_auth_delete(RFIFOL(fd,2), RFIFOL(fd,6), ST_LOGOUT);
-	chrif_check_shutdown();
 }
 
 // request to move a character between mapservers
-int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port) {
+int chrif_changemapserver(map_session_data* sd, uint32 ip, uint16 port) {
 	nullpo_retr(-1, sd);
 
 	if (other_mapserver_count < 1) {//No other map servers are online!
@@ -548,7 +530,7 @@ static int chrif_reconnect(DBKey key, DBData *data, va_list ap) {
 			chrif_save(node->sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 			break;
 		case ST_MAPCHANGE: { //Re-send map-change request.
-			struct map_session_data *sd = node->sd;
+			map_session_data *sd = node->sd;
 			uint32 ip;
 			uint16 port;
 
@@ -570,8 +552,6 @@ void chrif_on_ready(void) {
 	ShowStatus("Map Server is now online.\n");
 
 	chrif_state = 2;
-
-	chrif_check_shutdown();
 
 	//If there are players online, send them to the char-server. [Skotlex]
 	send_users_tochar();
@@ -663,7 +643,7 @@ int chrif_skillcooldown_request(uint32 account_id, uint32 char_id) {
 /*==========================================
  * Request auth confirmation
  *------------------------------------------*/
-void chrif_authreq(struct map_session_data *sd, bool autotrade) {
+void chrif_authreq(map_session_data *sd, bool autotrade) {
 	struct auth_node *node= chrif_search(sd->bl.id);
 
 	if( node != NULL || !chrif_isconnected() ) {
@@ -732,7 +712,7 @@ void chrif_authok(int fd) {
 
 	sd = node->sd;
 
-	if( runflag == MAPSERVER_ST_RUNNING &&
+	if( global_core->is_running() &&
 		node->char_dat == NULL &&
 		node->account_id == account_id &&
 		node->char_id == char_id &&
@@ -811,7 +791,7 @@ TIMER_FUNC(auth_db_cleanup){
 /*==========================================
  *
  *------------------------------------------*/
-int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip) {
+int chrif_charselectreq(map_session_data* sd, uint32 s_ip) {
 	nullpo_retr(-1, sd);
 
 	if( !sd || !sd->bl.id || !sd->login_id1 )
@@ -904,7 +884,7 @@ int chrif_req_login_operation(int aid, const char* character_name, enum chrif_re
  * Send a sex change (for account or character) request to the login server (via char server).
  * @sd : Player requesting operation
  */
-int chrif_changesex(struct map_session_data *sd, bool change_account) {
+int chrif_changesex(map_session_data *sd, bool change_account) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
@@ -939,7 +919,7 @@ int chrif_changesex(struct map_session_data *sd, bool change_account) {
  *   3: login-server offline
  */
 static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, uint16 answer) {
-	struct map_session_data* sd;
+	map_session_data* sd;
 	char action[25];
 	char output[256];
 
@@ -986,7 +966,7 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
  *------------------------------------------*/
 int chrif_changedsex(int fd) {
 	int acc, sex;
-	struct map_session_data *sd;
+	map_session_data *sd;
 
 	acc = RFIFOL(fd,2);
 	sex = RFIFOL(fd,6);
@@ -1000,34 +980,45 @@ int chrif_changedsex(int fd) {
 			return 0; //Do nothing? Likely safe.
 		sd->status.sex = !sd->status.sex;
 
-		// reset skill of some job
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
-			int i;
-			// remove specifical skills of Bard classes
-			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
+		// Reset skills of gender split jobs.
+		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
+			const static struct {
+				e_skill start;
+				e_skill end;
+			} ranges[] = {
+				// Bard class exclusive skills
+				{ BA_MUSICALLESSON, BA_APPLEIDUN },
+				// Dancer class exclusive skills
+				{ DC_DANCINGLESSON, DC_SERVICEFORYOU },
+				// Minstrel class exclusive skills
+				{ MI_RUSH_WINDMILL, MI_HARMONIZE },
+				// Wanderer class exclusive skills
+				{ WA_SWING_DANCE, WA_MOONLIT_SERENADE },
+				// Kagerou class exclusive skills
+				{ KG_KAGEHUMI, KG_KAGEMUSYA },
+				// Oboro class exclusive skills
+				{ OB_ZANGETSU, OB_AKAITSUKI },
+			};
+
+			for( const auto& range : ranges ){
+				for( uint16 skill_id = range.start; skill_id <= range.end; skill_id++ ){
+					uint16 sk_idx = skill_get_index( skill_id );
+
+					if( sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT ){
+						sd->status.skill_point += sd->status.skill[sk_idx].lv;
+						sd->status.skill[sk_idx].id = 0;
+						sd->status.skill[sk_idx].lv = 0;
+					}
 				}
 			}
-			// remove specifical skills of Dancer classes
-			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
+
 			clif_updatestatus(sd, SP_SKILLPOINT);
-			// change job if necessary
-			if (sd->status.sex) //Changed from Dancer
+			// Change to other gender version of the job if needed.
+			if (sd->status.sex)// Changed from female version of job.
 				sd->status.class_ -= 1;
-			else	//Changed from Bard
+			else// Changed from male version of job.
 				sd->status.class_ += 1;
-			//sd->class_ needs not be updated as both Dancer/Bard are the same.
+			//sd->class_ Does not need to be updated as both versions of the job are the same.
 		}
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
@@ -1058,7 +1049,7 @@ int chrif_divorce(int partner_id1, int partner_id2) {
  * only used if 'partner_id' is offline
  *------------------------------------------*/
 int chrif_divorceack(uint32 char_id, int partner_id) {
-	struct map_session_data* sd;
+	map_session_data* sd;
 	int i;
 
 	if( !char_id || !partner_id )
@@ -1084,7 +1075,7 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
  * Removes Baby from parents
  *------------------------------------------*/
 int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
-	struct map_session_data* sd;
+	map_session_data* sd;
 	uint16 idx = skill_get_index(WE_CALLBABY);
 
 	if( father_id && ( sd = map_charid2sd(father_id) ) != NULL && sd->status.child == child_id ) {
@@ -1111,7 +1102,7 @@ int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
  *------------------------------------------*/
 int chrif_ban(int fd) {
 	int id, res=0;
-	struct map_session_data *sd;
+	map_session_data *sd;
 
 	id = RFIFOL(fd,2);
 	res = RFIFOB(fd,6); // 0: change of statut, 1: ban, 2 charban
@@ -1177,7 +1168,7 @@ int chrif_req_charunban(int aid, const char* character_name){
 //Disconnect the player out of the game, simple packet
 //packet.w AID.L WHY.B 2+4+1 = 7byte
 int chrif_disconnectplayer(int fd) {
-	struct map_session_data* sd;
+	map_session_data* sd;
 	uint32 account_id = RFIFOL(fd, 2);
 
 	sd = map_id2sd(account_id);
@@ -1211,24 +1202,14 @@ int chrif_disconnectplayer(int fd) {
 /*==========================================
  * Request/Receive top 10 Fame character list
  *------------------------------------------*/
-int chrif_updatefamelist(struct map_session_data* sd) {
-	char type;
-
+int chrif_updatefamelist(map_session_data &sd, e_rank ranktype) {
 	chrif_check(-1);
-
-	switch(sd->class_ & MAPID_UPPERMASK) {
-		case MAPID_BLACKSMITH: type = RANK_BLACKSMITH; break;
-		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
-		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
-		default:
-			return 0;
-	}
 
 	WFIFOHEAD(char_fd, 11);
 	WFIFOW(char_fd,0) = 0x2b10;
-	WFIFOL(char_fd,2) = sd->status.char_id;
-	WFIFOL(char_fd,6) = sd->status.fame;
-	WFIFOB(char_fd,10) = type;
+	WFIFOL(char_fd,2) = sd.status.char_id;
+	WFIFOL(char_fd,6) = sd.status.fame;
+	WFIFOB(char_fd,10) = ranktype;
 	WFIFOSET(char_fd,11);
 
 	return 0;
@@ -1307,12 +1288,12 @@ int chrif_updatefamelist_ack(int fd) {
 	return 1;
 }
 
-int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
+int chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
 	int i, count=0;
 	t_tick tick;
 	struct status_change_data data;
-	struct status_change *sc = &sd->sc;
+	status_change *sc = &sd->sc;
 	const struct TimerData *timer;
 
 	chrif_check(-1);
@@ -1324,10 +1305,11 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 	WFIFOL(char_fd,8) = sd->status.char_id;
 
 	for (i = 0; i < SC_MAX; i++) {
-		if (!sc->data[i])
+		auto sce = sc->getSCE(static_cast<sc_type>(i));
+		if (!sce)
 			continue;
-		if (sc->data[i]->timer != INVALID_TIMER) {
-			timer = get_timer(sc->data[i]->timer);
+		if (sce->timer != INVALID_TIMER) {
+			timer = get_timer(sce->timer);
 			if (timer == NULL || timer->func != status_change_timer)
 				continue;
 			if (DIFF_TICK(timer->tick,tick) > 0)
@@ -1337,10 +1319,10 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 		} else
 			data.tick = INFINITE_TICK; //Infinite duration
 		data.type = i;
-		data.val1 = sc->data[i]->val1;
-		data.val2 = sc->data[i]->val2;
-		data.val3 = sc->data[i]->val3;
-		data.val4 = sc->data[i]->val4;
+		data.val1 = sce->val1;
+		data.val2 = sce->val2;
+		data.val3 = sce->val3;
+		data.val4 = sce->val4;
 		memcpy(WFIFOP(char_fd,14 +count*sizeof(struct status_change_data)),
 			&data, sizeof(struct status_change_data));
 		count++;
@@ -1353,7 +1335,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 	return 0;
 }
 
-int chrif_skillcooldown_save(struct map_session_data *sd) {
+int chrif_skillcooldown_save(map_session_data *sd) {
 	int i, count = 0;
 	struct skill_cooldown_data data;
 	t_tick tick;
@@ -1370,10 +1352,8 @@ int chrif_skillcooldown_save(struct map_session_data *sd) {
 		if (!sd->scd[i])
 			continue;
 
-#ifndef RENEWAL
-		if (!battle_config.guild_skill_relog_delay && (sd->scd[i]->skill_id >= GD_BATTLEORDER && sd->scd[i]->skill_id <= GD_EMERGENCYCALL))
+		if (battle_config.guild_skill_relog_type == 1 && SKILL_CHK_GUILD(sd->scd[i]->skill_id))
 			continue;
-#endif
 
 		timer = get_timer(sd->scd[i]->timer);
 		if (timer == NULL || timer->func != skill_blockpc_end || DIFF_TICK(timer->tick, tick) < 0)
@@ -1398,7 +1378,7 @@ int chrif_skillcooldown_save(struct map_session_data *sd) {
 int chrif_load_scdata(int fd) {
 
 #ifdef ENABLE_SC_SAVING
-	struct map_session_data *sd;
+	map_session_data *sd;
 	int aid, cid, i, count;
 
 	aid = RFIFOL(fd,4); //Player Account ID
@@ -1432,7 +1412,7 @@ int chrif_load_scdata(int fd) {
 //Retrieve and load skillcooldown for a player
 
 int chrif_skillcooldown_load(int fd) {
-	struct map_session_data *sd;
+	map_session_data *sd;
 	int aid, cid, i, count;
 
 	aid = RFIFOL(fd, 4);
@@ -1458,7 +1438,7 @@ int chrif_skillcooldown_load(int fd) {
 /*=========================================
  * Tell char-server charcter disconnected [Wizputer]
  *-----------------------------------------*/
-int chrif_char_offline(struct map_session_data *sd) {
+int chrif_char_offline(map_session_data *sd) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,10);
@@ -1511,7 +1491,7 @@ int chrif_char_reset_offline(void) {
  * Tell char-server charcter is online [Wizputer]
  *-----------------------------------------*/
 
-int chrif_char_online(struct map_session_data *sd) {
+int chrif_char_online(map_session_data *sd) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,10);
@@ -1615,8 +1595,7 @@ void chrif_parse_ack_vipActive(int fd) {
 	}
 	// Show info if status changed
 	if (((flag&0x4) || changed) && !sd->vip.disableshowrate) {
-		clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-		//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		clif_display_pinfo( *sd );
 	}
 #endif
 }
@@ -1645,7 +1624,7 @@ int chrif_bsdata_request(uint32 char_id) {
  * @param sd
  * @author [Cydh]
  **/
-int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
+int chrif_bsdata_save(map_session_data *sd, bool quit) {
 	uint8 i = 0;
 
 	chrif_check(-1);
@@ -1655,7 +1634,8 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 
 	// Removing...
 	if (quit && sd->bonus_script.head) {
-		uint16 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+		uint32 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+
 		if (battle_config.debuff_on_logout&1) //Remove negative buffs
 			flag |= BSF_REM_DEBUFF;
 		if (battle_config.debuff_on_logout&2) //Remove positive buffs
@@ -1710,7 +1690,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
  * @author [Cydh]
  **/
 int chrif_bsdata_received(int fd) {
-	struct map_session_data *sd;
+	map_session_data *sd;
 	uint32 cid = RFIFOL(fd,4);
 	uint8 count = 0;
 
@@ -1733,7 +1713,7 @@ int chrif_bsdata_received(int fd) {
 			if (bs->script_str[0] == '\0' || !bs->tick)
 				continue;
 
-			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_types)bs->icon, bs->flag, bs->type)))
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_type)bs->icon, bs->flag, bs->type)))
 				continue;
 
 			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
@@ -1852,7 +1832,7 @@ TIMER_FUNC(send_usercount_tochar){
  *------------------------------------------*/
 int send_users_tochar(void) {
 	int users = 0, i = 0;
-	struct map_session_data* sd;
+	map_session_data* sd;
 	struct s_mapiterator* iter;
 
 	chrif_check(-1);
