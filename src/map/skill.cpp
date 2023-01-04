@@ -9020,11 +9020,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sd->vend_skill_lv = skill_lv;
 				ARR_FIND(0, MAX_CART, i, sd->cart.u.items_cart[i].nameid && sd->cart.u.items_cart[i].id == 0);
 				if (i < MAX_CART) {
-					sd->state.pending_vending_ui = 1;
+					// Save the cart before opening the vending UI
+					sd->state.pending_vending_ui = true;
 					intif_storage_save(sd, &sd->cart);
 				}
-				else
+				else{
+					// Instantly open the vending UI
+					sd->state.pending_vending_ui = false;
 					clif_openvendingreq(sd,2+skill_lv);
+				}
 			}
 		}
 		break;

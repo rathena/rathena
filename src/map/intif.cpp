@@ -3514,9 +3514,10 @@ static bool intif_parse_StorageReceived(int fd)
 			}else if( sd->state.prevend ){
 				clif_clearcart(sd->fd);
 				clif_cartlist(sd);
+				// Only open the vending UI, if it has not been opened already
 				if (sd->state.pending_vending_ui) {
 					clif_openvendingreq(sd, sd->vend_skill_lv + 2);
-					sd->state.pending_vending_ui = 0;
+					sd->state.pending_vending_ui = false;
 				}
 			}
 			break;
