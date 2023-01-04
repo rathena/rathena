@@ -330,6 +330,28 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
+	if( this->nodeExists( node, "Type" ) ){
+		std::string type;
+
+		if( !this->asString( node, "Type", type ) ){
+			return 0;
+		}
+
+		std::string type_constant = "WOE_" + type;
+		int64 constant;
+
+		if( !script_get_constant( type_constant.c_str(), &constant ) || constant < WOE_FIRST_EDITION || constant >= WOE_MAX ){
+			this->invalidWarning( node["Type"], "Invalid WoE type %s.\n", type.c_str() );
+			return 0;
+		}
+
+		gc->type = static_cast<e_woe_type>( constant );
+	}else{
+		if( !exists ){
+			gc->type = WOE_FIRST_EDITION;
+		}
+	}
+
 	if( this->nodeExists( node, "ClientId" ) ){
 		uint16 id;
 

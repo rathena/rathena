@@ -9927,6 +9927,11 @@
 	export_constant(ENCHANTGRADE_A);
 	export_constant(MAX_ENCHANTGRADE);
 
+	/* WoE Types */
+	export_constant(WOE_FIRST_EDITION);
+	export_constant(WOE_SECOND_EDITION);
+	export_constant(WOE_THIRD_EDITION);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

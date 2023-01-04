@@ -3403,10 +3403,25 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd){
 		|| map_getmapflag(sd->bl.m, MF_NOWARP))
 		return;
 
-	int zeny = gc->zeny;
+	uint32 zeny = gc->zeny;
 
-	if (agit_flag || agit2_flag || agit3_flag)
-		zeny = gc->zeny_siege;
+	switch( gc->type ){
+		case WOE_FIRST_EDITION:
+			if( agit_flag ){
+				zeny = gc->zeny_siege;
+			}
+			break;
+		case WOE_SECOND_EDITION:
+			if( agit2_flag ){
+				zeny = gc->zeny_siege;
+			}
+			break;
+		case WOE_THIRD_EDITION:
+			if( agit3_flag ){
+				zeny = gc->zeny_siege;
+			}
+			break;
+	}
 
 	if (zeny && pc_payzeny(sd, zeny, LOG_TYPE_OTHER, nullptr)) {
 		clif_guild_castle_teleport_res(*sd, SIEGE_TP_NOT_ENOUGH_ZENY);

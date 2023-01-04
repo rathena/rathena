@@ -26,6 +26,7 @@
 #   Map               Map name to be considered as the castle map.
 #   Name              Name of the castle (used by scripts and guardian name tags).
 #   Npc               NPC unique name to invoke ::OnGuildBreak on, when a occupied castle is abandoned during guild break.
+#   Type              The WoE type this castle belongs to. (Default: First_Edition)
 #   ClientId          Client side ID of the castle. (Default: 0)
 #   WarpEnabled       If the warp to the castle is enabled. (Default: false)
 #   WarpX             X coordinate to warp to. (Default: 0)
