@@ -5002,6 +5002,11 @@ prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
 		close;
 	}
 	if (ill_underwater == 3) {
+		if (countitem(25899) < 1) {
+			mes "[Jerrymon]";
+			mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+			close;
+		}
 		mes "[Jerrymon]";
 		mes "Ah, welcome, adventurer!";
 		next;
@@ -5077,8 +5082,7 @@ prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
 		mes "The place is too small to do this much here, so let's do it in Izlude. In order to get help from your friends.";
 		mes "Then see you in Izlude!!";
 		close2;
-		if (countitem(25899) > 0)
-			delitem 25899,1;	// E_Abyss1
+		delitem 25899,1;	// E_Abyss1
 		ill_underwater = 4;
 		erasequest 3408;
 		setquest 3409;
@@ -5103,10 +5107,10 @@ OnInit:
 izlude,126,53,0	script	Sirud#SRD1	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
-	if (isbegin_quest(3410) == 2)
-		cloakoffnpcself( "Sirud#SRD2" );
 	if (ill_underwater > 3)
 		cloakoffnpcself( "Jerrymon#jerry2" );
+	if (ill_underwater > 6)
+		cloakoffnpcself( "Sirud#SRD2" );
 	end;
 }
 izlude,132,54,0	duplicate(Sirud#SRD1)	Jerrymon#jerry1	HIDDEN_WARP_NPC,4,4
@@ -5647,8 +5651,8 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 		delitem 25899,10;	// E_Abyss1
 		ill_underwater = 7;
 		erasequest 3412;
-		if (isbegin_quest(3410) == 1)	// todo
-			completequest 3410;
+		if (isbegin_quest(3410) == 1)
+			erasequest 3410;
 		getitem 25271,2;	// IllusionStone
 		getexp 4441860,3109150;
 		warp "izlude",128,54;
@@ -5936,13 +5940,13 @@ iz_d04_i,142,216,4	script	Sunrin#Sun01	4_F_03,{
 iz_d04_i,125,226,0	script	Sirud#SRD3	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
-	if (isbegin_quest(3410) == 0)
+	if (ill_underwater < 7 && isbegin_quest(3410) == 0)
 		cloakoffnpcself( "Sirud#SRD4" );
 	end;
 }
 
 iz_d04_i,125,226,5	script	Sirud#SRD4	1_M_04,{
-	if (ill_underwater < 5)
+	if (ill_underwater != 5 && ill_underwater != 6)
 		end;
 	switch( isbegin_quest(3410) ) {
 	case 0:
