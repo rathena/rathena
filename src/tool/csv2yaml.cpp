@@ -4946,8 +4946,16 @@ static bool cashshop_parse_dbrow( char* fields[], int columns, int current ){
 		return false;
 	}
 
-	std::string constant = constant_lookup( tab, "CASHSHOP_TAB_" );
+	const char* constant_ptr = constant_lookup( tab, "CASHSHOP_TAB_" );
+
+	if( constant_ptr == nullptr ){
+		ShowError( "cashshop_parse_dbrow: CASHSHOP_TAB constant for tab %hu was not found, skipping...\n", tab );
+		return false;
+	}
+
+	std::string constant = constant_ptr;
 	constant.erase( 0, 13 );
+	constant = name2Upper( constant );
 
 	body << YAML::BeginMap;
 	body << YAML::Key << "Tab" << YAML::Value << constant;

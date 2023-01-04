@@ -95,6 +95,16 @@ uint64 CashShopDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			return 0;
 		}
 
+		if( price == 0 ){
+			this->invalidWarning( it["Price"], "Price has to be greater than zero." );
+			return 0;
+		}
+
+		if( price > MAX_CASHPOINT ){
+			this->invalidWarning( it["Price"], "Price has to be lower than MAX_CASHPOINT(%d).", MAX_CASHPOINT );
+			return 0;
+		}
+
 		cash_item->price = price;
 
 		if( !cash_item_exists ){
@@ -141,7 +151,7 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 
 	// Check if the item exists in the sales tab
 	if( cash_shop_db.findItemInTab( CASHSHOP_TAB_SALE, nameid ) == nullptr ){
-		ShowWarning( "sale_parse_dbrow: ID %u is not registered in the limited tab in line '%d', skipping...\n", nameid, current );
+		ShowWarning( "sale_parse_dbrow: ID %u is not registered in the Sale tab in line '%d', skipping...\n", nameid, current );
 		return false;
 	}
 
