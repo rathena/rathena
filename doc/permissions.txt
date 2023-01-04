@@ -212,3 +212,15 @@ Allow to bypass the maximum stat parameter (at conf/player.conf) to
 maximum value 32,767.
 
 ---------------------------------------
+
+*macro_detect
+
+Allows player to use the client command /macro_detector.
+
+---------------------------------------
+
+*macro_register
+
+Allows player to use the client commands /maco_register (used to add new captcha) and /macro_preview (used to preview captcha by ID).
+
+---------------------------------------

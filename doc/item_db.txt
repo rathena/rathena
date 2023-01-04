@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20200602
+//= 20220402
 //===== Description: =========================================
 //= Explanation of the item_db.yml file and structure.
 //============================================================
@@ -159,10 +159,10 @@ Baby        - Baby classes (no Third-Baby classes).
 Third       - Third classes (no Transcedent-Third or Third-Baby classes).
 Third_Upper - Transcedent-Third classes.
 Third_Baby  - Third-Baby classes.
+Fourth      - Fourth classes.
 All_Upper   - All Transcedent classes
 All_Baby    - All baby classes
 All_Third   - Applies to all Third classes.
-Fourth      - Fourth classes.
 
 ---------------------------------------
 
@@ -216,6 +216,10 @@ EquipLevelMax: Only able to equip if base level is lower than this.
 ---------------------------------------
 
 Refineable: Defines if the item can be refined.
+
+---------------------------------------
+
+Gradable: Defines if the item can be graded.
 
 ---------------------------------------
 
@@ -280,10 +284,10 @@ Script: Script to execute when the item is used/equipped.
 
 ---------------------------------------
 
-OnEquip_Script: Script to execute when the item is equipped.
-                Warning, not all item bonuses will work here as expected.
+EquipScript: Script to execute when the item is equipped.
+             Warning, not all item bonuses will work here as expected.
 
 ---------------------------------------
 
-OnUnequip_Script: Script to execute when the item is unequipped or when a rental item expires.
-                  Warning, not all item bonuses will work here as expected.
+UnEquipScript: Script to execute when the item is unequipped or when a rental item expires.
+               Warning, not all item bonuses will work here as expected.

@@ -4,7 +4,26 @@
 #ifndef CSV2YAML_HPP
 #define CSV2YAML_HPP
 
+#include "../common/core.hpp"
+
 #include "yaml.hpp"
+
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace tool_csv2yaml{
+		class Csv2YamlTool : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+
+			public:
+				Csv2YamlTool() : Core( e_core_type::TOOL ){
+
+				}
+		};
+	}
+}
 
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
@@ -20,6 +39,8 @@
 //Raised to 105 since Expanded Super Baby needs it.
 #define MAX_SKILL_TREE 105
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+///Maximum amount of items a combo may require
+#define MAX_ITEMS_PER_COMBO 6
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
@@ -508,5 +529,6 @@ static bool mercenary_read_skilldb(char* str[], int columns, int current);
 static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
+static bool itemdb_read_combos(const char* file);
 
 #endif /* CSV2YAML_HPP */

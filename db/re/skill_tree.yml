@@ -6643,3 +6643,1190 @@ Body:
       Taekwon: true
       Star_Gladiator: true
       Star_Emperor: true
+  - Job: Dragon_Knight
+    Inherit:
+      Novice: true
+      Swordman: true
+      Knight: true
+      Lord_Knight: true
+      Rune_Knight: true
+      Rune_Knight_T: true
+    Tree:
+      - Name: DK_SERVANTWEAPON
+        MaxLevel: 5
+      - Name: DK_SERVANT_W_SIGN
+        MaxLevel: 5
+        Requires:
+          - Name: DK_SERVANTWEAPON
+            Level: 3
+      - Name: DK_SERVANT_W_PHANTOM
+        MaxLevel: 5
+        Requires:
+          - Name: DK_SERVANTWEAPON
+            Level: 5
+          - Name: DK_SERVANT_W_SIGN
+            Level: 5
+      - Name: DK_SERVANT_W_DEMOL
+        MaxLevel: 5
+        Requires:
+          - Name: DK_SERVANT_W_PHANTOM
+            Level: 5
+      - Name: DK_CHARGINGPIERCE
+        MaxLevel: 10
+        Requires:
+          - Name: RK_HUNDREDSPEAR
+            Level: 5
+      - Name: DK_TWOHANDDEF
+        MaxLevel: 10
+      - Name: DK_HACKANDSLASHER
+        MaxLevel: 10
+        Requires:
+          - Name: DK_TWOHANDDEF
+            Level: 5
+      - Name: DK_DRAGONIC_AURA
+        MaxLevel: 10
+        Requires:
+          - Name: DK_CHARGINGPIERCE
+            Level: 10
+          - Name: RK_DRAGONBREATH
+            Level: 10
+          - Name: RK_DRAGONBREATH_WATER
+            Level: 10
+      - Name: DK_MADNESS_CRUSHER
+        MaxLevel: 5
+        Requires:
+          - Name: DK_CHARGINGPIERCE
+            Level: 5
+          - Name: DK_HACKANDSLASHER
+            Level: 10
+      - Name: DK_VIGOR
+        MaxLevel: 10
+        Requires:
+          - Name: DK_SERVANT_W_DEMOL
+            Level: 3
+          - Name: DK_STORMSLASH
+            Level: 5
+      - Name: DK_STORMSLASH
+        MaxLevel: 5
+        Requires:
+          - Name: DK_HACKANDSLASHER
+            Level: 5
+          - Name: DK_TWOHANDDEF
+            Level: 10
+  - Job: Meister
+    Inherit:
+      Novice: true
+      Merchant: true
+      Blacksmith: true
+      Whitesmith: true
+      Mechanic: true
+      Mechanic_T: true
+    Tree:
+      - Name: MT_AXE_STOMP
+        MaxLevel: 5
+        Requires:
+          - Name: MT_TWOAXEDEF
+            Level: 5
+      - Name: MT_RUSH_QUAKE
+        MaxLevel: 10
+        Requires:
+          - Name: MT_AXE_STOMP
+            Level: 5
+      - Name: MT_M_MACHINE
+        MaxLevel: 5
+      - Name: MT_A_MACHINE
+        MaxLevel: 5
+        Requires:
+          - Name: MT_AXE_STOMP
+            Level: 3
+          - Name: MT_M_MACHINE
+            Level: 3
+      - Name: MT_D_MACHINE
+        MaxLevel: 5
+        Requires:
+          - Name: MT_M_MACHINE
+            Level: 1
+      - Name: MT_TWOAXEDEF
+        MaxLevel: 10
+      - Name: MT_ABR_M
+        MaxLevel: 10
+        Requires:
+          - Name: MT_M_MACHINE
+            Level: 1
+      - Name: MT_SUMMON_ABR_BATTLE_WARIOR
+        MaxLevel: 4
+        Requires:
+          - Name: MT_ABR_M
+            Level: 1
+      - Name: MT_SUMMON_ABR_DUAL_CANNON
+        MaxLevel: 4
+        Requires:
+          - Name: MT_ABR_M
+            Level: 3
+          - Name: MT_SUMMON_ABR_BATTLE_WARIOR
+            Level: 2
+      - Name: MT_SUMMON_ABR_MOTHER_NET
+        MaxLevel: 4
+        Requires:
+          - Name: MT_ABR_M
+            Level: 5
+          - Name: MT_SUMMON_ABR_BATTLE_WARIOR
+            Level: 3
+          - Name: MT_SUMMON_ABR_DUAL_CANNON
+            Level: 3
+      - Name: MT_SUMMON_ABR_INFINITY
+        MaxLevel: 4
+        Requires:
+          - Name: MT_ABR_M
+            Level: 10
+          - Name: MT_SUMMON_ABR_BATTLE_WARIOR
+            Level: 4
+          - Name: MT_SUMMON_ABR_DUAL_CANNON
+            Level: 4
+          - Name: MT_SUMMON_ABR_MOTHER_NET
+            Level: 4
+  - Job: Shadow_Cross
+    Inherit:
+      Novice: true
+      Thief: true
+      Assassin: true
+      Assassin_Cross: true
+      Guillotine_Cross: true
+      Guillotine_Cross_T: true
+    Tree:
+      - Name: SHC_SHADOW_EXCEED
+        MaxLevel: 10
+        Requires:
+          - Name: SHC_ENCHANTING_SHADOW
+            Level: 5
+          - Name: SHC_POTENT_VENOM
+            Level: 3
+          - Name: SHC_SHADOW_SENSE
+            Level: 7
+      - Name: SHC_DANCING_KNIFE
+        MaxLevel: 5
+        Requires:
+          - Name: SHC_SHADOW_SENSE
+            Level: 3
+      - Name: SHC_SAVAGE_IMPACT
+        MaxLevel: 10
+        Requires:
+          - Name: GC_CROSSIMPACT
+            Level: 5
+          - Name: SHC_SHADOW_SENSE
+            Level: 3
+      - Name: SHC_SHADOW_SENSE
+        MaxLevel: 10
+      - Name: SHC_ETERNAL_SLASH
+        MaxLevel: 5
+        Requires:
+          - Name: GC_WEAPONBLOCKING
+            Level: 3
+          - Name: SHC_DANCING_KNIFE
+            Level: 3
+          - Name: SHC_SHADOW_SENSE
+            Level: 5
+      - Name: SHC_POTENT_VENOM
+        MaxLevel: 10
+        Requires:
+          - Name: SHC_ENCHANTING_SHADOW
+            Level: 3
+          - Name: SHC_SHADOW_SENSE
+            Level: 5
+      - Name: SHC_SHADOW_STAB
+        MaxLevel: 5
+        Requires:
+          - Name: GC_CLOAKINGEXCEED
+            Level: 5
+          - Name: SHC_DANCING_KNIFE
+            Level: 5
+          - Name: SHC_ETERNAL_SLASH
+            Level: 3
+          - Name: SHC_SHADOW_SENSE
+            Level: 5
+      - Name: SHC_IMPACT_CRATER
+        MaxLevel: 5
+        Requires:
+          - Name: GC_ROLLINGCUTTER
+            Level: 5
+          - Name: GC_WEAPONBLOCKING
+            Level: 3
+          - Name: SHC_SAVAGE_IMPACT
+            Level: 5
+          - Name: SHC_SHADOW_SENSE
+            Level: 5
+      - Name: SHC_ENCHANTING_SHADOW
+        MaxLevel: 5
+        Requires:
+          - Name: GC_POISONINGWEAPON
+            Level: 5
+          - Name: SHC_SHADOW_SENSE
+            Level: 3
+      - Name: SHC_FATAL_SHADOW_CROW
+        MaxLevel: 10
+        Requires:
+          - Name: SHC_IMPACT_CRATER
+            Level: 5
+          - Name: SHC_SHADOW_STAB
+            Level: 5
+  - Job: Arch_Mage
+    Inherit:
+      Novice: true
+      Mage: true
+      Wizard: true
+      High_Wizard: true
+      Warlock: true
+      Warlock_T: true
+    Tree:
+      - Name: AG_DEADLY_PROJECTION
+        MaxLevel: 5
+        Requires:
+          - Name: AG_MYSTERY_ILLUSION
+            Level: 3
+      - Name: AG_DESTRUCTIVE_HURRICANE
+        MaxLevel: 5
+        Requires:
+          - Name: AG_TORNADO_STORM
+            Level: 3
+      - Name: AG_RAIN_OF_CRYSTAL
+        MaxLevel: 5
+        Requires:
+          - Name: WL_FROSTMISTY
+            Level: 3
+      - Name: AG_MYSTERY_ILLUSION
+        MaxLevel: 5
+        Requires:
+          - Name: AG_SOUL_VC_STRIKE
+            Level: 3
+          - Name: WL_HELLINFERNO
+            Level: 3
+      - Name: AG_VIOLENT_QUAKE
+        MaxLevel: 5
+        Requires:
+          - Name: AG_STRANTUM_TREMOR
+            Level: 3
+      - Name: AG_SOUL_VC_STRIKE
+        MaxLevel: 5
+        Requires:
+          - Name: AG_TWOHANDSTAFF
+            Level: 3
+          - Name: WL_SOULEXPANSION
+            Level: 5
+      - Name: AG_STRANTUM_TREMOR
+        MaxLevel: 5
+        Requires:
+          - Name: WL_SIENNAEXECRATE
+            Level: 3
+      - Name: AG_ALL_BLOOM
+        MaxLevel: 5
+        Requires:
+          - Name: AG_FLORAL_FLARE_ROAD
+            Level: 3
+      - Name: AG_CRYSTAL_IMPACT
+        MaxLevel: 5
+        Requires:
+          - Name: AG_RAIN_OF_CRYSTAL
+            Level: 3
+      - Name: AG_TORNADO_STORM
+        MaxLevel: 5
+        Requires:
+          - Name: WL_CHAINLIGHTNING
+            Level: 3
+      - Name: AG_TWOHANDSTAFF
+        MaxLevel: 10
+      - Name: AG_FLORAL_FLARE_ROAD
+        MaxLevel: 5
+        Requires:
+          - Name: WL_CRIMSONROCK
+            Level: 3
+      - Name: AG_ASTRAL_STRIKE
+        MaxLevel: 10
+        Requires:
+          - Name: AG_DEADLY_PROJECTION
+            Level: 3
+          - Name: AG_MYSTERY_ILLUSION
+            Level: 3
+          - Name: WL_COMET
+            Level: 5
+      - Name: AG_CLIMAX
+        MaxLevel: 5
+        Requires:
+          - Name: AG_TWOHANDSTAFF
+            Level: 3
+          - Name: WL_TETRAVORTEX
+            Level: 5
+      - Name: AG_ROCK_DOWN
+        MaxLevel: 5
+        Requires:
+          - Name: AG_STRANTUM_TREMOR
+            Level: 1
+      - Name: AG_STORM_CANNON
+        MaxLevel: 5
+        Requires:
+          - Name: AG_TORNADO_STORM
+            Level: 1
+      - Name: AG_CRIMSON_ARROW
+        MaxLevel: 5
+        Requires:
+          - Name: AG_FLORAL_FLARE_ROAD
+            Level: 1
+      - Name: AG_FROZEN_SLASH
+        MaxLevel: 5
+        Requires:
+          - Name: AG_RAIN_OF_CRYSTAL
+            Level: 1
+  - Job: Cardinal
+    Inherit:
+      Novice: true
+      Acolyte: true
+      Priest: true
+      High_Priest: true
+      Arch_Bishop: true
+      Arch_Bishop_T: true
+    Tree:
+      - Name: CD_REPARATIO
+        MaxLevel: 5
+        Requires:
+          - Name: CD_MEDIALE_VOTUM
+            Level: 3
+      - Name: CD_MEDIALE_VOTUM
+        MaxLevel: 5
+        Requires:
+          - Name: CD_DILECTIO_HEAL
+            Level: 3
+      - Name: CD_MACE_BOOK_M
+        MaxLevel: 10
+      - Name: CD_ARGUTUS_VITA
+        MaxLevel: 5
+        Requires:
+          - Name: CD_MEDIALE_VOTUM
+            Level: 3
+          - Name: CD_REPARATIO
+            Level: 3
+      - Name: CD_ARGUTUS_TELUM
+        MaxLevel: 5
+        Requires:
+          - Name: CD_MEDIALE_VOTUM
+            Level: 3
+          - Name: CD_REPARATIO
+            Level: 3
+      - Name: CD_ARBITRIUM
+        MaxLevel: 10
+        Requires:
+          - Name: AB_ADORAMUS
+            Level: 5
+          - Name: CD_FRAMEN
+            Level: 3
+      - Name: CD_PRESENS_ACIES
+        MaxLevel: 5
+        Requires:
+          - Name: CD_MEDIALE_VOTUM
+            Level: 3
+          - Name: CD_REPARATIO
+            Level: 3
+      - Name: CD_FIDUS_ANIMUS
+        MaxLevel: 10
+      - Name: CD_EFFLIGO
+        MaxLevel: 10
+        Requires:
+          - Name: AB_ORATIO
+            Level: 5
+          - Name: CD_PETITIO
+            Level: 10
+      - Name: CD_COMPETENTIA
+        MaxLevel: 5
+        Requires:
+          - Name: CD_ARGUTUS_TELUM
+            Level: 2
+          - Name: CD_ARGUTUS_VITA
+            Level: 2
+          - Name: CD_PRESENS_ACIES
+            Level: 2
+      - Name: CD_PNEUMATICUS_PROCELLA
+        MaxLevel: 10
+        Requires:
+          - Name: CD_ARBITRIUM
+            Level: 10
+          - Name: CD_FRAMEN
+            Level: 5
+      - Name: CD_DILECTIO_HEAL
+        MaxLevel: 5
+        Requires:
+          - Name: AB_CHEAL
+            Level: 3
+          - Name: AB_HIGHNESSHEAL
+            Level: 3
+      - Name: CD_RELIGIO
+        MaxLevel: 5
+        Requires:
+          - Name: AB_CLEMENTIA
+            Level: 3
+          - Name: CD_DILECTIO_HEAL
+            Level: 2
+      - Name: CD_BENEDICTUM
+        MaxLevel: 5
+        Requires:
+          - Name: AB_CANTO
+            Level: 3
+          - Name: CD_DILECTIO_HEAL
+            Level: 2
+      - Name: CD_PETITIO
+        MaxLevel: 10
+        Requires:
+          - Name: AB_DUPLELIGHT
+            Level: 10
+          - Name: CD_MACE_BOOK_M
+            Level: 5
+      - Name: CD_FRAMEN
+        MaxLevel: 5
+        Requires:
+          - Name: AB_JUDEX
+            Level: 10
+          - Name: CD_FIDUS_ANIMUS
+            Level: 5
+  - Job: Windhawk
+    Inherit:
+      Novice: true
+      Archer: true
+      Hunter: true
+      Sniper: true
+      Ranger: true
+      Ranger_T: true
+    Tree:
+      - Name: WH_ADVANCED_TRAP
+        MaxLevel: 5
+        Requires:
+          - Name: RA_RESEARCHTRAP
+            Level: 3
+      - Name: WH_WIND_SIGN
+        MaxLevel: 5
+        Requires:
+          - Name: WH_NATUREFRIENDLY
+            Level: 5
+      - Name: WH_NATUREFRIENDLY
+        MaxLevel: 5
+      - Name: WH_HAWKRUSH
+        MaxLevel: 5
+        Requires:
+          - Name: WH_HAWK_M
+            Level: 1
+      - Name: WH_HAWK_M
+        MaxLevel: 1
+        Requires:
+          - Name: HT_STEELCROW
+            Level: 1
+      - Name: WH_CALAMITYGALE
+        MaxLevel: 1
+        Requires:
+          - Name: WH_GALESTORM
+            Level: 5
+          - Name: WH_WIND_SIGN
+            Level: 5
+      - Name: WH_HAWKBOOMERANG
+        MaxLevel: 5
+        Requires:
+          - Name: WH_HAWKRUSH
+            Level: 5
+      - Name: WH_GALESTORM
+        MaxLevel: 10
+        Requires:
+          - Name: WH_CRESCIVE_BOLT
+            Level: 3
+      - Name: WH_DEEPBLINDTRAP
+        MaxLevel: 5
+        Requires:
+          - Name: WH_ADVANCED_TRAP
+            Level: 3
+      - Name: WH_SOLIDTRAP
+        MaxLevel: 5
+        Requires:
+          - Name: WH_ADVANCED_TRAP
+            Level: 3
+      - Name: WH_SWIFTTRAP
+        MaxLevel: 5
+        Requires:
+          - Name: WH_DEEPBLINDTRAP
+            Level: 1
+      - Name: WH_CRESCIVE_BOLT
+        MaxLevel: 10
+        Requires:
+          - Name: RA_AIMEDBOLT
+            Level: 5
+      - Name: WH_FLAMETRAP
+        MaxLevel: 5
+        Requires:
+          - Name: WH_SOLIDTRAP
+            Level: 1
+  - Job: Imperial_Guard
+    Inherit:
+      Novice: true
+      Swordman: true
+      Crusader: true
+      Paladin: true
+      Royal_Guard: true
+      Royal_Guard_T: true
+    Tree:
+      - Name: IG_GUARD_STANCE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_SHIELD_MASTERY
+            Level: 3
+      - Name: IG_GUARDIAN_SHIELD
+        MaxLevel: 5
+        Requires:
+          - Name: IG_GUARD_STANCE
+            Level: 2
+      - Name: IG_REBOUND_SHIELD
+        MaxLevel: 5
+        Requires:
+          - Name: IG_GUARD_STANCE
+            Level: 4
+      - Name: IG_SHIELD_MASTERY
+        MaxLevel: 10
+      - Name: IG_SPEAR_SWORD_M
+        MaxLevel: 10
+      - Name: IG_ATTACK_STANCE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_SPEAR_SWORD_M
+            Level: 3
+      - Name: IG_ULTIMATE_SACRIFICE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_GUARDIAN_SHIELD
+            Level: 3
+          - Name: IG_REBOUND_SHIELD
+            Level: 3
+      - Name: IG_HOLY_SHIELD
+        MaxLevel: 5
+        Requires:
+          - Name: IG_CROSS_RAIN
+            Level: 3
+          - Name: IG_SHIELD_MASTERY
+            Level: 5
+      - Name: IG_GRAND_JUDGEMENT
+        MaxLevel: 10
+        Requires:
+          - Name: IG_OVERSLASH
+            Level: 5
+          - Name: IG_SPEAR_SWORD_M
+            Level: 5
+      - Name: IG_JUDGEMENT_CROSS
+        MaxLevel: 10
+        Requires:
+          - Name: IG_CROSS_RAIN
+            Level: 5
+          - Name: IG_HOLY_SHIELD
+            Level: 3
+      - Name: IG_SHIELD_SHOOTING
+        MaxLevel: 5
+        Requires:
+          - Name: IG_ATTACK_STANCE
+            Level: 2
+          - Name: IG_SHIELD_MASTERY
+            Level: 5
+      - Name: IG_OVERSLASH
+        MaxLevel: 10
+        Requires:
+          - Name: IG_ATTACK_STANCE
+            Level: 3
+      - Name: IG_CROSS_RAIN
+        MaxLevel: 10
+        Requires:
+          - Name: IG_SHIELD_MASTERY
+            Level: 1
+  - Job: Biolo
+    Inherit:
+      Novice: true
+      Merchant: true
+      Alchemist: true
+      Creator: true
+      Genetic: true
+      Genetic_T: true
+    Tree:
+      - Name: BO_BIONIC_PHARMACY
+        MaxLevel: 5
+        Requires:
+          - Name: GN_S_PHARMACY
+            Level: 5
+      - Name: BO_BIONICS_M
+        MaxLevel: 10
+      - Name: BO_THE_WHOLE_PROTECTION
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONIC_PHARMACY
+            Level: 5
+      - Name: BO_ADVANCE_PROTECTION
+        MaxLevel: 4
+        Requires:
+          - Name: BO_BIONIC_PHARMACY
+            Level: 5
+      - Name: BO_ACIDIFIED_ZONE_WATER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_ACIDIFIED_ZONE_WIND
+            Level: 1
+      - Name: BO_ACIDIFIED_ZONE_GROUND
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 3
+          - Name: BO_BIONIC_PHARMACY
+            Level: 5
+      - Name: BO_ACIDIFIED_ZONE_WIND
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 3
+          - Name: BO_BIONIC_PHARMACY
+            Level: 5
+      - Name: BO_ACIDIFIED_ZONE_FIRE
+        MaxLevel: 5
+        Requires:
+          - Name: BO_ACIDIFIED_ZONE_GROUND
+            Level: 1
+      - Name: BO_WOODENWARRIOR
+        MaxLevel: 5
+        Requires:
+          - Name: BO_CREEPER
+            Level: 3
+      - Name: BO_WOODEN_FAIRY
+        MaxLevel: 5
+        Requires:
+          - Name: BO_CREEPER
+            Level: 3
+      - Name: BO_CREEPER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 5
+      - Name: BO_RESEARCHREPORT
+        MaxLevel: 1
+        Requires:
+          - Name: BO_ACIDIFIED_ZONE_FIRE
+            Level: 3
+          - Name: BO_ACIDIFIED_ZONE_WATER
+            Level: 3
+      - Name: BO_HELLTREE
+        MaxLevel: 5
+        Requires:
+          - Name: BO_WOODENWARRIOR
+            Level: 3
+          - Name: BO_WOODEN_FAIRY
+            Level: 3
+  - Job: Abyss_Chaser
+    Inherit:
+      Novice: true
+      Thief: true
+      Rogue: true
+      Stalker: true
+      Shadow_Chaser: true
+      Shadow_Chaser_T: true
+    Tree:
+      - Name: ABC_DAGGER_AND_BOW_M
+        MaxLevel: 10
+      - Name: ABC_MAGIC_SWORD_M
+        MaxLevel: 10
+        Requires:
+          - Name: SC_AUTOSHADOWSPELL
+            Level: 5
+          - Name: SC_REPRODUCE
+            Level: 5
+      - Name: ABC_STRIP_SHADOW
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 7
+          - Name: SC_STRIPACCESSARY
+            Level: 1
+      - Name: ABC_ABYSS_DAGGER
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 3
+          - Name: SC_FATALMENACE
+            Level: 5
+      - Name: ABC_UNLUCKY_RUSH
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_ABYSS_DAGGER
+            Level: 3
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 4
+      - Name: ABC_CHAIN_REACTION_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 3
+          - Name: SC_TRIANGLESHOT
+            Level: 5
+      - Name: ABC_FROM_THE_ABYSS
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_MAGIC_SWORD_M
+            Level: 3
+      - Name: ABC_ABYSS_SLAYER
+        MaxLevel: 10
+        Requires:
+          - Name: ABC_ABYSS_DAGGER
+            Level: 5
+          - Name: ABC_DEFT_STAB
+            Level: 5
+      - Name: ABC_ABYSS_STRIKE
+        MaxLevel: 10
+        Requires:
+          - Name: ABC_ABYSS_SQUARE
+            Level: 3
+          - Name: ABC_FROM_THE_ABYSS
+            Level: 3
+      - Name: ABC_DEFT_STAB
+        MaxLevel: 10
+        Requires:
+          - Name: ABC_ABYSS_DAGGER
+            Level: 3
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 5
+      - Name: ABC_ABYSS_SQUARE
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_FROM_THE_ABYSS
+            Level: 1
+          - Name: ABC_MAGIC_SWORD_M
+            Level: 5
+      - Name: ABC_FRENZY_SHOT
+        MaxLevel: 10
+        Requires:
+          - Name: ABC_CHAIN_REACTION_SHOT
+            Level: 3
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 5
+  - Job: Elemental_Master
+    Inherit:
+      Novice: true
+      Mage: true
+      Sage: true
+      Professor: true
+      Sorcerer: true
+      Sorcerer_T: true
+    Tree:
+      - Name: EM_MAGIC_BOOK_M
+        MaxLevel: 10
+      - Name: EM_SPELL_ENCHANTING
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 5
+      - Name: EM_ACTIVITY_BURN
+        MaxLevel: 5
+        Requires:
+          - Name: EM_SPELL_ENCHANTING
+            Level: 3
+      - Name: EM_INCREASING_ACTIVITY
+        MaxLevel: 5
+        Requires:
+          - Name: EM_ACTIVITY_BURN
+            Level: 5
+      - Name: EM_DIAMOND_STORM
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 2
+      - Name: EM_LIGHTNING_LAND
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 2
+      - Name: EM_VENOM_SWAMP
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 2
+      - Name: EM_CONFLAGRATION
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 2
+      - Name: EM_TERRA_DRIVE
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 2
+      - Name: EM_ELEMENTAL_SPIRIT_M
+        MaxLevel: 10
+        Requires:
+          - Name: SO_EL_SYMPATHY
+            Level: 1
+      - Name: EM_SUMMON_ELEMENTAL_ARDOR
+        MaxLevel: 1
+        Requires:
+          - Name: EM_CONFLAGRATION
+            Level: 1
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 1
+          - Name: SO_SUMMON_AGNI
+            Level: 3
+      - Name: EM_SUMMON_ELEMENTAL_DILUVIO
+        MaxLevel: 1
+        Requires:
+          - Name: EM_DIAMOND_STORM
+            Level: 1
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 1
+          - Name: SO_SUMMON_AQUA
+            Level: 3
+      - Name: EM_SUMMON_ELEMENTAL_PROCELLA
+        MaxLevel: 1
+        Requires:
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 1
+          - Name: EM_LIGHTNING_LAND
+            Level: 1
+          - Name: SO_SUMMON_VENTUS
+            Level: 3
+      - Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
+        MaxLevel: 1
+        Requires:
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 1
+          - Name: EM_TERRA_DRIVE
+            Level: 1
+          - Name: SO_SUMMON_TERA
+            Level: 3
+      - Name: EM_SUMMON_ELEMENTAL_SERPENS
+        MaxLevel: 1
+        Requires:
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 1
+          - Name: EM_VENOM_SWAMP
+            Level: 1
+          - Name: SO_SUMMON_AGNI
+            Level: 3
+          - Name: SO_SUMMON_AQUA
+            Level: 3
+          - Name: SO_SUMMON_TERA
+            Level: 3
+          - Name: SO_SUMMON_VENTUS
+            Level: 3
+      - Name: EM_ELEMENTAL_BUSTER
+        MaxLevel: 10
+        Requires:
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 5
+          - Name: EM_SUMMON_ELEMENTAL_ARDOR
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_DILUVIO
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_PROCELLA
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_SERPENS
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
+            Level: 1
+      - Name: EM_ELEMENTAL_VEIL
+        MaxLevel: 5
+        Requires:
+          - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 3
+  - Job: Inquisitor
+    Inherit:
+      Novice: true
+      Acolyte: true
+      Monk: true
+      Champion: true
+      Sura: true
+      Sura_T: true
+    Tree:
+      - Name: IQ_POWERFUL_FAITH
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_WILL_OF_FAITH
+            Level: 1
+      - Name: IQ_FIRM_FAITH
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_WILL_OF_FAITH
+            Level: 1
+      - Name: IQ_WILL_OF_FAITH
+        MaxLevel: 10
+      - Name: IQ_OLEUM_SANCTUM
+        MaxLevel: 5
+        Requires:
+          - Name: AL_HOLYWATER
+            Level: 1
+          - Name: IQ_WILL_OF_FAITH
+            Level: 3
+      - Name: IQ_SINCERE_FAITH
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_WILL_OF_FAITH
+            Level: 1
+      - Name: IQ_MASSIVE_F_BLASTER
+        MaxLevel: 10
+        Requires:
+          - Name: IQ_EXPOSION_BLASTER
+            Level: 3
+          - Name: IQ_OLEUM_SANCTUM
+            Level: 3
+          - Name: IQ_WILL_OF_FAITH
+            Level: 5
+      - Name: IQ_EXPOSION_BLASTER
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_OLEUM_SANCTUM
+            Level: 1
+      - Name: IQ_FIRST_BRAND
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_WILL_OF_FAITH
+            Level: 2
+      - Name: IQ_FIRST_FAITH_POWER
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_FIRST_BRAND
+            Level: 1
+          - Name: IQ_WILL_OF_FAITH
+            Level: 3
+      - Name: IQ_JUDGE
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_FIRST_FAITH_POWER
+            Level: 1
+      - Name: IQ_SECOND_FLAME
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_THIRD_EXOR_FLAME
+            Level: 1
+      - Name: IQ_SECOND_FAITH
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_FIRST_FAITH_POWER
+            Level: 1
+      - Name: IQ_SECOND_JUDGEMENT
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_JUDGE
+            Level: 1
+      - Name: IQ_THIRD_PUNISH
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_SECOND_FAITH
+            Level: 2
+      - Name: IQ_THIRD_FLAME_BOMB
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_SECOND_FLAME
+            Level: 2
+      - Name: IQ_THIRD_CONSECRATION
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_SECOND_JUDGEMENT
+            Level: 2
+      - Name: IQ_THIRD_EXOR_FLAME
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_JUDGE
+            Level: 1
+  - Job: Troubadour
+    Inherit:
+      Novice: true
+      Archer: true
+      Bard: true
+      Clown: true
+      Minstrel: true
+      Minstrel_T: true
+    Tree:
+      - Name: TR_STAGE_MANNER
+        MaxLevel: 5
+      - Name: TR_RETROSPECTION
+        MaxLevel: 1
+        Requires:
+          - Name: TR_STAGE_MANNER
+            Level: 1
+      - Name: TR_MYSTIC_SYMPHONY
+        MaxLevel: 1
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 1
+          - Name: TR_ROSEBLOSSOM
+            Level: 5
+      - Name: TR_KVASIR_SONATA
+        MaxLevel: 1
+        Requires:
+          - Name: TR_NIPELHEIM_REQUIEM
+            Level: 1
+          - Name: TR_ROKI_CAPRICCIO
+            Level: 1
+      - Name: TR_ROSEBLOSSOM
+        MaxLevel: 5
+        Requires:
+          - Name: TR_RHYTHMSHOOTING
+            Level: 3
+      - Name: TR_RHYTHMSHOOTING
+        MaxLevel: 5
+      - Name: TR_METALIC_FURY
+        MaxLevel: 5
+        Requires:
+          - Name: TR_SOUNDBLEND
+            Level: 1
+      - Name: TR_SOUNDBLEND
+        MaxLevel: 5
+        Requires:
+          - Name: WM_METALICSOUND
+            Level: 5
+      - Name: TR_GEF_NOCTURN
+        MaxLevel: 5
+        Requires:
+          - Name: TR_STAGE_MANNER
+            Level: 3
+      - Name: TR_ROKI_CAPRICCIO
+        MaxLevel: 5
+        Requires:
+          - Name: TR_JAWAII_SERENADE
+            Level: 1
+      - Name: TR_AIN_RHAPSODY
+        MaxLevel: 5
+        Requires:
+          - Name: TR_STAGE_MANNER
+            Level: 3
+      - Name: TR_MUSICAL_INTERLUDE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_AIN_RHAPSODY
+            Level: 1
+      - Name: TR_JAWAII_SERENADE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_GEF_NOCTURN
+            Level: 1
+      - Name: TR_NIPELHEIM_REQUIEM
+        MaxLevel: 5
+        Requires:
+          - Name: TR_MUSICAL_INTERLUDE
+            Level: 1
+          - Name: TR_PRON_MARCH
+            Level: 1
+      - Name: TR_PRON_MARCH
+        MaxLevel: 5
+        Requires:
+          - Name: TR_AIN_RHAPSODY
+            Level: 1
+  - Job: Trouvere
+    Inherit:
+      Novice: true
+      Archer: true
+      Dancer: true
+      Gypsy: true
+      Wanderer: true
+      Wanderer_T: true
+    Tree:
+      - Name: TR_STAGE_MANNER
+        MaxLevel: 5
+      - Name: TR_RETROSPECTION
+        MaxLevel: 1
+        Requires:
+          - Name: TR_STAGE_MANNER
+            Level: 1
+      - Name: TR_MYSTIC_SYMPHONY
+        MaxLevel: 1
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 1
+          - Name: TR_ROSEBLOSSOM
+            Level: 5
+      - Name: TR_KVASIR_SONATA
+        MaxLevel: 1
+        Requires:
+          - Name: TR_NIPELHEIM_REQUIEM
+            Level: 1
+          - Name: TR_ROKI_CAPRICCIO
+            Level: 1
+      - Name: TR_ROSEBLOSSOM
+        MaxLevel: 5
+        Requires:
+          - Name: TR_RHYTHMSHOOTING
+            Level: 3
+      - Name: TR_RHYTHMSHOOTING
+        MaxLevel: 5
+      - Name: TR_METALIC_FURY
+        MaxLevel: 5
+        Requires:
+          - Name: TR_SOUNDBLEND
+            Level: 1
+      - Name: TR_SOUNDBLEND
+        MaxLevel: 5
+        Requires:
+          - Name: WM_METALICSOUND
+            Level: 5
+      - Name: TR_GEF_NOCTURN
+        MaxLevel: 5
+        Requires:
+          - Name: TR_STAGE_MANNER
+            Level: 3
+      - Name: TR_ROKI_CAPRICCIO
+        MaxLevel: 5
+        Requires:
+          - Name: TR_JAWAII_SERENADE
+            Level: 1
+      - Name: TR_AIN_RHAPSODY
+        MaxLevel: 5
+        Requires:
+          - Name: TR_STAGE_MANNER
+            Level: 3
+      - Name: TR_MUSICAL_INTERLUDE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_AIN_RHAPSODY
+            Level: 1
+      - Name: TR_JAWAII_SERENADE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_GEF_NOCTURN
+            Level: 1
+      - Name: TR_NIPELHEIM_REQUIEM
+        MaxLevel: 5
+        Requires:
+          - Name: TR_MUSICAL_INTERLUDE
+            Level: 1
+          - Name: TR_PRON_MARCH
+            Level: 1
+      - Name: TR_PRON_MARCH
+        MaxLevel: 5
+        Requires:
+          - Name: TR_AIN_RHAPSODY
+            Level: 1
+  - Job: Windhawk2
+    Inherit:
+      Novice: true
+      Archer: true
+      Hunter: true
+      Sniper: true
+      Ranger: true
+      Ranger_T: true
+      Windhawk: true
+  - Job: Meister2
+    Inherit:
+      Novice: true
+      Merchant: true
+      Blacksmith: true
+      Whitesmith: true
+      Mechanic: true
+      Mechanic_T: true
+      Meister: true
+  - Job: Dragon_Knight2
+    Inherit:
+      Novice: true
+      Swordman: true
+      Knight: true
+      Lord_Knight: true
+      Rune_Knight: true
+      Rune_Knight_T: true
+      Dragon_Knight: true
+  - Job: Imperial_Guard2
+    Inherit:
+      Novice: true
+      Swordman: true
+      Crusader: true
+      Paladin: true
+      Royal_Guard: true
+      Royal_Guard_T: true
+      Imperial_Guard: true

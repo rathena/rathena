@@ -290,8 +290,8 @@ Body:
       4264 Trouvere
       ----- Expanded Class -----
            23 Super Novice      24 Gunslinger              25 Ninja                 4045 Super Baby
-      4046 Taekwon           4047 Star Gladiator     4049 Soul Linker            4050 Gangsi
-      4051 Death Knight    4052 Dark Collector    4190 Ex. Super Novice  4191 Ex. Super Baby
+      4046 Taekwon           4047 Star Gladiator     4049 Soul Linker
+      4190 Ex. Super Novice  4191 Ex. Super Baby
       4211 Kagerou            4212 Oboro             4215 Rebellion        4218 Summoner
       4239 Star Emperor   4240 Soul Reaper
       4302 Sky Emperor    4303 Soul Ascetic         4304 Shinkiro                 4305 Shiranui
@@ -313,10 +313,6 @@ Body:
       4220 Baby Summoner        4222 Baby Ninja        4223 Baby Kagero         4224 Baby Oboro
       4225 Baby Taekwon       4226 Baby Star Glad    4227 Baby Soul Linker    4228 Baby Gunslinger
       4229 Baby Rebellion   4241 Baby Star Emperor    4242 Baby Soul Reaper
-      ---- Modes And Others ----
-       22 Wedding            26 Christmas          27 Summer           28 Hanbok
-       29 Oktoberfest       30 Summer 2
-       4048 Star Gladiator (Union)	    4238 Baby Star Glad (Union)
   - Command: option
     Help: |
       Params: <param1> <param2>(stackable) <param3>(stackable)
@@ -335,6 +331,10 @@ Body:
     Help: |
       Params: [<HP> <SP>]
       Heals the desired amount of HP and SP. No value specified will do a full heal.
+  - Command: healap
+    Help: |
+      Params: [<AP>]
+      Heals the desired amount of AP. No value specified will do a full AP heal.
   - Command: dye
     Aliases:
       - ccolor
@@ -480,6 +480,9 @@ Body:
   - Command: stpoint
     Help: |
       Params: <number of points> - Gives you the desired number of stat points.
+  - Command: trpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of trait stat points.
   - Command: skpoint
     Help: |
       Params: <number of points> - Gives you the desired number of skill points.
@@ -659,6 +662,9 @@ Body:
       Params: <part_of_item_name>
       Search all items that name have part_of_item_name
   - Command: refine
+    Help: |
+      Params: <equip position> <+/- amount>
+  - Command: grade
     Help: |
       Params: <equip position> <+/- amount>
   - Command: produce
@@ -1003,6 +1009,16 @@ Body:
   - Command: reloadnpcfile
     Aliases:
       - reloadnpc
+  - Command: addfame
+    Aliases:
+      - famepoint
+      - famepoints
+  - Command: enchantgradeui
+    Help: |
+      Opens the enchantgrade UI.
+  - Command: roulette
+    Help: |
+      Opens the roulette UI.
 
 Footer:
   Imports:
