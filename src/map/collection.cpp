@@ -8,8 +8,6 @@
 
 #include <stdlib.h>
 
-#include <yaml-cpp/yaml.h>
-
 #include "../common/db.hpp"
 #include "../common/ers.hpp"
 #include "../common/malloc.hpp"
@@ -35,7 +33,7 @@ const std::string CollectionDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/collection_db.yml";
 }
 
-uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 CollectionDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string item_name;
 
 	if (!this->asString(node, "ConsumeItem", item_name))
@@ -62,10 +60,13 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if (this->nodeExists(node, "Target")) {
-		const YAML::Node& monsterNode = node["Target"];
+		const ryml::NodeRef& monsterNode = node["Target"];
 
 		for (const auto& target : monsterNode) {
-			std::string mob_name = target.first.as<std::string>(); 
+			std::string mob_name;
+
+			c4::from_chars( target.key(), &mob_name );
+
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 			if (mob == nullptr) {
@@ -131,14 +132,6 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 		this->put(item->nameid, collection);
 	}
 	return 1;
-}
-
-bool CollectionDatabase::reload(){
-	if( !TypesafeYamlDatabase::reload() ){
-		return false;
-	}
-
-	return true;
 }
 
 CollectionDatabase collection_db;
