@@ -540,7 +540,6 @@ bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 		return false;
 	}
 
-
 	if( !process( "ITEM_CASH_DB", 1, root_paths, "item_cash_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &cashshop_parse_dbrow, false );
 	}, "item_cash" ) ){
