@@ -53,7 +53,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2af8: Outgoing, chrif_connect -> 'connect to charserver / auth @ charserver'
 //2af9: Incoming, chrif_connectack -> 'answer of the 2af8 login(ok / fail)'
 //2afa: Outgoing, chrif_sendmap -> 'sending our maps'
-//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not .. also received server name & default map'
+//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not .. also received server name'
 //2afc: Outgoing, chrif_scdata_request -> request sc_data for pc_authok'ed char. <- new command reuses previous one.
 //2afd: Incoming, chrif_authok -> 'client authentication ok'
 //2afe: Outgoing, send_usercount_tochar -> 'sends player count of this map server to charserver'
@@ -567,7 +567,6 @@ void chrif_on_ready(void) {
 /**
  * Maps are sent, then received misc info from char-server
  * - Server name
- * - Default map
  * HZ 0x2afb
  **/
 int chrif_sendmapack(int fd) {
@@ -581,18 +580,10 @@ int chrif_sendmapack(int fd) {
 	// Whisper name
 	safestrncpy( wisp_server_name, RFIFOCP( fd, offs ), NAME_LENGTH );
 
-	// Default map
-	safestrncpy( map_default.mapname, RFIFOCP( fd, ( offs += NAME_LENGTH ) ), MAP_NAME_LENGTH );
-	map_default.x = RFIFOW(fd, (offs+=MAP_NAME_LENGTH));
-	map_default.y = RFIFOW(fd, (offs+=2));
-
 	// Server name
-	safestrncpy( charserver_name, RFIFOCP( fd, ( offs += 2 ) ), NAME_LENGTH );
+	safestrncpy( charserver_name, RFIFOCP( fd, offs + NAME_LENGTH ), NAME_LENGTH );
 
 	ShowStatus( "Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "' (whispername: %s).\n", charserver_name, wisp_server_name );
-
-	if (battle_config.etc_log)
-		ShowInfo("Received default map from char-server '" CL_WHITE "%s %d,%d" CL_RESET "'.\n", map_default.mapname, map_default.x, map_default.y);
 
 	chrif_on_ready();
 

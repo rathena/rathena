@@ -195,10 +195,6 @@ struct CharServ_Config {
 	int start_zeny;
 	int guild_exp_rate;
 
-	char default_map[MAP_NAME_LENGTH];
-	unsigned short default_map_x;
-	unsigned short default_map_y;
-
 	int clan_remove_inactive_days;
 	int mail_return_days;
 	int mail_delete_days;
