@@ -1270,6 +1270,9 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	const std::string start_tag = "<ITEML>";
 	const std::string closing_tag = "</ITEML>";
+#elif PACKETVER_MAIN_NUM == 20151104
+	const std::string start_tag = "<ITEM>";
+	const std::string closing_tag = "</ITEM>";
 #else // PACKETVER >= 20100000
 	const std::string start_tag = "<ITEMLINK>";
 	const std::string closing_tag = "</ITEMLINK>";
@@ -1283,9 +1286,13 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 	if (item.refine > 0) {
 		itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
 	}
+
+#if PACKETVER_MAIN_NUM != 20151104
 	if (itemdb_isequip2(id)) {
 		itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
 	}
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
 #endif
@@ -1295,6 +1302,11 @@ std::string ItemDatabase::create_item_link( struct item& item ){
 	const std::string optid_sep = "+";
 	const std::string optpar_sep = ",";
 	const std::string optval_sep = "-";
+#elif PACKETVER_MAIN_NUM == 20151104 
+	const std::string card_sep = "'";
+	const std::string optid_sep = ")";
+	const std::string optpar_sep = "*";
+	const std::string optval_sep = "+";
 #else
 	const std::string card_sep = "(";
 	const std::string optid_sep = "*";
