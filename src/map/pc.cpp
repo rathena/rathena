@@ -1325,7 +1325,7 @@ void pc_makesavestatus(map_session_data *sd) {
 		pc_setrestartvalue( sd, 0 );
 
 		// Return to save point
-		safestrncpy( sd->status.last_point.map, mapindex_id2name( sd->status.save_point.map ), sizeof( sd->status.last_point.map ) );
+		safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
 		sd->status.last_point.x = sd->status.save_point.x;
 		sd->status.last_point.y = sd->status.save_point.y;
 	}else{
@@ -1344,14 +1344,14 @@ void pc_makesavestatus(map_session_data *sd) {
 				sd->status.last_point.y = mapdata->save.y;
 			// Return the user to his save point
 			}else{
-				safestrncpy( sd->status.last_point.map, mapindex_id2name( sd->status.save_point.map ), sizeof( sd->status.last_point.map ) );
+				safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
 				sd->status.last_point.x = sd->status.save_point.x;
 				sd->status.last_point.y = sd->status.save_point.y;
 			}
 		// If the user is on a instance map, we return him to his save point
 		}else if( mapdata->instance_id ){
 			// Return the user to his save point
-			safestrncpy( sd->status.last_point.map, mapindex_id2name( sd->status.save_point.map ), sizeof( sd->status.last_point.map ) );
+			safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
 			sd->status.last_point.x = sd->status.save_point.x;
 			sd->status.last_point.y = sd->status.save_point.y;
 		}else{
@@ -6912,6 +6912,16 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 	return SETPOS_OK;
 }
 
+enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype ){
+	struct map_data *mapdata = map_getmapdata( sd.bl.m );
+
+	if( mapdata != nullptr && mapdata->flag[MF_NOSAVE] && mapdata->save.map ){
+		return pc_setpos( &sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, clrtype );
+	}else{
+		return pc_setpos( &sd, mapindex_name2id( sd.status.save_point.map ), sd.status.save_point.x, sd.status.save_point.y, clrtype );
+	}
+}
+
 /*==========================================
  * Warp player sd to random location on current map.
  * May fail if no walkable cell found (1000 attempts).
@@ -9360,8 +9370,9 @@ void pc_respawn(map_session_data* sd, clr_type clrtype)
 
 	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
-	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) != SETPOS_OK )
+	if( pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, clrtype ) != SETPOS_OK ){
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
+	}
 }
 
 static TIMER_FUNC(pc_respawn_timer){
@@ -12665,7 +12676,7 @@ void pc_setsavepoint(map_session_data *sd, short mapindex,int x,int y)
 {
 	nullpo_retv(sd);
 
-	sd->status.save_point.map = mapindex;
+	safestrncpy( sd->status.save_point.map, mapindex_id2name( mapindex ), sizeof( sd->status.save_point.map ) );
 	sd->status.save_point.x = x;
 	sd->status.save_point.y = y;
 }

@@ -780,14 +780,12 @@ int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char 
 		clif_name_area(&sd->bl); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 
-		if( p->instance_id ) {
+		if( p != nullptr && p->instance_id ){
 			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if( mapdata->instance_id ) { // User was on the instance map
-				if( mapdata->save.map )
-					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
-				else
-					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			// User was on the instance map of the party
+			if( mapdata != nullptr && p->instance_id == mapdata->instance_id ){
+				pc_setpos_savepoint( *sd );
 			}
 		}
 	}

@@ -5611,7 +5611,7 @@ BUILDIN_FUNC(warp)
 	if(strcmp(str,"Random")==0)
 		ret = pc_randomwarp(sd,CLR_TELEPORT,true);
 	else if(strcmp(str,"SavePoint")==0 || strcmp(str,"Save")==0)
-		ret = pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+		ret = pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 	else
 		ret = pc_setpos(sd,mapindex_name2id(str),x,y,CLR_OUTSIGHT);
 
@@ -5850,11 +5850,11 @@ BUILDIN_FUNC(warpparty)
 		break;
 		case WARPPARTY_SAVEPOINTALL:
 			if (!mapdata->flag[MF_NORETURN])
-				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
+				ret = pc_setpos( pl_sd, mapindex_name2id( pl_sd->status.save_point.map ), pl_sd->status.save_point.x, pl_sd->status.save_point.y, CLR_TELEPORT );
 		break;
 		case WARPPARTY_SAVEPOINT:
 			if (!mapdata->flag[MF_NORETURN])
-				ret = pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+				ret = pc_setpos( pl_sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 		break;
 		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
@@ -5956,11 +5956,11 @@ BUILDIN_FUNC(warpguild)
 		break;
 		case 1: // SavePointAll
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
+				pc_setpos( pl_sd, mapindex_name2id( pl_sd->status.save_point.map ), pl_sd->status.save_point.x, pl_sd->status.save_point.y, CLR_TELEPORT );
 		break;
 		case 2: // SavePoint
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+				pc_setpos( pl_sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 		break;
 		case 3: // m,x,y
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd)))
@@ -13125,7 +13125,7 @@ BUILDIN_FUNC(warpwaitingpc)
 		if( strcmp(map_name,"Random") == 0 )
 			pc_randomwarp(sd,CLR_TELEPORT,true);
 		else if( strcmp(map_name,"SavePoint") == 0 )
-			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 		else
 			pc_setpos(sd, mapindex_name2id(map_name), x, y, CLR_OUTSIGHT);
 	}
@@ -13619,7 +13619,7 @@ static int buildin_maprespawnguildid_sub_pc(map_session_data* sd, va_list ap)
 		(sd->status.guild_id != g_id && flag&2) || //Warp out outsiders
 		(sd->status.guild_id == 0 && flag&2)	// Warp out players not in guild
 	)
-		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+		pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 	return 1;
 }
 
@@ -16089,7 +16089,7 @@ BUILDIN_FUNC(getsavepoint)
 	type = script_getnum(st,2);
 
 	switch(type) {
-		case 0: script_pushstrcopy(st,mapindex_id2name(sd->status.save_point.map)); break;
+		case 0: script_pushstrcopy( st, sd->status.save_point.map ); break;
 		case 1: script_pushint(st,sd->status.save_point.x); break;
 		case 2: script_pushint(st,sd->status.save_point.y); break;
 		default:

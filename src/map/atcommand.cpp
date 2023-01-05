@@ -962,13 +962,12 @@ ACMD_FUNC(save)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD_FUNC(load)
-{
-	int16 m;
-
+ACMD_FUNC(load){
 	nullpo_retr(-1, sd);
 
-	m = map_mapindex2mapid(sd->status.save_point.map);
+	uint16 mapindex = mapindex_name2id( sd->status.save_point.map );
+
+	int16 m = map_mapindex2mapid( mapindex );
 	if (m >= 0 && map_getmapflag(m, MF_NOWARPTO) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 		clif_displaymessage(fd, msg_txt(sd,249));	// You are not authorized to warp to your save map.
 		return -1;
@@ -978,7 +977,7 @@ ACMD_FUNC(load)
 		return -1;
 	}
 
-	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
+	pc_setpos( sd, mapindex, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT );
 	clif_displaymessage(fd, msg_txt(sd,7)); // Warping to save point..
 
 	return 0;

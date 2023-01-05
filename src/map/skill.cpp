@@ -9057,7 +9057,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( skill_lv == 1 )
 					pc_randomwarp(sd,CLR_TELEPORT);
 				else
-					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+					pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 				break;
 			}
 
@@ -9065,7 +9065,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL )
 				clif_skill_warppoint(sd,skill_id,skill_lv, (unsigned short)-1,0,0,0);
 			else
-				clif_skill_warppoint(sd,skill_id,skill_lv, (unsigned short)-1,sd->status.save_point.map,0,0);
+				clif_skill_warppoint( sd, skill_id, skill_lv, (unsigned short)-1, mapindex_name2id( sd->status.save_point.map ), 0, 0 );
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
@@ -13603,7 +13603,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AL_WARP:
 		if(sd)
 		{
-			clif_skill_warppoint(sd, skill_id, skill_lv, sd->status.save_point.map,
+			clif_skill_warppoint(sd, skill_id, skill_lv, mapindex_name2id( sd->status.save_point.map ),
 				(skill_lv >= 2) ? sd->status.memo_point[0].map : 0,
 				(skill_lv >= 3) ? sd->status.memo_point[1].map : 0,
 				(skill_lv >= 4) ? sd->status.memo_point[2].map : 0
@@ -14243,7 +14243,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 		if(strcmp(mapname,"Random") == 0)
 			pc_randomwarp(sd,CLR_TELEPORT);
 		else if (sd->menuskill_val > 1 || skill_id == ALL_ODINS_RECALL) //Need lv2 to be able to warp here.
-			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+			pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 
 		clif_refresh_storagewindow(sd);
 		break;
@@ -14263,7 +14263,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 				skill_failed(sd);
 				return 0;
 			}
-			p[0] = &sd->status.save_point;
+			// p[0] = &sd->status.save_point; // TODO: fix with memo_point refactor
 			p[1] = &sd->status.memo_point[0];
 			p[2] = &sd->status.memo_point[1];
 			p[3] = &sd->status.memo_point[2];

@@ -1027,11 +1027,9 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		if (g->instance_id) {
 			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if (mapdata->instance_id) { // User was on the instance map
-				if (mapdata->save.map)
-					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
-				else
-					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			// User was on the instance map of the guild
+			if( g->instance_id == mapdata->instance_id ){
+				pc_setpos_savepoint( *sd );
 			}
 		}
 

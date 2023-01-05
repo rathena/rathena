@@ -2148,23 +2148,6 @@ int map_quit(map_session_data *sd) {
 
 	unit_remove_map_pc(sd,CLR_RESPAWN);
 
-	if( mapdata->instance_id > 0 ) { // Avoid map conflicts and warnings on next login
-		int16 m;
-		struct point *pt;
-		if( mapdata->save.map )
-			pt = &mapdata->save;
-		else
-			pt = &sd->status.save_point;
-
-		if( (m=map_mapindex2mapid(pt->map)) >= 0 )
-		{
-			sd->bl.m = m;
-			sd->bl.x = pt->x;
-			sd->bl.y = pt->y;
-			sd->mapindex = pt->map;
-		}
-	}
-
 	if (sd->state.vending)
 		idb_remove(vending_getdb(), sd->status.char_id);
 
@@ -2753,7 +2736,7 @@ static int map_instancemap_leave(struct block_list *bl, va_list ap)
 	nullpo_retr(0, bl);
 	nullpo_retr(0, sd = (map_session_data *)bl);
 
-	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+	pc_setpos_savepoint( *sd );
 
 	return 1;
 }

@@ -1408,6 +1408,7 @@ enum e_setpos{
 };
 
 enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
+enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype = CLR_TELEPORT );
 void pc_setsavepoint(map_session_data *sd, short mapindex,int x,int y);
 char pc_randomwarp(map_session_data *sd,clr_type type,bool ignore_mapflag = false);
 bool pc_memo(map_session_data* sd, int pos);

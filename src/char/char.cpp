@@ -289,6 +289,8 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->zeny != cp->zeny) ||
 		( strncmp( p->last_point.map, cp->last_point.map, sizeof( p->last_point.map ) ) != 0 ) ||
 		(p->last_point.x != cp->last_point.x) || (p->last_point.y != cp->last_point.y) ||
+		( strncmp( p->save_point.map, cp->save_point.map, sizeof( p->save_point.map ) ) != 0 ) ||
+		( p->save_point.x != cp->save_point.x ) || ( p->save_point.y != cp->save_point.y ) ||
 		(p->max_hp != cp->max_hp) || (p->hp != cp->hp) ||
 		(p->max_sp != cp->max_sp) || (p->sp != cp->sp) ||
 		(p->status_point != cp->status_point) || (p->skill_point != cp->skill_point) ||
@@ -327,7 +329,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			p->option, p->party_id, p->guild_id, p->pet_id, p->hom_id, p->ele_id,
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 			p->last_point.map, p->last_point.x, p->last_point.y,
-			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y, p->rename,
+			p->save_point.map, p->save_point.x, p->save_point.y, p->rename,
 			(unsigned long)p->delete_date, // FIXME: platform-dependent size
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
 			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip, p->hotkey_rowshift2,
@@ -1035,7 +1037,6 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	int i;
 	struct mmo_charstatus* cp;
 	SqlStmt* stmt;
-	char save_map[MAP_NAME_LENGTH_EXT];
 	char point_map[MAP_NAME_LENGTH_EXT];
 	struct point tmp_point;
 	struct s_skill tmp_skill;
@@ -1114,7 +1115,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_STRING, &p->last_point.map, sizeof(p->last_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_SHORT,  &p->last_point.x, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_SHORT,  &p->last_point.y, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_STRING, &save_map, sizeof(save_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_STRING, &p->save_point.map, sizeof(p->save_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_SHORT,  &p->save_point.x, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_SHORT,  &p->save_point.y, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_UINT32,    &p->partner_id, 0, NULL, NULL)
@@ -1160,13 +1161,6 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		return 0;
 	}
 	p->sex = char_mmo_gender(NULL, p, sex[0]);
-	p->save_point.map = mapindex_name2id(save_map);
-
-	if( p->save_point.map == 0 ) {
-		p->save_point.map = mapindex_name2id(charserv_config.default_map);
-		p->save_point.x = charserv_config.default_map_x;
-		p->save_point.y = charserv_config.default_map_y;
-	}
 
 	StringBuf_Init(&msg_buf);
 	StringBuf_AppendStr(&msg_buf, " status");
