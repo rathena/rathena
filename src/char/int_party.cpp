@@ -8,7 +8,6 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
-#include "../common/mapindex.hpp"
 #include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"

@@ -368,11 +368,11 @@ int chrif_sendmap(int fd) {
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + instance_start * 4);
+	WFIFOHEAD( fd, 4 + instance_start * MAP_NAME_LENGTH_EXT );
 	WFIFOW(fd,0) = 0x2afa;
 	for (int i = 0; i < instance_start; i++)
-		WFIFOW(fd, 4 + i * 4) = map[i].index;
-	WFIFOW(fd, 2) = 4 + instance_start * 4;
+		safestrncpy( WFIFOCP( fd, 4 + i * MAP_NAME_LENGTH_EXT ), map[i].name, MAP_NAME_LENGTH_EXT );
+	WFIFOW( fd, 2 ) = 4 + instance_start * MAP_NAME_LENGTH_EXT;
 	WFIFOSET(fd, WFIFOW(fd, 2));
 
 	return 0;
@@ -384,8 +384,8 @@ int chrif_recvmap(int fd) {
 	uint32 ip = ntohl(RFIFOL(fd,4));
 	uint16 port = ntohs(RFIFOW(fd,8));
 
-	for(i = 10, j = 0; i < RFIFOW(fd,2); i += 4, j++) {
-		map_setipport(RFIFOW(fd,i), ip, port);
+	for( i = 10, j = 0; i < RFIFOW( fd, 2 ); i += MAP_NAME_LENGTH_EXT, j++ ){
+		map_setipport( mapindex_name2id( RFIFOCP( fd, i ) ), ip, port );
 	}
 
 	if (battle_config.etc_log)
@@ -402,8 +402,9 @@ int chrif_removemap(int fd) {
 	uint32 ip =  RFIFOL(fd,4);
 	uint16 port = RFIFOW(fd,8);
 
-	for(i = 10, j = 0; i < RFIFOW(fd, 2); i += 4, j++)
-		map_eraseipport(RFIFOW(fd, i), ip, port);
+	for( i = 10, j = 0; i < RFIFOW( fd, 2 ); i += MAP_NAME_LENGTH_EXT, j++ ){
+		map_eraseipport( mapindex_name2id( RFIFOCP( fd, i ) ), ip, port );
+	}
 
 	other_mapserver_count--;
 

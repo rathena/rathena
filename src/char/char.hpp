@@ -212,7 +212,7 @@ struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
 	int users;
-	std::vector<uint16> map;
+	std::vector<std::string> maps;
 };
 extern struct mmo_map_server map_server[MAX_MAP_SERVERS];
 
@@ -283,7 +283,7 @@ extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 #define MAX_CHAR_BUF sizeof( struct CHARACTER_INFO ) //Max size (for WFIFOHEAD calls)
 
-int char_search_mapserver(unsigned short map, uint32 ip, uint16 port);
+int char_search_mapserver( const std::string& map, uint32 ip, uint16 port );
 int char_lan_subnetcheck(uint32 ip);
 
 int char_count_users(void);

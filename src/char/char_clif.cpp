@@ -698,7 +698,7 @@ int chclif_parse_maplogin(int fd){
 			map_server[i].ip = ntohl(RFIFOL(fd,54));
 			map_server[i].port = ntohs(RFIFOW(fd,58));
 			map_server[i].users = 0;
-			map_server[i].map = {};
+			map_server[i].maps = {};
 			session[fd]->func_parse = chmapif_parse;
 			session[fd]->flag.server = 1;
 			realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
@@ -828,7 +828,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
 
-		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, session_isValid(map_server[server_id].fd) && !map_server[server_id].map.empty() );
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, session_isValid(map_server[server_id].fd) && !map_server[server_id].maps.empty() );
 		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
 		if (server_id == ARRAYLENGTH(map_server)) {
 			WFIFOHEAD(fd, 24);
@@ -888,13 +888,13 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		ShowInfo("Selected char: (Account %d: %d - %s)\n", sd->account_id, slot, char_dat.name);
 
 		// searching map server
-		i = char_search_mapserver(mapindex_name2id(cd->last_point.map), -1, -1);
+		i = char_search_mapserver( cd->last_point.map, -1, -1 );
 
 		// if map is not found, we check major cities
 		if( i < 0 ){
 			unsigned short j;
 			//First check that there's actually a map server online.
-			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].map.empty() );
+			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].maps.empty() );
 			if (j == ARRAYLENGTH(map_server)) {
 				ShowInfo("Connection Closed. No map servers available.\n");
 				chclif_send_auth_result(fd,1); // 01 = Server closed
@@ -902,13 +902,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 			}
 
 			for( struct point_str& accessible_map : accessible_maps ){
-				int mapindex = mapindex_name2id( accessible_map.map );
-
-				if( mapindex == 0 ){
-					continue;
-				}
-
-				i = char_search_mapserver( mapindex, -1, -1 );
+				i = char_search_mapserver( accessible_map.map, -1, -1 );
 
 				// Found a map-server for a map
 				if( i >= 0 ){

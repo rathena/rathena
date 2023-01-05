@@ -2097,16 +2097,18 @@ int char_loadName(uint32 char_id, char* name){
 
 // Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
 // If found, returns the server's index in the 'server' array (otherwise returns -1).
-int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
+int char_search_mapserver( const std::string& map, uint32 ip, uint16 port ){
 	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
 		if (session_isValid(map_server[i].fd)
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
-			for (int j = 0; map_server[i].map[j]; j++)
-				if (map_server[i].map[j] == map)
+			for( std::string& m : map_server[i].maps ){
+				if( m == map ){
 					return i;
+				}
+			}
 		}
 	}
 

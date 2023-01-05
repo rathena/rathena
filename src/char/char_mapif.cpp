@@ -198,29 +198,31 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
 		ShowWarning("Map-server %d has NO maps.\n", map_id);
 	}
 	else {
-		unsigned char buf[16384];
+		unsigned char buf[INT16_MAX];
 		// Transmitting maps information to the other map-servers
 		WBUFW(buf,0) = 0x2b04;
-		WBUFW(buf,2) = count * 4 + 10;
+		WBUFW( buf, 2 ) = count * MAP_NAME_LENGTH_EXT + 10;
 		WBUFL(buf,4) = htonl(map_server[map_id].ip);
 		WBUFW(buf,8) = htons(map_server[map_id].port);
-		memcpy(WBUFP(buf,10), mapbuf, count * 4);
+		memcpy( WBUFP( buf, 10 ), mapbuf, count * MAP_NAME_LENGTH_EXT );
 		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
 	}
 
 	// Transmitting the maps of the other map-servers to the new map-server
 	for (x = 0; x < ARRAYLENGTH(map_server); x++) {
 		if (session_isValid(map_server[x].fd) && x != map_id) {
-			WFIFOHEAD(fd,10 +4*map_server[x].map.size());
+			WFIFOHEAD( fd, 10 + MAP_NAME_LENGTH_EXT * map_server[x].maps.size() );
 			WFIFOW(fd,0) = 0x2b04;
 			WFIFOL(fd,4) = htonl(map_server[x].ip);
 			WFIFOW(fd,8) = htons(map_server[x].port);
 			uint16 j = 0;
-			for(size_t i = 0; i < map_server[x].map.size(); i++)
-				if (map_server[x].map[i])
-					WFIFOW(fd,10+(j++)*4) = map_server[x].map[i];
+			for( std::string& map : map_server[x].maps ){
+				safestrncpy( WFIFOCP( fd, 10 + j * MAP_NAME_LENGTH_EXT ), map.c_str(), MAP_NAME_LENGTH_EXT );
+				j++;
+			}
+
 			if (j > 0) {
-				WFIFOW(fd,2) = j * 4 + 10;
+				WFIFOW( fd, 2 ) = j * MAP_NAME_LENGTH_EXT + 10;
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
 		}
@@ -243,20 +245,26 @@ int chmapif_parse_getmapname(int fd, int id){
 		return 0;
 
 	//Retain what map-index that map-serv contains
-	map_server[id].map = {};
-	for(i = 4; i < RFIFOW(fd,2); i += 4)
-		map_server[id].map.push_back(RFIFOW(fd, i));
+	map_server[id].maps.clear();
+
+	for( int i = 4; i < RFIFOW( fd, 2 ); i += MAP_NAME_LENGTH_EXT ){
+		char mapname[MAP_NAME_LENGTH_EXT];
+
+		safestrncpy( mapname, RFIFOCP( fd, i ), sizeof( mapname ) );
+
+		map_server[id].maps.push_back( mapname );
+	}
 
 	mapbuf = RFIFOP(fd,4);
 	RFIFOSKIP(fd,RFIFOW(fd,2));
 
 	ShowStatus("Map-Server %d connected: %" PRIuPTR " maps, from IP %d.%d.%d.%d port %d.\n",
-				id, map_server[id].map.size(), CONVIP(map_server[id].ip), map_server[id].port);
+				id, map_server[id].maps.size(), CONVIP(map_server[id].ip), map_server[id].port);
 	ShowStatus("Map-server %d loading complete.\n", id);
 
 	chmapif_send_misc(fd);
 	chmapif_send_fame_list(fd); //Send fame list.
-	chmapif_send_maps(fd, id, map_server[id].map.size(), mapbuf);
+	chmapif_send_maps(fd, id, map_server[id].maps.size(), mapbuf);
 
 	return 1;
 }
@@ -596,8 +604,9 @@ int chmapif_parse_reqchangemapserv(int fd){
 		struct mmo_charstatus* char_data;
 		struct mmo_charstatus char_dat;
 		DBMap* char_db_ = char_get_chardb();
+		int offset = 18 + MAP_NAME_LENGTH_EXT;
 
-		map_id = char_search_mapserver(RFIFOW(fd,18), ntohl(RFIFOL(fd,24)), ntohs(RFIFOW(fd,28))); //Locate mapserver by ip and port.
+		map_id = char_search_mapserver( RFIFOCP( fd, 18 ), ntohl( RFIFOL( fd, offset + 4 ) ), ntohs( RFIFOW( fd, offset + 8 ) ) ); //Locate mapserver by ip and port.
 		if (map_id >= 0)
 			map_fd = map_server[map_id].fd;
 		//Char should just had been saved before this packet, so this should be safe. [Skotlex]
@@ -620,7 +629,6 @@ int chmapif_parse_reqchangemapserv(int fd){
 
 			//Update the "last map" as this is where the player must be spawned on the new map server.
 			safestrncpy( char_data->last_point.map, RFIFOCP( fd, 18 ), MAP_NAME_LENGTH_EXT );
-			int offset = 18 + MAP_NAME_LENGTH_EXT;
 			char_data->last_point.x = RFIFOW( fd, offset + 0 );
 			char_data->last_point.y = RFIFOW( fd, offset + 2 );
 			char_data->sex = RFIFOB( fd, offset + 10 );
@@ -1488,7 +1496,7 @@ void do_init_chmapif(void){
  */
 void chmapif_server_reset(int id){
 	int j = 0;
-	unsigned char buf[16384];
+	unsigned char buf[INT16_MAX];
 	int fd = map_server[id].fd;
 	DBMap* online_char_db = char_get_onlinedb();
 
@@ -1496,11 +1504,12 @@ void chmapif_server_reset(int id){
 	WBUFW(buf,0) = 0x2b20;
 	WBUFL(buf,4) = htonl(map_server[id].ip);
 	WBUFW(buf,8) = htons(map_server[id].port);
-	for(size_t i = 0; i < map_server[id].map.size(); i++)
-		if (map_server[id].map[i])
-			WBUFW(buf,10+(j++)*4) = map_server[id].map[i];
+	for( std::string& map : map_server[id].maps ){
+		safestrncpy( WBUFCP( buf, 10 + j * MAP_NAME_LENGTH_EXT ), map.c_str(), MAP_NAME_LENGTH_EXT );
+		j++;
+	}
 	if (j > 0) {
-		WBUFW(buf,2) = j * 4 + 10;
+		WBUFW(buf,2) = j * MAP_NAME_LENGTH_EXT + 10;
 		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
 	}
 	online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
