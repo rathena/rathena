@@ -402,11 +402,10 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		StringBuf_Printf(&buf, "INSERT INTO `%s`(`char_id`,`map`,`x`,`y`) VALUES ", schema_config.memo_db);
 		for( i = 0, count = 0; i < MAX_MEMOPOINTS; ++i )
 		{
-			if( p->memo_point[i].map )
-			{
+			if( strcmp( "", p->memo_point[i].map ) != 0 ){
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
-				Sql_EscapeString(sql_handle, esc_mapname, mapindex_id2name(p->memo_point[i].map));
+				Sql_EscapeString( sql_handle, esc_mapname, p->memo_point[i].map );
 				StringBuf_Printf(&buf, "('%d', '%s', '%d', '%d')", char_id, esc_mapname, p->memo_point[i].x, p->memo_point[i].y);
 				++count;
 			}
@@ -1037,8 +1036,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	int i;
 	struct mmo_charstatus* cp;
 	SqlStmt* stmt;
-	char point_map[MAP_NAME_LENGTH_EXT];
-	struct point tmp_point;
+	struct point_str tmp_point;
 	struct s_skill tmp_skill;
 	uint16 skill_count = 0;
 	struct s_friend tmp_friend;
@@ -1177,14 +1175,13 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`=? ORDER by `memo_id` LIMIT %d", schema_config.memo_db, MAX_MEMOPOINTS)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &point_map, sizeof(point_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_point.map, sizeof(tmp_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,  &tmp_point.x, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  &tmp_point.y, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
 	for( i = 0; i < MAX_MEMOPOINTS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
-		tmp_point.map = mapindex_name2id(point_map);
 		memcpy(&p->memo_point[i], &tmp_point, sizeof(tmp_point));
 	}
 	StringBuf_AppendStr(&msg_buf, " memo");

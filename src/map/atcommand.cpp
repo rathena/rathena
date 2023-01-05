@@ -2579,8 +2579,8 @@ ACMD_FUNC(memo)
 		clif_displaymessage(sd->fd,  msg_txt(sd,668)); // Your actual memo positions are:
 		for( i = 0; i < MAX_MEMOPOINTS; i++ )
 		{
-			if( sd->status.memo_point[i].map )
-				sprintf(atcmd_output, "%d - %s (%d,%d)", i, mapindex_id2name(sd->status.memo_point[i].map), sd->status.memo_point[i].x, sd->status.memo_point[i].y);
+			if( strcmp( "", sd->status.memo_point[i].map ) != 0 )
+				sprintf( atcmd_output, "%d - %s (%d,%d)", i, sd->status.memo_point[i].map, sd->status.memo_point[i].x, sd->status.memo_point[i].y );
 			else
 				sprintf(atcmd_output, msg_txt(sd,171), i); // %d - void
 			clif_displaymessage(sd->fd, atcmd_output);

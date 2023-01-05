@@ -590,7 +590,7 @@ struct mmo_charstatus {
 
 	struct point_str last_point;
 	struct point_str save_point;
-	struct point memo_point[MAX_MEMOPOINTS];
+	struct point_str memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]

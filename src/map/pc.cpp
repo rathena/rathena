@@ -6985,8 +6985,10 @@ bool pc_memo(map_session_data* sd, int pos)
 	if( pos == -1 )
 	{
 		uint8 i;
+		const char* mapname = map_mapid2mapname( sd->bl.m );
+
 		// prevent memo-ing the same map multiple times
-		ARR_FIND( 0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m) );
+		ARR_FIND( 0, MAX_MEMOPOINTS, i, strncmp( sd->status.memo_point[i].map, mapname, sizeof( sd->status.memo_point[i].map ) ) == 0 );
 		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (u8min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
 		pos = 0;
 	}
@@ -6996,7 +6998,7 @@ bool pc_memo(map_session_data* sd, int pos)
 		return false;
 	}
 
-	sd->status.memo_point[pos].map = map_id2index(sd->bl.m);
+	safestrncpy( sd->status.memo_point[pos].map, map_mapid2mapname( sd->bl.m ), sizeof( sd->status.memo_point[pos].map ) );
 	sd->status.memo_point[pos].x = sd->bl.x;
 	sd->status.memo_point[pos].y = sd->bl.y;
 

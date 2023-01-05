@@ -9063,9 +9063,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL )
-				clif_skill_warppoint(sd,skill_id,skill_lv, (unsigned short)-1,0,0,0);
+				clif_skill_warppoint( sd, skill_id, skill_lv, "Random" );
 			else
-				clif_skill_warppoint( sd, skill_id, skill_lv, (unsigned short)-1, mapindex_name2id( sd->status.save_point.map ), 0, 0 );
+				clif_skill_warppoint( sd, skill_id, skill_lv, "Random", sd->status.save_point.map );
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
@@ -13603,10 +13603,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AL_WARP:
 		if(sd)
 		{
-			clif_skill_warppoint(sd, skill_id, skill_lv, mapindex_name2id( sd->status.save_point.map ),
-				(skill_lv >= 2) ? sd->status.memo_point[0].map : 0,
-				(skill_lv >= 3) ? sd->status.memo_point[1].map : 0,
-				(skill_lv >= 4) ? sd->status.memo_point[2].map : 0
+			clif_skill_warppoint(sd, skill_id, skill_lv, sd->status.save_point.map,
+				(skill_lv >= 2) ? sd->status.memo_point[0].map : "",
+				(skill_lv >= 3) ? sd->status.memo_point[1].map : "",
+				(skill_lv >= 4) ? sd->status.memo_point[2].map : ""
 			);
 		}
 		if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
@@ -14250,7 +14250,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 
 	case AL_WARP:
 		{
-			const struct point *p[4];
+			const struct point_str *p[4];
 			std::shared_ptr<s_skill_unit_group> group;
 			int i, lv, wx, wy;
 			int maxcount=0;
@@ -14263,7 +14263,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 				skill_failed(sd);
 				return 0;
 			}
-			// p[0] = &sd->status.save_point; // TODO: fix with memo_point refactor
+			p[0] = &sd->status.save_point;
 			p[1] = &sd->status.memo_point[0];
 			p[2] = &sd->status.memo_point[1];
 			p[3] = &sd->status.memo_point[2];
@@ -14286,7 +14286,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 			if( lv > 4 ) lv = 4; // crash prevention
 
 			// check if the chosen map exists in the memo list
-			ARR_FIND( 0, lv, i, mapindex == p[i]->map );
+			ARR_FIND( 0, lv, i, strncmp( p[i]->map, mapname, sizeof( p[i]->map ) ) == 0 );
 			if( i < lv ) {
 				x=p[i]->x;
 				y=p[i]->y;
