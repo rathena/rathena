@@ -10516,9 +10516,6 @@ Body:
           Amount: 90
         - Level: 5
           Amount: 100
-      ItemCost:
-        - Item: Poison_Bottle
-          Amount: 1
     Status: Edp
   - Id: 379
     Name: ASC_BREAKER
@@ -27608,8 +27605,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 9
-    Hit: Single
-    HitCount: -3
+    Hit: Multi_Hit
+    HitCount: 3
     Element: Wind
     SplashArea:
       - Level: 1

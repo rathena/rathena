@@ -8351,7 +8351,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bDelayRate,-30;
+      bonus bDelayrate,-30;
   - Id: 4404
     AegisName: Skogul_Card
     Name: Skogul Card
@@ -9512,7 +9512,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bDelayRate,((getrefine()>14)?-20:-15);
+      bonus bDelayrate,((getrefine()>14)?-20:-15);
   - Id: 4481
     AegisName: Sealed_Ktullanux_Card
     Name: Sealed Ktullanux Card
@@ -26305,7 +26305,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 7324
-    AegisName: aegis_7324
+    AegisName: IL_Kraken_Leg
     Name: Deep Sea Kraken's Leg
     Type: Etc
     Weight: 10
@@ -35602,7 +35602,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25298
-    AegisName: Spirit_Jewel
+    AegisName: SpritJewel
     Name: Spirit Jewel
     Type: Etc
     Weight: 10
@@ -35658,6 +35658,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25308
+    AegisName: Cash_Can
+    Name: Cash Can
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25309
     AegisName: Dry_Branch
     Name: Dry Twig
@@ -35695,7 +35708,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25313
-    AegisName: Old_Shell
+    AegisName: OldShell
     Name: Old Shell
     Type: Etc
     Weight: 10
@@ -37824,35 +37837,35 @@ Body:
     Name: Lottery ticket for harvest
     Type: Etc
   - Id: 25892
-    AegisName: aegis_25892
+    AegisName: Abysmal_Clam
     Name: Deep Sea Shell
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25893
-    AegisName: aegis_25893
+    AegisName: Deepsea_Fish_Tail
     Name: Deep Sea Fish's Tail
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25894
-    AegisName: aegis_25894
+    AegisName: Rotten_Deepseafish
     Name: Rotten Deep Sea Fish
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25895
-    AegisName: aegis_25895
+    AegisName: Deep_Sea_Starfish
     Name: Deep Sea Starfish
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25896
-    AegisName: aegis_25896
+    AegisName: Deep_Sea_Crab
     Name: Deep Sea Crab
     Type: Etc
     Weight: 10
@@ -37926,6 +37939,19 @@ Body:
       bonus2 bAddMonsterDropItem,666,30;
       bonus2 bAddMonsterDropItem,667,30;
       /*Unknow Rate*/
+  - Id: 27007
+    AegisName: XM_Celine_Kimi_Card_J
+    Name: Celine Kimi Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatkRate,10;
+      bonus5 bAutoSpell,"NPC_CRITICALWOUND",1,10,BF_MAGIC,1;
   - Id: 27008
     AegisName: AmdaraisH_Card_J
     Name: Realized Amdarais Card
@@ -38742,6 +38768,36 @@ Body:
     Script: |
       bonus bAtkRate,2;
       bonus5 bAutoSpell,"SM_ENDURE",1,5,BF_SHORT,0;
+  - Id: 27089
+    AegisName: T_W_O_Card_J
+    Name: T W O Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bFixedCastrate,-50;
+      bonus2 bIgnoreDefRaceRate,RC_All,50;
+      bonus2 bIgnoreMdefRaceRate,RC_All,50;
+  - Id: 27092
+    AegisName: Charleston_Card_J
+    Name: Charleston3 Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSkillAtk,"NC_ARMSCANNON",70;
+      bonus2 bSkillAtk,"NC_COLDSLOWER",70;
+      bonus2 bSkillAtk,"NC_FLAMELAUNCHER",70;
+      bonus2 bVariableCastrate,"NC_VULCANARM",-100;
+      bonus2 bVariableCastrate,"NC_BOOSTKNUCKLE",-100;
   - Id: 27101
     AegisName: SweetNightM_Card
     Name: Sweet Nightmare Card
@@ -38929,7 +38985,7 @@ Body:
       }
       bonus bDef,.@val;
   - Id: 27115
-    AegisName: Ominous_Permeter_Card
+    AegisName: OminousPermeter_Card
     Name: Ominous Permeter Card
     Type: Card
     Buy: 20
@@ -38948,7 +39004,7 @@ Body:
          bonus bSPrecovRate,30;
       }
   - Id: 27116
-    AegisName: Ominous_Heater_Card
+    AegisName: OminousHeater_Card
     Name: Ominous Heater Card
     Type: Card
     Buy: 20
@@ -38961,7 +39017,7 @@ Body:
       bonus bCritical,3;
       bonus bCritAtkRate,5;
   - Id: 27117
-    AegisName: Ominous_Assaulter_Card
+    AegisName: OminousAssulter_Card
     Name: Ominous Assaulter Card
     Type: Card
     Buy: 20
@@ -38979,7 +39035,7 @@ Body:
       }
       bonus bCritAtkRate,(10+.@r);
   - Id: 27118
-    AegisName: Ominous_Freezer_Card
+    AegisName: OminousFreezer_Card
     Name: Ominous Freezer Card
     Type: Card
     Buy: 20
@@ -39423,6 +39479,51 @@ Body:
       bonus2 bSkillAtk,"SR_SKYNETBLOW",5+.@r;
       if (.@r>=10)
          bonus2 bSkillAtk,"SR_SKYNETBLOW",5;
+  - Id: 27141
+    AegisName: Evil_Card_J
+    Name: Heart Hunter Evil Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Fire,100;
+      bonus3 bAddEffWhenHit,Eff_Curse,5000,ATF_WEAPON;
+  - Id: 27143
+    AegisName: Chimera_1_Card_J
+    Name: Venomous Chimera Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddEle,Ele_Earth,50;
+      bonus2 bAddEle,Ele_Poison,50;
+      bonus2 bAddRace,RC_Brute,50;
+      bonus2 bAddRace,RC_Insect,50;
+      bonus2 bMagicAddEle,Ele_Earth,50;
+      bonus2 bMagicAddEle,Ele_Poison,50;
+      bonus2 bMagicAddRace,RC_Brute,50;
+      bonus2 bMagicAddRace,RC_Insect,50;
+  - Id: 27146
+    AegisName: CUITE_Card_J
+    Name: CUTIE Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatkRate,10;
+      autobonus "{ bonus bAspdRate,100; }",5,30000,BF_MAGIC;
   - Id: 27147
     AegisName: Human_Kimera_Card
     Name: Humanoid Chimera Card
@@ -41095,7 +41196,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bAtkRate,10;
-      bonus bMaxHPRate,-50;
+      bonus bMaxHPrate,-50;
       bonus2 bAddRace,RC_DemiHuman,30;
       bonus2 bAddRace,RC_Player_Human,30;
       bonus2 bAddRace,RC_Angel,30;
@@ -41262,7 +41363,7 @@ Body:
       bonus bAtkRate,25;
       bonus2 bSubRace,RC_Demon,-5;
   - Id: 27335
-    AegisName: Chaotic_Baphomet_Junior_Card
+    AegisName: Chaos_Ba_Jr_Card
     Name: Chaotic Baphomet Junior Card
     Type: Card
     Buy: 20
@@ -41274,7 +41375,7 @@ Body:
     Script: |
       bonus bCritical,readparam(bAgi)/15;
   - Id: 27336
-    AegisName: Chaotic_Sidewinder_Card
+    AegisName: Chaos_S_Winder_Card
     Name: Chaotic Sidewinder Card
     Type: Card
     Buy: 20
@@ -41288,7 +41389,7 @@ Body:
       bonus2 bSubRace,RC_Brute,15;
       bonus2 bSubRace,RC_Player_Doram,15;
   - Id: 27337
-    AegisName: Chaotic_Hunter_Fly_Card
+    AegisName: Chaos_H_Fly_Card
     Name: Chaotic Hunter Fly Card
     Type: Card
     Buy: 20
@@ -41301,7 +41402,7 @@ Body:
       bonus2 bSubDefEle,Ele_Wind,15;
       bonus2 bSubRace,RC_Insect,15;
   - Id: 27338
-    AegisName: Chaotic_Mantis_Card
+    AegisName: Chaos_Mantis_Card
     Name: Chaotic Mantis Card
     Type: Card
     Buy: 20
@@ -41313,7 +41414,7 @@ Body:
     Script: |
       bonus bStr,3;
   - Id: 27339
-    AegisName: Chaotic_Ghostring_Card
+    AegisName: Chaos_Goring_Card
     Name: Chaotic Ghostring Card
     Type: Card
     Buy: 20
@@ -41327,7 +41428,7 @@ Body:
       bonus2 bAddSize,Size_Small,25;
       bonus2 bAddSize,Size_Large,25;
   - Id: 27340
-    AegisName: Chaotic_Killer_Mantis_Card
+    AegisName: Chaos_K_Mantis_Card
     Name: Chaotic Killer Mantis Card
     Type: Card
     Buy: 20
@@ -41339,7 +41440,7 @@ Body:
     Script: |
       bonus bCritAtkRate,3;
   - Id: 27341
-    AegisName: Chaotic_Poporing_Card
+    AegisName: Chaos_Poporing_Card
     Name: Chaotic Poporing Card
     Type: Card
     Buy: 20
@@ -41352,7 +41453,7 @@ Body:
       bonus2 bSubDefEle,Ele_Water,15;
       bonus2 bSubRace,RC_Fish,15;
   - Id: 27342
-    AegisName: Chaotic_Stem_Worm_Card
+    AegisName: Chaos_Stem_W_Card
     Name: Chaotic Stem Worm Card
     Type: Card
     Buy: 20
@@ -45672,7 +45773,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bMaxSPRate,20;
+      bonus bMaxSPrate,20;
       bonus2 bAddEff2,Eff_Curse,20;
   - Id: 31023
     AegisName: XM_Celine_Kimi_Card
@@ -47689,7 +47790,7 @@ Body:
       if (.@r>=15)
          bonus2 bMagicAtkEle,Ele_Holy,7;
   - Id: 300209
-    AegisName: aegis_300209
+    AegisName: SLD_Grave_Amon_Ra_Card
     Name: Sealed Nightmare Amon Ra Card
     Type: Card
     Weight: 10
@@ -47896,7 +47997,7 @@ Body:
       bonus2 bMagicAddRace,RC_Demon,75;
       bonus2 bSubRace,RC_Demon,-25;
   - Id: 300230
-    AegisName: aegis_300230
+    AegisName: ILL_Andre_Card
     Name: Diligent Andre Card
     Type: Card
     Weight: 10
@@ -47908,7 +48009,7 @@ Body:
       bonus2 bSubRace,RC_Insect,20;
       bonus bMaxHPrate,getrefine();
   - Id: 300231
-    AegisName: aegis_300231
+    AegisName: ILL_Andre_soldier_Card
     Name: Diligent Soldier Andre Card
     Type: Card
     Weight: 10
@@ -47921,7 +48022,7 @@ Body:
       bonus2 bAddSize,Size_Medium,20;
       bonus bBreakArmorRate,1;
   - Id: 300232
-    AegisName: aegis_300232
+    AegisName: ILL_Andre_larva_Card
     Name: Diligent Andre Larva Card
     Type: Card
     Weight: 10
@@ -47933,7 +48034,7 @@ Body:
       bonus2 bAddRace,RC_Insect,20;
       bonus2 bMagicAddRace,RC_Insect,20;
   - Id: 300233
-    AegisName: aegis_300233
+    AegisName: ILL_Deniro_Card
     Name: Diligent Deniro Card
     Type: Card
     Weight: 10
@@ -47945,7 +48046,7 @@ Body:
       bonus2 bSubRace,RC_Insect,20;
       bonus bMaxHPrate,getrefine();
   - Id: 300234
-    AegisName: aegis_300234
+    AegisName: ILL_Piere_Card
     Name: Diligent Piere Card
     Type: Card
     Weight: 10
@@ -47957,7 +48058,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Plant,15;
       bonus2 bAddRace,RC_Plant,5*(getrefine()/2);
   - Id: 300235
-    AegisName: aegis_300235
+    AegisName: ILL_Ant_egg_Card
     Name: Mushy Ant Egg Card
     Type: Card
     Weight: 10
@@ -47969,7 +48070,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus bMaxHPrate,getrefine();
   - Id: 300236
-    AegisName: aegis_300236
+    AegisName: ILL_Giearth_Card
     Name: Gutsy Giearth Card
     Type: Card
     Weight: 10
@@ -47984,7 +48085,7 @@ Body:
       bonus2 bResEff,Eff_Blind,10000;
       bonus2 bAddRace,RC_Insect,4*(getrefine()/2);
   - Id: 300237
-    AegisName: aegis_300237
+    AegisName: ILL_Farmiliar_Card
     Name: Gutsy Familiar Card
     Type: Card
     Weight: 10
@@ -48026,7 +48127,7 @@ Body:
       bonus2 bMagicAddRace,RC_Plant,50;
       bonus bUseSPrate,50;
   - Id: 300240
-    AegisName: aegis_300240
+    AegisName: Gan_Ceann_Card
     Name: Gan Ceann Card
     Type: Card
     Weight: 10
@@ -48041,7 +48142,7 @@ Body:
          bonus2 bAddSize,Size_Large,25;
       }
   - Id: 300241
-    AegisName: aegis_300241
+    AegisName: Brutal_Murderer_Card
     Name: Brutal Murderer Card
     Type: Card
     Weight: 10
@@ -48056,7 +48157,7 @@ Body:
          bonus2 bAddSize,Size_Medium,25;
       }
   - Id: 300242
-    AegisName: aegis_300242
+    AegisName: Ghost_Cube_Card
     Name: Ghost Cube Card
     Type: Card
     Weight: 10
@@ -48070,7 +48171,7 @@ Body:
          bonus bMaxHP,1500;
       }
   - Id: 300243
-    AegisName: aegis_300243
+    AegisName: Lude_Gal_Card
     Name: Lude Gal Card
     Type: Card
     Weight: 10
@@ -48084,7 +48185,7 @@ Body:
          bonus bMaxSP,500;
       }
   - Id: 300244
-    AegisName: aegis_300244
+    AegisName: Disguiser_Card
     Name: Disguiser Card
     Type: Card
     Weight: 10
@@ -48104,7 +48205,7 @@ Body:
          }
       }
   - Id: 300245
-    AegisName: aegis_300245
+    AegisName: Bluemoon_Loli_Ruri_Card
     Name: Blue Moon Loli Ruri Card
     Type: Card
     Weight: 10
@@ -48124,7 +48225,7 @@ Body:
          }
       }
   - Id: 300246
-    AegisName: aegis_300246
+    AegisName: Grote_Card
     Name: Grote Card
     Type: Card
     Weight: 10
@@ -48145,7 +48246,7 @@ Body:
          }
       }
   - Id: 300247
-    AegisName: aegis_300247
+    AegisName: Pierrotzoist_Card
     Name: Pierrotzoist Card
     Type: Card
     Weight: 10
@@ -48165,7 +48266,7 @@ Body:
          }
       }
   - Id: 300248
-    AegisName: aegis_300248
+    AegisName: Death_Witch_Card
     Name: Death Witch Card
     Type: Card
     Weight: 10
@@ -48179,7 +48280,7 @@ Body:
       bonus2 bMagicAddRace,RC_Demon,50;
       bonus2 bMagicAddRace,RC_Formless,50;
   - Id: 300249
-    AegisName: aegis_300249
+    AegisName: Giant_Caput_Card
     Name: Giant Caput Card
     Type: Card
     Weight: 10
@@ -48193,7 +48294,7 @@ Body:
          bonus2 bAddRace,RC_Formless,15;
       }
   - Id: 300250
-    AegisName: aegis_300250
+    AegisName: Dolorian_Card
     Name: Dolorian Card
     Type: Card
     Weight: 10
@@ -48207,7 +48308,7 @@ Body:
          bonus2 bAddRace,RC_Demon,15;
       }
   - Id: 300251
-    AegisName: aegis_300251
+    AegisName: Plagarion_Card
     Name: Plagarion Card
     Type: Card
     Weight: 10
@@ -48222,7 +48323,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,7;
       bonus bUseSPrate,5;
   - Id: 300252
-    AegisName: aegis_300252
+    AegisName: Deadre_Card
     Name: Deadre Card
     Type: Card
     Weight: 10
@@ -48237,7 +48338,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,7;
       bonus bUseSPrate,5;
   - Id: 300253
-    AegisName: aegis_300253
+    AegisName: Venedi_Card
     Name: Venedi Card
     Type: Card
     Weight: 10
@@ -48252,7 +48353,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,7;
       bonus bUseSPrate,5;
   - Id: 300254
-    AegisName: aegis_300254
+    AegisName: Amitera_Card
     Name: Amitera Card
     Type: Card
     Weight: 10
@@ -48266,7 +48367,7 @@ Body:
          bonus bMaxHPrate,10;
       }
   - Id: 300255
-    AegisName: aegis_300255
+    AegisName: Litus_Card
     Name: Litus Card
     Type: Card
     Weight: 10
@@ -48281,7 +48382,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,7;
       bonus bUseSPrate,5;
   - Id: 300256
-    AegisName: aegis_300256
+    AegisName: Fillia_Card
     Name: Fillia Card
     Type: Card
     Weight: 10
@@ -48296,7 +48397,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Fire,7;
       bonus bUseSPrate,5;
   - Id: 300257
-    AegisName: aegis_300257
+    AegisName: Vanilaqus_Card
     Name: Vanilaqus Card
     Type: Card
     Weight: 10
@@ -48311,7 +48412,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,7;
       bonus bUseSPrate,5;
   - Id: 300258
-    AegisName: aegis_300258
+    AegisName: Lava_Eater_Card
     Name: Lavaeter Card
     Type: Card
     Weight: 10
@@ -48326,7 +48427,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,7;
       bonus bUseSPrate,5;
   - Id: 300259
-    AegisName: aegis_300259
+    AegisName: Fulgor_Card
     Name: Fulgor Card
     Type: Card
     Weight: 10
@@ -48341,7 +48442,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,7;
       bonus bUseSPrate,5;
   - Id: 300260
-    AegisName: aegis_300260
+    AegisName: Napeo_Card
     Name: Napeo Card
     Type: Card
     Weight: 10
@@ -48355,7 +48456,7 @@ Body:
          bonus bMatk,60;
       }
   - Id: 300261
-    AegisName: aegis_300261
+    AegisName: Galensis_Card
     Name: Galensis Card
     Type: Card
     Weight: 10
@@ -48369,7 +48470,7 @@ Body:
          bonus bCritAtkRate,30;
       }
   - Id: 300262
-    AegisName: aegis_300262
+    AegisName: The_One_Card
     Name: The One Card
     Type: Card
     Weight: 10
@@ -48383,7 +48484,7 @@ Body:
       bonus2 bMagicAddRace,RC_Undead,50;
       bonus2 bMagicAddRace,RC_Dragon,50;
   - Id: 300263
-    AegisName: aegis_300263
+    AegisName: Reken_Guard_Card
     Name: Rekenber Guard Card
     Type: Card
     Weight: 10
@@ -48401,7 +48502,7 @@ Body:
          }
       }
   - Id: 300264
-    AegisName: aegis_300264
+    AegisName: Reken_H_Guard_Card
     Name: Rekenber Senior Guard Card
     Type: Card
     Weight: 10
@@ -48419,7 +48520,7 @@ Body:
          }
       }
   - Id: 300265
-    AegisName: aegis_300265
+    AegisName: Regen_Scientist_Card
     Name: Regenschirm Scientist Card
     Type: Card
     Weight: 10
@@ -48437,7 +48538,7 @@ Body:
          }
       }
   - Id: 300266
-    AegisName: aegis_300266
+    AegisName: Unknown_Swordman_Card
     Name: Unknown Swordsman Card
     Type: Card
     Weight: 10
@@ -48448,7 +48549,7 @@ Body:
     Script: |
       bonus bMaxHPrate,15;
   - Id: 300267
-    AegisName: aegis_300267
+    AegisName: Crow_Baron_Card
     Name: Crow Baron Card
     Type: Card
     Weight: 10
@@ -48463,7 +48564,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Wind,15;
       }
   - Id: 300268
-    AegisName: aegis_300268
+    AegisName: Crow_Duke_Card
     Name: Crow Duke Card
     Type: Card
     Weight: 10
@@ -48478,7 +48579,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Water,15;
       }
   - Id: 300269
-    AegisName: aegis_300269
+    AegisName: Eldest_Card
     Name: Eldest Card
     Type: Card
     Weight: 10
@@ -48490,7 +48591,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Ghost,10;
       bonus bMaxSPrate,-25;
   - Id: 300270
-    AegisName: aegis_300270
+    AegisName: Empathizer_Card
     Name: Empathizer Card
     Type: Card
     Weight: 10
@@ -48502,7 +48603,7 @@ Body:
       bonus bLongAtkRate,10;
       bonus bMaxSPrate,-25;
   - Id: 300271
-    AegisName: aegis_300271
+    AegisName: Happy_Giver_Card
     Name: Happiness Giver Card
     Type: Card
     Weight: 10
@@ -48514,7 +48615,7 @@ Body:
       bonus bShortAtkRate,10;
       bonus bMaxSPrate,-25;
   - Id: 300272
-    AegisName: aegis_300272
+    AegisName: Pray_Giver_Card
     Name: Pray Giver Card
     Type: Card
     Weight: 10
@@ -48526,7 +48627,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,10;
       bonus bMaxSPrate,-25;
   - Id: 300273
-    AegisName: aegis_300273
+    AegisName: Smile_Giver_Card
     Name: Smile Giver Card
     Type: Card
     Weight: 10
@@ -48538,7 +48639,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,10;
       bonus bMaxSPrate,-25;
   - Id: 300274
-    AegisName: aegis_300274
+    AegisName: Tha_Anger_Card
     Name: Anger of Thanatos Card
     Type: Card
     Weight: 10
@@ -48553,7 +48654,7 @@ Body:
          bonus bAtkRate,5;
       }
   - Id: 300275
-    AegisName: aegis_300275
+    AegisName: Tha_Horror_Card
     Name: Horror of Thanatos Card
     Type: Card
     Weight: 10
@@ -48568,7 +48669,7 @@ Body:
          bonus bMatkRate,5;
       }
   - Id: 300276
-    AegisName: aegis_300276
+    AegisName: Tha_Regret_Card
     Name: Regret of Thanatos Card
     Type: Card
     Weight: 10
@@ -48582,7 +48683,7 @@ Body:
          bonus2 bMagicAddRace,RC_Angel,20;
       }
   - Id: 300277
-    AegisName: aegis_300277
+    AegisName: Tha_Resent_Card
     Name: Resentment of Thanatos Card
     Type: Card
     Weight: 10
@@ -48593,7 +48694,7 @@ Body:
     Script: |
       bonus bShortWeaponDamageReturn,15;
   - Id: 300278
-    AegisName: aegis_300278
+    AegisName: Void_Mimic_Card
     Name: Void Mimic Card
     Type: Card
     Weight: 10
@@ -48604,7 +48705,7 @@ Body:
     Script: |
       bonus bCritAtkRate,15;
   - Id: 300279
-    AegisName: aegis_300279
+    AegisName: Book_Of_Death_Card
     Name: Book of Death Card
     Type: Card
     Weight: 10
@@ -48615,7 +48716,7 @@ Body:
     Script: |
       bonus2 bSkillAtk,"WL_SOULEXPANSION",30;
   - Id: 300280
-    AegisName: aegis_300280
+    AegisName: Broken_Thanatos_Card
     Name: Broken Memory of Thanatos Card
     Type: Card
     Weight: 10
@@ -48629,7 +48730,7 @@ Body:
       bonus3 bSubRace,RC_Demon,-30,BF_NORMAL;
       bonus3 bSubRace,RC_DemiHuman,-30,BF_NORMAL;
   - Id: 300281
-    AegisName: aegis_300281
+    AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
     Type: Card
     Weight: 10
@@ -48822,7 +48923,7 @@ Body:
       if (.@r>=10)
          bonus2 bSkillAtk,"SJ_STAREMPEROR",5;
   - Id: 300292
-    AegisName: aegis_300292
+    AegisName: Extra_Joker_Card
     Name: Extra Joker Card
     Type: Card
     Weight: 10
@@ -48838,7 +48939,7 @@ Body:
       if (.@r>=9)
          bonus2 bMagicAddRace,RC_Demon,7;
   - Id: 300293
-    AegisName: aegis_300293
+    AegisName: Erzsebet_Card
     Name: Erzsebet Card
     Type: Card
     Weight: 10
@@ -48850,7 +48951,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Poison,3*getrefine();
   - Id: 300294
-    AegisName: aegis_300294
+    AegisName: Jeniffer_Card
     Name: Jennifer Card
     Type: Card
     Weight: 10
@@ -48862,7 +48963,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,20;
       bonus2 bMagicAtkEle,Ele_Undead,20;
   - Id: 300295
-    AegisName: aegis_300295
+    AegisName: General_Orc_Card
     Name: Orc General Card
     Type: Card
     Weight: 10
@@ -48882,7 +48983,7 @@ Body:
          bonus2 bMagicAddRace,RC_Player_Doram,7;
       }
   - Id: 300296
-    AegisName: aegis_300296
+    AegisName: Sieglouse_Card
     Name: Sieglouse Card
     Type: Card
     Weight: 10
@@ -48898,7 +48999,7 @@ Body:
       if (.@r>=9)
          bonus2 bMagicAddRace,RC_Insect,7;
   - Id: 300297
-    AegisName: aegis_300297
+    AegisName: Goblin_King_Card
     Name: Goblin King Card
     Type: Card
     Weight: 10
@@ -48913,7 +49014,7 @@ Body:
       bonus2 bSubRace,RC_Brute,-10;
       bonus2 bSubRace,RC_Player_Doram,-10;
   - Id: 300307
-    AegisName: aegis_300307
+    AegisName: Meyer_Card
     Name: Meyer Card
     Type: Card
     Weight: 10
@@ -48935,7 +49036,7 @@ Body:
       bonus bUseSPrate,10;
       bonus2 bMagicAtkEle,Ele_All,4*(getrefine()/3);
   - Id: 300309
-    AegisName: aegis_300309
+    AegisName: Helmut_Card
     Name: Helmut Card
     Type: Card
     Weight: 10
@@ -48958,7 +49059,7 @@ Body:
       bonus bShortAtkRate,4*(.@r/3);
       bonus bLongAtkRate,4*(.@r/3);
   - Id: 300314
-    AegisName: aegis_300314
+    AegisName: 19th_Pack_enc01
     Name: Remnants of reason and memory    # !todo check english name
     Type: Card
     SubType: Enchant
@@ -49425,7 +49526,7 @@ Body:
       bonus bAtkRate,10;
       bonus bMaxSPrate,-50;
   - Id: 300359
-    AegisName: aegis_300359
+    AegisName: Ice_Gangu_Card
     Name: Ice Gangu Card
     Type: Card
     Weight: 10
@@ -49449,7 +49550,7 @@ Body:
         bonus bVariableCastrate,-5;
       }
   - Id: 300360
-    AegisName: aegis_300360
+    AegisName: Shining_Seaweed_Card
     Name: Shining Seaweed Card
     Type: Card
     Weight: 10
@@ -49473,7 +49574,7 @@ Body:
         bonus bVariableCastrate,-5;
       }
   - Id: 300361
-    AegisName: aegis_300361
+    AegisName: Ice_Straw_Card
     Name: Ice Straw Card
     Type: Card
     Weight: 10
@@ -49487,7 +49588,7 @@ Body:
       bonus bUseSPrate,7;
       bonus2 bMagicAtkEle,Ele_Water,4*(getrefine()/2);
   - Id: 300362
-    AegisName: aegis_300362
+    AegisName: Unfrost_Flower_card
     Name: Unfrost Flower Card
     Type: Card
     Weight: 10
@@ -49502,7 +49603,7 @@ Body:
       .@r = getrefine();
       bonus bShortAtkRate,4*(getrefine()/3);
   - Id: 300363
-    AegisName: aegis_300363
+    AegisName: Limacina_Card
     Name: Limacina Card
     Type: Card
     Weight: 10
@@ -49524,7 +49625,7 @@ Body:
         bonus bVariableCastrate,-5;
       }
   - Id: 300364
-    AegisName: aegis_300364
+    AegisName: Calmaring_Card
     Name: Calmaring Card
     Type: Card
     Weight: 10
@@ -49537,7 +49638,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,35;
       bonus bUseSPrate,10;
   - Id: 300365
-    AegisName: aegis_300365
+    AegisName: Primitive_Rgan_Card
     Name: Primal Rgan Card
     Type: Card
     Weight: 10
@@ -49549,7 +49650,7 @@ Body:
     Script: |
       bonus bShortAtkRate,8;
   - Id: 300366
-    AegisName: aegis_300366
+    AegisName: Lowest_Rgan_Card
     Name: Minor Rgan Card
     Type: Card
     Weight: 10
@@ -49562,7 +49663,7 @@ Body:
       bonus bCritical,6;
       bonus bCRate,1;
   - Id: 300367
-    AegisName: aegis_300367
+    AegisName: Junior_Rgan_Card
     Name: Lesser Rgan Card
     Type: Card
     Weight: 10
@@ -49574,7 +49675,7 @@ Body:
     Script: |
       bonus bShortAtkRate,8;
   - Id: 300368
-    AegisName: aegis_300368
+    AegisName: Middle_G_Rgan_Card
     Name: Intermediate Rgan Card
     Type: Card
     Weight: 10
@@ -49587,7 +49688,7 @@ Body:
       bonus bCritical,6;
       bonus bCRate,1;
   - Id: 300369
-    AegisName: aegis_300369
+    AegisName: Discarded_P_R_Card
     Name: Wasted Primal Rgan Card
     Type: Card
     Weight: 10
@@ -49600,7 +49701,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,35;
       bonus bUseSPrate,10;
   - Id: 300370
-    AegisName: aegis_300370
+    AegisName: Discarded_L_R_Card
     Name: Wasted Intermediate Rgan Card
     Type: Card
     Weight: 10
@@ -49613,7 +49714,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Fire,35;
       bonus bUseSPrate,10;
   - Id: 300371
-    AegisName: aegis_300371
+    AegisName: Cave_Calmaring_Card
     Name: Cave Calmaring Card
     Type: Card
     Weight: 10
@@ -49626,7 +49727,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,35;
       bonus bUseSPrate,10;
   - Id: 300372
-    AegisName: aegis_300372
+    AegisName: Cave_Un_Flower_Card
     Name: Cave Flower Card
     Type: Card
     Weight: 10
@@ -49639,7 +49740,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Fire,3*getrefine();
   - Id: 300373
-    AegisName: aegis_300373
+    AegisName: B_Hallucigenia_Card
     Name: Hallucigenia Baby Card
     Type: Card
     Weight: 10
@@ -49656,7 +49757,7 @@ Body:
       bonus2 bSubRace,RC_Insect,15;
       bonus2 bWeaponSubSize,Size_Small,15;
   - Id: 300374
-    AegisName: aegis_300374
+    AegisName: Hallucigenia_Card
     Name: Hallucigenia Card
     Type: Card
     Weight: 10
@@ -49671,7 +49772,7 @@ Body:
       bonus bPAtk,1;
       bonus bSMatk,1;
   - Id: 300375
-    AegisName: aegis_300375
+    AegisName: One_E_Dollocaris_Card
     Name: One-Eye Dollocaris Card
     Type: Card
     Weight: 10
@@ -49692,7 +49793,7 @@ Body:
       bonus2 bMagicSubDefEle,Ele_Fire,.@rate;
       bonus2 bMagicSubDefEle,Ele_Neutral,.@rate;
   - Id: 300376
-    AegisName: aegis_300376
+    AegisName: Eyes_Dollocaris_Card
     Name: Two-Eye Dollocaris Card
     Type: Card
     Weight: 10
@@ -49719,7 +49820,7 @@ Body:
         bonus bRes,50;
       }
   - Id: 300377
-    AegisName: aegis_300377
+    AegisName: Ultra_Limacina_Card
     Name: Ultra Limacina Card
     Type: Card
     Weight: 10
@@ -49740,7 +49841,7 @@ Body:
         bonus bFixedCast,-500;
       }
   - Id: 300378
-    AegisName: aegis_300378
+    AegisName: Simulation_Juncea_Card
     Name: Simulation Juncea Card
     Type: Card
     Weight: 10
@@ -49754,7 +49855,7 @@ Body:
       bonus bSMatk,20;
       bonus bUnbreakableArmor;
   - Id: 300379
-    AegisName: aegis_300379
+    AegisName: R_Superior_Rgan_Card
     Name: Modified Advanced Rgan Card
     Type: Card
     Weight: 10
@@ -49774,7 +49875,7 @@ Body:
         bonus bMRes,50;
       }
   - Id: 300380
-    AegisName: aegis_300380
+    AegisName: E_Inter_Rgan_Card
     Name: Entangled Intermediate Rgan Card
     Type: Card
     Weight: 10
@@ -49797,7 +49898,7 @@ Body:
         bonus bCRate,5;
       }
   - Id: 300381
-    AegisName: aegis_300381
+    AegisName: Heart_Hunter_AT_Card
     Name: Hearthunter AT Card
     Type: Card
     Weight: 10
@@ -49811,7 +49912,7 @@ Body:
       bonus bUseSPrate,7;
       bonus bLongAtkRate,4*(getrefine()/3);
   - Id: 300382
-    AegisName: aegis_300382
+    AegisName: Aquila_Card
     Name: Aquila Card
     Type: Card
     Weight: 10
@@ -49904,7 +50005,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bDelayRate,-5;
+      bonus bDelayrate,-5;
   - Id: 300397
     AegisName: aegis_300397
     Name: Sealed Pharaoh Card
@@ -50194,6 +50295,166 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
       bonus bLongAtkRate,5+4*(getrefine()/2);
+  - Id: 300441
+    AegisName: Burning_Knight_Card
+    Name: Burning Night Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      .@view = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@view == W_1HAXE || .@view == W_2HAXE) {
+         bonus bLongAtkRate,2*(.@r/3)+10;
+         if (BaseLevel>=200) {
+            bonus bLongAtkRate,3*(.@r/3);
+         }
+      }
+  - Id: 300442
+    AegisName: Dedsera_Card
+    Name: Deadsera Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF) {
+         bonus2 bMagicAtkEle,Ele_All,10+2*(.@r/3);
+      }
+      if (BaseLevel>=200) {
+         bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
+      }
+  - Id: 300443
+    AegisName: Hardrock_Titan_Card
+    Name: Hardrock Titan Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_Earth,10;
+         if (.@r>=9) {
+            bonus2 bAddEle,Ele_Earth,7;
+         }
+      }
+  - Id: 300444
+    AegisName: Deadween_Card
+    Name: Deadween Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      if (.@r>=7) {
+         bonus bAtkRate,3;
+         if (.@r>=9) {
+            bonus bAtkRate,2;
+         }
+      }
+  - Id: 300445
+    AegisName: Gaia_Pol_Card
+    Name: Gaia Pol Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Plant,40;
+      bonus2 bAddRace,RC_DemiHuman,40;
+      bonus2 bAddEle,Ele_Neutral,40;
+      bonus2 bAddEle,Ele_Earth,40;
+  - Id: 300446
+    AegisName: Punch_Bug_Card
+    Name: Punch Bug Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_KNUCKLE) {
+         bonus bShortAtkRate,10+2*(.@r/3);
+         if (BaseLevel>=200) {
+            bonus bShortAtkRate,3*(.@r/3);
+         }
+      }
+  - Id: 300447
+    AegisName: Aferde_Card
+    Name: Aferde Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,6;
+  - Id: 300448
+    AegisName: Dispol_Card
+    Name: Dispol Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,35;
+      bonus bUseSPrate,10;
+  - Id: 300449
+    AegisName: Timbers_Card
+    Name: Timbers Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,6;
+  - Id: 300450
+    AegisName: Renire_Card
+    Name: Renire Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -51840,112 +52101,112 @@ Body:
     Script: |
       bonus bDelayrate,-getskilllv("ASC_BREAKER");
   - Id: 310197
-    AegisName: aegis_310197
+    AegisName: Tha_Anger_1
     Name: Anger Lv1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,1;
   - Id: 310198
-    AegisName: aegis_310198
+    AegisName: Tha_Anger_2
     Name: Anger Lv2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,3;
   - Id: 310199
-    AegisName: aegis_310199
+    AegisName: Tha_Anger_3
     Name: Anger Lv3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,5;
   - Id: 310200
-    AegisName: aegis_310200
+    AegisName: Tha_Anger_4
     Name: Anger Lv4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,7;
   - Id: 310201
-    AegisName: aegis_310201
+    AegisName: Tha_Anger_5
     Name: Anger Lv5
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,10;
   - Id: 310202
-    AegisName: aegis_310202
+    AegisName: Tha_Horror_1
     Name: Horror Lv1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,1;
   - Id: 310203
-    AegisName: aegis_310203
+    AegisName: Tha_Horror_2
     Name: Horror Lv2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,3;
   - Id: 310204
-    AegisName: aegis_310204
+    AegisName: Tha_Horror_3
     Name: Horror Lv3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,5;
   - Id: 310205
-    AegisName: aegis_310205
+    AegisName: Tha_Horror_4
     Name: Horror Lv4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,7;
   - Id: 310206
-    AegisName: aegis_310206
+    AegisName: Tha_Horror_5
     Name: Horror Lv5
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,10;
   - Id: 310207
-    AegisName: aegis_310207
+    AegisName: Tha_Resent_1
     Name: Resentment Lv1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,1;
   - Id: 310208
-    AegisName: aegis_310208
+    AegisName: Tha_Resent_2
     Name: Resentment Lv2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,3;
   - Id: 310209
-    AegisName: aegis_310209
+    AegisName: Tha_Resent_3
     Name: Resentment Lv3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,5;
   - Id: 310210
-    AegisName: aegis_310210
+    AegisName: Tha_Resent_4
     Name: Resentment Lv4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,7;
   - Id: 310211
-    AegisName: aegis_310211
+    AegisName: Tha_Resent_5
     Name: Resentment Lv5
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,10;
   - Id: 310212
-    AegisName: aegis_310212
+    AegisName: Tha_Regret_1
     Name: Regret Lv1
     Type: Card
     SubType: Enchant
@@ -51953,7 +52214,7 @@ Body:
       bonus bMaxHPrate,1;
       bonus bMaxSPrate,1;
   - Id: 310213
-    AegisName: aegis_310213
+    AegisName: Tha_Regret_2
     Name: Regret Lv2
     Type: Card
     SubType: Enchant
@@ -51961,7 +52222,7 @@ Body:
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
   - Id: 310214
-    AegisName: aegis_310214
+    AegisName: Tha_Regret_3
     Name: Regret Lv3
     Type: Card
     SubType: Enchant
@@ -51969,7 +52230,7 @@ Body:
       bonus bMaxHPrate,5;
       bonus bMaxSPrate,5;
   - Id: 310215
-    AegisName: aegis_310215
+    AegisName: Tha_Regret_4
     Name: Regret Lv4
     Type: Card
     SubType: Enchant
@@ -51977,7 +52238,7 @@ Body:
       bonus bMaxHPrate,7;
       bonus bMaxSPrate,7;
   - Id: 310216
-    AegisName: aegis_310216
+    AegisName: Tha_Regret_5
     Name: Regret Lv5
     Type: Card
     SubType: Enchant
@@ -51985,112 +52246,112 @@ Body:
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
   - Id: 310217
-    AegisName: aegis_310217
+    AegisName: Tha_Empatize_1
     Name: Empathy Lv1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,1;
   - Id: 310218
-    AegisName: aegis_310218
+    AegisName: Tha_Empatize_2
     Name: Empathy Lv2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,3;
   - Id: 310219
-    AegisName: aegis_310219
+    AegisName: Tha_Empatize_3
     Name: Empathy Lv3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,5;
   - Id: 310220
-    AegisName: aegis_310220
+    AegisName: Tha_Empatize_4
     Name: Empathy Lv4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,7;
   - Id: 310221
-    AegisName: aegis_310221
+    AegisName: Tha_Empatize_5
     Name: Empathy Lv5
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAtkRate,10;
   - Id: 310222
-    AegisName: aegis_310222
+    AegisName: Tha_Happy_1
     Name: Happiness Lv1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,1;
   - Id: 310223
-    AegisName: aegis_310223
+    AegisName: Tha_Happy_2
     Name: Happiness Lv2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,3;
   - Id: 310224
-    AegisName: aegis_310224
+    AegisName: Tha_Happy_3
     Name: Happiness Lv3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,5;
   - Id: 310225
-    AegisName: aegis_310225
+    AegisName: Tha_Happy_4
     Name: Happiness Lv4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,7;
   - Id: 310226
-    AegisName: aegis_310226
+    AegisName: Tha_Happy_5
     Name: Happiness Lv5
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,10;
   - Id: 310227
-    AegisName: aegis_310227
+    AegisName: Tha_Comfort_1
     Name: Shelter Lv1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,1;
   - Id: 310228
-    AegisName: aegis_310228
+    AegisName: Tha_Comfort_2
     Name: Shelter Lv2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,3;
   - Id: 310229
-    AegisName: aegis_310229
+    AegisName: Tha_Comfort_3
     Name: Shelter Lv3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,5;
   - Id: 310230
-    AegisName: aegis_310230
+    AegisName: Tha_Comfort_4
     Name: Shelter Lv4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,7;
   - Id: 310231
-    AegisName: aegis_310231
+    AegisName: Tha_Comfort_5
     Name: Shelter Lv5
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,10;
   - Id: 310232
-    AegisName: aegis_310232
+    AegisName: Tha_Console_1
     Name: Solace Lv1
     Type: Card
     SubType: Enchant
@@ -52098,7 +52359,7 @@ Body:
       bonus bMaxHPrate,1;
       bonus bMaxSPrate,1;
   - Id: 310233
-    AegisName: aegis_310233
+    AegisName: Tha_Console_2
     Name: Solace Lv2
     Type: Card
     SubType: Enchant
@@ -52106,7 +52367,7 @@ Body:
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
   - Id: 310234
-    AegisName: aegis_310234
+    AegisName: Tha_Console_3
     Name: Solace Lv3
     Type: Card
     SubType: Enchant
@@ -52114,7 +52375,7 @@ Body:
       bonus bMaxHPrate,5;
       bonus bMaxSPrate,5;
   - Id: 310235
-    AegisName: aegis_310235
+    AegisName: Tha_Console_4
     Name: Solace Lv4
     Type: Card
     SubType: Enchant
@@ -52122,7 +52383,7 @@ Body:
       bonus bMaxHPrate,7;
       bonus bMaxSPrate,7;
   - Id: 310236
-    AegisName: aegis_310236
+    AegisName: Tha_Console_5
     Name: Solace Lv5
     Type: Card
     SubType: Enchant
@@ -52130,7 +52391,7 @@ Body:
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
   - Id: 310237
-    AegisName: aegis_310237
+    AegisName: Tha_Wrath_1
     Name: Inverse Scale Lv1
     Type: Card
     SubType: Enchant
@@ -52138,7 +52399,7 @@ Body:
       bonus2 bAddRace,RC_Angel,10;
       bonus2 bAddRace,RC_Dragon,10;
   - Id: 310238
-    AegisName: aegis_310238
+    AegisName: Tha_Wrath_2
     Name: Inverse Scale Lv2
     Type: Card
     SubType: Enchant
@@ -52146,7 +52407,7 @@ Body:
       bonus2 bAddRace,RC_Angel,15;
       bonus2 bAddRace,RC_Dragon,15;
   - Id: 310239
-    AegisName: aegis_310239
+    AegisName: Tha_Wrath_3
     Name: Inverse Scale Lv3
     Type: Card
     SubType: Enchant
@@ -52154,7 +52415,7 @@ Body:
       bonus2 bAddRace,RC_Angel,20;
       bonus2 bAddRace,RC_Dragon,20;
   - Id: 310240
-    AegisName: aegis_310240
+    AegisName: Tha_Wrath_4
     Name: Inverse Scale Lv4
     Type: Card
     SubType: Enchant
@@ -52162,7 +52423,7 @@ Body:
       bonus2 bAddRace,RC_Angel,25;
       bonus2 bAddRace,RC_Dragon,25;
   - Id: 310241
-    AegisName: aegis_310241
+    AegisName: Tha_Wrath_5
     Name: Inverse Scale Lv5
     Type: Card
     SubType: Enchant
@@ -52170,7 +52431,7 @@ Body:
       bonus2 bAddRace,RC_Angel,35;
       bonus2 bAddRace,RC_Dragon,35;
   - Id: 310242
-    AegisName: aegis_310242
+    AegisName: Tha_Majesty_1
     Name: Dragon Scale Lv1
     Type: Card
     SubType: Enchant
@@ -52178,7 +52439,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,10;
       bonus2 bMagicAddRace,RC_Dragon,10;
   - Id: 310243
-    AegisName: aegis_310243
+    AegisName: Tha_Majesty_2
     Name: Dragon Scale Lv2
     Type: Card
     SubType: Enchant
@@ -52186,7 +52447,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,15;
       bonus2 bMagicAddRace,RC_Dragon,15;
   - Id: 310244
-    AegisName: aegis_310244
+    AegisName: Tha_Majesty_3
     Name: Dragon Scale Lv3
     Type: Card
     SubType: Enchant
@@ -52194,7 +52455,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,20;
       bonus2 bMagicAddRace,RC_Dragon,20;
   - Id: 310245
-    AegisName: aegis_310245
+    AegisName: Tha_Majesty_4
     Name: Dragon Scale Lv4
     Type: Card
     SubType: Enchant
@@ -52202,7 +52463,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,25;
       bonus2 bMagicAddRace,RC_Dragon,25;
   - Id: 310246
-    AegisName: aegis_310246
+    AegisName: Tha_Majesty_5
     Name: Dragon Scale Lv5
     Type: Card
     SubType: Enchant
@@ -52210,7 +52471,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,35;
       bonus2 bMagicAddRace,RC_Dragon,35;
   - Id: 310247
-    AegisName: aegis_310247
+    AegisName: Tha_demigod_1
     Name: Divine Evil Lv1
     Type: Card
     SubType: Enchant
@@ -52218,7 +52479,7 @@ Body:
       bonus2 bAddRace,RC_Angel,10;
       bonus2 bAddRace,RC_Demon,10;
   - Id: 310248
-    AegisName: aegis_310248
+    AegisName: Tha_demigod_2
     Name: Divine Evil Lv2
     Type: Card
     SubType: Enchant
@@ -52226,7 +52487,7 @@ Body:
       bonus2 bAddRace,RC_Angel,15;
       bonus2 bAddRace,RC_Demon,15;
   - Id: 310249
-    AegisName: aegis_310249
+    AegisName: Tha_demigod_3
     Name: Divine Evil Lv3
     Type: Card
     SubType: Enchant
@@ -52234,7 +52495,7 @@ Body:
       bonus2 bAddRace,RC_Angel,20;
       bonus2 bAddRace,RC_Demon,20;
   - Id: 310250
-    AegisName: aegis_310250
+    AegisName: Tha_demigod_4
     Name: Divine Evil Lv4
     Type: Card
     SubType: Enchant
@@ -52242,7 +52503,7 @@ Body:
       bonus2 bAddRace,RC_Angel,25;
       bonus2 bAddRace,RC_Demon,25;
   - Id: 310251
-    AegisName: aegis_310251
+    AegisName: Tha_demigod_5
     Name: Divine Evil Lv5
     Type: Card
     SubType: Enchant
@@ -52250,7 +52511,7 @@ Body:
       bonus2 bAddRace,RC_Angel,35;
       bonus2 bAddRace,RC_Demon,35;
   - Id: 310252
-    AegisName: aegis_310252
+    AegisName: Tha_Antigod_1
     Name: Destructive Evil Lv1
     Type: Card
     SubType: Enchant
@@ -52258,7 +52519,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,10;
       bonus2 bMagicAddRace,RC_Demon,10;
   - Id: 310253
-    AegisName: aegis_310253
+    AegisName: Tha_Antigod_2
     Name: Destructive Evil Lv2
     Type: Card
     SubType: Enchant
@@ -52266,7 +52527,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,15;
       bonus2 bMagicAddRace,RC_Demon,15;
   - Id: 310254
-    AegisName: aegis_310254
+    AegisName: Tha_Antigod_3
     Name: Destructive Evil Lv3
     Type: Card
     SubType: Enchant
@@ -52274,7 +52535,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,20;
       bonus2 bMagicAddRace,RC_Demon,20;
   - Id: 310255
-    AegisName: aegis_310255
+    AegisName: Tha_Antigod_4
     Name: Destructive Evil Lv4
     Type: Card
     SubType: Enchant
@@ -52282,7 +52543,7 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,25;
       bonus2 bMagicAddRace,RC_Demon,25;
   - Id: 310256
-    AegisName: aegis_310256
+    AegisName: Tha_Antigod_5
     Name: Destructive Evil Lv5
     Type: Card
     SubType: Enchant
@@ -52375,7 +52636,7 @@ Body:
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",15;
       bonus2 bSkillAtk,"DC_THROWARROW",15;
   - Id: 310321
-    AegisName: aegis_310321
+    AegisName: Enchant_Groza
     Name: Abyssal King
     Type: Card
     SubType: Enchant
@@ -55217,14 +55478,14 @@ Body:
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
   - Id: 310654
-    AegisName: aegis_310654
+    AegisName: ASPD_Robe_D
     Name: ASPD+1(Dual)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAspd,1;
   - Id: 310655
-    AegisName: aegis_310655
+    AegisName: Ooparts1
     Name: The Creation
     Type: Card
     SubType: Enchant
@@ -55232,14 +55493,14 @@ Body:
       bonus2 bAddSize,Size_All,15;
       bonus2 bMagicAddSize,Size_All,15;
   - Id: 310658
-    AegisName: aegis_310658
+    AegisName: MinorCast_Robe_D
     Name: Minor Casting Reduction(Dual)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100;
   - Id: 310659
-    AegisName: aegis_310659
+    AegisName: Cast_Robe_D
     Name: Variable Casting Time Reduction(Dual)
     Type: Card
     SubType: Enchant
@@ -56646,7 +56907,7 @@ Body:
     Script: |
       bonus bCritAtkRate,2*getskilllv("RK_DRAGONTRAINING");
   - Id: 310882
-    AegisName: aegis_310882
+    AegisName: Runeknight_Middle3
     Name: Rune Knight Stone(Mid)
     Type: Card
     SubType: Enchant
@@ -56654,7 +56915,7 @@ Body:
       bonus bLongAtkRate,(getskilllv("RK_RUNEMASTERY")/2);
       bonus bShortAtkRate,(getskilllv("RK_RUNEMASTERY")/2);
   - Id: 310883
-    AegisName: aegis_310883
+    AegisName: Runeknight_Bottom3
     Name: Rune Knight Stone(Lower)
     Type: Card
     SubType: Enchant
@@ -56779,7 +57040,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bMaxHPRate,10;
+      bonus bMaxHPrate,10;
   - Id: 310919
     AegisName: HeroInsignia_AGI
     Name: Agility
@@ -57454,14 +57715,14 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("SO_EARTHGRAVE");
   - Id: 311014
-    AegisName: aegis_311014
+    AegisName: Reload_Robe_D
     Name: Reload Stone (Dual)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-5;
   - Id: 311015
-    AegisName: aegis_311015
+    AegisName: Crt_Robe_D
     Name: Creative Stone (Dual)
     Type: Card
     SubType: Enchant
@@ -62497,7 +62758,7 @@ Body:
         }
       }
   - Id: 311354
-    AegisName: aegis_311354
+    AegisName: Critical_Robe_D
     Name: Critical Stone (Dual)
     Type: Card
     SubType: Enchant
@@ -62512,69 +62773,78 @@ Body:
     Script: |
       bonus bCon,5;
   - Id: 311356
-    AegisName: aegis_311356
+    AegisName: Archbishop_Top3
     Name: Archbishop Stone (Top)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-3*getskilllv("AB_CLEMENTIA");
   - Id: 311357
-    AegisName: aegis_311357
+    AegisName: Archbishop_Middle3
     Name: Archbishop Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-3*getskilllv("AB_LAUDAAGNUS");
   - Id: 311358
-    AegisName: aegis_311358
+    AegisName: Archbishop_Bottom3
     Name: Archbishop Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("AB_EXPIATIO");
   - Id: 311359
-    AegisName: aegis_311359
+    AegisName: Ranger_Top3
     Name: Ranger Stone (Top)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-1*getskilllv("RA_RANGERMAIN");
   - Id: 311360
-    AegisName: aegis_311360
+    AegisName: Ranger_Middle3
     Name: Ranger Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-1*getskilllv("RA_RESEARCHTRAP");
   - Id: 311361
-    AegisName: aegis_311361
+    AegisName: Ranger_Bottom3
     Name: Ranger Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("RA_FEARBREEZE");
   - Id: 311362
-    AegisName: aegis_311362
+    AegisName: Shadowchaser_Top3
     Name: Shadow Chaser Stone (Top)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAspdRate,2*getskilllv("SC_ESCAPE");
   - Id: 311363
-    AegisName: aegis_311363
+    AegisName: Shadowchaser_Middle3
     Name: Shadow Chaser Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-1*getskilllv("SC_SHADOWFORM");
   - Id: 311364
-    AegisName: aegis_311364
+    AegisName: Shadowchaser_Bottom3
     Name: Shadow Chaser Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,1*getskilllv("SC_REPRODUCE");
       bonus bShortAtkRate,1*getskilllv("SC_REPRODUCE");
+  - Id: 311365
+    AegisName: Royal_Glory
+    Name: Royal Glory
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,15;
+      bonus bMatkRate,15;
+      autobonus "{}",30,100,BF_WEAPON|BF_MAGIC,"{ sc_start SC_REFRESH,20000,1; }";
   - Id: 311367
     AegisName: Gray_Melee1
     Name: Earth Magic (Warrior) Lv. 1
@@ -64784,6 +65054,28 @@ Body:
             }
          }
       }
+  - Id: 311883
+    AegisName: aegis_311883
+    Name: Omniscience Seeker
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,50;
+      bonus bMdef,10;
+  - Id: 311905
+    AegisName: aegis_311905
+    Name: Freeze Resistance
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Id: 311907
+    AegisName: aegis_311907
+    Name: Crystalization Resistance
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bResEff,Eff_Crystalize,10000;
   - Id: 311912
     AegisName: aegis_311912
     Name: Kagerou Stone (Upper)
@@ -65517,6 +65809,72 @@ Body:
     SubType: Enchant
     Script: |
       bonus bWis,5;
+  - Id: 312004
+    AegisName: Bishop_Blessing1
+    Name: Bishop's Blessing (Attack Speed)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,3+3*getenchantgrade();
+  - Id: 312005
+    AegisName: Bishop_Blessing2
+    Name: Bishop's Blessing (Variable Casting)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-3-3*getenchantgrade();
+  - Id: 312006
+    AegisName: Bishop_Blessing3
+    Name: Bishop's Blessing (Global Cool Time)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-3-3*getenchantgrade();
+  - Id: 312007
+    AegisName: Bishop_Blessing4
+    Name: Bishop's Blessing (Perfect Hit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitRate,3+3*getenchantgrade();
+  - Id: 312008
+    AegisName: Bishop_Blessing5
+    Name: Bishop's Blessing (Cri)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,3+3*getenchantgrade();
+  - Id: 312009
+    AegisName: Warped_Spell1
+    Name: Warped Spell (Melee)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,5+5*getenchantgrade();
+  - Id: 312010
+    AegisName: Warped_Spell2
+    Name: Warped Spell (Magic)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5+5*getenchantgrade();
+  - Id: 312011
+    AegisName: Warped_Spell3
+    Name: Warped Spell (Long Ranged)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,5+5*getenchantgrade();
+  - Id: 312014
+    AegisName: Justice_Power
+    Name: Good Spell
+    Type: Card
+    SubType: Enchant
+  - Id: 312021
+    AegisName: Injustice_Power
+    Name: Evil Spell
+    Type: Card
+    SubType: Enchant
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -67395,7 +67753,7 @@ Body:
     Type: Etc
     Weight: 1
   - Id: 1000471
-    AegisName: aegis_1000471
+    AegisName: Vila_Basement_Key
     Name: Villa Basement Key
     Type: Etc
     Weight: 10
@@ -67516,11 +67874,11 @@ Body:
     Name: Sabbatical Handkerchief
     Type: Etc
   - Id: 1000504
-    AegisName: aegis_1000504
+    AegisName: Dry_Sand
     Name: Dry Sand
     Type: Etc
   - Id: 1000505
-    AegisName: aegis_1000505
+    AegisName: Opaque_Liquid
     Name: Opaque Liquid
     Type: Etc
   - Id: 1000506
@@ -67960,11 +68318,11 @@ Body:
     Flags:
       DropEffect: CLIENT
   - Id: 1000682
-    AegisName: aegis_1000682
+    AegisName: ClockTower_key
     Name: Tuner
     Type: Etc
   - Id: 1000684
-    AegisName: aegis_1000684
+    AegisName: 2ndUpperEx_guidemap
     Name: 4th Expanded Job Change Guide
     Type: Etc
   - Id: 1000685
@@ -68917,91 +69275,91 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1000940
-    AegisName: aegis_1000940
+    AegisName: VR_Capitolina_Candy
     Name: Abbey Candy    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000941
-    AegisName: aegis_1000941
+    AegisName: VR_Sealing_Bandage
     Name: Sealing bandage    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000942
-    AegisName: aegis_1000942
+    AegisName: VR_Kntcmds_Portrait
     Name: Portrait of the Knight Commander    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000943
-    AegisName: aegis_1000943
+    AegisName: VR_Bloody_Sword
     Name: Bloody Sword    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000944
-    AegisName: aegis_1000944
+    AegisName: VR_Old_Dagger
     Name: Old old dagger    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000945
-    AegisName: aegis_1000945
+    AegisName: VR_Abyss_Mirror
     Name: Abyss Mirror    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000946
-    AegisName: aegis_1000946
+    AegisName: VR_Fork_Spoon
     Name: Fork spoon    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000947
-    AegisName: aegis_1000947
+    AegisName: VR_Sloppy_Glasses
     Name: Crude Glasses    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000948
-    AegisName: aegis_1000948
+    AegisName: VR_Old_Tie
     Name: Old tie    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000949
-    AegisName: aegis_1000949
+    AegisName: VR_Nyllems_Handmirror
     Name: Nelem's Hand Mirror    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000950
-    AegisName: aegis_1000950
-    Name: Small jello    # !todo check english name
+    AegisName: VR_Tiny_Jellopy
+    Name: Small Jellopy    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000951
-    AegisName: aegis_1000951
+    AegisName: VR_Bite_Apple
     Name: Apple with a bite    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000952
-    AegisName: aegis_1000952
+    AegisName: VR_Clover_Ring
     Name: Shamrock Flower Ring    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000953
-    AegisName: aegis_1000953
+    AegisName: VR_BlackTea_Tin
     Name: Manyeop Tea Imperial    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1000954
-    AegisName: aegis_1000954
+    AegisName: VR_Candy_Pile
     Name: Candy Bundles    # !todo check english name
     Type: Etc
     Flags:
@@ -69204,12 +69562,12 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001007
-    AegisName: aegis_1001007
+    AegisName: Evt_20th_Invasion
     Name: Token of Invasion Defense    # !todo check english name
     Type: Etc
     Weight: 10
   - Id: 1001008
-    AegisName: aegis_1001008
+    AegisName: Evt_20th_Dimension
     Name: Fragment Beyond Dimensions    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69219,43 +69577,43 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 1001010
-    AegisName: aegis_1001010
+    AegisName: Evt_20th_Clock
     Name: Memorial clock of the Principality    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001011
-    AegisName: aegis_1001011
+    AegisName: Evt_20th_Exploration
     Name: Token of Quest    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001012
-    AegisName: aegis_1001012
+    AegisName: Evt_20th_Jewelry
     Name: Fine jewelry Box China Manufacturer    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001013
-    AegisName: aegis_1001013
+    AegisName: Evt_20th_Pepper
     Name: Sacred Pepper Disease    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001014
-    AegisName: aegis_1001014
+    AegisName: Evt_20th_Sesrumnir
     Name: Hallows of Sesrumnir    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001015
-    AegisName: aegis_1001015
+    AegisName: Evt_20th_Cookie
     Name: Advanced Cookie Box    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001016
-    AegisName: aegis_1001016
+    AegisName: VR_Stress_Jelly
     Name: Stress Relief Jelly    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1001017
-    AegisName: aegis_1001017
+    AegisName: Evt_20th_Letter
     Name: Seal of Protection    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69350,7 +69708,7 @@ Body:
     Name: 20th Anniversary Effect (Mid)    # !todo check english name
     Type: Etc
   - Id: 1001043
-    AegisName: aegis_1001043
+    AegisName: VR_Creatura_Doll
     Name: Kritura Academy Doll    # !todo check english name
     Type: Etc
     Flags:
@@ -69447,7 +69805,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 1001077
-    AegisName: aegis_1001077
+    AegisName: Whittling
     Name: Wood chips    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69482,7 +69840,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 1001084
-    AegisName: aegis_1001084
+    AegisName: Blaze_Stone
     Name: Flamestone    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69497,7 +69855,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 1001087
-    AegisName: aegis_1001087
+    AegisName: Shining_Crystal
     Name: Brightly shining crystal    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69507,26 +69865,26 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 1001089
-    AegisName: aegis_1001089
+    AegisName: Aromatic_Flower
     Name: Fragrant flowers    # !todo check english name
     Type: Etc
     Weight: 10
   - Id: 1001090
-    AegisName: aegis_1001090
+    AegisName: Dimmen_Jewel_Fragment
     Name: Dimensional Jewel Fragment    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001091
-    AegisName: aegis_1001091
+    AegisName: Dimm_Jewelry_Fragment
     Name: Dimensional Jewel Decoration Fragment    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001092
-    AegisName: aegis_1001092
+    AegisName: Herosria_Jewel_Fragment
     Name: Heroria Jewel Fragment    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69554,28 +69912,28 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001096
-    AegisName: aegis_1001096
+    AegisName: Heros_Gold_Ore
     Name: Heroria Gold Ore    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001097
-    AegisName: aegis_1001097
+    AegisName: Heros_Silver_Ore
     Name: Heroria Silver Ore    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001098
-    AegisName: aegis_1001098
+    AegisName: Heros_Copper_Ore
     Name: Heroria Copper Ore    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001099
-    AegisName: aegis_1001099
+    AegisName: Heros_Iron_Ore
     Name: Heroria Iron Ore    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69610,35 +69968,35 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001104
-    AegisName: aegis_1001104
+    AegisName: Heros_Ruby_Ore
     Name: Heroria Ruby Ore    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001105
-    AegisName: aegis_1001105
+    AegisName: Heros_Topaz_Ore
     Name: Heroria Topaz Gemstone    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001106
-    AegisName: aegis_1001106
+    AegisName: Heros_Sapphire_Ore
     Name: Heroria Sapphire Gemstone    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001107
-    AegisName: aegis_1001107
+    AegisName: Heros_Emerald_Ore
     Name: Heroria Emerald Ore    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001108
-    AegisName: aegis_1001108
+    AegisName: Heros_Diamond_Ore
     Name: Heroria Diamond Ore    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69680,28 +70038,28 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001114
-    AegisName: aegis_1001114
+    AegisName: Heros_Red_Herb
     Name: Heroria Red Herb    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001115
-    AegisName: aegis_1001115
+    AegisName: Heros_Blue_Herb
     Name: Heroria Blue Herb    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001116
-    AegisName: aegis_1001116
+    AegisName: Heros_Yellow_Herb
     Name: Heroria Yellow Herb    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001117
-    AegisName: aegis_1001117
+    AegisName: Heros_White_Herb
     Name: Heroria White Herb    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69799,28 +70157,28 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001131
-    AegisName: aegis_1001131
+    AegisName: Heros_Red_H_Powder
     Name: Heroria Red Herb Powder    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001132
-    AegisName: aegis_1001132
+    AegisName: Heros_Blue_H_Powder
     Name: Heroria Blue Herb Powder    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001133
-    AegisName: aegis_1001133
+    AegisName: Heros_Yellow_H_Powder
     Name: Heroria Yellow Herb Powder    # !todo check english name
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001134
-    AegisName: aegis_1001134
+    AegisName: Heros_White_H_Powder
     Name: Heroria White Herb Powder    # !todo check english name
     Type: Etc
     Weight: 10
@@ -69997,6 +70355,17 @@ Body:
     Name: Stamina Wisdom Stone (Dual)
     Type: Etc
     Weight: 100
+  - Id: 1001173
+    AegisName: Rusty_Bottle_Cap
+    Name: Rusty Bottle Cap    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001174
     AegisName: Ymir_Heart_TW
     Name: Imelo Heart Power Stone    # !todo check english name
@@ -70100,6 +70469,57 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001198
+    AegisName: Sources_Of_Pollution
+    Name: Source of contamination    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001199
+    AegisName: Fragments_Of_Pollution
+    Name: Fragments of Corruption    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001200
+    AegisName: Crystal_Of_Pollution
+    Name: Determination of contamination    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001201
+    AegisName: Mocadas_Gold
+    Name: Priest's Relic    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001202
+    AegisName: Mocadas_Water
+    Name: Priest's Holy Water    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001203
+    AegisName: Mjo_Treasure
+    Name: Myornil's Treasure    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001204
+    AegisName: Mjo_Energy
+    Name: Myornil's Energy    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

@@ -143,12 +143,16 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 int channel_delete(struct Channel *channel, bool force) {
 	if(!channel)
 		return -1;
-	if(!force && channel->type == CHAN_TYPE_PUBLIC && runflag == MAPSERVER_ST_RUNNING) //only delete those serv stop
+
+	// only delete those serv stop
+	if( !force && channel->type == CHAN_TYPE_PUBLIC && global_core->is_running() ){
 		return -2;
+	}
+
 	if( db_size(channel->users)) {
-		struct map_session_data *sd;
+		map_session_data *sd;
 		DBIterator *iter = db_iterator(channel->users);
-		for( sd = (struct map_session_data *)dbi_first(iter); dbi_exists(iter); sd = (struct map_session_data *)dbi_next(iter) ) { //for all users
+		for( sd = (map_session_data *)dbi_first(iter); dbi_exists(iter); sd = (map_session_data *)dbi_next(iter) ) { //for all users
 			channel_clean(channel,sd,1); //make all quit
 		}
 		dbi_destroy(iter);
@@ -192,7 +196,7 @@ int channel_delete(struct Channel *channel, bool force) {
  *  -3: Player banned
  *  -4: Reached max limit
  */
-int channel_join(struct Channel *channel, struct map_session_data *sd) {
+int channel_join(struct Channel *channel, map_session_data *sd) {
 	if(!channel || !sd)
 		return -1;
 	if(sd->state.autotrade)
@@ -247,7 +251,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
  *  -2: Player already in channel (channel_join)
  *  -3: Player banned (channel_join)
  */
-int channel_mjoin(struct map_session_data *sd) {
+int channel_mjoin(map_session_data *sd) {
 	char mout[60];
 	if(!sd) return -1;
 
@@ -275,7 +279,7 @@ int channel_mjoin(struct map_session_data *sd) {
  */
 int channel_ajoin(struct guild *g){
 	int i, j;
-	struct map_session_data *pl_sd;
+	map_session_data *pl_sd;
 
 	if(!g || !g->channel) return -1;
 	for (i = 0; i < MAX_GUILDALLIANCE; i++){
@@ -302,7 +306,7 @@ int channel_ajoin(struct guild *g){
  *  -1: Invalid player
  *  -2: Player has no guild attached
  */
-int channel_gjoin(struct map_session_data *sd, int flag){
+int channel_gjoin(map_session_data *sd, int flag){
 	struct Channel *channel;
 	struct guild *g;
 
@@ -341,7 +345,7 @@ int channel_gjoin(struct map_session_data *sd, int flag){
  *  0: Success
  * -1: Invalid player or channel
  */
-int channel_clean(struct Channel *channel, struct map_session_data *sd, int flag) {
+int channel_clean(struct Channel *channel, map_session_data *sd, int flag) {
 	unsigned char i;
 
 	if(!channel || !sd)
@@ -388,7 +392,7 @@ int channel_clean(struct Channel *channel, struct map_session_data *sd, int flag
  *  0: Success
  * -1: Invalid player
  */
-int channel_pcquit(struct map_session_data *sd, int type){
+int channel_pcquit(map_session_data *sd, int type){
 	int i;
 
 	//On closing state we could have clean all chan by sd but pcquit is more used to free unit when
@@ -438,7 +442,7 @@ int channel_pcquit(struct map_session_data *sd, int type){
  * -1: Invalid player, channel, or message
  * -2: Delay message from last message
  */
-int channel_send(struct Channel *channel, struct map_session_data *sd, const char *msg) {
+int channel_send(struct Channel *channel, map_session_data *sd, const char *msg) {
 	int idx = 0;
 
 	if(!channel || !sd || !msg || (idx = channel_pc_haschan(sd, channel)) < 0)
@@ -500,7 +504,7 @@ int channel_chk(char *chname, char *chpass, int type){
  * @param flag: Lookup types (1 - Create channel if it does not exist (map or ally only), 2 - Join the channel if not joined yet (map or ally only))
  * @return NULL on channel not found or channel data on success
  */
-struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, int flag){
+struct Channel* channel_name2channel(char *chname, map_session_data *sd, int flag){
 	if(channel_chk(chname, NULL, 1))
 		return NULL;
 
@@ -533,7 +537,7 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
  *  0: Player not found or not banned
  *  1: Player is in channel
  */
-int channel_haspc(struct Channel *channel,struct map_session_data *sd){
+int channel_haspc(struct Channel *channel,map_session_data *sd){
 	if(!channel || !sd) return -1;
 	return (idb_exists(channel->users, sd->status.char_id))?1:0;
 }
@@ -545,7 +549,7 @@ int channel_haspc(struct Channel *channel,struct map_session_data *sd){
  *  0: Player not found or not banned
  *  1: Player is banned
  */
-int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd){
+int channel_haspcbanned(struct Channel *channel,map_session_data *sd){
 	if(!channel || !sd) return -1;
 	return (idb_exists(channel->banned, sd->status.char_id))?1:0;
 }
@@ -560,7 +564,7 @@ int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd){
  * -2: Player not found or not in channel
  * x > 0: has_channel at index x
  */
-int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
+int channel_pc_haschan(map_session_data *sd, struct Channel *channel){
 	int k;
 	if(!channel || !sd) return -1; //channel or player doesn't exist
 	ARR_FIND(0, sd->channel_count, k, strcmpi(channel->name,sd->channels[k]->name) == 0);
@@ -577,7 +581,7 @@ int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
  *   void: List of public channel and map and guild and number of users
  * @return 0 on success or -1 on failure
  */
-int channel_display_list(struct map_session_data *sd, const char *options){
+int channel_display_list(map_session_data *sd, const char *options){
 
 	if(!sd || !options)
 		return -1;
@@ -654,7 +658,7 @@ int channel_display_list(struct map_session_data *sd, const char *options){
  * @param chpass: Channel password
  * @return 0 on success or -1 on failure
  */
-int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
+int channel_pccreate(map_session_data *sd, char *chname, char *chpass){
 	char output[CHAT_SIZE_MAX];
 	int8 res;
 
@@ -688,7 +692,7 @@ int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
  * @param chname: Channel name
  * @return 0 on success or -1 on failure
  */
-int channel_pcdelete(struct map_session_data *sd, char *chname){
+int channel_pcdelete(map_session_data *sd, char *chname){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 
@@ -719,7 +723,7 @@ int channel_pcdelete(struct map_session_data *sd, char *chname){
  * @param chname: Channel name
  * @return 0 on success or -1 on failure
  */
-int channel_pcleave(struct map_session_data *sd, char *chname){
+int channel_pcleave(map_session_data *sd, char *chname){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 
@@ -767,7 +771,7 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
  * @param pass: Channel password
  * @return 0 on success or -1 on failure
  */
-int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
+int channel_pcjoin(map_session_data *sd, char *chname, char *pass){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 
@@ -832,7 +836,7 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
  * @param color: New color
  * @return 0 on success or -1 on failure
  */
-int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
+int channel_pccolor(map_session_data *sd, char *chname, char *color){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 	int k;
@@ -885,7 +889,7 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
  * @param chname: Channel name
  * @return 0 on success, -1 on incorrect channel name, or -2 channel doesn't exist or player didn't join
  */
-int channel_pcbind(struct map_session_data *sd, char *chname){
+int channel_pcbind(map_session_data *sd, char *chname){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 
@@ -914,7 +918,7 @@ int channel_pcbind(struct map_session_data *sd, char *chname){
  * @param sd: Player data
  * @return 0 on success or -1 on failure
  */
-int channel_pcunbind(struct map_session_data *sd){
+int channel_pcunbind(map_session_data *sd){
 	char output[CHAT_SIZE_MAX];
 
 	if(!sd)
@@ -938,10 +942,10 @@ int channel_pcunbind(struct map_session_data *sd){
  * @param flag: Ban options (0 - Ban, 1 - Unban, 2 - Unban all, 3 - Ban list)
  * @return 0 on success or -1 on failure
  */
-int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int flag){
+int channel_pcban(map_session_data *sd, char *chname, char *pname, int flag){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
-	struct map_session_data *tsd = map_nick2sd(pname,false);
+	map_session_data *tsd = map_nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
@@ -1047,10 +1051,10 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
  * @param pname: Player name to kick
  * @return 0 on success or -1 on failure
  */
-int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
+int channel_pckick(map_session_data *sd, char *chname, char *pname) {
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
-	struct map_session_data *tsd = map_nick2sd(pname,false);
+	map_session_data *tsd = map_nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
@@ -1114,7 +1118,7 @@ int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
  * @param val: Option value
  * @return 0 on success or -1 on failure
  */
-int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *option, const char *val){
+int channel_pcsetopt(map_session_data *sd, char *chname, const char *option, const char *val){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 	int k, s = 0, opt;
@@ -1266,11 +1270,11 @@ bool channel_pccheckgroup(struct Channel *channel, int group_id) {
  */
 int channel_pcautojoin_sub(DBKey key, DBData *data, va_list ap) {
 	struct Channel *channel = (struct Channel *)db_data2ptr(data);
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 	char channame[CHAN_NAME_LENGTH+1];
 
 	nullpo_ret(channel);
-	nullpo_ret((sd = va_arg(ap, struct map_session_data *)));
+	nullpo_ret((sd = va_arg(ap, map_session_data *)));
 
 	if (channel->pass[0])
 		return 0;
@@ -1288,7 +1292,7 @@ int channel_pcautojoin_sub(DBKey key, DBData *data, va_list ap) {
  * Attempt to autojoin a player to a channel
  * @param sd: Player data
  */
-void channel_autojoin(struct map_session_data *sd) {
+void channel_autojoin(map_session_data *sd) {
 	nullpo_retv(sd);
 	if (sd->state.autotrade || !sd->fd)
 		return;

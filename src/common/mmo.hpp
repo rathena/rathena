@@ -81,6 +81,12 @@ typedef uint32 t_itemid;
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
 #define MAX_ZENY INT_MAX ///Max zeny
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
+#ifndef MAX_CASHPOINT
+	#define MAX_CASHPOINT INT_MAX
+#endif
+#ifndef MAX_KAFRAPOINT
+	#define MAX_KAFRAPOINT INT_MAX
+#endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
 #define MAX_SKILL 1454 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
@@ -353,8 +359,8 @@ enum equip_pos : uint32 {
 };
 
 struct point {
-	unsigned short map;
-	short x,y;
+	uint16 map;
+	uint16 x,y;
 };
 
 struct startitem {
@@ -693,14 +699,14 @@ struct party {
 	struct party_member member[MAX_PARTY];
 };
 
-struct map_session_data;
+class map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
 	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
-	struct map_session_data *sd;
+	map_session_data *sd;
 	unsigned char modified;
 	uint32 last_login;
 };
@@ -1121,7 +1127,7 @@ struct clan{
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];
 	short max_member, connect_member;
-	struct map_session_data *members[MAX_CLAN];
+	map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
 	unsigned short instance_id;
 };

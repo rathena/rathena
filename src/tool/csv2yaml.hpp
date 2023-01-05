@@ -4,7 +4,26 @@
 #ifndef CSV2YAML_HPP
 #define CSV2YAML_HPP
 
+#include "../common/core.hpp"
+
 #include "yaml.hpp"
+
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace tool_csv2yaml{
+		class Csv2YamlTool : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+
+			public:
+				Csv2YamlTool() : Core( e_core_type::TOOL ){
+
+				}
+		};
+	}
+}
 
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
@@ -511,5 +530,6 @@ static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
 static bool itemdb_read_combos(const char* file);
+static bool cashshop_parse_dbrow( char* fields[], int columns, int current );
 
 #endif /* CSV2YAML_HPP */

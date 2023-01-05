@@ -4,33 +4,34 @@
 #ifndef CASHSHOP_HPP
 #define CASHSHOP_HPP
 
+#include <memory> // std::shared_ptr
+#include <vector> // std::vector
+
 #include "../config/core.hpp"
 
 #include "../common/cbasetypes.hpp" // uint16, uint32
+#include "../common/database.hpp" // TypesafeYamlDatabase
 #include "../common/mmo.hpp" // t_itemid
 #include "../common/timer.hpp" // ShowWarning, ShowStatus
 
-struct map_session_data;
+class map_session_data;
 
 void do_init_cashshop( void );
 void do_final_cashshop( void );
 void cashshop_reloaddb( void );
-bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
 
-// Taken from AEGIS
-enum CASH_SHOP_TAB_CODE
-{
+// Taken from AEGIS (CASH_SHOP_TAB_CODE)
+enum e_cash_shop_tab : uint16{
 	CASHSHOP_TAB_NEW =  0x0,
-	CASHSHOP_TAB_POPULAR,
+	CASHSHOP_TAB_HOT,
 	CASHSHOP_TAB_LIMITED,
 	CASHSHOP_TAB_RENTAL,
-	CASHSHOP_TAB_PERPETUITY,
-	CASHSHOP_TAB_BUFF,
-	CASHSHOP_TAB_RECOVERY,
-	CASHSHOP_TAB_ETC,
-#if PACKETVER_SUPPORTS_SALES
+	CASHSHOP_TAB_PERMANENT,
+	CASHSHOP_TAB_SCROLLS,
+	CASHSHOP_TAB_CONSUMABLES,
+	CASHSHOP_TAB_OTHER,
 	CASHSHOP_TAB_SALE,
-#endif
 	CASHSHOP_TAB_MAX
 };
 
@@ -52,18 +53,30 @@ enum CASHSHOP_BUY_RESULT
 	CASHSHOP_RESULT_ERROR_BUSY =  0xc,
 };
 
-struct cash_item_data{
+struct s_cash_item{
 	t_itemid nameid;
 	uint32 price;
 };
 
-struct cash_item_db{
-	struct cash_item_data** item;
-	uint32 count;
+struct s_cash_item_tab{
+	e_cash_shop_tab tab;
+	std::vector<std::shared_ptr<s_cash_item>> items;
 };
 
-extern struct cash_item_db cash_shop_items[CASHSHOP_TAB_MAX];
-extern bool cash_shop_defined;
+class CashShopDatabase : public TypesafeYamlDatabase<e_cash_shop_tab, s_cash_item_tab>{
+public:
+	CashShopDatabase() : TypesafeYamlDatabase( "ITEM_CASH_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+
+	// Additional
+	std::shared_ptr<s_cash_item> findItemInTab( e_cash_shop_tab tab, t_itemid nameid );
+};
+
+extern CashShopDatabase cash_shop_db;
 
 enum e_sale_add_result {
 	SALE_ADD_SUCCESS = 0,
@@ -94,7 +107,7 @@ extern struct sale_item_db sale_items;
 struct sale_item_data* sale_find_item(t_itemid nameid, bool onsale);
 enum e_sale_add_result sale_add_item(t_itemid nameid, int32 count, time_t from, time_t to);
 bool sale_remove_item(t_itemid nameid);
-void sale_notify_login( struct map_session_data* sd );
+void sale_notify_login( map_session_data* sd );
 #endif
 
 #endif /* CASHSHOP_HPP */
