@@ -42,154 +42,316 @@ Header:
 Body:
 # WOE FE castle
   - Id: 0
-#   Name: Neuschwanstein
+    Map: aldeg_cas01
+    Name: Neuschwanstein
+    #Name: Noisyubantian
+    Npc: Agit#aldeg_cas01
+    Type: First_Edition
+    ClientId: 6
     WarpEnabled: true
     WarpX: 212
     WarpY: 175
   - Id: 1
-#   Name: Hohenschwangau
+    Map: aldeg_cas02
+    Name: Hohenschwangau
+    #Name: Hohensyubangawoo
+    Npc: Agit#aldeg_cas02
+    Type: First_Edition
+    ClientId: 7
     WarpEnabled: true
     WarpX: 82
     WarpY: 71
   - Id: 2
-#   Name: Nuernberg
+    Map: aldeg_cas03
+    Name: Nuernberg
+    #Name: Nyirenverk
+    Npc: Agit#aldeg_cas03
+    Type: First_Edition
+    ClientId: 8
     WarpEnabled: true
     WarpX: 109
     WarpY: 112
   - Id: 3
-#   Name: Wuerzburg
+    Map: aldeg_cas04
+    Name: Wuerzburg
+    #Name: Byirtsburi
+    Npc: Agit#aldeg_cas04
+    Type: First_Edition
+    ClientId: 9
     WarpEnabled: true
     WarpX: 60
     WarpY: 116
   - Id: 4
-#   Name: Rothenburg
+    Map: aldeg_cas05
+    Name: Rothenburg
+    #Name: Rotenburk
+    Npc: Agit#aldeg_cas05
+    Type: First_Edition
+    ClientId: 10
     WarpEnabled: true
     WarpX: 61
     WarpY: 185
   - Id: 5
-#   Name: Repherion
+    Map: gefg_cas01
+    Name: Repherion
+    #Name: Reprion
+    Npc: Agit#gefg_cas01
+    Type: First_Edition
+    ClientId: 11
     WarpEnabled: true
     WarpX: 40
     WarpY: 43
   - Id: 6
-#   Name: Eeyolbriggar
+    Map: gefg_cas02
+    Name: Eeyolbriggar
+    #Name: Yolbriger
+    Npc: Agit#gefg_cas02
+    Type: First_Edition
+    ClientId: 12
     WarpEnabled: true
     WarpX: 22
     WarpY: 66
   - Id: 7
-#   Name: Yesnelph
+    Map: gefg_cas03
+    Name: Yesnelph
+    #Name: Isinlife
+    Npc: Agit#gefg_cas03
+    Type: First_Edition
+    ClientId: 13
     WarpEnabled: true
     WarpX: 112
     WarpY: 23
   - Id: 8
-#   Name: Bergel
+    Map: gefg_cas04
+    Name: Bergel
+    #Name: Berigel
+    Npc: Agit#gefg_cas04
+    Type: First_Edition
+    ClientId: 14
     WarpEnabled: true
     WarpX: 58
     WarpY: 46
   - Id: 9
-#   Name: Mersetzdeitz
+    Map: gefg_cas05
+    Name: Mersetzdeitz
+    #Name: Melsedetsu
+    Npc: Agit#gefg_cas05
+    Type: First_Edition
+    ClientId: 15
     WarpEnabled: true
     WarpX: 66
     WarpY: 48
   - Id: 10
-#   Name: Bright Arbor
+    Map: payg_cas01
+    Name: Bright Arbor
+    #Name: Mingting
+    Npc: Agit#payg_cas01
+    Type: First_Edition
+    ClientId: 16
     WarpEnabled: true
     WarpX: 115
     WarpY: 57
   - Id: 11
-#   Name: Scarlet Palace
+    Map: payg_cas02
+    Name: Scarlet Palace
+    #Name: Tiantan
+    Npc: Agit#payg_cas02
+    Type: First_Edition
+    ClientId: 17
     WarpEnabled: true
     WarpX: 26
     WarpY: 265
   - Id: 12
-#   Name: Holy Shadow
+    Map: payg_cas03
+    Name: Holy Shadow
+    #Name: Fuying
+    Npc: Agit#payg_cas03
+    Type: First_Edition
+    ClientId: 18
     WarpEnabled: true
     WarpX: 43
     WarpY: 264
   - Id: 13
-#   Name: Sacred Altar
+    Map: payg_cas04
+    Name: Sacred Altar
+    #Name: Honglou
+    Npc: Agit#payg_cas04
+    Type: First_Edition
+    ClientId: 19
     WarpEnabled: true
     WarpX: 36
     WarpY: 272
   - Id: 14
-#   Name: Bamboo Grove Hill
+    Map: payg_cas05
+    Name: Bamboo Grove Hill
+    #Name: Zhulinxian
+    Npc: Agit#payg_cas05
+    Type: First_Edition
+    ClientId: 20
     WarpEnabled: true
     WarpX: 274
     WarpY: 246
   - Id: 15
-#   Name: Kriemhild
+    Map: prtg_cas01
+    Name: Kriemhild
+    #Name: Creamhilt
+    Npc: Agit#prtg_cas01
+    Type: First_Edition
+    ClientId: 1
     WarpEnabled: true
     WarpX: 107
     WarpY: 180
   - Id: 16
-#   Name: Swanhild
+    Map: prtg_cas02
+    Name: Swanhild
+    #Name: Sbanhealt
+    Npc: Agit#prtg_cas02
+    Type: First_Edition
+    ClientId: 2
     WarpEnabled: true
     WarpX: 94
     WarpY: 56
   - Id: 17
-#   Name: Fadhgridh
+    Map: prtg_cas03
+    Name: Fadhgridh
+    #Name: Lazrigees
+    Npc: Agit#prtg_cas03
+    Type: First_Edition
+    ClientId: 3
     WarpEnabled: true
     WarpX: 46
     WarpY: 97
   - Id: 18
-#   Name: Skoegul
+    Map: prtg_cas04
+    Name: Skoegul
+    #Name: Squagul
+    Npc: Agit#prtg_cas04
+    Type: First_Edition
+    ClientId: 4
     WarpEnabled: true
     WarpX: 260
     WarpY: 262
   - Id: 19
-#   Name: Gondul
+    Map: prtg_cas05
+    Name: Gondul
+    #Name: Guindull
+    Npc: Agit#prtg_cas05
+    Type: First_Edition
+    ClientId: 5
     WarpEnabled: true
     WarpX: 26
     WarpY: 38
 
+# WOE NGuild castle
+  - Id: 20
+    Map: nguild_alde
+    Name: Earth
+    Npc: Agit_N01
+    Type: First_Edition
+  - Id: 21
+    Map: nguild_gef
+    Name: Air
+    Npc: Agit_N02
+    Type: First_Edition
+  - Id: 22
+    Map: nguild_pay
+    Name: Water
+    Npc: Agit_N03
+    Type: First_Edition
+  - Id: 23
+    Map: nguild_prt
+    Name: Fire
+    Npc: Agit_N04
+    Type: First_Edition
+
 # WOE SE castle
   - Id: 24
-#   Name: Himinn
+    Map: schg_cas01
+    Name: Himinn
+    Npc: Manager#schg_cas01
+    Type: Second_Edition
+    ClientId: 26
     WarpEnabled: true
     WarpX: 233
     WarpY: 300
   - Id: 25
-#   Name: Andlangr
+    Map: schg_cas02
+    Name: Andlangr
+    Npc: Manager#schg_cas02
+    Type: Second_Edition
+    ClientId: 27
     WarpEnabled: true
     WarpX: 101
     WarpY: 372
   - Id: 26
-#   Name: Viblainn
+    Map: schg_cas03
+    Name: Viblainn
+    Npc: Manager#schg_cas03
+    Type: Second_Edition
+    ClientId: 28
     WarpEnabled: true
     WarpX: 81
     WarpY: 94
   - Id: 27
-#   Name: Hljod
+    Map: schg_cas04
+    Name: Hljod
+    Npc: Manager#schg_cas04
+    Type: Second_Edition
+    ClientId: 29
     WarpEnabled: true
     WarpX: 233
     WarpY: 300
   - Id: 28
-#   Name: Skidbladnir
+    Map: schg_cas05
+    Name: Skidbladnir
+    Npc: Manager#schg_cas05
+    Type: Second_Edition
+    ClientId: 30
     WarpEnabled: true
     WarpX: 233
     WarpY: 300
   - Id: 29
-#   Name: Mardol
+    Map: arug_cas01
+    Name: Mardol
+    Npc: Manager#arug_cas01
+    Type: Second_Edition
+    ClientId: 21
     WarpEnabled: true
     WarpX: 77
     WarpY: 371
   - Id: 30
-#   Name: Cyr
+    Map: arug_cas02
+    Name: Cyr
+    Npc: Manager#arug_cas02
+    Type: Second_Edition
+    ClientId: 22
     WarpEnabled: true
     WarpX: 301
     WarpY: 332
   - Id: 31
-#   Name: Horn
+    Map: arug_cas03
+    Name: Horn
+    Npc: Manager#arug_cas03
+    Type: Second_Edition
+    ClientId: 23
     WarpEnabled: true
     WarpX: 322
     WarpY: 91
   - Id: 32
-#   Name: Gefn
+    Map: arug_cas04
+    Name: Gefn
+    Npc: Manager#arug_cas04
+    Type: Second_Edition
+    ClientId: 24
     WarpEnabled: true
     WarpX: 322
     WarpY: 91
   - Id: 33
-#   Name: Bandis
+    Map: arug_cas05
+    Name: Bandis
+    Npc: Manager#arug_cas05
+    Type: Second_Edition
+    ClientId: 25
     WarpEnabled: true
     WarpX: 322
     WarpY: 91
