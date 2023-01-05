@@ -3139,7 +3139,6 @@ void CharacterServer::finalize(){
 	}
 
 	Sql_Free(sql_handle);
-	mapindex_final();
 
 	ShowStatus("Finished.\n");
 }
@@ -3154,9 +3153,6 @@ void CharacterServer::handle_shutdown(){
 }
 
 bool CharacterServer::initialize( int argc, char *argv[] ){
-	//Read map indexes
-	mapindex_init();
-
 	// Init default value
 	CHAR_CONF_NAME =   "conf/char_athena.conf";
 	LAN_CONF_NAME =    "conf/subnet_athena.conf";
