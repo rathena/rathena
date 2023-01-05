@@ -7842,7 +7842,7 @@ void clif_party_info( struct party_data& party, map_session_data* sd ){
 		member.GID = m.char_id;
 #endif
 		safestrncpy( member.playerName, m.name, sizeof( member.playerName ) );
-		mapindex_getmapname_ext( mapindex_id2name( m.map ), member.mapName );
+		mapindex_getmapname_ext( m.map, member.mapName );
 		member.leader = ( m.leader ) ? 0 : 1;
 		member.offline = ( m.online ) ? 0 : 1;
 #if PACKETVER_MAIN_NUM >= 20170524 || PACKETVER_RE_NUM >= 20170502 || defined(PACKETVER_ZERO)

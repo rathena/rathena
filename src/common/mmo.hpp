@@ -685,7 +685,7 @@ struct party_member {
 	uint32 char_id;
 	char name[NAME_LENGTH];
 	unsigned short class_;
-	unsigned short map;
+	char map[MAP_NAME_LENGTH_EXT];
 	unsigned short lv;
 	unsigned leader : 1,
 	         online : 1;

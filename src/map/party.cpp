@@ -46,7 +46,7 @@ static void party_fill_member(struct party_member* member, map_session_data* sd,
 	member->char_id    = sd->status.char_id;
 	safestrncpy(member->name, sd->status.name, NAME_LENGTH);
 	member->class_     = sd->status.class_;
-	member->map        = sd->mapindex;
+	safestrncpy( member->map, mapindex_id2name( sd->mapindex ), sizeof( member->map ) );
 	member->lv         = sd->status.base_level;
 	member->online     = 1;
 	member->leader     = leader;
@@ -916,7 +916,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 		if (tmi == MAX_PARTY)
 			return 0; // Shouldn't happen
 
-		if (battle_config.change_party_leader_samemap && p->party.member[mi].map != p->party.member[tmi].map) {
+		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
 			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
 			return 0;
 		}
@@ -951,8 +951,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 /// - changes maps
 /// - logs in or out
 /// - gains a level (disabled)
-int party_recv_movemap(int party_id,uint32 account_id,uint32 char_id, unsigned short map_idx,int online,int lv)
-{
+int party_recv_movemap( int party_id, uint32 account_id, uint32 char_id, int online, int lv, const char* map ){
 	struct party_member* m;
 	struct party_data* p;
 	int i;
@@ -969,7 +968,7 @@ int party_recv_movemap(int party_id,uint32 account_id,uint32 char_id, unsigned s
 	}
 
 	m = &p->party.member[i];
-	m->map = map_idx;
+	safestrncpy( m->map, map, sizeof( m->map ) );
 	m->online = online;
 	m->lv = lv;
 	//Check if they still exist on this map server
