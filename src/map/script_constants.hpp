@@ -9927,6 +9927,17 @@
 	export_constant(ENCHANTGRADE_A);
 	export_constant(MAX_ENCHANTGRADE);
 
+	/* cash shop tabs */
+	export_constant(CASHSHOP_TAB_NEW);
+	export_constant(CASHSHOP_TAB_HOT);
+	export_constant(CASHSHOP_TAB_LIMITED);
+	export_constant(CASHSHOP_TAB_RENTAL);
+	export_constant(CASHSHOP_TAB_PERMANENT);
+	export_constant(CASHSHOP_TAB_SCROLLS);
+	export_constant(CASHSHOP_TAB_CONSUMABLES);
+	export_constant(CASHSHOP_TAB_OTHER);
+	export_constant(CASHSHOP_TAB_SALE);
+
 	/* WoE Types */
 	export_constant(WOE_FIRST_EDITION);
 	export_constant(WOE_SECOND_EDITION);

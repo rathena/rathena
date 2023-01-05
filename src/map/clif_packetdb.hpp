@@ -1747,6 +1747,10 @@
 	parseable_packet(0x0843,6,clif_parse_GMRemove2,2);
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20100824 || PACKETVER_RE_NUM >= 20100824 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_REQ_SE_CASH_TAB_CODE, sizeof( struct PACKET_CZ_REQ_SE_CASH_TAB_CODE ), clif_parse_CashShopReqTab, 0 );
+#endif
+
 // 2010-11-24aRagexeRE
 #if PACKETVER >= 20101124
 	parseable_packet(0x0288,-1,clif_parse_npccashshop_buy,2,4,8,10);
@@ -1783,7 +1787,6 @@
 	parseable_packet(0x0439,8,clif_parse_UseItem,2,4);
 	packet(0x08d2,10);
 	packet(0x08d1,7);
-	parseable_packet(0x0846,4,clif_parse_CashShopReqTab,2); //2011-07-18
 #endif
 
 // 2011-11-02aRagexe

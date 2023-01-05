@@ -5623,7 +5623,7 @@ int pc_paycash(map_session_data *sd, int price, int points, e_log_pick_type type
 	int cash;
 	nullpo_retr(-1,sd);
 
-	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
+	points = cap_value(points, 0, MAX_KAFRAPOINT); //prevent command UB
 
 	cash = price-points;
 
@@ -5669,14 +5669,14 @@ int pc_getcash(map_session_data *sd, int cash, int points, e_log_pick_type type)
 
 	nullpo_retr(-1,sd);
 
-	cash = cap_value(cash, 0, MAX_ZENY); //prevent command UB
-	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
+	cash = cap_value(cash, 0, MAX_CASHPOINT); //prevent command UB
+	points = cap_value(points, 0, MAX_KAFRAPOINT); //prevent command UB
 	if( cash > 0 )
 	{
-		if( cash > MAX_ZENY-sd->cashPoints )
+		if( cash > MAX_CASHPOINT-sd->cashPoints )
 		{
 			ShowWarning("pc_getcash: Cash point overflow (cash=%d, have cash=%d, account_id=%d, char_id=%d).\n", cash, sd->cashPoints, sd->status.account_id, sd->status.char_id);
-			cash = MAX_ZENY-sd->cashPoints;
+			cash = MAX_CASHPOINT-sd->cashPoints;
 		}
 
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
@@ -5693,10 +5693,10 @@ int pc_getcash(map_session_data *sd, int cash, int points, e_log_pick_type type)
 
 	if( points > 0 )
 	{
-		if( points > MAX_ZENY-sd->kafraPoints )
+		if( points > MAX_KAFRAPOINT-sd->kafraPoints )
 		{
 			ShowWarning("pc_getcash: Kafra point overflow (points=%d, have points=%d, account_id=%d, char_id=%d).\n", points, sd->kafraPoints, sd->status.account_id, sd->status.char_id);
-			points = MAX_ZENY-sd->kafraPoints;
+			points = MAX_KAFRAPOINT-sd->kafraPoints;
 		}
 
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
@@ -10278,16 +10278,16 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 		if (val < 0)
 			return false;
 		if (!sd->state.connect_new)
-			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
-		sd->cashPoints = cap_value(val, 0, MAX_ZENY);
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_CASHPOINT)));
+		sd->cashPoints = cap_value(val, 0, MAX_CASHPOINT);
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints);
 		return true;
 	case SP_KAFRAPOINTS:
 		if (val < 0)
 			return false;
 		if (!sd->state.connect_new)
-			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
-		sd->kafraPoints = cap_value(val, 0, MAX_ZENY);
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_KAFRAPOINT)));
+		sd->kafraPoints = cap_value(val, 0, MAX_KAFRAPOINT);
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
 		return true;
 	case SP_PCDIECOUNTER:

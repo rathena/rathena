@@ -10420,15 +10420,37 @@ Body:
   - Id: 16439
     Title: Award Garden-Waiting
     TimeLimit: 4h
+  - Id: 16521
+    Title: 4th floor of Rudus, an organic field for waste specimens
+  - Id: 16522
+    Title: 4th floor of Rudus, an organic field for waste specimens
   - Id: 16523
-    Title: The solitude of the abyss
+    Title: Abyssal Solitude - Standby
     TimeLimit: 4h
+  - Id: 16524
+    Title: Abyssal Solitude
+    Targets:
+      - Mob: DEADRE
+        Count: 10
+      - Mob: DOLORIAN
+        Count: 10
+      - Mob: PLAGARION
+        Count: 10
   - Id: 16525
-    Title: Transformation and development - Standby
+    Title: Transformation and Evolution - Standby
     TimeLimit: 4h
+  - Id: 16526
+    Title: Transformation and Evolution
+    Targets:
+      - Mob: GIANT_CAPUT
+        Count: 15
+      - Mob: VENEDI
+        Count: 15
   - Id: 16527
     Title: Data backup - Waiting
     TimeLimit: 4h
+  - Id: 16528
+    Title: Data Backup
   - Id: 16530
     Title: The ground and fire
     TimeLimit: 4h
@@ -10444,6 +10466,8 @@ Body:
   - Id: 16538
     Title: Natural change - Waiting
     TimeLimit: 4h
+  - Id: 16540
+    Title: Data Backup
   - Id: 16546
     Title: Farm Worker
   - Id: 16547

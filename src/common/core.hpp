@@ -59,10 +59,10 @@ namespace rathena{
 
 		class Core{
 			private:
-				e_core_status status;
-				e_core_type type;
-				bool run_once;
-				bool crashed;
+				e_core_status m_status;
+				e_core_type m_type;
+				bool m_run_once;
+				bool m_crashed;
 
 			protected:
 				virtual bool initialize( int argc, char* argv[] );
@@ -74,10 +74,10 @@ namespace rathena{
 
 			public:
 				Core( e_core_type type ){
-					this->status = e_core_status::NOT_STARTED;
-					this->run_once = false;
-					this->crashed = false;
-					this->type = type;
+					this->m_status = e_core_status::NOT_STARTED;
+					this->m_run_once = false;
+					this->m_crashed = false;
+					this->m_type = type;
 				}
 
 				e_core_status get_status();

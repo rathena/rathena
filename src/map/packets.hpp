@@ -453,6 +453,28 @@ struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER{
 	uint32 refused;
 } __attribute__((packed));
 
+struct PACKET_CZ_REQ_SE_CASH_TAB_CODE{
+	int16 packetType;
+	int16 tab;
+} __attribute__((packed));
+
+struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub{
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	int32 price;
+} __attribute__((packed));
+
+struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2{
+	int16 packetType;
+	int16 packetLength;
+	uint32 tab;
+	int16 count;
+	struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub items[];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -489,6 +511,9 @@ DEFINE_PACKET_HEADER(ZC_CASH_ITEM_DELETE, 0x299)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_BIND_ON_EQUIP, 0x2d3)
 DEFINE_PACKET_HEADER(ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, 0x824)
 DEFINE_PACKET_HEADER(CZ_SSILIST_ITEM_CLICK, 0x83c)
+DEFINE_PACKET_HEADER(CZ_REQ_SE_CASH_TAB_CODE, 0x846)
+DEFINE_PACKET_HEADER(ZC_ACK_SE_CASH_ITEM_LIST2, 0x8c0)
+DEFINE_PACKET_HEADER(ZC_ACK_SCHEDULER_CASHITEM, 0x8ca)
 DEFINE_PACKET_HEADER(ZC_CLEAR_DIALOG, 0x8d6)
 DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e);
 DEFINE_PACKET_HEADER(ZC_BANKING_CHECK, 0x9a6)
