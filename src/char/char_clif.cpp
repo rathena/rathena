@@ -25,7 +25,7 @@
 #include "inter.hpp"
 #include "packets.hpp"
 
-std::vector<struct point_str> accessible_maps = {
+std::vector<struct point_str> accessible_maps{
 	{ MAP_PRONTERA, 273, 354 },
 	{ MAP_GEFFEN, 120, 100 },
 	{ MAP_MORROC, 160, 94 },
