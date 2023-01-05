@@ -41,7 +41,7 @@ static bool char_init_done = false; //server already initialized? Used for Inter
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,-1,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
-	 6,-1,18, 7,-1,39,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
+	 6,-1,18, 7,-1, -1,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30, 10, -1,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	11,10,10, 0,11, -1, 0,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, F->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
@@ -322,20 +322,8 @@ int chrif_save(map_session_data *sd, int flag) {
 	WFIFOL(char_fd,8) = sd->status.char_id;
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
-	// If the user is on a instance map, we have to fake his current position
-	if( map_getmapdata(sd->bl.m)->instance_id ){
-		struct mmo_charstatus status;
-
-		// Copy the whole status
-		memcpy( &status, &sd->status, sizeof( struct mmo_charstatus ) );
-		// Change his current position to his savepoint
-		memcpy( &status.last_point, &status.save_point, sizeof( struct point ) );
-		// Copy the copied status into the packet
-		memcpy( WFIFOP( char_fd, 13 ), &status, sizeof( struct mmo_charstatus ) );
-	} else {
-		// Copy the whole status into the packet
-		memcpy( WFIFOP( char_fd, 13 ), &sd->status, sizeof( struct mmo_charstatus ) );
-	}
+	// Copy the whole status into the packet
+	memcpy( WFIFOP( char_fd, 13 ), &sd->status, sizeof( struct mmo_charstatus ) );
 
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
@@ -441,21 +429,22 @@ int chrif_changemapserver(map_session_data* sd, uint32 ip, uint16 port) {
 
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd,39);
+	WFIFOHEAD( char_fd, 37 + MAP_NAME_LENGTH_EXT );
 	WFIFOW(char_fd, 0) = 0x2b05;
 	WFIFOL(char_fd, 2) = sd->bl.id;
 	WFIFOL(char_fd, 6) = sd->login_id1;
 	WFIFOL(char_fd,10) = sd->login_id2;
 	WFIFOL(char_fd,14) = sd->status.char_id;
-	WFIFOW(char_fd,18) = sd->mapindex;
-	WFIFOW(char_fd,20) = sd->bl.x;
-	WFIFOW(char_fd,22) = sd->bl.y;
-	WFIFOL(char_fd,24) = htonl(ip);
-	WFIFOW(char_fd,28) = htons(port);
-	WFIFOB(char_fd,30) = sd->status.sex;
-	WFIFOL(char_fd,31) = htonl(session[sd->fd]->client_addr);
-	WFIFOL(char_fd,35) = sd->group_id;
-	WFIFOSET(char_fd,39);
+	safestrncpy( WFIFOCP( char_fd, 18 ), mapindex_id2name( sd->mapindex ), MAP_NAME_LENGTH_EXT );
+	int offset = 18 + MAP_NAME_LENGTH_EXT;
+	WFIFOW( char_fd, offset + 0 ) = sd->bl.x;
+	WFIFOW( char_fd, offset + 2 ) = sd->bl.y;
+	WFIFOL( char_fd, offset + 4 ) = htonl( ip );
+	WFIFOW( char_fd, offset + 8 ) = htons( port );
+	WFIFOB( char_fd, offset + 10 ) = sd->status.sex;
+	WFIFOL( char_fd, offset + 11 ) = htonl( session[sd->fd]->client_addr );
+	WFIFOL( char_fd, offset + 15 ) = sd->group_id;
+	WFIFOSET( char_fd, 37 + MAP_NAME_LENGTH_EXT );
 
 	return 0;
 }

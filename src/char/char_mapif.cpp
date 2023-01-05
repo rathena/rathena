@@ -592,8 +592,9 @@ void chmapif_changemapserv_ack(int fd, bool nok){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_reqchangemapserv(int fd){
-	if (RFIFOREST(fd) < 39)
+	if( RFIFOREST( fd ) < ( 37 + MAP_NAME_LENGTH_EXT ) ){
 		return 0;
+	}
 	else {
 		int map_id, map_fd = -1;
 		struct mmo_charstatus* char_data;
@@ -622,10 +623,11 @@ int chmapif_parse_reqchangemapserv(int fd){
 			int aid = RFIFOL(fd,2);
 
 			//Update the "last map" as this is where the player must be spawned on the new map server.
-			char_data->last_point.map = RFIFOW(fd,18);
-			char_data->last_point.x = RFIFOW(fd,20);
-			char_data->last_point.y = RFIFOW(fd,22);
-			char_data->sex = RFIFOB(fd,30);
+			safestrncpy( char_data->last_point.map, RFIFOCP( fd, 18 ), MAP_NAME_LENGTH_EXT );
+			int offset = 18 + MAP_NAME_LENGTH_EXT;
+			char_data->last_point.x = RFIFOW( fd, offset + 0 );
+			char_data->last_point.y = RFIFOW( fd, offset + 2 );
+			char_data->sex = RFIFOB( fd, offset + 10 );
 
 			// create temporary auth entry
 			CREATE(node, struct auth_node, 1);
@@ -633,10 +635,10 @@ int chmapif_parse_reqchangemapserv(int fd){
 			node->char_id = RFIFOL(fd,14);
 			node->login_id1 = RFIFOL(fd,6);
 			node->login_id2 = RFIFOL(fd,10);
-			node->sex = RFIFOB(fd,30);
+			node->sex = char_data->sex;
 			node->expiration_time = 0; // FIXME (this thing isn't really supported we could as well purge it instead of fixing)
-			node->ip = ntohl(RFIFOL(fd,31));
-			node->group_id = RFIFOL(fd,35);
+			node->ip = ntohl( RFIFOL( fd, offset + 11 ) );
+			node->group_id = RFIFOL( fd, offset + 15 );
 			node->changing_mapservers = 1;
 			idb_put(auth_db, aid, node);
 
@@ -649,7 +651,7 @@ int chmapif_parse_reqchangemapserv(int fd){
 		} else { //Reply with nak
 			chmapif_changemapserv_ack(fd,1);
 		}
-		RFIFOSKIP(fd,39);
+		RFIFOSKIP( fd, 37 + MAP_NAME_LENGTH_EXT );
 	}
 	return 1;
 }

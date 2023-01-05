@@ -3,6 +3,8 @@
 
 #include "char_clif.hpp"
 
+#include <vector>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,6 +24,15 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 #include "packets.hpp"
+
+std::vector<struct point_str> accessible_maps = {
+	{ MAP_PRONTERA, 273, 354 },
+	{ MAP_GEFFEN, 120, 100 },
+	{ MAP_MORROC, 160, 94 },
+	{ MAP_ALBERTA, 116, 57 },
+	{ MAP_PAYON, 87, 117 },
+	{ MAP_IZLUDE, 94, 103 }
+};
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
@@ -792,7 +803,7 @@ void chclif_send_map_data( int fd, struct mmo_charstatus *cd, uint32 ipl, int ma
 	WFIFOHEAD(fd,size);
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = cd->char_id;
-	mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
+	mapindex_getmapname_ext( cd->last_point.map, WFIFOCP( fd, 6 ) );
 	uint32 subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
 	WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip);
 	WFIFOW(fd,26) = ntows(htons(map_server[map_server_index].port)); // [!] LE byte order here [!]
@@ -877,10 +888,10 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		ShowInfo("Selected char: (Account %d: %d - %s)\n", sd->account_id, slot, char_dat.name);
 
 		// searching map server
-		i = char_search_mapserver(cd->last_point.map, -1, -1);
+		i = char_search_mapserver(mapindex_name2id(cd->last_point.map), -1, -1);
 
 		// if map is not found, we check major cities
-		if (i < 0 || !cd->last_point.map) {
+		if( i < 0 ){
 			unsigned short j;
 			//First check that there's actually a map server online.
 			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].map.empty() );
@@ -889,31 +900,29 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 				chclif_send_auth_result(fd,1); // 01 = Server closed
 				return 1;
 			}
-			if ((i = char_search_mapserver((j=mapindex_name2id(MAP_PRONTERA)),-1,-1)) >= 0) {
-				cd->last_point.x = 273;
-				cd->last_point.y = 354;
-			} else if ((i = char_search_mapserver((j=mapindex_name2id(MAP_GEFFEN)),-1,-1)) >= 0) {
-				cd->last_point.x = 120;
-				cd->last_point.y = 100;
-			} else if ((i = char_search_mapserver((j=mapindex_name2id(MAP_MORROC)),-1,-1)) >= 0) {
-				cd->last_point.x = 160;
-				cd->last_point.y = 94;
-			} else if ((i = char_search_mapserver((j=mapindex_name2id(MAP_ALBERTA)),-1,-1)) >= 0) {
-				cd->last_point.x = 116;
-				cd->last_point.y = 57;
-			} else if ((i = char_search_mapserver((j=mapindex_name2id(MAP_PAYON)),-1,-1)) >= 0) {
-				cd->last_point.x = 87;
-				cd->last_point.y = 117;
-			} else if ((i = char_search_mapserver((j=mapindex_name2id(MAP_IZLUDE)),-1,-1)) >= 0) {
-				cd->last_point.x = 94;
-				cd->last_point.y = 103;
-			} else {
-				ShowInfo("Connection Closed. No map server available that has a major city, and unable to find map-server for '%s'.\n", mapindex_id2name(cd->last_point.map));
+
+			for( struct point_str& accessible_map : accessible_maps ){
+				int mapindex = mapindex_name2id( accessible_map.map );
+
+				if( mapindex == 0 ){
+					continue;
+				}
+
+				i = char_search_mapserver( mapindex, -1, -1 );
+
+				// Found a map-server for a map
+				if( i >= 0 ){
+					ShowWarning( "Unable to find map-server for '%s', sending to major city '%s'.\n", cd->last_point.map, accessible_map.map );
+					memcpy( &cd->last_point, &accessible_map, sizeof( cd->last_point ) );
+					break;
+				}
+			}
+
+			if( i < 0 ){
+				ShowInfo( "Connection Closed. No map server available that has a major city, and unable to find map-server for '%s'.\n", cd->last_point.map );
 				chclif_send_auth_result(fd,1); // 01 = Server closed
 				return 1;
 			}
-			ShowWarning("Unable to find map-server for '%s', sending to major city '%s'.\n", mapindex_id2name(cd->last_point.map), mapindex_id2name(j));
-			cd->last_point.map = j;
 		}
 
 		//Send NEW auth packet [Kevin]
