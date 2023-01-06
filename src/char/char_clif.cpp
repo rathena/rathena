@@ -3,6 +3,9 @@
 
 #include "char_clif.hpp"
 
+#include <memory>
+#include <unordered_map>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -15,6 +18,7 @@
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "char.hpp"
@@ -22,6 +26,8 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 #include "packets.hpp"
+
+using namespace rathena;
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
@@ -703,9 +709,6 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 	if( RFIFOREST(fd) < 17 ) // request to connect
 		return 0;
 	else {
-		struct auth_node* node;
-		DBMap *auth_db = char_get_authdb();
-
 		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
@@ -741,14 +744,15 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		}
 
 		// search authentification
-		node = (struct auth_node*)idb_get(auth_db, account_id);
-		if( node != NULL &&
+		std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), account_id);
+
+		if( node != nullptr &&
 			node->account_id == account_id &&
 			node->login_id1  == login_id1 &&
 			node->login_id2  == login_id2 /*&&
 			node->ip         == ipl*/ )
 		{// authentication found (coming from map server)
-			idb_remove(auth_db, account_id);
+			char_get_authdb().erase(account_id);
 			char_auth_ok(fd, sd);
 		}
 		else
@@ -780,7 +784,7 @@ int chclif_parse_req_charlist(int fd, struct char_session_data* sd){
 }
 
 //Send player to map
-void chclif_send_map_data( int fd, struct mmo_charstatus *cd, uint32 ipl, int map_server_index ){
+void chclif_send_map_data( int fd, std::shared_ptr<struct mmo_charstatus> cd, uint32 ipl, int map_server_index ){
 #if PACKETVER >= 20170315
 	int cmd = 0xAC5;
 	int size = 156;
@@ -806,13 +810,9 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	FIFOSD_CHECK(3)
 	{
 		struct mmo_charstatus char_dat;
-		struct mmo_charstatus *cd;
 		char* data;
 		uint32 char_id;
-		struct auth_node* node;
 		int i, map_fd, server_id;
-		DBMap *auth_db = char_get_authdb();
-		DBMap *char_db_ = char_get_chardb();
 
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
@@ -864,7 +864,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		}
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
-		cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
+		std::shared_ptr<struct mmo_charstatus> cd = util::umap_find( char_get_chardb(), char_id );
 
 		if (charserv_config.log_char) {
 			char esc_name[NAME_LENGTH*2+1];
@@ -930,7 +930,8 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		chclif_send_map_data( fd, cd, ipl, i );
 
 		// create temporary auth entry
-		CREATE(node, struct auth_node, 1);
+		std::shared_ptr<struct auth_node> node = std::make_shared<struct auth_node>();
+
 		node->account_id = sd->account_id;
 		node->char_id = cd->char_id;
 		node->login_id1 = sd->login_id1;
@@ -939,8 +940,8 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		node->expiration_time = sd->expiration_time;
 		node->group_id = sd->group_id;
 		node->ip = ipl;
-		idb_put(auth_db, sd->account_id, node);
 
+		char_get_authdb()[node->account_id] = node;
 	}
 	return 1;
 }
@@ -1363,12 +1364,16 @@ int chclif_parse(int fd) {
 
 	if(session[fd]->flag.eof) {
 		if( sd != NULL && sd->auth ) { // already authed client
-			DBMap *online_char_db = char_get_onlinedb();
-			struct online_char_data* data = (struct online_char_data*)idb_get(online_char_db, sd->account_id);
-			if( data != NULL && data->fd == fd)
+			std::shared_ptr<struct online_char_data> data = util::umap_find( char_get_onlinedb(), sd->account_id );
+
+			if( data != nullptr && data->fd == fd ){
 				data->fd = -1;
-			if( data == NULL || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
+			}
+
+			// If it is not in any server, send it offline. [Skotlex]
+			if( data == nullptr || data->server == -1 ){
 				char_set_char_offline(-1,sd->account_id);
+			}
 		}
 		do_close(fd);
 		return 0;
