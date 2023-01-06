@@ -593,12 +593,13 @@ int chmapif_parse_req_skillcooldown(int fd){
  * @param nok : 0=accepted or no=1
  */
 void chmapif_changemapserv_ack(int fd, bool nok){
-    WFIFOHEAD(fd,30);
+	// TODO: Refactor... You crazy *** [Lemongrass]
+    WFIFOHEAD( fd, 28 + MAP_NAME_LENGTH_EXT );
     WFIFOW(fd,0) = 0x2b06;
-    memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 28);
+    memcpy( WFIFOP( fd, 2 ), RFIFOP( fd, 2 ), 26 + MAP_NAME_LENGTH_EXT );
     if(nok) 
 	WFIFOL(fd,6) = 0; //Set login1 to 0.(not ok)
-    WFIFOSET(fd,30);
+    WFIFOSET( fd, 28 + MAP_NAME_LENGTH_EXT );
 }
 
 /**

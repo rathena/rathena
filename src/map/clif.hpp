@@ -639,7 +639,7 @@ int clif_spawn(struct block_list *bl, bool walking = false);	//area
 void clif_walkok(map_session_data *sd);	// self
 void clif_move(struct unit_data *ud); //area
 void clif_changemap(map_session_data *sd, short m, int x, int y);	//self
-void clif_changemapserver(map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port);	//self
+void clif_changemapserver( map_session_data* sd, const char* map, int x, int y, uint32 ip, uint16 port );
 void clif_blown(struct block_list *bl); // area
 void clif_slide(struct block_list *bl, int x, int y); // area
 void clif_fixpos(struct block_list *bl);	// area
