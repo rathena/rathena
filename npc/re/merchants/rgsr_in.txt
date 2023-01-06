@@ -5,7 +5,7 @@
 //============================================================
 
 itemmall,14,50,3	script	Equipment Reform PR Agent#it01	4_F_ZONDAGIRL,{
-	mes "[Equipment Renovation PR Agent]";
+	mes "[Equipment Reform PR Agent]";
 	mes "Hello, adventurer!";
 	mes "Are you unhappy with your equipment now?";
 	mes "Don't you want to try a new modification than just any other normal method?";
@@ -13,26 +13,26 @@ itemmall,14,50,3	script	Equipment Reform PR Agent#it01	4_F_ZONDAGIRL,{
 	next;
 	switch( select( "Let's go.", "Listen to the explanation.", "Quit." ) ) {
 	case 1:
-		mes "[Equipment Renovation PR Agent]";
+		mes "[Equipment Reform PR Agent]";
 		mes "Good! Other facilities in the institute are confidential and are not accessible, so we will guide you on a special path where you outsiders can enter!";
 		close2;
 		warp "rgsr_in",125,170;
 		end;
 	case 2:
-		mes "[Equipment Renovation PR Agent]";
+		mes "[Equipment Reform PR Agent]";
 		mes "All around the world research is being conducted at the Regenschirm Institute to modify weapons, armor, accessories and other equipment items...";
 		mes "We're still collecting data and researching modifications, so we need a lot of adventurer's equipment to increase our modification research.";
 		next;
-		mes "[Equipment Renovation PR Agent]";
+		mes "[Equipment Reform PR Agent]";
 		mes "Research is ongoing, so please look forward to the addition of multiple new equipment as soon as it is completed!";
 		close;
 	case 3:
-		mes "[Equipment Renovation PR Agent]";
+		mes "[Equipment Reform PR Agent]";
 		mes "If you're interested later, come back!";
 		close;
 	}
 }
-lighthalzen,99,156,3	duplicate(Equipment Renovation PR Agent#it01)	Equipment renovation PR Agent#lh01	4_F_ZONDAGIRL
+lighthalzen,99,156,3	duplicate(Equipment Reform PR Agent#it01)	Equipment Reform PR Agent#lh01	4_F_ZONDAGIRL
 
 rgsr_in,112,167,7	script	Enchant Researcher#rg02-1	MD_ED_M_SCIENCE,{
 	mes "[Torus]";
@@ -54,7 +54,7 @@ rgsr_in,112,167,7	script	Enchant Researcher#rg02-1	MD_ED_M_SCIENCE,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Matnard" );
 	end;
 }
 
@@ -121,20 +121,20 @@ rgsr_in,115,169,5	script	Weapon Researcher#rg02	MD_ED_M_SCIENCE,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Frasa");
+	setunittitle( getnpcid(0), "Team Matnard");
 	end;
 }
 
 rgsr_in,115,180,5	script	Armor Researcher#rg02	MD_ED_M_SCIENCE,{
 	mes "[Algebra]";
-	mes "Oh, at best, we've come here because our team's research is still short on experiments.";
-	mes "Next time you get a little more improvement and get the permission, then let's proceed.";
+	mes "Ah, we've come this far, but our team's research is still lacking in experiments.";
+	mes "I'll improve it a bit next time and get the captain's permission, then let's proceed.";
 	mes "Okay?";
 	npctalk "Grimace.", "", bc_self;
 	close;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Matnard" );
 	end;
 }
 
@@ -165,7 +165,7 @@ rgsr_in,146,169,3	script	Assistant#rg05	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Licht");
+	setunittitle( getnpcid(0), "Team Licht");
 	end;
 }
 
@@ -174,7 +174,7 @@ rgsr_in,146,167,3	script	Assistant#rg06	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Licht");
+	setunittitle( getnpcid(0), "Team Licht");
 	end;
 }
 
@@ -183,7 +183,7 @@ rgsr_in,144,170,5	script	Assistant#rg07	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Licht");
+	setunittitle( getnpcid(0), "Team Licht");
 	end;
 }
 
@@ -194,7 +194,7 @@ rgsr_in,106,167,5	script	Assistant#rg11	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Matnard" );
 	end;
 }
 
@@ -205,7 +205,7 @@ rgsr_in,109,167,3	script	Assistant#rg10	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Matnard" );
 	end;
 }
 
@@ -214,7 +214,7 @@ rgsr_in,146,178,3	script	Assistant#rg20	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Matnard" );
 	end;
 }
 
@@ -225,7 +225,7 @@ rgsr_in,143,180,5	script	Assistant#rg21	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Matnard" );
 	end;
 }
 
@@ -293,11 +293,11 @@ rgsr_in,137,178,3	script	Accessories Researcher#rg02	MD_ED_M_SCIENCE,{
 	next;
 	mes "[Champ]";
 	mes "It's still incomplete.";
-	mes "Next time the colon permit falls, we will see then.";
+	mes "I'll see you next time I get permission from the captain.";
 	close;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Zertar");
+	setunittitle( getnpcid(0), "Team Zertar");
 	end;
 }
 
@@ -338,7 +338,7 @@ rgsr_in,136,171,5	script	Special Equipment Researcher#rg02	MD_ED_M_SCIENCE,{
 			mes "And for modification, the equipment must have a refine level of +9 or higher.";
 			mes "^FF0000Non-refineable equipment^000000 can also be granted with advanced modifications, but the refine level does not increase.";
 			close2;
-			item_reform("Thanos_Refine_Hammer");	// todo check
+			item_reform("C_Armor_Reform_3");
 			end;
 		case 4:
 			mes "[Stack]";
@@ -391,7 +391,7 @@ rgsr_in,136,171,5	script	Special Equipment Researcher#rg02	MD_ED_M_SCIENCE,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid (0), "Team Licht");
+	setunittitle( getnpcid(0), "Team Licht");
 	end;
 }
 
@@ -418,7 +418,7 @@ rgsr_in,128,174,5	script	Director#rg02	1_M_LIBRARYMASTER,{
 
 rgsr_in,122,160,5	script	Exit Guard#rg01	4_M_LGTGUARD,{
 	mes "[Exit guard]";
-	mes "Is your service over?";
+	mes "Are you done?";
 	mes "^FF0000Return to Lighthalzen^000000?";
 	next;
 	if (select( "Return.", "Work remaining." ) == 2) {
@@ -435,7 +435,7 @@ rgsr_in,122,160,5	script	Exit Guard#rg01	4_M_LGTGUARD,{
 
 rgsr_in,129,160,3	script	Exit Guard#rg02	4_M_LGTGUARD,{
 	mes "[Exit guard]";
-	mes "Is your service over?";
+	mes "Are you done?";
 	mes "^FF0000Return to Item Mall^000000?";
 	next;
 	if (select( "Return.", "Work remaining." ) == 2) {
