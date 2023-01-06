@@ -299,8 +299,13 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		uint16 mapindex = mapindex_name2idx(map_name.c_str(), nullptr);
 
-		if (map_mapindex2mapid(mapindex) < 0) {
+		if( mapindex == 0 ){
 			this->invalidWarning(node["Map"], "Map %s doesn't exist, skipping.\n", map_name.c_str());
+			return 0;
+		}
+
+		if( map_mapindex2mapid( mapindex ) < 0 ){
+			// Ignore silently, the map is on another mapserver
 			return 0;
 		}
 
