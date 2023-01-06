@@ -304,11 +304,6 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 		}
 
-		if( map_mapindex2mapid( mapindex ) < 0 ){
-			// Ignore silently, the map is on another mapserver
-			return 0;
-		}
-
 		gc->mapindex = mapindex;
 	}
 
@@ -399,7 +394,8 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
 
-		if( warp_x >= md->xs ){
+		// If the map is on another map-server, we cannot verify the bounds
+		if( md != nullptr && warp_x >= md->xs ){
 			this->invalidWarning( node["WarpX"], "WarpX has to be smaller than %hu.\n", md->xs );
 			return 0;
 		}
@@ -425,7 +421,8 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
 
-		if( warp_y >= md->ys ){
+		// If the map is on another map-server, we cannot verify the bounds
+		if( md != nullptr && warp_y >= md->ys ){
 			this->invalidWarning( node["WarpY"], "WarpY has to be smaller than %hu.\n", md->ys );
 			return 0;
 		}
