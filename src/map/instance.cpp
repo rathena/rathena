@@ -178,19 +178,43 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		if (this->nodeExists(enterNode, "X")) {
-			int16 x;
+			uint16 x;
 
-			if (!this->asInt16(enterNode, "X", x))
+			if (!this->asUInt16(enterNode, "X", x))
 				return 0;
+
+			if (x == 0) {
+				this->invalidWarning(node["X"], "X has to be greater than zero.\n");
+				return 0;
+			}
+
+			map_data *md = map_getmapdata(instance->enter.map);
+
+			if (x >= md->xs) {
+				this->invalidWarning(node["X"], "X has to be smaller than %hu.\n", md->xs);
+				return 0;
+			}
 
 			instance->enter.x = x;
 		}
 
 		if (this->nodeExists(enterNode, "Y")) {
-			int16 y;
+			uint16 y;
 
-			if (!this->asInt16(enterNode, "Y", y))
+			if (!this->asUInt16(enterNode, "Y", y))
 				return 0;
+
+			if (y == 0) {
+				this->invalidWarning(node["Y"], "Y has to be greater than zero.\n");
+				return 0;
+			}
+
+			map_data *md = map_getmapdata(instance->enter.map);
+
+			if (y >= md->ys) {
+				this->invalidWarning(node["Y"], "Y has to be smaller than %hu.\n", md->ys);
+				return 0;
+			}
 
 			instance->enter.y = y;
 		}

@@ -104,6 +104,9 @@ struct s_npc_barter{
 	uint8 dir;
 	int16 sprite;
 	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
+	int32 npcid;
+
+	~s_npc_barter();
 };
 
 class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{

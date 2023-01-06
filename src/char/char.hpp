@@ -4,6 +4,8 @@
 #ifndef CHAR_HPP
 #define CHAR_HPP
 
+#include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "../common/core.hpp" // CORE_ST_LAST
@@ -206,6 +208,7 @@ struct CharServ_Config {
 	int mail_return_empty;
 
 	int allowed_job_flag;
+	int clear_parties;
 };
 extern struct CharServ_Config charserv_config;
 
@@ -232,7 +235,8 @@ struct auth_node {
 	unsigned changing_mapservers : 1;
 	uint8 version;
 };
-DBMap* char_get_authdb(); // uint32 account_id -> struct auth_node*
+
+std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& char_get_authdb();
 
 struct online_char_data {
 	uint32 account_id;
@@ -241,8 +245,12 @@ struct online_char_data {
 	int waiting_disconnect;
 	short server; // -2: unknown server, -1: not connected, 0+: id of server
 	bool pincode_success;
+
+public: 
+	online_char_data( uint32 account_id );
 };
-DBMap* char_get_onlinedb(); // uint32 account_id -> struct online_char_data*
+
+std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb();
 
 struct char_session_data {
 	bool auth; // whether the session is authed or not
@@ -270,9 +278,7 @@ struct char_session_data {
 	uint8 flag; // &1 - Retrieving guild bound items
 };
 
-
-struct mmo_charstatus;
-DBMap* char_get_chardb(); // uint32 char_id -> struct mmo_charstatus*
+std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>>& char_get_chardb();
 
 //Custom limits for the fame lists. [Skotlex]
 extern int fame_list_size_chemist;
@@ -290,8 +296,7 @@ int char_search_mapserver(unsigned short map, uint32 ip, uint16 port);
 int char_lan_subnetcheck(uint32 ip);
 
 int char_count_users(void);
-DBData char_create_online_data(DBKey key, va_list args);
-int char_db_setoffline(DBKey key, DBData *data, va_list ap);
+void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int server );
 void char_set_char_online(int map_id, uint32 char_id, uint32 account_id);
 void char_set_char_offline(uint32 char_id, uint32 account_id);
 void char_set_all_offline(int id);
