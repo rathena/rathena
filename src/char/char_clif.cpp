@@ -26,12 +26,12 @@
 #include "packets.hpp"
 
 std::vector<struct point_str> accessible_maps{
-	{ MAP_PRONTERA, 273, 354 },
-	{ MAP_GEFFEN, 120, 100 },
-	{ MAP_MORROC, 160, 94 },
-	{ MAP_ALBERTA, 116, 57 },
-	{ MAP_PAYON, 87, 117 },
-	{ MAP_IZLUDE, 94, 103 }
+	point_str{ MAP_PRONTERA, 273, 354 },
+	point_str{ MAP_GEFFEN, 120, 100 },
+	point_str{ MAP_MORROC, 160, 94 },
+	point_str{ MAP_ALBERTA, 116, 57 },
+	point_str{ MAP_PAYON, 87, 117 },
+	point_str{ MAP_IZLUDE, 94, 103 }
 };
 
 #if PACKETVER_SUPPORTS_PINCODE
