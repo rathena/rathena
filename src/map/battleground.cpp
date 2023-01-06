@@ -261,6 +261,11 @@ uint64 BattlegroundDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					this->invalidWarning(location["Map"], "Invalid battleground map name %s, skipping.\n", map_name.c_str());
 					return 0;
 				}
+
+				if( map_mapindex2mapid( map_entry.mapindex ) < 0 ){
+					// Ignore silently, the map is on another mapserver
+					return 0;
+				}
 			}
 
 			if (this->nodeExists(location, "StartEvent")) {
