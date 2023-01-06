@@ -81,6 +81,12 @@ typedef uint32 t_itemid;
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
 #define MAX_ZENY INT_MAX ///Max zeny
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
+#ifndef MAX_CASHPOINT
+	#define MAX_CASHPOINT INT_MAX
+#endif
+#ifndef MAX_KAFRAPOINT
+	#define MAX_KAFRAPOINT INT_MAX
+#endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
 #define MAX_SKILL 1454 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
@@ -761,11 +767,25 @@ struct guild {
 	int32 chargeshout_flag_id;
 };
 
+enum e_woe_type{
+	WOE_FIRST_EDITION = 1,
+	WOE_SECOND_EDITION,
+	WOE_THIRD_EDITION,
+	WOE_MAX
+};
+
 struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NPC_NAME_LENGTH];
+	e_woe_type type;
+	uint16 client_id;
+	bool warp_enabled;
+	uint16 warp_x;
+	uint16 warp_y;
+	uint32 zeny;
+	uint32 zeny_siege;
 	int guild_id;
 	int economy;
 	int defense;

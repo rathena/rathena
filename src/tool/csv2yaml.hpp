@@ -530,5 +530,6 @@ static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
 static bool itemdb_read_combos(const char* file);
+static bool cashshop_parse_dbrow( char* fields[], int columns, int current );
 
 #endif /* CSV2YAML_HPP */

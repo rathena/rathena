@@ -40,6 +40,7 @@
 #include "../map/achievement.hpp"
 #include "../map/battle.hpp"
 #include "../map/battleground.hpp"
+#include "../map/cashshop.hpp"
 #include "../map/channel.hpp"
 #include "../map/chat.hpp"
 #include "../map/date.hpp"

@@ -611,6 +611,12 @@ enum e_dynamicnpc_result : int32{
 	DYNAMICNPC_RESULT_OUTOFTIME
 };
 
+enum e_siege_teleport_result : uint8 {
+	SIEGE_TP_SUCCESS = 0,
+	SIEGE_TP_NOT_ENOUGH_ZENY = 1,
+	SIEGE_TP_INVALID_MODE = 2
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -861,6 +867,9 @@ void clif_guild_broken(map_session_data *sd,int flag);
 void clif_guild_xy(map_session_data *sd);
 void clif_guild_xy_single(int fd, map_session_data *sd);
 void clif_guild_xy_remove(map_session_data *sd);
+void clif_guild_castle_list(map_session_data& sd);
+void clif_guild_castle_info(map_session_data& sd, std::shared_ptr<guild_castle> castle );
+void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result);
 
 // Battleground
 void clif_bg_hp(map_session_data *sd);
