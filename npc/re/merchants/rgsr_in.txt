@@ -4,12 +4,12 @@
 //= 1.0 First Version. [Capuche]
 //============================================================
 
-itemmall,14,50,3	script	Equipment Renovation PR Agent#it01	4_F_ZONDAGIRL,{
+itemmall,14,50,3	script	Equipment Reform PR Agent#it01	4_F_ZONDAGIRL,{
 	mes "[Equipment Renovation PR Agent]";
 	mes "Hello, adventurer!";
 	mes "Are you unhappy with your equipment now?";
 	mes "Don't you want to try a new modification than just any other normal method?";
-	mes "Join the Regenschmm Institute!";
+	mes "Join the Regenschirm Institute!";
 	next;
 	switch( select( "Let's go.", "Listen to the explanation.", "Quit." ) ) {
 	case 1:
@@ -20,7 +20,7 @@ itemmall,14,50,3	script	Equipment Renovation PR Agent#it01	4_F_ZONDAGIRL,{
 		end;
 	case 2:
 		mes "[Equipment Renovation PR Agent]";
-		mes "All around the world research is being conducted at the Regenschmm Institute to modify weapons, armor, accessories and other equipment items...";
+		mes "All around the world research is being conducted at the Regenschirm Institute to modify weapons, armor, accessories and other equipment items...";
 		mes "We're still collecting data and researching modifications, so we need a lot of adventurer's equipment to increase our modification research.";
 		next;
 		mes "[Equipment Renovation PR Agent]";
@@ -74,16 +74,16 @@ rgsr_in,115,169,5	script	Weapon Researcher#rg02	MD_ED_M_SCIENCE,{
 		case 1:
 			mes "[Frasa]";
 			mes "Thanos weapon lower modification.";
-			mes "^FF0000Smelting level is reduced by 5^000000, but consumes less materials.";
-			mes "And for mods, the weapon needs +9 or more smelting levels.";
+			mes "^FF0000Refine level is reduced by 5^000000, but consumes less materials.";
+			mes "And for mods, the weapon needs to be refine level +9 or higher.";
 			close2;
 			item_reform("Thanos_W_Reform_1");
 			end;
 		case 2:
 			mes "[Frasa]";
 			mes "Thanos Weapon intermediate modification.";
-			mes "^FF0000Smelting level is reduced by 1^000000, but consumes more material.";
-			mes "And for mods, the weapon needs +9 or more smelting levels.";
+			mes "^FF0000Refine level is reduced by 1^000000, but consumes more material.";
+			mes "And for mods, the weapon needs to be refine level +9 or higher.";
 			close2;
 			item_reform("Thanos_W_Reform_2");
 			end;
@@ -97,8 +97,8 @@ rgsr_in,115,169,5	script	Weapon Researcher#rg02	MD_ED_M_SCIENCE,{
 	case 2:
 		mes "[Frasa]";
 		mes "^0000FFOS Weapons^000000...";
-		mes "For modification, the smelting level must be +7 or more.";
-		mes "Smelting level does not decrease.";
+		mes "For modification, the refine level must be +7 or higher.";
+		mes "Refine level does not decrease.";
 		mes "Did you bring the stuff?";
 		next;
 		if (select( "Convert", "Quit" ) == 2) {
@@ -170,7 +170,7 @@ OnInit:
 }
 
 rgsr_in,146,167,3	script	Assistant#rg06	4_M_REPAIR,{
-	npctalk "Assistant: Our lead is a great guy. I'm still young...", "", bc_self;
+	npctalk "Assistant: Our leader is a great guy. I'm still young...", "", bc_self;
 	end;
 
 OnInit:
@@ -232,7 +232,7 @@ OnInit:
 rgsr_in,131,187,5	script	Ore Researcher#rg02	MD_ED_M_SCIENCE,{
 	mes "[Grid]";
 	mes "Come on.";
-	mes "It's low-budget lab, so it's always like this.";
+	mes "It's a low-budget lab, so it's always like this.";
 	mes "My assistants and I refine the gemstones used in this lab. For a fee.";
 	next;
 	switch( select( "View the exchange list", "What are you exchanging?", "Quit" ) ) {
@@ -274,7 +274,7 @@ rgsr_in,131,187,5	script	Ore Researcher#rg02	MD_ED_M_SCIENCE,{
 		next;
 		mes "[Grid]";
 		mes "Luckily, we do the research and adventurers who come to us provide materials to use our technology.";
-		mes "If you want to modify you only need to bring the materials presented.";
+		mes "If you want to modify something you only need to bring the presented materials.";
 		next;
 		mes "[Grid]";
 		mes "You're an adventurer, so you know what that means?";
@@ -288,7 +288,7 @@ rgsr_in,131,187,5	script	Ore Researcher#rg02	MD_ED_M_SCIENCE,{
 
 rgsr_in,137,178,3	script	Accessories Researcher#rg02	MD_ED_M_SCIENCE,{
 	mes "[Champ]";
-	mes "Finally, I talked an adventurer and asked him to confirm his research, is that you?";
+	mes "Finally, I talked to an adventurer and asked him to confirm my research, was that you?";
 	mes "Unfortunately, our team hasn't done enough to get out there yet.";
 	next;
 	mes "[Champ]";
@@ -311,81 +311,81 @@ rgsr_in,136,171,5	script	Special Equipment Researcher#rg02	MD_ED_M_SCIENCE,{
 	switch( select( "Non-standard armor", "Non-standard weapon", "Quit" ) ) {
 	case 1:
 		mes "[Stack]";
-		mes "^0000FFNon-standard armor^000000, there are lower, intermediate, and upper levels in the modification method.";
-		mes "Non-smelting armor is only capable of advanced modification.";
+		mes "^0000FFNon-standard armor^000000, there are Lower, Intermediate, and Upper levels of the modification method.";
+		mes "Non-refineable armor is only capable of Upper modification.";
 		next;
 		switch( select( "Lower mods", "Intermediate mods", "Upper mods", "Quit" ) ) {
 		case 1:
 			mes "[Stack]";
 			mes "Armor Lower Mods? Okay.";
-			mes "^FF0000Smelting level is reduced by 5^000000, but consumes less material.";
-			mes "And for modification, the equipment must have a smelting level of +9 or more.";
+			mes "^FF0000Refine level is reduced by 5^000000, but consumes less material.";
+			mes "And for modification, the equipment must have a refine level of +9 or higher.";
 			close2;
 			item_reform("C_Armor_Reform_1");
 			end;
 		case 2:
 			mes "[Stack]";
 			mes "Armor Intermediate Mods? Okay.";
-			mes "^FF0000Smelting level is reduced by 1^000000, but consumes more material.";
-			mes "And for modification, the equipment must have a smelting level of +9 or more.";
+			mes "^FF0000Refine level is reduced by 1^000000, but consumes more material.";
+			mes "And for modification, the equipment must have a refine level of +9 or higher.";
 			close2;
 			item_reform("C_Armor_Reform_2");
 			end;
 		case 3:
 			mes "[Stack]";
-			mes "Armor Advanced Mods? Okay.";
-			mes "^FF0000Smelting level increases by 1^000000, but consumes more material.";
-			mes "And for modification, the equipment must have a smelting level of +9 or more.";
-			mes "^FF0000Non-smelting equipment^000000 can also be granted with advanced modifications, but the smelting level does not increase.";
+			mes "Armor Upper Mods? Okay.";
+			mes "^FF0000Refine level increases by 1^000000, but consumes more material.";
+			mes "And for modification, the equipment must have a refine level of +9 or higher.";
+			mes "^FF0000Non-refineable equipment^000000 can also be granted with advanced modifications, but the refine level does not increase.";
 			close2;
 			item_reform("Thanos_Refine_Hammer");	// todo check
 			end;
 		case 4:
 			mes "[Stack]";
 			mes "Already going?";
-			mes "We need to see more of our outstanding performance!";
+			mes "You need to see more of our outstanding performance!";
 			close;
 		}
 	case 2:
 		mes "[Stack]";
-		mes "^0000FFNon-standard weapon^000000, there are lower, intermediate, and upper levels in the modification method.";
+		mes "^0000FFNon-standard weapon^000000, there are Lower, Intermediate, and Upper levels of the modification method.";
 		next;
 		switch( select( "Lower mods", "Intermediate mods", "Upper mods", "Quit" ) ) {
 		case 1:
 			mes "[Stack]";
 			mes "Weapon Lower Mods? Okay.";
-			mes "^FF0000Smelting level is reduced by 5^000000, but consumes less material.";
-			mes "And for modification, the equipment must have a smelting level of +9 or more.";
+			mes "^FF0000Refine level is reduced by 5^000000, but consumes less material.";
+			mes "And for modification, the equipment must have a refine level of +9 or higher.";
 			close2;
 			item_reform("C_Weapon_Reform_1");
 			end;
 		case 2:
 			mes "[Stack]";
 			mes "Weapon Intermediate Mods? Okay.";
-			mes "^FF0000Smelting level is reduced by 1^000000, but consumes more material.";
-			mes "And for modification, the equipment must have a smelting level of +9 or more.";
+			mes "^FF0000Refine level is reduced by 1^000000, but consumes more material.";
+			mes "And for modification, the equipment must have a refine level of +9 or higher.";
 			close2;
 			item_reform("C_Weapon_Reform_2");
 			end;
 		case 3:
 			mes "[Stack]";
 			mes "Weapon Advanced Mods? Okay.";
-			mes "^FF0000Smelting level increases by 1^000000, but consumes more material.";
-			mes "And for modification, the equipment must have a smelting level of +9 or more.";
+			mes "^FF0000Refine level increases by 1^000000, but consumes more material.";
+			mes "And for modification, the equipment must have a refine level of +9 or higher.";
 			close2;
 			item_reform("C_Weapon_Reform_3");
 			end;
 		case 4:
 			mes "[Stack]";
 			mes "Already going?";
-			mes "We need to see more of our outstanding performance!";
+			mes "You need to see more of our outstanding performance!";
 			close;
 		}
 		end;
 	case 3:
 		mes "[Stack]";
 		mes "Already going?";
-		mes "We need to see more of our outstanding performance!";
+		mes "You need to see more of our outstanding performance!";
 		close;
 	}
 	end;
@@ -398,10 +398,10 @@ OnInit:
 rgsr_in,128,174,5	script	Director#rg02	1_M_LIBRARYMASTER,{
 	mes "[Director]";
 	mes "...Come on.";
-	mes "You may have heard the explanation when you came, but to briefly introduce you to this place, there is still a long way to go. We are working on converting as many weapons, armor, accessories, etc. into something different.";
+	mes "You may have heard the explanation when you came, but to briefly introduce you to this place, there is still a long way to go. We are working on converting many weapons, armor, accessories, etc. into something different.";
 	next;
 	mes "[Director]";
-	mes "It is essential to cut the smelting of the equipment to be converted, but it is a labor for greater power.";
+	mes "It is essential to cut the refine of the equipment to be converted, but it is a labor for greater power.";
 	next;
 	mes "[Director]";
 	mes "Research is ongoing, so it is not known when and where something will suddenly be completed and offered to adventurers.";
@@ -412,7 +412,7 @@ rgsr_in,128,174,5	script	Director#rg02	1_M_LIBRARYMASTER,{
 	mes "If you're interested, check out what research was done.";
 	next;
 	mes "[Director]";
-	mes "Everyone likes quiet, so don't talk too loud.";
+	mes "Everyone likes it quiet, so don't talk too loud.";
 	close;
 }
 
