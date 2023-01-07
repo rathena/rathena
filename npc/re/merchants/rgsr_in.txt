@@ -54,7 +54,7 @@ rgsr_in,112,167,7	script	Enchant Researcher#rg02-1	MD_ED_M_SCIENCE,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Atnad" );
 	end;
 }
 
@@ -121,7 +121,7 @@ rgsr_in,115,169,5	script	Weapon Researcher#rg02	MD_ED_M_SCIENCE,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard");
+	setunittitle( getnpcid(0), "Team Atnad");
 	end;
 }
 
@@ -134,7 +134,7 @@ rgsr_in,115,180,5	script	Armor Researcher#rg02	MD_ED_M_SCIENCE,{
 	close;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Fresa" );
 	end;
 }
 
@@ -194,7 +194,7 @@ rgsr_in,106,167,5	script	Assistant#rg11	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Atnad" );
 	end;
 }
 
@@ -205,7 +205,7 @@ rgsr_in,109,167,3	script	Assistant#rg10	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Atnad" );
 	end;
 }
 
@@ -214,7 +214,7 @@ rgsr_in,146,178,3	script	Assistant#rg20	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Atnad" );
 	end;
 }
 
@@ -225,7 +225,7 @@ rgsr_in,143,180,5	script	Assistant#rg21	4_M_REPAIR,{
 	end;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Matnard" );
+	setunittitle( getnpcid(0), "Team Atnad" );
 	end;
 }
 
@@ -297,7 +297,7 @@ rgsr_in,137,178,3	script	Accessories Researcher#rg02	MD_ED_M_SCIENCE,{
 	close;
 
 OnInit:
-	setunittitle( getnpcid(0), "Team Zertar");
+	setunittitle( getnpcid(0), "Team Zerter");
 	end;
 }
 
