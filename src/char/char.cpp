@@ -98,6 +98,7 @@ void char_set_charselect(uint32 account_id) {
 
 	if( character == nullptr ){
 		character = std::make_shared<struct online_char_data>( account_id );
+		char_get_onlinedb()[account_id] = character;
 	}
 
 	if( character->server > -1 )
