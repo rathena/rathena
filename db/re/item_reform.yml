@@ -6892,3 +6892,91 @@ Body:
 #          Amount: 150
 #       ResultItem: Blessed_Knife_LT
 #       ChangeRefine: 1
+  - Item: Dimmen_A_Reform
+    BaseItems:
+      - BaseItem: Under_Seal_D_Key
+        MaximumRefine: 0
+        CardsAllowed: false
+        Materials:
+          - Material: Dimmension_Jewel
+            Amount: 1
+          - Material: Dimmension_Jewelry
+            Amount: 1
+          - Material: Herosria_Jewel
+            Amount: 1
+          - Material: Creed_Of_Herosria
+            Amount: 1
+        ResultItem: Dimmension_W_Key
+      - BaseItem: Under_Seal_D_Padlock
+        MaximumRefine: 0
+        CardsAllowed: false
+        Materials:
+          - Material: Dimmension_Jewel
+            Amount: 1
+          - Material: Dimmension_Jewelry
+            Amount: 1
+          - Material: Herosria_Jewel
+            Amount: 1
+          - Material: Justice_Of_Herosria
+            Amount: 1
+        ResultItem: Dimmension_W_Padlock
+      - BaseItem: Under_Seal_D_keyring
+        MaximumRefine: 0
+        CardsAllowed: false
+        Materials:
+          - Material: Dimmension_Jewel
+            Amount: 1
+          - Material: Dimmension_Jewelry
+            Amount: 1
+          - Material: Herosria_Jewel
+            Amount: 1
+          - Material: Glory_Of_Herosria
+            Amount: 1
+        ResultItem: Dimmension_W_Keyring
+  - Item: Dimmen_A_Refine
+    BaseItems:
+      - BaseItem: Dimmension_W_Key
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Heros_Gold_Bar
+            Amount: 50
+          - Material: Heros_Silver_Bar
+            Amount: 100
+          - Material: Heros_Copper_Bar
+            Amount: 200
+          - Material: Heros_Iron_Bar
+            Amount: 300
+        ResultItem: Dimmension_W_Key
+        ChangeRefine: 1
+      - BaseItem: Dimmension_W_Padlock
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Heros_Gold_Bar
+            Amount: 50
+          - Material: Heros_Silver_Bar
+            Amount: 100
+          - Material: Heros_Copper_Bar
+            Amount: 200
+          - Material: Heros_Iron_Bar
+            Amount: 300
+        ResultItem: Dimmension_W_Padlock
+        ChangeRefine: 1
+      - BaseItem: Dimmension_W_Keyring
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Heros_Gold_Bar
+            Amount: 50
+          - Material: Heros_Silver_Bar
+            Amount: 100
+          - Material: Heros_Copper_Bar
+            Amount: 200
+          - Material: Heros_Iron_Bar
+            Amount: 300
+        ResultItem: Dimmension_W_Keyring
+        ChangeRefine: 1

@@ -21,8 +21,6 @@ Note: The schema name is defined in `conf/inter_athena.conf::log_db_db`.
 If your server is setup to read SQL database data, import the following into the main schema:
 Note: If `conf/inter_athena.conf::use_sql_db` is set to yes continue with these imports else these can be skipped. Not all files have to be imported, only the ones that apply to the same mode as the server being ran.
 
-* item_cash_db.sql - Used for client's cash shop.
-* item_cash_db2.sql - Used for client's cash shop (import).
 * item_db.sql - Contains __pre-renewal__ item data table structure.
 * item_db_equip.sql - Contains __pre-renewal__ equipment item data.
 * item_db_etc.sql - Contains __pre-renewal__ etcetera item data.

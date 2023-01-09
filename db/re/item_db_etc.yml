@@ -50295,6 +50295,166 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
       bonus bLongAtkRate,5+4*(getrefine()/2);
+  - Id: 300441
+    AegisName: Burning_Knight_Card
+    Name: Burning Night Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      .@view = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@view == W_1HAXE || .@view == W_2HAXE) {
+         bonus bLongAtkRate,2*(.@r/3)+10;
+         if (BaseLevel>=200) {
+            bonus bLongAtkRate,3*(.@r/3);
+         }
+      }
+  - Id: 300442
+    AegisName: Dedsera_Card
+    Name: Deadsera Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF) {
+         bonus2 bMagicAtkEle,Ele_All,10+2*(.@r/3);
+      }
+      if (BaseLevel>=200) {
+         bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
+      }
+  - Id: 300443
+    AegisName: Hardrock_Titan_Card
+    Name: Hardrock Titan Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_Earth,10;
+         if (.@r>=9) {
+            bonus2 bAddEle,Ele_Earth,7;
+         }
+      }
+  - Id: 300444
+    AegisName: Deadween_Card
+    Name: Deadween Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      if (.@r>=7) {
+         bonus bAtkRate,3;
+         if (.@r>=9) {
+            bonus bAtkRate,2;
+         }
+      }
+  - Id: 300445
+    AegisName: Gaia_Pol_Card
+    Name: Gaia Pol Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Plant,40;
+      bonus2 bAddRace,RC_DemiHuman,40;
+      bonus2 bAddEle,Ele_Neutral,40;
+      bonus2 bAddEle,Ele_Earth,40;
+  - Id: 300446
+    AegisName: Punch_Bug_Card
+    Name: Punch Bug Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_KNUCKLE) {
+         bonus bShortAtkRate,10+2*(.@r/3);
+         if (BaseLevel>=200) {
+            bonus bShortAtkRate,3*(.@r/3);
+         }
+      }
+  - Id: 300447
+    AegisName: Aferde_Card
+    Name: Aferde Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,6;
+  - Id: 300448
+    AegisName: Dispol_Card
+    Name: Dispol Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,35;
+      bonus bUseSPrate,10;
+  - Id: 300449
+    AegisName: Timbers_Card
+    Name: Timbers Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,6;
+  - Id: 300450
+    AegisName: Renire_Card
+    Name: Renire Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -65649,6 +65809,62 @@ Body:
     SubType: Enchant
     Script: |
       bonus bWis,5;
+  - Id: 312004
+    AegisName: Bishop_Blessing1
+    Name: Bishop's Blessing (Attack Speed)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,3+3*getenchantgrade();
+  - Id: 312005
+    AegisName: Bishop_Blessing2
+    Name: Bishop's Blessing (Variable Casting)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-3-3*getenchantgrade();
+  - Id: 312006
+    AegisName: Bishop_Blessing3
+    Name: Bishop's Blessing (Global Cool Time)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-3-3*getenchantgrade();
+  - Id: 312007
+    AegisName: Bishop_Blessing4
+    Name: Bishop's Blessing (Perfect Hit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitRate,3+3*getenchantgrade();
+  - Id: 312008
+    AegisName: Bishop_Blessing5
+    Name: Bishop's Blessing (Cri)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,3+3*getenchantgrade();
+  - Id: 312009
+    AegisName: Warped_Spell1
+    Name: Warped Spell (Melee)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,5+5*getenchantgrade();
+  - Id: 312010
+    AegisName: Warped_Spell2
+    Name: Warped Spell (Magic)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5+5*getenchantgrade();
+  - Id: 312011
+    AegisName: Warped_Spell3
+    Name: Warped Spell (Long Ranged)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,5+5*getenchantgrade();
   - Id: 312014
     AegisName: Justice_Power
     Name: Good Spell
@@ -70253,6 +70469,57 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001198
+    AegisName: Sources_Of_Pollution
+    Name: Source of contamination    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001199
+    AegisName: Fragments_Of_Pollution
+    Name: Fragments of Corruption    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001200
+    AegisName: Crystal_Of_Pollution
+    Name: Determination of contamination    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001201
+    AegisName: Mocadas_Gold
+    Name: Priest's Relic    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001202
+    AegisName: Mocadas_Water
+    Name: Priest's Holy Water    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001203
+    AegisName: Mjo_Treasure
+    Name: Myornil's Treasure    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001204
+    AegisName: Mjo_Energy
+    Name: Myornil's Energy    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

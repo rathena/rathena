@@ -20123,6 +20123,552 @@ Body:
                 Chance: 50
               - Item: Bio_Jam_Boss
                 Chance: 50
+  - Id: 63
+    TargetItems:
+      F_Ein_1HDAGGER: true
+      F_Ein_1HMAGGER: true
+      F_Ein_1HSWORD: true
+      F_Ein_1H_Foxtail: true
+      F_Ein_1HSPEAR: true
+      F_Ein_BHSWORD: true
+      F_Ein_1HHAMMER: true
+      F_Ein_BHAXE: true
+      F_Ein_1HKNUCK: true
+      F_Ein_1HBOOK: true
+      F_Ein_1HWAND: true
+      F_Ein_BHSTAFF: true
+      F_Ein_BHHuuma: true
+      F_Ein_BHBOW: true
+      F_Ein_BHKATAR: true
+      F_Ein_1HGUN: true
+      F_Ein_1HWHIP: true
+      F_Ein_1HLUTE: true
+    Reset:
+      Chance: 100000
+      Price: 3000000
+      Materials:
+        - Material: Mjo_Treasure
+          Amount: 30
+        - Material: Mjo_Energy
+          Amount: 30
+        - Material: Ein_DYNITE
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Sharp1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+          - Item: Hit_Plus1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+          - Item: Attack_Delay_1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+          - Item: Caster1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+        Upgrades:
+          - Enchant: Sharp1
+            Upgrade: Sharp2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Hit_Plus1
+            Upgrade: Hit_Plus2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Attack_Delay_1
+            Upgrade: Attack_Delay_2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Caster1
+            Upgrade: Caster2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Sharp2
+            Upgrade: Sharp3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Hit_Plus2
+            Upgrade: Hit_Plus3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Caster2
+            Upgrade: Caster3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Sharp3
+            Upgrade: Sharp4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Hit_Plus3
+            Upgrade: Hit_Plus4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Caster3
+            Upgrade: Caster4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Sharp4
+            Upgrade: Sharp5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+          - Enchant: Hit_Plus4
+            Upgrade: Hit_Plus5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+          - Enchant: Attack_Delay_4
+            Upgrade: Attack_Delay_5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+          - Enchant: Caster4
+            Upgrade: Caster5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Expert_Archer1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 75
+              - Material: Mjo_Treasure
+                Amount: 150
+          - Item: Expert_Fighter1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 75
+              - Material: Mjo_Treasure
+                Amount: 150
+          - Item: Expert_Magician1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 75
+              - Material: Mjo_Treasure
+                Amount: 150
+        Upgrades:
+          - Enchant: Expert_Archer1
+            Upgrade: Expert_Archer2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 70
+          - Enchant: Expert_Fighter1
+            Upgrade: Expert_Fighter2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 70
+          - Enchant: Expert_Magician1
+            Upgrade: Expert_Magician2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 70
+          - Enchant: Expert_Archer2
+            Upgrade: Expert_Archer3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 140
+              - Material: Ein_DYNITE
+                Amount: 30
+              - Material: Mjo_Treasure
+                Amount: 80
+          - Enchant: Expert_Fighter2
+            Upgrade: Expert_Fighter3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 140
+              - Material: Ein_DYNITE
+                Amount: 30
+              - Material: Mjo_Treasure
+                Amount: 80
+          - Enchant: Expert_Magician2
+            Upgrade: Expert_Magician3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 140
+              - Material: Ein_DYNITE
+                Amount: 30
+              - Material: Mjo_Treasure
+                Amount: 80
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 170
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 90
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 170
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 90
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 170
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 90
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 70
+              - Material: Mjo_Treasure
+                Amount: 100
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 70
+              - Material: Mjo_Treasure
+                Amount: 100
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 70
+              - Material: Mjo_Treasure
+                Amount: 100
+  - Id: 64
+    TargetItems:
+      Mocadas_G_Sword: true
+      Mocadas_Spear: true
+      Mocadas_Stem: true
+      Mocadas_Spellbooks: true
+      Mocadas_C_Sword: true
+      Mocadas_Katar: true
+      Mocadas_Axe: true
+      Mocadas_Judgement: true
+      Mocadas_Knuckle: true
+      Mocadas_Rod: true
+      Mocadas_Bow: true
+      Mocadas_Instrument: true
+      Mocadas_Whip: true
+      Mocadas_Foxtail: true
+      Mocadas_Wand: true
+      Mocadas_Book: true
+      Mocadas_Knife: true
+      Mocadas_Hall: true
+      Mocadas_Launcher: true
+      Mocadas_Rifle: true
+      Mocadas_Shotgun: true
+      Mocadas_Gatling: true
+    Reset:
+      Chance: 100000
+      Price: 3000000
+      Materials:
+        - Material: Mocadas_Water
+          Amount: 150
+        - Material: Mocadas_Gold
+          Amount: 150
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 300000
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 50
+          - Material: Mocadas_Gold
+            Amount: 50
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 1
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 2
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 3
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 4
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+        PerfectEnchants:
+          - Item: Bishop_Blessing1
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing2
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing3
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing4
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing5
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Warped_Spell1
+            Price: 5000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 300
+              - Material: Mocadas_Gold
+                Amount: 300
+          - Item: Warped_Spell2
+            Price: 5000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 300
+              - Material: Mocadas_Gold
+                Amount: 300
+          - Item: Warped_Spell3
+            Price: 5000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 300
+              - Material: Mocadas_Gold
+                Amount: 300
   - Id: 65
     TargetItems:
       Punish_Hall: true
