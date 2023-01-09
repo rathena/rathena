@@ -6065,7 +6065,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		}
 	}
 
-	if( itemdb_group.item_exists( MF_NORETURN, nameid ) ){
+	if( itemdb_group.item_exists( IG_MF_NORETURN, nameid ) ){
 		if( mapdata->flag[MF_NORETURN] ){
 			return false;
 		}
