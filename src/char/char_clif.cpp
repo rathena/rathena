@@ -30,13 +30,13 @@
 
 using namespace rathena;
 
-std::vector<struct point_str> accessible_maps{
-	point_str{ MAP_PRONTERA, 273, 354 },
-	point_str{ MAP_GEFFEN, 120, 100 },
-	point_str{ MAP_MORROC, 160, 94 },
-	point_str{ MAP_ALBERTA, 116, 57 },
-	point_str{ MAP_PAYON, 87, 117 },
-	point_str{ MAP_IZLUDE, 94, 103 }
+std::vector<struct s_point_str> accessible_maps{
+	s_point_str{ MAP_PRONTERA, 273, 354 },
+	s_point_str{ MAP_GEFFEN, 120, 100 },
+	s_point_str{ MAP_MORROC, 160, 94 },
+	s_point_str{ MAP_ALBERTA, 116, 57 },
+	s_point_str{ MAP_PAYON, 87, 117 },
+	s_point_str{ MAP_IZLUDE, 94, 103 }
 };
 
 #if PACKETVER_SUPPORTS_PINCODE
@@ -900,7 +900,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 				return 1;
 			}
 
-			for( struct point_str& accessible_map : accessible_maps ){
+			for( struct s_point_str& accessible_map : accessible_maps ){
 				i = char_search_mapserver( accessible_map.map, -1, -1 );
 
 				// Found a map-server for a map

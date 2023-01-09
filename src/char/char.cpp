@@ -1027,7 +1027,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int i;
 	SqlStmt* stmt;
-	struct point_str tmp_point;
+	struct s_point_str tmp_point;
 	struct s_skill tmp_skill;
 	uint16 skill_count = 0;
 	struct s_friend tmp_friend;
@@ -1406,7 +1406,7 @@ int char_check_char_name(char * name, char * esc_name)
 int char_make_new_char( struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short start_job, int sex ){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
-	struct point_str tmp_start_point[MAX_STARTPOINT];
+	struct s_point_str tmp_start_point[MAX_STARTPOINT];
 	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
 	int flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
@@ -1416,9 +1416,9 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 	normalize_name(name,TRIM_CHARS);
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 
-	memset(tmp_start_point, 0, MAX_STARTPOINT * sizeof(struct point_str));
+	memset( tmp_start_point, 0, sizeof( tmp_start_point ) );
 	memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
-	memcpy(tmp_start_point, charserv_config.start_point, MAX_STARTPOINT * sizeof(struct point_str));
+	memcpy( tmp_start_point, charserv_config.start_point, sizeof( tmp_start_point ) );
 	memcpy(tmp_start_items, charserv_config.start_items, MAX_STARTITEM * sizeof(struct startitem));
 
 	flag = char_check_char_name(name,esc_name);
@@ -1504,9 +1504,9 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 
 	// Check for Doram based information.
 	if (start_job == JOB_SUMMONER) { // Check for just this job for now.
-		memset(tmp_start_point, 0, MAX_STARTPOINT * sizeof(struct point_str));
+		memset( tmp_start_point, 0, sizeof( tmp_start_point ) );
 		memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
-		memcpy(tmp_start_point, charserv_config.start_point_doram, MAX_STARTPOINT * sizeof(struct point_str));
+		memcpy( tmp_start_point, charserv_config.start_point_doram, sizeof( tmp_start_point ) );
 		memcpy(tmp_start_items, charserv_config.start_items_doram, MAX_STARTITEM * sizeof(struct startitem));
 		start_point_idx = rnd() % charserv_config.start_point_count_doram;
 	}
@@ -2814,8 +2814,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
-void char_config_split_startpoint(char *w1_value, char *w2_value, struct point_str start_point[MAX_STARTPOINT], short *count)
-{
+void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_point_str start_point[MAX_STARTPOINT], short* count ){
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
 

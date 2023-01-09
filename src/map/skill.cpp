@@ -14250,7 +14250,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 
 	case AL_WARP:
 		{
-			const struct point_str *p[4];
+			const struct s_point_str *p[4];
 			std::shared_ptr<s_skill_unit_group> group;
 			int i, lv, wx, wy;
 			int maxcount=0;
