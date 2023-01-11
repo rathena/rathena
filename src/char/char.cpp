@@ -277,8 +277,10 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->base_exp != cp->base_exp) || (p->base_level != cp->base_level) ||
 		(p->job_level != cp->job_level) || (p->job_exp != cp->job_exp) ||
 		(p->zeny != cp->zeny) ||
-		(p->last_point.map != cp->last_point.map) ||
+		( strncmp( p->last_point.map, cp->last_point.map, sizeof( p->last_point.map ) ) != 0 ) ||
 		(p->last_point.x != cp->last_point.x) || (p->last_point.y != cp->last_point.y) ||
+		( strncmp( p->save_point.map, cp->save_point.map, sizeof( p->save_point.map ) ) != 0 ) ||
+		( p->save_point.x != cp->save_point.x ) || ( p->save_point.y != cp->save_point.y ) ||
 		(p->max_hp != cp->max_hp) || (p->hp != cp->hp) ||
 		(p->max_sp != cp->max_sp) || (p->sp != cp->sp) ||
 		(p->status_point != cp->status_point) || (p->skill_point != cp->skill_point) ||
@@ -316,8 +318,8 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			p->str, p->agi, p->vit, p->int_, p->dex, p->luk,
 			p->option, p->party_id, p->guild_id, p->pet_id, p->hom_id, p->ele_id,
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
-			mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y,
-			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y, p->rename,
+			p->last_point.map, p->last_point.x, p->last_point.y,
+			p->save_point.map, p->save_point.x, p->save_point.y, p->rename,
 			(unsigned long)p->delete_date, // FIXME: platform-dependent size
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
 			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip, p->hotkey_rowshift2,
@@ -390,11 +392,10 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		StringBuf_Printf(&buf, "INSERT INTO `%s`(`char_id`,`map`,`x`,`y`) VALUES ", schema_config.memo_db);
 		for( i = 0, count = 0; i < MAX_MEMOPOINTS; ++i )
 		{
-			if( p->memo_point[i].map )
-			{
+			if( strcmp( "", p->memo_point[i].map ) != 0 ){
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
-				Sql_EscapeString(sql_handle, esc_mapname, mapindex_id2name(p->memo_point[i].map));
+				Sql_EscapeString( sql_handle, esc_mapname, p->memo_point[i].map );
 				StringBuf_Printf(&buf, "('%d', '%s', '%d', '%d')", char_id, esc_mapname, p->memo_point[i].x, p->memo_point[i].y);
 				++count;
 			}
@@ -910,7 +911,6 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 	SqlStmt* stmt;
 	struct mmo_charstatus p;
 	int j = 0, i;
-	char last_map[MAP_NAME_LENGTH_EXT];
 	char sex[2];
 
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -970,7 +970,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p.head_top, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p.head_mid, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,  &p.head_bottom, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_STRING, &p.last_point.map, sizeof(p.last_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_SHORT,	&p.rename, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_UINT32, &p.delete_date, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p.robe, 0, NULL, NULL)
@@ -1004,7 +1004,6 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 
 	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ )
 	{
-		p.last_point.map = mapindex_name2id(last_map);
 		sd->found_char[p.slot] = p.char_id;
 		sd->unban_time[p.slot] = p.unban_time;
 		p.sex = char_mmo_gender(sd, &p, sex[0]);
@@ -1029,10 +1028,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int i;
 	SqlStmt* stmt;
-	char last_map[MAP_NAME_LENGTH_EXT];
-	char save_map[MAP_NAME_LENGTH_EXT];
-	char point_map[MAP_NAME_LENGTH_EXT];
-	struct point tmp_point;
+	struct s_point_str tmp_point;
 	struct s_skill tmp_skill;
 	uint16 skill_count = 0;
 	struct s_friend tmp_friend;
@@ -1106,10 +1102,10 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p->head_top, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 37, SQLDT_SHORT,  &p->head_mid, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 38, SQLDT_SHORT,  &p->head_bottom, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_STRING, &p->last_point.map, sizeof(p->last_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_SHORT,  &p->last_point.x, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_SHORT,  &p->last_point.y, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_STRING, &save_map, sizeof(save_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_STRING, &p->save_point.map, sizeof(p->save_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_SHORT,  &p->save_point.x, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_SHORT,  &p->save_point.y, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_UINT32,    &p->partner_id, 0, NULL, NULL)
@@ -1155,20 +1151,6 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		return 0;
 	}
 	p->sex = char_mmo_gender(NULL, p, sex[0]);
-	p->last_point.map = mapindex_name2id(last_map);
-	p->save_point.map = mapindex_name2id(save_map);
-
-	if( p->last_point.map == 0 ) {
-		p->last_point.map = mapindex_name2id(charserv_config.default_map);
-		p->last_point.x = charserv_config.default_map_x;
-		p->last_point.y = charserv_config.default_map_y;
-	}
-
-	if( p->save_point.map == 0 ) {
-		p->save_point.map = mapindex_name2id(charserv_config.default_map);
-		p->save_point.x = charserv_config.default_map_x;
-		p->save_point.y = charserv_config.default_map_y;
-	}
 
 	StringBuf_Init(&msg_buf);
 	StringBuf_AppendStr(&msg_buf, " status");
@@ -1185,14 +1167,13 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`=? ORDER by `memo_id` LIMIT %d", schema_config.memo_db, MAX_MEMOPOINTS)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &point_map, sizeof(point_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_point.map, sizeof(tmp_point.map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,  &tmp_point.x, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  &tmp_point.y, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
 	for( i = 0; i < MAX_MEMOPOINTS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
-		tmp_point.map = mapindex_name2id(point_map);
 		memcpy(&p->memo_point[i], &tmp_point, sizeof(tmp_point));
 	}
 	StringBuf_AppendStr(&msg_buf, " memo");
@@ -1426,7 +1407,7 @@ int char_check_char_name(char * name, char * esc_name)
 int char_make_new_char( struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short start_job, int sex ){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
-	struct point tmp_start_point[MAX_STARTPOINT];
+	struct s_point_str tmp_start_point[MAX_STARTPOINT];
 	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
 	int flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
@@ -1436,9 +1417,9 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 	normalize_name(name,TRIM_CHARS);
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 
-	memset(tmp_start_point, 0, MAX_STARTPOINT * sizeof(struct point));
+	memset( tmp_start_point, 0, sizeof( tmp_start_point ) );
 	memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
-	memcpy(tmp_start_point, charserv_config.start_point, MAX_STARTPOINT * sizeof(struct point));
+	memcpy( tmp_start_point, charserv_config.start_point, sizeof( tmp_start_point ) );
 	memcpy(tmp_start_items, charserv_config.start_items, MAX_STARTITEM * sizeof(struct startitem));
 
 	flag = char_check_char_name(name,esc_name);
@@ -1524,9 +1505,9 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 
 	// Check for Doram based information.
 	if (start_job == JOB_SUMMONER) { // Check for just this job for now.
-		memset(tmp_start_point, 0, MAX_STARTPOINT * sizeof(struct point));
+		memset( tmp_start_point, 0, sizeof( tmp_start_point ) );
 		memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
-		memcpy(tmp_start_point, charserv_config.start_point_doram, MAX_STARTPOINT * sizeof(struct point));
+		memcpy( tmp_start_point, charserv_config.start_point_doram, sizeof( tmp_start_point ) );
 		memcpy(tmp_start_items, charserv_config.start_items_doram, MAX_STARTITEM * sizeof(struct startitem));
 		start_point_idx = rnd() % charserv_config.start_point_count_doram;
 	}
@@ -1538,7 +1519,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
 		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, status_points, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex) )
+		tmp_start_point[start_point_idx].map, tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, tmp_start_point[start_point_idx].map, tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex ) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
@@ -1863,7 +1844,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	info->hairColor = (uint8)u16min( p->hair_color, UINT8_MAX );
 	info->bIsChangedCharName = ( p->rename > 0 ) ? 0 : 1;
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext( mapindex_id2name( p->last_point.map ), info->mapName );
+	mapindex_getmapname_ext( p->last_point.map, info->mapName );
 #endif
 #if PACKETVER >= 20100803
 #if PACKETVER_CHAR_DELETEDATE
@@ -2114,16 +2095,18 @@ int char_loadName(uint32 char_id, char* name){
 
 // Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
 // If found, returns the server's index in the 'server' array (otherwise returns -1).
-int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
+int char_search_mapserver( const std::string& map, uint32 ip, uint16 port ){
 	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
 		if (session_isValid(map_server[i].fd)
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
-			for (int j = 0; map_server[i].map[j]; j++)
-				if (map_server[i].map[j] == map)
+			for( std::string& m : map_server[i].maps ){
+				if( m == map ){
 					return i;
+				}
+			}
 		}
 	}
 
@@ -2774,13 +2757,13 @@ void char_set_defaults(){
 	charserv_config.char_check_db =1;
 
 	// See const.hpp to change the default values
-	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
+	safestrncpy( charserv_config.start_point[0].map, MAP_DEFAULT_NAME, sizeof( charserv_config.start_point[0].map ) ); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
 	charserv_config.start_point_count = 1;
 
 #if PACKETVER >= 20151001
-	charserv_config.start_point_doram[0].map = mapindex_name2id(MAP_DEFAULT_NAME);
+	safestrncpy( charserv_config.start_point_doram[0].map, MAP_DEFAULT_NAME, sizeof( charserv_config.start_point_doram[0].map ) );
 	charserv_config.start_point_doram[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point_doram[0].y = MAP_DEFAULT_Y;
 	charserv_config.start_point_count_doram = 1;
@@ -2811,10 +2794,6 @@ void char_set_defaults(){
 	charserv_config.start_zeny = 0;
 	charserv_config.guild_exp_rate = 100;
 
-	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
-	charserv_config.default_map_x = 156;
-	charserv_config.default_map_y = 191;
-
 	charserv_config.clan_remove_inactive_days = 14;
 	charserv_config.mail_return_days = 14;
 	charserv_config.mail_delete_days = 14;
@@ -2836,8 +2815,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
-void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
-{
+void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_point_str start_point[MAX_STARTPOINT], short* count ){
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
 
@@ -2857,16 +2835,9 @@ void char_config_split_startpoint(char *w1_value, char *w2_value, struct point s
 			continue;
 		}
 
-		start_point[i].map = mapindex_name2id(fields[1]);
-		if (!start_point[i].map) {
-			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", fields[1]);
-			start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
-			start_point[i].x = MAP_DEFAULT_X;
-			start_point[i].y = MAP_DEFAULT_Y;
-		} else {
-			start_point[i].x = max(0, atoi(fields[2]));
-			start_point[i].y = max(0, atoi(fields[3]));
-		}
+		safestrncpy( start_point[i].map, fields[1], sizeof( start_point[i].map ) );
+		start_point[i].x = max( 0, atoi( fields[2] ) );
+		start_point[i].y = max( 0, atoi( fields[3] ) );
 		(*count)++;
 
 		lineitem = strtok(NULL, ":"); //next lineitem
@@ -3098,12 +3069,6 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.charmove_config.char_moves_unlimited = config_switch(w2);
 		} else if (strcmpi(w1, "char_checkdb") == 0) {
 			charserv_config.char_check_db = config_switch(w2);
-		} else if (strcmpi(w1, "default_map") == 0) {
-			safestrncpy(charserv_config.default_map, w2, MAP_NAME_LENGTH);
-		} else if (strcmpi(w1, "default_map_x") == 0) {
-			charserv_config.default_map_x = atoi(w2);
-		} else if (strcmpi(w1, "default_map_y") == 0) {
-			charserv_config.default_map_y = atoi(w2);
 		} else if (strcmpi(w1, "clan_remove_inactive_days") == 0) {
 			charserv_config.clan_remove_inactive_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_return_days") == 0) {
@@ -3176,7 +3141,6 @@ void CharacterServer::finalize(){
 	}
 
 	Sql_Free(sql_handle);
-	mapindex_final();
 
 	ShowStatus("Finished.\n");
 }
@@ -3191,9 +3155,6 @@ void CharacterServer::handle_shutdown(){
 }
 
 bool CharacterServer::initialize( int argc, char *argv[] ){
-	//Read map indexes
-	mapindex_init();
-
 	// Init default value
 	CHAR_CONF_NAME =   "conf/char_athena.conf";
 	LAN_CONF_NAME =    "conf/subnet_athena.conf";
@@ -3295,8 +3256,6 @@ bool CharacterServer::initialize( int argc, char *argv[] ){
 	}
 
 	do_init_chcnslif();
-	mapindex_check_mapdefault(charserv_config.default_map);
-	ShowInfo("Default map: '" CL_WHITE "%s %d,%d" CL_RESET "'\n", charserv_config.default_map, charserv_config.default_map_x, charserv_config.default_map_y);
 
 	ShowStatus("The char-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %d).\n\n", charserv_config.char_port);
 

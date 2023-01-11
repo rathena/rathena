@@ -639,7 +639,7 @@ int clif_spawn(struct block_list *bl, bool walking = false);	//area
 void clif_walkok(map_session_data *sd);	// self
 void clif_move(struct unit_data *ud); //area
 void clif_changemap(map_session_data *sd, short m, int x, int y);	//self
-void clif_changemapserver(map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port);	//self
+void clif_changemapserver( map_session_data* sd, const char* map, int x, int y, uint32 ip, uint16 port );
 void clif_blown(struct block_list *bl); // area
 void clif_slide(struct block_list *bl, int x, int y); // area
 void clif_fixpos(struct block_list *bl);	// area
@@ -746,7 +746,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,
 bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
-void clif_skill_warppoint(map_session_data* sd, uint16 skill_id, uint16 skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4);
+void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
 void clif_skill_memomessage(map_session_data* sd, int type);
 void clif_skill_teleportmessage(map_session_data *sd, int type);
 void clif_skill_produce_mix_list(map_session_data *sd, int skill_id, int trigger);

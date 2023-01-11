@@ -299,7 +299,7 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		uint16 mapindex = mapindex_name2idx(map_name.c_str(), nullptr);
 
-		if (map_mapindex2mapid(mapindex) < 0) {
+		if( mapindex == 0 ){
 			this->invalidWarning(node["Map"], "Map %s doesn't exist, skipping.\n", map_name.c_str());
 			return 0;
 		}
@@ -394,7 +394,8 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
 
-		if( warp_x >= md->xs ){
+		// If the map is on another map-server, we cannot verify the bounds
+		if( md != nullptr && warp_x >= md->xs ){
 			this->invalidWarning( node["WarpX"], "WarpX has to be smaller than %hu.\n", md->xs );
 			return 0;
 		}
@@ -420,7 +421,8 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
 
-		if( warp_y >= md->ys ){
+		// If the map is on another map-server, we cannot verify the bounds
+		if( md != nullptr && warp_y >= md->ys ){
 			this->invalidWarning( node["WarpY"], "WarpY has to be smaller than %hu.\n", md->ys );
 			return 0;
 		}
@@ -1218,11 +1220,9 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		if (g->instance_id) {
 			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if (mapdata->instance_id) { // User was on the instance map
-				if (mapdata->save.map)
-					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
-				else
-					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			// User was on the instance map of the guild
+			if( g->instance_id == mapdata->instance_id ){
+				pc_setpos_savepoint( *sd );
 			}
 		}
 

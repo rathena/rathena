@@ -167,14 +167,21 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			if (!this->asString(enterNode, "Map", map))
 				return 0;
 
-			int16 m = map_mapname2mapid(map.c_str());
+			uint16 mapindex = mapindex_name2idx( map.c_str(), nullptr );
 
-			if (m == -1) {
+			if( mapindex == 0 ){
 				this->invalidWarning(enterNode["Map"], "Map %s is not a valid map, skipping.\n", map.c_str());
 				return 0;
 			}
 
-			instance->enter.map = m;
+			int16 mapid = map_mapindex2mapid( mapindex );
+
+			if( mapid < 0 ){
+				// Ignore silently, the map is on another mapserver
+				return 0;
+			}
+
+			instance->enter.map = mapid;
 		}
 
 		if (this->nodeExists(enterNode, "X")) {
