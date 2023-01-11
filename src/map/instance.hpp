@@ -81,6 +81,8 @@ struct s_instance_data {
 		keep_timer(INVALID_TIMER),
 		idle_limit(0),
 		idle_timer(INVALID_TIMER),
+		nonpc(false),
+		nomapflag(false),
 		regs(),
 		map() { }
 };
