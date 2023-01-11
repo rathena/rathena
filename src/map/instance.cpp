@@ -87,18 +87,6 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		instance->name = name;
 	}
 
-	if (this->nodeExists(node, "InfiniteLimit")) {
-		bool value;
-
-		if (!this->asBool(node, "InfiniteLimit", value))
-			return 0;
-
-		instance->infinite_limit = value;
-	} else {
-		if (!exists)
-			instance->infinite_limit = false;
-	}
-
 	if (this->nodeExists(node, "TimeLimit")) {
 		int64 limit;
 
@@ -106,9 +94,14 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		instance->limit = limit;
+
+		// Infinite duration
+		instance->infinite_limit = (limit == 0);
 	} else {
-		if (!exists)
+		if (!exists) {
 			instance->limit = 3600;
+			instance->infinite_limit = false;
+		}
 	}
 
 	if (this->nodeExists(node, "IdleTimeOut")) {
@@ -118,9 +111,14 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		instance->timeout = idle;
+
+		// Infinite duration
+		instance->infinite_timeout = (idle == 0);
 	} else {
-		if (!exists)
+		if (!exists) {
 			instance->timeout = 300;
+			instance->infinite_timeout = false;
+		}
 	}
 
 	if (this->nodeExists(node, "NoNpc")) {
@@ -264,25 +262,6 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 InstanceDatabase instance_db;
-
-void InstanceDatabase::loadingFinished() {
-	for (auto &it : instance_db) {
-		std::shared_ptr<s_instance_db> instance = it.second;
-
-		// Instances that aren't marked as infinite durations need timers!
-		if (!instance->infinite_limit) {
-			if (instance->limit == 0) {
-				ShowWarning("Instance %s needs a TimeLimit, defaulting to 3600 seconds.", instance->name.c_str());
-				instance->limit = 3600;
-			}
-
-			if (instance->timeout == 0) {
-				ShowWarning("Instance %s needs an IdleTimeOut, defaulting to 300 seconds.", instance->name.c_str());
-				instance->timeout = 300;
-			}
-		}
-	}
-}
 
 /**
  * Searches for an instance name in the database
