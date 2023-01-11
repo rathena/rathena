@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable return warp.
+//===== Description: ========================================= 
+//= Disables the following items:
+//=   Butterfly Wing (602), Siege Teleport Scroll (14591),
+//=   Yellow/Green/Red/Blue Butterfly Wings (14582-14585),
+//=   Dungeon Teleport Scrolls (14527/14581)
+//= Also restricts "warpparty" and "warpguild" script commands.
+//===== Additional Comments: ================================= 
+//= 1.0 Added noreturn mapflag for renewal. [Mazvi]
+//============================================================
+
+//============================================================
+// Poring Village
+//============================================================
+1@begi	mapflag	noreturn
