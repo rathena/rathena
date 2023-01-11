@@ -87,14 +87,23 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		instance->name = name;
 	}
 
+	if (this->nodeExists(node, "InfiniteLimit")) {
+		bool value;
+
+		if (!this->asBool(node, "InfiniteLimit", value))
+			return 0;
+
+		instance->infinite_limit = value;
+	} else {
+		if (!exists)
+			instance->infinite_limit = false;
+	}
+
 	if (this->nodeExists(node, "TimeLimit")) {
 		int64 limit;
 
 		if (!this->asInt64(node, "TimeLimit", limit))
 			return 0;
-
-		if (limit == 0) // Infinite duration
-			limit = INT64_MAX;
 
 		instance->limit = limit;
 	} else {
@@ -107,9 +116,6 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		if (!this->asInt64(node, "IdleTimeOut", idle))
 			return 0;
-
-		if (idle == 0) // Infinite duration
-			idle = INT64_MAX;
 
 		instance->timeout = idle;
 	} else {
@@ -259,6 +265,25 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 InstanceDatabase instance_db;
 
+void InstanceDatabase::loadingFinished() {
+	for (auto &it : instance_db) {
+		std::shared_ptr<s_instance_db> instance = it.second;
+
+		// Instances that aren't marked as infinite durations need timers!
+		if (!instance->infinite_limit) {
+			if (instance->limit == 0) {
+				ShowWarning("Instance %s needs a TimeLimit, defaulting to 3600 seconds.", instance->name.c_str());
+				instance->limit = 3600;
+			}
+
+			if (instance->timeout == 0) {
+				ShowWarning("Instance %s needs an IdleTimeOut, defaulting to 300 seconds.", instance->name.c_str());
+				instance->timeout = 300;
+			}
+		}
+	}
+}
+
 /**
  * Searches for an instance name in the database
  * @param instance_name: Instance to search for
@@ -397,6 +422,10 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 	if (!db)
 		return false;
 
+	// Infinite duration instance
+	if (db->infinite_limit)
+		return true;
+
 	// Add timer
 	idata->keep_limit = time(nullptr) + db->limit;
 	idata->keep_timer = add_timer(gettick() + db->limit * 1000, instance_delete_timer, instance_id, 0);
@@ -443,6 +472,10 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 
 	if (!db)
 		return false;
+
+	// Infinite idle duration instance
+	if (db->infinite_limit)
+		return true;
 
 	// Add the timer
 	idata->idle_limit = time(nullptr) + db->timeout;
@@ -1287,6 +1320,7 @@ void do_init_instance(void) {
  * Finalizes the instances and instance database
  */
 void do_final_instance(void) {
-	for (const auto &it : instances)
-		instance_destroy(it.first);
+	// Since instance_destroy() modifies the unordered_map, make sure iteration always restarts.
+	for (auto it = instances.begin(); it != instances.end(); it = instances.begin())
+		instance_destroy(it->first);
 }

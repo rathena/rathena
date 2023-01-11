@@ -94,6 +94,7 @@ struct s_instance_db {
 	bool nonpc;
 	bool nomapflag;
 	bool destroyable; ///< Destroyable flag
+	bool infinite_limit; ///< Infinite limit/timeout flag
 	struct point enter; ///< Instance entry point
 	std::vector<int16> maplist; ///< Maps in instance
 };
@@ -106,6 +107,7 @@ public:
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
 };
 
 extern InstanceDatabase instance_db;
