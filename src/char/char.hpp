@@ -186,7 +186,7 @@ struct CharServ_Config {
 	int log_inter;	// loggin inter or not [devil]
 	int char_check_db;	///cheking sql-table at begining ?
 
-	struct point start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
+	struct s_point_str start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
 	short start_point_count, start_point_count_doram; // Number of positions read
 	struct startitem start_items[MAX_STARTITEM], start_items_doram[MAX_STARTITEM]; // Initial items the player with spawn with on the server
 	uint32 start_status_points;
@@ -196,10 +196,6 @@ struct CharServ_Config {
 	int autosave_interval;
 	int start_zeny;
 	int guild_exp_rate;
-
-	char default_map[MAP_NAME_LENGTH];
-	unsigned short default_map_x;
-	unsigned short default_map_y;
 
 	int clan_remove_inactive_days;
 	int mail_return_days;
@@ -218,7 +214,7 @@ struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
 	int users;
-	std::vector<uint16> map;
+	std::vector<std::string> maps;
 };
 extern struct mmo_map_server map_server[MAX_MAP_SERVERS];
 
@@ -292,7 +288,7 @@ extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 #define MAX_CHAR_BUF sizeof( struct CHARACTER_INFO ) //Max size (for WFIFOHEAD calls)
 
-int char_search_mapserver(unsigned short map, uint32 ip, uint16 port);
+int char_search_mapserver( const std::string& map, uint32 ip, uint16 port );
 int char_lan_subnetcheck(uint32 ip);
 
 int char_count_users(void);

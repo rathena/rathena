@@ -1051,13 +1051,6 @@ extern char channel_conf[];
 
 extern char wisp_server_name[];
 
-struct s_map_default {
-	char mapname[MAP_NAME_LENGTH];
-	unsigned short x;
-	unsigned short y;
-};
-extern struct s_map_default map_default;
-
 /// Type of 'save_settings'
 enum save_settings_type {
 	CHARSAVE_NONE		= 0x000, /// Never
