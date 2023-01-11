@@ -453,7 +453,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Infinite idle duration instance
-	if (db->infinite_limit)
+	if (db->infinite_timeout)
 		return true;
 
 	// Add the timer
