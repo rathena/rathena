@@ -30,6 +30,10 @@
 
 using namespace rathena;
 
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+static int8 packet_buffer[UINT16_MAX];
+
 std::vector<struct s_point_str> accessible_maps{
 	s_point_str{ MAP_PRONTERA, 273, 354 },
 	s_point_str{ MAP_GEFFEN, 120, 100 },
@@ -816,6 +820,165 @@ void chclif_send_map_data( int fd, std::shared_ptr<struct mmo_charstatus> cd, ui
 	WFIFOSET(fd,size);
 }
 
+int chclif_parse_select_accessible_map( int fd, struct char_session_data* sd, uint32 ipl ){
+#if PACKETVER >= 20100714
+	struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME p;
+
+	FIFOSD_CHECK( sizeof( p ) );
+
+	memcpy( &p, RFIFOP( fd, 0 ), sizeof( p ) );
+
+	RFIFOSKIP( fd, sizeof( p ) );
+
+	char* data;
+
+	// Check if the character exists and is not scheduled for deletion
+	if( SQL_SUCCESS != Sql_Query( sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, p.slot )
+		|| SQL_SUCCESS != Sql_NextRow( sql_handle )
+		|| SQL_SUCCESS != Sql_GetData( sql_handle, 0, &data, nullptr ) ){
+		// Not found?? May be forged packet.
+		Sql_ShowDebug( sql_handle );
+		Sql_FreeResult( sql_handle );
+		chclif_reject( fd, 0 ); // rejected from server
+		return 1;
+	}
+
+	uint32 char_id = atoi( data );
+	Sql_FreeResult( sql_handle );
+
+	// Prevent select a char while retrieving guild bound items
+	if( sd->flag&1 ){
+		chclif_reject( fd, 0 ); // rejected from server
+		return 1;
+	}
+
+	/* client doesn't let it get to this point if you're banned, so its a forged packet */
+	if( sd->found_char[p.slot] == char_id && sd->unban_time[p.slot] > time(NULL) ) {
+		chclif_reject( fd, 0 ); // rejected from server
+		return 1;
+	}
+
+	/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
+	char_set_char_online( -2, char_id, sd->account_id );
+
+	struct mmo_charstatus char_dat;
+
+	if( !char_mmo_char_fromsql( char_id, &char_dat, true ) ) {
+		/* failed? set it back offline */
+		char_set_char_offline( char_id, sd->account_id );
+		/* failed to load something. REJECT! */
+		chclif_reject( fd, 0 ); /* jump off this boat */
+		return 1;
+	}
+
+	// Have to switch over to the DB instance otherwise data won't propagate [Kevin]
+	std::shared_ptr<struct mmo_charstatus> cd = util::umap_find( char_get_chardb(), char_id );
+
+	if( charserv_config.log_char ){
+		char esc_name[NAME_LENGTH*2+1];
+
+		Sql_EscapeStringLen( sql_handle, esc_name, char_dat.name, strnlen( char_dat.name, NAME_LENGTH ) );
+
+		if( SQL_ERROR == Sql_Query( sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')", schema_config.charlog_db, sd->account_id, p.slot, esc_name ) ){
+			Sql_ShowDebug( sql_handle );
+		}
+	}
+
+	ShowInfo( "Selected char: (Account %d: %d - %s)\n", sd->account_id, p.slot, char_dat.name );
+
+	// Check if there is really no mapserver for the last point where the player was
+	int32 mapserver = char_search_mapserver( cd->last_point.map, -1, -1 );
+
+	// It was not an unavailable map
+	if( mapserver >= 0 ){
+		chclif_reject( fd, 0 ); // rejected from server
+		return 1;
+	}
+
+	if( static_cast<size_t>( p.mapnumber ) >= accessible_maps.size() ){
+		chclif_reject( fd, 0 ); // rejected from server
+		return 1;
+	}
+
+	s_point_str& accessible_map = accessible_maps[p.mapnumber];
+
+	safestrncpy( cd->last_point.map, accessible_map.map, sizeof( cd->last_point.map ) );
+	cd->last_point.x = accessible_map.x;
+	cd->last_point.y = accessible_map.y;
+
+	mapserver = char_search_mapserver( cd->last_point.map, -1, -1 );
+
+	// No mapserver found for our accessible map
+	if( mapserver < 0 ){
+		chclif_reject( fd, 0 ); // rejected from server
+		return 1;
+	}
+
+	int map_fd;
+
+	// Send NEW auth packet [Kevin]
+	// FIXME: is this case even possible? [ultramage]
+	if( ( map_fd = map_server[mapserver].fd ) < 1 || session[map_fd] == nullptr ){
+		ShowError( "parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, mapserver );
+		map_server[mapserver].fd = -1;
+		memset( &map_server[mapserver], 0, sizeof( struct mmo_map_server ) );
+		chclif_send_auth_result( fd, 1 ); // Send server closed.
+		return 1;
+	}
+
+	chclif_send_map_data( fd, cd, ipl, mapserver );
+
+	// create temporary auth entry
+	std::shared_ptr<struct auth_node> node = std::make_shared<struct auth_node>();
+
+	node->account_id = sd->account_id;
+	node->char_id = cd->char_id;
+	node->login_id1 = sd->login_id1;
+	node->login_id2 = sd->login_id2;
+	node->sex = sd->sex;
+	node->expiration_time = sd->expiration_time;
+	node->group_id = sd->group_id;
+	node->ip = ipl;
+
+	char_get_authdb()[node->account_id] = node;
+
+	return 1;
+#else
+	return 0;
+#endif
+}
+
+void chclif_accessible_maps( int fd ){
+#if PACKETVER >= 20100714
+	struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = (struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*)packet_buffer;
+
+	p->packetType = HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME;
+	p->packetLength = sizeof( *p );
+
+	int count = 0;
+	for( s_point_str& accessible_map : accessible_maps ){
+		int32 mapserver = char_search_mapserver( accessible_map.map, -1, -1 );
+
+		if( mapserver < 0 ){
+			p->maps[count].status = 1;
+		}else{
+			p->maps[count].status = 0;
+		}
+		
+		mapindex_getmapname_ext( accessible_map.map, p->maps[count].map );
+
+		p->packetLength += sizeof( p->maps[0] );
+		count++;
+	}
+
+	WFIFOHEAD( fd, p->packetLength );
+	memcpy( WFIFOP( fd, 0 ), p, p->packetLength );
+	WFIFOSET( fd, p->packetLength );
+#else
+	chclif_send_auth_result( fd, 1 ); // 01 = Server closed
+#endif
+}
+
 int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	FIFOSD_CHECK(3)
 	{
@@ -830,11 +993,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, session_isValid(map_server[server_id].fd) && !map_server[server_id].maps.empty() );
 		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
 		if (server_id == ARRAYLENGTH(map_server)) {
-			WFIFOHEAD(fd, 24);
-			WFIFOW(fd, 0) = 0x840;
-			WFIFOW(fd, 2) = 24;
-			strncpy(WFIFOCP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
-			WFIFOSET(fd, 24);
+			chclif_accessible_maps( fd );
 			return 1;
 		}
 
@@ -891,6 +1050,13 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		// if map is not found, we check major cities
 		if( i < 0 ){
+#if PACKETVER >= 20100714
+			// Let the user select a map
+			chclif_accessible_maps( fd );
+
+			return 0;
+#else
+			// Try to select a map for the user
 			unsigned short j;
 			//First check that there's actually a map server online.
 			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].maps.empty() );
@@ -916,6 +1082,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 				chclif_send_auth_result(fd,1); // 01 = Server closed
 				return 1;
 			}
+#endif
 		}
 
 		//Send NEW auth packet [Kevin]
@@ -1424,6 +1591,9 @@ int chclif_parse(int fd) {
 			// character movement request
 			case 0x8d4: next=chclif_parse_moveCharSlot(fd,sd); break;
 			case 0x9a1: next=chclif_parse_req_charlist(fd,sd); break;
+			case HEADER_CH_SELECT_ACCESSIBLE_MAPNAME:
+				next = chclif_parse_select_accessible_map( fd, sd, ipl );
+				break;
 			// unknown packet received
 			default:
 				ShowError("parse_char: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
