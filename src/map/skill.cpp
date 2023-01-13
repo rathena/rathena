@@ -6139,10 +6139,35 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case SS_SHIMIRU: {
 		struct unit_data *ud = unit_bl2ud(src);
+		int dx,dy;
 
-		unit_setdir(src, map_calc_dir(bl, src->x, src->y));
-		skill_blown(src, src, distance_bl(src, bl) + 1, unit_getdir(src), BLOWN_NONE);
-		clif_blown(src);
+		if (!check_distance_bl(src, bl, 0)) {
+			uint8 dir = map_calc_dir(src, bl->x, bl->y);
+			short x, y;
+
+			if (dir > 0 && dir < 4)
+				x = -1;
+			else if (dir > 4)
+				x = 1;
+			else
+				x = 0;
+
+			if (dir > 2 && dir < 6)
+				y = -1;
+			else if (dir == 7 || dir < 2)
+				y = 1;
+			else
+				y = 0;
+
+			if (battle_check_target(src, bl, BCT_ENEMY) > 0 && unit_movepos(src, bl->x + x, bl->y + y, 2, true)) {// Display movement + animation.
+				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
+				unit_setdir(bl,dir);
+				clif_blown(src);
+			} else if (sd) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_TARGET_SHADOW_SPACE, 0);
+				break;
+			}
+		}
 
 		if (ud == nullptr)
 			break;
