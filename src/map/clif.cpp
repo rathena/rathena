@@ -2115,7 +2115,7 @@ void clif_changemap(map_session_data *sd, short m, int x, int y)
 /// Notifies the client of a position change to coordinates on given map, which is on another map-server.
 /// 0092 <map name>.16B <x>.W <y>.W <ip>.L <port>.W (ZC_NPCACK_SERVERMOVE)
 /// 0ac7 <map name>.16B <x>.W <y>.W <ip>.L <port>.W <unknown>.128B (ZC_NPCACK_SERVERMOVE2)
-void clif_changemapserver(map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port)
+void clif_changemapserver(map_session_data* sd, const char* map, int x, int y, uint32 ip, uint16 port)
 {
 	int fd;
 #if PACKETVER >= 20170315
@@ -2128,7 +2128,7 @@ void clif_changemapserver(map_session_data* sd, unsigned short map_index, int x,
 
 	WFIFOHEAD(fd,packet_len(cmd));
 	WFIFOW(fd,0) = cmd;
-	mapindex_getmapname_ext(mapindex_id2name(map_index), WFIFOCP(fd,2));
+	mapindex_getmapname_ext( map, WFIFOCP( fd, 2 ) );
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOL(fd,22) = htonl(ip);
@@ -6245,8 +6245,7 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 
 /// Presents a list of available warp destinations (ZC_WARPLIST).
 /// 011c <skill id>.W { <map name>.16B }*4
-void clif_skill_warppoint(map_session_data* sd, uint16 skill_id, uint16 skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4)
-{
+void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2, const char* map3, const char* map4 ){
 	int fd;
 	nullpo_retv(sd);
 	fd = sd->fd;
@@ -6255,12 +6254,18 @@ void clif_skill_warppoint(map_session_data* sd, uint16 skill_id, uint16 skill_lv
 	WFIFOW(fd,0) = 0x11c;
 	WFIFOW(fd,2) = skill_id;
 	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
-	if (map1 == (unsigned short)-1) strcpy(WFIFOCP(fd,4), "Random");
-	else // normal map name
-	if (map1 > 0) mapindex_getmapname_ext(mapindex_id2name(map1), WFIFOCP(fd,4));
-	if (map2 > 0) mapindex_getmapname_ext(mapindex_id2name(map2), WFIFOCP(fd,20));
-	if (map3 > 0) mapindex_getmapname_ext(mapindex_id2name(map3), WFIFOCP(fd,36));
-	if (map4 > 0) mapindex_getmapname_ext(mapindex_id2name(map4), WFIFOCP(fd,52));
+	if( strcmp( "", map1 ) != 0 ){
+		mapindex_getmapname_ext( map1, WFIFOCP( fd, 4 ) );
+	}
+	if( strcmp( "", map2 ) != 0 ){
+		mapindex_getmapname_ext( map2, WFIFOCP( fd, 20 ) );
+	}
+	if( strcmp( "", map3 ) != 0 ){
+		mapindex_getmapname_ext( map3, WFIFOCP( fd, 36 ) );
+	}
+	if( strcmp( "", map4 ) != 0 ){
+		mapindex_getmapname_ext( map4, WFIFOCP( fd, 52 ) );
+	}
 	WFIFOSET(fd,packet_len(0x11c));
 
 	sd->menuskill_id = skill_id;
@@ -7979,7 +7984,7 @@ void clif_party_info( struct party_data& party, map_session_data* sd ){
 		member.GID = m.char_id;
 #endif
 		safestrncpy( member.playerName, m.name, sizeof( member.playerName ) );
-		mapindex_getmapname_ext( mapindex_id2name( m.map ), member.mapName );
+		mapindex_getmapname_ext( m.map, member.mapName );
 		member.leader = ( m.leader ) ? 0 : 1;
 		member.offline = ( m.online ) ? 0 : 1;
 #if PACKETVER_MAIN_NUM >= 20170524 || PACKETVER_RE_NUM >= 20170502 || defined(PACKETVER_ZERO)

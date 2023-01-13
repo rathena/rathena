@@ -11,7 +11,6 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
-#include "../common/mapindex.hpp"
 #include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
@@ -244,7 +243,7 @@ std::shared_ptr<struct party_data> inter_party_fromsql( int party_id ){
 		Sql_GetData(sql_handle, 1, &data, NULL); m->char_id = atoi(data);
 		Sql_GetData(sql_handle, 2, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
 		Sql_GetData(sql_handle, 3, &data, NULL); m->lv = atoi(data);
-		Sql_GetData(sql_handle, 4, &data, NULL); m->map = mapindex_name2id(data);
+		Sql_GetData(sql_handle, 4, &data, &len); memcpy(m->map, data, zmin(len, sizeof(m->map)));
 		Sql_GetData(sql_handle, 5, &data, NULL); m->online = (atoi(data) ? 1 : 0);
 		Sql_GetData(sql_handle, 6, &data, NULL); m->class_ = atoi(data);
 		m->leader = (m->account_id == leader_id && m->char_id == leader_char ? 1 : 0);
@@ -301,7 +300,7 @@ std::shared_ptr<struct party_data> search_partyname( char* str ){
 
 int party_check_family_share( std::shared_ptr<struct party_data> p ){
 	int i;
-	unsigned short map = 0;
+	const char* map = nullptr;
 	if (!p->family)
 		return 0;
 	for (i = 0; i < MAX_PARTY; i++) {
@@ -309,6 +308,10 @@ int party_check_family_share( std::shared_ptr<struct party_data> p ){
 			map = p->party.member[i].map;
 			break;
 		}
+	}
+
+	if( map == nullptr ){
+		return 0;
 	}
 
 	for (i = 0; i < MAX_PARTY; i++) {
@@ -322,7 +325,7 @@ int party_check_family_share( std::shared_ptr<struct party_data> p ){
 			//everyone should be online to share
 			return 0;
 		}
-		if (mem->map != map) {
+		if( strncmp( mem->map, map, sizeof( mem->map ) ) != 0 ){
 			//everyone should be on the same map
 			return 0;
 		}
@@ -455,16 +458,18 @@ int mapif_party_withdraw(int party_id, uint32 account_id, uint32 char_id, char *
 //Party map update notification
 int mapif_party_membermoved(struct party *p,int idx)
 {
-	unsigned char buf[20];
+	unsigned char buf[17+MAP_NAME_LENGTH_EXT];
 
 	WBUFW(buf,0) = 0x3825;
 	WBUFL(buf,2) = p->party_id;
 	WBUFL(buf,6) = p->member[idx].account_id;
 	WBUFL(buf,10) = p->member[idx].char_id;
-	WBUFW(buf,14) = p->member[idx].map;
-	WBUFB(buf,16) = p->member[idx].online;
-	WBUFW(buf,17) = p->member[idx].lv;
-	chmapif_sendall(buf, 19);
+	WBUFB(buf,14) = p->member[idx].online;
+	WBUFW(buf,15) = p->member[idx].lv;
+	safestrncpy( WBUFCP( buf, 17 ), p->member[idx].map, sizeof( p->member[idx].map ) );
+
+	chmapif_sendall( buf, sizeof( buf ) );
+
 	return 0;
 }
 
@@ -679,8 +684,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_
 	return 0;
 }
 // When member goes to other map or levels up.
-int mapif_parse_PartyChangeMap(int fd, int party_id, uint32 account_id, uint32 char_id, unsigned short map, int online, unsigned int lv)
-{
+int mapif_parse_PartyChangeMap( int fd, int party_id, uint32 account_id, uint32 char_id, int online, unsigned int lv, const char* map ){
 	int i;
 
 	std::shared_ptr<struct party_data> p = inter_party_fromsql( party_id );
@@ -729,8 +733,8 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, uint32 account_id, uint32 c
 		//since they do nothing with it.
 	}
 
-	if (p->party.member[i].map != map) {
-		p->party.member[i].map = map;
+	if( strncmp( p->party.member[i].map, map, sizeof( p->party.member[i].map ) ) != 0 ){
+		safestrncpy( p->party.member[i].map, map, sizeof( p->party.member[i].map ) );
 		mapif_party_membermoved(&p->party, i);
 		int_party_check_lv(p);
 	}
@@ -814,7 +818,7 @@ int inter_party_parse_frommap(int fd)
 	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,4), (struct party_member*)RFIFOP(fd,8)); break;
 	case 0x3023: mapif_parse_PartyChangeOption(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOW(fd,10), RFIFOW(fd,12)); break;
 	case 0x3024: mapif_parse_PartyLeave(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOCP(fd,14), (enum e_party_member_withdraw)RFIFOB(fd,14+NAME_LENGTH)); break;
-	case 0x3025: mapif_parse_PartyChangeMap(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOW(fd,14), RFIFOB(fd,16), RFIFOW(fd,17)); break;
+	case 0x3025: mapif_parse_PartyChangeMap( fd, RFIFOL( fd, 2 ), RFIFOL( fd, 6 ), RFIFOL( fd, 10 ), RFIFOB( fd, 14 ), RFIFOW( fd, 15 ), RFIFOCP( fd, 17 ) ); break;
 	case 0x3026: mapif_parse_BreakParty(fd, RFIFOL(fd,2)); break;
 	case 0x3027: mapif_parse_PartyMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), RFIFOCP(fd,12), RFIFOW(fd,2)-12); break;
 	case 0x3029: mapif_parse_PartyLeaderChange(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
