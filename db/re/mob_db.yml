@@ -95045,8 +95045,9 @@ Body:
 #    AegisName: MD_ED_LGTHIGHGUARD
 #  - Id: 20542
 #    AegisName: MD_ED_LGTGUARD
-#  - Id: 20543
-#    AegisName: MD_ED_M_SCIENCE
+  - Id: 20543
+    AegisName: MD_ED_M_SCIENCE
+    Name: MD_ED_M_SCIENCE
 #  - Id: 20544
 #    AegisName: MINERAL_R_MJ
 #  - Id: 20545
