@@ -65303,6 +65303,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 101355
+    AegisName: OS_Weapon_Reform
+    Name: OS Weapon Modification Box
+    Type: DelayConsume
+    Script: |
+      item_reform();
   - Id: 101359
     AegisName: MajorAutoSpell_Up
     Name: Major Auto Spell Shadow Spellbook
@@ -65929,6 +65935,12 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 101745
+    AegisName: Dimmen_A_Reform
+    Name: Unsealing the dimension    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
   - Id: 101792
     AegisName: SubjectCape_Refine_Cube
     Name: Subject Manteau 12 Refine Cube
@@ -65938,6 +65950,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101816
+    AegisName: Dimmen_A_Refine
+    Name: Dimension Enhancer    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
   - Id: 101876
     AegisName: aegis_101876
     Name: Costume Enchant Stone Box 29

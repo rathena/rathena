@@ -1315,31 +1315,51 @@ void pc_makesavestatus(map_session_data *sd) {
 			sd->status.sp = sd->battle_status.sp;
 			sd->status.ap = sd->battle_status.ap;
 		}
-		sd->status.last_point.map = sd->mapindex;
+		mapindex_getmapname( mapindex_id2name( sd->mapindex ), sd->status.last_point.map );
 		sd->status.last_point.x = sd->bl.x;
 		sd->status.last_point.y = sd->bl.y;
 		return;
 	}
 
-	if(pc_isdead(sd)) {
-		pc_setrestartvalue(sd, 0);
-		memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
-	} else {
+	if( pc_isdead( sd ) ){
+		pc_setrestartvalue( sd, 0 );
+
+		// Return to save point
+		safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
+		sd->status.last_point.x = sd->status.save_point.x;
+		sd->status.last_point.y = sd->status.save_point.y;
+	}else{
 		sd->status.hp = sd->battle_status.hp;
 		sd->status.sp = sd->battle_status.sp;
 		sd->status.ap = sd->battle_status.ap;
-		sd->status.last_point.map = sd->mapindex;
-		sd->status.last_point.x = sd->bl.x;
-		sd->status.last_point.y = sd->bl.y;
-	}
 
-	if(map_getmapflag(sd->bl.m, MF_NOSAVE)) {
-		struct map_data *mapdata = map_getmapdata(sd->bl.m);
+		struct map_data* mapdata = map_getmapdata( sd->bl.m );
 
-		if(mapdata->save.map)
-			memcpy(&sd->status.last_point,&mapdata->save,sizeof(sd->status.last_point));
-		else
-			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
+		// If saving is not allowed on the map, we return the player to the designated point
+		if( mapdata->flag[MF_NOSAVE] ){
+			// The map has a specific return point
+			if( mapdata->save.map ){
+				safestrncpy( sd->status.last_point.map, mapindex_id2name( mapdata->save.map ), sizeof( sd->status.last_point.map ) );
+				sd->status.last_point.x = mapdata->save.x;
+				sd->status.last_point.y = mapdata->save.y;
+			// Return the user to his save point
+			}else{
+				safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
+				sd->status.last_point.x = sd->status.save_point.x;
+				sd->status.last_point.y = sd->status.save_point.y;
+			}
+		// If the user is on a instance map, we return him to his save point
+		}else if( mapdata->instance_id ){
+			// Return the user to his save point
+			safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
+			sd->status.last_point.x = sd->status.save_point.x;
+			sd->status.last_point.y = sd->status.save_point.y;
+		}else{
+			// Save normally
+			mapindex_getmapname( mapindex_id2name( sd->mapindex ), sd->status.last_point.map );
+			sd->status.last_point.x = sd->bl.x;
+			sd->status.last_point.y = sd->bl.y;
+		}
 	}
 }
 
@@ -2011,9 +2031,9 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->vars_received = 0x0;
 
 	//warp player
-	enum e_setpos setpos_result = pc_setpos( sd, sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT );
+	enum e_setpos setpos_result = pc_setpos( sd, mapindex_name2id( sd->status.last_point.map ), sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT );
 	if( setpos_result != SETPOS_OK ){
-		ShowError( "Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, setpos_result );
+		ShowError( "Last_point_map %s not found (error code %d)\n", sd->status.last_point.map, setpos_result );
 
 		// try warping to a default map instead (church graveyard)
 		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, CLR_OUTSIGHT) != SETPOS_OK) {
@@ -3094,7 +3114,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
 		return;
 	}
-	if (!item_db.exists(nameid)) {
+	if (nameid && !item_db.exists(nameid)) {
 		ShowWarning("pc_bonus_item_drop: Invalid item id %u\n",nameid);
 		return;
 	}
@@ -5623,7 +5643,7 @@ int pc_paycash(map_session_data *sd, int price, int points, e_log_pick_type type
 	int cash;
 	nullpo_retr(-1,sd);
 
-	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
+	points = cap_value(points, 0, MAX_KAFRAPOINT); //prevent command UB
 
 	cash = price-points;
 
@@ -5669,14 +5689,14 @@ int pc_getcash(map_session_data *sd, int cash, int points, e_log_pick_type type)
 
 	nullpo_retr(-1,sd);
 
-	cash = cap_value(cash, 0, MAX_ZENY); //prevent command UB
-	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
+	cash = cap_value(cash, 0, MAX_CASHPOINT); //prevent command UB
+	points = cap_value(points, 0, MAX_KAFRAPOINT); //prevent command UB
 	if( cash > 0 )
 	{
-		if( cash > MAX_ZENY-sd->cashPoints )
+		if( cash > MAX_CASHPOINT-sd->cashPoints )
 		{
 			ShowWarning("pc_getcash: Cash point overflow (cash=%d, have cash=%d, account_id=%d, char_id=%d).\n", cash, sd->cashPoints, sd->status.account_id, sd->status.char_id);
-			cash = MAX_ZENY-sd->cashPoints;
+			cash = MAX_CASHPOINT-sd->cashPoints;
 		}
 
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
@@ -5693,10 +5713,10 @@ int pc_getcash(map_session_data *sd, int cash, int points, e_log_pick_type type)
 
 	if( points > 0 )
 	{
-		if( points > MAX_ZENY-sd->kafraPoints )
+		if( points > MAX_KAFRAPOINT-sd->kafraPoints )
 		{
 			ShowWarning("pc_getcash: Kafra point overflow (points=%d, have points=%d, account_id=%d, char_id=%d).\n", points, sd->kafraPoints, sd->status.account_id, sd->status.char_id);
-			points = MAX_ZENY-sd->kafraPoints;
+			points = MAX_KAFRAPOINT-sd->kafraPoints;
 		}
 
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
@@ -6065,7 +6085,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		}
 	}
 
-	if( itemdb_group.item_exists( MF_NORETURN, nameid ) ){
+	if( itemdb_group.item_exists( IG_MF_NORETURN, nameid ) ){
 		if( mapdata->flag[MF_NORETURN] ){
 			return false;
 		}
@@ -6892,6 +6912,16 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 	return SETPOS_OK;
 }
 
+enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype ){
+	struct map_data *mapdata = map_getmapdata( sd.bl.m );
+
+	if( mapdata != nullptr && mapdata->flag[MF_NOSAVE] && mapdata->save.map ){
+		return pc_setpos( &sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, clrtype );
+	}else{
+		return pc_setpos( &sd, mapindex_name2id( sd.status.save_point.map ), sd.status.save_point.x, sd.status.save_point.y, clrtype );
+	}
+}
+
 /*==========================================
  * Warp player sd to random location on current map.
  * May fail if no walkable cell found (1000 attempts).
@@ -6955,9 +6985,11 @@ bool pc_memo(map_session_data* sd, int pos)
 	if( pos == -1 )
 	{
 		uint8 i;
+		const char* mapname = map_mapid2mapname( sd->bl.m );
+
 		// prevent memo-ing the same map multiple times
-		ARR_FIND( 0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m) );
-		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (u8min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
+		ARR_FIND( 0, MAX_MEMOPOINTS, i, strncmp( sd->status.memo_point[i].map, mapname, sizeof( sd->status.memo_point[i].map ) ) == 0 );
+		memmove( &sd->status.memo_point[1], &sd->status.memo_point[0], ( u8min( i, MAX_MEMOPOINTS - 1 ) ) * sizeof( struct s_point_str ) );
 		pos = 0;
 	}
 
@@ -6966,7 +6998,7 @@ bool pc_memo(map_session_data* sd, int pos)
 		return false;
 	}
 
-	sd->status.memo_point[pos].map = map_id2index(sd->bl.m);
+	safestrncpy( sd->status.memo_point[pos].map, map_mapid2mapname( sd->bl.m ), sizeof( sd->status.memo_point[pos].map ) );
 	sd->status.memo_point[pos].x = sd->bl.x;
 	sd->status.memo_point[pos].y = sd->bl.y;
 
@@ -9340,8 +9372,9 @@ void pc_respawn(map_session_data* sd, clr_type clrtype)
 
 	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
-	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) != SETPOS_OK )
+	if( pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, clrtype ) != SETPOS_OK ){
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
+	}
 }
 
 static TIMER_FUNC(pc_respawn_timer){
@@ -10278,16 +10311,16 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 		if (val < 0)
 			return false;
 		if (!sd->state.connect_new)
-			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
-		sd->cashPoints = cap_value(val, 0, MAX_ZENY);
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_CASHPOINT)));
+		sd->cashPoints = cap_value(val, 0, MAX_CASHPOINT);
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints);
 		return true;
 	case SP_KAFRAPOINTS:
 		if (val < 0)
 			return false;
 		if (!sd->state.connect_new)
-			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
-		sd->kafraPoints = cap_value(val, 0, MAX_ZENY);
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_KAFRAPOINT)));
+		sd->kafraPoints = cap_value(val, 0, MAX_KAFRAPOINT);
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
 		return true;
 	case SP_PCDIECOUNTER:
@@ -12645,7 +12678,7 @@ void pc_setsavepoint(map_session_data *sd, short mapindex,int x,int y)
 {
 	nullpo_retv(sd);
 
-	sd->status.save_point.map = mapindex;
+	safestrncpy( sd->status.save_point.map, mapindex_id2name( mapindex ), sizeof( sd->status.save_point.map ) );
 	sd->status.save_point.x = x;
 	sd->status.save_point.y = y;
 }

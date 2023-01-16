@@ -540,6 +540,12 @@ bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 		return false;
 	}
 
+	if( !process( "ITEM_CASH_DB", 1, root_paths, "item_cash_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &cashshop_parse_dbrow, false );
+	}, "item_cash" ) ){
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return true;
@@ -4914,6 +4920,52 @@ static bool itemdb_read_combos(const char* file) {
 	}
 	fclose(fp);
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+
+	return true;
+}
+
+// Copied and adjusted from cashshop.cpp
+static bool cashshop_parse_dbrow( char* fields[], int columns, int current ){
+	uint16 tab = atoi( fields[0] );
+	t_itemid nameid = strtoul( fields[1], nullptr, 10 );
+	uint32 price = atoi( fields[2] );
+
+	std::string* item_name = util::umap_find( aegis_itemnames, nameid );
+
+	if( item_name == nullptr ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid item id %u.\n", nameid );
+		return false;
+	}
+
+	if( tab >= CASHSHOP_TAB_MAX ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line '%d', skipping...\n", tab, current );
+		return false;
+	}else if( price < 1 ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line '%d', skipping...\n", price, current );
+		return false;
+	}
+
+	const char* constant_ptr = constant_lookup( tab, "CASHSHOP_TAB_" );
+
+	if( constant_ptr == nullptr ){
+		ShowError( "cashshop_parse_dbrow: CASHSHOP_TAB constant for tab %hu was not found, skipping...\n", tab );
+		return false;
+	}
+
+	std::string constant = constant_ptr;
+	constant.erase( 0, 13 );
+	constant = name2Upper( constant );
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Tab" << YAML::Value << constant;
+	body << YAML::Key << "Items";
+	body << YAML::BeginSeq;
+	body << YAML::BeginMap;
+	body << YAML::Key << "Item" << YAML::Value << *item_name;
+	body << YAML::Key << "Price" << YAML::Value << price;
+	body << YAML::EndMap;
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
 
 	return true;
 }
