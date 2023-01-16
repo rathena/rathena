@@ -65303,6 +65303,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 101355
+    AegisName: OS_Weapon_Reform
+    Name: OS Weapon Modification Box
+    Type: DelayConsume
+    Script: |
+      item_reform();
   - Id: 101359
     AegisName: MajorAutoSpell_Up
     Name: Major Auto Spell Shadow Spellbook
