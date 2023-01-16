@@ -752,7 +752,7 @@ ACMD_FUNC(jump)
  *------------------------------------------*/
 ACMD_FUNC(who) {
 	map_session_data* pl_sd = nullptr;;
-	struct s_mapiterator *iter = NULL;
+	struct s_mapiterator *iter = NULL;	
 	char player_name[NAME_LENGTH] = "";
 	int count = 0;
 	int level = 0;
@@ -2922,7 +2922,7 @@ ACMD_FUNC(stat_all)
 				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 		}
 	}
-
+	
 	count = 0;
 	for (i = PARAM_STR; i < PARAM_POW; i++) {
 		short new_value;
@@ -3099,7 +3099,7 @@ ACMD_FUNC(makeegg) {
 
 		// for egg name
 		std::shared_ptr<item_data> item_data = item_db.searchname( message );
-
+		
 		if( item_data != nullptr ){
 			nameid = item_data->nameid;
 		}else{
@@ -3120,17 +3120,17 @@ ACMD_FUNC(makeegg) {
 				res = -2; //char server down
 			}
 		}
-	}
-
+	} 
+	
 	switch(res){
-		case -1:
+		case -1:		
 			clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 			break;
 		case -2:
 			clif_displaymessage(fd, msg_txt(sd,407)); //charserver link broken
 			break;
 	}
-
+	
 	return res;
 }
 
@@ -5033,7 +5033,7 @@ ACMD_FUNC(loadnpc)
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
 		return -1;
 	}
-
+	
 	npc_read_event_script();
 
 	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was loaded.\n", message );
@@ -5301,7 +5301,7 @@ ACMD_FUNC(jailfor) {
 		clif_displaymessage(fd, msg_txt(sd,400));	//Usage: @jailfor <time> <character name>
 		return -1;
 	}
-
+	
 	atcmd_output[sizeof(atcmd_output)-1] = '\0';
 
 	modif_p = atcmd_output;
@@ -5476,7 +5476,7 @@ ACMD_FUNC(disguiseguild)
 {
 	int id = 0, i;
 	char monster[NAME_LENGTH], guild[NAME_LENGTH];
-
+	
 	struct guild *g;
 
 	memset(monster, '\0', sizeof(monster));
@@ -5798,7 +5798,7 @@ ACMD_FUNC(npcmove)
 		return -1;
 	}
 
-	if ( npc_movenpc( nd, x, y ) )
+	if ( npc_movenpc( nd, x, y ) ) 
 	{ //actually failed to move
 		clif_displaymessage(fd, msg_txt(sd,1154)); // NPC is not on this map.
 		return -1;	//Not on a map.
@@ -5892,7 +5892,7 @@ ACMD_FUNC(dropall)
 	uint16 i, count = 0, count2 = 0;
 
 	nullpo_retr(-1, sd);
-
+	
 	if( message[0] ) {
 		type = atoi(message);
 		if( type != -1 && type != IT_HEALING && type != IT_USABLE && type != IT_ETC && type != IT_WEAPON &&
@@ -5932,7 +5932,7 @@ ACMD_FUNC(dropall)
 		}
 	}
 	sprintf(atcmd_output, msg_txt(sd,1494), count,count2); // %d items are dropped (%d skipped)!
-	clif_displaymessage(fd, atcmd_output);
+	clif_displaymessage(fd, atcmd_output); 
 	return 0;
 }
 
@@ -7449,7 +7449,7 @@ ACMD_FUNC(uptime)
 }
 
 /*==========================================
- * @changesex
+ * @changesex 
  * => Changes one's account sex. Switch from male to female or visversa
  *------------------------------------------*/
 ACMD_FUNC(changesex)
@@ -8330,7 +8330,7 @@ ACMD_FUNC(whereis)
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
 		return -1;
 	}
-
+	
 	int i_message = atoi(message);
 	if (mobdb_checkid(i_message)) {
 		// ID given
@@ -8340,7 +8340,7 @@ ACMD_FUNC(whereis)
 		// Name given, get all monster associated whith this name
 		count = mobdb_searchname_array(message, mob_ids, MAX_SEARCH);
 	}
-
+	
 	if (count <= 0) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
 		return -1;
@@ -8359,7 +8359,7 @@ ACMD_FUNC(whereis)
 		if(!mob) continue;
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname.c_str()); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
-
+		
 		const std::vector<spawn_info> spawns = mob_get_spawns(mob_id);
 		if (spawns.size() <= 0) {
 			 // This monster does not spawn normally.
@@ -9668,7 +9668,7 @@ static void atcommand_commands_sub(map_session_data* sd, const int fd, AtCommand
 		if ( count_bind )
 			clif_displaymessage(fd,line_buff);// last one
 		count += count_bind;
-
+		
 	}
 
 	sprintf(atcmd_output, msg_txt(sd,274), count); // "%d commands found."
@@ -9730,7 +9730,7 @@ ACMD_FUNC(accinfo) {
 
 /**
  * @set <variable name{[index]}>{ <value>}
- *
+ * 
  * Gets or sets a value of a non server variable.
  * If a value is specified it is used to set the variable's value,
  * if not the variable's value is read.
@@ -10187,11 +10187,11 @@ ACMD_FUNC(vip) {
 	char * modif_p;
 	int32 vipdifftime = 0;
 	time_t now=time(NULL);
-
+	
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-
+	
 	if (!message || !*message || sscanf(message, "%255s %23[^\n]",atcmd_output,atcmd_player_name) < 2) {
 		clif_displaymessage(fd, msg_txt(sd,700));	//Usage: @vip <timef> <character name>
 		return -1;
@@ -10218,14 +10218,14 @@ ACMD_FUNC(vip) {
 	}
 	if(pl_sd->vip.time==0) pl_sd->vip.time=now;
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
-
+	
 	if (pl_sd->vip.time <= now) {
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
 		clif_displaymessage(fd, msg_txt(sd,704)); // Player is no longer VIP.
 	} else {
 		int year,month,day,hour,minute,second;
 		char timestr[21];
-
+		
 		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
@@ -10240,7 +10240,7 @@ ACMD_FUNC(vip) {
 			clif_displaymessage(fd,atcmd_output);
 		}
 	}
-	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, CHRIF_OP_LOGIN_VIP, vipdifftime, 7, 0);
+	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, CHRIF_OP_LOGIN_VIP, vipdifftime, 7, 0); 
 	return 0;
 }
 
@@ -10262,7 +10262,7 @@ ACMD_FUNC(showrate) {
 ACMD_FUNC(fullstrip) {
 	int i;
 	TBL_PC *tsd;
-
+	
 	nullpo_retr(-1,sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -10271,7 +10271,7 @@ ACMD_FUNC(fullstrip) {
 		clif_displaymessage(fd, msg_txt(sd,349)); // Please enter a player name (usage: @fullstrip/@warpto/@goto <char name/ID>).
 		return -1;
 	}
-
+	
 	if((tsd=map_nick2sd(atcmd_player_name,false)) == NULL && (tsd=map_id2sd(atoi(atcmd_player_name))) == NULL){
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
