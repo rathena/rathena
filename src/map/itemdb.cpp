@@ -870,7 +870,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->stack.guild_storage = false;
 		}
 	}
-	
+
 	if (this->nodeExists(node, "NoUse")) {
 		const auto& nouseNode = node["NoUse"];
 
@@ -1064,7 +1064,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		item->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	} else {
-		if (!exists) 
+		if (!exists)
 			item->script = nullptr;
 	}
 
@@ -1250,102 +1250,114 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
 * @return <ITEML> string for the item
 * @author [Cydh]
 **/
-std::string ItemDatabase::create_item_link( struct item& item ){
-	std::shared_ptr<item_data> data = this->find( item.nameid );
-
+std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<item_data>& data){
 	if( data == nullptr ){
 		ShowError( "Tried to create itemlink for unknown item %u.\n", item.nameid );
 		return "Unknown item";
 	}
 
-// All these dates are unconfirmed
-#if PACKETVER >= 20100000
-	if( !battle_config.feature_itemlink ){
-		// Feature is disabled
-		return data->ename;
-	}
-
+	std::string itemstr;
 	struct item_data* id = data.get();
 
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	const std::string start_tag = "<ITEML>";
-	const std::string closing_tag = "</ITEML>";
-#elif PACKETVER_MAIN_NUM == 20151104
-	const std::string start_tag = "<ITEM>";
-	const std::string closing_tag = "</ITEM>";
+// All these dates are unconfirmed
+#if PACKETVER >= 20100000
+	if( battle_config.feature_itemlink ) {
+
+#if PACKETVER >= 20160203
+		const std::string start_tag = "<ITEML>";
+		const std::string closing_tag = "</ITEML>";
+#elif PACKETVER >= 20151104
+		const std::string start_tag = "<ITEM>";
+		const std::string closing_tag = "</ITEM>";
 #else // PACKETVER >= 20100000
-	const std::string start_tag = "<ITEMLINK>";
-	const std::string closing_tag = "</ITEMLINK>";
+		const std::string start_tag = "<ITEMLINK>";
+		const std::string closing_tag = "</ITEMLINK>";
 #endif
 
-	std::string itemstr = start_tag;
+		itemstr += start_tag;
 
-	itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
-	itemstr += itemdb_isequip2(id) ? "1" : "0";
-	itemstr += util::base62_encode(item.nameid);
-	if (item.refine > 0) {
-		itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
-	}
+		itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
+		itemstr += itemdb_isequip2(id) ? "1" : "0";
+		itemstr += util::base62_encode(item.nameid);
+		if (item.refine > 0) {
+			itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
+		}
 
-#if PACKETVER_MAIN_NUM != 20151104
-	if (itemdb_isequip2(id)) {
-		itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
-	}
+#if PACKETVER > 20160203 && PACKETVER < 20151104
+		if (itemdb_isequip2(id)) {
+			itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
+		}
 #endif
 
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
+#if PACKETVER >= 20200724
+		itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
 #endif
 
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	const std::string card_sep = ")";
-	const std::string optid_sep = "+";
-	const std::string optpar_sep = ",";
-	const std::string optval_sep = "-";
-#elif PACKETVER_MAIN_NUM == 20151104 
-	const std::string card_sep = "'";
-	const std::string optid_sep = ")";
-	const std::string optpar_sep = "*";
-	const std::string optval_sep = "+";
+#if PACKETVER >= 20200724
+		const std::string card_sep = ")";
+		const std::string optid_sep = "+";
+		const std::string optpar_sep = ",";
+		const std::string optval_sep = "-";
+#elif PACKETVER >= 20151104 && PACKETVER < 20171213
+		const std::string card_sep = "'";
+		const std::string optid_sep = ")";
+		const std::string optpar_sep = "*";
+		const std::string optval_sep = "+";
 #else
-	const std::string card_sep = "(";
-	const std::string optid_sep = "*";
-	const std::string optpar_sep = "+";
-	const std::string optval_sep = ",";
+		const std::string card_sep = "(";
+		const std::string optid_sep = "*";
+		const std::string optpar_sep = "+";
+		const std::string optval_sep = ",";
 #endif
-
-	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-		itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
-	}
+		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
+			itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
+		}
 
 #if PACKETVER >= 20150225
-	for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-		if (item.option[i].id == 0) {
-			break; // ignore options including ones beyond this one since the client won't even display them
+		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+			if (item.option[i].id == 0) {
+				break; // ignore options including ones beyond this one since the client won't even display them
+			}
+			// Option ID
+			itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
+			// Param
+			itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
+			// Value
+			itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
 		}
-		// Option ID
-		itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
-		// Param
-		itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
-		// Value
-		itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
+#endif
+
+		itemstr += closing_tag;
+		if ((itemdb_isequip2(id)) && (data->slots == 0))
+			itemstr += " [" + std::to_string(data->slots) + "]";
 	}
 #endif
 
-	itemstr += closing_tag;
+	// No itemstr means the itemlinking wasn't performed, either because it's disabled or because of the packet version
+	// If that's the case then we format the item prepending the refine and appending the slots
+	if (itemstr.empty()) {
+		if (item.refine > 0)
+			itemstr += "+" + std::to_string(item.refine) + " ";
+
+		itemstr += data->ename;
+
+		if (itemdb_isequip2(id))
+			itemstr += "[" + std::to_string(data->slots) + "]";
+	}
 	return itemstr;
-#else
-	// Did not exist before that
-	return data->ename;
-#endif
 }
 
-std::string ItemDatabase::create_item_link( t_itemid id ){
+std::string ItemDatabase::create_item_link( std::shared_ptr<item_data>& data ){
 	struct item it = {};
+	it.nameid = data->nameid;
 
-	it.nameid = id;
+	return this->create_item_link( it, data );
+}
 
-	return this->create_item_link( it );
+std::string ItemDatabase::create_item_link(item& item) {
+	std::shared_ptr<item_data> data = this->find(item.nameid);
+
+	return this->create_item_link(item, data);
 }
 
 ItemDatabase item_db;
@@ -2921,7 +2933,7 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 	if (group->random.empty())
 		return 0;
-	
+
 	// Get all the 'must' item(s) (subgroup 0)
 	uint16 subgroup = 0;
 	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
@@ -4135,7 +4147,7 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
@@ -4577,18 +4589,18 @@ static void itemdb_read(void) {
 		"",
 		"/" DBIMPORT,
 	};
-	
+
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		item_db.load();
-	
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
-		
+
 
 		if(i==0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
@@ -4689,7 +4701,7 @@ void itemdb_reload(void) {
 		pc_setinventorydata(sd);
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
-		status_calc_pc(sd, SCO_FORCE); // 
+		status_calc_pc(sd, SCO_FORCE); //
 	}
 	mapit_free(iter);
 }

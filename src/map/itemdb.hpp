@@ -2143,8 +2143,9 @@ public:
 	// Additional
 	std::shared_ptr<item_data> searchname( const char* name );
 	std::shared_ptr<item_data> search_aegisname( const char *name );
-	std::string create_item_link( struct item& data );
-	std::string create_item_link( t_itemid id );
+	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data); // Shouldn't be used directly
+	std::string create_item_link(struct item& item); // Used when we want to link the an actual item with all its cards, upgrades, options, etc.
+	std::string create_item_link( std::shared_ptr<item_data>& data ); // Used when we want to link an item from the itemdb
 };
 
 extern ItemDatabase item_db;
