@@ -55,3 +55,4 @@ Footer:
   - Path: npc/re/merchants/barters/refine.yml
   - Path: npc/re/merchants/barters/enchantgrade.yml
   - Path: npc/re/merchants/barters/cashmall.yml
+  - Path: npc/re/merchants/barters/rgsr_in.yml

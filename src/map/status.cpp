@@ -11305,7 +11305,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					val3 = map_idx;
 					val4 = pos;
 				} else if (!val3 || val3 == sd->mapindex) { // Use save point.
-					val3 = sd->status.save_point.map;
+					val3 = mapindex_name2id( sd->status.save_point.map );
 					val4 = (sd->status.save_point.x&0xFFFF)
 						|(sd->status.save_point.y<<16);
 				}
