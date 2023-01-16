@@ -3130,7 +3130,7 @@ ACMD_FUNC(makeegg) {
 			clif_displaymessage(fd, msg_txt(sd,407)); //charserver link broken
 			break;
 	}
-	
+
 	return res;
 }
 
@@ -3359,7 +3359,7 @@ ACMD_FUNC(char_ban)
 		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter. y/a = Year, m = Month, d/j = Day, h = Hour, n/mn = Minute, s = Second.
 		return -1;
 	}
-
+	
 	if( timediff < 0 && (
 		   (bantype == CHRIF_OP_LOGIN_BAN && !pc_can_use_command(sd, "unban", COMMAND_ATCOMMAND))
 		|| (bantype == CHRIF_OP_BAN && !pc_can_use_command(sd, "charunban", COMMAND_ATCOMMAND))
@@ -5031,7 +5031,7 @@ ACMD_FUNC(loadnpc)
 		clif_displaymessage(fd, msg_txt(sd,1132)); // Please enter a script file name (usage: @loadnpc <file name>).
 		return -1;
 	}
-
+	
 	if (!npc_addsrcfile(message, true)) {
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
 		return -1;
@@ -5299,12 +5299,12 @@ ACMD_FUNC(jailfor) {
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-
+	
 	if (!message || !*message || sscanf(message, "%255s %23[^\n]",atcmd_output,atcmd_player_name) < 2) {
 		clif_displaymessage(fd, msg_txt(sd,400));	//Usage: @jailfor <time> <character name>
 		return -1;
 	}
-	
+
 	atcmd_output[sizeof(atcmd_output)-1] = '\0';
 
 	modif_p = atcmd_output;
@@ -10274,12 +10274,12 @@ ACMD_FUNC(fullstrip) {
 		clif_displaymessage(fd, msg_txt(sd,349)); // Please enter a player name (usage: @fullstrip/@warpto/@goto <char name/ID>).
 		return -1;
 	}
-	
+
 	if((tsd=map_nick2sd(atcmd_player_name,false)) == NULL && (tsd=map_id2sd(atoi(atcmd_player_name))) == NULL){
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
 	}
-
+	
 	for( i = 0; i < EQI_MAX; i++ ) {
 		if( tsd->equip_index[ i ] >= 0 )
 			pc_unequipitem( tsd , tsd->equip_index[ i ] , 2 );
