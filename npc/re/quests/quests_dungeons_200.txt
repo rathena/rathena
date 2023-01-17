@@ -1347,7 +1347,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		mes "It's an honor to meet you in a place like this. May I buy you a drink?";
 		next;
 		mes "[Gerbena]";
-		mes "Wow, " + strcharinfo(0) + "! Can you sign?";
+		mes "Wow, " + strcharinfo(0) + "! Can I get an autograph?";
 		mes "It's an honor! Hehe~";
 		next;
 		mes "[Ansuriya]";
@@ -1359,15 +1359,15 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		next;
 		mes "[Ansuriya]";
 		mes "You buy it with your money.";
-		mes "By the way, Gerbena, what's going on with Amicitia's edge?";
+		mes "By the way Gerbena, how is the Amicitia team?";
 		next;
 		emotion ET_PROFUSELY_SWAT, getnpcid(0,"Gerbena#ami");
 		mes "[Gerbena]";
-		mes "Well, that's it once the formation is finished.";
+		mes "Well, that's... I've finished organizing for now.";
 		mes "However, it is true that the number of rebellions to be deployed is a bit short since the total number of members is small.";
 		next;
 		mes "[Ansuriya]";
-		mes "Hmm, how are you? Gerbena. Would you like to go?";
+		mes "Hmm, what should I do? Gerbena. Do you want to go?";
 		next;
 		emotion ET_SWEAT, getnpcid(0,"Gerbena#ami");
 		mes "[Gerbena]";
@@ -1378,7 +1378,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		next;
 		emotion ET_AHA, getnpcid(0,"Gerbena#ami");
 		mes "[Gerbena]";
-		mes "I, maybe a hero.";
+		mes "You're a hero.";
 		mes "Can you help us?";
 		next;
 		emotion ET_QUESTION;
@@ -1400,7 +1400,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		mes "Nothing else, we have discovered a new laboratory around Einbroch.";
 		next;
 		mes "[Ansuriya]";
-		mes "The name is <FONT COLOR = 0000CD>Amicitia General Research Institute</FONT>. According to the data provided by Rekenberg, it is said to be a sister laboratory of the Werner Institute.";
+		mes "The name is <FONT COLOR = 0000CD>Amicitia General Lab</FONT>. According to the data provided by Rekenber, it is said to be a sister laboratory of the Werner Institute.";
 		next;
 		mes "[Ansuriya]";
 		mes "It seems that it did not conduct very illegal experiments and focused on the study of culturing chimeras as homunculus, but it is said that it was abandoned after an explosion at an underground magical power plant.";
@@ -1409,19 +1409,19 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		mes "It came under investigation because one of the administrators of that abandoned lab was Werner.";
 		next;
 		mes "[Ansuriya]";
-		mes "As a result of the investigation, the chimeras in cultivation ran out due to an explosion, and the monsterized ones were left unattended.";
+		mes "As a result of the investigation, the chimeras that were being cultivated ran out of control due to an explosion accident and turned into monsters and were left unattended.";
 		next;
 		mes "[Ansuriya]";
-		mes "I didn't know if it was just neglected or if it was intentionally neglected.";
+		mes "I couldn't tell if it was just neglected or intentionally.";
 		next;
 		mes "[Ansuriya]";
-		mes "Because it's not far from the city, I took care of cleaning up at Rebellion for the sake of safety... As you've heard, we're having trouble due to a shortage of people.";
+		mes "It's not far from the city, so Rebellion took care of organizing it for safety reasons... As you've heard, we're having trouble with the lack of staff.";
 		next;
 		mes "[Gerbena]";
-		mes "If the hero helps us, we will be able to organize the work more easily!";
+		mes "With your help, we can make the cleanup easier!";
 		next;
 		mes "[Ansuriya]";
-		mes "Yes. Can you help me subdue?";
+		mes "Okay. Could you help me with the subjugation?";
 		next;
 		if (select( "Help", "Don't help" ) == 2) {
 			mes "[Ansuriya]";
@@ -1429,7 +1429,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 			mes "It's our job and we're just looking for help.";
 			next;
 			mes "[Ansuriya]";
-			mes "Your hero must have his work!";
+			mes "You must have your own things to do!";
 			mes "We will try to solve this by ourselves.";
 			close;
 		}
@@ -1438,18 +1438,18 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		next;
 		mes "[Ansuriya]";
 		mes "Thank you for your cooperation!";
-		mes "Then regrouping...";
+		mes "Let's organize the group again...";
 		next;
 		mes "[Ansuriya]";
 		mes "Are you comfortable taking the mission alone or with the Rebellion's mission team?";
 		next;
 		select( "I'm comfortable alone" );
 		mes "[Ansuriya]";
-		mes "Then, unite the Rebellion mission team and perform the hero's sole mission! mumble.";
-		mes "Oh, why am I thinking alone. Gerbena, you do it too!";
+		mes "If so, let's combine the Rebellion mission groups into one, and the hero's solo mission... mumble mumble.";
+		mes "Oh, why am I the only one thinking. Gerbena, help me!";
 		next;
 		mes "[Gerbena]";
-		mes "Ah, I see!";
+		mes "Oops, yes!";
 		setquest 16529;
 		completequest 16529;
 		next;
@@ -1458,7 +1458,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 	mes "Hero, these are the things we would like to ask of you from Amicitia.";
 	mes "Which of these would you like to help with?";
 	next;
-	switch( select("Earth and Fire", "Water and Wind", "Werner's Trace", "Don't help" ) ) {
+	switch( select( "Earth and Fire", "Water and Wind", "Werner's Trace", "Don't help" ) ) {
 	case 1:
 		switch( checkquest(16530,PLAYTIME) ) {
 		case -1:
@@ -1466,11 +1466,12 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Ansuriya]";
-			mes "Hmm? Have you changed your mind?";
+			mes "Now, the Rebellion unit is in the process of following up.";
+			mes "It's okay, hero, to rest a little longer.";
 			next;
 			mes "[Ansuriya]";
-			mes "Well, then! We have to re-organize! Ugh.";
-			mes "Hero, why don't you reconsider calmly?";
+			mes "Thank you for being so active with us.";
+			mes "Can you come back after dawn?";
 			close;
 		case 2:
 			erasequest 16530;
@@ -1482,11 +1483,11 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>Mutant Chimera Amitera and Mutant Chimera Fillia</FONT> among the chimeras in culture.";
 			next;
 			mes "[Ansuriya]";
-			mes "The properties of earth and fire are much stronger than those of existing entities, and you will be able to recognize them immediately.";
+			mes "You will be able to recognize them right away as the attribute characteristics of earth and fire appear much stronger than those of existing entities.";";
 			mes "Actually, it's more like a monster than a homunculus...";
 			next;
 			mes "[Ansuriya]";
-			mes "Despite the destruction of the culture facility, the number of individuals continues to increase, so I would like to ask for the quantity of about 15 specimens of each kind!";
+			mes "Despite the destruction of the culture facility, the number of individuals continues to increase, so I would like to ask you to hunt about 15 specimens of each!";
 			next;
 			if (select( "Hunt", "Do not hunt" ) == 2) {
 				mes "[Ansuriya]";
@@ -1510,7 +1511,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 			mes "<FONT COLOR = 0000CD>The Mutant Chimera Amitera and the Mutant Chimera Fillia</FONT> will be roaming the first floor of the closed lab Amicitia.";
 			next;
 			mes "[Ansuriya]";
-			mes "15 each, please take good care of the hunt.";
+			mes "Please hunt 15 of each.";
 			close;
 		case 2:
 			mes "[Ansuriya]";
@@ -1536,12 +1537,12 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Ansuriya]";
-			mes "Now the rebellion troops are in and are working on follow-up.";
-			mes "Hero, it's okay to come after a little rest.";
+			mes "Now, the Rebellion unit is in the process of following up.";
+			mes "It's okay, hero, to rest a little longer.";
 			next;
 			mes "[Ansuriya]";
 			mes "Thank you for being so active with us.";
-			mes "Will you come back after dawn?";
+			mes "Can you come back after dawn?";
 			close;
 		case 2:
 			erasequest 16532;
@@ -1552,11 +1553,10 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 			mes "[Ansuriya]";
 			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>Mutant Chimera Litus and Mutant Chimera Vanilaqus</FONT> among the chimeras that were being cultured.";
 			next;
-			mes "[Ansuriya]";
-			mes "It's easy to tell the difference between the wind and water properties because they have changed into an appearance that clearly reveals them.";
+			mes "It's not difficult to tell them apart because they've mutated into an appearance that clearly reveals the attributes of wind and water.";
 			next;
 			mes "[Ansuriya]";
-			mes "The number of individuals continues to increase without the help of a culture facility, so the quantity! 15 each, please.";
+			mes "The number of individuals continues to increase without the help of a culture facility, so please hunt 15 of each.";
 			next;
 			if (select( "Hunt", "Do not hunt" ) == 2) {
 				mes "[Ansuriya]";
@@ -1581,7 +1581,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 			mes "<FONT COLOR = 0000CD>Mutant Chimera Litus and Mutant Chimera Vanilaqus</FONT> are staying on the first floor of the closed lab Amicitia.";
 			next;
 			mes "[Ansuriya]";
-			mes "15 each, please take good care of the hunt.";
+			mes "Please hunt 15 of each.";
 			close;
 		case 2:
 			mes "[Ansuriya]";
@@ -1608,12 +1608,12 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Ansuriya]";
-			mes "Now the rebellion troops are in and are working on follow-up.";
-			mes "Hero, it's okay to come after a little rest.";
+			mes "Now, the Rebellion unit is in the process of following up.";
+			mes "It's okay, hero, to rest a little longer.";
 			next;
 			mes "[Ansuriya]";
 			mes "Thank you for being so active with us.";
-			mes "Will you come back after dawn?";
+			mes "Can you come back after dawn?";
 			close;
 		case 2:
 			erasequest 16534;
@@ -1737,7 +1737,7 @@ amicitia1,244,49,3	duplicate(Something#ami1)	Something#ami5	4_GC109
 pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 	if (BaseLevel < 230) {
 		mes "[Gerbena]";
-		mes "Wow, " + strcharinfo(0) + "! Can you sign?";
+		mes "Wow, " + strcharinfo(0) + "! Can I get an autograph?";
 		mes "It's an honor! Hehe~";
 		next;
 		mes " - This is a quest that can be performed at level 230 or higher - ";
@@ -1751,7 +1751,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 	mes "It's pitiful, but if they are released from the lab, they will do more damage than you can imagine.";
 	mes "Can you help me clean up these chimeras?";
 	next;
-	switch( select("Imitation and Real", "Natural change", "Don't help" ) ) {
+	switch( select( "Imitation and Real", "Natural change", "Don't help" ) ) {
 	case 1:
 		switch( checkquest(16536,PLAYTIME) ) {
 		case -1:
