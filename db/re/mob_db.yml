@@ -92369,20 +92369,28 @@ Body:
     Drops:
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 0
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 1
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 2
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 3
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 4
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 5
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 6
       - Item: Frozen_Stone_Fragment
         Rate: 200
+        Index: 7
         StealProtected: true
   - Id: 3796
     AegisName: ILL_KTULLANUX
@@ -92412,7 +92420,6 @@ Body:
     AttackDelay: 432
     AttackMotion: 840
     DamageMotion: 216
-    # DamageTaken: 10   # TODO check
     Ai: 21
     Class: Boss
     Modes:
@@ -92420,8 +92427,10 @@ Body:
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5000
+        Index: 0
       - Item: Yggdrasilberry
         Rate: 5000
+        Index: 1
       - Item: IllusionStone
         Rate: 5000
     Drops:
