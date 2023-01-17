@@ -48998,7 +48998,7 @@ Body:
           - Item: F_Giant_Fly_Wing
   - Group: CLASS_SHADOW_WP_CUBE
     SubGroups:
-      - SubGroup: 0
+      - SubGroup: 1
         List:
           - Item: S_SuperNovice_Weapon
             Rate: 526
@@ -49040,7 +49040,7 @@ Body:
             Rate: 527
   - Group: CLASS_SHADOW_AM_CUBE
     SubGroups:
-      - SubGroup: 0
+      - SubGroup: 1
         List:
           - Item: S_Knight_Armor
             Rate: 555
@@ -49080,7 +49080,7 @@ Body:
             Rate: 560
   - Group: CLASS_SHADOW_SU_CUBE
     SubGroups:
-      - SubGroup: 0
+      - SubGroup: 1
         List:
           - Item: S_Knight_Shoes
             Rate: 555
@@ -49120,7 +49120,7 @@ Body:
             Rate: 560
   - Group: CLASS_SHADOW_SD_CUBE
     SubGroups:
-      - SubGroup: 0
+      - SubGroup: 1
         List:
           - Item: S_Runeknight_Shield
             Rate: 526
@@ -49162,7 +49162,7 @@ Body:
             Rate: 527
   - Group: CLASS_SHADOW_PD_CUBE
     SubGroups:
-      - SubGroup: 0
+      - SubGroup: 1
         List:
           - Item: S_Thief_Pendant
             Rate: 1666
@@ -49178,7 +49178,7 @@ Body:
             Rate: 1667
   - Group: CLASS_SHADOW_EA_CUBE
     SubGroups:
-      - SubGroup: 0
+      - SubGroup: 1
         List:
           - Item: S_Merchant_earring
             Rate: 1666
