@@ -1733,6 +1733,7 @@ amicitia1,262,139,3	duplicate(Something#ami1)	Something#ami3	4_GC109
 amicitia1,36,106,3	duplicate(Something#ami1)	Something#ami4	4_GC109
 amicitia1,244,49,3	duplicate(Something#ami1)	Something#ami5	4_GC109
 
+
 // amicitia2
 pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 	if (BaseLevel < 230) {
