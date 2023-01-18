@@ -10,7 +10,7 @@
 pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 	mes "[Marry Jae]";
 	if (BaseLevel < 60) {
-		mes "Your base level is too low, come back when you hit level 60+";
+		mes "Your base level is too low, come back when you hit level 60+.";
 		close;
 	}
 	mes "^ff0000If you attempt to tame any monsters, it will not count as a kill. Please be careful.^000000";
@@ -18,7 +18,7 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 	.@day = gettime(DT_DAYOFWEEK);
 	if (.@day != SATURDAY && .@day != SUNDAY) {
 		mes "[Marry Jae]";
-		mes "Oh, a curious onlooker? It's Marry Jae, the person in charge of weekends among the days of the week.";
+		mes "Oh, a curious onlooker? I'm Marry Jae, the person in charge of weekends among the days of the week.";
 		next;
 		mes "[Marry Jae]";
 		mes "What is the weekend dungeon? Actually, it's a specially designed space for new adventurers to train.";
@@ -26,7 +26,7 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 		mes "^0000FFLooking around, it's obvious that Marry Jae is talking to you.^000000";
 		next;
 		mes "[Marry Jae]";
-		mes "For those who do not have a party on the weekends, this place are hunting and experience gaining grounds for lonely adventurers!";
+		mes "For those who do not have a party on the weekends, this place is hunting and experience gaining grounds for lonely adventurers!";
 		next;
 		mes "[Marry Jae]";
 		mes "Besides, the experience gain here is very generous.";
@@ -92,7 +92,7 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 			case 3:
 				mes "[Marry Jae]";
 				mes "You have not prepared?";
-				mes "Can't really help it I guess";
+				mes "Can't really help it I guess.";
 				close;
 		}
 	} else {
@@ -182,7 +182,7 @@ pay_arche,44,121,5	script	Gift Supplies Clerk	4_F_02,{
 	}
 	mes "[Marry Jae]";
 	if (BaseLevel < .@min_level) {
-		mes "Your base level is too low to select this, you need to be level "+.@min_level+"+";
+		mes "Your base level is too low to select this, you need to be level "+.@min_level+"+.";
 		close;
 	}
 
