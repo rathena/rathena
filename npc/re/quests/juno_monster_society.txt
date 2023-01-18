@@ -1210,6 +1210,7 @@ mal_dun01,141,126,4	script	Map Examiner Mother One#yma	4_F_TAEKWON,{
 			mes "Obviously, when you see adventurers passing by, you seem to be having a conversation. Are you shy? Why don't you talk to me?";
 			close;
 		}
+		end;
 	case 0:
 	case 1:
 		mes .@npc_name$;
@@ -2508,6 +2509,8 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 		mes .@npc_name$;
 		break;
 	case 2:
+		mes .@npc_name$;
+		mes "Hello. You came today!";
 		erasequest 8667;
 		break;
 	}
@@ -2800,6 +2803,9 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 		mes "Ah, adventurer! I'm requesting a monster subjugation investigation, how about it?";
 		break;
 	case 2:
+		mes .@npc_name$;
+		mes "Hello. You came today!";
+		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		erasequest 8664;
 		break;
 	}
@@ -2944,6 +2950,8 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 		mes .@npc_name$;
 		break;
 	case 2:
+		mes .@npc_name$;
+		mes "Hello. You came today!";
 		erasequest 8670;
 		break;
 	}
@@ -3094,6 +3102,9 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 		mes "It's really good. We're asking adventurers who pass by here to investigate monster subjugation, how about it?";
 		break;
 	case 2:
+		mes .@npc_name$;
+		mes "Hello. You came today!";
+		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		erasequest 8661;
 		break;
 	}
@@ -3561,22 +3572,34 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 		break;
 	case 2:
 		erasequest 8673;
+		mes .@npc_name$;
+		mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
+		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+		next;
+		mes .@npc_name$;
 		break;
 	}
-	switch( checkquest(8672,HUNTING) ) {
+	if (isbegin_quest(8672) == 2)
+		.@quest_id = 8674;
+	else
+		.@quest_id = 8672;
+
+	switch( checkquest(.@quest_id,HUNTING) ) {
 	case -1:
 		mes "Or, if you are nearby, we will support you with a teleportation service.";
 		next;
 		switch( select( "Listen to the situation", "Move to a nearby city", "Stop" ) ) {
 		case 1:
-			mes .@npc_name$;
-			mes "Recently, the number of monsters is increasing in some areas, including around this area.";
-			mes "It already means that you can't control the object naturally.";
-			next;
-			mes .@npc_name$;
-			mes "To prevent further colonization from expanding, our Juno Monster Society has planned a massive subjugation.";
-			mes "No matter how many adventurers visit, it's a big deal if you come down to where people live...";
-			next;
+			if (.@quest_id == 8672) {
+				mes .@npc_name$;
+				mes "Recently, the number of monsters is increasing in some areas, including around this area.";
+				mes "It already means that you can't control the object naturally.";
+				next;
+				mes .@npc_name$;
+				mes "To prevent further colonization from expanding, our Juno Monster Society has planned a massive subjugation.";
+				mes "No matter how many adventurers visit, it's a big deal if you come down to where people live...";
+				next;
+			}
 			mes .@npc_name$;
 			mes "So, can I ask you to subdue me?";
 			mes "This Porto Luna, if you kill 80 monsters within this field that I can see, our society will recognize your achievements and give you experience points.";
@@ -3586,7 +3609,7 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 				mes "Ah... can you help us?";
 				close;
 			}
-			setquest 8672;
+			setquest .@quest_id;
 			mes .@npc_name$;
 			mes "Yes, I have registered!";
 			mes "I'm going to check if the population is throttled here.";
@@ -3645,7 +3668,10 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 		getexp 194712,185136;
 		mes .@npc_name$;
 		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
-		erasequest 8674;
+		if (.@quest_id == 8672)
+			completequest 8672;
+		else
+			erasequest 8674;
 		setquest 8673;
 		close;
 	}
@@ -3709,6 +3735,9 @@ ve_fild03,348,230,5	script	Map Examiner Dew#85	4_M_MOC_SOLDIER,{
 		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
 		break;
 	case 2:
+		mes .@npc_name$;
+		mes "Hello. You came today!";
+		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		erasequest 8679;
 		break;
 	}
