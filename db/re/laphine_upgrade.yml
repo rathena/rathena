@@ -2560,6 +2560,28 @@ Body:
       - Item: Up_Crimson_Rose
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
+      - Item: aegis_2064
+      - Item: Comp_Undine_Spear_K
+      - Item: Comp_Royal_Bow_K
+      - Item: Comp_Shadow_Staff_K
+      - Item: aegis_1873
+      - Item: Comp_Sword_Of_Bluefire
+      - Item: Comp_Oriental_Sword
+      - Item: aegis_18202
+      - Item: aegis_1350
+      - Item: Comp_Magic_Sword
+      - Item: aegis_28646
+      - Item: Comp_Shiver_Katar_K_TH
+      - Item: Comp_Demon_S_Shot
+      - Item: Comp_Sharp_Wind_Sword
+      - Item: Comp_Fog_Dew_Sword
+      - Item: Comp_Crimson_Rose
+      - Item: Comp_The_Black_Gatling
+      - Item: Comp_MeawFoxtail
+      - Item: aegis_21066
+      - Item: Comp_Fatalist
+      - Item: Comp_Light_Blade
+      - Item: Comp_Scalet_DragonL_Bow
   - Item: Ancient_Hero_Wisdom
     RandomOptionGroup: ANCIENT_HERO_WISDOM
     TargetItems:
@@ -2634,6 +2656,28 @@ Body:
       - Item: Up_Crimson_Rose
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
+      - Item: aegis_2064
+      - Item: Comp_Undine_Spear_K
+      - Item: Comp_Royal_Bow_K
+      - Item: Comp_Shadow_Staff_K
+      - Item: aegis_1873
+      - Item: Comp_Sword_Of_Bluefire
+      - Item: Comp_Oriental_Sword
+      - Item: aegis_18202
+      - Item: aegis_1350
+      - Item: Comp_Magic_Sword
+      - Item: aegis_28646
+      - Item: Comp_Shiver_Katar_K_TH
+      - Item: Comp_Demon_S_Shot
+      - Item: Comp_Sharp_Wind_Sword
+      - Item: Comp_Fog_Dew_Sword
+      - Item: Comp_Crimson_Rose
+      - Item: Comp_The_Black_Gatling
+      - Item: Comp_MeawFoxtail
+      - Item: aegis_21066
+      - Item: Comp_Fatalist
+      - Item: Comp_Light_Blade
+      - Item: Comp_Scalet_DragonL_Bow
   - Item: Boost_Up_1
     ResultRefine: 10
     MaximumRefine: 9
@@ -5156,3 +5200,12 @@ Body:
       - Item: Subject_CapeRange_TH
       - Item: Subject_CapeMagic_TH
       - Item: Subject_CapeMelee_TH
+  - Item: GMT_Robe_Stone
+    ResultRefine: 12
+    MaximumRefine: 11
+    CardsAllowed: true
+    TargetItems:
+      - Item: Geffen_Magic_Muffler
+      - Item: Anti_Magic_Manteau
+      - Item: Comp_Anti_Manteau_TH
+      - Item: Comp_Geffen_M_Muffle

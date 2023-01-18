@@ -65773,6 +65773,15 @@ Body:
       NoAuction: true
     Script: |
       laphine_synthesis();
+  - Id: 101645
+    AegisName: GMT_Robe_Stone
+    Name: Geffen Secret Stone
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
   - Id: 101654
     AegisName: aegis_101654
     Name: Almighty Shadow Selection Box    # !todo check english name
