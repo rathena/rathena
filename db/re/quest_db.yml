@@ -5768,9 +5768,31 @@ Body:
           KOBOLD_2: true
           KOBOLD_3: true
           KOBOLD_ARCHER: true
+  - Id: 8674
+    Title: "Subjugation - Porto Luna"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild06
+        MapMobTargets:
+          ANOPHELES: true
+          KOBOLD_1: true
+          KOBOLD_2: true
+          KOBOLD_3: true
+          KOBOLD_ARCHER: true
   - Id: 8673
     Title: "[Standby] Subjugation-Portu Luna"
     TimeLimit: 4h
+  - Id: 8675
+    Title: "Subjugation-Veins Field-3"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ve_fild04
+        MapMobTargets:
+          GALION: true
+          DROSERA: true
+          MUSCIPULAR: true
   - Id: 8676
     Title: "[Standby] Subjugation-Veins Field-3"
     TimeLimit: 4h
