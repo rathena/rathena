@@ -85,7 +85,6 @@ S_Boss:
 	end;
 
 OnBossDeath:
-	// mapannounce "com_d02_i", "", bc_map;	// todo
 	killmonster "com_d02_i", "illusion_luanda::OnBossDeath";
 	.boss_spawn = false;
 	.cooldown = true;
