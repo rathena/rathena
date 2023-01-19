@@ -1483,7 +1483,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>Mutant Chimera Amitera and Mutant Chimera Fillia</FONT> among the chimeras in culture.";
 			next;
 			mes "[Ansuriya]";
-			mes "You will be able to recognize them right away as the attribute characteristics of earth and fire appear much stronger than those of existing entities.";";
+			mes "You will be able to recognize them right away as the attribute characteristics of earth and fire appear much stronger than those of existing entities.";
 			mes "Actually, it's more like a monster than a homunculus...";
 			next;
 			mes "[Ansuriya]";
