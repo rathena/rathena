@@ -36,7 +36,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "Regarding the Pope, it is strictly forbidden to make any public announcement except that it is permitted to be revealed in the temple. It is a felony punishment for anyone who speaks or hears.";
 		next;
 		mes "[Niren]";
-		mes "However, even if the situation is the situation and the adventurer sees me as a reliable person, listen to what I have to say from now on, and whether you accept the request or not, you must keep today's dialogue absolutely confidential.";
+		mes "However, even if this is the situation and the adventurer sees me as a reliable person, listen to what I have to say from now on, and whether you accept the request or not, you must keep today's dialogue absolutely confidential.";
 		next;
 		mes "[Niren]";
 		mes "Do you understand?";
@@ -52,7 +52,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "^0000cdPope's sleeping time^000000 is abnormal, and it is increasing more and more.";
 		next;
 		mes "[Niren]";
-		mes "At first, she started to go to bed early in the evening, then she started to stand up much later in the morning, and now she goes to bed more and more often.";
+		mes "At first, she started to go to bed early in the evening, then she started to get up much later in the morning, and now she goes to bed more often.";
 		next;
 		mes "[Niren]";
 		mes "Right now, she's still asleep.";
@@ -85,7 +85,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "Just once, she woke up and asked about her ^0000cdbrother Luwmin^000000.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "So the Pope has have a family...?";
+		mes "So the Pope has a family...?";
 		next;
 		mes "[Niren]";
 		mes "Yes. However, it is a matter of our religion that before coming to the temple and becoming a Pope, everything must be washed away and forgotten.";
@@ -94,7 +94,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "This includes any connection to families.";
 		next;
 		mes "[Niren]";
-		mes "There is only one in an age: born as a child of choice and entering the temple to be reborn as a body to enshrine the goddess.";
+		mes "It is a once in a life chance: born as a child of choice and entering the temple to be reborn as a body to enshrine the goddess.";
 		next;
 		mes "[Niren]";
 		mes "So, officially, the Pope has no secular family.";
@@ -109,7 +109,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "Yes, it's just a dream, of course, but I don't see it that way. And that's why we enlisted adventurers.";
 		next;
 		mes "[Niren]";
-		mes "The Pope is not allowed to touch anyone in the temple, and if someone had to approach the pope, this person would have to bribe someone within the temple or use another method.";
+		mes "The Pope is not allowed to touch anyone in the temple, and if someone had to approach the Pope, this person would have to bribe someone within the temple or use another method.";
 		next;
 		mes "[Niren]";
 		mes "However, that method is rather unlikely due to the high probability of getting caught.";
@@ -121,19 +121,19 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "Is that possible?";
 		next;
 		mes "[Niren]";
-		mes "It cannot be affirmed, but it is possible.";
+		mes "It cannot be confirmed, but it is possible.";
 		next;
 		mes "[Niren]";
 		mes "And there is one, someone who has doubts.";
 		next;
 		mes "[Niren]";
-		mes "The Pope's ^0000cdtwin brother^000000, who was sealed in ice by ^0000ffKthullanax^000000 in the depths of the ^0000ffIce cave^000000.";
+		mes "The Pope's ^0000cdtwin brother^000000, who was sealed in ice by ^0000ffKthullanax^000000 in the depths of the ^0000ffIce Cave^000000.";
 		next;
 		mes "[Niren]";
 		mes "According to a recent investigation report, it was due to the influence of Kthullanax that it was given a weak magical power.";
 		next;
 		mes "[Niren]";
-		mes "In one belly, there must be a special sympathy as the twins born at one day and at one o'clock.";
+		mes "In one instance, there must be a special connection as the twins born at one day and at one o'clock.";
 		next;
 		mes "[Niren]";
 		mes "If somehow, through a dream, consciousness came into contact with the Pope, it would be possible to intervene in everything about the Pope through a dream.";
@@ -142,7 +142,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "In the unconscious way.";
 		next;
 		mes "[Niren]";
-		mes "As the current Pope's sleep time is getting slower, it is speculated that someone is trying to hold onto him or that the Pope does not want to wake himself up.";
+		mes "As the current Pope's sleep time is getting slower, it is speculated that someone is trying to hold onto her or that the Pope does not want to wake herself up.";
 		next;
 		mes "[Niren]";
 		mes "So I hope you can get into the Pope's dream and see what's going on, and if you find any problems, you can solve them.";
@@ -172,7 +172,7 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "The Pope is Arunafelz's hope and dream.";
 		next;
 		mes "[Niren]";
-		mes "If his dreaming durations continually increase, then one day she won't wake up and sleep forever...";
+		mes "If her dreaming duration continually increase, then one day she won't wake up and sleep forever...";
 		next;
 		mes "[Niren]";
 		mes "Protect the Pope in your dreams and go as far as possible to find out what's going on.";
@@ -184,10 +184,10 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		mes "Maybe it's really dangerous. So please be careful.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Okay";
+		mes "Okay.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Would you like to intrude her dream right now? Or do you need time to prepare?";
+		mes "Would you like to enter her dream right now? Or do you need time to prepare?";
 		next;
 		select("Let me do some preparations.");
 		mes "[Niren]";
@@ -195,9 +195,9 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		setquest 14594;
 		close3;
 	}
-	if (checkquest(14585,HUNTING) == 2) {
+	if (checkquest(14585,HUNTING) == 2 || checkquest(14587,HUNTING) == 2) {
 		mes "[Niren]";
-		mes "Adventurer, how was the Pope's dream state like?";
+		mes "Adventurer, what was the Pope's dream state like?";
 		next;
 		mes "- You describe the dream of the Pope and Luwmin in detail -";
 		next;
@@ -221,38 +221,11 @@ rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
 		next;
 		mes "[Niren]";
 		mes "As for today, it's time for you to relax comfortably.";
-		completequest 14585;
+		if (checkquest(14585,HUNTING) == 2)
+			completequest 14585;
+		else // 14587
+			completequest 14587;
 		getexp 126000,90000;
-		close3;
-	}
-	if (checkquest(14587,HUNTING) == 2) {
-		mes "[Niren]";
-		mes "Adventurer, how was the Pope's dream state like?";
-		next;
-		mes "- You describe the dream of the Pope and Luwmin in detail -";
-		next;
-		mes "[Niren]";
-		mes "That's bizzare. So you found out that her dream was due to her anxiety in daily life?";
-		next;
-		mes "[Niren]";
-		mes "I'm sure she came to her senses.";
-		next;
-		mes "[Niren]";
-		mes "Adventurer, do you mind if I were to ask for another favour?";
-		next;
-		mes "[Niren]";
-		mes "Could you accompany the Pope in her dream again? She...needs company.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Sure. I've also promised that to the Pope herself.";
-		next;
-		mes "[Niren]";
-		mes "Thank you very much. She is haunted by her inner demons...";
-		next;
-		mes "[Niren]";
-		mes "As for today, it's time for you to relax comfortably.";
-		completequest 14587;
-		getexp 1260000,900000;
 		close3;
 	}
 	switch (checkquest(14586,PLAYTIME)) {
@@ -317,7 +290,7 @@ rachel,176,145,6	script	Dream#poent	PORTAL,{
 	case 0:
 	case 1:
 		mes "[Dream Path]";
-		mes "The crack in time is not safe enough to pass back and forth. Please come back again if the after effect timer has passed.";
+		mes "The crack in time is not safe enough to pass back and forth. Please come back again when the after effect timer has passed.";
 		close;
 	case 2:
 		mes "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000";
@@ -389,7 +362,7 @@ rachel,176,145,6	script	Dream#poent	PORTAL,{
 	mes "Pope, please calm down. I have been sent by Niren.";
 	next;
 	mes "[Pope]";
-	mes ".Who ...?";
+	mes "Who ...?";
 	npctalk "By Niren ...?";
 	next;
 	mes "["+strcharinfo(0)+"]";
@@ -399,7 +372,7 @@ rachel,176,145,6	script	Dream#poent	PORTAL,{
 	mes "" + strcharinfo(0) + "?";
 	next;
 	mes "[Pope]";
-	mes "Niren ... did she sent you?";
+	mes "Niren ... did she send you?";
 	next;
 	mes "[Pope]";
 	mes "Where is Niren?";
@@ -409,7 +382,7 @@ rachel,176,145,6	script	Dream#poent	PORTAL,{
 	next;
 	mes "[Pope]";
 	mes "Yeah ... I remember now. Adventurer ...";
-	npctalk "I remembered ...";
+	npctalk "I remember ...";
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "What were you doing?";
@@ -588,8 +561,8 @@ OnDisable:
 
 1@pop1,100,98,3	script	Pope#1hmoon04	4_F_ARUNA_POP,{
 	mes "[Priest]";
-	mes "Your Holyness.";
-	npctalk "Your Holyness",instance_npcname("Priest#1hmoon01");
+	mes "Your Holiness.";
+	npctalk "Your Holiness",instance_npcname("Priest#1hmoon01");
 	next;
 	mes "[Priest]";
 	mes "The Pope has arrived.";
@@ -605,11 +578,11 @@ OnDisable:
 	next;
 	mes "[Devotee]";
 	mes "Pope, please behave yourself in public.";
-	npctalk "Pope, please behave yourself in public",instance_npcname("Devotee#1hmoon02");
+	npctalk "Pope, please behave yourself in public.",instance_npcname("Devotee#1hmoon02");
 	next;
 	mes "[Devotee]";
-	mes "What a disrespect to the pope! Take a look at yourself!";
-	npctalk "What a disrespect to the pope! Take a look at yourself!",instance_npcname("Devotee#1hmoon04");
+	mes "What a disrespect to the Pope! Take a look at yourself!";
+	npctalk "What a disrespect to the Pope! Take a look at yourself!",instance_npcname("Devotee#1hmoon04");
 	next;
 	mes "[Devotee]";
 	mes "The Pope is divine! Let's keep that ideal. Don't speak up!";
@@ -652,8 +625,8 @@ OnDisable:
 	npctalk "The Pope will need to act according to our objectives.",instance_npcname("Devotee#1hmoon03");
 	next;
 	mes "[Priest]";
-	mes "The Pope's actions is none of your concern.";
-	npctalk "The Pope's actions is none of your concern.",instance_npcname("Priest#1hmoon02");
+	mes "The Pope's actions are none of your concern.";
+	npctalk "The Pope's actions are none of your concern.",instance_npcname("Priest#1hmoon02");
 	next;
 	mes "[Devotee]";
 	mes "Step down if you disagree.";
@@ -684,16 +657,16 @@ OnDisable:
 	npctalk "We may have made the wrong choice.",instance_npcname("Devotee#1hmoon06");
 	next;
 	mes "[Devotee]";
-	mes "If i had to change my choice right now...!";
-	npctalk "If i had to change my choice right now...!",instance_npcname("Devotee#1hmoon02");
+	mes "If I had to change my choice right now...!";
+	npctalk "If I had to change my choice right now...!",instance_npcname("Devotee#1hmoon02");
 	next;
 	mes "[Priest]";
-	mes "The imperfect pope needs to be replaced.";
-	npctalk "The imperfect pope needs to be replaced.",instance_npcname("Priest#1hmoon02");
+	mes "The imperfect Pope needs to be replaced.";
+	npctalk "The imperfect Pope needs to be replaced.",instance_npcname("Priest#1hmoon02");
 	next;
 	mes "[Devotee]";
-	mes "I need a pope who listens to my concerns.";
-	npctalk "I need a pope who listens to my concerns.",instance_npcname("Devotee#1hmoon03");
+	mes "I need a Pope who listens to my concerns.";
+	npctalk "I need a Pope who listens to my concerns.",instance_npcname("Devotee#1hmoon03");
 	next;
 	mes "[Priest]";
 	mes "We don't need the current Pope.";
@@ -721,7 +694,7 @@ OnDisable:
 	mes "What am I... to these people?";
 	next;
 	mes "[Pope]";
-	mes "A sacred vessel of the Goddess";
+	mes "A sacred vessel of the Goddess.";
 	next;
 	mes "[Pope]";
 	mes "An imperfect being.";
@@ -835,8 +808,8 @@ OnDisable:
 	donpcevent instance_npcname("Devotee#1hmoon27")+"::OnEnable";
 	donpcevent instance_npcname("Devotee#1hmoon28")+"::OnEnable";
 	mes "[Devotee]";
-	mes "Pope! please remain seated, for your own good!";
-	npctalk "Pope! please remain seated, for your own good!","Devotee#1hmoon27";
+	mes "Pope! Please remain seated, for your own good!";
+	npctalk "Pope! Please remain seated, for your own good!","Devotee#1hmoon27";
 	next;
 	cutin "pop_sim",2;
 	mes "[Pope]";
@@ -928,7 +901,7 @@ OnDisable:
 	sleep2 1000;
 	npctalk "One !!!",instance_npcname("Guard#1hmoon21");
 	npctalk "One !!!",instance_npcname("Guard#1hmoon21");
-	instance_announce -1, "Security Captain:: From now on, the adventurer is considered our enemy!",bc_map,"0xFFFF00";
+	instance_announce -1, "Security Captain: From now on, the adventurer is considered our enemy!",bc_map,"0xFFFF00";
 	npctalk "From now on, the adventurer is considered our enemy!",instance_npcname("Guard#1hmoon21");
 	sleep2 1000;
 	instance_announce -1, "Security Captain: Protect the Pope and eliminate the adventurer!",bc_map,"0xFFFF00";
@@ -936,9 +909,9 @@ OnDisable:
 	sleep2 1000;
 	npctalk "Protect the Pope and eliminate the adventurer!",instance_npcname("Guard#1hmoon21");
 	sleep2 1000;
-	npctalk "Protects the Pope and eliminate the adventurer!",instance_npcname("Guard#1hmoon22");
+	npctalk "Protect the Pope and eliminate the adventurer!",instance_npcname("Guard#1hmoon22");
 	sleep2 1000;
-	npctalk "Protects the Pope and eliminate the adventurer!",instance_npcname("Guard#1hmoon22");
+	npctalk "Protect the Pope and eliminate the adventurer!",instance_npcname("Guard#1hmoon22");
 	sleep2 1000;
 	npctalk "Aye Aye Sir !!",instance_npcname("Guard#1hmoon23");
 	npctalk "Aye Aye Sir !!",instance_npcname("Guard#1hmoon24");
@@ -1050,7 +1023,7 @@ OnMyMobDead:
 	sleep2 2000;
 	npctalk "Come on, we need to get out of here.",instance_npcname(strnpcinfo(0));
 	sleep2 2000;
-	unittalk getcharid(3),"... Let's chase the Pope.";
+	unittalk getcharid(3),"... Let's follow the Pope.";
 	donpcevent instance_npcname("Pope#1hmoon05")+"::OnDisable";
 	donpcevent instance_npcname("#1hmoond05")+"::OnEnable";
 	pcblockmove getcharid(3),0;
@@ -1097,11 +1070,11 @@ OnEnable:
 	next;
 	cutin "pop_nor", 2;
 	mes "[Pope]";
-	mes "Yes. It's okay now. The adventurers helped me.";
+	mes "Yes. I'm okay now. The adventurers helped me.";
 	next;
 	cutin "loo_nor",0;
 	mes "[Luwmin]";
-	mes "Thank you for helping my sister. I'll take you from here.";
+	mes "Thank you for helping my sister. I'll take it from here.";
 	npctalk "Just watch from here onwards.",instance_npcname("Luwmin#1hmoon01");
 	next;
 	mes "["+strcharinfo(0)+"]";
@@ -1120,7 +1093,7 @@ OnEnable:
 	next;
 	cutin "loo_nor",0;
 	mes "[Luwmin]";
-	mes "These clothes attract attention. Lets get you a change in attire.";
+	mes "These clothes attract attention. Lets get you a change of attire.";
 	next;
 	cutin "pop_nor", 2;
 	mes "[Pope]";
@@ -1277,7 +1250,7 @@ OnEnable:
 	sleep2 2000;
 	unittalk getcharid(3),"...This is near High Priest Zhed's residence.";
 	sleep2 2000;
-	npctalk "Zhed? Then I'll be safe here", instance_npcname("Pope#2hmoon01");
+	npctalk "Zhed? Then I'll be safe here.", instance_npcname("Pope#2hmoon01");
 	sleep2 2000;
 	npctalk "It's too late. We have to hurry.", instance_npcname("Luwmin#2hmoon01");
 	sleep2 2000;
@@ -1299,7 +1272,7 @@ OnDisable:
 
 1@pop2,63,237,3	script	Pope#2hmoon02	4_F_ARUNA_POP2,{
 	mes "[Luwmin]";
-	mes "This is the residence of the priest right?";
+	mes "This is the residence of the Priest right?";
 	next;
 	cutin "loo_nor", 255;
 	mes "["+strcharinfo(0)+"]";
@@ -1347,7 +1320,7 @@ OnDisable:
 	next;
 	cutin "ra_gman2", 0;
 	mes "[High Priest Zhed]";
-	mes "What did you come from the temple? What did you do to the Pope?";
+	mes "Where did you come from? The temple? What did you do to the Pope?";
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "I am escorting the Pope.";
@@ -1416,7 +1389,7 @@ OnDisable:
 	next;
 	cutin "loo_smi", 0;
 	mes "[Luwmin]";
-	mes "It's best for us to scatter here to loose them. Let's regroup at the village.";
+	mes "It's best for us to scatter here to lose them. Let's regroup at the village.";
 	sleep2 1000;
 	cutin "loo_smi", 255;
 	donpcevent instance_npcname("Luwmin#2hmoon02")+"::OnDisable";
@@ -1435,7 +1408,7 @@ OnDisable:
 	mes "The person...";
 	next;
 	cutin "pops_sim", 255;
-	instance_announce -1, "Guard: The pope is here!",bc_map,"0xFFFF00";
+	instance_announce -1, "Guard: The Pope is here!",bc_map,"0xFFFF00";
 	sleep2 1000;
 	instance_announce -1, "Guard: Over here! Quick!!!",bc_map,"0xFFFF00";
 	sleep2 3000;
@@ -1472,7 +1445,7 @@ OnDisable:
 	donpcevent instance_npcname("Guard#2hmoon07")+"::OnEnable";
 	donpcevent instance_npcname("Guard#2hmoon08")+"::OnEnable";
 	mes "[Guards]";
-	mes "The pope is over here!";
+	mes "The Pope is over here!";
 	npctalk "Pope is here", instance_npcname("Guard#2hmoon03");
 	next;
 	mes "[Guards]";
@@ -1480,7 +1453,7 @@ OnDisable:
 	next;
 	cutin "pops_sim", 2;
 	mes "[Pope]";
-	mes "Now, I will not go now!";
+	mes "No, I will not go now!";
 	next;
 	cutin "pops_sim", 255;
 	mes "[Guards]";
@@ -1499,11 +1472,11 @@ OnDisable:
 	next;
 	mes "[Guards]";
 	mes "Submit! You are just a mere adventurer!";
-	npctalk "Where to go over the theme !!", instance_npcname("Guard#2hmoon07");
+	npctalk "You are just a mere adventurer!", instance_npcname("Guard#2hmoon07");
 	next;
 	mes "[Guards]";
-	mes "Outsiders should not bother about our bussiness!";
-	npctalk "Outsiders should not bother about our bussiness!", instance_npcname("Guard#2hmoon05");
+	mes "Outsiders should not bother about our business!";
+	npctalk "Outsiders should not bother about our business!", instance_npcname("Guard#2hmoon05");
 	sleep2 500;
 	npctalk "All of you! Shut up!", instance_npcname("Guard#2hmoon04");
 	next;
@@ -1511,7 +1484,7 @@ OnDisable:
 	mes "The adventurer is a hostle target. Eliminate him with prejudice!";
 	next;
 	mes "[Guards]";
-	mes "Remember, don't hurt the pope!";
+	mes "Remember, don't hurt the Pope!";
 	next;
 	mes "[Guards]";
 	mes "Ready?";
@@ -1687,13 +1660,13 @@ OnEnable:
 	sleep2 2000;
 	npctalk "Well what sort of weapons does he make?",instance_npcname("Luwmin#2hmoon04");
 	sleep2 2000;
-	npctalk "I think its some common swords and the likes of it, for the guards.",instance_npcname("Friend#2hmoon05");
+	npctalk "I think it's some common swords and the likes of it, for the guards.",instance_npcname("Friend#2hmoon05");
 	sleep2 2000;
 	npctalk "That's interesting.",instance_npcname("Friend#2hmoon06");
 	sleep2 2000;
 	npctalk "Why? You interested in such stuff?",instance_npcname("Friend#2hmoon05");
 	sleep2 2000;
-	npctalk "I really do not know to say...",instance_npcname("Friend#2hmoon04");
+	npctalk "I really do not know to what say...",instance_npcname("Friend#2hmoon04");
 	sleep2 2000;
 	npctalk "Well if you want to, go ahead.",instance_npcname("Friend#2hmoon06");
 	sleep2 2000;
@@ -1845,7 +1818,7 @@ OnEnable:
 	sleep2 2000;
 	npctalk "Thank you. I'll eat well.",instance_npcname("Luwmin#2hmoon08");
 	sleep2 2000;
-	npctalk "brother?",instance_npcname("Pope#2hmoon09");
+	npctalk "Brother?",instance_npcname("Pope#2hmoon09");
 	sleep2 2000;
 	npctalk "Oh ~ My hunger has been satisfied ~",instance_npcname("Luwmin#2hmoon08");
 	sleep2 2000;
@@ -1902,7 +1875,7 @@ OnEnable:
 	next;
 	cutin "loo_smi", 0;
 	mes "[Luwmin]";
-	mes "I'm sorry. We will come home early the next time.";
+	mes "I'm sorry. We will come home earlier next time.";
 	next;
 	cutin "pops_smi", 2;
 	mes "[Pope]";
@@ -1997,31 +1970,31 @@ OnEnable:
 	sleep2 500;
 	donpcevent instance_npcname("Devotee#2hmoon02")+"::OnEnable";
 	npctalk "The Pope, our Glory!",instance_npcname("Devotee#2hmoon02");
-	mes "[Village]";
+	mes "[Villager]";
 	mes "Did you just heard?";
 	npctalk "Did you just heard?",instance_npcname("Townsfolk#2hmoon02");
 	next;
-	mes "[Village]";
+	mes "[Villager]";
 	mes "To think that the Pope would have been born within our neighborhood!";
 	npctalk "To think that the Pope would have been born within our neighborhood!",instance_npcname("Townsfolk#2hmoon03");
 	next;
 	donpcevent instance_npcname("Townsfolk#2hmoon01")+"::OnEnable";
-	mes "[Village]";
+	mes "[Villager]";
 	mes "What? Pope?";
 	npctalk "What? Pope ??",instance_npcname("Townsfolk#2hmoon01");
 	next;
 	donpcevent instance_npcname("Townsfolk#2hmoon02")+"::OnEnable";
-	mes "[Village]";
+	mes "[Villager]";
 	mes "We were blessed with such a gift...!";
 	npctalk "We were blessed with such a gift...!",instance_npcname("Townsfolk#2hmoon02");
 	next;
 	donpcevent instance_npcname("Townsfolk#2hmoon03")+"::OnEnable";
-	mes "[Village]";
+	mes "[Villager]";
 	mes "It seems to be a kid living next to our home. I had some close encounters with her before.... Ahem!";
 	npctalk "It seems to be a kid living next to our home. I had some close encounters with her before.... Ahem!",instance_npcname("Townsfolk#2hmoon03");
 	next;
 	donpcevent instance_npcname("Townsfolk#2hmoon04")+"::OnEnable";
-	mes "[Village]";
+	mes "[Villager]";
 	mes "Pope? Am I dreaming...?";
 	npctalk "Pope? Am I dreaming...?",instance_npcname("Townsfolk#2hmoon04");
 	next;
@@ -2032,7 +2005,7 @@ OnEnable:
 	next;
 	cutin "ra_gwoman", 0;
 	mes "[High Priest]";
-	mes "I came to find a child who meets the new Pope's criteria.";
+	mes "I came to find a child who meets the criteria for a new Pope.";
 	next;
 	donpcevent instance_npcname("Townsfolk#2hmoon12")+"::OnEnable";
 	donpcevent instance_npcname("Townsfolk#2hmoon23")+"::OnEnable";
@@ -2087,10 +2060,10 @@ OnEnable:
 	donpcevent instance_npcname("Townsfolk#2hmoon25")+"::OnEnable";
 	npctalk "Make space, I need to see!",instance_npcname("Townsfolk#2hmoon25");
 	donpcevent instance_npcname("Townsfolk#2hmoon18")+"::OnEnable";
-	npctalk "Praise the birth of a new pope",instance_npcname("Townsfolk#2hmoon18");
+	npctalk "Praise the birth of a new Pope!",instance_npcname("Townsfolk#2hmoon18");
 	cutin "pops_sim", 2;
 	mes "[Pope]";
-	mes "Niren? Is that you, Niren? Don't separate my from my family!";
+	mes "Niren? Is that you, Niren? Don't separate me from my family!";
 	next;
 	cutin "ra_gwoman", 0;
 	mes "[High Priest]";
@@ -2101,7 +2074,7 @@ OnEnable:
 	npctalk "This girl is undoubtly the true Pope.",instance_npcname("High Priest#2hmoon01");
 	next;
 	donpcevent instance_npcname("Townsfolk#2hmoon21")+"::OnEnable";
-	npctalk "I know that kids! I know !!",instance_npcname("Townsfolk#2hmoon21");
+	npctalk "I know that kid! I know !!",instance_npcname("Townsfolk#2hmoon21");
 	mes "[High Priest]";
 	mes "It is Freyja's will, to be reincarnated in such a vessel.";
 	npctalk "It is Freyja's will, to be reincarnated in such a vessel.",instance_npcname("High Priest#2hmoon01");
@@ -2206,7 +2179,7 @@ OnEnable:
 	next;
 	cutin "loo_smi", 0;
 	mes "[Luwmin]";
-	mes "Listen to me. We never separate from one another.";
+	mes "Listen to me. We will never be apart from one another.";
 	next;
 	cutin "pops_sim", 2;
 	mes "[Pope]";
@@ -2650,7 +2623,7 @@ OnMyMobDead:
 		'2hmoon++;
 		end;
 	case 8:
-		instance_announce -1, "Guards: Whatch out, they went north!",bc_map,"0xFFFF00";
+		instance_announce -1, "Guards: Watch out, they went north!",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("Pope#2hmoon10")+"::OnEnable";
 		donpcevent instance_npcname("#2hmoon07")+"::OnEnable";
 		navigateto instance_mapname("1@pop2"),119,123;
@@ -2701,7 +2674,7 @@ OnMyMobDead:
 		pcblockmove getcharid(3),1;
 		npctalk "I miss Mom, Dad and Luwmin.", instance_npcname("Pope#2hmoon11");
 		sleep2 1000;
-		npctalk "I feel like I want to excape reality.", instance_npcname("Pope#2hmoon11");
+		npctalk "I feel like I want to escape reality.", instance_npcname("Pope#2hmoon11");
 		sleep2 1000;
 		npctalk "......", instance_npcname("Pope#2hmoon11");
 		sleep2 1000;
@@ -2761,10 +2734,10 @@ OnMyMobDead:
 		donpcevent instance_npcname("Pope#2hmoon07")+"::OnEnable";
 		sleep2 2000;
 		donpcevent instance_npcname("Luwmin#2hmoon06")+"::OnEnable";
-		npctalk "I'm not waiting for it. I came to take it. Let's go before I come to go. Hurry up!",instance_npcname("Luwmin#2hmoon06");
+		npctalk "I'm not waiting for it. I came to take her. Let's go before the come back. Hurry up!",instance_npcname("Luwmin#2hmoon06");
 		sleep2 2000;
 		donpcevent instance_npcname("Luwmin#2hmoon06")+"::OnDisable";
-		npctalk "Adventurer, go with.",instance_npcname("Pope#2hmoon07");
+		npctalk "Adventurer, come with us.",instance_npcname("Pope#2hmoon07");
 		sleep2 2000;
 		donpcevent instance_npcname("Pope#2hmoon07")+"::OnDisable";
 		donpcevent instance_npcname("#2hmoon10")+"::OnEnable";
@@ -2886,7 +2859,7 @@ OnEnable:
 	next;
 	cutin "loo_nor", 0;
 	mes "[Luwmin]";
-	mes "It's okay now. This is safe.";
+	mes "It's okay now. We are safe.";
 	next;
 	cutin "pops_nor", 2;
 	mes "[Pope]";
@@ -2898,7 +2871,7 @@ OnEnable:
 	next;
 	cutin "pops_nor", 2;
 	mes "[Pope]";
-	mes "I thought this was a place that existed only in a dream.";
+	mes "I thought this was a place that existed only in dreams.";
 	next;
 	mes "[Pope]";
 	mes "This fountain is the same as I imagined. That tree too. And... that doll!";
@@ -2930,10 +2903,10 @@ OnEnable:
 	next;
 	cutin "loo_ang", 0;
 	mes "[Luwmin]";
-	mes "Keep her safe from what? We were fine until you just came!";
+	mes "Keep her safe from what? We were fine until you came!";
 	next;
 	mes "[Luwmin]";
-	mes "After you appeared, we had high priests, guards coming at us....We even got separated from our parents!!";
+	mes "After you appeared, we had high priests and guards coming for us.... We even got separated from our parents!!";
 	next;
 	mes "[Luwmin]";
 	mes "You are a risk to us!";
@@ -2941,7 +2914,7 @@ OnEnable:
 	next;
 	cutin "pops_sim", 2;
 	mes "[Pope]";
-	mes "Brother, don't do that. The Adventurer has been a trustful companion.";
+	mes "Brother, don't say that. The Adventurer has been a trustful companion.";
 	next;
 	cutin "loo_ang", 0;
 	mes "[Luwmin]";
@@ -2971,7 +2944,7 @@ OnEnable:
 	cutin "pops_sim", 2;
 	mes "[Pope]";
 	mes "... Nobody will ever find us! I would bet my life on that..!";
-	npctalk "Forever ... Nobody finds ...",instance_npcname("Pope#3hmoon01");
+	npctalk "Forever ... Nobody will find ...",instance_npcname("Pope#3hmoon01");
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "Pope! You cannot stay here forever, you need to wake up eventually!";
@@ -2982,7 +2955,7 @@ OnEnable:
 	npctalk "Dream ...?",instance_npcname("Pope#3hmoon01");
 	next;
 	mes "["+strcharinfo(0)+"]";
-	mes "In reality, many people are awaiting your presencee. The is just a dream, which may not reflect what had happened in the past.";
+	mes "In reality, many people are awaiting your presence. This is just a dream which may not reflect what have happened in the past.";
 	next;
 	cutin "loo_ang", 0;
 	mes "[Luwmin]";
@@ -2995,7 +2968,7 @@ OnEnable:
 	npctalk "This is a dream ...?",instance_npcname("Pope#3hmoon01");
 	next;
 	mes "["+strcharinfo(0)+"]";
-	mes "Yes, that's right. This is just a dream, it's a manisfestation of all of your anxiety and Luwmin's. Not everything you saw was real.";
+	mes "Yes, that's right. This is just a dream. It's a manifestation of all of your anxiety and Luwmin's. Not everything you saw was real.";
 	next;
 	cutin "loo_ang", 0;
 	mes "[Luwmin]";
@@ -3035,7 +3008,7 @@ OnEnable:
 	npctalk "Going together.",instance_npcname("Pope#3hmoon01");
 	next;
 	mes "["+strcharinfo(0)+"]";
-	mes "Don't do that. Luwmin has frozen to not move.";
+	mes "Don't do that. Luwmin is frozen and can not move.";
 	next;
 	cutin "pops_sim", 2;
 	mes "[Pope]";
@@ -3092,8 +3065,8 @@ OnEnable:
 	npctalk "Is that why my brother wants to share a dream with me?",instance_npcname("Pope#3hmoon01");
 	next;
 	mes "[Pope]";
-	mes "What do you want to dream?";
-	npctalk "What do you want to dream?",instance_npcname("Pope#3hmoon01");
+	mes "What do you want to dream about?";
+	npctalk "What do you want to dream about?",instance_npcname("Pope#3hmoon01");
 	next;
 	cutin "loo_smi", 0;
 	mes "[Luwmin]";
@@ -3113,7 +3086,7 @@ OnEnable:
 	next;
 	cutin "loo_ang", 0;
 	mes "[Luwmin]";
-	mes "Don't you dare to interfere!";
+	mes "Don't you dare interfere!";
 	specialeffect2 EF_FROSTDIVER2;
 	next;
 	mes "[Luwmin]";
@@ -3173,13 +3146,13 @@ OnEnable:
 	next;
 	cutin "pops_sim", 255;
 	mes "[Ktullanux]";
-	mes "This here is the owner of the ice cave.";
+	mes "This here is the owner of the Ice Cave.";
 	npctalk "Do you not recognize me?",instance_npcname("Ktullanux#3hmoon01");
 	sleep2 1000;
 	unittalk getcharid(3),"Who knows?";
 	next;
 	mes "["+strcharinfo(0)+"]";
-	mes "The owner of the ice cave? Was this not the dream of the Pope and Luwmin?";
+	mes "The owner of the Ice Cave? Was this not the dream of the Pope and Luwmin?";
 	next;
 	mes "[Ktullanux]";
 	mes "Siblings can share a dream, through sheer determination.";
@@ -3198,7 +3171,7 @@ OnEnable:
 	mes "Why? Why you ask?";
 	next;
 	mes "[Ktullanux]";
-	mes "Luwmin the younger subling was forcefully pushed deep into the cave and became frozen.";
+	mes "Luwmin, the younger sibling, was forcefully pushed deep into the cave and became frozen.";
 	npctalk "......",instance_npcname("Pope#3hmoon04");
 	next;
 	mes "[Ktullanux]";
@@ -3211,10 +3184,10 @@ OnEnable:
 	mes "Hence I looked into the consciousness of Luwmin.";
 	next;
 	mes "[Ktullanux]";
-	mes "I could saw what transpired back then...";
+	mes "I could see what transpired back then...";
 	next;
 	mes "[Ktullanux]";
-	mes "The memory was mainly related to his twin.";
+	mes "The memories were mainly related to his twin.";
 	next;
 	mes "[Ktullanux]";
 	mes "Remember that you used to play together with your brother, share conversations in bed, and to cry and laugh together.";
@@ -3235,16 +3208,16 @@ OnEnable:
 	mes "Luwmin had the power to share a dream with his sibling.";
 	next;
 	mes "[Ktullanux]";
-	mes "To make his sister sitting on the throne of the Pope to be trapped forever in a dream.";
+	mes "To make his sister, sitting on the throne of the Pope, to be trapped forever in a dream.";
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "How did it help you?";
 	next;
 	mes "[Ktullanux]";
-	mes "The men who threatened the Pope had me stuck in eternal slumber must be worried right now. Both of us have the common enemy.";
+	mes "The men who threatened the Pope had me stuck in eternal slumber must be worried right now. Both of us have a common enemy.";
 	next;
 	mes "[Ktullanux]";
-	mes "How upsetting must they be right now, having their leader in slumber...deep slumber.";
+	mes "How upsetting it must be having their leader in slumber... deep slumber.";
 	next;
 	cutin "pops_sim", 2;
 	mes "[Pope]";
@@ -3253,7 +3226,7 @@ OnEnable:
 	cutin "pops_sim", 255;
 	mes "["+strcharinfo(0)+"]";
 	mes "What a dream you have...";
-	unittalk getcharid(3),"This is an impossible dream.";
+	unittalk getcharid(3),"This is an unstable dream.";
 	sleep2 2000;
 	npctalk "You are rude!",instance_npcname("Ktullanux#3hmoon01");
 	next;
@@ -3261,7 +3234,7 @@ OnEnable:
 	mes "If you did not interfere !!!";
 	next;
 	mes "[Ktullanux]";
-	mes "I will get rid of both the Pope and Luwmin";
+	mes "I will get rid of both the Pope and Luwmin.";
 	next;
 	mes "[Ktullanux]";
 	mes "Pope, come here!";
@@ -3312,7 +3285,7 @@ OnEnable:
 	cutin "pop_nor", 0;
 	mes "[Pope]";
 	mes "Go back.";
-	npctalk "Go back to where you belong",instance_npcname("Pope#3hmoon03");
+	npctalk "Go back to where you belong.",instance_npcname("Pope#3hmoon03");
 	next;
 	mes "[Pope]";
 	mes "The place of dreams whose passage opens at night...";
@@ -3383,7 +3356,7 @@ OnEnable:
 	cutin "pops_sim", 2;
 	mes "[Pope]";
 	mes "Even so, that would...make me very happy.";
-	npctalk "Even so, that would...make me very happy..",instance_npcname("Pope#3hmoon05");
+	npctalk "Even so, that would...make me very happy.",instance_npcname("Pope#3hmoon05");
 	next;
 	cutin "pop_nor", 0;
 	mes "[Pope]";
@@ -3410,7 +3383,7 @@ OnEnable:
 	next;
 	cutin "pop_nor", 0;
 	mes "[Pope]";
-	mes "I am.";
+	mes "I am you.";
 	npctalk "I am you.",instance_npcname("Pope#3hmoon03");
 	next;
 	cutin "pops_smi", 2;
@@ -3522,7 +3495,7 @@ OnEnable:
 		getitem 25088,2; //Dream_Piece
 	}
 	donpcevent instance_npcname("Pope#3hmoon06")+"::OnDisable";
-	instance_announce -1, "A exit has appeared in the east direction.",bc_map,"0xFFFF00";
+	instance_announce -1, "An exit has appeared in the east direction.",bc_map,"0xFFFF00";
 	donpcevent instance_npcname("#3hmoond01")+"::OnEnable";
 	cutin "pop_nor",255;
 	navigateto instance_mapname("1@pop3"),79,67;

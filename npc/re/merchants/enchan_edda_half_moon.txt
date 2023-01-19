@@ -40,13 +40,13 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "I've always been a fan of the ^0000cdGoddess^000000. As I entered the temple and started my life as a devoted follower, my life began to blossom.";
 			next;
 			mes "[Temple Item Manager]";
-			mes "One day before i went to sleep, I had a ^0000cddream^000000 while I way praying to the Goddess.";
+			mes "One day before I went to sleep, I had a ^0000cddream^000000 while I way praying to the Goddess.";
 			next;
 			mes "[Temple Item Manager]";
 			mes "I heard the ^0000cdvoice^000000 of Goddess Freya in the full light.";
 			next;
 			mes "[Temple Item Manager]";
-			mes "But unfortunately, as soon as I woke up, I forgot all about my dreams. That's how dreams are.";
+			mes "But unfortunately, as soon as I woke up, I forgot all about my dream. That's how dreams are.";
 			next;
 			mes "[Temple Item Manager]";
 			mes "I cried endlessly because I felt sorry for that fact. But if the Goddess lets me hear her voice through a dream, wouldn't we too, be able to reach the Goddess through dreaming?";
@@ -64,7 +64,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "Anyway, when I first heard the request from our aunt, High Priestess Niren, I was surprised.";
 			next;
 			mes "[Temple Item Manager]";
-			mes "Would you dare to enter the Pope's dream...? The High Priestess Niren convinced me to enter her dream, but there was nothing that i could do to help her eventualy.";
+			mes "Would you dare to enter the Pope's dream...? The High Priestess Niren convinced me to enter her dream, but there was nothing that I could do to help her.";
 			next;
 			mes "[Temple Item Manager]";
 			mes "And the persuasion was surprisingly convincing.";
@@ -116,7 +116,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "I began to study the necklace and the strange fragment of the shrine. The strange fragment was named the ^0000cdDream Fragment^000000, meaning the fragment obtained in a dream. Kyah- Name Sense!";
 			next;
 			mes "[Temple Item Manager]";
-			mes "They seemed normal when being seperated, however i felt a subtle energy when i stacked them on top of each other.";
+			mes "They seemed normal when being separated, however I felt a subtle energy when I stacked them on top of each other.";
 			next;
 			mes "[Temple Item Manager]";
 			mes "From then on, I entered the Pope's dream and began to study by collecting them one by one, without being noticed by the Pope.";
@@ -137,7 +137,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 			mes "But what's even more surprising is that if you put a larger amount of ^0000cdDream Fragments^000000, that's about ^0000cd1000pcs^000000 or so, you can enchant an even more ^0000cdpowerful power^000000.";
 			next;
 			mes "[Temple Item Manager]";
-			mes "Any more than that, the Priest's Necklace couldn't hold up to, so all the items i've gathered were destroyed. I'm still working on it, so I'm sure I'll succeed someday.";
+			mes "Any more than that, the Priest's Necklace couldn't hold up to, so all the items I've gathered were destroyed. I'm still working on it, so I'm sure I'll succeed someday.";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "So, give me a three-line summary.";
@@ -189,7 +189,7 @@ rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
 		}
 		.@card = getequipcardid(.@part,3);
 		if (getiteminfo(.@card, ITEMINFO_SUBTYPE) == CARD_ENCHANT) {
-			npctalk "This necklace of yours already has an enchantment";
+			npctalk "This necklace of yours already has an enchantment.";
 			close;
 		}
 		mes "What special abilities would you like to enchant your necklace with?";
