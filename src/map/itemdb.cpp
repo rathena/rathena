@@ -1260,18 +1260,15 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 	struct item_data* id = data.get();
 
 // All these dates are unconfirmed
-#if PACKETVER >= 20100000
+#if PACKETVER >= 20151104
 	if( battle_config.feature_itemlink ) {
 
 #if PACKETVER >= 20160203
 		const std::string start_tag = "<ITEML>";
 		const std::string closing_tag = "</ITEML>";
-#elif PACKETVER >= 20151104
+#else // PACKETVER >= 20151104
 		const std::string start_tag = "<ITEM>";
 		const std::string closing_tag = "</ITEM>";
-#else // PACKETVER >= 20100000
-		const std::string start_tag = "<ITEMLINK>";
-		const std::string closing_tag = "</ITEMLINK>";
 #endif
 
 		itemstr += start_tag;
@@ -1298,22 +1295,22 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 		const std::string optid_sep = "+";
 		const std::string optpar_sep = ",";
 		const std::string optval_sep = "-";
-#elif PACKETVER >= 20151104 && PACKETVER < 20171213
-		const std::string card_sep = "'";
-		const std::string optid_sep = ")";
-		const std::string optpar_sep = "*";
-		const std::string optval_sep = "+";
-#else
+#elif PACKETVER >= 20171213
 		const std::string card_sep = "(";
 		const std::string optid_sep = "*";
 		const std::string optpar_sep = "+";
 		const std::string optval_sep = ",";
+#else // PACKETVER >= 20151104
+		const std::string card_sep = "'";
+		const std::string optid_sep = ")";
+		const std::string optpar_sep = "*";
+		const std::string optval_sep = "+";
 #endif
+
 		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
 			itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
 		}
 
-#if PACKETVER >= 20150225
 		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
 			if (item.option[i].id == 0) {
 				break; // ignore options including ones beyond this one since the client won't even display them
@@ -1325,7 +1322,6 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 			// Value
 			itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
 		}
-#endif
 
 		itemstr += closing_tag;
 		if ((itemdb_isequip2(id)) && (data->slots == 0))
