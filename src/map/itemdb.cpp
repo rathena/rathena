@@ -1263,7 +1263,7 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 #if PACKETVER >= 20151104
 	if( battle_config.feature_itemlink ) {
 
-#if PACKETVER >= 20160203
+#if PACKETVER >= 20160113
 		const std::string start_tag = "<ITEML>";
 		const std::string closing_tag = "</ITEML>";
 #else // PACKETVER >= 20151104
