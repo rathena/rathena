@@ -1707,7 +1707,7 @@ lhz_fild03,167,344,3	script	Map Examiner Modaka#madaka	4_F_JOB_KNIGHT,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "The nearest city from here is Liechtarsen~";
+			mes "The nearest city from here is Lighthalzen~";
 			next;
 			mes .@npc_name$;
 			mes "If you give me one " + .@item_name$ + ", I will send it right away!";
@@ -2357,7 +2357,7 @@ ra_fild08,163,47,5	script	Map Examiner Lucia#rsia	4_F_04,{
 		mes .@npc_name$;
 		mes "Ummm... I feel weird...!";
 		next;
-		mes "[Map ExaminerLucia]";
+		mes "[Map Examiner Lucia]";
 		mes "Um... did you come to receive a request? Did you receive it...?";
 		next;
 		mes .@npc_name$;
@@ -2472,8 +2472,6 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8667,PLAYTIME) ) {
 	case -1:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
 		break;
 	case 0:
 	case 1:
@@ -2507,6 +2505,7 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 		mes "Ah! Adventurer!";
 		next;
 		mes .@npc_name$;
+		.@skip = true;
 		break;
 	case 2:
 		mes .@npc_name$;
@@ -2516,6 +2515,10 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8668,HUNTING) ) {
 	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+		}
 		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		mes "Or, if you are nearby, we also support teleportation service.";
 		next;
@@ -2536,7 +2539,7 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "The nearest place here is ^0033FF Rachel^000000,";
+			mes "The nearest place here is ^0033FFRachel^000000,";
 			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 			mes "Ha~ It's popular these days, but I can't go buy it.";
 			next;
@@ -2568,7 +2571,7 @@ ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
 		mes "...Yes? Mobility service?";
 		next;
 		mes .@npc_name$;
-		mes "The nearest place here is ^0033FF Rachel^000000,";
+		mes "The nearest place here is ^0033FFRachel^000000,";
 		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 		mes "Ha~ It's popular these days, but I can't go buy it.";
 		next;
@@ -2765,9 +2768,6 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8664,PLAYTIME) ) {
 	case -1:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
-		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		break;
 	case 0:
 	case 1:
@@ -2801,16 +2801,19 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 		next;
 		mes .@npc_name$;
 		mes "Ah, adventurer! I'm requesting a monster subjugation investigation, how about it?";
+		.@skip = true;
 		break;
 	case 2:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
-		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		erasequest 8664;
 		break;
 	}
 	switch( checkquest(8665,HUNTING) ) {
 	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+			mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		}
 		mes "Or, if you are nearby, we also support teleportation service.";
 		next;
 		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
@@ -2830,7 +2833,7 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "The nearest place here is ^0033FF Rachel^000000,";
+			mes "The nearest place here is ^0033FFRachel^000000,";
 			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 			mes "It's the saddest thing to be here.";
 			next;
@@ -2860,7 +2863,7 @@ ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
 		mes "...Yes? Mobility service?";
 		next;
 		mes .@npc_name$;
-		mes "The nearest place here is ^0033FF Rachel^000000,";
+		mes "The nearest place here is ^0033FFRachel^000000,";
 		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 		mes "Ha~ It's popular these days, but I can't go buy it.";
 		next;
@@ -2913,8 +2916,6 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8670,PLAYTIME) ) {
 	case -1:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
 		break;
 	case 0:
 	case 1:
@@ -2948,15 +2949,18 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 		mes "Ah! Adventurer!";
 		next;
 		mes .@npc_name$;
+		.@skip = true;
 		break;
 	case 2:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
 		erasequest 8670;
 		break;
 	}
 	switch( checkquest(8671,HUNTING) ) {
 	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+		}
 		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		mes "Or, if you are nearby, we also support teleportation service.";
 		next;
@@ -2977,7 +2981,7 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "The nearest place here is ^0033FF Rachel^000000,";
+			mes "The nearest place here is ^0033FFRachel^000000,";
 			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 			mes "Ha~ It's popular these days, but I can't go buy it.";
 			next;
@@ -3009,7 +3013,7 @@ ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
 		mes "...Yes? Mobility service?";
 		next;
 		mes .@npc_name$;
-		mes "The nearest place here is ^0033FF Rachel^000000,";
+		mes "The nearest place here is ^0033FFRachel^000000,";
 		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 		mes "Ha~ It's popular these days, but I can't go buy it.";
 		next;
@@ -3063,9 +3067,6 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8661,PLAYTIME) ) {
 	case -1:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
-		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		break;
 	case 0:
 	case 1:
@@ -3100,16 +3101,19 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 		next;
 		mes .@npc_name$;
 		mes "It's really good. We're asking adventurers who pass by here to investigate monster subjugation, how about it?";
+		.@skip = true;
 		break;
 	case 2:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
-		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		erasequest 8661;
 		break;
 	}
 	switch( checkquest(8662,HUNTING) ) {
 	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+			mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		}
 		mes "Or, if you are nearby, we also support teleportation service.";
 		next;
 		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
@@ -3129,7 +3133,7 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "The nearest place here is ^0033FF Rachel^000000,";
+			mes "The nearest place here is ^0033FFRachel^000000,";
 			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 			mes "Ha~ It's popular these days, but I can't go buy it.";
 			next;
@@ -3161,7 +3165,7 @@ ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
 		mes "...Yes? Mobility service?";
 		next;
 		mes .@npc_name$;
-		mes "The nearest place here is ^0033FF Rachel^000000,";
+		mes "The nearest place here is ^0033FFRachel^000000,";
 		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 		mes "Ha~ It's popular these days, but I can't go buy it.";
 		next;
@@ -3397,23 +3401,25 @@ ve_fild04,52,242,5	script	Map Examiner Rana#85	4_M_MOC_SOLDIER,{
 		erasequest 8676;
 		break;
 	}
-	switch( checkquest(8675,HUNTING) ) {	// first time
-	case -1:
-		callsub( S_Quest, 8675, 0 );
-	case 0:
-	case 1:
-		mes .@npc_name$;
-		mes "Please kill 80 monsters around here.";
-		mes "...Yes? Mobility service?";
-		next;
-		callsub( S_Warp );
-	case 2:
-		mes .@npc_name$;
-		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
-		getexp 188600,173200;
-		completequest 8675;
-		setquest 8676;
-		close;
+	if (isbegin_quest(8675) < 2) {
+		switch( checkquest(8675,HUNTING) ) {	// first time
+		case -1:
+			callsub( S_Quest, 8675, 0 );
+		case 0:
+		case 1:
+			mes .@npc_name$;
+			mes "Please kill 80 monsters around here.";
+			mes "...Yes? Mobility service?";
+			next;
+			callsub( S_Warp );
+		case 2:
+			mes .@npc_name$;
+			mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+			getexp 188600,173200;
+			completequest 8675;
+			setquest 8676;
+			close;
+		}
 	}
 	switch( checkquest(8677,HUNTING) ) {
 	case -1:
@@ -3437,6 +3443,7 @@ ve_fild04,52,242,5	script	Map Examiner Rana#85	4_M_MOC_SOLDIER,{
 
 S_Quest:
 	.@quest_id = getarg(0);
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
 
 	switch( getarg(1) ) {
 	case 0:	// quest 8675
@@ -3492,8 +3499,11 @@ S_Quest:
 	end;
 
 S_Warp:
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
 	mes .@npc_name$;
-	mes "The nearest place here is ^0033FF Veins^000000,";
+	mes "The nearest place here is ^0033FFVeins^000000,";
 	mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 	next;
 	if (select( "Give me 1 " + .@item_name$ + " with Veins", "No" ) == 2) {
@@ -3516,6 +3526,7 @@ OnInit:
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 90 && checkquest(8675,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(8675) == 2 && checkquest(8677,HUNTING) == -1 && checkquest(8676,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8676,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8675,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8677,HUNTING) == 2" );
 
 	// (no questinfo when playtime ongoing)
@@ -3533,11 +3544,6 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8673,PLAYTIME) ) {
 	case -1:
-		mes .@npc_name$;
-		mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
-		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
-		next;
-		mes .@npc_name$;
 		break;
 	case 0:
 	case 1:
@@ -3569,14 +3575,10 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 		next;
 		mes .@npc_name$;
 		mes "Ah, adventurer. I'm taking a monster subjugation investigation request today, how is it?";
+		.@skip = true;
 		break;
 	case 2:
 		erasequest 8673;
-		mes .@npc_name$;
-		mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
-		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
-		next;
-		mes .@npc_name$;
 		break;
 	}
 	if (isbegin_quest(8672) == 2)
@@ -3586,6 +3588,13 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 
 	switch( checkquest(.@quest_id,HUNTING) ) {
 	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
+			mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+			next;
+			mes .@npc_name$;
+		}
 		mes "Or, if you are nearby, we will support you with a teleportation service.";
 		next;
 		switch( select( "Listen to the situation", "Move to a nearby city", "Stop" ) ) {
@@ -3616,7 +3625,7 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "The nearest place here is ^0033FF Rachel^000000,";
+			mes "The nearest place here is ^0033FFRachel^000000,";
 			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 			mes "Ha~ It's popular these days, but I can't go buy it.";
 			next;
@@ -3647,7 +3656,7 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 		mes "...Yes? Mobility service?";
 		next;
 		mes .@npc_name$;
-		mes "The nearest place here is ^0033FF Rachel^000000,";
+		mes "The nearest place here is ^0033FFRachel^000000,";
 		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 		next;
 		if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
@@ -3665,6 +3674,10 @@ ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
 		warp "rachel",113,136;
 		end;
 	case 2:
+		mes .@npc_name$;
+		mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
+		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+		next;
 		getexp 194712,185136;
 		mes .@npc_name$;
 		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
@@ -3681,8 +3694,10 @@ OnInit:
 	setunittitle getnpcid(0), "<Juno Monster Society>";
 
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 93 && checkquest(8672,HUNTING) == -1 && checkquest(8673,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(8672) == 2 && checkquest(8674,HUNTING) == -1 && checkquest(8673,PLAYTIME) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8673,PLAYTIME) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8672,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8674,HUNTING) == 2" );
 	end;
 }
 
@@ -3698,9 +3713,6 @@ ve_fild03,348,230,5	script	Map Examiner Dew#85	4_M_MOC_SOLDIER,{
 	}
 	switch( checkquest(8679,PLAYTIME) ) {
 	case -1:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
-		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		break;
 	case 0:
 	case 1:
@@ -3733,16 +3745,19 @@ ve_fild03,348,230,5	script	Map Examiner Dew#85	4_M_MOC_SOLDIER,{
 		next;
 		mes .@npc_name$;
 		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+		.@skip = true;
 		break;
 	case 2:
-		mes .@npc_name$;
-		mes "Hello. You came today!";
-		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
 		erasequest 8679;
 		break;
 	}
 	switch( checkquest(8680,HUNTING) ) {
 	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+			mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		}
 		mes "Or, if you are nearby, we also support teleportation service.";
 		next;
 		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
@@ -3791,7 +3806,7 @@ ve_fild03,348,230,5	script	Map Examiner Dew#85	4_M_MOC_SOLDIER,{
 		mes "...Yes? Mobility service?";
 		next;
 		mes .@npc_name$;
-		mes "The nearest place here is ^0033FF Veins^000000,";
+		mes "The nearest place here is ^0033FFVeins^000000,";
 		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
 		mes "Ha~ It's popular these days, but I can't go buy it.";
 		next;
