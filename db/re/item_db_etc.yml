@@ -40776,7 +40776,7 @@ Body:
          bonus bAspd,1;
       } }
   - Id: 27291
-    AegisName: Ancient_Tri_Joint_Card
+    AegisName: Ancient_Trijoint_Card
     Name: Ancient Tri Joint Card
     Type: Card
     Buy: 20
@@ -40789,7 +40789,7 @@ Body:
       bonus bBaseAtk,30;
       bonus bMaxHPrate,-1;
   - Id: 27292
-    AegisName: Ancient_Stalactic_Golem_Card
+    AegisName: Ancient_Sta_Golem_Card
     Name: Ancient Stalactic Golem Card
     Type: Card
     Buy: 20
@@ -40839,7 +40839,7 @@ Body:
       }
       bonus2 bIgnoreDefClassRate,Class_Boss,.@val;
   - Id: 27295
-    AegisName: Ancient_Stone_Shooter_Card
+    AegisName: Ancient_S_Shooter_Card
     Name: Ancient Stone Shooter Card
     Type: Card
     Buy: 20
@@ -40857,7 +40857,7 @@ Body:
       }
       bonus bCritAtkRate,.@crit;
   - Id: 27296
-    AegisName: Ancient_Wootan_Shooter_Card
+    AegisName: Ancient_W_Shooter_Card
     Name: Ancient Wootan Shooter Card
     Type: Card
     Buy: 20
@@ -40876,7 +40876,7 @@ Body:
          bonus bBaseAtk,40;
       } }
   - Id: 27297
-    AegisName: Ancient_Wootan_Fighter_Card
+    AegisName: Ancient_W_Fighter_Card
     Name: Ancient Wootan Fighter Card
     Type: Card
     Buy: 20
@@ -40889,7 +40889,7 @@ Body:
       bonus bCritical,5;
       bonus bCritAtkRate,10;
   - Id: 27298
-    AegisName: Ancient_Wootan_Defender_Card
+    AegisName: Ancient_W_Deffend_Card
     Name: Ancient Wootan Defender Card
     Type: Card
     Buy: 20

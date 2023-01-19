@@ -2803,15 +2803,39 @@ Body:
   - Id: 5846
     Title: Welcome Corridor
     TimeLimit: 4h
+  - Id: 5847
+    Title: A story to tell Luanda
+  - Id: 5848
+    Title: Evidence of Fighting the Megaliths
   - Id: 5849
     Title: "[Waiting] Evidence to Fight Megaliths"
     TimeLimit: 4h
+  - Id: 5850
+    Title: Evidence of Fighting the Utans
   - Id: 5851
     Title: "[Waiting] Evidence of Fighting the Utans"
     TimeLimit: 4h
+  - Id: 5852
+    Title: Operation of Geosokki
+    Targets:
+      - Mob: ILL_TRI_JOINT
+        Count: 5
+      - Mob: ILL_STALACTIC_GOLEM
+        Count: 5
+      - Mob: ILL_MEGALITH
+        Count: 5
   - Id: 5853
     Title: "[Waiting] Operation to Fight Megalithic"
     TimeLimit: 4h
+  - Id: 5854
+    Title: Operation of Utans
+    Targets:
+      - Mob: ILL_STONE_SHOOTER
+        Count: 5
+      - Mob: ILL_WOOTAN_SHOOTER
+        Count: 5
+      - Mob: ILL_WOOTAN_FIGHTER
+        Count: 5
   - Id: 5855
     Title: "[Wait] Utan Fighting Operation"
     TimeLimit: 4h
