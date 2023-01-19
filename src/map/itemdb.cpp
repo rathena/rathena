@@ -1283,7 +1283,7 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 			itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
 		}
 
-#if PACKETVER > 20160203 && PACKETVER < 20151104
+#if PACKETVER > 20160203
 		if (itemdb_isequip2(id)) {
 			itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
 		}
