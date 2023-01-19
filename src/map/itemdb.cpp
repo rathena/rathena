@@ -1330,20 +1330,21 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 		itemstr += closing_tag;
 		if ((itemdb_isequip2(id)) && (data->slots == 0))
 			itemstr += " [" + std::to_string(data->slots) + "]";
+
+		return itemstr;
 	}
 #endif
 
-	// No itemstr means the itemlinking wasn't performed, either because it's disabled or because of the packet version
+	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
 	// If that's the case then we format the item prepending the refine and appending the slots
-	if (itemstr.empty()) {
-		if (item.refine > 0)
-			itemstr += "+" + std::to_string(item.refine) + " ";
+	if (item.refine > 0)
+		itemstr += "+" + std::to_string(item.refine) + " ";
 
-		itemstr += data->ename;
+	itemstr += data->ename;
 
-		if (itemdb_isequip2(id))
-			itemstr += "[" + std::to_string(data->slots) + "]";
-	}
+	if (itemdb_isequip2(id))
+		itemstr += "[" + std::to_string(data->slots) + "]";
+
 	return itemstr;
 }
 
