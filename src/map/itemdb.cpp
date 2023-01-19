@@ -1351,7 +1351,7 @@ std::string ItemDatabase::create_item_link( std::shared_ptr<item_data>& data ){
 	return this->create_item_link( it, data );
 }
 
-std::string ItemDatabase::create_item_link(item& item) {
+std::string ItemDatabase::create_item_link(struct item& item) {
 	std::shared_ptr<item_data> data = this->find(item.nameid);
 
 	return this->create_item_link(item, data);

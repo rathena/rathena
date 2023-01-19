@@ -5036,7 +5036,7 @@ ACMD_FUNC(loadnpc)
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
 		return -1;
 	}
-	
+
 	npc_read_event_script();
 
 	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was loaded.\n", message );
