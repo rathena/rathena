@@ -1280,7 +1280,7 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 			itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
 		}
 
-#if PACKETVER > 20160203
+#if PACKETVER >= 20161116
 		if (itemdb_isequip2(id)) {
 			itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
 		}
@@ -1295,7 +1295,7 @@ std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<it
 		const std::string optid_sep = "+";
 		const std::string optpar_sep = ",";
 		const std::string optval_sep = "-";
-#elif PACKETVER >= 20171213
+#elif PACKETVER >= 20161116
 		const std::string card_sep = "(";
 		const std::string optid_sep = "*";
 		const std::string optpar_sep = "+";
