@@ -9,6 +9,7 @@
 //= 1.0 Illusion of Moonlight initial release [crazyarashi]
 //= 1.1 Script & function cleanup [Everade]
 //= 1.2 Added Illusion of Vampire [Capuche]
+//= 1.3 Added Illusion of Frozen [Capuche]
 //============================================================
 
 //============================================================
@@ -170,8 +171,8 @@ pay_arche,48,137,4	script	Young Scholar#ill_moon_arch	4_F_03,{
 		next;
 		mes "[ Young Scholar ]";
 		mes "I hope nothing bad happens to those two.";
-		cloakoffnpc "Payon Soldier#ill_moon_arch",getcharid(0);
-		cloakoffnpc "Muyeon#ill_moon_arch",getcharid(0);
+		cloakoffnpcself( "Payon Soldier#ill_moon_arch" );
+		cloakoffnpcself( "Muyeon#ill_moon_arch" );
 		sleep2 750;
 		npctalk "There they are! They look fine!","Young Scholar#ill_moon_arch",bc_self;
 		sleep2 1500;
@@ -196,8 +197,8 @@ pay_arche,48,137,4	script	Young Scholar#ill_moon_arch	4_F_03,{
 		next;
 		npctalk "Sigh. I'll go after her. Talk to the Elders, will you?","Payon Soldier#ill_moon_arch",bc_self;
 		sleep2 1500;
-		cloakonnpc "Payon Soldier#ill_moon_arch",getcharid(0);
-		cloakonnpc "Muyeon#ill_moon_arch",getcharid(0);
+		cloakonnpcself( "Payon Soldier#ill_moon_arch" );
+		cloakonnpcself( "Muyeon#ill_moon_arch" );
 		mes "[ Young Scholar ]";
 		mes "That's....!";
 		mes "She left without telling us what happened.";
@@ -400,7 +401,7 @@ payon_in03,33,95,3	script	Muyeon#ill_moon_pin	4_F_TAEKWON,{
 		specialeffect EF_PORTAL5;
 		specialeffect EF_QUAKEBODY2;
 		for (.@i = 0; .@i < 4; .@i++) {
-			cloakoffnpc "Nine Tail Spirit#ill_moon_" + .@i,getcharid(0);
+			cloakoffnpcself( "Nine Tail Spirit#ill_moon_" + .@i );
 			specialeffect EF_REDBODY,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
 			specialeffect EF_QUAKEBODY2,AREA,"Nine Tail Spirit#ill_moon_" + .@i;
 			sleep2 250;
@@ -625,8 +626,8 @@ pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 	if (illusion_moonlight == 5) {
 		mes "There's a shimmering portal in the air.";
 		next;
-		cloakoffnpc "Young Scholar#ill_moon_pdun",getcharid(0);
-		cloakoffnpc "Junghee#ill_moon_pdun",getcharid(0);
+		cloakoffnpcself( "Young Scholar#ill_moon_pdun" );
+		cloakoffnpcself( "Junghee#ill_moon_pdun" );
 		npctalk "*Panting* You're here.","Young Scholar#ill_moon_pdun",bc_self;
 		mes "[ Young Scholar ]";
 		mes "I was alarmed when you suddenly disappeared.";
@@ -650,7 +651,7 @@ pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 		specialeffect EF_DQ9_CHARGE,AREA,"Young Scholar#ill_moon_pdun";
 		sleep2 350;
 		npctalk "Arghhhhh-!","",bc_self;
-		cloakonnpc "Young Scholar#ill_moon_pdun",getcharid(0);
+		cloakonnpcself( "Young Scholar#ill_moon_pdun" );
 		sleep2 500;
 		npctalk "Chunghae!","Junghee#ill_moon_pdun",bc_self;
 		sleep2 2000;
@@ -660,7 +661,7 @@ pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 		specialeffect EF_DQ9_CHARGE,AREA,"Junghee#ill_moon_pdun";
 		sleep2 350;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Junghee#ill_moon_pdun",getcharid(0);
+		cloakonnpcself( "Junghee#ill_moon_pdun" );
 		end;
 	}
 	mes "There is something on the other side of the shimmering portal.";
@@ -1388,23 +1389,23 @@ gef_dun01,132,223,5	script	Grimm#ilgf	4_M_MINISTER,{
 		mes "Just let me read it. I'll go bring them out afterward. Please?";
 		npctalk "Please?", "Mojo#ilgf", bc_self;
 		sleep2 500;
-		cloakonnpc( "Mojo#ilgf", getcharid(0) );
-		cloakoffnpc( "Mojo#ilgf01", getcharid(0) );
+		cloakonnpcself( "Mojo#ilgf" );
+		cloakoffnpcself( "Mojo#ilgf01" );
 		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf01");
 		npctalk "Please?", "Mojo#ilgf01", bc_self;
 		sleep2 500;
-		cloakonnpc( "Mojo#ilgf01", getcharid(0) );
-		cloakoffnpc( "Mojo#ilgf02", getcharid(0) );
+		cloakonnpcself( "Mojo#ilgf01" );
+		cloakoffnpcself( "Mojo#ilgf02" );
 		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf02");
 		npctalk "Please?", "Mojo#ilgf02", bc_self;
 		sleep2 500;
-		cloakonnpc( "Mojo#ilgf02", getcharid(0) );
-		cloakoffnpc( "Mojo#ilgf03", getcharid(0) );
+		cloakonnpcself( "Mojo#ilgf02" );
+		cloakoffnpcself( "Mojo#ilgf03" );
 		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf03");
 		npctalk "Please?", "Mojo#ilgf03", bc_self;
 		sleep2 500;
-		cloakonnpc( "Mojo#ilgf03", getcharid(0) );
-		cloakoffnpc( "Mojo#ilgf", getcharid(0) );
+		cloakonnpcself( "Mojo#ilgf03" );
+		cloakoffnpcself( "Mojo#ilgf" );
 		npctalk "Please?", "Mojo#ilgf", bc_self;
 		emotion ET_QUESTION, getnpcid(0, "Mojo#ilgf");
 		next;
@@ -1861,60 +1862,60 @@ OnTouch:
 	}
 	else if (ill_vampire == 6) {
 		.@char_id = getcharid(0);
-		cloakoffnpc( "Priest#ilgf01", .@char_id );
+		cloakoffnpcself( "Priest#ilgf01" );
 		for ( .@i = 3; .@i < 10; ++.@i )
-			cloakoffnpc( "Marina#ilgf0" + .@i, .@char_id );
+			cloakoffnpcself( "Marina#ilgf0" + .@i );
 	}
 	else if (ill_vampire == 7) {
 		.@char_id = getcharid(0);
-		cloakoffnpc( "Undead#ilgf06", .@char_id );
-		cloakoffnpc( "Wizard#ilgf06", .@char_id );
-		cloakoffnpc( "Wizard#ilgf07", .@char_id );
+		cloakoffnpcself( "Undead#ilgf06" );
+		cloakoffnpcself( "Wizard#ilgf06" );
+		cloakoffnpcself( "Wizard#ilgf07" );
 
-		cloakoffnpc( "Wizard#ilgf08", .@char_id );
-		cloakoffnpc( "Nameless Catacomb#ilgf01", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf08" );
+		cloakoffnpcself( "Nameless Catacomb#ilgf01" );
 
-		cloakoffnpc( "Wizard#ilgf09", .@char_id );
-		cloakoffnpc( "Wizard#ilgf10", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf09" );
+		cloakoffnpcself( "Wizard#ilgf10" );
 
-		cloakoffnpc( "Wizard#ilgf11", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf11" );
 
-		cloakoffnpc( "Wizard#ilgf12", .@char_id );
-		cloakoffnpc( "Wizard#ilgf13", .@char_id );
-		cloakoffnpc( "Nameless Catacomb#ilgf02", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf12" );
+		cloakoffnpcself( "Wizard#ilgf13" );
+		cloakoffnpcself( "Nameless Catacomb#ilgf02" );
 
-		cloakoffnpc( "Wizard#ilgf14", .@char_id );
-		cloakoffnpc( "Wizard#ilgf15", .@char_id );
-		cloakoffnpc( "Nameless Catacomb#ilgf03", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf14" );
+		cloakoffnpcself( "Wizard#ilgf15" );
+		cloakoffnpcself( "Nameless Catacomb#ilgf03" );
 
-		cloakoffnpc( "Wizard#ilgf16", .@char_id );
-		cloakoffnpc( "Wizard#ilgf17", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf16" );
+		cloakoffnpcself( "Wizard#ilgf17" );
 
-		cloakoffnpc( "Wizard#ilgf18", .@char_id );
-		cloakoffnpc( "Someone's Dream#ilgf18", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf18" );
+		cloakoffnpcself( "Someone's Dream#ilgf18" );
 
-		cloakoffnpc( "Wizard#ilgf19", .@char_id );
-		cloakoffnpc( "Wizard#ilgf20", .@char_id );
-		cloakoffnpc( "Undead#ilgf05", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf19" );
+		cloakoffnpcself( "Wizard#ilgf20" );
+		cloakoffnpcself( "Undead#ilgf05" );
 
-		cloakoffnpc( "Undead#ilgf02", .@char_id );
-		cloakoffnpc( "Undead#ilgf03", .@char_id );
-		cloakoffnpc( "Undead#ilgf04", .@char_id );
-		cloakoffnpc( "Wizard#ilgf21", .@char_id );
-		cloakoffnpc( "Wizard#ilgf22", .@char_id );
+		cloakoffnpcself( "Undead#ilgf02" );
+		cloakoffnpcself( "Undead#ilgf03" );
+		cloakoffnpcself( "Undead#ilgf04" );
+		cloakoffnpcself( "Wizard#ilgf21" );
+		cloakoffnpcself( "Wizard#ilgf22" );
 
-		cloakoffnpc( "Wizard#ilgf23", .@char_id );
-		cloakoffnpc( "Fast Undead#ilgf01", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf23" );
+		cloakoffnpcself( "Fast Undead#ilgf01" );
 
-		cloakoffnpc( "Wizard#ilgf24", .@char_id );
-		cloakoffnpc( "Shining Mushroom#ilgf01", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf24" );
+		cloakoffnpcself( "Shining Mushroom#ilgf01" );
 
-		cloakoffnpc( "Wizard#ilgf25", .@char_id );
-		cloakoffnpc( "Wizard#ilgf26", .@char_id );
-		cloakoffnpc( "Undead#ilgf01", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf25" );
+		cloakoffnpcself( "Wizard#ilgf26" );
+		cloakoffnpcself( "Undead#ilgf01" );
 
-		cloakoffnpc( "Wizard#ilgf27", .@char_id );
-		cloakoffnpc( "Wizard#ilgf28", .@char_id );
+		cloakoffnpcself( "Wizard#ilgf27" );
+		cloakoffnpcself( "Wizard#ilgf28" );
 	}
 	else if (ill_vampire == 10) {
 		cloakoffnpcself( "Dracula#ilgf02" );
@@ -1923,19 +1924,19 @@ OnTouch:
 	}
 	else if (ill_vampire == 12 || ill_vampire == 13) {
 		.@char_id = getcharid(0);
-		cloakoffnpc( "Gem#ilgf02", .@char_id );
-		cloakoffnpc( "Marina#ilgf02", .@char_id );
-		cloakoffnpc( "Antoine#ilgf02", .@char_id );
+		cloakoffnpcself( "Gem#ilgf02" );
+		cloakoffnpcself( "Marina#ilgf02" );
+		cloakoffnpcself( "Antoine#ilgf02" );
 		if (ill_vampire == 13) {
-			cloakoffnpc( "Dracula#ilgf03", .@char_id );
-			cloakoffnpc( "King#ilgf02", .@char_id );
-			cloakoffnpc( "Jojo#ilgf01", .@char_id );
+			cloakoffnpcself( "Dracula#ilgf03" );
+			cloakoffnpcself( "King#ilgf02" );
+			cloakoffnpcself( "Jojo#ilgf01" );
 		}
 	}
 	if (ill_vampire > 13) {
-		cloakoffnpc( "King#ilgf01", getcharid(0) );
-		cloakoffnpc( "Wizard#ilgf02", getcharid(0) );
-		cloakoffnpc( "Dracula#ilgf02", getcharid(0) );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
+		cloakoffnpcself( "Dracula#ilgf02" );
 	}
 	end;
 }
@@ -2206,16 +2207,16 @@ gef_d01_i,113,230,5	script	Gem#ilgf01	1_F_PRIEST,{
 		npcskill "AL_BLESSING",10,0,0;
 		ill_vampire = 6;
 		.@char_id = getcharid(0);
-		cloakoffnpc( "Priest#ilgf01", .@char_id );
+		cloakoffnpcself( "Priest#ilgf01" );
 		for ( .@i = 3; .@i < 10; ++.@i )
-			cloakoffnpc( "Marina#ilgf0" + .@i, .@char_id );
+			cloakoffnpcself( "Marina#ilgf0" + .@i );
 		close;
 	}
 	if (ill_vampire == 6) {
 		.@char_id = getcharid(0);
-		cloakoffnpc( "Priest#ilgf01", .@char_id );
+		cloakoffnpcself( "Priest#ilgf01" );
 		for ( .@i = 3; .@i < 10; ++.@i )
-			cloakoffnpc( "Marina#ilgf0" + .@i, .@char_id );
+			cloakoffnpcself( "Marina#ilgf0" + .@i );
 		mes "[Gem]";
 		mes "I hope Brother Jubilee and Brother Jojo are safe.";
 		next;
@@ -2420,7 +2421,7 @@ OnTouch:
 			npctalk "Let's go south!", "", bc_self;
 		sleep2 1500;
 		specialeffect EF_TELEPORTATION2;
-		cloakonnpc( strnpcinfo(0), getcharid(0) );
+		cloakonnpcself();
 		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
@@ -2441,7 +2442,7 @@ gef_d01_i,250,164,0	script	#ilgf06	HIDDEN_WARP_NPC,3,5,{
 	end;
 OnTouch:
 	if (ill_vampire == 6)
-		cloakoffnpc( "Priest#ilgf01", getcharid(0) );
+		cloakoffnpcself( "Priest#ilgf01" );
 	end;
 }
 
@@ -2460,8 +2461,8 @@ gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
 	mes "[Priest]";
 	mes "*Gasp* Am I going to die? Am I? I can't believe I'm going to die in a place like this!";
 	sleep2 500;
-	cloakoffnpc( "Undead#ilgf08", .@char_id );
-	cloakoffnpc( "Undead#ilgf09", .@char_id );
+	cloakoffnpcself( "Undead#ilgf08" );
+	cloakoffnpcself( "Undead#ilgf09" );
 	npctalk "Grr...", "Undead#ilgf08", bc_self;
 	npctalk "Grrgghh...", "Undead#ilgf09", bc_self;
 	next;
@@ -2473,7 +2474,7 @@ gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
 	mes "Could he be Father Jubilee?";
 	mes "Marina, I think we've found him!";
 	sleep2 500;
-	cloakoffnpc( "Marina#ilgf10", .@char_id );
+	cloakoffnpcself( "Marina#ilgf10" );
 	specialeffect EF_TELEPORTATION2, AREA, "Marina#ilgf10";
 	npctalk "What are you doing here?", "Marina#ilgf10", bc_self;
 	next;
@@ -2501,8 +2502,8 @@ gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
 	sleep2 1000;
 	specialeffect EF_DEVIL, AREA, "Undead#ilgf08";
 	specialeffect EF_DEVIL, AREA, "Undead#ilgf09";
-	cloakonnpc( "Undead#ilgf08", .@char_id );
-	cloakonnpc( "Undead#ilgf09", .@char_id );
+	cloakonnpcself( "Undead#ilgf08" );
+	cloakonnpcself( "Undead#ilgf09" );
 	next;
 	npctalk "Brother, are you all right?", "Marina#ilgf10", bc_self;
 	sleep2 1000;
@@ -2562,62 +2563,62 @@ gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
 	unittalk getcharid(3), "" + strcharinfo(0) + " : I'd better look for Jojo.", bc_self;
 	specialeffect EF_TELEPORTATION2, AREA, "Marina#ilgf10";
 	specialeffect EF_TELEPORTATION2;
-	cloakonnpc( "Marina#ilgf10", .@char_id );
-	cloakonnpc( "Priest#ilgf01", .@char_id );
+	cloakonnpcself( "Marina#ilgf10" );
+	cloakonnpcself( "Priest#ilgf01" );
 	erasequest 14658;// Jubilee Is the Priest's Name
 	ill_vampire = 7;
 
 	for ( .@i = 3; .@i < 10; ++.@i )
-		cloakonnpc( "Marina#ilgf0" + .@i, .@char_id );
+		cloakonnpcself( "Marina#ilgf0" + .@i );
 
-	cloakoffnpc( "Undead#ilgf06", .@char_id );
-	cloakoffnpc( "Wizard#ilgf06", .@char_id );
-	cloakoffnpc( "Wizard#ilgf07", .@char_id );
+	cloakoffnpcself( "Undead#ilgf06" );
+	cloakoffnpcself( "Wizard#ilgf06" );
+	cloakoffnpcself( "Wizard#ilgf07" );
 
-	cloakoffnpc( "Wizard#ilgf08", .@char_id );
-	cloakoffnpc( "Nameless Catacomb#ilgf01", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf08" );
+	cloakoffnpcself( "Nameless Catacomb#ilgf01" );
 
-	cloakoffnpc( "Wizard#ilgf09", .@char_id );
-	cloakoffnpc( "Wizard#ilgf10", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf09" );
+	cloakoffnpcself( "Wizard#ilgf10" );
 
-	cloakoffnpc( "Wizard#ilgf11", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf11" );
 
-	cloakoffnpc( "Wizard#ilgf12", .@char_id );
-	cloakoffnpc( "Wizard#ilgf13", .@char_id );
-	cloakoffnpc( "Nameless Catacomb#ilgf02", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf12" );
+	cloakoffnpcself( "Wizard#ilgf13" );
+	cloakoffnpcself( "Nameless Catacomb#ilgf02" );
 
-	cloakoffnpc( "Wizard#ilgf14", .@char_id );
-	cloakoffnpc( "Wizard#ilgf15", .@char_id );
-	cloakoffnpc( "Nameless Catacomb#ilgf03", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf14" );
+	cloakoffnpcself( "Wizard#ilgf15" );
+	cloakoffnpcself( "Nameless Catacomb#ilgf03" );
 
-	cloakoffnpc( "Wizard#ilgf16", .@char_id );
-	cloakoffnpc( "Wizard#ilgf17", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf16" );
+	cloakoffnpcself( "Wizard#ilgf17" );
 
-	cloakoffnpc( "Wizard#ilgf18", .@char_id );
-	cloakoffnpc( "Someone's Dream#ilgf18", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf18" );
+	cloakoffnpcself( "Someone's Dream#ilgf18" );
 
-	cloakoffnpc( "Wizard#ilgf19", .@char_id );
-	cloakoffnpc( "Wizard#ilgf20", .@char_id );
-	cloakoffnpc( "Undead#ilgf05", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf19" );
+	cloakoffnpcself( "Wizard#ilgf20" );
+	cloakoffnpcself( "Undead#ilgf05" );
 
-	cloakoffnpc( "Undead#ilgf02", .@char_id );
-	cloakoffnpc( "Undead#ilgf03", .@char_id );
-	cloakoffnpc( "Undead#ilgf04", .@char_id );
-	cloakoffnpc( "Wizard#ilgf21", .@char_id );
-	cloakoffnpc( "Wizard#ilgf22", .@char_id );
+	cloakoffnpcself( "Undead#ilgf02" );
+	cloakoffnpcself( "Undead#ilgf03" );
+	cloakoffnpcself( "Undead#ilgf04" );
+	cloakoffnpcself( "Wizard#ilgf21" );
+	cloakoffnpcself( "Wizard#ilgf22" );
 
-	cloakoffnpc( "Wizard#ilgf23", .@char_id );
-	cloakoffnpc( "Fast Undead#ilgf01", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf23" );
+	cloakoffnpcself( "Fast Undead#ilgf01" );
 
-	cloakoffnpc( "Wizard#ilgf24", .@char_id );
-	cloakoffnpc( "Shining Mushroom#ilgf01", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf24" );
+	cloakoffnpcself( "Shining Mushroom#ilgf01" );
 
-	cloakoffnpc( "Wizard#ilgf25", .@char_id );
-	cloakoffnpc( "Wizard#ilgf26", .@char_id );
-	cloakoffnpc( "Undead#ilgf01", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf25" );
+	cloakoffnpcself( "Wizard#ilgf26" );
+	cloakoffnpcself( "Undead#ilgf01" );
 
-	cloakoffnpc( "Wizard#ilgf27", .@char_id );
-	cloakoffnpc( "Wizard#ilgf28", .@char_id );
+	cloakoffnpcself( "Wizard#ilgf27" );
+	cloakoffnpcself( "Wizard#ilgf28" );
 	close;
 
 OnTouch:
@@ -2643,7 +2644,7 @@ gef_d01_i,49,113,3	script	Wizard#ilgf06	4_GEFFEN_01,5,5,{
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	specialeffect 1033, AREA, "Undead#ilgf06";
-	cloakonnpc( "Undead#ilgf06", getcharid(0) );
+	cloakonnpcself( "Undead#ilgf06" );
 	sleep2 1000;
 	npctalk "Ah, it died!", "", bc_self;
 	sleep2 1500;
@@ -2659,8 +2660,8 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf07";
 	// specialeffect EF_GUARD2, AREA, "Undead#ilgf06";	// already hidden
-	cloakonnpc( "Wizard#ilgf06", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf07", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf06" );
+	cloakonnpcself( "Wizard#ilgf07" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2683,8 +2684,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf08";
 	specialeffect EF_GUARD2, AREA, "Nameless Catacomb#ilgf01";
-	cloakonnpc( "Wizard#ilgf08", getcharid(0) );
-	cloakonnpc( "Nameless Catacomb#ilgf01", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf08" );
+	cloakonnpcself( "Nameless Catacomb#ilgf01" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2716,8 +2717,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf10";
-	cloakonnpc( "Wizard#ilgf09", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf10", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf09" );
+	cloakonnpcself( "Wizard#ilgf10" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2740,7 +2741,7 @@ OnTouch:
 	sleep2 2500;
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2;
-	cloakonnpc( "Wizard#ilgf11", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf11" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2769,9 +2770,9 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf13";
 	specialeffect EF_GUARD2, AREA, "Nameless Catacomb#ilgf02";
-	cloakonnpc( "", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf13", getcharid(0) );
-	cloakonnpc( "Nameless Catacomb#ilgf02", getcharid(0) );
+	cloakonnpcself();
+	cloakonnpcself( "Wizard#ilgf13" );
+	cloakonnpcself( "Nameless Catacomb#ilgf02" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2802,9 +2803,9 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf15";
 	specialeffect EF_GUARD2, AREA, "Nameless Catacomb#ilgf03";
-	cloakonnpc( "Wizard#ilgf14", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf15", getcharid(0) );
-	cloakonnpc( "Nameless Catacomb#ilgf03", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf14" );
+	cloakonnpcself( "Wizard#ilgf15" );
+	cloakonnpcself( "Nameless Catacomb#ilgf03" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2827,8 +2828,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf16";
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf16";
-	cloakonnpc( "Wizard#ilgf16", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf17", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf16" );
+	cloakonnpcself( "Wizard#ilgf17" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2850,8 +2851,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf18";
 	specialeffect EF_GUARD2, AREA, "Someone's Dream#ilgf18";
-	cloakonnpc( "Wizard#ilgf18", getcharid(0) );
-	cloakonnpc( "Someone's Dream#ilgf18", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf18" );
+	cloakonnpcself( "Someone's Dream#ilgf18" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2878,9 +2879,9 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf20";
 	specialeffect EF_GUARD2, AREA, "Undead#ilgf05";
-	cloakonnpc( "Wizard#ilgf19", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf20", getcharid(0) );
-	cloakonnpc( "Undead#ilgf05", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf19" );
+	cloakonnpcself( "Wizard#ilgf20" );
+	cloakonnpcself( "Undead#ilgf05" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2906,9 +2907,9 @@ OnTouch:
 	specialeffect EF_FIREPILLARBOMB, AREA, "Undead#ilgf03";
 	specialeffect EF_FIREPILLARBOMB, AREA, "Undead#ilgf04";
 	sleep2 1500;
-	cloakonnpc( "Undead#ilgf02", getcharid(0) );
-	cloakonnpc( "Undead#ilgf03", getcharid(0) );
-	cloakonnpc( "Undead#ilgf04", getcharid(0) );
+	cloakonnpcself( "Undead#ilgf02" );
+	cloakonnpcself( "Undead#ilgf03" );
+	cloakonnpcself( "Undead#ilgf04" );
 	npctalk "Whew, thanks!", "Wizard#ilgf22", bc_self;
 	sleep2 1500;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : This... It must be an old memory of the notebook's owner.", bc_self;
@@ -2916,8 +2917,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf22";
-	cloakonnpc( "Wizard#ilgf21", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf22", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf21" );
+	cloakonnpcself( "Wizard#ilgf22" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2944,8 +2945,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Fast Undead#ilgf01";
-	cloakonnpc( "Wizard#ilgf23", getcharid(0) );
-	cloakonnpc( "Fast Undead#ilgf01", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf23" );
+	cloakonnpcself( "Fast Undead#ilgf01" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2969,8 +2970,8 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Shining Mushroom#ilgf01";
-	cloakonnpc( "Wizard#ilgf24", getcharid(0) );
-	cloakonnpc( "Shining Mushroom#ilgf01", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf24" );
+	cloakonnpcself( "Shining Mushroom#ilgf01" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -3001,9 +3002,9 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf26";
 	specialeffect EF_GUARD2, AREA, "Undead#ilgf01";
-	cloakonnpc( "Wizard#ilgf25", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf26", getcharid(0) );
-	cloakonnpc( "Undead#ilgf01", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf25" );
+	cloakonnpcself( "Wizard#ilgf26" );
+	cloakonnpcself( "Undead#ilgf01" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -3034,8 +3035,8 @@ OnTouch:
 
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf27";
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf28";
-	cloakonnpc( "Wizard#ilgf27", getcharid(0) );
-	cloakonnpc( "Wizard#ilgf28", getcharid(0) );
+	cloakonnpcself( "Wizard#ilgf27" );
+	cloakonnpcself( "Wizard#ilgf28" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -3174,7 +3175,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		sleep2 2000;
 		npctalk "Later, I met him again and we got close. He was my first real friend.", "", bc_self;
 		sleep2 1500;
-		cloakoffnpc( "Dracula#ilgf01", getcharid(0) );
+		cloakoffnpcself( "Dracula#ilgf01" );
 		specialeffect EF_GUARD2, AREA, "Dracula#ilgf01";
 		specialeffect EF_BLUELIGHTBODY, AREA, "Dracula#ilgf01";
 		npctalk "Why did you save me?", "Dracula#ilgf01", bc_self;
@@ -3221,7 +3222,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		npctalk "I'm sorry.", "Dracula#ilgf01", bc_self;
 		sleep2 1500;
 		specialeffect EF_GUARD2, AREA, "Dracula#ilgf01";
-		cloakonnpc( "Dracula#ilgf01", getcharid(0) );
+		cloakonnpcself( "Dracula#ilgf01" );
 		mes "[Bomi]";
 		mes "I couldn't believe he turned me into a monster. I trusted him!";
 		next;
@@ -3354,9 +3355,9 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 	}
 	if (ill_vampire == 12) {
 		viewpoint 2,85,131,1,0x00FF00;
-		cloakoffnpc( "Gem#ilgf02", getcharid(0) );
-		cloakoffnpc( "Marina#ilgf02", getcharid(0) );
-		cloakoffnpc( "Antoine#ilgf02", getcharid(0) );
+		cloakoffnpcself( "Gem#ilgf02" );
+		cloakoffnpcself( "Marina#ilgf02" );
+		cloakoffnpcself( "Antoine#ilgf02" );
 
 		mes "[Bomi]";
 		mes "Stay away from me, and I won't hurt you.";
@@ -3390,7 +3391,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		npctalk "Sigh, Sister Marina is right.", "Antoine#ilgf02", bc_self;
 		npctalk "Guillotine Fist!", "Marina#ilgf02", bc_self;
 		sleep2 1000;
-		cloakoffnpc( "Dracula#ilgf03", getcharid(0) );
+		cloakoffnpcself( "Dracula#ilgf03" );
 		specialeffect EF_M01, AREA, "Dracula#ilgf03";
 		specialeffect EF_BOTTOM_MAG, AREA, "Dracula#ilgf03";
 		specialeffect EF_BEGINASURA, AREA, "Dracula#ilgf03";
@@ -3401,7 +3402,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		specialeffect EF_TEIHIT1X, AREA, "Dracula#ilgf03";
 		npctalk "Ugh!", "Dracula#ilgf03", bc_self;
 		next;
-		cloakoffnpc( "King#ilgf02", getcharid(0) );
+		cloakoffnpcself( "King#ilgf02" );
 		specialeffect EF_M01, AREA, "King#ilgf02";
 		emotion ET_ANGER, getnpcid(0, "King#ilgf02");
 		mes "[King]";
@@ -3438,7 +3439,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		mes "[Marina]";
 		mes "Grr, let me go! Enough is enough!";
 		next;
-		cloakoffnpc( "Jojo#ilgf01", getcharid(0) );
+		cloakoffnpcself( "Jojo#ilgf01" );
 		specialeffect EF_TELEPORTATION2, AREA, "Jojo#ilgf01";
 		emotion ET_CONFUSE, getnpcid(0, "Jojo#ilgf01");
 		mes "[Jojo]";
@@ -3659,7 +3660,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		mes "[King]";
 		mes "So you can keep an eye on us. Drac, I can't take this anymore!";
 		specialeffect EF_PORTAL4, AREA, "King#ilgf02";
-		cloakoffnpc( "King#ilgf02", getcharid(0) );
+		cloakoffnpcself( "King#ilgf02" );
 		specialeffect EF_M01, AREA, "King#ilgf02";
 		sleep2 1000;
 		npctalk "I'm going to kill them all!", "King#ilgf02", bc_self;
@@ -3676,7 +3677,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		next;
 		emotion ET_ANGER, getnpcid(0, "King#ilgf02");
 		specialeffect EF_PORTAL4, AREA, "King#ilgf02";
-		cloakoffnpc( "King#ilgf02", getcharid(0) );
+		cloakoffnpcself( "King#ilgf02" );
 		specialeffect EF_M01, AREA, "King#ilgf02";
 		mes "[King]";
 		mes "I'm not happy with this arrangement, Drac. I'm going back to our castle once you get better, got it?";
@@ -3685,26 +3686,26 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		mes "So we've come to an agreement. We'll leave now.";
 		specialeffect EF_TELEPORTATION2, AREA, "Gem#ilgf02";
 		sleep2 500;
-		cloakonnpc( "Gem#ilgf02", getcharid(0) );
+		cloakonnpcself( "Gem#ilgf02" );
 		next;
 		mes "[Marina]";
 		mes "You! I'm watching you! Better keep your coffin lid shut tight while you sleep!";
 		specialeffect EF_TELEPORTATION2, AREA, "Marina#ilgf02";
 		sleep2 500;
-		cloakonnpc( "Marina#ilgf02", getcharid(0) );
+		cloakonnpcself( "Marina#ilgf02" );
 		next;
 		npctalk "What? Hey, you stop right there!", "King#ilgf02", bc_self;
 		mes "[Antoine]";
 		mes "I should leave too. Excuse me.";
 		specialeffect EF_TELEPORTATION2, AREA, "Antoine#ilgf02";
 		sleep2 500;
-		cloakonnpc( "Antoine#ilgf02", getcharid(0) );
+		cloakonnpcself( "Antoine#ilgf02" );
 		next;
 		mes "[King]";
 		mes "Argh! I don't ever want to see them again! Let's go!";
 		specialeffect EF_M01, AREA, "King#ilgf02";
 		sleep2 500;
-		cloakonnpc( "King#ilgf02", getcharid(0) );
+		cloakonnpcself( "King#ilgf02" );
 		next;
 		mes "[Jojo]";
 		mes "Let's go.";
@@ -3717,8 +3718,8 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		specialeffect EF_TELEPORTATION2, AREA, "Jojo#ilgf01";
 		specialeffect EF_M01, AREA, "Dracula#ilgf03";
 		sleep2 500;
-		cloakonnpc( "Jojo#ilgf01", getcharid(0) );
-		cloakonnpc( "Dracula#ilgf03", getcharid(0) );
+		cloakonnpcself( "Jojo#ilgf01" );
+		cloakonnpcself( "Dracula#ilgf03" );
 		next;
 		select("Finally, they all left. That was close.");
 		mes "[Bomi]";
@@ -3931,13 +3932,13 @@ OnTouch:
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Typical wizard... Wait, could that be Jojo??", bc_self;
 	}
 	else if (ill_vampire == 12 || ill_vampire == 13) {
-		cloakoffnpc( "Gem#ilgf02", getcharid(0) );
-		cloakoffnpc( "Marina#ilgf02", getcharid(0) );
-		cloakoffnpc( "Antoine#ilgf02", getcharid(0) );
+		cloakoffnpcself( "Gem#ilgf02" );
+		cloakoffnpcself( "Marina#ilgf02" );
+		cloakoffnpcself( "Antoine#ilgf02" );
 		if (ill_vampire == 13) {
-			cloakoffnpc( "Dracula#ilgf03", getcharid(0) );
-			cloakoffnpc( "King#ilgf02", getcharid(0) );
-			cloakoffnpc( "Jojo#ilgf01", getcharid(0) );
+			cloakoffnpcself( "Dracula#ilgf03" );
+			cloakoffnpcself( "King#ilgf02" );
+			cloakoffnpcself( "Jojo#ilgf01" );
 		}
 	}
 	end;
@@ -4584,9 +4585,9 @@ OnTouch:
 	if (ill_vampire == 16 && isbegin_quest(14677) == 0)
 		npctalk "Ah, Adventurer! Wait!", "Wizard#ilgf02", bc_self;
 	if (ill_vampire > 13) {
-		cloakoffnpc( "King#ilgf01", getcharid(0) );
-		cloakoffnpc( "Wizard#ilgf02", getcharid(0) );
-		cloakoffnpc( "Dracula#ilgf02", getcharid(0) );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
+		cloakoffnpcself( "Dracula#ilgf02" );
 	}
 	end;
 
@@ -4628,7 +4629,7 @@ gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
 		npctalk "Then what are you?", "Wizard#ilgf02", bc_self;
 		specialeffect EF_PORTAL4, AREA, "King#ilgf01";
 		specialeffect EF_M01, AREA, "King#ilgf01";
-		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		cloakoffnpcself( "King#ilgf01" );
 		sleep2 1500;
 		npctalk "Now, what do I look like?", "King#ilgf01", bc_self;
 		sleep2 1500;
@@ -4638,7 +4639,7 @@ gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
 		npctalk "Why, is this too scary? Then how about this?", "King#ilgf01", bc_self;
 		specialeffect EF_PORTAL4, AREA, "King#ilgf01";
 		specialeffect EF_M01, AREA, "King#ilgf01";
-		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		cloakoffnpcself( "King#ilgf01" );
 		sleep2 1500;
 		emotion ET_CRY, getnpcid(0, "Wizard#ilgf02");
 		npctalk "Y-y-you're me? D-d-d-doppelganger! A-am I going to die?!", "Wizard#ilgf02", bc_self;
@@ -4655,7 +4656,7 @@ gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
 		npctalk "Tsk, tsk. You're too softhearted when it comes to humans.", "King#ilgf01", bc_self;
 		specialeffect EF_PORTAL4, AREA, "King#ilgf01";
 		specialeffect EF_M01, AREA, "King#ilgf01";
-		cloakoffnpc( "King#ilgf01", getcharid(0) );
+		cloakoffnpcself( "King#ilgf01" );
 		sleep2 1000;
 		npctalk "Um... I can move fine now. Can I go?", "Wizard#ilgf02", bc_self;
 		sleep2 500;
@@ -4866,3 +4867,702 @@ OnInit:
 	cloakonnpc();
 	end;
 }
+
+
+//============================================================
+//= Illusion of Frozen
+//============================================================
+// boss summoning - 1 day of delay for now
+ice_d03_i,126,126,3	script	Orb of Seal#frozen1	CLEAR_NPC,{
+	if (.ill_frozen_boss_timer >= gettimetick(2)) {
+		mes "This orb needs more time to gather enough energy before it'll work.";
+		close;
+	}
+	.@i = atoi( charat(strnpcinfo(2), 6) );
+	.timer[.@i] = 30;
+	initnpctimer;	// the effect continue after boss spawn
+	if (.timer[1] > 0 && .timer[2] > 0 && .timer[3] > 0 && .timer[4] > 0) {
+		.ill_frozen_boss_timer = gettimetick(2) + 86400;// respawn timer (seems to be one day)
+		donpcevent "bosseff#frozen::OnEvent";
+	}
+	end;
+OnTimer1000:
+	.@i = atoi( charat(strnpcinfo(2), 6) );
+	.timer[.@i]--;
+	if (.timer[.@i] < 1)
+		stopnpctimer;
+	else {
+		initnpctimer;
+		specialeffect EF_DETOXICATION;
+	}
+	end;
+}
+ice_d03_i,172,126,3	duplicate(Orb of Seal#frozen1)	Orb of Seal#frozen2	CLEAR_NPC
+ice_d03_i,172,173,3	duplicate(Orb of Seal#frozen1)	Orb of Seal#frozen3	CLEAR_NPC
+ice_d03_i,127,172,3	duplicate(Orb of Seal#frozen1)	Orb of Seal#frozen4	CLEAR_NPC
+
+ice_d03_i,149,112,0	script	bosseff#frozen	HIDDEN_WARP_NPC,{
+	end;
+OnEvent:
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce "ice_d03_i", "All the energy that was sealed inside the cave has been released, awakening Ktullanux.", bc_map, 0xFFFF00;
+	end;
+OnTimer3000:
+	stopnpctimer;
+	mapannounce "ice_d03_i", "Ktullanux: Who dares call me a lizard? I'll freeze you all!", bc_map, 0xFFFF00;
+	specialeffect EF_PORTAL;
+	if (mobcount("ice_d03_i", "bosseff#frozen::OnBossDead") < 1)
+		monster "ice_d03_i",149,112,"Awakened Ktullanux",3796,1, "bosseff#frozen::OnBossDead";	// ILL_KTULLANUX
+	end;
+OnBossDead:
+	mapannounce "ice_d03_i", "Ktullanux: I'll... be... back...", bc_map;
+	end;
+}
+
+
+// main quest and daily quests
+ice_dun02,150,11,1	script	#tofrozen	4_PURPLE_WARP,2,2,{
+	end;
+OnTouch:
+	if (BaseLevel < 120) {
+		mes "^4d4dffYou must be level 120 or higher to enter this area.^000000";
+		close;
+	}
+	warp "ice_d03_i",149,24;
+	end;
+}
+
+ice_d03_i,149,19,1	script	#fromfrozen	4_PURPLE_WARP,2,2,{
+	end;
+OnTouch:
+	warp "ice_dun02",150,17;
+	end;
+}
+
+ice_d03_i,149,24,0	script	dream#frozen	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	if (isbegin_quest(15116) == 0) {
+		mes "^ff0000I feel dazed, as if I'm dreaming.^000000";
+		close;
+	}
+	end;
+}
+
+ice_d03_i,152,43,0	script	cine1#frozen	HIDDEN_WARP_NPC,13,13,{
+	end;
+OnTouch:
+	if (checkquest(15115,PLAYTIME) == 2) {
+		illusion_frozen = 0;	// reset the variable for daily quests
+		erasequest 15115;// Vrid and Zeith
+	}
+	.@char_id = getcharid(0);
+	if (illusion_frozen < 3) {
+		cloakoffnpcself( "Zeith#frozen01" );
+		cloakoffnpcself( "Vrid#frozen01" );
+		end;
+	}
+	if (illusion_frozen == 3) {
+		cloakoffnpcself( "Vrid#frozen01" );
+		if (checkquest(15112,HUNTING) == 2)
+			cloakoffnpcself( "Zeith#frozen02" );
+		end;
+	}
+	if (illusion_frozen == 4) {
+		cloakoffnpcself( "Zeith#frozen02" );
+		if (checkquest(15113,HUNTING) == 2)
+			cloakoffnpcself( "Vrid#frozen02" );
+		end;
+	}
+	end;
+}
+
+ice_d03_i,155,43,3	script	Zeith#frozen01	4_M_FROZEN_GC,{
+	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+		mes "I'm carrying too many types of items. I should lighten my bag first.";
+		close;
+	}
+	if (BaseLevel < 110) {
+		mes "- You must be Level 110 or above to perform this quest.";
+		close;
+	}
+	.@quest_15116 = isbegin_quest(15116);
+
+	if (illusion_frozen == 0) {
+		if (.@quest_15116 == 2) {
+			mes "^ff0000...? I released them from the ice earlier. Why are they frozen again?^000000";
+			next;
+		}
+		mes "[^0000ffZeith^000000]";
+		mes "Sigh, this is all because of you, idiot.";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "But he really looked pitiful!";
+		mes "I was only trying to help him.";
+		mes "Who knew he'd freeze us in ice?";
+		mes "I'm the victim here, you know.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "I don't know why you thought he looked pitiful, but that's not important.";
+		mes "We have to think about how to break out of this ice. *Groan*";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "I can't even move a finger because of the ice around me.";
+		mes "Yeah, we really need help.";
+		mes "Is there anyone who can help? oh! Hey, you!";
+		next;
+		select("- Are you calling me?");
+		mes "[^ff0000Vrid^000000]";
+		mes "Yes, who else? As you can see, we happened to get ourselves trapped in ice. It's a long story. I'll tell you all about it if you let us out.";
+		next;
+		select("- How can I let you out?");
+		mes "[^ff0000Vrid^000000]";
+		mes "That's a good question. Zeith, answer him.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "...Stop dumping things on me!";
+		mes "I think we'll have to use fire.";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Fire?";
+		mes "But I hate being hot, and fire could burn us to death.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "But we need it to melt the ice around us. We'll be okay... I think.";
+		mes "So, mm... Our new friend...";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "I'm sorry, but could you find some dry twigs from heaps of dry soil in this cave? We won't need more than 10.";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Argh, you're going to burn us to death!";
+		setquest 15110;// Fighting Ice with Fire
+		illusion_frozen = 1;
+		if (.@quest_15116 == 2) {
+			next;
+			mes "^ff0000They're having the same conversation they had before. Also, I don't think they remember me.^000000";
+			next;
+			mes "^ff0000I already know fire won't work, but I'm just going to go along with their request.^000000";
+		}
+		close;
+	}
+	if (illusion_frozen == 1) {
+		if (countitem(25309) < 10) {
+			mes "[^0000ffZeith^000000]";
+			mes "We need 10 Dry Twigs. Check the heaps of dry soil inside this cave.";
+			close;
+		}
+		.@pc_name$ = strcharinfo(0);
+		delitem 25309,10;	// Dry_Branch
+		erasequest 15110;// Fighting Ice with Fire
+		setarray .@list[0],
+			15111,	// Hunt Furious Ice Titans
+			15117,	// Hunt Furious Gazetis
+			15118,	// Hunt Furious Snowiers
+			15119;	// Hunt Hard Icicles
+		.@quest_id = .@list[ rand(getarraysize(.@list)) ];
+		setquest .@quest_id;
+		illusion_frozen = 2;
+		mes "[^0000ffZeith^000000]";
+		mes "You brought all those dry twigs. Oh, we haven't introduced ourselves yet. have we?";
+		mes "I'm Zeith, and this is?";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Ugh, you're going to burn us to death.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Sigh. This is Vrid.";
+		mes "What's your name?";
+		next;
+		if (.@quest_15116 == 2) {
+			mes "^ff0000They asked my name again, as if they didn't remember me. Something weird is going on, but I told them my name again, anyway.^000000";
+			next;
+		}
+		select("-" + .@pc_name$ + ".");
+		mes "[^0000ffZeith^000000]";
+		mes "" + .@pc_name$ + ". That's a nice name.";
+		mes "For now, let's light the twigs and try to melt the ice. Why don't you try to melt the ice around my friend first?";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Grr, why are you so evil?";
+		mes "No, don't! I'd rather die!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "...Sigh. Alright, I'll do it.";
+		mes "Could you light the twigs and place them around me?";
+		mes "But let me remind you,";
+		mes "try not to place them too close to me.";
+		next;
+		mes "^ff0000I lit the dry twigs and placed them around him. Some time has passed, but the ice doesn't look like it's melting.^000000";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Maybe this ice is magical.";
+		mes "It's not melting.";
+		mes "Vrid, you haven't said anything. Come on, think of something!";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Tsk, tsk. You guys are so simpleminded, thinking fire would melt ice like this. It's not working, is it? We need to think outside of the box. Let's try to beat the ice with ice!";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "We can use the cold energy from the monsters in this place to break the ice, I think.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		if (.@quest_15116 == 2)
+			mes "...That's just outlandish.";
+		else
+			mes "...That's ridiculous.";
+		mes "How are we going to use their cold energy, anyway?";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Just listen.";
+		switch(.@quest_id) {
+		case 15111:
+			mes "Vrid's Report: Furious Ice Titans!";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "According to my investigation, Furious Ice Titans are as tiny as specks of dust in the air.";
+			mes "They just look big because of the icicles growing on their bodies.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "Imagine how uncomfortable and cold they must be!";
+			mes "" + .@pc_name$ + "";
+			mes "I want you to liberate them from the icicles growing on their bodies.";
+			break;
+		case 15117:
+			mes "Vrid's Report: Furious Gazetis!";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "According to my investigation, Gazetis were ice giants. They were so curious about this cave that they stuck their heads into it and had their necks shattered. Now they're roaming about the cave, looking for their bodies.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "Aren't they creepy? Every time I look at them, they look like they're mouthing, ";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "" + .@pc_name$ + "";
+			mes "Please help them, so they don't have to look for their bodies anymore.";
+			break;
+		case 15118:
+			mes "Vrid's Report: Furious Snowiers!";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "According to my investigation, Furious Snowiers were gentle creatures who loved to say hi to people.";
+			mes "They became bitter after being ignored too many times. Now, they pretend to be friendly,";
+			mes "but once they get close enough, they attack people. My heart goes out to them...";
+			next;
+			mes "^ff0000Zeith stared at Vrid with incredulity in his eyes.^000000";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "" + .@pc_name$ + "";
+			mes "Please teach them not to act so sneaky.";
+			break;
+		case 15119:
+			mes "Vrid's Report: Hard Icicles!";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "According to my investigation, these icicles have gone through a lot.";
+			next;
+			select("- Like what?");
+			mes "[^ff0000Vrid^000000]";
+			mes "Well, first of all, they were... Mm... Uh...";
+			next;
+			mes "^ff0000Vrid grimaced, sighed, and scratched his head. He then said...^000000";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "Well, icicles are icicles. It's not like they have a life story, do they?";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "Finally, you say something that makes sense.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "Berome";
+			mes "Maybe you should help them create their own story.";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "...Or not.";
+			break;
+		}
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "While you're at it, you'll absorb the cold energy released from them. Come back and hug us, and maybe the cold energy in you will crack the ice we're trapped in. Doesn't that sound plausible?";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "No. Not at all.";
+		mes "Everything you say sounds far-fetched to me.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "But... Sigh, I can't think of a better solution.";
+		switch(.@quest_id) {
+		case 15111:
+			mes "We'll try your suggestion. Adventurer, could you hunt 10 Furious Ice Titans and come back?";
+			break;
+		case 15117:
+			mes "We'll try your suggestion. Adventurer, could you hunt 10 Furious Gazetis and come back?";
+			break;
+		case 15118:
+			mes "We'll try your suggestion. Adventurer, could you hunt 10 Furious Snowiers and come back?";
+			break;
+		case 15119:
+			mes "We'll try your suggestion. Adventurer, could you hunt 10 Hard Icicles and come back?";
+			break;
+		}
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "No, don't hunt them! You have to help them!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Sigh, whatever. Please help them.";
+		close;
+	}
+	if (illusion_frozen == 2) {
+		if (isbegin_quest(15111))	// Hunt Furious Ice Titans
+			.@quest_id = 15111;
+		else if (isbegin_quest(15117))	// Hunt Furious Gazetis
+			.@quest_id = 15117;
+		else if (isbegin_quest(15118))	// Hunt Furious Snowiers
+			.@quest_id = 15118;
+		else if (isbegin_quest(15119))	// Hunt Hard Icicles
+			.@quest_id = 15119;
+		else
+			end;
+
+		if (checkquest(.@quest_id,HUNTING) != 2) {
+			switch (.@quest_id) {
+			case 15111:
+				mes "[^0000ffZeith^000000]";
+				mes "Please come back after hunting 10 Furious Ice Titans inside the cave.";
+				close;
+			case 15117:
+				mes "[^0000ffZeith^000000]";
+				mes "Please come back after hunting 10 Furious Gazetis inside the cave.";
+				close;
+			case 15118:
+				mes "[^0000ffZeith^000000]";
+				mes "Please come back after hunting 10 Furious Snowiers inside the cave.";
+				close;
+			case 15119:
+				mes "[^0000ffZeith^000000]";
+				mes "Please come back after hunting 10 Hard Icicles inside the cave.";
+				close;
+			}
+		}
+		mes "[^ff0000Vrid^000000]";
+		mes "See, I told you!";
+		mes "This adventurer is now radiating a massive amount of cold energy!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "...Isn't this guy just really cold?";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Now, come hug us? no, hug me first. Then, light will flash as the ice around me cracks, you know, like in those fairy tales!";
+		next;
+		mes "^ff0000I hugged Vrid as he asked.^000000";
+		mes "";
+		mes "^ff0000Light flashed!^000000";
+		mes "^ff0000No, wait. That was just the ice reflecting ambient light.^000000";
+		mes "^ff0000Nothing happened.^000000";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "*Chattering his teeth* C-c-c-c-cold. Get off me! You're too cold!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "I knew that was an idiotic idea! I shouldn't have listened to your stupid story! I shouldn't have followed you into this cave!";
+		next;
+		if (.@quest_15116 == 2)
+			.@menu$ = "I already know what the story is. I should just... skip it.";
+		.@s = select( "- What stupid story?", .@menu$ );
+		mes "[^ff0000Vrid^000000]";
+		mes "It's not stupid!";
+		mes "It's the truth!";
+		if (.@s == 1) {
+			mes "Vrid's Report:";
+			mes "Secret of the Ice Cave!";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "Sigh...";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "According to my investigation, this cave used to be a subterranean kingdom, and it was entirely made of gold, like El Dorado!";
+			next;
+			mes "^ff0000Zeith rolled his eyes, but Vrid ignored him and continued.^000000";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "The king was worried about the growing number of thieves, when a young warrior came in and drove all the invaders away. The king was overjoyed and gave the warrior his daughter's hand in marriage.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "But it turned out his son-in-law was also a thief. He ended up running away with the kingdom's most valuable treasure.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "The furious king froze the cave and summoned formidable monsters in it, so no one would ever dare invade his kingdom again. Tragic, isn't it??";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "Of course, I didn't come here for the treasures. We happened to be in the area, and I just wanted to check the place out.";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "That isn't what you told me the first time. I never believed that stupid story, anyway. I followed you in because I was curious. I totally regret it now.";
+		}
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Hah hah, now there's only one thing left to try. That is...";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "No more stupid ideas, please!";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Sometimes the direct approach is best. Let's try to hit the ice until it breaks. Try Zeith's first, please.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "So we're resorting to brute force. You want me to go first? Coward! Sigh... Please be gentle? no, hit me with your best shot!";
+		erasequest .@quest_id;
+		setquest 15112;	// Direct Approach
+		illusion_frozen = 3;
+		cloakonnpcself( "Zeith#frozen01" );
+		if (mobcount("ice_d03_i", "Zeith#frozen02::OnZeithDead") < 1)
+			monster "ice_d03_i",155,42,"Zeith",3798,1, "Zeith#frozen02::OnZeithDead";	// ILL_FROZEN_GC
+		close;
+	}
+	end;
+
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+ice_d03_i,155,43,3	script	Zeith#frozen02	4_M_GUILLOTINE,{
+	if (illusion_frozen == 3) {
+		if (checkquest(15112,HUNTING) == 2) {
+			mes "[^0000ffZeith^000000]";
+			mes "...I can't believe it worked.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "It worked because I'm a genius! You should be thanking me, Zeith!";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "*Snort*";
+			mes "Let's see how long you can gloat.";
+			mes "" + strcharinfo(0) + "";
+			mes "Let's leave him alone here";
+			mes "and get out!";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "What? Hey, wait! Wait! Come on, Zeith! I thought we were better friends than that!";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "...Sigh. You're lucky I'm too kind to just leave you here.";
+			mes "I'm still too stiff to move. Would you take care of him, too??";
+			erasequest 15112;	// Direct Approach
+			setquest 15113;		// Direct Approach
+			illusion_frozen = 4;
+			cloakonnpcself( "Vrid#frozen01" );
+			if (mobcount("ice_d03_i", "Vrid#frozen02::OnVridDead") < 1)
+				monster "ice_d03_i",150,42,"Vrid",3797,1, "Vrid#frozen02::OnVridDead";	// ILL_FROZEN_KN
+			close;
+		}
+		end;
+	}
+	if (illusion_frozen == 4) {
+		if (checkquest(15113,HUNTING) != 2) {
+			mes "[^0000ffZeith^000000]";
+			mes "Now, we need to help Vrid. Please get him out of the ice.";
+			if (mobcount("ice_d03_i", "Vrid#frozen02::OnVridDead") < 1)
+				monster "ice_d03_i",150,42,"Vrid",3797,1, "Vrid#frozen02::OnVridDead";	// ILL_FROZEN_KN
+			close;
+		}
+		cloakoffnpcself( "Vrid#frozen02" );
+		mes "[^ff0000Vrid^000000]";
+		mes "Whew, thanks!";
+		mes "You're pretty good.";
+		mes "Thank you," + strcharinfo(0) + "!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Let's get out of here.";
+		mes "I don't want to be frozen again!";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Wait. We're warriors? we can't leave without making our enemy pay for what he did to us!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Revenge?";
+		mes "Do you want to get frozen again?";
+		next;
+		select("- What revenge? How did you get frozen, anyway?");
+		mes "[^0000ffZeith^000000]";
+		mes "Sigh... This knucklehead touched something he shouldn't.";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Come on, I was only trying to help!";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Helping who? To me, that monster didn't look like it needed help!";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		mes "Listen.";
+		mes "Vrid's Report: The Strange Lizard!";
+		next;
+		mes "[^ff0000Vrid^000000]";
+		if (isbegin_quest(15116) == 2)
+			.@r = rand(3);
+		switch(.@r) {
+		case 0:// it seems likely to be the default text when 15116 uncompleted
+			mes "Like I told you earlier, when this cave was a kingdom, the king had a pet lizard. When the king froze the cave in a fit of rage, this lizard was also turned into a terrifying ice monster.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "Now, he's roaming about the cave, yearning for his owner's love. Isn't that so tragic? I was only trying to give him the love he wanted, and he punished me for it!";
+			break;
+		case 1:
+			mes "Like I told you earlier, when this cave was a kingdom, the king had a pet lizard. One day, this lizard wandered outside of the kingdom to see the outside world, but ended up getting lost. The king was so angry at the lizard that he cursed him.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "That cursed lizard roams about this cave, still wanting to go outside. Isn't that tragic? I was only trying to free him, and in return, he froze me in a block of ice!";
+			break;
+		case 2:
+			mes "His real name was? what was his name?? Ktulla-something. Someone once told me the lizard has been hired by the archpriests of Rachel to keep watch over a boy who is sealed inside this cave.";
+			next;
+			mes "[^ff0000Vrid^000000]";
+			mes "But that story was so unrealistic and boring that it's not worth remembering. A lizard is just a lizard, right?";
+			next;
+			mes "[^0000ffZeith^000000]";
+			mes "If you ask me, that sounds the most plausible of all your stories I've heard.";
+			break;
+		}
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Where do you get all this? And why do your stories keep changing every time?";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "Sigh, anyway, that lizard does exist inside this cave. If you want to see it, then press down on all 4 Orbs of Seal in the center of the cave within 30 seconds. That'll make it come out of hiding.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "But that lizard is really strong. I suggest you fight it in a group.";
+		next;
+		mes "[^0000ffZeith^000000]";
+		mes "I'm glad we've met you,";
+		mes "" + strcharinfo(0) + ".";
+		mes "I hope we'll meet again.";
+		next;
+		if (isbegin_quest(15116) == 0) {
+			mes "^ff0000They started to fade away as they bid me goodbye. Soon there was nothing left of them, as if they never existed at all. Was this all just a dream or something?^000000";
+			setquest 15116;// Clear the Illusion of the Frozen
+			completequest 15116;
+			illusion_frozen = 5;
+		}
+		else {
+			mes "^ff0000They started to fade away as they bid me goodbye. It seems this cave is stuck in an endless time loop.^000000";
+			next;
+			mes "^ff0000But the events that take place inside it aren't always the same. Is it possible that spacetime inside this cave is still warping? Will I also be affected by that?^000000";
+		}
+		erasequest 15113;// Direct Approach
+		setquest 15115;// Vrid and Zeith
+		getexp 1200000,1200000;
+		getitem 25271,3;	// IllusionStone
+		cloakonnpcself( "Vrid#frozen02" );
+		cloakonnpcself( "Zeith#frozen02" );
+		close;
+	}
+	end;
+
+OnZeithDead:
+	if (illusion_frozen == 3) {
+		cloakonnpcself();
+		specialeffect EF_ICECRASH;
+	}
+	end;
+
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+ice_d03_i,150,43,5	script	Vrid#frozen01	4_M_FROZEN_KN,{
+	if (illusion_frozen == 3) {
+		if (checkquest(15112,HUNTING) == 2) {
+			cloakoffnpcself( "Zeith#frozen02" );
+			mes "[^ff0000Vrid^000000]";
+			mes "It really worked! Hey, Zeith! Are you alright?";
+			close;
+		}
+		mes "[^ff0000Vrid^000000]";
+		mes "See if you can break the ice around him. If it works, then please break me out of the ice, too.";
+		if (mobcount("ice_d03_i", "Zeith#frozen02::OnZeithDead") < 1)
+			monster "ice_d03_i",155,42,"Zeith",3798,1, "Zeith#frozen02::OnZeithDead";	// ILL_FROZEN_GC
+		close;
+	}
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+ice_d03_i,150,43,5	script	Vrid#frozen02	4_M_KNIGHT_BLACK,{
+	end;
+OnVridDead:
+	if (illusion_frozen == 4) {
+		cloakonnpcself();
+		specialeffect EF_ICECRASH;
+	}
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+ice_d03_i,137,38,3	script	Heap of Dry Soil#frozen1	4_SOIL,{
+	if (illusion_frozen == 1) {
+		if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+			mes "I'm carrying too many types of items. I should lighten my bag first.";
+			close;
+		}
+		if (countitem(25309) >= 10) {
+			mes "I have all the twigs I need. I should go back to Zeith and Vrid.";
+			close;
+		}
+		mes "I checked the mound of dirt to look for twigs.";
+		next;
+		progressbar "00000000",5;
+		disablenpc();
+		initnpctimer;
+		if (rand(100) < 10)
+			mes "There's nothing inside this mound of dirt.";
+		else {
+			getitem 25309,1;
+			mes "I've found 1 ^006400Dry Twig^000000.";
+		}
+		close;
+	}
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+ice_d03_i,111,45,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen2	4_SOIL
+ice_d03_i,65,70,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen3	4_SOIL
+ice_d03_i,86,87,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen4	4_SOIL
+ice_d03_i,70,113,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen5	4_SOIL
+ice_d03_i,46,206,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen6	4_SOIL
+ice_d03_i,64,231,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen7	4_SOIL
+ice_d03_i,84,208,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen8	4_SOIL
+ice_d03_i,100,246,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen9	4_SOIL
+ice_d03_i,196,246,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen10	4_SOIL
+ice_d03_i,238,231,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen11	4_SOIL
+ice_d03_i,252,206,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen12	4_SOIL
+ice_d03_i,238,64,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen13	4_SOIL
+ice_d03_i,186,44,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen14	4_SOIL
+ice_d03_i,160,48,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen15	4_SOIL
+ice_d03_i,126,73,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen16	4_SOIL
+ice_d03_i,70,184,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen17	4_SOIL
+ice_d03_i,214,208,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen18	4_SOIL
+ice_d03_i,228,184,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen19	4_SOIL
+ice_d03_i,230,111,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen20	4_SOIL
+ice_d03_i,219,90,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen21	4_SOIL
+ice_d03_i,171,72,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen22	4_SOIL
+ice_d03_i,112,111,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen23	4_SOIL
+ice_d03_i,112,188,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen24	4_SOIL
+ice_d03_i,186,188,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen25	4_SOIL
+ice_d03_i,189,112,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen26	4_SOIL
+ice_d03_i,150,104,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen27	4_SOIL
+ice_d03_i,110,150,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen28	4_SOIL
+ice_d03_i,150,187,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen29	4_SOIL
+ice_d03_i,187,149,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen30	4_SOIL
