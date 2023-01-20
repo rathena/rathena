@@ -18484,7 +18484,7 @@ void clif_bg_queue_apply_notify(const char *name, map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
+	auto queue = bg_search_queue(sd->bg_queue_id);
 
 	if (queue == nullptr) {
 		ShowError("clif_bg_queue_apply_notify: Player is not in a battleground queue.\n");
@@ -18527,7 +18527,7 @@ void clif_parse_bg_queue_cancel_request(int fd, map_session_data *sd)
 	bool success;
 
 	if (sd->bg_queue_id > 0) {
-		std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
+		auto queue = bg_search_queue(sd->bg_queue_id);
 
 		if (queue && queue->state == QUEUE_STATE_SETUP_DELAY)
 			return; // Make the cancel button do nothing if the entry window is open. Otherwise it'll crash the game when you click on both the queue status and entry status window.

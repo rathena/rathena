@@ -21229,7 +21229,7 @@ BUILDIN_FUNC(bg_unbook)
  */
 BUILDIN_FUNC(bg_info)
 {
-	std::shared_ptr<s_battleground_type> bg = bg_search_name(script_getstr(st, 2));
+	auto bg = bg_search_name(script_getstr(st, 2));
 
 	if (!bg) {
 		ShowError("bg_info: Invalid Battleground name %s.\n", script_getstr(st, 2));

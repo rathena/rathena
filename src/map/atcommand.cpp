@@ -4295,7 +4295,7 @@ ACMD_FUNC(reload) {
 					bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
 				for (auto &bg_sd : bg->teamb_members)
 					bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
-				bg_queue_clear(bg, true);
+				bg_queue_clear(*bg, true);
 		}
 
 		flush_fifos();
