@@ -2173,14 +2173,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case SS_ANKOKURYUUAKUMU:
 		status_change_end(bl, SC_NIGHTMARE);
 		break;
-	case NW_THE_VIGILANTE_AT_NIGHT:
-	case NW_ONLY_ONE_BULLET:
-	case NW_SPIRAL_SHOOTING:
-	case NW_MAGAZINE_FOR_ONE:
-	case NW_WILD_FIRE:
-		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
-		break;
 	case HN_SHIELD_CHAIN_RUSH:
 	case HN_JACK_FROST_NOVA:
 	case HN_GROUND_GRAVITATION:
@@ -3832,6 +3824,14 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case TR_ROSEBLOSSOM: // Status should start even if target dies
 			if (damage > 0)
 				sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
+			break;
+		case NW_THE_VIGILANTE_AT_NIGHT:
+		case NW_ONLY_ONE_BULLET:
+		case NW_SPIRAL_SHOOTING:
+		case NW_MAGAZINE_FOR_ONE:
+		case NW_WILD_FIRE:
+			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+				status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 			break;
 	}
 
