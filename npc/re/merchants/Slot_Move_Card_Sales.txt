@@ -15,7 +15,7 @@
 prt_in,211,173,3	script	Slot Move Card Sales#slo	4_F_01,{
 	mes "[Salesman]";
 	mes "Howdy.";
-	mes "I'm selling <ITEM>[Character Position Change Coupon]<INFO>12786</INFO></ITEM>.";
+	mes "I'm selling " + mesitemlink( 12786 ) + ".";
 	mes "You can ^4d4dffchange the slot position of a character using the card^000000.";
 	next;
 	mes "[Salesman]";

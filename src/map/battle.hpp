@@ -564,6 +564,7 @@ struct Battle_Config
 	int update_enemy_position;
 	int devotion_rdamage;
 	int feature_itemlink;
+	int feature_mesitemlink;
 
 	// autotrade persistency
 	int feature_autotrade;

@@ -1357,6 +1357,43 @@ std::string ItemDatabase::create_item_link(struct item& item) {
 	return this->create_item_link(item, data);
 }
 
+std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& data ){
+	if( data == nullptr ){
+		return "Unknown item";
+	}
+
+	std::string itemstr;
+
+// All these dates are unconfirmed
+#if PACKETVER >= 20100000
+	if( battle_config.feature_mesitemlink ){
+// It was changed in 2015-11-04, but Gravity actually broke the feature for this specific client, because they introduced the new itemlink feature [Lemongrass]
+// See the following github issues for more details:
+// * https://github.com/rathena/rathena/issues/1236
+// * https://github.com/rathena/rathena/issues/1873
+#if PACKETVER >= 20151104
+		const std::string start_tag = "<ITEM>";
+		const std::string closing_tag = "</ITEM>";
+#else
+		const std::string start_tag = "<ITEMLINK>";
+		const std::string closing_tag = "</ITEMLINK>";
+#endif
+
+		itemstr += start_tag;
+		itemstr += data->ename;
+		itemstr += "<INFO>";
+		itemstr += std::to_string( data->nameid );
+		itemstr += "</INFO>";
+		itemstr += closing_tag;
+
+		return itemstr;
+	}
+#endif
+
+	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
+	return data->ename;
+}
+
 ItemDatabase item_db;
 
 /**
