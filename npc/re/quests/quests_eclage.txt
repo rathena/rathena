@@ -10299,7 +10299,7 @@ OnTouch_:
 			mes "Son... What is the meaning of this.";
 			next;
 			mes "[????]";
-			mes "I'm putting the equiment to rest, father...";
+			mes "I'm putting the equipment to rest, father...";
 			next;
 			mes "^000099The reactor was activated, but the dimension does not seem to be related to Etran. It's cold somehow.^000000";
 			close;
@@ -16862,7 +16862,7 @@ que_avan01,18,38,0	script	Desk#tl01	CLEAR_NPC,{
 		if (select("Examine the desk.:Ignore it.") == 2)
 			mes "Other parts of the desk should be examined.";
 		else {
-			mes "I roughtly organized the stuff on the desk.";
+			mes "I roughly organized the stuff on the desk.";
 			mes "What should we look into?";
 			cutin "avn_desk02",4;
 			while (1) {
