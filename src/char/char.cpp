@@ -139,6 +139,7 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 		}
 	}else{
 		character = std::make_shared<struct online_char_data>( account_id );
+		char_get_onlinedb()[account_id] = character;
 	}
 
 	//Update state data
