@@ -61917,6 +61917,66 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_KR_B_SPECIAL03);
+  - Id: 100537
+    AegisName: Class_Shadow_WP_Cube
+    Name: Class Weapon Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_WP_CUBE);
+  - Id: 100538
+    AegisName: Class_Shadow_AM_Cube
+    Name: Class Armor Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_AM_CUBE);
+  - Id: 100539
+    AegisName: Class_Shadow_SU_Cube
+    Name: Class Shoes Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_SU_CUBE);
+  - Id: 100540
+    AegisName: Class_Shadow_SD_Cube
+    Name: Class Shield Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_SD_CUBE);
+  - Id: 100541
+    AegisName: Class_Shadow_PD_Cube
+    Name: Class Pendant Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_PD_CUBE);
+  - Id: 100542
+    AegisName: Class_Shadow_EA_Cube
+    Name: Class Earring Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_EA_CUBE);
   - Id: 100547
     AegisName: BioWeapon_Helm_Box
     Name: Biological Lab Helmet Box
@@ -65713,6 +65773,15 @@ Body:
       NoAuction: true
     Script: |
       laphine_synthesis();
+  - Id: 101645
+    AegisName: GMT_Robe_Stone
+    Name: Geffen Secret Stone
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
   - Id: 101654
     AegisName: aegis_101654
     Name: Almighty Shadow Selection Box    # !todo check english name

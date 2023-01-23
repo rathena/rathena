@@ -92210,20 +92210,295 @@ Body:
         Rate: 7000
 #  - Id: 3791
 #    AegisName: JP_E_MONSTER_73
-#  - Id: 3792
-#    AegisName: ILL_GAZETI
-#  - Id: 3793
-#    AegisName: ILL_SNOWIER
-#  - Id: 3794
-#    AegisName: ILL_ICE_TITAN
-#  - Id: 3795
-#    AegisName: ILL_ICEICLE
-#  - Id: 3796
-#    AegisName: ILL_KTULLANUX
-#  - Id: 3797
-#    AegisName: ILL_FROZEN_KN
-#  - Id: 3798
-#    AegisName: ILL_FROZEN_GC
+  - Id: 3792
+    AegisName: ILL_GAZETI
+    Name: Angry Gazeti
+    Level: 126
+    Hp: 117139
+    BaseExp: 6755
+    JobExp: 6454
+    Attack: 2290
+    Attack2: 366
+    Defense: 141
+    MagicDefense: 42
+    Str: 125
+    Agi: 54
+    Vit: 64
+    Int: 56
+    Dex: 144
+    Luk: 62
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 190
+    AttackDelay: 576
+    AttackMotion: 370
+    DamageMotion: 270
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Frozen_Stone_Fragment
+        Rate: 1000
+      - Item: Bradium
+        Rate: 200
+      - Item: Cold_Ice
+        Rate: 100
+      - Item: Cap_
+        Rate: 50
+      - Item: Bullet_Case_Fleeze
+        Rate: 100
+      - Item: AngerGazeti_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3793
+    AegisName: ILL_SNOWIER
+    Name: Angry Snowier
+    Level: 129
+    Hp: 105290
+    BaseExp: 7106
+    JobExp: 6711
+    Attack: 1750
+    Attack2: 330
+    Defense: 195
+    MagicDefense: 78
+    Str: 136
+    Agi: 88
+    Vit: 97
+    Int: 78
+    Dex: 103
+    Luk: 71
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 04
+    Drops:
+      - Item: Snowball
+        Rate: 1000
+      - Item: Ice_Heart
+        Rate: 700
+      - Item: Mistic_Frozen
+        Rate: 100
+      - Item: Combo_Battle_Glove
+        Rate: 50
+      - Item: Light_Granule
+        Rate: 300
+      - Item: AngerSnowier_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3794
+    AegisName: ILL_ICE_TITAN
+    Name: Angry Ice Titan
+    Level: 133
+    Hp: 137656
+    BaseExp: 7519
+    JobExp: 7132
+    Attack: 1988
+    Attack2: 298
+    Defense: 644
+    MagicDefense: 44
+    Str: 181
+    Agi: 70
+    Vit: 119
+    Int: 61
+    Dex: 124
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Drops:
+      - Item: SpritJewel
+        Rate: 1000
+      - Item: Ice_Piece
+        Rate: 700
+      - Item: Frozen_Rose
+        Rate: 200
+      - Item: Huuma_Fluttering_Snow
+        Rate: 50
+      - Item: Elder_Branch
+        Rate: 300
+      - Item: AngerIceTitan_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3795
+    AegisName: ILL_ICEICLE
+    Name: Solid Icicle
+    Level: 135
+    Hp: 1012
+    BaseExp: 200
+    JobExp: 200
+    Attack: 1553
+    Attack2: 1
+    Defense: 50
+    MagicDefense: 35
+    Str: 199
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 244
+    Luk: 1
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 1344
+    Drops:
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 0
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 1
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 2
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 3
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 4
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 5
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 6
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 7
+        StealProtected: true
+  - Id: 3796
+    AegisName: ILL_KTULLANUX
+    Name: Awakened Ktullanux
+    Level: 135
+    Hp: 13521442
+    BaseExp: 2777284
+    JobExp: 1937023
+    Attack: 5754
+    Attack2: 2680
+    Defense: 129
+    MagicDefense: 78
+    Str: 125
+    Agi: 156
+    Vit: 70
+    Int: 165
+    Dex: 262
+    Luk: 142
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 400
+    AttackDelay: 432
+    AttackMotion: 840
+    DamageMotion: 216
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Yggdrasilberry
+        Rate: 5000
+        Index: 0
+      - Item: Yggdrasilberry
+        Rate: 5000
+        Index: 1
+      - Item: IllusionStone
+        Rate: 5000
+    Drops:
+      - Item: Ktullanux_Eye
+        Rate: 4000
+      - Item: Clack_Of_Servival
+        Rate: 1000
+      - Item: Herald_Of_GOD
+        Rate: 1000
+      - Item: Huuma_Fluttering_Snow
+        Rate: 1000
+      - Item: AwakenKtullanux_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3797
+    AegisName: ILL_FROZEN_KN
+    Name: ILL_FROZEN_KN
+    Level: 1
+    Hp: 100
+    Defense: 100
+    MagicDefense: 99
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 500
+    AttackMotion: 500
+    DamageMotion: 500
+    Modes:
+      NORANDOMWALK: true
+      IGNOREMELEE: true
+      IGNOREMAGIC: true
+      IGNORERANGED: true
+      IGNOREMISC: true
+      KNOCKBACKIMMUNE: true
+      TELEPORTBLOCK: true
+      STATUSIMMUNE: true
+      SKILLIMMUNE: true
+  - Id: 3798
+    AegisName: ILL_FROZEN_GC
+    Name: ILL_FROZEN_GC
+    Level: 1
+    Hp: 100
+    Defense: 100
+    MagicDefense: 99
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 500
+    AttackMotion: 500
+    DamageMotion: 500
+    Modes:
+      NORANDOMWALK: true
+      IGNOREMELEE: true
+      IGNOREMAGIC: true
+      IGNORERANGED: true
+      IGNOREMISC: true
+      KNOCKBACKIMMUNE: true
+      TELEPORTBLOCK: true
+      STATUSIMMUNE: true
+      SKILLIMMUNE: true
 #  - Id: 3799
 #    AegisName: ILL_ASSULTER
 #  - Id: 3800

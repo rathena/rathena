@@ -1826,6 +1826,12 @@ enum e_random_item_group {
 	IG_MF_NOTELEPORT,
 	IG_MF_NORETURN,
 	IG_GIANT_FLY_WING,
+	IG_CLASS_SHADOW_WP_CUBE,
+	IG_CLASS_SHADOW_AM_CUBE,
+	IG_CLASS_SHADOW_SU_CUBE,
+	IG_CLASS_SHADOW_SD_CUBE,
+	IG_CLASS_SHADOW_PD_CUBE,
+	IG_CLASS_SHADOW_EA_CUBE,
 
 	IG_MAX,
 };
@@ -2143,8 +2149,11 @@ public:
 	// Additional
 	std::shared_ptr<item_data> searchname( const char* name );
 	std::shared_ptr<item_data> search_aegisname( const char *name );
-	std::string create_item_link( struct item& data );
-	std::string create_item_link( t_itemid id );
+	std::string create_item_link(struct item& item);
+	std::string create_item_link( std::shared_ptr<item_data>& data );
+
+private:
+	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data);
 };
 
 extern ItemDatabase item_db;

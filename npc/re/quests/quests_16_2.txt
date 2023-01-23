@@ -13755,7 +13755,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		emotion ET_FRET;
 		mes "[Jana Levedeva]";
 		mes "...We'll become adults in the near future.";
-		mes "We are not that much younger compared to other people here. Does putting on several years make any diffrence?";
+		mes "We are not that much younger compared to other people here. Does putting on several years make any difference?";
 		next;
 		mes "[Jana Levedeva]";
 		mes "They all know that we have better abilities than adults.";
