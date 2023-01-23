@@ -143,6 +143,22 @@ namespace rathena {
 		}
 
 		/**
+		 * Find a key-value pair and return the value as a raw pointer
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return Key value on success or nullptr on failure
+		 */
+		template <typename K, typename V>
+		V * umap_find_get(std::unordered_map<K, std::shared_ptr<V>>& map, K key) {
+			auto it = map.find(key);
+
+			if (it != map.end())
+				return it->second.get();
+			else
+				return nullptr;
+		}
+
+		/**
 		 * Resize an unordered map.
 		 * @param map: Unordered map to resize
 		 * @param size: Size to set unordered map to

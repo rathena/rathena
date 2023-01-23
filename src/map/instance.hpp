@@ -116,7 +116,7 @@ extern InstanceDatabase instance_db;
 
 extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
 
-std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
+const s_instance_db *instance_search_db_name(const char* name);
 void instance_getsd(int instance_id, map_session_data *&sd, enum send_target *target);
 
 int instance_create(int owner_id, const char *name, e_instance_mode mode);
@@ -130,7 +130,7 @@ void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAM
 int16 instance_mapid(int16 m, int instance_id);
 int instance_addmap(int instance_id);
 
-void instance_addnpc(std::shared_ptr<s_instance_data> idata);
+void instance_addnpc(s_instance_data &idata);
 
 void do_reload_instance(void);
 void do_init_instance(void);

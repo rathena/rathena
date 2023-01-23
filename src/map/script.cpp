@@ -21824,7 +21824,7 @@ BUILDIN_FUNC(instance_info)
 	const char* name = script_getstr(st, 2);
 	int type = script_getnum(st, 3);
 	int index = 0;
-	std::shared_ptr<s_instance_db> db = instance_search_db_name(name);
+	const auto *db = instance_search_db_name(name);
 
 	if (!db) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );

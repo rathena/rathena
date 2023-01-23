@@ -114,6 +114,15 @@ public:
 		}
 	}
 
+	virtual const datatype * find_get(keytype key) {
+		auto it = data.find(key);
+		if (it != data.end()) {
+			return it->second.get();
+		} else {
+			return nullptr;
+		}
+	}
+
 	virtual void put( keytype key, std::shared_ptr<datatype> ptr ){
 		this->data[key] = ptr;
 	}
