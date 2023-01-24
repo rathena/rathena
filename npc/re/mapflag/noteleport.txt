@@ -247,6 +247,12 @@ har_in01	mapflag	noteleport
 rockmi2	mapflag	noteleport
 
 //============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	noteleport
+1@md_pay	mapflag	noteleport
+
+//============================================================
 // Lasagna
 //============================================================
 lasa_in01	mapflag	noteleport
