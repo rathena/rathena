@@ -5580,7 +5580,7 @@ beach_dun2,248,254,4	script	#IL_Luanda	4_ENERGY_BLUE,{
 	if (select( "Touch it", "Leave it" ) == 2)
 		end;
 	if (BaseLevel < 160) {
-		mes "- You cannot enter the area because your level is low.";
+		mes "- You cannot enter the area because your level is too low.";
 		close;
 	}
 	warp "com_d02_i",249,243;
@@ -5608,10 +5608,10 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "I've heard that they hire adventurers because they don't have enough hands to defend the village. I guess that's you?";
 		next;
 		mes "[Luanda]";
-		mes "By the way, haven't I seen you somewhere? The face looks strangely familiar.";
+		mes "By the way, haven't I seen you somewhere? Your face looks strangely familiar.";
 		next;
 		mes "[Luanda]";
-		mes "Oops, I'm not in a position to blame the similar faces... We're triplets. Ha ha ha";
+		mes "Oops, I'm not in a position to compare similar faces... We're twins. Ha ha ha";
 		next;
 		mes "[Luanda]";
 		mes "Should I say hello? Nice to meet you. I'm Luanda, the defense manager of this cave.";
@@ -5628,14 +5628,14 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		ill_luanda = 1;
 		emotion ET_KIK;
 		mes "[Luanda]";
-		mes "Then have a hard time. Adventurer.";
+		mes "Then have a good time. Adventurer.";
 		close;
 	}
 	if (ill_luanda == 2) {	// first time (walk near any shadow npc)
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "Told Luanda about the strange shimmering he had witnessed.";
+		mes "Told Luanda about the strange shimmering you had witnessed.";
 		next;
 		emotion ET_SCRATCH;
 		mes "[Luanda]";
@@ -5660,7 +5660,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "He told me about three young men he met and talked to.";
+		mes "Told Luanda about three young men you met and talked to.";
 		next;
 		emotion ET_SURPRISE;
 		mes "[Luanda]";
@@ -5673,7 +5673,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "I vaguely remember it. I did warn a stranger I met before I went hunting with my brothers.";
 		next;
 		mes "[Luanda]";
-		mes "It's not uncommon to see strangers in town, so it's hazy over time, but I remember it.";
+		mes "It's not uncommon to see strangers in town, so my memory is hazy, but I remember it.";
 		next;
 		mes "[Luanda]";
 		mes "It's interesting. If what you're saying is true, doesn't that mean you've been talking to me in the past?";
@@ -5689,7 +5689,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		next;
 		emotion ET_SORRY;
 		mes "[Luanda]";
-		mes "I apologize. Deep down, I felt that it was annoying for adventurer to talk to me. Now, I'll ask you first.";
+		mes "I apologize. Deep down, I felt that it was annoying for adventurers to talk to me. Now, I'll ask you first.";
 		next;
 		mes "[Luanda]";
 		mes "If you ever go through something similar, please let me know. I'm begging you.";
@@ -5708,14 +5708,14 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		next;
 		emotion ET_SMILE;
 		mes "[Luanda]";
-		mes "Puhahaha I think you came to see the place where hyung-nim and sister-in-law are dating.";
+		mes "Puhahaha I think you came to see the place where Hyung-nim and sister-in-law are dating.";
 		next;
 		emotion ET_SMILE;
 		mes "[Luanda]";
 		mes "Oh my gosh.. that place is where my brother and sister-in-law often went on dates.";
 		next;
 		mes "[Luanda]";
-		mes "Your brother might think it's a secret place only he knows, but it's a place everyone in the village knows.";
+		mes "My brother might think it's a secret place only he knows, but it's a place everyone in the village knows.";
 		next;
 		mes "[Luanda]";
 		mes "It's quite a popular spot among village lovers. It's quiet and a good place for a date.";
@@ -5733,16 +5733,16 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "Told me about Luanda who was painting murals in the cave.";
+		mes "Told Luanda about who was painting murals in the cave.";
 		next;
 		mes "[Luanda]";
-		mes "Have you ever met Adventurer when I was painting the mural? I don't remember, but...";
+		mes "Have you ever met me when I was painting the mural? I don't remember, but...";
 		next;
 		mes "[Luanda]";
 		mes "I think I can tell you why I painted the mural.";
 		next;
 		mes "[Luanda]";
-		mes "It's an open secret, but each of my brothers has a mysterious ability.";
+		mes "It's not much of a secret, but each of my brothers has a mysterious ability.";
 		next;
 		mes "[Luanda]";
 		mes "In the case of Karoo-hyung, he has the ability to see accurately even from a distance..";
@@ -5751,10 +5751,10 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "Maknae Maru has an excellent memory that never forgets what she has seen and the ability to read her opponent's mind..";
 		next;
 		mes "[Luanda]";
-		mes "I'm not clear, but I can see into the future. Ah! I have more abilities than that.";
+		mes "I'm not always correct, but I can see into the future. Ah! I have more abilities than that.";
 		next;
 		mes "[Luanda]";
-		mes "You can see people's good and evil energy. In the case of adventurers...";
+		mes "I can see people's good and evil energy. In the case of adventurers...";
 		next;
 		mes "[Luanda]";
 		mes "I can feel the good energy that can't be touched. That's why I feel more bitter.";
@@ -5787,7 +5787,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "He told me about Mao, who was training alone.";
+		mes "Told Luanda about Mao, who was training alone.";
 		next;
 		mes "[Luanda]";
 		mes "Mao guy... you've been thinking about a lot of things.";
@@ -5818,7 +5818,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "Told you about Luanda, who was taking something from the cave.";
+		mes "Told Luanda about someone who was taking something from the cave.";
 		next;
 		mes "[Luanda]";
 		mes "You saw that too. I think we've talked about it before. In my dream, I saw monsters coming into town.";
@@ -5842,7 +5842,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "He told me the story of meeting the villagers and the village chief.";
+		mes "Told Luanda about the story of meeting the villagers and the village chief.";
 		next;
 		mes "[Luanda]";
 		mes "You really came to see what happened a while ago. It wasn't as much damage as you saw in your dream, but it was a lot of damage.";
@@ -5863,7 +5863,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "I told Luanda the story of meeting the brothers who ran somewhere in a hurry.";
+		mes "Told Luanda about the story of meeting the brothers who ran somewhere in a hurry.";
 		next;
 		mes "[Luanda]";
 		mes "You must have seen the day my brothers and I came back from hunting. There was a big disaster in the village and it was the next day.";
@@ -5872,15 +5872,15 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "Kuh.. If me and my brothers hadn't emptied the village... the people wouldn't have been taken by the monsters...";
 		next;
 		mes "[Luanda]";
-		mes "If so... the sister-in-law also...";
+		mes "If so... my sister-in-law also...";
 		next;
-		select( "It's not your fault" );
+		select( "It's not your fault." );
 		mes "[Luanda]";
 		mes "I know. It's not because of me and my brothers.. but.. that day.. we.. .. .. it's just a pity";
 		next;
 		select( "You'd better calm down first." );
 		mes "[Luanda]";
-		mes "You've shown the adventurer something you wouldn't have seen. I'm just here to tell you what I saw...";
+		mes "You've shown me, adventurer, something I wouldn't have seen. I'm just here to tell you what I remember...";
 		next;
 		ill_luanda = 18;
 		getexp 1120000,650000;
@@ -5892,13 +5892,13 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "Told the story of seeing Karu and Asudem.";
+		mes "Told Luanda about the story of seeing Karu and Asudem.";
 		next;
 		mes "[Luanda]";
 		mes "... ... ...";
 		next;
 		mes "[Luanda]";
-		mes "Ka.. Karoo hyungnim.. hyungnim";
+		mes "Ka.. Karu hyungnim.. hyungnim";
 		mes "That's the reason why you shut yourself up in the west cave.";
 		next;
 		mes "[Luanda]";
@@ -5923,7 +5923,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "[Luanda]";
 		mes "What's up, adventurer?";
 		next;
-		mes "Told stories of unknown people.";
+		mes "Told Luanda about stories of unknown people.";
 		next;
 		mes "[Luanda]";
 		mes "It sounds like a conversation between a Wootan or Megalith monster targeting the village.";
@@ -5932,7 +5932,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		mes "Follow a strong leader? Recently, I felt that the movements of these guys are disturbingly orderly...";
 		next;
 		mes "[Luanda]";
-		mes "It seems that a leader monster has appeared to lead them.";
+		mes "It seems that a monster has appeared to lead them.";
 		next;
 		mes "[Luanda]";
 		mes "It's embarrassing. Even now, all we can do is block it.";
@@ -6006,7 +6006,7 @@ com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
 		close;
 	case 2:
 		mes "[Luanda]";
-		mes "Adventurer is really curious about everything.";
+		mes "Adventurer, you are really curious about everything.";
 		next;
 		mes "[Luanda]";
 		mes "The Luanda Caves are strategically the only way out north of town.";
@@ -6120,13 +6120,13 @@ com_d02_i,152,40,6	script	Second Young#LuE01	4_M_THAIONGBAK,{
 		mes "[Third Young]";
 		mes "Brothers, there is someone over there. A stranger?";
 		next;
-		npctalk "Looks like a stranger? If I remember correctly, I haven't seen a face in the neighborhood.", "Third Young#LuE01", bc_self;
+		npctalk "Looks like a stranger? If I remember correctly, I haven't seen that face in the neighborhood.", "Third Young#LuE01", bc_self;
 		mes "[Third Young]";
-		mes "Looks like a stranger? If I remember correctly, I haven't seen a face in the neighborhood.";
+		mes "Looks like a stranger? If I remember correctly, I haven't seen that face in the neighborhood.";
 		next;
-		npctalk "If it's the youngest's memory, that's it. It's strange to be a stranger at this age.", "First Young#LuE01", bc_self;
+		npctalk "If it's the youngest's memory, that's it. It's odd to be a stranger at this age.", "First Young#LuE01", bc_self;
 		mes "[First Young]";
-		mes "If it's the youngest's memory, that's it. It's strange to be a stranger at this age.";
+		mes "If it's the youngest's memory, that's it. It's odd to be a stranger at this age.";
 		next;
 		npctalk "Brother, I don't think you're dangerous. This isn't the time. Brother, let's go first.", "", bc_self;
 		mes "[Second Young]";
@@ -6163,17 +6163,17 @@ com_d02_i,152,40,6	script	Second Young#LuE01	4_M_THAIONGBAK,{
 		mes "You? Can't you feel anything but good vibes? What the hell are you doing?";
 		next;
 		select( "What are you talking about?" );
-		npctalk "I can see it. Hmm... I can't see it either.", "", bc_self;
+		npctalk "I can see it. Hmm... you can't see it though.", "", bc_self;
 		mes "[Second Young]";
-		mes "I can see it. Hmm.. I can't see it either.";
+		mes "I can see it. Hmm.. you can't see it though.";
 		next;
 		npctalk "I'm telling you that I feel good vibes from you. Leave this place right now.", "", bc_self;
 		mes "[Second Young]";
 		mes "I'm telling you because I feel good vibes from you. Leave this place right now.";
 		next;
-		npctalk "A lot of monsters will come to this town soon. Don't die in vain and leave here.", "", bc_self;
+		npctalk "A lot of monsters will come to this town soon. Don't die in vain and leave this place.", "", bc_self;
 		mes "[Second Young]";
-		mes "A lot of monsters will come to this town soon. Don't die in vain and leave here.";
+		mes "A lot of monsters will come to this town soon. Don't die in vain and leave this place.";
 		next;
 		cloakonnpcself();
 		ill_luanda = 5;
@@ -6227,10 +6227,10 @@ com_d02_i,121,95,4	script	Karu#LuE02	4_M_THAIONGBAK,{
 		mes "Karu.. how was the hunt today?";
 		next;
 		npctalk "Hahaha Asudem... No honey. Don't you trust my skills? I caught plenty this time as usual.", "", bc_self;
-		mes "[karoo]";
+		mes "[Karu]";
 		mes "Hahaha Asudem... No honey. Don't you trust my skills? I caught plenty this time as usual.";
 		next;
-		npctalk "Phi~ braggart, Master Mao already told me everything.", "Asudem#LuE02", bc_self;
+		npctalk "Phi~ braggart, Master Mao has already told me everything.", "Asudem#LuE02", bc_self;
 		mes "[Asudem]";
 		mes "Phi~ braggart, Master Mao has already told me everything.";
 		next;
@@ -6239,26 +6239,26 @@ com_d02_i,121,95,4	script	Karu#LuE02	4_M_THAIONGBAK,{
 		mes "I heard that only Master Luanda and Master Mao were running around this time? You lay on top of a tree and just shouted...";
 		next;
 		npctalk "Wow... these guys are real...", "", bc_self;
-		mes "[karoo]";
+		mes "[Karu]";
 		mes "Wow...these guys are real...";
 		next;
 		npctalk "Honey? Who's there?", "Asudem#LuE02", bc_self;
 		mes "[Asudem]";
 		mes "Honey? Who's there?";
 		next;
-		npctalk "Who's coming all the way to this eerie place? Huh?! Really... It was a good date day.", "", bc_self;
-		mes "[karoo]";
-		mes "Who's coming all the way to this eerie place? Huh?! Really... It was a good date day.";
+		npctalk "Who's coming all the way to this eerie place? Huh?! Really... It was a good date.", "", bc_self;
+		mes "[Karu]";
+		mes "Who's coming all the way to this eerie place? Huh?! Really... It was a good date.";
 		next;
-		npctalk "Honey, let's go, I think today's date is over. Hey, let's do some errands~ We'll fall out...", "", bc_self;
-		mes "[karoo]";
-		mes "Honey, let's go, I think today's date is over. Hey, let's go do some errands~ We'll fall out..";
+		npctalk "Honey, let's go, I think today's date is over. Hey, let's do some errands~ We'll get out of here...", "", bc_self;
+		mes "[Karu]";
+		mes "Honey, let's go, I think today's date is over. Hey, let's go do some errands~ We'll get out of here...";
 		next;
 		cloakonnpcself();
 		cloakonnpcself( "Asudem#LuE02" );
 		ill_luanda = 7;
 		setquest 5847;
-		mes "It looks like you interrupted the couple's date. I need to tell Luanda what happened.";
+		mes "It looks like I interrupted the couple's date. I need to tell Luanda what happened.";
 		close;
 	}
 	end;
@@ -6352,9 +6352,9 @@ com_d02_i,228,95,4	script	Young#LuE04	4_M_THAIONGBAK,{
 	if (ill_luanda == 10) {
 		npctalk "Oh, why am I so weak? Unlike my older brothers, my abilities are not particularly useful in battle.", "", bc_self;
 		mes "[Young Man]";
-		mes "Ah, why am I so weak? Unlike my older brothers, my abilities are not particularly useful in battle.";
+		mes "Oh, why am I so weak? Unlike my older brothers, my abilities are not particularly useful in battle.";
 		next;
-		npctalk "Huh?! You're an stranger Luanda took an interest in on his way out hunting?", "", bc_self;
+		npctalk "Huh?! You're the stranger Luanda took an interest in on his way out hunting?", "", bc_self;
 		mes "[Young Man]";
 		mes "Huh?! You're the stranger Luanda took an interest in on the way out hunting?";
 		next;
@@ -6379,7 +6379,7 @@ com_d02_i,228,95,4	script	Young#LuE04	4_M_THAIONGBAK,{
 		mes "[Young Man]";
 		mes "They said it was the name of the guardian spirits that guarded the old village.";
 		next;
-		npctalk "Whoa? Why am I telling you this?", "", bc_self;
+		npctalk "Huh? Why am I telling you this?", "", bc_self;
 		mes "[Young Man]";
 		mes "Huh? Why am I telling you this?";
 		next;
@@ -6501,7 +6501,7 @@ com_d02_i,157,28,4	script	Chief#LuE06	4_M_JPNOJI2,{
 		cloakonnpcself( "Villager#LuE063" );
 		ill_luanda = 15;
 		setquest 5847;
-		mes "The chief who worried about me has disappeared. I have to tell Mr. Luanda what I've been through.";
+		mes "The Chief who is worried about me has disappeared. I have to tell Mr. Luanda what I've been through.";
 		close;
 	}
 	end;
@@ -6540,17 +6540,17 @@ OnTouch:
 
 com_d02_i,43,219,4	script	Third Young#LuE07	4_M_THAIONGBAK,{
 	if (ill_luanda == 16) {
-		npctalk "Brothers, it looks like you hunt well this time.", "", bc_self;
+		npctalk "Brothers, it looks like the hunt went well this time.", "", bc_self;
 		mes "[Third Young]";
-		mes "Brothers, it looks like you hunt well this time.";
+		mes "Brothers, it looks like the hunt went well this time.";
 		next;
 		npctalk "Something was a bit sinister, but I think this time it will be quite profitable, youngest.", "First Young#LuE07", bc_self;
 		mes "[First Young]";
 		mes "Something was a bit sinister, but I think it will be quite profitable this time, youngest.";
 		next;
-		npctalk "Huh? Brother, hey.. I've seen him before.", "", bc_self;
+		npctalk "Huh? Brother, over there.. I've seen him before.", "", bc_self;
 		mes "[Third Young]";
-		mes "Huh? Brother, over there.. I saw an outsider before.";
+		mes "Huh? Brother, over there.. I've seen him before.";
 		next;
 		npctalk "Yeah, I guess so? That's a face I can remember too.", "First Young#LuE07", bc_self;
 		mes "[First Young]";
@@ -6558,11 +6558,11 @@ com_d02_i,43,219,4	script	Third Young#LuE07	4_M_THAIONGBAK,{
 		next;
 		npctalk "I heard that the stern-faced second warned you, but what a fearless outsider you are.", "The First Young#LuE07", bc_self;
 		mes "[First Young]";
-		mes "I heard that the stern-faced second warned you, but you're a fearless stranger.";
+		mes "I heard that the stern-faced second warned you, but what a fearless outsider you are.";
 		next;
 		npctalk "Brother.. I'm all the same..", "", bc_self;
 		mes "[Third Young]";
-		mes "Brother.. I'm all the same spirit..";
+		mes "Brother.. I'm all the same..";
 		next;
 		npctalk "Brother! It's a big deal. Ma.. The smell of blood comes from the village.", "Second Young#LuE07", bc_self;
 		mes "[Second Young]";
@@ -6594,19 +6594,19 @@ com_d02_i,41,220,4	duplicate(dummy_cloaked_npc)	Second Young#LuE07	4_M_THAIONGBA
 // (re)TUESDAY
 com_d02_i,116,94,6	script	Karu#LuE08	4_M_THAIONGBAK,{
 	if (ill_luanda == 18) {
-		npctalk "Ahh! Asudem why? Why? My... how did I find you...", "", bc_self;
-		mes "[karoo]";
-		mes "Aww! Asudem why? Why? My... how did I find you...";
+		npctalk "Ahh! Asudem, why? Why? My... how did I find you...", "", bc_self;
+		mes "[Karu]";
+		mes "Aww! Asudem, why? Why? My... how did I find you...";
 		next;
 		npctalk "Ka.. Karu..", "Asudem#LuE08", bc_self;
 		mes "[Asudem]";
 		mes "Ka.. Karu..";
 		next;
-		npctalk "Hey hey hey Asudem... honey...", "", bc_self;
-		mes "[karoo]";
-		mes "Hey hey hey Asudem.. honey..";
+		npctalk "Hey, hey, hey, Asudem... honey...", "", bc_self;
+		mes "[Karu]";
+		mes "Hey, hey, hey, Asudem.. honey..";
 		next;
-		npctalk "Don't be too sad, Karu.. you found me like this..", "Asudem#LuE08", bc_self;
+		npctalk "Karu, don't be too sad.. You found me like this..", "Asudem#LuE08", bc_self;
 		mes "[Asudem]";
 		mes "Karu, don't be too sad.. You found me like this..";
 		next;
@@ -6614,13 +6614,13 @@ com_d02_i,116,94,6	script	Karu#LuE08	4_M_THAIONGBAK,{
 		mes "[Asudem]";
 		mes "I... I'm... glad...";
 		next;
-		npctalk "This... it's not about dying... their curse... on you...", "", bc_self;
-		mes "[karoo]";
-		mes "This.. This means dying is not the problem.. Their curse.. on you..";
+		npctalk "This.. it's not about dying.. their curse.. on you..", "", bc_self;
+		mes "[Karu]";
+		mes "This.. it's not about dying.. their curse.. on you..";
 		next;
-		npctalk "All..you are no longer..", "", bc_self;
-		mes "[karoo]";
-		mes "everything.. you no longer..";
+		npctalk "All.. you no longer..", "", bc_self;
+		mes "[Karu]";
+		mes "All.. you no longer..";
 		next;
 		npctalk "Ah.. Karu.. My husband.. Sa..", "Asudem#LuE08", bc_self;
 		mes "[Asudem]";
@@ -6698,7 +6698,7 @@ com_d02_i,268,75,4	script	Silhouette#LuE091	4_GHOST_STAND,{
 		mes "[???]";
 		mes "Once we claim the land, the legendary power will be ours too.";
 		next;
-		npctalk "Sniff sniff... I can smell the humans. It's not time to run into them yet. Let's go.", "", bc_self;
+		npctalk "Sniff... I can smell the humans. It's not time to run into them yet. Let's go.", "", bc_self;
 		mes "[???]";
 		mes "Sniff.. I can smell the humans. It's not time to run into them yet. Let's go.";
 		next;
