@@ -17907,6 +17907,263 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 756
+    Name: NPC_WIDEBLEEDING2
+    Description: Wide Bleeding
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 108000
+    Status: Bleeding
+  - Id: 757
+    Name: NPC_WIDESILENCE2
+    Description: Wide Silence
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Silence
+  - Id: 758
+    Name: NPC_WIDESTUN2
+    Description: Wide Stun
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: Stun
+  - Id: 759
+    Name: NPC_WIDESTONE2
+    Description: Wide Petrify
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration1: 100
+    Duration2: 17000
+    Status: StoneWait
+  - Id: 760
+    Name: NPC_WIDESLEEP2
+    Description: Wide Sleep
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Sleep
+  - Id: 761
+    Name: NPC_WIDECURSE2
+    Description: Wide Curse
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Curse
+  - Id: 762
+    Name: NPC_WIDECONFUSE2
+    Description: Wide Confusion
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Confusion
+  - Id: 763
+    Name: NPC_WIDEFREEZE2
+    Description: Wide Freeze
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 27000
+    Status: Freeze
+  - Id: 764
+    Name: NPC_BLEEDING2
+    Description: Bleeding
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: -9
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    Duration2: 108000
+    Status: Bleeding
+  - Id: 765
+    Name: NPC_ICEBREATH2
+    Description: Ice Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: 6
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    SplashArea: 4
+    ActiveInstance: 14
+    Duration2: 27000
+    Status: Freeze
+  - Id: 768
+    Name: NPC_HELLJUDGEMENT2
+    Description: Hell's Judgement
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    SplashArea: 14
+    Duration2: 18000
+    Status: Curse
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
