@@ -15,7 +15,7 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 		mes "That's right, I'm waiting for a strong adventurer to satisfy my curiosity!";
 		next;
 		mes "[Nillem]";
-		mes "If you reach level 175, you will be my destined opponent-â˜†";
+		mes "If you reach level 175, you will be my destined opponent-¡Ù";
 		close;
 	}
 	mes "[Nillem]";
@@ -261,17 +261,17 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8541,HUNTING) == 2" );
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8544,HUNTING) == 2" );
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8547,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8541,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8544,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8547,HUNTING) == 2" );
 
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8542,PLAYTIME) == -1 && checkquest(8541,HUNTING) == -1" );
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8545,PLAYTIME) == -1 && checkquest(8544,HUNTING) == -1" );
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8548,PLAYTIME) == -1 && checkquest(8547,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8542,PLAYTIME) == -1 && checkquest(8541,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8545,PLAYTIME) == -1 && checkquest(8544,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8548,PLAYTIME) == -1 && checkquest(8547,HUNTING) == -1" );
 
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8542,PLAYTIME) == 2" );
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8545,PLAYTIME) == 2" );
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(8548,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8542,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8545,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8548,PLAYTIME) == 2" );
 	end;
 }
 
