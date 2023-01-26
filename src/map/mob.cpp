@@ -4293,12 +4293,62 @@ bool MobDatabase::parseDropNode(std::string nodeName, const ryml::NodeRef& node,
 				this->invalidWarning(dropit["Index"], "Invalid monster %s index %hu. Must be between 0~%hu, skipping.\n", nodeName.c_str(), index, max - 1);
 				continue;
 			}
-		} else {
-			index = i++;
 
-			if (index >= max) {
+			if( this->nodeExists( dropit, "Clear" ) ){
+				bool clear;
+
+				if( !this->asBool( dropit, "Clear", clear ) ){
+					return false;
+				}
+
+				if( clear ){
+					// Clear specific index
+					drops[index] = {};
+
+					if( !this->nodeExists( dropit, "Item" ) ){
+						// Continue with next yaml node
+						continue;
+					}
+				}
+			}
+		} else {
+			// Find next empty slot
+			for( ; i < max; i++ ){
+				if( drops[i].nameid == 0 ){
+					break;
+				}
+			}
+
+			// No empty slots anymore
+			if (i >= max) {
 				this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
 				continue;
+			}
+
+			// Use free index and increment it for the next entry
+			index = i++;
+
+			if( this->nodeExists( dropit, "Clear" ) ){
+				bool clear;
+
+				if( !this->asBool( dropit, "Clear", clear ) ){
+					return false;
+				}
+
+				if( clear ){
+					// Clear all
+					for( uint8 j = 0; j < max; j++ ){
+						drops[j] = {};
+					}
+
+					// Reset current index for next entry
+					i = 0;
+
+					if( !this->nodeExists( dropit, "Item" ) ){
+						// Continue with next yaml node
+						continue;
+					}
+				}
 			}
 		}
 

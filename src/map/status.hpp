@@ -139,6 +139,7 @@ public:
 	}
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void removeBodyNode( const ryml::NodeRef& node ) override;
 
 	// Additional
 	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);

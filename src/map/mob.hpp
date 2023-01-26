@@ -392,8 +392,9 @@ public:
 	}
 
 	void clear() override{ };
-	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void removeBodyNode(const ryml::NodeRef& node) override{ };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 struct s_randomsummon_entry {

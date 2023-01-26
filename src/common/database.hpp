@@ -29,7 +29,6 @@ private:
 	bool load( const std::string& path );
 	void parse( const ryml::Tree& rootNode );
 	void parseImports( const ryml::Tree& rootNode );
-	template <typename R> bool asType( const ryml::NodeRef& node, const std::string& name, R& out );
 
 // These should be visible/usable by the implementation provider
 protected:
@@ -44,6 +43,7 @@ protected:
 	std::string getCurrentFile();
 
 	// Conversion functions
+	template <typename R> bool asType( const ryml::NodeRef& node, const std::string& name, R& out );
 	bool asBool(const ryml::NodeRef& node, const std::string &name, bool &out);
 	bool asInt16(const ryml::NodeRef& node, const std::string& name, int16& out );
 	bool asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out);
@@ -79,6 +79,7 @@ public:
 	virtual void clear() = 0;
 	virtual const std::string getDefaultLocation() = 0;
 	virtual uint64 parseBodyNode( const ryml::NodeRef& node ) = 0;
+	virtual void removeBodyNode( const ryml::NodeRef& node ) = 0;
 };
 
 template <typename keytype, typename datatype> class TypesafeYamlDatabase : public YamlDatabase{
@@ -140,6 +141,14 @@ public:
 
 	virtual void erase(keytype key) {
 		this->data.erase(key);
+	}
+
+	void removeBodyNode( const ryml::NodeRef& node ){
+		keytype key;
+
+		if( this->asType<keytype>( node, "Remove", key ) ){
+			this->data.erase( key );
+		}
 	}
 };
 

@@ -158,7 +158,11 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		const char* fileName = this->currentFile.c_str();
 
 		for( const ryml::NodeRef &node : bodyNode ){
-			count += this->parseBodyNode( node );
+			if( this->nodeExists( node, "Remove" ) ){
+				this->removeBodyNode( node );
+			}else{
+				count += this->parseBodyNode( node );
+			}
 
 			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
 		}

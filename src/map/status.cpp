@@ -15281,6 +15281,21 @@ uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	return 1;
 }
 
+void AttributeDatabase::removeBodyNode( const ryml::NodeRef& node ){
+	uint16 level;
+
+	if( !this->asUInt16( node, "Level", level ) ){
+		return;
+	}
+
+	if( !CHK_ELEMENT_LEVEL( level ) ){
+		this->invalidWarning( node["Level"], "Invalid element level %hu.\n", level );
+		return;
+	}
+
+	std::fill_n( &attr_fix_table[level - 1][0][0], ELE_MAX * ELE_MAX, 100 );
+}
+
 AttributeDatabase elemental_attribute_db;
 
 /**
