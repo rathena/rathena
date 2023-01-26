@@ -567,7 +567,7 @@ bra_in01,95,179,3	script	Cherto	4_M_BRZ_MAN2,{
 		mes "- I tell Cherto about the kid making animal-like sounds. -";
 		next;
 		mes "[Cherto]";
-		mes "Hoooh. That's unbelivable.";
+		mes "Hoooh. That's unbelievable.";
 		mes "That kid might be a guarana kid. Sure...";
 		mes "According to the story the kid can have conversations with animals.";
 		next;
