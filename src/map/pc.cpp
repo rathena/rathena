@@ -5583,7 +5583,7 @@ char pc_payzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_s
 	clif_updatestatus(sd,SP_ZENY);
 
 	if(!tsd) tsd = sd;
-	log_zeny(sd, type, tsd, -zeny);
+	log_zeny(*sd, type, tsd->status.char_id, -zeny);
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Removed %dz.", zeny);
@@ -5618,7 +5618,7 @@ char pc_getzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_s
 	clif_updatestatus(sd,SP_ZENY);
 
 	if(!tsd) tsd = sd;
-	log_zeny(sd, type, tsd, zeny);
+	log_zeny(*sd, type, tsd->status.char_id, zeny);
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
@@ -10152,7 +10152,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_ZENY:
 		if( val < 0 )
 			return false;// can't set negative zeny
-		log_zeny(sd, LOG_TYPE_SCRIPT, sd, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
+		log_zeny(*sd, LOG_TYPE_SCRIPT, sd->status.char_id, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
@@ -10291,7 +10291,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_BANK_VAULT:
 		if (val < 0)
 			return false;
-		log_zeny(sd, LOG_TYPE_BANK, sd, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
+		log_zeny(*sd, LOG_TYPE_BANK, sd->status.char_id, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
 		sd->bank_vault = cap_value(val, 0, MAX_BANK_ZENY);
 		pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 		return true;

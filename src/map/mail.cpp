@@ -99,15 +99,18 @@ int mail_removeitem(map_session_data *sd, short flag, int idx, int amount)
 	return 1;
 }
 
-bool mail_removezeny( map_session_data *sd, bool flag ){
+bool mail_removezeny(map_session_data *sd, bool flag) {
 	nullpo_retr( false, sd );
 
 	if( sd->mail.zeny > 0 ){
 		//Zeny send
 		if( flag ){
-			if( pc_payzeny( sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_MAIL, NULL ) ){
+			if (pc_payzeny(sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_NONE, NULL)) {
 				return false;
 			}
+			// we don't know the target char_id, just the name. So, let's just use 0.
+			// it's not that important anyways, as the recv log will show it as well.
+			log_zeny(*sd, LOG_TYPE_MAIL, 0, -sd->mail.zeny);
 		}else{
 			// Update is called by pc_payzeny, so only call it in the else condition
 			clif_updatestatus(sd, SP_ZENY);
@@ -285,7 +288,7 @@ bool mail_setattachment(map_session_data *sd, struct mail_message *msg)
 
 		mail_removeitem(sd,1,sd->mail.item[i].index + 2,sd->mail.item[i].amount);
 	}
-	mail_removezeny(sd,true);
+	mail_removezeny(sd, true);
 
 	return true;
 }
@@ -355,7 +358,8 @@ void mail_getattachment(map_session_data* sd, struct mail_message* msg, int zeny
 		sd->mail.pending_zeny -= zeny;
 
 		// Add the zeny
-		pc_getzeny(sd, zeny,LOG_TYPE_MAIL, NULL);
+		pc_getzeny(sd, zeny, LOG_TYPE_NONE, NULL);
+		log_zeny(*sd, LOG_TYPE_MAIL, msg->send_id, zeny);
 		clif_mail_getattachment( sd, msg, 0, MAIL_ATT_ZENY );
 	}
 }
