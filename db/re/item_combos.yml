@@ -146,7 +146,7 @@ Body:
       /* Confirm: Success rate */
   - Combos:
       - Combo:
-          - Illusion_War_Axe
+          - War_Axe_IL
           - Shoes_IL
     Script: |
       bonus bBaseAtk,40;
@@ -2885,14 +2885,14 @@ Body:
       bonus bAtkRate,10;
   - Combos:
       - Combo:
-          - Contaminated_Raydric_Card
+          - Polluted_Raydric_Card
           - Daydric_Card
     Script: |
       bonus bAtkRate,5;
       bonus2 bSubEle,Ele_Neutral,10;
   - Combos:
       - Combo:
-          - Contaminated_Raydric_Archer_Card
+          - Polluted_Ray_A_Card
           - P_Archer_Skeleton_Card
       - Combo:
           - Genetic_Robe
@@ -2904,7 +2904,7 @@ Body:
       bonus bLongAtkRate,5;
   - Combos:
       - Combo:
-          - Contaminated_Sting_Card
+          - Polluted_Sting_Card
           - Sting_Card
     Script: |
       bonus bDef,150;
@@ -7389,7 +7389,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - Illusion_Wing_Shuriken
+          - Huuma_Bird_Wing_IL
           - Apple_Of_Archer_IL
     Script: |
       bonus bBaseAtk,50;
@@ -7423,7 +7423,7 @@ Body:
       bonus2 bAddRace,RC_DemiHuman,4;
   - Combos:
       - Combo:
-          - Illusion_Immaterial_Sword
+          - Immaterial_Sword_IL
           - Cape_Of_Ancient_Lord_IL
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -8255,7 +8255,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - Illusion_Iron_Driver
+          - Iron_Driver_IL
           - Muffler_IL
     Script: |
       bonus bAspdRate,10;
@@ -9092,7 +9092,7 @@ Body:
       bonus bHealPower,5;
   - Combos:
       - Combo:
-          - Illusion_Fancy_Flower
+          - Fancy_Flower_IL
           - Illusion_Bazerald
     Script: |
       bonus bMatk,50;
@@ -10618,7 +10618,7 @@ Body:
   - Combos:
       - Combo:
           - Shoes_IL
-          - Illusion_Pole_Axe
+          - Pole_Axe_IL
     Script: |
       bonus bBaseAtk,40;
       .@eq = getequiprefinerycnt(EQI_SHOES);
@@ -21578,10 +21578,10 @@ Body:
   - Combos:
       - Combo:
           - Military_Boots_IL
-          - Illusion_War_Axe
+          - War_Axe_IL
       - Combo:
           - Military_Boots_IL_
-          - Illusion_War_Axe
+          - War_Axe_IL
     Script: |
       bonus2 bAddClass,Class_Boss,70;
       bonus2 bSubClass,Class_Boss,15;

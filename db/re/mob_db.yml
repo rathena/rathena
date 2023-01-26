@@ -94893,16 +94893,229 @@ Body:
       - Item: Mt_Caput_Card
         Rate: 1
         StealProtected: true
-#  - Id: 20367
-#    AegisName: RAYDRIC_H
-#  - Id: 20368
-#    AegisName: RAYDRIC_ARCHER_H
-#  - Id: 20369
-#    AegisName: GARGOYLE_H
-#  - Id: 20370
-#    AegisName: STING_H
-#  - Id: 20371
-#    AegisName: RAGGED_ZOMBIE_H
+  - Id: 20367
+    AegisName: RAYDRIC_H
+    Name: Contaminated Raydric
+    Level: 185
+    Hp: 2372683
+    BaseExp: 169477
+    JobExp: 118634
+    Attack: 3330
+    Attack2: 826
+    Defense: 494
+    MagicDefense: 101
+    Str: 144
+    Agi: 134
+    Vit: 103
+    Int: 67
+    Dex: 148
+    Luk: 41
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 824
+    AttackMotion: 780
+    DamageMotion: 420
+    Ai: 21
+    Drops:
+      - Item: Brigan
+        Rate: 3774
+      - Item: Elunium_Stone
+        Rate: 35
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: T_Lance_Of_Kingdom
+        Rate: 50
+        RandomOptionGroup: AGW1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_Raydric_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20368
+    AegisName: RAYDRIC_ARCHER_H
+    Name: Contaminated Raydric Ar
+    Level: 184
+    Hp: 2355718
+    BaseExp: 168266
+    JobExp: 117786
+    Attack: 3174
+    Attack2: 883
+    Defense: 412
+    MagicDefense: 101
+    Str: 138
+    Agi: 113
+    Vit: 76
+    Int: 72
+    Dex: 187
+    Luk: 77
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 05
+    Drops:
+      - Item: Incisive_Arrow
+        Rate: 350
+      - Item: Brigan
+        Rate: 3774
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_Ray_A_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20369
+    AegisName: GARGOYLE_H
+    Name: Frozen Gargoyle
+    Level: 186
+    Hp: 2377139
+    BaseExp: 169796
+    JobExp: 118857
+    Attack: 2999
+    Attack2: 1203
+    Defense: 333
+    MagicDefense: 105
+    Str: 129
+    Agi: 109
+    Vit: 49
+    Int: 97
+    Dex: 178
+    Luk: 63
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 720
+    DamageMotion: 384
+    Ai: 05
+    Drops:
+      - Item: Zargon
+        Rate: 970
+      - Item: Petite_DiablOfs_Wing
+        Rate: 75
+      - Item: Elunium
+        Rate: 6
+      - Item: Crystal_Arrow_Container
+        Rate: 6
+      - Item: Crystal_Blue
+        Rate: 2
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Frozen_Gargoyle_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20370
+    AegisName: STING_H
+    Name: Contaminated Sting
+    Level: 180
+    Hp: 2297907
+    BaseExp: 164136
+    JobExp: 114895
+    Attack: 3893
+    Attack2: 912
+    Defense: 276
+    MagicDefense: 100
+    Str: 173
+    Agi: 98
+    Vit: 32
+    Int: 76
+    Dex: 170
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 528
+    AttackMotion: 500
+    DamageMotion: 240
+    Ai: 21
+    Drops:
+      - Item: Mud_Lump
+        Rate: 1000
+      - Item: Coal
+        Rate: 160
+      - Item: Great_Nature
+        Rate: 30
+      - Item: Silk_Ribbon
+        Rate: 13
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_Sting_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20371
+    AegisName: RAGGED_ZOMBIE_H
+    Name: Prison Breaker
+    Level: 186
+    Hp: 2375279
+    BaseExp: 169663
+    JobExp: 118764
+    Attack: 3185
+    Attack2: 1228
+    Defense: 297
+    MagicDefense: 105
+    Str: 137
+    Agi: 71
+    Vit: 37
+    Int: 99
+    Dex: 156
+    Luk: 61
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 05
+    Drops:
+      - Item: Manacles
+        Rate: 1750
+      - Item: Spoon_Stub
+        Rate: 50
+      - Item: Elunium
+        Rate: 10
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Prisoner_Dairy
+        Rate: 50
+        RandomOptionGroup: AGW1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Prison_Breaker_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20372
 #    AegisName: BLAZZER_H
 #  - Id: 20373
@@ -94917,10 +95130,98 @@ Body:
 #    AegisName: KAHO_H
 #  - Id: 20378
 #    AegisName: LAVA_GOLEM_H
-#  - Id: 20379
-#    AegisName: ICE_GHOST_H
-#  - Id: 20380
-#    AegisName: FLAME_GHOST_H
+  - Id: 20379
+    AegisName: ICE_GHOST_H
+    Name: Ice Ghost
+    Level: 189
+    Hp: 2418315
+    BaseExp: 172737
+    JobExp: 120916
+    Attack: 2670
+    Attack2: 2104
+    Defense: 390
+    MagicDefense: 115
+    Str: 113
+    Agi: 103
+    Vit: 67
+    Int: 167
+    Dex: 146
+    Luk: 57
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1056
+    AttackMotion: 1056
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Zargon
+        Rate: 2280
+      - Item: Skel_Bone
+        Rate: 3000
+      - Item: Skull
+        Rate: 250
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Wand_Of_Ice
+        Rate: 50
+        RandomOptionGroup: AGM1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Ice_Ghost_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20380
+    AegisName: FLAME_GHOST_H
+    Name: Flame Ghost
+    Level: 189
+    Hp: 2410282
+    BaseExp: 172163
+    JobExp: 120514
+    Attack: 2811
+    Attack2: 2356
+    Defense: 237
+    MagicDefense: 118
+    Str: 119
+    Agi: 99
+    Vit: 16
+    Int: 187
+    Dex: 149
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1056
+    AttackMotion: 1056
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Zargon
+        Rate: 2280
+      - Item: Skel_Bone
+        Rate: 3000
+      - Item: Skull
+        Rate: 250
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Wand_Of_Flame
+        Rate: 50
+        RandomOptionGroup: AGM1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Flame_Ghost_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20381
     AegisName: EP17_1_R4885_BESTIA
     Name: R48-85-Bestia
@@ -95072,14 +95373,151 @@ Body:
 #  - Id: 20419
 #    AegisName: MUSPELLSKOLL_H
 #    DamageTaken: 10
-#  - Id: 20420
-#    AegisName: WANDER_MAN_H
-#  - Id: 20421
-#    AegisName: BRINARANEA_H
-#    DamageTaken: 10
-#  - Id: 20422
-#    AegisName: DARK_LORD_H
-#    DamageTaken: 10
+  - Id: 20420
+    AegisName: WANDER_MAN_H
+    Name: Corrupted Wanderer
+    Level: 187
+    Hp: 2387582
+    BaseExp: 170542
+    JobExp: 119379
+    Attack: 4114
+    Attack2: 835
+    Defense: 289
+    MagicDefense: 102
+    Str: 176
+    Agi: 121
+    Vit: 34
+    Int: 67
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 672
+    AttackMotion: 500
+    DamageMotion: 192
+    Ai: 21
+    Drops:
+      - Item: Skull
+        Rate: 2425
+      - Item: Centimental_Leaf
+        Rate: 3
+      - Item: Oridecon
+        Rate: 57
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: T_Sword_Of_Kingdom
+        Rate: 50
+        RandomOptionGroup: AGW1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_W_Man_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20421
+    AegisName: BRINARANEA_H
+    Name: Corrupted Spider Queen
+    Level: 195
+    Hp: 74623473
+    BaseExp: 14924695
+    JobExp: 10447286
+    Attack: 6069
+    Attack2: 1469
+    Defense: 285
+    MagicDefense: 112
+    Str: 249
+    Agi: 176
+    Vit: 30
+    Int: 113
+    Dex: 191
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 500
+    DamageMotion: 768
+    DamageTaken: 10
+    Ai: 21
+    MvpDrops:
+      - Item: Old_Card_Album
+        Rate: 1000
+      - Item: Mistic_Frozen
+        Rate: 5000
+    Drops:
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Old_Violet_Box
+        Rate: 3000
+      - Item: Yggdrasilberry
+        Rate: 2500
+      - Item: Zelunium
+        Rate: 50
+      - Item: Spiderweb
+        Rate: 5000
+      - Item: Staff_Of_Blue_Flame
+        Rate: 100
+        RandomOptionGroup: AGM1
+      - Item: Polluted_Spi_Q_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20422
+    AegisName: DARK_LORD_H
+    Name: Corrupted Dark Lord
+    Level: 194
+    Hp: 74476822
+    BaseExp: 14895364
+    JobExp: 10426755
+    Attack: 6693
+    Attack2: 3841
+    Defense: 503
+    MagicDefense: 134
+    Str: 276
+    Agi: 151
+    Vit: 103
+    Int: 297
+    Dex: 172
+    Luk: 66
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 868
+    AttackMotion: 768
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    MvpDrops:
+      - Item: Blue_Coif_
+        Rate: 500
+      - Item: Skull
+        Rate: 6000
+    Drops:
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Skull
+        Rate: 5000
+      - Item: Zelunium
+        Rate: 50
+      - Item: Yggdrasilberry
+        Rate: 2500
+      - Item: Polluted_Dark_L_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20423
 #    AegisName: BACSOJIN2
 #  - Id: 20424
