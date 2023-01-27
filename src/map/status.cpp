@@ -4866,7 +4866,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH, ELE_NEUTRAL };
 			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
-			for( e_element element : elements ){
+			for( e_element &element : elements ){
 				sd->indexed_bonus.magic_atk_ele[(int)element] += bonus;
 				sd->right_weapon.addele[(int)element] += bonus;
 				sd->left_weapon.addele[(int)element] += bonus;
@@ -12612,7 +12612,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 		case SC_GUARDIAN_S:
-			val2 = (status->max_hp / 2 ) * (50 * val1) / 100 + 15 * sd->status.sta;// Barrier HP
+			val2 = (status->max_hp / 2 ) * (50 * val1) / 100 + 15 * status->sta; // Barrier HP
 			break;
 		case SC_REBOUND_S:
 			val2 = 10 * val1;// Reduced Damage From Devotion

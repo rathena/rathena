@@ -783,7 +783,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 
 	if (sd) {
 		if (sd->sc.getSCE(SC_KI_SUL_RAMPAGE))
-			status_change_end(bl, SC_KI_SUL_RAMPAGE, INVALID_TIMER);
+			status_change_end(bl, SC_KI_SUL_RAMPAGE);
 	}
 
 	// Start timer to recall summon

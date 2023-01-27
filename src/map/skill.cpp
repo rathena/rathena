@@ -3231,7 +3231,7 @@ int skill_mirage_cast(struct block_list* src, struct block_list* bl, int skill_i
 	if (ud == nullptr || src->type != BL_PC || (flag & 1))
 		return 0;
 
-	for (const auto itsu : ud->skillunits) {
+	for (const auto &itsu : ud->skillunits) {
 		skill_unit *su = itsu->unit;
 		std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
 
@@ -4342,7 +4342,7 @@ int skill_shimiru_check_cell(struct block_list *target, va_list ap)
 	if (target->type == BL_SKILL)
 	{
 		struct skill_unit *su = (struct skill_unit*)target;
-		if (su->group->skill_id == SS_SHINKIROU)
+		if (su != nullptr && su->group->skill_id == SS_SHINKIROU)
 			return 1;
 		return 0;
 	}
@@ -6020,13 +6020,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case TR_METALIC_FURY:
 	{
-		int area = skill_get_splash(skill_id, skill_lv);
 		if (flag & 1) {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		} else {
+			int area = skill_get_splash(skill_id, skill_lv);
 			int count = map_forcountinarea(skill_check_bl_sc,bl->m,bl->x - area,bl->y - area,bl->x + area,bl->y + area,5,BL_MOB,SC_SOUNDBLEND);
-			if (count){
+			if (count > 0){
 				map_foreachinarea(skill_area_sub, bl->m, bl->x - area, bl->y - area, bl->x + area, bl->y + area, BL_CHAR,
 					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 			} else{
@@ -6052,8 +6052,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case HN_DOUBLEBOWLINGBASH:
 		if (flag & 1) {
-			int sflag = skill_area_temp[0] & 0xFFF;
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, skill_area_temp[0] & 0xFFF);
 		} else {
 			int splash = skill_get_splash(skill_id, skill_lv);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -6095,7 +6094,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		} else {
 			struct unit_data *ud = unit_bl2ud(src);
 			if (ud) {
-				for (const auto itsu : ud->skillunits) {
+				for (const auto &itsu : ud->skillunits) {
 					skill_unit *su = itsu->unit;
 					std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
 
@@ -7370,7 +7369,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	map_freeblock_unlock();
 
-	if( sd && !(flag&1))
+	if( sd && !(flag&1) )
 	{// ensure that the skill last-cast tick is recorded
 		sd->canskill_tick = gettick();
 
@@ -8282,7 +8281,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case CD_MEDIALE_VOTUM:
 		if (flag & 1) {
 			if (sd == nullptr || sd->status.party_id == 0 || (flag & 2)) {
-				status_data *sstatus = status_get_status_data(src);
 				int heal_amount = sstatus->max_hp * skill_lv * 2 / 100;
 				clif_specialeffect(bl, 1808, AREA);
 				clif_skill_nodamage( nullptr, bl, AL_HEAL, heal_amount, 1 );
@@ -11168,7 +11166,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case SH_HOWLING_OF_CHUL_HO:
-	{	status_change* sc = status_get_sc(src);}
 		i = skill_get_splash(skill_id, skill_lv);
 		if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 			i += 1;
@@ -13297,7 +13294,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skill_id<<16));
 	}
 
-	if( sd && !(flag&1))
+	if( sd && !(flag&1) )
 	{// ensure that the skill last-cast tick is recorded
 		sd->canskill_tick = gettick();
 
@@ -14332,7 +14329,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	{
 		struct unit_data *ud = unit_bl2ud(src);
 		if (ud) {
-			for (const auto itsu : ud->skillunits) {
+			for (const auto &itsu : ud->skillunits) {
 				skill_unit *su = itsu->unit;
 				std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
 
