@@ -4866,7 +4866,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH, ELE_NEUTRAL };
 			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
-			for( e_element &element : elements ){
+			for( const auto &element : elements ){
 				sd->indexed_bonus.magic_atk_ele[(int)element] += bonus;
 				sd->right_weapon.addele[(int)element] += bonus;
 				sd->left_weapon.addele[(int)element] += bonus;
