@@ -3148,10 +3148,12 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case NPC_CURSEATTACK:
 			case NPC_SLEEPATTACK:
 			case NPC_BLEEDING:
+			case NPC_BLEEDING2:
 				hitrate += hitrate * 20 / 100;
 				break;
 			case NPC_FIREBREATH:
 			case NPC_ICEBREATH:
+			case NPC_ICEBREATH2:
 			case NPC_THUNDERBREATH:
 			case NPC_ACIDBREATH:
 			case NPC_DARKNESSBREATH:
@@ -4258,8 +4260,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NPC_DARKNESSBREATH:
 		case NPC_FIREBREATH:
 		case NPC_ICEBREATH:
+		case NPC_ICEBREATH2:
 		case NPC_THUNDERBREATH:
 		case NPC_HELLJUDGEMENT:
+		case NPC_HELLJUDGEMENT2:
 		case NPC_PULSESTRIKE:
 			skillratio += 100 * (skill_lv - 1);
 			break;

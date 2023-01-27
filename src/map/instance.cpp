@@ -727,8 +727,10 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = time(nullptr) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	if (!db->infinite_timeout) {
+		idata->idle_limit = time(nullptr) + db->timeout;
+		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	}
 	idata->nomapflag = db->nomapflag;
 	idata->nonpc = db->nonpc;
 
