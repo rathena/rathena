@@ -9344,6 +9344,7 @@
 	export_constant(HAT_EF_EFST_C_20TH_ANNIVERSARY_HAT);
 	export_constant(HAT_EF_SUBJECT_AURA_NAVY);
 	export_constant(HAT_EF_20TH_SCARF_J);
+	export_constant(HAT_EF_GHOST_FIRE);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
