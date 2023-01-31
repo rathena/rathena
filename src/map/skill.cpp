@@ -17846,7 +17846,7 @@ int skill_check_bl_sc(struct block_list *target, va_list ap) {
 
 	int sc_id = va_arg(ap,int);
 
-	struct status_change *sc = status_get_sc(target);
+	status_change *sc = status_get_sc(target);
 
 	if (sc && sc->getSCE(sc_id))
 		return 1;
