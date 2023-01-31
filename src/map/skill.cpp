@@ -6164,7 +6164,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case SS_SHIMIRU: {
 		struct unit_data *ud = unit_bl2ud(src);
-		int dx,dy;
 
 		if (!check_distance_bl(src, bl, 0)) {
 			uint8 dir = map_calc_dir(src, bl->x, bl->y);
@@ -13465,35 +13464,35 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		}
 			break;
 		case EM_SUMMON_ELEMENTAL_ARDOR:{
-			struct map_session_data *sd = map_id2sd(src->id);
+			map_session_data *sd = map_id2sd(src->id);
 			if (sd && (!sd->ed || !(sd->ed->elemental.class_ == ELEMENTALID_AGNI_L))) {
 				return USESKILL_FAIL_EL_SUMMON;
 			}
 		}
 			break;
 		case EM_SUMMON_ELEMENTAL_DILUVIO:{
-			struct map_session_data *sd = map_id2sd(src->id);
+			map_session_data *sd = map_id2sd(src->id);
 			if (sd && (!sd->ed || !(sd->ed->elemental.class_ == ELEMENTALID_AQUA_L))) {
 				return USESKILL_FAIL_EL_SUMMON;
 			}
 		}
 			break;
 		case EM_SUMMON_ELEMENTAL_PROCELLA:{
-			struct map_session_data *sd = map_id2sd(src->id);
+			map_session_data *sd = map_id2sd(src->id);
 			if (sd && (!sd->ed || !(sd->ed->elemental.class_ == ELEMENTALID_VENTUS_L))) {
 				return USESKILL_FAIL_EL_SUMMON;
 			}
 		}
 			break;
 		case EM_SUMMON_ELEMENTAL_TERREMOTUS:{
-			struct map_session_data *sd = map_id2sd(src->id);
+			map_session_data *sd = map_id2sd(src->id);
 			if (sd && (!sd->ed || !(sd->ed->elemental.class_ == ELEMENTALID_TERA_L))) {
 				return USESKILL_FAIL_EL_SUMMON;
 			}
 		}
 			break;
 		case EM_SUMMON_ELEMENTAL_SERPENS:{
-			struct map_session_data *sd = map_id2sd(src->id);
+			map_session_data *sd = map_id2sd(src->id);
 			if (sd && (!sd->ed || !((sd->ed->elemental.class_ == ELEMENTALID_AGNI_L)
 								|| (sd->ed->elemental.class_ == ELEMENTALID_AQUA_L)
 								|| (sd->ed->elemental.class_ == ELEMENTALID_VENTUS_L)
@@ -13504,7 +13503,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		}
 			break;
 		case EM_ELEMENTAL_BUSTER:{
-			struct map_session_data *sd = map_id2sd(src->id);
+			map_session_data *sd = map_id2sd(src->id);
 			if (sd && (!sd->ed || !(sd->ed->elemental.class_ >= ELEMENTALID_DILUVIO && sd->ed->elemental.class_ <= ELEMENTALID_SERPENS))) {
 				return USESKILL_FAIL_EL_SUMMON;
 			}
