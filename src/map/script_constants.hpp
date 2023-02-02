@@ -9222,6 +9222,8 @@
 	export_constant(HAT_EF_QSCARABA);
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
+	export_deprecated_constant2("HAT_EF_GODCLASS",HAT_EF_BRYSINGGAMEN);
+	export_deprecated_constant2("HAT_EF_GODCLASS2",HAT_EF_MAGINGIORDE);
 	export_constant(HAT_EF_BRYSINGGAMEN);
 	export_constant(HAT_EF_MAGINGIORDE);
 	export_constant(HAT_EF_LEVEL99_RED);
