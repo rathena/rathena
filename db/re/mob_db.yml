@@ -93273,8 +93273,35 @@ Body:
 #    AegisName: TW_V_B_SEYREN
 #  - Id: 3895
 #    AegisName: TW_V_B_EREMES
-#  - Id: 3896
-#    AegisName: G_ILL_ASSULTER
+  - Id: 3896
+    AegisName: G_ILL_ASSULTER
+    Name: Ominous Assaulter
+    Level: 160
+    Hp: 592508
+    Attack: 3049
+    Attack2: 408
+    Defense: 369
+    MagicDefense: 82
+    Str: 180
+    Agi: 161
+    Vit: 60
+    Int: 44
+    Dex: 214
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 21
+    Modes:
+      Detector: true
 #  - Id: 3897
 #    AegisName: MD_ORC_SKELETON
 #  - Id: 3898
