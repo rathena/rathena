@@ -20954,7 +20954,7 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 			int result = skill_unit_onout(unit,target,tick);
 
 			if( flag&2 && result > 0 ) { //Store this unit id.
-				util::vector_erase_if_exists(skill_unit_cell, skill_id);
+				skill_unit_cell.push_back(skill_id);
 			}
 		}
 
