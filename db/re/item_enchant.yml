@@ -93,7 +93,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 15
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -146,7 +145,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 25
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -223,7 +221,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 50
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -624,7 +621,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 15
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -669,7 +665,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 25
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -702,7 +697,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 50
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -761,7 +755,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 15
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -794,7 +787,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 25
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -821,7 +813,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 50
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -888,7 +879,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 15
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -933,7 +923,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 25
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -996,7 +985,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 50
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1105,7 +1093,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 15
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1150,7 +1137,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 25
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1213,7 +1199,6 @@ Body:
         Materials:
           - Material: Ep18_Amethyst_Fragment
             Amount: 50
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1304,7 +1289,7 @@ Body:
                 Amount: 2500
   - Id: 6
     TargetItems:
-      Cherryblossom_Fan: true
+      Cherry_Twig_In_Mouth: true
     Reset:
       Chance: 100000
       Price: 10000
@@ -1319,7 +1304,6 @@ Body:
         Materials:
           - Material: Small_Spray_Of_Flowers
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1372,7 +1356,6 @@ Body:
         Materials:
           - Material: Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1539,7 +1522,6 @@ Body:
         Materials:
           - Material: Pow_Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1736,7 +1718,6 @@ Body:
         Materials:
           - Material: Pow_Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -1948,7 +1929,6 @@ Body:
         Materials:
           - Material: Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -2115,7 +2095,6 @@ Body:
         Materials:
           - Material: Sta_Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -2307,12 +2286,11 @@ Body:
                 Chance: 300
               - Item: Nebula_Of_HP3
                 Chance: 300
-      - Slot: 2
+      - Slot: 1
         Price: 1000000
         Materials:
-          - Material: Sta_Meteorite_Dust
+          - Material: Sta_Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -2524,7 +2502,6 @@ Body:
         Materials:
           - Material: Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -2691,7 +2668,6 @@ Body:
         Materials:
           - Material: Con_Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -2888,7 +2864,6 @@ Body:
         Materials:
           - Material: Con_Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -3100,7 +3075,6 @@ Body:
         Materials:
           - Material: Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -3267,7 +3241,6 @@ Body:
         Materials:
           - Material: Crt_Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -3464,7 +3437,6 @@ Body:
         Materials:
           - Material: Crt_Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -3676,7 +3648,6 @@ Body:
         Materials:
           - Material: Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -3843,7 +3814,6 @@ Body:
         Materials:
           - Material: Spl_Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -4040,7 +4010,6 @@ Body:
         Materials:
           - Material: Spl_Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -4252,7 +4221,6 @@ Body:
         Materials:
           - Material: Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -4419,7 +4387,6 @@ Body:
         Materials:
           - Material: Wis_Meteorite_Dust
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -4616,7 +4583,6 @@ Body:
         Materials:
           - Material: Wis_Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -4831,7 +4797,6 @@ Body:
         Materials:
           - Material: Meteorite_Fragment
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -4926,7 +4891,6 @@ Body:
         Materials:
           - Material: Meteorite_Fragment
             Amount: 10
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -5018,7 +4982,7 @@ Body:
                 Chance: 50
   - Id: 14
     TargetItems:
-      Limesoda_In_Mouth: true
+      Cheesy_Snack_In_Mouth: true
     Reset:
       Chance: 100000
       Price: 10000
@@ -5039,7 +5003,6 @@ Body:
             Amount: 5
           - Material: Healthful_Herb
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -5100,7 +5063,6 @@ Body:
       - Slot: 3
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -5307,92 +5269,92 @@ Body:
             Upgrade: Mad_Bunny_Enchant_1_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_2_2
             Upgrade: Mad_Bunny_Enchant_2_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_3_2
             Upgrade: Mad_Bunny_Enchant_3_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_4_2
             Upgrade: Mad_Bunny_Enchant_4_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_5_2
             Upgrade: Mad_Bunny_Enchant_5_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_6_2
             Upgrade: Mad_Bunny_Enchant_6_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_7_2
             Upgrade: Mad_Bunny_Enchant_7_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_8_2
             Upgrade: Mad_Bunny_Enchant_8_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_9_2
             Upgrade: Mad_Bunny_Enchant_9_3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
           - Enchant: Mad_Bunny_Enchant_3_5
             Upgrade: Mad_Bunny_Enchant_3_4
             Materials:
               - Material: Enchant_Ticket
-                Amount: 3
+                Amount: 5
               - Material: Zelunium
-                Amount: 50
+                Amount: 150
               - Material: Shadowdecon
-                Amount: 50
+                Amount: 150
   - Id: 16
     TargetItems:
       Barmund_Plain_Armor: true
@@ -5412,7 +5374,6 @@ Body:
         Price: 50000
         Materials:
           - Material: Plain_Barmund_Rune2
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -5579,7 +5540,6 @@ Body:
         Materials:
           - Material: Plain_Barmund_Rune2
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -5790,7 +5750,6 @@ Body:
         Price: 50000
         Materials:
           - Material: Flame_Barmund_Rune2
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -5957,7 +5916,6 @@ Body:
         Materials:
           - Material: Flame_Barmund_Rune2
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -6168,7 +6126,6 @@ Body:
         Price: 50000
         Materials:
           - Material: Ice_Barmund_Rune2
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -6335,7 +6292,6 @@ Body:
         Materials:
           - Material: Ice_Barmund_Rune2
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -6546,7 +6502,6 @@ Body:
         Price: 50000
         Materials:
           - Material: Death_Barmund_Rune2
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -6713,7 +6668,6 @@ Body:
         Materials:
           - Material: Death_Barmund_Rune2
             Amount: 5
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -6919,7 +6873,6 @@ Body:
     Slots:
       - Slot: 3
         Price: 100000
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -6996,7 +6949,6 @@ Body:
             Price: 10000000
       - Slot: 2
         Price: 500000
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7045,7 +6997,6 @@ Body:
       - Slot: 1
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7075,7 +7026,6 @@ Body:
     Slots:
       - Slot: 3
         Price: 100000
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7200,7 +7150,6 @@ Body:
             Price: 10000000
       - Slot: 2
         Price: 500000
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7289,7 +7238,6 @@ Body:
       - Slot: 1
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7366,13 +7314,13 @@ Body:
       Poring_Balloon: true
       Marin_Balloon: true
       Drops_Balloon: true
-      Santa_Poring_Balloon: true
+      SantaPoring_Balloon: true
       Poporing_Balloon: true
-      Metalring_Balloon: true
-      Devilring_Balloon: true
-      Angelring_Balloon: true
+      Metaling_Balloon: true
+      Deviling_Balloon: true
+      Angeling_Balloon: true
       Ghostring_Balloon: true
-      Arch_Angelring_Balloon: true
+      Archangeling_Balloon: true
     Reset:
       Chance: 100000
       Price: 500000
@@ -7382,7 +7330,6 @@ Body:
     Slots:
       - Slot: 3
         Price: 500000
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7438,7 +7385,6 @@ Body:
       - Slot: 2
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7482,7 +7428,6 @@ Body:
     Slots:
       - Slot: 3
         Price: 100000
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7562,7 +7507,6 @@ Body:
       - Slot: 2
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7614,7 +7558,6 @@ Body:
       - Slot: 1
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -7743,7 +7686,6 @@ Body:
           - Material: ClockTower_Lead
             Amount: 30
           - Material: ClockTower_Gear
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -8345,7 +8287,6 @@ Body:
       - Slot: 3
         Materials:
           - Material: Enchant_Ticket
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -8463,7 +8404,6 @@ Body:
         Materials:
           - Material: Enchant_Ticket
             Amount: 2
-        Chance: 100000
         Enchants:
           - Enchantgrade: 0
             Items:
@@ -8597,8 +8537,8 @@ Body:
                 Amount: 800
   - Id: 26
     TargetItems:
-      Snowflower_Robe
-      Snowflower_Armor
+      Snowflower_Robe: true
+      Snowflower_Armor: true
     Order:
       - Slot: 3
       - Slot: 2
@@ -9194,7 +9134,7 @@ Body:
                 Amount: 25
               - Material: Snow_F_Stone3
                 Amount: 25
-              - Material: Old_Shell
+              - Material: OldShell
                 Amount: 300
           - Item: Glacier_F_Orb_7
             Materials:
@@ -9844,7 +9784,7 @@ Body:
                 Amount: 25
               - Material: Snow_F_Stone3
                 Amount: 25
-              - Material: Spirit_Jewel
+              - Material: SpritJewel
                 Amount: 300
           - Item: Glacier_F_Orb_66
             Materials:
@@ -10602,6 +10542,54 @@ Body:
                 Amount: 35
               - Material: Snow_F_Stone3
                 Amount: 50
+          - Item: Glacier_F_Orb_162
+            Materials:
+              - Material: Snow_F_Stone1
+                Amount: 25
+              - Material: Snow_F_Stone2
+                Amount: 35
+              - Material: Snow_F_Stone3
+                Amount: 50
+          - Item: Glacier_F_Orb_163
+            Materials:
+              - Material: Snow_F_Stone1
+                Amount: 25
+              - Material: Snow_F_Stone2
+                Amount: 35
+              - Material: Snow_F_Stone3
+                Amount: 50
+          - Item: Glacier_F_Orb_164
+            Materials:
+              - Material: Snow_F_Stone1
+                Amount: 25
+              - Material: Snow_F_Stone2
+                Amount: 35
+              - Material: Snow_F_Stone3
+                Amount: 50
+          - Item: Glacier_F_Orb_165
+            Materials:
+              - Material: Snow_F_Stone1
+                Amount: 25
+              - Material: Snow_F_Stone2
+                Amount: 35
+              - Material: Snow_F_Stone3
+                Amount: 50
+          - Item: Glacier_F_Orb_166
+            Materials:
+              - Material: Snow_F_Stone1
+                Amount: 25
+              - Material: Snow_F_Stone2
+                Amount: 35
+              - Material: Snow_F_Stone3
+                Amount: 50
+          - Item: Glacier_F_Orb_167
+            Materials:
+              - Material: Snow_F_Stone1
+                Amount: 25
+              - Material: Snow_F_Stone2
+                Amount: 35
+              - Material: Snow_F_Stone3
+                Amount: 50
           - Item: Glacier_F_Orb_156
             Materials:
               - Material: Snow_F_Stone2
@@ -10693,7 +10681,6 @@ Body:
             Upgrade: Mettle2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10704,7 +10691,6 @@ Body:
             Upgrade: Adamatine2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10715,7 +10701,6 @@ Body:
             Upgrade: MagicEessence2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10726,7 +10711,6 @@ Body:
             Upgrade: Acute2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10737,7 +10721,6 @@ Body:
             Upgrade: MasterArcher2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10748,7 +10731,6 @@ Body:
             Upgrade: Affection2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10759,7 +10741,6 @@ Body:
             Upgrade: Tenacity2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10770,7 +10751,6 @@ Body:
             Upgrade: Mettle3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10781,7 +10761,6 @@ Body:
             Upgrade: Adamatine3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10792,7 +10771,6 @@ Body:
             Upgrade: MagicEessence3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10803,7 +10781,6 @@ Body:
             Upgrade: Acute3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10814,7 +10791,6 @@ Body:
             Upgrade: MasterArcher3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10825,7 +10801,6 @@ Body:
             Upgrade: Affection3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10836,7 +10811,6 @@ Body:
             Upgrade: Tenacity3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10870,7 +10844,6 @@ Body:
             Upgrade: Gray_Melee2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10881,7 +10854,6 @@ Body:
             Upgrade: Gray_Range2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10892,7 +10864,6 @@ Body:
             Upgrade: Gray_Magic2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10903,7 +10874,6 @@ Body:
             Upgrade: Gray_Fight2
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
@@ -10914,7 +10884,6 @@ Body:
             Upgrade: Gray_Melee3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10925,7 +10894,6 @@ Body:
             Upgrade: Gray_Range3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10936,7 +10904,6 @@ Body:
             Upgrade: Gray_Magic3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -10947,7 +10914,6 @@ Body:
             Upgrade: Gray_Fight3
             Materials:
               - Material: Enchant_Ticket
-                Amount: 1
               - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
@@ -11222,12 +11188,6 @@ Body:
     TargetItems:
       E_Illusion_Armor_A: true
       E_Illusion_Armor_B: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -11321,12 +11281,6 @@ Body:
     TargetItems:
       E_Auto_B_L: true
       E_Auto_BC_L: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -11454,10 +11408,6 @@ Body:
       RS_B_Whip: true
       MV_B_Violin: true
       MV_B_Whip: true
-    Reset:
-      Chance: 100000
-      Materials:
-        - Material: Enchant_Ticket
     Order:
       - Slot: 3
       - Slot: 2
@@ -11500,10 +11450,6 @@ Body:
       C_Black_Cat_Hood_kr: true
       C_Squirrel_Ear_Hat_Kr: true
       C_Black_Moon_Cat_kr: true
-    Reset:
-      Chance: 100000
-      Materials:
-        - Material: Enchant_Ticket
     Order:
       - Slot: 2
       - Slot: 1
@@ -11827,10 +11773,6 @@ Body:
       C_School_Bag_BL: true
       C_School_Bag_BU: true
       C_School_Bag_PU: true
-    Reset:
-      Chance: 100000
-      Materials:
-        - Material: Enchant_Ticket
     Order:
       - Slot: 0
       - Slot: 1
@@ -11957,12 +11899,6 @@ Body:
     TargetItems:
       E_Illusion_Engine_A: true
       E_Illusion_Engine_B: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -12056,12 +11992,6 @@ Body:
     TargetItems:
       E_Illusion_Leg_A: true
       E_Illusion_Leg_B: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -12155,12 +12085,6 @@ Body:
     TargetItems:
       E_Auto_B_R: true
       E_Auto_BC_R: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -12252,12 +12176,6 @@ Body:
     TargetItems:
       E_Illusion_B_R: true
       E_Illusion_BC_R: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -12393,12 +12311,6 @@ Body:
     TargetItems:
       E_Illusion_B_L: true
       E_Illusion_BC_L: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -12534,12 +12446,6 @@ Body:
     TargetItems:
       E_Auto_Armor_A: true
       E_Auto_Armor_B: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -13043,12 +12949,6 @@ Body:
     TargetItems:
       E_Auto_Engine_A: true
       E_Auto_Engine_B: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -13124,12 +13024,6 @@ Body:
     TargetItems:
       E_Auto_Leg_A: true
       E_Auto_Leg_B: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -13249,12 +13143,6 @@ Body:
       D_Glacier_Shotgun: true
       D_Glacier_Gatling: true
       D_Glacier_Launcher: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Small_Spray_Of_Flowers
-          Amount: 5
     Order:
       - Slot: 3
       - Slot: 2
@@ -13356,7 +13244,6 @@ Body:
                 Amount: 10
               - Material: EP19_S_F_2_Extract
                 Amount: 15
-            Materials:
               - Material: EP19_S_F_3_Extract
                 Amount: 25
           - Item: Glacier_F_Orb_13
@@ -15159,7 +15046,6 @@ Body:
               - Material: EP19_N_P_Crystal
                 Amount: 7
               - Material: EP19_D_P_Stone
-                Amount: 1
           - Enchant: Physical_Grade_3
             Upgrade: Physical_Grade_4
             Materials:
@@ -15225,7 +15111,6 @@ Body:
               - Material: EP19_N_P_Crystal
                 Amount: 7
               - Material: EP19_D_P_Stone
-                Amount: 1
           - Enchant: Magical_Grade_3
             Upgrade: Magical_Grade_4
             Materials:
@@ -15264,11 +15149,6 @@ Body:
   - Id: 51
     TargetItems:
       C_20th_Anniversary_Hat: true
-    Reset:
-      Chance: 100000
-      Price: 10000
-      Materials:
-        - Material: Evt_20th_Coin
     Order:
       - Slot: 3
     Slots:
@@ -15427,7 +15307,7 @@ Body:
                 Chance: 500
               - Item: Dexterity4
                 Chance: 500
-          - Enchantgrade: 3
+          - Enchantgrade: 4
             Items:
               - Item: Strength3
                 Chance: 15000
@@ -18094,3 +17974,3471 @@ Body:
                 Chance: 2000
               - Item: Barmund_Death5
                 Chance: 500
+  - Id: 56
+    TargetItems:
+      Dimmension_W_Key: true
+      Dimmension_W_Padlock: true
+      Dimmension_W_Keyring: true
+    Reset:
+      Chance: 100000
+      Price: 10000
+      Materials:
+        - Material: Heros_Gold_Bar
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Pow_Orb_1
+            Materials:
+              - Material: Heros_Gold_Bar
+                Amount: 25
+              - Material: Heros_Silver_Bar
+                Amount: 50
+              - Material: Heros_Copper_Bar
+                Amount: 100
+              - Material: Heros_Iron_Bar
+                Amount: 200
+          - Item: Spl_Orb_1
+            Materials:
+              - Material: Heros_Gold_Bar
+                Amount: 25
+              - Material: Heros_Silver_Bar
+                Amount: 50
+              - Material: Heros_Copper_Bar
+                Amount: 100
+              - Material: Heros_Iron_Bar
+                Amount: 200
+        Upgrades:
+          - Enchant: Pow_Orb_1
+            Upgrade: Pow_Orb_2
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 2
+              - Material: Heros_Topaz
+                Amount: 2
+              - Material: Heros_Sapphire
+                Amount: 2
+              - Material: Heros_Emerald
+                Amount: 2
+              - Material: Heros_Diamond
+                Amount: 2
+          - Enchant: Pow_Orb_2
+            Upgrade: Pow_Orb_3
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 4
+              - Material: Heros_Topaz
+                Amount: 4
+              - Material: Heros_Sapphire
+                Amount: 4
+              - Material: Heros_Emerald
+                Amount: 4
+              - Material: Heros_Diamond
+                Amount: 4
+          - Enchant: Pow_Orb_3
+            Upgrade: Pow_Orb_4
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 6
+              - Material: Heros_Topaz
+                Amount: 6
+              - Material: Heros_Sapphire
+                Amount: 6
+              - Material: Heros_Emerald
+                Amount: 6
+              - Material: Heros_Diamond
+                Amount: 6
+          - Enchant: Pow_Orb_4
+            Upgrade: Pow_Orb_5
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 8
+              - Material: Heros_Topaz
+                Amount: 8
+              - Material: Heros_Sapphire
+                Amount: 8
+              - Material: Heros_Emerald
+                Amount: 8
+              - Material: Heros_Diamond
+                Amount: 8
+          - Enchant: Pow_Orb_5
+            Upgrade: Pow_Orb_6
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 10
+              - Material: Heros_Topaz
+                Amount: 10
+              - Material: Heros_Sapphire
+                Amount: 10
+              - Material: Heros_Emerald
+                Amount: 10
+              - Material: Heros_Diamond
+                Amount: 10
+          - Enchant: Pow_Orb_6
+            Upgrade: Pow_Orb_7
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 12
+              - Material: Heros_Topaz
+                Amount: 12
+              - Material: Heros_Sapphire
+                Amount: 12
+              - Material: Heros_Emerald
+                Amount: 12
+              - Material: Heros_Diamond
+                Amount: 12
+          - Enchant: Pow_Orb_7
+            Upgrade: Pow_Orb_8
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 14
+              - Material: Heros_Topaz
+                Amount: 14
+              - Material: Heros_Sapphire
+                Amount: 14
+              - Material: Heros_Emerald
+                Amount: 14
+              - Material: Heros_Diamond
+                Amount: 14
+          - Enchant: Pow_Orb_8
+            Upgrade: Pow_Orb_9
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 16
+              - Material: Heros_Topaz
+                Amount: 16
+              - Material: Heros_Sapphire
+                Amount: 16
+              - Material: Heros_Emerald
+                Amount: 16
+              - Material: Heros_Diamond
+                Amount: 16
+          - Enchant: Pow_Orb_9
+            Upgrade: Pow_Orb_10
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 18
+              - Material: Heros_Topaz
+                Amount: 18
+              - Material: Heros_Sapphire
+                Amount: 18
+              - Material: Heros_Emerald
+                Amount: 18
+              - Material: Heros_Diamond
+                Amount: 18
+          - Enchant: Pow_Orb_10
+            Upgrade: Pow_Orb_11
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 4
+              - Material: Heros_Topaz_1
+                Amount: 4
+              - Material: Heros_Sapphire_1
+                Amount: 4
+              - Material: Heros_Emerald_1
+                Amount: 4
+              - Material: Heros_Diamond_1
+                Amount: 4
+          - Enchant: Pow_Orb_11
+            Upgrade: Pow_Orb_12
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 6
+              - Material: Heros_Topaz_1
+                Amount: 6
+              - Material: Heros_Sapphire_1
+                Amount: 6
+              - Material: Heros_Emerald_1
+                Amount: 6
+              - Material: Heros_Diamond_1
+                Amount: 6
+          - Enchant: Pow_Orb_12
+            Upgrade: Pow_Orb_13
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 8
+              - Material: Heros_Topaz_1
+                Amount: 8
+              - Material: Heros_Sapphire_1
+                Amount: 8
+              - Material: Heros_Emerald_1
+                Amount: 8
+              - Material: Heros_Diamond_1
+                Amount: 8
+          - Enchant: Pow_Orb_13
+            Upgrade: Pow_Orb_14
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 10
+              - Material: Heros_Topaz_1
+                Amount: 10
+              - Material: Heros_Sapphire_1
+                Amount: 10
+              - Material: Heros_Emerald_1
+                Amount: 10
+              - Material: Heros_Diamond_1
+                Amount: 10
+          - Enchant: Pow_Orb_14
+            Upgrade: Pow_Orb_15
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 12
+              - Material: Heros_Topaz_1
+                Amount: 12
+              - Material: Heros_Sapphire_1
+                Amount: 12
+              - Material: Heros_Emerald_1
+                Amount: 12
+              - Material: Heros_Diamond_1
+                Amount: 12
+          - Enchant: Pow_Orb_15
+            Upgrade: Pow_Orb_16
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 14
+              - Material: Heros_Topaz_1
+                Amount: 14
+              - Material: Heros_Sapphire_1
+                Amount: 14
+              - Material: Heros_Emerald_1
+                Amount: 14
+              - Material: Heros_Diamond_1
+                Amount: 14
+          - Enchant: Pow_Orb_16
+            Upgrade: Pow_Orb_17
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 16
+              - Material: Heros_Topaz_1
+                Amount: 16
+              - Material: Heros_Sapphire_1
+                Amount: 16
+              - Material: Heros_Emerald_1
+                Amount: 16
+              - Material: Heros_Diamond_1
+                Amount: 16
+          - Enchant: Pow_Orb_17
+            Upgrade: Pow_Orb_18
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 4
+              - Material: Heros_Topaz_2
+                Amount: 4
+              - Material: Heros_Sapphire_2
+                Amount: 4
+              - Material: Heros_Emerald_2
+                Amount: 4
+              - Material: Heros_Diamond_2
+                Amount: 4
+          - Enchant: Pow_Orb_18
+            Upgrade: Pow_Orb_19
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 6
+              - Material: Heros_Topaz_2
+                Amount: 6
+              - Material: Heros_Sapphire_2
+                Amount: 6
+              - Material: Heros_Emerald_2
+                Amount: 6
+              - Material: Heros_Diamond_2
+                Amount: 6
+          - Enchant: Pow_Orb_19
+            Upgrade: Pow_Orb_20
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 8
+              - Material: Heros_Topaz_2
+                Amount: 8
+              - Material: Heros_Sapphire_2
+                Amount: 8
+              - Material: Heros_Emerald_2
+                Amount: 8
+              - Material: Heros_Diamond_2
+                Amount: 8
+          - Enchant: Spl_Orb_1
+            Upgrade: Spl_Orb_2
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 2
+              - Material: Heros_Topaz
+                Amount: 2
+              - Material: Heros_Sapphire
+                Amount: 2
+              - Material: Heros_Emerald
+                Amount: 2
+              - Material: Heros_Diamond
+                Amount: 2
+          - Enchant: Spl_Orb_2
+            Upgrade: Spl_Orb_3
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 4
+              - Material: Heros_Topaz
+                Amount: 4
+              - Material: Heros_Sapphire
+                Amount: 4
+              - Material: Heros_Emerald
+                Amount: 4
+              - Material: Heros_Diamond
+                Amount: 4
+          - Enchant: Spl_Orb_3
+            Upgrade: Spl_Orb_4
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 6
+              - Material: Heros_Topaz
+                Amount: 6
+              - Material: Heros_Sapphire
+                Amount: 6
+              - Material: Heros_Emerald
+                Amount: 6
+              - Material: Heros_Diamond
+                Amount: 6
+          - Enchant: Spl_Orb_4
+            Upgrade: Spl_Orb_5
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 8
+              - Material: Heros_Topaz
+                Amount: 8
+              - Material: Heros_Sapphire
+                Amount: 8
+              - Material: Heros_Emerald
+                Amount: 8
+              - Material: Heros_Diamond
+                Amount: 8
+          - Enchant: Spl_Orb_5
+            Upgrade: Spl_Orb_6
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 10
+              - Material: Heros_Topaz
+                Amount: 10
+              - Material: Heros_Sapphire
+                Amount: 10
+              - Material: Heros_Emerald
+                Amount: 10
+              - Material: Heros_Diamond
+                Amount: 10
+          - Enchant: Spl_Orb_6
+            Upgrade: Spl_Orb_7
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 12
+              - Material: Heros_Topaz
+                Amount: 12
+              - Material: Heros_Sapphire
+                Amount: 12
+              - Material: Heros_Emerald
+                Amount: 12
+              - Material: Heros_Diamond
+                Amount: 12
+          - Enchant: Spl_Orb_7
+            Upgrade: Spl_Orb_8
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 14
+              - Material: Heros_Topaz
+                Amount: 14
+              - Material: Heros_Sapphire
+                Amount: 14
+              - Material: Heros_Emerald
+                Amount: 14
+              - Material: Heros_Diamond
+                Amount: 14
+          - Enchant: Spl_Orb_8
+            Upgrade: Spl_Orb_9
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 16
+              - Material: Heros_Topaz
+                Amount: 16
+              - Material: Heros_Sapphire
+                Amount: 16
+              - Material: Heros_Emerald
+                Amount: 16
+              - Material: Heros_Diamond
+                Amount: 16
+          - Enchant: Spl_Orb_9
+            Upgrade: Spl_Orb_10
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 18
+              - Material: Heros_Topaz
+                Amount: 18
+              - Material: Heros_Sapphire
+                Amount: 18
+              - Material: Heros_Emerald
+                Amount: 18
+              - Material: Heros_Diamond
+                Amount: 18
+          - Enchant: Spl_Orb_10
+            Upgrade: Spl_Orb_11
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 4
+              - Material: Heros_Topaz_1
+                Amount: 4
+              - Material: Heros_Sapphire_1
+                Amount: 4
+              - Material: Heros_Emerald_1
+                Amount: 4
+              - Material: Heros_Diamond_1
+                Amount: 4
+          - Enchant: Spl_Orb_11
+            Upgrade: Spl_Orb_12
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 6
+              - Material: Heros_Topaz_1
+                Amount: 6
+              - Material: Heros_Sapphire_1
+                Amount: 6
+              - Material: Heros_Emerald_1
+                Amount: 6
+              - Material: Heros_Diamond_1
+                Amount: 6
+          - Enchant: Spl_Orb_12
+            Upgrade: Spl_Orb_13
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 8
+              - Material: Heros_Topaz_1
+                Amount: 8
+              - Material: Heros_Sapphire_1
+                Amount: 8
+              - Material: Heros_Emerald_1
+                Amount: 8
+              - Material: Heros_Diamond_1
+                Amount: 8
+          - Enchant: Spl_Orb_13
+            Upgrade: Spl_Orb_14
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 10
+              - Material: Heros_Topaz_1
+                Amount: 10
+              - Material: Heros_Sapphire_1
+                Amount: 10
+              - Material: Heros_Emerald_1
+                Amount: 10
+              - Material: Heros_Diamond_1
+                Amount: 10
+          - Enchant: Spl_Orb_14
+            Upgrade: Spl_Orb_15
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 12
+              - Material: Heros_Topaz_1
+                Amount: 12
+              - Material: Heros_Sapphire_1
+                Amount: 12
+              - Material: Heros_Emerald_1
+                Amount: 12
+              - Material: Heros_Diamond_1
+                Amount: 12
+          - Enchant: Spl_Orb_15
+            Upgrade: Spl_Orb_16
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 14
+              - Material: Heros_Topaz_1
+                Amount: 14
+              - Material: Heros_Sapphire_1
+                Amount: 14
+              - Material: Heros_Emerald_1
+                Amount: 14
+              - Material: Heros_Diamond_1
+                Amount: 14
+          - Enchant: Spl_Orb_16
+            Upgrade: Spl_Orb_17
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 16
+              - Material: Heros_Topaz_1
+                Amount: 16
+              - Material: Heros_Sapphire_1
+                Amount: 16
+              - Material: Heros_Emerald_1
+                Amount: 16
+              - Material: Heros_Diamond_1
+                Amount: 16
+          - Enchant: Spl_Orb_17
+            Upgrade: Spl_Orb_18
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 4
+              - Material: Heros_Topaz_2
+                Amount: 4
+              - Material: Heros_Sapphire_2
+                Amount: 4
+              - Material: Heros_Emerald_2
+                Amount: 4
+              - Material: Heros_Diamond_2
+                Amount: 4
+          - Enchant: Spl_Orb_18
+            Upgrade: Spl_Orb_19
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 6
+              - Material: Heros_Topaz_2
+                Amount: 6
+              - Material: Heros_Sapphire_2
+                Amount: 6
+              - Material: Heros_Emerald_2
+                Amount: 6
+              - Material: Heros_Diamond_2
+                Amount: 6
+          - Enchant: Spl_Orb_19
+            Upgrade: Spl_Orb_20
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 8
+              - Material: Heros_Topaz_2
+                Amount: 8
+              - Material: Heros_Sapphire_2
+                Amount: 8
+              - Material: Heros_Emerald_2
+                Amount: 8
+              - Material: Heros_Diamond_2
+                Amount: 8
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Warrior_Orb_1
+            Materials:
+              - Material: Heros_Gold_Bar
+                Amount: 50
+              - Material: Heros_Silver_Bar
+                Amount: 100
+              - Material: Heros_Copper_Bar
+                Amount: 200
+              - Material: Heros_Iron_Bar
+                Amount: 400
+          - Item: Magician_Orb_1
+            Materials:
+              - Material: Heros_Gold_Bar
+                Amount: 50
+              - Material: Heros_Silver_Bar
+                Amount: 100
+              - Material: Heros_Copper_Bar
+                Amount: 200
+              - Material: Heros_Iron_Bar
+                Amount: 400
+          - Item: Shooter_Orb_1
+            Materials:
+              - Material: Heros_Gold_Bar
+                Amount: 50
+              - Material: Heros_Silver_Bar
+                Amount: 100
+              - Material: Heros_Copper_Bar
+                Amount: 200
+              - Material: Heros_Iron_Bar
+                Amount: 400
+        Upgrades:
+          - Enchant: Warrior_Orb_1
+            Upgrade: Warrior_Orb_2
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 4
+              - Material: Heros_Topaz
+                Amount: 4
+              - Material: Heros_Sapphire
+                Amount: 4
+              - Material: Heros_Emerald
+                Amount: 4
+              - Material: Heros_Diamond
+                Amount: 4
+          - Enchant: Warrior_Orb_2
+            Upgrade: Warrior_Orb_3
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 8
+              - Material: Heros_Topaz
+                Amount: 8
+              - Material: Heros_Sapphire
+                Amount: 8
+              - Material: Heros_Emerald
+                Amount: 8
+              - Material: Heros_Diamond
+                Amount: 8
+          - Enchant: Warrior_Orb_3
+            Upgrade: Warrior_Orb_4
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 12
+              - Material: Heros_Topaz
+                Amount: 12
+              - Material: Heros_Sapphire
+                Amount: 12
+              - Material: Heros_Emerald
+                Amount: 12
+              - Material: Heros_Diamond
+                Amount: 12
+          - Enchant: Warrior_Orb_4
+            Upgrade: Warrior_Orb_5
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 16
+              - Material: Heros_Topaz
+                Amount: 16
+              - Material: Heros_Sapphire
+                Amount: 16
+              - Material: Heros_Emerald
+                Amount: 16
+              - Material: Heros_Diamond
+                Amount: 16
+          - Enchant: Warrior_Orb_5
+            Upgrade: Warrior_Orb_6
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 4
+              - Material: Heros_Topaz_1
+                Amount: 4
+              - Material: Heros_Sapphire_1
+                Amount: 4
+              - Material: Heros_Emerald_1
+                Amount: 4
+              - Material: Heros_Diamond_1
+                Amount: 4
+          - Enchant: Warrior_Orb_6
+            Upgrade: Warrior_Orb_7
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 6
+              - Material: Heros_Topaz_1
+                Amount: 6
+              - Material: Heros_Sapphire_1
+                Amount: 6
+              - Material: Heros_Emerald_1
+                Amount: 6
+              - Material: Heros_Diamond_1
+                Amount: 6
+          - Enchant: Warrior_Orb_7
+            Upgrade: Warrior_Orb_8
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 8
+              - Material: Heros_Topaz_1
+                Amount: 8
+              - Material: Heros_Sapphire_1
+                Amount: 8
+              - Material: Heros_Emerald_1
+                Amount: 8
+              - Material: Heros_Diamond_1
+                Amount: 8
+          - Enchant: Warrior_Orb_8
+            Upgrade: Warrior_Orb_9
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 10
+              - Material: Heros_Topaz_1
+                Amount: 10
+              - Material: Heros_Sapphire_1
+                Amount: 10
+              - Material: Heros_Emerald_1
+                Amount: 10
+              - Material: Heros_Diamond_1
+                Amount: 10
+          - Enchant: Warrior_Orb_9
+            Upgrade: Warrior_Orb_10
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 12
+              - Material: Heros_Topaz_1
+                Amount: 12
+              - Material: Heros_Sapphire_1
+                Amount: 12
+              - Material: Heros_Emerald_1
+                Amount: 12
+              - Material: Heros_Diamond_1
+                Amount: 12
+          - Enchant: Warrior_Orb_10
+            Upgrade: Warrior_Orb_11
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 3
+              - Material: Heros_Topaz_2
+                Amount: 3
+              - Material: Heros_Sapphire_2
+                Amount: 3
+              - Material: Heros_Emerald_2
+                Amount: 3
+              - Material: Heros_Diamond_2
+                Amount: 3
+          - Enchant: Warrior_Orb_11
+            Upgrade: Warrior_Orb_12
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 6
+              - Material: Heros_Topaz_2
+                Amount: 6
+              - Material: Heros_Sapphire_2
+                Amount: 6
+              - Material: Heros_Emerald_2
+                Amount: 6
+              - Material: Heros_Diamond_2
+                Amount: 6
+          - Enchant: Warrior_Orb_12
+            Upgrade: Warrior_Orb_13
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 9
+              - Material: Heros_Topaz_2
+                Amount: 9
+              - Material: Heros_Sapphire_2
+                Amount: 9
+              - Material: Heros_Emerald_2
+                Amount: 9
+              - Material: Heros_Diamond_2
+                Amount: 9
+          - Enchant: Warrior_Orb_13
+            Upgrade: Warrior_Orb_14
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 12
+              - Material: Heros_Topaz_2
+                Amount: 12
+              - Material: Heros_Sapphire_2
+                Amount: 12
+              - Material: Heros_Emerald_2
+                Amount: 12
+              - Material: Heros_Diamond_2
+                Amount: 12
+          - Enchant: Warrior_Orb_14
+            Upgrade: Warrior_Orb_15
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 15
+              - Material: Heros_Topaz_2
+                Amount: 15
+              - Material: Heros_Sapphire_2
+                Amount: 15
+              - Material: Heros_Emerald_2
+                Amount: 15
+              - Material: Heros_Diamond_2
+                Amount: 15
+          - Enchant: Magician_Orb_1
+            Upgrade: Magician_Orb_2
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 4
+              - Material: Heros_Topaz
+                Amount: 4
+              - Material: Heros_Sapphire
+                Amount: 4
+              - Material: Heros_Emerald
+                Amount: 4
+              - Material: Heros_Diamond
+                Amount: 4
+          - Enchant: Magician_Orb_2
+            Upgrade: Magician_Orb_3
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 8
+              - Material: Heros_Topaz
+                Amount: 8
+              - Material: Heros_Sapphire
+                Amount: 8
+              - Material: Heros_Emerald
+                Amount: 8
+              - Material: Heros_Diamond
+                Amount: 8
+          - Enchant: Magician_Orb_3
+            Upgrade: Magician_Orb_4
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 12
+              - Material: Heros_Topaz
+                Amount: 12
+              - Material: Heros_Sapphire
+                Amount: 12
+              - Material: Heros_Emerald
+                Amount: 12
+              - Material: Heros_Diamond
+                Amount: 12
+          - Enchant: Magician_Orb_4
+            Upgrade: Magician_Orb_5
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 16
+              - Material: Heros_Topaz
+                Amount: 16
+              - Material: Heros_Sapphire
+                Amount: 16
+              - Material: Heros_Emerald
+                Amount: 16
+              - Material: Heros_Diamond
+                Amount: 16
+          - Enchant: Magician_Orb_5
+            Upgrade: Magician_Orb_6
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 4
+              - Material: Heros_Topaz_1
+                Amount: 4
+              - Material: Heros_Sapphire_1
+                Amount: 4
+              - Material: Heros_Emerald_1
+                Amount: 4
+              - Material: Heros_Diamond_1
+                Amount: 4
+          - Enchant: Magician_Orb_6
+            Upgrade: Magician_Orb_7
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 6
+              - Material: Heros_Topaz_1
+                Amount: 6
+              - Material: Heros_Sapphire_1
+                Amount: 6
+              - Material: Heros_Emerald_1
+                Amount: 6
+              - Material: Heros_Diamond_1
+                Amount: 6
+          - Enchant: Magician_Orb_7
+            Upgrade: Magician_Orb_8
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 8
+              - Material: Heros_Topaz_1
+                Amount: 8
+              - Material: Heros_Sapphire_1
+                Amount: 8
+              - Material: Heros_Emerald_1
+                Amount: 8
+              - Material: Heros_Diamond_1
+                Amount: 8
+          - Enchant: Magician_Orb_8
+            Upgrade: Magician_Orb_9
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 10
+              - Material: Heros_Topaz_1
+                Amount: 10
+              - Material: Heros_Sapphire_1
+                Amount: 10
+              - Material: Heros_Emerald_1
+                Amount: 10
+              - Material: Heros_Diamond_1
+                Amount: 10
+          - Enchant: Magician_Orb_9
+            Upgrade: Magician_Orb_10
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 12
+              - Material: Heros_Topaz_1
+                Amount: 12
+              - Material: Heros_Sapphire_1
+                Amount: 12
+              - Material: Heros_Emerald_1
+                Amount: 12
+              - Material: Heros_Diamond_1
+                Amount: 12
+          - Enchant: Magician_Orb_10
+            Upgrade: Magician_Orb_11
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 3
+              - Material: Heros_Topaz_2
+                Amount: 3
+              - Material: Heros_Sapphire_2
+                Amount: 3
+              - Material: Heros_Emerald_2
+                Amount: 3
+              - Material: Heros_Diamond_2
+                Amount: 3
+          - Enchant: Magician_Orb_11
+            Upgrade: Magician_Orb_12
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 6
+              - Material: Heros_Topaz_2
+                Amount: 6
+              - Material: Heros_Sapphire_2
+                Amount: 6
+              - Material: Heros_Emerald_2
+                Amount: 6
+              - Material: Heros_Diamond_2
+                Amount: 6
+          - Enchant: Magician_Orb_12
+            Upgrade: Magician_Orb_13
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 9
+              - Material: Heros_Topaz_2
+                Amount: 9
+              - Material: Heros_Sapphire_2
+                Amount: 9
+              - Material: Heros_Emerald_2
+                Amount: 9
+              - Material: Heros_Diamond_2
+                Amount: 9
+          - Enchant: Magician_Orb_13
+            Upgrade: Magician_Orb_14
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 12
+              - Material: Heros_Topaz_2
+                Amount: 12
+              - Material: Heros_Sapphire_2
+                Amount: 12
+              - Material: Heros_Emerald_2
+                Amount: 12
+              - Material: Heros_Diamond_2
+                Amount: 12
+          - Enchant: Magician_Orb_14
+            Upgrade: Magician_Orb_15
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 15
+              - Material: Heros_Topaz_2
+                Amount: 15
+              - Material: Heros_Sapphire_2
+                Amount: 15
+              - Material: Heros_Emerald_2
+                Amount: 15
+              - Material: Heros_Diamond_2
+                Amount: 15
+          - Enchant: Shooter_Orb_1
+            Upgrade: Shooter_Orb_2
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 4
+              - Material: Heros_Topaz
+                Amount: 4
+              - Material: Heros_Sapphire
+                Amount: 4
+              - Material: Heros_Emerald
+                Amount: 4
+              - Material: Heros_Diamond
+                Amount: 4
+          - Enchant: Shooter_Orb_2
+            Upgrade: Shooter_Orb_3
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 8
+              - Material: Heros_Topaz
+                Amount: 8
+              - Material: Heros_Sapphire
+                Amount: 8
+              - Material: Heros_Emerald
+                Amount: 8
+              - Material: Heros_Diamond
+                Amount: 8
+          - Enchant: Shooter_Orb_3
+            Upgrade: Shooter_Orb_4
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 12
+              - Material: Heros_Topaz
+                Amount: 12
+              - Material: Heros_Sapphire
+                Amount: 12
+              - Material: Heros_Emerald
+                Amount: 12
+              - Material: Heros_Diamond
+                Amount: 12
+          - Enchant: Shooter_Orb_4
+            Upgrade: Shooter_Orb_5
+            Materials:
+              - Material: Heros_Ruby
+                Amount: 16
+              - Material: Heros_Topaz
+                Amount: 16
+              - Material: Heros_Sapphire
+                Amount: 16
+              - Material: Heros_Emerald
+                Amount: 16
+              - Material: Heros_Diamond
+                Amount: 16
+          - Enchant: Shooter_Orb_5
+            Upgrade: Shooter_Orb_6
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 4
+              - Material: Heros_Topaz_1
+                Amount: 4
+              - Material: Heros_Sapphire_1
+                Amount: 4
+              - Material: Heros_Emerald_1
+                Amount: 4
+              - Material: Heros_Diamond_1
+                Amount: 4
+          - Enchant: Shooter_Orb_6
+            Upgrade: Shooter_Orb_7
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 6
+              - Material: Heros_Topaz_1
+                Amount: 6
+              - Material: Heros_Sapphire_1
+                Amount: 6
+              - Material: Heros_Emerald_1
+                Amount: 6
+              - Material: Heros_Diamond_1
+                Amount: 6
+          - Enchant: Shooter_Orb_7
+            Upgrade: Shooter_Orb_8
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 8
+              - Material: Heros_Topaz_1
+                Amount: 8
+              - Material: Heros_Sapphire_1
+                Amount: 8
+              - Material: Heros_Emerald_1
+                Amount: 8
+              - Material: Heros_Diamond_1
+                Amount: 8
+          - Enchant: Shooter_Orb_8
+            Upgrade: Shooter_Orb_9
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 10
+              - Material: Heros_Topaz_1
+                Amount: 10
+              - Material: Heros_Sapphire_1
+                Amount: 10
+              - Material: Heros_Emerald_1
+                Amount: 10
+              - Material: Heros_Diamond_1
+                Amount: 10
+          - Enchant: Shooter_Orb_9
+            Upgrade: Shooter_Orb_10
+            Materials:
+              - Material: Heros_Ruby_1
+                Amount: 12
+              - Material: Heros_Topaz_1
+                Amount: 12
+              - Material: Heros_Sapphire_1
+                Amount: 12
+              - Material: Heros_Emerald_1
+                Amount: 12
+              - Material: Heros_Diamond_1
+                Amount: 12
+          - Enchant: Shooter_Orb_10
+            Upgrade: Shooter_Orb_11
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 3
+              - Material: Heros_Topaz_2
+                Amount: 3
+              - Material: Heros_Sapphire_2
+                Amount: 3
+              - Material: Heros_Emerald_2
+                Amount: 3
+              - Material: Heros_Diamond_2
+                Amount: 3
+          - Enchant: Shooter_Orb_11
+            Upgrade: Shooter_Orb_12
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 6
+              - Material: Heros_Topaz_2
+                Amount: 6
+              - Material: Heros_Sapphire_2
+                Amount: 6
+              - Material: Heros_Emerald_2
+                Amount: 6
+              - Material: Heros_Diamond_2
+                Amount: 6
+          - Enchant: Shooter_Orb_12
+            Upgrade: Shooter_Orb_13
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 9
+              - Material: Heros_Topaz_2
+                Amount: 9
+              - Material: Heros_Sapphire_2
+                Amount: 9
+              - Material: Heros_Emerald_2
+                Amount: 9
+              - Material: Heros_Diamond_2
+                Amount: 9
+          - Enchant: Shooter_Orb_13
+            Upgrade: Shooter_Orb_14
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 12
+              - Material: Heros_Topaz_2
+                Amount: 12
+              - Material: Heros_Sapphire_2
+                Amount: 12
+              - Material: Heros_Emerald_2
+                Amount: 12
+              - Material: Heros_Diamond_2
+                Amount: 12
+          - Enchant: Shooter_Orb_14
+            Upgrade: Shooter_Orb_15
+            Materials:
+              - Material: Heros_Ruby_2
+                Amount: 15
+              - Material: Heros_Topaz_2
+                Amount: 15
+              - Material: Heros_Sapphire_2
+                Amount: 15
+              - Material: Heros_Emerald_2
+                Amount: 15
+              - Material: Heros_Diamond_2
+                Amount: 15
+  - Id: 57
+    TargetItems:
+      Barmund_Soul_Ring: true
+    Reset:
+      Chance: 70000
+      Price: 1000000
+      Materials:
+        - Material: Soul_Barmund_Rune2
+          Amount: 2
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: Soul_Barmund_Rune2
+            Amount: 2
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Pow1
+                Chance: 10000
+              - Item: Ba_Pow2
+                Chance: 4500
+              - Item: Ba_Pow3
+                Chance: 1500
+              - Item: Ba_Pow4
+                Chance: 500
+              - Item: Ba_Pow5
+                Chance: 200
+              - Item: Ba_Con1
+                Chance: 10000
+              - Item: Ba_Con2
+                Chance: 4500
+              - Item: Ba_Con3
+                Chance: 1500
+              - Item: Ba_Con4
+                Chance: 500
+              - Item: Ba_Con5
+                Chance: 200
+              - Item: Ba_Crt1
+                Chance: 10000
+              - Item: Ba_Crt2
+                Chance: 4500
+              - Item: Ba_Crt3
+                Chance: 1500
+              - Item: Ba_Crt4
+                Chance: 500
+              - Item: Ba_Crt5
+                Chance: 200
+              - Item: Ba_Sta1
+                Chance: 10000
+              - Item: Ba_Sta2
+                Chance: 4500
+              - Item: Ba_Sta3
+                Chance: 1500
+              - Item: Ba_Sta4
+                Chance: 500
+              - Item: Ba_Sta5
+                Chance: 200
+              - Item: Ba_Spl1
+                Chance: 10000
+              - Item: Ba_Spl2
+                Chance: 4500
+              - Item: Ba_Spl3
+                Chance: 1500
+              - Item: Ba_Spl4
+                Chance: 500
+              - Item: Ba_Spl5
+                Chance: 200
+              - Item: Ba_Wis1
+                Chance: 10000
+              - Item: Ba_Wis2
+                Chance: 4500
+              - Item: Ba_Wis3
+                Chance: 1300
+              - Item: Ba_Wis4
+                Chance: 500
+              - Item: Ba_Wis5
+                Chance: 200
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Soul_Barmund_Rune2
+            Amount: 5
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Stead1
+                Chance: 10000
+              - Item: Ba_Stead2
+                Chance: 4500
+              - Item: Ba_Stead3
+                Chance: 1500
+              - Item: Ba_Stead4
+                Chance: 500
+              - Item: Ba_Stead5
+                Chance: 200
+              - Item: Ba_Tenacity1
+                Chance: 10000
+              - Item: Ba_Tenacity2
+                Chance: 4500
+              - Item: Ba_Tenacity3
+                Chance: 1500
+              - Item: Ba_Tenacity4
+                Chance: 500
+              - Item: Ba_Tenacity5
+                Chance: 200
+              - Item: Ba_Intelligence1
+                Chance: 10000
+              - Item: Ba_Intelligence2
+                Chance: 4500
+              - Item: Ba_Intelligence3
+                Chance: 1500
+              - Item: Ba_Intelligence4
+                Chance: 500
+              - Item: Ba_Intelligence5
+                Chance: 200
+              - Item: Ba_focus1
+                Chance: 10000
+              - Item: Ba_focus2
+                Chance: 4500
+              - Item: Ba_focus3
+                Chance: 1500
+              - Item: Ba_focus4
+                Chance: 500
+              - Item: Ba_focus5
+                Chance: 200
+              - Item: Ba_Agility1
+                Chance: 10000
+              - Item: Ba_Agility2
+                Chance: 4500
+              - Item: Ba_Agility3
+                Chance: 1500
+              - Item: Ba_Agility4
+                Chance: 500
+              - Item: Ba_Agility5
+                Chance: 200
+              - Item: Ba_Mental1
+                Chance: 10000
+              - Item: Ba_Mental2
+                Chance: 4500
+              - Item: Ba_Mental3
+                Chance: 1300
+              - Item: Ba_Mental4
+                Chance: 500
+              - Item: Ba_Mental5
+                Chance: 200
+  - Id: 58
+    TargetItems:
+      Barmund_Venom_Ring: true
+    Reset:
+      Chance: 70000
+      Price: 1000000
+      Materials:
+        - Material: Venom_Barmund_Rune2
+          Amount: 2
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: Venom_Barmund_Rune2
+            Amount: 2
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Pow1
+                Chance: 10000
+              - Item: Ba_Pow2
+                Chance: 4500
+              - Item: Ba_Pow3
+                Chance: 1500
+              - Item: Ba_Pow4
+                Chance: 500
+              - Item: Ba_Pow5
+                Chance: 200
+              - Item: Ba_Con1
+                Chance: 10000
+              - Item: Ba_Con2
+                Chance: 4500
+              - Item: Ba_Con3
+                Chance: 1500
+              - Item: Ba_Con4
+                Chance: 500
+              - Item: Ba_Con5
+                Chance: 200
+              - Item: Ba_Crt1
+                Chance: 10000
+              - Item: Ba_Crt2
+                Chance: 4500
+              - Item: Ba_Crt3
+                Chance: 1500
+              - Item: Ba_Crt4
+                Chance: 500
+              - Item: Ba_Crt5
+                Chance: 200
+              - Item: Ba_Sta1
+                Chance: 10000
+              - Item: Ba_Sta2
+                Chance: 4500
+              - Item: Ba_Sta3
+                Chance: 1500
+              - Item: Ba_Sta4
+                Chance: 500
+              - Item: Ba_Sta5
+                Chance: 200
+              - Item: Ba_Spl1
+                Chance: 10000
+              - Item: Ba_Spl2
+                Chance: 4500
+              - Item: Ba_Spl3
+                Chance: 1500
+              - Item: Ba_Spl4
+                Chance: 500
+              - Item: Ba_Spl5
+                Chance: 200
+              - Item: Ba_Wis1
+                Chance: 10000
+              - Item: Ba_Wis2
+                Chance: 4500
+              - Item: Ba_Wis3
+                Chance: 1300
+              - Item: Ba_Wis4
+                Chance: 500
+              - Item: Ba_Wis5
+                Chance: 200
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Venom_Barmund_Rune2
+            Amount: 5
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Stead1
+                Chance: 10000
+              - Item: Ba_Stead2
+                Chance: 4500
+              - Item: Ba_Stead3
+                Chance: 1500
+              - Item: Ba_Stead4
+                Chance: 500
+              - Item: Ba_Stead5
+                Chance: 200
+              - Item: Ba_Tenacity1
+                Chance: 10000
+              - Item: Ba_Tenacity2
+                Chance: 4500
+              - Item: Ba_Tenacity3
+                Chance: 1500
+              - Item: Ba_Tenacity4
+                Chance: 500
+              - Item: Ba_Tenacity5
+                Chance: 200
+              - Item: Ba_Intelligence1
+                Chance: 10000
+              - Item: Ba_Intelligence2
+                Chance: 4500
+              - Item: Ba_Intelligence3
+                Chance: 1500
+              - Item: Ba_Intelligence4
+                Chance: 500
+              - Item: Ba_Intelligence5
+                Chance: 200
+              - Item: Ba_focus1
+                Chance: 10000
+              - Item: Ba_focus2
+                Chance: 4500
+              - Item: Ba_focus3
+                Chance: 1500
+              - Item: Ba_focus4
+                Chance: 500
+              - Item: Ba_focus5
+                Chance: 200
+              - Item: Ba_Agility1
+                Chance: 10000
+              - Item: Ba_Agility2
+                Chance: 4500
+              - Item: Ba_Agility3
+                Chance: 1500
+              - Item: Ba_Agility4
+                Chance: 500
+              - Item: Ba_Agility5
+                Chance: 200
+              - Item: Ba_Mental1
+                Chance: 10000
+              - Item: Ba_Mental2
+                Chance: 4500
+              - Item: Ba_Mental3
+                Chance: 1300
+              - Item: Ba_Mental4
+                Chance: 500
+              - Item: Ba_Mental5
+                Chance: 200
+  - Id: 59
+    TargetItems:
+      Barmund_Temple_Ring: true
+    Reset:
+      Chance: 70000
+      Price: 1000000
+      Materials:
+        - Material: Temple_Barmund_Rune2
+          Amount: 2
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: Temple_Barmund_Rune2
+            Amount: 2
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Pow1
+                Chance: 10000
+              - Item: Ba_Pow2
+                Chance: 4500
+              - Item: Ba_Pow3
+                Chance: 1500
+              - Item: Ba_Pow4
+                Chance: 500
+              - Item: Ba_Pow5
+                Chance: 200
+              - Item: Ba_Con1
+                Chance: 10000
+              - Item: Ba_Con2
+                Chance: 4500
+              - Item: Ba_Con3
+                Chance: 1500
+              - Item: Ba_Con4
+                Chance: 500
+              - Item: Ba_Con5
+                Chance: 200
+              - Item: Ba_Crt1
+                Chance: 10000
+              - Item: Ba_Crt2
+                Chance: 4500
+              - Item: Ba_Crt3
+                Chance: 1500
+              - Item: Ba_Crt4
+                Chance: 500
+              - Item: Ba_Crt5
+                Chance: 200
+              - Item: Ba_Sta1
+                Chance: 10000
+              - Item: Ba_Sta2
+                Chance: 4500
+              - Item: Ba_Sta3
+                Chance: 1500
+              - Item: Ba_Sta4
+                Chance: 500
+              - Item: Ba_Sta5
+                Chance: 200
+              - Item: Ba_Spl1
+                Chance: 10000
+              - Item: Ba_Spl2
+                Chance: 4500
+              - Item: Ba_Spl3
+                Chance: 1500
+              - Item: Ba_Spl4
+                Chance: 500
+              - Item: Ba_Spl5
+                Chance: 200
+              - Item: Ba_Wis1
+                Chance: 10000
+              - Item: Ba_Wis2
+                Chance: 4500
+              - Item: Ba_Wis3
+                Chance: 1300
+              - Item: Ba_Wis4
+                Chance: 500
+              - Item: Ba_Wis5
+                Chance: 200
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Temple_Barmund_Rune2
+            Amount: 5
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Stead1
+                Chance: 10000
+              - Item: Ba_Stead2
+                Chance: 4500
+              - Item: Ba_Stead3
+                Chance: 1500
+              - Item: Ba_Stead4
+                Chance: 500
+              - Item: Ba_Stead5
+                Chance: 200
+              - Item: Ba_Tenacity1
+                Chance: 10000
+              - Item: Ba_Tenacity2
+                Chance: 4500
+              - Item: Ba_Tenacity3
+                Chance: 1500
+              - Item: Ba_Tenacity4
+                Chance: 500
+              - Item: Ba_Tenacity5
+                Chance: 200
+              - Item: Ba_Intelligence1
+                Chance: 10000
+              - Item: Ba_Intelligence2
+                Chance: 4500
+              - Item: Ba_Intelligence3
+                Chance: 1500
+              - Item: Ba_Intelligence4
+                Chance: 500
+              - Item: Ba_Intelligence5
+                Chance: 200
+              - Item: Ba_focus1
+                Chance: 10000
+              - Item: Ba_focus2
+                Chance: 4500
+              - Item: Ba_focus3
+                Chance: 1500
+              - Item: Ba_focus4
+                Chance: 500
+              - Item: Ba_focus5
+                Chance: 200
+              - Item: Ba_Agility1
+                Chance: 10000
+              - Item: Ba_Agility2
+                Chance: 4500
+              - Item: Ba_Agility3
+                Chance: 1500
+              - Item: Ba_Agility4
+                Chance: 500
+              - Item: Ba_Agility5
+                Chance: 200
+              - Item: Ba_Mental1
+                Chance: 10000
+              - Item: Ba_Mental2
+                Chance: 4500
+              - Item: Ba_Mental3
+                Chance: 1300
+              - Item: Ba_Mental4
+                Chance: 500
+              - Item: Ba_Mental5
+                Chance: 200
+  - Id: 60
+    TargetItems:
+      Soul_Rune_Ring: true
+      Soul_M_Ring: true
+    Reset:
+      Chance: 80000
+      Price: 1000000
+      Materials:
+        - Material: Soul_Barmund_Rune2
+          Amount: 2
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: Soul_Barmund_Rune2
+          - Material: Barmund_Water
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Pow1
+                Chance: 10000
+              - Item: Ba_Pow2
+                Chance: 4500
+              - Item: Ba_Pow3
+                Chance: 1500
+              - Item: Ba_Pow4
+                Chance: 500
+              - Item: Ba_Pow5
+                Chance: 200
+              - Item: Ba_Con1
+                Chance: 10000
+              - Item: Ba_Con2
+                Chance: 4500
+              - Item: Ba_Con3
+                Chance: 1500
+              - Item: Ba_Con4
+                Chance: 500
+              - Item: Ba_Con5
+                Chance: 200
+              - Item: Ba_Crt1
+                Chance: 10000
+              - Item: Ba_Crt2
+                Chance: 4500
+              - Item: Ba_Crt3
+                Chance: 1500
+              - Item: Ba_Crt4
+                Chance: 500
+              - Item: Ba_Crt5
+                Chance: 200
+              - Item: Ba_Sta1
+                Chance: 10000
+              - Item: Ba_Sta2
+                Chance: 4500
+              - Item: Ba_Sta3
+                Chance: 1500
+              - Item: Ba_Sta4
+                Chance: 500
+              - Item: Ba_Sta5
+                Chance: 200
+              - Item: Ba_Spl1
+                Chance: 10000
+              - Item: Ba_Spl2
+                Chance: 4500
+              - Item: Ba_Spl3
+                Chance: 1500
+              - Item: Ba_Spl4
+                Chance: 500
+              - Item: Ba_Spl5
+                Chance: 200
+              - Item: Ba_Wis1
+                Chance: 10000
+              - Item: Ba_Wis2
+                Chance: 4500
+              - Item: Ba_Wis3
+                Chance: 1300
+              - Item: Ba_Wis4
+                Chance: 500
+              - Item: Ba_Wis5
+                Chance: 200
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Soul_Barmund_Rune2
+            Amount: 3
+          - Material: Barmund_Water
+            Amount: 3
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Stead1
+                Chance: 10000
+              - Item: Ba_Stead2
+                Chance: 4500
+              - Item: Ba_Stead3
+                Chance: 1500
+              - Item: Ba_Stead4
+                Chance: 500
+              - Item: Ba_Stead5
+                Chance: 200
+              - Item: Ba_Tenacity1
+                Chance: 10000
+              - Item: Ba_Tenacity2
+                Chance: 4500
+              - Item: Ba_Tenacity3
+                Chance: 1500
+              - Item: Ba_Tenacity4
+                Chance: 500
+              - Item: Ba_Tenacity5
+                Chance: 200
+              - Item: Ba_Intelligence1
+                Chance: 10000
+              - Item: Ba_Intelligence2
+                Chance: 4500
+              - Item: Ba_Intelligence3
+                Chance: 1500
+              - Item: Ba_Intelligence4
+                Chance: 500
+              - Item: Ba_Intelligence5
+                Chance: 200
+              - Item: Ba_focus1
+                Chance: 10000
+              - Item: Ba_focus2
+                Chance: 4500
+              - Item: Ba_focus3
+                Chance: 1500
+              - Item: Ba_focus4
+                Chance: 500
+              - Item: Ba_focus5
+                Chance: 200
+              - Item: Ba_Agility1
+                Chance: 10000
+              - Item: Ba_Agility2
+                Chance: 4500
+              - Item: Ba_Agility3
+                Chance: 1500
+              - Item: Ba_Agility4
+                Chance: 500
+              - Item: Ba_Agility5
+                Chance: 200
+              - Item: Ba_Mental1
+                Chance: 10000
+              - Item: Ba_Mental2
+                Chance: 4500
+              - Item: Ba_Mental3
+                Chance: 1300
+              - Item: Ba_Mental4
+                Chance: 500
+              - Item: Ba_Mental5
+                Chance: 200
+      - Slot: 1
+        Price: 300000
+        Materials:
+          - Material: Soul_Barmund_Rune2
+            Amount: 5
+          - Material: Barmund_Water
+            Amount: 5
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Bio_Jam_Df1
+                Chance: 14180
+              - Item: Bio_Jam_Df2
+                Chance: 5300
+              - Item: Bio_Jam_Df3
+                Chance: 500
+              - Item: Bio_Jam_Es1
+                Chance: 14180
+              - Item: Bio_Jam_Es2
+                Chance: 5300
+              - Item: Bio_Jam_Es3
+                Chance: 500
+              - Item: Bio_Jam_Vl1
+                Chance: 14180
+              - Item: Bio_Jam_Vl2
+                Chance: 5300
+              - Item: Bio_Jam_Vl3
+                Chance: 500
+              - Item: Bio_Jam_Eq1
+                Chance: 14180
+              - Item: Bio_Jam_Eq2
+                Chance: 5300
+              - Item: Bio_Jam_Eq3
+                Chance: 500
+              - Item: Bio_Jam_Hd1
+                Chance: 14180
+              - Item: Bio_Jam_Hd2
+                Chance: 5300
+              - Item: Bio_Jam_Hd3
+                Chance: 500
+              - Item: Bio_Jam_Normal
+                Chance: 50
+              - Item: Bio_Jam_Boss
+                Chance: 50
+  - Id: 61
+    TargetItems:
+      Venom_Rune_Ring: true
+      Venom_M_Ring: true
+    Reset:
+      Chance: 80000
+      Price: 1000000
+      Materials:
+        - Material: Venom_Barmund_Rune2
+          Amount: 2
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: Venom_Barmund_Rune2
+          - Material: Barmund_Water3
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Pow1
+                Chance: 10000
+              - Item: Ba_Pow2
+                Chance: 4500
+              - Item: Ba_Pow3
+                Chance: 1500
+              - Item: Ba_Pow4
+                Chance: 500
+              - Item: Ba_Pow5
+                Chance: 200
+              - Item: Ba_Con1
+                Chance: 10000
+              - Item: Ba_Con2
+                Chance: 4500
+              - Item: Ba_Con3
+                Chance: 1500
+              - Item: Ba_Con4
+                Chance: 500
+              - Item: Ba_Con5
+                Chance: 200
+              - Item: Ba_Crt1
+                Chance: 10000
+              - Item: Ba_Crt2
+                Chance: 4500
+              - Item: Ba_Crt3
+                Chance: 1500
+              - Item: Ba_Crt4
+                Chance: 500
+              - Item: Ba_Crt5
+                Chance: 200
+              - Item: Ba_Sta1
+                Chance: 10000
+              - Item: Ba_Sta2
+                Chance: 4500
+              - Item: Ba_Sta3
+                Chance: 1500
+              - Item: Ba_Sta4
+                Chance: 500
+              - Item: Ba_Sta5
+                Chance: 200
+              - Item: Ba_Spl1
+                Chance: 10000
+              - Item: Ba_Spl2
+                Chance: 4500
+              - Item: Ba_Spl3
+                Chance: 1500
+              - Item: Ba_Spl4
+                Chance: 500
+              - Item: Ba_Spl5
+                Chance: 200
+              - Item: Ba_Wis1
+                Chance: 10000
+              - Item: Ba_Wis2
+                Chance: 4500
+              - Item: Ba_Wis3
+                Chance: 1300
+              - Item: Ba_Wis4
+                Chance: 500
+              - Item: Ba_Wis5
+                Chance: 200
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Venom_Barmund_Rune2
+            Amount: 3
+          - Material: Barmund_Water3
+            Amount: 3
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Stead1
+                Chance: 10000
+              - Item: Ba_Stead2
+                Chance: 4500
+              - Item: Ba_Stead3
+                Chance: 1500
+              - Item: Ba_Stead4
+                Chance: 500
+              - Item: Ba_Stead5
+                Chance: 200
+              - Item: Ba_Tenacity1
+                Chance: 10000
+              - Item: Ba_Tenacity2
+                Chance: 4500
+              - Item: Ba_Tenacity3
+                Chance: 1500
+              - Item: Ba_Tenacity4
+                Chance: 500
+              - Item: Ba_Tenacity5
+                Chance: 200
+              - Item: Ba_Intelligence1
+                Chance: 10000
+              - Item: Ba_Intelligence2
+                Chance: 4500
+              - Item: Ba_Intelligence3
+                Chance: 1500
+              - Item: Ba_Intelligence4
+                Chance: 500
+              - Item: Ba_Intelligence5
+                Chance: 200
+              - Item: Ba_focus1
+                Chance: 10000
+              - Item: Ba_focus2
+                Chance: 4500
+              - Item: Ba_focus3
+                Chance: 1500
+              - Item: Ba_focus4
+                Chance: 500
+              - Item: Ba_focus5
+                Chance: 200
+              - Item: Ba_Agility1
+                Chance: 10000
+              - Item: Ba_Agility2
+                Chance: 4500
+              - Item: Ba_Agility3
+                Chance: 1500
+              - Item: Ba_Agility4
+                Chance: 500
+              - Item: Ba_Agility5
+                Chance: 200
+              - Item: Ba_Mental1
+                Chance: 10000
+              - Item: Ba_Mental2
+                Chance: 4500
+              - Item: Ba_Mental3
+                Chance: 1300
+              - Item: Ba_Mental4
+                Chance: 500
+              - Item: Ba_Mental5
+                Chance: 200
+      - Slot: 1
+        Price: 300000
+        Materials:
+          - Material: Venom_Barmund_Rune2
+            Amount: 5
+          - Material: Barmund_Water3
+            Amount: 5
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Bio_Jam_Df1
+                Chance: 14180
+              - Item: Bio_Jam_Df2
+                Chance: 5300
+              - Item: Bio_Jam_Df3
+                Chance: 500
+              - Item: Bio_Jam_Es1
+                Chance: 14180
+              - Item: Bio_Jam_Es2
+                Chance: 5300
+              - Item: Bio_Jam_Es3
+                Chance: 500
+              - Item: Bio_Jam_Vl1
+                Chance: 14180
+              - Item: Bio_Jam_Vl2
+                Chance: 5300
+              - Item: Bio_Jam_Vl3
+                Chance: 500
+              - Item: Bio_Jam_Eq1
+                Chance: 14180
+              - Item: Bio_Jam_Eq2
+                Chance: 5300
+              - Item: Bio_Jam_Eq3
+                Chance: 500
+              - Item: Bio_Jam_Hd1
+                Chance: 14180
+              - Item: Bio_Jam_Hd2
+                Chance: 5300
+              - Item: Bio_Jam_Hd3
+                Chance: 500
+              - Item: Bio_Jam_Normal
+                Chance: 50
+              - Item: Bio_Jam_Boss
+                Chance: 50
+  - Id: 62
+    TargetItems:
+      Temple_Rune_Ring: true
+      Temple_M_Ring: true
+    Reset:
+      Chance: 80000
+      Price: 1000000
+      Materials:
+        - Material: Temple_Barmund_Rune2
+          Amount: 2
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: Temple_Barmund_Rune2
+          - Material: Barmund_Water2
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Pow1
+                Chance: 10000
+              - Item: Ba_Pow2
+                Chance: 4500
+              - Item: Ba_Pow3
+                Chance: 1500
+              - Item: Ba_Pow4
+                Chance: 500
+              - Item: Ba_Pow5
+                Chance: 200
+              - Item: Ba_Con1
+                Chance: 10000
+              - Item: Ba_Con2
+                Chance: 4500
+              - Item: Ba_Con3
+                Chance: 1500
+              - Item: Ba_Con4
+                Chance: 500
+              - Item: Ba_Con5
+                Chance: 200
+              - Item: Ba_Crt1
+                Chance: 10000
+              - Item: Ba_Crt2
+                Chance: 4500
+              - Item: Ba_Crt3
+                Chance: 1500
+              - Item: Ba_Crt4
+                Chance: 500
+              - Item: Ba_Crt5
+                Chance: 200
+              - Item: Ba_Sta1
+                Chance: 10000
+              - Item: Ba_Sta2
+                Chance: 4500
+              - Item: Ba_Sta3
+                Chance: 1500
+              - Item: Ba_Sta4
+                Chance: 500
+              - Item: Ba_Sta5
+                Chance: 200
+              - Item: Ba_Spl1
+                Chance: 10000
+              - Item: Ba_Spl2
+                Chance: 4500
+              - Item: Ba_Spl3
+                Chance: 1500
+              - Item: Ba_Spl4
+                Chance: 500
+              - Item: Ba_Spl5
+                Chance: 200
+              - Item: Ba_Wis1
+                Chance: 10000
+              - Item: Ba_Wis2
+                Chance: 4500
+              - Item: Ba_Wis3
+                Chance: 1300
+              - Item: Ba_Wis4
+                Chance: 500
+              - Item: Ba_Wis5
+                Chance: 200
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Temple_Barmund_Rune2
+            Amount: 3
+          - Material: Barmund_Water2
+            Amount: 3
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Ba_Stead1
+                Chance: 10000
+              - Item: Ba_Stead2
+                Chance: 4500
+              - Item: Ba_Stead3
+                Chance: 1500
+              - Item: Ba_Stead4
+                Chance: 500
+              - Item: Ba_Stead5
+                Chance: 200
+              - Item: Ba_Tenacity1
+                Chance: 10000
+              - Item: Ba_Tenacity2
+                Chance: 4500
+              - Item: Ba_Tenacity3
+                Chance: 1500
+              - Item: Ba_Tenacity4
+                Chance: 500
+              - Item: Ba_Tenacity5
+                Chance: 200
+              - Item: Ba_Intelligence1
+                Chance: 10000
+              - Item: Ba_Intelligence2
+                Chance: 4500
+              - Item: Ba_Intelligence3
+                Chance: 1500
+              - Item: Ba_Intelligence4
+                Chance: 500
+              - Item: Ba_Intelligence5
+                Chance: 200
+              - Item: Ba_focus1
+                Chance: 10000
+              - Item: Ba_focus2
+                Chance: 4500
+              - Item: Ba_focus3
+                Chance: 1500
+              - Item: Ba_focus4
+                Chance: 500
+              - Item: Ba_focus5
+                Chance: 200
+              - Item: Ba_Agility1
+                Chance: 10000
+              - Item: Ba_Agility2
+                Chance: 4500
+              - Item: Ba_Agility3
+                Chance: 1500
+              - Item: Ba_Agility4
+                Chance: 500
+              - Item: Ba_Agility5
+                Chance: 200
+              - Item: Ba_Mental1
+                Chance: 10000
+              - Item: Ba_Mental2
+                Chance: 4500
+              - Item: Ba_Mental3
+                Chance: 1300
+              - Item: Ba_Mental4
+                Chance: 500
+              - Item: Ba_Mental5
+                Chance: 200
+      - Slot: 1
+        Price: 300000
+        Materials:
+          - Material: Temple_Barmund_Rune2
+            Amount: 5
+          - Material: Barmund_Water2
+            Amount: 5
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Bio_Jam_Df1
+                Chance: 14180
+              - Item: Bio_Jam_Df2
+                Chance: 5300
+              - Item: Bio_Jam_Df3
+                Chance: 500
+              - Item: Bio_Jam_Es1
+                Chance: 14180
+              - Item: Bio_Jam_Es2
+                Chance: 5300
+              - Item: Bio_Jam_Es3
+                Chance: 500
+              - Item: Bio_Jam_Vl1
+                Chance: 14180
+              - Item: Bio_Jam_Vl2
+                Chance: 5300
+              - Item: Bio_Jam_Vl3
+                Chance: 500
+              - Item: Bio_Jam_Eq1
+                Chance: 14180
+              - Item: Bio_Jam_Eq2
+                Chance: 5300
+              - Item: Bio_Jam_Eq3
+                Chance: 500
+              - Item: Bio_Jam_Hd1
+                Chance: 14180
+              - Item: Bio_Jam_Hd2
+                Chance: 5300
+              - Item: Bio_Jam_Hd3
+                Chance: 500
+              - Item: Bio_Jam_Normal
+                Chance: 50
+              - Item: Bio_Jam_Boss
+                Chance: 50
+  - Id: 63
+    TargetItems:
+      F_Ein_1HDAGGER: true
+      F_Ein_1HMAGGER: true
+      F_Ein_1HSWORD: true
+      F_Ein_1H_Foxtail: true
+      F_Ein_1HSPEAR: true
+      F_Ein_BHSWORD: true
+      F_Ein_1HHAMMER: true
+      F_Ein_BHAXE: true
+      F_Ein_1HKNUCK: true
+      F_Ein_1HBOOK: true
+      F_Ein_1HWAND: true
+      F_Ein_BHSTAFF: true
+      F_Ein_BHHuuma: true
+      F_Ein_BHBOW: true
+      F_Ein_BHKATAR: true
+      F_Ein_1HGUN: true
+      F_Ein_1HWHIP: true
+      F_Ein_1HLUTE: true
+    Reset:
+      Chance: 100000
+      Price: 3000000
+      Materials:
+        - Material: Mjo_Treasure
+          Amount: 30
+        - Material: Mjo_Energy
+          Amount: 30
+        - Material: Ein_DYNITE
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Sharp1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+          - Item: Hit_Plus1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+          - Item: Attack_Delay_1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+          - Item: Caster1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 100
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 75
+        Upgrades:
+          - Enchant: Sharp1
+            Upgrade: Sharp2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Hit_Plus1
+            Upgrade: Hit_Plus2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Attack_Delay_1
+            Upgrade: Attack_Delay_2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Caster1
+            Upgrade: Caster2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 50
+              - Material: Ein_DYNITE
+                Amount: 5
+              - Material: Mjo_Treasure
+                Amount: 40
+          - Enchant: Sharp2
+            Upgrade: Sharp3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Hit_Plus2
+            Upgrade: Hit_Plus3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Caster2
+            Upgrade: Caster3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 70
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 45
+          - Enchant: Sharp3
+            Upgrade: Sharp4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Hit_Plus3
+            Upgrade: Hit_Plus4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Caster3
+            Upgrade: Caster4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 90
+              - Material: Ein_DYNITE
+                Amount: 15
+              - Material: Mjo_Treasure
+                Amount: 50
+          - Enchant: Sharp4
+            Upgrade: Sharp5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+          - Enchant: Hit_Plus4
+            Upgrade: Hit_Plus5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+          - Enchant: Attack_Delay_4
+            Upgrade: Attack_Delay_5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+          - Enchant: Caster4
+            Upgrade: Caster5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 20
+              - Material: Mjo_Treasure
+                Amount: 60
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Expert_Archer1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 75
+              - Material: Mjo_Treasure
+                Amount: 150
+          - Item: Expert_Fighter1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 75
+              - Material: Mjo_Treasure
+                Amount: 150
+          - Item: Expert_Magician1
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 75
+              - Material: Mjo_Treasure
+                Amount: 150
+        Upgrades:
+          - Enchant: Expert_Archer1
+            Upgrade: Expert_Archer2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 70
+          - Enchant: Expert_Fighter1
+            Upgrade: Expert_Fighter2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 70
+          - Enchant: Expert_Magician1
+            Upgrade: Expert_Magician2
+            Price: 200000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 110
+              - Material: Ein_DYNITE
+                Amount: 10
+              - Material: Mjo_Treasure
+                Amount: 70
+          - Enchant: Expert_Archer2
+            Upgrade: Expert_Archer3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 140
+              - Material: Ein_DYNITE
+                Amount: 30
+              - Material: Mjo_Treasure
+                Amount: 80
+          - Enchant: Expert_Fighter2
+            Upgrade: Expert_Fighter3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 140
+              - Material: Ein_DYNITE
+                Amount: 30
+              - Material: Mjo_Treasure
+                Amount: 80
+          - Enchant: Expert_Magician2
+            Upgrade: Expert_Magician3
+            Price: 300000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 140
+              - Material: Ein_DYNITE
+                Amount: 30
+              - Material: Mjo_Treasure
+                Amount: 80
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 170
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 90
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 170
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 90
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Price: 400000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 170
+              - Material: Ein_DYNITE
+                Amount: 50
+              - Material: Mjo_Treasure
+                Amount: 90
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 70
+              - Material: Mjo_Treasure
+                Amount: 100
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 70
+              - Material: Mjo_Treasure
+                Amount: 100
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Price: 500000
+            Materials:
+              - Material: Mjo_Energy
+                Amount: 200
+              - Material: Ein_DYNITE
+                Amount: 70
+              - Material: Mjo_Treasure
+                Amount: 100
+  - Id: 64
+    TargetItems:
+      Mocadas_G_Sword: true
+      Mocadas_Spear: true
+      Mocadas_Stem: true
+      Mocadas_Spellbooks: true
+      Mocadas_C_Sword: true
+      Mocadas_Katar: true
+      Mocadas_Axe: true
+      Mocadas_Judgement: true
+      Mocadas_Knuckle: true
+      Mocadas_Rod: true
+      Mocadas_Bow: true
+      Mocadas_Instrument: true
+      Mocadas_Whip: true
+      Mocadas_Foxtail: true
+      Mocadas_Wand: true
+      Mocadas_Book: true
+      Mocadas_Knife: true
+      Mocadas_Hall: true
+      Mocadas_Launcher: true
+      Mocadas_Rifle: true
+      Mocadas_Shotgun: true
+      Mocadas_Gatling: true
+    Reset:
+      Chance: 100000
+      Price: 3000000
+      Materials:
+        - Material: Mocadas_Water
+          Amount: 150
+        - Material: Mocadas_Gold
+          Amount: 150
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 300000
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 50
+          - Material: Mocadas_Gold
+            Amount: 50
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 1
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 2
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 3
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+          - Enchantgrade: 4
+            Items:
+              - Item: Bishop_Blessing1
+                Chance: 20000
+              - Item: Bishop_Blessing2
+                Chance: 20000
+              - Item: Bishop_Blessing3
+                Chance: 20000
+              - Item: Bishop_Blessing4
+                Chance: 20000
+              - Item: Bishop_Blessing5
+                Chance: 20000
+        PerfectEnchants:
+          - Item: Bishop_Blessing1
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing2
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing3
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing4
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+          - Item: Bishop_Blessing5
+            Price: 3000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 200
+              - Material: Mocadas_Gold
+                Amount: 200
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Warped_Spell1
+            Price: 5000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 300
+              - Material: Mocadas_Gold
+                Amount: 300
+          - Item: Warped_Spell2
+            Price: 5000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 300
+              - Material: Mocadas_Gold
+                Amount: 300
+          - Item: Warped_Spell3
+            Price: 5000000
+            Materials:
+              - Material: Mocadas_Water
+                Amount: 300
+              - Material: Mocadas_Gold
+                Amount: 300
+  - Id: 65
+    TargetItems:
+      Punish_Hall: true
+      Saint_Bringer: true
+      Humma_Brilliance: true
+      Luppiter_Spear: true
+      Holy_Raise_Spear: true
+      Lightforce_Foxtail_Wand: true
+      Shining_Light_Katar: true
+      Angel_Wing_Bow: true
+      Guardian_Saber: true
+      Holy_Light_Dagger: true
+      Light_Power_Harp: true
+      Light_Power_Spark: true
+      Lighting_Splatter: true
+      Justice_Bomber: true
+      Last_Dawn: true
+      Devil_Hunter: true
+      Road_Of_Glory: true
+      Victory_Sword: true
+      Divine_Buster: true
+      Orign_Of_Life: true
+      Destiny_Staff: true
+      Blessed_Bible: true
+      Soul_Liberator: true
+    Reset:
+      Chance: 100000
+      Price: 1000000
+      Materials:
+        - Material: Fate_Fragment
+          Amount: 20
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Sharp1
+            Price: 1500000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 150
+          - Item: Hit_Plus1
+            Price: 1500000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 150
+          - Item: Attack_Delay_1
+            Price: 1500000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 150
+          - Item: Caster1
+            Price: 1500000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 150
+        Upgrades:
+          - Enchant: Sharp1
+            Upgrade: Sharp2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 40
+          - Enchant: Sharp2
+            Upgrade: Sharp3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 45
+          - Enchant: Sharp3
+            Upgrade: Sharp4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Sharp4
+            Upgrade: Sharp5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Hit_Plus1
+            Upgrade: Hit_Plus2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 40
+          - Enchant: Hit_Plus2
+            Upgrade: Hit_Plus3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 45
+          - Enchant: Hit_Plus3
+            Upgrade: Hit_Plus4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Hit_Plus4
+            Upgrade: Hit_Plus5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Attack_Delay_1
+            Upgrade: Attack_Delay_2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 40
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 45
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_4
+            Upgrade: Attack_Delay_5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Caster1
+            Upgrade: Caster2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 40
+          - Enchant: Caster2
+            Upgrade: Caster3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 45
+          - Enchant: Caster3
+            Upgrade: Caster4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Caster4
+            Upgrade: Caster5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Expert_Archer1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 250
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Expert_Archer1
+            Upgrade: Expert_Archer2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+          - Enchant: Expert_Archer2
+            Upgrade: Expert_Archer3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 60
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 65
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Expert_Fighter1
+            Upgrade: Expert_Fighter2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+          - Enchant: Expert_Fighter2
+            Upgrade: Expert_Fighter3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 60
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 65
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Expert_Magician1
+            Upgrade: Expert_Magician2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+          - Enchant: Expert_Magician2
+            Upgrade: Expert_Magician3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 55
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 60
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 65
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+  - Id: 66
+    TargetItems:
+      Demonic_Claw: true
+      Sealed_Bible: true
+      Darkness_Tablet: true
+      Devil_Wing_Staff: true
+      Doom_Bible: true
+      Soul_Harvest: true
+      The_Reaper: true
+      Underworld_Knife: true
+      Devil_Cursed_Sword: true
+      Dark_Angel_Ray_Bow: true
+      Crime_Violine: true
+      Crime_Whip: true
+      RG_5649: true
+      Devil_L_Launcher: true
+      Screaming_Rifle: true
+      Devils_Bullet: true
+      Outlaw_Cursed_Shotgun: true
+      Blood_Rapier: true
+      Destruction_Axe: true
+      Devil_Claw: true
+      Execution_Great_Sword: true
+      Devil_Guardian_Sword: true
+      Darkness_Foxtail_Model: true
+    Reset:
+      Chance: 100000
+      Price: 1000000
+      Materials:
+        - Material: Sin_Fragment
+          Amount: 20
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Sharp1
+            Price: 1500000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 150
+          - Item: Hit_Plus1
+            Price: 1500000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 150
+          - Item: Attack_Delay_1
+            Price: 1500000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 150
+          - Item: Caster1
+            Price: 1500000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 150
+        Upgrades:
+          - Enchant: Sharp1
+            Upgrade: Sharp2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 40
+          - Enchant: Sharp2
+            Upgrade: Sharp3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 45
+          - Enchant: Sharp3
+            Upgrade: Sharp4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Sharp4
+            Upgrade: Sharp5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Hit_Plus1
+            Upgrade: Hit_Plus2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 40
+          - Enchant: Hit_Plus2
+            Upgrade: Hit_Plus3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 45
+          - Enchant: Hit_Plus3
+            Upgrade: Hit_Plus4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Hit_Plus4
+            Upgrade: Hit_Plus5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Attack_Delay_1
+            Upgrade: Attack_Delay_2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 40
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 45
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_4
+            Upgrade: Attack_Delay_5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Caster1
+            Upgrade: Caster2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 40
+          - Enchant: Caster2
+            Upgrade: Caster3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 45
+          - Enchant: Caster3
+            Upgrade: Caster4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Enchant: Caster4
+            Upgrade: Caster5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Expert_Archer1
+            Price: 3000000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter1
+            Price: 3000000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician1
+            Price: 3000000
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 250
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Expert_Archer1
+            Upgrade: Expert_Archer2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+          - Enchant: Expert_Archer2
+            Upgrade: Expert_Archer3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 60
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 65
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Expert_Fighter1
+            Upgrade: Expert_Fighter2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+          - Enchant: Expert_Fighter2
+            Upgrade: Expert_Fighter3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 60
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 65
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+          - Enchant: Expert_Magician1
+            Upgrade: Expert_Magician2
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 50
+          - Enchant: Expert_Magician2
+            Upgrade: Expert_Magician3
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 55
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 60
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: Sin_Fragment
+                Amount: 65
+              - Material: M_Dimension_Essence
+              - Material: Enchant_Ticket
+  - Id: 67
+    TargetItems:
+      GoodnEvil_Circlet_DK: true
+      GoodnEvil_Circlet_IG: true
+      GoodnEvil_Circlet_AG: true
+      GoodnEvil_Circlet_EM: true
+      GoodnEvil_Circlet_CD: true
+      GoodnEvil_Circlet_IQ: true
+      GoodnEvil_Circlet_MT: true
+      GoodnEvil_Circlet_BO: true
+      GoodnEvil_Circlet_SHC: true
+      GoodnEvil_Circlet_ABC: true
+      GoodnEvil_Circlet_WH: true
+      GoodnEvil_Circlet_TR: true
+      GoodnEvil_Circlet_SS: true
+      GoodnEvil_Circlet_SKE: true
+      GoodnEvil_Circlet_SOA: true
+      GoodnEvil_Circlet_HN: true
+      GoodnEvil_Circlet_SH: true
+      GoodnEvil_Circlet_NW: true
+      GoodnEvil_Circlet_NW2: true
+      GoodnEvil_Circlet_NW3: true
+      GoodnEvil_Circlet_NW4: true
+      GoodnEvil_Circlet_NW5: true
+    Reset:
+      Chance: 100000
+      Price: 1000000
+      Materials:
+        - Material: Fate_Fragment
+          Amount: 50
+        - Material: Sin_Fragment
+          Amount: 50
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 300000
+        Materials:
+          - Material: Fate_Fragment
+            Amount: 25
+          - Material: Sin_Fragment
+            Amount: 25
+          - Material: M_Dimension_Essence
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Tenacity1
+                Chance: 16667
+              - Item: MagicEessence1
+                Chance: 16667
+              - Item: Adamatine1
+                Chance: 16666
+              - Item: MasterArcher1
+                Chance: 16667
+              - Item: Acute1
+                Chance: 16667
+              - Item: Affection1
+                Chance: 16666
+          - Enchantgrade: 1
+            Items:
+              - Item: Tenacity1
+                Chance: 16667
+              - Item: MagicEessence1
+                Chance: 16667
+              - Item: Adamatine1
+                Chance: 16666
+              - Item: MasterArcher1
+                Chance: 16667
+              - Item: Acute1
+                Chance: 16667
+              - Item: Affection1
+                Chance: 16666
+          - Enchantgrade: 2
+            Items:
+              - Item: Tenacity1
+                Chance: 16667
+              - Item: MagicEessence1
+                Chance: 16667
+              - Item: Adamatine1
+                Chance: 16666
+              - Item: MasterArcher1
+                Chance: 16667
+              - Item: Acute1
+                Chance: 16667
+              - Item: Affection1
+                Chance: 16666
+          - Enchantgrade: 3
+            Items:
+              - Item: Tenacity1
+                Chance: 16667
+              - Item: MagicEessence1
+                Chance: 16667
+              - Item: Adamatine1
+                Chance: 16666
+              - Item: MasterArcher1
+                Chance: 16667
+              - Item: Acute1
+                Chance: 16667
+              - Item: Affection1
+                Chance: 16666
+          - Enchantgrade: 4
+            Items:
+              - Item: Tenacity1
+                Chance: 16667
+              - Item: MagicEessence1
+                Chance: 16667
+              - Item: Adamatine1
+                Chance: 16666
+              - Item: MasterArcher1
+                Chance: 16667
+              - Item: Acute1
+                Chance: 16667
+              - Item: Affection1
+                Chance: 16666
+        PerfectEnchants:
+          - Item: Tenacity1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 100
+              - Material: Sin_Fragment
+                Amount: 100
+              - Material: M_Dimension_Essence
+                Amount: 2
+          - Item: MagicEessence1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 100
+              - Material: Sin_Fragment
+                Amount: 100
+              - Material: M_Dimension_Essence
+                Amount: 2
+          - Item: Adamatine1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 100
+              - Material: Sin_Fragment
+                Amount: 100
+              - Material: M_Dimension_Essence
+                Amount: 2
+          - Item: MasterArcher1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 100
+              - Material: Sin_Fragment
+                Amount: 100
+              - Material: M_Dimension_Essence
+                Amount: 2
+          - Item: Acute1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 100
+              - Material: Sin_Fragment
+                Amount: 100
+              - Material: M_Dimension_Essence
+                Amount: 2
+          - Item: Affection1
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 100
+              - Material: Sin_Fragment
+                Amount: 100
+              - Material: M_Dimension_Essence
+                Amount: 2
+        Upgrades:
+          - Enchant: Tenacity1
+            Upgrade: Tenacity2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Tenacity2
+            Upgrade: Tenacity3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 70
+              - Material: Sin_Fragment
+                Amount: 70
+              - Material: Enchant_Ticket
+              - Material: M_Dimension_Essence
+          - Enchant: MagicEessence1
+            Upgrade: MagicEessence2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: MagicEessence2
+            Upgrade: MagicEessence3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 70
+              - Material: Sin_Fragment
+                Amount: 70
+              - Material: Enchant_Ticket
+              - Material: M_Dimension_Essence
+          - Enchant: Adamatine1
+            Upgrade: Adamatine2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Adamatine2
+            Upgrade: Adamatine3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 70
+              - Material: Sin_Fragment
+                Amount: 70
+              - Material: Enchant_Ticket
+              - Material: M_Dimension_Essence
+          - Enchant: MasterArcher1
+            Upgrade: MasterArcher2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: MasterArcher2
+            Upgrade: MasterArcher3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 70
+              - Material: Sin_Fragment
+                Amount: 70
+              - Material: Enchant_Ticket
+              - Material: M_Dimension_Essence
+          - Enchant: Acute1
+            Upgrade: Acute2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Acute2
+            Upgrade: Acute3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 70
+              - Material: Sin_Fragment
+                Amount: 70
+              - Material: Enchant_Ticket
+              - Material: M_Dimension_Essence
+          - Enchant: Affection1
+            Upgrade: Affection2
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 50
+              - Material: Sin_Fragment
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Affection2
+            Upgrade: Affection3
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 70
+              - Material: Sin_Fragment
+                Amount: 70
+              - Material: Enchant_Ticket
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Power
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 250
+              - Material: Sin_Fragment
+                Amount: 250
+              - Material: Enchant_Ticket
+                Amount: 3
+          - Item: Injustice_Power
+            Price: 3000000
+            Materials:
+              - Material: Fate_Fragment
+                Amount: 250
+              - Material: Sin_Fragment
+                Amount: 250
+              - Material: Enchant_Ticket
+                Amount: 3

@@ -1,6 +1,10 @@
 name: Build servers with MSVS
 # build_servers_msbuild.yml
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
 on:
   push:
     branches:

@@ -4704,7 +4704,23 @@ struct PACKET_ZC_PERSONAL_INFOMATION {
 	struct PACKET_ZC_PERSONAL_INFOMATION_SUB details[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PERSONAL_INFOMATION, 0x097b);
-#endif  // PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
+#elif PACKETVER_MAIN_NUM >= 20110627 || PACKETVER_RE_NUM >= 20110628
+struct PACKET_ZC_PERSONAL_INFOMATION_SUB {
+	int8 type;
+	int16 exp;
+	int16 death;
+	int16 drop;
+} __attribute__((packed));
+struct PACKET_ZC_PERSONAL_INFOMATION {
+	int16 packetType;
+	int16 length;
+	int16 total_exp;
+	int16 total_death;
+	int16 total_drop;
+	struct PACKET_ZC_PERSONAL_INFOMATION_SUB details[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PERSONAL_INFOMATION, 0x08cb);
+#endif // PACKETVER_MAIN_NUM >= 20110627 || PACKETVER_RE_NUM >= 20110628
 
 struct PACKET_CZ_REQUEST_ACTNPC {
 	int16 packetType;
