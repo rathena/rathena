@@ -14,7 +14,7 @@
 #include "skill.hpp"
 
 //fwd declaration
-struct map_session_data;
+class map_session_data;
 struct mob_data;
 struct block_list;
 enum e_damage_type : uint8;
@@ -93,7 +93,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
-void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
+void battle_drain(map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
 
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
@@ -107,7 +107,7 @@ int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint1
 void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
 int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
 
-int battle_calc_chorusbonus(struct map_session_data *sd);
+int battle_calc_chorusbonus(map_session_data *sd);
 
 // Summary normal attack treatment (basic attack)
 enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,t_tick tick,int flag);
@@ -123,7 +123,7 @@ int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
 
-void battle_consume_ammo(struct map_session_data* sd, int skill, int lv);
+void battle_consume_ammo(map_session_data* sd, int skill, int lv);
 
 bool is_infinite_defense(struct block_list *target, int flag);
 
@@ -614,6 +614,7 @@ struct Battle_Config
 	int homunculus_evo_intimacy_reset;
 	int monster_loot_search_type;
 	int feature_roulette;
+	int feature_roulette_bonus_reward;
 	int monster_hp_bars_info;
 	int min_body_style;
 	int max_body_style;
@@ -714,11 +715,17 @@ struct Battle_Config
 	int break_mob_equip;
 	int macro_detection_retry;
 	int macro_detection_timeout;
+	int macro_detection_punishment;
+	int macro_detection_punishment_time;
 
 	int feature_dynamicnpc_timeout;
 	int feature_dynamicnpc_rangex;
 	int feature_dynamicnpc_rangey;
 	int feature_dynamicnpc_direction;
+
+	int mob_respawn_time;
+
+	int feature_stylist;
 
 #include "../custom/battle_config_struct.inc"
 };

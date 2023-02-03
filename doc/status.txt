@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20221013
+//= 20221216
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -232,6 +232,7 @@ Flags: Various status flags for specific status change events.
 	RemoveOnUnequip       - Removed when unequipping any type of equipment.
 	RemoveOnUnequipWeapon - Removed when unequipping a weapon.
 	RemoveOnUnequipArmor  - Removed when unequipping an armor.
+	RemoveOnHermode       - Removed by CG_HERMODE.
 
 	StopAttacking         - Makes the unit stop attacking.
 	StopCasting           - Makes the unit stop casting skills.

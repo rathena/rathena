@@ -5650,14 +5650,35 @@ Body:
   - Id: 8538
     Title: Renting an advanced oxygen mask
     TimeLimit: 4h
+  - Id: 8541
+    Title: Nothing to See
+    Targets:
+      - Mob: RAYDRIC_H
+        Count: 20
+      - Mob: RAYDRIC_ARCHER_H
+        Count: 20
   - Id: 8542
-    Title: Standby
+    Title: Nothing to See - Standby
     TimeLimit: 4h
+  - Id: 8544
+    Title: High Freezing Point
+    Targets:
+      - Mob: GARGOYLE_H
+        Count: 5
+      - Mob: RAGGED_ZOMBIE_H
+        Count: 5
   - Id: 8545
     Title: High freezing point (Standby)
     TimeLimit: 4h
+  - Id: 8547
+    Title: A Mirror
+    Targets:
+      - Mob: ICE_GHOST_H
+        Count: 10
+      - Mob: FLAME_GHOST_H
+        Count: 10
   - Id: 8548
-    Title: Mirror (Standby)
+    Title: A Mirror - (Standby)
     TimeLimit: 4h
   - Id: 8551
     Title: The Dealer That Caused Evolution (Standby)
@@ -5768,9 +5789,31 @@ Body:
           KOBOLD_2: true
           KOBOLD_3: true
           KOBOLD_ARCHER: true
+  - Id: 8674
+    Title: "Subjugation - Porto Luna"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ra_fild06
+        MapMobTargets:
+          ANOPHELES: true
+          KOBOLD_1: true
+          KOBOLD_2: true
+          KOBOLD_3: true
+          KOBOLD_ARCHER: true
   - Id: 8673
     Title: "[Standby] Subjugation-Portu Luna"
     TimeLimit: 4h
+  - Id: 8675
+    Title: "Subjugation-Veins Field-3"
+    Targets:
+      - Id: 1
+        Count: 80
+        Location: ve_fild04
+        MapMobTargets:
+          GALION: true
+          DROSERA: true
+          MUSCIPULAR: true
   - Id: 8676
     Title: "[Standby] Subjugation-Veins Field-3"
     TimeLimit: 4h
@@ -8440,6 +8483,8 @@ Body:
   - Id: 12411
     Title: Come Back Tomorrow
     TimeLimit: 4h
+  - Id: 12415
+    Title: Contract with Fantasy Ganghwa
   - Id: 12416
     Title: Contract with Emily
   - Id: 12417
@@ -9928,9 +9973,48 @@ Body:
   - Id: 15093
     Title: Promote the 13th Anniversary
     TimeLimit: 4h
+  - Id: 15110
+    Title: Fighting Ice with Fire
+  - Id: 15111
+    Title: Hunt Furious Ice Titans
+    Targets:
+      - Mob: ILL_ICE_TITAN
+        Count: 10
+  - Id: 15112
+    Title: Direct Approach
+    Targets:
+      - Mob: ILL_FROZEN_GC
+        Count: 1
+  - Id: 15113
+    Title: Direct Approach
+    Targets:
+      - Mob: ILL_FROZEN_KN
+        Count: 1
+  - Id: 15114
+    Title: Catch a Strange Lizard
+    Targets:
+      - Mob: ILL_KTULLANUX
+        Count: 1
   - Id: 15115
-    Title: Bride and Jace
+    Title: Vrid and Zeith
     TimeLimit: 4h
+  - Id: 15116
+    Title: Clear the Illusion of the Frozen
+  - Id: 15117
+    Title: Hunt Furious Gazetis
+    Targets:
+      - Mob: ILL_GAZETI
+        Count: 10
+  - Id: 15118
+    Title: Hunt Furious Snowiers
+    Targets:
+      - Mob: ILL_SNOWIER
+        Count: 10
+  - Id: 15119
+    Title: Hunt Hard Icicles
+    Targets:
+      - Mob: ILL_ICEICLE
+        Count: 10
   - Id: 15128
     Title: Chocolate Delivery Complete
     TimeLimit: 4h
@@ -10420,15 +10504,37 @@ Body:
   - Id: 16439
     Title: Award Garden-Waiting
     TimeLimit: 4h
+  - Id: 16521
+    Title: 4th floor of Rudus, an organic field for waste specimens
+  - Id: 16522
+    Title: 4th floor of Rudus, an organic field for waste specimens
   - Id: 16523
-    Title: The solitude of the abyss
+    Title: Abyssal Solitude - Standby
     TimeLimit: 4h
+  - Id: 16524
+    Title: Abyssal Solitude
+    Targets:
+      - Mob: DEADRE
+        Count: 10
+      - Mob: DOLORIAN
+        Count: 10
+      - Mob: PLAGARION
+        Count: 10
   - Id: 16525
-    Title: Transformation and development - Standby
+    Title: Transformation and Evolution - Standby
     TimeLimit: 4h
+  - Id: 16526
+    Title: Transformation and Evolution
+    Targets:
+      - Mob: GIANT_CAPUT
+        Count: 15
+      - Mob: VENEDI
+        Count: 15
   - Id: 16527
     Title: Data backup - Waiting
     TimeLimit: 4h
+  - Id: 16528
+    Title: Data Backup
   - Id: 16530
     Title: The ground and fire
     TimeLimit: 4h
@@ -10444,6 +10550,8 @@ Body:
   - Id: 16538
     Title: Natural change - Waiting
     TimeLimit: 4h
+  - Id: 16540
+    Title: Data Backup
   - Id: 16546
     Title: Farm Worker
   - Id: 16547

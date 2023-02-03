@@ -32,6 +32,7 @@
 #include "loginlog.hpp"
 
 using namespace rathena;
+using namespace rathena::server_login;
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
@@ -780,7 +781,7 @@ void login_set_defaults() {
  * Login-serv destructor
  *  dealloc..., function called at exit of the login-serv
  */
-void do_final(void) {
+void LoginServer::finalize(){
 	struct client_hash_node *hn = login_config.client_hash_nodes;
 	AccountDB* db = accounts;
 
@@ -822,45 +823,14 @@ void do_final(void) {
 	ShowStatus("Finished.\n");
 }
 
-/**
- * Signal handler
- *  This function attempts to properly close the server when an interrupt signal is received.
- *  current signal catch : SIGTERM, SIGINT
- */
-void do_shutdown(void) {
-	if( runflag != LOGINSERVER_ST_SHUTDOWN ) {
-		runflag = LOGINSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
-		do_shutdown_loginchrif();
-		flush_fifos();
-		runflag = CORE_ST_STOP;
-	}
+void LoginServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+	// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
+	do_shutdown_loginchrif();
+	flush_fifos();
 }
 
-/**
- * Signal handler
- *  Function called when the server has received a crash signal.
- *  current signal catch : SIGSEGV, SIGFPE
- */
-void do_abort(void) {
-}
-
-// Is this still used ??
-void set_server_type(void) {
-	SERVER_TYPE = ATHENA_SERVER_LOGIN;
-}
-
-/**
- * Login serv constructor
- *  Initialisation, function called at start of the login-serv.
- * @param argc : number of argument from main()
- * @param argv : arguments values from main()
- * @return 0 everything ok else stopping programme execution.
- */
-int do_init(int argc, char** argv) {
-	runflag = LOGINSERVER_ST_STARTING;
-
+bool LoginServer::initialize( int argc, char* argv[] ){
 	// Init default value
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
@@ -900,23 +870,18 @@ int do_init(int argc, char** argv) {
 	// Account database init
 	if( accounts == NULL ) {
 		ShowFatalError("do_init: account engine not found.\n");
-		exit(EXIT_FAILURE);
+		return false;
 	} else {
 		if(!accounts->init(accounts)) {
 			ShowFatalError("do_init: Failed to initialize account engine.\n");
-			exit(EXIT_FAILURE);
+			return false;
 		}
 	}
 
 	// server port open & binding
 	if( (login_fd = make_listen_bind(login_config.login_ip,login_config.login_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",login_config.login_port);
-		exit(EXIT_FAILURE);
-	}
-
-	if( runflag != CORE_ST_STOP ) {
-		shutdown_callback = do_shutdown;
-		runflag = LOGINSERVER_ST_RUNNING;
+		return false;
 	}
 
 	do_init_logincnslif();
@@ -924,5 +889,9 @@ int do_init(int argc, char** argv) {
 	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
 
-	return 0;
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<LoginServer>( argc, argv );
 }

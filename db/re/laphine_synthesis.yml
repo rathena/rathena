@@ -37,7 +37,7 @@ Header:
   Version: 1
 
 Body:
-  - Item: Shadow_Exchange_Box
+  - Item: Shadow_Mix_Recipe
     RewardGroup: SHADOW_EXCHANGE_BOX
     RequiredRequirementsCount: 3
     Requirements:
@@ -345,42 +345,42 @@ Body:
       - Item: S_Gunslinger_Shield
       - Item: S_Thief_earring
       - Item: S_Archer_earring
-      - Item: S_Hasty_Shoes_II
-      - Item: S_Bearer's_Pendant_II
-      - Item: S_Gemstone_Earring_II
-      - Item: S_Spellflow_Shield_II
-      - Item: S_Spiritual_Weapon_II
-      - Item: S_Malicious_Armor_II
+      - Item: S2_Hasty_Shoes
+      - Item: S2_Bearers_Pendent
+      - Item: S2_Gemstone_Earring
+      - Item: S2_Spell_Flow_Shield
+      - Item: S2_Spiritual_Weapon
+      - Item: S2_Malicious_Armor
       - Item: S_Sigrun_Armor
       - Item: S_Sigrun_Shield
-      - Item: S_Force_Executioner_Weapon
-      - Item: S_Spirit_Magic_Executioner_Weapon
-      - Item: S_Caster_Armor_II
-      - Item: S_Reload_Armor_II
+      - Item: S2_Force_Ex_Weapon
+      - Item: S2_Spirit_M_E_Weapon
+      - Item: S2_Caster_Armor
+      - Item: S2_Reload_Armor
       - Item: S_Critical_Shield
       - Item: S_Critical_Shoes
-      - Item: S_Magic_Compose_Armor
-      - Item: S_Gemstone_Weapon_II
-      - Item: S_Gemstone_Shield_II
-      - Item: S_Bearer's_Armor_II
-      - Item: S_Bearer's_Shoes_II
+      - Item: S_MagicCompose_Armor
+      - Item: S2_Gemstone_Weapon
+      - Item: S2_Gemstone_Shield
+      - Item: S2_Bearers_Armor
+      - Item: S2_Bearers_Shoes
       - Item: S_AllMighty_Earring
       - Item: S_AllMighty_Pendant
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
-      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
-      - Item: S_Plasterer's_Armor_II
-      - Item: S_Insomniac_Shoes_II
-      - Item: S_Peerless_Armor_II
-      - Item: S_Adulate_Shoes_II
-      - Item: S_Unfreezing_Weapon_II
-      - Item: S_Vitality_Earring_II
-      - Item: S_Neutral_Weapon_II
-      - Item: S_Uncursed_Pendant_II
+      - Item: S_M_ExeHoly_Armor
+      - Item: S_M_ExoCorrupt_Armor
+      - Item: S_M_DragonVib_Armor
+      - Item: S_M_SciHunting_Armor
+      - Item: S_M_FishInsect_Armor
+      - Item: S2_Plasterer's_Armor
+      - Item: S2_Insomniac_Shoes
+      - Item: S2_Peerless_Armor
+      - Item: S2_Adurate_Shoes
+      - Item: Unfreez_Weapon_S2
+      - Item: Vitality_Earing_S2
+      - Item: S2_Neutral_Weapon
+      - Item: S2_Curse_Lift_Pendent
       - Item: S_Tension_Weapon
       - Item: S_Tension_Earring
       - Item: S_Tension_Pendent
@@ -390,17 +390,17 @@ Body:
       - Item: S_Healing_Shield
       - Item: S_Healing_Shoes
       - Item: S_Restore_Earring
-      - Item: S_Restore_Pendant
-      - Item: S_Mortal_Blow_Weapon
-      - Item: S_Mortal_Blow_Earring
-      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Restore_Pendent
+      - Item: S_MortalBlow_Weapon
+      - Item: S_MortalBlow_Earring
+      - Item: S_MortalBlow_Pendent
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
-      - Item: S_Executioner_Holy_Water_Armor
-      - Item: S_Exorcist_Corrupted_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
-      - Item: S_Scissor_Hunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_ExeHoly_Armor
+      - Item: S_ExoCorrupt_Armor
+      - Item: S_DragonVib_Armor
+      - Item: S_SciHunting_Armor
+      - Item: S_FishInsect_Armor
       - Item: Sentimental_Weapone_S
       - Item: Sentimental_Earring_S
       - Item: Sentimental_Pendant_S
@@ -414,8 +414,8 @@ Body:
       - Item: S_Magical_Shoes
       - Item: S_Magical_Shield
       - Item: S_Magical_Armor
-      - Item: S_Immune_Athena_Shield
-      - Item: S_Hard_Champion_Shoes
+      - Item: S_ImmunedAthena_Shield
+      - Item: S_HardChamption_Shoes
       - Item: S_KingbirdAncient_Armor
       - Item: S_CriticalHit_Armor
       - Item: S_Rebellion_Armor
@@ -657,8 +657,8 @@ Body:
       - Item: S_FullPene_Armor
       - Item: S_FullPene_Pendant
       - Item: S_FullPene_Earring
-      - Item: S_All_Race_Shoes
-      - Item: S_All_Race_Shield
+      - Item: S_AllRace_Shoes
+      - Item: S_AllRace_Shield
       - Item: S_Blitz_Weapon
       - Item: S_Blitz_Armor
       - Item: S_FullTemp_Earring
@@ -857,9 +857,9 @@ Body:
       - Item: MechanicStone_Bottom
       - Item: MechanicStone_Robe
       - Item: WanderMinstrelStone_Top
-      - Item: WanderMinstrelStone_Middle
-      - Item: WanderMinstrelStone_Bottom
-      - Item: WanderMinstrelStone_Robe
+      - Item: WanderMinstStone_Middle
+      - Item: WanderMinstStone_Bottom
+      - Item: WanderMinstreStone_Robe
       - Item: HPStone_Bottom
       - Item: DoubleAttack_Stone
       - Item: Critical_Stone_Robe
@@ -890,14 +890,14 @@ Body:
       - Item: ShadowchasStone_Bottom2
       - Item: ShadowchasStone_Middle2
       - Item: ShadowchaserStone_Top2
-      - Item: SoulReaperStone_Robe
-      - Item: SoulLinkerStone_Top
-      - Item: SoulLinkerStone_Middle
-      - Item: SoulLinkerStone_Bottom
-      - Item: StarGladiatorStone_Top
-      - Item: StarGladiatorStone_Middle
-      - Item: StarGladiatorStone_Bottom
-      - Item: StarEmperorStone_Garment
+      - Item: SoulreaperStone_Robe
+      - Item: SoullinkerStone_Top
+      - Item: SoullinkerStone_Middle
+      - Item: SoullinkerStone_Bottom
+      - Item: GladiatorStone_Top
+      - Item: GladiatorStone_Middle
+      - Item: GladiatorStone_Bottom
+      - Item: StaremperorStone_Robe
       - Item: NinjaStone_Top
       - Item: NinjaStone_Middle
       - Item: NinjaStone_Bottom
@@ -906,35 +906,35 @@ Body:
       - Item: GunslingerStone_Top
       - Item: GunslingerStone_Middle
       - Item: GunslingerStone_Bottom
-      - Item: GunslingerStone_Robe
+      - Item: RebellionStone_Robe
       - Item: DoramStone_Top
       - Item: DoramStone_Middle
       - Item: DoramStone_Bottom
       - Item: DoramStone_Robe
-      - Item: RangerStone_II_Top
-      - Item: RangerStone_II_Middle
-      - Item: RangerStone_II_Bottom
-      - Item: RangerStone_II_Garment
-      - Item: MechanicStone_II_Top
-      - Item: MechanicStone_II_Middle
-      - Item: MechanicStone_II_Bottom
-      - Item: MechanicStone_II_Garment
-      - Item: HighpriestStone_II_Top
-      - Item: HighpriestStone_II_Middle
-      - Item: HighpriestStone_II_Bottom
-      - Item: ArchbishopStone_II_Garment
+      - Item: RangerStone_Top2
+      - Item: RangerStone_Middle2
+      - Item: RangerStone_Bottom2
+      - Item: RangerStone_Robe2
+      - Item: MechanicStone_Top2
+      - Item: MechanicStone_Middle2
+      - Item: MechanicStone_Bottom2
+      - Item: MechanicStone_Robe2
+      - Item: HighpriestStone_Top2
+      - Item: HighpriestStone_Middle2
+      - Item: HighpriestStone_Bottom2
+      - Item: ArchbishopStone_Robe2
       - Item: WarlockStone_Robe2
       - Item: WarlockStone_Top2
       - Item: WarlockStone_Middle2
       - Item: WarlockStone_Bottom2
-      - Item: RoyalGuardStone_Robe2
-      - Item: RoyalGuardStone_Top2
-      - Item: RoyalGuardStone_Middle2
-      - Item: RoyalGuardStone_Bottom2
-      - Item: GuillotineCrossStone_Robe2
-      - Item: GuillotineCrossStone_Top2
-      - Item: GuillotineCrossStone_Middle2
-      - Item: GuillotineCrossStone_Bottom2
+      - Item: RoyalguardStone_Robe2
+      - Item: PaladinStone_Top2
+      - Item: PaladinStone_Middle2
+      - Item: PaladinStone_Bottom2
+      - Item: GuillcrossStone_Robe2
+      - Item: AssacrossStone_Top2
+      - Item: AssacrossStone_Middle2
+      - Item: AssacrossStone_Bottom2
       - Item: RuneknightStone_Robe2
       - Item: RuneknightStone_Top2
       - Item: RuneknightStone_Middle2
@@ -994,7 +994,7 @@ Body:
       - Item: ShadowchasStone_Top3
       - Item: ShadowchasStone_Middle3
       - Item: ShadowchasStone_Bottom3
-  - Item: Collectibles_Box
+  - Item: EventItem_Recipe
     # TODO: Add official rewards
     RewardGroup: VIOLETBOX
     RequiredRequirementsCount: 10
@@ -1387,7 +1387,7 @@ Body:
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
-      - Item: Spirit_Jewel
+      - Item: SpritJewel
         Amount: 10
       - Item: Snowball
         Amount: 10
@@ -1419,7 +1419,7 @@ Body:
         Amount: 10
       - Item: Fine_Old_Doll
         Amount: 10
-      - Item: Old_Shell
+      - Item: OldShell
         Amount: 10
       - Item: Ein_SOLIDDUST
         Amount: 10
@@ -1427,7 +1427,7 @@ Body:
         Amount: 10
       - Item: Ein_EYEROCK
         Amount: 10
-  - Item: Pet_Egg_Box
+  - Item: PetEgg_Recipe
     RewardGroup: PET_EGG_BOX
     RequiredRequirementsCount: 2
     Requirements:
@@ -1502,7 +1502,7 @@ Body:
       - Item: Miyabi_Ningyo_Egg
       - Item: Leaf_Cat_Egg
       - Item: Dark_Priest_Egg
-  - Item: Costume_Exchange_Box
+  - Item: Nyang_Costume_Recipe
     RewardGroup: COSTUME_EXCHANGE_BOX
     Requirements:
       - Item: C_Rabbit_Ear_Hat
@@ -1554,7 +1554,7 @@ Body:
       - Item: C_Cowlick_OM
       - Item: C_Cowlick_BU
       - Item: C_Cowlick_WH
-      - Item: C_Bouncing_Hair_Black
+      - Item: C_Cowlick_BL
       - Item: C_Straight_Pony_YL
       - Item: C_Straight_Pony_GN
       - Item: C_Straight_Pony_PP
@@ -1562,7 +1562,7 @@ Body:
       - Item: C_Straight_Pony_OM
       - Item: C_Straight_Pony_BU
       - Item: C_Straight_Pony_WH
-      - Item: C_Straight_Pony_Black
+      - Item: C_Straight_Pony_BL
       - Item: C_Loose_Wave_Twin_YL
       - Item: C_Loose_Wave_Twin_GN
       - Item: C_Loose_Wave_Twin_PP
@@ -1570,7 +1570,7 @@ Body:
       - Item: C_Loose_Wave_Twin_OM
       - Item: C_Loose_Wave_Twin_BU
       - Item: C_Loose_Wave_Twin_WH
-      - Item: C_Loose_Wave_Twin
+      - Item: C_Loose_Wave_Twin_BL
       - Item: C_Cupid_Wing_Pink
       - Item: C_Pecopeco_Cap
       - Item: C_Green_Hat
@@ -1602,7 +1602,7 @@ Body:
       - Item: C_Charleston_Antenna
       - Item: C_Wings_of_Uriel
       - Item: C_Pig_Nose
-      - Item: C_Cat_Ears_Hat
+      - Item: C_Cat_Ear_Hat
       - Item: C_Valkyrie_Circlet
       - Item: C_Eremes_Scarf_Black
       - Item: C_Eleanor_Wig
@@ -1639,7 +1639,7 @@ Body:
       - Item: C_Long_Pony_OM
       - Item: C_Long_Pony_PP
       - Item: C_Piggyback
-      - Item: C_RuneHelm
+      - Item: C_Rune_Helm
       - Item: C_Shaving_Foam
       - Item: C_Blue_Fairy_Wing
       - Item: C_Black_Cat
@@ -1649,7 +1649,7 @@ Body:
       - Item: C_Thanatos_Sword
       - Item: C_Warm_Cat_Muffler
       - Item: C_Clock_Casket
-      - Item: C_Happy_Parrot_J
+      - Item: C_Chatty_Parrot
       - Item: C_Flame_Muffler
       - Item: C_Teddy_Bear_Hood
       - Item: C_Mouton_Life_BL
@@ -1659,7 +1659,7 @@ Body:
       - Item: C_BelieversCap
       - Item: C_Pope_Ribbon
       - Item: C_Alice_Wig
-      - Item: Khalitzburg_KN_Helm_BL
+      - Item: C_Khalitzburg_Helm_BL
       - Item: C_Wanderer_Sakkat
       - Item: C_Wings_of_Michael
       - Item: C_Shura_King_Pledge
@@ -1738,13 +1738,13 @@ Body:
       - Item: C_Big_Foxtail
       - Item: C_T_Bear_Bag
       - Item: C_Poring_On_Shoulder
-      - Item: Costume_Yawata_Seal
+      - Item: C_FortunetellinSealed
       - Item: C_Pretty_Bear_WH
       - Item: C_Bicolor_Cat_Witch_Hat
       - Item: C_Nifl_Bloom
       - Item: C_Floating_Ball_TW
       - Item: C_Dark_Snake_Lord_Stall
-      - Item: Costume_Twin_Cannon
+      - Item: C_Twin_Canon
       - Item: C_Picnic_Basket
       - Item: C_Magic_Helm
       - Item: C_ManyStars_TW
@@ -1773,13 +1773,13 @@ Body:
       - Item: C_Disapear_Time_TW
       - Item: C_Magic_Heir_TW
       - Item: C_Blink_Eyes_Sakura
-      - Item: Costume_Angola_Intention
-      - Item: C_Stole_Of_Dominion
+      - Item: C_Angola_Intention
+      - Item: C_Stall_Of_Dominions
       - Item: C_Flowery_Vision_TH
       - Item: C_Frill_Collar
       - Item: C_Rose_Gothic_Bonnet
       - Item: C_LittleGarden
-      - Item: Costume_Twinkling_Red_Eyes
+      - Item: C_Blinking_Eyes_RD
       - Item: C_P_Ulysses_Feather
       - Item: C_DancingButterfly_TW
       - Item: C_Blue_Pencil_In_Mouth
@@ -1790,7 +1790,7 @@ Body:
       - Item: C_Frog_Hood
       - Item: C_Lude_Hood
       - Item: C_Blessings_Of_Soul
-      - Item: C_Crow
+      - Item: C_Gossip_Raven
       - Item: C_Halloween_Hat
       - Item: C_Blessed_Veil
       - Item: C_Eyes_Of_Ifrit
@@ -1799,7 +1799,7 @@ Body:
       - Item: C_Wildcat_Knit_Cap
       - Item: C_Pink_Fur_Hat
       - Item: C_Gift_Of_Snow
-      - Item: C_Large_Ribbon_Muffler_Red
+      - Item: C_L_RibbonMuff_Red
       - Item: C_Imperial_Glory
       - Item: C_Black_Shiba_Inu_Hat
       - Item: C_Black_Glasses
@@ -1809,18 +1809,18 @@ Body:
       - Item: C_Fairy_Feathers
       - Item: C_Giant_White_Rabbit
       - Item: C_Katashiro_Flying
-      - Item: C_Yellow_Hunting_Cap
+      - Item: C_Love_Daddy
       - Item: C_Sakura_Coronet
       - Item: C_Full_Bloom_Hairpin
       - Item: Cons_Of_Earth
-      - Item: Costume_Master_Of_Wind
+      - Item: C_Cons_Of_Wind
       - Item: C_Cons_Of_Darkness
       - Item: C_Boitata_Hat_J
       - Item: C_Jioia_TW
       - Item: C_Baldr_Wing_TW
       - Item: C_Brabery_Hat
       - Item: C_Carefree_Face
-      - Item: C_Stings_Silk_Ribbon
+      - Item: C_Sting_Silk_Ribbon
       - Item: C_Adventure_Cat_Bag
       - Item: C_Flower_Summer_Hat
       - Item: C_Cherry_Ribbon
@@ -1858,12 +1858,12 @@ Body:
     RewardGroup: SUIT_UPGRADE_KIT
     Requirements:
       - Item: Kafra_Uniform
-  - Item: Scroll_of_Fallen_Angel_Wings
+  - Item: FallenAngelWing_Reset
     RewardGroup: SCROLL_OF_FALLEN_ANGEL_WINGS
     Requirements:
       - Item: Fallen_Angel_Wings_
       - Item: Fallen_Angel_Wing
-  - Item: Class_Shadow_Box_Weapon
+  - Item: JobShadow_Mix_Weapon
     RewardGroup: CLASS_SHADOW_BOX_WEAPON
     MinimumRefine: 7
     Requirements:
@@ -1886,7 +1886,7 @@ Body:
       - Item: S_Ranger_Weapon
       - Item: S_Minstrel_Weapon
       - Item: S_Wanderer_Weapon
-  - Item: Class_Shadow_Box_Armor
+  - Item: JobShadow_Mix_Armor
     RewardGroup: CLASS_SHADOW_BOX_ARMOR
     MinimumRefine: 7
     Requirements:
@@ -1910,7 +1910,7 @@ Body:
       - Item: S_DoramMagical_Armor
       - Item: S_Star_Emperor_Armor
       - Item: S_Soul_Reaper_Armor
-  - Item: Class_Shadow_Box_Shoes
+  - Item: JobShadow_Mix_Shoes
     RewardGroup: CLASS_SHADOW_BOX_SHOES
     MinimumRefine: 7
     Requirements:
@@ -1934,7 +1934,7 @@ Body:
       - Item: S_DoramMagical_Shoes
       - Item: S_Star_Emperor_Shoes
       - Item: S_Soul_Reaper_Shoes
-  - Item: Class_Shadow_Box_Shield
+  - Item: JobShadow_Mix_Shield
     RewardGroup: CLASS_SHADOW_BOX_SHIELD
     MinimumRefine: 7
     Requirements:
@@ -1957,7 +1957,7 @@ Body:
       - Item: S_DoramMagical_Shield
       - Item: S_SuperNovice_Shield
       - Item: S_Gunslinger_Shield
-  - Item: Class_Shadow_Box_Pendant
+  - Item: JobShadow_Mix_Pendant
     RewardGroup: CLASS_SHADOW_BOX_PENDANT
     MinimumRefine: 7
     Requirements:
@@ -1967,7 +1967,7 @@ Body:
       - Item: S_Thief_Pendant
       - Item: S_Magician_Pendant
       - Item: S_Archer_Pendant
-  - Item: Class_Shadow_Box_Earring
+  - Item: JobShadow_Mix_Earing
     RewardGroup: CLASS_SHADOW_BOX_EARRING
     MinimumRefine: 7
     Requirements:
@@ -2067,7 +2067,7 @@ Body:
   - Item: Magical_Cat_Hand
     RewardGroup: MAGICAL_CAT_HAND
     Requirements:
-      - Item: Neko_Headress
+      - Item: Cat_Lace_Hairband_K
   - Item: StabilityShadow_Mix
     RewardGroup: STABILITYSHADOW_MIX
     RequiredRequirementsCount: 3
@@ -2829,7 +2829,7 @@ Body:
     RequiredRequirementsCount: 2
     MinimumRefine: 7
     Requirements:
-      - Item: S_Hasty_Shoes_II
+      - Item: S2_Hasty_Shoes
       - Item: S_Hasty_Armor
       - Item: S_Hasty_Shoes
   - Item: EnchantStone_Recipe_4m
@@ -2911,7 +2911,7 @@ Body:
     RewardGroup: SHIVER_KATAR_K_CUBE
     MinimumRefine: 9
     Requirements:
-      - Item: Katar_of_Shiver
+      - Item: Shiver_Katar_K
   - Item: Blade_Katar_Cube
     RewardGroup: BLADE_KATAR_CUBE
     MinimumRefine: 9
@@ -3212,7 +3212,7 @@ Body:
     RewardGroup: DEMON_HUNT_BIBLE_CUBE
     MinimumRefine: 9
     Requirements:
-      - Item: Exoricists_Bible_
+      - Item: Demon_Hunting_Bible_K
   - Item: Saint_Hall_Cube
     RewardGroup: SAINT_HALL_CUBE
     MinimumRefine: 9
@@ -3233,12 +3233,12 @@ Body:
     MinimumRefine: 9
     Requirements:
       - Item: Humma_Clear
-  - Item: Thousand_Sun_Cube
+  - Item: OneSkyOneSun_Cube
     RewardGroup: THOUSAND_SUN_CUBE
     MinimumRefine: 9
     Requirements:
       - Item: OneSkyOneSun
-  - Item: Spirit_Pendulum_Cube
+  - Item: SoulWeight_Cube
     RewardGroup: SPIRIT_PENDULUM_CUBE
     MinimumRefine: 9
     Requirements:
@@ -3253,17 +3253,17 @@ Body:
     MinimumRefine: 9
     Requirements:
       - Item: Master_Soul_Rifle
-  - Item: Golden_Lord_Launcher_Cube
+  - Item: Golden_L_Launcher_Cube
     RewardGroup: GOLDEN_LORD_LAUNCHER_CUBE
     MinimumRefine: 9
     Requirements:
       - Item: Golden_L_Launcher
-  - Item: The_Black_Cube
+  - Item: The_Black_Gatling_Cube
     RewardGroup: THE_BLACK_CUBE
     MinimumRefine: 9
     Requirements:
       - Item: The_Black_Gatling
-  - Item: Demon_Slayer_Shot_Cube
+  - Item: Demon_S_Shot_Cube
     RewardGroup: DEMON_SLAYER_SHOT_CUBE
     MinimumRefine: 9
     Requirements:
@@ -3272,11 +3272,11 @@ Body:
 #    RewardGroup: ENCHANTSTONE_RECIPE_3M
 #    Requirements:
 #      - Item: C_Pretty_Bear_WH
-#      - Item: Costume_Yawata_Seal
+#      - Item: C_FortunetellinSealed
 #      - Item: C_Floating_Ball_TW
 #      - Item: C_Dark_Snake_Lord_Stall
 #      - Item: C_Bicolor_Cat_Witch_Hat
-#      - Item: Costume_Twin_Cannon
+#      - Item: C_Twin_Canon
 #      - Item: C_Picnic_Basket
 #      - Item: C_Magic_Helm
 #      - Item: C_Fawn_Ear
@@ -3291,7 +3291,7 @@ Body:
 #      - Item: C_Frill_Collar
 #      - Item: C_Rose_Gothic_Bonnet
 #      - Item: C_LittleGarden
-#      - Item: Costume_Twinkling_Red_Eyes
+#      - Item: C_Blinking_Eyes_RD
 #  - Item: Egirnion_Box
 #    RewardGroup: EGIRNION_BOX
 #    Requirements:
@@ -3307,11 +3307,11 @@ Body:
     Requirements:
       - Item: S_Penetration_Shoes
       - Item: S_Penetration_Shield
-      - Item: S_Executioner_Holy_Water_Armor
-      - Item: S_Exorcist_Corrupted_Armor
-      - Item: S_Vibration_Dragon_Killer_Armor
-      - Item: S_Scissor_Hunting_Armor
-      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_ExeHoly_Armor
+      - Item: S_ExoCorrupt_Armor
+      - Item: S_DragonVib_Armor
+      - Item: S_SciHunting_Armor
+      - Item: S_FishInsect_Armor
       - Item: S_Penetration_Earring
       - Item: S_Penetration_Pendent
       - Item: S_Executioner_Weapon
@@ -3324,7 +3324,7 @@ Body:
       - Item: S_Vibration_Weapon
       - Item: S_Holy_Water_Weapon
       - Item: S_Scissors_Weapon
-      - Item: S_Force_Executioner_Weapon
+      - Item: S2_Force_Ex_Weapon
       - Item: S_Penetration_Weapon
       - Item: S_Penetration_Armor
       - Item: S_Exe_Ho_Weapon
@@ -3344,11 +3344,11 @@ Body:
     Requirements:
       - Item: S_Tempest_Shoes
       - Item: S_Tempest_Shield
-      - Item: S_Magic_Executioner_Holy_Water_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
-      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_M_ExeHoly_Armor
+      - Item: S_M_ExoCorrupt_Armor
+      - Item: S_M_DragonVib_Armor
+      - Item: S_M_SciHunting_Armor
+      - Item: S_M_FishInsect_Armor
       - Item: S_Tempest_Earring
       - Item: S_Tempest_Pendent
       - Item: S_M_Executioner_Weapon
@@ -3361,7 +3361,7 @@ Body:
       - Item: S_M_Vibration_Weapon
       - Item: S_M_Holy_Water_Weapon
       - Item: S_M_Scissors_Weapon
-      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S2_Spirit_M_E_Weapon
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
       - Item: S_M_Exe_Ho_Weapon
@@ -3700,11 +3700,11 @@ Body:
 #      - Item: S_AllMighty_Pendant
 #      - Item: S_Tempest_Shield
 #      - Item: S_Tempest_Shoes
-#      - Item: S_Magic_Executioner_Holy_Water_Armor
-#      - Item: S_Magic_Exorcist_Corrupted_Armor
-#      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-#      - Item: S_Magic_Scissor_Hunting_Armor
-#      - Item: S_Magic_Fishing_Insect_Net_Armor
+#      - Item: S_M_ExeHoly_Armor
+#      - Item: S_M_ExoCorrupt_Armor
+#      - Item: S_M_DragonVib_Armor
+#      - Item: S_M_SciHunting_Armor
+#      - Item: S_M_FishInsect_Armor
 #      - Item: S_Plasterer's_Armor_II
 #      - Item: S_Insomniac_Shoes_II
 #      - Item: S_Peerless_Armor_II
@@ -3728,11 +3728,11 @@ Body:
 #      - Item: S_Mortal_Blow_Pendant
 #      - Item: S_Penetration_Shoes
 #      - Item: S_Penetration_Shield
-#      - Item: S_Executioner_Holy_Water_Armor
-#      - Item: S_Exorcist_Corrupted_Armor
-#      - Item: S_Vibration_Dragon_Killer_Armor
-#      - Item: S_Scissor_Hunting_Armor
-#      - Item: S_Fishing_Insect_Net_Armor
+#      - Item: S_ExeHoly_Armor
+#      - Item: S_ExoCorrupt_Armor
+#      - Item: S_DragonVib_Armor
+#      - Item: S_SciHunting_Armor
+#      - Item: S_FishInsect_Armor
 #      - Item: Sentimental_Weapone_S
 #      - Item: Sentimental_Earring_S
 #      - Item: Sentimental_Pendant_S
@@ -4209,9 +4209,9 @@ Body:
       - Item: S_Gemstone_Earring
       - Item: S_Gemstone_Pendent
       - Item: S_Gemstone_Armor
-      - Item: S_Gemstone_Weapon_II
-      - Item: S_Gemstone_Shield_II
-      - Item: S_Gemstone_Earring_II
+      - Item: S2_Gemstone_Weapon
+      - Item: S2_Gemstone_Shield
+      - Item: S2_Gemstone_Earring
   - Item: Mammoth_Mix
     RewardGroup: MAMMOTH_MIX
     RequiredRequirementsCount: 6
@@ -4247,11 +4247,11 @@ Body:
       - Item: S_Spiritual_Weapon
       - Item: S_Spiritual_Earring
       - Item: S_Spiritual_Pendent
-      - Item: S_Spiritual_Weapon_II
+      - Item: S2_Spiritual_Weapon
       - Item: S_Malicious_Armor
       - Item: S_Malicious_Shoes
       - Item: S_Malicious_Shield
-      - Item: S_Malicious_Armor_II
+      - Item: S2_Malicious_Armor
   - Item: MajorAutoSpell_Mix
     RewardGroup: MAJORAUTOSPELL_MIX
     RequiredRequirementsCount: 6
@@ -4341,18 +4341,18 @@ Body:
       - Item: S_Reload_Armor
       - Item: S_Reload_Shoes
       - Item: S_Reload_Shield
-      - Item: S_Reload_Armor_II
+      - Item: S2_Reload_Armor
   - Item: SpellCasterShadow_Mix
     RewardGroup: SPELLCASTERSHADOW_MIX
     RequiredRequirementsCount: 6
     MinimumRefine: 7
     MaximumRefine: 10
     Requirements:
-      - Item: S_Spellflow_Shield_II
+      - Item: S2_Spell_Flow_Shield
       - Item: S_Spell_Flow_Shield
       - Item: S_Spell_Flow_Armor
       - Item: S_Spell_Flow_Shoes
-      - Item: S_Caster_Armor_II
+      - Item: S2_Caster_Armor
       - Item: S_Caster_Armor
       - Item: S_Caster_Shield
       - Item: S_Caster_Shoes
@@ -4469,9 +4469,9 @@ Body:
     MinimumRefine: 7
     MaximumRefine: 10
     Requirements:
-      - Item: S_Bearer's_Shoes_II
-      - Item: S_Bearer's_Armor_II
-      - Item: S_Bearer's_Pendant_II
+      - Item: S2_Bearers_Shoes
+      - Item: S2_Bearers_Armor
+      - Item: S2_Bearers_Pendent
       - Item: S_Bearers_Earring
       - Item: S_Bearers_Pendent
       - Item: S_Bearers_Armor
