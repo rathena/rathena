@@ -1,7 +1,7 @@
 
 LIBBCRYPT_OBJ =  $(shell find * -type f -name "*.c" | sed -e "s/\.c/\.o/g")
 LIBBCRYPT_DIR_OBJ = $(LIBBCRYPT_OBJ:%=obj/%)
-LIBBCRYPT_H =  $(shell find * -type f -name "*.h")
+LIBBCRYPT_H =  $(shell find * -type f -name "*.h*")
 LIBBCRYPT_AR = obj/libbcrypt.a
 
 CXXFLAG =-std=c++11
