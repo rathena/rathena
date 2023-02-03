@@ -5650,14 +5650,35 @@ Body:
   - Id: 8538
     Title: Renting an advanced oxygen mask
     TimeLimit: 4h
+  - Id: 8541
+    Title: Nothing to See
+    Targets:
+      - Mob: RAYDRIC_H
+        Count: 20
+      - Mob: RAYDRIC_ARCHER_H
+        Count: 20
   - Id: 8542
-    Title: Standby
+    Title: Nothing to See - Standby
     TimeLimit: 4h
+  - Id: 8544
+    Title: High Freezing Point
+    Targets:
+      - Mob: GARGOYLE_H
+        Count: 5
+      - Mob: RAGGED_ZOMBIE_H
+        Count: 5
   - Id: 8545
     Title: High freezing point (Standby)
     TimeLimit: 4h
+  - Id: 8547
+    Title: A Mirror
+    Targets:
+      - Mob: ICE_GHOST_H
+        Count: 10
+      - Mob: FLAME_GHOST_H
+        Count: 10
   - Id: 8548
-    Title: Mirror (Standby)
+    Title: A Mirror - (Standby)
     TimeLimit: 4h
   - Id: 8551
     Title: The Dealer That Caused Evolution (Standby)

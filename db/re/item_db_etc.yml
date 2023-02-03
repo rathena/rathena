@@ -41608,7 +41608,7 @@ Body:
       bonus2 bSubRace,RC_Demon,15;
       bonus2 bSubDefEle,Ele_Neutral,15;
   - Id: 27354
-    AegisName: Contaminated_Raydric_Card
+    AegisName: Polluted_Raydric_Card
     Name: Contaminated Raydric Card
     Type: Card
     Buy: 20
@@ -41620,7 +41620,7 @@ Body:
     Script: |
       bonus bAtkRate,5;
   - Id: 27355
-    AegisName: Contaminated_Raydric_Archer_Card
+    AegisName: Polluted_Ray_A_Card
     Name: Contaminated Raydric Archer Card
     Type: Card
     Buy: 20
@@ -41647,7 +41647,7 @@ Body:
       bonus2 bSubSize,Size_Small,-5;
       bonus bDef,20;
   - Id: 27357
-    AegisName: Contaminated_Sting_Card
+    AegisName: Polluted_Sting_Card
     Name: Contaminated Sting Card
     Type: Card
     Buy: 20
@@ -41702,7 +41702,7 @@ Body:
     Script: |
       bonus2 bMagicAddEle,Ele_Fire,15;
   - Id: 27361
-    AegisName: Contaminated_Wanderer_Card
+    AegisName: Polluted_W_Man_Card
     Name: Contaminated Wanderer Card
     Type: Card
     Buy: 20

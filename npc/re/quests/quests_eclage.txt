@@ -10630,7 +10630,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	HIDDEN_NPC,{
 			next;
 			cutin "EP14_etran4",1;
 			mes "[Etran]";
-			mes "(This guy mentioned his initital! Ok, this guy is making it more dangerous than I am!!) He took out equipments from the storage to see if he wants to refine them.";
+			mes "(This guy mentioned his initial! Ok, this guy is making it more dangerous than I am!!) He took out equipments from the storage to see if he wants to refine them.";
 			next;
 			cutin "EP14_robert4",1;
 			mes "[Robert]";
@@ -10653,7 +10653,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	HIDDEN_NPC,{
 			mes "Sorry I laughed.";
 			break;
 		case 4:
-			mes "^000099What if Etran and Robert were the priosoner and the guard?^000000";
+			mes "^000099What if Etran and Robert were the prisoner and the guard?^000000";
 			next;
 			cutin "EP14_etran1",1;
 			mes "[Etran]";
