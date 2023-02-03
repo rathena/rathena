@@ -281,7 +281,7 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct 
 // ids are char_ids
 void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int amount)
 {
-	if (!log_config.zeny || (log_config.zeny != 1 && abs(amount) < log_config.zeny) || (type == LOG_TYPE_NONE))
+	if (!log_config.zeny || (log_config.zeny != 1 && abs(amount) < log_config.zeny))
 		return;
 
 	if (log_config.sql_logs)
@@ -299,13 +299,11 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 		time_t curtime;
 		FILE* logfp;
 
-		auto * src_name = map_charid2nick(src_id); // we only need the name
-
 		if ((logfp = fopen(log_config.log_zeny, "a")) == NULL)
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_name ? src_name : "(no name found)", src_id, target_sd.status.name, target_sd.status.char_id, amount);
+		fprintf(logfp, "%d - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_id, src_id, target_sd.status.name, target_sd.status.char_id, amount);
 		fclose(logfp);
 	}
 }

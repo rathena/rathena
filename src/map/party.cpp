@@ -1232,7 +1232,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_ex
 #endif
 
 		if (zeny) // zeny from mobs [Valaris]
-			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER,NULL);
+			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER);
 	}
 }
 
