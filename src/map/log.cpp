@@ -303,7 +303,7 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%d - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_id, src_id, target_sd.status.name, target_sd.status.char_id, amount);
+		fprintf(logfp, "%s - [%d] ->\t%s[%d]\t%d\t\n", timestring, src_id, target_sd.status.name, target_sd.status.char_id, amount);
 		fclose(logfp);
 	}
 }
