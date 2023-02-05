@@ -11524,39 +11524,39 @@ Body:
             Chance: 714
           - Option: DAMAGE_PROPERTY_WATER_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_GROUND_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_FIRE_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_WIND_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_POISON_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_SAINT_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
       - Slot: 2
         Options:
@@ -11582,31 +11582,31 @@ Body:
             Chance: 666
           - Option: RACE_DAMAGE_PLANT
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_INSECT
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_FISHS
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_DEVIL
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_HUMAN
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_ANGEL
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_DRAGON
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: CLASS_DAMAGE_NORMAL_TARGET
             MinValue: 1
