@@ -3246,7 +3246,7 @@ public:
 	void deleteSCE(enum sc_type type);
 	void clearSCE(enum sc_type type);
 };
-
+#ifndef ONLY_CONSTANTS
 int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id );
 static int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, t_tick walkdelay, int flag, uint16 skill_id ){
 	return status_damage( src, target, dhp, dsp, 0, walkdelay, flag, skill_id );
@@ -3462,5 +3462,6 @@ uint16 status_efst_get_bl_type(enum efst_type efst);
 void status_readdb( bool reload = false );
 void do_init_status(void);
 void do_final_status(void);
+#endif /* ONLY_CONSTANTS */
 
 #endif /* STATUS_HPP */
