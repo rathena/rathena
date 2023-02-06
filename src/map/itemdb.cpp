@@ -1381,11 +1381,11 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 
 		itemstr += start_tag;
 
-		if( use_brackets ){
+		if( use_brackets || battle_config.feature_mesitemlink_brackets ){
 			itemstr += "[";
 		}
 
-		if( name != nullptr ){
+		if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
 			// Name was forcefully overwritten
 			itemstr += name;
 		}else{
@@ -1393,7 +1393,7 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 			itemstr += data->ename;
 		}
 
-		if( use_brackets ){
+		if( use_brackets || battle_config.feature_mesitemlink_brackets ){
 			itemstr += "]";
 		}
 
@@ -1408,7 +1408,7 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 #endif
 
 	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
-	if( name != nullptr ){
+	if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
 		// Name was forcefully overwritten
 		return name;
 	}else{

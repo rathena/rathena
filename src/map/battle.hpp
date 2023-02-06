@@ -565,6 +565,8 @@ struct Battle_Config
 	int devotion_rdamage;
 	int feature_itemlink;
 	int feature_mesitemlink;
+	int feature_mesitemlink_brackets;
+	int feature_mesitemlink_dbname;
 
 	// autotrade persistency
 	int feature_autotrade;
