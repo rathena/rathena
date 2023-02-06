@@ -1357,7 +1357,7 @@ std::string ItemDatabase::create_item_link(struct item& item) {
 	return this->create_item_link(item, data);
 }
 
-std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& data ){
+std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name ){
 	if( data == nullptr ){
 		return "Unknown item";
 	}
@@ -1380,10 +1380,27 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 #endif
 
 		itemstr += start_tag;
-		itemstr += data->ename;
+
+		if( use_brackets ){
+			itemstr += "[";
+		}
+
+		if( name != nullptr ){
+			// Name was forcefully overwritten
+			itemstr += name;
+		}else{
+			// Use database name
+			itemstr += data->ename;
+		}
+
+		if( use_brackets ){
+			itemstr += "]";
+		}
+
 		itemstr += "<INFO>";
 		itemstr += std::to_string( data->nameid );
 		itemstr += "</INFO>";
+
 		itemstr += closing_tag;
 
 		return itemstr;
@@ -1391,7 +1408,13 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 #endif
 
 	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
-	return data->ename;
+	if( name != nullptr ){
+		// Name was forcefully overwritten
+		return name;
+	}else{
+		// Use database name
+		return data->ename;
+	}
 }
 
 ItemDatabase item_db;
