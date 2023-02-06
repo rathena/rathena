@@ -11032,7 +11032,7 @@ client (and server) supports the Item Random Options feature (PACKETVER >= 20150
 Generates an itemlink string for an item and can be used for NPC's mes command.
 The NPC message will show the item's name and it will be clickable and open the
 item description on client side.
-By default the link will be surrounded by brackets, but you can disable the brackets by
+By default <use_brackets> is true and the link will be surrounded by brackets, but you can disable the brackets by
 calling the function with <use_brackets> set to false.
 By default the link will be created with the name of the item stored in the item database,
 but in some places it might be necessary to overwrite the <display_name> with something else.
@@ -11042,7 +11042,7 @@ Examples:
 	mes mesitemlink( 1201 ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
 	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
-	mes "Bring me a " + mesitemlink( 1201, false, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
+	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
 
 ========================
 |14.- Channel commands.|

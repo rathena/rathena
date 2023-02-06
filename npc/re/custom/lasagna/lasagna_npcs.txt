@@ -2066,22 +2066,22 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "[Yota Chara]";
 	switch(.@s) {
 	case 1:
-		mes mesitemlink( 28413, false, "Low-grade Horse Mackerel Amulet" ) + " is for my father who is far out to the sea.";
+		mes mesitemlink( 28413, false ) + " is for my father who is far out to the sea.";
 		break;
 	case 2:
-		mes mesitemlink( 28416, false, "Low-grade Leaf Amulet" ) + " is for my mother who should be wandering about the deep side of the forest.";
+		mes mesitemlink( 28416, false ) + " is for my mother who should be wandering about the deep side of the forest.";
 		break;
 	case 3:
-		mes mesitemlink( 28419, false, "Low-grade Rabbit Amulet" ) + " is for my brothers' health and wellness.";
+		mes mesitemlink( 28419, false ) + " is for my brothers' health and wellness.";
 		break;
 	case 4:
-		mes mesitemlink( 28422, false, "Shining Twig Charm" ) + " is to wish for my mother to return home safely from anywhere in the world.";
+		mes mesitemlink( 28422, false ) + " is to wish for my mother to return home safely from anywhere in the world.";
 		break;
 	case 5:
-		mes mesitemlink( 28423, false, "Fresh Tuna Amulet" ) + " is to wish for my father to return home quick with his ship full of tunas.";
+		mes mesitemlink( 28423, false ) + " is to wish for my father to return home quick with his ship full of tunas.";
 		break;
 	case 6:
-		mes mesitemlink( 28424, false, "Plump Earthworm Amulet" ) + " is to wish for easy fishing so that my family won't be starved.";
+		mes mesitemlink( 28424, false ) + " is to wish for easy fishing so that my family won't be starved.";
 		break;
 	}
 	if (.@s < 4) {
@@ -3372,7 +3372,7 @@ lasagna,222,187,3	script	Chef#dorcon	4_CAT_CHEF,{
 				mes "Pub-Oven has its own special network where it receives ingredients within ten minutes. So customers don't need to wait infinitely.";
 				next;
 				mes "[Chef]";
-				mes "But as you know, there's no such thing as ¢®¡Ænever¢®¡¾ in life. Yet, we always make the effort to achieve ¢®¡Ænever.¢®¡¾";
+				mes "But as you know, there's no such thing as Â¡Â°neverÂ¡Â± in life. Yet, we always make the effort to achieve Â¡Â°never.Â¡Â±";
 				next;
 				mes "[Chef]";
 				mes "And right now, that effort is being challenged.";
@@ -3384,7 +3384,7 @@ lasagna,222,187,3	script	Chef#dorcon	4_CAT_CHEF,{
 				mes "You must've heard about the cave in Raviol Forest. There are unspeakable things as well as creatures that are delicious food ingredients.";
 				next;
 				mes "[Chef]";
-				mes "You know the Trans Spores? Their ¢®¡Æmushroom spores¢®¡¾ are an essential ingredient for our fish cake.";
+				mes "You know the Trans Spores? Their Â¡Â°mushroom sporesÂ¡Â± are an essential ingredient for our fish cake.";
 				next;
 				mes "[Chef]";
 				mes "But for some reason, they live with the basilisks, but so this is a serious problem for us.";
@@ -3710,7 +3710,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[Shaman meow]";
-		mes "When I told him that ¡°a noble person from a new place solves the problem,¡± I meant that the the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
+		mes "When I told him that â€œa noble person from a new place solves the problem,â€ I meant that the the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "T-then, you've also...";
@@ -4676,7 +4676,7 @@ lasagna,205,325,5	script	Eggling#dorcon	4_M_MERCAT1,2,2,{
 		mes "Well, well. You seem to know how things work around here. You can bring it to the Sous Chef. However, the Sous Chef is kind of eccentric. You have to say something when you hand over things to him.";
 		next;
 		mes "[Eggling]";
-		mes "You should toss this to him, saying ¡°^0000cd[Here comes the newbie!]^000000 He believes that a Doram should say this on his or her first voyage for good luck. Anyways, he seems to think that it is the right way to do.";
+		mes "You should toss this to him, saying â€œ^0000cd[Here comes the newbie!]^000000 He believes that a Doram should say this on his or her first voyage for good luck. Anyways, he seems to think that it is the right way to do.";
 		next;
 		mes "[Eggling]";
 		mes "You know what I mean, right?";
@@ -7309,11 +7309,11 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 				mes "[Sous Chef]";
 				mes "The ingredients are ^0000cd1 Clover, 1 Green Herb and 1 Red Herb^000000.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp",3;
+				cutin "ë£¨ë‚˜í‹±ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Clovers and Red Herbs from Leaf Lunatic or Grass Fabre in the field outside.";
 				next;
-				cutin "ÆÄºê¸£Ä«µå.bmp",3;
+				cutin "íŒŒë¸Œë¥´ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Green Herbs from Grass Fabre.";
 				next;
@@ -7332,11 +7332,11 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 				mes "[Sous Chef]";
 				mes "The ingredients are ^0000cd1 Apple and 2 Carrots^000000.";
 				next;
-				cutin "¿¡±×¸µÄ«µå.bmp",3;
+				cutin "ì—ê·¸ë§ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Apples from the Eggring jumping in the outer field of Izlude.";
 				next;
-				cutin "¸®ÇÁ·ç³ªÆ½Ä«µå.bmp",3;
+				cutin "ë¦¬í”„ë£¨ë‚˜í‹±ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get the Carrots from Leaf Lunatic.";
 				next;
@@ -7352,15 +7352,15 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 				mes "[Sous Chef]";
 				mes "The ingredients are ^0000cd1 Jellopy , 1 Fluff, and 1 Feather^000000.";
 				next;
-				cutin "¿¡±×¸µÄ«µå.bmp",3;
+				cutin "ì—ê·¸ë§ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Jellopies from the Eggring jumping in the outer field.";
 				next;
-				cutin "±×·¡½ºÆÄºê¸£Ä«µå.bmp",3;
+				cutin "ê·¸ëž˜ìŠ¤íŒŒë¸Œë¥´ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Fluffs from Grass Fabre or Leaf Lunatic.";
 				next;
-				cutin "¸®ÇÁ·ç³ªÆ½Ä«µå.bmp",3;
+				cutin "ë¦¬í”„ë£¨ë‚˜í‹±ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Feathers from Grass Fabre or Leaf Lunatic.";
 				next;
@@ -7379,11 +7379,11 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 				mes "[Sous Chef]";
 				mes "The ingredients are ^0000cd1 Apple and 1 Clover^000000.";
 				next;
-				cutin "¿¡±×¸µÄ«µå.bmp",3;
+				cutin "ì—ê·¸ë§ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Apples from the Eggring in the outer field.";
 				next;
-				cutin "±×·¡½ºÆÄºê¸£Ä«µå.bmp",3;
+				cutin "ê·¸ëž˜ìŠ¤íŒŒë¸Œë¥´ì¹´ë“œ.bmp",3;
 				mes "[Sous Chef]";
 				mes "You can get Clovers from Grass Fabre or Leaf Lunatic.";
 				next;
