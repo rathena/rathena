@@ -5810,13 +5810,13 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 		if( sd->npc_id == nd->bl.id || sd->npc_shopid == nd->bl.id ){
 			// Retry later
 			nd->dynamicnpc.last_interaction = gettick();
-			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
+			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, nd->bl.id, (intptr_t)nullptr );
 			return 0;
 		}
 
 		// Last interaction is not long enough in the past
 		if( DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ) < battle_config.feature_dynamicnpc_timeout ){
-			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ), npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
+			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ), npc_dynamicnpc_removal_timer, nd->bl.id, (intptr_t)nullptr );
 			return 0;
 		}
 
@@ -5874,7 +5874,7 @@ struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, map_session_
 	}
 
 	dnd->dynamicnpc.last_interaction = gettick();
-	dnd->dynamicnpc.removal_tid = add_timer( dnd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, dnd->bl.id, NULL );
+	dnd->dynamicnpc.removal_tid = add_timer( dnd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, dnd->bl.id, (intptr_t)nullptr );
 
 	return dnd;
 }
