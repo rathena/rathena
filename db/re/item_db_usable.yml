@@ -62503,7 +62503,7 @@ Body:
     Script: |
       getgroupitem(IG_UP_HERO_WEAPON_BOX);
   - Id: 100744
-    AegisName: Costama_Egg69
+    AegisName: Hero_LT_Refine_Melee
     Name: Hero's Weapon Modifier(Physical)
     Type: DelayConsume
     Weight: 10
