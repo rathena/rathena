@@ -2066,22 +2066,22 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "[Yota Chara]";
 	switch(.@s) {
 	case 1:
-		mes mesitemlink( 28413 ) + " is for my father who is far out to the sea.";
+		mes mesitemlink( 28413, false, "Low-grade Horse Mackerel Amulet" ) + " is for my father who is far out to the sea.";
 		break;
 	case 2:
-		mes mesitemlink( 28416 ) + " is for my mother who should be wandering about the deep side of the forest.";
+		mes mesitemlink( 28416, false, "Low-grade Leaf Amulet" ) + " is for my mother who should be wandering about the deep side of the forest.";
 		break;
 	case 3:
-		mes mesitemlink( 28419 ) + " is for my brothers' health and wellness.";
+		mes mesitemlink( 28419, false, "Low-grade Rabbit Amulet" ) + " is for my brothers' health and wellness.";
 		break;
 	case 4:
-		mes mesitemlink( 28422 ) + " is to wish for my mother to return home safely from anywhere in the world.";
+		mes mesitemlink( 28422, false, "Shining Twig Charm" ) + " is to wish for my mother to return home safely from anywhere in the world.";
 		break;
 	case 5:
-		mes mesitemlink( 28423 ) + " is to wish for my father to return home quick with his ship full of tunas.";
+		mes mesitemlink( 28423, false, "Fresh Tuna Amulet" ) + " is to wish for my father to return home quick with his ship full of tunas.";
 		break;
 	case 6:
-		mes mesitemlink( 28424 ) + " is to wish for easy fishing so that my family won't be starved.";
+		mes mesitemlink( 28424, false, "Plump Earthworm Amulet" ) + " is to wish for easy fishing so that my family won't be starved.";
 		break;
 	}
 	if (.@s < 4) {
@@ -2092,7 +2092,7 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 		.@cost = 30;
 		.@item_id = 28418 + .@s;
 	}
-	mes "Will you exchange it for " + .@cost + " " + mesitemlink( 25142 ) + "?";
+	mes "Will you exchange it for " + .@cost + " " + mesitemlink( 25142, false ) + "?";
 	next;
 	if (select( "Exchange", "Cancel" ) == 2) {
 		mes "[Yota Chara]";
@@ -2164,7 +2164,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 	emotion ET_SPARK;
 	mes "[Jogi Chara]";
 	mes "Whoa, a new weapon! New power!";
-	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for " + mesitemlink( 25142 ) + "?";
+	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for " + mesitemlink( 25142, false ) + "?";
 	next;
 	if (select( "Search", "Cancel" ) == 1) {
 		setarray .@item_data[0],
@@ -2193,7 +2193,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 			else {
 				mes "[Jogi Chara]";
 				mes "Whoa! This is ^3131FF" + getitemname(.@item_data[.@i]) + "^000000!";
-				mes "Exchange it for " + .@item_data[.@i+1] + " " + mesitemlink( 25142 ) + "! Please? Will you do it, please?";
+				mes "Exchange it for " + .@item_data[.@i+1] + " " + mesitemlink( 25142, false ) + "! Please? Will you do it, please?";
 				next;
 				if (select( "Exchange", "Quit exchanging" ) == 2) {
 					mes "[Jogi Chara]";
@@ -2253,7 +2253,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	}
 	mes "[Dandi Chara]";
 	mes "Do you mind if I search you to see the items you have with you?";
-	mes "If I find an item suitable for Jogi, I'll pay " + mesitemlink( 25142 ) + "....";
+	mes "If I find an item suitable for Jogi, I'll pay " + mesitemlink( 25142, false ) + "....";
 	next;
 	if (select( "Search", "Cancel" ) == 1) {
 		setarray .@item_data[0],	// keep the order
@@ -2298,7 +2298,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 			else {
 				mes "[Dandi Chara]";
 				mes "Whoa, this must be ^3131FF" + getitemname(.@item_data[.@i]) + "^000000!!";
-				mes "Don't you want to exchange this with " + .@item_data[.@i+1] + " " + mesitemlink( 25142 ) + "?";
+				mes "Don't you want to exchange this with " + .@item_data[.@i+1] + " " + mesitemlink( 25142, false ) + "?";
 				next;
 				if (select( "Exchange", "Quit exchanging" ) == 2) {
 					mes "[Dandi Chara]";
@@ -2388,8 +2388,8 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
 	next;
 	mes "[Goma Chara]";
-	mes "Hey, if you give me " + .@needCoin + " " + mesitemlink( 25142 ) + ", I'll fix this for you.";
-	mes "This should produce " + mesitemlink( .@next_charm_ID ) + ", I guess. How do you like it?";
+	mes "Hey, if you give me " + .@needCoin + " " + mesitemlink( 25142, false ) + ", I'll fix this for you.";
+	mes "This should produce " + mesitemlink( .@next_charm_ID, false ) + ", I guess. How do you like it?";
 	next;
 	if (select( "Upgrade", "Cancel" ) == 2) {
 		mes "[Goma Chara]";
