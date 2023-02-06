@@ -20731,7 +20731,7 @@ void clif_parse_roulette_generate( int fd, map_session_data* sd ){
 	}
 
 	// Player has not claimed his prize yet
-	if( sd->roulette.claimPrize ){
+	if( !sd->roulette.stage && sd->roulette.claimPrize ){
 		clif_roulette_getitem( sd );
 	}
 
