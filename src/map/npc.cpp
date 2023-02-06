@@ -6214,6 +6214,9 @@ void do_init_npc(void){
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 	add_timer_func_list( npc_dynamicnpc_removal_timer, "npc_dynamicnpc_removal_timer" );
+#ifdef SECURE_NPCTIMEOUT
+	add_timer_func_list( npc_secure_timeout_timer, "npc_secure_timeout_timer" );
+#endif
 
 	// Init dummy NPC
 	fake_nd = npc_create_npc( -1, 0, 0 );
