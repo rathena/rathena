@@ -63,7 +63,7 @@ struct s_cash_item_tab{
 	std::vector<std::shared_ptr<s_cash_item>> items;
 };
 
-class CashShopDatabase : public TypesafeYamlDatabase<e_cash_shop_tab, s_cash_item_tab>{
+class CashShopDatabase : public TypesafeYamlDatabase<uint16, s_cash_item_tab>{
 public:
 	CashShopDatabase() : TypesafeYamlDatabase( "ITEM_CASH_DB", 1 ){
 
