@@ -26810,6 +26810,7 @@ BUILDIN_FUNC(mesitemlink){
 	
 	if( data == nullptr ){
 		ShowError( "buildin_mesitemlink: Item ID %u does not exists.\n", nameid );
+		script_pushconststr( st, "" );
 		return SCRIPT_CMD_FAILURE;
 	}
 
