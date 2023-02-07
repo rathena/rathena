@@ -10367,7 +10367,7 @@ void battle_adjust_conf()
 
 #if PACKETVER < 20100000
 	if( battle_config.feature_mesitemlink ){
-		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it requires PACKETVER 2010-00-00 or newer, disabling...\n" );
+		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it requires PACKETVER 2010-01-01 or newer, disabling...\n" );
 		battle_config.feature_mesitemlink = 0;
 	}
 #elif PACKETVER == 20151029 || PACKETVER == 20151104

@@ -1127,9 +1127,9 @@ In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
 
 	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
 
-We therefore created a script command "mesitemlink" that allows you to create the correct syntax
-depending on your configured packet version and we recommend that you use this script command
-instead of hardcoding the HTML tags. For more details see the script command documentation later.
+We therefore created script command "mesitemlink" that allows you to create the correct syntax
+depending on your configured packet version. We recommend that you use this script command
+instead of hardcoding the HTML-like tags. For more details see the documentation for "mesitemlink".
 
 The following sample will open a preview window for Red Potion:
 
@@ -11029,13 +11029,12 @@ client (and server) supports the Item Random Options feature (PACKETVER >= 20150
 
 *mesitemlink(<item_id>{,<use_brackets>{,<display_name>});
 
-Generates an itemlink string for an item and can be used for NPC's mes command.
-The NPC message will show the item's name and it will be clickable and open the
-item description on client side.
-By default <use_brackets> is true and the link will be surrounded by brackets, but you can disable the brackets by
-calling the function with <use_brackets> set to false.
+Generates an itemlink string for an item and can be used with NPC's mes command.
+The NPC message will show the item's name which will be clickable and opens the
+item description client side.
+By default <use_brackets> is true which surrounds the link with brackets. Send false to disable.
 By default the link will be created with the name of the item stored in the item database,
-but in some places it might be necessary to overwrite the <display_name> with something else.
+but in some cases it might be necessary to overwrite the <display_name> with something else.
 
 Examples:
 
