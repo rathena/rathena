@@ -10277,6 +10277,9 @@ static const struct _battle_data {
 	{ "feature.barter",                     &battle_config.feature_barter,                  1,      0,      1,              },
 	{ "feature.barter_extended",            &battle_config.feature_barter_extended,         1,      0,      1,              },
 	{ "feature.itemlink",                   &battle_config.feature_itemlink,                1,      0,      1,              },
+	{ "feature.mesitemlink",                &battle_config.feature_mesitemlink,             1,      0,      1,              },
+	{ "feature.mesitemlink_brackets",       &battle_config.feature_mesitemlink_brackets,    0,      0,      1,              },
+	{ "feature.mesitemlink_dbname",         &battle_config.feature_mesitemlink_dbname,      0,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
 	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
 	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
@@ -10366,6 +10369,19 @@ void battle_adjust_conf()
 	if (battle_config.night_duration && battle_config.night_duration < 60000) // added by [Yor]
 		battle_config.night_duration = 60000;
 
+#if PACKETVER < 20100000
+	if( battle_config.feature_mesitemlink ){
+		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it requires PACKETVER 2010-01-01 or newer, disabling...\n" );
+		battle_config.feature_mesitemlink = 0;
+	}
+#elif PACKETVER == 20151029 || PACKETVER == 20151104
+	// The feature is broken on those two clients or maybe even more. For more details check ItemDatabase::create_item_link_for_mes [Lemongrass]
+	if( battle_config.feature_mesitemlink ){
+		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it is broken on this specific PACKETVER, disabling...\n" );
+		battle_config.feature_mesitemlink = 0;
+	}
+#endif
+
 #if PACKETVER < 20100427
 	if (battle_config.feature_buying_store) {
 		ShowWarning("conf/battle/feature.conf:buying_store is enabled but it requires PACKETVER 2010-04-27 or newer, disabling...\n");
@@ -10426,6 +10442,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20151104
+	if( battle_config.feature_itemlink ){
+		ShowWarning( "conf/battle/feature.conf:itemlink is enabled but it requires PACKETVER 2015-11-04 or newer, disabling...\n" );
+		battle_config.feature_itemlink = 0;
 	}
 #endif
 
