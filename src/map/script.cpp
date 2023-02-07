@@ -4847,6 +4847,8 @@ void do_init_script(void) {
 	stack_ers = ers_new(sizeof(struct script_stack), "script.cpp::script_stack", ERS_OPT_FLEX_CHUNK);
 	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
 
+	add_timer_func_list( run_script_timer, "run_script_timer" );
+
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
 
