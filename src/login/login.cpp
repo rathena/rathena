@@ -261,10 +261,8 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = MIN_CHARS;
-#ifdef VIP_ENABLE
 	acc.vip_time = 0;
 	acc.old_group = 0;
-#endif
 	if( !accounts->create(acc) )
 		return 0;
 

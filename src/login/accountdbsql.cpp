@@ -345,12 +345,15 @@ bool AccountDBSql::from_sql(struct mmo_account& acc, uint32 account_id) {
 	Sql_GetData(sql_handle, 13, &data, NULL); acc.char_slots = (uint8) atoi(data);
 	Sql_GetData(sql_handle, 14, &data, NULL); safestrncpy(acc.pincode, data, sizeof(acc.pincode));
 	Sql_GetData(sql_handle, 15, &data, NULL); acc.pincode_change = atol(data);
-#ifdef VIP_ENABLE
 	Sql_GetData(sql_handle, 16, &data, NULL); acc.vip_time = atol(data);
 	Sql_GetData(sql_handle, 17, &data, NULL); acc.old_group = atoi(data);
-#endif
 	Sql_FreeResult(sql_handle);
 	acc.web_auth_token[0] = '\0';
+
+#ifndef VIP_ENABLE
+	acc.vip_time = 0;
+	acc.old_group = 0;
+#endif
 
 	if (acc.char_slots > MAX_CHARS) {
 		ShowError( "Account %s (AID=%u) exceeds MAX_CHARS. Capping...\n", acc.userid, acc.account_id );
@@ -413,11 +416,7 @@ bool AccountDBSql::to_sql(const struct mmo_account& acc, bool is_new, bool refre
 	else
 	{// update account table
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, 
-#ifdef VIP_ENABLE
 			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=?, `vip_time`=?, `old_group`=? WHERE `account_id` = '%d'",
-#else
-			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=? WHERE `account_id` = '%d'",
-#endif
 			account_db_.c_str(), acc.account_id)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_STRING,    (void*)acc.userid,           strlen(acc.userid))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_STRING,    (void*)acc.pass,             strlen(acc.pass))
@@ -434,10 +433,8 @@ bool AccountDBSql::to_sql(const struct mmo_account& acc, bool is_new, bool refre
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 12, SQLDT_UCHAR,     (void*)&acc.char_slots,      sizeof(acc.char_slots))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 13, SQLDT_STRING,    (void*)&acc.pincode,         strlen(acc.pincode))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 14, SQLDT_LONG,      (void*)&acc.pincode_change,  sizeof(acc.pincode_change))
-#ifdef VIP_ENABLE
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_LONG,      (void*)&acc.vip_time,        sizeof(acc.vip_time))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_INT,       (void*)&acc.old_group,       sizeof(acc.old_group))
-#endif
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt)
 		) {
 			SqlStmt_ShowDebug(stmt);

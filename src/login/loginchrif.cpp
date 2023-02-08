@@ -703,7 +703,7 @@ int logchrif_parse_reqvipdata(int fd) {
 				acc.old_group = 0;
 			}
 			acc.vip_time = vip_time;
-			accounts->save(accounts,&acc, false);
+			accounts->save(acc, false);
 			if( flag&1 )
 				logchrif_sendvipdata(fd,&acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
 		}
