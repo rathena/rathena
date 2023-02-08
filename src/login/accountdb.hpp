@@ -9,12 +9,11 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../config/core.hpp"
-
 #include "mmo_account.hpp"
 
 class AccountDB {
-public:
-	virtual ~AccountDB() {};
+   public:
+	virtual ~AccountDB(){};
 
 	virtual bool init() = 0;
 
@@ -75,8 +74,6 @@ public:
 
 	virtual void send_global_accreg(int fd, uint32 account_id, uint32 char_id) = 0;
 	virtual void save_global_accreg(int fd, uint32 account_id, uint32 char_id) = 0;
-
 };
-
 
 #endif /* ACCOUNTDB_HPP */

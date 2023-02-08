@@ -8,15 +8,14 @@
 #include <string>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
+#include "../common/mmo.hpp"  // ACCOUNT_REG2_NUM
 #include "../common/sql.hpp"
 #include "../config/core.hpp"
-
 #include "accountdb.hpp"
 #include "mmo_account.hpp"
 
 class AccountDBSql : public AccountDB {
-public:
+   public:
 	/// Destroys this database, releasing all allocated memory (including itself).
 	~AccountDBSql();
 
@@ -80,10 +79,9 @@ public:
 	void send_global_accreg(int fd, uint32 account_id, uint32 char_id) override;
 	void save_global_accreg(int fd, uint32 account_id, uint32 char_id) override;
 
-
-private:
-	Sql * accounts_{nullptr};       // SQL handle accounts storage
-	std::string db_hostname_{"127.0.0.1"}; // Doubled for long hostnames (bugreport:8003)
+   private:
+	Sql* accounts_{nullptr};				// SQL handle accounts storage
+	std::string db_hostname_{"127.0.0.1"};	// Doubled for long hostnames (bugreport:8003)
 	uint16 db_port_{3306};
 	std::string db_username_{"ragnarok"};
 	std::string db_password_{""};
@@ -91,7 +89,7 @@ private:
 	std::string codepage_{""};
 	// other settings
 	bool case_sensitive_{false};
-	//table name
+	// table name
 	std::string account_db_{"login"};
 	std::string global_acc_reg_num_table_{"global_acc_reg_num"};
 	std::string global_acc_reg_str_table_{"global_acc_reg_str"};
@@ -99,8 +97,7 @@ private:
 	bool from_sql(struct mmo_account& acc, uint32 account_id);
 	bool to_sql(const struct mmo_account& acc, bool is_new, bool refresh_token);
 
-	Sql * get_handle();
+	Sql* get_handle();
 };
-
 
 #endif /* ACCOUNTDBSQL_HPP */
