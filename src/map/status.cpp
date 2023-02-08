@@ -1751,7 +1751,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 		sc->getSCE(SC_AUTOBERSERK) &&
 		sc->getSCE(SC_PROVOKE) &&
 		sc->getSCE(SC_PROVOKE)->val4==1 &&
-		status->hp >= status->max_hp / 42
+		status->hp >= status->max_hp / 4
 	)	// End auto berserk.
 		status_change_end(bl, SC_PROVOKE);
 
