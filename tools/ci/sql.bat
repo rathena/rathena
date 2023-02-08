@@ -8,8 +8,6 @@ set MYSQL_PWD=%DB_ROOTPW%
 %MYSQL% -u %DB_ROOT% -e "CREATE DATABASE %DB_NAME%;"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\main.sql"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\logs.sql"
-%MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\item_cash_db.sql"
-%MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\item_cash_db2.sql"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\item_db.sql"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\item_db_usable.sql"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\item_db_equip.sql"

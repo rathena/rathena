@@ -7,19 +7,31 @@
 #include <memory>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/core.hpp"
 #include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
 #include "account.hpp"
 
-enum E_LOGINSERVER_ST {
-	LOGINSERVER_ST_RUNNING = CORE_ST_LAST,
-	LOGINSERVER_ST_STARTING,
-	LOGINSERVER_ST_SHUTDOWN,
-	LOGINSERVER_ST_LAST
-};
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_login{
+		class LoginServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_shutdown() override;
+
+			public:
+				LoginServer() : Core( e_core_type::LOGIN ){
+
+				}
+		};
+	}
+}
 
 /// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3

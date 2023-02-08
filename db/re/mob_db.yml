@@ -88368,6 +88368,86 @@ Body:
     AttackMotion: 864
     DamageMotion: 480
     Ai: 21
+#  - Id: 3529
+#    AegisName: JP_E_MONSTER_1
+#  - Id: 3530
+#    AegisName: JP_E_MONSTER_2
+#  - Id: 3531
+#    AegisName: JP_E_MONSTER_3
+#  - Id: 3532
+#    AegisName: JP_E_MONSTER_4
+#  - Id: 3533
+#    AegisName: JP_E_MONSTER_5
+#  - Id: 3534
+#    AegisName: JP_E_MONSTER_6
+#  - Id: 3535
+#    AegisName: JP_E_MONSTER_7
+#  - Id: 3536
+#    AegisName: JP_E_MONSTER_8
+#  - Id: 3537
+#    AegisName: JP_E_MONSTER_9
+#  - Id: 3538
+#    AegisName: JP_E_MONSTER_10
+#  - Id: 3539
+#    AegisName: JP_E_MONSTER_11
+#  - Id: 3540
+#    AegisName: JP_E_MONSTER_12
+#  - Id: 3541
+#    AegisName: JP_E_MONSTER_13
+#  - Id: 3542
+#    AegisName: JP_E_MONSTER_14
+#  - Id: 3543
+#    AegisName: JP_E_MONSTER_15
+#  - Id: 3544
+#    AegisName: JP_E_MONSTER_16
+#  - Id: 3545
+#    AegisName: JP_E_MONSTER_17
+#  - Id: 3546
+#    AegisName: JP_E_MONSTER_18
+#  - Id: 3547
+#    AegisName: JP_E_MONSTER_19
+#  - Id: 3548
+#    AegisName: JP_E_MONSTER_20
+#  - Id: 3549
+#    AegisName: JP_E_MONSTER_21
+#  - Id: 3550
+#    AegisName: JP_E_MONSTER_22
+#  - Id: 3551
+#    AegisName: JP_E_MONSTER_23
+#  - Id: 3552
+#    AegisName: JP_E_MONSTER_24
+#  - Id: 3553
+#    AegisName: JP_E_MONSTER_25
+#  - Id: 3554
+#    AegisName: JP_E_MONSTER_26
+#  - Id: 3555
+#    AegisName: JP_E_MONSTER_27
+#  - Id: 3556
+#    AegisName: JP_E_MONSTER_28
+#  - Id: 3557
+#    AegisName: JP_E_MONSTER_29
+#  - Id: 3558
+#    AegisName: JP_E_MONSTER_30
+#  - Id: 3559
+#    AegisName: JP_E_MONSTER_31
+#  - Id: 3560
+#    AegisName: JP_E_MONSTER_32
+#  - Id: 3561
+#    AegisName: JP_E_MONSTER_33
+#  - Id: 3562
+#    AegisName: JP_E_MONSTER_34
+#  - Id: 3563
+#    AegisName: JP_E_MONSTER_35
+#  - Id: 3564
+#    AegisName: JP_E_MONSTER_36
+#  - Id: 3565
+#    AegisName: JP_E_MONSTER_37
+#  - Id: 3566
+#    AegisName: JP_E_MONSTER_38
+#  - Id: 3567
+#    AegisName: JP_E_MONSTER_39
+#  - Id: 3568
+#    AegisName: JP_E_MONSTER_40
   - Id: 3569
     AegisName: POPE_MD_H_MERC_NORMAL
     Name: Casual Pope
@@ -92130,20 +92210,296 @@ Body:
         Rate: 7000
 #  - Id: 3791
 #    AegisName: JP_E_MONSTER_73
-#  - Id: 3792
-#    AegisName: ILL_GAZETI
-#  - Id: 3793
-#    AegisName: ILL_SNOWIER
-#  - Id: 3794
-#    AegisName: ILL_ICE_TITAN
-#  - Id: 3795
-#    AegisName: ILL_ICEICLE
-#  - Id: 3796
-#    AegisName: ILL_KTULLANUX
-#  - Id: 3797
-#    AegisName: ILL_FROZEN_KN
-#  - Id: 3798
-#    AegisName: ILL_FROZEN_GC
+  - Id: 3792
+    AegisName: ILL_GAZETI
+    Name: Angry Gazeti
+    Level: 126
+    Hp: 117139
+    BaseExp: 6755
+    JobExp: 6454
+    Attack: 2290
+    Attack2: 366
+    Defense: 141
+    MagicDefense: 42
+    Str: 125
+    Agi: 54
+    Vit: 64
+    Int: 56
+    Dex: 144
+    Luk: 62
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 190
+    AttackDelay: 576
+    AttackMotion: 370
+    DamageMotion: 270
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Frozen_Stone_Fragment
+        Rate: 1000
+      - Item: Bradium
+        Rate: 200
+      - Item: Cold_Ice
+        Rate: 100
+      - Item: Cap_
+        Rate: 50
+      - Item: Bullet_Case_Fleeze
+        Rate: 100
+      - Item: AngerGazeti_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3793
+    AegisName: ILL_SNOWIER
+    Name: Angry Snowier
+    Level: 129
+    Hp: 105290
+    BaseExp: 7106
+    JobExp: 6711
+    Attack: 1750
+    Attack2: 330
+    Defense: 195
+    MagicDefense: 78
+    Str: 136
+    Agi: 88
+    Vit: 97
+    Int: 78
+    Dex: 103
+    Luk: 71
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 04
+    Drops:
+      - Item: Snowball
+        Rate: 1000
+      - Item: Ice_Heart
+        Rate: 700
+      - Item: Mistic_Frozen
+        Rate: 100
+      - Item: Combo_Battle_Glove
+        Rate: 50
+      - Item: Light_Granule
+        Rate: 300
+      - Item: AngerSnowier_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3794
+    AegisName: ILL_ICE_TITAN
+    Name: Angry Ice Titan
+    Level: 133
+    Hp: 137656
+    BaseExp: 7519
+    JobExp: 7132
+    Attack: 1988
+    Attack2: 298
+    Defense: 644
+    MagicDefense: 44
+    Str: 181
+    Agi: 70
+    Vit: 119
+    Int: 61
+    Dex: 124
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Ai: 04
+    Drops:
+      - Item: SpritJewel
+        Rate: 1000
+      - Item: Ice_Piece
+        Rate: 700
+      - Item: Frozen_Rose
+        Rate: 200
+      - Item: Huuma_Fluttering_Snow
+        Rate: 50
+      - Item: Elder_Branch
+        Rate: 300
+      - Item: AngerIceTitan_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3795
+    AegisName: ILL_ICEICLE
+    Name: Solid Icicle
+    Level: 135
+    Hp: 1012
+    BaseExp: 200
+    JobExp: 200
+    Attack: 1553
+    Attack2: 1
+    Defense: 50
+    MagicDefense: 35
+    Str: 199
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 244
+    Luk: 1
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 1344
+    Drops:
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 0
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 1
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 2
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 3
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 4
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 5
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 6
+      - Item: Frozen_Stone_Fragment
+        Rate: 200
+        Index: 7
+        StealProtected: true
+  - Id: 3796
+    AegisName: ILL_KTULLANUX
+    Name: Awakened Ktullanux
+    Level: 135
+    Hp: 13521442
+    BaseExp: 2777284
+    JobExp: 1937023
+    Attack: 5754
+    Attack2: 2680
+    Defense: 129
+    MagicDefense: 78
+    Str: 125
+    Agi: 156
+    Vit: 70
+    Int: 165
+    Dex: 262
+    Luk: 142
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 400
+    AttackDelay: 432
+    AttackMotion: 840
+    DamageMotion: 216
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Yggdrasilberry
+        Rate: 5000
+        Index: 0
+      - Item: Yggdrasilberry
+        Rate: 5000
+        Index: 1
+      - Item: IllusionStone
+        Rate: 5000
+    Drops:
+      - Item: Ktullanux_Eye
+        Rate: 4000
+      - Item: Clack_Of_Servival
+        Rate: 1000
+      - Item: Herald_Of_GOD
+        Rate: 1000
+      - Item: Huuma_Fluttering_Snow
+        Rate: 1000
+      - Item: AwakenKtullanux_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3797
+    AegisName: ILL_FROZEN_KN
+    Name: ILL_FROZEN_KN
+    Level: 1
+    Hp: 100
+    Defense: 100
+    MagicDefense: 99
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 500
+    AttackMotion: 500
+    DamageMotion: 500
+    Modes:
+      NORANDOMWALK: true
+      IGNOREMELEE: true
+      IGNOREMAGIC: true
+      IGNORERANGED: true
+      IGNOREMISC: true
+      KNOCKBACKIMMUNE: true
+      TELEPORTBLOCK: true
+      STATUSIMMUNE: true
+      SKILLIMMUNE: true
+  - Id: 3798
+    AegisName: ILL_FROZEN_GC
+    Name: ILL_FROZEN_GC
+    Level: 1
+    Hp: 100
+    Defense: 100
+    MagicDefense: 99
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 500
+    AttackMotion: 500
+    DamageMotion: 500
+    Modes:
+      NORANDOMWALK: true
+      IGNOREMELEE: true
+      IGNOREMAGIC: true
+      IGNORERANGED: true
+      IGNOREMISC: true
+      KNOCKBACKIMMUNE: true
+      TELEPORTBLOCK: true
+      STATUSIMMUNE: true
+      SKILLIMMUNE: true
 #  - Id: 3799
 #    AegisName: ILL_ASSULTER
 #  - Id: 3800
@@ -92505,7 +92861,7 @@ Body:
 #  - Id: 3825
 #    AegisName: E_SALAMANDER
 #  - Id: 3826
-#    AegisName: EP16_2_SEYREN
+#    AegisName: E16_2_SEYREN
 #  - Id: 3827
 #    AegisName: AB_MOB_001
 #  - Id: 3828
@@ -94538,16 +94894,229 @@ Body:
       - Item: Mt_Caput_Card
         Rate: 1
         StealProtected: true
-#  - Id: 20367
-#    AegisName: RAYDRIC_H
-#  - Id: 20368
-#    AegisName: RAYDRIC_ARCHER_H
-#  - Id: 20369
-#    AegisName: GARGOYLE_H
-#  - Id: 20370
-#    AegisName: STING_H
-#  - Id: 20371
-#    AegisName: RAGGED_ZOMBIE_H
+  - Id: 20367
+    AegisName: RAYDRIC_H
+    Name: Contaminated Raydric
+    Level: 185
+    Hp: 2372683
+    BaseExp: 169477
+    JobExp: 118634
+    Attack: 3330
+    Attack2: 826
+    Defense: 494
+    MagicDefense: 101
+    Str: 144
+    Agi: 134
+    Vit: 103
+    Int: 67
+    Dex: 148
+    Luk: 41
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 824
+    AttackMotion: 780
+    DamageMotion: 420
+    Ai: 21
+    Drops:
+      - Item: Brigan
+        Rate: 3774
+      - Item: Elunium_Stone
+        Rate: 35
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: T_Lance_Of_Kingdom
+        Rate: 50
+        RandomOptionGroup: AGW1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_Raydric_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20368
+    AegisName: RAYDRIC_ARCHER_H
+    Name: Contaminated Raydric Ar
+    Level: 184
+    Hp: 2355718
+    BaseExp: 168266
+    JobExp: 117786
+    Attack: 3174
+    Attack2: 883
+    Defense: 412
+    MagicDefense: 101
+    Str: 138
+    Agi: 113
+    Vit: 76
+    Int: 72
+    Dex: 187
+    Luk: 77
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 05
+    Drops:
+      - Item: Incisive_Arrow
+        Rate: 350
+      - Item: Brigan
+        Rate: 3774
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_Ray_A_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20369
+    AegisName: GARGOYLE_H
+    Name: Frozen Gargoyle
+    Level: 186
+    Hp: 2377139
+    BaseExp: 169796
+    JobExp: 118857
+    Attack: 2999
+    Attack2: 1203
+    Defense: 333
+    MagicDefense: 105
+    Str: 129
+    Agi: 109
+    Vit: 49
+    Int: 97
+    Dex: 178
+    Luk: 63
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 720
+    DamageMotion: 384
+    Ai: 05
+    Drops:
+      - Item: Zargon
+        Rate: 970
+      - Item: Petite_DiablOfs_Wing
+        Rate: 75
+      - Item: Elunium
+        Rate: 6
+      - Item: Crystal_Arrow_Container
+        Rate: 6
+      - Item: Crystal_Blue
+        Rate: 2
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Frozen_Gargoyle_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20370
+    AegisName: STING_H
+    Name: Contaminated Sting
+    Level: 180
+    Hp: 2297907
+    BaseExp: 164136
+    JobExp: 114895
+    Attack: 3893
+    Attack2: 912
+    Defense: 276
+    MagicDefense: 100
+    Str: 173
+    Agi: 98
+    Vit: 32
+    Int: 76
+    Dex: 170
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 528
+    AttackMotion: 500
+    DamageMotion: 240
+    Ai: 21
+    Drops:
+      - Item: Mud_Lump
+        Rate: 1000
+      - Item: Coal
+        Rate: 160
+      - Item: Great_Nature
+        Rate: 30
+      - Item: Silk_Ribbon
+        Rate: 13
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_Sting_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20371
+    AegisName: RAGGED_ZOMBIE_H
+    Name: Prison Breaker
+    Level: 186
+    Hp: 2375279
+    BaseExp: 169663
+    JobExp: 118764
+    Attack: 3185
+    Attack2: 1228
+    Defense: 297
+    MagicDefense: 105
+    Str: 137
+    Agi: 71
+    Vit: 37
+    Int: 99
+    Dex: 156
+    Luk: 61
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 05
+    Drops:
+      - Item: Manacles
+        Rate: 1750
+      - Item: Spoon_Stub
+        Rate: 50
+      - Item: Elunium
+        Rate: 10
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Prisoner_Dairy
+        Rate: 50
+        RandomOptionGroup: AGW1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Prison_Breaker_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20372
 #    AegisName: BLAZZER_H
 #  - Id: 20373
@@ -94562,10 +95131,98 @@ Body:
 #    AegisName: KAHO_H
 #  - Id: 20378
 #    AegisName: LAVA_GOLEM_H
-#  - Id: 20379
-#    AegisName: ICE_GHOST_H
-#  - Id: 20380
-#    AegisName: FLAME_GHOST_H
+  - Id: 20379
+    AegisName: ICE_GHOST_H
+    Name: Ice Ghost
+    Level: 189
+    Hp: 2418315
+    BaseExp: 172737
+    JobExp: 120916
+    Attack: 2670
+    Attack2: 2104
+    Defense: 390
+    MagicDefense: 115
+    Str: 113
+    Agi: 103
+    Vit: 67
+    Int: 167
+    Dex: 146
+    Luk: 57
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1056
+    AttackMotion: 1056
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Zargon
+        Rate: 2280
+      - Item: Skel_Bone
+        Rate: 3000
+      - Item: Skull
+        Rate: 250
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Wand_Of_Ice
+        Rate: 50
+        RandomOptionGroup: AGM1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Ice_Ghost_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20380
+    AegisName: FLAME_GHOST_H
+    Name: Flame Ghost
+    Level: 189
+    Hp: 2410282
+    BaseExp: 172163
+    JobExp: 120514
+    Attack: 2811
+    Attack2: 2356
+    Defense: 237
+    MagicDefense: 118
+    Str: 119
+    Agi: 99
+    Vit: 16
+    Int: 187
+    Dex: 149
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1056
+    AttackMotion: 1056
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Zargon
+        Rate: 2280
+      - Item: Skel_Bone
+        Rate: 3000
+      - Item: Skull
+        Rate: 250
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: Wand_Of_Flame
+        Rate: 50
+        RandomOptionGroup: AGM1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Flame_Ghost_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20381
     AegisName: EP17_1_R4885_BESTIA
     Name: R48-85-Bestia
@@ -94717,14 +95374,151 @@ Body:
 #  - Id: 20419
 #    AegisName: MUSPELLSKOLL_H
 #    DamageTaken: 10
-#  - Id: 20420
-#    AegisName: WANDER_MAN_H
-#  - Id: 20421
-#    AegisName: BRINARANEA_H
-#    DamageTaken: 10
-#  - Id: 20422
-#    AegisName: DARK_LORD_H
-#    DamageTaken: 10
+  - Id: 20420
+    AegisName: WANDER_MAN_H
+    Name: Corrupted Wanderer
+    Level: 187
+    Hp: 2387582
+    BaseExp: 170542
+    JobExp: 119379
+    Attack: 4114
+    Attack2: 835
+    Defense: 289
+    MagicDefense: 102
+    Str: 176
+    Agi: 121
+    Vit: 34
+    Int: 67
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 672
+    AttackMotion: 500
+    DamageMotion: 192
+    Ai: 21
+    Drops:
+      - Item: Skull
+        Rate: 2425
+      - Item: Centimental_Leaf
+        Rate: 3
+      - Item: Oridecon
+        Rate: 57
+      - Item: Zelunium_Ore
+        Rate: 120
+      - Item: T_Sword_Of_Kingdom
+        Rate: 50
+        RandomOptionGroup: AGW1
+      - Item: Shadowdecon_Ore
+        Rate: 120
+      - Item: Polluted_W_Man_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20421
+    AegisName: BRINARANEA_H
+    Name: Corrupted Spider Queen
+    Level: 195
+    Hp: 74623473
+    BaseExp: 14924695
+    JobExp: 10447286
+    Attack: 6069
+    Attack2: 1469
+    Defense: 285
+    MagicDefense: 112
+    Str: 249
+    Agi: 176
+    Vit: 30
+    Int: 113
+    Dex: 191
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 500
+    DamageMotion: 768
+    DamageTaken: 10
+    Ai: 21
+    MvpDrops:
+      - Item: Old_Card_Album
+        Rate: 1000
+      - Item: Mistic_Frozen
+        Rate: 5000
+    Drops:
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Old_Violet_Box
+        Rate: 3000
+      - Item: Yggdrasilberry
+        Rate: 2500
+      - Item: Zelunium
+        Rate: 50
+      - Item: Spiderweb
+        Rate: 5000
+      - Item: Staff_Of_Blue_Flame
+        Rate: 100
+        RandomOptionGroup: AGM1
+      - Item: Polluted_Spi_Q_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20422
+    AegisName: DARK_LORD_H
+    Name: Corrupted Dark Lord
+    Level: 194
+    Hp: 74476822
+    BaseExp: 14895364
+    JobExp: 10426755
+    Attack: 6693
+    Attack2: 3841
+    Defense: 503
+    MagicDefense: 134
+    Str: 276
+    Agi: 151
+    Vit: 103
+    Int: 297
+    Dex: 172
+    Luk: 66
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 868
+    AttackMotion: 768
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    MvpDrops:
+      - Item: Blue_Coif_
+        Rate: 500
+      - Item: Skull
+        Rate: 6000
+    Drops:
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Skull
+        Rate: 5000
+      - Item: Zelunium
+        Rate: 50
+      - Item: Yggdrasilberry
+        Rate: 2500
+      - Item: Polluted_Dark_L_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20423
 #    AegisName: BACSOJIN2
 #  - Id: 20424
@@ -94965,8 +95759,9 @@ Body:
 #    AegisName: MD_ED_LGTHIGHGUARD
 #  - Id: 20542
 #    AegisName: MD_ED_LGTGUARD
-#  - Id: 20543
-#    AegisName: MD_ED_M_SCIENCE
+  - Id: 20543
+    AegisName: MD_ED_M_SCIENCE
+    Name: MD_ED_M_SCIENCE
 #  - Id: 20544
 #    AegisName: MINERAL_R_MJ
 #  - Id: 20545
@@ -95916,19 +96711,440 @@ Body:
 #  - Id: 20928
 #    AegisName: CHIMERA_THEONE
 #    DamageTaken: 10
-#  - Id: 20929
-#    AegisName: GIANT_CAPUT
-#  - Id: 20930
-#    AegisName: DOLORIAN
-#  - Id: 20931
-#    AegisName: PLAGARION
-#  - Id: 20932
-#    AegisName: DEADRE
-#  - Id: 20933
-#    AegisName: VENEDI
-#  - Id: 20934
-#    AegisName: R001_BESTIA
-#    DamageTaken: 10
+#  - Id: 20856
+#    AegisName: MD_N_ARENA_1
+#  - Id: 20857
+#    AegisName: MD_N_ARENA_2
+#  - Id: 20858
+#    AegisName: MD_N_ARENA_3_1
+#  - Id: 20859
+#    AegisName: MD_N_ARENA_3_2
+#  - Id: 20860
+#    AegisName: MD_N_ARENA_3_3
+#  - Id: 20861
+#    AegisName: MD_N_ARENA_4
+#  - Id: 20862
+#    AegisName: MD_N_ARENA_5
+#  - Id: 20863
+#    AegisName: MD_N_ARENA_6
+#  - Id: 20864
+#    AegisName: MD_N_ARENA_7
+#  - Id: 20865
+#    AegisName: MD_N_ARENA_8
+#  - Id: 20866
+#    AegisName: MD_N_ARENA_9
+#  - Id: 20867
+#    AegisName: MD_N_ARENA_10
+#  - Id: 20868
+#    AegisName: MD_N_ARENA_11
+#  - Id: 20869
+#    AegisName: MD_N_ARENA_12
+#  - Id: 20870
+#    AegisName: MD_KANABIAN_N
+#  - Id: 20871
+#    AegisName: MD_ALPHONSE_N
+#  - Id: 20872
+#    AegisName: MD_GEFFEN_FENRIR_N
+#  - Id: 20873
+#    AegisName: WAR_NUT
+#  - Id: 20874
+#    AegisName: MOLE_TW
+#  - Id: 20875
+#    AegisName: 4JOB_LETICIA
+#  - Id: 20876
+#    AegisName: 4JOB_ACIDUS
+#  - Id: 20877
+#    AegisName: G_ILL_SROPHO
+#  - Id: 20878
+#    AegisName: G_ILL_OBEAUNE
+#  - Id: 20879
+#    AegisName: G_ILL_DEVIACE
+#  - Id: 20880
+#    AegisName: G_ILL_MARSE
+#  - Id: 20881
+#    AegisName: G_ILL_MERMAN
+#  - Id: 20882
+#    AegisName: G_ILL_SEDORA
+#  - Id: 20883
+#    AegisName: G_ILL_SWORD_FISH
+#  - Id: 20884
+#    AegisName: G_ILL_STROUF
+#  - Id: 20885
+#    AegisName: G_ILL_PHEN
+#  - Id: 20886
+#    AegisName: MD_AIRBOAT_TREE
+#  - Id: 20887
+#    AegisName: MD_AIRBOAT_PORING
+#  - Id: 20888
+#    AegisName: MD_AIRBOAT_WORM
+#  - Id: 20889
+#    AegisName: MD_AIRBOAT_LEECH
+#  - Id: 20890
+#    AegisName: MD_AIRBOAT_MOS
+#  - Id: 20891
+#    AegisName: MD_AIRBOAT_BOSS
+#  - Id: 20892
+#    AegisName: MD_SAKRAY
+#  - Id: 20893
+#    AegisName: MD_TIARA
+#  - Id: 20894
+#    AegisName: MD_UNDEAD_KNIGHT
+#  - Id: 20895
+#    AegisName: MD_UNDEAD_SOLDIER
+#  - Id: 20896
+#    AegisName: MD_UNDEAD_ARCHER
+#  - Id: 20897
+#    AegisName: MD_UNDEAD_WIZARD
+#  - Id: 20898
+#    AegisName: MD_UNDEAD_MAGICIAN
+#  - Id: 20899
+#    AegisName: MD_UNDEAD_NOBLE
+#  - Id: 20900
+#    AegisName: MD_UNDEAD_SERVANT
+#  - Id: 20901
+#    AegisName: DISASTER_OMEN
+#  - Id: 20902
+#    AegisName: DISASTER_WIND
+#  - Id: 20903
+#    AegisName: CONQUER_INCARNATION
+#  - Id: 20904
+#    AegisName: FAMINE_INCARNATION
+#  - Id: 20905
+#    AegisName: APPETITE_INCARNATION
+#  - Id: 20906
+#    AegisName: DISASTER_SYMBOL
+#  - Id: 20907
+#    AegisName: DEVIL_EYE
+#  - Id: 20908
+#    AegisName: WAR_INCARNATION
+#  - Id: 20909
+#    AegisName: DEATH_INCARNATION
+#  - Id: 20910
+#    AegisName: CARNIVOROUS
+#  - Id: 20911
+#    AegisName: SINS_JUSTICE
+#  - Id: 20912
+#    AegisName: SINS_BRAVE
+#  - Id: 20913
+#    AegisName: SINS_MODERATION
+#  - Id: 20914
+#    AegisName: SINS_WISDOM
+#  - Id: 20915
+#    AegisName: G_SINS_JUSTICE
+#  - Id: 20916
+#    AegisName: G_SINS_BRAVE
+#  - Id: 20917
+#    AegisName: G_SINS_MODERATION
+#  - Id: 20918
+#    AegisName: G_SINS_WISDOM
+#  - Id: 20919
+#    AegisName: CARAT_TWEVENT
+#  - Id: 20920
+#    AegisName: CHIMERA_LAVA
+#  - Id: 20921
+#    AegisName: CHIMERA_FULGOR
+#  - Id: 20922
+#    AegisName: CHIMERA_NAPEO
+#  - Id: 20923
+#    AegisName: CHIMERA_GALENSIS
+#  - Id: 20924
+#    AegisName: CHIMERA_AMITERA
+#  - Id: 20925
+#    AegisName: CHIMERA_LITUS
+#  - Id: 20926
+#    AegisName: CHIMERA_FILLIA
+#  - Id: 20927
+#    AegisName: CHIMERA_VANILAQUS
+#  - Id: 20928
+#    AegisName: CHIMERA_THEONE
+  - Id: 20929
+    AegisName: GIANT_CAPUT
+    Name: Giant Caput
+    Level: 213
+    Hp: 12405430
+    BaseExp: 262421  # TODO
+    JobExp: 183695  # TODO
+    Attack: 7135
+    Attack2: 894
+    Defense: 288
+    MagicDefense: 125
+    MagicResistance: 113
+    Resistance: 113
+    Str: 257
+    Agi: 159
+    Vit: 106
+    Int: 106
+    Dex: 170
+    Luk: 170
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 924
+    AttackMotion: 1848
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Tooth_Of_
+        Rate: 1600
+      - Item: Tendon
+        Rate: 2000
+      - Item: Rune_Of_Darkness
+        Rate: 2000
+      - Item: Piece_Of_Darkness
+        Rate: 2000
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Giant_Caput_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20930
+    AegisName: DOLORIAN
+    Name: Dolorian
+    Level: 214
+    Hp: 11763310
+    BaseExp: 267459  # TODO
+    JobExp: 187221  # TODO
+    Attack: 7230
+    Attack2: 904
+    Defense: 145
+    MagicDefense: 142
+    MagicResistance: 114
+    Resistance: 116
+    Str: 256
+    Agi: 158
+    Vit: 108
+    Int: 107
+    Dex: 173
+    Luk: 170
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 125
+    AttackDelay: 674
+    AttackMotion: 1248
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 2500
+      - Item: Sticky_Poison
+        Rate: 2000
+      - Item: Tendon
+        Rate: 2000
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 12
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Dolorian_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20931
+    AegisName: PLAGARION
+    Name: Plagarion
+    Level: 215
+    Hp: 13189560
+    BaseExp: 264854  # TODO
+    JobExp: 185398  # TODO
+    Attack: 7800
+    Attack2: 940
+    Defense: 285
+    MagicDefense: 122
+    MagicResistance: 118
+    Resistance: 118
+    Str: 278
+    Agi: 177
+    Vit: 110
+    Int: 110
+    Dex: 191
+    Luk: 177
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1332
+    AttackMotion: 2664
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 2000
+      - Item: Dragon_Canine
+        Rate: 2000
+      - Item: Dragon_Train
+        Rate: 2000
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 12
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Plagarion_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20932
+    AegisName: DEADRE
+    Name: Deadre
+    Level: 214
+    Hp: 12435400
+    BaseExp: 263484  # TODO
+    JobExp: 184439  # TODO
+    Attack: 7415
+    Attack2: 921
+    Defense: 231
+    MagicDefense: 88
+    MagicResistance: 96
+    Resistance: 118
+    Str: 277
+    Agi: 175
+    Vit: 110
+    Int: 90
+    Dex: 170
+    Luk: 177
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 1152
+    DamageMotion: 720
+    Ai: 04
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 1500
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Long_Hair
+        Rate: 1500
+      - Item: Zelunium
+        Rate: 12
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Deadre_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20933
+    AegisName: VENEDI
+    Name: Venedi
+    Level: 213
+    Hp: 11790680
+    BaseExp: 261478  # TODO
+    JobExp: 183035  # TODO
+    Attack: 7122
+    Attack2: 911
+    Defense: 207
+    MagicDefense: 110
+    MagicResistance: 108
+    Resistance: 122
+    Str: 256
+    Agi: 167
+    Vit: 115
+    Int: 101
+    Dex: 165
+    Luk: 117
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 1536
+    DamageMotion: 960
+    Ai: 04
+    Drops:
+      - Item: Sticky_Poison
+        Rate: 2400
+      - Item: Sticky_Mucus
+        Rate: 2400
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Zelunium
+        Rate: 12
+      - Item: Venedi_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20934
+    AegisName: R001_BESTIA
+    Name: R001-Bestia
+    Level: 215
+    Hp: 134179630  # TODO
+    BaseExp: 6578140
+    JobExp: 4604698
+    Attack: 12871
+    Attack2: 2187
+    Defense: 540
+    MagicDefense: 140
+    MagicResistance: 367
+    Resistance: 278
+    Str: 347
+    Agi: 124
+    Vit: 259
+    Int: 341
+    Dex: 167
+    Luk: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 672
+    AttackMotion: 1344
+    DamageMotion: 768
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Piece_Of_Bone_Armor
+        Rate: 4000
+      - Item: Old_Violet_Box
+        Rate: 4000
+      - Item: Shadowdecon
+        Rate: 4000
+      - Item: Zelunium
+        Rate: 4000
+      - Item: R001_Bestia_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20935
 #    AegisName: GAN_CEANN
 #  - Id: 20936
@@ -97545,6 +98761,14 @@ Body:
 #    AegisName: SEASON_MOB_105
 #  - Id: 21508
 #    AegisName: SEASON_MOB_106
+#  - Id: 21509
+#    AegisName: SEASON_MOB_107
+#  - Id: 21510
+#    AegisName: SEASON_MOB_108
+#  - Id: 21511
+#    AegisName: SEASON_MOB_109
+#  - Id: 21512
+#    AegisName: SEASON_MOB_110
 #  - Id: 21513
 #    AegisName: EP19_NPC_IWIN
 #  - Id: 21514
@@ -97681,6 +98905,12 @@ Body:
 #    AegisName: ECO_LORD_OF_DEATH
 #  - Id: 21580
 #    AegisName: G_BIJOU
+#  - Id: 21581
+#    AegisName: BD_DUMMY_TW
+#  - Id: 21582
+#    AegisName: BD_KUJAKA_TW
+#  - Id: 21583
+#    AegisName: BD_KUJAKA_REWARD_TW
 #  - Id: 21587
 #    AegisName: NPC_EDDGA
 #  - Id: 21588
@@ -97711,6 +98941,430 @@ Body:
 #    AegisName: EP19_RE_RGAN_E
 #  - Id: 21601
 #    AegisName: EP19_ET_RGAN_D
+#  - Id: 21602
+#    AegisName: C5_KASA_VEINS
+#  - Id: 21603
+#    AegisName: C4_GHOUL_VEINS
+#  - Id: 21604
+#    AegisName: BYORGUE_VEINS
+#  - Id: 21605
+#    AegisName: BOW_GUARDIAN_VEINS
+#  - Id: 21606
+#    AegisName: C5_SALAMANDER_VEINS
+#  - Id: 21607
+#    AegisName: DROSERA_VEINS
+#  - Id: 21608
+#    AegisName: IMP_VEINS
+#  - Id: 21609
+#    AegisName: KASA_VEINS
+#  - Id: 21610
+#    AegisName: MAGMARING_VEINS
+#  - Id: 21611
+#    AegisName: MUSCIPULAR_VEINS
+#  - Id: 21612
+#    AegisName: SALAMANDER_VEINS
+#  - Id: 21613
+#    AegisName: SWORD_GUARDIAN_VEINS
+#  - Id: 21614
+#    AegisName: KNOCKER_VEINS
+#  - Id: 21615
+#    AegisName: C3_KNOCKER_VEINS
+#  - Id: 21616
+#    AegisName: VR_BOOK_FAIRY
+#  - Id: 21617
+#    AegisName: VR_UNKOWN_MAN
+#  - Id: 21618
+#    AegisName: VR_LADY
+#  - Id: 21619
+#    AegisName: VR_KNIGHT_SILVER
+#  - Id: 21620
+#    AegisName: VR_ELYUMINA
+#  - Id: 21621
+#    AegisName: VR_MD_HHA_RKNT
+#  - Id: 21622
+#    AegisName: VR_MD_HHA_RYGD
+#  - Id: 21623
+#    AegisName: VR_MD_HHA_ACBS
+#  - Id: 21624
+#    AegisName: VR_MD_HHA_RNGR
+#  - Id: 21625
+#    AegisName: VR_MD_HHA_GX
+#  - Id: 21626
+#    AegisName: VR_MD_HHA_SC
+#  - Id: 21627
+#    AegisName: VR_MD_HHA_WR
+#  - Id: 21628
+#    AegisName: VR_MD_LEVI
+#  - Id: 21629
+#    AegisName: VR_MD_LEVI_2
+#  - Id: 21630
+#    AegisName: WILD_ROSE3
+#  - Id: 21631
+#    AegisName: BLUEMOON_LOLI_RURI2
+#  - Id: 21632
+#    AegisName: FARMILIAR2
+#  - Id: 21633
+#    AegisName: VR_AGNES
+#  - Id: 21634
+#    AegisName: 20TH_GATE_GREEN
+#  - Id: 21635
+#    AegisName: 20TH_GATE_PURPLE
+#  - Id: 21636
+#    AegisName: 20TH_GATE_RED
+#  - Id: 21637
+#    AegisName: 20TH_CRYSTAL_S
+#  - Id: 21638
+#    AegisName: 20TH_CRYSTAL_M
+#  - Id: 21639
+#    AegisName: 20TH_CRYSTAL_L
+#  - Id: 21640
+#    AegisName: SEASON_MOB_111
+#  - Id: 21641
+#    AegisName: SEASON_MOB_112
+#  - Id: 21642
+#    AegisName: SEASON_MOB_113
+#  - Id: 21643
+#    AegisName: SEASON_MOB_114
+#  - Id: 21644
+#    AegisName: SEASON_MOB_115
+#  - Id: 21645
+#    AegisName: SEASON_MOB_116
+#  - Id: 21646
+#    AegisName: SEASON_MOB_117
+#  - Id: 21647
+#    AegisName: SEASON_MOB_118
+#  - Id: 21648
+#    AegisName: SEASON_MOB_119
+#  - Id: 21649
+#    AegisName: SEASON_MOB_120
+#  - Id: 21650
+#    AegisName: CWHITEKNIGHT
+#  - Id: 21651
+#    AegisName: KNIGHT_OF_ABYSS2
+#  - Id: 21652
+#    AegisName: GH_WHITEKNIGHT
+#  - Id: 21653
+#    AegisName: EDDGA3
+#  - Id: 21779
+#    AegisName: SEASON_MOB_121
+#  - Id: 21780
+#    AegisName: SEASON_MOB_122
+#  - Id: 21781
+#    AegisName: SEASON_MOB_123
+#  - Id: 21782
+#    AegisName: SEASON_MOB_124
+#  - Id: 21783
+#    AegisName: SEASON_MOB_125
+#  - Id: 21784
+#    AegisName: SEASON_MOB_126
+#  - Id: 21785
+#    AegisName: SEASON_MOB_127
+#  - Id: 21786
+#    AegisName: SEASON_MOB_128
+#  - Id: 21787
+#    AegisName: SEASON_MOB_129
+#  - Id: 21788
+#    AegisName: SEASON_MOB_130
+#  - Id: 21789
+#    AegisName: SEASON_MOB_131
+#  - Id: 21790
+#    AegisName: SEASON_MOB_132
+#  - Id: 21791
+#    AegisName: SEASON_MOB_133
+#  - Id: 21792
+#    AegisName: SEASON_MOB_134
+#  - Id: 21793
+#    AegisName: SEASON_MOB_135
+#  - Id: 21794
+#    AegisName: SEASON_MOB_136
+#  - Id: 21795
+#    AegisName: SEASON_MOB_137
+#  - Id: 21796
+#    AegisName: SEASON_MOB_138
+#  - Id: 21797
+#    AegisName: SEASON_MOB_139
+#  - Id: 21798
+#    AegisName: SEASON_MOB_140
+#  - Id: 21799
+#    AegisName: SEASON_MOB_141
+#  - Id: 21800
+#    AegisName: SEASON_MOB_142
+#  - Id: 21801
+#    AegisName: SEASON_MOB_143
+#  - Id: 21802
+#    AegisName: SEASON_MOB_144
+#  - Id: 21803
+#    AegisName: SEASON_MOB_145
+#  - Id: 21804
+#    AegisName: SEASON_MOB_146
+#  - Id: 21805
+#    AegisName: SEASON_MOB_147
+#  - Id: 21806
+#    AegisName: SEASON_MOB_148
+#  - Id: 21807
+#    AegisName: SEASON_MOB_149
+#  - Id: 21808
+#    AegisName: SEASON_MOB_150
+#  - Id: 21809
+#    AegisName: 20TH_GATE_GREEN_M
+#  - Id: 21810
+#    AegisName: 20TH_GATE_GREEN_S
+#  - Id: 21811
+#    AegisName: 20TH_GATE_PURPLE_M
+#  - Id: 21812
+#    AegisName: 20TH_GATE_PURPLE_S
+#  - Id: 21813
+#    AegisName: 20TH_GATE_RED_M
+#  - Id: 21814
+#    AegisName: 20TH_GATE_RED_S
+#  - Id: 21815
+#    AegisName: VH_BONE_DETALE
+#  - Id: 21816
+#    AegisName: VH_INGRID
+#  - Id: 21817
+#    AegisName: VH_GRAN_PAPILIA
+#  - Id: 21818
+#    AegisName: VH_PITAYA_BOSS
+#  - Id: 21819
+#    AegisName: VH_SILVA_PAPILIA
+#  - Id: 21820
+#    AegisName: VH_SWEETY
+#  - Id: 21821
+#    AegisName: VH_AMDARAIS
+#  - Id: 21822
+#    AegisName: VH_HEMEL
+#  - Id: 21823
+#    AegisName: VH_ABYSMAL_WITCH
+#  - Id: 21824
+#    AegisName: VH_DEATH_WITCH
+#  - Id: 21825
+#    AegisName: VH_R001_BESTIA
+#  - Id: 21826
+#    AegisName: VH_SAKRAY
+#  - Id: 21827
+#    AegisName: VH_TIARA
+#  - Id: 21828
+#    AegisName: VH_AIRBOAT_BOSS
+#  - Id: 21829
+#    AegisName: VH_BETELGEUSE
+#  - Id: 21830
+#    AegisName: VH_BURNING_FANG
+#  - Id: 21831
+#    AegisName: VH_FREYJA
+#  - Id: 21832
+#    AegisName: VH_SCHULANG
+#  - Id: 21833
+#    AegisName: VH_LIMACINA_BOSS
+#  - Id: 21834
+#    AegisName: VH_JUNCEA
+#  - Id: 21835
+#    AegisName: VH_RKNT
+#  - Id: 21836
+#    AegisName: VH_RYGD
+#  - Id: 21837
+#    AegisName: VH_ACBS
+#  - Id: 21838
+#    AegisName: VH_RNGR
+#  - Id: 21839
+#    AegisName: VH_GX
+#  - Id: 21840
+#    AegisName: VH_SC
+#  - Id: 21841
+#    AegisName: VH_WR
+#  - Id: 21842
+#    AegisName: E_PORING_20
+#  - Id: 21843
+#    AegisName: SEASON_MOB_151
+#  - Id: 21844
+#    AegisName: SEASON_MOB_152
+#  - Id: 21845
+#    AegisName: SEASON_MOB_153
+#  - Id: 21846
+#    AegisName: SEASON_MOB_154
+#  - Id: 21847
+#    AegisName: SEASON_MOB_155
+#  - Id: 21848
+#    AegisName: SEASON_MOB_156
+#  - Id: 21849
+#    AegisName: SEASON_MOB_157
+#  - Id: 21850
+#    AegisName: SEASON_MOB_158
+#  - Id: 21853
+#    AegisName: EP19_MD_BOX1
+#  - Id: 21854
+#    AegisName: EP19_MD_BOX2
+#  - Id: 21855
+#    AegisName: HEROS_DRAGON_1
+#  - Id: 21856
+#    AegisName: HEROS_DRAGON_2
+#  - Id: 21857
+#    AegisName: HEROS_DRAGON_3
+#  - Id: 21858
+#    AegisName: HEROS_DRAGON_4
+#  - Id: 21859
+#    AegisName: G_MASTERING
+#  - Id: 21860
+#    AegisName: G_CRAB
+#  - Id: 21861
+#    AegisName: G_SHELLFISH
+#  - Id: 21862
+#    AegisName: VR_MD_SWORDMAN
+#  - Id: 21863
+#    AegisName: VR_MARLBRON
+#  - Id: 21864
+#    AegisName: E_HILLSRION
+#  - Id: 21865
+#    AegisName: E_BABY_LEOPARD
+#  - Id: 21866
+#    AegisName: HEROS_IN_ORB_1
+#  - Id: 21867
+#    AegisName: HEROS_IN_ORB_2
+#  - Id: 21868
+#    AegisName: HEROS_IN_ORB_3
+#  - Id: 21869
+#    AegisName: HEROS_IN_ORB_4
+#  - Id: 21870
+#    AegisName: VR_MD_DEVIL
+#  - Id: 21887
+#    AegisName: HEROS_OUT_ORB
+#  - Id: 21888
+#    AegisName: G_DEVILING
+#  - Id: 21889
+#    AegisName: HEROS_WOLF
+#  - Id: 21890
+#    AegisName: HEROS_GINSENG
+#  - Id: 21891
+#    AegisName: HEROS_CANNON_R
+#  - Id: 21892
+#    AegisName: HEROS_CANNON_Y
+#  - Id: 21893
+#    AegisName: HEROS_CANNON_G
+#  - Id: 21894
+#    AegisName: HEROS_CANNON_B
+#  - Id: 21895
+#    AegisName: HEROS_R_PLANT
+#  - Id: 21896
+#    AegisName: HEROS_Y_PLANT
+#  - Id: 21897
+#    AegisName: HEROS_B_PLANT
+#  - Id: 21898
+#    AegisName: HEROS_W_PLANT
+#  - Id: 21899
+#    AegisName: HEROS_R_FERUS
+#  - Id: 21900
+#    AegisName: HEROS_G_FERUS
+#  - Id: 21901
+#    AegisName: HEROS_P_FERUS
+#  - Id: 21902
+#    AegisName: HEROS_WATCHER
+#  - Id: 21903
+#    AegisName: HEROS_KEEPER
+#  - Id: 21904
+#    AegisName: HEROS_F_PEGASUS
+#  - Id: 21905
+#    AegisName: G_HEROS_R_FERUS
+#  - Id: 21906
+#    AegisName: G_HEROS_G_FERUS
+#  - Id: 21907
+#    AegisName: G_HEROS_P_FERUS
+#  - Id: 21908
+#    AegisName: VR_WILD_ROSE
+#  - Id: 21909
+#    AegisName: E_SOHEE
+#  - Id: 21910
+#    AegisName: VR_MD_LZ
+#  - Id: 21911
+#    AegisName: 2210_EV_SPIDING
+#  - Id: 21912
+#    AegisName: MD_SEWER_THIEF_BUG
+#  - Id: 21913
+#    AegisName: MD_SEWER_CHONCHON
+#  - Id: 21914
+#    AegisName: MD_SEWER_AMBERNITE
+#  - Id: 21915
+#    AegisName: MD_SEWER_BEETLE
+#  - Id: 21916
+#    AegisName: MD_SEWER_ARCLOUSE
+#  - Id: 21917
+#    AegisName: MD_SEWER_ARGIOPE
+#  - Id: 21918
+#    AegisName: MD_SEWER_CAVE_FLOWER
+#  - Id: 21919
+#    AegisName: LARVA_VIOLET
+#  - Id: 21920
+#    AegisName: ECO_RUDO
+#  - Id: 21921
+#    AegisName: ECO_ARCHANGELING
+#  - Id: 21922
+#    AegisName: ECO_FAKE_ANGEL
+#  - Id: 21923
+#    AegisName: ECO_PLASMA_P
+#  - Id: 21924
+#    AegisName: ECO_SOLACE
+#  - Id: 21925
+#    AegisName: ECO_ANOPHELES
+#  - Id: 21926
+#    AegisName: ECO_GRYPHON
+#  - Id: 21927
+#    AegisName: ECO_RANDGRIS
+#  - Id: 21928
+#    AegisName: ECO_COMODO
+#  - Id: 21929
+#    AegisName: ECO_POISON_TOAD
+#  - Id: 21930
+#    AegisName: ECO_SIDE_WINDER
+#  - Id: 21931
+#    AegisName: ECO_CRAMP
+#  - Id: 21932
+#    AegisName: ECO_KUKRE
+#  - Id: 21933
+#    AegisName: ECO_NEPENTHES
+#  - Id: 21934
+#    AegisName: ECO_ANGRA_MANTIS
+#  - Id: 21935
+#    AegisName: ECO_VENOM_KIMERA
+#  - Id: 21936
+#    AegisName: ECO_NIGHTMARE
+#  - Id: 21937
+#    AegisName: ECO_WHISPER
+#  - Id: 21938
+#    AegisName: ECO_MARIONETTE
+#  - Id: 21939
+#    AegisName: ECO_NOXIOUS
+#  - Id: 21940
+#    AegisName: ECO_THE_PAPER
+#  - Id: 21941
+#    AegisName: ECO_GAJOMART
+#  - Id: 21942
+#    AegisName: ECO_ODIUM
+#  - Id: 21943
+#    AegisName: ECO_GLOOMUNDERNIGHT
+#  - Id: 21946
+#    AegisName: BURNING_KNIGHT
+#  - Id: 21947
+#    AegisName: DEDSERA
+#  - Id: 21948
+#    AegisName: HARDROCK_TITAN
+#  - Id: 21949
+#    AegisName: DEADWEEN
+#  - Id: 21950
+#    AegisName: GAIA_POL
+#  - Id: 21951
+#    AegisName: PUNCH_BUG
+#  - Id: 21952
+#    AegisName: AFERDE
+#  - Id: 21953
+#    AegisName: DISPOL
+#  - Id: 21954
+#    AegisName: TIMBERS
+#  - Id: 21955
+#    AegisName: RENIRE
+#  - Id: 21956
+#    AegisName: G_BURNING_KNIGHT
+#  - Id: 21957
+#    AegisName: G_TIMBERS
+#  - Id: 21964
+#    AegisName: 2301_EV_RICE_FLOUR
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
@@ -97761,6 +99415,116 @@ Body:
 #    AegisName: MQ_KIND_OF_BEETLE3
 #  - Id: 22352
 #    AegisName: MQ_KIND_OF_BEETLE4
+#  - Id: 23000
+#    AegisName: DARK_ILLUSION2
+#  - Id: 23001
+#    AegisName: MD_RIGEL
+#  - Id: 23002
+#    AegisName: 20TH_EVENT_HEMEL
+#  - Id: 23003
+#    AegisName: 20TH_EVENT_LOLI_RURI
+#  - Id: 23004
+#    AegisName: 20TH_EVENT_GIBBET
+#  - Id: 23005
+#    AegisName: 20TH_EVENT_HYLOZOIST
+#  - Id: 23006
+#    AegisName: 20TH_EVENT_MURDERER
+#  - Id: 23007
+#    AegisName: 20TH_EVENT_CORPS
+#  - Id: 23008
+#    AegisName: 20TH_EVENT_CO_CMDER
+#  - Id: 23009
+#    AegisName: PITAYA_R_PET
+#  - Id: 25019
+#    AegisName: MQ_M_MOCLORD
+#  - Id: 25020
+#    AegisName: MQ_M_ZAVIER
+#  - Id: 25021
+#    AegisName: MQ_EREMES
+#  - Id: 25022
+#    AegisName: MQ_HARWORD
+#  - Id: 25023
+#    AegisName: MQ_KATRINN
+#  - Id: 25024
+#    AegisName: MQ_MAGALETA
+#  - Id: 25025
+#    AegisName: MQ_M_TRISTAN
+#  - Id: 25026
+#    AegisName: MQ_BREEZE
+#  - Id: 25027
+#    AegisName: MQ_C4_BREEZE
+#  - Id: 25028
+#    AegisName: MQ_C3_BREEZE
+#  - Id: 25029
+#    AegisName: MQ_SKOGUL
+#  - Id: 25030
+#    AegisName: MQ_C2_SKOGUL
+#  - Id: 25031
+#    AegisName: MQ_FRUS
+#  - Id: 25032
+#    AegisName: MQ_SKEGGIOLD_
+#  - Id: 25033
+#    AegisName: MQ_SKEGGIOLD
+#  - Id: 25034
+#    AegisName: MQ_G_RANDGRIS
+#  - Id: 25035
+#    AegisName: MQ_RANDGRIS
+#  - Id: 25036
+#    AegisName: MQ_SHECIL
+#  - Id: 25037
+#    AegisName: MQ_VALKYRIE
+#  - Id: 25038
+#    AegisName: 06_EVENT_THIEF_FAIRY
+#  - Id: 25039
+#    AegisName: MD_MOROCC
+#  - Id: 25047
+#    AegisName: ICE_TITAN_FV
+#  - Id: 25049
+#    AegisName: SNOWIER_FV
+#  - Id: 25050
+#    AegisName: ICEICLE_FV
+#  - Id: 25051
+#    AegisName: GAZETI_FV
+#  - Id: 25052
+#    AegisName: HAPPY_GIVER_FV
+#  - Id: 25053
+#    AegisName: PRAY_GIVER_FV
+#  - Id: 25054
+#    AegisName: BOOK_OF_DEATH_FV
+#  - Id: 25055
+#    AegisName: SMILE_GIVER_FV
+#  - Id: 25056
+#    AegisName: EMPATHIZER_FV
+#  - Id: 25057
+#    AegisName: THA_RESENT_FV
+#  - Id: 25058
+#    AegisName: THA_ANGER_FV
+#  - Id: 25059
+#    AegisName: THA_HORROR_FV
+#  - Id: 25060
+#    AegisName: VOID_MIMIC_FV
+#  - Id: 25072
+#    AegisName: HOLY_FRUS_FV
+#  - Id: 25073
+#    AegisName: HOLY_SKOGUL_FV
+#  - Id: 25074
+#    AegisName: ANGELGOLT_FV
+#  - Id: 25075
+#    AegisName: ANGELGOLT2_FV
+#  - Id: 25076
+#    AegisName: INGRID_FV
+#  - Id: 25077
+#    AegisName: REGINLEIF_FV
+#  - Id: 25078
+#    AegisName: G_RANDGRIS_FV
+#  - Id: 27000
+#    AegisName: E_EDDGA_TW
+#  - Id: 29500
+#    AegisName: DROSERA_VEINS0
+#  - Id: 29501
+#    AegisName: G_ZOMBIE_SLAUGHTER
+#  - Id: 29502
+#    AegisName: KAHO_VEINS
 #  - Id: 31999
 #    AegisName: HUNTING_GID_DEFAULT
 #  - Id: 32000

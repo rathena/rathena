@@ -1250,90 +1250,171 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
 * @return <ITEML> string for the item
 * @author [Cydh]
 **/
-std::string ItemDatabase::create_item_link( struct item& item ){
-	std::shared_ptr<item_data> data = this->find( item.nameid );
-
+std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<item_data>& data){
 	if( data == nullptr ){
 		ShowError( "Tried to create itemlink for unknown item %u.\n", item.nameid );
 		return "Unknown item";
 	}
 
-// All these dates are unconfirmed
-#if PACKETVER >= 20100000
-	if( !battle_config.feature_itemlink ){
-		// Feature is disabled
-		return data->ename;
-	}
-
+	std::string itemstr;
 	struct item_data* id = data.get();
 
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	const std::string start_tag = "<ITEML>";
-	const std::string closing_tag = "</ITEML>";
-#else // PACKETVER >= 20100000
-	const std::string start_tag = "<ITEMLINK>";
-	const std::string closing_tag = "</ITEMLINK>";
+// All these dates are unconfirmed
+#if PACKETVER >= 20151104
+	if( battle_config.feature_itemlink ) {
+
+#if PACKETVER >= 20160113
+		const std::string start_tag = "<ITEML>";
+		const std::string closing_tag = "</ITEML>";
+#else // PACKETVER >= 20151104
+		const std::string start_tag = "<ITEM>";
+		const std::string closing_tag = "</ITEM>";
 #endif
 
-	std::string itemstr = start_tag;
+		itemstr += start_tag;
 
-	itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
-	itemstr += itemdb_isequip2(id) ? "1" : "0";
-	itemstr += util::base62_encode(item.nameid);
-	if (item.refine > 0) {
-		itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
-	}
-	if (itemdb_isequip2(id)) {
-		itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
-	}
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
-#endif
-
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	const std::string card_sep = ")";
-	const std::string optid_sep = "+";
-	const std::string optpar_sep = ",";
-	const std::string optval_sep = "-";
-#else
-	const std::string card_sep = "(";
-	const std::string optid_sep = "*";
-	const std::string optpar_sep = "+";
-	const std::string optval_sep = ",";
-#endif
-
-	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-		itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
-	}
-
-#if PACKETVER >= 20150225
-	for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-		if (item.option[i].id == 0) {
-			break; // ignore options including ones beyond this one since the client won't even display them
+		itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
+		itemstr += itemdb_isequip2(id) ? "1" : "0";
+		itemstr += util::base62_encode(item.nameid);
+		if (item.refine > 0) {
+			itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
 		}
-		// Option ID
-		itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
-		// Param
-		itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
-		// Value
-		itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
+
+#if PACKETVER >= 20161116
+		if (itemdb_isequip2(id)) {
+			itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
+		}
+#endif
+
+#if PACKETVER >= 20200724
+		itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
+#endif
+
+#if PACKETVER >= 20200724
+		const std::string card_sep = ")";
+		const std::string optid_sep = "+";
+		const std::string optpar_sep = ",";
+		const std::string optval_sep = "-";
+#elif PACKETVER >= 20161116
+		const std::string card_sep = "(";
+		const std::string optid_sep = "*";
+		const std::string optpar_sep = "+";
+		const std::string optval_sep = ",";
+#else // PACKETVER >= 20151104
+		const std::string card_sep = "'";
+		const std::string optid_sep = ")";
+		const std::string optpar_sep = "*";
+		const std::string optval_sep = "+";
+#endif
+
+		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
+			itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
+		}
+
+		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+			if (item.option[i].id == 0) {
+				break; // ignore options including ones beyond this one since the client won't even display them
+			}
+			// Option ID
+			itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
+			// Param
+			itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
+			// Value
+			itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
+		}
+
+		itemstr += closing_tag;
+		if ((itemdb_isequip2(id)) && (data->slots == 0))
+			itemstr += " [" + std::to_string(data->slots) + "]";
+
+		return itemstr;
 	}
 #endif
 
-	itemstr += closing_tag;
+	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
+	// If that's the case then we format the item prepending the refine and appending the slots
+	if (item.refine > 0)
+		itemstr += "+" + std::to_string(item.refine) + " ";
+
+	itemstr += data->ename;
+
+	if (itemdb_isequip2(id))
+		itemstr += "[" + std::to_string(data->slots) + "]";
+
 	return itemstr;
-#else
-	// Did not exist before that
-	return data->ename;
-#endif
 }
 
-std::string ItemDatabase::create_item_link( t_itemid id ){
+std::string ItemDatabase::create_item_link( std::shared_ptr<item_data>& data ){
 	struct item it = {};
+	it.nameid = data->nameid;
 
-	it.nameid = id;
+	return this->create_item_link( it, data );
+}
 
-	return this->create_item_link( it );
+std::string ItemDatabase::create_item_link(struct item& item) {
+	std::shared_ptr<item_data> data = this->find(item.nameid);
+
+	return this->create_item_link(item, data);
+}
+
+std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name ){
+	if( data == nullptr ){
+		return "Unknown item";
+	}
+
+	std::string itemstr;
+
+// All these dates are unconfirmed
+#if PACKETVER >= 20100000
+	if( battle_config.feature_mesitemlink ){
+// It was changed in 2015-11-04, but Gravity actually broke the feature for this specific client, because they introduced the new itemlink feature [Lemongrass]
+// See the following github issues for more details:
+// * https://github.com/rathena/rathena/issues/1236
+// * https://github.com/rathena/rathena/issues/1873
+#if PACKETVER >= 20151104
+		const std::string start_tag = "<ITEM>";
+		const std::string closing_tag = "</ITEM>";
+#else
+		const std::string start_tag = "<ITEMLINK>";
+		const std::string closing_tag = "</ITEMLINK>";
+#endif
+
+		itemstr += start_tag;
+
+		if( use_brackets || battle_config.feature_mesitemlink_brackets ){
+			itemstr += "[";
+		}
+
+		if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
+			// Name was forcefully overwritten
+			itemstr += name;
+		}else{
+			// Use database name
+			itemstr += data->ename;
+		}
+
+		if( use_brackets || battle_config.feature_mesitemlink_brackets ){
+			itemstr += "]";
+		}
+
+		itemstr += "<INFO>";
+		itemstr += std::to_string( data->nameid );
+		itemstr += "</INFO>";
+
+		itemstr += closing_tag;
+
+		return itemstr;
+	}
+#endif
+
+	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
+	if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
+		// Name was forcefully overwritten
+		return name;
+	}else{
+		// Use database name
+		return data->ename;
+	}
 }
 
 ItemDatabase item_db;
@@ -4380,6 +4461,36 @@ void s_random_opt_group::apply( struct item& item ){
 			}
 		}
 	}
+
+	// Fix any gaps, the client cannot handle this
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		// If an option is empty
+		if( item.option[i].id == 0 ){
+			// Check if any other options, after the empty option exist
+			size_t j;
+			for( j = i + 1; j < MAX_ITEM_RDM_OPT; j++ ){
+				if( item.option[j].id != 0 ){
+					break;
+				}
+			}
+
+			// Another option was found, after the empty option
+			if( j < MAX_ITEM_RDM_OPT ){
+				// Move the later option forward
+				item.option[i].id = item.option[j].id;
+				item.option[i].value = item.option[j].value;
+				item.option[i].param = item.option[j].param;
+
+				// Reset the option that was moved
+				item.option[j].id = 0;
+				item.option[j].value = 0;
+				item.option[j].param = 0;
+			}else{
+				// Cancel early
+				break;
+			}
+		}
+	}
 }
 
 /**
@@ -4629,7 +4740,7 @@ void itemdb_gen_itemmoveinfo()
 */
 void itemdb_reload(void) {
 	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	do_final_itemdb();
 
@@ -4641,7 +4752,7 @@ void itemdb_reload(void) {
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
+	for( sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		sd->combos.clear(); // clear combo bonuses
 		pc_setinventorydata(sd);

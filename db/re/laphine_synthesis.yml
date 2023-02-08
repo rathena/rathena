@@ -1387,7 +1387,7 @@ Body:
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
-      - Item: Spirit_Jewel
+      - Item: SpritJewel
         Amount: 10
       - Item: Snowball
         Amount: 10
@@ -1419,7 +1419,7 @@ Body:
         Amount: 10
       - Item: Fine_Old_Doll
         Amount: 10
-      - Item: Old_Shell
+      - Item: OldShell
         Amount: 10
       - Item: Ein_SOLIDDUST
         Amount: 10
@@ -1602,7 +1602,7 @@ Body:
       - Item: C_Charleston_Antenna
       - Item: C_Wings_of_Uriel
       - Item: C_Pig_Nose
-      - Item: C_Cat_Ears_Hat
+      - Item: C_Cat_Ear_Hat
       - Item: C_Valkyrie_Circlet
       - Item: C_Eremes_Scarf_Black
       - Item: C_Eleanor_Wig
@@ -1738,13 +1738,13 @@ Body:
       - Item: C_Big_Foxtail
       - Item: C_T_Bear_Bag
       - Item: C_Poring_On_Shoulder
-      - Item: Costume_Yawata_Seal
+      - Item: C_FortunetellinSealed
       - Item: C_Pretty_Bear_WH
       - Item: C_Bicolor_Cat_Witch_Hat
       - Item: C_Nifl_Bloom
       - Item: C_Floating_Ball_TW
       - Item: C_Dark_Snake_Lord_Stall
-      - Item: Costume_Twin_Cannon
+      - Item: C_Twin_Canon
       - Item: C_Picnic_Basket
       - Item: C_Magic_Helm
       - Item: C_ManyStars_TW
@@ -1773,13 +1773,13 @@ Body:
       - Item: C_Disapear_Time_TW
       - Item: C_Magic_Heir_TW
       - Item: C_Blink_Eyes_Sakura
-      - Item: Costume_Angola_Intention
-      - Item: C_Stole_Of_Dominion
+      - Item: C_Angola_Intention
+      - Item: C_Stall_Of_Dominions
       - Item: C_Flowery_Vision_TH
       - Item: C_Frill_Collar
       - Item: C_Rose_Gothic_Bonnet
       - Item: C_LittleGarden
-      - Item: Costume_Twinkling_Red_Eyes
+      - Item: C_Blinking_Eyes_RD
       - Item: C_P_Ulysses_Feather
       - Item: C_DancingButterfly_TW
       - Item: C_Blue_Pencil_In_Mouth
@@ -1790,7 +1790,7 @@ Body:
       - Item: C_Frog_Hood
       - Item: C_Lude_Hood
       - Item: C_Blessings_Of_Soul
-      - Item: C_Crow
+      - Item: C_Gossip_Raven
       - Item: C_Halloween_Hat
       - Item: C_Blessed_Veil
       - Item: C_Eyes_Of_Ifrit
@@ -1799,7 +1799,7 @@ Body:
       - Item: C_Wildcat_Knit_Cap
       - Item: C_Pink_Fur_Hat
       - Item: C_Gift_Of_Snow
-      - Item: C_Large_Ribbon_Muffler_Red
+      - Item: C_L_RibbonMuff_Red
       - Item: C_Imperial_Glory
       - Item: C_Black_Shiba_Inu_Hat
       - Item: C_Black_Glasses
@@ -3272,11 +3272,11 @@ Body:
 #    RewardGroup: ENCHANTSTONE_RECIPE_3M
 #    Requirements:
 #      - Item: C_Pretty_Bear_WH
-#      - Item: Costume_Yawata_Seal
+#      - Item: C_FortunetellinSealed
 #      - Item: C_Floating_Ball_TW
 #      - Item: C_Dark_Snake_Lord_Stall
 #      - Item: C_Bicolor_Cat_Witch_Hat
-#      - Item: Costume_Twin_Cannon
+#      - Item: C_Twin_Canon
 #      - Item: C_Picnic_Basket
 #      - Item: C_Magic_Helm
 #      - Item: C_Fawn_Ear
@@ -3291,7 +3291,7 @@ Body:
 #      - Item: C_Frill_Collar
 #      - Item: C_Rose_Gothic_Bonnet
 #      - Item: C_LittleGarden
-#      - Item: Costume_Twinkling_Red_Eyes
+#      - Item: C_Blinking_Eyes_RD
 #  - Item: Egirnion_Box
 #    RewardGroup: EGIRNION_BOX
 #    Requirements:
@@ -3700,11 +3700,11 @@ Body:
 #      - Item: S_AllMighty_Pendant
 #      - Item: S_Tempest_Shield
 #      - Item: S_Tempest_Shoes
-#      - Item: S_Magic_Executioner_Holy_Water_Armor
-#      - Item: S_Magic_Exorcist_Corrupted_Armor
-#      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-#      - Item: S_Magic_Scissor_Hunting_Armor
-#      - Item: S_Magic_Fishing_Insect_Net_Armor
+#      - Item: S_M_ExeHoly_Armor
+#      - Item: S_M_ExoCorrupt_Armor
+#      - Item: S_M_DragonVib_Armor
+#      - Item: S_M_SciHunting_Armor
+#      - Item: S_M_FishInsect_Armor
 #      - Item: S_Plasterer's_Armor_II
 #      - Item: S_Insomniac_Shoes_II
 #      - Item: S_Peerless_Armor_II
@@ -3728,11 +3728,11 @@ Body:
 #      - Item: S_Mortal_Blow_Pendant
 #      - Item: S_Penetration_Shoes
 #      - Item: S_Penetration_Shield
-#      - Item: S_Executioner_Holy_Water_Armor
-#      - Item: S_Exorcist_Corrupted_Armor
-#      - Item: S_Vibration_Dragon_Killer_Armor
-#      - Item: S_Scissor_Hunting_Armor
-#      - Item: S_Fishing_Insect_Net_Armor
+#      - Item: S_ExeHoly_Armor
+#      - Item: S_ExoCorrupt_Armor
+#      - Item: S_DragonVib_Armor
+#      - Item: S_SciHunting_Armor
+#      - Item: S_FishInsect_Armor
 #      - Item: Sentimental_Weapone_S
 #      - Item: Sentimental_Earring_S
 #      - Item: Sentimental_Pendant_S

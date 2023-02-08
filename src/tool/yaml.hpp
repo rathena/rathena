@@ -37,9 +37,11 @@
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
+#define ONLY_CONSTANTS
 #include "../map/achievement.hpp"
 #include "../map/battle.hpp"
 #include "../map/battleground.hpp"
+#include "../map/cashshop.hpp"
 #include "../map/channel.hpp"
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
