@@ -2618,7 +2618,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		//TODO: Determine if this should go before calculating the MVP player instead of after.
 		if (UINT_MAX - md->dmglog[0].dmg > md->tdmg) {
 			md->tdmg += md->dmglog[0].dmg;
-			md->dmglog[0].dmg<<=1;
+			md->dmglog[0].dmg *= 2;
 		} else {
 			md->dmglog[0].dmg+= UINT_MAX - md->tdmg;
 			md->tdmg = UINT_MAX;
