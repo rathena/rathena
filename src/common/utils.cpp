@@ -4,6 +4,7 @@
 #include "utils.hpp"
 
 #include <math.h> // floor()
+#include <memory>
 #include <stdlib.h>
 #include <string.h>
 

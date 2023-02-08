@@ -4,6 +4,7 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include <memory>
 #include <stdio.h> // FILE*
 
 #include "cbasetypes.hpp"
@@ -28,6 +29,12 @@ bool exists(const char* filename);
 /// calculates the value of A / B, in percent (rounded down)
 unsigned int get_percentage(const unsigned int A, const unsigned int B);
 uint32 get_percentage_exp(const uint64 a, const uint64 b);
+
+template<typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&&... args)
+{
+	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 //////////////////////////////////////////////////////////////////////////
 // byte word dword access [Shinomori]
