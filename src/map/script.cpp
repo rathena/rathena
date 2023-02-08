@@ -21528,6 +21528,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
 	int instance_id = va_arg(ap, int);
+	e_instance_warpall_flag flag = va_arg(ap, e_instance_warpall_flag);
 	map_session_data *sd;
 
 	nullpo_retr(0, bl);
@@ -21536,6 +21537,9 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	sd = (TBL_PC *)bl;
+
+	if ((flag & IWA_NOTDEAD) && pc_isdead(sd))
+		return 0;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
@@ -21572,16 +21576,18 @@ BUILDIN_FUNC(instance_warpall)
 {
 	int16 m;
 	int instance_id;
-	const char *mapn;
-	int x, y;
+	e_instance_warpall_flag flag = IWA_ALL;
 
-	mapn = script_getstr(st,2);
-	x    = script_getnum(st,3);
-	y    = script_getnum(st,4);
+	const char *mapn = script_getstr(st,2);
+	int x    = script_getnum(st,3);
+	int y    = script_getnum(st,4);
 	if( script_hasdata(st,5) )
 		instance_id = script_getnum(st,5);
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
+
+	if( script_hasdata(st, 6) )
+		flag = (e_instance_warpall_flag)script_getnum(st, 6);
 
 	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
@@ -21594,7 +21600,7 @@ BUILDIN_FUNC(instance_warpall)
 	}
 
 	for(const auto &it : idata->map)
-		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id);
+		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id, flag);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27447,7 +27453,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_enter,"s????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
-	BUILDIN_DEF(instance_warpall,"sii?"),
+	BUILDIN_DEF(instance_warpall,"sii??"),
 	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	BUILDIN_DEF(instance_check_guild,"i???"),
