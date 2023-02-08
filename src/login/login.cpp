@@ -25,7 +25,9 @@
 #include "../common/utils.hpp"
 #include "../config/core.hpp"
 
-#include "account.hpp"
+#include "accountdb.hpp"
+#include "accountdbsql.hpp"
+#include "mmo_account.hpp"
 #include "ipban.hpp"
 #include "loginchrif.hpp"
 #include "loginclif.hpp"
@@ -834,7 +836,7 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
 	// initialize engine
-	accounts = make_unique<AccountDB>();
+	accounts = make_unique<AccountDBSql>();
 
 	// read login-server configuration
 	login_set_defaults();

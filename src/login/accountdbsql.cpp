@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "account.hpp"
+#include "accountdbsql.hpp"
 
 #include <algorithm> //min / max
 #include <memory>
@@ -17,12 +17,14 @@
 #include "../common/strlib.hpp"
 
 #include "login.hpp" // login_config
+#include "accountdb.hpp"
+#include "mmo_account.hpp"
 
 
 /**
  * Establish the database connection.
  */
-bool AccountDB::init() {
+bool AccountDBSql::init() {
 	accounts_ = Sql_Malloc();
 	auto * sql_handle = get_handle();
 
@@ -47,7 +49,7 @@ bool AccountDB::init() {
 /**
  * Destroy the database and close the connection to it.
  */
-AccountDB::~AccountDB() {
+AccountDBSql::~AccountDBSql() {
 	auto * handle = get_handle();
 	remove_webtokens();
 	Sql_Free(handle);
@@ -62,7 +64,7 @@ AccountDB::~AccountDB() {
  * @param buflen: size of buffer to avoid out of bound
  * @return true if successful, false if something has failed
  */
-bool AccountDB::get_property(const char* key, char* buf, size_t buflen)
+bool AccountDBSql::get_property(const char* key, char* buf, size_t buflen)
 {
 	const char* signature = "login_server_";
 
@@ -119,7 +121,7 @@ bool AccountDB::get_property(const char* key, char* buf, size_t buflen)
  * @param value: config value for keyword
  * @return true if successful, false if something has failed
  */
-bool AccountDB::set_property(const char* key, const char* value) {
+bool AccountDBSql::set_property(const char* key, const char* value) {
 	const char* signature;
 
 	signature = "login_server_";
@@ -176,7 +178,7 @@ bool AccountDB::set_property(const char* key, const char* value) {
  * @param acc: pointer of mmo_account to save
  * @return true if successful, false if something has failed
  */
-bool AccountDB::create(struct mmo_account& acc) {
+bool AccountDBSql::create(struct mmo_account& acc) {
 	// decide on the account id to assign
 	uint32 account_id;
 	if (acc.account_id != -1) {
@@ -224,7 +226,7 @@ bool AccountDB::create(struct mmo_account& acc) {
  * @param account_id: id of user account
  * @return true if successful, false if something has failed
  */
-bool AccountDB::remove(const uint32 account_id) {
+bool AccountDBSql::remove(const uint32 account_id) {
 	auto * sql_handle = get_handle();
 	bool result = false;
 
@@ -246,7 +248,7 @@ bool AccountDB::remove(const uint32 account_id) {
  * @param acc: pointer of mmo_account to save
  * @return true if successful, false if something has failed
  */
-bool AccountDB::save(const struct mmo_account& acc, bool refresh_token) {
+bool AccountDBSql::save(const struct mmo_account& acc, bool refresh_token) {
 	return to_sql(acc, false, refresh_token);
 }
 
@@ -257,7 +259,7 @@ bool AccountDB::save(const struct mmo_account& acc, bool refresh_token) {
  * @param account_id: id of user account
  * @return true if successful, false if something has failed
  */
-bool AccountDB::load_num(struct mmo_account& acc, const uint32 account_id) {
+bool AccountDBSql::load_num(struct mmo_account& acc, const uint32 account_id) {
 	return from_sql(acc, account_id);
 }
 
@@ -269,7 +271,7 @@ bool AccountDB::load_num(struct mmo_account& acc, const uint32 account_id) {
  * @param userid: name of user account
  * @return true if successful, false if something has failed
  */
-bool AccountDB::load_str(struct mmo_account& acc, const char* userid) {
+bool AccountDBSql::load_str(struct mmo_account& acc, const char* userid) {
 	auto * sql_handle = get_handle();
 	char esc_userid[2*NAME_LENGTH+1];
 
@@ -309,7 +311,7 @@ bool AccountDB::load_str(struct mmo_account& acc, const char* userid) {
  * @param account_id: id of user account to take data from
  * @return true if successful, false if something has failed
  */
-bool AccountDB::from_sql(struct mmo_account& acc, uint32 account_id) {
+bool AccountDBSql::from_sql(struct mmo_account& acc, uint32 account_id) {
 	auto * sql_handle = get_handle();
 	char* data;
 
@@ -365,7 +367,7 @@ bool AccountDB::from_sql(struct mmo_account& acc, uint32 account_id) {
  * @param is_new: if it's a new entry or should we update
  * @return true if successful, false if something has failed
  */
-bool AccountDB::to_sql(const struct mmo_account& acc, bool is_new, bool refresh_token) {
+bool AccountDBSql::to_sql(const struct mmo_account& acc, bool is_new, bool refresh_token) {
 	auto * sql_handle = get_handle();
 	SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
 	bool result = false;
@@ -518,7 +520,7 @@ bool AccountDB::to_sql(const struct mmo_account& acc, bool is_new, bool refresh_
 	return result;
 }
 
-void AccountDB::save_global_accreg(int fd, uint32 account_id, uint32 char_id) {
+void AccountDBSql::save_global_accreg(int fd, uint32 account_id, uint32 char_id) {
 	auto * sql_handle = get_handle();
 	uint16 count = RFIFOW(fd, 12);
 
@@ -566,7 +568,7 @@ void AccountDB::save_global_accreg(int fd, uint32 account_id, uint32 char_id) {
 	}
 }
 
-void AccountDB::send_global_accreg(int fd, uint32 account_id, uint32 char_id) {
+void AccountDBSql::send_global_accreg(int fd, uint32 account_id, uint32 char_id) {
 	auto * sql_handle = get_handle();
 	char* data;
 	int plen = 0;
@@ -705,7 +707,7 @@ void AccountDB::send_global_accreg(int fd, uint32 account_id, uint32 char_id) {
 	Sql_FreeResult(sql_handle);
 }
 
-bool AccountDB::enable_webtoken(const uint32 account_id) {
+bool AccountDBSql::enable_webtoken(const uint32 account_id) {
 	auto * sql_handle = get_handle();
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `web_auth_token_enabled` = '1' WHERE `account_id` = '%u'", account_db_.c_str(), account_id)) {
 		Sql_ShowDebug(sql_handle);
@@ -733,12 +735,12 @@ TIMER_FUNC(account_disable_webtoken_timer){
 }
 
 
-bool AccountDB::disable_webtoken_timer(const uint32 account_id) {
+bool AccountDBSql::disable_webtoken_timer(const uint32 account_id) {
 	add_timer(gettick() + login_config.disable_webtoken_delay, account_disable_webtoken_timer, account_id, reinterpret_cast<intptr_t>(this));
 	return true;
 }
 
-int AccountDB::disable_webtoken(const uint32 account_id) {
+int AccountDBSql::disable_webtoken(const uint32 account_id) {
 	const struct online_login_data* p = login_get_online_user(account_id);
 
 	if (p == nullptr) {
@@ -754,7 +756,7 @@ int AccountDB::disable_webtoken(const uint32 account_id) {
 }
 
 
-bool AccountDB::remove_webtokens() {
+bool AccountDBSql::remove_webtokens() {
 	auto * sql_handle = get_handle();
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `web_auth_token` = NULL, `web_auth_token_enabled` = '0'", account_db_.c_str())) {
 		Sql_ShowDebug(sql_handle);
@@ -765,6 +767,6 @@ bool AccountDB::remove_webtokens() {
 }
 
 
-Sql * AccountDB::get_handle() {
+Sql * AccountDBSql::get_handle() {
 	return accounts_;
 }
