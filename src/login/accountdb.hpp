@@ -18,15 +18,6 @@ public:
 
 	virtual bool init() = 0;
 
-	/// Gets a property from this database.
-	/// These read-only properties must be implemented:
-	///
-	/// @param key Property name
-	/// @param buf Buffer for the value
-	/// @param buflen Buffer length
-	/// @return true if successful
-	virtual bool get_property(const char* key, char* buf, size_t buflen) = 0;
-
 	/// Sets a property in this database.
 	///
 	/// @param key Property name

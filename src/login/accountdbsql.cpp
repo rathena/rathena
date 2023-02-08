@@ -57,64 +57,6 @@ AccountDBSql::~AccountDBSql() {
 }
 
 /**
- * Get configuration information into buf.
- *  If the option is supported, adjust the internal state.
- * @param key: config keyword
- * @param buf: value set of the keyword
- * @param buflen: size of buffer to avoid out of bound
- * @return true if successful, false if something has failed
- */
-bool AccountDBSql::get_property(const char* key, char* buf, size_t buflen)
-{
-	const char* signature = "login_server_";
-
-	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
-		key += strlen(signature);
-		if( strcmpi(key, "ip") == 0 )
-			safesnprintf(buf, buflen, "%s", db_hostname_);
-		else
-		if( strcmpi(key, "port") == 0 )
-			safesnprintf(buf, buflen, "%d", db_port_);
-		else
-		if( strcmpi(key, "id") == 0 )
-			safesnprintf(buf, buflen, "%s", db_username_);
-		else
-		if(	strcmpi(key, "pw") == 0 )
-			safesnprintf(buf, buflen, "%s", db_password_);
-		else
-		if( strcmpi(key, "db") == 0 )
-			safesnprintf(buf, buflen, "%s", db_database_);
-		else
-		if( strcmpi(key, "account_db") == 0 )
-			safesnprintf(buf, buflen, "%s", account_db_.c_str());
-		else
-		if( strcmpi(key, "global_acc_reg_str_table") == 0 )
-			safesnprintf(buf, buflen, "%s", global_acc_reg_str_table_.c_str());
-		else
-		if( strcmpi(key, "global_acc_reg_num_table") == 0 )
-			safesnprintf(buf, buflen, "%s", global_acc_reg_num_table_.c_str());
-		else
-			return false;// not found
-		return true;
-	}
-
-	signature = "login_";
-	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
-		key += strlen(signature);
-		if( strcmpi(key, "codepage") == 0 )
-			safesnprintf(buf, buflen, "%s", codepage_);
-		else
-		if( strcmpi(key, "case_sensitive") == 0 )
-			safesnprintf(buf, buflen, "%d", (case_sensitive_ ? 1 : 0));
-		else
-			return false;// not found
-		return true;
-	}
-
-	return false;// not found
-}
-
-/**
  * Read and set configuration.
  *  If the option is supported, adjust the internal state.
  * @param key: config keyword

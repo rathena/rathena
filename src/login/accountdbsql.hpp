@@ -17,22 +17,10 @@
 
 class AccountDBSql : public AccountDB {
 public:
-	/// Constructor
-	AccountDBSql() {};
-
 	/// Destroys this database, releasing all allocated memory (including itself).
 	~AccountDBSql();
 
 	bool init() override;
-
-	/// Gets a property from this database.
-	/// These read-only properties must be implemented:
-	///
-	/// @param key Property name
-	/// @param buf Buffer for the value
-	/// @param buflen Buffer length
-	/// @return true if successful
-	bool get_property(const char* key, char* buf, size_t buflen) override;
 
 	/// Sets a property in this database.
 	///
