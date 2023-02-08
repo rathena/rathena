@@ -28,7 +28,7 @@ void mail_clear(map_session_data *sd)
 		sd->mail.item[i].amount = 0;
 	}
 	sd->mail.zeny = 0;
-	sd->mail.target_id = 0;
+	sd->mail.dest_id = 0;
 
 	return;
 }
@@ -106,8 +106,8 @@ bool mail_removezeny(map_session_data *sd, bool flag) {
 	if( sd->mail.zeny > 0 ){
 		//Zeny send
 		if( flag ){
-			// It's possible that we don't know what the target_id is, so it will be 0
-			if (pc_payzeny(sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_MAIL, sd->mail.target_id)) {
+			// It's possible that we don't know what the dest_id is, so it will be 0
+			if (pc_payzeny(sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_MAIL, sd->mail.dest_id)) {
 				return false;
 			}
 		}else{

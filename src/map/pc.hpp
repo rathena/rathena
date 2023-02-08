@@ -787,7 +787,7 @@ public:
 		uint32 pending_weight;
 		uint32 pending_zeny;
 		uint16 pending_slots;
-		uint32 target_id;
+		uint32 dest_id;
 	} mail;
 
 	//Quest log system

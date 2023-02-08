@@ -2657,7 +2657,7 @@ static void intif_parse_Mail_receiver( int fd ){
 	// Only f the player is online
 	if( sd ){
 		clif_Mail_Receiver_Ack( sd, RFIFOL( fd, 6 ), RFIFOW( fd, 10 ), RFIFOW( fd, 12 ), RFIFOCP( fd, 14 ) );
-		sd->mail.target_id = RFIFOL(fd, 6);
+		sd->mail.dest_id = RFIFOL(fd, 6);
 	}
 }
 
@@ -2665,12 +2665,12 @@ bool intif_mail_checkreceiver( map_session_data* sd, char* name ){
 	map_session_data *tsd;
 
 	tsd = map_nick2sd( name, false );
+	sd->mail.dest_id = 0;
 
 	// If the target player is online on this map-server
 	if( tsd != NULL ){
 		clif_Mail_Receiver_Ack( sd, tsd->status.char_id, tsd->status.class_, tsd->status.base_level, name );
-		if (sd)
-			sd->mail.target_id = tsd->status.char_id;
+		sd->mail.dest_id = tsd->status.char_id;
 		return true;
 	}
 
