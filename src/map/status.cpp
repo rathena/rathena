@@ -4966,20 +4966,6 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	if((skill_lv = hom_checkskill(hd, HLIF_BRAIN)) > 0)
 		status->max_sp += skill_lv * status->max_sp / 100;
 
-	if (opt&SCO_FIRST) {
-		hd->battle_status.hp = hom->hp;
-		hd->battle_status.sp = hom->sp;
-		if(hom->class_ == 6052) // Eleanor
-			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
-	}
-
-#ifndef RENEWAL
-	status->rhw.atk = status->dex;
-	status->rhw.atk2 = status->str + hom->level;
-#endif
-
-	status_calc_misc(&hd->bl, status, hom->level);
-
 	if((skill_lv = hom_checkskill(hd, MH_CLASSY_FLUTTER)) > 0) {
 		status->matk_min += 100 + 60* skill_lv;
 		status->matk_max += 100 + 60* skill_lv;
@@ -5004,6 +4990,20 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	if((skill_lv = hom_checkskill(hd, MH_BLAZING_LAVA)) > 0) {
 		status->batk += 100 + 60* skill_lv;
 	}
+
+	if (opt&SCO_FIRST) {
+		hd->battle_status.hp = hom->hp;
+		hd->battle_status.sp = hom->sp;
+		if(hom->class_ == 6052) // Eleanor
+			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
+	}
+
+#ifndef RENEWAL
+	status->rhw.atk = status->dex;
+	status->rhw.atk2 = status->str + hom->level;
+#endif
+
+	status_calc_misc(&hd->bl, status, hom->level);
 
 	status_cpy(&hd->battle_status, status);
 	return 1;

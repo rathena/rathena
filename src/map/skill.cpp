@@ -8013,10 +8013,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sc_start2(src,bl,type,100,skill_lv,skill_id,skill_get_time(skill_id,skill_lv)));
 		break;
 	case HLIF_AVOID:
+		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
+		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv))); // Homunc
+		break;
 	case HAMI_DEFENCE:
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
+#ifdef RENEWAL
 		if (hd)
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+#endif
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv))); // Homunc
 		break;
 	case NJ_BUNSINJYUTSU:
@@ -10481,7 +10486,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		if (hd)
+#ifdef RENEWAL
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id,skill_lv));
+#else
+			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
+#endif
 		break;
 
 	case NPC_DRAGONFEAR:
