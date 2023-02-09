@@ -1106,6 +1106,8 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_SPIRITS, spiritball);
 			return true;
 		}
+
+		// Blazing And Furious removes all spirit balls after calculating the amount of hits
 		if (skill_id != MH_BLAZING_AND_FURIOUS)
 			hom_delspiritball(hd, spiritball, 1);
 	}
@@ -6779,6 +6781,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		else
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		break;
+
 	case MH_TWISTER_CUTTER:
 	case MH_GLANZEN_SPIES:
 	case MH_STAHL_HORN:
@@ -7649,6 +7652,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		sc_start4(src,src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skill_id, skill_lv));
 #endif
 		break;
+
 	case MH_BLAZING_AND_FURIOUS:
 	case TK_JUMPKICK:
 		/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
@@ -8421,7 +8425,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (skill_id == IQ_MASSIVE_F_BLASTER || skill_id == SHC_IMPACT_CRATER || skill_id == MT_AXE_STOMP || skill_id == ABC_ABYSS_DAGGER)
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
-			hd->homunculus.spiritball = MAX_SPIRITBALL;
 			hom_addspiritball(hd, MAX_SPIRITBALL);
 		}
 
@@ -12129,14 +12132,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_GOLDENE_TONE:
-	case MH_TEMPERING:
-		bl = battle_get_master(src);
-		if (bl != nullptr)
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+	case MH_TEMPERING: {
+		block_list* master_bl = battle_get_master(src);
+		
+		if (master_bl != nullptr){
+			clif_skill_nodamage(src,master_bl,skill_id,skill_lv,1);
+			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
+		
 		if (hd)
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		break;
+		} break;
 	case MH_PAIN_KILLER:
 		bl = battle_get_master(src);
 		if (bl != nullptr)

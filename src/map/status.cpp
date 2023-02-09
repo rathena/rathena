@@ -8523,14 +8523,13 @@ static signed short status_calc_mres(struct block_list *bl, status_change *sc, i
 {
 	if (!sc || !sc->count)
 		return cap_value(mres, 0, SHRT_MAX);
+
 	if (sc->getSCE(SC_GOLDENE_TONE))
 		mres += sc->getSCE(SC_GOLDENE_TONE)->val2;
 	if (sc->getSCE(SC_SHADOW_STRIP) && bl->type != BL_PC)
 		mres -= mres * sc->getSCE(SC_SHADOW_STRIP)->val2 / 100;
 	if (sc->getSCE(SC_GEF_NOCTURN))
 		mres -= sc->getSCE(SC_GEF_NOCTURN)->val2;
-	if (sc->getSCE(SC_TOXIN_OF_MANDARA))
-		mres -= sc->getSCE(SC_TOXIN_OF_MANDARA)->val2;
 
 	return (short)cap_value(mres, 0, SHRT_MAX);
 }
