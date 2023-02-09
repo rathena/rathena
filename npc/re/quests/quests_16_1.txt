@@ -14258,7 +14258,7 @@ prt_cas,270,168,3	duplicate(Royal Guardian Knight#02)	Royal Guardian Knight#03	4
 prt_cas,165,260,6	script	Noblesse Operator#ext161	4_F_CRU,{
 	mes "[Noblesse Operator]";
 	mes "Hello.";
-	mes "We have ^4d4dffNoblesse^000000 equipment that can be exchanged for <ITEM>[Honor Token]<INFO>6919</INFO></ITEM>.";
+	mes "We have ^4d4dffNoblesse^000000 equipment that can be exchanged for " + mesitemlink( 6919 ) + ".";
 	mes "I will guide you to exchange items according to your job.";
 	close2;
 	switch( eaclass() & EAJ_THIRDMASK ) {

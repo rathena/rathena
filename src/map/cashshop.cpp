@@ -47,7 +47,7 @@ uint64 CashShopDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 	e_cash_shop_tab tab = static_cast<e_cash_shop_tab>( constant );
 
-	std::shared_ptr<s_cash_item_tab> entry = this->find( tab );
+	std::shared_ptr<s_cash_item_tab> entry = this->find( static_cast<uint16>( tab ) );
 	bool exists = entry != nullptr;
 
 	if( !exists ){
@@ -113,14 +113,14 @@ uint64 CashShopDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	}
 
 	if( !exists ){
-		this->put( tab, entry );
+		this->put( static_cast<uint16>( tab ), entry );
 	}
 
 	return 1;
 }
 
 std::shared_ptr<s_cash_item> CashShopDatabase::findItemInTab( e_cash_shop_tab tab, t_itemid nameid ){
-	std::shared_ptr<s_cash_item_tab> cash_tab = this->find( tab );
+	std::shared_ptr<s_cash_item_tab> cash_tab = this->find( static_cast<uint16>( tab ) );
 
 	if( cash_tab == nullptr ){
 		return nullptr;

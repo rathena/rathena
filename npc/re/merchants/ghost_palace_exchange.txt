@@ -13,7 +13,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	}
 	.@item_name_req$ = getitemname(6672);// Gray_Shard
 	mes "[Dimension Traveler]";
-	mes "Adventurer friend, <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
+	mes "Adventurer friend, " + mesitemlink( 6672 ) + " is what I need. How about exchanging it with something I have?";
 	next;
 	.@type = select( "Show me your weapon.", "Show me your armor.", "Anything special?", "I do not need." ) - 1;
 	mes "[Dimension Traveler]";
@@ -33,7 +33,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	}
 	next;
 	mes "[Dimension Traveler]";
-	mes "Ah! The number that is written beside <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> will be needed.";
+	mes "Ah! The number that is written beside " + mesitemlink( 6672 ) + " will be needed.";
 	mes "Please keep that in mind.";
 
 	switch(.@type) {
@@ -80,7 +80,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		.@s = (select(.@menu$) - 1) * 2;
 		mes "[Dimension Traveler]";
 		if (.@type != 1)	// armor type doesn't display item info
-			mes "Do you mean <ITEM>[" + getitemname(.@items[.@s]) + "]<INFO>" + .@items[.@s] + "</INFO></ITEM>?";
+			mes "Do you mean " + mesitemlink( .@items[.@s] ) + "?";
 		mes "" + .@items[.@s+1] + " ^006400" + .@item_name_req$ + "^000000 are required in exchange.";
 		next;
 		switch( select( "Let's exchange.", "Let me see other stuff.", "I will come back later." ) ) {
