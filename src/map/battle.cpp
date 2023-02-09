@@ -1247,7 +1247,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			(skill_id == 0 && (status_get_status_data(src))->rhw.ele == ELE_GHOST))
 		{
 			if (skill_id == WL_SOULEXPANSION)
-				damage <<= 1; // If used against a player in White Imprison, the skill deals double damage.
+				damage *= 2; // If used against a player in White Imprison, the skill deals double damage.
 			status_change_end(target, SC_WHITEIMPRISON); // Those skills do damage and removes effect
 		} else {
 			d->dmg_lv = ATK_BLOCK;
@@ -1480,12 +1480,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		// Damage increasing effects
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (sc->getSCE(SC_KAITE) && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
-			damage <<= 2;
+			damage *= 4;
 #endif
 
 		if (sc->getSCE(SC_AETERNA) && skill_id != PF_SOULBURN) {
 			if (src->type != BL_MER || !skill_id)
-				damage <<= 1; // Lex Aeterna only doubles damage of regular attacks from mercenaries
+				damage *= 2; // Lex Aeterna only doubles damage of regular attacks from mercenaries
 
 #ifndef RENEWAL
 			if( skill_id != ASC_BREAKER || !(flag&BF_WEAPON) )
@@ -1537,7 +1537,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if (sc->getSCE(SC_SOUNDOFDESTRUCTION))
-			damage <<= 1;
+			damage *= 2;
 		if (sc->getSCE(SC_DARKCROW) && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
 			int bonus = sc->getSCE(SC_DARKCROW)->val2;
 		if( sc->getSCE(SC_BURNT) && status_get_element(src) == ELE_FIRE )
@@ -1560,7 +1560,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if( map_flag_vs(bl->m) )
 				damage = (int64)damage*2/3; //Receive 66% damage
 			else
-				damage >>= 1; //Receive 50% damage
+				damage /= 2; //Receive 50% damage
 		}
 #endif
 
@@ -1580,7 +1580,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if(flag&BF_SKILL) //25% reduction
 				damage -= damage * 25 / 100;
 			else if ((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
-				damage >>= 2; //75% reduction
+				damage /= 4; //75% reduction
 		}
 
 		if (sc->getSCE(SC_SPORE_EXPLOSION) && (flag & BF_LONG) == BF_LONG)
@@ -1768,7 +1768,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 							break;
 						case RC2_OGH_ATK_DEF:
 							if (sc->getSCE(SC_GLASTHEIM_ATK))
-								damage <<= 1;
+								damage *= 2;
 							break;
 						case RC2_BIO5_SWORDMAN_THIEF:
 							if (sce = sc->getSCE(SC_LHZ_DUN_N1))
@@ -2795,7 +2795,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 		cri -= tstatus->luk * ((!sd && tsd) ? 3 : 2);
 
 		if( tsc && tsc->getSCE(SC_SLEEP) )
-			cri <<= 1;
+			cri *= 2;
 
 		switch(skill_id) {
 			case 0:
@@ -2808,7 +2808,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					(battle_config.auto_counter_type&src->type))
 					return true;
 				else
-					cri <<= 1;
+					cri *= 2;
 				break;
 			case SN_SHARPSHOOTING:
 			case MA_SHARPSHOOTING:
@@ -4062,7 +4062,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case AS_SONICBLOW:
 #ifdef RENEWAL
 			skillratio += 100 + 100 * skill_lv;
-			if (tstatus->hp < tstatus->max_hp >> 1)
+			if (tstatus->hp < (tstatus->max_hp / 2))
 				skillratio += skillratio / 2;
 #else
 			skillratio += 300 + 40 * skill_lv;
@@ -4245,7 +4245,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case LK_JOINTBEAT:
 			skillratio += 10 * skill_lv - 50;
 			if (wd->miscflag & BREAK_NECK || (tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
-				skillratio <<= 1;
+				skillratio *= 2;
 			break;
 #ifdef RENEWAL
 		// Renewal: skill ratio applies to entire damage [helvetica]
@@ -4839,7 +4839,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sd) {
 				skillratio += pc_checkskill(sd, WM_LESSON) * 50; // !TODO: Confirm bonus
 				if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-					skillratio <<= 1;
+					skillratio *= 2;
 			}
 			RE_LVL_DMOD(100);
 			break;
@@ -5053,7 +5053,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case SU_PICKYPECK:
 		case SU_PICKYPECK_DOUBLE_ATK:
 			skillratio += 100 + 100 * skill_lv;
-			if (status_get_hp(target) < status_get_max_hp(target) >> 1)
+			if (status_get_hp(target) < (status_get_max_hp(target) / 2))
 				skillratio *= 2;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
@@ -6192,7 +6192,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.amotion = (skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
 	// counter attack DOES obey ASPD delay on official, uncomment if you want the old (bad) behavior [helvetica]
 	/*if(skill_id == KN_AUTOCOUNTER)
-		wd.amotion >>= 1; */
+		wd.amotion /= 2; */
 	wd.dmotion = tstatus->dmotion;
 	wd.blewcount =skill_get_blewcount(skill_id,skill_lv);
 	wd.miscflag = wflag;
@@ -8088,7 +8088,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = (int)((int64)7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_)));
 			else
 				md.damage = 0;
-			if (tsd) md.damage>>=1;
+			if (tsd)
+				md.damage /= 2;
 #endif
 			break;
 		case NJ_ZENYNAGE:
@@ -10277,6 +10278,9 @@ static const struct _battle_data {
 	{ "feature.barter",                     &battle_config.feature_barter,                  1,      0,      1,              },
 	{ "feature.barter_extended",            &battle_config.feature_barter_extended,         1,      0,      1,              },
 	{ "feature.itemlink",                   &battle_config.feature_itemlink,                1,      0,      1,              },
+	{ "feature.mesitemlink",                &battle_config.feature_mesitemlink,             1,      0,      1,              },
+	{ "feature.mesitemlink_brackets",       &battle_config.feature_mesitemlink_brackets,    0,      0,      1,              },
+	{ "feature.mesitemlink_dbname",         &battle_config.feature_mesitemlink_dbname,      0,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
 	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
 	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
@@ -10366,6 +10370,19 @@ void battle_adjust_conf()
 	if (battle_config.night_duration && battle_config.night_duration < 60000) // added by [Yor]
 		battle_config.night_duration = 60000;
 
+#if PACKETVER < 20100000
+	if( battle_config.feature_mesitemlink ){
+		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it requires PACKETVER 2010-01-01 or newer, disabling...\n" );
+		battle_config.feature_mesitemlink = 0;
+	}
+#elif PACKETVER == 20151029 || PACKETVER == 20151104
+	// The feature is broken on those two clients or maybe even more. For more details check ItemDatabase::create_item_link_for_mes [Lemongrass]
+	if( battle_config.feature_mesitemlink ){
+		ShowWarning( "conf/battle/feature.conf:mesitemlink is enabled but it is broken on this specific PACKETVER, disabling...\n" );
+		battle_config.feature_mesitemlink = 0;
+	}
+#endif
+
 #if PACKETVER < 20100427
 	if (battle_config.feature_buying_store) {
 		ShowWarning("conf/battle/feature.conf:buying_store is enabled but it requires PACKETVER 2010-04-27 or newer, disabling...\n");
@@ -10426,6 +10443,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20151104
+	if( battle_config.feature_itemlink ){
+		ShowWarning( "conf/battle/feature.conf:itemlink is enabled but it requires PACKETVER 2015-11-04 or newer, disabling...\n" );
+		battle_config.feature_itemlink = 0;
 	}
 #endif
 

@@ -1513,7 +1513,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				}
 			}
 #endif
-			if(sc->getSCE(SC_DANCING) && (unsigned int)hp > status->max_hp>>2)
+			if(sc->getSCE(SC_DANCING) && hp > (status->max_hp / 4))
 				status_change_end(target, SC_DANCING);
 			if(sc->getSCE(SC_CLOAKINGEXCEED) && --(sc->getSCE(SC_CLOAKINGEXCEED)->val2) <= 0)
 				status_change_end(target, SC_CLOAKINGEXCEED);
@@ -1533,7 +1533,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if (sc && hp && status->hp) {
 		if (sc->getSCE(SC_AUTOBERSERK) &&
 			(!sc->getSCE(SC_PROVOKE) || !sc->getSCE(SC_PROVOKE)->val4) &&
-			status->hp < status->max_hp>>2)
+			status->hp < status->max_hp / 4)
 			sc_start4(src,target,SC_PROVOKE,100,10,0,0,1,0);
 		if (sc->getSCE(SC_BERSERK) && status->hp <= 100)
 			status_change_end(target, SC_BERSERK);
@@ -1751,7 +1751,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 		sc->getSCE(SC_AUTOBERSERK) &&
 		sc->getSCE(SC_PROVOKE) &&
 		sc->getSCE(SC_PROVOKE)->val4==1 &&
-		status->hp>=status->max_hp>>2
+		status->hp >= status->max_hp / 4
 	)	// End auto berserk.
 		status_change_end(bl, SC_PROVOKE);
 
@@ -2598,7 +2598,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->def2 = cap_value(stat, 0, SHRT_MAX);
 	// Mdef2
 	stat = status->mdef2;
-	stat += status->int_ + (status->vit>>1);
+	stat += status->int_ + (status->vit / 2);
 	status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 #endif
 
@@ -2738,18 +2738,18 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 
 	if (flag&2 && battle_config.mob_size_influence) { // Change for sized monsters [Valaris]
 		if (md->special_state.size == SZ_MEDIUM) {
-			status->max_hp >>= 1;
-			status->max_sp >>= 1;
+			status->max_hp /= 2;
+			status->max_sp /= 2;
 			if (!status->max_hp) status->max_hp = 1;
 			if (!status->max_sp) status->max_sp = 1;
 			status->hp = status->max_hp;
 			status->sp = status->max_sp;
-			status->str >>= 1;
-			status->agi >>= 1;
-			status->vit >>= 1;
-			status->int_ >>= 1;
-			status->dex >>= 1;
-			status->luk >>= 1;
+			status->str /= 2;
+			status->agi /= 2;
+			status->vit /= 2;
+			status->int_ /= 2;
+			status->dex /= 2;
+			status->luk /= 2;
 			if (!status->str) status->str = 1;
 			if (!status->agi) status->agi = 1;
 			if (!status->vit) status->vit = 1;
@@ -2757,16 +2757,16 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 			if (!status->dex) status->dex = 1;
 			if (!status->luk) status->luk = 1;
 		} else if (md->special_state.size == SZ_BIG) {
-			status->max_hp <<= 1;
-			status->max_sp <<= 1;
+			status->max_hp *= 2;
+			status->max_sp *= 2;
 			status->hp = status->max_hp;
 			status->sp = status->max_sp;
-			status->str <<= 1;
-			status->agi <<= 1;
-			status->vit <<= 1;
-			status->int_ <<= 1;
-			status->dex <<= 1;
-			status->luk <<= 1;
+			status->str *= 2;
+			status->agi *= 2;
+			status->vit *= 2;
+			status->int_ *= 2;
+			status->dex *= 2;
+			status->luk *= 2;
 		}
 	}
 
@@ -4208,7 +4208,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	} else {
 		if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2)
 			&& battle_config.restart_hp_rate < 50)
-			base_status->hp = base_status->max_hp>>1;
+			base_status->hp = base_status->max_hp / 2;
 		else
 			base_status->hp = (int64)base_status->max_hp * battle_config.restart_hp_rate/100;
 		if(!base_status->hp)
@@ -4336,7 +4336,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	if((skill=pc_checkskill(sd,TF_MISS))>0)
 		base_status->flee += skill*(sd->class_&JOBL_2 && (sd->class_&MAPID_BASEMASK) == MAPID_THIEF? 4 : 3);
 	if((skill=pc_checkskill(sd,MO_DODGE))>0)
-		base_status->flee += (skill*3)>>1;
+		base_status->flee += (skill*3) / 2;
 	if (pc_checkskill(sd, SU_POWEROFLIFE) > 0)
 		base_status->flee += 20;
 	if ((skill = pc_checkskill(sd, SHC_SHADOW_SENSE)) > 0)
@@ -5105,7 +5105,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 	val = 1 + (status->int_/6) + (status->max_sp/100);
 	if( status->int_ >= 120 )
-		val += ((status->int_-120)>>1) + 4;
+		val += ((status->int_-120) / 2) + 4;
 
 	if( sd && sd->sprecov_rate != 100 )
 		val = val*sd->sprecov_rate/100;
@@ -5724,7 +5724,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 #ifdef RENEWAL
 			+ (int)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 - (float)b_status->vit/5) )
 #else
-			+ ((status->vit - b_status->vit)>>1)
+			+ ((status->vit - b_status->vit) / 2)
 #endif
 			);
 	}
@@ -5754,7 +5754,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
 		if (sd) {
 			if (sd->status.weapon == W_KATAR)
-				status->cri <<= 1;
+				status->cri *= 2;
 		}
 	}
 
@@ -7558,7 +7558,7 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 		if (bl->type == BL_PC)
 			return 0;
 		else
-			return def >>= 1;
+			return def /= 2;
 	}
 	if(sc->getSCE(SC_DEFSET))
 		return sc->getSCE(SC_DEFSET)->val1;
@@ -7583,15 +7583,15 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 	if(sc->getSCE(SC_STONEHARDSKIN))
 		def += sc->getSCE(SC_STONEHARDSKIN)->val1;
 	if(sc->getSCE(SC_STONE))
-		def >>=1;
+		def /= 2;
 	if(sc->getSCE(SC_FREEZE))
-		def >>=1;
+		def /= 2;
 	if(sc->getSCE(SC_SIGNUMCRUCIS))
 		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
 	if(sc->getSCE(SC_CONCENTRATION))
 		def -= def * sc->getSCE(SC_CONCENTRATION)->val4/100;
 	if(sc->getSCE(SC_SKE))
-		def >>=1;
+		def /= 2;
 	if(sc->getSCE(SC_PROVOKE) && bl->type != BL_PC) // Provoke doesn't alter player defense->
 		def -= def * sc->getSCE(SC_PROVOKE)->val3/100;
 	if(sc->getSCE(SC_STRIPSHIELD) && bl->type != BL_PC) // Player doesn't have def reduction only equip removed
@@ -7737,7 +7737,7 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int md
 		if (bl->type == BL_PC)
 			return 0;
 		else
-			return mdef >>= 1;
+			return mdef / 2;
 	}
 	if(sc->getSCE(SC_MDEFSET))
 		return sc->getSCE(SC_MDEFSET)->val1;
@@ -9408,7 +9408,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick_def2 = status->luk*100;
 			} else {
 				// For monsters: 30000 - 200*vit
-				tick>>=1;
+				tick /= 2;
 				tick_def = (status->vit*200)/3;
 			}
 #else
@@ -9512,7 +9512,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			break;
 		case SC_DECREASEAGI:
 			if (sd)
-				tick >>= 1; // Half duration for players.
+				tick /= 2; // Half duration for players.
 			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
@@ -10496,7 +10496,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				tick = INFINITE_TICK;
 			break;
 		case SC_AUTOBERSERK:
-			if (status->hp < status->max_hp>>2 &&
+			if (status->hp < status->max_hp / 4 &&
 				(!sc->getSCE(SC_PROVOKE) || sc->getSCE(SC_PROVOKE)->val4==0))
 					sc_start4(src,bl,SC_PROVOKE,100,10,0,0,1,60000);
 			tick = INFINITE_TICK;
@@ -10785,10 +10785,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_DPOISON:
 			// Lose 10/15% of your life as long as it doesn't brings life below 25%
-			if (status->hp > status->max_hp>>2) {
+			if (status->hp > status->max_hp / 4) {
 				int diff = status->max_hp*(bl->type==BL_PC?10:15)/100;
-				if (status->hp - diff < status->max_hp>>2)
-					diff = status->hp - (status->max_hp>>2);
+				if (status->hp - diff < status->max_hp / 4)
+					diff = status->hp - (status->max_hp / 4);
 				status_zap(bl, diff, 0);
 			}
 			// Fall through
@@ -10909,7 +10909,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				map_session_data *tsd;
 				int i;
 				for( i = val2 = 0; i < val1; i++) {
-					int t = 5-(i>>1);
+					int t = 5-(i / 2);
 					val2 += (t < 0)? 1:t;
 				}
 
@@ -12255,7 +12255,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_TUNAPARTY:
 			val2 = (status->max_hp * (val1 * 10) / 100); // Max HP% to absorb
 			if (sd && pc_checkskill(sd, SU_SPIRITOFSEA))
-				val2 <<= 1; // Double the shield life
+				val2 *= 2; // Double the shield life
 			break;
 		case SC_HISS:
 			val2 = 50; // Perfect Dodge
@@ -14967,7 +14967,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(flag&(RGN_SHP)) { // Sitting HP regen
 			rate = (int)(natural_heal_diff_tick * (sregen->rate.hp / 100.));
 			if (regen->state.overweight)
-				rate >>= 1; // Half as fast when overweight.
+				rate /= 2; // Half as fast when overweight.
 			sregen->tick.hp += rate;
 			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
@@ -14980,7 +14980,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(flag&(RGN_SSP)) { // Sitting SP regen
 			rate = (int)(natural_heal_diff_tick * (sregen->rate.sp / 100.));
 			if (regen->state.overweight)
-				rate >>= 1; // Half as fast when overweight.
+				rate /= 2; // Half as fast when overweight.
 			sregen->tick.sp += rate;
 			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;

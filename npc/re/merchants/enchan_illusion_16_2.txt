@@ -54,7 +54,7 @@ pay_d03_i,160,45,3	script	Gemcutter#ilp20	4_TOWER_17,3,3,{
 		mes "[ Gemcutter ]";
 		mes "The following is the list of equipment I can handle.";
 		for ( .@i = 0; .@i < .@size; ++.@i )
-			mes "<ITEM>" + .@reward_name$[.@i] + "<INFO>" + .@reward_id[.@i] + "</INFO></ITEM>";
+			mes mesitemlink( .@reward_id[.@i], false );
 		next;
 		mes "[ Gemcutter ]";
 		mes "Make sure ^0000FFyour equipment is refined to at least +" + .@refine_req + "^000000 before bringing it to me.";
@@ -133,7 +133,7 @@ pay_d03_i,160,45,3	script	Gemcutter#ilp20	4_TOWER_17,3,3,{
 		mes "[ Gemcutter ]";
 		mes "The following is the list of equipment I can handle.";
 		for ( .@i = 0; .@i < .@size; ++.@i )
-			mes "<ITEM>" + .@reward_name$[.@i] + "<INFO>" + .@reward_id[.@i] + "</INFO></ITEM>";
+			mes mesitemlink( .@reward_id[.@i], false );
 		next;
 		mes "[ Gemcutter ]";
 		mes "Make sure ^0000FFyour equipment is refined to at least +" + .@refine_req + "^000000 before bringing it to me.";
@@ -385,7 +385,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 			case 1:
 				switch( select( "Illusion Infiltrator", "Illusion Sharpened Legbone of Ghoul", "Illusion Wizardry Staff", "Illusion Ballista", "Illusion Book of the Apocalypse" ) ) {
 				case 1:
-					mes "<ITEM>Illusion Infiltrator<INFO>28022</INFO></ITEM>";
+					mes mesitemlink( 28022, false );
 					mes "***********************************";
 					mes "Necessary Items";
 					mes "^0000cd+9 or higher^000000 Infiltrator ^C71585[1]^000000 x1";
@@ -395,7 +395,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 					mes "20 Torn Papers";
 					break;
 				case 2:
-					mes "<ITEM>Illusion Sharpened Legbone of Ghoul<INFO>28023</INFO></ITEM>";
+					mes mesitemlink( 28023, false );
 					mes "********************************";
 					mes "Necessary Items";
 					mes "^0000cd+9 or higher^000000 Sharpened Legbone of Ghoul x1";
@@ -403,7 +403,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 					mes "100 Clusters of Nightmares";
 					break;
 				case 3:
-					mes "<ITEM>Illusion Wizardry Staff<INFO>2039</INFO></ITEM>";
+					mes mesitemlink( 2039, false );
 					mes "********************************";
 					mes "Necessary Items";
 					mes "^0000cd+9 or higher^000000 Wizardry Staff x1";
@@ -411,7 +411,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 					mes "100 Suspicious Pentacles";
 					break;
 				case 4:
-					mes "<ITEM>Illusion Ballista<INFO>18149</INFO></ITEM>";
+					mes mesitemlink( 18149, false );
 					mes "*************************";
 					mes "Necessary Items";
 					mes "^0000cd+9 or higher^000000 Ballista ^C71585[1]^000000 x1";
@@ -421,7 +421,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 					mes "100 Shining Spores";
 					break;
 				case 5:
-					mes "<ITEM>Illusion Book of the Apocalypse<INFO>28612</INFO></ITEM>";
+					mes mesitemlink( 28612, false );
 					mes "***********************";
 					mes "Necessary Items";
 					mes "^0000cd+9 or higher^000000 Book of the Apocalypse x1";
@@ -432,7 +432,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 				break;
 			case 2:
 				select("Illusion Ancient Cape");
-				mes "<ITEM>Illusion Ancient Cape<INFO>20840</INFO></ITEM>";
+				mes mesitemlink( 20840, false );
 				mes "*******************************";
 				mes "Necessary Items";
 				mes "^0000cd+9 or higher^000000 Ancient Cape ^C71585[1]^000000 x1";
@@ -444,7 +444,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 			case 3:
 				switch( select( "Illusion Skull Ring", "Illusion Ring" ) ) {
 				case 1:
-					mes "<ITEM>Illusion Skull Ring<INFO>28508</INFO></ITEM>";
+					mes mesitemlink( 28508, false );
 					mes "*************************";
 					mes "Necessary Items";
 					mes "Skull Ring ^C71585[1]^000000 x1";
@@ -454,7 +454,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 					mes "400 Dried Yggdrasil Leaves";
 					break;
 				case 2:
-					mes "<ITEM>Illusion Ring<INFO>28509</INFO></ITEM>";
+					mes mesitemlink( 28509, false );
 					mes "********************";
 					mes "Necessary Items";
 					mes "Ring ^C71585[1]^000000 x1";
@@ -647,8 +647,8 @@ ice_dun02,153,18,3	script	Illusion Stone Research	4_M_ALCHE_B,{
 			getitemname(.@reward_id[1]);
 		mes "[Illusion Stone Researcher]";
 		mes "The following is the list of equipment I can handle.";
-		mes "<ITEM>" + .@reward_name$[0] + "<INFO>" + .@reward_id[0] + "</INFO></ITEM>";
-		mes "<ITEM>" + .@reward_name$[1] + "<INFO>" + .@reward_id[1] + "</INFO></ITEM>";
+		mes mesitemlink( .@reward_id[0], false );
+		mes mesitemlink( .@reward_id[1], false );
 		next;
 		mes "[Illusion Stone Researcher]";
 		mes "Make sure ^4d4dffyour equipment is refined to at least +9^000000 before bringing it to me.";
@@ -695,9 +695,9 @@ ice_dun02,153,18,3	script	Illusion Stone Research	4_M_ALCHE_B,{
 			getitemname(.@reward_id[2]);
 		mes "[Illusion Stone Researcher]";
 		mes "The following is the list of equipment I can handle.";
-		mes "<ITEM>" + .@reward_name$[0] + "<INFO>" + .@reward_id[0] + "</INFO></ITEM>";
-		mes "<ITEM>" + .@reward_name$[1] + "<INFO>" + .@reward_id[1] + "</INFO></ITEM>";
-		mes "<ITEM>" + .@reward_name$[2] + "<INFO>" + .@reward_id[2] + "</INFO></ITEM>";
+		mes mesitemlink( .@reward_id[0], false );
+		mes mesitemlink( .@reward_id[1], false );
+		mes mesitemlink( .@reward_id[2], false );
 		next;
 		mes "[Illusion Stone Researcher]";
 		mes "Make sure ^4d4dffyour equipment is refined to at least +9^000000 before bringing it to me.";
