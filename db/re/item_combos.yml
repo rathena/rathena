@@ -25024,7 +25024,7 @@ Body:
       - Combo:
           - Orcish_Hero_Of_Anger     # 29140
           - Orcish_Axe     # 1304
-          - Orcish_Sword     # 1124        
+          - Orcish_Sword     # 1124
       - Combo:
           - Orcish_Hero_Of_Anger     # 29140
           - Orcish_Axe     # 1304
@@ -32226,7 +32226,7 @@ Body:
           - Racing_Cap_MI    # 19200
       - Combo:
           - aegis_22257    # 22257
-          - Racing_Cap_WA    # 19201          
+          - Racing_Cap_WA    # 19201
     Script: |
       if (getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_HEAD_TOP) >= 21)
          autobonus "{ bonus bBaseAtk,200; bonus bMatk,200; }",15,10000,BF_WEAPON|BF_MAGIC;
@@ -32639,7 +32639,7 @@ Body:
       - Combo:
           - Ein_1HGUN    # 32303
           - Ein_SAFETY_PENDL    # 32249
-          - Ein_SAFETY_EPAULL    # 32251          
+          - Ein_SAFETY_EPAULL    # 32251
     Script: |
       bonus bFixedCastrate,-300;
       bonus bDelayrate,-7;
@@ -33022,27 +33022,27 @@ Body:
           - Improve_Orb_T_WIND    # 310273
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      bonus2 bMagicAtkEle,Ele_Wind,3*.@r;      
+      bonus2 bMagicAtkEle,Ele_Wind,3*.@r;
   - Combos:
       - Combo:
           - Golden_Scarf_J    # 20900
           - Imuke_Upper_Shield    # 28910
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_KagerouOboro)
+      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Golden_Scarf_J    # 20900
           - Horn_Card    # 4045
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_KagerouOboro)
+      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Golden_Scarf_J    # 20900
           - Automatic_Orb_J01    # 310653
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_KagerouOboro)
+      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
@@ -33069,7 +33069,7 @@ Body:
           - VeilCoyote    # 20857
           - Automatic_Orb_J01    # 310653
     Script: |
-      bonus bLongAtkDef,-35;      
+      bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Horn_Card    # 4045
