@@ -2090,8 +2090,8 @@ enum e_convertpcinfo_type : uint8 {
 	CPC_ACCOUNT   = 2
 };
 
-enum e_instance_warpall_flag : uint8 {
-	IWA_NOTDEAD   = 0x01,
+enum e_instance_warpall_flag{
+	IWA_DEAD   = 0x01,
 	IWA_ALL      = 0xFF,
 };
 
