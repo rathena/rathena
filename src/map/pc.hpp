@@ -1234,7 +1234,7 @@ enum e_mado_type : uint16 {
 	#define pc_leftside_def(sd) ((sd)->battle_status.def)
 	#define pc_rightside_def(sd) ((sd)->battle_status.def2)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
+	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit / 2) )
 #define pc_leftside_matk(sd) \
     (\
     ((sd)->sc.getSCE(SC_MAGICPOWER) && (sd)->sc.getSCE(SC_MAGICPOWER)->val4) \

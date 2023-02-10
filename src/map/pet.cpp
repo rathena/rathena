@@ -1630,7 +1630,7 @@ int pet_food(map_session_data *sd, struct pet_data *pd)
 			k = pet_db_ptr->r_hungry;
 
 		if( pd->pet.hungry > PET_HUNGRY_NEUTRAL) {
-			k >>= 1;
+			k /= 2;
 			k = max(k, 1);
 		}
 
@@ -1753,7 +1753,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick tic
 		if (DIFF_TICK(tick, pd->ud.canmove_tick) < 0)
 			return 0; // Can't move yet.
 
-		pd->status.speed = (sd->battle_status.speed>>1);
+		pd->status.speed = (sd->battle_status.speed / 2);
 
 		if(pd->status.speed == 0)
 			pd->status.speed = 1;
