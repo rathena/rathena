@@ -1048,7 +1048,7 @@ Body:
           - Ancient_Hero_Boots
           - Freezing_Rod
       - Combo:
-          - aegis_2064
+          - Comp_Iron_Staff
           - Ancient_Hero_Boots
       - Combo:
           - Iron_Staff
@@ -1064,7 +1064,7 @@ Body:
           - Freezing_Rod
       - Combo:
           - aegis_470181
-          - aegis_2064
+          - Comp_Iron_Staff
     Script: |
       autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC;
   - Combos:
@@ -2664,7 +2664,7 @@ Body:
           - Demon_Hunting_Bible_K
       - Combo:
           - Spiritual_Ring
-          - aegis_28646
+          - Comp_D_Hunt_Bible_K
     Script: |
       bonus2 bVariableCastrate,"PR_MAGNUS",-25;
       bonus bHealPower,10;
@@ -3729,6 +3729,9 @@ Body:
       - Combo:
           - RingOfDevil
           - Swiftness3
+      - Combo:
+          - aegis_15947
+          - Bag_Of_Antonio_P
     Script: |
       bonus bAspdRate,5;
   - Combos:
@@ -3771,6 +3774,9 @@ Body:
       - Combo:
           - RingOfDevil
           - Artful3
+      - Combo:
+          - aegis_15947
+          - Bag_Of_Antonio_
     Script: |
       bonus bVariableCastrate,-5;
   - Combos:
@@ -10741,13 +10747,13 @@ Body:
           - Comp_Undine_Spear_K
       - Combo:
           - Ancient_Hero_Boots
-          - aegis_1873
+          - Comp_Iron_Nail_K
       - Combo:
           - Ancient_Hero_Boots
           - Comp_Oriental_Sword
       - Combo:
           - Ancient_Hero_Boots
-          - aegis_1350
+          - Comp_Avenger
       - Combo:
           - aegis_470181
           - Iron_Nail_K
@@ -10774,13 +10780,13 @@ Body:
           - Comp_Undine_Spear_K
       - Combo:
           - aegis_470181
-          - aegis_1873
+          - Comp_Iron_Nail_K
       - Combo:
           - aegis_470181
           - Comp_Oriental_Sword
       - Combo:
           - aegis_470181
-          - aegis_1350
+          - Comp_Avenger
     Script: |
       autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000;
   - Combos:
@@ -10822,7 +10828,7 @@ Body:
           - Comp_Magic_Sword
       - Combo:
           - Ancient_Hero_Boots
-          - aegis_28646
+          - Comp_D_Hunt_Bible_K
       - Combo:
           - Ancient_Hero_Boots
           - Comp_Light_Blade
@@ -10855,7 +10861,7 @@ Body:
           - Comp_Magic_Sword
       - Combo:
           - aegis_470181
-          - aegis_28646
+          - Comp_D_Hunt_Bible_K
       - Combo:
           - aegis_470181
           - Comp_Light_Blade
@@ -10986,13 +10992,13 @@ Body:
           - Dragonic_Slayer
       - Combo:
           - Ancient_Hero_Boots
-          - aegis_21066
+          - Comp_Dragonic_Slayer
       - Combo:
           - aegis_470181
           - Dragonic_Slayer
       - Combo:
           - aegis_470181
-          - aegis_21066
+          - Comp_Dragonic_Slayer
     Script: |
       autobonus "{ bonus bVit,20; bonus bLongAtkRate,10; }",30,7000;
   - Combos:
@@ -13923,13 +13929,13 @@ Body:
           - Narcis_Bow
       - Combo:
           - Ancient_Hero_Boots
-          - aegis_18202
+          - Comp_Narcis_Bow
       - Combo:
           - aegis_470181
           - Narcis_Bow
       - Combo:
           - aegis_470181
-          - aegis_18202
+          - Comp_Narcis_Bow
     Script: |
       autobonus "{ bonus bDex,20; bonus bLongAtkRate,15; }",30,7000,BF_WEAPON;
   - Combos:
@@ -17015,6 +17021,9 @@ Body:
       - Combo:
           - Blue_Rear_Ribbon
           - Bag_Of_Antonio_S
+      - Combo:
+          - aegis_15947
+          - Bag_Of_Antonio_S
     Script: |
       bonus bAtkRate,4;
       if (getequiprefinerycnt(EQI_GARMENT) >= 12) {
@@ -17274,6 +17283,10 @@ Body:
           - Chrismas_Tree
           - Red_Lantern
           - Evilspirit_Gloves
+      - Combo:
+          - aegis_480277
+          - Red_Lantern
+          - Evilspirit_Gloves
     Script: |
       bonus bAspdRate,10;
       bonus bMatkRate,10;
@@ -17284,6 +17297,10 @@ Body:
   - Combos:
       - Combo:
           - Chrismas_Tree
+          - Hurt_Mind
+          - KindHeart
+      - Combo:
+          - aegis_480277
           - Hurt_Mind
           - KindHeart
     Script: |
@@ -17299,6 +17316,10 @@ Body:
           - Chrismas_Tree
           - Hurt_Mind
           - Noble_Cross
+      - Combo:
+          - aegis_480277
+          - Hurt_Mind
+          - Noble_Cross
     Script: |
       bonus bMatk,30;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",40;
@@ -17310,6 +17331,10 @@ Body:
           - Chrismas_Tree
           - KindHeart
           - Noble_Cross
+      - Combo:
+          - aegis_480277
+          - KindHeart
+          - Noble_Cross
     Script: |
       bonus bBaseAtk,30;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",40;
@@ -17319,6 +17344,10 @@ Body:
   - Combos:
       - Combo:
           - Chrismas_Tree
+          - Evilspirit_Gloves
+          - Old_Parasol
+      - Combo:
+          - aegis_480277
           - Evilspirit_Gloves
           - Old_Parasol
     Script: |
@@ -17978,6 +18007,9 @@ Body:
   - Combos:
       - Combo:
           - CD_In_MouthK
+          - Old_Parasol
+      - Combo:
+          - aegis_15970
           - Old_Parasol
     Script: |
       bonus bMatk,50;
@@ -24992,7 +25024,7 @@ Body:
       - Combo:
           - Orcish_Hero_Of_Anger     # 29140
           - Orcish_Axe     # 1304
-          - Orcish_Sword     # 1124        
+          - Orcish_Sword     # 1124
       - Combo:
           - Orcish_Hero_Of_Anger     # 29140
           - Orcish_Axe     # 1304
@@ -25038,7 +25070,7 @@ Body:
       bonus2 bAddSize,Size_All,10;
   - Combos:
       - Combo:
-          - aegis_490182     # 490182
+          - Immortal_Dog_Tag_IN     # 490182
           - Katar_170     # 28010
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -25051,7 +25083,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490182     # 490182
+          - Immortal_Dog_Tag_IN     # 490182
           - Staff_170     # 2027
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -25065,7 +25097,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490182     # 490182
+          - Immortal_Dog_Tag_IN     # 490182
           - Two_Hand_Spear_170     # 21018
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -32194,7 +32226,7 @@ Body:
           - Racing_Cap_MI    # 19200
       - Combo:
           - aegis_22257    # 22257
-          - Racing_Cap_WA    # 19201          
+          - Racing_Cap_WA    # 19201
     Script: |
       if (getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_HEAD_TOP) >= 21)
          autobonus "{ bonus bBaseAtk,200; bonus bMatk,200; }",15,10000,BF_WEAPON|BF_MAGIC;
@@ -32236,3 +32268,823 @@ Body:
       bonus bDelayrate,-30;
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
          bonus2 bSkillCooldown,"LG_EARTHDRIVE",-3000;
+  - Combos:
+      - Combo:
+          - Haurvatat    # 28962
+          - S_Str    # 4853
+    Script: |
+      bonus bAtkRate,15;
+  - Combos:
+      - Combo:
+          - Haurvatat    # 28962
+          - S_Agi    # 4854
+    Script: |
+      bonus bAspdRate,15;
+  - Combos:
+      - Combo:
+          - Haurvatat    # 28962
+          - S_Vital    # 4855
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+  - Combos:
+      - Combo:
+          - Haurvatat    # 28962
+          - S_Int    # 4856
+    Script: |
+      bonus bMatkRate,15;
+  - Combos:
+      - Combo:
+          - Haurvatat    # 28962
+          - S_Dex    # 4857
+    Script: |
+      bonus bLongAtkRate,15;
+  - Combos:
+      - Combo:
+          - Haurvatat    # 28962
+          - S_Luck    # 4858
+    Script: |
+      bonus bDelayrate,-15;
+  - Combos:
+      - Combo:
+          - aegis_300420    # 300420
+          - aegis_490285    # 490285
+    Script: |
+      bonus bAllTraitStats,3;
+      bonus bVariableCastrate,-30;
+  - Combos:
+      - Combo:
+          - Evilspirit_Gloves    # 2980
+          - XM_Celine_Kimi_Card_J    # 27007
+    Script: |
+      bonus bMaxHP,500;
+      bonus bMaxSP,250;
+      bonus3 bAutoSpell,"NPC_DARKSTRIKE",5,50;
+  - Combos:
+      - Combo:
+          - Celines_Ribbon    # 18849
+          - XM_Celine_Kimi_Card_J    # 27007
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,7*.@r;
+  - Combos:
+      - Combo:
+          - Noble_Cross    # 16029
+          - XM_Celine_Kimi_Card_J    # 27007
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bLuk,3*.@r;
+      bonus bAspdRate,2*.@r;
+  - Combos:
+      - Combo:
+          - Ein_1HAXE    # 1334
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HAXE    # 1334
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HKNUCK    # 1867
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HKNUCK    # 1867
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HKNUCK    # 1867
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HKNUCK    # 1867
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHSTAFF    # 2058
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHSTAFF    # 2058
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHSTAFF    # 2058
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHSTAFF    # 2058
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHHuuma    # 13346
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHHuuma    # 13346
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHHuuma    # 13346
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHHuuma    # 13346
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HHAMMER    # 16099
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HHAMMER    # 16099
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HHAMMER    # 16099
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HHAMMER    # 16099
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHBOW    # 18190
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHBOW    # 18190
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHBOW    # 18190
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHBOW    # 18190
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHSWORD    # 21054
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHSWORD    # 21054
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHSWORD    # 21054
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHSWORD    # 21054
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHSPEAR    # 26024
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHSPEAR    # 26024
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HWAND    # 26162
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HWAND    # 26162
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HWAND    # 26162
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HWAND    # 26162
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HWHIP    # 26215
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HWHIP    # 26215
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HWHIP    # 26215
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HWHIP    # 26215
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHKATAR    # 28045
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHKATAR    # 28045
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHKATAR    # 28045
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHKATAR    # 28045
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHAXE    # 28140
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHAXE    # 28140
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_BHAXE    # 28140
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_BHAXE    # 28140
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HBOOK    # 28635
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HBOOK    # 28635
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HBOOK    # 28635
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HBOOK    # 28635
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HDAGGER    # 28771
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HDAGGER    # 28771
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HDAGGER    # 28771
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HDAGGER    # 28771
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HMAGGER    # 28772
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HMAGGER    # 28772
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HMAGGER    # 28772
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HMAGGER    # 28772
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HSPEAR    # 32026
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HSPEAR    # 32026
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HSPEAR    # 32026
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HSPEAR    # 32026
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HLUTE    # 32110
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HLUTE    # 32110
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HLUTE    # 32110
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HLUTE    # 32110
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HSWORD    # 32352
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HSWORD    # 32352
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HSWORD    # 32352
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HSWORD    # 32352
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1H_Foxtail    # 550006
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1H_Foxtail    # 550006
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1H_Foxtail    # 550006
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1H_Foxtail    # 550006
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HGUN    # 32303
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HGUN    # 32303
+          - Ein_SAFETY_PENDR    # 32248
+          - Ein_SAFETY_EPAULL    # 32251
+      - Combo:
+          - Ein_1HGUN    # 32303
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULR    # 32250
+      - Combo:
+          - Ein_1HGUN    # 32303
+          - Ein_SAFETY_PENDL    # 32249
+          - Ein_SAFETY_EPAULL    # 32251
+    Script: |
+      bonus bFixedCastrate,-300;
+      bonus bDelayrate,-7;
+      bonus2 bSubSize,Size_All,3;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Atk    # 29534
+    Script: |
+      bonus bBaseAtk,15;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Def    # 29527
+    Script: |
+      bonus bDef,500;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_HealHP    # 29529
+    Script: |
+      bonus bHPrecovRate,350;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Matk    # 29535
+    Script: |
+      bonus bMatk,15;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Health    # 29531
+    Script: |
+      bonus bMaxHP,7500;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Spirit    # 29530
+    Script: |
+      bonus bMaxSP,150;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Mdef    # 29528
+    Script: |
+      bonus bMdef,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_HealSP    # 29532
+    Script: |
+      bonus bSPrecovRate,50;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Life    # 29543
+    Script: |
+      bonus bUnbreakableArmor;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Soul    # 29544
+    Script: |
+      bonus bUnbreakableArmor;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_M_Heal    # 29545
+    Script: |
+      bonus2 bHPRegenRate,1500,5000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_M_Soul    # 29546
+    Script: |
+      bonus2 bSPRegenRate,25,5000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Above    # 29542
+    Script: |
+      bonus2 bAddEle,Ele_All,5;
+      bonus2 bMagicAddEle,Ele_All,5;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Fix    # 29541
+    Script: |
+      bonus bSpeedAddRate,25;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Cast    # 29538
+    Script: |
+      bonus bVit,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Delay    # 29540
+    Script: |
+      bonus bStr,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Cri    # 29539
+    Script: |
+      bonus bLuk,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Heal    # 29533
+    Script: |
+      bonus bInt,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Reactor_A_Player    # 29511
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSubRace,RC_Player_Human,3+.@r;
+      bonus2 bSubRace,RC_Player_Doram,3+.@r;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Archer    # 29536
+    Script: |
+      bonus bDex,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_Speed    # 29537
+    Script: |
+      bonus bAgi,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_L_AGI    # 29551
+    Script: |
+      bonus bDelayrate,-20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_L_DEX    # 29549
+    Script: |
+      bonus bPerfectHitAddRate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_L_LUK    # 29552
+    Script: |
+      bonus bFlee2,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_L_STR    # 29550
+    Script: |
+      bonus bMaxHPrate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_L_INT    # 29548
+    Script: |
+      bonus bMaxSPrate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Improve_Orb_L_Vit    # 29547
+    Script: |
+      bonus bVariableCastrate,-20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb2    # 310083
+    Script: |
+      bonus2 bAddClass,Class_Boss,10;
+      bonus2 bMagicAddClass,Class_Boss,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb1    # 310082
+    Script: |
+      bonus2 bAddClass,Class_Normal,10;
+      bonus2 bMagicAddClass,Class_Normal,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb9    # 310009
+    Script: |
+      bonus bShortWeaponDamageReturn,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb10    # 310091
+    Script: |
+      bonus bUseSPrate,-20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb6    # 310087
+    Script: |
+      bonus bAgi,6;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb8    # 310089
+    Script: |
+       bonus bDex,6;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb7    # 310088
+    Script: |
+      bonus bInt,6;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb4    # 310085
+    Script: |
+      bonus bLuk,6;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb5    # 310086
+    Script: |
+      bonus bStr,6;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb3    # 310084
+    Script: |
+      bonus bVit,6;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb24    # 310105
+    Script: |
+      bonus2 bAddEle,Ele_Dark,10;
+      bonus2 bMagicAddEle,Ele_Dark,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb25    # 310106
+    Script: |
+      bonus2 bAddEle,Ele_Poison,10;
+      bonus2 bMagicAddEle,Ele_Poison,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb22    # 310103
+    Script: |
+      bonus2 bAddEle,Ele_Holy,10;
+      bonus2 bMagicAddEle,Ele_Holy,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb23    # 310104
+    Script: |
+      bonus2 bAddEle,Ele_Undead,10;
+      bonus2 bMagicAddEle,Ele_Undead,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb27    # 310108
+    Script: |
+      bonus bCritical,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb26    # 310107
+    Script: |
+      bonus bPerfectHitAddRate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb12    # 310093
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb14    # 310095
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb16    # 310097
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb17    # 310098
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb11    # 310092
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb15    # 310096
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb13    # 310094
+    Script: |
+      bonus bMaxHP,1000;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb44    # 310125
+    Script: |
+      bonus bDelayrate,-20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb42    # 310123
+    Script: |
+      bonus bPerfectHitAddRate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb45    # 310126
+    Script: |
+      bonus bFlee2,10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb43    # 310124
+    Script: |
+      bonus bMaxHPrate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb41    # 310122
+    Script: |
+      bonus bMaxSPrate,20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb40    # 310121
+    Script: |
+      bonus bVariableCastrate,-20;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      bonus bLongAtkDef,-10;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047 
+          - Improve_Orb_T_ATK    # 310270
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,10*.@r;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047 
+          - Improve_Orb_T_MATK    # 310271
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,10*.@r;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047 
+          - Improve_Orb_T_CRI    # 310272
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bCritical,3*.@r;
+  - Combos:
+      - Combo:
+          - Runaway_Accelerator    # 400047 
+          - Improve_Orb_T_WIND    # 310273
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bMagicAtkEle,Ele_Wind,3*.@r;
+  - Combos:
+      - Combo:
+          - Golden_Scarf_J    # 20900
+          - Imuke_Upper_Shield    # 28910
+    Script: |
+      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
+         bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Golden_Scarf_J    # 20900
+          - Horn_Card    # 4045
+    Script: |
+      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
+         bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Golden_Scarf_J    # 20900
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
+         bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Enforcer_cape    # 20800
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Yoichi_Muffler    # 20816
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - VeilCoyote    # 20857
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Horn_Card    # 4045
+          - Automatic_Orb_J01    # 310653
+    Script: |
+      bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - VeilCoyote    # 20857
+          - Imuke_Upper_Shield    # 28910
+    Script: |
+      bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - VeilCoyote    # 20857
+          - Horn_Card    # 4045
+    Script: |
+      bonus bLongAtkDef,-35;
