@@ -7,8 +7,8 @@
 #include <iostream>
 #include <ostream>
 
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
 
 #include "auth.hpp"
 #include "http.hpp"

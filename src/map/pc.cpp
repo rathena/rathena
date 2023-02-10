@@ -14,21 +14,21 @@
 #include <nlohmann/json.hpp>
 #endif
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp" // get_svn_revision()
-#include "../common/database.hpp"
-#include "../common/ers.hpp"  // ers_destroy
-#include "../common/grfio.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp" //NAME_LENGTH
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" // session[]
-#include "../common/strlib.hpp" // safestrncpy()
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp> // get_svn_revision()
+#include <common/database.hpp>
+#include <common/ers.hpp>  // ers_destroy
+#include <common/grfio.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp> //NAME_LENGTH
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> // session[]
+#include <common/strlib.hpp> // safestrncpy()
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "atcommand.hpp" // get_atcommand_level()

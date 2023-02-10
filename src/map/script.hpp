@@ -7,11 +7,11 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/database.hpp"
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp"
+#include <common/database.hpp>
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/mmo.hpp>
+#include <common/timer.hpp>
 
 #define NUM_WHISPER_VAR 10
 

@@ -11,12 +11,12 @@
 #include <math.h>
 #include <unordered_map>
 
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utils.hpp"
-#include "../common/utilities.hpp"
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utils.hpp>
+#include <common/utilities.hpp>
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
