@@ -21528,7 +21528,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
 	int instance_id = va_arg(ap, int);
-	e_instance_warpall_flag flag = va_arg(ap, e_instance_warpall_flag);
+	int flag = va_arg(ap, int);
 	map_session_data *sd;
 
 	nullpo_retr(0, bl);
@@ -21576,18 +21576,19 @@ BUILDIN_FUNC(instance_warpall)
 {
 	int16 m;
 	int instance_id;
-	e_instance_warpall_flag flag = IWA_ALL;
+	int flag = IWA_ALL;
 
 	const char *mapn = script_getstr(st,2);
-	int x    = script_getnum(st,3);
-	int y    = script_getnum(st,4);
+	int x = script_getnum(st,3);
+	int y = script_getnum(st,4);
+
 	if( script_hasdata(st,5) )
 		instance_id = script_getnum(st,5);
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
 
 	if( script_hasdata(st, 6) )
-		flag = (e_instance_warpall_flag)script_getnum(st, 6);
+		flag = script_getnum(st, 6);
 
 	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
