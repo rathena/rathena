@@ -11,39 +11,6 @@
 
 #define J_MAX_MALLOC_SIZE 65535
 
-// escapes a string in-place (' -> \' , \ -> \\ , % -> _)
-char* jstrescape (char* pt)
-{
-	//copy from here
-	char *ptr;
-	int i = 0, j = 0;
-
-	//copy string to temporary
-	CREATE(ptr, char, J_MAX_MALLOC_SIZE);
-	strcpy(ptr,pt);
-
-	while (ptr[i] != '\0') {
-		switch (ptr[i]) {
-			case '\'':
-				pt[j++] = '\\';
-				pt[j++] = ptr[i++];
-				break;
-			case '\\':
-				pt[j++] = '\\';
-				pt[j++] = ptr[i++];
-				break;
-			case '%':
-				pt[j++] = '_'; i++;
-				break;
-			default:
-				pt[j++] = ptr[i++];
-		}
-	}
-	pt[j++] = '\0';
-	aFree(ptr);
-	return pt;
-}
-
 // escapes a string into a provided buffer
 char* jstrescapecpy (char* pt, const char* spt)
 {

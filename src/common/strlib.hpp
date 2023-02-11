@@ -19,7 +19,6 @@
 #undef __USED_GNU
 #endif
 
-char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt, const char* spt, int size);
 
