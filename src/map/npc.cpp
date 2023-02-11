@@ -39,12 +39,8 @@ using namespace rathena;
 
 struct npc_data* fake_nd;
 
-// linked list of npc source files
-struct npc_src_list {
-	struct npc_src_list* next;
-	char name[4]; // dynamic array, the structure is allocated with extra bytes (string length)
-};
-static struct npc_src_list* npc_src_files = NULL;
+
+std::vector<std::string> npc_src_files;
 
 static int npc_id=START_NPC_NUM;
 static int npc_warp=0;
@@ -3568,14 +3564,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 /// Clears the npc source file list
 static void npc_clearsrcfile(void)
 {
-	struct npc_src_list* file = npc_src_files;
-
-	while( file != NULL ) {
-		struct npc_src_list* file_tofree = file;
-		file = file->next;
-		aFree(file_tofree);
-	}
-	npc_src_files = NULL;
+	npc_src_files.clear();
 }
 
 /**
@@ -3586,9 +3575,6 @@ static void npc_clearsrcfile(void)
  */
 int npc_addsrcfile(const char* name, bool loadscript)
 {
-	struct npc_src_list* file;
-	struct npc_src_list* file_prev = NULL;
-
 	if( strcmpi(name, "clear") == 0 )
 	{
 		npc_clearsrcfile();
@@ -3596,31 +3582,19 @@ int npc_addsrcfile(const char* name, bool loadscript)
 	}
 
 	//Check if this is not a file
-    if(check_filepath(name)!=2){
+	if(check_filepath(name)!=2){
 		ShowError("npc_addsrcfile: Can't find source file \"%s\"\n", name );
 		return 0;
 	}
-        
-	// prevent multiple insert of source files
-	file = npc_src_files;
-	while( file != NULL )
-	{
-		if( strcmp(name, file->name) == 0 )
-			return 0;// found the file, no need to insert it again
-		file_prev = file;
-		file = file->next;
+
+	if (std::find(npc_src_files.begin(), npc_src_files.end(), name) != npc_src_files.end()) {
+		return 0; // found the file, no need to insert it again
 	}
 
-	file = (struct npc_src_list*)aMalloc(sizeof(struct npc_src_list) + strlen(name));
-	file->next = NULL;
-	safestrncpy(file->name, name, strlen(name) + 1);
-	if( file_prev == NULL )
-		npc_src_files = file;
-	else
-		file_prev->next = file;
+	npc_src_files.push_back(name);
 
 	if (loadscript)
-		return npc_parsesrcfile(file->name);
+		return npc_parsesrcfile(name);
 
 	return 1;
 }
@@ -3628,29 +3602,18 @@ int npc_addsrcfile(const char* name, bool loadscript)
 /// Removes a npc source file (or all)
 void npc_delsrcfile(const char* name)
 {
-	struct npc_src_list* file = npc_src_files;
-	struct npc_src_list* file_prev = NULL;
-
 	if( strcmpi(name, "all") == 0 )
 	{
 		npc_clearsrcfile();
 		return;
 	}
 
-	while( file != NULL )
-	{
-		if( strcmp(file->name, name) == 0 )
-		{
-			if( npc_src_files == file )
-				npc_src_files = file->next;
-			else
-				file_prev->next = file->next;
-			aFree(file);
-			break;
-		}
-		file_prev = file;
-		file = file->next;
-	}
+	auto it = std::find(npc_src_files.begin(), npc_src_files.end(), name);
+
+	if (it == npc_src_files.end())
+		return;
+
+	npc_src_files.erase(it);
 }
 
 /// Parses and sets the name and exname of a npc.
@@ -5959,7 +5922,6 @@ void npc_clear_pathlist(void) {
 
 //Clear then reload npcs files
 int npc_reload(void) {
-	struct npc_src_list *nsl;
 	int npc_new_min = npc_id;
 	struct s_mapiterator* iter;
 	struct block_list* bl;
@@ -6028,9 +5990,9 @@ int npc_reload(void) {
 
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
-	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", nsl->name);
-		npc_parsesrcfile(nsl->name);
+	for (const auto& file : npc_src_files) {
+		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+		npc_parsesrcfile(file.c_str());
 	}
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
@@ -6160,7 +6122,6 @@ static void npc_debug_warps(void){
  * npc initialization
  *------------------------------------------*/
 void do_init_npc(void){
-	struct npc_src_list *file;
 	int i;
 
 	//Stock view data for normal npcs.
@@ -6184,9 +6145,9 @@ void do_init_npc(void){
 
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");
-	for( file = npc_src_files; file != NULL; file = file->next ) {
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file->name);
-		npc_parsesrcfile(file->name);
+	for (const auto& file : npc_src_files) {
+		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+		npc_parsesrcfile(file.c_str());
 	}
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
