@@ -11,40 +11,6 @@
 
 #define J_MAX_MALLOC_SIZE 65535
 
-// escapes a string into a provided buffer
-char* jstrescapecpy (char* pt, const char* spt)
-{
-	//copy from here
-	//WARNING: Target string pt should be able to hold strlen(spt)*2, as each time
-	//a escape character is found, the target's final length increases! [Skotlex]
-	int i =0, j=0;
-
-	if (!spt) {	//Return an empty string [Skotlex]
-		pt[0] = '\0';
-		return &pt[0];
-	}
-
-	while (spt[i] != '\0') {
-		switch (spt[i]) {
-			case '\'':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '\\':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '%':
-				pt[j++] = '_'; i++;
-				break;
-			default:
-				pt[j++] = spt[i++];
-		}
-	}
-	pt[j++] = '\0';
-	return &pt[0];
-}
-
 // escapes exactly 'size' bytes of a string into a provided buffer
 int jmemescapecpy (char* pt, const char* spt, int size)
 {
