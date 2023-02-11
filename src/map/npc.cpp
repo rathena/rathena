@@ -3561,12 +3561,6 @@ int npc_unload(struct npc_data* nd, bool single) {
 // NPC Source Files
 //
 
-/// Clears the npc source file list
-static void npc_clearsrcfile(void)
-{
-	npc_src_files.clear();
-}
-
 /**
  * Adds a npc source file (or removes all)
  * @param name : file to add
@@ -3577,7 +3571,7 @@ int npc_addsrcfile(const char* name, bool loadscript)
 {
 	if( strcmpi(name, "clear") == 0 )
 	{
-		npc_clearsrcfile();
+		npc_src_files.clear();
 		return 1;
 	}
 
@@ -3587,7 +3581,7 @@ int npc_addsrcfile(const char* name, bool loadscript)
 		return 0;
 	}
 
-	if (std::find(npc_src_files.begin(), npc_src_files.end(), name) != npc_src_files.end()) {
+	if (util::vector_exists(npc_src_files, name)) {
 		return 0; // found the file, no need to insert it again
 	}
 
@@ -3604,16 +3598,11 @@ void npc_delsrcfile(const char* name)
 {
 	if( strcmpi(name, "all") == 0 )
 	{
-		npc_clearsrcfile();
+		npc_src_files.clear();
 		return;
 	}
 
-	auto it = std::find(npc_src_files.begin(), npc_src_files.end(), name);
-
-	if (it == npc_src_files.end())
-		return;
-
-	npc_src_files.erase(it);
+	util::vector_erase_if_exists(npc_src_files, name);
 }
 
 /// Parses and sets the name and exname of a npc.
@@ -6076,7 +6065,7 @@ void do_final_npc(void) {
 	barter_db.clear();
 	ers_destroy(timer_event_ers);
 	ers_destroy(npc_sc_display_ers);
-	npc_clearsrcfile();
+	npc_src_files.clear();
 }
 
 static void npc_debug_warps_sub(struct npc_data* nd)
