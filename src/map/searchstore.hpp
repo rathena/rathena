@@ -17,7 +17,7 @@
 
 /// information about the search being performed
 struct s_search_store_search {
-	struct map_session_data* search_sd;  // sd of the searching player
+	map_session_data* search_sd;  // sd of the searching player
 	const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist;
 	const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist;
 	unsigned int item_count;
@@ -49,14 +49,14 @@ struct s_search_store_info {
 	bool open;
 };
 
-bool searchstore_open(struct map_session_data* sd, unsigned int uses, unsigned short effect);
-void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
-bool searchstore_querynext(struct map_session_data* sd);
-void searchstore_next(struct map_session_data* sd);
-void searchstore_clear(struct map_session_data* sd);
-void searchstore_close(struct map_session_data* sd);
-void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, t_itemid nameid);
-bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id);
-void searchstore_clearremote(struct map_session_data* sd);
+bool searchstore_open(map_session_data* sd, unsigned int uses, unsigned short effect);
+void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
+bool searchstore_querynext(map_session_data* sd);
+void searchstore_next(map_session_data* sd);
+void searchstore_clear(map_session_data* sd);
+void searchstore_close(map_session_data* sd);
+void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_itemid nameid);
+bool searchstore_queryremote(map_session_data* sd, uint32 account_id);
+void searchstore_clearremote(map_session_data* sd);
 
 #endif /* SEARCHSTORE_HPP */
