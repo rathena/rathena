@@ -11,33 +11,6 @@
 
 #define J_MAX_MALLOC_SIZE 65535
 
-// escapes exactly 'size' bytes of a string into a provided buffer
-int jmemescapecpy (char* pt, const char* spt, int size)
-{
-	//copy from here
-	int i =0, j=0;
-
-	while (i < size) {
-		switch (spt[i]) {
-			case '\'':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '\\':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '%':
-				pt[j++] = '_'; i++;
-				break;
-			default:
-				pt[j++] = spt[i++];
-		}
-	}
-	// copy size is 0 ~ (j-1)
-	return j;
-}
-
 // Function to suppress control characters in a string.
 int remove_control_chars(char* str)
 {

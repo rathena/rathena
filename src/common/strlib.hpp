@@ -19,8 +19,6 @@
 #undef __USED_GNU
 #endif
 
-int jmemescapecpy (char* pt, const char* spt, int size);
-
 int remove_control_chars(char* str);
 char* trim(char* str);
 char* normalize_name(char* str,const char* delims);
