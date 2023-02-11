@@ -6028,12 +6028,14 @@ int npc_reload(void) {
 
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
+	ShowStatus("Loading NPC Files\n");
 	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
 #ifdef DEBUG
 		ShowStatus("Loading NPC file: %s" CL_CLL "\r", nsl->name);
 #endif
 		npc_parsesrcfile(nsl->name);
 	}
+	ShowInfo("Loaded NPC Files\n");
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"

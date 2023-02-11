@@ -3777,6 +3777,8 @@ int map_readallmaps (void)
 
 	int maps_removed = 0;
 
+	ShowStatus("Loading %d maps.\n", map_num);
+
 	for (int i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
@@ -4843,6 +4845,7 @@ void MapServer::finalize(){
 	do_clear_npc();
 
 	// remove all objects on maps
+	ShowStatus("Cleaning up %d maps.\n", map_num);
 	for (int i = 0; i < map_num; i++) {
 		struct map_data *mapdata = map_getmapdata(i);
 #ifdef DEBUG
