@@ -52,28 +52,6 @@ char* trim(char* str)
 	return str;
 }
 
-// Note: This function returns a pointer to a substring of the original string.
-// If the given string was allocated dynamically, the caller must not overwrite
-// that pointer with the returned value, since the original pointer must be
-// deallocated using the same allocator with which it was allocated.  The return
-// value must NOT be deallocated using free() etc.
-char *trim2(char *str,char flag) {
-	if(flag&1) { // Trim leading space
-		while(ISSPACE(*str)) str++;
-		if(*str == 0)  // All spaces?
-			return str;
-	}
-	if(flag&2) { // Trim trailing space
-		char *end;
-
-		end = str + strlen(str) - 1;
-		while(end > str && ISSPACE(*end)) end--;
-		*(end+1) = 0; // Write new null terminator
-	}
-
-	return str;
-}
-
 // Converts one or more consecutive occurences of the delimiters into a single space
 // and removes such occurences from the beginning and end of string
 // NOTE: make sure the string is not const!!
