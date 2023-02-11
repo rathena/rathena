@@ -9,8 +9,6 @@
 #include "malloc.hpp"
 #include "showmsg.hpp"
 
-#define J_MAX_MALLOC_SIZE 65535
-
 // Function to suppress control characters in a string.
 int remove_control_chars(char* str)
 {
