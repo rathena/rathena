@@ -44414,6 +44414,15 @@ Body:
     Script: |
       autobonus "{ bonus bFlee2,100; bonus2 bAddClass,Class_Boss,100; }",50,10000,BF_WEAPON;
       /*Unknow Rate*/
+  - Id: 29511
+    AegisName: Reactor_A_Player
+    Name: Q-Player
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_Player_Human,1+(.@r/3);
+      bonus2 bSubRace,RC_Player_Doram,1+(.@r/3);
   - Id: 29513
     AegisName: Highpriest_Top
     Name: High Priest Stone (Upper)
@@ -50218,6 +50227,18 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,10*.@r;
+  - Id: 300420
+    AegisName: aegis_300420
+    Name: Labyrinth Berzebub Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAllStats,3;
   - Id: 300421
     AegisName: aegis_300421
     Name: Catherine Card
@@ -52628,6 +52649,90 @@ Body:
     Script: |
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",15;
       bonus2 bSkillAtk,"DC_THROWARROW",15;
+  - Id: 310270
+    AegisName: Improve_Orb_T_ATK
+    Name: T-PowerBoost
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         .@c = 35;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 49;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 70;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bBaseAtk,100; }",.@c,.@t,BF_WEAPON;
+      }
+  - Id: 310271
+    AegisName: Improve_Orb_T_MATK
+    Name: T-MagicBoost
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,50;
+      if (.@r>=7) {
+         .@c = 25;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 50;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bMatk,100; }",.@c,.@t,BF_MAGIC;
+      }
+  - Id: 310272
+    AegisName: Improve_Orb_T_CRI
+    Name: T-Assault
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,10;
+      if (.@r>=7) {
+         .@c = 25;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 50;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bCritAtkRate,40; }",.@c,.@t,BF_WEAPON;
+      }
+  - Id: 310273
+    AegisName: Improve_Orb_T_WIND
+    Name: T-Electricity
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus3 bAutoSpell,"MG_THUNDERSTORM",6,50;
+      if (.@r>=7) {
+         .@c = 30;
+         .@t = 10000;
+         if (.@r>=8) {
+             .@c = 40;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 50;
+             .@t += 1000;
+         }
+         autobonus "{ bonus3 bAutoSpell,\"SO_VARETYR_SPEAR\",3,1000; }",.@c,.@t,BF_WEAPON;
+      }
   - Id: 310321
     AegisName: Enchant_Groza
     Name: Abyssal King
@@ -55470,6 +55575,14 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 310653
+    AegisName: Automatic_Orb_J01
+    Name: Q-Range
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkDef,5+(10*(.@r/3));      
   - Id: 310654
     AegisName: ASPD_Robe_D
     Name: ASPD+1(Dual)

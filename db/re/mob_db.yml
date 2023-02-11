@@ -92326,6 +92326,7 @@ Body:
     AttackDelay: 861
     AttackMotion: 660
     DamageMotion: 144
+    Ai: 04
     Drops:
       - Item: SpritJewel
         Rate: 1000

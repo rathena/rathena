@@ -4847,6 +4847,8 @@ void do_init_script(void) {
 	stack_ers = ers_new(sizeof(struct script_stack), "script.cpp::script_stack", ERS_OPT_FLEX_CHUNK);
 	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
 
+	add_timer_func_list( run_script_timer, "run_script_timer" );
+
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
 
@@ -26804,6 +26806,37 @@ BUILDIN_FUNC(itemlink)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(mesitemlink){
+	t_itemid nameid = script_getnum( st, 2 );
+	std::shared_ptr<item_data> data = item_db.find( nameid );
+	
+	if( data == nullptr ){
+		ShowError( "buildin_mesitemlink: Item ID %u does not exists.\n", nameid );
+		script_pushconststr( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	bool use_brackets = true;
+
+	if( script_hasdata( st, 3 ) ){
+		use_brackets = script_getnum( st, 3 ) != 0;
+	}
+
+	const char* name = nullptr;
+
+	if( script_hasdata( st, 4 ) ){
+		name = script_getstr( st, 4 );
+	}
+
+	// Create the link, depending on configuration and packet version
+	std::string itemlstr = item_db.create_item_link_for_mes( data, use_brackets, name );
+
+	// Push it to the script engine for further usage
+	script_pushstrcopy( st, itemlstr.c_str() );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(addfame) {
 	map_session_data *sd;
 
@@ -27618,6 +27651,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
 	BUILDIN_DEF(itemlink, "i?????????"),
+	BUILDIN_DEF(mesitemlink, "i??"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),

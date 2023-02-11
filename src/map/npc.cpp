@@ -5810,13 +5810,13 @@ TIMER_FUNC(npc_dynamicnpc_removal_timer){
 		if( sd->npc_id == nd->bl.id || sd->npc_shopid == nd->bl.id ){
 			// Retry later
 			nd->dynamicnpc.last_interaction = gettick();
-			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
+			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, nd->bl.id, (intptr_t)nullptr );
 			return 0;
 		}
 
 		// Last interaction is not long enough in the past
 		if( DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ) < battle_config.feature_dynamicnpc_timeout ){
-			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ), npc_dynamicnpc_removal_timer, nd->bl.id, NULL );
+			nd->dynamicnpc.removal_tid = add_timer( nd->dynamicnpc.last_interaction + DIFF_TICK( gettick(), nd->dynamicnpc.last_interaction ), npc_dynamicnpc_removal_timer, nd->bl.id, (intptr_t)nullptr );
 			return 0;
 		}
 
@@ -5874,7 +5874,7 @@ struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, map_session_
 	}
 
 	dnd->dynamicnpc.last_interaction = gettick();
-	dnd->dynamicnpc.removal_tid = add_timer( dnd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, dnd->bl.id, NULL );
+	dnd->dynamicnpc.removal_tid = add_timer( dnd->dynamicnpc.last_interaction + battle_config.feature_dynamicnpc_timeout, npc_dynamicnpc_removal_timer, dnd->bl.id, (intptr_t)nullptr );
 
 	return dnd;
 }
@@ -6214,6 +6214,9 @@ void do_init_npc(void){
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 	add_timer_func_list( npc_dynamicnpc_removal_timer, "npc_dynamicnpc_removal_timer" );
+#ifdef SECURE_NPCTIMEOUT
+	add_timer_func_list( npc_secure_timeout_timer, "npc_secure_timeout_timer" );
+#endif
 
 	// Init dummy NPC
 	fake_nd = npc_create_npc( -1, 0, 0 );
