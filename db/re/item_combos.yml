@@ -33868,7 +33868,7 @@ Body:
           - aegis_29725    # 29725
           - Gemini_Rope_J    # 580004          
     Script: |
-      if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || ((eaclass()&EAJL_THIRD && BaseJob == Job_Dancer)))
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
          bonus2 bSkillAtk,"WM_REVERBERATION",150;
   - Combos:
       - Combo:
@@ -33876,7 +33876,7 @@ Body:
           - Gemini_Diadem    # 5569
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || ((eaclass()&EAJL_THIRD && BaseJob == Job_Dancer)))
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -33884,7 +33884,7 @@ Body:
           - Gemini_Mail_J    # 450130
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || ((eaclass()&EAJL_THIRD && BaseJob == Job_Dancer))) {
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
          bonus bAtkRate,3*.@r;
          bonus bMatkRate,3*.@r;
       }
@@ -33894,7 +33894,7 @@ Body:
           - Gemini_Manteau_J    # 480026
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || ((eaclass()&EAJL_THIRD && BaseJob == Job_Dancer))) {
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
          bonus bInt,2*.@r;
          bonus bDex,2*.@r;
       }
@@ -33904,14 +33904,14 @@ Body:
           - Gemini_Shoes_J    # 470032
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || ((eaclass()&EAJL_THIRD && BaseJob == Job_Dancer)))
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
          bonus bPerfectHitAddRate,3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Gemini_Ring_J    # 490032
     Script: |
-      if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || ((eaclass()&EAJL_THIRD && BaseJob == Job_Dancer))) {
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
          bonus bAtkRate,15;
          bonus bMatkRate,15;
          bonus2 bSkillAtk,"WM_REVERBERATION",50;
