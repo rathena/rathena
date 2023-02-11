@@ -2091,8 +2091,8 @@ enum e_convertpcinfo_type : uint8 {
 };
 
 enum e_instance_warpall_flag{
+	IWA_NONE   = 0x00,
 	IWA_DEAD   = 0x01,
-	IWA_ALL      = 0xFF,
 };
 
 /**

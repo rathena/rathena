@@ -21538,7 +21538,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 	sd = (TBL_PC *)bl;
 
-	if ((flag & IWA_DEAD) == 0 && pc_isdead(sd))
+	if ((flag & IWA_DEAD) != 0 && pc_isdead(sd))
 		return 0;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
@@ -21576,7 +21576,7 @@ BUILDIN_FUNC(instance_warpall)
 {
 	int16 m;
 	int instance_id;
-	int flag = IWA_ALL;
+	int flag = IWA_NONE;
 
 	const char *mapn = script_getstr(st,2);
 	int x = script_getnum(st,3);

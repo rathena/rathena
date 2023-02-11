@@ -9489,8 +9489,8 @@
 	export_constant(CPC_ACCOUNT);
 
 	/* instance_warpall flags */
+	export_constant(IWA_NONE);
 	export_constant(IWA_DEAD);
-	export_constant(IWA_ALL);
 
 	/* skill hit */
 	export_constant(DMG_SINGLE);
