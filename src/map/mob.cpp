@@ -5283,8 +5283,9 @@ static int mob_read_sqldb(void)
 
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
+#ifdef DEBUG
 			ShowStatus("Loading [%" PRIu64 "/%" PRIu64 "] rows from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, mob_db_name[fi]);
-
+#endif
 			std::vector<std::string> data = {};
 
 			for (uint32 i = 0; i < total_columns; i++) {
