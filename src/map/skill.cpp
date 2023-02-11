@@ -10481,8 +10481,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HFLI_FLEET:
 	case HFLI_SPEED:
 	case HLIF_CHANGE:
-	case MH_ANGRIFFS_MODUS:
-	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		if (hd)
@@ -10492,7 +10490,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
 #endif
 		break;
-
+	case MH_ANGRIFFS_MODUS:
+	case MH_GOLDENE_FERSE:
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,
+			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		break;
 	case NPC_DRAGONFEAR:
 		if (flag&1) {
 			const enum sc_type sc[] = { SC_STUN, SC_SILENCE, SC_CONFUSION, SC_BLEEDING };
