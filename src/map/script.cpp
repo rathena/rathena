@@ -21538,7 +21538,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 	sd = (TBL_PC *)bl;
 
-	if ((flag & IWA_DEAD) != 0 && pc_isdead(sd))
+	if ((flag & IWA_NOTDEAD) != 0 && pc_isdead(sd))
 		return 0;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);

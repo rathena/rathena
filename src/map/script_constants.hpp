@@ -9490,7 +9490,7 @@
 
 	/* instance_warpall flags */
 	export_constant(IWA_NONE);
-	export_constant(IWA_DEAD);
+	export_constant(IWA_NOTDEAD);
 
 	/* skill hit */
 	export_constant(DMG_SINGLE);

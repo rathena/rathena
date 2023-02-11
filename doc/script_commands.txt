@@ -9707,7 +9707,7 @@ to is used. If that fails, the script will come to a halt.
 
 Available values for the <flag> bitmask:
  IWA_NONE			No restriction. (default)
- IWA_DEAD			If dead players are warped or not
+ IWA_NOTDEAD		If dead players are warped or not
 
 ---------------------------------------
 
