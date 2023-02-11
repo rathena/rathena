@@ -181,12 +181,11 @@ public:
 	}
 
 	void loadingFinished() override{
-		// Cache all known values
 		size_t max_key = 0;
+		// Cache all known values
 		for (auto &pair : *this) {
 			// Calculate the key that should be used
 			size_t key = this->calculateCacheKey(pair.first);
-			max_key = std::max(max_key, key);
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() <= key) {
 				// Some keys compute to 0, so we allocate a minimum of 500 (250*2) entries
@@ -200,9 +199,14 @@ public:
 
 			// Insert the value into the cache
 			this->cache[key] = pair.second;
+
+			// keep track of highest known key for easy resize
+			max_key = std::max(max_key, key);
 		}
 
+		// Resize to only fit all existing non null entries
 		this->cache.resize(max_key);
+		// Free the memory that was allocated too much
 		this->cache.shrink_to_fit();
 		this->loaded = true;
 	}
