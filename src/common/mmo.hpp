@@ -6,7 +6,7 @@
 
 #include <time.h>
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #include "cbasetypes.hpp"
 #include "db.hpp"

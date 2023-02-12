@@ -6,9 +6,9 @@
 
 #include <bitset>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
+#include <config/core.hpp>
 
 #include "map.hpp" //ELE_MAX
 #include "skill.hpp"

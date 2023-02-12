@@ -10,17 +10,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/malloc.hpp"
-#include "../common/mapindex.hpp"
-#include "../common/mmo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/malloc.hpp>
+#include <common/mapindex.hpp>
+#include <common/mmo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "char.hpp"
 #include "char_logif.hpp"

@@ -6,12 +6,12 @@
 #include <stdlib.h> // exit
 #include <string.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
 
 // global sql settings (in ipban_sql.cpp)
 static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f

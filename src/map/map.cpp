@@ -6,22 +6,22 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/cli.hpp"
-#include "../common/core.hpp"
-#include "../common/ers.hpp"
-#include "../common/grfio.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" // WFIFO*()
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/cli.hpp>
+#include <common/core.hpp>
+#include <common/ers.hpp>
+#include <common/grfio.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> // WFIFO*()
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
@@ -3777,6 +3777,8 @@ int map_readallmaps (void)
 
 	int maps_removed = 0;
 
+	ShowStatus("Loading %d maps.\n", map_num);
+
 	for (int i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
@@ -3784,8 +3786,10 @@ int map_readallmaps (void)
 		struct map_data *mapdata = &map[i];
 		char map_cache_decode_buffer[MAX_MAP_SIZE];
 
+#ifdef DEBUG
 		// show progress
 		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
+#endif
 
 		if( enable_grf ){
 			// try to load the map
@@ -4841,10 +4845,12 @@ void MapServer::finalize(){
 	do_clear_npc();
 
 	// remove all objects on maps
+	ShowStatus("Cleaning up %d maps.\n", map_num);
 	for (int i = 0; i < map_num; i++) {
 		struct map_data *mapdata = map_getmapdata(i);
-
+#ifdef DEBUG
 		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map_num, mapdata->name);
+#endif
 		map_foreachinmap(cleanup_sub, i, BL_ALL);
 		channel_delete(mapdata->channel,false);
 	}

@@ -5,14 +5,14 @@
 
 #include <unordered_map>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
 
 #include "battle.hpp"
 #include "clif.hpp"
