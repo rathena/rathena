@@ -16,7 +16,7 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 		mes "That's right, I'm waiting for a strong adventurer to satisfy my curiosity!";
 		next;
 		mes "[Nillem]";
-		mes "If you reach level 175, you will be my destined opponent-¡Ù";
+		mes "If you reach level 175, you will be my destined opponent-Â¡Ã™";
 		close;
 	}
 	mes "[Nillem]";
@@ -305,7 +305,7 @@ abyss_03,108,97,3	script	Traveler's Monument#abyss	1_JOURNEY_STONE_F,{
 hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 	if (checkquest(7893,HUNTING) == 2) {
 		mes "[Marigold]";
-		mes "Purple Ferus... Hmm, that's right. We still need more investigation. Should we do this this time?";
+		mes "Purple Ferus... Hmm, that's right. We still need more investigation. Should we do it this time?";
 		erasequest 7893;
 		setquest 7894;
 		getexp 15823920,11076720;
@@ -313,7 +313,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 	}
 	if (checkquest(7895,HUNTING) == 2) {
 		mes "[Marigold]";
-		mes "Treasure Mimics carry those things. Oh, you can take them all as loot. All you need to know is the type.";
+		mes "Treasure Mimics carry those things. Oh, you can take all their loot. All I need to know is the type.";
 		erasequest 7895;
 		setquest 7896;
 		getexp 7979360,5585560;
@@ -321,7 +321,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 	}
 	if (checkquest(7897,HUNTING) == 2) {
 		mes "[Marigold]";
-		mes "How do you feel against the Black Acidus and the Silver Acidus? Interesting!";
+		mes "How did you feel against the Black Acidus and the Silver Acidus? Interesting!";
 		erasequest 7897;
 		setquest 7898;
 		getexp 32090640,22463360;
@@ -349,7 +349,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		case 0:
 		case 1:
 			mes "[Marigold]";
-			mes "We are still organizing the data we collected the other day.";
+			mes "We are still organizing the data you collected the other day.";
 			mes "There is still time until the next investigation, so how about taking a break?";
 			close;
 		case 2:
@@ -360,8 +360,8 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		case -1:
 			mes "[Marigold]";
 			mes "An unusual Purple Ferus was found on the 4th floor of the Abyss Cave.";
-			mes "Ferus usually follows natural attributes, isn't it amazing that it's purple?";
-			mes "So I want to know about this Purple ferus.";
+			mes "Ferus color usually follows it's natural attributes, isn't it amazing that it's purple?";
+			mes "So I want to know more about this Purple Ferus.";
 			next;
 			if (select( "Accept the request", "Reject" ) == 2) {
 				mes "[Marigold]";
@@ -390,7 +390,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		case 0:
 		case 1:
 			mes "[Marigold]";
-			mes "We are still organizing the data we collected the other day.";
+			mes "We are still organizing the data you collected the other day.";
 			mes "There is still time until the next investigation, so how about taking a break?";
 			close;
 		case 2:
@@ -400,7 +400,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		switch( checkquest(7895,HUNTING) ) {
 		case -1:
 			mes "[Marigold]";
-			mes "A new mimic has been discovered on the 4th floor of the Abyss Cave.";
+			mes "A new Mimic has been discovered on the 4th floor of the Abyss Cave.";
 			mes "I wonder what kind of loot this guy called 'Treasure Mimic' will give you.";
 			next;
 			if (select( "Accept the request", "Reject" ) == 2) {
@@ -430,7 +430,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		case 0:
 		case 1:
 			mes "[Marigold]";
-			mes "We are still organizing the data we collected the other day.";
+			mes "We are still organizing the data you collected the other day.";
 			mes "There is still time until the next investigation, so how about taking a break?";
 			close;
 		case 2:
@@ -440,7 +440,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		switch( checkquest(7897,HUNTING) ) {
 		case -1:
 			mes "[Marigold]";
-			mes "The color of an Acidus gives a rough estimate of its natural properties.";
+			mes "The color of an Acidus gives a rough estimate of it's natural properties.";
 			mes "But I don't know about Black Acidus and Silver Acidus. I'm looking for someone to help me collect data while dealing with them.";
 			next;
 			if (select( "Accept the request", "Reject" ) == 2) {
@@ -451,7 +451,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 			}
 			mes "[Marigold]";
 			mes "This time, we are going to investigate ^4d4dffSilver Acidus and Black Acidus^000000found on the ^4d4dff4th floor of the Abyss Cave^000000!";
-			mes "Tell me what attributes you have when you deal directly with them.";
+			mes "Tell me what attributes they have when you deal with them directly.";
 			setquest 7897;
 			close;
 		case 0:
@@ -470,7 +470,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		case 0:
 		case 1:
 			mes "[Marigold]";
-			mes "We are still organizing the data we collected the other day.";
+			mes "We are still organizing the data you collected the other day.";
 			mes "There is still time until the next investigation, so how about taking a break?";
 			close;
 		case 2:
@@ -498,7 +498,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		case 0:
 		case 1:
 			mes "[Marigold]";
-			mes "Born Ferus and Bone Acidus are said to be found on the 4th floor of the Abyss Cave.";
+			mes "Bone Ferus and Bone Acidus are said to be found on the 4th floor of the Abyss Cave.";
 			close;
 		case 2:
 			end;
@@ -517,7 +517,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 		mes "I've heard interesting news about the Dragon's Cave in Abyss Lake to the west and am investigating.";
 		next;
 		mes "[Marigold]";
-		mes "It wasn't really the lowest floor, where it was piled up with gold coins that we knew was the lowest level.";
+		mes "The level we knew as the lowest level, where gold coins were piled up, was not really the lowest floor.";
 		mes "What was the space under the high pile of gold coins?";
 		next;
 		mes "[Marigold]";
