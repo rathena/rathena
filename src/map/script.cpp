@@ -21576,22 +21576,18 @@ BUILDIN_FUNC(instance_warpall)
 {
 	int16 m;
 	int instance_id;
-	int flag = IWA_NONE;
 
 	const char *mapn = script_getstr(st,2);
-	int x = script_getnum(st,3);
-	int y = script_getnum(st,4);
 
 	if( script_hasdata(st,5) )
 		instance_id = script_getnum(st,5);
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
 
-	if( script_hasdata(st, 6) )
-		flag = script_getnum(st, 6);
-
-	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
+	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0) {
+		ShowError("buildin_instance_warpall: Instance map for instance ID %d is not found.\n", instance_id);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
@@ -21599,6 +21595,13 @@ BUILDIN_FUNC(instance_warpall)
 		ShowError("buildin_instance_warpall: Instance is not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	int flag = IWA_NONE;
+	int x = script_getnum(st,3);
+	int y = script_getnum(st,4);
+
+	if( script_hasdata(st, 6) )
+		flag = script_getnum(st, 6);
 
 	for(const auto &it : idata->map)
 		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id, flag);
