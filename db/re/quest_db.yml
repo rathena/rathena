@@ -5081,7 +5081,7 @@ Body:
     Title: Acidus Attribute Research - Standby
     TimeLimit: 4h
   - Id: 7899
-    Title: Against Providence
+    Title: Going against Providence
     Targets:
       - Mob: BONE_FERUS
         Count: 30

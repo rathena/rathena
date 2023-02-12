@@ -16,7 +16,7 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 		mes "That's right, I'm waiting for a strong adventurer to satisfy my curiosity!";
 		next;
 		mes "[Nillem]";
-		mes "If you reach level 175, you will be my destined opponent-Â¡Ã™";
+		mes "If you reach level 175, you will be my destined opponent-¡Ù";
 		close;
 	}
 	mes "[Nillem]";
@@ -341,7 +341,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 	mes "[Marigold]";
 	mes "I want to investigate the new dragons found deep in the Abyss Cave, can you help me?";
 	next;
-	switch( select( "Ferus of an unusual color", "Investigation of new mimics", "Research on Acidus properties", "Things that go against Providence", "What are you studying?" ) ) {
+	switch( select( "A unique color of Ferus", "New Mimic Investigation", "Acidus Attribute Research", "Going against Providence", "What are you studying?" ) ) {
 	case 1:
 		switch( checkquest(7894,PLAYTIME) ) {
 		case -1:
