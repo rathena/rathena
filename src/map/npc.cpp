@@ -8,16 +8,16 @@
 #include <stdlib.h>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "battle.hpp"
 #include "chat.hpp"
@@ -39,12 +39,8 @@ using namespace rathena;
 
 struct npc_data* fake_nd;
 
-// linked list of npc source files
-struct npc_src_list {
-	struct npc_src_list* next;
-	char name[4]; // dynamic array, the structure is allocated with extra bytes (string length)
-};
-static struct npc_src_list* npc_src_files = NULL;
+
+std::vector<std::string> npc_src_files;
 
 static int npc_id=START_NPC_NUM;
 static int npc_warp=0;
@@ -3565,19 +3561,6 @@ int npc_unload(struct npc_data* nd, bool single) {
 // NPC Source Files
 //
 
-/// Clears the npc source file list
-static void npc_clearsrcfile(void)
-{
-	struct npc_src_list* file = npc_src_files;
-
-	while( file != NULL ) {
-		struct npc_src_list* file_tofree = file;
-		file = file->next;
-		aFree(file_tofree);
-	}
-	npc_src_files = NULL;
-}
-
 /**
  * Adds a npc source file (or removes all)
  * @param name : file to add
@@ -3586,41 +3569,26 @@ static void npc_clearsrcfile(void)
  */
 int npc_addsrcfile(const char* name, bool loadscript)
 {
-	struct npc_src_list* file;
-	struct npc_src_list* file_prev = NULL;
-
 	if( strcmpi(name, "clear") == 0 )
 	{
-		npc_clearsrcfile();
+		npc_src_files.clear();
 		return 1;
 	}
 
 	//Check if this is not a file
-    if(check_filepath(name)!=2){
+	if(check_filepath(name)!=2){
 		ShowError("npc_addsrcfile: Can't find source file \"%s\"\n", name );
 		return 0;
 	}
-        
-	// prevent multiple insert of source files
-	file = npc_src_files;
-	while( file != NULL )
-	{
-		if( strcmp(name, file->name) == 0 )
-			return 0;// found the file, no need to insert it again
-		file_prev = file;
-		file = file->next;
+
+	if (util::vector_exists(npc_src_files, name)) {
+		return 0; // found the file, no need to insert it again
 	}
 
-	file = (struct npc_src_list*)aMalloc(sizeof(struct npc_src_list) + strlen(name));
-	file->next = NULL;
-	safestrncpy(file->name, name, strlen(name) + 1);
-	if( file_prev == NULL )
-		npc_src_files = file;
-	else
-		file_prev->next = file;
+	npc_src_files.push_back(name);
 
 	if (loadscript)
-		return npc_parsesrcfile(file->name);
+		return npc_parsesrcfile(name);
 
 	return 1;
 }
@@ -3628,29 +3596,34 @@ int npc_addsrcfile(const char* name, bool loadscript)
 /// Removes a npc source file (or all)
 void npc_delsrcfile(const char* name)
 {
-	struct npc_src_list* file = npc_src_files;
-	struct npc_src_list* file_prev = NULL;
-
 	if( strcmpi(name, "all") == 0 )
 	{
-		npc_clearsrcfile();
+		npc_src_files.clear();
 		return;
 	}
 
-	while( file != NULL )
-	{
-		if( strcmp(file->name, name) == 0 )
-		{
-			if( npc_src_files == file )
-				npc_src_files = file->next;
-			else
-				file_prev->next = file->next;
-			aFree(file);
-			break;
-		}
-		file_prev = file;
-		file = file->next;
+	util::vector_erase_if_exists(npc_src_files, name);
+}
+
+/**
+ * Load all npc files
+ */
+void npc_loadsrcfiles() {
+	ShowStatus("Loading NPCs...\n");
+	for (const auto& file : npc_src_files) {
+#ifdef DEBUG
+		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+#endif
+		npc_parsesrcfile(file.c_str());
 	}
+	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
+		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 }
 
 /// Parses and sets the name and exname of a npc.
@@ -5959,7 +5932,6 @@ void npc_clear_pathlist(void) {
 
 //Clear then reload npcs files
 int npc_reload(void) {
-	struct npc_src_list *nsl;
 	int npc_new_min = npc_id;
 	struct s_mapiterator* iter;
 	struct block_list* bl;
@@ -6026,20 +5998,7 @@ int npc_reload(void) {
 	// reset mapflags
 	map_flags_init();
 
-	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
-	// Reloading npcs now
-	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", nsl->name);
-		npc_parsesrcfile(nsl->name);
-	}
-	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
-		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+	npc_loadsrcfiles();
 
 	stylist_db.reload();
 	barter_db.reload();
@@ -6114,7 +6073,7 @@ void do_final_npc(void) {
 	barter_db.clear();
 	ers_destroy(timer_event_ers);
 	ers_destroy(npc_sc_display_ers);
-	npc_clearsrcfile();
+	npc_src_files.clear();
 }
 
 static void npc_debug_warps_sub(struct npc_data* nd)
@@ -6160,7 +6119,6 @@ static void npc_debug_warps(void){
  * npc initialization
  *------------------------------------------*/
 void do_init_npc(void){
-	struct npc_src_list *file;
 	int i;
 
 	//Stock view data for normal npcs.
@@ -6182,20 +6140,7 @@ void do_init_npc(void){
 	timer_event_ers = ers_new(sizeof(struct timer_event_data),"npc.cpp::timer_event_ers",ERS_OPT_NONE);
 	npc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "npc.cpp:npc_sc_display_ers", ERS_OPT_NONE);
 
-	// process all npc files
-	ShowStatus("Loading NPCs...\r");
-	for( file = npc_src_files; file != NULL; file = file->next ) {
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file->name);
-		npc_parsesrcfile(file->name);
-	}
-	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
-		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+	npc_loadsrcfiles();
 
 	stylist_db.load();
 	barter_db.load();

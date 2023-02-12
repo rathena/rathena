@@ -620,7 +620,7 @@ if test "$enable_lto" != "no" ; then
 	)
 	CFLAGS="$OLD_CFLAGS"
 	LDFLAGS="$OLD_LDFLAGS"
-	
+
 	CFLAGS="$CFLAGS -flto -fuse-linker-plugin"
 	LDFLAGS="$LDFLAGS -flto -fuse-linker-plugin"
 	

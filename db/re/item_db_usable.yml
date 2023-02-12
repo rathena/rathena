@@ -2866,6 +2866,23 @@ Body:
       getitem 12796,10;
       getitem 12684,5;
       getitembound 23919,1,Bound_Account;
+  - Id: 9991
+    AegisName: Boarding_Halter_Box_7d
+    Name: "[Not for Sale] Boarding Halter 7D Box"
+    Type: Cash
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_Boarding_Halter_Box);
   - Id: 9999
     AegisName: Season_Evt_Reward_2
     Name: Sweets Snack Pack
@@ -40363,6 +40380,13 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Libra_Scroll);
+  - Id: 16674
+    AegisName: New_Insurance_Box
+    Name: 10 New Life Insurance Box
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6413,10;
   - Id: 16675
     AegisName: Splash_Scroll
     Name: Splash Scroll
@@ -61610,7 +61634,7 @@ Body:
     Script: |
       getgroupitem(IG_MD_AIRBOAT_REWARD);
   - Id: 100465
-    AegisName: aegis_100465
+    AegisName: Stone_Robe_Box
     Name: 3rd/Expanded Stone (Garment) Box
     Type: Usable
     Weight: 10
@@ -61739,7 +61763,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100495
-    AegisName: aegis_100495
+    AegisName: Stone_Robe2_Box
     Name: 3rd/Expanded Stone II (Garment) Box
     Type: Usable
     Weight: 10
@@ -61748,7 +61772,7 @@ Body:
     Script: |
       getgroupitem(IG_THIRD_JOB_STONE_GARMENT_BOX2);
   - Id: 100496
-    AegisName: aegis_100496
+    AegisName: Stone_Top_Box
     Name: Rebirth/Expanded Stone (Top) Box
     Type: Usable
     Weight: 10
@@ -61757,7 +61781,7 @@ Body:
     Script: |
       getgroupitem(IG_THIRD_JOB_STONE_TOP_BOX);
   - Id: 100497
-    AegisName: aegis_100497
+    AegisName: Stone_Top2_Box
     Name: Rebirth/Expanded Stone II (Top) Box
     Type: Usable
     Weight: 10
@@ -61766,7 +61790,7 @@ Body:
     Script: |
       getgroupitem(IG_THIRD_JOB_STONE_TOP_BOX2);
   - Id: 100498
-    AegisName: aegis_100498
+    AegisName: Stone_Middle_Box
     Name: Rebirth/Expanded Stone (Middle) Box
     Type: Usable
     Weight: 10
@@ -61775,7 +61799,7 @@ Body:
     Script: |
       getgroupitem(IG_THIRD_JOB_STONE_MIDDLE_BOX);
   - Id: 100499
-    AegisName: aegis_100499
+    AegisName: Stone_Middle2_Box
     Name: Rebirth/Expanded Stone II (Middle) Box
     Type: Usable
     Weight: 10
@@ -61784,7 +61808,7 @@ Body:
     Script: |
       getgroupitem(IG_THIRD_JOB_STONE_MIDDLE_BOX2);
   - Id: 100500
-    AegisName: aegis_100500
+    AegisName: Stone_Bottom_Box
     Name: Rebirth/Expanded Stone (Bottom) Box
     Type: Usable
     Weight: 10
@@ -61793,7 +61817,7 @@ Body:
     Script: |
       getgroupitem(IG_THIRD_JOB_STONE_BOTTOM_BOX);
   - Id: 100501
-    AegisName: aegis_100501
+    AegisName: Stone_Bottom2_Box
     Name: Rebirth/Expanded Stone II (Bottom) Box
     Type: Usable
     Weight: 10
@@ -65363,6 +65387,23 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 101352
+    AegisName: E_Bubble_Gum_Box10
+    Name: "[Not For Sale] Bubble Gum Box"
+    Type: Cash
+    Weight: 100
+    Flags:
+      UniqueId: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12264,10;
   - Id: 101355
     AegisName: OS_Weapon_Reform
     Name: OS Weapon Modification Box
@@ -66034,6 +66075,15 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box29);
+  - Id: 102193
+    AegisName: aegis_102193
+    Name: Costume Enchant Stone Box 30
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box30);
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)

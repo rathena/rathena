@@ -6,7 +6,7 @@
 
 #include <mutex>
 
-#include "../common/sql.hpp"
+#include <common/sql.hpp>
 
 enum locktype {
 	LOGIN_SQL_LOCK,

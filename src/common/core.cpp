@@ -3,7 +3,7 @@
 
 #include "core.hpp"
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #ifndef MINICORE
 #include "database.hpp"

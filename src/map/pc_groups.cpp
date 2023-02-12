@@ -3,10 +3,10 @@
 
 #include "pc_groups.hpp"
 
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" // set_eof
-#include "../common/strlib.hpp" // strcmpi
-#include "../common/utilities.hpp"
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> // set_eof
+#include <common/strlib.hpp> // strcmpi
+#include <common/utilities.hpp>
 
 #include "atcommand.hpp" // AtCommandType
 #include "pc.hpp" // map_session_data
