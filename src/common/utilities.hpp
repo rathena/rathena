@@ -217,6 +217,7 @@ namespace rathena {
 
 		/**
 		 * Determine if a value exists in the vector and then erase it
+		 * This will only erase the first occurrence of the value
 		 * @param vector: Vector to erase value from
 		 * @param value: Value to remove
 		 */
