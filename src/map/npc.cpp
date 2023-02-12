@@ -5979,10 +5979,14 @@ int npc_reload(void) {
 
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
+	ShowStatus("Loading NPC Files\n");
 	for (const auto& file : npc_src_files) {
+#ifdef DEBUG
 		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+#endif
 		npc_parsesrcfile(file.c_str());
 	}
+	ShowInfo("Loaded NPC Files\n");
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
@@ -6135,7 +6139,9 @@ void do_init_npc(void){
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");
 	for (const auto& file : npc_src_files) {
+#ifdef DEBUG
 		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+#endif
 		npc_parsesrcfile(file.c_str());
 	}
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"

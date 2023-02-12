@@ -11489,6 +11489,19 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bAbsorbDmgMaxHP2,40;
+  - Id: 4623
+    AegisName: Adventures_Card
+    Name: 11th Anniversary Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT      
   - Id: 4625
     AegisName: Timeholder_Card
     Name: Time Holder Card
@@ -41609,7 +41622,7 @@ Body:
       bonus2 bSubDefEle,Ele_Neutral,15;
   - Id: 27354
     AegisName: Polluted_Raydric_Card
-    Name: Contaminated Raydric Card
+    Name: Polluted Raydric Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -41621,7 +41634,7 @@ Body:
       bonus bAtkRate,5;
   - Id: 27355
     AegisName: Polluted_Ray_A_Card
-    Name: Contaminated Raydric Archer Card
+    Name: Polluted Raydric Archer Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -41648,7 +41661,7 @@ Body:
       bonus bDef,20;
   - Id: 27357
     AegisName: Polluted_Sting_Card
-    Name: Contaminated Sting Card
+    Name: Polluted Sting Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -41703,7 +41716,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,15;
   - Id: 27361
     AegisName: Polluted_W_Man_Card
-    Name: Contaminated Wanderer Card
+    Name: Polluted Wanderer Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -41716,7 +41729,7 @@ Body:
       bonus2 bAddSize,Size_Medium,30;
   - Id: 27362
     AegisName: Polluted_Spi_Q_Card
-    Name: Contaminated Spider Queen Card
+    Name: Polluted Queen Spider Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -41730,7 +41743,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,100;
   - Id: 27363
     AegisName: Polluted_Dark_L_Card
-    Name: Contaminated Dark Lord Card
+    Name: Polluted Dark Lord Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -45455,6 +45468,13 @@ Body:
     Script: |
       bonus bMaxHPrate,15;
       bonus bMaxSPrate,15;
+  - Id: 29725
+    AegisName: aegis_29725
+    Name: Zodiac
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "AL_BLESSING",10;  
   - Id: 31000
     AegisName: Rudo_Card_J
     Name: Rudo Card
@@ -49319,7 +49339,7 @@ Body:
       bonus bSPDrainValue,-1;
   - Id: 300339
     AegisName: SLD_P_Dark_L_Card_J
-    Name: Sealed Contaminated Dark Lord Card
+    Name: Sealed Polluted Dark Lord Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -49333,7 +49353,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
   - Id: 300340
     AegisName: SLD_P_Spi_Q_Card_J
-    Name: Sealed Contaminated Spider Queen Card
+    Name: Sealed Polluted Queen Spider Card
     Type: Card
     Weight: 10
     Locations:
@@ -49348,7 +49368,7 @@ Body:
       bonus2 bResEff,Eff_Freezing,1500;
   - Id: 300341
     AegisName: SLD_F_Muspell_Card_J
-    Name: Sealed Contaminated Firm Muspellskoll Card
+    Name: Sealed Firm Muspellskoll Card
     Type: Card
     Weight: 10
     Locations:
@@ -49641,7 +49661,7 @@ Body:
       bonus bUseSPrate,10;
   - Id: 300365
     AegisName: Primitive_Rgan_Card
-    Name: Primal Rgan Card
+    Name: Primitive Rgan Card
     Type: Card
     Weight: 10
     Locations:
@@ -49653,7 +49673,7 @@ Body:
       bonus bShortAtkRate,8;
   - Id: 300366
     AegisName: Lowest_Rgan_Card
-    Name: Minor Rgan Card
+    Name: Lowest Rgan Card
     Type: Card
     Weight: 10
     Locations:
@@ -49691,7 +49711,7 @@ Body:
       bonus bCRate,1;
   - Id: 300369
     AegisName: Discarded_P_R_Card
-    Name: Wasted Primal Rgan Card
+    Name: Wasted Primitive Rgan Card
     Type: Card
     Weight: 10
     Locations:
