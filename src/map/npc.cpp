@@ -3605,6 +3605,27 @@ void npc_delsrcfile(const char* name)
 	util::vector_erase_if_exists(npc_src_files, name);
 }
 
+/**
+ * Load all npc files
+ */
+void npc_loadsrcfiles() {
+	ShowStatus("Loading NPCs...\n");
+	for (const auto& file : npc_src_files) {
+#ifdef DEBUG
+		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+#endif
+		npc_parsesrcfile(file.c_str());
+	}
+	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
+		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+}
+
 /// Parses and sets the name and exname of a npc.
 /// Assumes that m, x and y are already set in nd.
 static void npc_parsename(struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath)
@@ -5977,24 +5998,7 @@ int npc_reload(void) {
 	// reset mapflags
 	map_flags_init();
 
-	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
-	// Reloading npcs now
-	ShowStatus("Loading NPC Files\n");
-	for (const auto& file : npc_src_files) {
-#ifdef DEBUG
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
-#endif
-		npc_parsesrcfile(file.c_str());
-	}
-	ShowInfo("Loaded NPC Files\n");
-	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
-		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+	npc_loadsrcfiles();
 
 	stylist_db.reload();
 	barter_db.reload();
@@ -6136,22 +6140,7 @@ void do_init_npc(void){
 	timer_event_ers = ers_new(sizeof(struct timer_event_data),"npc.cpp::timer_event_ers",ERS_OPT_NONE);
 	npc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "npc.cpp:npc_sc_display_ers", ERS_OPT_NONE);
 
-	// process all npc files
-	ShowStatus("Loading NPCs...\r");
-	for (const auto& file : npc_src_files) {
-#ifdef DEBUG
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
-#endif
-		npc_parsesrcfile(file.c_str());
-	}
-	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
-		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
-		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+	npc_loadsrcfiles();
 
 	stylist_db.load();
 	barter_db.load();
