@@ -5,6 +5,7 @@
 #define DUEL_HPP
 
 #include <common/cbasetypes.hpp>
+
 class map_session_data;
 struct duel {
 	int members_count;

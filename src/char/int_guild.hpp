@@ -5,6 +5,7 @@
 #define INT_GUILD_HPP
 
 #include <string>
+
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
 
