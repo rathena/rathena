@@ -40873,7 +40873,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Cooldown:
+    Duration2:
       - Level: 1
         Time: 600000
       - Level: 2
@@ -40902,7 +40902,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    Cooldown: 30000
+    AfterCastActDelay: 30000
     Duration1:
       - Level: 1
         Time: 40000
@@ -40948,7 +40948,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Cooldown:
+    Duration2:
       - Level: 1
         Time: 300000
       - Level: 2
@@ -41009,7 +41009,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Cooldown:
+    Duration2:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -41054,7 +41054,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Cooldown:
+    Duration2:
       - Level: 1
         Time: 60000
       - Level: 2
