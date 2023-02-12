@@ -8577,6 +8577,24 @@ Body:
       NoClearance: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  - Status: Tempering
+    Icon: EFST_TEMPERING
+    DurationLookup: MH_TEMPERING
+    CalcFlags:
+      Patk: true
+  - Status: Goldene_Tone
+    Icon: EFST_GOLDENE_TONE
+    DurationLookup: MH_GOLDENE_TONE
+    CalcFlags:
+      Res: true
+      Mres: true
+  - Status: Toxin_of_Mandara
+    Icon: EFST_TOXIN_OF_MANDARA
+    DurationLookup: MH_TOXIN_OF_MANDARA
+    Flags:
+      Debuff: true
+    CalcFlags:
+      Res: true
   - Status: Rush_Quake1
     Icon: EFST_RUSH_QUAKE1
     DurationLookup: MT_RUSH_QUAKE
@@ -8873,24 +8891,6 @@ Body:
       Rising_Moon: true
       Midnight_Moon: true
       Dawn_Moon: true
-  - Status: Tempering
-    Icon: EFST_TEMPERING
-    DurationLookup: MH_TEMPERING
-    CalcFlags:
-      Patk: true
-  - Status: Goldene_Tone
-    Icon: EFST_GOLDENE_TONE
-    DurationLookup: MH_GOLDENE_TONE
-    CalcFlags:
-      Res: true
-      Mres: true
-  - Status: Toxin_of_Mandara
-    Icon: EFST_TOXIN_OF_MANDARA
-    DurationLookup: MH_TOXIN_OF_MANDARA
-    Flags:
-      Debuff: true
-    CalcFlags:
-      Res: true
   - Status: Shadow_Clock
     Icon: EFST_SHADOW_CLOCK
     DurationLookup: SS_TOKEDASU

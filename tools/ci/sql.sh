@@ -36,5 +36,8 @@ mysql -u $DB_ROOT -p$DB_ROOTPW $DB_NAME < sql-files/mob_skill_db2.sql || aborter
 mysql -u $DB_ROOT -p$DB_ROOTPW $DB_NAME < sql-files/mob_skill_db_re.sql || aborterror "Unable to import renewal monster skill table."
 mysql -u $DB_ROOT -p$DB_ROOTPW $DB_NAME < sql-files/mob_skill_db2_re.sql || aborterror "Unable to import renewal monster skill 2 table."
 mysql -u $DB_ROOT -p$DB_ROOTPW $DB_NAME < sql-files/roulette_default_data.sql || aborterror "Unable to import roulette table."
-mysql -u $DB_ROOT -p$DB_ROOTPW -e "CREATE USER '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
+# MariaDB
+mysql -u $DB_ROOT -p$DB_ROOTPW -e "SET old_passwords=0; CREATE USER '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
+# MySQL
+mysql -u $DB_ROOT -p$DB_ROOTPW -e "CREATE USER '$DB_USER'@'$DB_HOST' IDENTIFIED WITH mysql_native_password BY '$DB_PASS';"
 mysql -u $DB_ROOT -p$DB_ROOTPW -e "GRANT SELECT,INSERT,UPDATE,DELETE ON $DB_NAME.* TO '$DB_USER'@'$DB_HOST';"

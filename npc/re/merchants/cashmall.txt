@@ -110,7 +110,7 @@ itemmall,41,53,3	script	Cat Hand Salesman Macaroon#cashmall	4_M_MERCAT1,{
 	mes "Welcome!";
 	mes "Today doesn't come every day!";
 	mes "Things to see today~ Voila!";
-	mes "You can only exchange with <ITEM>[[Kachua] Mileage Coupon]<INFO>1000274</INFO></ITEM>!";
+	mes "You can only exchange with " + mesitemlink( 1000274 ) + "!";
 	mes "Feel free to choose!";
 	next;
 	switch( select( "3-1st Job Group Skill Shadow", "3-2nd Job Group Skill Shadow", "Extended Job Group Skill Shadow", "General Shadow by Occupation", "Shadow Cube", "Smelting, Modification, Useful Items", "Drop Box", "Spellbook" ) ){

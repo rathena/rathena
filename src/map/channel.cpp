@@ -5,14 +5,14 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/conf.hpp" //libconfig
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" //set_eof
-#include "../common/strlib.hpp" //safestrncpy
-#include "../common/timer.hpp"  // DIFF_TICK
+#include <common/cbasetypes.hpp>
+#include <common/conf.hpp> //libconfig
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> //set_eof
+#include <common/strlib.hpp> //safestrncpy
+#include <common/timer.hpp>  // DIFF_TICK
 
 #include "battle.hpp"
 #include "clif.hpp" //clif_chsys_msg

@@ -10,16 +10,16 @@
 #include <string.h>
 #include <time.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "battle.hpp"
@@ -602,7 +602,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	}
 
 	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
-		hp >>= 1;
+		hp /= 2;
 
 	if (sd) {
 		if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
@@ -1106,6 +1106,8 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_SPIRITS, spiritball);
 			return true;
 		}
+
+		// Blazing And Furious removes all spirit balls after calculating the amount of hits
 		if (skill_id != MH_BLAZING_AND_FURIOUS)
 			hom_delspiritball(hd, spiritball, 1);
 	}
@@ -2707,7 +2709,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 			//Physical range attacks only trigger autospells half of the time
 			if ((attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG))
-				 autospl_rate>>=1;
+				 autospl_rate /= 2;
 
 			dstsd->state.autocast = 1;
 			if ( skill_isNotOk(autospl_skill_id, dstsd) ) {
@@ -8867,7 +8869,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (skill_id == IQ_MASSIVE_F_BLASTER || skill_id == SHC_IMPACT_CRATER || skill_id == MT_AXE_STOMP || skill_id == ABC_ABYSS_DAGGER)
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
-			hd->homunculus.spiritball = MAX_SPIRITBALL;
 			hom_addspiritball(hd, MAX_SPIRITBALL);
 		}
 		if (skill_id == SOA_EXORCISM_OF_MALICIOUS_SOUL ) {
@@ -9714,13 +9715,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				} else {
 					if( potion_hp > 0 ) {
 						hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-						hp = hp * (100 + (tstatus->vit<<1)) / 100;
+						hp = hp * (100 + (tstatus->vit * 2)) / 100;
 						if( dstsd )
 							hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 					}
 					if( potion_sp > 0 ) {
 						sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-						sp = sp * (100 + (tstatus->int_<<1)) / 100;
+						sp = sp * (100 + (tstatus->int_ * 2)) / 100;
 						if( dstsd )
 							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
 					}
@@ -9747,7 +9748,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					default: hp = 325; break;
 				}
 				hp = (hp + rnd()%(skill_lv*20+1)) * (150 + skill_lv*10) / 100;
-				hp = hp * (100 + (tstatus->vit<<1)) / 100;
+				hp = hp * (100 + (tstatus->vit * 2)) / 100;
 				if( dstsd )
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 			}
@@ -10010,7 +10011,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_zap(bl, hp, sp);
 
 				if (hp && skill_lv >= 5)
-					hp>>=1;	//Recover half damaged HP at level 5 [Skotlex]
+					hp /= 2;	//Recover half damaged HP at level 5 [Skotlex]
 				else
 					hp = 0;
 
@@ -10548,8 +10549,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			break;
 		if (potion_hp || potion_sp) {
 			int hp = potion_hp, sp = potion_sp;
-			hp = hp * (100 + (tstatus->vit<<1))/100;
-			sp = sp * (100 + (tstatus->int_<<1))/100;
+			hp = hp * (100 + (tstatus->vit * 2))/100;
+			sp = sp * (100 + (tstatus->int_ * 2))/100;
 			if (dstsd) {
 				if (hp)
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10 + pc_skillheal2_bonus(dstsd, skill_id))/100;
@@ -12758,14 +12759,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_GOLDENE_TONE:
-	case MH_TEMPERING:
-		bl = battle_get_master(src);
-		if (bl != nullptr)
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+	case MH_TEMPERING: {
+		block_list* master_bl = battle_get_master(src);
+		
+		if (master_bl != nullptr){
+			clif_skill_nodamage(src,master_bl,skill_id,skill_lv,1);
+			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
+		
 		if (hd)
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		break;
+		} break;
 	case MH_PAIN_KILLER:
 		bl = battle_get_master(src);
 		if (bl != nullptr)
@@ -23150,6 +23154,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			default:
 				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
 					clif_specialeffect(&sd->bl, EF_COOKING_FAIL, AREA);
+					// todo: What in the world is this calculation
 					pc_setparam(sd, SP_COOKMASTERY, sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
 				}
 				break;

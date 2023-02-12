@@ -5,8 +5,9 @@
 #define INT_GUILD_HPP
 
 #include <string>
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
+
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,

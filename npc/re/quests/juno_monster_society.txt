@@ -736,7 +736,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "Can I move it to Einbroch? Give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you.";
+			mes "Can I move it to Einbroch? Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -787,7 +787,7 @@ ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "Can I move it to Einbroch? Give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you.";
+			mes "Can I move it to Einbroch? Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -872,7 +872,7 @@ gef_fild06,209,31,6	script	Map Examiner Gefil#yma	4_M_MIDDLE,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "Give me 1 <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you to Geffen.";
+			mes "Give me 1 " + mesitemlink( 1000374 ) + " and I can teleport you to Geffen.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -916,7 +916,7 @@ gef_fild06,209,31,6	script	Map Examiner Gefil#yma	4_M_MIDDLE,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "Give me 1 <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you to Geffen.";
+			mes "Give me 1 " + mesitemlink( 1000374 ) + " and I can teleport you to Geffen.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1001,7 +1001,7 @@ lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "If it's a nearby city, it's Lighthalzen. Give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you.";
+			mes "If it's a nearby city, it's Lighthalzen. Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1052,7 +1052,7 @@ lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "If it's a nearby city, it's Lighthalzen. Give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you.";
+			mes "If it's a nearby city, it's Lighthalzen. Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1276,7 +1276,7 @@ hu_fild01,133,157,6	script	Map Examiner Huf#yma	4_MAL_CAPTAIN,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "Are you going home? Hugel is the nearest city. I need 1 piece of <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM>.";
+			mes "Are you going home? Hugel is the nearest city. I need 1 piece of " + mesitemlink( 1000374 ) + ".";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1321,7 +1321,7 @@ hu_fild01,133,157,6	script	Map Examiner Huf#yma	4_MAL_CAPTAIN,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "Are you going home? Hugel is the nearest city. I need 1 piece of <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM>.";
+			mes "Are you going home? Hugel is the nearest city. I need 1 piece of " + mesitemlink( 1000374 ) + ".";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1411,7 +1411,7 @@ tur_dun01,159,46,4	script	Map Examiner Tural#yma	4_M_BRZ_MAN1,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "Give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you to Alberta.";
+			mes "Give me one " + mesitemlink( 1000374 ) + " and I can teleport you to Alberta.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1452,7 +1452,7 @@ tur_dun01,159,46,4	script	Map Examiner Tural#yma	4_M_BRZ_MAN1,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "Give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM> and I can teleport you to Alberta.";
+			mes "Give me one " + mesitemlink( 1000374 ) + " and I can teleport you to Alberta.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1818,7 +1818,7 @@ tur_dun02,151,256,4	script	Map Examiner Tidun#yma	4_M_NINJA_BLUE,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "If you give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM>, I can teleport you to the nearby city, Alberta.";
+			mes "If you give me one " + mesitemlink( 1000374 ) + ", I can teleport you to the nearby city, Alberta.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1863,7 +1863,7 @@ tur_dun02,151,256,4	script	Map Examiner Tidun#yma	4_M_NINJA_BLUE,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "If you give me one <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM>, I can teleport you to the nearby city, Alberta.";
+			mes "If you give me one " + mesitemlink( 1000374 ) + ", I can teleport you to the nearby city, Alberta.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1947,7 +1947,7 @@ tur_dun03,125,186,6	script	Map Examiner Tsensor#yma	4_M_SIT_NOVICE,{
 			close;
 		case 2:
 			mes .@npc_name$;
-			mes "Alberta Express 1 <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM>, left immediately.";
+			mes "Alberta Express 1 " + mesitemlink( 1000374 ) + ", left immediately.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {
@@ -1992,7 +1992,7 @@ tur_dun03,125,186,6	script	Map Examiner Tsensor#yma	4_M_SIT_NOVICE,{
 			close;
 		case 3:
 			mes .@npc_name$;
-			mes "Alberta Express 1 <ITEM>[" + .@item_name$ + "]<INFO>1000374</INFO></ITEM>, left immediately.";
+			mes "Alberta Express 1 " + mesitemlink( 1000374 ) + ", left immediately.";
 			next;
 			select( "Give me 1 " + .@item_name$ + "." );
 			if (countitem(1000374) < 1) {

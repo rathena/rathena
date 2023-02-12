@@ -8,10 +8,10 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp" //dbmap
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp" // t_tick
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp> //dbmap
+#include <common/mmo.hpp>
+#include <common/timer.hpp> // t_tick
 
 #include "packets.hpp"
 #include "script.hpp"

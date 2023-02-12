@@ -20,20 +20,21 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
+#define ONLY_CONSTANTS
 #include "../map/achievement.hpp"
 #include "../map/battle.hpp"
 #include "../map/battleground.hpp"

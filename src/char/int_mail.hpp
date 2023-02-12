@@ -4,8 +4,8 @@
 #ifndef INT_MAIL_HPP
 #define INT_MAIL_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/timer.hpp>
 
 struct mail_message;
 

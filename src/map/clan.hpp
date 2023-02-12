@@ -4,7 +4,7 @@
 #ifndef CLAN_HPP
 #define CLAN_HPP
 
-#include "../common/mmo.hpp"
+#include <common/mmo.hpp>
 
 struct clan;
 class map_session_data;

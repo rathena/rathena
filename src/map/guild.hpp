@@ -4,9 +4,9 @@
 #ifndef GUILD_HPP
 #define GUILD_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp>
 
 #include "map.hpp" // NAME_LENGTH
 
