@@ -2559,8 +2559,14 @@ Body:
       }
   - Combos:
       - Combo:
-          - Scarlet_Poncho
-          - Critical_Anklet
+          - Scarlet_Poncho    # 2597
+          - Critical_Anklet    # 28342
+      - Combo:
+          - Scarlet_Poncho    # 2597
+          - Critical_Ring    # 2616
+      - Combo:
+          - Scarlet_Poncho    # 2597
+          - Critical_Ring_    # 2943
     Script: |
       bonus bCritAtkRate,5;
       bonus bCritical,10;
@@ -10643,8 +10649,11 @@ Body:
       }
   - Combos:
       - Combo:
-          - Demonist_Shoes
-          - SeraphimRobe
+          - Demonist_Shoes    # 22138
+          - SeraphimRobe    # 20815
+      - Combo:
+          - Demonist_Shoes_    # 22221
+          - SeraphimRobe    # 20815
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus2 bSubRace,RC_DemiHuman,10;
@@ -10661,9 +10670,13 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,.@val;
   - Combos:
       - Combo:
-          - Demonist_Shoes
-          - SeraphimRobe
-          - Dead_Tree_Cane
+          - Demonist_Shoes    # 22138
+          - SeraphimRobe    # 20815
+          - Dead_Tree_Cane    # 1643
+      - Combo:
+          - Demonist_Shoes_    # 22221
+          - SeraphimRobe    # 20815
+          - Dead_Tree_Cane    # 1643
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSubRace,RC_DemiHuman,10;
@@ -10679,8 +10692,11 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,20*.@val;
   - Combos:
       - Combo:
-          - Demonist_Shoes
-          - Runaway_Magic
+          - Demonist_Shoes    # 22138
+          - Runaway_Magic    # 4876
+      - Combo:
+          - Demonist_Shoes_    # 22221
+          - Runaway_Magic    # 4876
     Script: |
       bonus2 bMagicAtkEle,Ele_Fire,-50;
       bonus2 bMagicAtkEle,Ele_Neutral,-50;
@@ -33088,3 +33104,1072 @@ Body:
           - Horn_Card    # 4045
     Script: |
       bonus bLongAtkDef,-35;
+  - Combos:
+      - Combo:
+          - Wedding_Veil    # 2206
+          - Wedding_Dress    # 2338
+          - Chrystal_Pumps    # 2407
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil_    # 5888
+          - Wedding_Dress_    # 15114
+          - Chrystal_Pumps_    # 2494
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil    # 2206
+          - Wedding_Dress_    # 15114
+          - Chrystal_Pumps_    # 2494
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil_    # 5888
+          - Wedding_Dress    # 2338
+          - Chrystal_Pumps_    # 2494
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil_    # 5888
+          - Wedding_Dress_    # 15114
+          - Chrystal_Pumps    # 2407
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil_    # 5888
+          - Wedding_Dress    # 2338
+          - Chrystal_Pumps    # 2494
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil    # 5888
+          - Wedding_Dress_    # 15114
+          - Chrystal_Pumps    # 2407
+          - Platinum_Ring    # 28312
+      - Combo:
+          - Wedding_Veil    # 5888
+          - Wedding_Dress    # 2338
+          - Chrystal_Pumps_    # 2494
+          - Platinum_Ring    # 28312
+    Script: |
+      .@r = 3+(getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES));
+      bonus bMdef,.@r;
+  - Combos:
+      - Combo:
+          - Rose_Robe    # 15115
+          - Pasana_Card    # 4099
+    Script: |
+      bonus2 bMagicAddEle,Ele_Fire,3;
+  - Combos:
+      - Combo:
+          - Rose_Robe    # 15115
+          - Sword_Fish_Card    # 4089
+    Script: |
+      bonus2 bMagicAddEle,Ele_Water,3;
+  - Combos:
+      - Combo:
+          - Rose_Robe    # 15115
+          - Dokebi_Card    # 4098
+    Script: |
+      bonus2 bMagicAddEle,Ele_Wind,3;
+  - Combos:
+      - Combo:
+          - Rose_Robe    # 15115
+          - Sand_Man_Card    # 4101
+    Script: |
+      bonus2 bMagicAddEle,Ele_Earth,3;
+  - Combos:
+      - Combo:
+          - Angel_Earing    # 5890
+          - Safety_Ring    # 2615
+      - Combo:
+          - Angel_Earing    # 5890
+          - Safety_Ring_    # 2956
+      - Combo:
+          - Angel_Earing    # 5890
+          - Safety_Ring    # 2615
+          - Safety_Ring_    # 2956
+    Script: |
+      bonus bDef,7;
+      bonus bMdef,7;
+  - Combos:
+      - Combo:
+          - Angel_Earing    # 5890
+          - Critical_Ring    # 2616
+      - Combo:
+          - Angel_Earing    # 5890
+          - Critical_Ring_    # 2943
+      - Combo:
+          - Angel_Earing    # 5890
+          - Critical_Ring    # 2616
+          - Critical_Ring_    # 2943
+    Script: |
+      bonus bCritical,7;
+  - Combos:
+      - Combo:
+          - Angel_Earing    # 5890
+          - Bless_Of_Moon    # 28306
+    Script: |
+      bonus2 bAddRace,RC_All,3;
+  - Combos:
+      - Combo:
+          - Triad_God_Shoes_J_    # 22228
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus bInt,40;
+      bonus bAspdRate,10;
+  - Combos:
+      - Combo:
+          - Soul_of_Drowned    # 490105
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus bAllStats,10;
+      bonus bVariableCastrate,-15;
+  - Combos:
+      - Combo:
+          - Glittering_Cat_Choker    # 490149
+          - Runaway_Magic    # 4876
+    Script: |
+      if  (BaseJob == Job_Summoner) {
+         skill "MG_FIREWALL",10;
+         bonus bNoKnockback;
+      }
+  - Combos:
+      - Combo:
+          - Mamaragan    # 22243
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus bInt,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Sword    # 600008
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Katar    # 610006
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Spear    # 630003
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Staff    # 640005
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Huuma    # 650003
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Bow    # 700007
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Bow2    # 700008
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Bow3    # 700009
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Rifle    # 810000
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Shotgun    # 820000
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Gatling    # 830001
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Grenade    # 840000
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Sword    # 500007
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Sword2    # 500008
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Dagger    # 510008
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Dagger2    # 510009
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Axe    # 520002
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Spear    # 530002
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Book    # 540004
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Book2    # 540005
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Wand    # 550008
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Foxtail    # 550009
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_Bh_Knuck    # 560004
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Inst    # 570005
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Whip    # 580005
+      - Combo:
+          - Demons_Familiar    # 410070
+          - Ep172_1h_Hammer    # 590006
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Sword    # 600008
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Katar    # 610006
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Spear    # 630003
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Staff    # 640005
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Huuma    # 650003
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Bow    # 700007
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Bow2    # 700008
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Bow3    # 700009
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Rifle    # 810000
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Shotgun    # 820000
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Gatling    # 830001
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Grenade    # 840000
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Sword    # 500007
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Sword2    # 500008
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Dagger    # 510008
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Dagger2    # 510009
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Axe    # 520002
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Spear    # 530002
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Book    # 540004
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Book2    # 540005
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Wand    # 550008
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Foxtail    # 550009
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_Bh_Knuck    # 560004
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Inst    # 570005
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Whip    # 580005
+      - Combo:
+          - Demons_Familiar_    # 410071
+          - Ep172_1h_Hammer    # 590006
+    Script: |
+      bonus bBaseAtk,200;
+      bonus bMatk,200;
+  - Combos:
+      - Combo:
+          - Adventures_Card    # 4623
+          - Boss_Hat    # 18802
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bHPrecovRate,((.@r>=10)?100:(.@r>=9)?75:(.@r>=7?50:25));
+      bonus bSPrecovRate,((.@r>=10)?100:(.@r>=9)?75:(.@r>=7?50:25));
+  - Combos:
+      - Combo:
+          - Adventures_Card    # 4623
+          - Boss_Beret    # 18969
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bFlee2,((.@r>=10)?10:(.@r>=9)?7:(.@r>=7?6:5));
+  - Combos:
+      - Combo:
+          - Leo_Mail_J    # 15408
+          - Leo_Mantle_J    # 20951
+          - Leo_Shoes_J    # 22213
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Cancer_Mail_J    # 15412
+          - Cancer_Manteau_J    # 20954
+          - Cancer_Shoes_J    # 22216
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bResEff,Eff_Freeze,10000;      
+  - Combos:
+      - Combo:
+          - Libra_Mail_J    # 15418
+          - Libra_Manteau_J    # 20970
+          - Libra_Shoes_J    # 22227
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",150;
+      bonus bNoSizeFix;
+  - Combos:
+      - Combo:
+          - Scorpio_Mail_J    # 15424
+          - Scorpio_Manteau_J    # 20976
+          - Scorpio_Shoes_J    # 22233
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bSubEle,Ele_Water,50;
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus2 bSubEle,Ele_Earth,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Taurus_Mail_J    # 15425
+          - Taurus_Manteau_J    # 20971
+          - Taurus_Shoes_J    # 22230
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSkillAtk,"GN_CARTCANNON",200;
+      bonus2 bSkillAtk,"GN_CART_TORNADO",100;
+      bonus2 bResEff,Eff_Stone,10000;
+  - Combos:
+      - Combo:
+          - Aquarius_Mail_J    # 15426
+          - Aquarius_Manteau_J    # 20972
+          - Aquarius_Shoes_J    # 22231
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bMagicAtkEle,Ele_Dark,40;
+      bonus2 bMagicAtkEle,Ele_Earth,40;
+      bonus2 bSubRace,RC_DemiHuman,15;
+  - Combos:
+      - Combo:
+          - Capricon_Mail_J    # 450011
+          - Capricon_Manteau_J    # 480006
+          - Capricon_Shoes_J    # 470010
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus bDelayrate,-40;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Virgo_Mail_J    # 450015
+          - Virgo_Manteau_J    # 480009
+          - Virgo_Shoes_J    # 470014
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSubEle,Ele_All,20;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Aries_Mail_J    # 450129
+          - Aries_Manteau_J    # 480022
+          - Aries_Shoes_J    # 470024
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",150;
+      bonus bLongAtkRate,30;
+      bonus bPerfectHitAddRate,50;
+  - Combos:
+      - Combo:
+          - Gemini_Mail_J    # 450130
+          - Gemini_Manteau_J    # 480026
+          - Gemini_Shoes_J    # 470032
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",200;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bSubEle,Ele_Water,50;
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus2 bSubEle,Ele_Earth,50;
+  - Combos:
+      - Combo:
+          - Pisces_Mail_J    # 450133
+          - Pisces_Manteau_J    # 480041
+          - Pisces_Shoes_J    # 470038
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSkillAtk,"MG_FIREBOLT",50;
+      bonus2 bSkillAtk,"MG_COLDBOLT",50;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50;
+      bonus2 bSkillAtk,"WZ_EARTHSPIKE",50;
+      bonus2 bSubEle,Ele_Fire,20;
+      bonus2 bSubEle,Ele_Water,20;
+      bonus2 bSubEle,Ele_Wind,20;
+      bonus2 bSubEle,Ele_Earth,20;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Sagittarius_Mail_J    # 450140
+          - Sagittarius_Manteau_J    # 480050
+          - Sagittarius_Shoes_J    # 470045
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus bDelayrate,-10;
+      bonus2 bSubClass,Class_Boss,15;
+      bonus2 bSkillUseSP,"RA_ARROWSTORM",20;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - aegis_410158    # 410158
+      - Combo:
+          - aegis_29725    # 29725
+          - aegis_410159    # 410159          
+    Script: |
+      bonus bAllStats,10;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Cancer_Axe_J    # 1335
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus2 bSkillCooldown,"NC_AXETORNADO",-500;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Cancer_Crown_J    # 19449
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus bDelayrate,-3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Cancer_Mail_J    # 15412
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Cancer_Manteau_J    # 20954
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus2 bSkillAtk,"NC_AXETORNADO",10*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Cancer_Shoes_J    # 22216
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus bDelayrate,-4*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Cancer_Ring_J    # 32253
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+         bonus bAtkRate,15;
+         bonus2 bVariableCastrate,"BS_GREED",-100;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Taurus_Sword_J    # 1100
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+         bonus2 bSkillCooldown,"GN_CART_TORNADO",-200;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Taurus_Diadem_J    # 19473
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+         bonus2 bSkillAtk,"GN_CARTCANNON",5*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Taurus_Mail_J    # 15425
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Taurus_Manteau_J    # 20971
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+         bonus2 bSkillAtk,"GN_CART_TORNADO",5*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Taurus_Shoes_J    # 22230
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+         bonus2 bSkillAtk,"GN_CARTCANNON",15*.@r;
+         bonus2 bSkillAtk,"GN_CART_TORNADO",10*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Taurus_Ring_J    # 32264
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+         bonus bAtkRate,15;
+         bonus2 bVariableCastrate,"GN_CARTCANNON",-100;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Leo_Mace_J    # 16098
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Leo_Crown_J    # 19447
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Leo_Mail_J    # 15408
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Leo_Mantle_J    # 20951
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Leo_Shoes_J    # 22213
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+         bonus bPerfectHitAddRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Leo_Ring_J    # 32247
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+         bonus bAtkRate,15;
+         bonus2 bSkillAtk,"SR_SKYNETBLOW",150;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Virgo_Divine_Cross_J    # 640002
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         bonus2 bMagicAtkEle,Ele_Holy,40;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Virgo_Diadem    # 5599
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         bonus2 bSkillAtk,"AB_JUDEX",10*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Virgo_Mail_J    # 450015
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         bonus bMatkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Virgo_Manteau_J    # 480009
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         bonus bFlee2,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Virgo_Shoes_J    # 470014
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         bonus2 bSkillAtk,"AB_JUDEX",10*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Virgo_Ring_J    # 490010
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+         bonus bMatkRate,15;
+         bonus2 bSkillAtk,"AB_JUDEX",50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Sagittarius_Hunter_Bow    # 700010
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus bPerfectHitAddRate,25;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Sagittarius_Crown    # 5739
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus2 bSubClass,Class_Boss,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Sagittarius_Mail_J    # 450140
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Sagittarius_Manteau_J    # 480050
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-18000;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Sagittarius_Shoes_J    # 470045
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus bPerfectHitAddRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Sagittarius_Ring_J    # 490041
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+         bonus bAtkRate,15;
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",30;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pisces_Staff_O_S_J    # 640006
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+         bonus2 bMagicAtkEle,Ele_Fire,40;
+         bonus2 bMagicAtkEle,Ele_Water,40;
+         bonus2 bMagicAtkEle,Ele_Wind,40;
+         bonus2 bMagicAtkEle,Ele_Earth,40;
+         bonus2 bMagicAtkEle,Ele_Neutral,40;
+         bonus2 bSubClass,Class_Boss,10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pisces_Diadem    # 5514
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage)
+         bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-200*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pisces_Mail_J    # 450133
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage)
+         bonus bMatkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pisces_Manteau_J    # 480041
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+         bonus3 bAutoSpell,"MG_FIREBOLT",getskilllv("MG_FIREBOLT"),10*.@r;
+         bonus3 bAutoSpell,"MG_COLDBOLT",getskilllv("MG_COLDBOLT"),10*.@r;
+         bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",getskilllv("MG_LIGHTNINGBOLT"),10*.@r;
+         bonus3 bAutoSpell,"WZ_EARTHSPIKE",getskilllv("WZ_EARTHSPIKE"),10*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pisces_Shoes_J    # 470038
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+         bonus2 bSkillAtk,"MG_COLDBOLT",10*.@r;
+         bonus2 bSkillAtk,"MG_FIREBOLT",10*.@r;
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10*.@r;
+         bonus2 bSkillAtk,"WZ_EARTHSPIKE",10*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pisces_Ring_J    # 490034
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+         bonus bMatkRate,15;
+         bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1000;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Violin_J    # 570004
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Rope_J    # 580004          
+    Script: |
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+         bonus2 bSkillAtk,"WM_REVERBERATION",150;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Diadem    # 5569
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Mail_J    # 450130
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+         bonus bAtkRate,3*.@r;
+         bonus bMatkRate,3*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Manteau_J    # 480026
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+         bonus bInt,2*.@r;
+         bonus bDex,2*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Shoes_J    # 470032
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+         bonus bPerfectHitAddRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Gemini_Ring_J    # 490032
+    Script: |
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+         bonus bAtkRate,15;
+         bonus bMatkRate,15;
+         bonus2 bSkillAtk,"WM_REVERBERATION",50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Scorpio_Katar_J    # 28047
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",150;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Scorpio_Crown_J    # 19471
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         bonus2 bSubClass,Class_Boss,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Scorpio_Mail_J    # 15424
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Scorpio_Manteau_J    # 20976
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Scorpio_Shoes_J    # 22233
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         bonus2 bSkillCooldown,"GC_DARKILLUSION",-500*(.@r/2);
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Scorpio_Ring_J    # 32267
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+         bonus bAtkRate,15;
+         bonus2 bSkillCooldown,"GC_DARKCROW",-25000;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Libra_Krasnaya_J    # 1150
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+         bonus bPerfectHitAddRate,25;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Libra_Diadem_J    # 19468
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+         bonus bLongAtkRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Libra_Mail_J    # 15418
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+         bonus bLongAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Libra_Manteau_J    # 20970
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+         bonus bDelayrate,-2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Libra_Shoes_J    # 22227
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+         bonus2 bSkillAtk,"RK_DRAGONBREATH",5*.@r;
+         bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Libra_Ring_J    # 32261
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+         bonus bLongAtkRate,15;
+         bonus2 bSkillUseSP,"LK_SPIRALPIERCE",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Spear_J    # 32031
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus bLongAtkRate,25;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Crown    # 5546
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus2 bSkillCooldown,"LG_CANNONSPEAR",-100*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Mail_J    # 450129
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Manteau_J    # 480022
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus bAspdRate,2;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Shoes_J    # 470024
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus bDelayrate,-3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Ring_J    # 490028
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+         bonus bAtkRate,15;
+         bonus2 bSkillAtk,"LG_CANNONSPEAR",30;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aries_Shield_J    # 460002
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_L);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus bMaxHP,500*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aquarius_Staff_J    # 26167
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus2 bSkillAtk,"WL_HELLINFERNO",150;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aquarius_Crown_J    # 19496
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-8000*.@r;
+    UnEquipScript: |
+      sc_end  SC_TELEKINESIS_INTENSE;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aquarius_Mail_J    # 15426
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus bMatkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aquarius_Manteau_J    # 20972
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus bDelayrate,-2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aquarius_Shoes_J    # 22231
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus bMatkRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Aquarius_Ring_J    # 32266
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+         bonus bMatkRate,15;
+         bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-75000;
+      }
+    UnEquipScript: |
+      sc_end SC_TELEKINESIS_INTENSE;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Capricon_Bow_Of_Rogue_J    # 700004
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+         bonus bFlee2,20;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Capricon_Diadem_J    # 400015
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Capricon_Mail_J    # 450011
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+         bonus bAtkRate,3*.@r;
+         bonus bMatkRate,3*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Capricon_Manteau_J    # 480006
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Capricon_Shoes_J    # 470010
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+         bonus bPerfectHitAddRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Capricon_Ring_J    # 490009
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+         bonus bAtkRate,15;
+         bonus bMatkRate,15;
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",70;
+      }
