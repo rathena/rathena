@@ -9697,11 +9697,17 @@ Examples:
 
 ---------------------------------------
 
-*instance_warpall "<map name>",<x>,<y>{,<instance id>};
+*instance_warpall "<map name>",<x>,<y>{,<instance id>,{<flag>}};
 
 Warps all players in the <instance id> to <map name> to the given coordinates.
 If no ID is specified, the IM_PARTY instance the invoking player is attached
 to is used. If that fails, the script will come to a halt.
+
+<flag> bitmask allows to add restrictions.
+
+Available values for the <flag> bitmask:
+ IWA_NONE			No restriction. (default)
+ IWA_NOTDEAD		If dead players are warped or not
 
 ---------------------------------------
 

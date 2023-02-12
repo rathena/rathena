@@ -9489,6 +9489,10 @@
 	export_constant(CPC_CHAR);
 	export_constant(CPC_ACCOUNT);
 
+	/* instance_warpall flags */
+	export_constant(IWA_NONE);
+	export_constant(IWA_NOTDEAD);
+
 	/* skill hit */
 	export_constant(DMG_SINGLE);
 	export_constant(DMG_MULTI_HIT);

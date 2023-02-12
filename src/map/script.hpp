@@ -2090,6 +2090,11 @@ enum e_convertpcinfo_type : uint8 {
 	CPC_ACCOUNT   = 2
 };
 
+enum e_instance_warpall_flag{
+	IWA_NONE    = 0x00,
+	IWA_NOTDEAD = 0x01,
+};
+
 /**
  * Player blocking actions related flags.
  */
