@@ -2479,6 +2479,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case SHC_FATAL_SHADOW_CROW: // 9 cell cast range.
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
+		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
 			return BF_SHORT;
@@ -3894,6 +3895,14 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			if( tsc && tsc->getSCE(SC_JYUMONJIKIRI) )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
+		case MH_BLAZING_AND_FURIOUS: {
+			struct homun_data *hd = BL_CAST(BL_HOM, src);
+			if (hd) {
+				wd->div_ = hd->homunculus.spiritball;
+				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
+			}
+			break;
+		}
 #ifdef RENEWAL
 		case AS_POISONREACT:
 			skill_lv = pc_checkskill(sd, TF_DOUBLE);
@@ -4964,22 +4973,40 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 20 * skill_lv;
 			break;
 		case MH_NEEDLE_OF_PARALYZE:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex / 6; // !TODO: Confirm Base Level and DEX bonus
+			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
+			break;
+		case MH_TOXIN_OF_MANDARA:
+			skillratio += -100 + 400 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
+			break;
+		case MH_NEEDLE_STINGER:
+			skillratio += -100 + 200 + 500 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
 			break;
 		case MH_STAHL_HORN:
-			skillratio += -100 + 1000 + 300 * skill_lv * status_get_lv(src) / 150 + sstatus->vit / 6; // !TODO: Confirm VIT bonus
+			skillratio += -100 + 1000 + 300 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
+			break;
+		case MH_GLANZEN_SPIES:
+			skillratio += -100 + 300 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 			break;
 		case MH_LAVA_SLIDE:
 			skillratio += -100 + 50 * skill_lv;
 			break;
+		case MH_BLAST_FORGE:
+			skillratio += -100 + 70 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+			break;
 		case MH_SONIC_CRAW:
 			skillratio += -100 + 60 * skill_lv * status_get_lv(src) / 150;
 			break;
+		case MH_BLAZING_AND_FURIOUS:
+			skillratio += -100 + 80 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+			break;
+		case MH_THE_ONE_FIGHTER_RISES:
+			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+			break;
 		case MH_SILVERVEIN_RUSH:
-			skillratio += -100 + 250 * skill_lv * status_get_lv(src) / 100 + sstatus->str / 6; // !TODO: Confirm STR bonus
+			skillratio += -100 + 250 * skill_lv * status_get_lv(src) / 100 + sstatus->str; // !TODO: Confirm STR bonus
 			break;
 		case MH_MIDNIGHT_FRENZY:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str / 6; // !TODO: Confirm STR bonus
+			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str; // !TODO: Confirm STR bonus
 			break;
 		case MH_MAGMA_FLOW:
 			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
@@ -7437,13 +7464,22 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case MH_ERASER_CUTTER:
 					case MH_XENO_SLASHER:
-						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_ / 6; // !TODO: Confirm Base Level and INT bonus
+						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
+						break;
+					case MH_TWISTER_CUTTER:
+						skillratio += -100 + 480 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
+						break;
+					case MH_ABSOLUTE_ZEPHYR:
+						skillratio += -100 + 1000 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
 						break;
 					case MH_HEILIGE_STANGE:
-						skillratio += -100 + 1500 + 250 * skill_lv * status_get_lv(src) / 150 + sstatus->vit / 6; // !TODO: Confirm VIT bonus
+						skillratio += -100 + 1500 + 250 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
+						break;
+					case MH_HEILIGE_PFERD:
+						skillratio += -100 + 1200 + 350 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 						break;
 					case MH_POISON_MIST:
-						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex / 6; // ! TODO: Confirm DEX bonus
+						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
 						break;
 					case SU_SV_STEMSPEAR:
 						skillratio += 600;

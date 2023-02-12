@@ -1258,6 +1258,11 @@ enum sc_type : int16 {
 
 	SC_WEAPONBREAKER,
 
+	// 2021 Mutated Homunculus Skills
+	SC_TOXIN_OF_MANDARA,
+	SC_GOLDENE_TONE,
+	SC_TEMPERING,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

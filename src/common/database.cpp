@@ -114,6 +114,7 @@ bool YamlDatabase::load(const std::string& path) {
 		ShowError( "Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str() );
 		ShowError( "There is likely a syntax error in the file.\n" );
 		ShowError( "Error message: %s\n", e.what() );
+		aFree(buf);
 		return false;
 	}
 
