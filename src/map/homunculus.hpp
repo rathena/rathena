@@ -5,8 +5,8 @@
 #define HOMUNCULUS_HPP
 
 #include <string>
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data

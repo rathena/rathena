@@ -8,8 +8,8 @@
 #include <map>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
 
 // Forward declaration from atcommands.hpp
 enum AtCommandType : uint8;
