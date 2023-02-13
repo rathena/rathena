@@ -491,7 +491,7 @@ moc_para01,14,19,7	script	Old scholar#lv200	2_M_SAGE_OLD,{
 		mes "I have no choice but to hire a strong and sincere adventurer. Hmm...";
 		next;
 		mes "[Old scholar]";
-		mes "I think level 200 would be enough... It's easy to say, but I'm not the type of person who can be easily found.";
+		mes "I think level 200 would be enough... It's easy to say, but that is not the type of person who can be easily found.";
 		close;
 	}
 	switch( isbegin_quest(8640) ) {
@@ -501,27 +501,25 @@ moc_para01,14,19,7	script	Old scholar#lv200	2_M_SAGE_OLD,{
 			mes "Oh, oh my, my gosh. The strong and sincere adventurer I've been looking for has appeared here.";
 			mes "Would you like to help me with my research?";
 			next;
-			if (select( "Listen to the request", "Suspicious..." ) == 2) {
-				mes "[Old scholar]";
-				mes "Even if you look at my eyes that recognized your skills at a glance, please do something...!";
-				close;
-			}
+			.@s = select( "Listen to the request", "Suspicious..." );
 			mes "[Old scholar]";
-			mes "Please don't do that even if you look at my eyes, which recognized your skills at a glance...!";
+			mes "Even if I look at you with my eyes I recognize your skills at a glance, please do something...!";
+			if (.@s == 2)
+				close;
 			mes "...?";
 			mes "What? Will you help me?";
 			next;
-			mes "{Old scholar]";
+			mes "[Old scholar]";
 			mes "No, that's it... Everyone refused, so the hanging words got stuck in my mouth.";
 			mes "Thank you for your cooperation.";
 			next;
 			select( "You're still cooperating..." );
 			mes "[Old scholar]";
-			mes "Come on, that's it. Of course, if you are as talented as you, you can go to Niflheim.";
-			mes "Of course I don't have many days left to go, but it's not the right time and I can't come back.";
+			mes "Come on, that's it. Of course someone as talented as you can go to Niflheim.";
+			mes "Of course I don't have many days left and it's not the right time for me to go and I can't come back in time.";
 			next;
 			mes "[Old scholar]";
-			mes "According to recent sources... Deep in the darkness of Niflheim, the dead hold a banquet.";
+			mes "According to recent sources... Deep in the darkness of Niflheim, the dead hold a banquet,";
 			mes "in a form we cannot imagine.";
 			mes "But there is nowhere to hear more about it.";
 			next;
@@ -531,7 +529,7 @@ moc_para01,14,19,7	script	Old scholar#lv200	2_M_SAGE_OLD,{
 			next;
 			if (select( "That's enough. Can I come back?", "What if I can't come back?" ) == 2) {
 				mes "[Old scholar]";
-				mes "You wouldn't even think that you wouldn't be able to come back to your level...";
+				mes "You wouldn't even think that you wouldn't be able to come back at your level...";
 				mes "If you're still that careful, okay. Come back when you're ready.";
 				close;
 			}
@@ -545,8 +543,8 @@ moc_para01,14,19,7	script	Old scholar#lv200	2_M_SAGE_OLD,{
 			mes "Relax...";
 			next;
 			mes "[Garim Springfield]";
-			mes "Yes. It's free.";
-			mes "Give me a wish, an idle old man.";
+			mes "Okay. It's worth it.";
+			mes "Grant an idle old man a wish.";
 			mes "Then I'll wait for the good news.";
 			close;
 		}
@@ -557,11 +555,11 @@ moc_para01,14,19,7	script	Old scholar#lv200	2_M_SAGE_OLD,{
 		mes "[Garim Springfield]";
 		mes "Huh? Did you really visit the banquet hall deep in Niflheim?";
 		mes "You came back alive?";
-		mes "Okay then, let me tell you a story.";
+		mes "Okay then, tell me your story.";
 		next;
 		mes "[Garim Springfield]";
 		mes "Hmm hmm... I see!";
-		mes "I prepared like this, so I won't be afraid if I go later!";
+		mes "I am prepared like this, so I won't be afraid if I go later!";
 		next;
 		mes "[Garim Springfield]";
 		mes "The research will last forever...!";
@@ -569,7 +567,7 @@ moc_para01,14,19,7	script	Old scholar#lv200	2_M_SAGE_OLD,{
 		close;
 	case 2:
 		mes "[Garim Springfield]";
-		mes "It made me feel better because I thought that research could be done even after death.";
+		mes "I felt like I could do research even after dying, so I felt better.";
 		close;
 	}
 	end;
@@ -588,59 +586,59 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			mes "[Tired looking dead]";
 			mes "Ha-am...";
 			mes "I can't sleep";
-			mes "What's the fuss that you can't sleep even after you're dead.";
+			mes "What's the fuss that you can't sleep even after you're dead?";
 			mes "Let's get some sleep...";
-			mes "I'm going to die of noise";
+			mes "I'm going to die because of the noise.";
 			close;
 		case 1:
 			mes "[Tired looking dead]";
 			mes "Ha-am...";
-			mes "Huh? What, I don't deal with peddlers.";
+			mes "Huh? What? I don't deal with peddlers.";
 			next;
 			if (select( "You have a bad complexion", "Go back quietly" ) == 2) {
 				mes "[Tired looking dead]";
-				mes "Oh, did you mean to ask if there were sleeping pills... But I'm dead... You won't hear... Hmm.";
+				mes "Oh, I did mean to ask you if you had sleeping pills... But I'm dead... You won't hear me... Hmm.";
 				close;
 			}
 			mes "[Tired looking dead]";
 			mes "Uh, how did you know?";
-			mes "Your complexion is so bad... you look real.";
+			mes "My complexion must look real bad...";
 			mes "Do you have a sleeping pill?";
 			next;
 			select("I'm not a junkie" );
 			mes "[Tired looking dead]";
-			mes "Ah... I'm sorry. I misunderstood. All the people who have come this far are weird kids or people who sell drugs, so I kicked them out.";
+			mes "Ah... I'm sorry. I misunderstood. All the people who have come this far were weird kids or people who sold drugs, so I kicked them out.";
 			next;
 			mes "[Tired looking dead]";
-			mes "By the way... how did you know I looked tired? Is my complexion that bad?";
+			mes "By the way... how did you know that I am tired? Does my complexion look that bad?";
 			next;
 			mes "[Tired looking dead]";
-			mes "Actually, I've been dead for a while, but I've only recently been to Niflheim. So I decided to sleep here in this house...";
-			mes "You can't sleep at night because it's so noisy next door.";
+			mes "Actually, I've been dead for a while, but I've only recently come to Niflheim. So I decided to sleep here in this house...";
+			mes "I can't sleep at night because it's so noisy next door.";
 			next;
 			mes "[Tired looking dead]";
-			mes "No, the pain of not being able to sleep because of the noise next door...";
-			mes "Oh, not this next door. Everyone ran away here.";
-			mes "Because it's cheap, there's a reason...";
+			mes "No, it's the pain of not being able to sleep because the next door is noisy even though I'm already dead..";
+			mes "Oh, not next door. They all ran away.";
+			mes "There's a reason why it is so cheap...";
 			next;
 			mes "[Tired looking dead]";
 			mes "Yes, <NAVI>[there]<INFO>niflheim,148,124,0,101,0</INFO></NAVI>";
 			mes "The crazy villagers over there... they have a banquet every day.";
 			next;
 			mes "[Tired looking dead]";
-			mes "Because every day is a day in that place, every day!!";
+			mes "I'm in there every day, every day!!";
 			next;
 			mes "[Tired looking dead]";
 			mes "Ha... I know, even if it's every day, there's a set time.";
-			mes "By the way... If you were a drinker who would have gone home on time while you were alive, would you do that even in death?";
+			mes "By the way... If you were a drinker, who would have gone home on time, while you were alive, would you do that even in death?";
 			next;
 			mes "[Tired looking dead]";
 			mes "I'm... dead, so I just want to sleep peacefully...";
-			mes "I hope someone knocks them down and returns them after the banquet is over.";
+			mes "I hope they return to their senses after the banquet is over.";
 			next;
 			select( "Banquet is..." );
 			mes "[Tired looking dead]";
-			mes "Yeah. ...you look pretty strong, there's alcohol... it's dead, so it's magic.";
+			mes "Yeah... you look pretty strong and there's alcohol... they are dead, so it's magic.";
 			mes "If you can silence those who are drunk with magical powers all night long, I will reward you.";
 			mes "Yes, of course every day.";
 			next;
@@ -664,17 +662,17 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 		if (select( "Listen to the request.", "Reject." ) == 2) {
 			mes "[Milla]";
 			mes "You can't do this if you're busy...";
-			mes "Ah, after all, the living do not hear that sound. Is this my agony only known to the dead...";
+			mes "Ah, after all, the living do not hear that sound. This is my agony only known to the dead...";
 			npctalk "Another Dead: Noisy! Get some sleep!", "#lv200althema", bc_self;
 			npctalk "Another Dead: He really can't sleep!", "#lv200althema2", bc_self;
 			close;
 		}
 		mes "[Milla]";
 		mes "Beloved living, thank you for your mercy.";
-		mes "It's a luxurious facility with a banquet hall and an opera house, but each one is a little different.";
+		mes "It's a luxurious facility with a banquet hall and an Opera House, but each one is a little different.";
 		mes "I'll ask for that kind of skill based on your kindness...";
 		next;
-		switch( select( "He looks cute", "That's not an instrument", "Plays the piano", "Guys with messy hair", "The ones with dolls", "Wake them up", "Stop" ) ) {
+		switch( select( "He looks cute", "That's not an instrument", "Playing the piano", "Guys with messy hair", "The ones with dolls", "Wake them up", "Stop" ) ) {
 		case 1:
 			switch( checkquest(8642,PLAYTIME) ) {
 			case -1:
@@ -682,7 +680,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I think they've had enough home today.";
+				mes "I think they've had enough today.";
 				mes "I hope you can help me tomorrow if you have time.";
 				close;
 			case 2:
@@ -692,19 +690,19 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			switch( checkquest(8641,HUNTING) ) {
 			case -1:
 				mes "[Milla]";
-				mes "They look cute... they're terribly noisy.";
+				mes "They look cute... but they're terribly noisy.";
 				mes "^0000FF" + getmonsterinfo("GHOST_CUBE", MOB_NAME) + "^000000,";
 				mes "^0000FF" + getmonsterinfo("LUDE_GAL", MOB_NAME) + "^000000";
 				next;
 				mes "[Milla]";
-				mes "I wish I could beat 15 " + getmonsterinfo("GHOST_CUBE", MOB_NAME) + "";
+				mes "I wish you could beat 15 " + getmonsterinfo("GHOST_CUBE", MOB_NAME) + "";
 				mes "and 15 of their mate " + getmonsterinfo("LUDE_GAL", MOB_NAME) + ", who haunted the banquet hall of the dead,";
 				mes "and make them holy for a day.";
 				next;
 				if (select( "I accept", "I'm busy today" ) == 2) {
 					mes "[Milla]";
 					mes "Ummm...";
-					mes "Yeah... Well, I don't die just because I can't sleep...";
+					mes "Yeah... Well, I won't die just because I can't sleep...";
 					mes "I'm already dead";
 					close;
 				}
@@ -716,7 +714,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I wish I could beat 15 " + getmonsterinfo("GHOST_CUBE", MOB_NAME) + "";
+				mes "I wish you could beat 15 " + getmonsterinfo("GHOST_CUBE", MOB_NAME) + "";
 				mes "and 15 of their mate " + getmonsterinfo("LUDE_GAL", MOB_NAME) + ", who haunted the banquet hall of the dead,";
 				mes "and make them holy for a day.";
 				close;
@@ -724,7 +722,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				mes "[Milla]";
 				mes "Kya, did you hear them scream all the way here?";
 				mes "I think I can sleep a little deeper today thanks to you...";
-				mes "I have to make this commotion again tomorrow.";
+				mes "I have to make it through this commotion again tomorrow.";
 				mes "Thank you.";
 				erasequest 8641;
 				setquest 8642;
@@ -740,7 +738,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I think they've had enough home today.";
+				mes "I think they've had enough today.";
 				mes "I hope you can help me tomorrow if you have time.";
 				close;
 			case 2:
@@ -755,14 +753,14 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				mes "It's too loud to knock anywhere!";
 				next;
 				mes "[Milla]";
-				mes "I wish I could beat 10 " + getmonsterinfo("BRUTAL_MURDERER", MOB_NAME) + "";
+				mes "I wish you could beat 10 " + getmonsterinfo("BRUTAL_MURDERER", MOB_NAME) + "";
 				mes "and 10 of their mate " + getmonsterinfo("GAN_CEANN", MOB_NAME) + ", who haunted the banquet hall of the dead,";
 				mes "and make them holy for a day.";
 				next;
 				if (select( "I accept", "I'm busy today" ) == 2) {
 					mes "[Milla]";
 					mes "Ummm...";
-					mes "Yeah... Well, I don't die just because I can't sleep...";
+					mes "Yeah... Well, I won't die just because I can't sleep...";
 					mes "I'm already dead.";
 					close;
 				}
@@ -774,7 +772,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I wish I could beat 10 " + getmonsterinfo("BRUTAL_MURDERER", MOB_NAME) + "";
+				mes "I wish you could beat 10 " + getmonsterinfo("BRUTAL_MURDERER", MOB_NAME) + "";
 				mes "and 10 of their mate " + getmonsterinfo("GAN_CEANN", MOB_NAME) + ", who haunted the banquet hall of the dead,";
 				mes "and make them holy for a day.";
 				close;
@@ -797,7 +795,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I think they've had enough home today.";
+				mes "I think they've had enough today.";
 				mes "I hope you can help me tomorrow if you have time.";
 				close;
 			case 2:
@@ -814,12 +812,12 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				mes "[Milla]";
 				mes "Play the <NAVI>[piano]<INFO>nif_dun01,140,202,0,101,0</INFO></NAVI>";
 				mes "of the banquet hall of the dead.";
-				mes "There is no such thing as a request song.";
+				mes "There is no such thing as a song request.";
 				next;
 				if (select( "I accept", "I'm busy today" ) == 2) {
 					mes "[Milla]";
 					mes "Ummm...";
-					mes "Yeah... Well, I don't die just because I can't sleep...";
+					mes "Yeah... Well, I won't die just because I can't sleep...";
 					mes "I'm already dead";
 					close;
 				}
@@ -832,7 +830,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				mes "[Milla]";
 				mes "Play the <NAVI>[piano]<INFO>nif_dun01,140,202,0,101,0</INFO></NAVI>";
 				mes "of the banquet hall of the dead.";
-				mes "There is no such thing as a request song.";
+				mes "There is no such thing as a song request.";
 				close;
 			case 2:
 				mes "[Milla]";
@@ -861,7 +859,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I think they've had enough home today.";
+				mes "I think they've had enough today.";
 				mes "I hope you can help me tomorrow if you have time.";
 				close;
 			case 2:
@@ -875,7 +873,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				case -1:
 					mes "[Milla]";
 					mes "I mean, there are kids called ^0000FF" + getmonsterinfo("DISGUISER", MOB_NAME) + "^000000. ";
-					mes "He's got his hair like a bomb hit, and he looks so excited.";
+					mes "They've got their hair as if a bomb hit, and they look so excited.";
 					mes "^0000FF" + getmonsterinfo("BLUEMOON_LOLI_RURI", MOB_NAME) + "^000000, it can't be that loud when you get together with guys with broom hair.";
 					next;
 					mes "[Milla]";
@@ -886,7 +884,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					if (select( "I accept", "I'm busy today" ) == 2) {
 						mes "[Milla]";
 						mes "Ummm...";
-						mes "Yeah... Well, I don't die just because I can't sleep...";
+						mes "Yeah... Well, I won't die just because I can't sleep...";
 						mes "I'm already dead";
 						close;
 					}
@@ -924,7 +922,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					if (select( "I accept", "I'm busy today" ) == 2) {
 						mes "[Milla]";
 						mes "Ummm...";
-						mes "Yeah... Well, I don't die just because I can't sleep...";
+						mes "Yeah... Well, I won't die just because I can't sleep...";
 						mes "I'm already dead";
 						close;
 					}
@@ -968,7 +966,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I think they've had enough home today.";
+				mes "I think they've had enough today.";
 				mes "I hope you can help me tomorrow if you have time.";
 				close;
 			case 2:
@@ -981,9 +979,9 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				switch( checkquest(8653,HUNTING) ) {
 				case -1:
 					mes "[Milla]";
-					mes "If you look at the collapsed opera house there,";
-					mes "you'll see kids wearing dolls. There's " + getmonsterinfo("GROTE", MOB_NAME) + " and " + getmonsterinfo("PIERROTZOIST", MOB_NAME) + "^000000...";
-					mes "All the dolls they wear are so noisy.";
+					mes "If you look at the collapsed Opera House there,";
+					mes "you'll see the ones with dolls. There's " + getmonsterinfo("GROTE", MOB_NAME) + " and " + getmonsterinfo("PIERROTZOIST", MOB_NAME) + "^000000...";
+					mes "All the ones with dolls are so noisy.";
 					next;
 					mes "[Milla]";
 					mes "I hope you show the hot taste to";
@@ -993,7 +991,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					if (select( "I accept", "I'm busy today" ) == 2) {
 						mes "[Milla]";
 						mes "Ummm...";
-						mes "Yeah... Well, I don't die just because I can't sleep...";
+						mes "Yeah... Well, I won't die just because I can't sleep...";
 						mes "I'm already dead";
 						close;
 					}
@@ -1011,9 +1009,9 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					close;
 				case 2:
 					mes "[Milla]";
-					mes "Kepok, what did you really do?";
+					mes "Kyak-kyak-kyak-kyak-kyak-kyak-kyak, what did you really do?";
 					mes "A while ago, " + getmonsterinfo("GROTE", MOB_NAME) + " and " + getmonsterinfo("PIERROTZOIST", MOB_NAME) + " went home saying they wouldn't make a noise again.";
-					mes "Of course not. I will come again tomorrow.";
+					mes "Of course not. They will come again tomorrow.";
 					mes "Thank you. See you tomorrow.";
 					completequest 8653;
 					setquest 8654;
@@ -1032,7 +1030,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					if (select( "I accept", "I'm busy today" ) == 2) {
 						mes "[Milla]";
 						mes "Ummm...";
-						mes "Yeah... Well, I don't die just because I can't sleep...";
+						mes "Yeah... Well, I won't die just because I can't sleep...";
 						mes "I'm already dead";
 						close;
 					}
@@ -1050,9 +1048,9 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 					close;
 				case 2:
 					mes "[Milla]";
-					mes "Kepok, what did you really do?";
+					mes "Kyak-kyak-kyak-kyak-kyak-kyak-kyak, what did you really do?";
 					mes "A while ago, " + getmonsterinfo("GROTE", MOB_NAME) + " and " + getmonsterinfo("PIERROTZOIST", MOB_NAME) + " went home saying they wouldn't make a noise again.";
-					mes "Of course not. I will come again tomorrow.";
+					mes "Of course not. They will come again tomorrow.";
 					mes "Thank you. See you tomorrow.";
 					erasequest 8655;
 					setquest 8654;
@@ -1077,7 +1075,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 			case 1:
 				mes "[Milla]";
-				mes "I think they've had enough home today.";
+				mes "I think they've had enough today.";
 				mes "I hope you can help me tomorrow if you have time.";
 				close;
 			case 2:
@@ -1088,7 +1086,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 			case 0:
 				mes "[Milla]";
 				mes "The smashed... no, don't say that.";
-				mes "If you go to the collapsed opera house, you will find ghosts in the frames.";
+				mes "If you go to the collapsed Opera House, you will find ghosts in the frames.";
 				mes "But they don't even have a body...";
 				mes "Snoring, my dear.";
 				next;
@@ -1101,7 +1099,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 				if (select( "I accept", "I'm busy today" ) == 2) {
 					mes "[Milla]";
 					mes "Ummm...";
-					mes "Yeah... Well, I don't die just because I can't sleep...";
+					mes "Yeah... Well, I won't die just because I can't sleep...";
 					mes "I'm already dead";
 					close;
 				}
@@ -1143,7 +1141,7 @@ niflheim,164,102,3	script	Tired looking dead#lv20	4_F_NFDEADMGCIAN,{
 		case 7:
 			mes "[Milla]";
 			mes "You can't do this if you're busy...";
-			mes "Ah, after all, the living do not hear that sound. Is this my agony only known to the dead...";
+			mes "Ah, after all, the living do not hear that sound. This is my agony only known to the dead...";
 			npctalk "Another Dead: Noisy! Get some sleep!", "#lv200althema", bc_self;
 			npctalk "Another Dead: He really can't sleep!", "#lv200althema2", bc_self;
 			close;
@@ -1208,7 +1206,7 @@ nif_dun01,140,202,3	script	Piano#lv200	CLEAR_NPC,{
 		npctalk "Clink clink... Crackle!", "Piano#lv200", bc_self;
 		npctalk "Sleep alive! Kyaaak!", "Exciting Cello#lv200", bc_self;
 		npctalk "The living man plays the piano!", "Dancing Cello#lv200", bc_self;
-		npctalk "Oh my God, I can't really play...", "Quiet Cello#lv200", bc_self;
+		npctalk "Oh my God, he can't really play...", "Quiet Cello#lv200", bc_self;
 		npctalk "How could that be...", "Stranger Cello#lv200", bc_self;
 		npctalk "You ruined the atmosphere!", "Happy Cello#lv200", bc_self;
 		npctalk "Piano Ooo!!!", "Serious Contrabass#lv2", bc_self;
