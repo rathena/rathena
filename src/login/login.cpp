@@ -834,7 +834,7 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
 	// initialize engine
-	accounts = make_unique<AccountDBSql>();
+	accounts = std::make_unique<AccountDBSql>();
 
 	// read login-server configuration
 	login_set_defaults();
