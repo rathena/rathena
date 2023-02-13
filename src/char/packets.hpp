@@ -4,7 +4,7 @@
 #ifndef PACKETS_HPP
 #define PACKETS_HPP
 
-#include "../common/mmo.hpp"
+#include <common/mmo.hpp>
 
 #pragma warning( push )
 #pragma warning( disable : 4200 )

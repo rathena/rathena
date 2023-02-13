@@ -1867,6 +1867,9 @@
 	export_constant(SC_BEEF_RIB_STEW);
 	export_constant(SC_PORK_RIB_STEW);
 	export_constant(SC_WEAPONBREAKER);
+	export_constant(SC_TOXIN_OF_MANDARA);
+	export_constant(SC_GOLDENE_TONE);
+	export_constant(SC_TEMPERING);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -6746,6 +6749,7 @@
 	export_constant(IG_CLASS_SHADOW_SD_CUBE);
 	export_constant(IG_CLASS_SHADOW_PD_CUBE);
 	export_constant(IG_CLASS_SHADOW_EA_CUBE);
+	export_constant(IG_ENCHANT_STONE_BOX30);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9222,8 +9226,10 @@
 	export_constant(HAT_EF_QSCARABA);
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
-	export_constant(HAT_EF_GODCLASS);
-	export_constant(HAT_EF_GODCLASS2);
+	export_deprecated_constant2("HAT_EF_GODCLASS",HAT_EF_BRYSINGGAMEN);
+	export_deprecated_constant2("HAT_EF_GODCLASS2",HAT_EF_MAGINGIORDE);
+	export_constant(HAT_EF_BRYSINGGAMEN);
+	export_constant(HAT_EF_MAGINGIORDE);
 	export_constant(HAT_EF_LEVEL99_RED);
 	export_constant(HAT_EF_LEVEL99_ULTRAMARINE);
 	export_constant(HAT_EF_LEVEL99_CYAN);
@@ -9330,10 +9336,21 @@
 	export_constant(HAT_EF_C_SAMBA_CARNIVAL);
 	export_constant(HAT_EF_POISON_MASTER);
 	export_constant(HAT_EF_C_SWIRLING_FLAME);
+	export_constant(HAT_EF_C_2021RTC_HEADSET_1_TW);
+	export_constant(HAT_EF_C_2021RTC_HEADSET_2_TW);
+	export_constant(HAT_EF_C_2021RTC_HEADSET_3_TW);
+	export_constant(HAT_EF_SUBJECT_AURA_WHITE_ALPHA);
+	export_constant(HAT_EF_GC_DARKCROW);
+	export_constant(HAT_EF_DIABOLUS_RING);
+	export_constant(HAT_EF_MAGICCIRCLE_BLUE_TW);
+	export_constant(HAT_EF_C_DISAPEAR_TIME_TW_2);
 	export_constant(HAT_EF_C_MELODY_WING);
 	export_constant(HAT_EF_C_SPOT_LIGHT);
 	export_constant(HAT_EF_C_ASTRA_BLESSING);
 	export_constant(HAT_EF_EFST_C_20TH_ANNIVERSARY_HAT);
+	export_constant(HAT_EF_SUBJECT_AURA_NAVY);
+	export_constant(HAT_EF_20TH_SCARF_J);
+	export_constant(HAT_EF_GHOST_FIRE);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -9474,6 +9491,10 @@
 	export_constant(CPC_NAME);
 	export_constant(CPC_CHAR);
 	export_constant(CPC_ACCOUNT);
+
+	/* instance_warpall flags */
+	export_constant(IWA_NONE);
+	export_constant(IWA_NOTDEAD);
 
 	/* skill hit */
 	export_constant(DMG_SINGLE);

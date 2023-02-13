@@ -5,7 +5,7 @@
 
 #include <mutex>
 
-#include "../common/showmsg.hpp"
+#include <common/showmsg.hpp>
 
 std::mutex dbmutex;
 

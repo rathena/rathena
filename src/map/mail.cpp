@@ -3,10 +3,10 @@
 
 #include "mail.hpp"
 
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
 
 #include "atcommand.hpp"
 #include "battle.hpp"

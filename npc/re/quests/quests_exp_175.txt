@@ -1,0 +1,294 @@
+//===== rAthena Script =======================================
+//= Quests EXP
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//--- NPC quests related to new dungeons.
+//===== Changelog: ===========================================
+//= 1.0 Initial release of Glast Heim Abyss quests. [OptimusM]
+//= 1.1 Corrections here and there. [Capuche]
+//============================================================
+
+glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
+	if (BaseLevel < 175) {
+		mes "[Nillem]";
+		mes "What are you doing here?";
+		mes "That's right, I'm waiting for a strong adventurer to satisfy my curiosity!";
+		next;
+		mes "[Nillem]";
+		mes "If you reach level 175, you will be my destined opponent-¡Ù";
+		close;
+	}
+	mes "[Nillem]";
+	mes "I think I've made a great discovery, so why don't you come with me?";
+	next;
+	switch( select( "Let's go!", "Please explain it.", "What I found", "Refuse." )) {
+	case 1:
+		mes "[Nillem]";
+		mes "This is my bae!";
+		mes "You're gonna jump into the abyss with me! I can't help But L-O-V-E you.";
+		close2;
+		warp "gl_cas01_",200,26;
+		end;
+	case 2:
+		mes "[Nillem]";
+		mes "As you know, I'm a good court wizard, right?";
+		mes "A genius wizard who can do this and that on dimension!";
+		next;
+		mes "[Nillem]";
+		mes "There was a report of strange magical power near central castle of Glast Heim.";
+		mes "I came here to investigate and found it.";
+		next;
+		mes "[Nillem]";
+		mes "A week crack of dimension!";
+		mes "You know, this genius wizard is good at connecting the crack of dimensions.";
+		next;
+		mes "[Nillem]";
+		mes "So I forced the connection and went in....";
+		mes "A piece of time that has stopped in the flow.... Hmmm... It's so hard to explain..";
+		next;
+		mes "[Nillem]";
+		mes "Anyway, the flood of creatures trapped for a long time came to me like waves!";
+		next;
+		mes "[Nillem]";
+		mes "I almost D - i - e - d there.";
+		mes "So I'm looking for adventurers to join me on this expedition.";
+		close;
+	case 3:
+		mes "[Nillem]";
+		mes "Right, there's no mission here, but curiosity follows discovery!";
+		mes "You noticed before I told you there were a few things I wanted to do with you, My - Darling -.";
+		next;
+		switch( select( "An Empty Thing", "A Thing with High Freezing Point", "A Thing Like A Mirror", "Well, I'm okay." )) {
+		case 1:
+			mes "[Nillem]";
+			mes "Beyond the cracks of this dimension, there are Empty Things..";
+			mes "^0000FFContaminated Raydric^000000 and ^0000FFContaminated Raydric Archer^000000...";
+			mes "Contamination";
+			next;
+			mes "[Nillem]";
+			mes "^0000FF20 Contaminated Raydrics^000000,";
+			mes "^0000FF20 Contaminated Raydric Archers^000000!! Defeat them and come back. Then this genius wizard will study it.";
+			mes "What do you think, bae?";
+			next;
+			if (select( "That's not hard.", "I'm busy." ) == 2) {
+				mes "[Nillem]";
+				mes "If you're busy, you can't help me.";
+				mes "But honey, please help me when You - Have - Spare - Time - !";
+				close;
+			}
+			switch( checkquest(8542,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				mes "[Nillem]";
+				mes "I asked you too much today, Sweetie.";
+				mes "Instead, you're sharing another new discovery tomorrow. O - K - A - Y -?";
+				close;
+			case 2:
+				mes "^4d4dff - You can take this mission again. Speak to Mage Nillem once again to accept it. - ^000000";
+				erasequest 8542;
+				break;
+			}
+			switch( checkquest(8541,HUNTING) ) {
+			case -1:
+				mes "[Nillem]";
+				mes "That's my baby!";
+				mes "It's hard to see the impact there because of the strange magic.";
+				mes "If you finish the quest, let's get out of there first And - Then Check - !";
+				setquest 8541;
+				close;
+			case 0:
+			case 1:
+				mes "[Nillem]";
+				mes "^0000FF20 Contaminated Raydrics^000000,";
+				mes "^0000FF20 Contaminated Raydric Archers^000000.";
+				mes "Woo-hoo, aren't you excited about the effects of empty things?";
+				close;
+			case 2:
+				mes "[Nillem]";
+				mes "Ha~ It's so obvious out here. Could you please show me your... weapon and... armor? Hmm...";
+				mes "Hmmm!!";
+				mes "Haha, what a discovery of the century!";
+				next;
+				select( "What do you get?" );
+				mes "[Nillem]";
+				mes "It's hard to explain to you, but in short, You - Did - it - !!";
+				mes "But this isn't enough, so please do it again tomorrow.";
+				erasequest 8541;
+				setquest 8542;
+				getexp 8142552,5674080;
+				close;
+			}
+			end;
+		case 2:
+			mes "[Nillem]";
+			mes "There are things that have a high freezing point beyond the crack of this dimension.";
+			mes "^0000FFFrozen Gargoyle^000000 and ^0000FFPrison Breaker^000000...";
+			next;
+			mes "[Nillem]";
+			mes "^0000FF5 Frozen Gargoyles^000000,";
+			mes "^0000FF5 Prison Breakers^000000!! Defeat them and come back. Then this genius wizard will study it.";
+			mes "What do you think, bae?";
+			next;
+			if (select( "That's not hard.", "I'm busy." ) == 2) {
+				mes "[Nillem]";
+				mes "If you're busy, you can't help me.";
+				mes "But honey, please help me when You - Have - Spare - Time - !";
+				close;
+			}
+			switch( checkquest(8545,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				mes "[Nillem]";
+				mes "I asked you too much today, Sweetie.";
+				mes "Instead, you're sharing another new discovery tomorrow. O - K - A - Y -?";
+				close;
+			case 2:
+				mes "^4d4dff - You can take this mission again. Speak to Mage Nillem once again to accept it. - ^000000";
+				erasequest 8545;
+				break;
+			}
+			switch( checkquest(8544,HUNTING) ) {
+			case -1:
+				mes "[Nillem]";
+				mes "That's my baby!";
+				mes "It's hard to see the impact there because of the strange magic.";
+				mes "If you finish the quest, let's get out of there first And - Then Check - !";
+				setquest 8544;
+				close;
+			case 0:
+			case 1:
+				mes "[Nillem]";
+				mes "^0000FF5 Frozen Gargoyles^000000,";
+				mes "^0000FF5 Prison Breakers^000000!!";
+				mes "Woo-hoo, aren't you excited about Things with High Freezing Point?";
+				close;
+			case 2:
+				mes "[Nillem]";
+				mes "Ha~ It's so obvious out here. Could you please show me your... weapon and... armor? Hmm...";
+				mes "Hmmm!!";
+				mes "Haha, what a discovery of the century!";
+				next;
+				select( "What do you get?" );
+				mes "[Nillem]";
+				mes "It's hard to explain to you, but in short, You - Did - it - !!";
+				mes "But this isn't enough, so please do it again tomorrow.";
+				erasequest 8544;
+				setquest 8545;
+				getexp 2036754,1425726;
+				close;
+			}
+			end;
+		case 3:
+			mes "[Nillem]";
+			mes "Beyond the crack of this dimension, there are mirrors of each other.";
+			mes "^0000FFIce Ghost^000000 and ^0000FFFlame Ghost^000000...";
+			mes "It looks completely different, but the crack of dimensions is very unknown.";
+			next;
+			mes "[Nillem]";
+			mes "^0000FF10 Ice Ghosts^000000,";
+			mes "^0000FF10 Flame Ghosts^000000!! Defeat them and come back. Then this genius wizard will study it.";
+			mes "What do you think, bae?";
+			next;
+			if (select( "That's not hard.", "I'm busy." ) == 2) {
+				mes "[Nillem]";
+				mes "If you're busy, you can't help me.";
+				mes "But honey, please help me when You - Have - Spare - Time - !";
+				close;
+			}
+			switch( checkquest(8548,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				mes "[Nillem]";
+				mes "I asked you too much today, Sweetie.";
+				mes "Instead, you're sharing another new discovery tomorrow. O - K - A - Y -?";
+				close;
+			case 2:
+				mes "^4d4dff - You can take this mission again. Speak to Mage Nillem once again to accept it. - ^000000";
+				erasequest 8548;
+				break;
+			}
+			switch( checkquest(8547,HUNTING) ) {
+			case -1:
+				mes "[Nillem]";
+				mes "That's my baby!";
+				mes "It's hard to see the impact there because of the strange magic.";
+				mes "If you finish the quest, let's get out of there first And - Then Check - !";
+				setquest 8547;
+				close;
+			case 0:
+			case 1:
+				mes "[Nillem]";
+				mes "^0000FF10 Ice Ghosts^000000,";
+				mes "^0000FF10 Flame Ghosts^000000!!";
+				mes "Woo-hoo, aren't you excited about Things Like A Mirror?";
+				close;
+			case 2:
+				mes "[Nillem]";
+				mes "Ha~ It's so obvious out here. Could you please show me your... weapon and... armor? Hmm...";
+				mes "Hmmm!!";
+				mes "Haha, what a discovery of the century!";
+				next;
+				select( "What do you get?" );
+				mes "[Nillem]";
+				mes "It's hard to explain to you, but in short, You - Did - it - !!";
+				mes "But this isn't enough, so please do it again tomorrow.";
+				erasequest 8547;
+				setquest 8548;
+				getexp 4138800,2897160;
+				close;
+			}
+			end;
+		case 4:
+			mes "[Nillem]";
+			mes "There, there. Sweet heart, you are right.";
+			mes "If you're tired, take a rest.";
+			mes "Do - Not - Push - yourself --- !";
+			close;
+		}
+		end;
+	case 4:
+		mes "[Nillem]";
+		mes "Oh, my sweetheart, you're so mean today.";
+		mes "Nillem is saaaad. *Tears*";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8541,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8544,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8547,HUNTING) == 2" );
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8542,PLAYTIME) == -1 && checkquest(8541,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8545,PLAYTIME) == -1 && checkquest(8544,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8548,PLAYTIME) == -1 && checkquest(8547,HUNTING) == -1" );
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8542,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8545,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8548,PLAYTIME) == 2" );
+	end;
+}
+
+gl_cas01_,205,36,5	script	Magician Nillem#glabyss02	4_M_JOB_WIZARD,{
+	mes "[Nillem]";
+	mes "Woo-hoo! I'm so excited whenever I come here!";
+	mes "I love this bleakness!";
+	next;
+	if (select( "Let's get out of here!", "I'd like to look around." ) == 2) {
+		mes "[Nillem]";
+		mes "See you!";
+		close;
+	}
+	mes "[Nillem]";
+	mes "Sure!";
+	mes "Let's - Go - Out - Side - !";
+	close2;
+	warp "glast_01",191,270;
+	end;
+}

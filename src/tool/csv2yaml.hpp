@@ -4,7 +4,7 @@
 #ifndef CSV2YAML_HPP
 #define CSV2YAML_HPP
 
-#include "../common/core.hpp"
+#include <common/core.hpp>
 
 #include "yaml.hpp"
 

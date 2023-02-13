@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
+#include <common/database.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp> // ITEM_NAME_LENGTH
 
 #include "script.hpp"
 #include "status.hpp"
@@ -1832,6 +1832,7 @@ enum e_random_item_group {
 	IG_CLASS_SHADOW_SD_CUBE,
 	IG_CLASS_SHADOW_PD_CUBE,
 	IG_CLASS_SHADOW_EA_CUBE,
+	IG_ENCHANT_STONE_BOX30,
 
 	IG_MAX,
 };
@@ -2151,6 +2152,7 @@ public:
 	std::shared_ptr<item_data> search_aegisname( const char *name );
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
+	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
 
 private:
 	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data);

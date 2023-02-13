@@ -4,8 +4,8 @@
 #ifndef LOG_HPP
 #define LOG_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
 struct block_list;
 class map_session_data;

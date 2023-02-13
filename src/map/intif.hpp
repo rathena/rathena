@@ -6,8 +6,8 @@
 
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
 struct party_member;
 struct guild_member;
