@@ -16,7 +16,7 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 		mes "That's right, I'm waiting for a strong adventurer to satisfy my curiosity!";
 		next;
 		mes "[Nillem]";
-		mes "If you reach level 175, you will be my destined opponent-¡Ù";
+		mes "If you reach level 175, you will be my destined opponent-Â¡Ã™";
 		close;
 	}
 	mes "[Nillem]";
@@ -410,7 +410,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 				close;
 			}
 			mes "[Marigold]";
-			mes "The thing to investigate this time is the ^4d4dffTreasure Mimic ^000000found on the ^4d4dff4th floor of the Abyss Cave^000000!";
+			mes "The thing to investigate this time is the ^4d4dffTreasure Mimic^000000 found on the ^4d4dff4th floor of the Abyss Cave^000000!";
 			mes "Show me the loot you've earned while dealing with it in moderation.";
 			setquest 7895;
 			close;
@@ -450,7 +450,7 @@ hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
 				close;
 			}
 			mes "[Marigold]";
-			mes "This time, we are going to investigate ^4d4dffSilver Acidus and Black Acidus^000000found on the ^4d4dff4th floor of the Abyss Cave^000000!";
+			mes "This time, we are going to investigate ^4d4dffSilver Acidus and Black Acidus^000000 found on the ^4d4dff4th floor of the Abyss Cave^000000!";
 			mes "Tell me what attributes they have when you deal with them directly.";
 			setquest 7897;
 			close;
