@@ -6,8 +6,8 @@
 
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
 
 #include "mob.hpp"
 #include "status.hpp" // struct status_data, struct status_change

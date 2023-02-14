@@ -8530,3 +8530,21 @@ Body:
       NoClearance: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  - Status: Tempering
+    Icon: EFST_TEMPERING
+    DurationLookup: MH_TEMPERING
+    CalcFlags:
+      Patk: true
+  - Status: Goldene_Tone
+    Icon: EFST_GOLDENE_TONE
+    DurationLookup: MH_GOLDENE_TONE
+    CalcFlags:
+      Res: true
+      Mres: true
+  - Status: Toxin_of_Mandara
+    Icon: EFST_TOXIN_OF_MANDARA
+    DurationLookup: MH_TOXIN_OF_MANDARA
+    Flags:
+      Debuff: true
+    CalcFlags:
+      Res: true

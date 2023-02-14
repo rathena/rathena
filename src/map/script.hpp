@@ -7,11 +7,11 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/database.hpp"
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp"
+#include <common/database.hpp>
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/mmo.hpp>
+#include <common/timer.hpp>
 
 #define NUM_WHISPER_VAR 10
 
@@ -2088,6 +2088,11 @@ enum e_convertpcinfo_type : uint8 {
 	CPC_NAME      = 0,
 	CPC_CHAR      = 1,
 	CPC_ACCOUNT   = 2
+};
+
+enum e_instance_warpall_flag{
+	IWA_NONE    = 0x00,
+	IWA_NOTDEAD = 0x01,
 };
 
 /**

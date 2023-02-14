@@ -676,6 +676,15 @@ Body:
       - Skill: MH_SILENT_BREEZE
         MaxLevel: 5
         RequiredLevel: 137
+      - Skill: MH_CLASSY_FLUTTER
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_TWISTER_CUTTER
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_ABSOLUTE_ZEPHYR
+        MaxLevel: 10
+        RequiredLevel: 230
   - Class: Bayeri
     Name: Bayeri
     Food: Fresh_Plant
@@ -731,6 +740,18 @@ Body:
       - Skill: MH_ANGRIFFS_MODUS
         MaxLevel: 5
         RequiredLevel: 130
+      - Skill: MH_LICHT_GEHORN
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_GLANZEN_SPIES
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_HEILIGE_PFERD
+        MaxLevel: 10
+        RequiredLevel: 230
+      - Skill: MH_GOLDENE_TONE
+        MaxLevel: 10
+        RequiredLevel: 230
   - Class: Sera
     Name: Sera
     Food: Apple_Pudding
@@ -783,6 +804,15 @@ Body:
       - Skill: MH_PAIN_KILLER
         MaxLevel: 10
         RequiredLevel: 123
+      - Skill: MH_POLISHING_NEEDLE
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_TOXIN_OF_MANDARA
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_NEEDLE_STINGER
+        MaxLevel: 10
+        RequiredLevel: 230
   - Class: Dieter
     Name: Dieter
     Food: Big_Cell
@@ -838,6 +868,15 @@ Body:
       - Skill: MH_VOLCANIC_ASH
         MaxLevel: 5
         RequiredLevel: 102
+      - Skill: MH_BLAST_FORGE
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_TEMPERING
+        MaxLevel: 10
+        RequiredLevel: 230
+      - Skill: MH_BLAZING_LAVA
+        MaxLevel: 10
+        RequiredLevel: 210
   - Class: Eleanor
     Name: Eleanor
     Food: Bun_
@@ -898,3 +937,12 @@ Body:
       - Skill: MH_EQC
         MaxLevel: 5
         RequiredLevel: 133
+      - Skill: MH_BRUSHUP_CLAW
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_BLAZING_AND_FURIOUS
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_THE_ONE_FIGHTER_RISES
+        MaxLevel: 10
+        RequiredLevel: 230

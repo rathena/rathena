@@ -6,16 +6,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/ers.hpp"  // ers_destroy
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/ers.hpp>  // ers_destroy
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
 
 #include "clan.hpp"
 #include "clif.hpp"

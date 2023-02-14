@@ -2560,17 +2560,17 @@ Body:
       - Item: Up_Crimson_Rose
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
-      - Item: aegis_2064
+      - Item: Comp_Iron_Staff
       - Item: Comp_Undine_Spear_K
       - Item: Comp_Royal_Bow_K
       - Item: Comp_Shadow_Staff_K
-      - Item: aegis_1873
+      - Item: Comp_Iron_Nail_K
       - Item: Comp_Sword_Of_Bluefire
       - Item: Comp_Oriental_Sword
-      - Item: aegis_18202
-      - Item: aegis_1350
+      - Item: Comp_Narcis_Bow
+      - Item: Comp_Avenger
       - Item: Comp_Magic_Sword
-      - Item: aegis_28646
+      - Item: Comp_D_Hunt_Bible_K
       - Item: Comp_Shiver_Katar_K_TH
       - Item: Comp_Demon_S_Shot
       - Item: Comp_Sharp_Wind_Sword
@@ -2578,7 +2578,7 @@ Body:
       - Item: Comp_Crimson_Rose
       - Item: Comp_The_Black_Gatling
       - Item: Comp_MeawFoxtail
-      - Item: aegis_21066
+      - Item: Comp_Dragonic_Slayer
       - Item: Comp_Fatalist
       - Item: Comp_Light_Blade
       - Item: Comp_Scalet_DragonL_Bow
@@ -2656,17 +2656,17 @@ Body:
       - Item: Up_Crimson_Rose
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
-      - Item: aegis_2064
+      - Item: Comp_Iron_Staff
       - Item: Comp_Undine_Spear_K
       - Item: Comp_Royal_Bow_K
       - Item: Comp_Shadow_Staff_K
-      - Item: aegis_1873
+      - Item: Comp_Iron_Nail_K
       - Item: Comp_Sword_Of_Bluefire
       - Item: Comp_Oriental_Sword
-      - Item: aegis_18202
-      - Item: aegis_1350
+      - Item: Comp_Narcis_Bow
+      - Item: Comp_Avenger
       - Item: Comp_Magic_Sword
-      - Item: aegis_28646
+      - Item: Comp_D_Hunt_Bible_K
       - Item: Comp_Shiver_Katar_K_TH
       - Item: Comp_Demon_S_Shot
       - Item: Comp_Sharp_Wind_Sword
@@ -2674,7 +2674,7 @@ Body:
       - Item: Comp_Crimson_Rose
       - Item: Comp_The_Black_Gatling
       - Item: Comp_MeawFoxtail
-      - Item: aegis_21066
+      - Item: Comp_Dragonic_Slayer
       - Item: Comp_Fatalist
       - Item: Comp_Light_Blade
       - Item: Comp_Scalet_DragonL_Bow
