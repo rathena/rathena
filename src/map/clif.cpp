@@ -20538,7 +20538,8 @@ void roulette_generate_bonus( map_session_data& sd ){
 void clif_roulette_open( map_session_data* sd ){
 	nullpo_retv( sd );
 
-	roulette_generate_bonus( *sd );
+	if (!sd->roulette.claimPrize)
+		roulette_generate_bonus( *sd );
 
 	struct packet_roulette_open_ack p;
 
