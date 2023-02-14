@@ -683,7 +683,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					if( !this->asUInt16( chanceNode, "Refine", refineIndex ) ){
 						return 0;
 					}
-					if( !this->asUInt16( chanceNode, "Chance", chance ) ){
+					if( !this->asUInt16Rate( chanceNode, "Chance", chance ) ){
 						return 0;
 					}
 					grade->chance[refineIndex] = chance;
