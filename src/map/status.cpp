@@ -5001,7 +5001,7 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 
 #ifndef RENEWAL
 	status->rhw.atk = status->dex;
-	status->rhw.atk2 = status->str + hom->level;
+	status->rhw.atk2 = status->str + hom.level;
 #endif
 
 	status_calc_misc(&hd->bl, status, hom.level);
