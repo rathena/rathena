@@ -34466,7 +34466,7 @@ Body:
           - S_Master_Shield   # 24793
           - S_HN_Shoes   # 24869
     Script: |
-      .@sum = getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bPAtk,1;
       bonus bSMatk,1;
       if (.@sum>=27) {
@@ -34690,9 +34690,9 @@ Body:
           - S_Master_Weapon   # 24792
           - S_HN_Pendant   # 24871
     Script: |
-      bonus2 bIgnoreDefRaceRate,RC_All,20;
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-20;
-      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-20;
-      bonus2 bIgnoreMdefRaceRate,RC_All,20;
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-20;
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-20;
+      bonus2 bIgnoreResRaceRate,RC_All,20;
+      bonus2 bIgnoreResRaceRate,RC_Player_Human,-20;
+      bonus2 bIgnoreResRaceRate,RC_Player_Doram,-20;
+      bonus2 bIgnoreMResRaceRate,RC_All,20;
+      bonus2 bIgnoreMResRaceRate,RC_Player_Human,-20;
+      bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-20;

@@ -594,6 +594,8 @@ public:
 		int dropaddrace[RC_MAX];
 		int dropaddclass[CLASS_MAX];
 		int magic_subdefele[ELE_MAX];
+		int ignore_res_by_race[RC_MAX];
+		int ignore_mres_by_race[RC_MAX];
 	} indexed_bonus;
 	// zeroed arrays end here.
 
