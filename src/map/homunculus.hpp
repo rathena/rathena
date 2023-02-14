@@ -16,9 +16,9 @@
 #ifdef RENEWAL
 	#define	HOMUN_LEVEL_STATWEIGHT_VALUE 0
 	#define APPLY_HOMUN_LEVEL_STATWEIGHT()( \
-		hom->str_value = hom->agi_value = \
-		hom->vit_value = hom->int_value = \
-		hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
+		hom.str_value = hom.agi_value = \
+		hom.vit_value = hom.int_value = \
+		hom.dex_value = hom.luk_value = hom.level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
 		)
 #else
 	#define APPLY_HOMUN_LEVEL_STATWEIGHT()
@@ -53,6 +53,7 @@ struct s_homun_skill_tree_entry {
 	uint8 max;			///< Max level for this tree
 	uint8 need_level;	///< Homunculus level required
 	uint32 intimacy;	///< Intimacy required (n/100)
+	bool evolution;		///< Require evolution to show on skill tree
 	std::unordered_map<uint16, uint8> need; ///< Skills needed
 };
 
@@ -184,6 +185,9 @@ enum e_homun_grade : uint8 {
 };
 
 class HomunculusDatabase : public TypesafeYamlDatabase<int32, s_homunculus_db> {
+private:
+	bool parseStatusNode(const std::string &nodeName, const std::string &subNodeName, const ryml::NodeRef &node, s_hom_stats &bonus);
+
 public:
 	HomunculusDatabase() : TypesafeYamlDatabase("HOMUNCULUS_DB", 1) {
 
@@ -207,7 +211,7 @@ enum homun_type hom_class2type(int class_);
 void hom_damage(struct homun_data *hd);
 int hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
-void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve);
+void hom_calc_skilltree(homun_data *hd);
 short hom_checkskill(struct homun_data *hd,uint16 skill_id);
 uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
 void hom_gainexp(struct homun_data *hd,t_exp exp);

@@ -25,6 +25,8 @@
 #include "pc.hpp"
 #include "trade.hpp"
 
+using namespace rathena;
+
 static TIMER_FUNC(hom_hungry);
 
 //For holding the view data of npc classes. [Skotlex]
@@ -328,49 +330,19 @@ int hom_delete(struct homun_data *hd, int emote)
 }
 
 /**
-* Calculates homunculus skill tree
-* @param hd
-* @param flag_envolve
-*/
-void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
+ * Calculates homunculus skill tree for specific evolve/class.
+ * @param hd: Homunculus data
+ * @param skill_tree: Homunculus db skill tree
+ */
+void hom_calc_skilltree_sub(homun_data *hd, std::vector<s_homun_skill_tree_entry> skill_tree) {
 	nullpo_retv(hd);
 
-	std::shared_ptr<s_homunculus_db> homun = homunculus_db.find(hd->homunculus.prev_class);
+	bool evolved = false;
 
-	/* load previous homunculus form skills first. */
-	if (hd->homunculus.prev_class != 0 && homun != nullptr) {
-		for (const auto &skit : homun->skill_tree) {
-			uint16 skill_id = skit.id;
-			short idx = hom_skill_get_index(skill_id);
+	if (hd->homunculus.class_ == hd->homunculusDB->evo_class)
+		evolved = true;
 
-			if (skill_id == 0 || idx == -1)
-				continue;
-			if (hd->homunculus.hskill[idx].id)
-				continue; //Skill already known.
-
-			bool fail = false;
-
-			if (!battle_config.skillfree) {
-				if (skit.need_level > hd->homunculus.level)
-					continue;
-				for (const auto &needit : skit.need) {
-					if (needit.first > 0 && hom_checkskill(hd, needit.first) < needit.second) {
-						fail = true;
-						break;
-					}
-				}
-			}
-			if (!fail)
-				hd->homunculus.hskill[idx].id = skill_id;
-		}
-	}
-
-	std::shared_ptr<s_homunculus_db> homun_current = homunculus_db.find(hd->homunculus.class_);
-
-	if (homun_current == nullptr)
-		return;
-
-	for (const auto &skit : homun_current->skill_tree) {
+	for (const auto &skit : skill_tree) {
 		uint16 skill_id = skit.id;
 		short idx = hom_skill_get_index(skill_id);
 
@@ -378,12 +350,15 @@ void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 			continue;
 		if (hd->homunculus.hskill[idx].id)
 			continue; //Skill already known.
+		if (skit.intimacy > 0 && hd->homunculus.intimacy < skit.intimacy * 100) {
+			continue;
+		}
+		if (skit.evolution && !evolved) {
+			continue;
+		}
 
 		bool fail = false;
-		uint32 intimacy = (flag_evolve) ? 10 : hd->homunculus.intimacy;
 
-		if (intimacy < skit.intimacy * 100)
-			continue;
 		if (!battle_config.skillfree) {
 			if (skit.need_level > hd->homunculus.level)
 				continue;
@@ -397,6 +372,29 @@ void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 		if (!fail)
 			hd->homunculus.hskill[idx].id = skill_id;
 	}
+}
+
+/**
+* Calculates homunculus skill tree
+* @param hd: Homunculus data
+*/
+void hom_calc_skilltree(homun_data *hd) {
+	nullpo_retv(hd);
+
+	std::shared_ptr<s_homunculus_db> homun_current = homunculus_db.find(hd->homunculus.class_);
+
+	// If the current class can't be loaded, then for sure there's no prev_class!
+	if (homun_current == nullptr)
+		return;
+
+	std::shared_ptr<s_homunculus_db> homun = homunculus_db.find(hd->homunculus.prev_class);
+
+	/* load previous homunculus form skills first. */
+	if (homun != nullptr) {
+		hom_calc_skilltree_sub(hd, homun->skill_tree);
+	}
+
+	hom_calc_skilltree_sub(hd, homun_current->skill_tree);
 
 	if (hd->master)
 		clif_homskillinfoblock(hd->master);
@@ -440,7 +438,7 @@ int hom_skill_tree_get_max(int skill_id, int b_class){
 			return skit.max;
 	}
 
-	return skill_get_max(skill_id);
+	return 0;
 }
 
  /**
@@ -505,22 +503,23 @@ int hom_levelup(struct homun_data *hd)
 	int m_class;
 
 	if ((m_class = hom_class2mapid(hd->homunculus.class_)) == -1) {
-		ShowError("hom_levelup: Invalid class %d. \n", hd->homunculus.class_);
+		ShowError("hom_levelup: Invalid class %d.\n", hd->homunculus.class_);
 		return 0;
 	}
 
-	std::shared_ptr<s_homunculus_db> homun_db = homunculus_db.find(hd->homunculus.prev_class);
 	struct s_hom_stats *min = nullptr, *max = nullptr;
 
 	/// When homunculus is homunculus S, we check to see if we need to apply previous class stats
 	if(m_class&HOM_S && hd->homunculus.level < battle_config.hom_S_growth_level) {
-		if (!hd->homunculus.prev_class) {
-			/// We also need to be sure that the previous class exists, otherwise give it something to work with
-			hd->homunculus.prev_class = MER_LIF;
+		std::shared_ptr<s_homunculus_db> homun_s_db = homunculus_db.find(hd->homunculus.prev_class);
+
+		if (homun_s_db == nullptr) {
+			ShowError("hom_levelup: Failed to find database entry for %d.\n", hd->homunculus.prev_class);
+			return 0;
 		}
 
-		max = &homun_db->gmax;
-		min = &homun_db->gmin;
+		max = &homun_s_db->gmax;
+		min = &homun_s_db->gmin;
 	}
 
 	if (((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level)
@@ -528,13 +527,14 @@ int hom_levelup(struct homun_data *hd)
 		|| !hd->exp_next || hd->homunculus.exp < hd->exp_next)
 		return 0;
 
-	s_homunculus *hom = &hd->homunculus;
-	hom->level++;
-	if (!(hom->level % 3))
-		hom->skillpts++;	//1 skillpoint each 3 base level
+	s_homunculus &hom = hd->homunculus;
 
-	hom->exp -= hd->exp_next;
-	hd->exp_next = homun_exp_db.get_nextexp(hom->level);
+	hom.level++;
+	if (!(hom.level % 3))
+		hom.skillpts++;	//1 skillpoint each 3 base level
+
+	hom.exp -= hd->exp_next;
+	hd->exp_next = homun_exp_db.get_nextexp(hom.level);
 
 	if (!max) {
 		max  = &hd->homunculusDB->gmax;
@@ -558,14 +558,14 @@ int hom_levelup(struct homun_data *hd)
 	growth_int-=growth_int%10;
 	growth_luk-=growth_luk%10;
 
-	hom->max_hp += growth_max_hp;
-	hom->max_sp += growth_max_sp;
-	hom->str += growth_str;
-	hom->agi += growth_agi;
-	hom->vit += growth_vit;
-	hom->dex += growth_dex;
-	hom->int_+= growth_int;
-	hom->luk += growth_luk;
+	hom.max_hp += growth_max_hp;
+	hom.max_sp += growth_max_sp;
+	hom.str += growth_str;
+	hom.agi += growth_agi;
+	hom.vit += growth_vit;
+	hom.dex += growth_dex;
+	hom.int_+= growth_int;
+	hom.luk += growth_luk;
 
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
@@ -601,7 +601,6 @@ static bool hom_change_class(struct homun_data *hd, short class_) {
 	hd->homunculusDB = homun;
 	hd->homunculus.class_ = class_;
 	status_set_viewdata(&hd->bl, class_);
-	hom_calc_skilltree(hd, 1);
 	return true;
 }
 
@@ -643,6 +642,8 @@ int hom_evolution(struct homun_data *hd)
 	hom->dex += 10*rnd_value(min->dex, max->dex);
 	hom->luk += 10*rnd_value(min->luk, max->luk);
 	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
+
+	hom_calc_skilltree(hd);
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 	if (map_addblock(&hd->bl))
@@ -694,6 +695,8 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 		ShowError("hom_mutate: Can't evolve homunc from %d to %d", hd->homunculus.class_, homun_id);
 		return 0;
 	}
+
+	hom_calc_skilltree(hd);
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 	if(map_addblock(&hd->bl))
@@ -1441,6 +1444,32 @@ const std::string HomunculusDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/homunculus_db.yml";
 }
 
+bool HomunculusDatabase::parseStatusNode(const std::string &nodeName, const std::string &subNodeName, const ryml::NodeRef &node, s_hom_stats &bonus) {
+	uint32 value;
+
+	if (!this->asUInt32(node, nodeName, value))
+		return false;
+
+	if (subNodeName.compare("Hp") == 0)
+		bonus.HP = value;
+	else if (subNodeName.compare("Sp") == 0)
+		bonus.SP = value;
+	else if (subNodeName.compare("Str") == 0)
+		bonus.str = static_cast<uint16>(value);
+	else if (subNodeName.compare("Agi") == 0)
+		bonus.agi = static_cast<uint16>(value);
+	else if (subNodeName.compare("Vit") == 0)
+		bonus.vit = static_cast<uint16>(value);
+	else if (subNodeName.compare("Int") == 0)
+		bonus.int_ = static_cast<uint16>(value);
+	else if (subNodeName.compare("Dex") == 0)
+		bonus.dex = static_cast<uint16>(value);
+	else if (subNodeName.compare("Luk") == 0)
+		bonus.luk = static_cast<uint16>(value);
+
+	return true;
+}
+
 /**
  * Reads and parses an entry from the homunculus_db.
  * @param node: YAML node containing the entry.
@@ -1449,14 +1478,14 @@ const std::string HomunculusDatabase::getDefaultLocation() {
 uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	std::string class_name;
 
-	if (!this->asString(node, "BaseClass", class_name))
+	if (!this->asString(node, "Class", class_name))
 		return 0;
 
 	std::string class_name_constant = "MER_" + class_name;
 	int64 class_tmp;
 
 	if (!script_get_constant(class_name_constant.c_str(), &class_tmp)) {
-		this->invalidWarning(node["BaseClass"], "Invalid homunculus BaseClass \"%s\", skipping.\n", class_name.c_str());
+		this->invalidWarning(node["Class"], "Invalid homunculus Class \"%s\", skipping.\n", class_name.c_str());
 		return 0;
 	}
 
@@ -1470,6 +1499,20 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 		hom = std::make_shared<s_homunculus_db>();
 		hom->base_class = class_id;
+		hom->base = { 1 };
+		hom->gmin = {};
+		hom->gmax = {};
+		hom->emin = {};
+		hom->emax = {};
+	}
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+
+		if (!this->asString(node, "Name", name))
+			return 0;
+
+		safestrncpy(hom->name, name.c_str(), sizeof(hom->name));
 	}
 
 	if (this->nodeExists(node, "EvolutionClass")) {
@@ -1492,15 +1535,6 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			hom->evo_class = class_id;
 	}
 
-	if (this->nodeExists(node, "Name")) {
-		std::string name;
-
-		if (!this->asString(node, "Name", name))
-			return 0;
-
-		safestrncpy(hom->name, name.c_str(), sizeof(hom->name));
-	}
-
 	if (this->nodeExists(node, "Food")) {
 		std::string food;
 
@@ -1512,8 +1546,8 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		if (item != nullptr)
 			hom->foodID = item->nameid;
 		else {
-			this->invalidWarning(node["Food"], "Invalid homunculus Food %s, defaulting to Pet_Food.\n", food.c_str());
-			hom->foodID = ITEMID_PET_FOOD;
+			this->invalidWarning(node["Food"], "Invalid homunculus Food %s, skipping.\n", food.c_str());
+			return 0;
 		}
 	} else {
 		if (!exists)
@@ -1532,281 +1566,236 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			hom->hungryDelay = 60000;
 	}
 
-	if (this->nodeExists(node, "Status")) {
-		const ryml::NodeRef &status = node["Status"];
+	if (this->nodeExists(node, "Race")) {
+		std::string race;
 
-		if (!exists && !this->nodesExist(status, { "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" }))
+		if (!this->asString(node, "Race", race))
 			return 0;
 
-		if (this->nodeExists(status, "Race")) {
-			std::string race;
+		std::string race_constant = "RC_" + race;
+		int64 constant;
 
-			if (!this->asString(status, "Race", race))
-				return 0;
-
-			std::string race_constant = "RC_" + race;
-			int64 constant;
-
-			if (!script_get_constant(race_constant.c_str(), &constant)) {
-				this->invalidWarning(status["Race"], "Invalid homunculus Race %s, defaulting to Demi-Human.\n", race.c_str());
-				constant = RC_DEMIHUMAN;
-			}
-
-			hom->race = static_cast<e_race>(constant);
-		} else {
-			if (!exists)
-				hom->race = RC_DEMIHUMAN;
+		if (!script_get_constant(race_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Race"], "Invalid homunculus Race %s, skipping.\n", race.c_str());
+			return 0;
 		}
 
-		if (this->nodeExists(status, "Element")) {
-			std::string element;
+		hom->race = static_cast<e_race>(constant);
+	} else {
+		if (!exists)
+			hom->race = RC_DEMIHUMAN;
+	}
 
-			if (!this->asString(status, "Element", element))
-				return 0;
+	if (this->nodeExists(node, "Element")) {
+		std::string element;
 
-			std::string element_constant = "ELE_" + element;
-			int64 constant;
+		if (!this->asString(node, "Element", element))
+			return 0;
 
-			if (!script_get_constant(element_constant.c_str(), &constant)) {
-				this->invalidWarning(status["Element"], "Invalid homunculus Element %s, defaulting to Neutral.\n", element.c_str());
-				constant = ELE_NEUTRAL;
-			}
+		std::string element_constant = "ELE_" + element;
+		int64 constant;
 
-			hom->element = static_cast<e_element>(constant);
-		} else {
-			if (!exists)
-				hom->element = ELE_NEUTRAL;
+		if (!script_get_constant(element_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Element"], "Invalid homunculus Element %s, skipping.\n", element.c_str());
+			return 0;
 		}
 
-		if (this->nodeExists(status, "Size")) {
-			const ryml::NodeRef &sizeNode = status["Size"];
-			std::vector<std::string> size_list = { "Base", "Evolution" };
+		hom->element = static_cast<e_element>(constant);
+	} else {
+		if (!exists)
+			hom->element = ELE_NEUTRAL;
+	}
 
-			for (const auto &sizeit : size_list) {
-				if (this->nodeExists(sizeNode, sizeit)) {
-					std::string size;
+	if (this->nodeExists(node, "Size")) {
+		std::string size;
 
-					if (!this->asString(sizeNode, sizeit, size))
-						return 0;
+		if (!this->asString(node, "Size", size))
+			return 0;
 
-					std::string size_constant = "SIZE_" + size;
-					int64 constant;
+		std::string size_constant = "SIZE_" + size;
+		int64 constant;
 
-					if (!script_get_constant(size_constant.c_str(), &constant)) {
-						c4::csubstr size_name = c4::to_csubstr(sizeit);
-
-						this->invalidWarning(sizeNode[size_name], "Invalid homunculus %s Size %s, defaulting to Small.\n", sizeit.c_str(), size.c_str());
-						constant = SZ_SMALL;
-					}
-
-					if (sizeit.compare("Base") == 0) {
-						if (!exists)
-							hom->base_size = SZ_SMALL;
-						else
-							hom->base_size = static_cast<e_size>(constant);
-					} else {
-						if (!exists)
-							hom->evo_size = SZ_SMALL;
-						else
-							hom->evo_size = static_cast<e_size>(constant);
-					}
-				}
-			}
+		if (!script_get_constant(size_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Size"], "Invalid homunculus Size %s, skipping.\n", size.c_str());
+			return 0;
 		}
 
-		if (this->nodeExists(status, "BaseAspd")) {
-			uint16 aspd;
+		hom->base_size = static_cast<e_size>(constant);
+	} else {
+		if (!exists)
+			hom->base_size = SZ_SMALL;
+	}
+	
+	if (this->nodeExists(node, "EvolutionSize")) {
+		std::string size;
 
-			if (!this->asUInt16(status, "BaseAspd", aspd))
-				return 0;
+		if (!this->asString(node, "EvolutionSize", size))
+			return 0;
 
-			if (aspd > 2000) {
-				this->invalidWarning(status["BaseAspd"], "Homunculus BaseAspd %hu exceeds 2000, capping.\n", aspd);
-				aspd = 2000;
-			}
+		std::string size_constant = "SIZE_" + size;
+		int64 constant;
 
-			hom->baseASPD = aspd;
-		} else {
-			if (!exists)
-				hom->baseASPD = 700;
+		if (!script_get_constant(size_constant.c_str(), &constant)) {
+			this->invalidWarning(node["EvolutionSize"], "Invalid homunculus EvolutionSize %s, skipping.\n", size.c_str());
+			return 0;
 		}
 
+		hom->base_size = static_cast<e_size>(constant);
+	} else {
+		if (!exists)
+			hom->base_size = SZ_MEDIUM;
+	}
+
+	if (this->nodeExists(node, "AttackDelay")) {
+		uint16 aspd;
+
+		if (!this->asUInt16(node, "AttackDelay", aspd))
+			return 0;
+
+		if (aspd > 2000) {
+			this->invalidWarning(node["AttackDelay"], "Homunculus AttackDelay %hu exceeds 2000, capping.\n", aspd);
+			aspd = 2000;
+		}
+
+		hom->baseASPD = aspd;
+	} else {
+		if (!exists)
+			hom->baseASPD = 700;
+	}
+
+	if (this->nodeExists(node, "Status")) {
 		std::vector<std::string> stat_list = { "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" };
 
-		for (const auto &statit : stat_list) {
-			if (this->nodeExists(status, statit)) {
-				c4::csubstr stat_name = c4::to_csubstr(statit);
-				const ryml::NodeRef &bonus = status[stat_name];
+		for (const auto &statusNode : node["Status"]) {
+			if (!this->nodeExists(statusNode, "Type"))
+				return 0;
 
-				if (this->nodeExists(bonus, "Base")) {
-					uint32 base;
+			std::string stat_name;
 
-					if (!this->asUInt32(bonus, "Base", base))
-						return 0;
+			if (!this->asString(statusNode, "Type", stat_name))
+				return 0;
 
-					if (statit.compare("Hp") == 0)
-						hom->base.HP = base;
-					else if (statit.compare("Sp") == 0)
-						hom->base.SP = base;
-					else if (statit.compare("Str") == 0)
-						hom->base.str = static_cast<uint16>(base);
-					else if (statit.compare("Agi") == 0)
-						hom->base.agi = static_cast<uint16>(base);
-					else if (statit.compare("Vit") == 0)
-						hom->base.vit = static_cast<uint16>(base);
-					else if (statit.compare("Int") == 0)
-						hom->base.int_ = static_cast<uint16>(base);
-					else if (statit.compare("Dex") == 0)
-						hom->base.dex = static_cast<uint16>(base);
-					else if (statit.compare("Luk") == 0)
-						hom->base.luk = static_cast<uint16>(base);
-				} else {
-					if (!exists) {
-						this->invalidWarning(bonus["Base"], "Base stats must be defined for homunculus, skipping.\n");
-						return 0;
-					}
+			if (!util::vector_exists(stat_list, stat_name)) {
+				this->invalidWarning(statusNode["Type"], "Invalid Status Type %s, skipping.\n", stat_name.c_str());
+				return 0;
+			}
+
+			if (this->nodeExists(statusNode, "Base")) {
+				if (!this->parseStatusNode("Base", stat_name, statusNode, hom->base)) {
+					return 0;
 				}
-
-				if (this->nodeExists(bonus, "GrowthBonus")) {
-					const ryml::NodeRef &growth = bonus["GrowthBonus"];
-
-					if (this->nodeExists(growth, "Min")) {
-						uint32 gbonus;
-
-						if (!this->asUInt32(growth, "Min", gbonus))
-							return 0;
-
-						if (statit.compare("Hp") == 0)
-							hom->gmin.HP = gbonus;
-						else if (statit.compare("Sp") == 0)
-							hom->gmin.SP = gbonus;
-						else if (statit.compare("Str") == 0)
-							hom->gmin.str = static_cast<uint16>(gbonus);
-						else if (statit.compare("Agi") == 0)
-							hom->gmin.agi = static_cast<uint16>(gbonus);
-						else if (statit.compare("Vit") == 0)
-							hom->gmin.vit = static_cast<uint16>(gbonus);
-						else if (statit.compare("Int") == 0)
-							hom->gmin.int_ = static_cast<uint16>(gbonus);
-						else if (statit.compare("Dex") == 0)
-							hom->gmin.dex = static_cast<uint16>(gbonus);
-						else if (statit.compare("Luk") == 0)
-							hom->gmin.luk = static_cast<uint16>(gbonus);
-					}
-
-					if (this->nodeExists(growth, "Max")) {
-						uint32 gbonus;
-
-						if (!this->asUInt32(growth, "Max", gbonus))
-							return 0;
-
-						if (statit.compare("Hp") == 0)
-							hom->gmax.HP = gbonus;
-						else if (statit.compare("Sp") == 0)
-							hom->gmax.SP = gbonus;
-						else if (statit.compare("Str") == 0)
-							hom->gmax.str = static_cast<uint16>(gbonus);
-						else if (statit.compare("Agi") == 0)
-							hom->gmax.agi = static_cast<uint16>(gbonus);
-						else if (statit.compare("Vit") == 0)
-							hom->gmax.vit = static_cast<uint16>(gbonus);
-						else if (statit.compare("Int") == 0)
-							hom->gmax.int_ = static_cast<uint16>(gbonus);
-						else if (statit.compare("Dex") == 0)
-							hom->gmax.dex = static_cast<uint16>(gbonus);
-						else if (statit.compare("Luk") == 0)
-							hom->gmax.luk = static_cast<uint16>(gbonus);
-					}
+			} else {
+				if (!exists) {
+					hom->base = { 1 };
 				}
-				
-				if (this->nodeExists(bonus, "EvolutionBonus")) {
-					const ryml::NodeRef &evolution = bonus["EvolutionBonus"];
+			}
 
-					if (this->nodeExists(evolution, "Min")) {
-						uint32 ebonus;
+			if (this->nodeExists(statusNode, "GrowthMinimum")) {
+				if (!this->parseStatusNode("GrowthMinimum", stat_name, statusNode, hom->gmin)) {
+					return 0;
+				}
+			} else {
+				if (!exists) {
+					hom->gmin = {};
+				}
+			}
 
-						if (!this->asUInt32(evolution, "Min", ebonus))
-							return 0;
+			if (this->nodeExists(statusNode, "GrowthMaximum")) {
+				if (!this->parseStatusNode("GrowthMaximum", stat_name, statusNode, hom->gmax)) {
+					return 0;
+				}
+			} else {
+				if (!exists) {
+					hom->gmax = {};
+				}
+			}
 
-						if (statit.compare("Hp") == 0)
-							hom->emin.HP = ebonus;
-						else if (statit.compare("Sp") == 0)
-							hom->emin.SP = ebonus;
-						else if (statit.compare("Str") == 0)
-							hom->emin.str = static_cast<uint16>(ebonus);
-						else if (statit.compare("Agi") == 0)
-							hom->emin.agi = static_cast<uint16>(ebonus);
-						else if (statit.compare("Vit") == 0)
-							hom->emin.vit = static_cast<uint16>(ebonus);
-						else if (statit.compare("Int") == 0)
-							hom->emin.int_ = static_cast<uint16>(ebonus);
-						else if (statit.compare("Dex") == 0)
-							hom->emin.dex = static_cast<uint16>(ebonus);
-						else if (statit.compare("Luk") == 0)
-							hom->emin.luk = static_cast<uint16>(ebonus);
-					}
+			if (this->nodeExists(statusNode, "EvolutionMinimum")) {
+				if (!this->parseStatusNode("EvolutionMinimum", stat_name, statusNode, hom->emin)) {
+					return 0;
+				}
+			} else {
+				if (!exists) {
+					hom->emin = {};
+				}
+			}
 
-					if (this->nodeExists(evolution, "Max")) {
-						uint32 ebonus;
-
-						if (!this->asUInt32(evolution, "Max", ebonus))
-							return 0;
-
-						if (statit.compare("Hp") == 0)
-							hom->emax.HP = ebonus;
-						else if (statit.compare("Sp") == 0)
-							hom->emax.SP = ebonus;
-						else if (statit.compare("Str") == 0)
-							hom->emax.str = static_cast<uint16>(ebonus);
-						else if (statit.compare("Agi") == 0)
-							hom->emax.agi = static_cast<uint16>(ebonus);
-						else if (statit.compare("Vit") == 0)
-							hom->emax.vit = static_cast<uint16>(ebonus);
-						else if (statit.compare("Int") == 0)
-							hom->emax.int_ = static_cast<uint16>(ebonus);
-						else if (statit.compare("Dex") == 0)
-							hom->emax.dex = static_cast<uint16>(ebonus);
-						else if (statit.compare("Luk") == 0)
-							hom->emax.luk = static_cast<uint16>(ebonus);
-					}
+			if (this->nodeExists(statusNode, "EvolutionMaximum")) {
+				if (!this->parseStatusNode("EvolutionMaximum", stat_name, statusNode, hom->emax)) {
+					return 0;
+				}
+			} else {
+				if (!exists) {
+					hom->emax = {};
 				}
 			}
 		}
 
 		// Cap values
-		if (hom->gmin.HP > hom->gmax.HP)
+		if (hom->gmin.HP > hom->gmax.HP) {
 			hom->gmin.HP = hom->gmax.HP;
-		if (hom->gmin.SP > hom->gmax.SP)
+			this->invalidWarning(node, "GrowthMinimum HP %d is greater than GrowthMaximum HP %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.HP, hom->gmax.HP, class_name.c_str());
+		}
+		if (hom->gmin.SP > hom->gmax.SP) {
 			hom->gmin.SP = hom->gmax.SP;
-		if (hom->gmin.str > hom->gmax.str)
+			this->invalidWarning(node, "GrowthMinimum SP %d is greater than GrowthMaximum SP %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.SP, hom->gmax.SP, class_name.c_str());
+		}
+		if (hom->gmin.str > hom->gmax.str) {
 			hom->gmin.str = hom->gmax.str;
-		if (hom->gmin.agi > hom->gmax.agi)
+			this->invalidWarning(node, "GrowthMinimum STR %d is greater than GrowthMaximum STR %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.str, hom->gmax.str, class_name.c_str());
+		}
+		if (hom->gmin.agi > hom->gmax.agi) {
 			hom->gmin.agi = hom->gmax.agi;
-		if (hom->gmin.vit > hom->gmax.vit)
+			this->invalidWarning(node, "GrowthMinimum AGI %d is greater than GrowthMaximum AGI %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.agi, hom->gmax.agi, class_name.c_str());
+		}
+		if (hom->gmin.vit > hom->gmax.vit) {
 			hom->gmin.vit = hom->gmax.vit;
-		if (hom->gmin.int_ > hom->gmax.int_)
+			this->invalidWarning(node, "GrowthMinimum VIT %d is greater than GrowthMaximum VIT %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.vit, hom->gmax.vit, class_name.c_str());
+		}
+		if (hom->gmin.int_ > hom->gmax.int_) {
 			hom->gmin.int_ = hom->gmax.int_;
-		if (hom->gmin.dex > hom->gmax.dex)
+			this->invalidWarning(node, "GrowthMinimum INT %d is greater than GrowthMaximum INT %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.int_, hom->gmax.int_, class_name.c_str());
+		}
+		if (hom->gmin.dex > hom->gmax.dex) {
 			hom->gmin.dex = hom->gmax.dex;
-		if (hom->gmin.luk > hom->gmax.luk)
+			this->invalidWarning(node, "GrowthMinimum DEX %d is greater than GrowthMaximum DEX %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.dex, hom->gmax.dex, class_name.c_str());
+		}
+		if (hom->gmin.luk > hom->gmax.luk) {
 			hom->gmin.luk = hom->gmax.luk;
-
-		if (hom->emin.HP > hom->emax.HP)
+			this->invalidWarning(node, "GrowthMinimum LUK %d is greater than GrowthMaximum LUK %d for homunculus %s, capping minimum to maximum.\n", hom->gmin.luk, hom->gmax.luk, class_name.c_str());
+		}
+		if (hom->emin.HP > hom->emax.HP) {
 			hom->emin.HP = hom->emax.HP;
-		if (hom->emin.SP > hom->emax.SP)
+			this->invalidWarning(node, "EvolutionMinimum HP %d is greater than EvolutionMaximum HP %d for homunculus %s, capping minimum to maximum.\n", hom->emin.HP, hom->emax.HP, class_name.c_str());
+		}
+		if (hom->emin.SP > hom->emax.SP) {
 			hom->emin.SP = hom->emax.SP;
-		if (hom->emin.str > hom->emax.str)
+			this->invalidWarning(node, "EvolutionMinimum SP %d is greater than EvolutionMaximum SP %d for homunculus %s, capping minimum to maximum.\n", hom->emin.SP, hom->emax.SP, class_name.c_str());
+		}
+		if (hom->emin.str > hom->emax.str) {
 			hom->emin.str = hom->emax.str;
-		if (hom->emin.agi > hom->emax.agi)
+			this->invalidWarning(node, "EvolutionMinimum STR %d is greater than EvolutionMaximum STR %d for homunculus %s, capping minimum to maximum.\n", hom->emin.str, hom->emax.str, class_name.c_str());
+		}
+		if (hom->emin.agi > hom->emax.agi) {
 			hom->emin.agi = hom->emax.agi;
-		if (hom->emin.vit > hom->emax.vit)
+			this->invalidWarning(node, "EvolutionMinimum AGI %d is greater than EvolutionMaximum AGI %d for homunculus %s, capping minimum to maximum.\n", hom->emin.agi, hom->emax.agi, class_name.c_str());
+		}
+		if (hom->emin.vit > hom->emax.vit) {
 			hom->emin.vit = hom->emax.vit;
-		if (hom->emin.int_ > hom->emax.int_)
+			this->invalidWarning(node, "EvolutionMinimum VIT %d is greater than EvolutionMaximum VIT %d for homunculus %s, capping minimum to maximum.\n", hom->emin.vit, hom->emax.vit, class_name.c_str());
+		}
+		if (hom->emin.int_ > hom->emax.int_) {
 			hom->emin.int_ = hom->emax.int_;
-		if (hom->emin.dex > hom->emax.dex)
+			this->invalidWarning(node, "EvolutionMinimum INT %d is greater than EvolutionMaximum INT %d for homunculus %s, capping minimum to maximum.\n", hom->emin.int_, hom->emax.int_, class_name.c_str());
+		}
+		if (hom->emin.dex > hom->emax.dex) {
 			hom->emin.dex = hom->emax.dex;
-		if (hom->emin.luk > hom->emax.luk)
+			this->invalidWarning(node, "EvolutionMinimum DEX %d is greater than EvolutionMaximum DEX %d for homunculus %s, capping minimum to maximum.\n", hom->emin.dex, hom->emax.dex, class_name.c_str());
+		}
+		if (hom->emin.luk > hom->emax.luk) {
 			hom->emin.luk = hom->emax.luk;
+			this->invalidWarning(node, "EvolutionMinimum LUK %d is greater than EvolutionMaximum LUK %d for homunculus %s, capping minimum to maximum.\n", hom->emin.luk, hom->emax.luk, class_name.c_str());
+		}
 	}
 
 	if (this->nodeExists(node, "SkillTree")) {
@@ -1860,6 +1849,13 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 				if (!this->asUInt16(skill, "MaxLevel", level))
 					return 0;
 
+				uint16 db_level = skill_get_max(entry.id);
+
+				if (level > db_level) {
+					this->invalidWarning(skill["MaxLevel"], "Skill %s exceeds maximum defined skill level %d from homunuculus %s, capping.\n", skill_db.find(entry.id)->name, db_level, class_name.c_str());
+					level = db_level;
+				}
+
 				entry.max = static_cast<uint8>(level);
 			}
 
@@ -1902,6 +1898,18 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					entry.intimacy = 0;
 			}
 
+			if (this->nodeExists(skill, "RequireEvolution")) {
+				bool evo;
+
+				if (!this->asBool(skill, "RequireEvolution", evo))
+					return 0;
+
+				entry.evolution = evo;
+			} else {
+				if (!exists)
+					entry.evolution = false;
+			}
+
 			if (this->nodeExists(skill, "Required")) {
 				const ryml::NodeRef &required = skill["Required"];
 
@@ -1913,11 +1921,6 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 						if (!this->asString(prereqskill, "Skill", skill_name))
 							return 0;
-
-						if (skill_name2id(skill_name.c_str()) == 0) {
-							this->invalidWarning(prereqskill["Skill"], "Invalid homunculus skill %s, skipping.\n", skill_name.c_str());
-							return 0;
-						}
 
 						skill_id = skill_name2id(skill_name.c_str());
 
@@ -1974,7 +1977,6 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 }
 
 HomunculusDatabase homunculus_db;
-
 
 void hom_reload(void){
 	homunculus_db.load();
