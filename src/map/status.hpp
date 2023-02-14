@@ -186,7 +186,7 @@ struct s_enchantgrade{
 
 class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{
 public:
-	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 2, 1 ){
+	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 3, 1 ){
 
 	}
 
