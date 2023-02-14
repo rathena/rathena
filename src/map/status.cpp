@@ -656,7 +656,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				grade = std::make_shared<s_enchantgradelevel>();
 				grade->grade = gradeLevel;
 
-				if( !this->nodesExist( gradeNode, { "Refine", "Chance", "Options" } ) ){
+				if( !this->nodesExist( gradeNode, { "Refine", "Chances", "Options" } ) ){
 					return 0;
 				}
 			}
@@ -676,14 +676,18 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				grade->refine = refine;
 			}
 
-			if( this->nodeExists( gradeNode, "Chance" ) ){
-				uint16 chance;
+			if( this->nodeExists( gradeNode, "Chances" ) ){
+				uint16 chance,refineIndex;
 
-				if( !this->asUInt16Rate( gradeNode, "Chance", chance ) ){
-					return 0;
+				for( const ryml::NodeRef& chanceNode : gradeNode["Chances"] ){
+					if( !this->asUInt16( chanceNode, "Refine", refineIndex ) ){
+						return 0;
+					}
+					if( !this->asUInt16( chanceNode, "Chance", chance ) ){
+						return 0;
+					}
+					grade->chance[refineIndex] = chance;
 				}
-
-				grade->chance = chance;
 			}
 
 			if( this->nodeExists( gradeNode, "Bonus" ) ){

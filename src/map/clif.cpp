@@ -23559,7 +23559,7 @@ void clif_enchantgrade_add( map_session_data& sd, uint16 index = UINT16_MAX, std
 	if( index < UINT16_MAX ){
 		p->index = client_index( index );
 		if( sd.inventory.u.items_inventory[index].refine >= gradeLevel->refine ){
-			p->success_chance = gradeLevel->chance / 100;
+			p->success_chance = gradeLevel->chance[sd.inventory.u.items_inventory[index].refine] / 100;
 		}else{
 			p->success_chance = 0;
 		}
@@ -23755,7 +23755,7 @@ void clif_parse_enchantgrade_start( int fd, map_session_data* sd ){
 		return;
 	}
 
-	uint16 totalChance = enchantgradelevel->chance;
+	uint16 totalChance = enchantgradelevel->chance[sd->inventory.u.items_inventory[index].refine];
 	uint16 steps = min( p->blessing_amount, enchantgradelevel->catalyst.maximumSteps );
 	std::unordered_map<uint16, uint16> requiredItems;
 

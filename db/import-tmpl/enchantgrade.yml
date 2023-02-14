@@ -28,7 +28,9 @@
 #       Grades:                         Enchantgrade settings per grade level.
 #         - Grade                       Enchantgrade level.
 #           Refine                      Required refine level.
-#           Chance                      Base chance of success out of 0~10000.
+#           Chances:                    Chance settings per refine level.
+#             - Refine                  Refine level.
+#               Chance                  Base chance of success out of 0~10000.
 #           Bonus                       Enchantgrade bonus. (Default: 0)
 #           AnnounceSuccess             Announce on upgrade success. (Default: true)
 #           AnnounceFail                Announce on upgrade failure. (Default: false)
@@ -51,4 +53,4 @@
 
 Header:
   Type: ENCHANTGRADE_DB
-  Version: 2
+  Version: 3
