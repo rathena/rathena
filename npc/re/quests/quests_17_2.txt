@@ -382,16 +382,10 @@ ba_in01,18,323,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bain01-00	4_F_PINKWOMAN
 
 
 ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
-	if (checkweight(1000103,5) == 0) {	// todo
-		mes "- 소지하고 계신 아이템이 너무 많습니다.";
-		mes "인벤토리를 정리하고 다시 시도해 주시기 바랍니다. -";
+	if (checkweight(1000103,5) == 0) {
+		mes "- You have too many items.";
+		mes "Please clear your inventory and try again. -";
 		close;
-	}
-	if (ep17_2_main < 7) {
-		cutin "ep172_tamarin01",2;
-		mes "[ Tamarin ]";
-		mes "I heard that the Varmundt's mansion was burned down during the uprising of mercenaries... I think it's a lot different from what's written in the books.";
-		close3;
 	}
 	if (ep17_2_main == 7 || ep17_2_main == 8) {
 		if (ep17_2_main == 7) {
@@ -447,9 +441,9 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		cloakonnpcself( "Magi#ep172_bamaison-00" );
 		end;
 	}
-	if (ep17_2_main == 9) {	// todo
-		mes "[타마린]";
-		mes "바르문트의 저택이라면 용병반란 당시에 불타버렸다고 들었는데… 예전에 본 책에 적혀있는 내용이랑 다른 부분이 많은 것 같아요.";
+	if (ep17_2_main < 10) {
+		mes "[ Tamarin ]";
+		mes "I heard that the Varmundt's mansion was burned down during the uprising of mercenaries... I think it's a lot different from what's written in the books.";
 		cutin "ep172_tamarin01.bmp",2;
 		close3;
 	}
@@ -585,9 +579,9 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		navigateto("ba_maison",85,111);
 		end;
 	}
-	if (ep17_2_library < 5) {	// todo
+	if (ep17_2_library < 5) {
 		mes "[ Tamarin ]";
-		mes "바르문트의 저택이라면 용병반란 당시에 불타버렸다고 들었는데… 예전에 본 책에 적혀있는 내용이랑 다른 부분이 많은 것 같아요.";
+		mes "I heard that the Varmundt's mansion was burned down during the uprising of mercenaries... I think it's a lot different from what's written in the books.";
 		cutin "ep172_tamarin01.bmp",2;
 		close3;
 	}
@@ -659,9 +653,9 @@ ba_maison,68,146,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bamaison-00	4_F_PINKW
 
 // Daily quest : Supply the spare parts
 ba_maison,74,150,3	script	Mansion Manager α#172nw01	4_EP17_MASTER_A,{
-	if (checkweight(1000103,15) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,15) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main < 8) {
@@ -1177,9 +1171,9 @@ OnInit:
 }
 
 ba_maison,146,109,5	script	Tasty#172nw01	4_EP17_BASIC_B,{
-	if (checkweight(1000103,5) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,5) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main == 10) {
@@ -1511,7 +1505,7 @@ ba_maison,334,143,3	script	Repeater#172nw02	2_POSTBOX,{
 		mes "The doll told me to go up from this road and turn left to go to the <NAVI>[central garden]<INFO>ba_maison,245,206,0,0,0</INFO></NAVI>.";
 		close;
 	}
-	npctalk "정상 작동중. 신호 강도 높음.", "", bc_self;	// todo
+	npctalk "In normal operation. High signal strength.", "", bc_self;
 	end;
 
 OnInit:
@@ -1539,9 +1533,9 @@ ba_maison,245,206,5	script	Gabriel#172nw01	4_EP17_GUARD_B,5,5,{
 	close;
 
 OnTouch:
-	if (checkweight(1000103,5) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,5) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main < 10) {
@@ -3426,9 +3420,9 @@ ba_maison,64,187,3	duplicate(dummy_cloaked_npc)	#ep172_beta-8	4_EP17_BROKENBETA
 ba_maison,70,256,3	duplicate(dummy_cloaked_npc)	#ep172_beta-9	4_EP17_BROKENBETA
 
 ba_maison,303,141,3	script	Elena Bolkova#ep172_eln	4_F_ELENA,{
-	if (checkweight(1000103,10) == 0) {	// todo
-		mes "소지하고 계시는 아이템의 갯수가 많아 퀘스트를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,10) == 0) {
+		mes "You cannot proceed with the quest because you have too many items in your possession.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main == 27) {
@@ -3827,9 +3821,9 @@ OnInit:
 }
 
 ba_in01,15,147,3	script	Elyumina#ep172_elmn02	4_EP17_ELYUMINA,{
-	if (checkweight(1201,3) == 0) {	// todo
-		mes "소지하고 계시는 아이템의 갯수가 많아 퀘스트를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1201,3) == 0) {
+		mes "You cannot proceed with the quest because you have too many items in your possession.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main == 28) {
@@ -4037,9 +4031,9 @@ OnInit:
 
 
 ba_in01,26,266,3	script	Smart Ellie#ep172_ely01	4_EP17_TABLET,{
-	if (checkweight(1000103,15) == 0) {	// todo
-		mes "소지하고 계시는 아이템의 갯수가 많아 퀘스트를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,15) == 0) {
+		mes "You cannot proceed with the quest because you have too many items in your possession.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main == 32) {
@@ -4714,9 +4708,9 @@ ba_in01,385,37,3	duplicate(dummy_cloaked_npc)	Sweep#172ba01	4_EP17_CLEANER
 
 // Sidequest quest : Exploring bathhouse - Step 2, 5
 ba_bath,165,43,3	script	Shrine#172ba02	4_EP17_BUCKETS,5,5,{
-	if (checkweight(1201,3) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1201,3) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_bath == 0) {
@@ -4934,9 +4928,9 @@ OnInit:
 // Sidequest quest : Exploring bathhouse - Step 3
 // Daily : Boiler's request
 ba_bath,286,68,5	script	Boiler#172ba02	4_EP17_BASIC_B,{
-	if (checkweight(1201,3) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1201,3) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_bath == 2) {
@@ -6258,9 +6252,8 @@ ba_bath,286,298,3	script	Unknown Creature#172ba01	4_EP17_MERMAID,{
 		cloakonnpcself();
 		end;
 	}
-	// todo
-	mes "[인어]";
-	mes "지금은 날 찾아와도 그대에게 해줄 수 있는 것이 없소.";
+	mes "[ Princess ]";
+	mes "Even if you come to me now, there is nothing I can do for you.";
 	close;
 
 OnInit:
@@ -6291,9 +6284,9 @@ ba_bath,280,297,5	duplicate(dummy_cloaked_npc)	Sweep#172ba03	4_EP17_CLEANER
 
 // Daily : Sweepy's request
 ba_bath,288,68,3	script	Sweep#172ba02	4_EP17_CLEANER,{
-	if (checkweight(1000103,2) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,2) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_bath == 2) {
@@ -6508,9 +6501,9 @@ ba_bath,31,276,5	script	Cold Spring#bathifo	4_BOARD3,{
 // Daily quest : Warehouse Clearance
 // Daily quest : Basement Clearance
 ba_2whs01,150,51,5	script	Chirp#172wh01	4_EP17_BASKET,{
-	if (checkweight(1000103,3) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,3) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (BaseLevel < 160) {
@@ -7252,7 +7245,7 @@ ba_2whs01,110,218,0	script	Emergency Key#ep172_0	4_ENERGY_WHITE,{
 		if (isbegin_quest(17345) != 0 || isbegin_quest(17346) != 0 || isbegin_quest(17347) != 0)
 			unittalk getcharid(3), "" + strcharinfo(0) + " : Let's go find the other emergency key.", bc_self;
 		else {
-			unittalk getcharid(3), "" + strcharinfo(0) + " : 비상열쇠를 다 찾았으니 잠긴 문을 열러 가 보자.", bc_self;	// todo
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Now that you've found all the emergency keys, let's go open the locked door.", bc_self;
 			ep17_2_chirp = 5;
 			setquest 17348;
 		}
@@ -7510,7 +7503,7 @@ ba_2whs02,37,312,3	script	Head#ep172_2whs01	4_GHOSTRING,{
 		mes "You said, you should go up and report to another automatic doll, right? Do you think I can do this?";
 		close;
 	}
-	mes "이름을 뭘로 하면 좋을지 아직도 결정을 못했어. 저 친구들은 괜찮아. 나를 건드리지는 않더라구. 이상하게도.";	// todo
+	mes "I still haven't decided what to name it. Those guys are fine didn't touch me Oddly enough.";
 	close;
 
 OnInit:
@@ -7521,9 +7514,9 @@ OnInit:
 }
 
 ba_2whs02,31,50,0	script	Junk#ep172_whs2body	4_ENERGY_BLACK,{
-	if (checkweight(1000101,1) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000101,1) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_chirp == 7) {
@@ -7555,9 +7548,9 @@ OnInit:
 }
 
 ba_2whs02,129,82,0	script	Junk#ep172_whs2arm	4_ENERGY_BLACK,{
-	if (checkweight(1000101,1) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000101,1) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_chirp == 8) {
@@ -7589,9 +7582,9 @@ OnInit:
 }
 
 ba_2whs02,239,124,0	script	Junk#ep172_whs2leg	4_ENERGY_BLACK,{
-	if (checkweight(1000101,1) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000101,1) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_chirp == 9) {
@@ -7626,8 +7619,8 @@ OnInit:
 
 // Daily Quest : Cleaning Robot Omega
 ba_in01,24,322,3	script	Cleaning Robot Ω#ba_pw01_02Q	20640,{
-	if (checkweight(1000103,2) == 0) {	// todo
-		mes "- 소지하고 계신 아이템이 많아 진행할 수 없습니다. -";
+	if (checkweight(1000103,2) == 0) {
+		mes "- You cannot proceed because you have too many items. -";
 		close;
 	}
 	setpcblock PCBLOCK_NPC, true;
@@ -8252,9 +8245,9 @@ ba_in01,213,186,3	duplicate(dummy_cloaked_npc)	#fire4_0	4_TRACE
 // Daily quest : Hunting Bookworm
 // Daily quest : Hunting Roaming Spellbook
 ba_lib,157,19,5	script	Mansion Manager β#ep172_balib	4_EP17_BASIC_B,{
-	if (checkweight(1000103,5) == 0) {	// todo
-		mes "- 소지하고 계신 아이템이 너무 많습니다.";
-		mes "인벤토리를 정리하고 다시 시도해 주시기 바랍니다. -";
+	if (checkweight(1000103,5) == 0) {
+		mes "- You have too many items.";
+		mes "Please clear your inventory and try again. -";
 		close;
 	}
 	// Sidequest quest
@@ -8673,8 +8666,8 @@ OnInit:
 //= Lost Farm In Time
 // ba_maison,311,206,3	script	Luina#greeen	4_EP17_BASIC_B,{
 ba_maison,306,206,5	script	Cotton#greeen	4_EP17_BASIC_B,{
-	if (checkweight(1000103,2) == 0) {	// todo
-		mes "- 소지하고 계신 아이템이 많아 퀘스트를 진행할 수 없습니다. -";
+	if (checkweight(1000103,2) == 0) {
+		mes "- You cannot proceed with the quest because you have too many items. -";
 		close;
 	}
 	if (BaseLevel < 150) {
@@ -8807,9 +8800,9 @@ ba_maison,309,206,5	script	Kitty#greeen	EP17_2_PITAYA_G,{
 // Sidequest quest : Removing Biomagnetic Jamming Chips - Step 1
 // Daily quest : Warehouse Clearance
 ba_maison,79,278,3	script	Europa#eorpa	4_EP17_BASIC_B,{
-	if (checkweight(1000103,1) == 0) {	// todo
-		mes "소지하고 계신 아이템의 수량이 많아 대화를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,1) == 0) {
+		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (BaseLevel < 180) {
@@ -9021,9 +9014,9 @@ OnInit:
 		
 // Daily quest and instance : Hey! Sweety
 ba_in01,28,255,5	script	Manager Beta Almond#ep172_amd01	4_EP17_BASIC_B,{
-	if (checkweight(1000103,4) == 0) {	// todo
-		mes "소지하고 계시는 아이템의 갯수가 많아 퀘스트를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,4) == 0) {
+		mes "You cannot proceed with the quest because you have too many items in your possession.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main < 33) {
@@ -9116,22 +9109,22 @@ ba_in01,28,255,5	script	Manager Beta Almond#ep172_amd01	4_EP17_BASIC_B,{
 	case -1:
 		break;
 	case 0:
-	case 1:	// todo
+	case 1:
 		cutin "ep172_beta.bmp",2;
-		mes "[아몬드]";
-		mes "손님, 나중에도 시간이 되면 해가 진 저택에서 망가진 인형의 코어를 수집해 주세요.";
-		mes "아직도 많은 자동인형들이 망가진 채 방치되어 있네.";
+		mes "[ Almond ]";
+		mes "Guest, when the time comes, please collect the cores of the broken dolls from the mansion after sunset.";
+		mes "There are still many automatons left in ruins.";
 		close3;
 	case 2:
 		cutin "ep172_beta.bmp",2;
-		mes "[아몬드]";
-		mes "이따가 스위티랑 또 대련할 거에요?";
-		mes "그럼 아몬드가 요청하고 싶은 일이 있는데 ….";
+		mes "[ Almond ]";
+		mes "Are you going to play against Sweety again later?";
+		mes "Then, I wants to ask you something...";
 		erasequest 18025;
 		next;
 		cutin "ep172_beta.bmp",2;
-		mes "[아몬드]";
-		mes "스위티 고치랴, 자동인형 복구하랴 아몬드는 바빠요~";
+		mes "[ Almond ]";
+		mes "Sweetie should be fixed and the automaton should be restored. Almond is busy~";
 		close3;
 	}
 	switch( isbegin_quest(18024) ) {
@@ -9141,12 +9134,12 @@ ba_in01,28,255,5	script	Manager Beta Almond#ep172_amd01	4_EP17_BASIC_B,{
 		mes "Repairing Sweety. The automatic doll Almond is busy.";
 		close3;
 	case 1:
-		if (countitem(1000226) < 10) {	// todo
+		if (countitem(1000226) < 10) {
 			cutin "ep172_beta.bmp",2;
-			mes "[아몬드]";
-			mes "망가진 인형의 코어, 10개 이상 회수해 주시면 되는데 ….";
-			mes "좀 모자란 것 같네?";
-			mes "손님, 노력이 부족해?";
+			mes "[ Almond ]";
+			mes "I need you to collect more than 10 broken doll cores...";
+			mes "You seem a bit short?";
+			mes "Guest, is your effort not enough?";
 			close3;
 		}
 		cutin "ep172_beta",2;
@@ -9178,9 +9171,9 @@ OnInit:
 }
 
 ba_in01,32,250,3	script	Sweety#ep172_swty	4_EP17_SWEETY,{
-	if (checkweight(1000103,4) == 0) {	// todo
-		mes "소지하고 계시는 아이템의 갯수가 많아 퀘스트를 진행 할 수 없습니다.";
-		mes "아이템을 정리한 뒤 다시 시도해 주시기 바랍니다.";
+	if (checkweight(1000103,4) == 0) {
+		mes "You cannot proceed with the quest because you have too many items in your possession.";
+		mes "Please clean up your inventory and try again.";
 		close;
 	}
 	if (ep17_2_main < 33) {

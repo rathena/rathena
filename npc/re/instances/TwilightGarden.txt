@@ -74,7 +74,7 @@ OnInstanceInit:
 	//----------------------------
 	disablenpc instance_npcname("Almond#amond02");
 	disablenpc instance_npcname("Sweety#sweety_boss");
-	disablenpc instance_npcname("기절한 스위티#sweety_bo");	// todo
+	disablenpc instance_npcname("Stunned Sweety#sweety_bo");
 
 	//----------------------------
 	// Daily: Hey! Sweety
@@ -482,9 +482,8 @@ OnMobDead:
 	end;
 }
 
-// todo
 1@bamn,243,208,5	script	Repeater#wifi03	CLEAR_NPC,{
-	mes "Repeater 상태가 어떤지는 알아볼 방법이 없다. 통신칩은 제대로 꽂혀 있는 것 같다.";
+	mes "There is no way to find out what the state of the repeater is. The communication chip seems to be properly installed.";
 	close;
 }
 
@@ -757,19 +756,18 @@ OnMobDead:
 	killmonster 'map_bamq$, instance_npcname("twilight_story_mob_5") + "::OnMobDead";
 	if ('twilight_story == 22)
 		'twilight_story = 23;
-	mapannounce 'map_bamq$, "에스트: 여기에서 큰 소리가 들렸는데?", bc_map, 0xFF00;	// todo
+	mapannounce 'map_bamq$, "Est: Did you hear a loud noise from here?", bc_map, 0xFF00;
 	enablenpc instance_npcname("Broken Sweety#sweety04");
 	enablenpc instance_npcname("Est#est05");
 	enablenpc instance_npcname("#tgd_bamq_exit");
 	end;
 }
 
-// todo
 1@bamq,123,39,3	script	Broken Sweety#sweety04	4_EP17_SWEETY,{
 	specialeffect EF_NPC_STOP;
-	npctalk " …. 네 … 들 … 가만 … 안 …둘 … ";
-	mes "마치 기계가 고장난 듯 전류가 튀며 움직이지 않는다.";
-	mes "시선을 피하는 것을 보니 완전히 망가진 건 아닌 듯 하다.";
+	npctalk " ... yes ... s ... go ... no ... two ...";
+	mes "The electricity bounces and doesn't move, as if the machine is broken.";
+	mes "Seeing that he averts his gaze, he doesn't seem completely broken.";
 	close;
 }
 
@@ -880,21 +878,20 @@ OnStart:
 	end;
 OnMobDead:
 	killmonster 'map_bamq$, instance_npcname("twilight_daily") + "::OnMobDead";
-	mapannounce 'map_bamq$, "아몬드: 스위티~ 적당히 해요~", bc_map, 0xFF00;	// todo
+	mapannounce 'map_bamq$, "Almond: Sweety~ Do it in moderation~", bc_map, 0xFF00;
 	enablenpc instance_npcname("Sweety#sweety_boss");
 	'sweety = 2;
 	end;
 }
 
-// todo
-1@bamq,32,43,3	script	기절한 스위티#sweety_bo	4_EP17_SWEETY,{
+1@bamq,32,43,3	script	Stunned Sweety#sweety_bo	4_EP17_SWEETY,{
 	setpcblock PCBLOCK_NPC, true;
 	specialeffect EF_NPC_STOP;
 	sleep2 500;
 	setpcblock PCBLOCK_NPC, false;
-	npctalk " … … ";
-	mes "충격으로 인해 정신을 잃었다.";
-	mes "기절한 것 같다.";
+	npctalk " ... ... ";
+	mes "I passed out from the shock.";
+	mes "Looks like he passed out.";
 	close;
 }
 	

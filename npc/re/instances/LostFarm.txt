@@ -10,8 +10,8 @@
 //============================================================
 
 ba_maison,311,206,3	script	Luina#greeen	4_EP17_BASIC_B,{
-	if (checkweight(1000103,20) == 0) {	// todo
-		mes "- 소지하고 계신 아이템이 많아 퀘스트를 진행할 수 없습니다. -";
+	if (checkweight(1000103,20) == 0) {
+		mes "- You cannot proceed with the quest because you have too many items. -";
 		close;
 	}
 	if (BaseLevel < 150) {

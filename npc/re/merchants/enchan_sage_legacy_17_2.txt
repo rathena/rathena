@@ -10,8 +10,8 @@
 //============================================================
 
 ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
-	if (checkweight(1201,3) == 0) {	// todo
-		mes "^ff0000보유한 물건의 종류나 무게가 너무 많은 것 같습니다. 인벤토리를 정리해주세요.^000000";
+	if (checkweight(1201,3) == 0) {
+		mes "^ff0000It seems that the type or weight of the item you have is too much. Please organize your inventory.^000000";
 		close;
 	}
 	disable_items;
@@ -223,9 +223,9 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 -	marketshop	ep172littlemanager00	-1,1000227:172:999999
 
 ba_in01,87,386,3	script	Child Manager ?ep172_pet	EP17_2_CHILD_ADMIN1,{
-	if (checkweight(1201,3) == 0) {	// todo
-		mes "- 소지하고 계신 아이템이 너무 많습니다.";
-		mes "인벤토리를 정리하고 다시 시도해 주시기 바랍니다. -";
+	if (checkweight(1201,3) == 0) {
+		mes "- You have too many items.";
+		mes "Please clear your inventory and try again. -";
 		close;
 	}
 	mes "[ Child Manager ?]";
@@ -285,10 +285,10 @@ ba_in01,87,373,3	script	Spiera#ep172_soapstone	MD_ASSISTANT,{
 
 //= Equipment Shop
 ba_in01,87,383,3	script	Yeoncheong#equipment_exchange	4_EP17_CLEANER_W,{
-	if (checkweight(1201,3) == 0) {	// todo
+	if (checkweight(1201,3) == 0) {
 		cutin "ep172_omega.bmp",2;
-		mes "[연청]";
-		mes "가방이 가득 찼습니다. 소지 무게와 소지 물품 수량을 확인 뒤 다시 말을 걸어 주세요.";
+		mes "[ Yeoncheong ]";
+		mes "The bag is full. Please check the weight and number of items in your possession before talking again.";
 		close3;
 	}
 	disable_items;
@@ -331,10 +331,10 @@ ba_in01,87,383,3	script	Yeoncheong#equipment_exchange	4_EP17_CLEANER_W,{
 
 //= Device Module Exchange
 ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
-	if (checkweight(1201,3) == 0) {	// todo
+	if (checkweight(1201,3) == 0) {
 		cutin "ep172_omega",2;
-		mes "[예청]";
-		mes "가방이 가득 찼습니다. 소지 무게와 소지 물품 수량을 확인 뒤 다시 말을 걸어 주세요.";
+		mes "[ Yecheon ]";
+		mes "The bag is full. Please check the weight and number of items in your possession before talking again.";
 		close3;
 	}
 	disable_items;
@@ -471,9 +471,9 @@ ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
 }
 
 ba_in01,87,389,2	script	Butterfly Merchant#ba_in01	4_EP17_MASTER_A,{
-	if (ep17_2_main < 8) {	// todo
+	if (ep17_2_main < 8) {
 		mes "[Butterfly Merchant]";
-		mes "죄송합니다. 나비를 구매하시려면, 손님 등록이 필요합니다.";
+		mes "Sorry. Registration is required to purchase butterflies.";
 		close;
 	}
 	mes "[Butterfly Merchant]";

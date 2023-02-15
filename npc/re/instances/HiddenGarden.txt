@@ -1205,19 +1205,19 @@ OnTouch:
 		}
 		end;
 	}
-	if ('hidden_garden == 20) {	// todo
+	if ('hidden_garden == 20) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
 		specialeffect EF_WHITEBODY;
 		specialeffect EF_MOONSTAR;
-		select( "바깥의 자동인형들도 당신이 만들었나요?" );
+		select( "Did you make the automatons outside?" );
 		donpcevent instance_npcname("#sigma") + "::OnTalk03";
 		end;
 	}
-	if ('hidden_garden == 21) {	// todo
+	if ('hidden_garden == 21) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
 		specialeffect EF_WHITEBODY;
 		specialeffect EF_MOONSTAR;
-		select( "평가를 요구해 왔다." );
+		select( "Have requested an evaluation." );
 		donpcevent instance_npcname("#sigma") + "::OnTalk04";
 		end;
 	}
