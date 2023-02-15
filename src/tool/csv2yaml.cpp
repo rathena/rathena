@@ -5000,7 +5000,7 @@ static bool read_homunculus_skilldb(char* split[], int columns, int current) {
 	entry.id = atoi(split[1]);
 	entry.max = atoi(split[2]);
 	entry.need_level = atoi(split[3]);
-	entry.intimacy = atoi(split[14]);
+	entry.intimacy = cap_value(atoi(split[14]), 0, 1000);
 
 	for (int i = 0; i < MAX_HOM_SKILL_REQUIRE; i++) {
 		if (atoi(split[4 + i * 2]) > 0)

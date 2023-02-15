@@ -334,12 +334,10 @@ int hom_delete(struct homun_data *hd, int emote)
  * @param hd: Homunculus data
  * @param skill_tree: Homunculus db skill tree
  */
-void hom_calc_skilltree_sub(homun_data *hd, std::vector<s_homun_skill_tree_entry> skill_tree) {
-	nullpo_retv(hd);
-
+void hom_calc_skilltree_sub(homun_data &hd, std::vector<s_homun_skill_tree_entry> &skill_tree) {
 	bool evolved = false;
 
-	if (hd->homunculus.class_ == hd->homunculusDB->evo_class)
+	if (hd.homunculus.class_ == hd.homunculusDB->evo_class)
 		evolved = true;
 
 	for (const auto &skit : skill_tree) {
@@ -348,29 +346,29 @@ void hom_calc_skilltree_sub(homun_data *hd, std::vector<s_homun_skill_tree_entry
 
 		if (skill_id == 0 || idx == -1)
 			continue;
-		if (hd->homunculus.hskill[idx].id)
+		if (hd.homunculus.hskill[idx].id)
 			continue; //Skill already known.
-		if (skit.intimacy > 0 && hd->homunculus.intimacy < skit.intimacy * 100) {
-			continue;
-		}
-		if (skit.evolution && !evolved) {
-			continue;
-		}
 
 		bool fail = false;
 
 		if (!battle_config.skillfree) {
-			if (skit.need_level > hd->homunculus.level)
+			if (skit.intimacy > 0 && hd.homunculus.intimacy < skit.intimacy) {
+				continue;
+			}
+			if (skit.evolution && !evolved) {
+				continue;
+			}
+			if (skit.need_level > hd.homunculus.level)
 				continue;
 			for (const auto &needit : skit.need) {
-				if (needit.first > 0 && hom_checkskill(hd, needit.first) < needit.second) {
+				if (needit.first > 0 && hom_checkskill(&hd, needit.first) < needit.second) {
 					fail = true;
 					break;
 				}
 			}
 		}
 		if (!fail)
-			hd->homunculus.hskill[idx].id = skill_id;
+			hd.homunculus.hskill[idx].id = skill_id;
 	}
 }
 
@@ -381,20 +379,20 @@ void hom_calc_skilltree_sub(homun_data *hd, std::vector<s_homun_skill_tree_entry
 void hom_calc_skilltree(homun_data *hd) {
 	nullpo_retv(hd);
 
-	std::shared_ptr<s_homunculus_db> homun_current = homunculus_db.find(hd->homunculus.class_);
+	std::shared_ptr<s_homunculus_db> homun_current = homunculus_db.homun_search(hd->homunculus.class_);
 
 	// If the current class can't be loaded, then for sure there's no prev_class!
 	if (homun_current == nullptr)
 		return;
 
-	std::shared_ptr<s_homunculus_db> homun = homunculus_db.find(hd->homunculus.prev_class);
+	std::shared_ptr<s_homunculus_db> homun = homunculus_db.homun_search(hd->homunculus.prev_class);
 
 	/* load previous homunculus form skills first. */
 	if (homun != nullptr) {
-		hom_calc_skilltree_sub(hd, homun->skill_tree);
+		hom_calc_skilltree_sub(*hd, homun->skill_tree);
 	}
 
-	hom_calc_skilltree_sub(hd, homun_current->skill_tree);
+	hom_calc_skilltree_sub(*hd, homun_current->skill_tree);
 
 	if (hd->master)
 		clif_homskillinfoblock(hd->master);
@@ -428,7 +426,7 @@ short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 * @return Skill Level
 */
 int hom_skill_tree_get_max(int skill_id, int b_class){
-	std::shared_ptr<s_homunculus_db> homun = homunculus_db.find(b_class);
+	std::shared_ptr<s_homunculus_db> homun = homunculus_db.homun_search(b_class);
 
 	if (homun == nullptr)
 		return 0;
@@ -447,8 +445,8 @@ int hom_skill_tree_get_max(int skill_id, int b_class){
  * @param skill_id Homunculus skill ID
  * @return Level required or 0 if invalid
  **/
-uint8 hom_skill_get_min_level(int class_, uint16 skill_id) {
-	std::shared_ptr<s_homunculus_db> homun = homunculus_db.find(class_);
+uint16 hom_skill_get_min_level(int class_, uint16 skill_id) {
+	std::shared_ptr<s_homunculus_db> homun = homunculus_db.homun_search(class_);
 
 	if (homun == nullptr)
 		return 0;
@@ -511,7 +509,7 @@ int hom_levelup(struct homun_data *hd)
 
 	/// When homunculus is homunculus S, we check to see if we need to apply previous class stats
 	if(m_class&HOM_S && hd->homunculus.level < battle_config.hom_S_growth_level) {
-		std::shared_ptr<s_homunculus_db> homun_s_db = homunculus_db.find(hd->homunculus.prev_class);
+		std::shared_ptr<s_homunculus_db> homun_s_db = homunculus_db.homun_search(hd->homunculus.prev_class);
 
 		if (homun_s_db == nullptr) {
 			ShowError("hom_levelup: Failed to find database entry for %d.\n", hd->homunculus.prev_class);
@@ -588,12 +586,12 @@ int hom_levelup(struct homun_data *hd)
 
 /**
 * Changes homunculus class
-* @param hd
-* @param class_ old class
-* @reutrn Fals if the class cannot be changed, True if otherwise
+* @param hd: Homunculus data
+* @param class_: New class
+* @reutrn Fails if the class cannot be changed, otherwise true
 */
-static bool hom_change_class(struct homun_data *hd, short class_) {
-	std::shared_ptr<s_homunculus_db> homun = homunculus_db.find(class_);
+static bool hom_change_class(struct homun_data *hd, int32 class_) {
+	std::shared_ptr<s_homunculus_db> homun = homunculus_db.homun_search(class_);
 
 	if (homun == nullptr)
 		return false;
@@ -624,7 +622,7 @@ int hom_evolution(struct homun_data *hd)
 		return 0;
 
 	if (!hom_change_class(hd, hd->homunculusDB->evo_class)) {
-		ShowError("hom_evolution: Can't evolve homunc from %d to %d", hd->homunculus.class_, hd->homunculusDB->evo_class);
+		ShowError("hom_evolution: Can't evolve homunc from %d to %d\n", hd->homunculus.class_, hd->homunculusDB->evo_class);
 		return 0;
 	}
 
@@ -692,7 +690,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	prev_class = hd->homunculus.class_;
 
 	if (!hom_change_class(hd, homun_id)) {
-		ShowError("hom_mutate: Can't evolve homunc from %d to %d", hd->homunculus.class_, homun_id);
+		ShowError("hom_mutate: Can't evolve homunc from %d to %d\n", hd->homunculus.class_, homun_id);
 		return 0;
 	}
 
@@ -1040,7 +1038,7 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 
 	Assert((sd->status.hom_id == 0 || sd->hd == 0) || sd->hd->master == sd);
 
-	std::shared_ptr<s_homunculus_db> homun_db = homunculus_db.find(hom->class_);
+	std::shared_ptr<s_homunculus_db> homun_db = homunculus_db.homun_search(hom->class_);
 
 	if (homun_db == nullptr) {
 		ShowError("hom_alloc: unknown class [%d] for homunculus '%s', requesting deletion.\n", hom->class_, hom->name);
@@ -1222,7 +1220,7 @@ bool hom_create_request(map_session_data *sd, int class_)
 {
 	nullpo_ret(sd);
 
-	std::shared_ptr<s_homunculus_db> homun_db = homunculus_db.find(class_);
+	std::shared_ptr<s_homunculus_db> homun_db = homunculus_db.homun_search(class_);
 
 	if (homun_db == nullptr)
 		return false;
@@ -1543,12 +1541,12 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 		std::shared_ptr<item_data> item = item_db.search_aegisname(food.c_str());
 
-		if (item != nullptr)
-			hom->foodID = item->nameid;
-		else {
+		if (item == nullptr) {
 			this->invalidWarning(node["Food"], "Invalid homunculus Food %s, skipping.\n", food.c_str());
 			return 0;
 		}
+
+		hom->foodID = item->nameid;
 	} else {
 		if (!exists)
 			hom->foodID = ITEMID_PET_FOOD;
@@ -1856,7 +1854,7 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					level = db_level;
 				}
 
-				entry.max = static_cast<uint8>(level);
+				entry.max = level;
 			}
 
 			if (this->nodeExists(skill, "RequiredLevel")) {
@@ -1875,24 +1873,24 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					level = config_max;
 				}
 
-				entry.need_level = static_cast<uint8>(level);
+				entry.need_level = level;
 			} else {
 				if (!exists)
 					entry.need_level = 0;
 			}
 
 			if (this->nodeExists(skill, "RequiredIntimacy")) {
-				uint32 intimacy;
+				uint16 intimacy;
 
-				if (!this->asUInt32(skill, "RequiredIntimacy", intimacy))
+				if (!this->asUInt16(skill, "RequiredIntimacy", intimacy))
 					return 0;
 
-				if (intimacy > 100000) {
-					this->invalidWarning(skill["RequiredIntimacy"], "Homunculus Required Intimacy %u exceeds maximum intimacy 100000, capping.\n", intimacy);
-					intimacy = 100000;
+				if (intimacy > 1000) {
+					this->invalidWarning(skill["RequiredIntimacy"], "Homunculus Required Intimacy %u exceeds maximum intimacy 1000, capping.\n", intimacy);
+					intimacy = 1000;
 				}
 
-				entry.intimacy = intimacy;
+				entry.intimacy = intimacy * 100;
 			} else {
 				if (!exists)
 					entry.intimacy = 0;
@@ -1903,6 +1901,11 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 				if (!this->asBool(skill, "RequireEvolution", evo))
 					return 0;
+
+				if (evo && hom->base_class == hom->evo_class) {
+					this->invalidWarning(skill["RequireEvolution"], "Homunculus %s does not have any evolution making this skill unobtainable, skipping.\n");
+					return 0;
+				}
 
 				entry.evolution = evo;
 			} else {
@@ -1939,7 +1942,7 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 						bool found = false;
 
 						for (auto &skit : hom->skill_tree) {
-							std::unordered_map<uint16, uint8>::iterator it = skit.need.begin();
+							std::unordered_map<uint16, uint16>::iterator it = skit.need.begin();
 
 							while (it != skit.need.end()) {
 								if (it->first == skill_id) { // Skill found, remove it from the skill tree.
@@ -1962,7 +1965,7 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					}
 
 					if (skill_id > 0 && skill_lv > 0)
-						entry.need.emplace(skill_id, static_cast<uint8>(skill_lv));
+						entry.need.emplace(skill_id, skill_lv);
 				}
 			}
 
@@ -1974,6 +1977,30 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		this->put(class_id, hom);
 
 	return 1;
+}
+
+/**
+ * Since evolved homunculus share a database entry, use this search.
+ * !TODO: Clean this up so evolved homunculus have their own entry
+ * @param class_: Homun class to look up
+ * @return Shared pointer of homunculus on success, otherwise nullptr
+ */
+std::shared_ptr<s_homunculus_db> HomunculusDatabase::homun_search(int32 class_) {
+	std::shared_ptr<s_homunculus_db> hom = homunculus_db.find(class_);
+
+	if (hom != nullptr) {
+		return hom;
+	}
+
+	for (const auto &homit : homunculus_db) {
+		hom = homit.second;
+
+		if (hom->evo_class == class_) {
+			return hom;
+		}
+	}
+
+	return nullptr;
 }
 
 HomunculusDatabase homunculus_db;

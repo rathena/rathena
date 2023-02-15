@@ -50,11 +50,11 @@ struct s_hom_stats {
 /// Homunculus skill entry [Celest]
 struct s_homun_skill_tree_entry {
 	uint16 id;			///< Skill ID
-	uint8 max;			///< Max level for this tree
-	uint8 need_level;	///< Homunculus level required
+	uint16 max;			///< Max level for this tree
+	uint16 need_level;	///< Homunculus level required
 	uint32 intimacy;	///< Intimacy required (n/100)
 	bool evolution;		///< Require evolution to show on skill tree
-	std::unordered_map<uint16, uint8> need; ///< Skills needed
+	std::unordered_map<uint16, uint16> need; ///< Skills needed
 };
 
 struct s_homunculus_db {
@@ -69,8 +69,6 @@ struct s_homunculus_db {
 	e_size base_size, evo_size;
 	std::vector<s_homun_skill_tree_entry> skill_tree;
 };
-
-enum e_hom_search_type : uint8  { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 
 enum e_hom_mode : uint8  { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
 
@@ -195,6 +193,9 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const ryml::NodeRef& node);
+
+	// Additional
+	std::shared_ptr<s_homunculus_db> homun_search(int32 class_);
 };
 
 extern HomunculusDatabase homunculus_db;
@@ -213,7 +214,7 @@ int hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
 void hom_calc_skilltree(homun_data *hd);
 short hom_checkskill(struct homun_data *hd,uint16 skill_id);
-uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
+uint16 hom_skill_get_min_level(int class_, uint16 skill_id);
 void hom_gainexp(struct homun_data *hd,t_exp exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
