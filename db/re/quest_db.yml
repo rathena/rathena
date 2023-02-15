@@ -5743,6 +5743,25 @@ Body:
     TimeLimit: 4h
   - Id: 8588
     Title: Tail Collection
+    Drops:
+      - Mob: MD_PITAYA_R
+        Item: PITAYA_TAIL_R
+        Rate: 1500
+      - Mob: MD_PITAYA_B
+        Item: PITAYA_TAIL_B
+        Rate: 1500
+      - Mob: MD_PITAYA_G
+        Item: PITAYA_TAIL_G
+        Rate: 1500
+      - Mob: MD_PITAYA_Y
+        Item: PITAYA_TAIL_Y
+        Rate: 1500
+      - Mob: MD_PITAYA_V
+        Item: PITAYA_TAIL_P
+        Rate: 1500
+      - Mob: MD_PITAYA_BOSS
+        Item: PITAYA_TAIL_BOSS
+        Rate: 1500
   - Id: 8589
     Title: It's Boss Meow!
   - Id: 8590
@@ -11073,6 +11092,13 @@ Body:
     TimeLimit: 4h
   - Id: 18024
     Title: Core collection
+    Drops:
+      - Mob: G_EP17_2_HEART_HUNTER
+        Item: Broken_Dollcore
+        Rate: 5000
+      - Mob: G_BELLARE3
+        Item: Broken_Dollcore
+        Rate: 5000
   - Id: 18025
     Title: Core collection - Waiting
     TimeLimit: 4h

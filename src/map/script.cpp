@@ -20730,6 +20730,7 @@ BUILDIN_FUNC(erasequest)
 		script_reportfunc(st);
 	}
 
+	pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 

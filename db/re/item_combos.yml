@@ -15035,7 +15035,7 @@ Body:
       bonus bCritical,10;
   - Combos:
       - Combo:
-          - Beta_Guards_Card
+          - Beta_Guards_Ng_Card
           - Assistant_H_Card
           - Verporta_Card
     Script: |
@@ -15047,9 +15047,9 @@ Body:
       bonus2 bSkillAtk,"LG_CANNONSPEAR",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Omega_Cleaner_Card
+          - O_Cleaner_Ng_Card
           - KickAndKick_Card
-          - Papila_Ruba_H_Card
+          - Papila_H_Card
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",20;
       bonus2 bSkillAtk,"NC_VULCANARM",20;
@@ -15061,7 +15061,7 @@ Body:
       - Combo:
           - Beta_Cleaner_Card
           - Verporta_Card
-          - MD_Papila_Ruba_H_Card
+          - Papila_Ruba_H_Card
     Script: |
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",20;
       bonus2 bSkillAtk,"RK_DRAGONBREATH",20;
@@ -15167,8 +15167,8 @@ Body:
   - Combos:
       - Combo:
           - Plasma_Y_Card
-          - MD_Papila_Cae_Card
-          - MD_Papila_Cae_H_Card
+          - Papila_Cae_Card
+          - Papila_Cae_H_Card
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
       bonus2 bSkillAtk,"WM_REVERBERATION",20;
@@ -15180,7 +15180,7 @@ Body:
       - Combo:
           - Sanare3_Card
           - Sanare_Card
-          - MD_Papila_Ruba_Card
+          - Papila_Ruba_Card
     Script: |
       bonus2 bSkillAtk,"AB_ADORAMUS",20;
       bonus2 bSkillAtk,"AB_JUDEX",20;
@@ -15192,7 +15192,7 @@ Body:
       - Combo:
           - Plasma_R_Card
           - Mutant_Plaga_Card
-          - MD_Papila_Ruba_Card
+          - Papila_Ruba_Card
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20;
       bonus2 bSkillAtk,"SR_TIGERCANNON",20;
@@ -15204,7 +15204,7 @@ Body:
       - Combo:
           - Plasma_R2_Card
           - P_Archer_Skeleton_Card
-          - MD_Papila_Cae_Card
+          - Papila_Cae_Card
     Script: |
       bonus2 bSkillAtk,"RA_ARROWSTORM",20;
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",20;
@@ -15228,7 +15228,7 @@ Body:
       - Combo:
           - EP17_2_Sword_Fish_Card
           - High_Bellare_Card
-          - MD_Papila_Card
+          - Papila_Card
     Script: |
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20;
       bonus2 bSkillAtk,"RL_R_TRIP",20;

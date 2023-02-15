@@ -82671,7 +82671,7 @@ Body:
       CanMove: true
       Mvp: true
     MvpDrops:
-      - Item: Questioned_Parts
+      - Item: Problematical_Part
         Rate: 5000
       - Item: Old_Violet_Box
         Rate: 5000
@@ -95920,20 +95920,20 @@ Body:
     AegisName: MD_REDPEPPER
     Name: Red Pepper
     Level: 135
-    Hp: 9500000
-    BaseExp: 23400000
-    JobExp: 3931200
+    Hp: 9514800
+    BaseExp: 426099
+    JobExp: 298270
     MvpExp: 11700000
-    Attack: 1783
-    Attack2: 3365
+    Attack: 1215
+    Attack2: 702
     Defense: 345
     MagicDefense: 77
-    Str: 124
-    Agi: 96
-    Vit: 35
-    Int: 167
-    Dex: 266
-    Luk: 76
+    Str: 72
+    Agi: 73
+    Vit: 70
+    Int: 78
+    Dex: 109
+    Luk: 41
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -95941,11 +95941,11 @@ Body:
     Race: Formless
     Element: Fire
     ElementLevel: 3
-    WalkSpeed: 330
-    AttackDelay: 1344
-    AttackMotion: 1592
-    DamageMotion: 432
-    Ai: 17
+    WalkSpeed: 120
+    AttackDelay: 480
+    AttackMotion: 1632
+    DamageMotion: 480
+    Ai: 04
     Class: Boss
     Modes:
       Mvp: true
@@ -95955,20 +95955,16 @@ Body:
       - Item: Old_Blue_Box
         Rate: 3000
     Drops:
-      - Item: Ep172_1h_Hammer
-        Rate: 25
-      - Item: Ep172_1h_Sword
-        Rate: 25
-      - Item: Ep172_1h_Foxtail
-        Rate: 25
-      - Item: Ep172_Bh_Bow3
-        Rate: 25
-      - Item: Ep172_Bh_Sword
-        Rate: 25
-      - Item: Ep172_1h_Grenade
-        Rate: 25
-      - Item: Magical_Igni_Stone
+      - Item: Scell
+        Rate: 5000
+      - Item: Red_Gemstone
         Rate: 3000
+      - Item: Old_Violet_Box
+        Rate: 500
+      - Item: Cardinal_Jewel_
+        Rate: 50
+      - Item: Old_Card_Album
+        Rate: 500
       - Item: Redpepper_Card
         Rate: 1
         StealProtected: true
@@ -95976,20 +95972,20 @@ Body:
     AegisName: MD_REDPEPPER_H
     Name: Senior Red Pepper
     Level: 185
-    Hp: 300000000
-    BaseExp: 23400000
-    JobExp: 3931200
+    Hp: 1008398847
+    BaseExp: 3381619
+    JobExp: 2367133
     MvpExp: 11700000
-    Attack: 3967
-    Attack2: 7414
+    Attack: 3816
+    Attack2: 2060
     Defense: 386
     MagicDefense: 113
-    Str: 182
-    Agi: 132
-    Vit: 58
-    Int: 243
-    Dex: 260
-    Luk: 96
+    Str: 165
+    Agi: 103
+    Vit: 67
+    Int: 167
+    Dex: 146
+    Luk: 57
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -95997,11 +95993,11 @@ Body:
     Race: Formless
     Element: Dark
     ElementLevel: 3
-    WalkSpeed: 300
-    AttackDelay: 973
-    AttackMotion: 1592
-    DamageMotion: 432
-    Ai: 17
+    WalkSpeed: 120
+    AttackDelay: 480
+    AttackMotion: 1632
+    DamageMotion: 480
+    Ai: 04
     Class: Boss
     Modes:
       Mvp: true
@@ -96011,21 +96007,17 @@ Body:
       - Item: Old_Blue_Box
         Rate: 3000
     Drops:
-      - Item: Ep172_1h_Hammer
+      - Item: Scell
+        Rate: 5000
+      - Item: Red_Gemstone
+        Rate: 3000
+      - Item: Old_Violet_Box
+        Rate: 750
+      - Item: Cardinal_Jewel_
         Rate: 50
-      - Item: Ep172_1h_Sword
-        Rate: 50
-      - Item: Ep172_1h_Foxtail
-        Rate: 50
-      - Item: Ep172_Bh_Bow3
-        Rate: 50
-      - Item: Ep172_Bh_Sword
-        Rate: 50
-      - Item: Ep172_1h_Grenade
-        Rate: 50
-      - Item: Magical_Igni_Stone
-        Rate: 6000
-      - Item: Red_Pepper_H_Card
+      - Item: Old_Card_Album
+        Rate: 750
+      - Item: Redpepper_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20622
@@ -96033,89 +96025,87 @@ Body:
     Name: Assistant Bot
     Level: 137
     Hp: 238512
-    BaseExp: 6839158
-    JobExp: 7659857
-    Attack: 1481
-    Attack2: 1856
+    BaseExp: 21683
+    JobExp: 15178
+    Attack: 1661
+    Attack2: 658
     Defense: 365
     MagicDefense: 78
-    Str: 107
-    Agi: 112
-    Vit: 81
-    Int: 83
-    Dex: 144
-    Luk: 67
-    AttackRange: 2
+    Str: 97
+    Agi: 87
+    Vit: 76
+    Int: 72
+    Dex: 113
+    Luk: 77
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 190
-    AttackDelay: 938
-    AttackMotion: 956
-    DamageMotion: 467
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Screw
-        Rate: 1500
+      - Item: Hot_Tee
+        Rate: 10
       - Item: Iron
-        Rate: 1000
+        Rate: 2000
       - Item: Steel
         Rate: 500
       - Item: Sturdy_Iron_Piece
-        Rate: 1000
-      - Item: Hot_Tee
-        Rate: 500
+        Rate: 250
       - Item: Assistant_Card
         Rate: 1
         StealProtected: true
   - Id: 20623
     AegisName: MD_ASSISTANT_H
     Name: Senior Assistant Bot
-    Level: 189
+    Level: 187
     Hp: 2398802
-    BaseExp: 6839158
-    JobExp: 7659857
-    Attack: 2176
-    Attack2: 3232
+    BaseExp: 171343
+    JobExp: 119940
+    Attack: 3763
+    Attack2: 2331
     Defense: 505
     MagicDefense: 117
-    Str: 221
-    Agi: 158
-    Vit: 113
-    Int: 144
-    Dex: 254
-    Luk: 131
-    AttackRange: 2
+    Str: 161
+    Agi: 99
+    Vit: 106
+    Int: 187
+    Dex: 149
+    Luk: 61
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 180
-    AttackDelay: 938
-    AttackMotion: 956
-    DamageMotion: 467
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Screw
-        Rate: 1500
+      - Item: Hot_Tee
+        Rate: 10
       - Item: Iron
-        Rate: 1000
+        Rate: 2000
       - Item: Steel
         Rate: 500
       - Item: Sturdy_Iron_Piece
-        Rate: 1000
-      - Item: Hot_Tee
-        Rate: 500
-      - Item: Assistant_Card
+        Rate: 250
+      - Item: Ep172_1h_Book2
+        Rate: 4
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Ep172_1h_Book
+        Rate: 4
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Assistant_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20624
@@ -96123,19 +96113,19 @@ Body:
     Name: Dry Rafflesia
     Level: 140
     Hp: 248245
-    BaseExp: 8101132
-    JobExp: 1360990
-    Attack: 766
-    Attack2: 1332
+    BaseExp: 22568
+    JobExp: 15797
+    Attack: 2258
+    Attack2: 905
     Defense: 200
     MagicDefense: 82
-    Str: 164
-    Agi: 143
-    Vit: 101
-    Int: 135
-    Dex: 244
-    Luk: 76
-    AttackRange: 3
+    Str: 129
+    Agi: 92
+    Vit: 20
+    Int: 97
+    Dex: 124
+    Luk: 63
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Small
@@ -96151,13 +96141,15 @@ Body:
       CastSensorIdle: true
     Drops:
       - Item: Great_Leaf
-        Rate: 3000
+        Rate: 1000
       - Item: Browny_Root
         Rate: 1500
-      - Item: Singing_Plant
-        Rate: 500
       - Item: Sharp_Leaf
         Rate: 1000
+      - Item: Singing_Plant
+        Rate: 150
+      - Item: Branch_Of_Dead_Tree
+        Rate: 20
       - Item: Dry_Rafflesia_Card
         Rate: 1
         StealProtected: true
@@ -96166,19 +96158,19 @@ Body:
     Name: Senior Dry Rafflesia
     Level: 190
     Hp: 2908909
-    BaseExp: 8101132
-    JobExp: 1360990
-    Attack: 1884
-    Attack2: 2986
+    BaseExp: 207779
+    JobExp: 145445
+    Attack: 4038
+    Attack2: 849
     Defense: 292
     MagicDefense: 103
-    Str: 164
-    Agi: 143
-    Vit: 101
-    Int: 135
-    Dex: 244
-    Luk: 76
-    AttackRange: 3
+    Str: 170
+    Agi: 121
+    Vit: 34
+    Int: 67
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Small
@@ -96193,14 +96185,19 @@ Body:
     Modes:
       CastSensorIdle: true
     Drops:
-      - Item: Singing_Plant
-        Rate: 7500
-      - Item: Sharp_Leaf
-        Rate: 1250
-      - Item: Browny_Root
-        Rate: 2250
       - Item: Great_Leaf
-        Rate: 3000
+        Rate: 1000
+      - Item: Browny_Root
+        Rate: 1500
+      - Item: Sharp_Leaf
+        Rate: 1000
+      - Item: Singing_Plant
+        Rate: 150
+      - Item: Branch_Of_Dead_Tree
+        Rate: 20
+      - Item: Ep172_1h_Wand
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Dry_Rafflesia_H_Card
         Rate: 1
         StealProtected: true
@@ -96208,44 +96205,44 @@ Body:
     AegisName: MD_ALNOLDI_EX
     Name: Special Alnoldi
     Level: 143
-    Hp: 7121315
-    BaseExp: 7975873
-    JobExp: 1339947
-    Attack: 1262
-    Attack2: 1453
+    Hp: 255483
+    BaseExp: 23226
+    JobExp: 16258
+    Attack: 1341
+    Attack2: 725
     Defense: 272
     MagicDefense: 81
-    Str: 84
-    Agi: 126
-    Vit: 48
-    Int: 122
-    Dex: 170
-    Luk: 60
-    AttackRange: 2
+    Str: 75
+    Agi: 93
+    Vit: 43
+    Int: 76
+    Dex: 130
+    Luk: 68
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Medium
+    Size: Small
     Race: Plant
     Element: Poison
     ElementLevel: 2
     WalkSpeed: 300
-    AttackDelay: 768
-    AttackMotion: 768
-    DamageMotion: 576
+    AttackDelay: 500
+    AttackMotion: 576
+    DamageMotion: 504
     Ai: 04
     Modes:
       CastSensorIdle: true
     Drops:
-      - Item: Sharp_Leaf
+      - Item: Great_Leaf
         Rate: 1000
       - Item: Browny_Root
         Rate: 1500
-      - Item: Great_Leaf
-        Rate: 3000
+      - Item: Sharp_Leaf
+        Rate: 1000
       - Item: Leaf_Clothes
-        Rate: 500
+        Rate: 1250
       - Item: Elder_Branch
-        Rate: 50
+        Rate: 70
       - Item: Alnoldi_Ex_Card
         Rate: 1
         StealProtected: true
@@ -96254,19 +96251,19 @@ Body:
     Name: Senior Special Alnoldi
     Level: 193
     Hp: 2954324
-    BaseExp: 7975873
-    JobExp: 1339947
-    Attack: 1633
-    Attack2: 2421
-    Defense: 272
-    MagicDefense: 81
-    Str: 104
-    Agi: 147
-    Vit: 82
-    Int: 162
-    Dex: 214
-    Luk: 93
-    AttackRange: 2
+    BaseExp: 211023
+    JobExp: 147716
+    Attack: 4270
+    Attack2: 1454
+    Defense: 283
+    MagicDefense: 111
+    Str: 177
+    Agi: 176
+    Vit: 30
+    Int: 113
+    Dex: 191
+    Luk: 70
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
@@ -96274,138 +96271,191 @@ Body:
     Element: Poison
     ElementLevel: 2
     WalkSpeed: 300
-    AttackDelay: 768
-    AttackMotion: 768
-    DamageMotion: 576
+    AttackDelay: 500
+    AttackMotion: 576
+    DamageMotion: 504
     Ai: 04
     Modes:
       CastSensorIdle: true
     Drops:
-      - Item: Sharp_Leaf
+      - Item: Great_Leaf
         Rate: 1000
       - Item: Browny_Root
         Rate: 1500
-      - Item: Great_Leaf
-        Rate: 3000
+      - Item: Sharp_Leaf
+        Rate: 1000
       - Item: Leaf_Clothes
-        Rate: 500
+        Rate: 1250
       - Item: Elder_Branch
-        Rate: 150
+        Rate: 140
+      - Item: Ep172_1h_Foxtail
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Alnoldi_Ex_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20628
     AegisName: EP17_2_ALPHA_MASTER
     Name: Manager Alpha
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 180
+    Hp: 1847205
+    BaseExp: 131943
+    JobExp: 92360
+    Attack: 3488
+    Attack2: 1536
+    Defense: 498
+    MagicDefense: 106
+    Str: 155
+    Agi: 109
+    Vit: 106
+    Int: 128
+    Dex: 132
+    Luk: 73
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Small
-    Race: Formless
+    Size: Medium
+    Race: Demihuman
     Element: Neutral
-    ElementLevel: 1
+    ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1000
-    AttackMotion: 1000
-    DamageMotion: 1000
-    Ai: 25
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Screw
+        Rate: 50
+      - Item: Broken_Steel_Piece
+        Rate: 500
+      - Item: Iron
+        Rate: 500
+      - Item: Cookbook08
+        Rate: 20
   - Id: 20629
     AegisName: EP17_2_BETA_BASIC
     Name: Manager Beta
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 165
+    Hp: 662430
+    BaseExp: 55203
+    JobExp: 38642
+    Attack: 2516
+    Attack2: 902
+    Defense: 429
+    MagicDefense: 93
+    Str: 122
+    Agi: 101
+    Vit: 88
+    Int: 82
+    Dex: 112
+    Luk: 61
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Small
-    Race: Formless
+    Size: Medium
+    Race: Demihuman
     Element: Neutral
-    ElementLevel: 1
+    ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1000
-    AttackMotion: 1000
-    DamageMotion: 1000
-    Ai: 25
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Steel
+        Rate: 500
+      - Item: Screw
+        Rate: 50
+      - Item: Broken_Steel_Piece
+        Rate: 500
+      - Item: Iron
+        Rate: 500
   - Id: 20630
     AegisName: EP17_2_BETA_BASIC_NG
     Name: Broken Beta
     Level: 145
     Hp: 261170
-    BaseExp: 626808
-    JobExp: 94021
-    Attack: 1241
-    Attack2: 1892
+    BaseExp: 23743
+    JobExp: 16620
+    Attack: 1885
+    Attack2: 648
     Defense: 349
     MagicDefense: 81
-    Str: 121
-    Agi: 102
-    Vit: 86
-    Int: 76
-    Dex: 143
-    Luk: 65
-    AttackRange: 2
+    Str: 104
+    Agi: 112
+    Vit: 68
+    Int: 67
+    Dex: 107
+    Luk: 48
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 190
-    AttackDelay: 912
-    AttackMotion: 376
-    DamageMotion: 246
-    Ai: 09
+    WalkSpeed: 150
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Screw
+        Rate: 50
+      - Item: Problematical_Part
+        Rate: 10
       - Item: Iron
         Rate: 500
-      - Item: Mystery_Piece
-        Rate: 700
-      - Item: Screw
-        Rate: 1500
+      - Item: Ep172_Bh_knuck
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Ep172_Bh_Bow3
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
   - Id: 20631
     AegisName: MD_BETA_SCISSORE_NG
     Name: Broken Gardener Beta
     Level: 135
     Hp: 234017
-    BaseExp: 5936900
-    JobExp: 997399
-    Attack: 1336
-    Attack2: 1870
-    Defense: 311
-    MagicDefense: 79
-    Str: 116
-    Agi: 70
-    Vit: 73
-    Int: 101
-    Dex: 142
-    Luk: 61
-    AttackRange: 2
+    BaseExp: 21274
+    JobExp: 14892
+    Attack: 1232
+    Attack2: 576
+    Defense: 336
+    MagicDefense: 76
+    Str: 73
+    Agi: 93
+    Vit: 67
+    Int: 64
+    Dex: 73
+    Luk: 90
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
     Element: Fire
     ElementLevel: 2
-    WalkSpeed: 190
-    AttackDelay: 926
-    AttackMotion: 321
-    DamageMotion: 246
-    Ai: 09
+    WalkSpeed: 200
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
+      - Item: Scissores_Sword
+        Rate: 5
+      - Item: Screw
+        Rate: 50
+      - Item: Problematical_Part
+        Rate: 10
       - Item: Iron
         Rate: 500
-      - Item: Mystery_Piece
-        Rate: 700
-      - Item: Screw
-        Rate: 1500
+      - Item: Steel
+        Rate: 150
       - Item: Beta_Scissore_Ng_Card
         Rate: 1
         StealProtected: true
@@ -96415,99 +96465,118 @@ Body:
 #    JapaneseName: Senior Broken Gardener Beta
     Level: 185
     Hp: 2379158
-    BaseExp: 5936900
-    JobExp: 997399
-    Attack: 1763
-    Attack2: 2899
+    BaseExp: 169940
+    JobExp: 118958
+    Attack: 3700
+    Attack2: 1813
     Defense: 620
     MagicDefense: 111
-    Str: 221
-    Agi: 187
-    Vit: 98
-    Int: 144
-    Dex: 278
-    Luk: 67
-    AttackRange: 2
+    Str: 160
+    Agi: 171
+    Vit: 145
+    Int: 147
+    Dex: 152
+    Luk: 100
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
     Element: Fire
     ElementLevel: 2
-    WalkSpeed: 190
-    AttackDelay: 926
-    AttackMotion: 321
-    DamageMotion: 246
-    Ai: 09
+    WalkSpeed: 150
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
+      - Item: Scissores_Sword
+        Rate: 5
+      - Item: Screw
+        Rate: 50
+      - Item: Problematical_Part
+        Rate: 10
       - Item: Iron
         Rate: 500
-      - Item: Mystery_Piece
-        Rate: 700
-      - Item: Screw
-        Rate: 1500
+      - Item: Steel
+        Rate: 150
+      - Item: Ep172_Bh_Katar
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: B_Scissore_Ng_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20633
     AegisName: EP17_2_BETA_CLEANER_A
     Name: Broken Cleaner
-    Level: 135
+    Level: 143
     Hp: 147134
-    Attack: 1261
-    Attack2: 1896
+    BaseExp: 13376
+    JobExp: 9363
+    Attack: 2074
+    Attack2: 829
     Defense: 344
     MagicDefense: 82
-    Str: 121
-    Agi: 76
-    Vit: 86
-    Int: 126
-    Dex: 151
-    Luk: 53
-    AttackRange: 2
+    Str: 116
+    Agi: 98
+    Vit: 67
+    Int: 87
+    Dex: 113
+    Luk: 76
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
-    RaceGroups:
-      EP172BATH: true
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 190
-    AttackDelay: 926
-    AttackMotion: 321
-    DamageMotion: 246
-    Ai: 09
+    WalkSpeed: 150
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
       - Item: Burnt_Parts
-        Rate: 2000
-      - Item: Steel
-        Rate: 300
-      - Item: Broken_AutoDoll_Parts
-        Rate: 3
+        Index: 0
+        Rate: 1000
+      - Item: Burnt_Parts
+        Index: 1
+        Rate: 50
       - Item: Iron
+        Index: 2
         Rate: 500
+      - Item: Steel
+        Index: 3
+        Rate: 150
       - Item: Sturdy_Iron_Piece
-        Rate: 2000
+        Index: 4
+        Rate: 300
+      - Item: Ep172_1h_Sword2
+        Index: 5
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Beta_Cleaner_Card
+        Index: 6
         Rate: 1
         StealProtected: true
   - Id: 20634
     AegisName: EP17_2_BETA_CLEANER_B
     Name: Broken Cleaner
-    Level: 135
+    Level: 144
     Hp: 150304
-    Attack: 1462
-    Attack2: 1976
+    BaseExp: 13386
+    JobExp: 9371
+    Attack: 2124
+    Attack2: 854
     Defense: 288
     MagicDefense: 83
-    Str: 121
-    Agi: 76
-    Vit: 86
-    Int: 126
-    Dex: 151
-    Luk: 53
-    AttackRange: 2
+    Str: 118
+    Agi: 89
+    Vit: 48
+    Int: 89
+    Dex: 109
+    Luk: 74
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
@@ -96516,90 +96585,145 @@ Body:
       EP172BATH: true
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 190
-    AttackDelay: 926
-    AttackMotion: 321
-    DamageMotion: 246
-    Ai: 09
+    WalkSpeed: 150
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
+      - Item: Burnt_Parts
+        Index: 0
+        Rate: 1000
+      - Item: Burnt_Parts
+        Index: 1
+        Rate: 50
       - Item: Iron
+        Index: 2
         Rate: 500
       - Item: Steel
-        Rate: 300
+        Index: 3
+        Rate: 150
       - Item: Sturdy_Iron_Piece
-        Rate: 2000
-      - Item: Burnt_Parts
-        Rate: 2000
+        Index: 4
+        Rate: 300
+      - Item: Ep172_Bh_Huuma
+        Index: 5
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Beta_Cleaner_Card
+        Index: 6
         Rate: 1
         StealProtected: true
   - Id: 20635
     AegisName: EP17_2_BETA_BATHS_A
     Name: Cleaning Robot
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 145
+    Hp: 150690
+    BaseExp: 13699
+    JobExp: 9589
+    Attack: 2193
+    Attack2: 870
+    Defense: 439
+    MagicDefense: 84
+    Str: 121
+    Agi: 108
+    Vit: 98
+    Int: 90
+    Dex: 107
+    Luk: 76
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Small
-    Race: Formless
+    Size: Medium
+    Race: Demihuman
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1000
-    AttackMotion: 1000
-    DamageMotion: 1000
-    Ai: 25
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
+      - Item: Broken_Steel_Piece
+        Rate: 500
+      - Item: Screw
+        Rate: 50
+      - Item: Problematical_Part
+        Rate: 10
       - Item: Iron
-        Rate: 1000
+        Rate: 500
+      - Item: Old_Violet_Box
+        Rate: 3
+      - Item: Ep172_1h_Axe
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Beta_Baths_A_Card
         Rate: 1
         StealProtected: true
   - Id: 20636
     AegisName: EP17_2_BETA_BATHS_B
     Name: Cleaning Robot
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 145
+    Hp: 150304
+    BaseExp: 13664
+    JobExp: 9565
+    Attack: 2121
+    Attack2: 918
+    Defense: 415
+    MagicDefense: 84
+    Str: 117
+    Agi: 104
+    Vit: 90
+    Int: 95
+    Dex: 114
+    Luk: 87
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Small
+    Size: Medium
     Race: Formless
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1000
-    AttackMotion: 1000
-    DamageMotion: 1000
-    Ai: 25
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Iron
-        Rate: 1000
       - Item: Broken_Steel_Piece
         Rate: 500
+      - Item: Screw
+        Rate: 50
+      - Item: Problematical_Part
+        Rate: 10
+      - Item: Iron
+        Rate: 500
+      - Item: Old_Violet_Box
+        Rate: 3
+      - Item: Ep172_1h_Inst
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Beta_Baths_A_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20637
     AegisName: EP17_2_BETA_ITEMKEEPER
     Name: Broken Warehouse Manager
-    Level: 1
+    Level: 185
     Hp: 1900983
-    Attack: 1855
-    Attack2: 2561
-    Defense: 553
+    BaseExp: 135785
+    JobExp: 95049
+    Attack: 3608
+    Attack2: 1702
+    Defense: 563
     MagicDefense: 110
-    Str: 186
-    Agi: 105
-    Vit: 49
-    Int: 167
-    Dex: 236
-    Luk: 43
-    AttackRange: 2
+    Str: 156
+    Agi: 98
+    Vit: 126
+    Int: 138
+    Dex: 143
+    Luk: 91
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
@@ -96608,54 +96732,77 @@ Body:
       EP172ALPHA: true
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 175
-    AttackDelay: 721
-    AttackMotion: 1521
-    DamageMotion: 246
-    Ai: 09
+    WalkSpeed: 200
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Iron
-        Rate: 1000
-      - Item: Broken_Steel_Piece
-        Rate: 500
       - Item: Screw
-        Rate: 1500
+        Rate: 50
+      - Item: Steel
+        Rate: 50
+      - Item: Center_Potion
+        Rate: 10
+      - Item: Awakening_Potion
+        Rate: 10
+      - Item: Ep172_Bh_Staff
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Ep172_Bh_knuck
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Old_Violet_Box
+        Rate: 5
+        StealProtected: true
   - Id: 20638
     AegisName: EP17_2_BETA_GUARDS
     Name: Beta Guards
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 140
+    Hp: 257228
+    BaseExp: 23384
+    JobExp: 16369
+    Attack: 1750
+    Attack2: 709
+    Defense: 530
+    MagicDefense: 80
+    Str: 100
+    Agi: 76
+    Vit: 130
+    Int: 76
+    Dex: 108
+    Luk: 80
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Small
-    Race: Formless
-    Element: Neutral
-    ElementLevel: 1
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1000
-    AttackMotion: 1000
-    DamageMotion: 1000
-    Ai: 25
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 04
+    Drops:
   - Id: 20639
     AegisName: EP17_2_BETA_GUARDS_NG
     Name: Broken Beta Guards
-    Level: 1
+    Level: 186
     Hp: 1909523
-    Attack: 1956
-    Attack2: 2860
+    BaseExp: 136395
+    JobExp: 95476
+    Attack: 3534
+    Attack2: 1662
     Defense: 522
     MagicDefense: 110
-    Str: 207
-    Agi: 142
-    Vit: 32
-    Int: 143
-    Dex: 220
-    Luk: 31
-    AttackRange: 2
+    Str: 152
+    Agi: 76
+    Vit: 112
+    Int: 134
+    Dex: 114
+    Luk: 98
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
@@ -96664,32 +96811,45 @@ Body:
       EP172ALPHA: true
     Element: Wind
     ElementLevel: 2
-    WalkSpeed: 190
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Iron
-        Rate: 1500
       - Item: Broken_Steel_Piece
         Rate: 500
-      - Item: Beta_Guards_Card
+      - Item: Screw
+        Rate: 50
+      - Item: Problematical_Part
+        Rate: 10
+      - Item: Iron
+        Rate: 500
+      - Item: Old_Violet_Box
+        Rate: 5
+      - Item: Ep172_1h_Axe
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Beta_Guards_Ng_Card
         Rate: 1
         StealProtected: true
   - Id: 20640
     AegisName: EP17_2_OMEGA_CLEANER
-    Name: Omega Cleaner
+    Name: Cleaning Robot Ω
     Level: 130
-    Hp: 365934
-    BaseExp: 439121
-    JobExp: 65868
-    Attack: 572
-    Attack2: 1573
+    Hp: 182967
+    BaseExp: 16633
+    JobExp: 11643
+    Attack: 1138
+    Attack2: 563
     Defense: 424
     MagicDefense: 73
-    Str: 120
-    Agi: 98
-    Vit: 76
-    Int: 104
-    Dex: 143
-    Luk: 32
+    Str: 70
+    Agi: 68
+    Vit: 98
+    Int: 65
+    Dex: 97
+    Luk: 61
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -96697,28 +96857,40 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 180
-    AttackDelay: 761
-    AttackMotion: 421
-    DamageMotion: 210
-    Ai: 09
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Burnt_Parts
+        Rate: 50
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Steel
+        Rate: 100
+      - Item: Iron
+        Rate: 500
+      - Item: Ep172_1h_Whip
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
   - Id: 20641
     AegisName: EP17_2_OMEGA_CLEANER_NG
-    Name: Broken Omega Cleaner
+    Name: Broken Cleaning Robot Ω
     Level: 175
     Hp: 1200685
-    BaseExp: 439121
-    JobExp: 65868
-    Attack: 1240
-    Attack2: 2731
+    BaseExp: 100057
+    JobExp: 70040
+    Attack: 3063
+    Attack2: 1412
     Defense: 475
     MagicDefense: 103
-    Str: 203
-    Agi: 132
-    Vit: 87
-    Int: 75
-    Dex: 241
-    Luk: 47
+    Str: 140
+    Agi: 90
+    Vit: 100
+    Int: 121
+    Dex: 130
+    Luk: 64
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -96729,15 +96901,27 @@ Body:
       EP172ALPHA: true
     Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 180
-    AttackDelay: 761
-    AttackMotion: 421
-    DamageMotion: 210
-    Ai: 09
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 04
     Drops:
+      - Item: Burnt_Parts
+        Rate: 50
+      - Item: Mystery_Piece
+        Rate: 150
       - Item: Steel
+        Rate: 100
+      - Item: Iron
         Rate: 500
-      - Item: Omega_Cleaner_Card
+      - Item: Ep172_Bh_Bow
+        Rate: 4
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Ep172_Bh_Bow2
+        Rate: 4
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: O_Cleaner_Ng_Card
         Rate: 1
         StealProtected: true
   - Id: 20642
@@ -96745,17 +96929,19 @@ Body:
     Name: Sweety
     Level: 139
     Hp: 5011304
-    BaseExp: 31200000
-    JobExp: 5241600
+    BaseExp: 455573
+    JobExp: 318901
     MvpExp: 15600000
-    Attack: 1255
-    Attack2: 2478
-    Str: 141
-    Agi: 121
-    Vit: 84
-    Int: 146
-    Dex: 246
-    Luk: 63
+    Attack: 2346
+    Attack2: 1112
+    Defense: 189
+    MagicDefense: 85
+    Str: 135
+    Agi: 120
+    Vit: 150
+    Int: 120
+    Dex: 170
+    Luk: 80
     AttackRange: 3
     SkillRange: 10
     ChaseRange: 12
@@ -96763,39 +96949,43 @@ Body:
     Race: Demihuman
     Element: Neutral
     ElementLevel: 3
-    WalkSpeed: 200
-    AttackDelay: 751
-    AttackMotion: 385
-    DamageMotion: 226
-    Ai: 09
+    WalkSpeed: 150
+    AttackDelay: 648
+    AttackMotion: 1296
+    DamageMotion: 480
+    Ai: 21
     Class: Boss
     Modes:
       Mvp: true
     Drops:
-      - Item: Explosive_Powder
-        Rate: 3000
       - Item: Sparkling_Dust
-        Rate: 500
-      - Item: Blue_Potion
+        Rate: 3000
+      - Item: Explosive_Powder
         Rate: 5000
+      - Item: Six_Shooter
+        Rate: 20
+      - Item: Blue_Potion
+        Rate: 2000
       - Item: Sweety_Card
         Rate: 1
         StealProtected: true
   - Id: 20643
     AegisName: EP17_2_PHEN
-    Name: Boiling Water Phen
+    Name: Boiled Water Phen
     Level: 139
     Hp: 133096
-    Attack: 943
-    Attack2: 1376
-    Defense: 240
-    MagicDefense: 100
-    Str: 105
-    Agi: 95
-    Vit: 84
-    Int: 72
-    Dex: 145
-    Luk: 38
+    BaseExp: 12100
+    JobExp: 8470
+    Attack: 1894
+    Attack2: 797
+    Defense: 367
+    MagicDefense: 80
+    Str: 109
+    Agi: 112
+    Vit: 76
+    Int: 86
+    Dex: 104
+    Luk: 64
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -96806,39 +96996,44 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 1062
-    AttackMotion: 344
-    DamageMotion: 356
-    Ai: 09
+    AttackDelay: 1152
+    AttackMotion: 864
+    DamageMotion: 1152
+    Ai: 04
     Drops:
-      - Item: Fish_With_Blue_Back
-        Rate: 300
       - Item: Fish_Tail
-        Rate: 1800
+        Rate: 2500
+      - Item: Fish_With_Blue_Back
+        Rate: 50
       - Item: Sharp_Scale
         Rate: 1500
       - Item: Fin
-        Rate: 3000
+        Rate: 950
       - Item: Skyblue_Jewel
-        Rate: 300
+        Rate: 3
+      - Item: Ep172_Bh_Bow2
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: EP17_2_Phen_Card
         Rate: 1
         StealProtected: true
   - Id: 20644
     AegisName: EP17_2_MARC
-    Name: Boiling Water Marc
+    Name: Boiled Water Marc
     Level: 137
     Hp: 132060
-    Attack: 996
-    Attack2: 1466
-    Defense: 408
-    MagicDefense: 71
-    Str: 128
-    Agi: 96
-    Vit: 46
-    Int: 145
-    Dex: 148
-    Luk: 49
+    BaseExp: 12005
+    JobExp: 8404
+    Attack: 1730
+    Attack2: 886
+    Defense: 407
+    MagicDefense: 81
+    Str: 101
+    Agi: 104
+    Vit: 90
+    Int: 97
+    Dex: 112
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -96849,37 +97044,44 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 831
-    AttackMotion: 72
+    AttackDelay: 1200
+    AttackMotion: 1200
     DamageMotion: 480
-    Ai: 09
+    Ai: 04
     Drops:
-      - Item: Fin
-        Rate: 1000
-      - Item: Gill
-        Rate: 9000
       - Item: Sharp_Scale
-        Rate: 2000
+        Rate: 1500
+      - Item: Skyblue_Jewel
+        Rate: 3
+      - Item: Gill
+        Rate: 2500
+      - Item: Fin
+        Rate: 950
       - Item: Meat
-        Rate: 5000
+        Rate: 550
+      - Item: Ep172_Bh_Bow
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: EP17_2_Marc_Card
         Rate: 1
         StealProtected: true
   - Id: 20645
     AegisName: EP17_2_SWORD_FISH
-    Name: Boiling Water Swordfish
+    Name: Boiled Water Swordfish
     Level: 138
     Hp: 133151
-    Attack: 749
-    Attack2: 1421
-    Defense: 255
-    MagicDefense: 27
-    Str: 135
-    Agi: 156
-    Vit: 85
-    Int: 105
-    Dex: 182
-    Luk: 74
+    BaseExp: 12105
+    JobExp: 8473
+    Attack: 1794
+    Attack2: 856
+    Defense: 414
+    MagicDefense: 81
+    Str: 104
+    Agi: 109
+    Vit: 92
+    Int: 93
+    Dex: 101
+    Luk: 70
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -96890,35 +97092,44 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 1238
-    AttackMotion: 760
-    DamageMotion: 384
+    AttackDelay: 624
+    AttackMotion: 624
+    DamageMotion: 144
     Ai: 04
     Drops:
       - Item: Fish_Tail
-        Rate: 3000
+        Rate: 2500
       - Item: Fin
-        Rate: 2000
+        Rate: 950
+      - Item: Skyblue_Jewel
+        Rate: 3
       - Item: Gill
-        Rate: 5000
+        Rate: 2500
+      - Item: Snowy_Horn
+        Rate: 1
+      - Item: Ep172_1h_Hammer
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: EP17_2_Sword_Fish_Card
         Rate: 1
         StealProtected: true
   - Id: 20646
     AegisName: EP17_2_PIRANHA
-    Name: Boiling Water Piranha
+    Name: Boiled Water Piranha
     Level: 138
     Hp: 133024
-    Attack: 851
-    Attack2: 1441
-    Defense: 332
-    MagicDefense: 76
-    Str: 95
-    Agi: 126
-    Vit: 77
-    Int: 98
-    Dex: 142
-    Luk: 28
+    BaseExp: 12093
+    JobExp: 8465
+    Attack: 1811
+    Attack2: 800
+    Defense: 408
+    MagicDefense: 80
+    Str: 105
+    Agi: 104
+    Vit: 90
+    Int: 87
+    Dex: 106
+    Luk: 73
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -96929,19 +97140,22 @@ Body:
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
-    AttackDelay: 768
+    AttackDelay: 960
     AttackMotion: 480
-    DamageMotion: 864
+    DamageMotion: 540
     Ai: 04
     Drops:
-      - Item: Tooth_Of_Ancient_Fish
-        Rate: 500
+      - Item: Fish_Tail
+        Rate: 2500
       - Item: Lip_Of_Ancient_Fish
-        Rate: 500
-      - Item: Sharp_Scale
-        Rate: 9000
+        Rate: 250
       - Item: Fin
-        Rate: 2000
+        Rate: 950
+      - Item: Tooth_Of_Ancient_Fish
+        Rate: 250
+      - Item: Ep172_1h_Grenade
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: EP17_2_Piranha_Card
         Rate: 1
         StealProtected: true
@@ -96949,30 +97163,31 @@ Body:
     AegisName: EP17_2_BATH_MERMAID
     Name: Elder of Chung-Geum
     Level: 141
-    Hp: 1108897
-    Attack: 1981
-    Attack2: 2676
+    Hp: 1823441
+    BaseExp: 121563
+    JobExp: 85094
+    Attack: 2062
+    Attack2: 912
     Defense: 393
     MagicDefense: 83
-    Str: 123
-    Agi: 67
-    Vit: 94
-    Int: 132
-    Dex: 186
-    Luk: 23
-    AttackRange: 2
+    Str: 117
+    Agi: 108
+    Vit: 84
+    Int: 97
+    Dex: 110
+    Luk: 68
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Fish
     Element: Water
     ElementLevel: 2
-    WalkSpeed: 180
-    AttackDelay: 904
-    AttackMotion: 572
-    DamageMotion: 288
-    Ai: 09
-    Class: Boss
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 04
     Modes:
       Mvp: true
     MvpDrops:
@@ -96983,33 +97198,33 @@ Body:
     Drops:
       - Item: Heart_Of_Mermaid
         Rate: 5000
-      - Item: Sharp_Scale
-        Rate: 3000
-      - Item: Delicious_Fish
-        Rate: 3000
       - Item: Fin
-        Rate: 7000
+        Rate: 5000
+      - Item: Sharp_Scale
+        Rate: 1200
+      - Item: Delicious_Fish
+        Rate: 2500
       - Item: Bath_Mermaid_Card
         Rate: 1
         StealProtected: true
   - Id: 20648
     AegisName: EP17_2_PITAYA_BOSS
-    Name: Boss Pitaya
+    Name: Boss Meow
     Level: 168
-    Hp: 19037292
-    BaseExp: 40656489
-    JobExp: 40459542
+    Hp: 19298694
+    BaseExp: 1608224
+    JobExp: 1125757
     MvpExp: 20328244
-    Attack: 1945
-    Attack2: 3856
+    Attack: 3024
+    Attack2: 1714
     Defense: 462
     MagicDefense: 103
-    Str: 244
-    Agi: 161
-    Vit: 45
-    Int: 81
-    Dex: 267
-    Luk: 93
+    Str: 144
+    Agi: 86
+    Vit: 98
+    Int: 153
+    Dex: 153
+    Luk: 98
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97019,23 +97234,30 @@ Body:
       EP172BETA: true
     Element: Fire
     ElementLevel: 3
-    WalkSpeed: 220
-    AttackDelay: 1021
-    AttackMotion: 327
-    DamageMotion: 299
-    Ai: 09
-    Class: Boss
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
     Modes:
       Mvp: true
-    Drops:
-      - Item: Jubilee
-        Rate: 5000
-      - Item: Reptile_Tongue
-        Rate: 3000
+    MvpDrops:
       - Item: Fruit_Basket
-        Rate: 9000
-      - Item: Old_Card_Album
         Rate: 5000
+      - Item: Yggdrasilberry
+        Rate: 1000
+    Drops:
+      - Item: Old_Violet_Box
+        Rate: 2500
+      - Item: Jubilee
+        Rate: 3000
+      - Item: Reptile_Tongue
+        Rate: 2500
+      - Item: Fruit_Basket
+        Rate: 2500
+      - Item: Old_Card_Album
+        Rate: 1500
       - Item: Pitaya_Boss_Card
         Rate: 1
         StealProtected: true
@@ -97044,16 +97266,18 @@ Body:
     Name: Red Pitaya
     Level: 162
     Hp: 648023
-    Attack: 1567
-    Attack2: 1974
+    BaseExp: 54002
+    JobExp: 37801
+    Attack: 2673
+    Attack2: 972
     Defense: 351
     MagicDefense: 92
-    Str: 124
-    Agi: 76
-    Vit: 83
-    Int: 125
-    Dex: 157
-    Luk: 36
+    Str: 132
+    Agi: 122
+    Vit: 63
+    Int: 90
+    Dex: 132
+    Luk: 90
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97063,22 +97287,23 @@ Body:
       EP172BETA: true
     Element: Fire
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 50
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
       - Item: Strawberry
-        Rate: 500
+        Rate: 150
+      - Item: Ep172_Bh_Spear
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_R_Card
         Rate: 1
         StealProtected: true
@@ -97086,17 +97311,19 @@ Body:
     AegisName: EP17_2_PITAYA_Y
     Name: Yellow Pitaya
     Level: 164
-    Hp: 603341
-    Attack: 1617
-    Attack2: 1921
+    Hp: 658607
+    BaseExp: 54884
+    JobExp: 38419
+    Attack: 2624
+    Attack2: 1006
     Defense: 434
     MagicDefense: 94
-    Str: 127
-    Agi: 86
-    Vit: 98
-    Int: 124
-    Dex: 163
-    Luk: 37
+    Str: 128
+    Agi: 164
+    Vit: 90
+    Int: 92
+    Dex: 154
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97106,22 +97333,23 @@ Body:
       EP172BETA: true
     Element: Wind
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 50
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
       - Item: Banana
-        Rate: 500
+        Rate: 150
+      - Item: Ep172_1h_Gatling
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_Y_Card
         Rate: 1
         StealProtected: true
@@ -97129,17 +97357,19 @@ Body:
     AegisName: EP17_2_PITAYA_B
     Name: Blue Pitaya
     Level: 165
-    Hp: 603341
-    Attack: 1534
-    Attack2: 1954
+    Hp: 662911
+    BaseExp: 47351
+    JobExp: 33146
+    Attack: 2454
+    Attack2: 1111
     Defense: 444
     MagicDefense: 95
-    Str: 113
-    Agi: 95
-    Vit: 63
-    Int: 102
-    Dex: 146
-    Luk: 54
+    Str: 119
+    Agi: 162
+    Vit: 93
+    Int: 101
+    Dex: 143
+    Luk: 77
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97149,22 +97379,23 @@ Body:
       EP172BETA: true
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 50
       - Item: Jubilee
-        Rate: 500
+        Rate: 100
       - Item: Reptile_Tongue
-        Rate: 1500
+        Rate: 1250
       - Item: Prickly_Fruit
-        Rate: 500
+        Rate: 75
+      - Item: Ep172_1h_Spear
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Pitaya_B_Card
         Rate: 1
         StealProtected: true
@@ -97172,17 +97403,19 @@ Body:
     AegisName: EP17_2_PITAYA_V
     Name: Violet Pitaya
     Level: 165
-    Hp: 603341
-    Attack: 1543
-    Attack2: 1986
+    Hp: 665510
+    BaseExp: 47536
+    JobExp: 33276
+    Attack: 2516
+    Attack2: 858
     Defense: 525
     MagicDefense: 92
-    Str: 128
-    Agi: 95
-    Vit: 36
-    Int: 146
-    Dex: 181
-    Luk: 34
+    Str: 122
+    Agi: 98
+    Vit: 120
+    Int: 78
+    Dex: 162
+    Luk: 87
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97192,22 +97425,23 @@ Body:
       EP172BETA: true
     Element: Poison
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 50
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
       - Item: Grape
-        Rate: 500
+        Rate: 150
+      - Item: Ep172_1h_Axe
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_V_Card
         Rate: 1
         StealProtected: true
@@ -97215,17 +97449,19 @@ Body:
     AegisName: EP17_2_PITAYA_G
     Name: Green Pitaya
     Level: 166
-    Hp: 603341
-    Attack: 1438
-    Attack2: 1988
-    Defense: 269
-    MagicDefense: 27
-    Str: 141
-    Agi: 68
-    Vit: 83
-    Int: 124
-    Dex: 156
-    Luk: 46
+    Hp: 668381
+    BaseExp: 44559
+    JobExp: 31191
+    Attack: 2573
+    Attack2: 741
+    Defense: 490
+    MagicDefense: 91
+    Str: 124
+    Agi: 132
+    Vit: 108
+    Int: 67
+    Dex: 153
+    Luk: 89
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97235,40 +97471,41 @@ Body:
       EP172BETA: true
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Reptile_Tongue
-        Rate: 1500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 50
       - Item: Jubilee
-        Rate: 500
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
       - Item: Melon
-        Rate: 500
+        Rate: 75
+      - Item: Ep172_1h_Dagger2
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_G_Card
         Rate: 1
         StealProtected: true
   - Id: 20654
     AegisName: G_PITAYA_R
     Name: Red Pitaya
-    Level: 162
-    Hp: 648023
-    Attack: 1567
-    Attack2: 1974
-    Defense: 351
+    Level: 132
+    Hp: 158478
+    Attack: 1205
+    Attack2: 528
+    Defense: 267
     MagicDefense: 92
-    Str: 124
-    Agi: 76
-    Vit: 83
-    Int: 125
-    Dex: 157
-    Luk: 36
+    Str: 73
+    Agi: 85
+    Vit: 45
+    Int: 60
+    Dex: 93
+    Luk: 64
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97276,28 +97513,26 @@ Body:
     Race: Plant
     Element: Fire
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
   - Id: 20655
     AegisName: G_PITAYA_Y
     Name: Yellow Pitaya
-    Level: 164
-    Hp: 603341
-    Attack: 1617
-    Attack2: 1921
-    Defense: 434
+    Level: 134
+    Hp: 162599
+    Attack: 1206
+    Attack2: 554
+    Defense: 335
     MagicDefense: 94
-    Str: 127
-    Agi: 86
-    Vit: 98
-    Int: 124
-    Dex: 163
-    Luk: 37
+    Str: 72
+    Agi: 68
+    Vit: 67
+    Int: 62
+    Dex: 110
+    Luk: 76
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97305,28 +97540,26 @@ Body:
     Race: Plant
     Element: Wind
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
   - Id: 20656
     AegisName: G_PITAYA_B
     Name: Blue Pitaya
-    Level: 165
-    Hp: 603341
-    Attack: 1534
-    Attack2: 1954
-    Defense: 444
+    Level: 135
+    Hp: 163655
+    Attack: 1181
+    Attack2: 648
+    Defense: 330
     MagicDefense: 95
-    Str: 113
-    Agi: 95
-    Vit: 63
-    Int: 102
-    Dex: 146
-    Luk: 54
+    Str: 70
+    Agi: 87
+    Vit: 65
+    Int: 72
+    Dex: 98
+    Luk: 43
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97334,28 +97567,26 @@ Body:
     Race: Plant
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 720
+    DamageMotion: 432
+    Ai: 04
   - Id: 20657
     AegisName: G_PITAYA_V
     Name: Violet Pitaya
-    Level: 165
-    Hp: 603341
-    Attack: 1543
-    Attack2: 1986
-    Defense: 525
+    Level: 135
+    Hp: 165308
+    Attack: 1688
+    Attack2: 486
+    Defense: 393
     MagicDefense: 92
-    Str: 128
-    Agi: 95
-    Vit: 36
-    Int: 146
-    Dex: 181
-    Luk: 34
+    Str: 100
+    Agi: 86
+    Vit: 86
+    Int: 54
+    Dex: 121
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97363,28 +97594,26 @@ Body:
     Race: Plant
     Element: Poison
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
   - Id: 20658
     AegisName: G_PITAYA_G
     Name: Green Pitaya
-    Level: 166
-    Hp: 603341
-    Attack: 1438
-    Attack2: 1988
-    Defense: 269
-    MagicDefense: 27
-    Str: 141
-    Agi: 68
-    Vit: 83
-    Int: 124
-    Dex: 156
-    Luk: 46
+    Level: 136
+    Hp: 165105
+    Attack: 1666
+    Attack2: 807
+    Defense: 340
+    MagicDefense: 91
+    Str: 98
+    Agi: 108
+    Vit: 68
+    Int: 89
+    Dex: 111
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97392,74 +97621,74 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 720
+    DamageMotion: 432
+    Ai: 04
   - Id: 20659
     AegisName: MD_PITAYA_BOSS
-    Name: Boss Pitaya
-    Level: 168
-    Hp: 19037292
-    BaseExp: 40656489
-    JobExp: 40459542
+    Name: Pitaya Boss
+    Level: 138
+    Hp: 7221377
+    BaseExp: 656489
+    JobExp: 459542
     MvpExp: 20328244
-    Attack: 1945
-    Attack2: 3856
-    Defense: 462
-    MagicDefense: 103
-    Str: 244
-    Agi: 161
-    Vit: 45
-    Int: 81
-    Dex: 267
-    Luk: 93
+    Attack: 1570
+    Attack2: 828
+    Defense: 498
+    MagicDefense: 80
+    Str: 91
+    Agi: 70
+    Vit: 120
+    Int: 90
+    Dex: 121
+    Luk: 60
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Medium
+    Size: Small
     Race: Plant
     Element: Fire
     ElementLevel: 3
-    WalkSpeed: 230
-    AttackDelay: 1021
-    AttackMotion: 327
-    DamageMotion: 299
-    Ai: 09
-    Class: Boss
+    WalkSpeed: 120
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 21
     Modes:
       Mvp: true
     Drops:
-      - Item: Old_Card_Album
-        Rate: 5000
-      - Item: Reptile_Tongue
-        Rate: 3000
+      - Item: Old_Violet_Box
+        Rate: 2500
       - Item: Jubilee
-        Rate: 5000
+        Rate: 3000
+      - Item: Reptile_Tongue
+        Rate: 2500
       - Item: Fruit_Basket
-        Rate: 9000
+        Rate: 2500
+      - Item: Old_Card_Album
+        Rate: 1500
       - Item: Pitaya_Boss_Card
         Rate: 1
+        StealProtected: true
   - Id: 20660
     AegisName: MD_PITAYA_R
     Name: Red Pitaya
-    Level: 162
-    Hp: 648023
-    BaseExp: 13014407
-    JobExp: 13010085
-    Attack: 1567
-    Attack2: 1974
-    Defense: 351
-    MagicDefense: 92
-    Str: 124
-    Agi: 76
-    Vit: 83
-    Int: 125
-    Dex: 157
-    Luk: 36
+    Level: 132
+    Hp: 158478
+    BaseExp: 14407
+    JobExp: 10085
+    Attack: 1205
+    Attack2: 528
+    Defense: 267
+    MagicDefense: 74
+    Str: 73
+    Agi: 85
+    Vit: 45
+    Int: 60
+    Dex: 93
+    Luk: 64
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97467,41 +97696,43 @@ Body:
     Race: Plant
     Element: Fire
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Strawberry
-        Rate: 500
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 100
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
+      - Item: Strawberry
+        Rate: 300
+      - Item: Ep172_1h_Grenade
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_R_Card
         Rate: 1
+        StealProtected: true
   - Id: 20661
     AegisName: MD_PITAYA_Y
     Name: Yellow Pitaya
-    Level: 164
-    Hp: 603341
-    BaseExp: 13014782
-    JobExp: 13010347
-    Attack: 1617
-    Attack2: 1921
-    Defense: 434
-    MagicDefense: 94
-    Str: 127
-    Agi: 86
-    Vit: 98
-    Int: 124
-    Dex: 163
-    Luk: 37
+    Level: 134
+    Hp: 162599
+    BaseExp: 14782
+    JobExp: 10347
+    Attack: 1206
+    Attack2: 554
+    Defense: 335
+    MagicDefense: 75
+    Str: 72
+    Agi: 68
+    Vit: 67
+    Int: 62
+    Dex: 110
+    Luk: 76
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97509,41 +97740,43 @@ Body:
     Race: Plant
     Element: Wind
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Banana
-        Rate: 500
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 100
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
+      - Item: Banana
+        Rate: 300
+      - Item: Ep172_1h_Dagger
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Pitaya_Y_Card
         Rate: 1
+        StealProtected: true
   - Id: 20662
     AegisName: MD_PITAYA_B
     Name: Blue Pitaya
-    Level: 165
-    Hp: 603341
-    BaseExp: 13014878
-    JobExp: 13010414
-    Attack: 1534
-    Attack2: 1954
-    Defense: 444
-    MagicDefense: 95
-    Str: 113
-    Agi: 95
-    Vit: 63
-    Int: 102
-    Dex: 146
-    Luk: 54
+    Level: 135
+    Hp: 163655
+    BaseExp: 14878
+    JobExp: 10414
+    Attack: 1181
+    Attack2: 648
+    Defense: 330
+    MagicDefense: 77
+    Str: 70
+    Agi: 87
+    Vit: 65
+    Int: 72
+    Dex: 98
+    Luk: 43
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97551,41 +97784,43 @@ Body:
     Race: Plant
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Prickly_Fruit
-        Rate: 500
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 100
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
+      - Item: Prickly_Fruit
+        Rate: 150
+      - Item: Ep172_1h_Rifle
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_B_Card
         Rate: 1
+        StealProtected: true
   - Id: 20663
     AegisName: MD_PITAYA_V
     Name: Violet Pitaya
-    Level: 165
-    Hp: 603341
-    BaseExp: 13015028
-    JobExp: 13010520
-    Attack: 1543
-    Attack2: 1986
-    Defense: 525
-    MagicDefense: 92
-    Str: 128
-    Agi: 95
-    Vit: 36
-    Int: 146
-    Dex: 181
-    Luk: 34
+    Level: 135
+    Hp: 165308
+    BaseExp: 15028
+    JobExp: 10520
+    Attack: 1688
+    Attack2: 486
+    Defense: 393
+    MagicDefense: 74
+    Str: 100
+    Agi: 86
+    Vit: 86
+    Int: 54
+    Dex: 121
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97593,41 +97828,43 @@ Body:
     Race: Plant
     Element: Poison
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Grape
-        Rate: 500
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 100
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
+      - Item: Grape
+        Rate: 300
+      - Item: Ep172_1h_Dagger2
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_V_Card
         Rate: 1
+        StealProtected: true
   - Id: 20664
     AegisName: MD_PITAYA_G
     Name: Green Pitaya
-    Level: 166
-    Hp: 603341
-    BaseExp: 13015010
-    JobExp: 13010507
-    Attack: 1438
-    Attack2: 1988
-    Defense: 269
-    MagicDefense: 27
-    Str: 141
-    Agi: 68
-    Vit: 83
-    Int: 124
-    Dex: 156
-    Luk: 46
+    Level: 136
+    Hp: 165105
+    BaseExp: 15010
+    JobExp: 10507
+    Attack: 1666
+    Attack2: 807
+    Defense: 340
+    MagicDefense: 79
+    Str: 98
+    Agi: 108
+    Vit: 68
+    Int: 89
+    Dex: 111
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97635,41 +97872,43 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 200
-    AttackDelay: 367
-    AttackMotion: 280
-    DamageMotion: 163
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1540
+    AttackMotion: 2112
+    DamageMotion: 960
+    Ai: 04
     Drops:
-      - Item: Reptile_Tongue
-        Rate: 1500
-      - Item: Melon
-        Rate: 500
-      - Item: Jubilee
-        Rate: 500
       - Item: Fruit_Basket
-        Rate: 3000
+        Rate: 100
+      - Item: Jubilee
+        Rate: 100
+      - Item: Reptile_Tongue
+        Rate: 1250
+      - Item: Melon
+        Rate: 150
+      - Item: Ep172_1h_Gatling
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Pitaya_G_Card
         Rate: 1
+        StealProtected: true
   - Id: 20665
     AegisName: MD_VERPORTA
     Name: Verporta
     Level: 136
     Hp: 239037
-    BaseExp: 9950885
-    JobExp: 1671749
-    Attack: 881
-    Attack2: 1243
+    BaseExp: 21731
+    JobExp: 15211
+    Attack: 1571
+    Attack2: 1025
     Defense: 424
     MagicDefense: 82
-    Str: 96
-    Agi: 82
-    Vit: 147
-    Int: 107
-    Dex: 154
-    Luk: 46
+    Str: 93
+    Agi: 98
+    Vit: 96
+    Int: 113
+    Dex: 80
+    Luk: 76
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97677,22 +97916,20 @@ Body:
     Race: Brute
     Element: Poison
     ElementLevel: 2
-    WalkSpeed: 200
-    AttackDelay: 1024
-    AttackMotion: 648
-    DamageMotion: 648
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 180
+    AttackDelay: 1344
+    AttackMotion: 1344
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Sticky_Poison
-        Rate: 800
-      - Item: Fluorescent_Liquid
-        Rate: 800
       - Item: Soft_Leaf
-        Rate: 1500
+        Rate: 1000
       - Item: Yellow_Powder
-        Rate: 300
+        Rate: 250
+      - Item: Fluorescent_Liquid
+        Rate: 500
+      - Item: Sticky_Poison
+        Rate: 1000
       - Item: Verporta_Card
         Rate: 1
         StealProtected: true
@@ -97701,18 +97938,18 @@ Body:
     Name: Verporte
     Level: 186
     Hp: 2390934
-    BaseExp: 9725342
-    JobExp: 1633858
-    Attack: 2168
-    Attack2: 3264
+    BaseExp: 170781
+    JobExp: 119547
+    Attack: 3813
+    Attack2: 2145
     Defense: 600
     MagicDefense: 115
-    Str: 206
-    Agi: 158
-    Vit: 136
-    Int: 221
-    Dex: 286
-    Luk: 65
+    Str: 164
+    Agi: 168
+    Vit: 138
+    Int: 173
+    Dex: 121
+    Luk: 102
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97720,42 +97957,43 @@ Body:
     Race: Brute
     Element: Poison
     ElementLevel: 2
-    WalkSpeed: 200
-    AttackDelay: 1080
-    AttackMotion: 480
-    DamageMotion: 360
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 180
+    AttackDelay: 1344
+    AttackMotion: 1344
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Yellow_Powder
-        Rate: 500
       - Item: Soft_Leaf
-        Rate: 3000
+        Rate: 1000
+      - Item: Yellow_Powder
+        Rate: 250
       - Item: Fluorescent_Liquid
-        Rate: 1500
+        Rate: 500
       - Item: Sticky_Poison
-        Rate: 1500
-      - Item: Verporte_Card
+        Rate: 1000
+      - Item: Ep172_1h_Sword2
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Verporte_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20667
     AegisName: MD_SILVA_PAPILIA
     Name: Silva Papilia
     Level: 145
-    Hp: 7347707
-    BaseExp: 37500000
-    JobExp: 6300000
-    Attack: 2864
-    Attack2: 4236
+    Hp: 7375012
+    BaseExp: 670456
+    JobExp: 469319
+    Attack: 1450
+    Attack2: 1334
     Defense: 241
     MagicDefense: 90
-    Str: 86
-    Agi: 74
-    Vit: 77
-    Int: 234
-    Dex: 246
-    Luk: 63
+    Str: 80
+    Agi: 90
+    Vit: 32
+    Int: 138
+    Dex: 112
+    Luk: 79
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97763,27 +98001,22 @@ Body:
     Race: Plant
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 786
-    AttackMotion: 258
-    DamageMotion: 246
-    Ai: 09
-    Class: Boss
+    WalkSpeed: 120
+    AttackDelay: 1136
+    AttackMotion: 720
+    DamageMotion: 840
+    Ai: 21
     Modes:
-      Assist: true
       Mvp: true
-    MvpDrops:
-      - Item: Old_Card_Album
-        Rate: 5000
     Drops:
       - Item: Piece_Of_Darkness
-        Rate: 5000
+        Rate: 3500
       - Item: Fancy_Fairy_Wing
-        Rate: 3000
+        Rate: 1500
       - Item: Illusion_Flower
         Rate: 500
       - Item: Solid_Twig
-        Rate: 1000
+        Rate: 3000
       - Item: Silva_Papilia_Card
         Rate: 1
         StealProtected: true
@@ -97792,18 +98025,18 @@ Body:
     Name: Gran Papilia
     Level: 195
     Hp: 74730723
-    BaseExp: 37500000
-    JobExp: 6300000
-    Attack: 3794
-    Attack2: 5124
+    BaseExp: 5337909
+    JobExp: 3736536
+    Attack: 4368
+    Attack2: 2470
     Defense: 384
     MagicDefense: 121
-    Str: 176
-    Agi: 154
-    Vit: 121
-    Int: 364
-    Dex: 326
-    Luk: 95
+    Str: 171
+    Agi: 103
+    Vit: 63
+    Int: 190
+    Dex: 181
+    Luk: 79
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -97811,72 +98044,69 @@ Body:
     Race: Plant
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 786
-    AttackMotion: 258
-    DamageMotion: 246
-    Ai: 09
-    Class: Boss
+    WalkSpeed: 120
+    AttackDelay: 1136
+    AttackMotion: 720
+    DamageMotion: 840
+    Ai: 21
     Modes:
-      Assist: true
       Mvp: true
     MvpDrops:
       - Item: Old_Card_Album
         Rate: 5000
     Drops:
+      - Item: Piece_Of_Darkness
+        Rate: 3500
+      - Item: Fancy_Fairy_Wing
+        Rate: 1500
       - Item: Illusion_Flower
         Rate: 500
-      - Item: Piece_Of_Darkness
-        Rate: 5000
-      - Item: Fancy_Fairy_Wing
-        Rate: 3000
       - Item: Solid_Twig
-        Rate: 1000
+        Rate: 3000
       - Item: Gran_Papilia_Card
         Rate: 1
+        StealProtected: true
   - Id: 20669
     AegisName: MD_PAPILA
     Name: Papila
     Level: 138
     Hp: 240713
-    BaseExp: 7248516
-    JobExp: 1217750
-    Attack: 1241
-    Attack2: 1564
+    BaseExp: 21883
+    JobExp: 15318
+    Attack: 1587
+    Attack2: 948
     Defense: 378
     MagicDefense: 82
-    Str: 114
-    Agi: 94
-    Vit: 46
-    Int: 128
-    Dex: 169
-    Luk: 76
-    AttackRange: 2
+    Str: 92
+    Agi: 108
+    Vit: 80
+    Int: 103
+    Dex: 93
+    Luk: 60
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Insect
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 672
-    AttackMotion: 576
-    DamageMotion: 288
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 155
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Fancy_Fairy_Wing
-        Rate: 2000
-      - Item: Sharp_Feeler
-        Rate: 800
       - Item: Great_Wing
-        Rate: 1000
-      - Item: Flower
-        Rate: 500
+        Rate: 1500
       - Item: Powder_Of_Butterfly
-        Rate: 1200
-      - Item: MD_Papila_Card
+        Rate: 2000
+      - Item: Fancy_Fairy_Wing
+        Rate: 500
+      - Item: Sharp_Feeler
+        Rate: 500
+      - Item: Flower
+        Rate: 3000
+      - Item: Papila_Card
         Rate: 1
         StealProtected: true
   - Id: 20670
@@ -97884,152 +98114,64 @@ Body:
     Name: Senior Papila
     Level: 188
     Hp: 2409593
-    BaseExp: 7248516
-    JobExp: 1217750
-    Attack: 1564
-    Attack2: 2321
+    BaseExp: 172114
+    JobExp: 120480
+    Attack: 3690
+    Attack2: 2043
     Defense: 467
     MagicDefense: 114
-    Str: 147
-    Agi: 85
-    Vit: 88
-    Int: 246
-    Dex: 261
-    Luk: 121
-    AttackRange: 2
+    Str: 157
+    Agi: 172
+    Vit: 93
+    Int: 163
+    Dex: 132
+    Luk: 76
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Insect
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 672
-    AttackMotion: 576
-    DamageMotion: 288
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 155
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Flower
-        Rate: 500
-      - Item: Powder_Of_Butterfly
-        Rate: 1200
-      - Item: Fancy_Fairy_Wing
-        Rate: 2000
-      - Item: Sharp_Feeler
-        Rate: 800
-        StealProtected: true
       - Item: Great_Wing
-        Rate: 1000
-        StealProtected: true
-      - Item: Papila_Ruba_H_Card
+        Rate: 1500
+      - Item: Powder_Of_Butterfly
+        Rate: 2000
+      - Item: Fancy_Fairy_Wing
+        Rate: 500
+      - Item: Sharp_Feeler
+        Rate: 500
+      - Item: Flower
+        Rate: 3000
+      - Item: Ep172_1h_Spear
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Papila_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20671
     AegisName: MD_PAPILA_RUBA
     Name: Papila Ruba
     Level: 139
-    Hp: 240713
-    BaseExp: 7167094
-    JobExp: 1204072
-    Attack: 1241
-    Attack2: 1564
-    Defense: 346
-    MagicDefense: 96
-    Str: 108
-    Agi: 84
-    Vit: 57
-    Int: 134
-    Dex: 154
-    Luk: 63
-    AttackRange: 2
-    SkillRange: 10
-    ChaseRange: 12
-    Size: Medium
-    Race: Insect
-    Element: Fire
-    ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 672
-    AttackMotion: 576
-    DamageMotion: 288
-    Ai: 09
-    Modes:
-      Assist: true
-    Drops:
-      - Item: Flower
-        Rate: 500
-      - Item: Powder_Of_Butterfly
-        Rate: 1200
-      - Item: Withered_Flower
-        Rate: 1500
-      - Item: Sharp_Feeler
-        Rate: 800
-      - Item: Great_Wing
-        Rate: 1000
-      - Item: MD_Papila_Ruba_Card
-        Rate: 1
-        StealProtected: true
-  - Id: 20672
-    AegisName: MD_PAPILA_RUBA_H
-    Name: Senior Papila Ruba
-    Level: 190
-    Hp: 2409593
-    BaseExp: 7167094
-    JobExp: 1204072
-    Attack: 1564
-    Attack2: 2321
-    Defense: 676
-    MagicDefense: 116
-    Str: 151
-    Agi: 97
-    Vit: 84
-    Int: 224
-    Dex: 284
-    Luk: 98
-    AttackRange: 2
-    SkillRange: 10
-    ChaseRange: 12
-    Size: Medium
-    Race: Insect
-    Element: Fire
-    ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 672
-    AttackMotion: 576
-    DamageMotion: 288
-    Ai: 09
-    Modes:
-      Assist: true
-    Drops:
-      - Item: Flower
-        Rate: 500
-      - Item: Powder_Of_Butterfly
-        Rate: 1200
-      - Item: Withered_Flower
-        Rate: 1500
-      - Item: Sharp_Feeler
-        Rate: 800
-      - Item: Great_Wing
-        Rate: 1000
-      - Item: MD_Papila_Ruba_H_Card
-        Rate: 1
-        StealProtected: true
-  - Id: 20673
-    AegisName: MD_PAPILA_RUBA2
-    Name: Papila Ruba
-    Level: 150
-    Hp: 300
-    BaseExp: 7167094
-    JobExp: 1204072
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
-    Int: 326
-    Dex: 254
-    Luk: 99
+    Hp: 240372
+    BaseExp: 21852
+    JobExp: 15296
+    Attack: 1494
+    Attack2: 704
+    Defense: 325
+    MagicDefense: 79
+    Str: 86
+    Agi: 113
+    Vit: 62
+    Int: 76
+    Dex: 104
+    Luk: 86
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98037,10 +98179,98 @@ Body:
     Race: Insect
     Element: Fire
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 1080
-    AttackMotion: 480
-    DamageMotion: 360
+    WalkSpeed: 155
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Great_Wing
+        Rate: 1500
+      - Item: Powder_Of_Butterfly
+        Rate: 2000
+      - Item: Fancy_Fairy_Wing
+        Rate: 500
+      - Item: Sharp_Feeler
+        Rate: 500
+      - Item: Withered_Flower
+        Rate: 500
+      - Item: Papila_Ruba_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20672
+    AegisName: MD_PAPILA_RUBA_H
+    Name: Senior Papila Ruba
+    Level: 190
+    Hp: 3656403
+    BaseExp: 261172
+    JobExp: 182820
+    Attack: 4180
+    Attack2: 2141
+    Defense: 676
+    MagicDefense: 116
+    Str: 176
+    Agi: 193
+    Vit: 162
+    Int: 169
+    Dex: 195
+    Luk: 53
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Great_Wing
+        Rate: 1500
+      - Item: Powder_Of_Butterfly
+        Rate: 2000
+      - Item: Fancy_Fairy_Wing
+        Rate: 500
+      - Item: Sharp_Feeler
+        Rate: 500
+      - Item: Withered_Flower
+        Rate: 500
+      - Item: Ep172_Bh_Huuma
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Papila_Ruba_H_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20673
+    AegisName: MD_PAPILA_RUBA2
+    Name: Papila Ruba
+    Level: 150
+    Hp: 10000
+    Attack: 1313
+    Attack2: 700
+    Defense: 700
+    MagicDefense: 32
+    Str: 70
+    Agi: 70
+    Vit: 70
+    Int: 70
+    Dex: 70
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Ai: 06
     Class: Battlefield
     Modes:
       IgnoreMagic: true
@@ -98051,118 +98281,119 @@ Body:
   - Id: 20674
     AegisName: MD_PAPILA_CAE
     Name: Papila Cae
-    Level: 138
+    Level: 137
     Hp: 237484
-    BaseExp: 7513587
-    JobExp: 1262282
-    Attack: 1241
-    Attack2: 1564
-    Defense: 378
-    MagicDefense: 82
-    Str: 114
-    Agi: 94
-    Vit: 46
-    Int: 128
-    Dex: 169
-    Luk: 76
-    AttackRange: 2
+    BaseExp: 21589
+    JobExp: 15113
+    Attack: 1473
+    Attack2: 895
+    Defense: 338
+    MagicDefense: 81
+    Str: 86
+    Agi: 91
+    Vit: 67
+    Int: 98
+    Dex: 95
+    Luk: 67
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Insect
-    Element: Dark
+    Element: Water
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 672
-    AttackMotion: 576
-    DamageMotion: 288
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 130
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 01
     Drops:
-      - Item: Flower
-        Rate: 500
-      - Item: Powder_Of_Butterfly
-        Rate: 1200
-      - Item: Fancy_Fairy_Wing
-        Rate: 2000
-      - Item: Sharp_Feeler
-        Rate: 800
       - Item: Great_Wing
-        Rate: 1000
-      - Item: MD_Papila_Cae_Card
+        Rate: 1500
+      - Item: Powder_Of_Butterfly
+        Rate: 2000
+      - Item: Fancy_Fairy_Wing
+        Rate: 500
+      - Item: Sharp_Feeler
+        Rate: 500
+      - Item: Withered_Flower
+        Rate: 500
+      - Item: Papila_Cae_Card
         Rate: 1
         StealProtected: true
   - Id: 20675
     AegisName: MD_PAPILA_CAE_H
     Name: Senior Papila Cae
-    Level: 188
+    Level: 187
     Hp: 2405191
-    BaseExp: 7513587
-    JobExp: 1262282
-    Attack: 1564
-    Attack2: 2321
-    Defense: 467
-    MagicDefense: 114
-    Str: 147
-    Agi: 85
-    Vit: 88
-    Int: 246
-    Dex: 261
-    Luk: 121
-    AttackRange: 2
+    BaseExp: 171799
+    JobExp: 120260
+    Attack: 3553
+    Attack2: 2094
+    Defense: 628
+    MagicDefense: 115
+    Str: 152
+    Agi: 181
+    Vit: 147
+    Int: 168
+    Dex: 184
+    Luk: 67
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Insect
-    Element: Dark
+    Element: Water
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 672
-    AttackMotion: 576
-    DamageMotion: 288
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 120
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 01
     Drops:
-      - Item: Flower
-        Rate: 500
-      - Item: Powder_Of_Butterfly
-        Rate: 1200
-      - Item: Fancy_Fairy_Wing
-        Rate: 2000
-      - Item: Sharp_Feeler
-        Rate: 800
       - Item: Great_Wing
-        Rate: 1000
-      - Item: MD_Papila_Cae_H_Card
+        Rate: 1500
+      - Item: Powder_Of_Butterfly
+        Rate: 2000
+      - Item: Fancy_Fairy_Wing
+        Rate: 500
+      - Item: Sharp_Feeler
+        Rate: 500
+      - Item: Withered_Flower
+        Rate: 500
+      - Item: Ep172_Bh_Spear
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Papila_Cae_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20676
     AegisName: MD_PAPILA_CAE2
     Name: Papila Cae
     Level: 150
-    Hp: 300
-    BaseExp: 7513587
-    JobExp: 1262282
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
-    Int: 326
-    Dex: 254
-    Luk: 99
+    Hp: 10000
+    Attack: 1313
+    Attack2: 700
+    Defense: 360
+    MagicDefense: 84
+    Str: 70
+    Agi: 70
+    Vit: 70
+    Int: 70
+    Dex: 70
+    Luk: 70
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Insect
-    Element: Fire
+    Element: Water
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 1080
-    AttackMotion: 480
-    DamageMotion: 360
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Ai: 06
     Class: Battlefield
     Modes:
       IgnoreMagic: true
@@ -98173,79 +98404,81 @@ Body:
   - Id: 20677
     AegisName: MD_ARIES
     Name: Aries
-    Level: 175
+    Level: 140
     Hp: 360702
-    BaseExp: 9305739
-    JobExp: 1563364
-    Attack: 1241
-    Attack2: 1861
+    BaseExp: 32791
+    JobExp: 22954
+    Attack: 1663
+    Attack2: 840
     Defense: 356
     MagicDefense: 81
-    Str: 121
-    Agi: 147
-    Vit: 84
-    Int: 124
-    Dex: 165
-    Luk: 34
-    AttackRange: 7
+    Str: 95
+    Agi: 107
+    Vit: 72
+    Int: 90
+    Dex: 93
+    Luk: 32
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
     Element: Water
     ElementLevel: 2
-    WalkSpeed: 170
-    AttackDelay: 981
-    AttackMotion: 504
-    DamageMotion: 360
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 1440
+    AttackMotion: 1440
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Great_Wing
-        Rate: 2000
       - Item: Fancy_Fairy_Wing
-        Rate: 500
+        Rate: 250
+      - Item: Great_Wing
+        Rate: 2500
+      - Item: Illusion_Flower
+        Rate: 1
       - Item: Aries_Card
         Rate: 1
         StealProtected: true
   - Id: 20678
     AegisName: MD_ARIES_H
     Name: Senior Aries
-    Level: 175
-    Hp: 603341
-    BaseExp: 8825543
-    JobExp: 1482691
-    Attack: 2164
-    Attack2: 3521
-    Defense: 269
-    MagicDefense: 27
-    Str: 186
-    Agi: 176
-    Vit: 94
-    Int: 214
-    Dex: 263
-    Luk: 85
-    AttackRange: 7
+    Level: 190
+    Hp: 3656403
+    BaseExp: 261172
+    JobExp: 182820
+    Attack: 4109
+    Attack2: 2153
+    Defense: 676
+    MagicDefense: 116
+    Str: 173
+    Agi: 173
+    Vit: 162
+    Int: 70
+    Dex: 173
+    Luk: 32
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
-    Element: Neutral
-    ElementLevel: 3
-    WalkSpeed: 170
-    AttackDelay: 981
-    AttackMotion: 504
-    DamageMotion: 360
-    Ai: 09
-    Modes:
-      Assist: true
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1440
+    AttackMotion: 1440
+    DamageMotion: 480
+    Ai: 04
     Drops:
-      - Item: Great_Wing
-        Rate: 2000
       - Item: Fancy_Fairy_Wing
-        Rate: 500
-        StealProtected: true
+        Rate: 250
+      - Item: Great_Wing
+        Rate: 2500
+      - Item: Illusion_Flower
+        Rate: 1
+      - Item: Ep172_Bh_Bow3
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Aries_H_Card
         Rate: 1
         StealProtected: true
@@ -98269,6 +98502,7 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
+    Ai: 06
     Class: Battlefield
     Modes:
       IgnoreMagic: true
@@ -98281,59 +98515,74 @@ Body:
     Name: Heart Hunter Skirmisher
     Level: 130
     Hp: 180367
-    BaseExp: 509314
-    JobExp: 85565
-    Attack: 867
-    Attack2: 1521
+    BaseExp: 16397
+    JobExp: 11478
+    Attack: 1300
+    Attack2: 571
     Defense: 334
     MagicDefense: 73
-    Str: 124
-    Agi: 123
-    Vit: 86
+    Str: 80
+    Agi: 113
+    Vit: 68
     Int: 67
-    Dex: 184
-    Luk: 20
+    Dex: 102
+    Luk: 77
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
-    Element: Dark
+    Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 200
-    AttackDelay: 674
+    WalkSpeed: 150
+    AttackDelay: 864
     AttackMotion: 1268
     DamageMotion: 480
     Ai: 04
     Drops:
       - Item: Vroken_Sword
-        Rate: 300
+        Rate: 500
       - Item: Heart_Hunter_Seal
-        Rate: 2000
+        Rate: 2500
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: EP17_1_EVT02
+        Rate: 30
+      - Item: Elunium_Stone
+        Rate: 24
+      - Item: Ep172_1h_Sword
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Ep172_Bh_Sword
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Heart_Hunter_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20681
     AegisName: G_EP17_2_HEART_HUNTER
     Name: Heart Hunter Skirmisher
     Level: 130
     Hp: 180367
-    Attack: 867
-    Attack2: 1521
+    Attack: 1300
+    Attack2: 581
     Defense: 334
     MagicDefense: 73
-    Str: 124
-    Agi: 123
-    Vit: 86
-    Int: 66
-    Dex: 184
-    Luk: 20
+    Str: 80
+    Agi: 113
+    Vit: 68
+    Int: 67
+    Dex: 102
+    Luk: 77
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
-    Element: Dark
+    Element: Neutral
     ElementLevel: 2
-    WalkSpeed: 200
-    AttackDelay: 674
+    WalkSpeed: 150
+    AttackDelay: 864
     AttackMotion: 1268
     DamageMotion: 480
     Ai: 04
@@ -98342,16 +98591,18 @@ Body:
     Name: Heart Hunter Skirmisher
     Level: 176
     Hp: 1208485
-    Attack: 1867
-    Attack2: 2564
-    Defense: 404
-    MagicDefense: 91
-    Str: 245
-    Agi: 173
-    Vit: 86
-    Int: 78
-    Dex: 264
-    Luk: 46
+    BaseExp: 100707
+    JobExp: 70495
+    Attack: 2948
+    Attack2: 1291
+    Defense: 500
+    MagicDefense: 102
+    Str: 110
+    Agi: 147
+    Vit: 38
+    Int: 97
+    Dex: 153
+    Luk: 87
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98361,33 +98612,48 @@ Body:
       EP172ALPHA: true
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 200
-    AttackDelay: 674
+    WalkSpeed: 150
+    AttackDelay: 864
     AttackMotion: 1268
     DamageMotion: 480
     Ai: 04
     Drops:
       - Item: Vroken_Sword
-        Rate: 300
+        Rate: 500
       - Item: Heart_Hunter_Seal
-        Rate: 2000
+        Rate: 2500
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: EP17_1_EVT02
+        Rate: 30
+      - Item: Shadowdecon_Ore
+        Rate: 100
+      - Item: Ep172_1h_Sword
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Ep172_Bh_Sword
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Heart_Hunter_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20683
     AegisName: EP17_2_BOOKWORM
     Name: Bookworm
     Level: 141
     Hp: 250264
-    BaseExp: 951003
-    JobExp: 475502
-    Attack: 1764
-    Attack2: 1941
+    BaseExp: 22751
+    JobExp: 15926
+    Attack: 1815
+    Attack2: 855
     Defense: 210
     MagicDefense: 82
-    Str: 121
-    Agi: 78
-    Vit: 95
-    Int: 64
-    Dex: 156
-    Luk: 34
+    Str: 103
+    Agi: 89
+    Vit: 23
+    Int: 91
+    Dex: 107
+    Luk: 7
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98395,24 +98661,25 @@ Body:
     Race: Insect
     Element: Earth
     ElementLevel: 2
-    WalkSpeed: 220
-    AttackDelay: 1214
-    AttackMotion: 672
-    DamageMotion: 480
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 04
     Drops:
       - Item: Long_Limb
-        Rate: 1000
+        Rate: 2250
       - Item: Colorful_Shell
-        Rate: 400
+        Rate: 500
       - Item: Fluorescent_Liquid
-        Rate: 300
+        Rate: 500
       - Item: Sticky_Mucus
-        Rate: 2000
+        Rate: 1000
       - Item: Solid_Shell
-        Rate: 800
+        Rate: 500
+      - Item: Ep172_1h_Book2
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Bookworm_Card
         Rate: 1
         StealProtected: true
@@ -98420,19 +98687,19 @@ Body:
     AegisName: EP17_2_ROAMING_SPLBOOK
     Name: Roaming Spellbook
     Level: 144
-    Hp: 603341
-    BaseExp: 976026
-    JobExp: 488013
-    Attack: 1274
-    Attack2: 1477
+    Hp: 256849
+    BaseExp: 23350
+    JobExp: 16345
+    Attack: 1980
+    Attack2: 931
     Defense: 258
     MagicDefense: 84
-    Str: 127
-    Agi: 98
-    Vit: 88
-    Int: 124
-    Dex: 164
-    Luk: 34
+    Str: 110
+    Agi: 147
+    Vit: 38
+    Int: 97
+    Dex: 153
+    Luk: 66
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98440,20 +98707,23 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 3
-    WalkSpeed: 150
-    AttackDelay: 764
-    AttackMotion: 860
+    WalkSpeed: 130
+    AttackDelay: 912
+    AttackMotion: 1824
     DamageMotion: 480
-    Ai: 09
-    Modes:
-      Assist: true
+    Ai: 04
     Drops:
-      - Item: Dustball
-        Rate: 300
       - Item: Worn_Out_Page
-        Rate: 2000
+        Rate: 2425
       - Item: Bookclip_In_Memory
-        Rate: 500
+        Rate: 350
+      - Item: Old_Magic_Book
+        Rate: 50
+      - Item: Dustball
+        Rate: 2500
+      - Item: Ep172_1h_Book
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Roaming_Splbook_Card
         Rate: 1
         StealProtected: true
@@ -98462,18 +98732,18 @@ Body:
     Name: Sewage Venenum
     Level: 142
     Hp: 290128
-    BaseExp: 696307
-    JobExp: 104446
-    Attack: 1451
-    Attack2: 1897
+    BaseExp: 19342
+    JobExp: 13539
+    Attack: 1793
+    Attack2: 719
     Defense: 277
     MagicDefense: 81
-    Str: 107
-    Agi: 84
-    Vit: 96
-    Int: 97
-    Dex: 146
-    Luk: 9
+    Str: 80
+    Agi: 97
+    Vit: 45
+    Int: 76
+    Dex: 96
+    Luk: 61
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98483,60 +98753,65 @@ Body:
       EP172BETA: true
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 180
-    AttackDelay: 680
-    AttackMotion: 576
-    DamageMotion: 240
-    Ai: 09
-    Modes:
-      Looter: true
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 1536
+    DamageMotion: 960
+    Ai: 04
     Drops:
       - Item: Sticky_Mucus
-        Rate: 1500
-      - Item: Elunium_Stone
-        Rate: 150
+        Rate: 2500
       - Item: Sticky_Poison
-        Rate: 300
+        Rate: 2000
+      - Item: Elunium_Stone
+        Rate: 240
+      - Item: Ep172_1h_Wand
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Venenum3_Card
         Rate: 1
         StealProtected: true
   - Id: 20686
     AegisName: EP17_2_CRAMP
     Name: Sewage Cramp
-    Level: 175
+    Level: 140
     Hp: 285388
-    BaseExp: 684931
-    JobExp: 102740
-    Attack: 981
-    Attack2: 1541
+    BaseExp: 19026
+    JobExp: 13318
+    Attack: 1978
+    Attack2: 523
     Defense: 254
     MagicDefense: 77
-    Str: 108
-    Agi: 144
-    Vit: 36
-    Int: 48
-    Dex: 168
-    Luk: 64
+    Str: 113
+    Agi: 118
+    Vit: 38
+    Int: 56
+    Dex: 109
+    Luk: 66
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Medium
-    Race: Demihuman
+    Size: Small
+    Race: Brute
     RaceGroups:
       EP172BETA: true
     Element: Poison
     ElementLevel: 1
     WalkSpeed: 100
-    AttackDelay: 768
-    AttackMotion: 500
+    AttackDelay: 522
+    AttackMotion: 1044
+    DamageMotion: 684
     Ai: 04
     Drops:
       - Item: Claw_Of_Rat
-        Rate: 300
-      - Item: Lemon
-        Rate: 500
+        Rate: 2328
       - Item: Monster's_Feed
-        Rate: 800
+        Rate: 500
+      - Item: Lemon
+        Rate: 125
+      - Item: Ep172_1h_Dagger
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: EP17_2_Cramp_Card
         Rate: 1
         StealProtected: true
@@ -98544,19 +98819,19 @@ Body:
     AegisName: EP17_2_WATERFALL
     Name: Sewage Waterfall
     Level: 141
-    Hp: 287987
-    BaseExp: 690953
-    JobExp: 103643
-    Attack: 1241
-    Attack2: 1687
+    Hp: 287897
+    BaseExp: 19193
+    JobExp: 13435
+    Attack: 1674
+    Attack2: 949
     Defense: 270
     MagicDefense: 83
-    Str: 96
-    Agi: 55
-    Vit: 147
-    Int: 70
-    Dex: 168
-    Luk: 99
+    Str: 95
+    Agi: 111
+    Vit: 43
+    Int: 101
+    Dex: 96
+    Luk: 48
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98566,18 +98841,21 @@ Body:
       EP172BETA: true
     Element: Poison
     ElementLevel: 2
-    WalkSpeed: 150
-    AttackDelay: 1272
+    WalkSpeed: 200
+    AttackDelay: 1672
     AttackMotion: 720
     DamageMotion: 288
     Ai: 04
     Drops:
       - Item: Mud_Lump
-        Rate: 700
-      - Item: Sticky_Poison
-        Rate: 300
+        Rate: 2425
       - Item: Coal
-        Rate: 150
+        Rate: 65
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Ep172_Bh_Katar
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Waterfall_Card
         Rate: 1
         StealProtected: true
@@ -98586,61 +98864,18 @@ Body:
     Name: Elite Bellare
     Level: 143
     Hp: 295508
-    BaseExp: 3617462
-    JobExp: 607734
-    Attack: 1276
-    Attack2: 1536
+    BaseExp: 19701
+    JobExp: 13790
+    Attack: 1931
+    Attack2: 648
     Defense: 383
     MagicDefense: 80
-    Str: 96
-    Agi: 131
-    Vit: 67
-    Int: 45
-    Dex: 148
-    Luk: 84
-    AttackRange: 9
-    SkillRange: 10
-    ChaseRange: 12
-    Size: Medium
-    Race: Demihuman
-    RaceGroups:
-      EP172BETA: true
-    Element: Ghost
-    ElementLevel: 1
-    WalkSpeed: 160
-    AttackDelay: 761
-    AttackMotion: 210
-    DamageMotion: 140
-    Ai: 09
-    Modes:
-      Assist: true
-    Drops:
-      - Item: Heart_Hunter_Seal
-        Rate: 2000
-      - Item: Elunium_Stone
-        Rate: 150
-      - Item: Explosive_Powder
-        Rate: 300
-      - Item: Bellare3_Card
-        Rate: 1
-        StealProtected: true
-  - Id: 20689
-    AegisName: EP17_2_DOLOR3
-    Name: Spell Addicted Dolor
-    Level: 145
-    Hp: 603341
-    BaseExp: 718440
-    JobExp: 107766
-    Attack: 1326
-    Attack2: 1841
-    Defense: 376
-    MagicDefense: 83
-    Str: 84
-    Agi: 78
-    Vit: 95
-    Int: 186
-    Dex: 156
-    Luk: 32
+    Str: 108
+    Agi: 121
+    Vit: 80
+    Int: 68
+    Dex: 113
+    Luk: 80
     AttackRange: 5
     SkillRange: 10
     ChaseRange: 12
@@ -98651,19 +98886,67 @@ Body:
     Element: Ghost
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 1640
-    AttackMotion: 380
-    DamageMotion: 210
-    Ai: 09
-    Modes:
-      Assist: true
+    AttackDelay: 384
+    AttackMotion: 384
+    DamageMotion: 480
+    Ai: 05
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Elunium_Stone
+        Rate: 150
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: Ep172_1h_Rifle
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Ep172_1h_Shotgun
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Bellare3_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20689
+    AegisName: EP17_2_DOLOR3
+    Name: Spell Addicted Dolor
+    Level: 145
+    Hp: 299350
+    BaseExp: 19957
+    JobExp: 13970
+    Attack: 2048
+    Attack2: 773
+    Defense: 376
+    MagicDefense: 83
+    Str: 113
+    Agi: 103
+    Vit: 77
+    Int: 80
+    Dex: 115
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    RaceGroups:
+      EP172BETA: true
+    Element: Ghost
+    ElementLevel: 1
+    WalkSpeed: 125
+    AttackDelay: 1768
+    AttackMotion: 768
+    DamageMotion: 576
+    Ai: 04
     Drops:
       - Item: Tough_Scalelike_Stem
-        Rate: 600
-      - Item: Wooden_Block
-        Rate: 1400
+        Rate: 2500
       - Item: Sticky_Poison
-        Rate: 500
+        Rate: 2000
+      - Item: Wooden_Block
+        Rate: 100
+      - Item: Ep172_1h_Foxtail
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Dolor3_Card
         Rate: 1
         StealProtected: true
@@ -98672,19 +98955,19 @@ Body:
     Name: Released Spell
     Level: 144
     Hp: 291046
-    BaseExp: 698510
-    JobExp: 104777
-    Attack: 1244
-    Attack2: 1876
-    Defense: 445
-    MagicDefense: 121
-    Str: 91
-    Agi: 75
-    Vit: 86
-    Int: 112
-    Dex: 142
-    Luk: 43
-    AttackRange: 1
+    BaseExp: 19403
+    JobExp: 13582
+    Attack: 1746
+    Attack2: 1152
+    Defense: 180
+    MagicDefense: 87
+    Str: 97
+    Agi: 120
+    Vit: 12
+    Int: 120
+    Dex: 90
+    Luk: 77
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
@@ -98693,20 +98976,21 @@ Body:
       EP172BETA: true
     Element: Ghost
     ElementLevel: 2
-    WalkSpeed: 100
-    AttackDelay: 800
-    AttackMotion: 500
-    DamageMotion: 1000
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 125
+    AttackDelay: 912
+    AttackMotion: 1248
+    DamageMotion: 576
+    Ai: 04
     Drops:
-      - Item: Yellow_Gemstone
-        Rate: 300
       - Item: Scell
-        Rate: 1200
+        Rate: 1000
+      - Item: Yellow_Gemstone
+        Rate: 200
+      - Item: Ep172_Bh_Staff
+        Rate: 3
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
       - Item: Light_Granule
-        Rate: 100
+        Rate: 150
       - Item: Plasma_Y_Card
         Rate: 1
         StealProtected: true
@@ -98715,17 +98999,19 @@ Body:
     Name: Spell Addicted Plaga
     Level: 192
     Hp: 2946697
-    Attack: 2451
-    Attack2: 3544
+    BaseExp: 196446
+    JobExp: 137513
+    Attack: 4824
+    Attack2: 1958
     Defense: 462
     MagicDefense: 115
-    Str: 211
-    Agi: 81
-    Vit: 76
-    Int: 149
-    Dex: 246
-    Luk: 91
-    AttackRange: 1
+    Str: 201
+    Agi: 177
+    Vit: 90
+    Int: 153
+    Dex: 186
+    Luk: 103
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Large
@@ -98734,20 +99020,23 @@ Body:
       EP172ALPHA: true
     Element: Poison
     ElementLevel: 3
-    WalkSpeed: 200
+    WalkSpeed: 150
     AttackDelay: 1280
     AttackMotion: 1080
     DamageMotion: 240
-    Ai: 09
-    Modes:
-      Assist: true
+    Ai: 04
     Drops:
       - Item: Dragon's_Skin
-        Rate: 800
+        Rate: 1000
       - Item: Fluorescent_Liquid
-        Rate: 1200
-      - Item: Solid_Shell
-        Rate: 500
+        Rate: 250
+      - Item: Ep172_1h_Shotgun
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MELEE_2
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon_Ore
+        Rate: 150
       - Item: Plaga3_Card
         Rate: 1
         StealProtected: true
@@ -98755,17 +99044,19 @@ Body:
     AegisName: EP17_2_SANARE3
     Name: Spell Addicted Sanare
     Level: 194
-    Hp: 603341
-    Attack: 2046
-    Attack2: 2546
-    Defense: 269
-    MagicDefense: 27
-    Str: 178
-    Agi: 115
-    Vit: 141
-    Int: 221
-    Dex: 286
-    Luk: 122
+    Hp: 2979073
+    BaseExp: 198605
+    JobExp: 139023
+    Attack: 4462
+    Attack2: 2561
+    Defense: 503
+    MagicDefense: 122
+    Str: 184
+    Agi: 168
+    Vit: 103
+    Int: 198
+    Dex: 162
+    Luk: 72
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98775,21 +99066,22 @@ Body:
       EP172ALPHA: true
     Element: Holy
     ElementLevel: 2
-    WalkSpeed: 160
-    AttackDelay: 962
-    AttackMotion: 362
-    DamageMotion: 240
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 1152
+    DamageMotion: 720
+    Ai: 04
     Drops:
       - Item: GAMJammingChip
-        Rate: 2500
-      - Item: Heart_Hunter_Seal
         Rate: 2000
-      - Item: Explosive_Powder
-        Rate: 300
-      - Item: Elunium_Stone
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Ep172_1h_Hammer
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon_Ore
         Rate: 150
       - Item: Sanare3_Card
         Rate: 1
@@ -98798,17 +99090,19 @@ Body:
     AegisName: EP17_2_PLASMA_R
     Name: Powerful Spell
     Level: 193
-    Hp: 603341
-    Attack: 1755
-    Attack2: 3055
-    Defense: 421
+    Hp: 2961272
+    BaseExp: 197418
+    JobExp: 138193
+    Attack: 4270
+    Attack2: 2522
+    Defense: 445
     MagicDefense: 121
-    Str: 155
-    Agi: 95
-    Vit: 87
-    Int: 204
-    Dex: 246
-    Luk: 56
+    Str: 177
+    Agi: 201
+    Vit: 84
+    Int: 196
+    Dex: 170
+    Luk: 70
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98818,20 +99112,23 @@ Body:
       EP172ALPHA: true
     Element: Ghost
     ElementLevel: 3
-    WalkSpeed: 100
-    AttackDelay: 800
-    AttackMotion: 500
-    DamageMotion: 1000
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 120
+    AttackDelay: 912
+    AttackMotion: 1248
+    DamageMotion: 576
+    Ai: 04
     Drops:
-      - Item: Blue_Gemstone
-        Rate: 300
       - Item: Scell
-        Rate: 1200
-      - Item: Light_Granule
-        Rate: 100
+        Rate: 1000
+      - Item: Yellow_Gemstone
+        Rate: 200
+      - Item: Ep172_1h_Inst
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon_Ore
+        Rate: 150
       - Item: Plasma_R_Card
         Rate: 1
         StealProtected: true
@@ -98839,17 +99136,19 @@ Body:
     AegisName: EP17_2_PLASMA_R2
     Name: Sharp Spell
     Level: 193
-    Hp: 603341
-    Attack: 1755
-    Attack2: 3055
+    Hp: 2960243
+    BaseExp: 197350
+    JobExp: 138145
+    Attack: 4101
+    Attack2: 2496
     Defense: 421
     MagicDefense: 121
-    Str: 155
-    Agi: 95
-    Vit: 87
-    Int: 204
-    Dex: 246
-    Luk: 56
+    Str: 170
+    Agi: 198
+    Vit: 76
+    Int: 194
+    Dex: 167
+    Luk: 67
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -98859,138 +99158,163 @@ Body:
       EP172ALPHA: true
     Element: Ghost
     ElementLevel: 3
-    WalkSpeed: 100
-    AttackDelay: 800
-    AttackMotion: 500
-    DamageMotion: 1000
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 120
+    AttackDelay: 912
+    AttackMotion: 1248
+    DamageMotion: 576
+    Ai: 04
     Drops:
-      - Item: Light_Granule
-        Rate: 100
       - Item: Scell
-        Rate: 1200
+        Rate: 1000
       - Item: Red_Gemstone
-        Rate: 100
+        Rate: 200
+      - Item: Ep172_1h_Whip
+        Rate: 5
+        RandomOptionGroup: AUTO_IMP_MAGIC_2
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon_Ore
+        Rate: 150
       - Item: Plasma_R2_Card
         Rate: 1
         StealProtected: true
   - Id: 20696
     AegisName: EP17_2_CHILD_ADMIN1
     Name: Child Admin Beta
-    Level: 1
-    Hp: 10
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 130
+    Hp: 130
+    Attack: 10
+    Attack2: 10
+    Defense: 10
+    MagicDefense: 10
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Small
-    Race: Demihuman
+    Race: Formless
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 100
-    AttackMotion: 100
-    DamageMotion: 100
+    AttackDelay: 1152
+    AttackMotion: 1344
+    DamageMotion: 480
     Ai: 01
-    Modes:
-      Assist: true
+    Drops:
   - Id: 20697
     AegisName: EP17_2_CHILD_ADMIN2
     Name: Child Admin Alpha
-    Level: 1
-    Hp: 10
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 180
+    Hp: 180
+    Attack: 10
+    Attack2: 10
+    Defense: 10
+    MagicDefense: 10
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Small
-    Race: Demihuman
+    Race: Formless
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 100
-    AttackMotion: 100
-    DamageMotion: 100
+    AttackDelay: 1152
+    AttackMotion: 1344
+    DamageMotion: 480
     Ai: 01
-    Modes:
-      Assist: true
+    Drops:
   - Id: 20698
     AegisName: G_ASSISTANT
     Name: Assistant
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 137
+    Hp: 238512
+    Attack: 1661
+    Attack2: 658
+    Defense: 365
+    MagicDefense: 78
+    Str: 97
+    Agi: 87
+    Vit: 76
+    Int: 72
+    Dex: 113
+    Luk: 77
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
-    Race: Demihuman
+    Race: Formless
     Element: Neutral
-    ElementLevel: 3
-    WalkSpeed: 200
-    AttackDelay: 100
-    AttackMotion: 100
-    DamageMotion: 100
-    Ai: 25
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
   - Id: 20699
     AegisName: G_BELLARE3
     Name: Heart Hunter Commander
     Level: 143
     Hp: 295508
-    Attack: 1541
-    Attack2: 1867
-    Defense: 334
-    MagicDefense: 73
-    Str: 96
-    Agi: 55
-    Vit: 147
-    Int: 70
-    Dex: 148
-    Luk: 76
-    AttackRange: 9
+    Attack: 1931
+    Attack2: 648
+    Defense: 383
+    MagicDefense: 80
+    Str: 108
+    Agi: 121
+    Vit: 80
+    Int: 68
+    Dex: 113
+    Luk: 80
+    AttackRange: 5
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
     Element: Ghost
     ElementLevel: 1
-    WalkSpeed: 160
-    AttackDelay: 761
-    AttackMotion: 210
-    DamageMotion: 140
-    Ai: 09
-    Modes:
-      Assist: true
+    WalkSpeed: 150
+    AttackDelay: 384
+    AttackMotion: 384
+    DamageMotion: 480
+    Ai: 04
   - Id: 20700
     AegisName: G_BETA_SCISSORE_NG
     Name: Broken Gardener Beta
-    Level: 1
-    Attack: 1
-    Attack2: 1
-    Defense: 1
-    MagicDefense: 1
+    Level: 135
+    Hp: 234017
+    Attack: 1232
+    Attack2: 576
+    Defense: 336
+    MagicDefense: 76
+    Str: 73
+    Agi: 93
+    Vit: 67
+    Int: 64
+    Dex: 73
+    Luk: 90
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Medium
-    Race: Demihuman
-    Element: Neutral
-    ElementLevel: 3
-    WalkSpeed: 150
-    AttackDelay: 100
-    AttackMotion: 100
-    DamageMotion: 100
-    Ai: 25
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
 #  - Id: 20701
 #    AegisName: AB_PRINCESS_1
 #  - Id: 20702

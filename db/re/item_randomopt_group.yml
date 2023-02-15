@@ -13118,3 +13118,718 @@ Body:
             MinValue: 5
             MaxValue: 20
             Chance: 666
+  - Id: 152
+    Group: AUTO_IMP_MELEE_1
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 25
+            Chance: 5000
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+  - Id: 153
+    Group: AUTO_IMP_MELEE_2
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 25
+            Chance: 5000
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+  - Id: 154
+    Group: AUTO_IMP_MELEE_3
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 25
+            Chance: 5000
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 2
+            Chance: 5000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 45
+            Chance: 5000
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+          - Option: WEAPON_INDESTRUCTIBLE
+            Chance: 5000
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_DAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_DAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 12
+            Chance: 5000
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+      - Slot: 3
+        Options:
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 100
+            Chance: 5000
+          - Option: VAR_MDEFPOWER
+            MinValue: 10
+            MaxValue: 40
+            Chance: 5000
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: CLASS_DAMAGE_NORMAL_TARGET
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+          - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+
+  - Id: 155
+    Group: AUTO_IMP_MAGIC_1
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 25
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+  - Id: 156
+    Group: AUTO_IMP_MAGIC_2
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 25
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: RACE_MDAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+  - Id: 157
+    Group: AUTO_IMP_MAGIC_3
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 25
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 2
+            Chance: 5000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 45
+            Chance: 5000
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+          - Option: WEAPON_INDESTRUCTIBLE
+            Chance: 5000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: RACE_MDAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+      - Slot: 3
+        Options:
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 100
+            Chance: 5000
+          - Option: VAR_MDEFPOWER
+            MinValue: 10
+            MaxValue: 40
+            Chance: 5000
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: CLASS_MDAMAGE_NORMAL
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+          - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
