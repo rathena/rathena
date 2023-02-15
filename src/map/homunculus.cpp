@@ -1903,7 +1903,7 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					return 0;
 
 				if (evo && hom->base_class == hom->evo_class) {
-					this->invalidWarning(skill["RequireEvolution"], "Homunculus %s does not have any evolution making this skill unobtainable, skipping.\n");
+					this->invalidWarning(skill["RequireEvolution"], "Homunculus %s does not have any evolution making skill %s unobtainable, skipping.\n", class_name.c_str(), skill_db.find(entry.id)->name);
 					return 0;
 				}
 
