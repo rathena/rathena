@@ -95,6 +95,13 @@ endif()
 
 c4_add_dev_targets()
 
-add_custom_target(ryml-uninstall
-    "${CMAKE_COMMAND}" -P "${PROJECT_SOURCE_DIR}/cmake/uninstall.cmake"
-)
+# [rathena]
+# don't need to uninstall, since we're using a subdirectory
+# add_custom_target(ryml-uninstall
+#     "${CMAKE_COMMAND}" -P "${PROJECT_SOURCE_DIR}/cmake/uninstall.cmake"
+# )
+
+# rathena
+if(WIN32)
+    set_target_properties(ryml PROPERTIES FOLDER "3rdparty")
+endif()
