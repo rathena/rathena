@@ -4,11 +4,11 @@
 #ifndef GUILD_HPP
 #define GUILD_HPP
 
-#include <common/cbasetypes.hpp>
-#include <common/database.hpp>
-#include <common/mmo.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/database.hpp"
+#include "common/mmo.hpp"
 
-#include <map/map.hpp> // NAME_LENGTH
+#include "map/map.hpp" // NAME_LENGTH
 
 struct guild;
 struct guild_member;

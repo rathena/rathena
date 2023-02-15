@@ -6,12 +6,12 @@
 
 #include <bitset>
 
-#include <common/cbasetypes.hpp>
-#include <common/mmo.hpp>
-#include <config/core.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/mmo.hpp"
+#include "config/core.hpp"
 
-#include <map/map.hpp> //ELE_MAX
-#include <map/skill.hpp>
+#include "map/map.hpp" //ELE_MAX
+#include "map/skill.hpp"
 
 //fwd declaration
 class map_session_data;
@@ -730,7 +730,7 @@ struct Battle_Config
 
 	int feature_stylist;
 
-#include <custom/battle_config_struct.inc>
+#include "custom/battle_config_struct.inc"
 };
 
 extern struct Battle_Config battle_config;

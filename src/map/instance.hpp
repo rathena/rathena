@@ -10,11 +10,11 @@
 #include <unordered_map>
 #include <vector>
 
-#include <common/cbasetypes.hpp>
-#include <common/database.hpp>
-#include <common/mmo.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/database.hpp"
+#include "common/mmo.hpp"
 
-#include <map/script.hpp>
+#include "map/script.hpp"
 
 enum send_target : uint8;
 struct block_list;

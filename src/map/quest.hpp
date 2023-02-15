@@ -6,11 +6,11 @@
 
 #include <string>
 
-#include <common/cbasetypes.hpp>
-#include <common/database.hpp>
-#include <common/strlib.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/database.hpp"
+#include "common/strlib.hpp"
 
-#include <map/map.hpp>
+#include "map/map.hpp"
 
 class map_session_data;
 enum e_size : uint8;

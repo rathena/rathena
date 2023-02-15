@@ -8,24 +8,24 @@
 #include <memory>
 #include <vector>
 
-#include <common/cbasetypes.hpp>
-#include <common/database.hpp>
-#include <common/mmo.hpp> // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
-#include <common/strlib.hpp>// StringBuf
-#include <common/timer.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/database.hpp"
+#include "common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
+#include "common/strlib.hpp"// StringBuf
+#include "common/timer.hpp"
 
-#include <map/battleground.hpp>
-#include <map/buyingstore.hpp> // struct s_buyingstore
-#include <map/clif.hpp> //e_wip_block
-#include <map/itemdb.hpp> // MAX_ITEMGROUP
-#include <map/map.hpp> // RC_ALL
-#include <map/mob.hpp> //e_size
-#include <map/pc_groups.hpp> // s_player_group
-#include <map/script.hpp> // struct script_reg, struct script_regstr
-#include <map/searchstore.hpp>  // struct s_search_store_info
-#include <map/status.hpp> // unit_data
-#include <map/unit.hpp> // unit_data
-#include <map/vending.hpp> // struct s_vending
+#include "map/battleground.hpp"
+#include "map/buyingstore.hpp" // struct s_buyingstore
+#include "map/clif.hpp" //e_wip_block
+#include "map/itemdb.hpp" // MAX_ITEMGROUP
+#include "map/map.hpp" // RC_ALL
+#include "map/mob.hpp" //e_size
+#include "map/pc_groups.hpp" // s_player_group
+#include "map/script.hpp" // struct script_reg, struct script_regstr
+#include "map/searchstore.hpp"  // struct s_search_store_info
+#include "map/status.hpp" // unit_data
+#include "map/unit.hpp" // unit_data
+#include "map/vending.hpp" // struct s_vending
 
 enum AtCommandType : uint8;
 enum e_instance_mode : uint8;

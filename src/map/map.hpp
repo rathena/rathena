@@ -10,17 +10,17 @@
 #include <unordered_map>
 #include <vector>
 
-#include <common/cbasetypes.hpp>
-#include <common/core.hpp> // CORE_ST_LAST
-#include <common/db.hpp>
-#include <common/mapindex.hpp>
-#include <common/mmo.hpp>
-#include <common/msg_conf.hpp>
-#include <common/timer.hpp>
-#include <config/core.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/core.hpp" // CORE_ST_LAST
+#include "common/db.hpp"
+#include "common/mapindex.hpp"
+#include "common/mmo.hpp"
+#include "common/msg_conf.hpp"
+#include "common/timer.hpp"
+#include "config/core.hpp"
 
-#include <map/navi.hpp>
-#include <map/script.hpp>
+#include "map/navi.hpp"
+#include "map/script.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
@@ -1242,8 +1242,8 @@ typedef struct s_elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-#include <common/sql.hpp>
-
+#include "common/sql.hpp"
+#include "common/sql.hpp"
 extern int db_use_sqldbs;
 
 extern Sql* mmysql_handle;

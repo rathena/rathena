@@ -6,12 +6,12 @@
 
 #include <vector>
 
-#include <common/database.hpp>
-#include <common/mmo.hpp> // struct item
-#include <common/timer.hpp>
+#include "common/database.hpp"
+#include "common/mmo.hpp" // struct item
+#include "common/timer.hpp"
 
-#include <map/status.hpp> // struct status data, struct status_change
-#include <map/unit.hpp> // unit_stop_walking(), unit_stop_attack()
+#include "map/status.hpp" // struct status data, struct status_change
+#include "map/unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
 struct guardian_data;
 

@@ -8,13 +8,13 @@
 #include <string>
 #include <vector>
 
-#include <common/database.hpp>
-#include <common/db.hpp>
-#include <common/malloc.hpp>
-#include <common/mmo.hpp> // ITEM_NAME_LENGTH
+#include "common/database.hpp"
+#include "common/db.hpp"
+#include "common/malloc.hpp"
+#include "common/mmo.hpp" // ITEM_NAME_LENGTH
 
-#include <map/script.hpp>
-#include <map/status.hpp>
+#include "map/script.hpp"
+#include "map/status.hpp"
 
 enum e_ammo_type : uint8;
 

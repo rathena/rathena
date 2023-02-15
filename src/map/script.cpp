@@ -18,18 +18,18 @@
 #include <pcre.h> // preg_match
 #endif
 
-#include <common/cbasetypes.hpp>
-#include <common/ers.hpp>  // ers_destroy
-#include <common/malloc.hpp>
-#include <common/md5calc.hpp>
-#include <common/nullpo.hpp>
-#include <common/random.hpp>
-#include <common/showmsg.hpp>
-#include <common/socket.hpp>
-#include <common/strlib.hpp>
-#include <common/timer.hpp>
-#include <common/utilities.hpp>
-#include <common/utils.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/ers.hpp"  // ers_destroy
+#include "common/malloc.hpp"
+#include "common/md5calc.hpp"
+#include "common/nullpo.hpp"
+#include "common/random.hpp"
+#include "common/showmsg.hpp"
+#include "common/socket.hpp"
+#include "common/strlib.hpp"
+#include "common/timer.hpp"
+#include "common/utilities.hpp"
+#include "common/utils.hpp"
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
@@ -26912,7 +26912,7 @@ BUILDIN_FUNC(macro_detector) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-#include <custom/script.inc>
+#include "custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
@@ -27668,7 +27668,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
 
-#include "../custom/script_def.inc"
+#include "custom/script_def.inc"
 
 	{NULL,NULL,NULL},
 };

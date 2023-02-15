@@ -7,13 +7,13 @@
 #include <array>
 #include <bitset>
 
-#include <common/cbasetypes.hpp>
-#include <common/database.hpp>
-#include <common/db.hpp>
-#include <common/mmo.hpp> // MAX_SKILL, struct square
-#include <common/timer.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/database.hpp"
+#include "common/db.hpp"
+#include "common/mmo.hpp" // MAX_SKILL, struct square
+#include "common/timer.hpp"
 
-#include <map/map.hpp> // struct block_list
+#include "map/map.hpp" // struct block_list
 
 enum damage_lv : uint8;
 enum sc_type : int16;

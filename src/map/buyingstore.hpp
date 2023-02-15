@@ -4,9 +4,9 @@
 #ifndef BUYINGSTORE_HPP
 #define BUYINGSTORE_HPP
 
-#include <common/cbasetypes.hpp>
+#include "common/cbasetypes.hpp"
 
-#include <map/map.hpp> //MESSAGE_SIZE
+#include "map/map.hpp" //MESSAGE_SIZE
 
 struct s_search_store_search;
 class map_session_data;

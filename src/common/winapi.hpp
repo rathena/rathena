@@ -4,7 +4,7 @@
 #ifndef WINAPI_HPP
 #define WINAPI_HPP
 
-#include <config/core.hpp>
+#include "config/core.hpp"
 
 #ifdef DEPRECATED_WINDOWS_SUPPORT
 #ifndef NTDDI_VERSION
@@ -56,7 +56,7 @@
 
 #undef NOMINMAX
 
-#include <common/cbasetypes.hpp>
+#include "common/cbasetypes.hpp"
 
 bool IsCurrentUserLocalAdministrator(void);
 

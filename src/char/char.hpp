@@ -8,13 +8,13 @@
 #include <unordered_map>
 #include <vector>
 
-#include <common/core.hpp> // CORE_ST_LAST
-#include <common/mmo.hpp>
-#include <common/msg_conf.hpp>
-#include <common/timer.hpp>
-#include <config/core.hpp>
+#include "common/core.hpp" // CORE_ST_LAST
+#include "common/mmo.hpp"
+#include "common/msg_conf.hpp"
+#include "common/timer.hpp"
+#include "config/core.hpp"
 
-#include <char/packets.hpp>
+#include "char/packets.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;

@@ -8,19 +8,19 @@
 
 #include <stdarg.h>
 
-#include <common/cbasetypes.hpp>
-#include <common/db.hpp> //dbmap
-#include <common/mmo.hpp>
-#include <common/timer.hpp> // t_tick
+#include "common/cbasetypes.hpp"
+#include "common/db.hpp" //dbmap
+#include "common/mmo.hpp"
+#include "common/timer.hpp" // t_tick
 
-#include <map/packets.hpp>
-#include <map/script.hpp>
+#include "map/packets.hpp"
+#include "map/script.hpp"
 
 struct Channel;
 struct clan;
 struct item;
 struct s_storage;
-//#include <map/map.hpp>
+//#include "map/map.hpp"
 struct block_list;
 struct unit_data;
 class map_session_data;

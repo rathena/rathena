@@ -6,13 +6,13 @@
 
 #include <memory>
 
-#include <common/cbasetypes.hpp>
-#include <common/core.hpp>
-#include <common/mmo.hpp> // NAME_LENGTH,SEX_*
-#include <common/timer.hpp>
-#include <config/core.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/core.hpp"
+#include "common/mmo.hpp" // NAME_LENGTH,SEX_*
+#include "common/timer.hpp"
+#include "config/core.hpp"
 
-#include <login/account.hpp>
+#include "login/account.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;

@@ -4,7 +4,7 @@
 #ifndef DUEL_HPP
 #define DUEL_HPP
 
-#include <common/cbasetypes.hpp>
+#include "common/cbasetypes.hpp"
 
 class map_session_data;
 struct duel {
