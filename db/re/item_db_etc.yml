@@ -11501,7 +11501,7 @@ Body:
       Head_Top: true
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT      
+      DropEffect: CLIENT
   - Id: 4625
     AegisName: Timeholder_Card
     Name: Time Holder Card
@@ -45474,7 +45474,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      skill "AL_BLESSING",10;  
+      skill "AL_BLESSING",10;
   - Id: 31000
     AegisName: Rudo_Card_J
     Name: Rudo Card
@@ -47798,6 +47798,61 @@ Body:
       bonus bDelayrate,-5;
       bonus bPAtk,1;
       bonus bSmatk,1;
+  - Id: 300195
+    AegisName: SLD_Boitata_Card
+    Name: Sealed Voitata Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Insect,20;
+      bonus2 bAddRace,RC_Brute,20;
+      bonus2 bAddEle,Ele_Earth,20;
+      bonus2 bAddEle,Ele_Wind,20;
+      if (getrefine()>=15) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_Brute,10;
+         bonus2 bAddEle,Ele_Earth,10;
+         bonus2 bAddEle,Ele_Wind,10;
+      }
+  - Id: 300201
+    AegisName: SLD_P_Spi_Q_Card
+    Name: Sealed Tainted Broodmother Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,50;
+      bonus2 bMagicAtkEle,Ele_Water,50;
+      bonus2 bSubEle,Ele_All,-60;
+      if (getrefine()>=15) {
+         bonus2 bSubEle,Ele_All,-40;
+         bonus2 bMagicAtkEle,Ele_Earth,25;
+         bonus2 bMagicAtkEle,Ele_Water,25;
+      }
+  - Id: 300203
+    AegisName: SLD_F_Muspell_Card
+    Name: Sealed Hardened Muspellscall Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubRace,RC_Demon,30;
+      bonus2 bSubRace,RC_Brute,30;
+      bonus2 bSubRace,RC_Dragon,30;
+      bonus2 bAddClass,Class_Normal,20;
+      if (getrefine()>=15) {
+         bonus2 bAddClass,Class_Normal,10;
+      }
   - Id: 300207
     AegisName: SLD_Shining_T_Bear_Card
     Name: Sealed Shiny Teddy Bear Card
@@ -55602,7 +55657,7 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bLongAtkDef,5+(10*(.@r/3));      
+      bonus bLongAtkDef,5+(10*(.@r/3));
   - Id: 310654
     AegisName: ASPD_Robe_D
     Name: ASPD+1(Dual)
@@ -66001,6 +66056,794 @@ Body:
     Name: Evil Spell
     Type: Card
     SubType: Enchant
+  - Id: 312189
+    AegisName: M_Pow3
+    Name: POW+3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,3;
+  - Id: 312190
+    AegisName: M_Sta3
+    Name: STA+3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSta,3;
+  - Id: 312191
+    AegisName: M_Wis3
+    Name: WIS+3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bWis,3;
+  - Id: 312192
+    AegisName: M_Spl3
+    Name: SPL+3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,3;
+  - Id: 312193
+    AegisName: M_Con3
+    Name: CON+3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCon,3;
+  - Id: 312194
+    AegisName: M_Crt3
+    Name: CRT+3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCrt,3;
+  - Id: 312195
+    AegisName: Nimble_Soul
+    Name: Nimble Soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,(getrefine()/2);
+  - Id: 312196
+    AegisName: Casting_Soul
+    Name: Casting soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-(getrefine()/2);
+  - Id: 312197
+    AegisName: Critical_Soul
+    Name: Critical Soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,(getrefine()/2);
+  - Id: 312198
+    AegisName: Expert_Soul
+    Name: Expert Soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-(getrefine()/2);
+  - Id: 312199
+    AegisName: Robust_Soul
+    Name: Robust Soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,(.@r/3);
+      bonus bMaxSPrate,(.@r/3);
+  - Id: 312200
+    AegisName: DK_Soul_SW
+    Name: Dragon Knight Soul (Servant Weapon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",2+(getrefine()/2);
+  - Id: 312201
+    AegisName: DK_Soul_SS
+    Name: Dragon Knight Soul (Storm Slash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_STORMSLASH",2+(getrefine()/2);
+  - Id: 312202
+    AegisName: DK_Soul_HS
+    Name: Dragon Knight Soul (Hack and Slasher)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",2+(getrefine()/2);
+  - Id: 312203
+    AegisName: DK_Soul_MC
+    Name: Dragon Knight Soul (Madness Crusher)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",2+(getrefine()/2);
+  - Id: 312204
+    AegisName: IG_Soul_OS
+    Name: Imperial Guard Soul (Over Slash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IG_OVERSLASH",2+(getrefine()/2);
+  - Id: 312205
+    AegisName: IG_Soul_SS
+    Name: Imperial Guard Soul (Shield Shooting)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",2+(getrefine()/2);
+  - Id: 312206
+    AegisName: IG_Soul_CR
+    Name: Imperial Guard Soul (Cross Lane)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IG_CROSS_RAIN",2+(getrefine()/2);
+  - Id: 312207
+    AegisName: SHC_Soul_ES
+    Name: Shadow Cross Soul (Eternal Slash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",2+(getrefine()/2);
+  - Id: 312208
+    AegisName: SHC_Soul_SI
+    Name: Shadow Cross Soul (Savage Impact)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",2+(getrefine()/2);
+  - Id: 312209
+    AegisName: SHC_Soul_IC
+    Name: Shadow Cross Soul (Impact Crater)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",2+(getrefine()/2);
+  - Id: 312210
+    AegisName: SHC_Soul_SS
+    Name: Shadow Cross Soul (Shadow Staff)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SHC_SHADOW_STAB",2+(getrefine()/2);
+  - Id: 312211
+    AegisName: ABC_Soul_DS
+    Name: Abyss Chaser Soul (Deft Staff)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_DEFT_STAB",2+(getrefine()/2);
+  - Id: 312212
+    AegisName: ABC_Soul_CR
+    Name: Abyss Chaser Soul (Chain Reaction Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",2+(getrefine()/2);
+  - Id: 312213
+    AegisName: ABC_Soul_FS
+    Name: Abyss Chaser Soul (Frenzy Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_FRENZY_SHOT",2+(getrefine()/2);
+  - Id: 312214
+    AegisName: ABC_Soul_AD
+    Name: Abyss Chaser Soul (Abyss Dagger)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",2+(getrefine()/2);
+  - Id: 312215
+    AegisName: ABC_Soul_AS
+    Name: Abyss Chaser Soul (Abyss Square)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",2+(getrefine()/2);
+  - Id: 312216
+    AegisName: ABC_Soul_FA
+    Name: Abyss Chaser Soul (From the Abyss)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS_ATK",2+(getrefine()/2);
+  - Id: 312217
+    AegisName: CD_Soul_AB
+    Name: Cardinal Soul (Arbitrium)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",2+(getrefine()/2);
+  - Id: 312218
+    AegisName: CD_Soul_FL
+    Name: Cardinal Soul (Flamen)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"CD_FRAMEN",2+(getrefine()/2);
+  - Id: 312219
+    AegisName: CD_Soul_PT
+    Name: Cardinal Soul (Petitio)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"CD_PETITIO",2+(getrefine()/2);
+  - Id: 312220
+    AegisName: IQ_Soul_FT
+    Name: Inquisitor Soul (Conviction)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_THIRD_PUNISH",2+(.@r/2);
+      bonus2 bSkillAtk,"IQ_SECOND_FAITH",2+(.@r/2);
+  - Id: 312221
+    AegisName: IQ_Soul_JD
+    Name: Inquisitor Soul (Judgment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",2+(.@r/2);
+      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",2+(.@r/2);
+  - Id: 312222
+    AegisName: IQ_Soul_EX
+    Name: Inquisitor Soul (Death)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IQ_SECOND_FLAME",2+(getrefine()/2);
+  - Id: 312223
+    AegisName: IQ_Soul_FL
+    Name: Inquisitor Soul (Explosive God Bullet)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",2+(getrefine()/2);
+  - Id: 312224
+    AegisName: MT_Soul_AS
+    Name: Meister Soul (Ax Stomp)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_AXE_STOMP",2+(getrefine()/2);
+  - Id: 312225
+    AegisName: MT_Soul_SB
+    Name: Meister Soul (Spark Blaster)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_SPARK_BLASTER",2+(getrefine()/2);
+  - Id: 312226
+    AegisName: MT_Soul_MS
+    Name: Meister Soul (Mighty Smash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",2+(getrefine()/2);
+  - Id: 312227
+    AegisName: MT_Soul_TL
+    Name: Meister Soul (Triple Laser)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_TRIPLE_LASER",2+(getrefine()/2);
+  - Id: 312228
+    AegisName: BO_Soul_MT
+    Name: Violo Soul (Mahemic Thorns)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",2+(getrefine()/2);
+  - Id: 312229
+    AegisName: BO_Soul_AZ
+    Name: Biolo Soul (Acidified Zone)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",2+(.@r/2);
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",2+(.@r/2);
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",2+(.@r/2);
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",2+(.@r/2);
+  - Id: 312230
+    AegisName: BO_Soul_EP
+    Name: Violo Soul (Explosive Powder)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",2+(getrefine()/2);
+  - Id: 312231
+    AegisName: WH_Soul_GS
+    Name: Windhawk Soul (Gile Storm)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_GALESTORM",2+(getrefine()/2);
+  - Id: 312232
+    AegisName: WH_Soul_CB
+    Name: Windhawk Soul (Creative Volt)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",2+(getrefine()/2);
+  - Id: 312233
+    AegisName: WH_Soul_HS
+    Name: Windhawk Soul (Hawk Rush)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_HAWKRUSH",2+(getrefine()/2);
+  - Id: 312234
+    AegisName: WH_Soul_ST
+    Name: Windhawk Soul (Solid Trap)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_SOLIDTRAP",2+(getrefine()/2);
+  - Id: 312235
+    AegisName: WH_Soul_BT
+    Name: Windhawk Soul (Deep Blind Trap)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_DEEPBLINDTRAP",2+(getrefine()/2);
+  - Id: 312236
+    AegisName: WH_Soul_FT
+    Name: Windhawk Soul (Flame Trap)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_FLAMETRAP",2+(getrefine()/2);
+  - Id: 312237
+    AegisName: WH_Soul_SW
+    Name: Windhawk Soul (Swift Trap)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WH_SWIFTTRAP",2+(getrefine()/2);
+  - Id: 312238
+    AegisName: TR_Soul_RB
+    Name: Troubadour & Trouber Soul (Rosé Blossom)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",2+(getrefine()/2);
+  - Id: 312239
+    AegisName: TR_Soul_RS
+    Name: Troubadour & Trouber Soul (Rhythm Shooting)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",2+(getrefine()/2);
+  - Id: 312240
+    AegisName: TR_Soul_MF
+    Name: Troubadour & Trouber Soul (Metallic Fury)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"TR_METALIC_FURY",2+(getrefine()/2);
+  - Id: 312241
+    AegisName: AG_Soul_SV
+    Name: Arch Mage Soul (Soul Vulcan Strike)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",2+(getrefine()/2);
+  - Id: 312242
+    AegisName: AG_Soul_MI
+    Name: Ark Mage Soul (Mystery Illusion)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_MYSTERY_ILLUSION",2+(getrefine()/2);
+  - Id: 312243
+    AegisName: AG_Soul_FF
+    Name: Arch Mage Soul (Floral Flare Rod)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",2+(getrefine()/2);
+  - Id: 312244
+    AegisName: AG_Soul_CA
+    Name: Arch Mage Soul (Crimson Arrow)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",2+(getrefine()/2);
+  - Id: 312245
+    AegisName: AG_Soul_RC
+    Name: Arch Mage Soul (Rain of Crystal)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_RAIN_OF_CRYSTAL",2+(getrefine()/2);
+  - Id: 312246
+    AegisName: AG_Soul_FS
+    Name: Arch Mage Soul (Frozen Slash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_FROZEN_SLASH",2+(getrefine()/2);
+  - Id: 312247
+    AegisName: AG_Soul_TS
+    Name: Arch Mage Soul (Tornado Storm)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_TORNADO_STORM",2+(getrefine()/2);
+  - Id: 312248
+    AegisName: AG_Soul_SC
+    Name: Arch Mage Soul (Storm Cannon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_STORM_CANNON",2+(getrefine()/2);
+  - Id: 312249
+    AegisName: AG_Soul_ST
+    Name: Arch Mage Soul (Stratum Trammer)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",2+(getrefine()/2);
+  - Id: 312250
+    AegisName: AG_Soul_RD
+    Name: Arch Mage Soul (Lock Down)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_ROCK_DOWN",2+(getrefine()/2);
+  - Id: 312251
+    AegisName: EM_Soul_DS
+    Name: Elemental Master Soul (Diamond Storm)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"EM_DIAMOND_STORM",2+(getrefine()/2);
+  - Id: 312252
+    AegisName: EM_Soul_CF
+    Name: Elemental Master Soul (Configuration)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",2+(getrefine()/2);
+  - Id: 312253
+    AegisName: EM_Soul_LD
+    Name: Elemental Master Soul (Lightning Land)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",2+(getrefine()/2);
+  - Id: 312254
+    AegisName: EM_Soul_TD
+    Name: Elemental Master Soul (Tera Drive)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"EM_TERRA_DRIVE",2+(getrefine()/2);
+  - Id: 312255
+    AegisName: EM_Soul_VS
+    Name: Elemental Master Soul (Venom Swamp)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",2+(getrefine()/2);
+  - Id: 312256
+    AegisName: NW_Soul_VN
+    Name: Night's Watch Soul (The Vigilant at Night)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",2+(getrefine()/2);
+  - Id: 312257
+    AegisName: NW_Soul_SS
+    Name: Night Watch Soul (Spiral Shooting)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",2+(getrefine()/2);
+  - Id: 312258
+    AegisName: NW_Soul_OB
+    Name: Night Watch Soul (Only One Bullet)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",2+(getrefine()/2);
+  - Id: 312259
+    AegisName: NW_Soul_WF
+    Name: Night Watch Soul (Wild Fire)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_WILD_FIRE",2+(getrefine()/2);
+  - Id: 312260
+    AegisName: NW_Soul_MO
+    Name: Night Watch Soul (Magazine for One)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",2+(getrefine()/2);
+  - Id: 312261
+    AegisName: NW_Soul_GR
+    Name: Night Watch Soul (Grenade)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",2+(.@r/2);
+      bonus2 bSkillAtk,"NW_BASIC_GRENADE",2+(.@r/2);
+      bonus2 bSkillAtk,"NW_GRENADES_DROPPING",2+(.@r/2);
+  - Id: 312262
+    AegisName: SH_Soul_HB
+    Name: Spirit Spirit Soul (Hyeonrok's Leaf Wind)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",2+(getrefine()/2);
+  - Id: 312263
+    AegisName: SH_Soul_HC
+    Name: Spirit Spirit Soul (Hyeonrokpo)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",2+(getrefine()/2);
+  - Id: 312264
+    AegisName: SH_Soul_CS
+    Name: Spirit Spirit Soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",2+(getrefine()/2);
+  - Id: 312265
+    AegisName: SH_Soul_HS
+    Name: Spirit Spirit Soul    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",2+(getrefine()/2);
+  - Id: 312266
+    AegisName: SS_Soul_FS
+    Name: Shinkiro & Shiranui Soul (Fouma Shuriken - Seized)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_FUUMASHOUAKU",2+(getrefine()/2);
+  - Id: 312267
+    AegisName: SS_Soul_FK
+    Name: Shinkiro & Shiranui Soul (Fouma Shuriken - Build)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",2+(getrefine()/2);
+  - Id: 312268
+    AegisName: SS_Soul_SH
+    Name: Shinkiro & Shiranui Soul (Red Flame Cannon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_SEKIENHOU",2+(getrefine()/2);
+  - Id: 312269
+    AegisName: SS_Soul_RH
+    Name: Shinkiro & Shiranui Soul (Cold Blooded)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_REIKETSUHOU",2+(getrefine()/2);
+  - Id: 312270
+    AegisName: SS_Soul_RDH
+    Name: Shinkiro & Shiranui Soul (Thunderbolt Cannon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_RAIDENPOU",2+(getrefine()/2);
+  - Id: 312271
+    AegisName: SS_Soul_KH
+    Name: Shinkiro & Shiranui Soul (Golden Dragon Cannon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_KINRYUUHOU",2+(getrefine()/2);
+  - Id: 312272
+    AegisName: SS_Soul_AH
+    Name: Shinkiro & Shiranui Soul (Dark Gun)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_ANTENPOU",2+(getrefine()/2);
+  - Id: 312273
+    AegisName: SS_Soul_KW
+    Name: Shinkiro & Shiranui Soul (Kunai - Distortion)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_KUNAIWAIKYOKU",2+(getrefine()/2);
+  - Id: 312274
+    AegisName: SS_Soul_KK
+    Name: Shinkiro & Shiranui Soul (Kunai-Refraction)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",2+(getrefine()/2);
+  - Id: 312275
+    AegisName: SS_Soul_KN
+    Name: Shinkiro & Shiranui Soul (Shadow Dance)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_KAGENOMAI",2+(getrefine()/2);
+  - Id: 312276
+    AegisName: SS_Soul_KG
+    Name: Shinkiro & Shiranui Soul (One Island of Shadows)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_KAGEGISSEN",2+(getrefine()/2);
+  - Id: 312277
+    AegisName: SKE_Soul_NB
+    Name: Celestial Soul (Taecheon Ilyang)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",2+(getrefine()/2);
+  - Id: 312278
+    AegisName: SKE_Soul_SB
+    Name: Celestial Soul (Chunyang)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_SUNSET_BLAST",2+(getrefine()/2);
+  - Id: 312279
+    AegisName: SKE_Soul_MK
+    Name: Celestial Soul (Taecheon Sun Moon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",2+(getrefine()/2);
+  - Id: 312280
+    AegisName: SKE_Soul_DB
+    Name: Celestial Soul (Thousand Moon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_DAWN_BREAK",2+(getrefine()/2);
+  - Id: 312281
+    AegisName: SKE_Soul_TG
+    Name: Heavenly Soul (Cheonjemanseong)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_TWINKLING_GALAXY",2+(getrefine()/2);
+  - Id: 312282
+    AegisName: SKE_Soul_SC
+    Name: Celestial Soul (Celestial)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_STAR_CANNON",2+(getrefine()/2);
+  - Id: 312283
+    AegisName: SOA_Soul_BD
+    Name: Yeongdosa Soul (Blue Dragon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLUE_DRAGON",2+(getrefine()/2);
+  - Id: 312284
+    AegisName: SOA_Soul_WT
+    Name: Young Dosa Soul (White Tiger)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_WHITE_TIGER",2+(getrefine()/2);
+  - Id: 312285
+    AegisName: SOA_Soul_RP
+    Name: Soul of the Leader (Master)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",2+(getrefine()/2);
+  - Id: 312286
+    AegisName: SOA_Soul_BT
+    Name: Yeongdosa Soul (Hyunmubu)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLACK_TORTOISE",2+(getrefine()/2);
+  - Id: 312287
+    AegisName: SOA_Soul_MS
+    Name: Leader Soul (Purification of the Dead)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",2+(getrefine()/2);
+  - Id: 312288
+    AegisName: SOA_Soul_SS
+    Name: Leader Soul (Leadership Department)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",2+(getrefine()/2);
+  - Id: 312289
+    AegisName: SOA_Soul_FG
+    Name: Young Dosa Soul (Bride of the four directions)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",2+(getrefine()/2);
+  - Id: 312290
+    AegisName: HN_Soul_DB
+    Name: Hyper Novice Soul (Double Bowling Bash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",2+(getrefine()/2);
+  - Id: 312291
+    AegisName: HN_Soul_SB
+    Name: Hyper Novice Soul (Mega Sonic Blow)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",2+(getrefine()/2);
+  - Id: 312292
+    AegisName: HN_Soul_SC
+    Name: Hyper Novice Soul (Shield Chain Rush)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",2+(getrefine()/2);
+  - Id: 312293
+    AegisName: HN_Soul_SP
+    Name: Hyper Novice Soul (Spiral Pierce Max)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_SPIRAL_PIERCE_MAX",2+(getrefine()/2);
+  - Id: 312294
+    AegisName: HN_Soul_MS
+    Name: Hyper Novice Soul (Meteor Storm Buster)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",2+(getrefine()/2);
+  - Id: 312295
+    AegisName: HN_Soul_JT
+    Name: Hyper Novice Soul (Jupitel Thunder Storm)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312296
+    AegisName: HN_Soul_JF
+    Name: Hyper Novice Soul (Jack Frost Nova)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",2+(getrefine()/2);
+  - Id: 312297
+    AegisName: HN_Soul_HD
+    Name: Hyper Novice Soul (Hell's Drive)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_HELLS_DRIVE",2+(getrefine()/2);
+  - Id: 312298
+    AegisName: HN_Soul_GG
+    Name: Hyper Novice Soul (Ground Gravitation)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_GROUND_GRAVITATION",2+(getrefine()/2);
+  - Id: 312299
+    AegisName: HN_Soul_NV
+    Name: Hyper Novice Soul (Napalm Vulcan Strike)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",2+(getrefine()/2);
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -70646,6 +71489,24 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001216
+    AegisName: 2301_ev_paste
+    Name: Sticky dough    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001253
+    AegisName: S_Enchant_Essence
+    Name: Shadow Essence    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
