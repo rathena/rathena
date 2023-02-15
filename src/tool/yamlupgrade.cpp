@@ -99,7 +99,7 @@ bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	std::vector<std::string> root_paths = {
 		path_db,
