@@ -6909,25 +6909,24 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 	}
 	// Episode 17.2 - START - (Walkthrough Conversion)
 	if (BaseLevel < 130) {
-		// todo
 		mes "[Rookie]";
-		mes "정보를 더 얻게 되면 연락드릴게요. 그러니 당분간 한숨 돌리도록 하세요.";
-		mes "엘류미나도 당분간은 여기서 맡아야겠지요.";
+		mes "I'll get back to you when I get more info. So take a break for a while.";
+		mes "Elyumina should also be in charge here for the time being.";
 		next;
 		cutin "16loo_01.bmp",2;
 		mes "[Rookie]";
-		mes "저희가 감시하면서 이곳에서 얻을 수 있는 파손된 무기를 우리가 쓸 수 있도록 개조하도록 제안해 볼 예정이에요.";
+		mes "We'll keep an eye on it and suggest modifying the damaged weapons we can get here for our own use.";
 		next;
 		mes "[Rookie]";
-		mes "모험가님도 혹시 관심 있으시다면 볼코바 대장님 <NAVI>[부하들]<INFO>sp_cor,108,130,0,101,0</INFO></NAVI> 쪽에서 관리하고 있으니 가서 물어보세요.";
+		mes "If you're an adventurer, if you're interested, it's managed by Captain Volkova's <NAVI>[subordinates]<INFO>sp_cor,108,130,0,101,0</INFO></NAVI>, so go and ask.";
 		next;
 		cutin "16loo_02.bmp",2;
 		mes "[Rookie]";
-		mes "이 주변에 아직 할 일이 꽤 많으니, 혹시 한가해지신다면 주변의 일손을 좀 도와주셔도 좋고요.";
-		mes "그럼 행운을 빕니다, 모험가님! 새로운 정보을 알게 되면 연락드릴게요!";
+		mes "There's still quite a bit of work to do around here, so if you're free, feel free to help out.";
+		mes "Then good luck, adventurer! I'll be in touch when I learn something new!";
 		next;
 		cutin "",255;
-		mes "^4d4dff 130Lv 이상 진행 가능한 퀘스트가 있습니다.^000000";
+		mes "^4d4dffThese quests are available from level 130 or higher.^000000";
 		close;
 	}
 	if (ep17_2_main == 0) {

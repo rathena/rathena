@@ -46,7 +46,7 @@ function	script	F_22507	{// ShabbyOldScroll
 //  0 : All the quests are not started
 //  1 : All the quests are started
 //  2 : All the quests are completed
-function	script	queststatus	{
+function	script	F_queststatus	{
 	.@type = getarg(0);
 	.@base = checkquest(getarg(1),.@type);
 	.@size = getargcount();

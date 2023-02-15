@@ -1353,13 +1353,13 @@ OnTalk02:
 
 OnTalk03:
 	'npc_is_talking = true;
-	npctalk "아 자동인형의 원형은 바르문트님이 만든게 맞소. 다만 지금의 나처럼 단순한 기능을 하는 녀석들이었지.";
+	npctalk "Oh, it's true that Master Varmundt made the prototypes of the automatons. But they were just like me, with simple functions.";
 	sleep 3000;
-	npctalk "우린 우리의 기억을 덧씌우고 바르문트님의 형상을 닮은 인간형으로 그들을 개조해나갔소";
+	npctalk "We overlaid our memories and remodeled them into humanoids in Master Varmundt's image";
 	sleep 2000;
-	npctalk "가끔 기능성 시험 목적으로 특이한 형태로 개조한 녀석들도 있었지.";
+	npctalk "Occasionally some of them were remodeled into peculiar shapes for functional testing purposes.";
 	sleep 2000;
-	npctalk "혹시 화원쪽의 자동인형들이 당신에게 임무 평가를 요청해오지 않았소?";
+	npctalk "Didn't the automatons from the garden ask you to evaluate the mission?";
 	sleep 1500;
 	specialeffect EF_MARKING_USE_CHANGEMONSTER;
 	if ('hidden_garden == 20)
@@ -1369,17 +1369,17 @@ OnTalk03:
 
 OnTalk04:
 	'npc_is_talking = true;
-	npctalk "역시 그랬었군.";
+	npctalk "So it was.";
 	sleep 3000;
-	npctalk "애초에 이 보안구역 내의 자동인형들중 대부분은 바르문트님을 본 적도 없는 녀석들이오.";
+	npctalk "In the first place, most of the automatons in this security area have never seen Master Varmundt before.";
 	sleep 2000;
-	npctalk "그들이 가진 바르문트님에 대한 기억은 그분의 조수로 활동하던 시절의 나의 기억을 조작해 넣은것이지.";
+	npctalk "The memories they have of Master Varmundt are fabricated from my memories of my time as his assistant.";
 	sleep 3000;
-	npctalk "저택의 운영 자금관리에 집중하는 카파의 지성이 많이 작용한 개체는 매우 계산적이고 돈벌이에 집착하고.";
+	npctalk "An entity heavily influenced by Kappa's intellect, who focuses on managing the mansion's running funds, is very calculating and obsessed with making money.";
 	sleep 2500;
-	npctalk "람다의 기억의 영향을 받은 아이들은 외부인에 호전적인 편이오. 바르문트님을 제외한 그 누구도 믿지않소.";
+	npctalk "Children affected by Lambda's memories tend to be warlike towards outsiders. They trust no one but Master Varmundt.";
 	sleep 2500;
-	npctalk "대략 그들의 성향이 이러하니 당신이 그들을 만나기 전 참고하면 좋겠소.";
+	npctalk "This is how they tend to be, so I'd like you to refer to them before you meet them.";
 	sleep 1500;
 	specialeffect EF_MARKING_USE_CHANGEMONSTER;
 	if ('hidden_garden == 21)

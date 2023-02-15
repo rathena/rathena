@@ -7674,8 +7674,8 @@ ba_in01,24,322,3	script	Cleaning Robot е╪#ba_pw01_02Q	20640,{
 		completequest 5892;
 		close;
 	}
-	.@status[0] = queststatus(HUNTING,5893,5894,5895);
-	.@status[1] = queststatus(HUNTING,5897,5898,5899);
+	.@status[0] = F_queststatus(HUNTING,5893,5894,5895);
+	.@status[1] = F_queststatus(HUNTING,5897,5898,5899);
 
 	if (.@status[0] == 2 || .@status[1] == 2) {
 		mes "[ Cleaning Robot е╪ ]";
@@ -8288,7 +8288,7 @@ ba_lib,157,19,5	script	Mansion Manager ет#ep172_balib	4_EP17_BASIC_B,{
 		close3;
 	}
 	if (ep17_2_library == 4) {
-		if (queststatus(HAVEQUEST, 11629,11630,11631,11632,11633) != 1) {
+		if (F_queststatus(HAVEQUEST, 11629,11630,11631,11632,11633) != 1) {
 			cutin "ep172_beta",2;
 			mes "[ Mansion Manager ет ]";
 			mes "Please be quiet inside the library. Also, you need to register to use the library. If you don't register, you won't be able to read any book inside the library.";
