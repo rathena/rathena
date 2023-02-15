@@ -750,6 +750,8 @@
 	export_constant2("bAddEffOnSkill",SP_ADDEFF_ONSKILL);
 	export_constant2("bHealPower",SP_ADD_HEAL_RATE);
 	export_constant2("bHealPower2",SP_ADD_HEAL2_RATE);
+	export_constant2("bIgnoreResRaceRate",SP_SP_IGNORE_RES_RACE_RATE);
+	export_constant2("bIgnoreMResRaceRate",SP_SP_IGNORE_MRES_RACE_RATE);
 
 	export_constant2("bRestartFullRecover",SP_RESTART_FULL_RECOVER);
 	export_constant2("bNoCastCancel",SP_NO_CASTCANCEL);
@@ -1867,6 +1869,9 @@
 	export_constant(SC_BEEF_RIB_STEW);
 	export_constant(SC_PORK_RIB_STEW);
 	export_constant(SC_WEAPONBREAKER);
+	export_constant(SC_TOXIN_OF_MANDARA);
+	export_constant(SC_GOLDENE_TONE);
+	export_constant(SC_TEMPERING);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);

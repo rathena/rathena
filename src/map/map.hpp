@@ -10,14 +10,14 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp" // CORE_ST_LAST
-#include "../common/db.hpp"
-#include "../common/mapindex.hpp"
-#include "../common/mmo.hpp"
-#include "../common/msg_conf.hpp"
-#include "../common/timer.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp> // CORE_ST_LAST
+#include <common/db.hpp>
+#include <common/mapindex.hpp>
+#include <common/mmo.hpp>
+#include <common/msg_conf.hpp>
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
 #include "navi.hpp"
 #include "script.hpp"
@@ -567,7 +567,8 @@ enum _sp {
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
-	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2 // 2102-2103
+	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2, // 2102-2103
+	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, // 2104-2105
 };
 
 enum _look {
@@ -1244,7 +1245,7 @@ typedef struct s_elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-#include "../common/sql.hpp"
+#include <common/sql.hpp>
 
 extern int db_use_sqldbs;
 

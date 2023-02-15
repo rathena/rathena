@@ -8,16 +8,16 @@
 #include <stdlib.h>
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "battle.hpp"
 #include "battleground.hpp"
@@ -4966,6 +4966,31 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	if((skill_lv = hom_checkskill(hd, HLIF_BRAIN)) > 0)
 		status->max_sp += skill_lv * status->max_sp / 100;
 
+	if((skill_lv = hom_checkskill(hd, MH_CLASSY_FLUTTER)) > 0) {
+		status->matk_min += 100 + 60* skill_lv;
+		status->matk_max += 100 + 60* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_BRUSHUP_CLAW)) > 0) {
+		status->batk += 100 + 60* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_POLISHING_NEEDLE)) > 0) {
+		status->matk_min += 50 + 20* skill_lv;
+		status->matk_max += 50 + 20* skill_lv;
+		status->batk += 100 + 40* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_LICHT_GEHORN)) > 0) {
+		status->matk_min += 100 + 30* skill_lv;
+		status->matk_max += 100 + 30* skill_lv;
+		status->batk += 100 + 30* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_BLAZING_LAVA)) > 0) {
+		status->batk += 100 + 60* skill_lv;
+	}
+
 	if (opt&SCO_FIRST) {
 		hd->battle_status.hp = hom->hp;
 		hd->battle_status.sp = hom->sp;
@@ -8427,6 +8452,8 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 		patk += sc->getSCE(SC_ABYSS_SLAYER)->val2;
 	if (sc->getSCE(SC_PRON_MARCH))
 		patk += sc->getSCE(SC_PRON_MARCH)->val2;
+	if (sc->getSCE(SC_TEMPERING))
+		patk += sc->getSCE(SC_TEMPERING)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -8473,10 +8500,14 @@ static signed short status_calc_res(struct block_list *bl, status_change *sc, in
 		res += sc->getSCE(SC_D_MACHINE)->val3;
 	if (sc->getSCE(SC_MUSICAL_INTERLUDE))
 		res += sc->getSCE(SC_MUSICAL_INTERLUDE)->val2;
+	if (sc->getSCE(SC_GOLDENE_TONE))
+		res += sc->getSCE(SC_GOLDENE_TONE)->val2;
 	if (sc->getSCE(SC_SHADOW_STRIP) && bl->type != BL_PC)
 		res -= res * sc->getSCE(SC_SHADOW_STRIP)->val2 / 100;
 	if (sc->getSCE(SC_AIN_RHAPSODY))
 		res -= sc->getSCE(SC_AIN_RHAPSODY)->val2;
+	if (sc->getSCE(SC_TOXIN_OF_MANDARA))
+		res -= sc->getSCE(SC_TOXIN_OF_MANDARA)->val2;
 
 	return (short)cap_value(res, 0, SHRT_MAX);
 }
@@ -8493,6 +8524,8 @@ static signed short status_calc_mres(struct block_list *bl, status_change *sc, i
 	if (!sc || !sc->count)
 		return cap_value(mres, 0, SHRT_MAX);
 
+	if (sc->getSCE(SC_GOLDENE_TONE))
+		mres += sc->getSCE(SC_GOLDENE_TONE)->val2;
 	if (sc->getSCE(SC_SHADOW_STRIP) && bl->type != BL_PC)
 		mres -= mres * sc->getSCE(SC_SHADOW_STRIP)->val2 / 100;
 	if (sc->getSCE(SC_GEF_NOCTURN))
@@ -12013,9 +12046,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PYROCLASTIC:
 			val2 += 100 + 10*val1; // atk bonus // !TODO: Confirm formula
 			break;
+		case SC_TEMPERING:
+			val2 += 5 + val1; // patk bonus
+			break;
+		case SC_GOLDENE_TONE:
+			val2 += 3 * val1; // res/mres bonus
+			break;
 		case SC_PARALYSIS: // [Lighta] need real info
 			val2 = 2*val1; // def reduction
 			val3 = 500*val1; // varcast augmentation
+			break;
+		case SC_TOXIN_OF_MANDARA:
+			val2 = 15*val1; // res reduction
 			break;
 		case SC_LIGHT_OF_REGENE: // Yommy leak need confirm
 			val2 = 20 * val1; // hp reco on death %

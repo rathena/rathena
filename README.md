@@ -30,7 +30,7 @@ Disk Space | 300 MB | 500 MB
 Operating System | Compiler
 ------|------
 Linux  | [gcc-5 or newer](https://www.gnu.org/software/gcc/gcc-5/) / [Make](https://www.gnu.org/software/make/)
-Windows | [MS Visual Studio 2013, 2015, 2017](https://www.visualstudio.com/downloads/)
+Windows | [MS Visual Studio 2017 or newer](https://www.visualstudio.com/downloads/)
 
 ### Required Applications
 Application | Name

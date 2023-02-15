@@ -15145,7 +15145,6 @@ Body:
                 Amount: 15
               - Material: EP19_D_P_Stone
                 Amount: 3
-# TODO: 48-50? Were they removed already again?
   - Id: 51
     TargetItems:
       C_20th_Anniversary_Hat: true
@@ -21442,3 +21441,1393 @@ Body:
                 Amount: 250
               - Material: Enchant_Ticket
                 Amount: 3
+  - Id: 70
+    TargetItems:
+      S_Master_Weapon: true
+      S_Master_Shield: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Strength5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Dexterity5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Inteligence5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Vitality5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Agility5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Luck5
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 71
+    TargetItems:
+      S_DK_Armor: true
+      S_DK_Shoes: true
+      S_DK_Earring: true
+      S_DK_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: DK_Soul_SW
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_MC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 72
+    TargetItems:
+      S_IG_Armor: true
+      S_IG_Shoes: true
+      S_IG_Earring: true
+      S_IG_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: IG_Soul_OS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_CR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 73
+    TargetItems:
+      S_SHC_Armor: true
+      S_SHC_Shoes: true
+      S_SHC_Earring: true
+      S_SHC_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SHC_Soul_ES
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_SI
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_IC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 74
+    TargetItems:
+      S_ABC_Armor: true
+      S_ABC_Shoes: true
+      S_ABC_Earring: true
+      S_ABC_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: ABC_Soul_DS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_CR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_FS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_AD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_AS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_FA
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 75
+    TargetItems:
+      S_CD_Armor: true
+      S_CD_Shoes: true
+      S_CD_Earring: true
+      S_CD_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: CD_Soul_AB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: CD_Soul_FL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: CD_Soul_PT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 76
+    TargetItems:
+      S_IQ_Armor: true
+      S_IQ_Shoes: true
+      S_IQ_Earring: true
+      S_IQ_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: IQ_Soul_FT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_JD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_EX
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_FL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 77
+    TargetItems:
+      S_MT_Armor: true
+      S_MT_Shoes: true
+      S_MT_Earring: true
+      S_MT_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: MT_Soul_AS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_SB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_MS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_TL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 78
+    TargetItems:
+      S_BO_Armor: true
+      S_BO_Shoes: true
+      S_BO_Earring: true
+      S_BO_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: BO_Soul_MT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_AZ
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_EP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 79
+    TargetItems:
+      S_WH_Armor: true
+      S_WH_Shoes: true
+      S_WH_Earring: true
+      S_WH_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: WH_Soul_GS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_CB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_ST
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_BT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_FT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_SW
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 80
+    TargetItems:
+      S_TR_Armor: true
+      S_TR_Shoes: true
+      S_TR_Earring: true
+      S_TR_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: TR_Soul_RB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: TR_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: TR_Soul_MF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 81
+    TargetItems:
+      S_AG_Armor: true
+      S_AG_Shoes: true
+      S_AG_Earring: true
+      S_AG_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: AG_Soul_SV
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_MI
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_FF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_CA
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_RC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_FS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_TS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_ST
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_RD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 82
+    TargetItems:
+      S_EM_Armor: true
+      S_EM_Shoes: true
+      S_EM_Earring: true
+      S_EM_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: EM_Soul_DS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_CF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_LD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_TD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_VS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 83
+    TargetItems:
+      S_NW_Armor: true
+      S_NW_Shoes: true
+      S_NW_Earring: true
+      S_NW_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: NW_Soul_VN
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_OB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_WF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_MO
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_GR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 84
+    TargetItems:
+      S_SH_Armor: true
+      S_SH_Shoes: true
+      S_SH_Earring: true
+      S_SH_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SH_Soul_HB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_HC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_CS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 85
+    TargetItems:
+      S_SS_Armor: true
+      S_SS_Shoes: true
+      S_SS_Earring: true
+      S_SS_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SS_Soul_FS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_FK
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_SH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_RH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_RDH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_AH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KW
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KK
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KN
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 86
+    TargetItems:
+      S_SKE_Armor: true
+      S_SKE_Shoes: true
+      S_SKE_Earring: true
+      S_SKE_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SKE_Soul_NB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_MK
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_DB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_TG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 87
+    TargetItems:
+      S_SOA_Armor: true
+      S_SOA_Shoes: true
+      S_SOA_Earring: true
+      S_SOA_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SOA_Soul_BD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_WT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_RP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_BT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_MS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_FG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 88
+    TargetItems:
+      S_HN_Armor: true
+      S_HN_Shoes: true
+      S_HN_Earring: true
+      S_HN_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: HN_Soul_DB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_SB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_SP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_MS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_JT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_JF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_HD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_GG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_NV
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5

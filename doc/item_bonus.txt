@@ -322,6 +322,11 @@ bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
 bonus2 bIgnoreDefClassRate,c,n;	Disregard n% of the target's DEF if the target belongs to class c
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
 
+Ignore Res
+----------
+bonus2 bIgnoreResRaceRate,r,n;		Disregard n% of the target's Res if the target belongs to race r
+bonus2 bIgnoreMResRaceRate,r,n; 	Disregard n% of the target's MRes if the target belongs to race r
+
 Experience
 ----------
 bonus2 bExpAddRace,r,x; 		Increase exp gained by x% against enemies of race r

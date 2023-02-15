@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
+#include <common/database.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp> // ITEM_NAME_LENGTH
 
 #include "script.hpp"
 #include "status.hpp"

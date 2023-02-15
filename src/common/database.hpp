@@ -10,7 +10,7 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #include "cbasetypes.hpp"
 #include "core.hpp"

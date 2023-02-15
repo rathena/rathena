@@ -6,11 +6,11 @@
 
 #include <memory>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
-#include "../common/timer.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/mmo.hpp> // NAME_LENGTH,SEX_*
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
 #include "account.hpp"
 

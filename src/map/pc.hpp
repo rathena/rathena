@@ -8,11 +8,11 @@
 #include <memory>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
-#include "../common/strlib.hpp"// StringBuf
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp> // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
+#include <common/strlib.hpp>// StringBuf
+#include <common/timer.hpp>
 
 #include "battleground.hpp"
 #include "buyingstore.hpp" // struct s_buyingstore
@@ -594,6 +594,8 @@ public:
 		int dropaddrace[RC_MAX];
 		int dropaddclass[CLASS_MAX];
 		int magic_subdefele[ELE_MAX];
+		int ignore_res_by_race[RC_MAX];
+		int ignore_mres_by_race[RC_MAX];
 	} indexed_bonus;
 	// zeroed arrays end here.
 

@@ -4,9 +4,9 @@
 #ifndef	_VENDING_HPP_
 #define	_VENDING_HPP_
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/mmo.hpp>
 
 class map_session_data;
 struct s_search_store_search;

@@ -34173,3 +34173,526 @@ Body:
          bonus bMatkRate,15;
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",70;
       }
+  - Combos:
+      - Combo:
+          - S_DK_Armor   # 24800
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_DK_Shoes   # 24801
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_DK_Earring   # 24802
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_DK_Pendant   # 24803
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_IG_Armor   # 24804
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_IG_Shoes   # 24805
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_IG_Earring   # 24806
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_IG_Pendant   # 24807
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SHC_Armor   # 24808
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SHC_Shoes   # 24809
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SHC_Earring   # 24810
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SHC_Pendant   # 24811
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_ABC_Armor   # 24812
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_ABC_Shoes   # 24813
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_ABC_Earring   # 24814
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_ABC_Pendant   # 24815
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_CD_Armor   # 24816
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_CD_Shoes   # 24817
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_CD_Earring   # 24818
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_CD_Pendant   # 24819
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_IQ_Armor   # 24820
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_IQ_Shoes   # 24821
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_IQ_Earring   # 24822
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_IQ_Pendant   # 24823
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_MT_Armor   # 24824
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_MT_Shoes   # 24825
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_MT_Earring   # 24826
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_MT_Pendant   # 24827
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_BO_Armor   # 24828
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_BO_Shoes   # 24829
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_BO_Earring   # 24830
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_BO_Pendant   # 24831
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_WH_Armor   # 24832
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_WH_Shoes   # 24833
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_WH_Earring   # 24834
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_WH_Pendant   # 24835
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_TR_Armor   # 24836
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_TR_Shoes   # 24837
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_TR_Earring   # 24838
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_TR_Pendant   # 24839
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_AG_Armor   # 24840
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_AG_Shoes   # 24841
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_AG_Earring   # 24842
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_AG_Pendant   # 24843
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_EM_Armor   # 24844
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_EM_Shoes   # 24845
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_EM_Earring   # 24846
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_EM_Pendant   # 24847
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_NW_Armor   # 24848
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_NW_Shoes   # 24849
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_NW_Earring   # 24850
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_NW_Pendant   # 24851
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SH_Armor   # 24852
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SH_Shoes   # 24853
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SH_Earring   # 24854
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SH_Pendant   # 24855
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SS_Armor   # 24856
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SS_Shoes   # 24857
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SS_Earring   # 24858
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SS_Pendant   # 24859
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SKE_Armor   # 24860
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SKE_Shoes   # 24861
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SKE_Earring   # 24862
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SKE_Pendant   # 24863
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SOA_Armor   # 24864
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SOA_Shoes   # 24865
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SOA_Earring   # 24866
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_SOA_Pendant   # 24867
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_HN_Armor   # 24868
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_HN_Shoes   # 24869
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_HN_Earring   # 24870
+          - S_Master_Weapon   # 24792
+      - Combo:
+          - S_HN_Pendant   # 24871
+          - S_Master_Weapon   # 24792
+    Script: |
+      bonus bAllTraitStats,2;
+  - Combos:
+      - Combo:
+          - S_DK_Armor   # 24800
+          - S_Master_Shield   # 24793
+          - S_DK_Shoes   # 24801
+      - Combo:
+          - S_IG_Armor   # 24804
+          - S_Master_Shield   # 24793
+          - S_IG_Shoes   # 24805
+      - Combo:
+          - S_SHC_Armor   # 24808
+          - S_Master_Shield   # 24793
+          - S_SHC_Shoes   # 24809
+      - Combo:
+          - S_ABC_Armor   # 24812
+          - S_Master_Shield   # 24793
+          - S_ABC_Shoes   # 24813
+      - Combo:
+          - S_CD_Armor   # 24816
+          - S_Master_Shield   # 24793
+          - S_CD_Shoes   # 24817
+      - Combo:
+          - S_IQ_Armor   # 24820
+          - S_Master_Shield   # 24793
+          - S_IQ_Shoes   # 24821
+      - Combo:
+          - S_MT_Armor   # 24824
+          - S_Master_Shield   # 24793
+          - S_MT_Shoes   # 24825
+      - Combo:
+          - S_BO_Armor   # 24828
+          - S_Master_Shield   # 24793
+          - S_BO_Shoes   # 24829
+      - Combo:
+          - S_WH_Armor   # 24832
+          - S_Master_Shield   # 24793
+          - S_WH_Shoes   # 24833
+      - Combo:
+          - S_TR_Armor   # 24836
+          - S_Master_Shield   # 24793
+          - S_TR_Shoes   # 24837
+      - Combo:
+          - S_AG_Armor   # 24840
+          - S_Master_Shield   # 24793
+          - S_AG_Shoes   # 24841
+      - Combo:
+          - S_EM_Armor   # 24844
+          - S_Master_Shield   # 24793
+          - S_EM_Shoes   # 24845
+      - Combo:
+          - S_NW_Armor   # 24848
+          - S_Master_Shield   # 24793
+          - S_NW_Shoes   # 24849
+      - Combo:
+          - S_SH_Shoes   # 24853
+          - S_SH_Armor   # 24852
+          - S_Master_Shield   # 24793
+      - Combo:
+          - S_SS_Armor   # 24856
+          - S_Master_Shield   # 24793
+          - S_SS_Shoes   # 24857
+      - Combo:
+          - S_SKE_Armor   # 24860
+          - S_Master_Shield   # 24793
+          - S_SKE_Shoes   # 24861
+      - Combo:
+          - S_SOA_Armor   # 24864
+          - S_Master_Shield   # 24793
+          - S_SOA_Shoes   # 24865
+      - Combo:
+          - S_HN_Armor   # 24868
+          - S_Master_Shield   # 24793
+          - S_HN_Shoes   # 24869
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bPAtk,1;
+      bonus bSMatk,1;
+      if (.@sum>=27) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+         bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+      }
+  - Combos:
+      - Combo:
+          - S_DK_Earring   # 24802
+          - S_Master_Weapon   # 24792
+          - S_DK_Pendant   # 24803
+      - Combo:
+          - S_IG_Earring   # 24806
+          - S_Master_Weapon   # 24792
+          - S_IG_Pendant   # 24807
+      - Combo:
+          - S_SHC_Earring   # 24810
+          - S_Master_Weapon   # 24792
+          - S_SHC_Pendant   # 24811
+      - Combo:
+          - S_ABC_Earring   # 24814
+          - S_Master_Weapon   # 24792
+          - S_ABC_Pendant   # 24815
+      - Combo:
+          - S_CD_Earring   # 24818
+          - S_Master_Weapon   # 24792
+          - S_CD_Pendant   # 24819
+      - Combo:
+          - S_IQ_Earring   # 24822
+          - S_Master_Weapon   # 24792
+          - S_IQ_Pendant   # 24823
+      - Combo:
+          - S_MT_Earring   # 24826
+          - S_Master_Weapon   # 24792
+          - S_MT_Pendant   # 24827
+      - Combo:
+          - S_BO_Earring   # 24830
+          - S_Master_Weapon   # 24792
+          - S_BO_Pendant   # 24831
+      - Combo:
+          - S_WH_Earring   # 24834
+          - S_Master_Weapon   # 24792
+          - S_WH_Pendant   # 24835
+      - Combo:
+          - S_TR_Earring   # 24838
+          - S_Master_Weapon   # 24792
+          - S_TR_Pendant   # 24839
+      - Combo:
+          - S_AG_Earring   # 24842
+          - S_Master_Weapon   # 24792
+          - S_AG_Pendant   # 24843
+      - Combo:
+          - S_EM_Earring   # 24846
+          - S_Master_Weapon   # 24792
+          - S_EM_Pendant   # 24847
+      - Combo:
+          - S_NW_Earring   # 24850
+          - S_Master_Weapon   # 24792
+          - S_NW_Pendant   # 24851
+      - Combo:
+          - S_SH_Earring   # 24854
+          - S_Master_Weapon   # 24792
+          - S_SH_Pendant   # 24855
+      - Combo:
+          - S_SS_Earring   # 24858
+          - S_Master_Weapon   # 24792
+          - S_SS_Pendant   # 24859
+      - Combo:
+          - S_SKE_Earring   # 24862
+          - S_Master_Weapon   # 24792
+          - S_SKE_Pendant   # 24863
+      - Combo:
+          - S_SOA_Earring   # 24866
+          - S_Master_Weapon   # 24792
+          - S_SOA_Pendant   # 24867
+      - Combo:
+          - S_HN_Earring   # 24870
+          - S_Master_Weapon   # 24792
+          - S_HN_Pendant   # 24871
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
+      bonus bPAtk,1;
+      bonus bSMatk,1;
+      if (.@sum>=27) {
+         bonus2 bIgnoreDefRaceRate,RC_All,50;
+         bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+         bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+      }
+  - Combos:
+      - Combo:
+          - S_DK_Armor   # 24800
+          - S_Master_Shield   # 24793
+          - S_DK_Shoes   # 24801
+          - S_DK_Earring   # 24802
+          - S_Master_Weapon   # 24792
+          - S_DK_Pendant   # 24803
+      - Combo:
+          - S_IG_Armor   # 24804
+          - S_Master_Shield   # 24793
+          - S_IG_Shoes   # 24805
+          - S_IG_Earring   # 24806
+          - S_Master_Weapon   # 24792
+          - S_IG_Pendant   # 24807
+      - Combo:
+          - S_SHC_Armor   # 24808
+          - S_Master_Shield   # 24793
+          - S_SHC_Shoes   # 24809
+          - S_SHC_Earring   # 24810
+          - S_Master_Weapon   # 24792
+          - S_SHC_Pendant   # 24811
+      - Combo:
+          - S_ABC_Armor   # 24812
+          - S_Master_Shield   # 24793
+          - S_ABC_Shoes   # 24813
+          - S_ABC_Earring   # 24814
+          - S_Master_Weapon   # 24792
+          - S_ABC_Pendant   # 24815
+      - Combo:
+          - S_CD_Armor   # 24816
+          - S_Master_Shield   # 24793
+          - S_CD_Shoes   # 24817
+          - S_CD_Earring   # 24818
+          - S_Master_Weapon   # 24792
+          - S_CD_Pendant   # 24819
+      - Combo:
+          - S_IQ_Armor   # 24820
+          - S_Master_Shield   # 24793
+          - S_IQ_Shoes   # 24821
+          - S_IQ_Earring   # 24822
+          - S_Master_Weapon   # 24792
+          - S_IQ_Pendant   # 24823
+      - Combo:
+          - S_MT_Armor   # 24824
+          - S_Master_Shield   # 24793
+          - S_MT_Shoes   # 24825
+          - S_MT_Earring   # 24826
+          - S_Master_Weapon   # 24792
+          - S_MT_Pendant   # 24827
+      - Combo:
+          - S_BO_Armor   # 24828
+          - S_Master_Shield   # 24793
+          - S_BO_Shoes   # 24829
+          - S_BO_Earring   # 24830
+          - S_Master_Weapon   # 24792
+          - S_BO_Pendant   # 24831
+      - Combo:
+          - S_WH_Armor   # 24832
+          - S_Master_Shield   # 24793
+          - S_WH_Shoes   # 24833
+          - S_WH_Earring   # 24834
+          - S_Master_Weapon   # 24792
+          - S_WH_Pendant   # 24835
+      - Combo:
+          - S_TR_Armor   # 24836
+          - S_Master_Shield   # 24793
+          - S_TR_Shoes   # 24837
+          - S_TR_Earring   # 24838
+          - S_Master_Weapon   # 24792
+          - S_TR_Pendant   # 24839
+      - Combo:
+          - S_AG_Armor   # 24840
+          - S_Master_Shield   # 24793
+          - S_AG_Shoes   # 24841
+          - S_AG_Earring   # 24842
+          - S_Master_Weapon   # 24792
+          - S_AG_Pendant   # 24843
+      - Combo:
+          - S_EM_Armor   # 24844
+          - S_Master_Shield   # 24793
+          - S_EM_Shoes   # 24845
+          - S_EM_Earring   # 24846
+          - S_Master_Weapon   # 24792
+          - S_EM_Pendant   # 24847
+      - Combo:
+          - S_NW_Armor   # 24848
+          - S_Master_Shield   # 24793
+          - S_NW_Shoes   # 24849
+          - S_NW_Earring   # 24850
+          - S_Master_Weapon   # 24792
+          - S_NW_Pendant   # 24851
+      - Combo:
+          - S_SH_Shoes   # 24853
+          - S_SH_Armor   # 24852
+          - S_Master_Shield   # 24793
+          - S_SH_Earring   # 24854
+          - S_Master_Weapon   # 24792
+          - S_SH_Pendant   # 24855
+      - Combo:
+          - S_SS_Armor   # 24856
+          - S_Master_Shield   # 24793
+          - S_SS_Shoes   # 24857
+          - S_SS_Earring   # 24858
+          - S_Master_Weapon   # 24792
+          - S_SS_Pendant   # 24859
+      - Combo:
+          - S_SKE_Armor   # 24860
+          - S_Master_Shield   # 24793
+          - S_SKE_Shoes   # 24861
+          - S_SKE_Earring   # 24862
+          - S_Master_Weapon   # 24792
+          - S_SKE_Pendant   # 24863
+      - Combo:
+          - S_SOA_Armor   # 24864
+          - S_Master_Shield   # 24793
+          - S_SOA_Shoes   # 24865
+          - S_SOA_Earring   # 24866
+          - S_Master_Weapon   # 24792
+          - S_SOA_Pendant   # 24867
+      - Combo:
+          - S_HN_Armor   # 24868
+          - S_Master_Shield   # 24793
+          - S_HN_Shoes   # 24869
+          - S_HN_Earring   # 24870
+          - S_Master_Weapon   # 24792
+          - S_HN_Pendant   # 24871
+    Script: |
+      bonus2 bIgnoreResRaceRate,RC_All,20;
+      bonus2 bIgnoreResRaceRate,RC_Player_Human,-20;
+      bonus2 bIgnoreResRaceRate,RC_Player_Doram,-20;
+      bonus2 bIgnoreMResRaceRate,RC_All,20;
+      bonus2 bIgnoreMResRaceRate,RC_Player_Human,-20;
+      bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-20;
