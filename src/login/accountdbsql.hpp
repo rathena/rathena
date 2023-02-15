@@ -7,10 +7,10 @@
 #include <memory>
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"  // ACCOUNT_REG2_NUM
-#include "../common/sql.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>  // ACCOUNT_REG2_NUM
+#include <common/sql.hpp>
+#include <config/core.hpp>
 #include "accountdb.hpp"
 #include "mmo_account.hpp"
 

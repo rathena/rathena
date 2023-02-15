@@ -6,8 +6,8 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-#include "../common/showmsg.hpp"
-#include "../common/sql.hpp"
+#include <common/showmsg.hpp>
+#include <common/sql.hpp>
 
 #include "auth.hpp"
 #include "http.hpp"

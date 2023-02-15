@@ -6,16 +6,16 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utils.hpp>
 
 #include "atcommand.hpp"
 #include "battleground.hpp"
@@ -1247,7 +1247,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			(skill_id == 0 && (status_get_status_data(src))->rhw.ele == ELE_GHOST))
 		{
 			if (skill_id == WL_SOULEXPANSION)
-				damage <<= 1; // If used against a player in White Imprison, the skill deals double damage.
+				damage *= 2; // If used against a player in White Imprison, the skill deals double damage.
 			status_change_end(target, SC_WHITEIMPRISON); // Those skills do damage and removes effect
 		} else {
 			d->dmg_lv = ATK_BLOCK;
@@ -1480,12 +1480,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		// Damage increasing effects
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (sc->getSCE(SC_KAITE) && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
-			damage <<= 2;
+			damage *= 4;
 #endif
 
 		if (sc->getSCE(SC_AETERNA) && skill_id != PF_SOULBURN) {
 			if (src->type != BL_MER || !skill_id)
-				damage <<= 1; // Lex Aeterna only doubles damage of regular attacks from mercenaries
+				damage *= 2; // Lex Aeterna only doubles damage of regular attacks from mercenaries
 
 #ifndef RENEWAL
 			if( skill_id != ASC_BREAKER || !(flag&BF_WEAPON) )
@@ -1537,7 +1537,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if (sc->getSCE(SC_SOUNDOFDESTRUCTION))
-			damage <<= 1;
+			damage *= 2;
 		if (sc->getSCE(SC_DARKCROW) && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
 			int bonus = sc->getSCE(SC_DARKCROW)->val2;
 		if( sc->getSCE(SC_BURNT) && status_get_element(src) == ELE_FIRE )
@@ -1560,7 +1560,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if( map_flag_vs(bl->m) )
 				damage = (int64)damage*2/3; //Receive 66% damage
 			else
-				damage >>= 1; //Receive 50% damage
+				damage /= 2; //Receive 50% damage
 		}
 #endif
 
@@ -1580,7 +1580,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if(flag&BF_SKILL) //25% reduction
 				damage -= damage * 25 / 100;
 			else if ((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
-				damage >>= 2; //75% reduction
+				damage /= 4; //75% reduction
 		}
 
 		if (sc->getSCE(SC_SPORE_EXPLOSION) && (flag & BF_LONG) == BF_LONG)
@@ -1768,7 +1768,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 							break;
 						case RC2_OGH_ATK_DEF:
 							if (sc->getSCE(SC_GLASTHEIM_ATK))
-								damage <<= 1;
+								damage *= 2;
 							break;
 						case RC2_BIO5_SWORDMAN_THIEF:
 							if (sce = sc->getSCE(SC_LHZ_DUN_N1))
@@ -2479,6 +2479,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case SHC_FATAL_SHADOW_CROW: // 9 cell cast range.
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
+		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
 			return BF_SHORT;
@@ -2795,7 +2796,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 		cri -= tstatus->luk * ((!sd && tsd) ? 3 : 2);
 
 		if( tsc && tsc->getSCE(SC_SLEEP) )
-			cri <<= 1;
+			cri *= 2;
 
 		switch(skill_id) {
 			case 0:
@@ -2808,7 +2809,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					(battle_config.auto_counter_type&src->type))
 					return true;
 				else
-					cri <<= 1;
+					cri *= 2;
 				break;
 			case SN_SHARPSHOOTING:
 			case MA_SHARPSHOOTING:
@@ -3894,6 +3895,14 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			if( tsc && tsc->getSCE(SC_JYUMONJIKIRI) )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
+		case MH_BLAZING_AND_FURIOUS: {
+			struct homun_data *hd = BL_CAST(BL_HOM, src);
+			if (hd) {
+				wd->div_ = hd->homunculus.spiritball;
+				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
+			}
+			break;
+		}
 #ifdef RENEWAL
 		case AS_POISONREACT:
 			skill_lv = pc_checkskill(sd, TF_DOUBLE);
@@ -4062,7 +4071,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case AS_SONICBLOW:
 #ifdef RENEWAL
 			skillratio += 100 + 100 * skill_lv;
-			if (tstatus->hp < tstatus->max_hp >> 1)
+			if (tstatus->hp < (tstatus->max_hp / 2))
 				skillratio += skillratio / 2;
 #else
 			skillratio += 300 + 40 * skill_lv;
@@ -4245,7 +4254,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case LK_JOINTBEAT:
 			skillratio += 10 * skill_lv - 50;
 			if (wd->miscflag & BREAK_NECK || (tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
-				skillratio <<= 1;
+				skillratio *= 2;
 			break;
 #ifdef RENEWAL
 		// Renewal: skill ratio applies to entire damage [helvetica]
@@ -4839,7 +4848,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sd) {
 				skillratio += pc_checkskill(sd, WM_LESSON) * 50; // !TODO: Confirm bonus
 				if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-					skillratio <<= 1;
+					skillratio *= 2;
 			}
 			RE_LVL_DMOD(100);
 			break;
@@ -4964,22 +4973,40 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 20 * skill_lv;
 			break;
 		case MH_NEEDLE_OF_PARALYZE:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex / 6; // !TODO: Confirm Base Level and DEX bonus
+			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
+			break;
+		case MH_TOXIN_OF_MANDARA:
+			skillratio += -100 + 400 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
+			break;
+		case MH_NEEDLE_STINGER:
+			skillratio += -100 + 200 + 500 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
 			break;
 		case MH_STAHL_HORN:
-			skillratio += -100 + 1000 + 300 * skill_lv * status_get_lv(src) / 150 + sstatus->vit / 6; // !TODO: Confirm VIT bonus
+			skillratio += -100 + 1000 + 300 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
+			break;
+		case MH_GLANZEN_SPIES:
+			skillratio += -100 + 300 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 			break;
 		case MH_LAVA_SLIDE:
 			skillratio += -100 + 50 * skill_lv;
 			break;
+		case MH_BLAST_FORGE:
+			skillratio += -100 + 70 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+			break;
 		case MH_SONIC_CRAW:
 			skillratio += -100 + 60 * skill_lv * status_get_lv(src) / 150;
 			break;
+		case MH_BLAZING_AND_FURIOUS:
+			skillratio += -100 + 80 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+			break;
+		case MH_THE_ONE_FIGHTER_RISES:
+			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
+			break;
 		case MH_SILVERVEIN_RUSH:
-			skillratio += -100 + 250 * skill_lv * status_get_lv(src) / 100 + sstatus->str / 6; // !TODO: Confirm STR bonus
+			skillratio += -100 + 250 * skill_lv * status_get_lv(src) / 100 + sstatus->str; // !TODO: Confirm STR bonus
 			break;
 		case MH_MIDNIGHT_FRENZY:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str / 6; // !TODO: Confirm STR bonus
+			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str; // !TODO: Confirm STR bonus
 			break;
 		case MH_MAGMA_FLOW:
 			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
@@ -5053,7 +5080,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case SU_PICKYPECK:
 		case SU_PICKYPECK_DOUBLE_ATK:
 			skillratio += 100 + 100 * skill_lv;
-			if (status_get_hp(target) < status_get_max_hp(target) >> 1)
+			if (status_get_hp(target) < (status_get_max_hp(target) / 2))
 				skillratio *= 2;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
@@ -6192,7 +6219,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.amotion = (skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
 	// counter attack DOES obey ASPD delay on official, uncomment if you want the old (bad) behavior [helvetica]
 	/*if(skill_id == KN_AUTOCOUNTER)
-		wd.amotion >>= 1; */
+		wd.amotion /= 2; */
 	wd.dmotion = tstatus->dmotion;
 	wd.blewcount =skill_get_blewcount(skill_id,skill_lv);
 	wd.miscflag = wflag;
@@ -7437,13 +7464,22 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case MH_ERASER_CUTTER:
 					case MH_XENO_SLASHER:
-						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_ / 6; // !TODO: Confirm Base Level and INT bonus
+						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
+						break;
+					case MH_TWISTER_CUTTER:
+						skillratio += -100 + 480 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
+						break;
+					case MH_ABSOLUTE_ZEPHYR:
+						skillratio += -100 + 1000 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
 						break;
 					case MH_HEILIGE_STANGE:
-						skillratio += -100 + 1500 + 250 * skill_lv * status_get_lv(src) / 150 + sstatus->vit / 6; // !TODO: Confirm VIT bonus
+						skillratio += -100 + 1500 + 250 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
+						break;
+					case MH_HEILIGE_PFERD:
+						skillratio += -100 + 1200 + 350 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 						break;
 					case MH_POISON_MIST:
-						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex / 6; // ! TODO: Confirm DEX bonus
+						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
 						break;
 					case SU_SV_STEMSPEAR:
 						skillratio += 600;
@@ -8088,7 +8124,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = (int)((int64)7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_)));
 			else
 				md.damage = 0;
-			if (tsd) md.damage>>=1;
+			if (tsd)
+				md.damage /= 2;
 #endif
 			break;
 		case NJ_ZENYNAGE:

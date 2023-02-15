@@ -10,9 +10,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp"
+#include <common/database.hpp>
+#include <common/mmo.hpp>
+#include <common/timer.hpp>
 
 #include "map.hpp"
 #include "script.hpp"
@@ -1257,6 +1257,11 @@ enum sc_type : int16 {
 	SC_PORK_RIB_STEW,
 
 	SC_WEAPONBREAKER,
+
+	// 2021 Mutated Homunculus Skills
+	SC_TOXIN_OF_MANDARA,
+	SC_GOLDENE_TONE,
+	SC_TEMPERING,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

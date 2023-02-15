@@ -7,8 +7,8 @@
 #include <memory>
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <config/core.hpp>
 #include "mmo_account.hpp"
 
 class AccountDB {

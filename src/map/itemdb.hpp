@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
+#include <common/database.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp> // ITEM_NAME_LENGTH
 
 #include "script.hpp"
 #include "status.hpp"
@@ -1832,6 +1832,7 @@ enum e_random_item_group {
 	IG_CLASS_SHADOW_SD_CUBE,
 	IG_CLASS_SHADOW_PD_CUBE,
 	IG_CLASS_SHADOW_EA_CUBE,
+	IG_ENCHANT_STONE_BOX30,
 
 	IG_MAX,
 };

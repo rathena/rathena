@@ -8,11 +8,11 @@
 #include <memory>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
-#include "../common/strlib.hpp"// StringBuf
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp> // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
+#include <common/strlib.hpp>// StringBuf
+#include <common/timer.hpp>
 
 #include "battleground.hpp"
 #include "buyingstore.hpp" // struct s_buyingstore
@@ -1234,7 +1234,7 @@ enum e_mado_type : uint16 {
 	#define pc_leftside_def(sd) ((sd)->battle_status.def)
 	#define pc_rightside_def(sd) ((sd)->battle_status.def2)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
+	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit / 2) )
 #define pc_leftside_matk(sd) \
     (\
     ((sd)->sc.getSCE(SC_MAGICPOWER) && (sd)->sc.getSCE(SC_MAGICPOWER)->val4) \

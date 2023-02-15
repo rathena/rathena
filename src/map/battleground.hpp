@@ -8,9 +8,9 @@
 #include <string>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp" // struct party
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp> // struct party
 
 #define MAX_BG_MEMBERS 30
 
