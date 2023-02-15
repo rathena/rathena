@@ -334,8 +334,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\exp_homun.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\exp_homun.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\exp_guild.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\exp_guild.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\guild_skill_tree.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\guild_skill_tree.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homun_skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homun_skill_tree.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homunculus_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homunculus_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homunculus_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homunculus_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\instance_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\instance_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_cash.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_cash.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_combos.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_combos.yml')" />
