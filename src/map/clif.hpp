@@ -13,14 +13,14 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp> // t_tick
 
-#include "packets.hpp"
-#include "script.hpp"
+#include <map/packets.hpp>
+#include <map/script.hpp>
 
 struct Channel;
 struct clan;
 struct item;
 struct s_storage;
-//#include "map.hpp"
+//#include <map/map.hpp>
 struct block_list;
 struct unit_data;
 class map_session_data;

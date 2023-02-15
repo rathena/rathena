@@ -6,7 +6,7 @@
 
 #include <libconfig.h>
 
-#include "cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 int conf_read_file(config_t *config, const char *config_filename);
 int config_setting_copy(config_setting_t *parent, const config_setting_t *src);

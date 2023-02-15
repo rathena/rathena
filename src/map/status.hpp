@@ -14,8 +14,8 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
-#include "map.hpp"
-#include "script.hpp"
+#include <map/map.hpp>
+#include <map/script.hpp>
 
 enum e_race2 : uint8;
 struct block_list;

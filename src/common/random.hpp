@@ -4,7 +4,7 @@
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
-#include "cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 void rnd_init(void);
 

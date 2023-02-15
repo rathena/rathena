@@ -40,7 +40,7 @@
 #ifndef ERS_HPP
 #define ERS_HPP
 
-#include "cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 /*****************************************************************************\
  *  (1) All public parts of the Entry Reusage System.                        *

@@ -14,7 +14,7 @@
 #include <common/database.hpp>
 #include <common/mmo.hpp>
 
-#include "script.hpp"
+#include <map/script.hpp>
 
 enum send_target : uint8;
 struct block_list;

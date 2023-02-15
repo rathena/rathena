@@ -14,18 +14,18 @@
 #include <common/strlib.hpp>// StringBuf
 #include <common/timer.hpp>
 
-#include "battleground.hpp"
-#include "buyingstore.hpp" // struct s_buyingstore
-#include "clif.hpp" //e_wip_block
-#include "itemdb.hpp" // MAX_ITEMGROUP
-#include "map.hpp" // RC_ALL
-#include "mob.hpp" //e_size
-#include "pc_groups.hpp" // s_player_group
-#include "script.hpp" // struct script_reg, struct script_regstr
-#include "searchstore.hpp"  // struct s_search_store_info
-#include "status.hpp" // unit_data
-#include "unit.hpp" // unit_data
-#include "vending.hpp" // struct s_vending
+#include <map/battleground.hpp>
+#include <map/buyingstore.hpp> // struct s_buyingstore
+#include <map/clif.hpp> //e_wip_block
+#include <map/itemdb.hpp> // MAX_ITEMGROUP
+#include <map/map.hpp> // RC_ALL
+#include <map/mob.hpp> //e_size
+#include <map/pc_groups.hpp> // s_player_group
+#include <map/script.hpp> // struct script_reg, struct script_regstr
+#include <map/searchstore.hpp>  // struct s_search_store_info
+#include <map/status.hpp> // unit_data
+#include <map/unit.hpp> // unit_data
+#include <map/vending.hpp> // struct s_vending
 
 enum AtCommandType : uint8;
 enum e_instance_mode : uint8;

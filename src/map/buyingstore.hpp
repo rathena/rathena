@@ -6,7 +6,7 @@
 
 #include <common/cbasetypes.hpp>
 
-#include "map.hpp" //MESSAGE_SIZE
+#include <map/map.hpp> //MESSAGE_SIZE
 
 struct s_search_store_search;
 class map_session_data;

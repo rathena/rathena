@@ -9,9 +9,9 @@
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
 
-#include "mob.hpp"
-#include "status.hpp" // struct status_data, struct status_change
-#include "unit.hpp" // struct unit_data
+#include <map/mob.hpp>
+#include <map/status.hpp> // struct status_data, struct status_change
+#include <map/unit.hpp> // struct unit_data
 
 #ifdef RENEWAL
 	#define	HOMUN_LEVEL_STATWEIGHT_VALUE 0

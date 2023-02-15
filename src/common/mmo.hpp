@@ -8,9 +8,9 @@
 
 #include <config/core.hpp>
 
-#include "cbasetypes.hpp"
-#include "db.hpp"
-#include "timer.hpp" // t_tick
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/timer.hpp> // t_tick
 
 #ifndef PACKETVER
 	#error Please define PACKETVER in src/config/packets.hpp

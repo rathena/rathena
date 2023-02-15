@@ -6,7 +6,7 @@
 
 #include <stdarg.h>// va_list
 
-#include "cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 // Return codes
 #define SQL_ERROR -1

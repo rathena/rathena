@@ -7,8 +7,8 @@
 #include <common/cbasetypes.hpp>
 #include <common/timer.hpp>
 
-#include "path.hpp" // struct walkpath_data
-#include "skill.hpp" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
+#include <map/path.hpp> // struct walkpath_data
+#include <map/skill.hpp> // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
 
 enum sc_type : int16;
 struct block_list;

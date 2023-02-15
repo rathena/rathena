@@ -10,8 +10,8 @@
 #include <common/mmo.hpp>
 #include <config/core.hpp>
 
-#include "map.hpp" //ELE_MAX
-#include "skill.hpp"
+#include <map/map.hpp> //ELE_MAX
+#include <map/skill.hpp>
 
 //fwd declaration
 class map_session_data;

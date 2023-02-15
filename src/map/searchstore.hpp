@@ -10,8 +10,8 @@
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
 
-#include "clif.hpp"
-#include "map.hpp"
+#include <map/clif.hpp>
+#include <map/map.hpp>
 
 #define SEARCHSTORE_RESULTS_PER_PAGE 10
 

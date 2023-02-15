@@ -12,7 +12,7 @@
 #include <common/timer.hpp>
 #include <config/core.hpp>
 
-#include "account.hpp"
+#include <login/account.hpp>
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;

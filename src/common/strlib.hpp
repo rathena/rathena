@@ -6,8 +6,8 @@
 
 #include <stdarg.h>
 
-#include "cbasetypes.hpp"
-#include "malloc.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
 
 #if !defined(__USE_GNU)
 #define __USE_GNU  // required to enable strnlen on some platforms
