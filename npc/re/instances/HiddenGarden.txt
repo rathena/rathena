@@ -29,17 +29,17 @@ OnTouch:
 ba_maison,120,321,5	script	#he_admin1	MD_ASSISTANT,{
 	if (ep17_2_main < 1)
 		end;
-	mes "[ Flower Garden Manager ]";
+	mes "[Flower Garden Manager]";
 	mes "An unregistered guest has been detected.";
 	next;
 	.@party_id = getcharid(1);
 	if (!is_party_leader()) {
-		mes "[ Flower Garden Manager ]";
+		mes "[Flower Garden Manager]";
 		mes "You cannot proceed to the next step, if you do not have the authority of the party leader.";
 		close;
 	}
 	.@party_name$ = getpartyname(.@party_id);
-	mes "[ Flower Garden Manager ]";
+	mes "[Flower Garden Manager]";
 	mes "If you're an administrator who lost authority, you can get the authority reissued through an authentication procedure.";
 	next;
 	.@md_name$ = "Hidden Flower Garden";
@@ -49,7 +49,7 @@ ba_maison,120,321,5	script	#he_admin1	MD_ASSISTANT,{
 
 	switch( select( "Quit and Stand Back.", "Authenticate Identity", .@menu$ ) ) {
 	case 1:
-		mes "[ Flower Garden Manager ]";
+		mes "[Flower Garden Manager]";
 		mes "A wise choice.";
 		close;
 	case 2:
@@ -58,12 +58,12 @@ ba_maison,120,321,5	script	#he_admin1	MD_ASSISTANT,{
 		end;
 	case 3:
 		if (!is_party_leader()) {	// shouldn't happen
-			mes "[ Flower Garden Manager ]";
+			mes "[Flower Garden Manager]";
 			mes "You cannot proceed to the next step, if you do not have the authority of the party leader.";
 			close;
 		}
 		if (instance_enter(.@md_name$) != IE_OK) {
-			mes "[ Flower Garden Manager ]";
+			mes "[Flower Garden Manager]";
 			mes "You can only move to the place when the party manager has completed all permits. Please re-check your issued access area.";
 			close;
 		}
@@ -87,7 +87,7 @@ ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
 		break;
 	case 0:
 	case 1:
-		mes "[ Flower Garden Manager ]";
+		mes "[Flower Garden Manager]";
 		mes "You just entered the security area.";
 		mes "Please rest your body for a day as Sigma ordered.";
 		close;
@@ -95,7 +95,7 @@ ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
 		erasequest 12498;
 		break;
 	}
-	mes "[ Flower Garden Manager ]";
+	mes "[Flower Garden Manager]";
 	mes "Your identity been identified. You may enter the security area. How may I help you?";
 	next;
 	if (BaseLevel >= 150)
@@ -105,13 +105,13 @@ ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
 
 	switch( select( "Stand back.", "Identity Authentication", "Enter Zone" ) ) {
 	case 1:
-		mes "[ Flower Garden Manager ]";
+		mes "[Flower Garden Manager]";
 		mes "Alright.";
 		close;
 	case 2:
 		switch( select( "Stand back.", .@menu$[0], .@menu$[1] ) ) {
 		case 1:
-			mes "[ Flower Garden Manager ]";
+			mes "[Flower Garden Manager]";
 			mes "Alright.";
 			close;
 		case 2:
@@ -122,7 +122,7 @@ ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
 			break;
 		}
 		if (!is_party_leader()) {
-			mes "[ Flower Garden Manager ]";
+			mes "[Flower Garden Manager]";
 			mes "Only the party leader can start the identity verification. Let's leave it up to person in charge.";
 			close;
 		}
@@ -143,7 +143,7 @@ ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
 			break;
 		}
 		if (instance_enter(.@md_name$) != IE_OK) {
-			mes "[ Flower Garden Manager ]";
+			mes "[Flower Garden Manager]";
 			mes "You can only move to the place when the party manager has completed all permits. Please re-check your issued access area.";
 			close;
 		}
@@ -327,7 +327,7 @@ OnInstanceInit:
 	}
 	if ('hidden_garden == 3) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "Please evaluate the landscape, water quality, and other overall layout of the garden.";
 		next;
 		while(true) {
@@ -816,11 +816,11 @@ OnTouch:
 1@herbs,201,287,4	script	#BMD000004	MD_ASSISTANT,3,3,{
 	if ('hidden_garden == 10) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "This section is managed by three automatic dolls. Shall we continue with the guide?";
 		next;
 		if (select( "Cancel.", "Let's continue." ) == 1) {
-			mes "[ " + 'guide_name$ + " ]";
+			mes "[" + 'guide_name$ + "]";
 			mes "I'll wait until further instructions are given.";
 			close;
 		}
@@ -835,25 +835,25 @@ OnTouch:
 	}
 	if ('hidden_garden == 12) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "Can I help you with anything?";
 		next;
 		if (select( "Cancel.", "What are those automatic dolls?" ) == 1) {
-			mes "[ " + 'guide_name$ + " ]";
+			mes "[" + 'guide_name$ + "]";
 			mes "Entering standby mode.";
 			close;
 		}
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "Automatic dolls are classified according to their usage.";
 		next;
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "The unit that attacked [" + 'admin$ + "] is the initial version of Class 4 combat-type automatic dolls. It's combat strength is equivalent to 20 adult humans.";
 		next;
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "I've delivered the information to the Manager ^0000CDSigma^000000, because the results were unexpected. The temporary administrator's combat capability is not of an average human.";
 		next;
 		select("Who's that??");
-		mes "[ " + 'guide_name$ + " ]";
+		mes "[" + 'guide_name$ + "]";
 		mes "It's one of the three most privileged control systems in this mansion.";
 		close2;
 		while(true) {
@@ -1282,13 +1282,13 @@ OnTouch:
 				close;
 			}
 			select("Who was that?");
-			mes "[ Sigma ]";
+			mes "[Sigma]";
 			mes "Lambda. She developed intellectually and began to perceive herself as a woman.";
 			next;
-			mes "[ Sigma ]";
+			mes "[Sigma]";
 			mes "It's a big problem, she's about to make a leap here.";
 			next;
-			mes "[ Sigma ]";
+			mes "[Sigma]";
 			mes "Take this. A recognition code that could lead to other areas of this secret garden.";
 			close2;
 			setquest 12497;
@@ -1297,13 +1297,13 @@ OnTouch:
 			specialeffect EF_MARKING_USE_CHANGEMONSTER;
 			end;
 		}
-		mes "[ Sigma ]";
+		mes "[Sigma]";
 		mes "There's an approximately 82% chance you'll lose your life in her radical suppression before we let her know that Master Varmundt is alive.";
 		next;
-		mes "[ Sigma ]";
+		mes "[Sigma]";
 		mes "Let's avoid this place today and make a promise next time to come again. Next time you'll be free to go to another area.";
 		next;
-		mes "[ Sigma ]";
+		mes "[Sigma]";
 		mes "Hold me tight. I'll warp you out.";
 		close2;
 		warp "ba_maison",136,309;
@@ -2099,13 +2099,13 @@ OnTouch:	// unknown effect
 			mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
 			close;
 		}
-		mes "[ Sigma ]";
+		mes "[Sigma]";
 		mes "You did great making them surrender, but I don't think you were granted any administrator rights.";
 		next;
-		mes "[ Sigma ]";
+		mes "[Sigma]";
 		mes "Since they will recover after some time, I think you will need to continue fighting them until Master Varmundt returns.";
 		next;
-		mes "[ Sigma ]";
+		mes "[Sigma]";
 		mes "Oh.";
 		mes "I brought some old items from the past. It might help you, so take it.";
 		close2;
@@ -2119,7 +2119,7 @@ OnTouch:	// unknown effect
 		}
 		end;
 	}
-	mes "[ Sigma ]";
+	mes "[Sigma]";
 	mes "I'll show you the way out. What will you do?";
 	next;
 	if (select( "I'll look around more.", "I'll leave." ) == 2)

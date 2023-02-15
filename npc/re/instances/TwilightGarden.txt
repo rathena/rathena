@@ -122,7 +122,7 @@ OnTouch:
 		end;
 	if ('twilight_story == 2) {
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "They must have been waiting too.";
 		mes "Let's do this more quietly.";
 		close3;
@@ -181,7 +181,7 @@ OnMobDead:
 		end;
 	if ('twilight_story == 3) {
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "I don't know if we should set a trap, or give you a chance.";
 		mes "Activate the tracker that we got from Elyumina.";
 		next;
@@ -192,12 +192,12 @@ OnMobDead:
 		navigateto("1@bamn",206,273);
 		sleep2 2000;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "That's a loud thing.";
 		mes "Will you move out first?";
 		mes "I have a place to go for a second.";
 		next;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "I'll join you soon.";
 		close2;
 		if ('twilight_story == 3) {
@@ -235,22 +235,22 @@ OnMobDead:
 1@bamn,202,274,5	script	Est#est03	4_F_ESTLOVELOY,{
 	if ('twilight_story == 5) {
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "I thought it might be better to throw in more bait, so I went to ask for the help of the automatic dolls.";
 		mes "Also, Almond said she had to go out and check something.";
 		next;
 		cutin "ep172_beta",0;
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "The repeater is dead again. That's why I have to fix it.";
 		mes "The repeater is the favorite target of the intruders, so we can't just leave it broken, right?";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "For that reason, I'd like to ask you to escort Almon here to check the repeater.";
 		mes "I'll look around and find other routes.";
 		next;
 		cutin "ep172_beta",0;
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "Let's go together whenever you're ready.";
 		close2;
 		cutin "",255;
@@ -260,7 +260,7 @@ OnMobDead:
 	}
 	if ('twilight_story == 6) {
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Talk to Almond, when you're ready to move.";
 		close3;
 	}
@@ -270,7 +270,7 @@ OnMobDead:
 1@bamn,199,275,5	script	Almond#amond01	EP17_2_BETA_BASIC,{
 	if ('twilight_story < 6) {
 		cutin "ep172_beta",2;
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "Everyone was supposed to be in the mansion today.";
 		mes "Something important came up. That's why I'm here with Est.";
 		close3;
@@ -611,29 +611,29 @@ OnTouch:
 1@bamn,257,84,3	script	Est#est04	4_F_ESTLOVELOY,{
 	if ('twilight_story == 20) {
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "I've heard the report. You found a guy who looked like the leader?";
 		mes "I think the rest of the members are somewhat good too.";
 		next;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "What happened to the repeater?";
 		next;
 		cutin "ep172_beta",2;
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "Were on the way to the other one.";
 		mes "But it's quite far from here.";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Hmm... Shall we do this?";
 		mes "The guy you missed is a boy with purple hair, right?";
 		mes "We're going to bait him out.";
 		next;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "I'll deal with the rest who's hiding in the garden.";
 		mes "Ah. I'll also escort Almond.";
 		next;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "He probably went to the western part of the mansion, so head over there.";
 		mes "You have Elyumina's tracker. It will activate, if you get near him.";
 		if ('twilight_story == 20) {
@@ -646,11 +646,11 @@ OnTouch:
 		close3;
 	}
 	if ('twilight_story == 21) {
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "He probably went to the western part of the mansion, so head over there.";
 		mes "You have Elyumina's tracker, if you get near him, it will activate.";
 		next;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Don't worry, I'll take care of Almond from here.";
 		close3;
 	}
@@ -773,20 +773,20 @@ OnMobDead:
 
 1@bamq,108,41,5	script	Est#est05	4_F_ESTLOVELOY,{
 	cutin "ep162_est01",2;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "It's a little late, but it's over.";
 	mes "So that's you. The guy who was dragging his feet in the garden.";
 	next;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "Did this guy think that controlling the automatic dolls will help him buy time?";
 	next;
 	cutin "ep162_est02",2;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "After all, they're just automatic dolls, right?";
 	mes "I had no choice but to blow the automatic dolls of the mansion...";
 	next;
 	cutin "ep162_est01",2;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "Let's get out of here.";
 	mes "I'll be waiting at the guesthouse.";
 	close3;
@@ -838,18 +838,18 @@ OnTouch:
 1@bamq,32,49,3	script	Sweety#sweety_boss	4_EP17_Sweety,{
 	if ('sweety == 0) {
 		cutin "ep172_Sweety01",2;
-		mes "[ Sweety ]";
+		mes "[Sweety]";
 		mes "Hey, are you ready?";
 		mes "Come at me anytime.";
 		mes "I'm sure I'll feel better once I beat you.";
 		next;
 		if (select( "Wait a bit.", "Let's go!" ) == 1) {
-			mes "[ Sweety ]";
+			mes "[Sweety]";
 			mes "What, did you come here to explore the garden?";
 			mes "The heart hunter don't know what happened to me, but...";
 			next;
 			cutin "ep172_Sweety02",2;
-			mes "[ Sweety ]";
+			mes "[Sweety]";
 			mes "What, why?";
 			mes "I'm not like them at all, I'm an excellent creature!";
 			mes "So did the teachers.";
@@ -898,27 +898,27 @@ OnMobDead:
 1@bamq,37,59,3	script	Almond#amond02	EP17_2_BETA_BASIC,{
 	if ('sweety < 2) {
 		cutin "ep172_beta",2;
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "I can't understand.";
 		mes "Why Sweety likes to push his body to the limit...";
 		next;
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "And it's my job to fix his destroyed body.";
 		mes "Please deal with him enough to make him satisfied.";
 		close3;
 	}
 	cutin "ep172_beta",2;
-	mes "[ Almond ]";
+	mes "[Almond]";
 	mes "I will take care of moving Sweety.";
 	mes "Do you want to wrap up now?";
 	next;
 	if (select( "Let's wrap up.", "I'll explore the garden first." ) == 2) {
-		mes "[ Almond ]";
+		mes "[Almond]";
 		mes "There is still some intruders out there.";
 		mes "Are you aware of it?";
 		close3;
 	}
-	mes "[ Almond ]";
+	mes "[Almond]";
 	mes "Then, shall we?";
 	close2;
 	warp "ba_in01",18,255;

@@ -99205,7 +99205,6 @@ Body:
     AttackMotion: 1344
     DamageMotion: 480
     Ai: 01
-    Drops:
   - Id: 20697
     AegisName: EP17_2_CHILD_ADMIN2
     Name: Child Admin Alpha
@@ -99233,7 +99232,6 @@ Body:
     AttackMotion: 1344
     DamageMotion: 480
     Ai: 01
-    Drops:
   - Id: 20698
     AegisName: G_ASSISTANT
     Name: Assistant
