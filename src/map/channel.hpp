@@ -16,21 +16,22 @@ struct DBMap;
 #define CHAN_NAME_LENGTH 20
 #define CHAN_MSG_LENGTH 150
 
-enum Channel_Opt {
-	CHAN_OPT_NONE		    = 0,	///< None
-	CHAN_OPT_ANNOUNCE_SELF  = 0x01,	///< Shows info when player joined/left channel to self
-	CHAN_OPT_ANNOUNCE_JOIN  = 0x02,	///< Shows info if player joined the channel
-	CHAN_OPT_ANNOUNCE_LEAVE = 0x04,	///< Shows info if player left the channel
-	CHAN_OPT_MSG_DELAY	    = 0x08,	///< Enables chat delay
-	CHAN_OPT_COLOR_OVERRIDE = 0x10,	///< Enables color channel be override by player's font color
-	CHAN_OPT_CAN_CHAT		= 0x20,	///< Allows player to chat in the channel
-	CHAN_OPT_CAN_LEAVE		= 0x40,	///< Allows player to leave the channel
-	CHAN_OPT_AUTOJOIN		= 0x80,	///< Player will be autojoined to the channel
-
-	CHAN_OPT_BASE = CHAN_OPT_ANNOUNCE_SELF|CHAN_OPT_MSG_DELAY|CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE,
+enum e_channel_options : uint16 {
+	CHAN_OPT_NONE			= 0,	// None
+	CHAN_OPT_SELFANNOUNCE,			// Shows info when player joined/left channel to self
+	CHAN_OPT_JOINANNOUNCE,			// Shows info if player joined the channel
+	CHAN_OPT_LEAVEANNOUNCE,			// Shows info if player left the channel
+	CHAN_OPT_CHANGEDELAY,			// Enables owner to change the chat delay
+	CHAN_OPT_CHANGECOLOR,			// Enables owner to allow channel color to be changed by player's font color
+	CHAN_OPT_BAN,					// Enables owner to ban players
+	CHAN_OPT_KICK,					// Enables owner to kick players
+	CHAN_OPT_CANCHAT,				// Allows player to chat in the channel
+	CHAN_OPT_CANLEAVE,				// Allows player to leave the channel
+	CHAN_OPT_AUTOJOIN,				// Player will be autojoined to the channel
+	CHAN_OPT_MAX,
 };
 
-enum Channel_Type {
+enum Channel_Type : uint8 {
 	CHAN_TYPE_PUBLIC  = 0, ///< Config file made
 	CHAN_TYPE_PRIVATE = 1, ///< User's channel
 	CHAN_TYPE_MAP	  = 2, ///< Local map
@@ -55,11 +56,11 @@ struct Channel {
 	unsigned short *groups;		  ///< List of group id, only these groups can join the channel
 };
 
-struct chan_banentry {
+struct s_chan_banentry {
 	uint32 char_id;
 	char char_name[NAME_LENGTH];
 };
-extern chan_banentry chan_banentry;
+extern s_chan_banentry chan_banentry;
 
 struct Channel_Config {
 	unsigned long *colors;		///< List of available colors

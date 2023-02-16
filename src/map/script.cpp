@@ -24941,10 +24941,10 @@ BUILDIN_FUNC(channel_ban) {
 	}
 
 	if (!idb_exists(ch->banned, char_id)) {
-		struct chan_banentry *cbe;
+		struct s_chan_banentry *cbe;
 		char output[CHAT_SIZE_MAX+1];
 
-		CREATE(cbe, struct chan_banentry, 1);
+		CREATE(cbe, struct s_chan_banentry, 1);
 		cbe->char_id = char_id;
 		if (tsd) {
 			strcpy(cbe->char_name,tsd->status.name);

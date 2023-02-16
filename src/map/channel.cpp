@@ -1002,10 +1002,10 @@ int channel_pcban(map_session_data *sd, char *chname, char *pname, int flag){
 	//let properly alter the list now
 	switch(flag){
 	case 0: {
-		struct chan_banentry *cbe;
+		struct s_chan_banentry *cbe;
 		if (!tsd)
 			return -1;
-		CREATE(cbe, struct chan_banentry, 1);
+		CREATE(cbe, struct s_chan_banentry, 1);
 		cbe->char_id = tsd->status.char_id;
 		strcpy(cbe->char_name,tsd->status.name);
 		idb_put(channel->banned, tsd->status.char_id, cbe);
@@ -1025,10 +1025,10 @@ int channel_pcban(map_session_data *sd, char *chname, char *pname, int flag){
 		break;
 	case 3: {
 		DBIterator *iter = db_iterator(channel->banned);
-		struct chan_banentry *cbe;
+		struct s_chan_banentry *cbe;
 		sprintf(output, msg_txt(sd,1443), channel->name);// ---- '#%s' Ban List:
 		clif_displaymessage(sd->fd, output);
-		for( cbe = (struct chan_banentry *)dbi_first(iter); dbi_exists(iter); cbe = (struct chan_banentry *)dbi_next(iter) ) { //for all users
+		for( cbe = (struct s_chan_banentry *)dbi_first(iter); dbi_exists(iter); cbe = (struct s_chan_banentry *)dbi_next(iter) ) { //for all users
 			if (cbe->char_name[0])
 				sprintf(output, "%d: %s",cbe->char_id,cbe->char_name);
 			else
