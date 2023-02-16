@@ -9005,7 +9005,7 @@ BUILDIN_FUNC(getguildname)
 	guild_id = script_getnum(st,2);
 	auto g = guild_search(guild_id);
 	if (g)
-		script_pushstrcopy(st,g->name);
+		script_pushstrcopy(st,g->guild.name);
 	else 
 		script_pushconststr(st,"null");
 	return SCRIPT_CMD_SUCCESS;
@@ -9022,7 +9022,7 @@ BUILDIN_FUNC(getguildmaster)
 	guild_id = script_getnum(st,2);
 	auto g = guild_search(guild_id);
 	if (g)
-		script_pushstrcopy(st,g->member[0].name);
+		script_pushstrcopy(st,g->guild.member[0].name);
 	else 
 		script_pushconststr(st,"null");
 	return SCRIPT_CMD_SUCCESS;
@@ -9035,7 +9035,7 @@ BUILDIN_FUNC(getguildmasterid)
 	guild_id = script_getnum(st,2);
 	auto g = guild_search(guild_id);
 	if (g)
-		script_pushint(st,g->member[0].char_id);
+		script_pushint(st,g->guild.member[0].char_id);
 	else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
@@ -9076,7 +9076,7 @@ BUILDIN_FUNC(strcharinfo)
 			break;
 		case 2:
 			if (sd->guild) {
-				script_pushstrcopy(st,sd->guild->name);
+				script_pushstrcopy(st,sd->guild->guild.name);
 			} else {
 				script_pushconststr(st,"");
 			}
@@ -10298,7 +10298,7 @@ BUILDIN_FUNC(getgdskilllv)
 	if (!g)
 		script_pushint(st, -1);
 	else
-		script_pushint(st, guild_checkskill(*g,skill_id));
+		script_pushint(st, guild_checkskill(g->guild,skill_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10874,7 +10874,7 @@ BUILDIN_FUNC(guild_has_permission){
 
 	int position = guild_getposition(*sd);
 	
-	if( position < 0 || ( sd->guild->position[position].mode&permission ) != permission ){
+	if( position < 0 || ( sd->guild->guild.position[position].mode&permission ) != permission ){
 		script_pushint( st, false );
 
 		return SCRIPT_CMD_SUCCESS;
@@ -11971,9 +11971,9 @@ BUILDIN_FUNC(getmapguildusers)
 
 	if (g){
 		unsigned short i;
-		for(i = 0; i < g->max_member; i++)
+		for(i = 0; i < g->guild.max_member; i++)
 		{
-			if (g->member[i].sd && g->member[i].sd->bl.m == m)
+			if (g->guild.member[i].sd && g->guild.member[i].sd->bl.m == m)
 				c++;
 		}
 	}
@@ -14078,7 +14078,7 @@ BUILDIN_FUNC(failedremovecards) {
 BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 {
 	int x,y,m,check_val=0,check_ID=0,i=0;
-	std::shared_ptr<struct guild> g;
+	std::shared_ptr<MapGuild> g;
 	struct party_data *p = NULL;
 	const char *str;
 	const char *mapname;
@@ -14102,10 +14102,10 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 		case 1:
 			g = guild_search(check_ID);
 			if (g){
-				for( i=0; i < g->max_member; i++)
+				for( i=0; i < g->guild.max_member; i++)
 				{
-					if(g->member[i].sd && g->member[i].sd->bl.m==m){
-						pc_setpos(g->member[i].sd,index,x,y,CLR_TELEPORT);
+					if(g->guild.member[i].sd && g->guild.member[i].sd->bl.m==m){
+						pc_setpos(g->guild.member[i].sd,index,x,y,CLR_TELEPORT);
 					}
 				}
 			}
@@ -15651,7 +15651,7 @@ BUILDIN_FUNC(recovery)
 				return SCRIPT_CMD_SUCCESS;
 			for (i = 0; i < MAX_GUILD; i++) {
 				map_session_data* pl_sd;
-				if((!(pl_sd = g->member[i].sd) || pl_sd->status.guild_id != g_id)
+				if((!(pl_sd = g->guild.member[i].sd) || pl_sd->status.guild_id != g_id)
 					|| (map_idx && pl_sd->bl.m != map_idx))
 					continue;
 				recovery_sub(pl_sd, revive);
@@ -21735,7 +21735,7 @@ BUILDIN_FUNC(instance_check_guild)
 	for(i = 0; i < MAX_GUILD; i++) {
 		map_session_data *pl_sd;
 
-		if ((pl_sd = g->member[i].sd)) {
+		if ((pl_sd = g->guild.member[i].sd)) {
 			if (map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if (pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
@@ -23500,25 +23500,25 @@ BUILDIN_FUNC(getguildmember)
 		}
 
 		for (i = 0; i < MAX_GUILD; i++) {
-			if (g->member[i].account_id) {
+			if (g->guild.member[i].account_id) {
 				switch (type) {
 					case 2:
 						if (data)
-							setd_sub_num( st, NULL, varname, j, g->member[i].account_id, data->ref );
+							setd_sub_num( st, NULL, varname, j, g->guild.member[i].account_id, data->ref );
 						else
-							mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
+							mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->guild.member[i].account_id);
 						break;
 					case 1:
 						if (data)
-							setd_sub_num( st, NULL, varname, j, g->member[i].char_id, data->ref );
+							setd_sub_num( st, NULL, varname, j, g->guild.member[i].char_id, data->ref );
 						else
-							mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
+							mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->guild.member[i].char_id);
 						break;
 					default:
 						if (data)
-							setd_sub_str( st, NULL, varname, j, g->member[i].name, data->ref );
+							setd_sub_str( st, NULL, varname, j, g->guild.member[i].name, data->ref );
 						else
-							mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
+							mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->guild.member[i].name);
 						break;
 				}
 				j++;
@@ -24534,13 +24534,13 @@ BUILDIN_FUNC(getguildalliance)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	ARR_FIND(0, MAX_GUILDALLIANCE, i, guild_data1->alliance[i].guild_id == guild_id2);
+	ARR_FIND(0, MAX_GUILDALLIANCE, i, guild_data1->guild.alliance[i].guild_id == guild_id2);
 	if (i == MAX_GUILDALLIANCE) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (guild_data1->alliance[i].opposition)
+	if (guild_data1->guild.alliance[i].opposition)
 		script_pushint(st, 2);
 	else
 		script_pushint(st, 1);
@@ -25914,7 +25914,7 @@ BUILDIN_FUNC(is_guild_leader)
 
 	auto guild_data = guild_search(guild_id);
 	if (guild_data)
-		script_pushint(st, (guild_data->member[0].char_id == sd->status.char_id));
+		script_pushint(st, (guild_data->guild.member[0].char_id == sd->status.char_id));
 	else
 		script_pushint(st, false);
 	return SCRIPT_CMD_SUCCESS;

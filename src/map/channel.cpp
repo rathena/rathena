@@ -277,18 +277,18 @@ int channel_mjoin(map_session_data *sd) {
  *   0: Success
  *  -1: Invalid guild or no channel for guild
  */
-int channel_ajoin(struct guild &g){
+int channel_ajoin(MapGuild &g) {
 	int i, j;
 	map_session_data *pl_sd;
 
 	if (!g.channel)
 		return -1;
 	for (i = 0; i < MAX_GUILDALLIANCE; i++){
-		std::shared_ptr<struct guild> ag; //allied guild
-		struct guild_alliance *ga = &g.alliance[i]; //guild alliance
+		std::shared_ptr<MapGuild> ag; //allied guild
+		struct guild_alliance *ga = &g.guild.alliance[i]; //guild alliance
 		if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id))){
-			for (j = 0; j < ag->max_member; j++){ //load all guildmember
-				pl_sd = ag->member[j].sd;
+			for (j = 0; j < ag->guild.max_member; j++){ //load all guildmember
+				pl_sd = ag->guild.member[j].sd;
 				if(channel_haspc(ag->channel,pl_sd)==1)  //only if they are in their own guildchan
 					channel_join(g.channel,pl_sd);
 			}
@@ -316,7 +316,7 @@ int channel_gjoin(map_session_data *sd, int flag){
 
 	channel = g->channel;
 	if(!channel){
-		channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,g->guild_id);
+		channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,g->guild.guild_id);
 		g->channel = channel;
 		channel_ajoin(*g);
 	}
@@ -326,8 +326,8 @@ int channel_gjoin(map_session_data *sd, int flag){
 	if(flag&2){
 		int i;
 		for (i = 0; i < MAX_GUILDALLIANCE; i++){
-			std::shared_ptr<struct guild> ag; //allied guild
-			struct guild_alliance *ga = &g->alliance[i]; //guild alliance
+			std::shared_ptr<MapGuild> ag; //allied guild
+			struct guild_alliance *ga = &g->guild.alliance[i]; //guild alliance
 			if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id)) ) //only join allies
 				channel_join(ag->channel,sd);
 		}
@@ -407,8 +407,8 @@ int channel_pcquit(map_session_data *sd, int type){
 		}
 		if(type&2){
 			for (i = 0; i < MAX_GUILDALLIANCE; i++) { //leave all alliance chan
-				std::shared_ptr<struct guild> ag; //allied guild
-				if( g->alliance[i].guild_id && (ag = guild_search(g->alliance[i].guild_id) ) ) {
+				std::shared_ptr<MapGuild> ag; //allied guild
+				if( g->guild.alliance[i].guild_id && (ag = guild_search(g->guild.alliance[i].guild_id) ) ) {
 					if(channel_haspc(ag->channel,sd) == 1)
 						channel_clean(ag->channel,sd,0);
 					break;
@@ -519,7 +519,7 @@ struct Channel* channel_name2channel(char *chname, map_session_data *sd, int fla
 	}
 	else if(sd && (strcmpi(chname + 1,channel_config.ally_tmpl.name) == 0) && sd->guild){
 		if(flag&1 && !sd->guild->channel)
-			sd->guild->channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,sd->guild->guild_id);
+			sd->guild->channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,sd->guild->guild.guild_id);
 		if(flag&2 && channel_pc_haschan(sd,mapdata->channel) < 1)
 			channel_gjoin(sd,3);
 		return sd->guild->channel;
