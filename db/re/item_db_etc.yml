@@ -66058,77 +66058,77 @@ Body:
     SubType: Enchant
   - Id: 312189
     AegisName: M_Pow3
-    Name: POW+3    # !todo check english name
+    Name: POW+3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bPow,3;
   - Id: 312190
     AegisName: M_Sta3
-    Name: STA+3    # !todo check english name
+    Name: STA+3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bSta,3;
   - Id: 312191
     AegisName: M_Wis3
-    Name: WIS+3    # !todo check english name
+    Name: WIS+3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bWis,3;
   - Id: 312192
     AegisName: M_Spl3
-    Name: SPL+3    # !todo check english name
+    Name: SPL+3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bSpl,3;
   - Id: 312193
     AegisName: M_Con3
-    Name: CON+3    # !todo check english name
+    Name: CON+3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCon,3;
   - Id: 312194
     AegisName: M_Crt3
-    Name: CRT+3    # !todo check english name
+    Name: CRT+3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCrt,3;
   - Id: 312195
     AegisName: Nimble_Soul
-    Name: Nimble Soul    # !todo check english name
+    Name: Nimble Soul
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAspdRate,(getrefine()/2);
   - Id: 312196
     AegisName: Casting_Soul
-    Name: Casting soul    # !todo check english name
+    Name: Casting Soul
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-(getrefine()/2);
   - Id: 312197
     AegisName: Critical_Soul
-    Name: Critical Soul    # !todo check english name
+    Name: Critical Soul
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritical,(getrefine()/2);
   - Id: 312198
     AegisName: Expert_Soul
-    Name: Expert Soul    # !todo check english name
+    Name: Expert Soul
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-(getrefine()/2);
   - Id: 312199
     AegisName: Robust_Soul
-    Name: Robust Soul    # !todo check english name
+    Name: Robust Soul
     Type: Card
     SubType: Enchant
     Script: |
