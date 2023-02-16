@@ -8548,3 +8548,22 @@ Body:
       Debuff: true
     CalcFlags:
       Res: true
+  - Status: RELIEVE_ON
+    Icon: EFST_RELIEVE_DAMAGE
+    DurationLookup: NPC_RELIEVE_ON
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Relieve_off: true
+  - Status: Relieve_off
+    DurationLookup: NPC_RELIEVE_OFF
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Relieve_on: true

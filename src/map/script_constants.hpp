@@ -1872,6 +1872,8 @@
 	export_constant(SC_TOXIN_OF_MANDARA);
 	export_constant(SC_GOLDENE_TONE);
 	export_constant(SC_TEMPERING);
+	export_constant(SC_RELIEVE_ON);
+	export_constant(SC_RELIEVE_OFF);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
