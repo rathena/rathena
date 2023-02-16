@@ -1668,7 +1668,7 @@ int intif_parse_GuildInfo(int fd)
 	}
 	if( RFIFOW(fd,2)!=sizeof(struct guild)+4 )
 		ShowError("intif: guild info : data size error Gid: %d recv size: %d Expected size: %" PRIuPTR "\n",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct guild)+4);
-	guild_recv_info((struct guild *)RFIFOP(fd,4));
+	guild_recv_info(*(struct guild *)RFIFOP(fd,4));
 	return 1;
 }
 
@@ -1731,7 +1731,7 @@ int intif_parse_GuildBasicInfoChanged(int fd)
 	int type = RFIFOW(fd,8);
 	//void* data = RFIFOP(fd,10);
 
-	struct guild* g = guild_search(guild_id);
+	auto g = guild_search(guild_id);
 	if( g == NULL )
 		return 0;
 
@@ -1759,19 +1759,18 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 	int type = RFIFOW(fd,16);
 	//void* data = RFIFOP(fd,18);
 
-	struct guild* g;
 	int idx;
 
-	g = guild_search(guild_id);
-	if( g == NULL )
+	auto g = guild_search(guild_id);
+	if( g == nullptr )
 		return 0;
 
-	idx = guild_getindex(g,account_id,char_id);
+	idx = guild_getindex(*g,account_id,char_id);
 	if( idx == -1 )
 		return 0;
 
 	switch( type ) {
-	case GMI_POSITION:   g->member[idx].position   = RFIFOW(fd,18); guild_memberposition_changed(g,idx,RFIFOW(fd,18)); break;
+	case GMI_POSITION:   g->member[idx].position   = RFIFOW(fd,18); guild_memberposition_changed(*g,idx,RFIFOW(fd,18)); break;
 	case GMI_EXP:        g->member[idx].exp        = RFIFOQ(fd,18); break;
 	case GMI_HAIR:       g->member[idx].hair       = RFIFOW(fd,18); break;
 	case GMI_HAIR_COLOR: g->member[idx].hair_color = RFIFOW(fd,18); break;

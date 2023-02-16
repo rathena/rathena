@@ -1110,7 +1110,7 @@ void bg_queue_join_guild(const char *name, map_session_data *sd)
 			return;
 		}
 
-		struct guild* g = sd->guild;
+		auto &g = sd->guild;
 
 		if (g->connect_member > bg->max_players) {
 			clif_bg_queue_apply_result(BG_APPLY_PLAYER_COUNT, name, sd);
