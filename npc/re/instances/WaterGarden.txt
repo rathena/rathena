@@ -936,7 +936,7 @@ OnStart:
 	end;
 OnBossDead:	// note: other events continue
 	killmonster 'map_ghg$, instance_npcname("#172_wg_boss") + "::OnBossDead";
-	killmonster 'map_ghg$, instance_npcname("#172_wg_boss") + "::OnMobDead";
+	// killmonster 'map_ghg$, instance_npcname("#172_wg_boss") + "::OnMobDead";
 	stopnpctimer;
 	if ('water_garden == 9)
 		'water_garden = 10;
@@ -951,15 +951,20 @@ OnSlave:
 	monster 'map_ghg$,182,286,"Papilla Cae",(20674+'mode),1, .@event$;
 	enablenpc instance_npcname("#blue" + 'blue + "ghg");
 	enablenpc instance_npcname("#red" + 'red + "ghg");
-	initnpctimer;
-	end;
-OnTimer15000:
+	sleep 15000;
 	disablenpc instance_npcname("#blue" + 'blue + "ghg");
 	disablenpc instance_npcname("#red" + 'red + "ghg");
-	enablenpc instance_npcname("#ghg_bosshw");
-	instance_warpall 'map_ghg$,182,286,instance_id(), IWA_NOTDEAD;	// (triggers the npc which makes lose hp)
+	// note: the event continues when the boss dies up to this point
+	if (!unitexists('boss_id))
+		killmonster 'map_ghg$, instance_npcname("#172_wg_boss") + "::OnMobDead";
+	else {
+		initnpctimer;
+		enablenpc instance_npcname("#ghg_bosshw");
+		instance_warpall 'map_ghg$,182,286,instance_id(), IWA_NOTDEAD;	// (triggers the npc which makes lose hp)
+	}
 	end;
-OnTimer16000:
+
+OnTimer1000:
 	switch( rand(1,4)) {
 	case 1:
 		.@x = 152;
@@ -985,14 +990,14 @@ OnTimer16000:
 	instance_warpall 'map_ghg$,.@x,.@y,instance_id(), IWA_NOTDEAD;
 	disablenpc instance_npcname("#ghg_bosshw");
 	end;
+OnTimer3000:
+	monster 'map_ghg$,'x_mob,'y_mob,"",2537,1, instance_npcname("#172_wg_boss") + "::OnMobDead";
+	end;
+OnTimer13000:
+	killmonster 'map_ghg$, instance_npcname("#172_wg_boss") + "::OnMobDead";
+	end;
 OnTimer18000:
-	monster 'map_ghg$,'x_mob,'y_mob,"",2537,1, .@event$;
-	end;
-OnTimer28000:
-	killmonster 'map_ghg$, .@event$;
-	end;
-OnTimer33000:
-	initnpctimer;
+	stopnpctimer;
 	donpcevent instance_npcname("#172_wg_boss") + "::OnSlave";
 	end;
 OnMobDead:
