@@ -10403,12 +10403,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		default:
 			break;
-	case SC_RELIEVE_ON:
-		status_change_end(bl, SC_RELIEVE_OFF, INVALID_TIMER);
-		break;
-	case SC_RELIEVE_OFF:
-		status_change_end(bl, SC_RELIEVE_ON, INVALID_TIMER);
-		break;
 	}
 
 	// Check for overlapping fails

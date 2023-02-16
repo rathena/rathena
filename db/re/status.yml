@@ -8557,7 +8557,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Relieve_off: true
   - Status: Relieve_off
     DurationLookup: NPC_RELIEVE_OFF
@@ -8565,5 +8565,5 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    EndOnStart:
       Relieve_on: true
