@@ -43,12 +43,12 @@ static std::unordered_map<int32, std::shared_ptr<struct guild_castle>> castle_db
 
 int mapif_parse_GuildLeave(int fd,int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
-bool guild_check_empty( std::shared_ptr<struct CharGuild> g );
-int guild_calcinfo( std::shared_ptr<struct CharGuild> g );
+bool guild_check_empty( std::shared_ptr<CharGuild> g );
+int guild_calcinfo( std::shared_ptr<CharGuild> g );
 int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len);
 int mapif_guild_info( int fd, const struct mmo_guild &g );
 int inter_guild_tosql( mmo_guild &g, int flag );
-int guild_checkskill( std::shared_ptr<struct CharGuild> g, int id );
+int guild_checkskill( std::shared_ptr<CharGuild> g, int id );
 
 TIMER_FUNC(guild_save_timer){
 	static int last_id = 0; //To know in which guild we were.
@@ -58,7 +58,7 @@ TIMER_FUNC(guild_save_timer){
 		state = 1;
 
 	for( auto it = guild_db.begin(); it != guild_db.end(); ){
-		std::shared_ptr<struct CharGuild> g = it->second;
+		std::shared_ptr<CharGuild> g = it->second;
 
 		if( state == 0 && g->guild.guild_id == last_id )
 			state++; //Save next guild in the list.

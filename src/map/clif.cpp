@@ -9080,8 +9080,6 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g, int idx)
 	map_session_data *sd;
 	unsigned char buf[64];
 
-	nullpo_retv(g);
-
 	WBUFW(buf, 0)=0x156;
 	WBUFW(buf, 2)=16;  // packet len
 	// MEMBER_POSITION_INFO{

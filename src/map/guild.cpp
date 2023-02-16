@@ -826,8 +826,6 @@ int guild_recv_info(const struct mmo_guild &sg) {
 	map_session_data *sd;
 	bool guild_new = false;
 
-	nullpo_ret(sg);
-
 	auto g = guild_search(sg.guild_id);
 
 	if (!g) {
@@ -1262,7 +1260,8 @@ void guild_retrieveitembound(uint32 char_id, uint32 account_id, int guild_id) {
 	} else { //Character is offline, ask char server to do the job
 		struct s_storage* stor = guild2storage2(guild_id);
 		auto g = guild_search(guild_id);
-		nullpo_retv(g);
+		if (!g)
+			return;
 		if (stor && stor->status) { //Someone is in guild storage, close them
 			int i;
 			for (i = 0; i < g->guild.max_member; i++) {
@@ -1407,7 +1406,6 @@ int guild_change_memberposition(int guild_id,uint32 account_id,uint32 char_id,sh
  * Notification of new position for member
  *---------------------------------------------------*/
 int guild_memberposition_changed(struct mmo_guild &g,int idx,int pos) {
-	nullpo_ret(g);
 
 	g.member[idx].position=pos;
 	clif_guild_memberpositionchanged(g,idx);
@@ -2115,8 +2113,8 @@ int guild_gm_change(int guild_id, uint32 char_id) {
 	int i;
 
 	auto g = guild_search(guild_id);
-
-	nullpo_ret(g);
+	if (!g)
+		return 0;
 
 	ARR_FIND(0, MAX_GUILD, i, g->guild.member[i].char_id == char_id);
 	
@@ -2530,7 +2528,8 @@ int guild_checkcastles(const struct mmo_guild &g) {
 bool guild_isallied(int guild_id, int guild_id2) {
 	int i;
 	auto g = guild_search(guild_id);
-	nullpo_ret(g);
+	if (!g)
+		return false;
 
 	ARR_FIND( 0, MAX_GUILDALLIANCE, i, g->guild.alliance[i].guild_id == guild_id2 );
 	return( i < MAX_GUILDALLIANCE && g->guild.alliance[i].opposition == 0 );
