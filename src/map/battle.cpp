@@ -6599,7 +6599,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			short res = tstatus->res;
 			short ignore_res = 0;// Value used as a percentage.
 
-			ignore_res += sd->indexed_bonus.ignore_res_by_race[tstatus->race] + sd->indexed_bonus.ignore_res_by_race[RC_ALL];
+			if (sd)
+				ignore_res += sd->indexed_bonus.ignore_res_by_race[tstatus->race] + sd->indexed_bonus.ignore_res_by_race[RC_ALL];
 
 			// Attacker status's that pierce Res.
 			if (sc) {
@@ -7819,7 +7820,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			short mres = tstatus->mres;
 			short ignore_mres = 0;// Value used as percentage.
 
-			ignore_mres += sd->indexed_bonus.ignore_mres_by_race[tstatus->race] + sd->indexed_bonus.ignore_mres_by_race[RC_ALL];
+			if (sd)
+				ignore_mres += sd->indexed_bonus.ignore_mres_by_race[tstatus->race] + sd->indexed_bonus.ignore_mres_by_race[RC_ALL];
 
 			// Attacker status's that pierce MRes.
 			if (sc && sc->getSCE(SC_A_VITA))
