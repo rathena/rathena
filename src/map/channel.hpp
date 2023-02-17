@@ -125,7 +125,7 @@ int channel_pcsetopt(map_session_data *sd, char *chname, const char *option, con
 
 class ChannelConfigLoader : public YamlDatabase {
 public:
-	ChannelConfigLoader() : YamlDatabase("CHANNEL_DB", 1) {}
+	ChannelConfigLoader() : YamlDatabase("CHANNEL_CONF", 1) {}
 
 	const std::string getDefaultLocation() override;
 	bool parseBody(const ryml::NodeRef& body) override;

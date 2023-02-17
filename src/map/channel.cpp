@@ -64,7 +64,7 @@ bool ChannelConfigLoader::parsePrivate(const ryml::NodeRef& node) {
 		if (!asUInt32(node, "Color", color))
 			return false;
 		if (color < 0x0 || color > 0xFF'FF'FF) {
-			invalidWarning(node["Color"], "Invalid private channel color %s, defaulting to 0xFFFFFF.\n");
+			invalidWarning(node["Color"], "Invalid private channel color 0x%06x, defaulting to 0xFFFFFF.\n", color);
 			color = 0xFF'FF'FF;
 		}
 		conf.color = RGB2BGR(color);
@@ -198,7 +198,7 @@ bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
 			return 0;
 		
 		if (color < 0x0 || color > 0xFF'FF'FF) {
-			invalidWarning(node["Color"], "Invalid channel color %0x, defaulting to 0xFFFFFF\n", color);
+			invalidWarning(node["Color"], "Invalid channel color 0x%06x, defaulting to 0xFFFFFF\n", color);
 			color = 0xFF'FF'FF;
 		}
 		channel->color = RGB2BGR(color);
