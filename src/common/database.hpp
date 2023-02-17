@@ -79,6 +79,12 @@ public:
 	virtual void clear() = 0;
 	virtual const std::string getDefaultLocation() = 0;
 	virtual uint64 parseBodyNode( const ryml::NodeRef& node ) = 0;
+	/**
+	 * Parse the Body node
+	 * YamlDatabase implementaion assumes Body has a list of nodes, and passes each to parseBodyNode
+	 * Override this for custom implementation 
+	 */
+	virtual bool parseBody(const ryml::NodeRef& node);
 };
 
 template <typename keytype, typename datatype> class TypesafeYamlDatabase : public YamlDatabase{

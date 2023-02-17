@@ -100,6 +100,7 @@ struct s_player_group{
 	std::bitset<PC_PERM_MAX> permissions;
 	uint32 index;
 
+
 public:
 	bool can_use_command( const std::string& command, AtCommandType type );
 	bool has_permission( e_pc_permission permission );
@@ -119,6 +120,8 @@ public:
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 	void loadingFinished() override;
+
+	std::shared_ptr<s_player_group> search_groupname(const std::string &name);
 };
 
 extern PlayerGroupDatabase player_group_db;

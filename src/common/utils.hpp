@@ -48,4 +48,6 @@ extern uint32 GetULong(const unsigned char* buf);
 extern int32 GetLong(const unsigned char* buf);
 extern float GetFloat(const unsigned char* buf);
 
+uint32 RGB2BGR(uint32 color);
+
 #endif /* UTILS_HPP */

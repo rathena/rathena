@@ -308,6 +308,17 @@ void PlayerGroupDatabase::loadingFinished(){
 	TypesafeYamlDatabase::loadingFinished();
 }
 
+std::shared_ptr<s_player_group> PlayerGroupDatabase::search_groupname(const std::string &name) {
+	auto it = std::find_if(begin(), end(), [&name](auto p) {
+		return p.second->name == name;
+	});
+
+	if (it != end())
+		return it->second;
+	else
+		return nullptr;
+}
+
 PlayerGroupDatabase player_group_db;
 
 /**

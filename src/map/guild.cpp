@@ -830,7 +830,6 @@ int guild_recv_info(struct guild *sg) {
 	if((g = guild_search(sg->guild_id))==NULL) {
 		guild_new = true;
 		g=(struct guild *)aCalloc(1,sizeof(struct guild));
-		new(g) guild(); // placement new
 		idb_put(guild_db,sg->guild_id,g);
 		before=*sg;
 		//Perform the check on the user because the first load

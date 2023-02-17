@@ -4,6 +4,7 @@
 #include "channel.hpp"
 
 #include <stdlib.h>
+#include <unordered_set>
 
 #include <common/cbasetypes.hpp>
 #include <common/conf.hpp> //libconfig
@@ -13,6 +14,7 @@
 #include <common/socket.hpp> //set_eof
 #include <common/strlib.hpp> //safestrncpy
 #include <common/timer.hpp>  // DIFF_TICK
+#include "common/utils.hpp"
 
 #include "battle.hpp"
 #include "clif.hpp" //clif_chsys_msg
@@ -26,6 +28,228 @@ static DBMap* channel_db; // channels
 struct Channel_Config channel_config;
 
 DBMap* channel_get_db(void){ return channel_db; }
+
+const std::string ChannelConfigLoader::getDefaultLocation() {
+	return std::string(conf_path) + "/channels.yml";
+}
+
+bool ChannelConfigLoader::parseBody(const ryml::NodeRef& body) {
+	if (this->nodeExists(body, "Private")) {
+		parsePrivate(body["Private"]);
+	}
+
+	if (this->nodeExists(body, "Public")) {
+		for (const auto &node : body["Public"]) {
+			parsePublicNode(node);
+		}
+	}
+	return true;
+}
+
+
+bool ChannelConfigLoader::parsePrivate(const ryml::NodeRef& node) {
+
+	auto &conf = channel_config.private_channel;
+
+	if (nodeExists(node, "Allow")) {
+		bool active;
+		if (!asBool(node, "Allow", active))
+			return false;
+
+		conf.allow = active;
+	}
+
+	if (nodeExists(node, "Color")) {
+		uint32 color;
+		if (!asUInt32(node, "Color", color))
+			return false;
+		if (color < 0x0 || color > 0xFF'FF'FF) {
+			invalidWarning(node["Color"], "Invalid private channel color %s, defaulting to 0xFFFFFF.\n");
+			color = 0xFF'FF'FF;
+		}
+		conf.color = RGB2BGR(color);
+	}
+
+	if (nodeExists(node, "Delay")) {
+		uint32 delay;
+
+		if (!this->asUInt32(node, "Delay", delay))
+			return false;
+
+		conf.delay = delay;
+	}
+
+	if (nodeExists(node, "MaxMembers")) {
+		uint16 members;
+		if (!asUInt16(node, "MaxMembers", members))
+			return false;
+		conf.max_member = members;
+	}
+
+	parseOptFlag(node, "SelfAnnounce", CHAN_OPT_SELFANNOUNCE, conf.opt);
+	parseOptFlag(node, "JoinAnnounce", CHAN_OPT_JOINANNOUNCE, conf.opt);
+	parseOptFlag(node, "LeaveAnnounce", CHAN_OPT_LEAVEANNOUNCE, conf.opt);
+	parseOptFlag(node, "ChangeDelay", CHAN_OPT_CHANGEDELAY, conf.opt);
+	parseOptFlag(node, "ChangeColor", CHAN_OPT_CHANGECOLOR, conf.opt);
+	parseOptFlag(node, "Ban", CHAN_OPT_BAN, conf.opt);
+	parseOptFlag(node, "Kick", CHAN_OPT_KICK, conf.opt);
+	return true;
+}
+
+bool ChannelConfigLoader::parseOptFlag(const ryml::NodeRef& node, const char *name, enum e_channel_options opt, uint16 &opts) {
+	if (nodeExists(node, name)) {
+		bool active;
+		if (!asBool(node, name, active))
+			return false;
+		if (active)
+			opts |= opt;
+		else
+			opts &= ~opt;
+	}
+	return true;
+}
+
+
+bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
+	std::string name;
+
+	if (!asString(node, "Name", name))
+		return false;
+
+	ShowInfo("Parsing public node %s\n", name.c_str());
+
+	if (name[0] != '#') {
+		invalidWarning(node["Name"], "Channel name %s must begin with '#'.\n", name.c_str());
+		return false;
+	}
+
+	name.resize(CHAN_NAME_LENGTH);
+
+	Channel_Type type = CHAN_TYPE_PUBLIC;
+
+	if (nodeExists(node, "Type")) {
+		std::string type_name;
+		if (!asString(node, "Type", type_name))
+			return false;
+		int64 constant;
+		std::string type_constant = "CHAN_TYPE_" + type_name;
+		if (!script_get_constant(type_constant.c_str(), &constant)) {
+			invalidWarning(node["Type"], "Channel type %s is invalid.\n", type_name.c_str());
+			return false;
+		}
+
+		if (constant < CHAN_TYPE_PUBLIC || constant == CHAN_TYPE_PRIVATE || constant > CHAN_TYPE_ALLY) {
+			invalidWarning(node["Type"], "Channel type %s is not a supported type for Public.\n", type_name.c_str());
+			return false;
+		}
+		type = static_cast<Channel_Type>(constant);
+	}
+
+	Channel * channel = nullptr;
+
+	switch(type) {
+	case CHAN_TYPE_PUBLIC:
+		channel = (struct Channel*)strdb_get(channel_db, name.c_str() + 1);
+		break;
+	case CHAN_TYPE_MAP:
+		channel = &channel_config.map_tmpl;
+		break;
+	case CHAN_TYPE_ALLY:
+		channel = &channel_config.ally_tmpl;
+		break;
+	default:
+		ShowError("ChannelConfigLoader::parsePublicNode: Type %d not handled\n", type);
+		return false;
+	}
+
+	bool exists = channel != nullptr;
+
+	Channel tmp_channel{};
+
+	if (!exists) {
+		channel = &tmp_channel;
+		// let's set a bunch of defaults
+		channel->color = 0xFF'FF'FF;
+		channel->msg_delay = 1000;
+
+	}
+
+	if (nodeExists(node, "Password")) {
+		std::string password;
+		if (!asString(node, "Password", password))
+			return false;
+		
+		password.resize(CHAN_NAME_LENGTH);
+		safestrncpy(channel->pass, password.c_str(), CHAN_NAME_LENGTH);
+	}
+
+	if (nodeExists(node, "Alias")) {
+		std::string alias;
+		if (!asString(node, "Alias", alias))
+			return false;
+		
+		alias.resize(CHAN_NAME_LENGTH);
+		safestrncpy(channel->alias, alias.c_str(), CHAN_NAME_LENGTH);
+	}
+
+	if (nodeExists(node, "Color")) {
+		uint32 color;
+		if (!asUInt32(node, "Color", color))
+			return 0;
+		
+		if (color < 0x0 || color > 0xFF'FF'FF) {
+			invalidWarning(node["Color"], "Invalid channel color %0x, defaulting to 0xFFFFFF\n", color);
+			color = 0xFF'FF'FF;
+		}
+		channel->color = RGB2BGR(color);
+	}
+
+	if (nodeExists(node, "Delay")) {
+		uint32 delay;
+		if (!asUInt32(node, "Delay", delay))
+			return 0;
+
+		channel->msg_delay = delay;
+	}
+
+	parseOptFlag(node, "Autojoin", CHAN_OPT_AUTOJOIN, channel->opt);
+	parseOptFlag(node, "Leave", CHAN_OPT_CANLEAVE, channel->opt);
+	parseOptFlag(node, "Chat", CHAN_OPT_CANCHAT, channel->opt);
+	parseOptFlag(node, "ChangeColor", CHAN_OPT_CHANGECOLOR, channel->opt);
+	parseOptFlag(node, "SelfAnnounce", CHAN_OPT_SELFANNOUNCE, channel->opt);
+	parseOptFlag(node, "JoinAnnounce", CHAN_OPT_JOINANNOUNCE, channel->opt);
+	parseOptFlag(node, "LeaveAnnounce", CHAN_OPT_LEAVEANNOUNCE, channel->opt);
+
+	if (nodeExists(node, "Groups")) {
+		const auto& groupsNode = node["Groups"];
+		std::unordered_set<uint32> groupids;
+		for (const auto &it : groupsNode) {
+			std::string group_name;
+			c4::from_chars(it.key(), &group_name);
+
+			auto group = player_group_db.search_groupname(group_name);
+			if (!group) {
+				invalidWarning(groupsNode, "Invalid group name %s, skipping.\n", group_name.c_str());
+				continue;
+			}
+
+			bool active;
+			if (!asBool(groupsNode, group_name, active))
+				return 0;
+			if (active)
+				channel->groups.insert(group->id);
+			else
+				channel->groups.erase(group->id);
+		}
+	}
+
+	if (type == CHAN_TYPE_PUBLIC && !exists) {
+		channel_create(channel);
+	}
+	return true;
+}
+
+ChannelConfigLoader channel_cl;
 
 /**
  * Create a channel
@@ -43,6 +267,7 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
 		return NULL;
 
 	CREATE(channel, struct Channel, 1); //will exit on fail allocation
+	new(channel) Channel(); // placement new
 	//channel->id = tmp_chan->id;
 	channel->users = idb_alloc(DB_OPT_BASE);
 	channel->banned = idb_alloc(static_cast<DBOptions>(DB_OPT_BASE|DB_OPT_RELEASE_DATA) );
@@ -86,8 +311,7 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
  * @return NULL on failure or Channel on success
  */
 struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, unsigned int owner) {
-	struct Channel tmp_chan;
-	memset(&tmp_chan, 0, sizeof(struct Channel));
+	struct Channel tmp_chan{};
 
 	switch (chantype) {
 		case CHAN_TYPE_ALLY:
@@ -106,7 +330,7 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 				tmp_chan.pass[0] = '\0';
 			safestrncpy(tmp_chan.alias, name, sizeof(tmp_chan.name));
 			tmp_chan.type = CHAN_TYPE_PUBLIC;
-			tmp_chan.opt = CHAN_OPT_BASE;
+			tmp_chan.opt = 0;
 			tmp_chan.msg_delay = 1000;
 			tmp_chan.color = channel_getColor("Default");
 			break;
@@ -161,10 +385,7 @@ int channel_delete(struct Channel *channel, bool force) {
 		ShowInfo("Deleting channel %s alias %s type %d\n",channel->name,channel->alias,channel->type);
 	db_destroy(channel->users);
 	db_destroy(channel->banned);
-	if (channel->groups)
-		aFree(channel->groups);
-	channel->groups = NULL;
-	channel->group_count = 0;
+	channel->groups.clear();
 	switch(channel->type){
 	case CHAN_TYPE_MAP:
 		map_getmapdata(channel->m)->channel = NULL;
@@ -228,7 +449,7 @@ int channel_join(struct Channel *channel, map_session_data *sd) {
 
 	if( sd->stealth ) {
 		sd->stealth = false;
-	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
+	} else if( channel->opt & CHAN_OPT_JOINANNOUNCE ) {
 		char output[CHAT_SIZE_MAX];
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,761), channel->alias, sd->status.name); // %s %s has joined.
 		clif_channel_msg(channel,output,channel->color);
@@ -261,7 +482,7 @@ int channel_mjoin(map_session_data *sd) {
 		mapdata->channel = channel_create_simple(NULL,NULL,CHAN_TYPE_MAP,sd->bl.m);
 	}
 
-	if( mapdata->channel->opt & CHAN_OPT_ANNOUNCE_SELF ) {
+	if( mapdata->channel->opt & CHAN_OPT_SELFANNOUNCE ) {
 		sprintf(mout, msg_txt(sd,1435),mapdata->channel->name,mapdata->name); // You're now in the '#%s' channel for '%s'.
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], mout, false, SELF);
 	}
@@ -455,7 +676,7 @@ int channel_send(struct Channel *channel, map_session_data *sd, const char *msg)
 	else {
 		char output[CHAT_SIZE_MAX];
 		unsigned long color = channel->color;
-		if((channel->opt&CHAN_OPT_COLOR_OVERRIDE) && sd->fontcolor && sd->fontcolor < channel_config.colors_count && channel_config.colors[sd->fontcolor])
+		if((channel->opt&CHAN_OPT_CHANGECOLOR) && sd->fontcolor && sd->fontcolor < channel_config.colors_count && channel_config.colors[sd->fontcolor])
 			color = channel_config.colors[sd->fontcolor];
 		safesnprintf(output, CHAT_SIZE_MAX, "%s %s : %s", channel->alias, sd->status.name, msg);
 		clif_channel_msg(channel,output,color);
@@ -669,7 +890,7 @@ int channel_pccreate(map_session_data *sd, char *chname, char *chpass){
 	if(res==0){ //success
 		struct Channel *channel = channel_create_simple(chname,chpass,CHAN_TYPE_PRIVATE,sd->status.char_id);
 		channel_join(channel,sd);
-		if( ( channel->opt & CHAN_OPT_ANNOUNCE_SELF ) ) {
+		if( ( channel->opt & CHAN_OPT_SELFANNOUNCE ) ) {
 			sprintf(output, msg_txt(sd,1403),chname); // You're now in the '%s' channel.
 			clif_displaymessage(sd->fd, output);
 		}
@@ -742,13 +963,13 @@ int channel_pcleave(map_session_data *sd, char *chname){
 		return -2; //channel doesn't exist or player don't have it
 	}
 
-	if (!(channel->opt&CHAN_OPT_CAN_LEAVE)) {
+	if (!(channel->opt&CHAN_OPT_LEAVEANNOUNCE)) {
 		sprintf(output, msg_txt(sd,762), chname); // You cannot leave channel '%s'.
 		clif_displaymessage(sd->fd, output);
 		return -1;
 	}
 
-	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
+	if( !channel_config.closing && (channel->opt & CHAN_OPT_LEAVEANNOUNCE) ) {
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,763), channel->alias, sd->status.name); // %s %s left.
 		clif_channel_msg(channel,output,channel->color);
 	}
@@ -821,7 +1042,7 @@ int channel_pcjoin(map_session_data *sd, char *chname, char *pass){
 			return -1;
 	}
 
-	if( ( channel->opt & CHAN_OPT_ANNOUNCE_SELF ) ) {
+	if( ( channel->opt & CHAN_OPT_SELFANNOUNCE ) ) {
 		sprintf(output, msg_txt(sd,1403),chname); // You're now in the '%s' channel.
 		clif_displaymessage(sd->fd, output);
 	}
@@ -863,7 +1084,7 @@ int channel_pccolor(map_session_data *sd, char *chname, char *color){
 			clif_displaymessage(sd->fd, output);
 			return -1;
 		}
-		else if (!(channel->opt&CHAN_OPT_COLOR_OVERRIDE)) {
+		else if (!(channel->opt&CHAN_OPT_CHANGECOLOR)) {
 			sprintf(output, msg_txt(sd,764), chname); // You cannot change the color for channel '%s'.
 			clif_displaymessage(sd->fd, output);
 			return -1;
@@ -964,7 +1185,7 @@ int channel_pcban(map_session_data *sd, char *chname, char *pname, int flag){
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
 			clif_displaymessage(sd->fd, output);
 			return -1;
-		} else if (!channel_config.private_channel.ban) {
+		} else if (!(channel_config.private_channel.opt & CHAN_OPT_BAN)) {
 			sprintf(output, msg_txt(sd,765), chname); // You're not allowed to ban a player.
 			clif_displaymessage(sd->fd, output);
 			return -1;
@@ -1077,7 +1298,7 @@ int channel_pckick(map_session_data *sd, char *chname, char *pname) {
 		if (channel->char_id != sd->status.char_id) {
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
 			clif_displaymessage(sd->fd, output);
-		} else if (!channel_config.private_channel.kick) {
+		} else if (!(channel_config.private_channel.opt & CHAN_OPT_KICK)) {
 			sprintf(output, msg_txt(sd,766), chname); // You cannot kick a player from channel '%s'.
 			clif_displaymessage(sd->fd, output);
 		}
@@ -1095,7 +1316,7 @@ int channel_pckick(map_session_data *sd, char *chname, char *pname) {
 		return -1;
 	}
 
-	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
+	if( !channel_config.closing && (channel->opt & CHAN_OPT_LEAVEANNOUNCE) ) {
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,768), channel->alias, tsd->status.name); // %s %s has been kicked.
 		clif_channel_msg(channel,output,channel->color);
 	}
@@ -1172,19 +1393,19 @@ int channel_pcsetopt(map_session_data *sd, char *chname, const char *option, con
 
 	if (channel->type == CHAN_TYPE_PRIVATE && !pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN)) {
 		switch (opt) {
-			case CHAN_OPT_MSG_DELAY:
-				if (!channel_config.private_channel.change_delay)
+			case CHAN_OPT_CHANGEDELAY:
+				if (!(channel_config.private_channel.opt & CHAN_OPT_CHANGEDELAY))
 					return -1;
 				break;
-			case CHAN_OPT_COLOR_OVERRIDE:
-				if (!channel_config.private_channel.color_override)
+			case CHAN_OPT_CHANGECOLOR:
+				if (!(channel_config.private_channel.opt & CHAN_OPT_CHANGECOLOR))
 					return -1;
 				break;
 		}
 	}
 
 	if( val[0] == '\0' ) {
-		if ( opt == CHAN_OPT_MSG_DELAY ) {
+		if ( opt == CHAN_OPT_CHANGEDELAY ) {
 			sprintf(output, msg_txt(sd,1466), opt_str[k]);// Input the number of seconds (0-10) for the '%s' option.
 			clif_displaymessage(sd->fd, output);
 			return -1;
@@ -1199,7 +1420,7 @@ int channel_pcsetopt(map_session_data *sd, char *chname, const char *option, con
 		}
 	} else {
 		int v = atoi(val);
-		if( opt == CHAN_OPT_MSG_DELAY ) {
+		if( opt == CHAN_OPT_CHANGEDELAY ) {
 			if( v < 0 || v > 10 ) {
 				sprintf(output, msg_txt(sd,1451), v, opt_str[k]);// Value '%d' for option '%s' is out of range (limit 0-10).
 				clif_displaymessage(sd->fd, output);
@@ -1250,19 +1471,9 @@ int channel_pcsetopt(map_session_data *sd, char *chname, const char *option, con
  * @return True on success or false on failure
  */
 bool channel_pccheckgroup(struct Channel *channel, int group_id) {
-	unsigned short i;
-
 	nullpo_ret(channel);
 
-	if (!channel->groups || !channel->group_count)
-		return true;
-
-	for (i = 0; i < channel->group_count; i++) {
-		if (channel->groups[i] == group_id)
-			return true;
-	}
-
-	return false;
+	return channel->groups.count(group_id) > 0;
 }
 
 /**
@@ -1314,176 +1525,28 @@ unsigned long channel_getColor(const char *color_str) {
 }
 
 /**
- * Attempt to create a global channel from the channel config
- * @param chan: Channel list
- * @param tmp_chan: Temporary channel data
- * @param i: Index
- * @return True on success or false on failure
- */
-bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i) {
-	config_setting_t  *group_list = NULL;
-	int delay = 1000, autojoin = 0, leave = 1, chat = 1, color_override = 0,
-		self_notif = 1, join_notif = 0, leave_notif = 0;
-	int64 type = CHAN_TYPE_PUBLIC;
-	int group_count = 0;
-	const char *name = NULL, *password = NULL, *alias = NULL, *color_str = "Default", *type_str = NULL;
-
-	if (tmp_chan == NULL)
-		return false;
-
-	if (!config_setting_lookup_string(chan, "name", &name)) {
-		ShowError("Please input channel 'name' at '%s' line '%d'! Skipping...\n", chan->file, chan->line);
-		return false;
-	}
-	if (config_setting_lookup_string(chan, "type", &type_str) && !script_get_constant(type_str, &type)) {
-		ShowError("Invalid channel type %s at '%s' line '%d'! Skipping...\n", type_str, chan->file, chan->line);
-		return false;
-	}
-	config_setting_lookup_string(chan, "password", &password);
-	config_setting_lookup_string(chan, "alias", &alias);
-	config_setting_lookup_string(chan, "color", &color_str);
-	config_setting_lookup_int(chan, "delay", &delay);
-	config_setting_lookup_bool(chan, "autojoin", &autojoin);
-	config_setting_lookup_bool(chan, "leave", &leave);
-	config_setting_lookup_bool(chan, "chat", &chat);
-	config_setting_lookup_bool(chan, "color_override", &color_override);
-	config_setting_lookup_bool(chan, "self_notif", &self_notif);
-	config_setting_lookup_bool(chan, "join_notif", &join_notif);
-	config_setting_lookup_bool(chan, "leave_notif", &leave_notif);
-
-	safestrncpy(tmp_chan->name,name+1,sizeof(tmp_chan->name));
-	if (password)
-		safestrncpy(tmp_chan->pass,password,sizeof(tmp_chan->pass));
-	else
-		tmp_chan->pass[0] = '\0';
-	safestrncpy(tmp_chan->alias,alias?alias:name,sizeof(tmp_chan->alias));
-	tmp_chan->msg_delay = delay;
-	tmp_chan->type = (enum Channel_Type)type;
-	tmp_chan->color = channel_getColor(color_str);
-
-	tmp_chan->opt = (autojoin ? CHAN_OPT_AUTOJOIN : 0) |
-		(leave ? CHAN_OPT_CAN_LEAVE : 0) |
-		(chat ? CHAN_OPT_CAN_CHAT : 0) |
-		(color_override ? CHAN_OPT_COLOR_OVERRIDE : 0) |
-		(self_notif ? CHAN_OPT_ANNOUNCE_SELF : 0) |
-		(join_notif ? CHAN_OPT_ANNOUNCE_JOIN : 0) |
-		(leave_notif ? CHAN_OPT_ANNOUNCE_LEAVE : 0);
-
-	if ((group_list = config_setting_get_member(chan, "groupid")) && (group_count = config_setting_length(group_list)) > 0) {
-		int j;
-		CREATE(tmp_chan->groups, unsigned short, group_count);
-		tmp_chan->group_count = group_count;
-		for (j = 0; j < group_count; j++) {
-			int groupid = config_setting_get_int_elem(group_list, j);
-			tmp_chan->groups[j] = groupid;
-		}
-	}
-
-	return true;
-}
-
-/**
  * Read and verify configuration in file
  * Assign table value with value
  */
 void channel_read_config(void) {
-	config_t channels_conf;
-	config_setting_t *chan_setting = NULL;
 
-	if (conf_read_file(&channels_conf, channel_conf)) {
-		ShowError("Cannot read file '%s' for channel connfig.\n", channel_conf);
-		return;
-	}
+	channel_config.private_channel.allow = false;
+	channel_config.private_channel.color = 0xFF'FF'FF;
+	channel_config.private_channel.delay = 1000;
+	channel_config.private_channel.max_member = 1000;
+	channel_config.private_channel.opt = CHAN_OPT_BAN | CHAN_OPT_KICK;
 
-	chan_setting = config_lookup(&channels_conf, "channel_config");
-	if (chan_setting != NULL) {
-		config_setting_t *colors, *private_channel = NULL, *channels = NULL;
-		int count = 0, channel_count = 0;
+	channel_config.ally_tmpl.color = 0xFF'FF'FF;
+	channel_config.ally_tmpl.msg_delay = 1000;
+	channel_config.ally_tmpl.opt = CHAN_OPT_CANLEAVE | CHAN_OPT_CANCHAT;
 
-		colors = config_setting_get_member(chan_setting, "colors");
-		if (colors != NULL) {
-			int i, color_count = config_setting_length(colors);
+	channel_config.map_tmpl.color = 0xFF'FF'FF;
+	channel_config.map_tmpl.msg_delay = 1000;
+	channel_config.map_tmpl.opt = CHAN_OPT_CANLEAVE | CHAN_OPT_CANCHAT;
 
-			CREATE(channel_config.colors, unsigned long, color_count);
-			CREATE(channel_config.colors_name, char *, color_count);
-			for (i = 0; i < color_count; i++) {
-				config_setting_t *color = config_setting_get_elem(colors, i);
-				CREATE(channel_config.colors_name[i], char, CHAN_NAME_LENGTH);
+	channel_cl.load();
 
-				safestrncpy(channel_config.colors_name[i], config_setting_name(color), CHAN_NAME_LENGTH);
-				channel_config.colors[i] = strtoul(config_setting_get_string_elem(colors,i),NULL,0);
-				channel_config.colors[i] = (channel_config.colors[i] & 0x0000FF) << 16 | (channel_config.colors[i] & 0x00FF00) | (channel_config.colors[i] & 0xFF0000) >> 16;//RGB to BGR
-			}
-			channel_config.colors_count = color_count;
-		}
-
-		private_channel = config_setting_get_member(chan_setting, "private_channel");
-		if (private_channel != NULL) {
-			int allow = 1, ban = 1, kick = 1, color_override = 0, change_delay = 0,
-				self_notif = 1, join_notif = 0, leave_notif = 0,
-				delay = 1000, max_member = 1000;
-			const char *color_str = "Default";
-
-			config_setting_lookup_bool(private_channel, "allow", &allow);
-			config_setting_lookup_int(private_channel, "delay", &delay);
-			config_setting_lookup_string(private_channel, "color", &color_str);
-			config_setting_lookup_int(private_channel, "max_member", &max_member);
-			config_setting_lookup_bool(private_channel, "self_notif", &self_notif);
-			config_setting_lookup_bool(private_channel, "join_notif", &join_notif);
-			config_setting_lookup_bool(private_channel, "leave_notif", &leave_notif);
-			config_setting_lookup_bool(private_channel, "ban", &ban);
-			config_setting_lookup_bool(private_channel, "kick", &kick);
-			config_setting_lookup_bool(private_channel, "color_override", &color_override);
-			config_setting_lookup_bool(private_channel, "change_delay", &change_delay);
-
-			channel_config.private_channel.allow = allow;
-			channel_config.private_channel.color = channel_getColor(color_str);
-			channel_config.private_channel.delay = delay;
-			channel_config.private_channel.max_member = min(max_member, UINT16_MAX);
-			channel_config.private_channel.ban = ban;
-			channel_config.private_channel.kick = kick;
-			channel_config.private_channel.color_override = color_override;
-			channel_config.private_channel.change_delay = change_delay;
-			channel_config.private_channel.opt = CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE|
-				(color_override ? CHAN_OPT_COLOR_OVERRIDE : 0) |
-				(self_notif ? CHAN_OPT_ANNOUNCE_SELF : 0) |
-				(join_notif ? CHAN_OPT_ANNOUNCE_JOIN : 0) |
-				(leave_notif ? CHAN_OPT_ANNOUNCE_LEAVE : 0);
-		}
-
-		channels = config_setting_get_member(chan_setting, "ally");
-		if (channels != NULL) {
-			memset(&channel_config.ally_tmpl, 0, sizeof(struct Channel));
-			channel_read_sub(channels, &channel_config.ally_tmpl, 0);
-		}
-		channels = config_setting_get_member(chan_setting, "map");
-		if (channels != NULL) {
-			memset(&channel_config.map_tmpl, 0, sizeof(struct Channel));
-			channel_read_sub(channels, &channel_config.map_tmpl, 0);
-		}
-
-		channels = config_setting_get_member(chan_setting, "channels");
-		if (channels != NULL && (count = config_setting_length(channels)) > 0) {
-			int i;
-			for (i = 0; i < count; i++) {
-				config_setting_t *chan = config_setting_get_elem(channels, i);
-				struct Channel *channel = NULL, tmp_chan;
-
-				memset(&tmp_chan, 0, sizeof(struct Channel));
-				if (!channel_read_sub(chan, &tmp_chan, i))
-					continue;
-
-				if ((channel = channel_create(&tmp_chan))) {
-					channel_count++;
-					channel->group_count = tmp_chan.group_count;
-					channel->groups = tmp_chan.groups;
-				}
-			}
-		}
-
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' channels in '" CL_WHITE "%s" CL_RESET "'.\n", db_size(channel_db), channel_conf);
-		config_destroy(&channels_conf);
-	}
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' channels.\n", db_size(channel_db));
 }
 
 /**
@@ -1491,9 +1554,6 @@ void channel_read_config(void) {
  */
 void do_init_channel(void) {
 	channel_db = stridb_alloc(static_cast<DBOptions>(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), CHAN_NAME_LENGTH);
-	memset(&channel_config.private_channel, 0, sizeof(struct Channel));
-	memset(&channel_config.ally_tmpl, 0, sizeof(struct Channel));
-	memset(&channel_config.map_tmpl, 0, sizeof(struct Channel));
 	channel_read_config();
 }
 
@@ -1523,3 +1583,4 @@ void do_final_channel(void) {
 		aFree(channel_config.colors);
 	}
 }
+

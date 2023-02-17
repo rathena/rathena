@@ -400,3 +400,9 @@ uint32 get_percentage_exp(const uint64 a, const uint64 b)
 
 	return (uint32)floor(result);
 }
+
+uint32 RGB2BGR(uint32 color) {
+	return ((color & 0x00'00'FF) << 16)
+		| (color & 0x00'FF'00)
+		| ((color & 0xFF'00'00) >> 16);
+}
