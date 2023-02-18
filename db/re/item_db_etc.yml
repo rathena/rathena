@@ -38157,7 +38157,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bVariableCastRate,"MG_FIREBALL",-50;
+      bonus2 bVariableCastrate,"MG_FIREBALL",-50;
       bonus2 bSkillAtk,"MG_FIREBALL",100;
   - Id: 27027
     AegisName: Fire_Sand_Man_Card
@@ -43390,113 +43390,131 @@ Body:
          bonus bMdef,8;
       }
   - Id: 29170
-    AegisName: S-Atk
+    AegisName: Reactor_S_ATK
     Name: S-Atk
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bBaseAtk,50;
       .@r = getrefine();
-      .@c = 100;
-      .@t = 3000;
-      if (.@r>=8) {
-         .@t += 1000;
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         .@c = 10;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 20;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bBaseAtk,150; }",.@c,.@t,BF_WEAPON;
       }
-      if (.@r>=9) {
-         .@c += 100;
-         .@t += 1000;
-      }
-      autobonus2 "{ bonus bBaseAtk,150; }",.@c,.@t;
   - Id: 29171
-    AegisName: S-Matk
+    AegisName: Reactor_S_MATK
     Name: S-Matk
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bMatk,100;
       .@r = getrefine();
-      .@c = 100;
-      .@t = 3000;
-      if (.@r>=8) {
-         .@t += 1000;
+      bonus bMatk,100;
+      if (.@r>=7) {
+         .@c = 10;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 20;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bMatk,150; }",.@c,.@t,BF_MAGIC;
       }
-      if (.@r>=9) {
-         .@c += 100;
-         .@t += 1000;
-      }
-      autobonus2 "{ bonus bMatk,150; }",.@c,.@t,BF_MAGIC;
   - Id: 29172
-    AegisName: S-Avoid
+    AegisName: Reactor_S_Avoid
     Name: S-Avoid
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bFlee2,5;
       .@r = getrefine();
-      .@c = 100;
-      .@t = 3000;
-      if (.@r>=8) {
-         .@t += 1000;
+      bonus bFlee2,5;
+      if (.@r>=7) {
+         .@c = 10;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 20;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bFlee2,100; }",.@c,.@t,BF_WEAPON;
       }
-      if (.@r>=9) {
-         .@c += 100;
-         .@t += 1000;
-      }
-      autobonus2 "{ bonus bFlee2,100; }",.@c,.@t;
   - Id: 29173
-    AegisName: S-MaxHP
+    AegisName: Reactor_S_MHP
     Name: S-MaxHP
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bMaxHP,2500;
       .@r = getrefine();
-      .@c = 100;
-      .@t = 3000;
-      if (.@r>=8) {
-         .@t += 1000;
+      bonus bMaxHP,2500;
+      if (.@r>=7) {
+         .@c = 10;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 20;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bMaxHP,7500; }",.@c,.@t,BF_WEAPON;
       }
-      if (.@r>=9) {
-         .@c += 100;
-         .@t += 1000;
-      }
-      autobonus2 "{ bonus bMaxHP,7500; }",.@c,.@t;
   - Id: 29174
-    AegisName: S-Quick
+    AegisName: Reactor_S_Quick
     Name: S-Quick
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bVariableCastrate,-10;
       .@r = getrefine();
-      .@c = 100;
-      .@t = 3000;
-      if (.@r>=8) {
-         .@t += 1000;
+      bonus bVariableCastrate,-10;
+      if (.@r>=7) {
+         .@c = 10;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 20;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100 }",.@c,.@t,BF_MAGIC;
       }
-      if (.@r>=9) {
-         .@c += 100;
-         .@t += 1000;
-      }
-      autobonus2 "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100; }",.@c,.@t,BF_MAGIC;
   - Id: 29175
-    AegisName: S-Cri
+    AegisName: Reactor_S_CRI
     Name: S-Cri
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCritical,10;
       .@r = getrefine();
-      .@c = 100;
-      .@t = 3000;
-      if (.@r>=8) {
-         .@t += 1000;
+      bonus bCritical,10;
+      if (.@r>=7) {
+         .@c = 10;
+         .@t = 3000;
+         if (.@r>=8) {
+             .@c = 20;
+             .@t += 1000;
+         }
+         if (.@r>=9) {
+             .@c = 35;
+             .@t += 1000;
+         }
+         autobonus "{ bonus bCritical,100; }",.@c,.@t,BF_WEAPON;
       }
-      if (.@r>=9) {
-         .@c += 100;
-         .@t += 1000;
-      }
-      autobonus2 "{ bonus bCritical,100; }",.@c,.@t;
   - Id: 29176
     AegisName: Tenji
     Name: Tenji
@@ -43993,35 +44011,35 @@ Body:
       skill "TF_DOUBLE",3;
   - Id: 29366
     AegisName: Strong_Blow1
-    Name: Hard Blow 1
+    Name: Strong Blow 1
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bAddRace,RC_All,2*getrefine();
   - Id: 29367
     AegisName: Strong_Blow2
-    Name: Hard Blow 2
+    Name: Strong Blow 2
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bAddRace,RC_All,4*getrefine();
   - Id: 29368
     AegisName: Strong_Blow3
-    Name: Hard Blow 3
+    Name: Strong Blow 3
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bAddRace,RC_All,6*getrefine();
   - Id: 29369
     AegisName: Strong_Blow4
-    Name: Hard Blow 4
+    Name: Strong Blow 4
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bAddRace,RC_All,8*getrefine();
   - Id: 29370
     AegisName: Strong_Blow5
-    Name: Hard Blow 5
+    Name: Strong Blow 5
     Type: Card
     SubType: Enchant
     Script: |
@@ -44150,22 +44168,21 @@ Body:
       autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000; }";
       /*Unknow Rate*/
   - Id: 29438
-    AegisName: Z-Knockback
+    AegisName: ReactorZ_Knockback
     Name: Z-Knockback
     Type: Card
     SubType: Enchant
     Script: |
       bonus bNoKnockback;
   - Id: 29439
-    AegisName: Z-Immortal
+    AegisName: ReactorZ_Immortal
     Name: Z-Immortal
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bUnbreakableHelm;
-      /* fix me */
+      bonus bUnbreakableArmor;
   - Id: 29440
-    AegisName: Z-Killgain
+    AegisName: ReactorZ_Killgain
     Name: Z-Killgain
     Type: Card
     SubType: Enchant
@@ -44182,28 +44199,28 @@ Body:
          bonus bSPGainValue,10;
       }
   - Id: 29441
-    AegisName: Z-Reincarnation
+    AegisName: ReactorZ_Reincarnation
     Name: Z-Reincarnation
     Type: Card
     SubType: Enchant
     Script: |
       bonus bRestartFullRecover;
   - Id: 29442
-    AegisName: Z-NoDispell
+    AegisName: ReactorZ_NoDispell
     Name: Z-NoDispell
     Type: Card
     SubType: Enchant
     Script: |
       bonus bNoCastCancel2;
   - Id: 29443
-    AegisName: Z-Clairvoyance
+    AegisName: ReactorZ_Clairvoyance
     Name: Z-Clairvoyance
     Type: Card
     SubType: Enchant
     Script: |
       bonus bIntravision;
   - Id: 29444
-    AegisName: Z-Cast_Fixed
+    AegisName: ReactorZ_CastFixed
     Name: Z-Cast Fixed
     Type: Card
     SubType: Enchant
@@ -48999,6 +49016,20 @@ Body:
       bonus2 bSkillAtk,"SJ_STAREMPEROR",5+.@r;
       if (.@r>=10)
          bonus2 bSkillAtk,"SJ_STAREMPEROR",5;
+  - Id: 300291
+    AegisName: 1st_Anniver_Card
+    Name: 1st Anniversary Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAllStats,1;
+      bonus bBaseAtk,15;
+      bonus bMatk,15;
   - Id: 300292
     AegisName: Extra_Joker_Card
     Name: Extra Joker Card
@@ -49137,12 +49168,33 @@ Body:
       bonus bLongAtkRate,4*(.@r/3);
   - Id: 300314
     AegisName: 19th_Pack_enc01
-    Name: Remnants of reason and memory    # !todo check english name
+    Name: Fragment of Reason and Memory
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
+  - Id: 300315
+    AegisName: E_Fire_19th
+    Name: Resist Fire
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Fire,70;
+  - Id: 300316
+    AegisName: E_Wind_19th
+    Name: Resist Wind
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Wind,70;
+  - Id: 300317
+    AegisName: E_Ground_19th
+    Name: Resist Earth
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Earth,70;
   - Id: 300318
     AegisName: Sealed_B_Ygnizem_Card_J
     Name: Sealed General Egnigem Cenia Card
@@ -50011,6 +50063,27 @@ Body:
       hateffect HAT_EF_VALHALLA_IDOL,true;
     UnEquipScript: |
       hateffect HAT_EF_VALHALLA_IDOL,false;
+  - Id: 300386
+    AegisName: aegis_300386
+    Name: Crushing
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,7*getrefine();
+  - Id: 300387
+    AegisName: aegis_300387
+    Name: Magic Edge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,7*getrefine();
+  - Id: 300389
+    AegisName: aegis_300389
+    Name: Black Winged Apostle
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bAspdRate,100; bonus bFixedCastrate,-100; }",10,10000,BF_WEAPON|BF_MAGIC;
   - Id: 300392
     AegisName: aegis_300392
     Name: Sealed Stormy Knight Card
@@ -52808,6 +52881,432 @@ Body:
          }
          autobonus "{ bonus3 bAutoSpell,\"SO_VARETYR_SPEAR\",3,1000; }",.@c,.@t,BF_WEAPON;
       }
+  - Id: 310269
+    AegisName: UnPetrify_JP
+    Name: Petrified Resistance
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bResEff,Eff_Stone,10000;
+  - Id: 310274
+    AegisName: MD_Geffen_Ruby1
+    Name: Ruby Emblem Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bHit,5;
+  - Id: 310275
+    AegisName: MD_Geffen_Ruby2
+    Name: Ruby Emblem Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,15;
+      bonus bHit,7;
+  - Id: 310276
+    AegisName: MD_Geffen_Ruby3
+    Name: Ruby Emblem Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,20;
+      bonus bHit,10;
+  - Id: 310277
+    AegisName: MD_Geffen_Ruby4
+    Name: Ruby Emblem Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,30;
+      bonus bHit,15;
+      bonus bAtkRate,3;
+  - Id: 310278
+    AegisName: MD_Geffen_Ruby5
+    Name: Ruby Emblem Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,35;
+      bonus bHit,20;
+      bonus bAtkRate,4;
+  - Id: 310279
+    AegisName: MD_Geffen_Ruby6
+    Name: Ruby Emblem Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,40;
+      bonus bHit,20;
+      bonus bAtkRate,7;
+  - Id: 310280
+    AegisName: MD_Geffen_Topa1
+    Name: Topaz Emblem Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+      bonus bHealPower,1;
+  - Id: 310281
+    AegisName: MD_Geffen_Topa2
+    Name: Topaz Emblem Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,15;
+      bonus bHealPower,4;
+  - Id: 310282
+    AegisName: MD_Geffen_Topa3
+    Name: Topaz Emblem Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,20;
+      bonus bHealPower,7;
+  - Id: 310283
+    AegisName: MD_Geffen_Topa4
+    Name: Topaz Emblem Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,30;
+      bonus bMatkRate,3;
+      bonus bHealPower,10;
+  - Id: 310284
+    AegisName: MD_Geffen_Topa5
+    Name: Topaz Emblem Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,35;
+      bonus bMatkRate,4;
+      bonus bHealPower,13;
+  - Id: 310285
+    AegisName: MD_Geffen_Topa6
+    Name: Topaz Emblem Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,40;
+      bonus bMatkRate,7;
+      bonus bHealPower,20;
+  - Id: 310286
+    AegisName: MD_Geffen_Jade1
+    Name: Jade Emblem Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bHit,5;
+  - Id: 310287
+    AegisName: MD_Geffen_Jade2
+    Name: Jade Emblem Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,15;
+      bonus bHit,7;
+  - Id: 310288
+    AegisName: MD_Geffen_Jade3
+    Name: Jade Emblem Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,20;
+      bonus bHit,10;
+  - Id: 310289
+    AegisName: MD_Geffen_Jade4
+    Name: Jade Emblem Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,30;
+      bonus bHit,15;
+      bonus bLongAtkRate,3;
+  - Id: 310290
+    AegisName: MD_Geffen_Jade5
+    Name: Jade Emblem Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,35;
+      bonus bHit,20;
+      bonus bLongAtkRate,4;
+  - Id: 310291
+    AegisName: MD_Geffen_Jade6
+    Name: Jade Emblem Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,40;
+      bonus bHit,20;
+      bonus bLongAtkRate,7;
+  - Id: 310292
+    AegisName: MD_Geffen_Embe1
+    Name: Ember Emblem Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,2;
+      bonus bFlee,5;
+  - Id: 310293
+    AegisName: MD_Geffen_Embe2
+    Name: Ember Emblem Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,4;
+      bonus bFlee,10;
+  - Id: 310294
+    AegisName: MD_Geffen_Embe3
+    Name: Ember Emblem Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,6;
+      bonus bFlee,15;
+  - Id: 310295
+    AegisName: MD_Geffen_Embe4
+    Name: Ember Emblem Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,8;
+      bonus bFlee,20;
+      bonus bAspd,1;
+  - Id: 310296
+    AegisName: MD_Geffen_Embe5
+    Name: Ember Emblem Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,10;
+      bonus bFlee,20;
+      bonus bAspd,1;
+  - Id: 310297
+    AegisName: MD_Geffen_Embe6
+    Name: Ember Emblem Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,15;
+      bonus bFlee,25;
+      bonus bAspd,2;
+  - Id: 310298
+    AegisName: MD_Geffen_Amet1
+    Name: Amethyst Emblem Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,3;
+      bonus bVariableCastrate,-2;
+  - Id: 310299
+    AegisName: MD_Geffen_Amet2
+    Name: Amethyst Emblem Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,4;
+      bonus bVariableCastrate,-4;
+  - Id: 310300
+    AegisName: MD_Geffen_Amet3
+    Name: Amethyst Emblem Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,5;
+      bonus bVariableCastrate,-6;
+  - Id: 310301
+    AegisName: MD_Geffen_Amet4
+    Name: Amethyst Emblem Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,6;
+      bonus bMaxSP,300;
+      bonus bVariableCastrate,-8;
+  - Id: 310302
+    AegisName: MD_Geffen_Amet5
+    Name: Amethyst Emblem Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,8;
+      bonus bMaxSP,400;
+      bonus bVariableCastrate,-10;
+  - Id: 310303
+    AegisName: MD_Geffen_Amet6
+    Name: Amethyst Emblem Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,10;
+      bonus bMaxSP,700;
+      bonus bVariableCastrate,-15;
+  - Id: 310304
+    AegisName: MD_Geffen_Saph1
+    Name: Sapphire Emblem Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,100;
+      bonus bMaxHP,200;
+  - Id: 310305
+    AegisName: MD_Geffen_Saph2
+    Name: Sapphire Emblem Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,200;
+      bonus bMaxHP,400;
+  - Id: 310306
+    AegisName: MD_Geffen_Saph3
+    Name: Sapphire Emblem Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,300;
+      bonus bMaxHP,600;
+  - Id: 310307
+    AegisName: MD_Geffen_Saph4
+    Name: Sapphire Emblem Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,400;
+      bonus bMaxHP,800;
+      bonus bMaxHPrate,3;
+  - Id: 310308
+    AegisName: MD_Geffen_Saph5
+    Name: Sapphire Emblem Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,500;
+      bonus bMaxHP,1000;
+      bonus bMaxHPrate,4;
+  - Id: 310309
+    AegisName: MD_Geffen_Saph6
+    Name: Sapphire Emblem Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,800;
+      bonus bMaxHP,1500;
+      bonus bMaxHPrate,7;
+  - Id: 310310
+    AegisName: Latent_Release_RK
+    Name: Latent Release (Rune Knight)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+         bonus2 bSubClass,Class_Boss,20;
+  - Id: 310311
+    AegisName: Latent_Release_LG
+    Name: Latent Release (Royal Guard)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus2 bAddClass,Class_Boss,50;
+  - Id: 310312
+    AegisName: Latent_Release_SO
+    Name: Latent Release (Sorcerer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+         bonus2 bSkillAtk,"SO_VARETYR_SPEAR",50;
+         bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
+      }   
+  - Id: 310313
+    AegisName: Latent_Release_AB
+    Name: Latent Release (Archbishop)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         autobonus3 "{ bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Stone,10000; }",1000,30000,"AB_ORATIO";
+  - Id: 310314
+    AegisName: Latent_Release_SR
+    Name: Latent Release (Sura)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+         bonus bPerfectHitAddRate,20;
+  - Id: 310315
+    AegisName: Latent_Release_SC
+    Name: Latent Release (Shadow Chaser)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+         bonus2 bSkillCooldown,"SC_ESCAPE",-1500;
+  - Id: 310316
+    AegisName: Latent_Release_NC
+    Name: Latent Release (Mechanic)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus bNoWalkDelay;
+  - Id: 310317
+    AegisName: Latent_Release_GN
+    Name: Latent Release (Genetic)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+         bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",50;
+         bonus2 bSkillAtk,"GN_CRAZYWEED",50;
+      }
+  - Id: 310318
+    AegisName: Hit_the_Target25
+    Name: Perfect Hit + 25%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitAddRate,25;
+  - Id: 310319
+    AegisName: Hit100
+    Name: Hit + 100
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,100;
+  - Id: 310320
+    AegisName: Armor_Telekine
+    Name: Telekinesis (Armor)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDefEle,Ele_Ghost;
   - Id: 310321
     AegisName: Enchant_Groza
     Name: Abyssal King
@@ -52824,6 +53323,16 @@ Body:
       hateffect HAT_EF_magical_feather,true;
     UnEquipScript: |
       hateffect HAT_EF_magical_feather,false;
+  - Id: 310323
+    AegisName: Extreme_Magic
+    Name: Transcend
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,BaseLevel;
+      bonus bMatk,BaseLevel;
+      bonus bMaxHP,20*BaseLevel;
+      bonus bMaxSP,2*BaseLevel;
   - Id: 310325
     AegisName: Range_Top
     Name: Range Stone (Top)
@@ -57670,6 +58179,20 @@ Body:
             }
          }
       }
+  - Id: 310978
+    AegisName: Amp_SU_1
+    Name: Latent Awakening (Tuna Belly)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus3 "{ bonus2 bSkillUseSP,\"SU_TUNABELLY\",59; }",100,10000,"SU_TUNABELLY";
+  - Id: 310979
+    AegisName: Amp_SU_2
+    Name: Latent Awakening (Spirit of Savage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus3 "{ bonus2 bSkillUseSP,\"SU_SVG_SPIRIT\",59; }",100,10000,"SU_SVG_SPIRIT";
   - Id: 310982
     AegisName: PATK_1Lv
     Name: P.ATK 1Lv
@@ -58766,6 +59289,48 @@ Body:
           }
         }
       }
+  - Id: 311065
+    AegisName: E_Poison_19th
+    Name: Resist Poison
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Poison,70;
+  - Id: 311066
+    AegisName: E_Saint_19th
+    Name: Resist Saint
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Holy,70;
+  - Id: 311067
+    AegisName: E_Darkness_19th
+    Name: Resist Darkness
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Dark,70;
+  - Id: 311068
+    AegisName: E_Telekine_19th
+    Name: Resist Telekinesis
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,70;
+  - Id: 311069
+    AegisName: E_Undead_19th
+    Name: Resist Undead
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Undead,70;
+  - Id: 311070
+    AegisName: E_Water_19th
+    Name: Resist Water
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Water,70;
   - Id: 311071
     AegisName: Sealed_Berz_Card_J
     Name: Sealed Berzebub Card
@@ -58780,7 +59345,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 311072
     AegisName: King_of_Origin
-    Name: King of Origin    # !todo check english name
+    Name: Original King
     Type: Card
     SubType: Enchant
     Script: |
@@ -58796,7 +59361,7 @@ Body:
       bonus bAddItemHealRate,15;
   - Id: 311074
     AegisName: Heros_TriumphantSong
-    Name: Hero's Triumph    # !todo check english name
+    Name: Song of Hero
     Type: Card
     SubType: Enchant
     Script: |
@@ -63416,6 +63981,13 @@ Body:
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-10;
+  - Id: 311415
+    AegisName: aegis_311415
+    Name: Energy Coat Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "MG_ENERGYCOAT",1;
   - Id: 311425
     AegisName: aegis_311425
     Name: Spell Stone (Dual)
@@ -63495,6 +64067,13 @@ Body:
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("GC_CROSSRIPPERSLASHER");
+  - Id: 311436
+    AegisName: aegis_311436
+    Name: Exam
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "MG_ENERGYCOAT",1;
   - Id: 311439
     AegisName: aegis_311439
     Name: Foreign Conquerer
@@ -65243,6 +65822,13 @@ Body:
     Script: |
       bonus bDef,50;
       bonus bMdef,10;
+  - Id: 311890
+    AegisName: aegis_311890
+    Name: Limit Breaking
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillCooldown,"ALL_FULL_THROTTLE",-600000;
   - Id: 311905
     AegisName: aegis_311905
     Name: Freeze Resistance
@@ -65257,6 +65843,13 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bResEff,Eff_Crystalize,10000;
+  - Id: 311909
+    AegisName: aegis_311909
+    Name: Immortal Benefactor
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus2 bRegenPercentHP,10,1000; }",10,10000,BF_WEAPON|BF_MAGIC;
   - Id: 311912
     AegisName: aegis_311912
     Name: Kagerou Stone (Upper)
