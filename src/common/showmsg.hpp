@@ -4,7 +4,7 @@
 #ifndef SHOWMSG_HPP
 #define SHOWMSG_HPP
 
-#include "../../3rdparty/libconfig/libconfig.h"
+#include <stdarg.h>
 
 // for help with the console colors look here:
 // http://www.edoceo.com/liberum/?doc=printf-with-color
@@ -96,6 +96,5 @@ extern void ShowWarning(const char *, ...);
 extern void ShowDebug(const char *, ...);
 extern void ShowError(const char *, ...);
 extern void ShowFatalError(const char *, ...);
-extern void ShowConfigWarning(config_setting_t *config, const char *string, ...);
 
 #endif /* SHOWMSG_HPP */

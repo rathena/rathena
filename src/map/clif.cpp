@@ -11,7 +11,6 @@
 #include <ctime>
 
 #include <common/cbasetypes.hpp>
-#include <common/conf.hpp>
 #include <common/ers.hpp>
 #include <common/grfio.hpp>
 #include <common/malloc.hpp>

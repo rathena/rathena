@@ -11,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "src\common\common
 		{492E2981-34F4-3A6A-BFD9-46096C641203} = {492E2981-34F4-3A6A-BFD9-46096C641203}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libconfig", "3rdparty\libconfig\libconfig.vcxproj", "{F6CC5F60-BD13-41B1-81D3-822A45EC0DBD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{60D3315D-FBF4-4FBF-8D44-99D5BED11D32}"
 	ProjectSection(SolutionItems) = preProject
 		src\config\const.hpp = src\config\const.hpp

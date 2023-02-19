@@ -5,10 +5,6 @@ COMMON_INCLUDE = -I../common/
 
 RA_INCLUDE = -I../
 
-LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
-LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
-LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
-
 RAPIDYAML_OBJ = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
 RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
 RAPIDYAML_AR = ../../3rdparty/rapidyaml/obj/ryml.a
@@ -84,53 +80,50 @@ obj-gen:
 
 # executables
 
-map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR)
+map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
-map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR)
+map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 	@echo "	LD	map-server-generator@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
 #cause this one failling otherwise
-obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
+obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H)
 	@echo "	CXX	$< (custom rule)"
-	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # these have extra dependencies
-obj/atcommand.o: atcommand.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) ../custom/atcommand_def.inc ../custom/atcommand.inc
+obj/atcommand.o: atcommand.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H) ../custom/atcommand_def.inc ../custom/atcommand.inc
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj/script.o: script.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) ../custom/script_def.inc ../custom/script.inc
+obj/script.o: script.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H) ../custom/script_def.inc ../custom/script.inc
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj/battle.o: battle.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) ../custom/battle_config_init.inc
+obj/battle.o: battle.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H) ../custom/battle_config_init.inc
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
+obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj-gen/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
+obj-gen/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H)
 	@echo "	CXX	$< (custom rule)"
-	@@CXX@ @CXXFLAG_CLEARS@ $(TOOLS_FLAGS) $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAG_CLEARS@ $(TOOLS_FLAGS) $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
-obj-gen/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H) $(NLOHMANN_H)
+obj-gen/%.o: %.cpp $(MAP_H) $(COMMON_H) $(RAPIDYAML_H) $(NLOHMANN_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(TOOLS_FLAGS) $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(TOOLS_FLAGS) $(COMMON_INCLUDE) $(RA_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
 	@$(MAKE) -C ../common server
-
-$(LIBCONFIG_AR):
-	@$(MAKE) -C ../../3rdparty/libconfig
 
 $(RAPIDYAML_AR):
 	@$(MAKE) -C ../../3rdparty/rapidyaml

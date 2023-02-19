@@ -847,18 +847,6 @@ void ShowWarning(const char *string, ...) {
 	_vShowMessage(MSG_WARNING, string, ap);
 	va_end(ap);
 }
-void ShowConfigWarning(config_setting_t *config, const char *string, ...)
-{
-	StringBuf buf;
-	va_list ap;
-	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, string);
-	StringBuf_Printf(&buf, " (%s:%d)\n", config_setting_source_file(config), config_setting_source_line(config));
-	va_start(ap, string);
-	_vShowMessage(MSG_WARNING, StringBuf_Value(&buf), ap);
-	va_end(ap);
-	StringBuf_Destroy(&buf);
-}
 void ShowDebug(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);

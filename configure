@@ -2757,7 +2757,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 ac_config_files="$ac_config_files Makefile src/common/Makefile"
 
-ac_config_files="$ac_config_files 3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile 3rdparty/rapidyaml/Makefile 3rdparty/httplib/Makefile"
+ac_config_files="$ac_config_files 3rdparty/yaml-cpp/Makefile 3rdparty/rapidyaml/Makefile 3rdparty/httplib/Makefile"
 
 ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile"
 
@@ -5887,58 +5887,6 @@ if test "x$ac_cv_func_strnlen" = xyes; then :
 fi
 
 
-# libconfig
-for ac_func in uselocale
-do :
-  ac_fn_cxx_check_func "$LINENO" "uselocale" "ac_cv_func_uselocale"
-if test "x$ac_cv_func_uselocale" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_USELOCALE 1
-_ACEOF
-
-fi
-done
-
-for ac_func in newlocale
-do :
-  ac_fn_cxx_check_func "$LINENO" "newlocale" "ac_cv_func_newlocale"
-if test "x$ac_cv_func_newlocale" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_NEWLOCALE 1
-_ACEOF
-
-fi
-done
-
-for ac_func in freelocale
-do :
-  ac_fn_cxx_check_func "$LINENO" "freelocale" "ac_cv_func_freelocale"
-if test "x$ac_cv_func_freelocale" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_FREELOCALE 1
-_ACEOF
-
-fi
-done
-
-for ac_header in xlocale.h
-do :
-  ac_fn_cxx_check_header_compile "$LINENO" "xlocale.h" "ac_cv_header_xlocale_h" "
-#ifdef HAVE_XLOCALE_H
-     # include <xlocale.h>
-     #endif
-
-"
-if test "x$ac_cv_header_xlocale_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_XLOCALE_H 1
-_ACEOF
-
-fi
-
-done
-
-
 #
 # Memory manager
 #
@@ -7839,7 +7787,6 @@ do
   case $ac_config_target in
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/common/Makefile") CONFIG_FILES="$CONFIG_FILES src/common/Makefile" ;;
-    "3rdparty/libconfig/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/libconfig/Makefile" ;;
     "3rdparty/yaml-cpp/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/yaml-cpp/Makefile" ;;
     "3rdparty/rapidyaml/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/rapidyaml/Makefile" ;;
     "3rdparty/httplib/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/httplib/Makefile" ;;

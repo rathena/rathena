@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #include <common/cbasetypes.hpp>
-#include <common/conf.hpp> //libconfig
 #include <common/malloc.hpp>
 #include <common/nullpo.hpp>
 #include <common/showmsg.hpp>
