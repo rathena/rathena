@@ -4,7 +4,6 @@
 #include "channel.hpp"
 
 #include <stdlib.h>
-#include <unordered_set>
 
 #include <common/cbasetypes.hpp>
 #include <common/conf.hpp> //libconfig
@@ -63,7 +62,7 @@ bool ChannelConfigLoader::parsePrivate(const ryml::NodeRef& node) {
 		uint32 color;
 		if (!asUInt32(node, "Color", color))
 			return false;
-		if (color < 0x0 || color > 0xFF'FF'FF) {
+		if (color > 0xFF'FF'FF) {
 			invalidWarning(node["Color"], "Invalid private channel color 0x%06x, defaulting to 0xFFFFFF.\n", color);
 			color = 0xFF'FF'FF;
 		}
@@ -197,7 +196,7 @@ bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
 		if (!asUInt32(node, "Color", color))
 			return 0;
 		
-		if (color < 0x0 || color > 0xFF'FF'FF) {
+		if (color > 0xFF'FF'FF) {
 			invalidWarning(node["Color"], "Invalid channel color 0x%06x, defaulting to 0xFFFFFF\n", color);
 			color = 0xFF'FF'FF;
 		}
@@ -222,7 +221,6 @@ bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
 
 	if (nodeExists(node, "Groups")) {
 		const auto& groupsNode = node["Groups"];
-		std::unordered_set<uint32> groupids;
 		for (const auto &it : groupsNode) {
 			std::string group_name;
 			c4::from_chars(it.key(), &group_name);
