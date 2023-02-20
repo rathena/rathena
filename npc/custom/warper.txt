@@ -383,7 +383,7 @@ D23: menu	"Illusion of Abyss",SubD1, "Illusion of Frozen",SubD2, "Illusion of La
 			"Illusion of Luanda",SubD4, "Illusion of Moonlight",SubD5, "Illusion of Teddy Bear",SubD6,
 			"Illusion of Twins",SubD7, "Illusion of Underwater",SubD8, "Illusion of Vampire",SubD9;
 	SubD1: Restrict("RE");
-		   setarray @c[2],132,189,100,192;
+		   setarray @c[2],132,189,99,186;
 		   Disp("Desolate Village:Bleak Turtle Palace"); Pick("","tur_d03_i","tur_d04_i");
 	SubD2: Restrict("RE");
 		   Go("ice_d03_i",149,22);
