@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="cbasetypes.hpp" />
     <ClInclude Include="cli.hpp" />
-    <ClInclude Include="conf.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="database.hpp" />
     <ClInclude Include="db.hpp" />
@@ -46,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.cpp" />
-    <ClCompile Include="conf.cpp" />
     <ClCompile Include="core.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="db.cpp" />
@@ -119,22 +117,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir).vs\build\</OutDir>
     <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir).vs\build\</OutDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir).vs\build\</OutDir>
     <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir).vs\build\</OutDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
@@ -157,7 +155,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
@@ -177,7 +175,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -198,7 +196,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -221,7 +219,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

@@ -8,7 +8,7 @@ AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 AC_CONFIG_SRCDIR([src/common/cbasetypes.hpp])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
-AC_CONFIG_FILES([3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile 3rdparty/rapidyaml/Makefile 3rdparty/httplib/Makefile])
+AC_CONFIG_FILES([3rdparty/yaml-cpp/Makefile 3rdparty/rapidyaml/Makefile 3rdparty/httplib/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
 AC_CONFIG_FILES([src/web/Makefile])
@@ -978,16 +978,6 @@ AC_CHECK_FUNC([setrlimit],[CPPFLAGS="$CPPFLAGS -DHAVE_SETRLIMIT"])
 # strnlen - string length with upper scan bound
 #
 AC_CHECK_FUNC([strnlen],[CPPFLAGS="$CPPFLAGS -DHAVE_STRNLEN"])
-
-# libconfig
-AC_CHECK_FUNCS([uselocale])
-AC_CHECK_FUNCS([newlocale])
-AC_CHECK_FUNCS([freelocale])
-AC_CHECK_HEADERS([xlocale.h], [], [], [
-AC_LANG_SOURCE([#ifdef HAVE_XLOCALE_H
-     # include <xlocale.h>
-     #endif
-     ])])
 
 #
 # Memory manager

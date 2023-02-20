@@ -24582,7 +24582,7 @@ BUILDIN_FUNC(openstorage2) {
  * @author [Cydh]
  **/
 BUILDIN_FUNC(channel_create) {
-	struct Channel tmp_chan, *ch = NULL;
+	struct Channel tmp_chan{}, *ch = NULL;
 	const char *chname = script_getstr(st,2), *pass = NULL;
 	int i = channel_chk((char*)chname, NULL, 3);
 	TBL_PC *sd = NULL;
@@ -24592,8 +24592,6 @@ BUILDIN_FUNC(channel_create) {
 		script_pushint(st,i);
 		return SCRIPT_CMD_FAILURE;
 	}
-
-	memset(&tmp_chan, 0, sizeof(struct Channel));
 
 	if (script_hasdata(st,8)) {
 		tmp_chan.char_id = script_getnum(st,8);
@@ -24617,7 +24615,7 @@ BUILDIN_FUNC(channel_create) {
 	if (script_hasdata(st,5))
 		tmp_chan.opt = script_getnum(st,5);
 	else
-		tmp_chan.opt = i ? channel_config.private_channel.opt : CHAN_OPT_BASE;
+		tmp_chan.opt = i ? channel_config.private_channel.opt : 0;
 	if (script_hasdata(st,6))
 		tmp_chan.msg_delay = script_getnum(st,6);
 	else
@@ -24655,19 +24653,19 @@ BUILDIN_FUNC(channel_setopt) {
 	}
 
 	switch (opt) {
-		case CHAN_OPT_ANNOUNCE_SELF:
-		case CHAN_OPT_ANNOUNCE_JOIN:
-		case CHAN_OPT_ANNOUNCE_LEAVE:
-		case CHAN_OPT_COLOR_OVERRIDE:
-		case CHAN_OPT_CAN_CHAT:
-		case CHAN_OPT_CAN_LEAVE:
+		case CHAN_OPT_SELFANNOUNCE:
+		case CHAN_OPT_JOINANNOUNCE:
+		case CHAN_OPT_LEAVEANNOUNCE:
+		case CHAN_OPT_CHANGECOLOR:
+		case CHAN_OPT_CANCHAT:
+		case CHAN_OPT_CANLEAVE:
 		case CHAN_OPT_AUTOJOIN:
 			if (value)
 				ch->opt |= opt;
 			else
 				ch->opt &= ~opt;
 			break;
-		case CHAN_OPT_MSG_DELAY:
+		case CHAN_OPT_CHANGEDELAY:
 			ch->msg_delay = value;
 			break;
 		default:
@@ -24697,16 +24695,16 @@ BUILDIN_FUNC(channel_getopt) {
 	int opt = script_getnum(st, 3);
 
 	switch (opt) {
-		case CHAN_OPT_ANNOUNCE_SELF:
-		case CHAN_OPT_ANNOUNCE_JOIN:
-		case CHAN_OPT_ANNOUNCE_LEAVE:
-		case CHAN_OPT_COLOR_OVERRIDE:
-		case CHAN_OPT_CAN_CHAT:
-		case CHAN_OPT_CAN_LEAVE:
+		case CHAN_OPT_SELFANNOUNCE:
+		case CHAN_OPT_JOINANNOUNCE:
+		case CHAN_OPT_LEAVEANNOUNCE:
+		case CHAN_OPT_CHANGECOLOR:
+		case CHAN_OPT_CANCHAT:
+		case CHAN_OPT_CANLEAVE:
 		case CHAN_OPT_AUTOJOIN:
 			script_pushint(st, (ch->opt & opt) != 0);
 			break;
-		case CHAN_OPT_MSG_DELAY:
+		case CHAN_OPT_CHANGEDELAY:
 			script_pushint(st, ch->msg_delay);
 			break;
 		default:
@@ -24806,10 +24804,7 @@ BUILDIN_FUNC(channel_setgroup) {
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		if (ch->groups)
-			aFree(ch->groups);
-		ch->groups = NULL;
-		ch->group_count = 0;
+		ch->groups.clear();
 
 		id = reference_getid(data);
 		idx = reference_getindex(data);
@@ -24819,9 +24814,8 @@ BUILDIN_FUNC(channel_setgroup) {
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
 			}
-			RECREATE(ch->groups, unsigned short, ++ch->group_count);
-			ch->groups[ch->group_count-1] = group;
-			ShowInfo("buildin_channel_setgroup: (2) Added group %d. Num: %d\n", ch->groups[ch->group_count-1], ch->group_count);
+			ch->groups.insert(group);
+			ShowInfo("buildin_channel_setgroup: (2) Added group %d to channel %s\n", group, ch->name);
 		}
 	}
 	else {
@@ -24834,20 +24828,16 @@ BUILDIN_FUNC(channel_setgroup) {
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		if (ch->groups)
-			aFree(ch->groups);
-		ch->groups = NULL;
-		ch->group_count = 0;
+		ch->groups.clear();
 
 		if (group == 0) { // Removed group list
 			script_pushint(st,1);
 			return SCRIPT_CMD_SUCCESS;
 		}
 
-		CREATE(ch->groups, unsigned short, n);
 		for (i = 3; i < n+2; i++) {
-			ch->groups[ch->group_count++] = script_getnum(st,i);
-			ShowInfo("buildin_channel_setgroup: (1) Added group %d. Num: %d\n", ch->groups[ch->group_count-1], ch->group_count);
+			ch->groups.insert(script_getnum(st, i));
+			ShowInfo("buildin_channel_setgroup: (1) Added group %d to channel %s\n", group, ch->name);
 		}
 	}
 	script_pushint(st,n);
@@ -24941,10 +24931,10 @@ BUILDIN_FUNC(channel_ban) {
 	}
 
 	if (!idb_exists(ch->banned, char_id)) {
-		struct chan_banentry *cbe;
+		struct s_chan_banentry *cbe;
 		char output[CHAT_SIZE_MAX+1];
 
-		CREATE(cbe, struct chan_banentry, 1);
+		CREATE(cbe, struct s_chan_banentry, 1);
 		cbe->char_id = char_id;
 		if (tsd) {
 			strcpy(cbe->char_name,tsd->status.name);

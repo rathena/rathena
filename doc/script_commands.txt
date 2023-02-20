@@ -11065,15 +11065,14 @@ channel names.
 is displayed.
 
 <option> values are:
-	CHAN_OPT_BASE		    - Default option including CHAN_OPT_ANNOUNCE_SELF|CHAN_OPT_MSG_DELAY|CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE
-	CHAN_OPT_ANNOUNCE_SELF  - Show info for player itself if player has joined/leaves the channel
-	CHAN_OPT_ANNOUNCE_JOIN  - Display message when player is joining the channel
-	CHAN_OPT_ANNOUNCE_LEAVE - Display message when player is leaving the channel
-	CHAN_OPT_MSG_DELAY	    - Enable chat delay for the channel
-	CHAN_OPT_COLOR_OVERRIDE - Player's unique font color will override channel's color
-	CHAN_OPT_CAN_CHAT	    - Player can chat in the channel
-	CHAN_OPT_CAN_LEAVE	    - Player can leave the channel
-	CHAN_OPT_AUTOJOIN	    - Players will auto join the channel at login
+	CHAN_OPT_SELFANNOUNCE  - Show info for player itself if player has joined/leaves the channel
+	CHAN_OPT_JOINANNOUNCE  - Display message when player is joining the channel
+	CHAN_OPT_LEAVEANNOUNCE - Display message when player is leaving the channel
+	CHAN_OPT_CHANGEDELAY   - Enable private channel owners to change the chat delay for the channel
+	CHAN_OPT_CHANGECOLOR   - Player's unique font color will override channel's color
+	CHAN_OPT_CANCHAT	   - Player can chat in the channel
+	CHAN_OPT_CANLEAVE	   - Player can leave the channel
+	CHAN_OPT_AUTOJOIN	   - Players will auto join the channel at login
 
 The <delay> is the minimum chat delay in millisecond for a single player before
 the player can chat again in the same channel.
@@ -11102,13 +11101,7 @@ Returns 1 on success.
 Set option for the channel. Use 1 in <value> to set it, or 0 to unset.
 The <option> values are the same as the 'channel_create' options.
 
-For CHAN_OPT_MSG_DELAY, the delay in millisecond must be sent or use 0
-to remove the delay at <value>.
-
 Returns 1 on success.
-
-	// Example to set delay
-	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
 
 Only for public and private channel.
 
@@ -11144,6 +11137,14 @@ Use "null" to remove the password.
 Returns 1 on success.
 Only for public and private channel.
 
+---------------------------------------
+
+*channel_setdelay "<chname>", <delay>;
+
+To change channel delay in milliseconds.
+
+Returns 1 on success.
+Only for public and private channel.
 ---------------------------------------
 
 *channel_setgroup "<chname>",<group_id>{,...,<group_id>};

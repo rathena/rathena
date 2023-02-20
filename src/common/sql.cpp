@@ -9,6 +9,7 @@
 
 #include <mysql.h>
 #include <stdlib.h>// strtoul
+#include <stdio.h>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"

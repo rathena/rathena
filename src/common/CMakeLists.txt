@@ -62,18 +62,16 @@ target_sources(minicore PRIVATE
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
-	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 )
 
 target_include_directories(minicore PUBLIC
 	${COMMON_SOURCE_DIR}
-	${LIBCONFIG_INCLUDE_DIRS}
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 )
 
 
-target_compile_definitions(minicore PRIVATE "-DMINICORE" ${LIBCONFIG_DEFINITIONS})
+target_compile_definitions(minicore PRIVATE "-DMINICORE")
 
 #
 # common_base
@@ -82,7 +80,6 @@ if( WITH_ZLIB )
 message( STATUS "Creating target common_base" )
 set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
-	"${COMMON_SOURCE_DIR}/conf.hpp"
 	"${COMMON_SOURCE_DIR}/core.hpp"
 	"${COMMON_SOURCE_DIR}/database.hpp"
 	"${COMMON_SOURCE_DIR}/db.hpp"
@@ -102,11 +99,9 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/msg_conf.hpp"
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
-	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
-	"${COMMON_SOURCE_DIR}/conf.cpp"
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/database.cpp"
 	"${COMMON_SOURCE_DIR}/db.cpp"
@@ -126,15 +121,12 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/msg_conf.cpp"
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
-	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
-	${LIBCONFIG_INCLUDE_DIRS}
 	${YAML_INCLUDE_DIRS}
 	CACHE INTERNAL "common_base include dirs" )
 set( COMMON_BASE_DEFINITIONS
-	${LIBCONFIG_DEFINITIONS}
 	CACHE INTERNAL "common_base definitions" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp ryml )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )

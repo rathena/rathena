@@ -182,7 +182,6 @@ The following list describes each module and its purpose.
   ------         -----------
   cbasetypes     adapter to OS and arch specification (function name, bit representation)
   cli            console Line Interface handling (get arguments from terminal at beginning and runtime) 
-  conf           facade of libconfig api
   core           MAIN program entry (initialization of each serv starts here)
   db             database module (create, parse, and destroy databases)
   des            Data Encryption Standard algorithm modified for rAthena

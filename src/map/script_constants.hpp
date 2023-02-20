@@ -5078,14 +5078,15 @@
 	export_constant(CHAN_TYPE_PRIVATE);
 	export_constant(CHAN_TYPE_MAP);
 	export_constant(CHAN_TYPE_ALLY);
-	export_constant(CHAN_OPT_BASE);
-	export_constant(CHAN_OPT_ANNOUNCE_SELF);
-	export_constant(CHAN_OPT_ANNOUNCE_JOIN);
-	export_constant(CHAN_OPT_ANNOUNCE_LEAVE);
-	export_constant(CHAN_OPT_MSG_DELAY);
-	export_constant(CHAN_OPT_COLOR_OVERRIDE);
-	export_constant(CHAN_OPT_CAN_CHAT);
-	export_constant(CHAN_OPT_CAN_LEAVE);
+
+	/* Channel System Options */
+	export_constant(CHAN_OPT_SELFANNOUNCE);
+	export_constant(CHAN_OPT_JOINANNOUNCE);
+	export_constant(CHAN_OPT_LEAVEANNOUNCE);
+	export_constant(CHAN_OPT_CHANGEDELAY);
+	export_constant(CHAN_OPT_CHANGECOLOR);
+	export_constant(CHAN_OPT_CANCHAT);
+	export_constant(CHAN_OPT_CANLEAVE);
 	export_constant(CHAN_OPT_AUTOJOIN);
 
 	export_constant(STOR_MODE_NONE);

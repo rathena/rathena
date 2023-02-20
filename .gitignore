@@ -46,11 +46,6 @@ Thumbs.db
 /yaml2sql
 /yamlupgrade
 
-# /3rdparty/libconfig/
-/3rdparty/libconfig/Makefile
-/3rdparty/libconfig/*.o
-/3rdparty/libconfig/obj
-
 # /3rdparty/rapidyaml/
 /3rdparty/rapidyaml/Makefile
 

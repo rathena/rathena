@@ -1788,7 +1788,7 @@ Leaves the specified channel.
 @channel create <#channel_name> <channel_password>
 
 Creates a new channel.
-'allow_user_channel_creation' must be enabled in '/conf/channels.conf'.
+'allow_user_channel_creation' must be enabled in '/conf/channels.yml'.
 
 ---------------------------------------
 
@@ -1808,20 +1808,19 @@ Destroys the specified channel.
 
 ---------------------------------------
 
-@fontcolor <color_name>
+@fontcolor <color_hex>
 
-Sets channel chat font color for the invoking character only.
+Sets channel chat font color using a hexadecimal color code for the invoking character only.
 Typing "Normal" returns text to the normal channel color.
 If no parameter is given, a list of available colors is displayed.
-Option 'ColorOverride' must be enabled for this to take effect.
+Option 'ChangeColor' must be enabled for this to take effect.
 
 ---------------------------------------
 
-@channel setcolor <#channel_name> <color_name>
+@channel setcolor <#channel_name> <color_hex>
 
-Changes the text color of the specified channel.
+Changes the text color using a hexadecimal color code for the specified channel.
 You must either be the channel's owner or have the channel_admin permission.
-All colors are defined in '/conf/channels.conf'.
 
 ---------------------------------------
 
@@ -1832,8 +1831,8 @@ You must either be the channel's owner or have the channel_admin permission.
 
 Available options:
 -- 'JoinAnnounce <1|0>' : Toggles channel announcement when a new player enters.
--- 'MessageDelay <0-10>' : Sets the delay (in seconds) for messages sent to the channel.
--- 'ColorOverride <1|0>' : Toggles the permission for players to change their color through @fontcolor.
+-- 'ChangeDelay <0-10>' : Sets the delay (in seconds) for messages sent to the channel.
+-- 'ChangeColor <1|0>' : Toggles the permission for players to change their color through @fontcolor.
 
 ---------------------------------------
 

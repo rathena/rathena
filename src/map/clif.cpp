@@ -11,7 +11,6 @@
 #include <ctime>
 
 #include <common/cbasetypes.hpp>
-#include <common/conf.hpp>
 #include <common/ers.hpp>
 #include <common/grfio.hpp>
 #include <common/malloc.hpp>
@@ -11575,7 +11574,7 @@ void clif_parse_GlobalMessage(int fd, map_session_data* sd)
 	if( !clif_process_message(sd, false, name, message, output ) )
 		return;
 
-	if( sd->gcbind && ((sd->gcbind->opt&CHAN_OPT_CAN_CHAT) || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN)) ) {
+	if( sd->gcbind && ((sd->gcbind->opt&CHAN_OPT_CANCHAT) || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN)) ) {
 		channel_send(sd->gcbind,sd,message);
 		return;
 	}
@@ -11954,7 +11953,7 @@ void clif_parse_WisMessage(int fd, map_session_data* sd)
 		char* chname = target;
 
 		channel = channel_name2channel(chname,sd,3);
-		if(channel && (pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) || ((channel->opt&CHAN_OPT_CAN_CHAT) && channel_pccheckgroup(channel,sd->group_id)))){
+		if(channel && (pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) || ((channel->opt&CHAN_OPT_CANCHAT) && channel_pccheckgroup(channel,sd->group_id)))){
 			if(channel_pc_haschan(sd,channel)>=0){ //we are in the chan
 				channel_send(channel,sd,message);
 			}

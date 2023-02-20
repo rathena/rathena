@@ -5,10 +5,6 @@ COMMON_INCLUDE = -I../common/
 
 RA_INCLUDE = -I../
 
-LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
-LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
-LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
-
 COMMON_OBJ = ../common/obj/sql.o
 COMMON_H = ../common/sql.hpp
 
@@ -53,9 +49,9 @@ help:
 #####################################################################
 
 
-char-server: obj $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(RAPIDYAML_AR)
+char-server: obj $(CHAR_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 	@echo "	LD	@OCHR@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(LIBCONFIG_OBJ) $(RAPIDYAML_AR) @LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @MYSQL_LIBS@
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
@@ -65,16 +61,13 @@ obj:
 	@echo "	MKDIR	obj"
 	@-mkdir obj
 	
-obj/%.o: %.cpp $(CHAR_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
+obj/%.o: %.cpp $(CHAR_H) $(COMMON_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
 	@$(MAKE) -C ../common server
 
-$(LIBCONFIG_AR):
-	@$(MAKE) -C ../../3rdparty/libconfig
-	
 $(RAPIDYAML_AR):
 	@$(MAKE) -C ../../3rdparty/rapidyaml
