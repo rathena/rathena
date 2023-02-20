@@ -100,6 +100,13 @@
 /// Uncomment for use with Nemo patch ExtendOldCashShopPreview
 //#define ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
 
+#if defined(_DEBUG) || defined(DEBUG)
+	#define FANCY_LOADING_OUTPUT
+#endif
+
+/// Uncomment to forcibly disable fancy loading output.
+//#undef FANCY_LOADING_OUTPUT
+
 /**
  * No settings past this point
  **/
