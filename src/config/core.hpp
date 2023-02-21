@@ -101,11 +101,12 @@
 //#define ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
 
 #if defined(_DEBUG) || defined(DEBUG)
-	#define FANCY_LOADING_OUTPUT
+	#define DETAILED_LOADING_OUTPUT
 #endif
 
-/// Uncomment to forcibly disable fancy loading output.
-//#undef FANCY_LOADING_OUTPUT
+/// Uncomment to forcibly disable the detailed loading output.
+/// This will noticeably decrease the boot time of the map server by not having to print so many status messages.
+//#undef DETAILED_LOADING_OUTPUT
 
 /**
  * No settings past this point
