@@ -2028,6 +2028,7 @@ struct s_roulette_db {
 	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
+	std::vector<int> chance_table[MAX_ROULETTE_LEVEL];
 };
 extern struct s_roulette_db rd;
 
