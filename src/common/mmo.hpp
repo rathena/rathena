@@ -595,6 +595,7 @@ struct mmo_charstatus {
 	uint16 mapport;
 
 	struct s_point_str last_point;
+	int32 last_point_instanceid;
 	struct s_point_str save_point;
 	struct s_point_str memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
