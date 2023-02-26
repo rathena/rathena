@@ -21562,9 +21562,11 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		case IM_GUILD:
 			if (sd->status.guild_id != owner_id)
 				return 0;
+			break;
 		case IM_CLAN:
 			if (sd->status.clan_id != owner_id)
 				return 0;
+			break;
 	}
 
 	pc_setpos(sd, m, x, y, CLR_TELEPORT);
