@@ -4214,7 +4214,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
 		skill_reload();
-		hom_reload_skill();
+		homunculus_db.reload();
 		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
 		atcommand_doload();
@@ -8119,7 +8119,7 @@ ACMD_FUNC(hominfo)
 ACMD_FUNC(homstats)
 {
 	struct homun_data *hd;
-	struct s_homunculus_db *db;
+	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
 	int lv, min, max, evo;
 

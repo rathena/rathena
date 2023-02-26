@@ -43,6 +43,7 @@
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
 #include "../map/elemental.hpp"
+#include "../map/homunculus.hpp"
 #include "../map/instance.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"

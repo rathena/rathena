@@ -4168,7 +4168,7 @@ static int itemdb_read_sqldb(void) {
 
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-#ifdef DEBUG
+#ifdef DETAILED_LOADING_OUTPUT
 			ShowStatus( "Loading [%" PRIu64 "/%" PRIu64 "] entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, item_db_name[fi] );
 #endif
 			std::vector<std::string> data = {};

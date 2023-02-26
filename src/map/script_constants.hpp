@@ -750,6 +750,8 @@
 	export_constant2("bAddEffOnSkill",SP_ADDEFF_ONSKILL);
 	export_constant2("bHealPower",SP_ADD_HEAL_RATE);
 	export_constant2("bHealPower2",SP_ADD_HEAL2_RATE);
+	export_constant2("bIgnoreResRaceRate",SP_SP_IGNORE_RES_RACE_RATE);
+	export_constant2("bIgnoreMResRaceRate",SP_SP_IGNORE_MRES_RACE_RATE);
 
 	export_constant2("bRestartFullRecover",SP_RESTART_FULL_RECOVER);
 	export_constant2("bNoCastCancel",SP_NO_CASTCANCEL);
@@ -10095,6 +10097,29 @@
 	export_constant(WOE_FIRST_EDITION);
 	export_constant(WOE_SECOND_EDITION);
 	export_constant(WOE_THIRD_EDITION);
+
+	/* homunculus view IDs */
+	export_constant(MER_LIF);
+	export_constant(MER_AMISTR);
+	export_constant(MER_FILIR);
+	export_constant(MER_VANILMIRTH);
+	export_constant(MER_LIF2);
+	export_constant(MER_AMISTR2);
+	export_constant(MER_FILIR2);
+	export_constant(MER_VANILMIRTH2);
+	export_constant(MER_LIF_H);
+	export_constant(MER_AMISTR_H);
+	export_constant(MER_FILIR_H);
+	export_constant(MER_VANILMIRTH_H);
+	export_constant(MER_LIF_H2);
+	export_constant(MER_AMISTR_H2);
+	export_constant(MER_FILIR_H2);
+	export_constant(MER_VANILMIRTH_H2);
+	export_constant(MER_EIRA);
+	export_constant(MER_BAYERI);
+	export_constant(MER_SERA);
+	export_constant(MER_DIETER);
+	export_constant(MER_ELEANOR);
 
 	#undef export_constant
 	#undef export_constant2

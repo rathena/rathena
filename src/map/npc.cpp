@@ -3611,7 +3611,7 @@ void npc_delsrcfile(const char* name)
 void npc_loadsrcfiles() {
 	ShowStatus("Loading NPCs...\n");
 	for (const auto& file : npc_src_files) {
-#ifdef DEBUG
+#ifdef DETAILED_LOADING_OUTPUT
 		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
 #endif
 		npc_parsesrcfile(file.c_str());
