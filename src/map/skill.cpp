@@ -18465,6 +18465,18 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 						req.itemid[0] = skill->require.itemid[skill_lv - 1];
 						req.amount[0] = skill->require.amount[skill_lv - 1];
 					}
+
+					if (sd->special_state.no_gemstone == 2) // Remove all Magic Stone required for all skills for VIP.
+						req.itemid[0] = req.amount[0] = 0;
+					else {
+						if (sd->special_state.no_gemstone || (sc && sc->getSCE(SC_INTOABYSS)))
+						{	// Ignore SA_ABRACADABRA & HW_GANBANTEIN from mistress effect
+							if (skill_id != SA_ABRACADABRA && skill_id != HW_GANBANTEIN)
+								req.itemid[0] = req.amount[0] = 0;
+							else if (--req.amount[0] < 1)
+								req.amount[0] = 1; // Hocus Pocus always use at least 1 gem
+						}
+					}
 				}
 
 				// Check requirement for gemstone.
