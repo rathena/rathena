@@ -164,7 +164,7 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 
 		for( const ryml::NodeRef &node : bodyNode ){
 			count += this->parseBodyNode( node );
-#ifdef DEBUG
+#ifdef DETAILED_LOADING_OUTPUT
 			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
 #endif
 		}
