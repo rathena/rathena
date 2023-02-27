@@ -10,6 +10,7 @@
 //= 1.0 Split from combined Alde and CT spawn file. [L0ne_W0lf]
 //= 1.1 Added nightmare clock tower. [Ridley8819]
 //= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
+//= 1.3 Added Clock Tower Unknown Basement. [Atemo]
 //============================================================
 
 //==================================================
@@ -71,3 +72,14 @@ c_tower3_,0,0	monster	Time Keeper	2918,2,5000
 c_tower3_,0,0	monster	Owl Viscount	2921,3,5000,1800000
 c_tower3_,0,0	monster	Owl Marquis	2923,3,5000,5000
 c_tower3_,0,0,0,0	boss_monster	Time Holder	3074,1,7200000,0,0
+
+//==================================================
+// clock_01 - Clock Tower Unknown Basement
+//==================================================
+clock_01	monster	Extra Joker	20175,75
+clock_01	monster	Erzsebet	20176,130
+clock_01	monster	Jennifer	20177,95
+clock_01	monster	General Orc	20178,115
+clock_01	monster	Sieglouse	20179,100
+// unknown respawn timer
+clock_01	boss_monster	Goblin King	20118,1,7200000,600000,1

@@ -12989,6 +12989,8 @@
 3816,MD_MARIN@AL_HEAL,idle,28,1,10000,500,5000,yes,friend,myhpltmaxrate,90,,,,,,2,
 3816,MD_MARIN@AL_HEAL,attack,28,1,10000,500,5000,yes,friend,myhpltmaxrate,90,,,,,,,69
 
+// Clock Tower Unknown Basement (placeholder). Ids [20118], [20175-20179]
+
 // Illusion of Luanda
 20270,ILL_TRI_JOINT@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,0,,,,,,,
 20270,ILL_TRI_JOINT@AL_HEAL,idle,28,9,5000,0,1500,yes,friend,mystatuson,hiding,,,,,,18,
