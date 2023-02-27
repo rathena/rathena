@@ -3728,19 +3728,20 @@ bool itemdb_parse_roulette_db(void)
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		int k, limit = MAX_ROULETTE_COLUMNS - i;
-		std::vector<int> chance_table = {};
+		std::vector<int8> chance_table = {};
 
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
 			unsigned short amount;
-			int level, flag, chance;
+			int level, flag;
+			int8 chance;
 
 			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
 			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = strtoul(data, nullptr, 10);
 			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
 			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
-			Sql_GetData(mmysql_handle, 5, &data, NULL); chance = atoi(data);
+			Sql_GetData(mmysql_handle, 5, &data, NULL); chance = static_cast<int8>(atoi(data));
 
 			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
