@@ -18167,7 +18167,7 @@ Body:
   - Id: 783
     Name: NPC_KILLING_AURA
     Description: Killing Aura
-    MaxLevel: 1
+    MaxLevel: 5 #TODO unknown interactions with level
     Type: Misc
     TargetType: Support
     Hit: Single
