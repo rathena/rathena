@@ -16,7 +16,7 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 		mes "That's right, I'm waiting for a strong adventurer to satisfy my curiosity!";
 		next;
 		mes "[Nillem]";
-		mes "If you reach level 175, you will be my destined opponent-Â¡Ã™";
+		mes "If you reach level 175, you will be my destined opponent-¡Ù";
 		close;
 	}
 	mes "[Nillem]";
@@ -210,7 +210,7 @@ glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
 				mes "Instead, you're sharing another new discovery tomorrow. O - K - A - Y -?";
 				close;
 			case 2:
-				mes "^4d4dff - You can take this mission again. Speak to Mage Nillem once again to accept it. - ^000000";
+				mes "^4d4dff - You can take this mission again. Speak to Mage Nillem once again to accept it. -^000000";
 				erasequest 8548;
 				break;
 			}
@@ -303,6 +303,14 @@ abyss_03,108,97,3	script	Traveler's Monument#abyss	1_JOURNEY_STONE_F,{
 }
 
 hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
+	if (BaseLevel < 190) {
+		mes "[Marigold]";
+		mes "A lot of people come and go in the square.";
+		mes "I'm sitting here observing. Someone who will do a very important job for me.";
+		next;
+		mes "^4d4dffThere are quests available for level 190 or higher.^000000";
+		close;
+	}
 	if (checkquest(7893,HUNTING) == 2) {
 		mes "[Marigold]";
 		mes "Purple Ferus... Hmm, that's right. We still need more investigation. Should we do it this time?";
