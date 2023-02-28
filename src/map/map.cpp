@@ -3786,7 +3786,7 @@ int map_readallmaps (void)
 		struct map_data *mapdata = &map[i];
 		char map_cache_decode_buffer[MAX_MAP_SIZE];
 
-#ifdef DEBUG
+#ifdef DETAILED_LOADING_OUTPUT
 		// show progress
 		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
 #endif
