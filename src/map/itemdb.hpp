@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
+#include <common/database.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp> // ITEM_NAME_LENGTH
 
 #include "script.hpp"
 #include "status.hpp"
@@ -48,6 +48,7 @@ enum item_itemid : t_itemid
 	ITEMID_APPLE						= 512,
 	ITEMID_HOLY_WATER					= 523,
 	ITEMID_PUMPKIN						= 535,
+	ITEMID_PET_FOOD						= 537,
 	ITEMID_RED_SLIM_POTION				= 545,
 	ITEMID_YELLOW_SLIM_POTION			= 546,
 	ITEMID_WHITE_SLIM_POTION			= 547,

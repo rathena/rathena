@@ -5,11 +5,11 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/sql.hpp" // SQL_INNODB
-#include "../common/strlib.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/sql.hpp> // SQL_INNODB
+#include <common/strlib.hpp>
 
 #include "battle.hpp"
 #include "homunculus.hpp"

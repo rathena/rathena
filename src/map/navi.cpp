@@ -1,4 +1,7 @@
-#include "../config/core.hpp"
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include <config/core.hpp>
 
 #ifdef MAP_GENERATOR
 
@@ -11,10 +14,10 @@
 #include <queue>
 #include <vector>
 
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/utils.hpp"
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/showmsg.hpp>
+#include <common/utils.hpp>
 #include "map.hpp"
 #include "mob.hpp"
 #include "navi.hpp"

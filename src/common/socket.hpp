@@ -4,7 +4,7 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #ifdef WIN32
 	#include "winapi.hpp"

@@ -114,6 +114,7 @@ bool YamlDatabase::load(const std::string& path) {
 		ShowError( "Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str() );
 		ShowError( "There is likely a syntax error in the file.\n" );
 		ShowError( "Error message: %s\n", e.what() );
+		aFree(buf);
 		return false;
 	}
 
@@ -163,7 +164,7 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 
 		for( const ryml::NodeRef &node : bodyNode ){
 			count += this->parseBodyNode( node );
-#ifdef DEBUG
+#ifdef DETAILED_LOADING_OUTPUT
 			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
 #endif
 		}

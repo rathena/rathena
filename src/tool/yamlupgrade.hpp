@@ -4,7 +4,7 @@
 #ifndef YAMLUPGRADE_HPP
 #define YAMLUPGRADE_HPP
 
-#include "../common/core.hpp"
+#include <common/core.hpp>
 
 #include "yaml.hpp"
 

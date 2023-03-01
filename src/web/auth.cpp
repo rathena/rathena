@@ -5,8 +5,8 @@
 
 #include <string.h>
 
-#include "../common/showmsg.hpp"
-#include "../common/sql.hpp"
+#include <common/showmsg.hpp>
+#include <common/sql.hpp>
 
 #include "http.hpp"
 #include "sqllock.hpp"

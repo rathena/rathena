@@ -11,9 +11,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/mmo.hpp"
-#include "../common/database.hpp"
-#include "../common/db.hpp"
+#include <common/mmo.hpp>
+#include <common/database.hpp>
+#include <common/db.hpp>
 
 class map_session_data;
 struct block_list;

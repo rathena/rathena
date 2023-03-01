@@ -3,10 +3,10 @@
 
 #include "searchstore.hpp"  // struct s_search_store_info
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"  // aMalloc, aRealloc, aFree
-#include "../common/showmsg.hpp"  // ShowError, ShowWarning
-#include "../common/strlib.hpp"  // safestrncpy
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>  // aMalloc, aRealloc, aFree
+#include <common/showmsg.hpp>  // ShowError, ShowWarning
+#include <common/strlib.hpp>  // safestrncpy
 
 #include "battle.hpp"  // battle_config.*
 #include "clif.hpp"  // clif_open_search_store_info, clif_search_store_info_*

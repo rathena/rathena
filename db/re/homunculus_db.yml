@@ -1,0 +1,948 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2023 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Homunculus Database
+###########################################################################
+#
+# Homunculus Settings
+#
+###########################################################################
+# - BaseClass               Base class.
+#   Name                    Name of homunculus.
+#   EvolutionClass          Evolution class.
+#   Food                    Homunculus food item. (Default: Pet_Food)
+#   HungryDelay             Time interval in milliseconds after which the hunger value is altered. (Default: 60000)
+#   Race                    Race. (Default: Demihuman)
+#   Element                 Element. (Default: Neutral)
+#   Size                    Size. (Default: Small)
+#   EvolutionSize           Evolution size. (Default: Medium)
+#   AttackDelay             Base ASPD. (Default: 700)
+#   Status:                 Homunculus stats.
+#     - Type                Type of status.
+#       Base                Base value of this status. (Default: 1)
+#       GrowthMinimum       Minimum growth of this status. (Default: 0)
+#       GrowthMaximum       Maximum growth of this status. (Default: 0)
+#       EvolutionMinimum    Minimum evolution growth of this status. Only applies for homunculus that can evolve. (Default: 0)
+#       EvolutionMaximum    Maximum evolution growth of this status. Only applies for homunculus that can evolve. (Default: 0)
+#   SkillTree:              Skill tree.
+#     - Skill               Skill name.
+#       Clear               True to remove the given skill name. (Optional)
+#       MaxLevel            Maximum level of skill.
+#       RequiredLevel       Required base level of homunculus to learn. (Default: 0)
+#       RequiredIntimacy    Required intimacy of homunculus to learn. (Default: 0)
+#       RequireEvolution    Require the homunculus to be evolved to be available. (Default: false)
+#       Required:           Prerequisite skills. (Default: null)
+#         - Skill           Prerequisite skill name.
+#           Level           Level of prerequisite skill.
+#           Clear           True to remove the given prerequisite skill name. (Optional)
+###########################################################################
+
+Header:
+  Type: HOMUNCULUS_DB
+  Version: 1
+
+Body:
+  - Class: Lif
+    Name: Lif
+    EvolutionClass: Lif_H
+    Status:
+      - Type: Hp
+        Base: 150
+        GrowthMinimum: 60
+        GrowthMaximum: 100
+        EvolutionMinimum: 800
+        EvolutionMaximum: 2400
+      - Type: Sp
+        Base: 40
+        GrowthMinimum: 4
+        GrowthMaximum: 9
+        EvolutionMinimum: 220
+        EvolutionMaximum: 480
+      - Type: Str
+        Base: 17
+        GrowthMinimum: 5
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Agi
+        Base: 20
+        GrowthMinimum: 5
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 15
+        GrowthMinimum: 5
+        GrowthMaximum: 19
+        EvolutionMinimum: 20
+        EvolutionMaximum: 40
+      - Type: Int
+        Base: 35
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 30
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 6
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 6
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+    SkillTree:
+      - Skill: HLIF_HEAL
+        MaxLevel: 5
+      - Skill: HLIF_AVOID
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 3
+      - Skill: HLIF_BRAIN
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 5
+      - Skill: HLIF_CHANGE
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Amistr
+    Name: Amistr
+    EvolutionClass: Amistr_H
+    Food: Zargon
+    Race: Brute
+    Status:
+      - Type: Hp
+        Base: 320
+        GrowthMinimum: 80
+        GrowthMaximum: 130
+        EvolutionMinimum: 1600
+        EvolutionMaximum: 3600
+      - Type: Sp
+        Base: 10
+        GrowthMinimum: 1
+        GrowthMaximum: 4
+        EvolutionMinimum: 120
+        EvolutionMaximum: 360
+      - Type: Str
+        Base: 20
+        GrowthMinimum: 8
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Agi
+        Base: 17
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 35
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 10
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+    SkillTree:
+      - Skill: HAMI_CASTLE
+        MaxLevel: 5
+      - Skill: HAMI_DEFENCE
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_CASTLE
+            Level: 5
+      - Skill: HAMI_SKIN
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_DEFENCE
+            Level: 3
+      - Skill: HAMI_BLOODLUST
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Filir
+    Name: Filir
+    EvolutionClass: Filir_H
+    Food: Garlet
+    Race: Brute
+    Status:
+      - Type: Hp
+        Base: 90
+        GrowthMinimum: 45
+        GrowthMaximum: 75
+        EvolutionMinimum: 1200
+        EvolutionMaximum: 3200
+      - Type: Sp
+        Base: 25
+        GrowthMinimum: 3
+        GrowthMaximum: 6
+        EvolutionMinimum: 200
+        EvolutionMaximum: 400
+      - Type: Str
+        Base: 29
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Agi
+        Base: 35
+        GrowthMinimum: 8
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 9
+        GrowthMinimum: 1
+        GrowthMaximum: 10
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Int
+        Base: 8
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 30
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Luk
+        Base: 9
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+    SkillTree:
+      - Skill: HFLI_MOON
+        MaxLevel: 5
+      - Skill: HFLI_FLEET
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_MOON
+            Level: 3
+      - Skill: HFLI_SPEED
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_FLEET
+            Level: 3
+      - Skill: HFLI_SBR44
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Vanilmirth
+    Name: Vanilmirth
+    EvolutionClass: Vanilmirth_H
+    Food: Scell
+    Race: Formless
+    Status:
+      - Type: Hp
+        Base: 80
+        GrowthMinimum: 30
+        GrowthMaximum: 150
+        EvolutionMinimum: 1200
+        EvolutionMaximum: 4800
+      - Type: Sp
+        Base: 11
+        GrowthMinimum: 0
+        GrowthMaximum: 7
+        EvolutionMinimum: 480
+        EvolutionMaximum: 640
+      - Type: Str
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Agi
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 50
+      - Type: Luk
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 100
+    SkillTree:
+      - Skill: HVAN_CAPRICE
+        MaxLevel: 5
+      - Skill: HVAN_CHAOTIC
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 3
+      - Skill: HVAN_INSTRUCT
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 5
+      - Skill: HVAN_EXPLOSION
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Lif2
+    Name: Lif
+    EvolutionClass: Lif_H2
+    Status:
+      - Type: Hp
+        Base: 150
+        GrowthMinimum: 60
+        GrowthMaximum: 100
+        EvolutionMinimum: 800
+        EvolutionMaximum: 2400
+      - Type: Sp
+        Base: 40
+        GrowthMinimum: 4
+        GrowthMaximum: 9
+        EvolutionMinimum: 220
+        EvolutionMaximum: 480
+      - Type: Str
+        Base: 17
+        GrowthMinimum: 5
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Agi
+        Base: 20
+        GrowthMinimum: 5
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 15
+        GrowthMinimum: 5
+        GrowthMaximum: 19
+        EvolutionMinimum: 20
+        EvolutionMaximum: 40
+      - Type: Int
+        Base: 35
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 30
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 6
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 6
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+    SkillTree:
+      - Skill: HLIF_HEAL
+        MaxLevel: 5
+      - Skill: HLIF_AVOID
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 3
+      - Skill: HLIF_BRAIN
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 5
+      - Skill: HLIF_CHANGE
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Amistr2
+    Name: Amistr
+    EvolutionClass: Amistr_H2
+    Food: Zargon
+    Race: Brute
+    Status:
+      - Type: Hp
+        Base: 320
+        GrowthMinimum: 80
+        GrowthMaximum: 130
+        EvolutionMinimum: 1600
+        EvolutionMaximum: 3600
+      - Type: Sp
+        Base: 10
+        GrowthMinimum: 1
+        GrowthMaximum: 4
+        EvolutionMinimum: 120
+        EvolutionMaximum: 360
+      - Type: Str
+        Base: 20
+        GrowthMinimum: 8
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Agi
+        Base: 17
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 35
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 10
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+    SkillTree:
+      - Skill: HAMI_CASTLE
+        MaxLevel: 5
+      - Skill: HAMI_DEFENCE
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_CASTLE
+            Level: 5
+      - Skill: HAMI_SKIN
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_DEFENCE
+            Level: 3
+      - Skill: HAMI_BLOODLUST
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Filir2
+    Name: Filir
+    EvolutionClass: Filir_H2
+    Food: Garlet
+    Race: Brute
+    Status:
+      - Type: Hp
+        Base: 90
+        GrowthMinimum: 45
+        GrowthMaximum: 75
+        EvolutionMinimum: 1200
+        EvolutionMaximum: 3200
+      - Type: Sp
+        Base: 25
+        GrowthMinimum: 3
+        GrowthMaximum: 6
+        EvolutionMinimum: 200
+        EvolutionMaximum: 400
+      - Type: Str
+        Base: 29
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Agi
+        Base: 35
+        GrowthMinimum: 8
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 9
+        GrowthMinimum: 1
+        GrowthMaximum: 10
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Int
+        Base: 8
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 30
+        GrowthMinimum: 4
+        GrowthMaximum: 20
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Luk
+        Base: 9
+        GrowthMinimum: 3
+        GrowthMaximum: 19
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+    SkillTree:
+      - Skill: HFLI_MOON
+        MaxLevel: 5
+      - Skill: HFLI_FLEET
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_MOON
+            Level: 3
+      - Skill: HFLI_SPEED
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_FLEET
+            Level: 3
+      - Skill: HFLI_SBR44
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Vanilmirth2
+    Name: Vanilmirth
+    EvolutionClass: Vanilmirth_H2
+    Food: Scell
+    Race: Formless
+    Status:
+      - Type: Hp
+        Base: 80
+        GrowthMinimum: 30
+        GrowthMaximum: 150
+        EvolutionMinimum: 1200
+        EvolutionMaximum: 4800
+      - Type: Sp
+        Base: 11
+        GrowthMinimum: 0
+        GrowthMaximum: 7
+        EvolutionMinimum: 480
+        EvolutionMaximum: 640
+      - Type: Str
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Agi
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Vit
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 30
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 20
+        EvolutionMaximum: 50
+      - Type: Dex
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 50
+      - Type: Luk
+        Base: 11
+        GrowthMinimum: 1
+        GrowthMaximum: 30
+        EvolutionMinimum: 10
+        EvolutionMaximum: 100
+    SkillTree:
+      - Skill: HVAN_CAPRICE
+        MaxLevel: 5
+      - Skill: HVAN_CHAOTIC
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 3
+      - Skill: HVAN_INSTRUCT
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 5
+      - Skill: HVAN_EXPLOSION
+        MaxLevel: 3
+        RequiredIntimacy: 910
+        RequireEvolution: true
+  - Class: Eira
+    Name: Eira
+    Food: Small_Snow_Flower
+    Race: Angel
+    Element: Wind
+    Size: Medium
+    Status:
+      - Type: Hp
+        Base: 150
+        GrowthMinimum: 40
+        GrowthMaximum: 160
+      - Type: Sp
+        Base: 40
+        GrowthMinimum: 20
+        GrowthMaximum: 42
+      - Type: Str
+        Base: 17
+        GrowthMinimum: 13
+        GrowthMaximum: 39
+      - Type: Agi
+        Base: 20
+        GrowthMinimum: 28
+        GrowthMaximum: 42
+      - Type: Vit
+        Base: 15
+        GrowthMinimum: 15
+        GrowthMaximum: 25
+      - Type: Int
+        Base: 35
+        GrowthMinimum: 14
+        GrowthMaximum: 48
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 16
+        GrowthMaximum: 36
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 9
+        GrowthMaximum: 18
+    SkillTree:
+      - Skill: MH_LIGHT_OF_REGENE
+        MaxLevel: 5
+        RequiredLevel: 128
+      - Skill: MH_OVERED_BOOST
+        MaxLevel: 5
+        RequiredLevel: 114
+      - Skill: MH_ERASER_CUTTER
+        MaxLevel: 10
+        RequiredLevel: 106
+      - Skill: MH_XENO_SLASHER
+        MaxLevel: 10
+        RequiredLevel: 121
+      - Skill: MH_SILENT_BREEZE
+        MaxLevel: 5
+        RequiredLevel: 137
+      - Skill: MH_CLASSY_FLUTTER
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_TWISTER_CUTTER
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_ABSOLUTE_ZEPHYR
+        MaxLevel: 10
+        RequiredLevel: 230
+  - Class: Bayeri
+    Name: Bayeri
+    Food: Fresh_Plant
+    Race: Brute
+    Element: Holy
+    Size: Medium
+    Status:
+      - Type: Hp
+        Base: 320
+        GrowthMinimum: 90
+        GrowthMaximum: 360
+      - Type: Sp
+        Base: 10
+        GrowthMinimum: 48
+        GrowthMaximum: 52
+      - Type: Str
+        Base: 20
+        GrowthMinimum: 18
+        GrowthMaximum: 36
+      - Type: Agi
+        Base: 17
+        GrowthMinimum: 8
+        GrowthMaximum: 36
+      - Type: Vit
+        Base: 35
+        GrowthMinimum: 16
+        GrowthMaximum: 32
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 22
+        GrowthMaximum: 44
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 12
+        GrowthMaximum: 24
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 20
+        GrowthMaximum: 36
+    SkillTree:
+      - Skill: MH_STAHL_HORN
+        MaxLevel: 10
+        RequiredLevel: 105
+      - Skill: MH_GOLDENE_FERSE
+        MaxLevel: 5
+        RequiredLevel: 112
+      - Skill: MH_STEINWAND
+        MaxLevel: 5
+        RequiredLevel: 121
+      - Skill: MH_HEILIGE_STANGE
+        MaxLevel: 10
+        RequiredLevel: 138
+      - Skill: MH_ANGRIFFS_MODUS
+        MaxLevel: 5
+        RequiredLevel: 130
+      - Skill: MH_LICHT_GEHORN
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_GLANZEN_SPIES
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_HEILIGE_PFERD
+        MaxLevel: 10
+        RequiredLevel: 230
+      - Skill: MH_GOLDENE_TONE
+        MaxLevel: 10
+        RequiredLevel: 230
+  - Class: Sera
+    Name: Sera
+    Food: Apple_Pudding
+    Race: Insect
+    Element: Earth
+    Size: Medium
+    Status:
+      - Type: Hp
+        Base: 90
+        GrowthMinimum: 60
+        GrowthMaximum: 240
+      - Type: Sp
+        Base: 25
+        GrowthMinimum: 36
+        GrowthMaximum: 64
+      - Type: Str
+        Base: 29
+        GrowthMinimum: 10
+        GrowthMaximum: 25
+      - Type: Agi
+        Base: 35
+        GrowthMinimum: 16
+        GrowthMaximum: 32
+      - Type: Vit
+        Base: 9
+        GrowthMinimum: 5
+        GrowthMaximum: 25
+      - Type: Int
+        Base: 8
+        GrowthMinimum: 7
+        GrowthMaximum: 35
+      - Type: Dex
+        Base: 30
+        GrowthMinimum: 28
+        GrowthMaximum: 40
+      - Type: Luk
+        Base: 9
+        GrowthMinimum: 20
+        GrowthMaximum: 40
+    SkillTree:
+      - Skill: MH_SUMMON_LEGION
+        MaxLevel: 5
+        RequiredLevel: 132
+      - Skill: MH_NEEDLE_OF_PARALYZE
+        MaxLevel: 10
+        RequiredLevel: 105
+      - Skill: MH_POISON_MIST
+        MaxLevel: 5
+        RequiredLevel: 116
+      - Skill: MH_PAIN_KILLER
+        MaxLevel: 10
+        RequiredLevel: 123
+      - Skill: MH_POLISHING_NEEDLE
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_TOXIN_OF_MANDARA
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_NEEDLE_STINGER
+        MaxLevel: 10
+        RequiredLevel: 230
+  - Class: Dieter
+    Name: Dieter
+    Food: Big_Cell
+    Race: Formless
+    Element: Fire
+    Size: Medium
+    Status:
+      - Type: Hp
+        Base: 80
+        GrowthMinimum: 240
+        GrowthMaximum: 480
+      - Type: Sp
+        Base: 11
+        GrowthMinimum: 40
+        GrowthMaximum: 120
+      - Type: Str
+        Base: 11
+        GrowthMinimum: 20
+        GrowthMaximum: 40
+      - Type: Agi
+        Base: 11
+        GrowthMinimum: 13
+        GrowthMaximum: 26
+      - Type: Vit
+        Base: 11
+        GrowthMinimum: 18
+        GrowthMaximum: 36
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 15
+        GrowthMaximum: 40
+      - Type: Dex
+        Base: 11
+        GrowthMinimum: 16
+        GrowthMaximum: 32
+      - Type: Luk
+        Base: 11
+        GrowthMinimum: 4
+        GrowthMaximum: 16
+    SkillTree:
+      - Skill: MH_MAGMA_FLOW
+        MaxLevel: 5
+        RequiredLevel: 122
+      - Skill: MH_GRANITIC_ARMOR
+        MaxLevel: 5
+        RequiredLevel: 116
+      - Skill: MH_LAVA_SLIDE
+        MaxLevel: 10
+        RequiredLevel: 109
+      - Skill: MH_PYROCLASTIC
+        MaxLevel: 10
+        RequiredLevel: 131
+      - Skill: MH_VOLCANIC_ASH
+        MaxLevel: 5
+        RequiredLevel: 102
+      - Skill: MH_BLAST_FORGE
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_TEMPERING
+        MaxLevel: 10
+        RequiredLevel: 230
+      - Skill: MH_BLAZING_LAVA
+        MaxLevel: 10
+        RequiredLevel: 210
+  - Class: Eleanor
+    Name: Eleanor
+    Food: Bun_
+    Element: Poison
+    Size: Medium
+    Status:
+      - Type: Hp
+        Base: 320
+        GrowthMinimum: 60
+        GrowthMaximum: 300
+      - Type: Sp
+        Base: 10
+        GrowthMinimum: 10
+        GrowthMaximum: 20
+      - Type: Str
+        Base: 20
+        GrowthMinimum: 20
+        GrowthMaximum: 40
+      - Type: Agi
+        Base: 17
+        GrowthMinimum: 10
+        GrowthMaximum: 50
+      - Type: Vit
+        Base: 35
+        GrowthMinimum: 24
+        GrowthMaximum: 48
+      - Type: Int
+        Base: 11
+        GrowthMinimum: 5
+        GrowthMaximum: 15
+      - Type: Dex
+        Base: 24
+        GrowthMinimum: 12
+        GrowthMaximum: 36
+      - Type: Luk
+        Base: 12
+        GrowthMinimum: 2
+        GrowthMaximum: 10
+    SkillTree:
+      - Skill: MH_STYLE_CHANGE
+        MaxLevel: 1
+        RequiredLevel: 100
+      - Skill: MH_SONIC_CRAW
+        MaxLevel: 5
+        RequiredLevel: 100
+      - Skill: MH_SILVERVEIN_RUSH
+        MaxLevel: 10
+        RequiredLevel: 114
+      - Skill: MH_MIDNIGHT_FRENZY
+        MaxLevel: 10
+        RequiredLevel: 128
+      - Skill: MH_TINDER_BREAKER
+        MaxLevel: 5
+        RequiredLevel: 100
+      - Skill: MH_CBC
+        MaxLevel: 5
+        RequiredLevel: 112
+      - Skill: MH_EQC
+        MaxLevel: 5
+        RequiredLevel: 133
+      - Skill: MH_BRUSHUP_CLAW
+        MaxLevel: 10
+        RequiredLevel: 210
+      - Skill: MH_BLAZING_AND_FURIOUS
+        MaxLevel: 10
+        RequiredLevel: 215
+      - Skill: MH_THE_ONE_FIGHTER_RISES
+        MaxLevel: 10
+        RequiredLevel: 230

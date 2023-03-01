@@ -9,102 +9,6 @@
 #include "malloc.hpp"
 #include "showmsg.hpp"
 
-#define J_MAX_MALLOC_SIZE 65535
-
-// escapes a string in-place (' -> \' , \ -> \\ , % -> _)
-char* jstrescape (char* pt)
-{
-	//copy from here
-	char *ptr;
-	int i = 0, j = 0;
-
-	//copy string to temporary
-	CREATE(ptr, char, J_MAX_MALLOC_SIZE);
-	strcpy(ptr,pt);
-
-	while (ptr[i] != '\0') {
-		switch (ptr[i]) {
-			case '\'':
-				pt[j++] = '\\';
-				pt[j++] = ptr[i++];
-				break;
-			case '\\':
-				pt[j++] = '\\';
-				pt[j++] = ptr[i++];
-				break;
-			case '%':
-				pt[j++] = '_'; i++;
-				break;
-			default:
-				pt[j++] = ptr[i++];
-		}
-	}
-	pt[j++] = '\0';
-	aFree(ptr);
-	return pt;
-}
-
-// escapes a string into a provided buffer
-char* jstrescapecpy (char* pt, const char* spt)
-{
-	//copy from here
-	//WARNING: Target string pt should be able to hold strlen(spt)*2, as each time
-	//a escape character is found, the target's final length increases! [Skotlex]
-	int i =0, j=0;
-
-	if (!spt) {	//Return an empty string [Skotlex]
-		pt[0] = '\0';
-		return &pt[0];
-	}
-
-	while (spt[i] != '\0') {
-		switch (spt[i]) {
-			case '\'':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '\\':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '%':
-				pt[j++] = '_'; i++;
-				break;
-			default:
-				pt[j++] = spt[i++];
-		}
-	}
-	pt[j++] = '\0';
-	return &pt[0];
-}
-
-// escapes exactly 'size' bytes of a string into a provided buffer
-int jmemescapecpy (char* pt, const char* spt, int size)
-{
-	//copy from here
-	int i =0, j=0;
-
-	while (i < size) {
-		switch (spt[i]) {
-			case '\'':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '\\':
-				pt[j++] = '\\';
-				pt[j++] = spt[i++];
-				break;
-			case '%':
-				pt[j++] = '_'; i++;
-				break;
-			default:
-				pt[j++] = spt[i++];
-		}
-	}
-	// copy size is 0 ~ (j-1)
-	return j;
-}
-
 // Function to suppress control characters in a string.
 int remove_control_chars(char* str)
 {
@@ -145,28 +49,6 @@ char* trim(char* str)
 		str[end] = '\0';
 		memmove(str,str+start,end-start+1);
 	}
-	return str;
-}
-
-// Note: This function returns a pointer to a substring of the original string.
-// If the given string was allocated dynamically, the caller must not overwrite
-// that pointer with the returned value, since the original pointer must be
-// deallocated using the same allocator with which it was allocated.  The return
-// value must NOT be deallocated using free() etc.
-char *trim2(char *str,char flag) {
-	if(flag&1) { // Trim leading space
-		while(ISSPACE(*str)) str++;
-		if(*str == 0)  // All spaces?
-			return str;
-	}
-	if(flag&2) { // Trim trailing space
-		char *end;
-
-		end = str + strlen(str) - 1;
-		while(end > str && ISSPACE(*end)) end--;
-		*(end+1) = 0; // Write new null terminator
-	}
-
 	return str;
 }
 

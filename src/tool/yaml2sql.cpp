@@ -20,17 +20,17 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
@@ -43,6 +43,7 @@
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
 #include "../map/elemental.hpp"
+#include "../map/homunculus.hpp"
 #include "../map/instance.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"
