@@ -17,8 +17,8 @@
 #include <common/sql.hpp>
 #include <common/strlib.hpp>
 #include "accountdb.hpp"
-#include "login.hpp"  // login_config
-#include "mmo_account.hpp"
+#include "../login.hpp"  // login_config
+#include "../mmo_account.hpp"
 
 /**
  * Establish the database connection.

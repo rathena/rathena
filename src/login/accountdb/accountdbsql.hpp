@@ -12,7 +12,8 @@
 #include <common/sql.hpp>
 #include <config/core.hpp>
 #include "accountdb.hpp"
-#include "mmo_account.hpp"
+#include "../mmo_account.hpp"
+
 
 class AccountDBSql : public AccountDB {
    public:

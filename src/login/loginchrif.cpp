@@ -11,7 +11,7 @@
 #include <common/strlib.hpp> //safeprint
 #include <common/timer.hpp> //difftick
 
-#include "accountdb.hpp"
+#include "accountdb/accountdb.hpp"
 #include "login.hpp"
 #include "loginlog.hpp"
 

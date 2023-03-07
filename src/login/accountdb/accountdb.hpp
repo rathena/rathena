@@ -9,7 +9,8 @@
 
 #include <common/cbasetypes.hpp>
 #include <config/core.hpp>
-#include "mmo_account.hpp"
+
+#include "../mmo_account.hpp"
 
 class AccountDB {
    public:
