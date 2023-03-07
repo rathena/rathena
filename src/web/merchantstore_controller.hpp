@@ -4,7 +4,7 @@
 #ifndef MERCHANTSTORE_CONTROLLER_HPP
 #define MERCHANTSTORE_CONTROLLER_HPP
 
-#include "web/http.hpp"
+#include "http.hpp"
 
 HANDLER_FUNC(merchantstore_save);
 HANDLER_FUNC(merchantstore_load);

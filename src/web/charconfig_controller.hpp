@@ -4,7 +4,7 @@
 #ifndef CHARCONFIG_CONTROLLER_HPP
 #define CHARCONFIG_CONTROLLER_HPP
 
-#include "web/http.hpp"
+#include "http.hpp"
 
 HANDLER_FUNC(charconfig_save);
 HANDLER_FUNC(charconfig_load);
