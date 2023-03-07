@@ -6,7 +6,7 @@
 
 #include <time.h>
 
-#include "common/cbasetypes.hpp"
+#include "cbasetypes.hpp"
 
 typedef int64 t_tick;
 #define PRtf PRId64

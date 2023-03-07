@@ -8,8 +8,8 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
-#include "map/status.hpp" // struct status_data, struct status_change
-#include "map/unit.hpp" // struct unit_data
+#include "status.hpp" // struct status_data, struct status_change
+#include "unit.hpp" // struct unit_data
 
 const t_tick MIN_ELETHINKTIME = 100;
 #define MIN_ELEDISTANCE 2

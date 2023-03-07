@@ -4,7 +4,7 @@
 #ifndef NULLPO_HPP
 #define NULLPO_HPP
 
-#include "common/cbasetypes.hpp"
+#include "cbasetypes.hpp"
 
 #define NLP_MARK __FILE__, __LINE__, __func__
 

@@ -10,7 +10,7 @@
 #include <common/database.hpp>
 #include <common/strlib.hpp>
 
-#include "map/map.hpp"
+#include "map.hpp"
 
 class map_session_data;
 enum e_size : uint8;

@@ -4,7 +4,7 @@
 #ifndef CHAT_HPP
 #define CHAT_HPP
 
-#include "map/map.hpp" // struct block_list, CHATROOM_TITLE_SIZE
+#include "map.hpp" // struct block_list, CHATROOM_TITLE_SIZE
 
 class map_session_data;
 struct chat_data;

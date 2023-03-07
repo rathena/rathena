@@ -6,8 +6,8 @@
 
 #include <common/cbasetypes.hpp>
 
-#include "map/status.hpp" // struct status_data, struct status_change
-#include "map/unit.hpp" // struct unit_data
+#include "status.hpp" // struct status_data, struct status_change
+#include "unit.hpp" // struct unit_data
 
 // number of cells that a mercenary can walk to from it's master before being warped
 #define MAX_MER_DISTANCE 15

@@ -56,7 +56,7 @@
 
 #undef NOMINMAX
 
-#include "common/cbasetypes.hpp"
+#include "cbasetypes.hpp"
 
 bool IsCurrentUserLocalAdministrator(void);
 

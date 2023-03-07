@@ -13,8 +13,8 @@
 #include <common/malloc.hpp>
 #include <common/mmo.hpp> // ITEM_NAME_LENGTH
 
-#include "map/script.hpp"
-#include "map/status.hpp"
+#include "script.hpp"
+#include "status.hpp"
 
 enum e_ammo_type : uint8;
 

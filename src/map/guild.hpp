@@ -8,7 +8,7 @@
 #include <common/database.hpp>
 #include <common/mmo.hpp>
 
-#include "map/map.hpp" // NAME_LENGTH
+#include "map.hpp" // NAME_LENGTH
 
 struct guild;
 struct guild_member;

@@ -12,9 +12,9 @@
 
 #include <config/core.hpp>
 
-#include "common/cbasetypes.hpp"
-#include "common/core.hpp"
-#include "common/utilities.hpp"
+#include "cbasetypes.hpp"
+#include "core.hpp"
+#include "utilities.hpp"
 
 class YamlDatabase{
 // Internal stuff

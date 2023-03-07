@@ -9,12 +9,12 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
-#include "map/battle.hpp"
-#include "map/mob.hpp"
-#include "map/pc.hpp"
-#include "map/script.hpp"
-#include "map/status.hpp"
-#include "map/unit.hpp"
+#include "battle.hpp"
+#include "mob.hpp"
+#include "pc.hpp"
+#include "script.hpp"
+#include "status.hpp"
+#include "unit.hpp"
 
 #include <unordered_map>
 

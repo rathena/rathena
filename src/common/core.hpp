@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 
-#include "common/timer.hpp"
+#include "timer.hpp"
 
 #ifdef _WIN32
-	#include "common/winapi.hpp" // Console close event handling
+	#include "winapi.hpp" // Console close event handling
 #endif
 
 /* so that developers with --enable-debug can raise signals from any section of the code they'd like */

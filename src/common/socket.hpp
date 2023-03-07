@@ -7,7 +7,7 @@
 #include <config/core.hpp>
 
 #ifdef WIN32
-	#include "common/winapi.hpp"
+	#include "winapi.hpp"
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>
@@ -16,8 +16,8 @@
 #endif
 #include <time.h>
 
-#include "common/cbasetypes.hpp"
-#include "common/timer.hpp" // t_tick
+#include "cbasetypes.hpp"
+#include "timer.hpp" // t_tick
 
 #ifndef MAXCONN
 	#define MAXCONN FD_SETSIZE

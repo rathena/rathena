@@ -19,8 +19,8 @@
 #include <common/timer.hpp>
 #include <config/core.hpp>
 
-#include "map/navi.hpp"
-#include "map/script.hpp"
+#include "navi.hpp"
+#include "script.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;

@@ -8,7 +8,7 @@
 #pragma warning( disable : 4200 )
 
 // Required for MESSAGE_SIZE, TALKBOX_MESSAGE_SIZE
-#include "map/map.hpp"
+#include "map.hpp"
 
 #define MAX_ITEM_OPTIONS MAX_ITEM_RDM_OPT
 #define UNAVAILABLE_STRUCT int8 _____unavailable
@@ -25,7 +25,7 @@
 #define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id;
 #define DEFINE_PACKET_ID(name, id) DEFINE_PACKET_HEADER(name, id)
 
-#include "map/packets_struct.hpp"
+#include "packets_struct.hpp"
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )

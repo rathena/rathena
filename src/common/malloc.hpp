@@ -4,7 +4,7 @@
 #ifndef MALLOC_HPP
 #define MALLOC_HPP
 
-#include "common/cbasetypes.hpp"
+#include "cbasetypes.hpp"
 
 #define ALC_MARK __FILE__, __LINE__, __func__
 

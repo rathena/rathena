@@ -11,11 +11,11 @@
 #include <common/timer.hpp>
 #include <config/core.hpp>
 
-#include "map/clif.hpp" //
-#include "map/map.hpp" // struct block_list
-#include "map/status.hpp" // struct status_change
-#include "map/unit.hpp" // struct unit_data
-#include "map/navi.hpp" // navi stuff
+#include "clif.hpp" //
+#include "map.hpp" // struct block_list
+#include "status.hpp" // struct status_change
+#include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;

@@ -4,7 +4,7 @@
 #ifndef GRFIO_HPP
 #define GRFIO_HPP
 
-#include "common/cbasetypes.hpp"
+#include "cbasetypes.hpp"
 
 const int32 RSW_NO_WATER = 1000000;
 
