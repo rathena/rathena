@@ -10,7 +10,7 @@
 #include <common/core.hpp> // CORE_ST_LAST
 #include <common/mmo.hpp> // NAME_LENGTH,SEX_*
 #include <common/timer.hpp>
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;

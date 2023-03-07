@@ -10,7 +10,7 @@
 #include <common/core.hpp>
 #include <common/mmo.hpp> // NAME_LENGTH,SEX_*
 #include <common/timer.hpp>
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include "login/account.hpp"
 

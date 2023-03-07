@@ -17,7 +17,7 @@
 #include <common/mmo.hpp>
 #include <common/msg_conf.hpp>
 #include <common/timer.hpp>
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include "map/navi.hpp"
 #include "map/script.hpp"

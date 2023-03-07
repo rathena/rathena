@@ -22,7 +22,7 @@
 #include <common/timer.hpp>
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include "account.hpp"
 #include "ipban.hpp"

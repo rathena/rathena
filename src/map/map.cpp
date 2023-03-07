@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include <common/cbasetypes.hpp>
 #include <common/cli.hpp>

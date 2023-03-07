@@ -7,7 +7,7 @@
 #include <memory> // std::shared_ptr
 #include <vector> // std::vector
 
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include <common/cbasetypes.hpp> // uint16, uint32
 #include <common/database.hpp> // TypesafeYamlDatabase

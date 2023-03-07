@@ -9,7 +9,7 @@
 
 #include <common/database.hpp>
 #include <common/timer.hpp>
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include "map/clif.hpp" //
 #include "map/map.hpp" // struct block_list

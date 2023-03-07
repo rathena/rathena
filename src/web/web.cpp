@@ -23,7 +23,7 @@
 #include <common/timer.hpp>
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
-#include "config/core.hpp"
+#include <config/core.hpp>
 
 #include "charconfig_controller.hpp"
 #include "emblem_controller.hpp"
