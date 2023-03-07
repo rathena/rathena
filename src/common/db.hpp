@@ -44,7 +44,7 @@
 
 #include <stdarg.h>
 
-#include "common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 /*****************************************************************************\
  *  (1) Section with public typedefs, enums, unions, structures and defines. *

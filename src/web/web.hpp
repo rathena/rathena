@@ -6,10 +6,10 @@
 
 #include <string>
 
-#include "common/cbasetypes.hpp"
-#include "common/core.hpp" // CORE_ST_LAST
-#include "common/mmo.hpp" // NAME_LENGTH,SEX_*
-#include "common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp> // CORE_ST_LAST
+#include <common/mmo.hpp> // NAME_LENGTH,SEX_*
+#include <common/timer.hpp>
 #include "config/core.hpp"
 
 using rathena::server_core::Core;

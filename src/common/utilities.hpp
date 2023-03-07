@@ -12,8 +12,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "common/cbasetypes.hpp"
-#include "common/random.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/random.hpp>
 
 #ifndef __has_builtin
 	#define __has_builtin(x) 0

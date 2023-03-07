@@ -4,9 +4,9 @@
 #ifndef ELEMENTAL_HPP
 #define ELEMENTAL_HPP
 
-#include "common/database.hpp"
-#include "common/mmo.hpp"
-#include "common/timer.hpp"
+#include <common/database.hpp>
+#include <common/mmo.hpp>
+#include <common/timer.hpp>
 
 #include "map/status.hpp" // struct status_data, struct status_change
 #include "map/unit.hpp" // struct unit_data

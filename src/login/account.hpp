@@ -4,8 +4,8 @@
 #ifndef ACCOUNT_HPP
 #define ACCOUNT_HPP
 
-#include "common/cbasetypes.hpp"
-#include "common/mmo.hpp" // ACCOUNT_REG2_NUM
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp> // ACCOUNT_REG2_NUM
 #include "config/core.hpp"
 
 #ifndef WEB_AUTH_TOKEN_LENGTH

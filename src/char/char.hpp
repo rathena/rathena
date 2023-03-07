@@ -8,10 +8,10 @@
 #include <unordered_map>
 #include <vector>
 
-#include "common/core.hpp" // CORE_ST_LAST
-#include "common/mmo.hpp"
-#include "common/msg_conf.hpp"
-#include "common/timer.hpp"
+#include <common/core.hpp> // CORE_ST_LAST
+#include <common/mmo.hpp>
+#include <common/msg_conf.hpp>
+#include <common/timer.hpp>
 #include "config/core.hpp"
 
 #include "char/packets.hpp"

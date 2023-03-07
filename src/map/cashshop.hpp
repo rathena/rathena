@@ -9,10 +9,10 @@
 
 #include "config/core.hpp"
 
-#include "common/cbasetypes.hpp" // uint16, uint32
-#include "common/database.hpp" // TypesafeYamlDatabase
-#include "common/mmo.hpp" // t_itemid
-#include "common/timer.hpp" // ShowWarning, ShowStatus
+#include <common/cbasetypes.hpp> // uint16, uint32
+#include <common/database.hpp> // TypesafeYamlDatabase
+#include <common/mmo.hpp> // t_itemid
+#include <common/timer.hpp> // ShowWarning, ShowStatus
 
 class map_session_data;
 

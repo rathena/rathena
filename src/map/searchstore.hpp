@@ -7,8 +7,8 @@
 #include <memory>
 #include <vector>
 
-#include "common/cbasetypes.hpp"
-#include "common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
 #include "map/clif.hpp"
 #include "map/map.hpp"
