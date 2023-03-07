@@ -4,8 +4,8 @@
 #ifndef CLI_HPP
 #define CLI_HPP
 
-#include <common/cbasetypes.hpp>
-#include <common/timer.hpp>
+#include "common/cbasetypes.hpp"
+#include "common/timer.hpp"
 
 #define MAX_CONSOLE_IN 200 //max is map...
 #define MIN_CONSOLE_IN 4 //min is help
