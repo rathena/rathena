@@ -1243,7 +1243,7 @@ typedef struct s_elemental_data	TBL_ELEM;
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
 #include <common/sql.hpp>
-#include <common/sql.hpp>
+
 extern int db_use_sqldbs;
 
 extern Sql* mmysql_handle;
