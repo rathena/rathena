@@ -4,7 +4,7 @@
 #ifndef PARTYBOOKING_CONTROLLER_HPP
 #define PARTYBOOKING_CONTROLLER_HPP
 
-#include "http.hpp"
+#include "web/http.hpp"
 
 HANDLER_FUNC(partybooking_add);
 HANDLER_FUNC(partybooking_delete);

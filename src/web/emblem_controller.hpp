@@ -4,7 +4,7 @@
 #ifndef EMBLEM_CONTROLLER_HPP
 #define EMBLEM_CONTROLLER_HPP
 
-#include "http.hpp"
+#include "web/http.hpp"
 
 HANDLER_FUNC(emblem_download);
 HANDLER_FUNC(emblem_upload);

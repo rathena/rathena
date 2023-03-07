@@ -4,7 +4,7 @@
 #ifndef USERCONFIG_CONTROLLER_HPP
 #define USERCONFIG_CONTROLLER_HPP
 
-#include "http.hpp"
+#include "web/http.hpp"
 
 HANDLER_FUNC(userconfig_save);
 HANDLER_FUNC(userconfig_load);
