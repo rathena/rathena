@@ -21,33 +21,28 @@
 # Channel Settings
 #
 ###########################################################################
-# Private                     Settings for private channels.
-#   Allow                     If players are allowed to create private channels. (Default: false)
+# - Type:                     Either Public, Private, Map, Ally. (Required)
 #   Color                     Chat color. (Default: 0xFFFFFF)
 #   Delay                     Chat delay in milliseconds. (Default: 1000)
-#   MaxMembers                Maximum amount of members in channel. (Default: 1000)
 #   SelfAnnounce              Displays a message to player when joining/leaving a channel. (Default: false)
 #   JoinAnnounce              Displays a message to the channel when a player joins. (Default: false)
 #   LeaveAnnounce             Displays a message to the channel when a player leaves. (Default: false)
-#   Ban                       Channel owner is allowed to ban members. (Default: true)
-#   Kick                      Channel owner is allowed to kick members. (Default: true)
-#   ChangeColor               Channel owner is allowed to toggle the option for players to change the message color. (Default: false)
-#   ChangeDelay               Channel owner is allowed to change the chat delay. (Default: false)
-# Public                      Settings for public channels.
-#   - Name                    Channel name.
-#     Password                Channel password. (Default: none)
-#     Alias                   Chat will display the alias at the beginning of the message.
-#     Type                    Channel type. (Default: Public)
-#     Color                   Chat color. (Default: 0xFFFFFF)
-#     Autojoin                If players will automatically join the channel at login. (Default: false)
-#     Delay                   Chat delay in milliseconds. (Default: 1000)
-#     Groups                  List of group names allowed to join. Group with 'ChannelAdmin' permission can always enter the channel. (Default: all)
-#     Leave                   If players are allowed to leave the channel. (Default: true)
-#     Chat                    If players are allowed to chat in the channel. (Default: true)
-#     ChangeColor             If players are allowed to change the message color. (Default: false)
-#     SelfAnnounce            Displays a message to player when joining/leaving a channel. (Default: false)
-#     JoinAnnounce            Displays a message to the channel when a player joins. (Default: false)
-#     LeaveAnnounce           Displays a message to the channel when a player leaves. (Default: false)
+######## Private Only
+#   AllowCreate               If players are allowed to create private channels. (Default: false)
+#   MaxMembers                Maximum amount of members in channel. (Default: 1000)
+#   AllowBan                  Channel owner is allowed to ban members. (Default: true)
+#   AllowKick                 Channel owner is allowed to kick members. (Default: true)
+#   AllowChangeColor          Channel owner is allowed to toggle the option for players to change the message color. (Default: false)
+#   AllowChangeDelay          Channel owner is allowed to change the chat delay. (Default: false)
+########  Public, Map, Ally Only
+#   Name                    Channel name
+#   Password                Channel password. (Default: none)
+#   Alias                   Chat will display the alias at the beginning of the message.
+#   Autojoin                If players will automatically join the channel at login. (Default: false)
+#   Groups                  List of group names allowed to join. Group with 'ChannelAdmin' permission can always enter the channel. (Default: all)
+#   Leave                   If players are allowed to leave the channel. (Default: true)
+#   Chat                    If players are allowed to chat in the channel. (Default: true)
+#   ChangeColor             If players are allowed to change the message color. (Default: false)
 ###########################################################################
 
 Header:
@@ -66,31 +61,34 @@ Body:
 # LightGreen: 0xB6FF00
 # Normal: 0x00FF00
 
-  Private:
+  - Type: Private
     # All values are defaulted.
 
-  Public:
-    - Name: "#global"
-      Alias: "[Global]"
-      Leave: false
+  - Type: Public
+    Name: "#global"
+    Alias: "[Global]"
+    Leave: false
 
-    - Name: "#support"
-      Alias: "[Support]"
-      Color: 0x83CFE9
+  - Type: Public
+    Name: "#support"
+    Alias: "[Support]"
+    Leave: false
+    Color: 0x83CFE9
 
-    - Name: "#trade"
-      Alias: "[Trade]"
-      Color: 0xB6FF00
+  - Type: Public
+    Name: "#trade"
+    Alias: "[Trade]"
+    Color: 0xB6FF00
 
-    - Name: "#ally"
-      Alias: "[Ally]"
-      Color: 0x28BF00
-      Type: Ally
+  - Type: Ally
+    Name: "#ally"
+    Alias: "[Ally]"
+    Color: 0x28BF00
 
-    - Name: "#map"
-      Alias: "[Map]"
-      Color: 0xFFFF90
-      Type: Map
+  - Type: Map
+    Name: "#map"
+    Alias: "[Map]"
+    Color: 0xFFFF90
 
 Footer:
   Imports:
