@@ -9,7 +9,7 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
-#include "../custom/defines_pre.hpp"
+#include <custom/defines_pre.hpp>
 
 /// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
@@ -121,6 +121,6 @@
  **/
 #include "./const.hpp"
 
-#include "../custom/defines_post.hpp"
+#include <custom/defines_post.hpp>
 
 #endif /* CONFIG_CORE_HPP */
