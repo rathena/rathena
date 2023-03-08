@@ -1,13 +1,14 @@
 #ifndef CHANNEL_DB_HPP
 #define CHANNEL_DB_HPP
 
+#include <memory>
 #include <unordered_map>
+
 #include "channel.hpp"
 #include "channel_config.hpp"
 
-
 class ChannelDatabase {
-public:
+   public:
 	ChannelDatabase() = default;
 	~ChannelDatabase() = default;
 
@@ -15,18 +16,22 @@ public:
 	void reload();
 	void clear();
 
-	const Channel_Config& getChannelConfig() const { return channel_config; }
-	Channel_Config& getMutChannelConfig() { return channel_config; }
+	const ChannelConfig& getChannelConfig() const { return config_; }
+	ChannelConfig& getMutChannelConfig() { return config_; }
 
 	std::shared_ptr<Channel> getChannel(const std::string& name) const;
 
-	std::shared_ptr<Channel> createChannel(Channel * orig);
+	std::shared_ptr<Channel> createChannel(const Channel& tmp);
+	std::shared_ptr<Channel> createChannelSimple(const std::string& name, const std::string& pass,
+												 ChannelType chantype, unsigned int owner);
 
-private:
-	Channel_Config channel_config;
+	int deleteChannel(const std::string& name, bool force);
+
+   private:
+	ChannelConfig config_;
 	std::unordered_map<std::string, std::shared_ptr<Channel>> channels;
 };
 
-
+extern std::unique_ptr<ChannelDatabase> channel_db;
 
 #endif /* CHANNEL_DB_HPP */

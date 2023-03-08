@@ -10,7 +10,7 @@ AC_CONFIG_SRCDIR([src/common/cbasetypes.hpp])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([3rdparty/yaml-cpp/Makefile 3rdparty/rapidyaml/Makefile 3rdparty/httplib/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
-AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
+AC_CONFIG_FILES([src/map/Makefile src/map/channels/Makefile src/tool/Makefile])
 AC_CONFIG_FILES([src/web/Makefile])
 
 AC_GNU_SOURCE

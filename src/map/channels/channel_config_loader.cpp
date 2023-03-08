@@ -60,7 +60,7 @@ bool ChannelConfigLoader::parsePrivate(const ryml::NodeRef& node) {
 		if (!this->asUInt32(node, "Delay", delay))
 			return false;
 
-		conf.delay = delay;
+		conf.msg_delay = delay;
 	}
 
 	if (nodeExists(node, "MaxMembers")) {
@@ -109,7 +109,7 @@ bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
 
 	name.resize(CHAN_NAME_LENGTH);
 
-	Channel_Type type = CHAN_TYPE_PUBLIC;
+	ChannelType type = ChannelType::Public;
 
 	if (nodeExists(node, "Type")) {
 		std::string type_name;
@@ -122,25 +122,26 @@ bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
 			return false;
 		}
 
-		if (constant < CHAN_TYPE_PUBLIC || constant == CHAN_TYPE_PRIVATE ||
-			constant > CHAN_TYPE_ALLY) {
+		if (constant < static_cast<int64>(ChannelType::Public) ||
+			constant == static_cast<int64>(ChannelType::Private) ||
+			constant > static_cast<int64>(ChannelType::Ally)) {
 			invalidWarning(node["Type"], "Channel type %s is not a supported type for Public.\n",
 						   type_name.c_str());
 			return false;
 		}
-		type = static_cast<Channel_Type>(constant);
+		type = static_cast<ChannelType>(constant);
 	}
 
 	Channel* channel = nullptr;
 
 	switch (type) {
-		case CHAN_TYPE_PUBLIC:
+		case ChannelType::Public:
 			channel = db_.getChannel(name).get();
 			break;
-		case CHAN_TYPE_MAP:
+		case ChannelType::Map:
 			channel = &db_.getMutChannelConfig().map_tmpl;
 			break;
-		case CHAN_TYPE_ALLY:
+		case ChannelType::Ally:
 			channel = &db_.getMutChannelConfig().ally_tmpl;
 			break;
 		default:
@@ -229,8 +230,8 @@ bool ChannelConfigLoader::parsePublicNode(const ryml::NodeRef& node) {
 		}
 	}
 
-	if (type == CHAN_TYPE_PUBLIC && !exists) {
-		db_.createChannel(channel);
+	if (type == ChannelType::Public && !exists) {
+		db_.createChannel(*channel);
 	}
 	return true;
 }

@@ -144,3 +144,6 @@ Thumbs.db
 
 # generated files
 generated
+
+# all makefiles
+Makefile

@@ -1,0 +1,62 @@
+
+COMMON_H = $(shell ls ../../common/*.hpp)
+COMMON_AR = ../../common/obj/common.a
+
+RA_INCLUDE = -I../../
+
+RAPIDYAML_OBJ = $(shell find ../../../3rdparty/rapidyaml/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
+RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
+RAPIDYAML_AR = ../../../3rdparty/rapidyaml/obj/ryml.a
+RAPIDYAML_H = $(shell find ../../../3rdparty/rapidyaml/ -type f -name "*.h*")
+RAPIDYAML_INCLUDE = -I../../../3rdparty/rapidyaml/src -I../../../3rdparty/rapidyaml/ext/c4core/src
+
+MAP_H = $(shell ls ../../map/*.hpp) \
+	$(shell ls ../../config/*.hpp) \
+	../../custom/battle_config_struct.inc
+
+CHANNELS_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+CHANNELS_DIR_OBJ = $(CHANNELS_OBJ:%=obj/%)
+CHANNELS_H = $(shell ls ../channels/*.hpp)
+
+
+@SET_MAKE@
+
+#####################################################################
+.PHONY : all channels clean help
+
+all: channels
+
+tools: $(TOOLS_DEPENDS)
+
+clean:
+	@echo "	CLEAN	channels"
+	@rm -rf *.o obj
+
+help:
+	@echo "possible targets are 'channels' 'all' 'clean' 'help'"
+	@echo "'channels' - channel objects"
+	@echo "'all'    - builds all above targets"
+	@echo "'clean'  - cleans builds and objects"
+	@echo "'help'   - outputs this message"
+
+#####################################################################
+
+# object directories
+obj:
+	@echo "	MKDIR	obj"
+	@-mkdir obj
+
+# libraries
+channels: obj $(CHANNELS_DIR_OBJ)
+	@echo "	Built channel objects"
+
+obj/%.o: %.cpp $(CHANNELS_H) $(MAP_H) $(COMMON_H) $(RAPIDYAML_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(RA_INCLUDE) $(RAPIDYAML_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+# missing object files
+$(COMMON_AR):
+	@$(MAKE) -C ../../common server
+
+$(RAPIDYAML_AR):
+	@$(MAKE) -C ../../../3rdparty/rapidyaml

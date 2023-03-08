@@ -5072,11 +5072,11 @@
 	export_constant(CARD0_PET);
 
 	/* Channel System */
-	export_constant(CHAN_TYPE_PUBLIC);
-	export_constant(CHAN_TYPE_PRIVATE);
-	export_constant(CHAN_TYPE_MAP);
-	export_constant(CHAN_TYPE_ALLY);
-
+	export_constant2("CHAN_TYPE_PUBLIC", ChannelType::Public);
+	export_constant2("CHAN_TYPE_PRIVATE", ChannelType::Private);
+	export_constant2("CHAN_TYPE_MAP", ChannelType::Map);
+	export_constant2("CHAN_TYPE_ALLY", ChannelType::Ally);
+	
 	/* Channel System Options */
 	export_constant(CHAN_OPT_SELFANNOUNCE);
 	export_constant(CHAN_OPT_JOINANNOUNCE);

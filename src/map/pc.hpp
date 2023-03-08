@@ -850,8 +850,7 @@ public:
 	int shadowform_id;
 
 	/* Channel System [Ind] */
-	struct Channel **channels;
-	unsigned char channel_count;
+	std::vector<std::shared_ptr<Channel>> channels;
 	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor;

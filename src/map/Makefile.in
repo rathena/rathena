@@ -14,13 +14,18 @@ RAPIDYAML_INCLUDE = -I../../3rdparty/rapidyaml/src -I../../3rdparty/rapidyaml/ex
 NLOHMANN_H = $(shell find ../../3rdparty/json/include/nlohmann/ -type f -name "*.hpp")
 NLOHMANN_INCLUDE = -I../../3rdparty/json/include
 
+CHANNELS_OBJ = $(shell ls channels/*.cpp | sed -e "s/\.cpp/\.o/g")
+CHANNELS_DIR_OBJ = $(CHANNELS_OBJ:%=channels/obj/%)
+CHANNELS_H = $(shell ls channels/*.hpp)
+
 MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
 MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%)
 MAP_H = $(shell ls ../map/*.hpp) \
 	$(shell ls ../config/*.hpp) \
-	../custom/battle_config_struct.inc
+	../custom/battle_config_struct.inc \
+	$(CHANNELS_H)
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -80,14 +85,14 @@ obj-gen:
 
 # executables
 
-map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
+map-server: obj $(MAP_DIR_OBJ) $(CHANNELS_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(CHANNELS_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
-map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
+map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(CHANNELS_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 	@echo "	LD	map-server-generator@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(CHANNELS_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
@@ -127,3 +132,6 @@ $(COMMON_AR):
 
 $(RAPIDYAML_AR):
 	@$(MAKE) -C ../../3rdparty/rapidyaml
+
+$(CHANNELS_DIR_OBJ):
+	@$(MAKE) -C channels all

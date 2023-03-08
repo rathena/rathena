@@ -10,6 +10,9 @@
 #define CHAN_NAME_LENGTH 20
 #define CHAN_MSG_LENGTH 150
 
+// forward declarations
+class map_session_data;
+
 struct s_chan_banentry {
 	uint32 char_id;
 	char char_name[NAME_LENGTH];
@@ -30,18 +33,19 @@ enum e_channel_options : uint16 {
 	CHAN_OPT_AUTOJOIN = 1 << 10,  // Player will be autojoined to the channel
 };
 
-enum Channel_Type : uint8 {
-	CHAN_TYPE_PUBLIC = 0,	// Config file made
-	CHAN_TYPE_PRIVATE = 1,	// User's channel
-	CHAN_TYPE_MAP = 2,		// Local map
-	CHAN_TYPE_ALLY = 3,		// Guild + its alliance
+enum class ChannelType : uint8 {
+	Public = 0,	  // Config file made
+	Private = 1,  // User's channel
+	Map = 2,	  // Local map
+	Ally = 3,	  // Guild + its alliance
 };
 
-struct Channel {
+class Channel {
+public:
 	char name[CHAN_NAME_LENGTH];   // Channel Name
 	char pass[CHAN_NAME_LENGTH];   // Password
 	char alias[CHAN_NAME_LENGTH];  // Channel display name
-	enum Channel_Type type;		   // Channel type @see enum Channel_Type
+	ChannelType type;		   // Channel type @see enum Channel_Type
 	unsigned long color;		   // Channel color in BGR
 	uint16 opt;					   // Channel options @see enum Channel_Opt
 	unsigned short msg_delay;	   // Chat delay in miliseconds
@@ -51,6 +55,17 @@ struct Channel {
 	std::vector<map_session_data *> users;	// List of users
 	std::vector<s_chan_banentry> banned;	// List of banned chars -> char_id
 	std::unordered_set<uint32> groups;	// Set of group ids that can join
+
+	/**
+	 * Make player leave the channel and cleanup association
+	 * - If no one remains in the chat, delete it
+	 * @param sd: Player data
+	 * @param flag: &1 Called from deletion process, do not call delete again
+	 * @return
+	 * 0: Success
+	 * -1: Invalid player or channel
+	 */
+	int clean(map_session_data *sd, int flag);
 };
 
 #endif // CHANNELS_CHANNEL_HPP

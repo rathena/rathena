@@ -17,29 +17,6 @@ struct guild;
 struct DBMap;
 
 
-struct Channel_Config {
-	unsigned long *colors;		///< List of available colors
-	char **colors_name;			///< Name list of available colors
-	unsigned char colors_count;	///< Number of available colors
-
-	/// Private channel default configs
-	struct {
-		uint16 opt;					 ///< Options @see enum Channel_Opt
-		unsigned long color;		 ///< Default color
-		unsigned int delay;			 ///< Message delay
-		unsigned short max_member;	 ///< Max member for each channel
-		unsigned allow : 1;			 ///< Allow private channel creation?
-	} private_channel;
-
-	struct Channel map_tmpl;  ///< Map channel default config
-	struct Channel ally_tmpl; ///< Alliance channel default config
-
-	bool closing; ///< Server is closing
-};
-extern struct Channel_Config channel_config;
-
-DBMap* channel_get_db(void);
-
 struct Channel* channel_create(struct Channel *tmp_chan);
 struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, unsigned int owner);
 int channel_delete(struct Channel *channel, bool force);
