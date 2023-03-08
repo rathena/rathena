@@ -13569,7 +13569,7 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						continue;
 					}
 
-					if (constant < W_FIST || constant > max) {
+					if (constant < W_FIST || constant >= max) {
 						this->invalidWarning(aspdNode["BaseASPD"], "Invalid weapon type %s specified for %s, skipping.\n", weapon.c_str(), job_name.c_str());
 						continue;
 					}

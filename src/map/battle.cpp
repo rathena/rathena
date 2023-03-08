@@ -10338,7 +10338,7 @@ static const struct _battle_data {
 
 	{ "feature.stylist",                    &battle_config.feature_stylist,                 1,      0,      1,              },
 
-#include "../custom/battle_config_init.inc"
+#include <custom/battle_config_init.inc>
 };
 
 /*==========================
