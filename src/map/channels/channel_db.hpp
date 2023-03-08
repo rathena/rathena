@@ -25,7 +25,18 @@ class ChannelDatabase {
 	std::shared_ptr<Channel> createChannelSimple(const std::string& name, const std::string& pass,
 												 ChannelType chantype, unsigned int owner);
 
-	int deleteChannel(const std::string& name, bool force);
+	/**
+	 * Delete a channel
+	 * - Checks if there is any user in channel and make them quit
+	 * - This requires a copy of the shared ptr so we don't have memory issues
+	 * @param channel: Channel
+	 * @param force: Forcefully remove channel
+	 * @return
+	 *   0: Success
+	 *  -1: Invalid channel
+	 *  -2: Can't delete now
+	 */
+	int deleteChannel(std::shared_ptr<Channel> channel, bool force);
 
    private:
 	ChannelConfig config_;

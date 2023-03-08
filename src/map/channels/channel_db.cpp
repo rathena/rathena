@@ -3,11 +3,15 @@
 
 #include <common/showmsg.hpp>
 #include <common/strlib.hpp>
+#include <common/utilities.hpp>
 
 #include "../battle.hpp"
+#include "../guild.hpp"
 
 #include "channel_db.hpp"
 #include "channel_config_loader.hpp"
+
+using namespace rathena;
 
 // create a new ChannelConfigLoader and call its load() method
 // this is the only place where ChannelConfigLoader is used
@@ -104,13 +108,7 @@ std::shared_ptr<Channel> ChannelDatabase::getChannel(const std::string &name) co
 	return it->second;
 }
 
-int ChannelDatabase::deleteChannel(const std::string &name, bool force) {
-	auto it = channels.find(name);
-	if (it == channels.end())
-		return -1;
-
-	auto channel = it->second;
-
+int ChannelDatabase::deleteChannel(std::shared_ptr<Channel> channel, bool force) {
 	if (channel->type == ChannelType::Public && !force && global_core->is_running())
 		return -1;
 
@@ -119,13 +117,33 @@ int ChannelDatabase::deleteChannel(const std::string &name, bool force) {
 	}
 
 	if (battle_config.etc_log)
-		ShowInfo("Delete channel %s alias %s type=%d, owner=%d/%d/%d\n", it->second->name,
-				 it->second->alias, it->second->type, it->second->char_id, it->second->m, it->second->gid);
+		ShowInfo("Delete channel %s alias %s type=%d, owner=%d/%d/%d\n", channel->name,
+				 channel->alias, channel->type, channel->char_id, channel->m, channel->gid);
 
-	channels.erase(it);
+	switch (channel->type) {
+		case ChannelType::Ally: {
+			struct guild *g = guild_search(channel->gid);
+			if (g)
+				g->channel = nullptr;
+			break;
+		}
+		case ChannelType::Map:
+			map_getmapdata(channel->m)->channel = nullptr;
+			break;
+		case ChannelType::Public:
+		case ChannelType::Private:
+			channels.erase(channel->name);
+			break;
+		default:
+			ShowError("deleteChannel: unknown channel type %d", channel->type);
+			return -1;
+			break;
+	}
+
 	return 0;
 }
 
 
 // I don't like having the global object here, maybe we should add this to MapServer in map.hpp
+// then we could use something like global_core->get_channel_db()
 std::unique_ptr<ChannelDatabase> channel_db;

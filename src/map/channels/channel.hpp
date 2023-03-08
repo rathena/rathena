@@ -1,6 +1,7 @@
 #ifndef CHANNELS_CHANNEL_HPP
 #define CHANNELS_CHANNEL_HPP
 
+#include <memory>
 #include <unordered_set>
 #include <vector>
 
@@ -40,7 +41,7 @@ enum class ChannelType : uint8 {
 	Ally = 3,	  // Guild + its alliance
 };
 
-class Channel {
+class Channel : public std::enable_shared_from_this<Channel> {
 public:
 	char name[CHAN_NAME_LENGTH];   // Channel Name
 	char pass[CHAN_NAME_LENGTH];   // Password
@@ -66,6 +67,36 @@ public:
 	 * -1: Invalid player or channel
 	 */
 	int clean(map_session_data *sd, int flag);
+
+	/**
+	 * Add player to the channel
+	 * @param sd: Player data
+	 * @return
+	 * 0: Success
+	 * -1: Invalid player or channel
+	 * -2: Channel is full
+	 * -3: Player is banned
+	 * -4: Player is already in the channel
+	 * -5: Player is not allowed to join
+	 */
+	int join(map_session_data *sd);
+
+	/**
+	 * Make a player join the map channel
+	 * - Create the map_channel if it does not exist
+	 * @param sd: Player data
+	 * @return
+	 *  -1: Invalid player
+	 *  -2: Player already in channel (channel_join)
+	 *  -3: Player banned (channel_join)
+	 */
+	int join_map(map_session_data *sd);
+
+	int hasPC(map_session_data *sd);
+
+	bool checkGroup(int group_id);
+
+	int isBanned(map_session_data *sd);
 };
 
 #endif // CHANNELS_CHANNEL_HPP
