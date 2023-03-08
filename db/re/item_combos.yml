@@ -102,7 +102,7 @@ Body:
           - Pike__
           - Hoplite_Helmet
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_STR
     Script: |
       bonus2 bAddClass,Class_All,3;
@@ -2701,7 +2701,7 @@ Body:
           - Bison_Horn
           - Buffalo_Horn
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_ASPD
       - Combo:
           - As_Bdy_Knight_Card
@@ -4387,7 +4387,7 @@ Body:
           - Shellfish_Card
           - King_Prawn_Hat
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_P_WATER
     Script: |
       bonus2 bAddEle,Ele_Water,10;
@@ -5305,11 +5305,11 @@ Body:
           - Noblesse_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
-      bonus bVariableCastRate,-5;
+      bonus bVariableCastrate,-5;
       bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r >= 27) {
-         bonus bVariableCastRate,-5;
+         bonus bVariableCastrate,-5;
          bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",10;
       }
@@ -5939,11 +5939,11 @@ Body:
           - Imperial_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
-      bonus bVariableCastRate,-5;
+      bonus bVariableCastrate,-5;
       bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r >= 27) {
-         bonus bVariableCastRate,-5;
+         bonus bVariableCastrate,-5;
          bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
       }
@@ -6489,11 +6489,11 @@ Body:
           - Grace_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
-      bonus bVariableCastRate,-5;
+      bonus bVariableCastrate,-5;
       bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
       if (.@r >= 27) {
-         bonus bVariableCastRate,-5;
+         bonus bVariableCastrate,-5;
          bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
       }
@@ -7055,7 +7055,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Broken_Chip_Green
       - Combo:
           - Sitting_Pope_Casual
@@ -7064,7 +7064,7 @@ Body:
       bonus bDelayrate,-15;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Broken_Chip_Red
       - Combo:
           - VesperHeadGear
@@ -7073,7 +7073,7 @@ Body:
       bonus bVariableCastrate,-20;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - A-Tolerance
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
@@ -7081,74 +7081,74 @@ Body:
       bonus2 bSubRace,RC_Formless,.@r;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - A-Hit
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bHit,(.@r/3)*5;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - A-Flee
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bFlee,(.@r/3)*5;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - A-Mdef
     Script: |
       bonus bMdef,20;
   - Combos:
       - Combo:
-          - _Riot_Chip
-          - S-Atk
+          - Riot_Chip_J
+          - Reactor_S_ATK
       - Combo:
-          - _Riot_Chip
-          - S-Matk
+          - Riot_Chip_J
+          - Reactor_S_MATK
       - Combo:
-          - _Riot_Chip
-          - S-Avoid
+          - Riot_Chip_J
+          - Reactor_S_Avoid
       - Combo:
-          - _Riot_Chip
-          - S-MaxHP
+          - Riot_Chip_J
+          - Reactor_S_MHP
       - Combo:
-          - _Riot_Chip
-          - S-Quick
+          - Riot_Chip_J
+          - Reactor_S_Quick
       - Combo:
-          - _Riot_Chip
-          - S-Cri
+          - Riot_Chip_J
+          - Reactor_S_CRI
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bAspdRate,(.@r/2);
   - Combos:
       - Combo:
-          - _Riot_Chip
-          - Z-Knockback
+          - Riot_Chip_J
+          - ReactorZ_Knockback
       - Combo:
-          - _Riot_Chip
-          - Z-Immortal
+          - Riot_Chip_J
+          - ReactorZ_Immortal
       - Combo:
-          - _Riot_Chip
-          - Z-Killgain
+          - Riot_Chip_J
+          - ReactorZ_Killgain
       - Combo:
-          - _Riot_Chip
-          - Z-Reincarnation
+          - Riot_Chip_J
+          - ReactorZ_Reincarnation
       - Combo:
-          - _Riot_Chip
-          - Z-NoDispell
+          - Riot_Chip_J
+          - ReactorZ_NoDispell
       - Combo:
-          - _Riot_Chip
-          - Z-Clairvoyance
+          - Riot_Chip_J
+          - ReactorZ_Clairvoyance
       - Combo:
-          - _Riot_Chip
-          - Z-Cast_Fixed
+          - Riot_Chip_J
+          - ReactorZ_CastFixed
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bMaxHPrate,(.@r/2);
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Accelerator_Chip
     Script: |
       bonus bAspdRate,10;
@@ -7158,115 +7158,115 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_All,30;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_P_FIRE
     Script: |
       bonus2 bAddEle,Ele_Fire,10;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_P_GROUND
     Script: |
       bonus2 bAddEle,Ele_Earth,10;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_P_WIND
     Script: |
       bonus2 bAddEle,Ele_Wind,10;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_T_FIRE
     Script: |
       bonus2 bSubEle,Ele_Fire,25;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_T_WATER
     Script: |
       bonus2 bSubEle,Ele_Water,25;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_T_GROUND
     Script: |
       bonus2 bSubEle,Ele_Earth,25;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_T_WIND
     Script: |
       bonus2 bSubEle,Ele_Wind,25;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_Cure_101
     Script: |
       bonus2 bHPRegenRate,1500,5000;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_Cure_102
     Script: |
       bonus2 bSPRegenRate,25,5000;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_Cure_201
     Script: |
       bonus bHPrecovRate,350;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_Cure_202
     Script: |
       bonus bSPrecovRate,50;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_INT
     Script: |
       bonus2 bMagicAddClass,Class_All,3;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_DEF
     Script: |
       bonus bDef,500;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_AVOI
     Script: |
       bonus bFlee2,2;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_ATK
     Script: |
       bonus bBaseAtk,15;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_MATK
     Script: |
       bonus bMatk,15;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_MHP
     Script: |
       bonus bMaxHP,7500;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_MSP
     Script: |
       bonus bMaxSP,150;
   - Combos:
       - Combo:
-          - _Riot_Chip
+          - Riot_Chip_J
           - Reactor_A_FROZ
     Script: |
       bonus bMaxHP,1000;
@@ -20680,7 +20680,7 @@ Body:
           - XM_Mystcase_Card_J
           - Happy_Balloon_J
     Script: |
-      if (readparam(bLUK) >= 77) {
+      if (readparam(bLuk) >= 77) {
          bonus2 bAddMonsterDropItem,22839,30;
       }
       /*Unknow Rate*/
@@ -21347,7 +21347,7 @@ Body:
           - Skull_Ring
           - Release_Of_Magic
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_SOUL_LINKER) {
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
          skill "MG_FIREWALL",10;
          bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
@@ -21363,7 +21363,7 @@ Body:
           - RingOfAdoramus
           - Release_Of_Magic
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_PRIEST) {
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
          bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
@@ -21378,7 +21378,7 @@ Body:
           - SkynetBlowRing
           - Hero
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_MONK) {
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
          bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200;
          autobonus3 "{ bonus bFlee2,100; }",50,3000,"SR_SKYNETBLOW";
       
@@ -21389,7 +21389,7 @@ Body:
           - Metal_Pick
           - Release_Of_Magic
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_BARD || eaclass()&EAJL_THIRD && BaseJob == JOB_DANCER) {
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
          bonus2 bSkillCooldown,"WM_METALICSOUND",-200;
       }
   - Combos:
@@ -21414,7 +21414,7 @@ Body:
           - Paracelsus_Glove
           - Dynast
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_ALCHEMIST) {
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
          bonus bNoWalkDelay;
          autobonus3 "{ bonus bPerfectHitAddRate,100; }",50,3000,"GN_CART_TORNADO";
          /*Unknow Rate*/
@@ -30069,7 +30069,7 @@ Body:
             bonus bDelayrate,-5;
             bonus2 bSkillAtk,"RA_AIMEDBOLT",30;
          }
-         if ((eaclass()&EAJL_THIRD && BaseJob == Job_Bard) || (eaclass()&EAJL_THIRD && BaseJob == Job_Dancer)) {
+         if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
             bonus2 bMagicAddRace,RC_All,10;
             bonus2 bSkillCooldown,"WM_METALICSOUND",-2000;
             bonus2 bSkillAtk,"WM_METALICSOUND",80;
@@ -34696,3 +34696,823 @@ Body:
       bonus2 bIgnoreMResRaceRate,RC_All,20;
       bonus2 bIgnoreMResRaceRate,RC_Player_Human,-20;
       bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-20;
+  - Combos:
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Str_Boots    # 22000
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Str_Boots_    # 22006
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (.@r>=9) {
+         if (readparam(bStr) >= 120) {
+            bonus bAtkRate,8;
+            bonus2 bAddSize,Size_All,8;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Agi_Boots    # 22002
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Agi_Boots_    # 22010
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (.@r>=9) {
+         if (readparam(bAgi) >= 120) {
+            bonus bAspdRate,4;
+            bonus bCritAtkRate,15;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Vit_Boots    # 22003
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Vit_Boots_    # 22007
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (.@r>=9) {
+         if (readparam(bVit) >= 120) {
+            bonus bMaxHPrate,8;
+            bonus bDelayrate,8;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Int_Boots    # 22001
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Int_Boots_    # 22009
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (.@r>=9) {
+         if (readparam(bInt) >= 120) {
+            bonus bMatkRate,8;
+            bonus2 bMagicAtkEle,Ele_All,8;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Dex_Boots    # 22004
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Dex_Boots_    # 22008
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (.@r>=9) {
+         if (readparam(bDex) >= 120) {
+            bonus bAtkRate,8;
+            bonus bLongAtkRate,5;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Luk_Boots    # 22005
+      - Combo:
+          - Anniversary_Ring_1TH    # 490147
+          - Temporal_Luk_Boots_    # 22011
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (.@r>=9) {
+         if (readparam(bDex) >= 120) {
+            bonus bCritAtkRate,10;
+            bonus bAspd,1;
+         }
+      }
+  - Combos:
+      - Combo:
+          - aegis_480262    # 480262
+          - aegis_490308    # 490308
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bMaxHPrate,.@r;
+      bonus bMaxSPrate,.@r;
+      bonus2 bSubEle,Ele_Neutral,(min(10,.@r));
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Procyon_Dagger_J    # 28784
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus2 bSkillAtk,"SP_SHA",25;
+         bonus2 bSkillAtk,"SP_SPA",25;
+         bonus2 bSkillAtk,"SP_SWHOO",25;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Phoenix_Crown_J    # 15824
+    Script: |      
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+         bonus bDelayrate,-3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Procyon_Robe_J    # 15448
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+         bonus bMatkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Procyon_Mantle_J    # 20984
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+         bonus bDelayrate,-2*.@r;
+  - Combos:
+      - Combo:
+          - Procyon_Robe_J    # 15448
+          - Procyon_Mantle_J    # 20984
+          - Procyon_Shoes_J    # 22242
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bSubEle,Ele_Water,50;
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus2 bSubEle,Ele_Earth,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Procyon_Shoes_J    # 22242
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+         bonus bDelayrate,-3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Procyon_Ring_J    # 32294
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus bMatkRate,15;
+         bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-500;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pollux_Book_J    # 28643
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+         bonus bAllStats,10;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Golden_Crown_J    # 15823
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pollux_Robe_J    # 15447
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+         bonus bAtkRate,3*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pollux_Mantle_J    # 20983
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+         bonus bWeaponAtkRate,.@r;
+  - Combos:
+      - Combo:
+          - Pollux_Robe_J    # 15447
+          - Pollux_Mantle_J    # 20983
+          - Pollux_Shoes_J    # 2400
+    Script: |
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus bPerfectHitAddRate,30;
+      bonus bNoSizeFix;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pollux_Shoes_J    # 2400
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+         bonus bPerfectHitAddRate,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pollux_Ring_J    # 32293
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bAtkRate,15;
+         bonus2 bSkillAtk,"SG_SUN_WARM",100;
+         bonus2 bSkillAtk,"SG_MOON_WARM",100;
+         bonus2 bSkillAtk,"SG_STAR_WARM",100;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Doram_Ele_Suit_J    # 15277
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (BaseJob == Job_Summoner) {
+         bonus bAtkRate,3*.@r;
+         bonus bMatkRate,3*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Doram_Ele_Cape_J    # 20917
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (BaseJob == Job_Summoner) {
+         bonus2 bSkillAtk,"SU_PICKYPECK",5*.@r;
+         bonus2 bSkillAtk,"SU_SCAROFTAROU",5*.@r;
+         bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",5*.@r;
+         bonus2 bSkillAtk,"SU_SVG_SPIRIT",5*.@r;
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",5*.@r;
+         bonus2 bSkillAtk,"SU_CN_METEOR",5*.@r;
+      }
+  - Combos:
+      - Combo:
+          - Doram_Ele_Suit_J    # 15277
+          - Doram_Ele_Cape_J    # 20917
+          - Doram_Ele_Shoes_J    # 22187
+    Script: |
+      bonus2 bHPRegenRate,1500,5000;
+      bonus2 bSPRegenRate,15,5000;
+      bonus bSpeedAddRate,25;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Doram_Ele_Shoes_J    # 22187
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      if (BaseJob == Job_Summoner) {
+         bonus bAtkRate,3*.@r;
+         bonus bMatkRate,3*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725 
+          - Clinging_Doram_1    # 19347
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (BaseJob == Job_Summoner)
+         bonus2 bSubClass,Class_Boss,2*.@r;
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Fresh_G_Necklace_J    # 28577
+    Script: |
+      if (BaseJob == Job_Summoner) {
+         bonus bAtkRate,15;
+         bonus2 bVariableCastrate,"SU_PICKYPECK",-50;
+         bonus2 bVariableCastrate,"SU_ARCLOUSEDASH",-50;
+         bonus2 bVariableCastrate,"SU_SCAROFTAROU",-50;
+         bonus2 bVariableCastrate,"SU_LUNATICCARROTBEAT",-50;
+         bonus2 bVariableCastrate,"SU_HISS",-50;
+         bonus2 bVariableCastrate,"SU_POWEROFFLOCK",-50;
+         bonus2 bVariableCastrate,"SU_SVG_SPIRIT",-50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Pretty_G_Necklace_J    # 28578
+    Script: |
+      if (BaseJob == Job_Summoner) {
+         bonus bDef,150;
+         bonus bMdef,15;
+         bonus2 bVariableCastrate,"SU_FRESHSHRIMP",-50;
+         bonus2 bVariableCastrate,"SU_BUNCHOFSHRIMP",-50;
+         bonus2 bVariableCastrate,"SU_TUNABELLY",-50;
+         bonus2 bVariableCastrate,"SU_TUNAPARTY",-50;
+         bonus2 bVariableCastrate,"SU_GROOMING",-50;
+         bonus2 bVariableCastrate,"SU_PURRING",-50;
+         bonus2 bVariableCastrate,"SU_SHRIMPARTY",-50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - Charm_G_Necklace_J    # 28579
+    Script: |
+      if (BaseJob == Job_Summoner) {
+         bonus bMatkRate,15;
+         bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-50;
+         bonus2 bVariableCastrate,"SU_SV_ROOTTWIST",-50;
+         bonus2 bVariableCastrate,"SU_CN_METEOR",-50;
+         bonus2 bVariableCastrate,"SU_CN_POWDERING",-50;
+         bonus2 bVariableCastrate,"SU_CHATTERING",-50;
+         bonus2 bVariableCastrate,"SU_MEOWMEOW",-50;
+         bonus2 bVariableCastrate,"SU_NYANGGRASS",-50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - ShiningTwigCharm_J    # 28589
+    Script: |
+      if (BaseJob == Job_Summoner) {
+         bonus bMatkRate,15;
+         bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-50;
+         bonus2 bVariableCastrate,"SU_SV_ROOTTWIST",-50;
+         bonus2 bVariableCastrate,"SU_CN_METEOR",-50;
+         bonus2 bVariableCastrate,"SU_CN_POWDERING",-50;
+         bonus2 bVariableCastrate,"SU_CHATTERING",-50;
+         bonus2 bVariableCastrate,"SU_MEOWMEOW",-50;
+         bonus2 bVariableCastrate,"SU_NYANGGRASS",-50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - FreshTunaCharm_J    # 28590
+    Script: |
+      if (BaseJob == Job_Summoner) {
+         bonus bDef,150;
+         bonus bMdef,15;
+         bonus2 bVariableCastrate,"SU_FRESHSHRIMP",-50;
+         bonus2 bVariableCastrate,"SU_BUNCHOFSHRIMP",-50;
+         bonus2 bVariableCastrate,"SU_TUNABELLY",-50;
+         bonus2 bVariableCastrate,"SU_TUNAPARTY",-50;
+         bonus2 bVariableCastrate,"SU_GROOMING",-50;
+         bonus2 bVariableCastrate,"SU_PURRING",-50;
+         bonus2 bVariableCastrate,"SU_SHRIMPARTY",-50;
+      }
+  - Combos:
+      - Combo:
+          - aegis_29725    # 29725
+          - PlumpyWormCharm_J    # 28591
+    Script: |
+      if (BaseJob == Job_Summoner) {
+         bonus bAtkRate,15;
+         bonus2 bVariableCastrate,"SU_PICKYPECK",-50;
+         bonus2 bVariableCastrate,"SU_ARCLOUSEDASH",-50;
+         bonus2 bVariableCastrate,"SU_SCAROFTAROU",-50;
+         bonus2 bVariableCastrate,"SU_LUNATICCARROTBEAT",-50;
+         bonus2 bVariableCastrate,"SU_HISS",-50;
+         bonus2 bVariableCastrate,"SU_POWEROFFLOCK",-50;
+         bonus2 bVariableCastrate,"SU_SVG_SPIRIT",-50;
+      }
+  - Combos:
+      - Combo:
+          - Toy_Ring    # 28596
+          - Meteor_Strike    # 16043
+    Script: |
+      bonus bBaseAtk,100;
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",50;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Gray_W_Suits    # 450177
+          - Gray_W_Manteau    # 480091
+          - Gray_W_Boots    # 470087
+      - Combo:
+          - aegis_400409    # 400409
+          - Gray_W_Robe    # 450178
+          - Gray_W_Muffler    # 480090
+          - Gray_W_Shoes    # 470088
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,20;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Gray_W_Pendant    # 490106
+      - Combo:
+          - aegis_400409    # 400409
+          - Gray_W_Ring    # 490107
+    Script: |
+      bonus bAtkRate,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Gray_W_Earing    # 490108
+      - Combo:
+          - aegis_400409    # 400409
+          - Gray_W_Necklace    # 490109
+    Script: |
+      bonus bMatkRate,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Str_1    # 310478
+    Script: |
+      bonus bStr,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Agi_1    # 310480
+    Script: |
+      bonus bAgi,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Vit_1    # 310482
+    Script: |
+      bonus bVit,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Int_1    # 310481
+    Script: |
+      bonus bInt,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Dex_1    # 310479
+    Script: |
+      bonus bDex,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_luk_1    # 310483
+    Script: |
+      bonus bLuk,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Str_2    # 310484
+    Script: |
+      bonus bPow,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Vit_2    # 310488
+    Script: |
+      bonus bSta,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Agi_2    # 310486
+    Script: |
+      bonus bWis,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Int_2    # 310487
+    Script: |
+      bonus bSpl,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Dex_2    # 310485
+    Script: |
+      bonus bCon,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_luk_2    # 310489
+    Script: |
+      bonus bCrt,15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Def_1    # 310496
+    Script: |
+      bonus bDef,300;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Mdef_1    # 310497
+    Script: |
+      bonus bMdef,30;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Speed_2    # 310571
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Speed_1    # 310567
+    Script: |
+      bonus bAspdRate,10;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Caster_1    # 310568
+    Script: |
+      bonus bVariableCastrate,-15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_S_Delay    # 310515
+    Script: |
+      bonus bDelayrate,-15;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Robust_1    # 310597
+    Script: |
+      bonus bBaseAtk,BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Robust_2    # 310598
+    Script: |
+      bonus bMatk,BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_War_2    # 310506
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,50;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Mag_2    # 310507
+    Script: |
+      bonus2 bIgnoreMdefRaceRate,RC_All,50;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_Caster_2    # 310572
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+  - Combos:
+      - Combo:
+          - aegis_400409    # 400409
+          - Wolf_Orb_F_Cast_1    # 310600
+    Script: |
+      bonus bFixedCastrate,-70;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb24    # 310105
+    Script: |
+      bonus2 bAddEle,Ele_Dark,50;
+      bonus2 bMagicAddEle,Ele_Dark,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_P_FIRE    # 4970
+    Script: |
+      bonus2 bAddEle,Ele_Fire,50;
+      bonus2 bMagicAddEle,Ele_Fire,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_P_GROUND    # 4972
+    Script: |
+      bonus2 bAddEle,Ele_Earth,50;
+      bonus2 bMagicAddEle,Ele_Earth,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb25    # 310106
+    Script: |
+      bonus2 bAddEle,Ele_Poison,50;
+      bonus2 bMagicAddEle,Ele_Poison,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb22    # 310103
+    Script: |
+      bonus2 bAddEle,Ele_Holy,50;
+      bonus2 bMagicAddEle,Ele_Holy,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb23    # 310104
+    Script: |
+      bonus2 bAddEle,Ele_Undead,50;
+      bonus2 bMagicAddEle,Ele_Undead,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_P_WATER    # 4971
+    Script: |
+      bonus2 bAddEle,Ele_Water,50;
+      bonus2 bMagicAddEle,Ele_Water,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_P_WIND    # 4973
+    Script: |
+      bonus2 bAddEle,Ele_Wind,50;
+      bonus2 bMagicAddEle,Ele_Wind,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb27    # 310108
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_Life    # 29543
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_Soul    # 29544
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb26    # 310107
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_M_Heal    # 29545
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_M_Soul    # 29546
+    Script: |
+      bonus bMdef,30;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb14    # 310095
+    Script: |
+      bonus2 bSubEle,Ele_Poison,15;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb12    # 310093
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb16    # 310097
+    Script: |
+      bonus2 bSubEle,Ele_Holy,15-(getskilllv("CR_TRUST")*15);
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb17    # 310098
+    Script: |
+      bonus2 bSubEle,Ele_Fire,15;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb11    # 310092
+    Script: |
+      bonus2 bSubEle,Ele_Earth,15;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb15    # 310096
+    Script: |
+      bonus2 bSubEle,Ele_Wind,15;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb13    # 310094
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,15;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_S_ATK    # 29170
+    Script: |
+      bonus2 bSubEle,Ele_Dark,25;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_S_Avoid    # 29172
+    Script: |
+      bonus2 bSubEle,Ele_Fire,25;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_S_CRI    # 29175
+    Script: |
+      bonus2 bSubEle,Ele_Undead,25;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb44    # 310125
+    Script: |
+      bonus bAgi,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb42    # 310123
+    Script: |
+      bonus bDex,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb45    # 310126
+    Script: |
+      bonus bLuk,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_S_MATK    # 29171
+    Script: |
+      bonus2 bSubEle,Ele_Wind,25;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_S_MHP    # 29173
+    Script: |
+      bonus2 bSubEle,Ele_Water,25;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb43    # 310124
+    Script: |
+      bonus bStr,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Reactor_S_Quick    # 29174
+    Script: |
+      bonus2 bSubEle,Ele_Earth,25;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb41    # 310122
+    Script: |
+      bonus bInt,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Automatic_Orb40    # 310121
+    Script: |
+      bonus bVit,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_L_AGI    # 29551
+    Script: |
+      bonus2 bSubEle,Ele_Fire,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_L_DEX    # 29549
+    Script: |
+      bonus2 bSubEle,Ele_Earth,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_L_LUK    # 29552
+    Script: |
+      bonus2 bSubEle,Ele_Undead,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_L_STR    # 29550
+    Script: |
+      bonus2 bSubEle,Ele_Dark,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_L_INT    # 29548
+    Script: |
+      bonus2 bSubEle,Ele_Wind,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - Improve_Orb_L_Vit    # 29547
+    Script: |
+      bonus2 bSubEle,Ele_Water,50;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - ReactorZ_Clairvoyance    # 29443
+      - Combo:
+          - aegis_311436    # 311436
+          - ReactorZ_Reincarnation    # 29441
+    Script: |
+      bonus bMaxHP,7500;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - ReactorZ_Immortal    # 29439
+      - Combo:
+          - aegis_311436    # 311436
+          - ReactorZ_Knockback    # 29438
+    Script: |
+      bonus bDef,500;
+  - Combos:
+      - Combo:
+          - aegis_311436    # 311436
+          - ReactorZ_NoDispell    # 29442
+    Script: |
+      bonus bVariableCastrate,-30;
+  - Combos:
+      - Combo:
+          - aegis_300387    # 300387
+          - Inteligence10    # 4719
+    Script: |
+      bonus2 bIgnoreMdefRaceRate,RC_All,100;
+  - Combos:
+      - Combo:
+          - aegis_300386    # 300386
+          - Strength10    # 4709
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,100;
