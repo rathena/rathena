@@ -1,12 +1,15 @@
 
 #include <memory>
 
+#include <common/core.hpp>
+#include <common/mmo.hpp>
 #include <common/showmsg.hpp>
 #include <common/strlib.hpp>
 #include <common/utilities.hpp>
 
 #include "../battle.hpp"
 #include "../guild.hpp"
+#include "../pc.hpp"
 
 #include "channel_db.hpp"
 #include "channel_config_loader.hpp"
@@ -113,7 +116,7 @@ int ChannelDatabase::deleteChannel(std::shared_ptr<Channel> channel, bool force)
 		return -1;
 
 	for (auto &sd : channel->users) {
-		channel->clean(sd, 1);
+		channel->leave(*sd, 1);
 	}
 
 	if (battle_config.etc_log)
@@ -143,6 +146,290 @@ int ChannelDatabase::deleteChannel(std::shared_ptr<Channel> channel, bool force)
 	return 0;
 }
 
+int ChannelDatabase::joinMap(map_session_data &sd) {
+	char output[CHAT_SIZE_MAX];
+
+	auto mapdata = map_getmapdata(sd.bl.m);
+	if (!mapdata)
+		return -1;
+
+	if (!mapdata->channel) {
+		mapdata->channel = createChannelSimple("", "", ChannelType::Map, sd.bl.m);
+	}
+
+	auto ret = mapdata->channel->join(sd);
+
+	if (ret != 0)
+		return ret;
+
+	if (mapdata->channel->opt & CHAN_OPT_SELFANNOUNCE) {
+		snprintf(output, sizeof(output), msg_txt(&sd, 1435), mapdata->channel->name, mapdata->name);
+		clif_messagecolor(&sd.bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+	}
+
+	return 0;
+}
+
+int ChannelDatabase::joinGuild(map_session_data &sd, int flag) {
+	if (sd.state.autotrade)
+		return -1;
+	
+	guild *g = sd.guild;
+
+	if (!g)
+		return -2;
+
+	if (!g->channel) {
+		// TODO(vstumpf): this requires #7612 to be merged
+		// g->channel = createChannelSimple("", "", ChannelType::Ally, g->guild_id);
+		g->channel->joinAlly(*g);
+	}
+
+	if (flag & 1) {
+		g->channel->join(sd);
+	}
+
+	if (flag & 2) {
+		for (int i = 0; i < MAX_GUILDALLIANCE; i++) {
+			guild_alliance &ga = g->alliance[i];
+			if (ga.guild_id && ga.opposition == 0) {
+				auto ag = guild_search(ga.guild_id);
+				if (ag && ag->channel) {
+					ag->channel->join(sd);
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+int ChannelDatabase::checkParameters(const char *name, const char *pass, int type) const {
+	if (type & 1) {
+		if (!name)
+			return -1;
+		auto len = strlen(name);
+		if (len < 3 || len > CHAN_NAME_LENGTH) {
+			return -2;
+		}
+	}
+	if (type & 2) {
+		if (strncmpi(name + 1, config_.map_tmpl.name, CHAN_NAME_LENGTH) == 0 ||
+			strncmpi(name + 1, config_.ally_tmpl.name, CHAN_NAME_LENGTH) == 0 ||
+			channels.find(name) != channels.end())
+			return -4;
+	}
+
+	if (type & 4) {
+		if (!pass)
+			return -3;
+		auto len = strlen(pass);
+		if (len < 3 || len > CHAN_NAME_LENGTH) {
+			return -3;
+		}
+	}
+	return 0;
+}
+
+/**
+ * This is a replacement for channel_name2channel
+ * This does NOT create a new channel, use the other functions for that
+*/
+std::shared_ptr<Channel> ChannelDatabase::findChannel(const std::string &name, map_session_data *sd) const {
+	if (checkParameters(name.c_str(), nullptr, 1) != 0)
+		return nullptr;
+	
+	if (sd && name == config_.map_tmpl.name) {
+		auto mapdata = map_getmapdata(sd->bl.m);
+		if (mapdata && mapdata->channel)
+			return mapdata->channel;
+	}
+
+	if (sd && name == config_.ally_tmpl.name) {
+		if (sd->guild && sd->guild->channel) {
+			// TODO(vstumpf): this requires #7612 to be merged, just return nullptr for now
+			// return sd->guild->channel;
+			return nullptr; 
+		}
+	}
+
+	return getChannel(name.substr(1));
+}
+
+int ChannelDatabase::displayInfo(map_session_data &sd, const char *options) {
+	if (!options)
+		return -1;
+
+	char output[CHAT_SIZE_MAX];
+	if (strcmpi(options, "colors") == 0) {
+		clif_displaymessage(sd.fd, msg_txt(&sd, 1444));
+		std::for_each(config_.colors.begin(), config_.colors.end(),
+					  [&sd, &output](const auto &pair) {
+						  snprintf(output, sizeof(output), msg_txt(&sd, 1445), pair.first.c_str());
+						  clif_displaymessage(sd.fd, output);
+					  });
+		return 0;
+	}
+
+	if (strcmpi(options, "mine") == 0) {
+		clif_displaymessage(sd.fd, msg_txt(&sd, 1475)); // -- My Channels --
+		if (sd.channels.empty()) {
+			clif_displaymessage(sd.fd, msg_txt(&sd, 1476)); // You have not joined any channels.
+			return 1;
+		}
+
+		std::for_each(sd.channels.begin(), sd.channels.end(),
+					  [&sd, &output](const auto &pair) {
+						  snprintf(output, sizeof(output), msg_txt(&sd, 1409), channel->name, channel->users.size());
+						  clif_displaymessage(sd.fd, output);
+					  });
+		return 0;
+	}
+
+	bool has_perm = pc_has_permission(&sd, PC_PERM_CHANNEL_ADMIN);
+	clif_displaymessage(sd.fd, msg_txt(&sd, 1410)); // -- Public Channels --
+	if (config_.map_tmpl.name[0]) {
+		auto map_channel = map_getmapdata(sd.bl.m)->channel;
+		if (map_channel) {
+			snprintf(output, sizeof(output), msg_txt(&sd, 1409), map_channel->name,
+					 map_channel->users.size());
+			clif_displaymessage(sd.fd, output);
+		}
+	}
+
+	if (config_.ally_tmpl.name[0] && sd.guild && sd.guild->channel) {
+		snprintf(output, sizeof(output), msg_txt(&sd, 1409), sd.guild->channel->name,
+				 sd.guild->channel->users.size());
+		clif_displaymessage(sd.fd, output);
+	}
+
+	std::for_each(channels.begin(), channels.end(),
+				  [&sd, &output, has_perm](const auto &pair) {
+					  auto channel = pair.second;
+					  if (channel->type == ChannelType::Public || has_perm) {
+						  snprintf(output, sizeof(output), msg_txt(&sd, 1409), channel->name,
+								   channel->users.size());
+						  clif_displaymessage(sd.fd, output);
+					  }
+				  });
+	return 0;
+}
+
+int ChannelDatabase::createChannelPC(map_session_data &sd, const std::string &name,
+									 const std::string &pass) {
+	char output[CHAT_SIZE_MAX];
+	auto res = checkParameters(name.c_str(), pass.c_str(), 1|2|4);
+	switch (res) {
+		case -1:
+			snprintf(output, sizeof(output),
+					 msg_txt(&sd, 1405));  // Channel name must start with '#'.
+			clif_displaymessage(sd.fd, output);
+			return -1;
+		case -2:
+			snprintf(output, sizeof(output), msg_txt(&sd, 1406),
+					 name.c_str());	 // Channel length must be between 3 and %d.
+			clif_displaymessage(sd.fd, output);
+			return -1;
+		case -3:
+			snprintf(output, sizeof(output), msg_txt(&sd, 1436),
+					 name.c_str());	 // Channel password can't be over %d characters.
+			clif_displaymessage(sd.fd, output);
+			return -1;
+		case -4:
+			snprintf(output, sizeof(output), msg_txt(&sd, 1407),
+					 name.c_str());	 // Channel '%s' is not available.
+			clif_displaymessage(sd.fd, output);
+			return -1;
+		default:
+			break;
+	}
+
+	// check succeeded
+	auto channel = createChannelSimple(name, pass, ChannelType::Private, sd.status.char_id);
+	channel->join(sd);
+	if (channel->opt & CHAN_OPT_SELFANNOUNCE) {
+		snprintf(output, sizeof(output), msg_txt(&sd, 1403), channel->name);
+		clif_displaymessage(sd.fd, output);
+	}
+	return 0;
+}
+
+int ChannelDatabase::deleteChannelPC(map_session_data& sd, const std::string& name) {
+	if (name.empty())
+		return 0;
+
+	if (!pc_has_permission(&sd, PC_PERM_CHANNEL_ADMIN))
+		return -1;
+
+	if (checkParameters(name.c_str(), nullptr, 1) != 0) {
+		clif_displaymessage(sd.fd, msg_txt(&sd, 1405));	 // Channel name must start with '#'.
+		return -1;
+	}
+
+	char output[CHAT_SIZE_MAX];
+	auto channel = findChannel(name, &sd);
+	if (!sd.hasChannel(channel)) {
+		safesnprintf(output, sizeof(output), msg_txt(&sd, 1425),
+					 name.c_str());	 // You're not part of the '%s' channel.
+		clif_displaymessage(sd.fd, output);
+		return -1;
+	}
+
+	deleteChannel(channel, false);
+	channel = nullptr;
+	safesnprintf(output, sizeof(output), msg_txt(&sd, 1448), name.c_str());
+	clif_displaymessage(sd.fd, output);
+	return 0;
+}
+
+int ChannelDatabase::leaveChannelPC(map_session_data& sd, const std::string& name) {
+	if (name.empty())
+		return 0;
+
+	if (checkParameters(name.c_str(), nullptr, 1) != 0) {
+		clif_displaymessage(sd.fd, msg_txt(&sd, 1405));	 // Channel name must start with '#'.
+		return -1;
+	}
+
+	char output[CHAT_SIZE_MAX];
+	auto channel = findChannel(name, &sd);
+	if (!sd.hasChannel(channel)) {
+		safesnprintf(output, sizeof(output), msg_txt(&sd, 1425),
+					 name.c_str());	 // You're not part of the '%s' channel.
+		clif_displaymessage(sd.fd, output);
+		return -1;
+	}
+
+	if (!(channel->opt & CHAN_OPT_CANLEAVE)) {
+		safesnprintf(output, sizeof(output), msg_txt(&sd, 726),
+					 name.c_str());	 // You can't leave the '%s' channel.
+		clif_displaymessage(sd.fd, output);
+		return -1;
+	}
+
+	if (!(global_core->get_status() == server_core::e_core_status::STOPPING) &&
+		(channel->opt & CHAN_OPT_LEAVEANNOUNCE)) {
+		safesnprintf(output, sizeof(output), msg_txt(&sd, 763),
+					 channel->alias, sd.status.name); // %s %s left.
+		clif_channel_msg(channel.get(), output, channel->color);
+	}
+
+	switch (channel->type) {
+		case ChannelType::Public:
+		case ChannelType::Private:
+			channel->leave(sd, 0);
+			break;
+		case ChannelType::Ally:
+			sd.quitChannels(1|2);
+			break;
+		case ChannelType::Map:
+			sd.quitChannels(4);
+			break;
+	}
+
+	safesnprintf(output, sizeof(output), msg_txt(&sd, 1426), channel->name); // You've left the '%s' channel.
+	clif_displaymessage(sd.fd, output);
+	return 0;
+}
 
 // I don't like having the global object here, maybe we should add this to MapServer in map.hpp
 // then we could use something like global_core->get_channel_db()

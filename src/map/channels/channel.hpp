@@ -13,6 +13,7 @@
 
 // forward declarations
 class map_session_data;
+struct guild;
 
 struct s_chan_banentry {
 	uint32 char_id;
@@ -66,7 +67,7 @@ public:
 	 * 0: Success
 	 * -1: Invalid player or channel
 	 */
-	int clean(map_session_data *sd, int flag);
+	int leave(map_session_data &sd, int flag);
 
 	/**
 	 * Add player to the channel
@@ -77,26 +78,63 @@ public:
 	 * -2: Channel is full
 	 * -3: Player is banned
 	 * -4: Player is already in the channel
-	 * -5: Player is not allowed to join
 	 */
-	int join(map_session_data *sd);
+	int join(map_session_data &sd);
 
 	/**
-	 * Make a player join the map channel
-	 * - Create the map_channel if it does not exist
+	 * Check if player is in a channel
 	 * @param sd: Player data
 	 * @return
-	 *  -1: Invalid player
-	 *  -2: Player already in channel (channel_join)
-	 *  -3: Player banned (channel_join)
+	 * -1: Invalid player or channel
+	 *  0: Player not in channel
+	 *  1: Player is in channel
 	 */
-	int join_map(map_session_data *sd);
+	int hasPC(map_session_data *sd) const;
 
-	int hasPC(map_session_data *sd);
+	bool checkGroup(int group_id) const;
 
-	bool checkGroup(int group_id);
+	/**
+	 * Check if player is banned from channel
+	 * @return
+	 * -1: Invalid player or channel
+	 *  0: Player not banned
+	 *  1: Player is banned
+	 */
+	int isBanned(map_session_data *sd) const;
 
-	int isBanned(map_session_data *sd);
+	/**
+	 * Make all ally members of a guild join this channel
+	 * - They only join if they are in their own guild's ally channel (if not they probably left it)
+	 * This is done when a guild channel is created; allies need to join the channel
+	 * @param g: Guild data
+	 * @return
+	 *   0: Success
+	 *  -1: Invalid guild or no channel for guild
+	 */
+	int joinAlly(struct guild &g);
+
+	/**
+	 * Format message from player to send to the channel
+	 * - Also truncate extra characters if message is too long
+	 * @param sd: Player data
+	 * @param msg: Message to send
+	 * @return
+	 *  0: Success
+	 * -1: Invalid player, channel, or message
+	 * -2: Delay message from last message
+	 */
+	int sendMsg(map_session_data &sd, const char *mes);
+
+	/**
+	 * Display some information to users in channel
+	 * @param sd: Player data
+	 * @param options:
+	 *   colors: Display available colors for channel system
+	 *   mine: List of players in channel and number of users
+	 *   void: List of public channel and map and guild and number of users
+	 * @return 0 on success or -1 on failure
+	 */
+	int displayInfo(map_session_data &sd, const char *options) const;
 };
 
 #endif // CHANNELS_CHANNEL_HPP

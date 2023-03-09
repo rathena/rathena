@@ -36,6 +36,7 @@
 #include "battleground.hpp"
 #include "buyingstore.hpp"  // struct s_buyingstore
 #include "channel.hpp"
+#include "channels/channel_db.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"
 #include "clan.hpp"
@@ -15606,6 +15607,46 @@ bool pc_macro_read_captcha_db_loadbmp(const std::string &filepath, std::shared_p
 	cd->image_size = static_cast<int16>(com_size);
 
 	return true;
+}
+
+int map_session_data::quitChannels(int type) {
+	if (type & (1|2) && guild && channel_db->getChannelConfig().ally_tmpl.name[0]) {
+		if (type & 1) {
+			guild->channel->leave(*this, 0);
+		}
+		if (type & 2) {
+			for (int i = 0; i < MAX_GUILDALLIANCE; i++) {
+				if (!guild->alliance[i].guild_id) {
+					continue;
+				}
+				auto ag = guild_search(guild->alliance[i].guild_id);
+				if (ag && ag->channel) {
+					ag->channel->leave(*this, 0);
+				}
+			}
+		}
+	}
+
+
+	if (type & 4 && channel_db->getChannelConfig().map_tmpl.name[0]) {
+		auto mapdata = map_getmapdata(bl.m);
+		if (mapdata)
+			mapdata->channel->leave(*this, 0);
+	}
+
+	if (type & 8) {
+		// we reverse iterate so we don't shift the channels when we leave them
+		std::for_each(channels.rbegin(), channels.rend(), [this](auto &pair) {
+			pair.first->leave(*this, 0);
+		});
+	}
+	return 0;
+}
+
+int map_session_data::hasChannel(std::shared_ptr<Channel> channel) const {
+	return std::find_if(channels.begin(), channels.end(), [&channel](auto &pair) {
+		return pair.first == channel;
+	}) != channels.end();
 }
 
 const std::string CaptchaDatabase::getDefaultLocation() {

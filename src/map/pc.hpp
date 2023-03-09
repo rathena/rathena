@@ -6,6 +6,7 @@
 
 #include <bitset>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include <common/cbasetypes.hpp>
@@ -850,11 +851,10 @@ public:
 	int shadowform_id;
 
 	/* Channel System [Ind] */
-	std::vector<std::shared_ptr<Channel>> channels;
+	std::vector<std::pair<std::shared_ptr<Channel>, t_tick>> channels;
 	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor;
-	t_tick *channel_tick;
 
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
@@ -935,6 +935,32 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
+
+   public:
+	/**
+	 * Make a player leave a type of channel
+	 * @param sd: Player data
+	 * @param type: Quit type:
+	 * 1 - Quit guild channel
+	 * 2 - Quit ally channel
+	 * 4 - Quit map channel
+	 * 8 - Quit all channels
+	 * @return
+	 *  0: Success
+	 * -1: Invalid player
+	 */
+	int quitChannels(int type);
+
+	/**
+	 * Check if player has channel in their channel list
+	 * @param sd: Player data
+	 * @param channel: Channel data
+	 * @return
+	 * -1: Invalid channel or player
+	 * -2: Player not found or not in channel
+	 * 1: Player does have channel
+	 */
+	int hasChannel(std::shared_ptr<Channel> channel) const;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table

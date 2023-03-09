@@ -820,7 +820,7 @@ struct map_data {
 	int instance_src_map;
 
 	/* rAthena Local Chat */
-	struct Channel *channel;
+	std::shared_ptr<Channel> channel;
 
 	/* ShowEvent Data Cache */
 	std::vector<int> qi_npc;
