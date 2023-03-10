@@ -35625,14 +35625,20 @@ Body:
           - Snake_G_Glory   # 312188
           - Snake_S_Def_10   # 312167
     Script: |
-      bonus2 bAddRace,RC_All,10;
       bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
   - Combos:
       - Combo:
           - Snake_G_Glory   # 312188
           - Snake_S_Atk_10   # 312177
     Script: |
       bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
   - Combos:
       - Combo:
           - Snake_G_Glory   # 312188
@@ -35685,19 +35691,365 @@ Body:
           - D_Glacier_Boots   # 470197
           - D_Glacier_Manteau   # 480283
     Script: |
+      .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
       bonus bDelayrate,-5;
       bonus bVariableCastrate,-5;
+      bonus bBaseAtk,2*.@sum;
+  - Combos:
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_T_Sword
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Lance
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_T_Axe
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Staff
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Katar
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Humma
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Bow
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Revolver
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Rifle
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Shotgun
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Gatling
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Launcher
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@g = getenchantgrade(EQI_HAND_R);
+      bonus bBaseAtk,10*(.@r/3);
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus bPAtk,6;
+         bonus bPow,5;
+         bonus bCon,5;
+         if (.@g >= ENCHANTGRADE_B) {
+            bonus bPAtk,5;
+            bonus bPow,5;
+            bonus bCon,5;
+            if (.@g >= ENCHANTGRADE_A) {
+               bonus bPAtk,4;
+               bonus bPow,5;
+               bonus bCon,5;
+               bonus2 bAddEle,Ele_All,20;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Sword
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_B_Sword
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_R_Knife
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_B_Knife
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Axe
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Spear
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Book
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Wand
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Foxtail
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Knuckle
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Violin
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Whip
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_Mace
+      - Combo:
+          - D_Glacier_Armor   # 450270
+          - D_Glacier_Boots   # 470197
+          - D_Glacier_Manteau   # 480283
+          - D_Glacier_M_Mace
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@g = getenchantgrade(EQI_HAND_R);
+      bonus bBaseAtk,10*(.@r/3);
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus bPAtk,6;
+         bonus bPow,5;
+         bonus bCon,5;
+         if (.@g >= ENCHANTGRADE_B) {
+            bonus bPAtk,5;
+            bonus bPow,5;
+            bonus bCon,5;
+            if (.@g >= ENCHANTGRADE_A) {
+               bonus bPAtk,4;
+               bonus bPow,5;
+               bonus bCon,5;
+            }
+         }
+      }
   - Combos:
       - Combo:
           - D_Glacier_Robe   # 450271
           - D_Glacier_Shoes   # 470198
           - D_Glacier_Muffler   # 480284
     Script: |
+      .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
       bonus2 bMagicAtkEle,Ele_All,5;
       bonus bDelayrate,-5;
       bonus bVariableCastrate,-5;
+      bonus bMatk,2*.@sum;
+  - Combos:
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_T_Sword
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Lance
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_T_Axe
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Staff
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Katar
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Humma
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Bow
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Revolver
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Rifle
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Shotgun
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Gatling
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Launcher
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@g = getenchantgrade(EQI_HAND_R);
+      bonus bMatk,10*(.@r/3);
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus bSMatk,6;
+         bonus bSpl,5;
+         bonus bCon,5;
+         if (.@g >= ENCHANTGRADE_B) {
+            bonus bSMatk,5;
+            bonus bSpl,5;
+            bonus bCon,5;
+            if (.@g >= ENCHANTGRADE_A) {
+               bonus bSMatk,4;
+               bonus bSpl,5;
+               bonus bCon,5;
+               bonus2 bMagicAddEle,Ele_All,20;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Sword
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_B_Sword
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_R_Knife
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_B_Knife
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Axe
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Spear
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Book
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Wand
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Foxtail
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Knuckle
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Violin
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Whip
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_Mace
+      - Combo:
+          - D_Glacier_Robe   # 450271
+          - D_Glacier_Shoes   # 470198
+          - D_Glacier_Muffler   # 480284
+          - D_Glacier_M_Mace
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@g = getenchantgrade(EQI_HAND_R);
+      bonus bMatk,10*(.@r/3);
+      if (.@g >= ENCHANTGRADE_C) {
+         bonus bSMatk,6;
+         bonus bSpl,5;
+         bonus bCon,5;
+         if (.@g >= ENCHANTGRADE_B) {
+            bonus bSMatk,5;
+            bonus bSpl,5;
+            bonus bCon,5;
+            if (.@g >= ENCHANTGRADE_A) {
+               bonus bSMatk,4;
+               bonus bSpl,5;
+               bonus bCon,5;
+            }
+         }
+      }
   - Combos:
       - Combo:
           - Glacier_Boots   # 470196

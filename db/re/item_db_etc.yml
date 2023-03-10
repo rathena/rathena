@@ -50647,8 +50647,13 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddRace,RC_Formless,12;
-      bonus2 bMagicAddRace,RC_Formless,12;
+      .@r = getrefine();
+      bonus2 bAddSize,Size_Small,15+5*(.@r/4);
+      bonus2 bMagicAddSize,Size_Small,15+5*(.@r/4);
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddSize,Size_Medium,12+4*(.@r/3);
+         bonus2 bMagicAddSize,Size_Medium,12+4*(.@r/3);
+      }
   - Id: 300456
     AegisName: aegis_300456
     Name: Icewind Egg Card    # !todo check english name
@@ -50664,7 +50669,10 @@ Body:
     Script: |
       bonus bDelayrate,-3;
       if (getrefine()>=10) {
-         bonus bDelayrate,-2-2;
+         bonus bDelayrate,-2;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+            bonus bDelayrate,-2;
+         }
       }
   - Id: 300457
     AegisName: aegis_300457
@@ -50677,11 +50685,14 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bVariableCastrate,-5-3;
+      bonus bVariableCastrate,-5;
       bonus bUseSPrate,7;
       bonus bAtkRate,5;
-      bonus bPow,3;
-      bonus bCon,3;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus bVariableCastrate,-3;
+         bonus bPow,3;
+         bonus bCon,3;
+      }
   - Id: 300458
     AegisName: aegis_300458
     Name: Icewind Card    # !todo check english name
@@ -50693,11 +50704,14 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bVariableCastrate,-5-3;
+      bonus bVariableCastrate,-5;
       bonus bUseSPrate,7;
       bonus bMatkRate,5;
-      bonus bSpl,3;
-      bonus bCon,3;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus bVariableCastrate,-3;
+         bonus bSpl,3;
+         bonus bCon,3;
+      }
   - Id: 300459
     AegisName: aegis_300459
     Name: Jormungand Church Bishop Card    # !todo check english name
@@ -50730,9 +50744,14 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,5;
       bonus bMatk,40;
       if (getrefine()>=10) {
-         bonus2 bMagicAtkEle,Ele_Ghost,5+10;
-         bonus2 bMagicAtkEle,Ele_Neutral,5+10;
-         bonus2 bMagicAtkEle,Ele_Dark,5+10;
+         bonus2 bMagicAtkEle,Ele_Ghost,5;
+         bonus2 bMagicAtkEle,Ele_Neutral,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus2 bMagicAtkEle,Ele_Ghost,10;
+            bonus2 bMagicAtkEle,Ele_Neutral,10;
+            bonus2 bMagicAtkEle,Ele_Dark,10;
+         }
       }
   - Id: 300461
     AegisName: aegis_300461
@@ -50748,7 +50767,10 @@ Body:
       bonus bShortAtkRate,5;
       bonus bBaseAtk,40;
       if (getrefine()>=10) {
-         bonus bShortAtkRate,5+10;
+         bonus bShortAtkRate,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus bShortAtkRate,10;
+         }
       }
   - Id: 300462
     AegisName: aegis_300462
@@ -50766,9 +50788,14 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,5;
       bonus bMatk,40;
       if (getrefine()>=10) {
-         bonus2 bMagicAtkEle,Ele_Earth,5+10;
-         bonus2 bMagicAtkEle,Ele_Fire,5+10;
-         bonus2 bMagicAtkEle,Ele_Wind,5+10;
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus2 bMagicAtkEle,Ele_Earth,10;
+            bonus2 bMagicAtkEle,Ele_Fire,10;
+            bonus2 bMagicAtkEle,Ele_Wind,10;
+         }
       }
   - Id: 300463
     AegisName: aegis_300463
@@ -50786,9 +50813,14 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,5;
       bonus bMatk,40;
       if (getrefine()>=10) {
-         bonus2 bMagicAtkEle,Ele_Poison,5+10;
-         bonus2 bMagicAtkEle,Ele_Holy,5+10;
-         bonus2 bMagicAtkEle,Ele_Water,5+10;
+         bonus2 bMagicAtkEle,Ele_Poison,5;
+         bonus2 bMagicAtkEle,Ele_Holy,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus2 bMagicAtkEle,Ele_Poison,10;
+            bonus2 bMagicAtkEle,Ele_Holy,10;
+            bonus2 bMagicAtkEle,Ele_Water,10;
+         }
       }
   - Id: 300464
     AegisName: aegis_300464
@@ -50830,6 +50862,9 @@ Body:
       bonus bDef,20*.@r;
       bonus bRes,5*.@r;
       if (.@r>=7) {
+         bonus2 bAddEle,Ele_Water,25;
+         bonus2 bAddEle,Ele_Wind,25;
+         bonus2 bAddEle,Ele_Earth,25;
          bonus2 bAddEle,Ele_Fire,25;
          if (.@r>=10) {
             bonus bLongAtkRate,10;
@@ -50850,7 +50885,10 @@ Body:
       bonus bLongAtkRate,5;
       bonus bBaseAtk,40;
       if (getrefine()>=10) {
-         bonus bLongAtkRate,5+10;
+         bonus bLongAtkRate,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus bLongAtkRate,10;
+         }
       }
   - Id: 300467
     AegisName: aegis_300467
@@ -50927,8 +50965,8 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddRace,RC_Demon,25+25;
-      bonus2 bAddRace,RC_Brute,25+25;
+      bonus2 bAddRace,RC_Demon,25;
+      bonus2 bAddRace,RC_Brute,25;
       bonus2 bAddEle,Ele_Water,25;
       bonus2 bAddEle,Ele_Dark,25;
       bonus bMaxHPrate,-20;
@@ -50945,9 +50983,12 @@ Body:
     Script: |
       bonus2 bMagicAddClass,Class_Boss,40;
       bonus bMaxHPrate,-15;
-      bonus bSMatk,15;
+      if (getrefine()>=12) {
+         bonus bSMatk,15;
+      }
       if (BaseLevel>=200) {
          bonus bSpl,15;
+      }
       if (readparam(bSpl)>=90) {
          bonus bMatkRate,15;
       }
@@ -50964,7 +51005,9 @@ Body:
     Script: |
       bonus bLongAtkRate,30*(readparam(bLuk)/20)+5*(getrefine()/3);
       bonus bCritical,-5*(readparam(bLuk)/20);
-      bonus2 bAddClass,Class_Boss,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus2 bAddClass,Class_Boss,10;
+      }
   - Id: 300474
     AegisName: aegis_300474
     Name: Sanctuary Cleaning Leader Card    # !todo check english name
@@ -50978,7 +51021,9 @@ Body:
     Script: |
       bonus bShortAtkRate,30*(readparam(bLuk)/20)+5*(getrefine()/3);
       bonus bCritical,-5*(readparam(bLuk)/20);
-      bonus2 bAddClass,Class_Boss,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus2 bAddClass,Class_Boss,10;
+      }
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -67111,10 +67156,21 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bPow,3;
       bonus bSta,3;
       if (.@r>=9) {
-         bonus bSta,1+2+(.@r/3);
+         bonus bPow,1;
+         bonus bSta,1;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPow,2;
+         bonus bSta,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPow,(.@r/3);
+            bonus bSta,(.@r/3);
+         }
       }
   - Id: 312059
     AegisName: Ice_C_Orb_Spl_W
@@ -67122,10 +67178,21 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bSpl,3;
       bonus bWis,3;
       if (.@r>=9) {
-         bonus bWis,1+2+(.@r/3);
+         bonus bSpl,1;
+         bonus bWis,1;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSpl,2;
+         bonus bWis,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bSpl,(.@r/3);
+            bonus bWis,(.@r/3);
+         }
       }
   - Id: 312060
     AegisName: Ice_C_Orb_Con_C
@@ -67133,10 +67200,21 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bCon,3;
       bonus bCrt,3;
       if (.@r>=9) {
-         bonus bCrt,1+2+(.@r/3);
+         bonus bCon,1;
+         bonus bCrt,1;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCon,2;
+         bonus bCrt,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCon,(.@r/3);
+            bonus bCrt,(.@r/3);
+         }
       }
   - Id: 312061
     AegisName: Ice_C_Orb_War
@@ -67186,13 +67264,20 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
       bonus bAtkRate,5;
       bonus bBaseAtk,75;
       if (.@r>=7) {
          bonus bShortAtkRate,5;
          if (.@r>=9) {
-            bonus bShortAtkRate,5+5+5;
+            bonus bShortAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
          }
       }
   - Id: 312065
@@ -67201,13 +67286,20 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
       bonus bAtkRate,5;
       bonus bBaseAtk,75;
       if (.@r>=7) {
          bonus bLongAtkRate,5;
          if (.@r>=9) {
-            bonus bLongAtkRate,5+5+5;
+            bonus bLongAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
          }
       }
   - Id: 312066
@@ -67216,12 +67308,19 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
       bonus bMatkRate,5;
       bonus bMatk,75;
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,5;
          if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,5;
          }
       }
@@ -67309,7 +67408,9 @@ Body:
       if (.@r>=7) {
          bonus bPerfectHitRate,8;
          if (.@r>=9) {
+            bonus bPerfectHitRate,8;
             if (.@r>=11) {
+               bonus bPerfectHitRate,8;
             }
          }
       }
@@ -67320,10 +67421,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bMagicAtkEle,Ele_All,-3;
+      bonus2 bSubSize,Size_All,3;
+      bonus2 bSubEle,Ele_All,3;
       if (.@r>=7) {
+         bonus2 bSubEle,Ele_All,7;
          if (.@r>=9) {
-            bonus2 bSubRace,RC_All,7;
+            bonus2 bSubSize,Size_All,7;
          }
       }
   - Id: 312073
@@ -67332,11 +67435,18 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
       bonus2 bMagicAtkEle,Ele_All,3;
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,3;
          if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         if (.@g>=ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,3;
          }
       }
@@ -67425,31 +67535,52 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       bonus bMaxHPrate,-5;
       bonus bMaxSPrate,-5;
       autobonus "{ bonus bStr,50; bonus bPow,15; bonus bSta,15; }",30,10000,BF_WEAPON;
-      bonus bLongAtkRate,5+5;
-      bonus bShortAtkRate,5+5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+         }
+      }
   - Id: 312080
     AegisName: Ice_C_Orb_Bu_Spl
     Name: Legendary Power (Spell Buster)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       bonus bMaxHPrate,-5;
       bonus bMaxSPrate,-5;
       autobonus "{ bonus bInt,50; bonus bWis,15; bonus bSpl,15; }",30,10000,BF_MAGIC;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+         }
+      }
   - Id: 312081
     AegisName: Ice_C_Orb_Fi_Con
     Name: Seolhwa Mystery (Firing Shot)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       bonus bMaxHPrate,-5;
       bonus bMaxSPrate,-5;
       autobonus "{ bonus bDex,50; bonus bCon,15; bonus bCrt,15; }",30,10000,BF_WEAPON;
-      bonus bLongAtkRate,5+5;
-      bonus bShortAtkRate,5+5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+         }
+      }
   - Id: 312082
     AegisName: Ice_C_Orb_Spd
     Name: Snow Power (Speed)    # !todo check english name
@@ -67535,11 +67666,14 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
+      bonus bAtkRate,3;
       bonus bMatkRate,3;
       if (.@r>=7) {
          bonus bMatk,20;
+         bonus bBaseAtk,20;
          if (.@r>=9) {
             bonus bMatk,10;
+            bonus bBaseAtk,10;
          }
       }
   - Id: 312092
@@ -67576,13 +67710,20 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
       bonus bDef,100;
       bonus bRes,50;
       if (.@r>=7) {
+         bonus2 bSubEle,Ele_All,5;
          if (.@r>=9) {
             bonus2 bSubSize,Size_All,5;
-            bonus bVariableCastrate,-5-5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bVariableCastrate,-5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bVariableCastrate,-5;
          }
       }
   - Id: 312095
@@ -67591,22 +67732,35 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@g = getenchantgrade();
       .@r = getrefine();
       bonus bSMatk,1;
       if (.@r>=7) {
          bonus2 bMagicAddEle,Ele_All,3;
          bonus2 bAddEle,Ele_All,3;
          if (.@r>=9) {
-            bonus2 bAddRace,RC_All,3;
-            bonus2 bMagicAddRace,RC_All,3;
+            bonus2 bAddSize,Size_All,3;
+            bonus2 bMagicAddSize,Size_All,3;
             if (.@r>=11) {
-               bonus2 bAddRace,RC_All,3;
                bonus2 bMagicAddRace,RC_All,3;
-               bonus2 bAddClass,Class_Normal,2;
-               bonus2 bMagicAddClass,Class_Normal,2;
-               bonus2 bAddClass,Class_Boss,2;
-               bonus2 bMagicAddClass,Class_Boss,2;
+               bonus2 bMagicAddRace,RC_Player_Human,-3;
+               bonus2 bMagicAddRace,RC_Player_Doram,-3;
+               bonus2 bAddRace,RC_All,3;
+               bonus2 bAddRace,RC_Player_Human,-3;
+               bonus2 bAddRace,RC_Player_Doram,-3;
             }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddClass,Class_Normal,2;
+         bonus2 bMagicAddClass,Class_Normal,2;
+         bonus2 bAddClass,Class_Boss,2;
+         bonus2 bMagicAddClass,Class_Boss,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddClass,Class_Normal,1;
+            bonus2 bMagicAddClass,Class_Normal,1;
+            bonus2 bAddClass,Class_Boss,1;
+            bonus2 bMagicAddClass,Class_Boss,1;
          }
       }
   - Id: 312096
@@ -67825,8 +67979,8 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bAddRace,RC_All,10;
-      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bMagicAddSize,Size_All,10;
   - Id: 312127
     AegisName: Snake_H_Def_1
     Name: Snake God's Poison (DEF) 1Lv    # !todo check english name
@@ -68261,8 +68415,12 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bAddRace,RC_All,10;
       bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
   - Id: 312189
     AegisName: M_Pow3
     Name: POW+3
