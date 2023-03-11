@@ -7630,6 +7630,30 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 		break;
 
+	case NPC_MOVE_COORDINATE:
+		{
+			uint8 dir = map_calc_dir(bl, src->x, src->y);
+
+			if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates with target. 
+				if (skill_check_unit_movepos(0, bl, src->x - dirx[dir], src->y - diry[dir], 1, 1)) {
+					clif_blown(bl);
+				} else {
+					if (sd)
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+					return 0;
+				}
+			} else {
+				int16 px = bl->x, py = bl->y;
+				if (skill_check_unit_movepos(0, bl, src->x, src->y, 1, 1) && skill_check_unit_movepos(0, src, px, py, 1, 1)) {
+					clif_blown(bl);
+					clif_blown(src);
+				}
+			}
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
+		}
+		break;
+
 	case PR_KYRIE:
 	case MER_KYRIE:
 	case SU_TUNAPARTY:
