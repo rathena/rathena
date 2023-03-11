@@ -17874,6 +17874,18 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 751
+    Name: NPC_ALL_STAT_DOWN
+    Description: Decrease All Stats
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 10000
+    Status: ALL_STAT_DOWN
   - Id: 745
     Name: NPC_FIREWALK
     Description: Fire Walk
