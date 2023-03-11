@@ -1873,7 +1873,6 @@
 	export_constant(SC_GOLDENE_TONE);
 	export_constant(SC_TEMPERING);
 	export_constant(SC_DAMAGE_HEAL);
-	export_constant(SC_IMMUNE_PROPERTY);
 	export_constant(SC_IMMUNE_PROPERTY_NOTHING);
 	export_constant(SC_IMMUNE_PROPERTY_WATER);
 	export_constant(SC_IMMUNE_PROPERTY_GROUND);
