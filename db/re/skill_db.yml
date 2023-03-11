@@ -17907,6 +17907,38 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 753  
+    Name: NPC_DAMAGE_HEAL
+    Description: Damage Heal
+    MaxLevel: 3
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Duration1: 30000
+    Status: DAMAGE_HEAL
+  - Id: 754
+    Name: NPC_IMMUNE_PROPERTY
+    Description: Property Immune
+    MaxLevel: 10 #Official max level is 5.
+    TargetType: Self #official is Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    #Range: #official skill has range
+    #  - Level: 1
+    #    Size: 5
+    #  - Level: 2
+    #    Size: 10
+    #  - Level: 3
+    #    Size: 15
+    #  - Level: 4
+    #    Size: 20
+    #  - Level: 5
+    #    Size: 25
+    Duration1: 30000
   - Id: 756
     Name: NPC_WIDEBLEEDING2
     Description: Wide Bleeding

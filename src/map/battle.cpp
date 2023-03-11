@@ -39,6 +39,8 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
 
 // Early declaration
 int battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only);
+int battle_get_magic_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag);
+int battle_get_misc_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag);
 
 /**
  * Returns the current/list skill used by the bl
@@ -1124,6 +1126,57 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		}
 		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT)
 			status_change_end(target, SC_KYRIE);
+	}
+
+	
+	if (sc) {
+		int element = 0;
+		if (flag & BF_WEAPON) {
+			struct status_data *sstatus = status_get_status_data(src);
+			if(sstatus->rhw.ele == ELE_NEUTRAL && sstatus->lhw.ele > sstatus->rhw.ele)
+				element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+			else {
+				element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_R, false);
+			}
+		} else if(flag & BF_MAGIC)
+			element = battle_get_magic_element(src, target, skill_id, skill_lv, d->miscflag);
+		else
+			element = battle_get_misc_element(src, target, skill_id, skill_lv, d->miscflag);
+		
+		//for(int i = SC_IMMUNE_PROPERTY_NOTHING; i <= SC_IMMUNE_PROPERTY_UNDEAD; i++) { suggestion for after all boss skill PRs are merged?
+		//	if (sc->getSCE(i) && element == i - 916)
+		//		damage = 0;
+		//}
+		if ((sc->getSCE(SC_IMMUNE_PROPERTY_NOTHING) && element == ELE_NEUTRAL)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_WATER) && element == ELE_WATER)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_GROUND) && element == ELE_EARTH)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_FIRE) && element == ELE_FIRE)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_WIND) && element == ELE_WIND)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_DARKNESS) && element == ELE_DARK)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_SAINT) && element == ELE_HOLY)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_POISON) && element == ELE_POISON)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_TELEKINESIS) && element == ELE_GHOST)
+		|| (sc->getSCE(SC_IMMUNE_PROPERTY_UNDEAD) && element == ELE_UNDEAD))
+			damage = 0;
+	
+		if (sc->getSCE(SC_DAMAGE_HEAL)) {
+			int dmg_heal_lv = sc->getSCE(SC_DAMAGE_HEAL)->val1;
+			int heal = static_cast<int>(damage);
+			if (damage > 0
+			&& ((flag & BF_WEAPON && dmg_heal_lv == 1)
+			|| (flag & BF_MAGIC && dmg_heal_lv == 2)
+			|| (flag & BF_MISC && dmg_heal_lv == 3))) {//Absorb MISC damage? Both WEAPON & MAGIC damage? Which is correct on level 3?
+				if(flag & BF_WEAPON) {
+					clif_specialeffect_value(target, EF_HEAL, heal, AREA);
+					clif_specialeffect_value(target, EF_GREEN_NUMBER, heal, AREA);
+				} else {
+					clif_specialeffect_value(target, 1143, heal, AREA);
+					clif_specialeffect_value(target, EF_GREEN_NUMBER, heal, AREA);
+				}
+				status_heal(target, damage, 0, 0);
+				damage = 0;
+			}
+		}
 	}
 
 	if ((sce = sc->getSCE(SC_P_ALTER)) && damage > 0) {
@@ -3275,6 +3328,112 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 	if (skill_id == CR_SHIELDBOOMERANG)
 		element = ELE_NEUTRAL;
 #endif
+
+	return element;
+}
+
+int battle_get_magic_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag) {
+	int element = skill_get_ele(skill_id, skill_lv);
+	map_session_data *sd = BL_CAST(BL_PC, src);
+	status_change *sc = status_get_sc(src);
+	struct status_data *sstatus = status_get_status_data(src);
+	
+	if (element == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
+		element = sstatus->rhw.ele;
+	} else if (element == ELE_ENDOWED) //Use status element
+		element = status_get_attack_sc_element(src,status_get_sc(src));
+	else if (element == ELE_RANDOM) //Use random element
+		element = rnd()%ELE_ALL;
+
+	switch(skill_id) {
+		case SS_ANKOKURYUUAKUMU:
+			if (mflag & SKILL_ALTDMG_FLAG)
+				element = ELE_FIRE;
+			break;
+		case SU_CN_METEOR:
+		case SH_HYUN_ROKS_BREEZE:
+		case SH_HYUN_ROK_CANNON:
+			if (sc && sc->count) {
+				if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_1))
+					element = ELE_WATER;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_2))
+					element = ELE_WIND;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_3))
+					element = ELE_EARTH;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_4))
+					element = ELE_FIRE;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_5))
+					element = ELE_DARK;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_6))
+					element = ELE_HOLY;
+			}
+			break;
+		case NPC_EARTHQUAKE:
+			element = ELE_NEUTRAL;
+			break;
+		case WL_HELLINFERNO:
+			if (mflag & 2) { // ELE_DARK
+				element = ELE_DARK;
+			}
+			break;
+		case WM_REVERBERATION:
+			if (sd)
+				element = sd->bonus.arrow_ele;
+			break;
+		case NPC_PSYCHIC_WAVE:
+		case SO_PSYCHIC_WAVE:
+			if( sc && sc->count ) {
+				if( sc->getSCE(SC_HEATER_OPTION) )
+					element = sc->getSCE(SC_HEATER_OPTION)->val3;
+				else if( sc->getSCE(SC_COOLER_OPTION) )
+					element = sc->getSCE(SC_COOLER_OPTION)->val3;
+				else if( sc->getSCE(SC_BLAST_OPTION) )
+					element = sc->getSCE(SC_BLAST_OPTION)->val3;
+				else if( sc->getSCE(SC_CURSED_SOIL_OPTION) )
+					element = sc->getSCE(SC_CURSED_SOIL_OPTION)->val3;
+				else if( sc->getSCE(SC_FLAMETECHNIC_OPTION) )
+					element = sc->getSCE(SC_FLAMETECHNIC_OPTION)->val3;
+				else if( sc->getSCE(SC_COLD_FORCE_OPTION) )
+					element = sc->getSCE(SC_COLD_FORCE_OPTION)->val3;
+				else if( sc->getSCE(SC_GRACE_BREEZE_OPTION) )
+					element = sc->getSCE(SC_GRACE_BREEZE_OPTION)->val3;
+				else if( sc->getSCE(SC_EARTH_CARE_OPTION) )
+					element = sc->getSCE(SC_EARTH_CARE_OPTION)->val3;
+				else if( sc->getSCE(SC_DEEP_POISONING_OPTION) )
+					element = sc->getSCE(SC_DEEP_POISONING_OPTION)->val3;
+			}
+			break;
+		case KO_KAIHOU:
+			if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
+				element = sd->spiritcharm_type;
+			break;
+		case AB_ADORAMUS:
+			if (sc && sc->getSCE(SC_ANCILLA))
+				element = ELE_NEUTRAL;
+			break;
+		case LG_RAYOFGENESIS:
+			if (sc && sc->getSCE(SC_INSPIRATION))
+				element = ELE_NEUTRAL;
+			break;
+		case TR_METALIC_FURY:
+		case TR_SOUNDBLEND:
+			if (sd)
+				element = sd->bonus.arrow_ele;
+			break;
+	}
+
+	return element;
+}
+
+int battle_get_misc_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag) {
+	map_session_data *sd = BL_CAST(BL_PC, src);
+	int element = skill_get_ele(skill_id, skill_lv);
+	
+	element = skill_get_ele(skill_id, skill_lv);
+	if (element == ELE_WEAPON || element == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
+		element = ELE_NEUTRAL;
+	else if (element == ELE_RANDOM) //Use random element
+		element = rnd()%ELE_ALL;
 
 	return element;
 }
@@ -6851,6 +7010,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	ad.dmotion = tstatus->dmotion;
 	ad.blewcount = skill_get_blewcount(skill_id, skill_lv);
 	ad.flag = BF_MAGIC|BF_SKILL;
+	ad.miscflag = mflag;
 	ad.dmg_lv = ATK_DEF;
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -6868,67 +7028,18 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	tsc = status_get_sc(target);
 
 	//Initialize variables that will be used afterwards
-	s_ele = skill_get_ele(skill_id, skill_lv);
-
-	if (s_ele == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
-		s_ele = sstatus->rhw.ele;
-		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
-			s_ele = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
-	} else if (s_ele == ELE_ENDOWED) //Use status element
-		s_ele = status_get_attack_sc_element(src,status_get_sc(src));
-	else if (s_ele == ELE_RANDOM) //Use random element
-		s_ele = rnd()%ELE_ALL;
+	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
 
 	switch(skill_id) {
-		case NPC_EARTHQUAKE:
-			s_ele = ELE_NEUTRAL;
-			break;
 		case WL_HELLINFERNO:
 			if (mflag & 2) { // ELE_DARK
-				s_ele = ELE_DARK;
 				ad.div_ = 3;
 			}
-			break;
-		case WM_REVERBERATION:
-			if (sd)
-				s_ele = sd->bonus.arrow_ele;
 			break;
 		case NPC_PSYCHIC_WAVE:
 		case SO_PSYCHIC_WAVE:
 			if (sd && (sd->weapontype1 == W_STAFF || sd->weapontype1 == W_2HSTAFF || sd->weapontype1 == W_BOOK))
 				ad.div_ = 2;
-			if( sc && sc->count ) {
-				if( sc->getSCE(SC_HEATER_OPTION) )
-					s_ele = sc->getSCE(SC_HEATER_OPTION)->val3;
-				else if( sc->getSCE(SC_COOLER_OPTION) )
-					s_ele = sc->getSCE(SC_COOLER_OPTION)->val3;
-				else if( sc->getSCE(SC_BLAST_OPTION) )
-					s_ele = sc->getSCE(SC_BLAST_OPTION)->val3;
-				else if( sc->getSCE(SC_CURSED_SOIL_OPTION) )
-					s_ele = sc->getSCE(SC_CURSED_SOIL_OPTION)->val3;
-				else if( sc->getSCE(SC_FLAMETECHNIC_OPTION) )
-					s_ele = sc->getSCE(SC_FLAMETECHNIC_OPTION)->val3;
-				else if( sc->getSCE(SC_COLD_FORCE_OPTION) )
-					s_ele = sc->getSCE(SC_COLD_FORCE_OPTION)->val3;
-				else if( sc->getSCE(SC_GRACE_BREEZE_OPTION) )
-					s_ele = sc->getSCE(SC_GRACE_BREEZE_OPTION)->val3;
-				else if( sc->getSCE(SC_EARTH_CARE_OPTION) )
-					s_ele = sc->getSCE(SC_EARTH_CARE_OPTION)->val3;
-				else if( sc->getSCE(SC_DEEP_POISONING_OPTION) )
-					s_ele = sc->getSCE(SC_DEEP_POISONING_OPTION)->val3;
-			}
-			break;
-		case KO_KAIHOU:
-			if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
-				s_ele = sd->spiritcharm_type;
-			break;
-		case AB_ADORAMUS:
-			if (sc && sc->getSCE(SC_ANCILLA))
-				s_ele = ELE_NEUTRAL;
-			break;
-		case LG_RAYOFGENESIS:
-			if (sc && sc->getSCE(SC_INSPIRATION))
-				s_ele = ELE_NEUTRAL;
 			break;
 		case AG_DESTRUCTIVE_HURRICANE:
 			if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 2)
@@ -6944,10 +7055,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			break;
 		case TR_METALIC_FURY:// Deals up to 5 additional hits. But what affects the number of hits? [Rytech]
 			ad.div_ = min(ad.div_ + mflag, 5); // Number of hits doesn't go above 5.
-			// Fall through and check arrow element
-		case TR_SOUNDBLEND:
-			if (sd)
-				s_ele = sd->bonus.arrow_ele;
 			break;
 	}
 
@@ -7990,6 +8097,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	md.blewcount = skill_get_blewcount(skill_id,skill_lv);
 	md.dmg_lv = ATK_DEF;
 	md.flag = BF_MISC|BF_SKILL;
+	md.miscflag = mflag;
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 	std::bitset<NK_MAX> nk;
@@ -8005,11 +8113,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.blewcount += battle_blewcount_bonus(sd, skill_id);
 	}
 
-	s_ele = skill_get_ele(skill_id, skill_lv);
-	if (s_ele == ELE_WEAPON || s_ele == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
-		s_ele = ELE_NEUTRAL;
-	else if (s_ele == ELE_RANDOM) //Use random element
-		s_ele = rnd()%ELE_ALL;
+	s_ele = battle_get_misc_element(src, target, skill_id, skill_lv, mflag);
 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
