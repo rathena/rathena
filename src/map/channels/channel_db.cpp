@@ -234,7 +234,7 @@ int ChannelDatabase::checkParameters(const char *name, const char *pass, int typ
  * This is a replacement for channel_name2channel
  * This does NOT create a new channel, use the other functions for that
 */
-std::shared_ptr<Channel> ChannelDatabase::findChannel(const std::string &name, map_session_data *sd) const {
+std::shared_ptr<Channel> ChannelDatabase::findChannel(const std::string &name, const map_session_data *sd) const {
 	if (checkParameters(name.c_str(), nullptr, 1) != 0)
 		return nullptr;
 	
@@ -277,11 +277,12 @@ int ChannelDatabase::displayInfo(map_session_data &sd, const char *options) {
 			return 1;
 		}
 
-		std::for_each(sd.channels.begin(), sd.channels.end(),
-					  [&sd, &output](const auto &pair) {
-						  snprintf(output, sizeof(output), msg_txt(&sd, 1409), channel->name, channel->users.size());
-						  clif_displaymessage(sd.fd, output);
-					  });
+		std::for_each(sd.channels.cbegin(), sd.channels.cend(), [&sd, &output](const auto &pair) {
+			const auto &channel = pair.second;
+			snprintf(output, sizeof(output), msg_txt(&sd, 1409), channel->name,
+					 channel->users.size());
+			clif_displaymessage(sd.fd, output);
+		});
 		return 0;
 	}
 
@@ -314,122 +315,6 @@ int ChannelDatabase::displayInfo(map_session_data &sd, const char *options) {
 	return 0;
 }
 
-int ChannelDatabase::createChannelPC(map_session_data &sd, const std::string &name,
-									 const std::string &pass) {
-	char output[CHAT_SIZE_MAX];
-	auto res = checkParameters(name.c_str(), pass.c_str(), 1|2|4);
-	switch (res) {
-		case -1:
-			snprintf(output, sizeof(output),
-					 msg_txt(&sd, 1405));  // Channel name must start with '#'.
-			clif_displaymessage(sd.fd, output);
-			return -1;
-		case -2:
-			snprintf(output, sizeof(output), msg_txt(&sd, 1406),
-					 name.c_str());	 // Channel length must be between 3 and %d.
-			clif_displaymessage(sd.fd, output);
-			return -1;
-		case -3:
-			snprintf(output, sizeof(output), msg_txt(&sd, 1436),
-					 name.c_str());	 // Channel password can't be over %d characters.
-			clif_displaymessage(sd.fd, output);
-			return -1;
-		case -4:
-			snprintf(output, sizeof(output), msg_txt(&sd, 1407),
-					 name.c_str());	 // Channel '%s' is not available.
-			clif_displaymessage(sd.fd, output);
-			return -1;
-		default:
-			break;
-	}
-
-	// check succeeded
-	auto channel = createChannelSimple(name, pass, ChannelType::Private, sd.status.char_id);
-	channel->join(sd);
-	if (channel->opt & CHAN_OPT_SELFANNOUNCE) {
-		snprintf(output, sizeof(output), msg_txt(&sd, 1403), channel->name);
-		clif_displaymessage(sd.fd, output);
-	}
-	return 0;
-}
-
-int ChannelDatabase::deleteChannelPC(map_session_data& sd, const std::string& name) {
-	if (name.empty())
-		return 0;
-
-	if (!pc_has_permission(&sd, PC_PERM_CHANNEL_ADMIN))
-		return -1;
-
-	if (checkParameters(name.c_str(), nullptr, 1) != 0) {
-		clif_displaymessage(sd.fd, msg_txt(&sd, 1405));	 // Channel name must start with '#'.
-		return -1;
-	}
-
-	char output[CHAT_SIZE_MAX];
-	auto channel = findChannel(name, &sd);
-	if (!sd.hasChannel(channel)) {
-		safesnprintf(output, sizeof(output), msg_txt(&sd, 1425),
-					 name.c_str());	 // You're not part of the '%s' channel.
-		clif_displaymessage(sd.fd, output);
-		return -1;
-	}
-
-	deleteChannel(channel, false);
-	channel = nullptr;
-	safesnprintf(output, sizeof(output), msg_txt(&sd, 1448), name.c_str());
-	clif_displaymessage(sd.fd, output);
-	return 0;
-}
-
-int ChannelDatabase::leaveChannelPC(map_session_data& sd, const std::string& name) {
-	if (name.empty())
-		return 0;
-
-	if (checkParameters(name.c_str(), nullptr, 1) != 0) {
-		clif_displaymessage(sd.fd, msg_txt(&sd, 1405));	 // Channel name must start with '#'.
-		return -1;
-	}
-
-	char output[CHAT_SIZE_MAX];
-	auto channel = findChannel(name, &sd);
-	if (!sd.hasChannel(channel)) {
-		safesnprintf(output, sizeof(output), msg_txt(&sd, 1425),
-					 name.c_str());	 // You're not part of the '%s' channel.
-		clif_displaymessage(sd.fd, output);
-		return -1;
-	}
-
-	if (!(channel->opt & CHAN_OPT_CANLEAVE)) {
-		safesnprintf(output, sizeof(output), msg_txt(&sd, 726),
-					 name.c_str());	 // You can't leave the '%s' channel.
-		clif_displaymessage(sd.fd, output);
-		return -1;
-	}
-
-	if (!(global_core->get_status() == server_core::e_core_status::STOPPING) &&
-		(channel->opt & CHAN_OPT_LEAVEANNOUNCE)) {
-		safesnprintf(output, sizeof(output), msg_txt(&sd, 763),
-					 channel->alias, sd.status.name); // %s %s left.
-		clif_channel_msg(channel.get(), output, channel->color);
-	}
-
-	switch (channel->type) {
-		case ChannelType::Public:
-		case ChannelType::Private:
-			channel->leave(sd, 0);
-			break;
-		case ChannelType::Ally:
-			sd.quitChannels(1|2);
-			break;
-		case ChannelType::Map:
-			sd.quitChannels(4);
-			break;
-	}
-
-	safesnprintf(output, sizeof(output), msg_txt(&sd, 1426), channel->name); // You've left the '%s' channel.
-	clif_displaymessage(sd.fd, output);
-	return 0;
-}
 
 // I don't like having the global object here, maybe we should add this to MapServer in map.hpp
 // then we could use something like global_core->get_channel_db()

@@ -51,7 +51,7 @@ struct map_data *map_getmapdata(int16 m);
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
 int map_msg_config_read(const char *cfgName,int lang);
-const char* map_msg_txt(map_session_data *sd,int msg_number);
+const char* map_msg_txt(const map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
 

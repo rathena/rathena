@@ -21,20 +21,11 @@ class ChannelDatabase {
 	ChannelConfig& getMutChannelConfig() { return config_; }
 
 	std::shared_ptr<Channel> getChannel(const std::string& name) const;
-	std::shared_ptr<Channel> findChannel(const std::string& name, map_session_data *sd) const;
+	std::shared_ptr<Channel> findChannel(const std::string& name, const map_session_data *sd) const;
 
 	std::shared_ptr<Channel> createChannel(const Channel& tmp);
 	std::shared_ptr<Channel> createChannelSimple(const std::string& name, const std::string& pass,
 												 ChannelType chantype, unsigned int owner);
-
-	/**
-	 * A player is attempting to create a channel
-	 * @param sd: Player data
-	 * @param chname: Channel name
-	 * @param chpass: Channel password
-	 * @return 0 on success or -1 on failure
-	 */
-	int createChannelPC(map_session_data& sd, const std::string& name, const std::string& pass);
 
 	/**
 	 * Delete a channel

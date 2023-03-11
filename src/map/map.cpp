@@ -4829,7 +4829,6 @@ static int cleanup_db_sub(DBKey key, DBData *data, va_list va)
  *------------------------------------------*/
 void MapServer::finalize(){
 	ShowStatus("Terminating...\n");
-	channel_config.closing = true;
 
 	//Ladies and babies first.
 	struct s_mapiterator* iter = mapit_getallusers();
@@ -5045,7 +5044,7 @@ int map_msg_config_read(const char *cfgName, int lang){
 	}
 	return 0;
 }
-const char* map_msg_txt(map_session_data *sd, int msg_number){
+const char* map_msg_txt(const map_session_data *sd, int msg_number){
 	struct msg_data *mdb;
 	uint8 lang = 0; //default
 	if(sd && sd->langtype) lang = sd->langtype;

@@ -14,7 +14,7 @@
 using namespace rathena;
 
 int Channel::leave(map_session_data &sd, int flag) {
-	if (this == sd.gcbind)
+	if (sd.gcbind == this)
 		sd.gcbind = nullptr;
 
 	auto it = std::find_if(sd.channels.begin(), sd.channels.end(), [this](auto &pair) {
@@ -25,6 +25,17 @@ int Channel::leave(map_session_data &sd, int flag) {
 		sd.channels.erase(it);
 	}
 
+	char output[CHAT_SIZE_MAX];
+	if (opt & CHAN_OPT_LEAVEANNOUNCE) {
+		safesnprintf(output, sizeof(output), msg_txt(&sd, 763), alias,
+					 sd.status.name);  // %s %s left.
+		clif_channel_msg(this, output, color);
+	}
+
+	safesnprintf(output, sizeof(output), msg_txt(&sd, 1426),
+				 name);	 // You've left the '%s' channel.
+	clif_displaymessage(sd.fd, output);
+
 	util::vector_erase_if_exists(users, &sd);
 	// TODO(vstumpf): Fix this
 	// if (users.size() == 0 && !(flag & 1))
@@ -33,7 +44,8 @@ int Channel::leave(map_session_data &sd, int flag) {
 	return 0;
 }
 
-int Channel::join(map_session_data &sd) {
+int Channel::join(map_session_data &sd, const char *password) {
+	char output[CHAT_SIZE_MAX];
 	if (sd.state.autotrade)
 		return 0; // fake success
 	
@@ -45,14 +57,12 @@ int Channel::join(map_session_data &sd) {
 	}
 
 	if (isBanned(&sd) == 1) {
-		char output[CHAT_SIZE_MAX];
 		sprintf(output, msg_txt(&sd, 1438), name); // You're currently banned from the '%s' channel.
 		clif_displaymessage(sd.fd, output);
 		return -3;
 	}
 	
 	if (type == ChannelType::Private && users.size() > channel_db->getChannelConfig().private_channel.max_member) {
-		char output[CHAT_SIZE_MAX];
 		sprintf(output, msg_txt(&sd, 760), name,
 				channel_db->getChannelConfig()
 					.private_channel
@@ -61,35 +71,30 @@ int Channel::join(map_session_data &sd) {
 		return -4;
 	}
 
-	sd.channels.emplace_back(shared_from_this(), 0);
+	if (pass[0] != '\0' && (!password || strcmp(password, pass) != 0)) {
+		sprintf(output, msg_txt(&sd, 759), name);  // You cannot join channel '%s'. Wrong password.
+		clif_displaymessage(sd.fd, output);
+		return -5;
+	}
 
-	if (sd.stealth) {
-		sd.stealth = false;
-	} else if (opt & CHAN_OPT_JOINANNOUNCE) {
-		char output[CHAT_SIZE_MAX];
+	sd.channels.emplace_back(shared_from_this(), 0);
+	users.push_back(&sd);
+
+	if (opt & CHAN_OPT_JOINANNOUNCE && !pc_has_permission(&sd, PC_PERM_CHANNEL_ADMIN)) {
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(&sd, 761), alias, sd.status.name);  // %s %s has joined the channel.
 		clif_channel_msg(this, output, color);
+	}
+
+	if (opt & CHAN_OPT_SELFANNOUNCE) {
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(&sd, 1403),
+					 alias);  // You're now in the '%s' channel.
+		clif_displaymessage(sd.fd, output);
 	}
 
 	// someone is cheating, we kindly disconnect the bastard
 	if (sd.channels.size() > 200) {
 		set_eof(sd.fd);
 	}
-
-
-	if (this == sd.gcbind)
-		sd.gcbind = nullptr;
-
-	if (std::find_if(sd.channels.begin(), sd.channels.end(), [this](auto &pair) {
-		return pair.first.get() == this;
-	}) != sd.channels.end())
-		return -1;
-
-	if (std::find(users.begin(), users.end(), &sd) != users.end())
-		return -1;
-
-	sd.channels.emplace_back(shared_from_this(), 0);
-	users.push_back(&sd);
 
 	return 0;
 }

@@ -853,7 +853,6 @@ public:
 	/* Channel System [Ind] */
 	std::vector<std::pair<std::shared_ptr<Channel>, t_tick>> channels;
 	struct Channel *gcbind;
-	bool stealth;
 	unsigned char fontcolor;
 
 	/* [Ind] */
@@ -960,7 +959,17 @@ public:
 	 * -2: Player not found or not in channel
 	 * 1: Player does have channel
 	 */
-	int hasChannel(std::shared_ptr<Channel> channel) const;
+	int hasChannel(const std::shared_ptr<Channel> &channel) const;
+
+	/**
+	 * A player is attempting to bind
+	 * - Makes default message output display to the channel
+	 * @param sd: Player data
+	 * @param chname: Channel name
+	 * @return 0 on success, -1 on incorrect channel name, or -2 channel doesn't exist or player
+	 * didn't join
+	 */
+	int bindChannel(const std::shared_ptr<Channel> &channel);
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1385,7 +1394,7 @@ bool pc_can_give_bounded_items(map_session_data *sd);
 bool pc_can_trade_item(map_session_data *sd, int index);
 
 bool pc_can_use_command(map_session_data *sd, const char *command, AtCommandType type);
-bool pc_has_permission( map_session_data* sd, e_pc_permission permission );
+bool pc_has_permission(const map_session_data* sd, e_pc_permission permission);
 bool pc_should_log_commands(map_session_data *sd);
 
 void pc_setrestartvalue(map_session_data *sd, char type);

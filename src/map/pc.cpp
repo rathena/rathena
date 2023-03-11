@@ -12856,7 +12856,7 @@ bool pc_can_use_command( map_session_data *sd, const char *command, AtCommandTyp
 	return sd->group->can_use_command( command, type );
 }
 
-bool pc_has_permission( map_session_data* sd, e_pc_permission permission ){
+bool pc_has_permission(const map_session_data* sd, e_pc_permission permission) {
 	return sd->permissions.test( permission );
 }
 
@@ -15643,10 +15643,23 @@ int map_session_data::quitChannels(int type) {
 	return 0;
 }
 
-int map_session_data::hasChannel(std::shared_ptr<Channel> channel) const {
+int map_session_data::hasChannel(const std::shared_ptr<Channel> &channel) const {
 	return std::find_if(channels.begin(), channels.end(), [&channel](auto &pair) {
 		return pair.first == channel;
 	}) != channels.end();
+}
+
+int map_session_data::bindChannel(const std::shared_ptr<Channel> &channel) {
+	if (!hasChannel(channel)) {
+		return -1;
+	}
+	
+	gcbind = channel.get();
+	char output[CHAT_SIZE_MAX];
+	sprintf(output, msg_txt(this, 1431),
+			channel->name);  // Your global chat is now binded to the '%s' channel.
+	clif_displaymessage(fd, output);
+	return 0;
 }
 
 const std::string CaptchaDatabase::getDefaultLocation() {

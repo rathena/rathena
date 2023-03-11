@@ -72,14 +72,16 @@ public:
 	/**
 	 * Add player to the channel
 	 * @param sd: Player data
+	 * @param pass: Password, or nullptr if no password
 	 * @return
 	 * 0: Success
 	 * -1: Invalid player or channel
 	 * -2: Channel is full
 	 * -3: Player is banned
 	 * -4: Player is already in the channel
+	 * -5: Wrong password
 	 */
-	int join(map_session_data &sd);
+	int join(map_session_data &sd, const char *pass = nullptr);
 
 	/**
 	 * Check if player is in a channel
