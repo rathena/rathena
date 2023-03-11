@@ -1128,7 +1128,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_KYRIE);
 	}
 
-	
 	if (sc) {
 		int element = 0;
 		if (flag & BF_WEAPON) {
