@@ -9352,6 +9352,7 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_LEECHESEND:
 		case SC_DPOISON:
 		case SC_DEATHHURT:
+		case SC_GRADUAL_GRAVITY:
 			return 1000;
 		case SC_BURNING:
 		case SC_PYREXIA:
@@ -10888,6 +10889,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if( (val4 = tick/(val2 * 1000)) < 1 )
 				val4 = 1;
 			tick_time = val2 * 1000; // [GodLesZ] tick time
+			break;
+		case SC_GRADUAL_GRAVITY:
+			val2 = 10 * val1;
+			val4 = tick / 1000;
+			tick_time = status_get_sc_interval(type);
 			break;
 		case SC_BOSSMAPINFO:
 			if( sd != NULL ) {
@@ -13957,6 +13963,18 @@ TIMER_FUNC(status_change_timer){
 				sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
 			status_heal(bl, 0, sp, 2);
 			sc_timer_next((sce->val2 * 1000) + tick);
+			return 0;
+		}
+		break;
+		
+	case SC_GRADUAL_GRAVITY:
+		if (--(sce->val4) >= 0) {
+			int hp = status->max_hp * sce->val2 / 100;
+
+			if (!status_charge(bl, hp, 0))
+				status_zap(bl, hp, 0);
+			if (sc->getSCE(type))
+				sc_timer_next(interval + tick);
 			return 0;
 		}
 		break;
