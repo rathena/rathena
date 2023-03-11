@@ -1134,9 +1134,8 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			struct status_data *sstatus = status_get_status_data(src);
 			if(sstatus->rhw.ele == ELE_NEUTRAL && sstatus->lhw.ele > sstatus->rhw.ele)
 				element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_L, false);
-			else {
+			else
 				element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-			}
 		} else if(flag & BF_MAGIC)
 			element = battle_get_magic_element(src, target, skill_id, skill_lv, d->miscflag);
 		else
