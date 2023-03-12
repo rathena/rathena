@@ -10892,8 +10892,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_GRADUAL_GRAVITY:
 			val2 = 10 * val1;
-			val4 = tick / 1000;
 			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_BOSSMAPINFO:
 			if( sd != NULL ) {
@@ -13968,14 +13968,10 @@ TIMER_FUNC(status_change_timer){
 		break;
 		
 	case SC_GRADUAL_GRAVITY:
-		if (--(sce->val4) >= 0) {
+		if (sce->val4 >= 0) {
 			int hp = status->max_hp * sce->val2 / 100;
 
-			if (!status_charge(bl, hp, 0))
-				status_zap(bl, hp, 0);
-			if (sc->getSCE(type))
-				sc_timer_next(interval + tick);
-			return 0;
+			status_zap(bl, hp, 0);
 		}
 		break;
 
