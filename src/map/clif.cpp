@@ -1007,6 +1007,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 {
 	struct block_list *tbl = ers_alloc(delay_clearunit_ers, struct block_list);
 	memcpy (tbl, bl, sizeof (struct block_list));
+	tbl->type = BL_NUL;
 	add_timer(tick, clif_clearunit_delayed_sub, (int)type, (intptr_t)tbl);
 }
 
