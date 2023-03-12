@@ -13969,9 +13969,7 @@ TIMER_FUNC(status_change_timer){
 		
 	case SC_GRADUAL_GRAVITY:
 		if (sce->val4 >= 0) {
-			int hp = status->max_hp * sce->val2 / 100;
-
-			status_zap(bl, hp, 0);
+			status_zap(bl, status->max_hp * sce->val2 / 100, 0);
 		}
 		break;
 
