@@ -7632,22 +7632,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_MOVE_COORDINATE:
 		{
-		    clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		    clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 
-		    int16 px = bl->x, py = bl->y;
-		    if (!skill_check_unit_movepos(0, bl, src->x, src->y, 1, 1)) {
-		        return 0;
-		    }
+			int16 px = bl->x, py = bl->y;
+			if (!skill_check_unit_movepos(0, bl, src->x, src->y, 1, 1)) {
+				return 0;
+			}
 
-		    clif_blown(bl);
+			clif_blown(bl);
 
-		    // If caster is not a boss, switch coordinates with the target
-		    if (status_get_class_(src) != CLASS_BOSS && !skill_check_unit_movepos(0, src, px, py, 1, 1)) {
-		        return 0;
-		    }
+			// If caster is not a boss, switch coordinates with the target
+			if (status_get_class_(src) != CLASS_BOSS) {
+				if (!skill_check_unit_movepos(0, src, px, py, 1, 1)) {
+					return 0;
+				}
 
-		    clif_blown(src);
+				clif_blown(src);
+			}
 		}
 		break;
 
