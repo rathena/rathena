@@ -17907,6 +17907,18 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 752
+    Name: NPC_GRADUAL_GRAVITY
+    Description: Increased Gravity
+    MaxLevel: 3
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 3000
+    Status: GRADUAL_GRAVITY
   - Id: 756
     Name: NPC_WIDEBLEEDING2
     Description: Wide Bleeding

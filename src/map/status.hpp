@@ -1263,6 +1263,8 @@ enum sc_type : int16 {
 	SC_GOLDENE_TONE,
 	SC_TEMPERING,
 
+	SC_GRADUAL_GRAVITY,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
