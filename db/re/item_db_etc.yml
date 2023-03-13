@@ -50617,6 +50617,413 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
+  - Id: 300454
+    AegisName: Ice_C_Orb_Hp
+    Name: Seolhwa Mystery (Stamina)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,2500;
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         if (.@r>=9) {
+            bonus bMaxHPrate,5;
+            if (.@r>=11) {
+               bonus bMaxHPrate,5;
+            }
+         }
+      }
+  - Id: 300455
+    AegisName: aegis_300455
+    Name: Kpopo Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_Small,15+5*(.@r/4);
+      bonus2 bMagicAddSize,Size_Small,15+5*(.@r/4);
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddSize,Size_Medium,12+4*(.@r/3);
+         bonus2 bMagicAddSize,Size_Medium,12+4*(.@r/3);
+      }
+  - Id: 300456
+    AegisName: aegis_300456
+    Name: Icewind Egg Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bDelayrate,-3;
+      if (getrefine()>=10) {
+         bonus bDelayrate,-2;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+            bonus bDelayrate,-2;
+         }
+      }
+  - Id: 300457
+    AegisName: aegis_300457
+    Name: Gray Icewind Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bUseSPrate,7;
+      bonus bAtkRate,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus bVariableCastrate,-3;
+         bonus bPow,3;
+         bonus bCon,3;
+      }
+  - Id: 300458
+    AegisName: aegis_300458
+    Name: Icewind Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bUseSPrate,7;
+      bonus bMatkRate,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus bVariableCastrate,-3;
+         bonus bSpl,3;
+         bonus bCon,3;
+      }
+  - Id: 300459
+    AegisName: aegis_300459
+    Name: Jormungand Church Bishop Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,2;
+      bonus bSMatk,2;
+      bonus bVariableCastrate,-3;
+  - Id: 300460
+    AegisName: aegis_300460
+    Name: Jormungand Guardian Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Ghost,5;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+      bonus bMatk,40;
+      if (getrefine()>=10) {
+         bonus2 bMagicAtkEle,Ele_Ghost,5;
+         bonus2 bMagicAtkEle,Ele_Neutral,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus2 bMagicAtkEle,Ele_Ghost,10;
+            bonus2 bMagicAtkEle,Ele_Neutral,10;
+            bonus2 bMagicAtkEle,Ele_Dark,10;
+         }
+      }
+  - Id: 300461
+    AegisName: aegis_300461
+    Name: Suspicious Irwin Soldier Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,5;
+      bonus bBaseAtk,40;
+      if (getrefine()>=10) {
+         bonus bShortAtkRate,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus bShortAtkRate,10;
+         }
+      }
+  - Id: 300462
+    AegisName: aegis_300462
+    Name: Greater Legan Shaman Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus bMatk,40;
+      if (getrefine()>=10) {
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus2 bMagicAtkEle,Ele_Earth,10;
+            bonus2 bMagicAtkEle,Ele_Fire,10;
+            bonus2 bMagicAtkEle,Ele_Wind,10;
+         }
+      }
+  - Id: 300463
+    AegisName: aegis_300463
+    Name: Greater Legan Healer Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,5;
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus bMatk,40;
+      if (getrefine()>=10) {
+         bonus2 bMagicAtkEle,Ele_Poison,5;
+         bonus2 bMagicAtkEle,Ele_Holy,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus2 bMagicAtkEle,Ele_Poison,10;
+            bonus2 bMagicAtkEle,Ele_Holy,10;
+            bonus2 bMagicAtkEle,Ele_Water,10;
+         }
+      }
+  - Id: 300464
+    AegisName: aegis_300464
+    Name: Jormungand Cult Shaman Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,25;
+      bonus2 bMagicAtkEle,Ele_Holy,25;
+      bonus2 bMagicAtkEle,Ele_Water,25;
+      if (readparam(bInt)>=90) {
+         bonus bUseSPrate,7;
+      }
+  - Id: 300465
+    AegisName: aegis_300465
+    Name: Jormungandr Shrine Guardian Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bStr,10;
+      bonus bVit,15;
+      bonus bLuk,-25;
+      bonus2 bSubSize,Size_All,20;
+      bonus2 bMagicAtkEle,Ele_Poison,-25;
+      bonus2 bMagicAtkEle,Ele_Ghost,-25;
+      bonus2 bMagicAtkEle,Ele_Holy,-25;
+      bonus2 bMagicAtkEle,Ele_Dark,-25;
+      bonus bDef,20*.@r;
+      bonus bRes,5*.@r;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_Water,25;
+         bonus2 bAddEle,Ele_Wind,25;
+         bonus2 bAddEle,Ele_Earth,25;
+         bonus2 bAddEle,Ele_Fire,25;
+         if (.@r>=10) {
+            bonus bLongAtkRate,10;
+            bonus bShortAtkRate,10;
+         }
+      }
+  - Id: 300466
+    AegisName: aegis_300466
+    Name: Jormungandr Sanctuary Scavenger Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,5;
+      bonus bBaseAtk,40;
+      if (getrefine()>=10) {
+         bonus bLongAtkRate,5;
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+            bonus bLongAtkRate,10;
+         }
+      }
+  - Id: 300467
+    AegisName: aegis_300467
+    Name: Angel Snail Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,15;
+      if (readparam(bLuk)>=90) {
+         bonus bCritical,-15;
+      }
+  - Id: 300468
+    AegisName: aegis_300468
+    Name: Snow Rabbit Snail Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,15;
+      if (readparam(bLuk)>=90) {
+         bonus bCritical,-15;
+      }
+  - Id: 300469
+    AegisName: aegis_300469
+    Name: Melibe Snail Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,25;
+      bonus2 bMagicAtkEle,Ele_Fire,25;
+      bonus2 bMagicAtkEle,Ele_Wind,25;
+      if (readparam(bInt)>=90) {
+         bonus bUseSPrate,7;
+      }
+  - Id: 300470
+    AegisName: aegis_300470
+    Name: Worm Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Ghost,25;
+      bonus2 bMagicAtkEle,Ele_Neutral,25;
+      bonus2 bMagicAtkEle,Ele_Dark,25;
+      if (readparam(bInt)>=90) {
+         bonus bUseSPrate,7;
+      }
+  - Id: 300471
+    AegisName: aegis_300471
+    Name: Fallen Angel Snail Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Demon,25;
+      bonus2 bAddRace,RC_Brute,25;
+      bonus2 bAddEle,Ele_Water,25;
+      bonus2 bAddEle,Ele_Dark,25;
+      bonus bMaxHPrate,-20;
+  - Id: 300472
+    AegisName: aegis_300472
+    Name: Ultimate Rasgand Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,40;
+      bonus bMaxHPrate,-15;
+      if (getrefine()>=12) {
+         bonus bSMatk,15;
+      }
+      if (BaseLevel>=200) {
+         bonus bSpl,15;
+      }
+      if (readparam(bSpl)>=90) {
+         bonus bMatkRate,15;
+      }
+  - Id: 300473
+    AegisName: aegis_300473
+    Name: Blizzard Angel Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,30*(readparam(bLuk)/20)+5*(getrefine()/3);
+      bonus bCritical,-5*(readparam(bLuk)/20);
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus2 bAddClass,Class_Boss,10;
+      }
+  - Id: 300474
+    AegisName: aegis_300474
+    Name: Sanctuary Cleaning Leader Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,30*(readparam(bLuk)/20)+5*(getrefine()/3);
+      bonus bCritical,-5*(readparam(bLuk)/20);
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         bonus2 bAddClass,Class_Boss,10;
+      }
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -66649,6 +67056,1371 @@ Body:
     Name: Evil Spell
     Type: Card
     SubType: Enchant
+  - Id: 312050
+    AegisName: Ice_C_Orb_Str
+    Name: Legendary Power (STR)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bStr,5;
+      if (readparam(bStr)>=120) {
+         bonus bStr,5;
+      }
+  - Id: 312051
+    AegisName: Ice_C_Orb_Dex
+    Name: Snowflake Mystery (DEX)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDex,5;
+      if (readparam(bDex)>=120) {
+         bonus bDex,5;
+      }
+  - Id: 312052
+    AegisName: Ice_C_Orb_Agi
+    Name: Snow Story (AGI)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAgi,5;
+      if (readparam(bAgi)>=120) {
+         bonus bAgi,5;
+      }
+  - Id: 312053
+    AegisName: Ice_C_Orb_Int
+    Name: Legendary Power (INT)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bInt,5;
+      if (readparam(bInt)>=120) {
+         bonus bInt,5;
+      }
+  - Id: 312054
+    AegisName: Ice_C_Orb_Vit
+    Name: Snowflake Mystery (VIT)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVit,5;
+      if (readparam(bVit)>=120) {
+         bonus bVit,5;
+      }
+  - Id: 312055
+    AegisName: Ice_C_Orb_Luk
+    Name: Legendary Power (LUK)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLuk,5;
+      if (readparam(bLuk)>=120) {
+         bonus bLuk,5;
+      }
+  - Id: 312056
+    AegisName: Ice_C_Orb_Def
+    Name: Seolhwa Mystery (Physical Defense)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,250;
+      bonus bRes,50;
+      if (.@r>=7) {
+         bonus bDef,100;
+         bonus bRes,15;
+         if (.@r>=9) {
+            bonus bDef,100;
+            bonus bRes,15;
+         }
+      }
+  - Id: 312057
+    AegisName: Ice_C_Orb_Mdef
+    Name: Snowflake Mystery (Magical Defense)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,25;
+      bonus bMRes,25;
+      if (.@r>=7) {
+         bonus bMdef,10;
+         bonus bMRes,5;
+         if (.@r>=9) {
+            bonus bMdef,15;
+            bonus bMRes,10;
+         }
+      }
+  - Id: 312058
+    AegisName: Ice_C_Orb_Pow_S
+    Name: Snow Power (POW&STA)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPow,3;
+      bonus bSta,3;
+      if (.@r>=9) {
+         bonus bPow,1;
+         bonus bSta,1;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPow,2;
+         bonus bSta,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPow,(.@r/3);
+            bonus bSta,(.@r/3);
+         }
+      }
+  - Id: 312059
+    AegisName: Ice_C_Orb_Spl_W
+    Name: Snow Power (SPL&WIS)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSpl,3;
+      bonus bWis,3;
+      if (.@r>=9) {
+         bonus bSpl,1;
+         bonus bWis,1;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSpl,2;
+         bonus bWis,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bSpl,(.@r/3);
+            bonus bWis,(.@r/3);
+         }
+      }
+  - Id: 312060
+    AegisName: Ice_C_Orb_Con_C
+    Name: Snowflake Mystery (CON&CRT)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCon,3;
+      bonus bCrt,3;
+      if (.@r>=9) {
+         bonus bCon,1;
+         bonus bCrt,1;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCon,2;
+         bonus bCrt,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCon,(.@r/3);
+            bonus bCrt,(.@r/3);
+         }
+      }
+  - Id: 312061
+    AegisName: Ice_C_Orb_War
+    Name: Seolhwa Mystery (Warrior)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         bonus bShortAtkRate,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,7;
+         }
+      }
+  - Id: 312062
+    AegisName: Ice_C_Orb_Ran
+    Name: Seolhwa Mystery (Shooter)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+         if (.@r>=9) {
+            bonus bLongAtkRate,7;
+         }
+      }
+  - Id: 312063
+    AegisName: Ice_C_Orb_Mag
+    Name: Legendary Power (Mage)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,50;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,7;
+         }
+      }
+  - Id: 312064
+    AegisName: Ice_C_Orb_War2
+    Name: Seolhwa Mystery (Berserker)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bBaseAtk,75;
+      if (.@r>=7) {
+         bonus bShortAtkRate,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
+         }
+      }
+  - Id: 312065
+    AegisName: Ice_C_Orb_Ran2
+    Name: Seolhwa Mystery (Marksman)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bBaseAtk,75;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+         if (.@r>=9) {
+            bonus bLongAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+         }
+      }
+  - Id: 312066
+    AegisName: Ice_C_Orb_Mag2
+    Name: Legendary Power (Great Mage)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,75;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+         }
+      }
+  - Id: 312067
+    AegisName: Ice_C_Orb_Force
+    Name: Snowflake Mystery (Power Force)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,2;
+      bonus bAtkRate,2;
+      if (.@r>=7) {
+         bonus bMatkRate,3;
+         bonus bAtkRate,3;
+         if (.@r>=9) {
+            bonus bMatkRate,3;
+            bonus bAtkRate,3;
+            if (.@r>=11) {
+               bonus bPAtk,3;
+               bonus bSMatk,3;
+            }
+         }
+      }
+  - Id: 312068
+    AegisName: Ice_C_Orb_S_Delay
+    Name: Snowflake Mystery (Global Cooldown)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-4;
+      if (.@r>=7) {
+         bonus bDelayrate,-4;
+         if (.@r>=9) {
+            bonus bDelayrate,-4;
+            if (.@r>=11) {
+               bonus bDelayrate,-4;
+            }
+         }
+      }
+  - Id: 312069
+    AegisName: Ice_C_Orb_Speed
+    Name: Snowflake Mystery (Quick)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bFlee,30;
+      if (.@r>=7) {
+         bonus bAspdRate,8;
+         if (.@r>=9) {
+            bonus bAspdRate,8;
+            if (.@r>=11) {
+               bonus bAspdRate,8;
+            }
+         }
+      }
+  - Id: 312070
+    AegisName: Ice_C_Orb_Caster
+    Name: Legendary Power (Caster)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-8;
+      bonus bMatk,30;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-8;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-8;
+            if (.@r>=11) {
+               bonus bVariableCastrate,-8;
+            }
+         }
+      }
+  - Id: 312071
+    AegisName: Ice_C_Orb_Guide
+    Name: Seolhwa Mystery (Guide Attack)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bHit,30;
+      if (.@r>=7) {
+         bonus bPerfectHitRate,8;
+         if (.@r>=9) {
+            bonus bPerfectHitRate,8;
+            if (.@r>=11) {
+               bonus bPerfectHitRate,8;
+            }
+         }
+      }
+  - Id: 312072
+    AegisName: Ice_C_Orb_Above
+    Name: Seolhwa Mystery (Above All)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubSize,Size_All,3;
+      bonus2 bSubEle,Ele_All,3;
+      if (.@r>=7) {
+         bonus2 bSubEle,Ele_All,7;
+         if (.@r>=9) {
+            bonus2 bSubSize,Size_All,7;
+         }
+      }
+  - Id: 312073
+    AegisName: Ice_C_Orb_P_Full
+    Name: Snowflake Mystery (Powerful)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,3;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,3;
+         }
+      }
+  - Id: 312074
+    AegisName: Ice_C_Orb_Sp
+    Name: Seolhwa Mystic Power (Spiritual Power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSP,450;
+      if (.@r>=7) {
+         bonus bMaxSPrate,5;
+         if (.@r>=9) {
+            bonus bMaxSPrate,5;
+            if (.@r>=11) {
+               bonus bMaxSPrate,5;
+            }
+         }
+      }
+  - Id: 312075
+    AegisName: Ice_C_Orb_Robust
+    Name: Snow Power (Robust)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      if (.@r>=7) {
+         bonus bMaxHPrate,1;
+         bonus bMaxSPrate,1;
+         if (.@r>=9) {
+            bonus bMaxHPrate,1;
+            bonus bMaxSPrate,1;
+            if (.@r>=11) {
+               bonus bMaxHPrate,2;
+               bonus bMaxSPrate,2;
+            }
+         }
+      }
+  - Id: 312076
+    AegisName: Ice_C_Orb_F_Cast
+    Name: Seolhwa Mystery (fixed casting)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-1000;
+  - Id: 312077
+    AegisName: Ice_C_Orb_P_F
+    Name: Seolhwa Mystery (Physical Force)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,5;
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,3;
+         if (.@r>=9) {
+            bonus2 bAddSize,Size_All,2;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,2;
+            }
+         }
+      }
+  - Id: 312078
+    AegisName: Ice_C_Orb_M_F
+    Name: Snowflake Mystery (Magical Force)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAddSize,Size_All,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddSize,Size_All,3;
+         if (.@r>=9) {
+            bonus2 bMagicAddSize,Size_All,2;
+            if (.@r>=11) {
+               bonus2 bMagicAddSize,Size_All,2;
+            }
+         }
+      }
+  - Id: 312079
+    AegisName: Ice_C_Orb_Ov_Pow
+    Name: Snowflake Mystery (Over Power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,-5;
+      bonus bMaxSPrate,-5;
+      autobonus "{ bonus bStr,50; bonus bPow,15; bonus bSta,15; }",30,10000,BF_WEAPON;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+         }
+      }
+  - Id: 312080
+    AegisName: Ice_C_Orb_Bu_Spl
+    Name: Legendary Power (Spell Buster)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,-5;
+      bonus bMaxSPrate,-5;
+      autobonus "{ bonus bInt,50; bonus bWis,15; bonus bSpl,15; }",30,10000,BF_MAGIC;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+         }
+      }
+  - Id: 312081
+    AegisName: Ice_C_Orb_Fi_Con
+    Name: Seolhwa Mystery (Firing Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,-5;
+      bonus bMaxSPrate,-5;
+      autobonus "{ bonus bDex,50; bonus bCon,15; bonus bCrt,15; }",30,10000,BF_WEAPON;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+         }
+      }
+  - Id: 312082
+    AegisName: Ice_C_Orb_Spd
+    Name: Snow Power (Speed)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,10;
+      bonus bVariableCastrate,-10;
+  - Id: 312083
+    AegisName: Ice_C_Orb_F_Spirit
+    Name: Seolhwa Mystery (fighting spirit)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+  - Id: 312084
+    AegisName: Ice_C_Orb_E_Archer
+    Name: Seolhwa Mystery (Myeonggung)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,12;
+  - Id: 312085
+    AegisName: Ice_C_Orb_Spell
+    Name: Seolhwa Mystic Power (Magic Power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,12;
+  - Id: 312086
+    AegisName: Ice_C_Orb_Fatal
+    Name: Seolhwa Mystery (Deadly)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,12;
+  - Id: 312087
+    AegisName: Ice_C_Orb_P_P
+    Name: Seolhwa Mystery (Physical Power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_All,4;
+      bonus bPAtk,3;
+  - Id: 312088
+    AegisName: Ice_C_Orb_M_P
+    Name: Snowflake Mystery (Magical Power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,4;
+      bonus bSMatk,3;
+  - Id: 312089
+    AegisName: Ice_C_Orb_A_Force
+    Name: Seolhwa Mystery (All Force)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,7;
+      bonus bLongAtkRate,7;
+      bonus bShortAtkRate,7;
+  - Id: 312090
+    AegisName: Ice_C_Orb_D
+    Name: Seolhwa Mystery (Defense)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,20;
+      bonus bDef,100;
+      if (.@r>=7) {
+         bonus bMdef,10;
+         bonus bDef,50;
+         if (.@r>=9) {
+            bonus bMdef,5;
+            bonus bDef,25;
+         }
+      }
+  - Id: 312091
+    AegisName: Ice_C_Orb_A
+    Name: Snowflake Mystery (Attack)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,3;
+      bonus bMatkRate,3;
+      if (.@r>=7) {
+         bonus bMatk,20;
+         bonus bBaseAtk,20;
+         if (.@r>=9) {
+            bonus bMatk,10;
+            bonus bBaseAtk,10;
+         }
+      }
+  - Id: 312092
+    AegisName: Ice_C_Orb_Res
+    Name: Seolhwa Mystic Power (Physical Resistance)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bRes,25;
+      if (.@r>=7) {
+         bonus bRes,15;
+         if (.@r>=9) {
+            bonus bRes,10;
+         }
+      }
+  - Id: 312093
+    AegisName: Ice_C_Orb_Mres
+    Name: Mystic Power (Magic Resistance)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMRes,15;
+      if (.@r>=7) {
+         bonus bMRes,10;
+         if (.@r>=9) {
+            bonus bMRes,5;
+         }
+      }
+  - Id: 312094
+    AegisName: Ice_C_Orb_Guard
+    Name: Legendary Power (Guardian)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bDef,100;
+      bonus bRes,50;
+      if (.@r>=7) {
+         bonus2 bSubEle,Ele_All,5;
+         if (.@r>=9) {
+            bonus2 bSubSize,Size_All,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bVariableCastrate,-5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bVariableCastrate,-5;
+         }
+      }
+  - Id: 312095
+    AegisName: Ice_C_Orb_Intel
+    Name: Legendary Power (Intelligence)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSMatk,1;
+      if (.@r>=7) {
+         bonus2 bMagicAddEle,Ele_All,3;
+         bonus2 bAddEle,Ele_All,3;
+         if (.@r>=9) {
+            bonus2 bAddSize,Size_All,3;
+            bonus2 bMagicAddSize,Size_All,3;
+            if (.@r>=11) {
+               bonus2 bMagicAddRace,RC_All,3;
+               bonus2 bMagicAddRace,RC_Player_Human,-3;
+               bonus2 bMagicAddRace,RC_Player_Doram,-3;
+               bonus2 bAddRace,RC_All,3;
+               bonus2 bAddRace,RC_Player_Human,-3;
+               bonus2 bAddRace,RC_Player_Doram,-3;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddClass,Class_Normal,2;
+         bonus2 bMagicAddClass,Class_Normal,2;
+         bonus2 bAddClass,Class_Boss,2;
+         bonus2 bMagicAddClass,Class_Boss,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddClass,Class_Normal,1;
+            bonus2 bMagicAddClass,Class_Normal,1;
+            bonus2 bAddClass,Class_Boss,1;
+            bonus2 bMagicAddClass,Class_Boss,1;
+         }
+      }
+  - Id: 312096
+    AegisName: Snake_A_Def_1
+    Name: Snake God's Warmth (DEF) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,3;
+  - Id: 312097
+    AegisName: Snake_A_Def_2
+    Name: Warmth of the Snake God (DEF) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,9;
+  - Id: 312098
+    AegisName: Snake_A_Def_3
+    Name: Snake God's Warmth (DEF) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,18;
+  - Id: 312099
+    AegisName: Snake_A_Def_4
+    Name: Warmth of the Snake God (DEF) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,30;
+  - Id: 312100
+    AegisName: Snake_A_Def_5
+    Name: Snake God's Warmth (DEF) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,45;
+  - Id: 312101
+    AegisName: Snake_A_Def_6
+    Name: Snake God's Warmth (DEF) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,63;
+  - Id: 312102
+    AegisName: Snake_A_Def_7
+    Name: Warmth of the Snake God (DEF) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,84;
+  - Id: 312103
+    AegisName: Snake_A_Def_8
+    Name: Warmth of the Snake God (DEF) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,108;
+  - Id: 312104
+    AegisName: Snake_A_Def_9
+    Name: Snake God's Warmth (DEF) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,135;
+  - Id: 312105
+    AegisName: Snake_A_Def_10
+    Name: Snake God's Warmth (DEF) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,165;
+  - Id: 312106
+    AegisName: Snake_A_Atk_1
+    Name: Warmth of the Snake God (ATK) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,1;
+  - Id: 312107
+    AegisName: Snake_A_Atk_2
+    Name: Warmth of the Snake God (ATK) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,3;
+  - Id: 312108
+    AegisName: Snake_A_Atk_3
+    Name: Warmth of the Snake God (ATK) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,6;
+  - Id: 312109
+    AegisName: Snake_A_Atk_4
+    Name: Warmth of the Snake God (ATK) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+  - Id: 312110
+    AegisName: Snake_A_Atk_5
+    Name: Warmth of the Snake God (ATK) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,15;
+  - Id: 312111
+    AegisName: Snake_A_Atk_6
+    Name: Warmth of the Snake God (ATK) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,21;
+  - Id: 312112
+    AegisName: Snake_A_Atk_7
+    Name: Warmth of the Snake God (ATK) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,28;
+  - Id: 312113
+    AegisName: Snake_A_Atk_8
+    Name: Warmth of the Snake God (ATK) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,36;
+  - Id: 312114
+    AegisName: Snake_A_Atk_9
+    Name: Warmth of the Snake God (ATK) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,45;
+  - Id: 312115
+    AegisName: Snake_A_Atk_10
+    Name: Warmth of the Snake God (ATK) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,55;
+  - Id: 312116
+    AegisName: Snake_A_Matk_1
+    Name: Snake God's Warmth (MATK) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,1;
+  - Id: 312117
+    AegisName: Snake_A_Matk_2
+    Name: Snake God's Warmth (MATK) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,3;
+  - Id: 312118
+    AegisName: Snake_A_Matk_3
+    Name: Snake God's Warmth (MATK) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,6;
+  - Id: 312119
+    AegisName: Snake_A_Matk_4
+    Name: Snake God's Warmth (MATK) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+  - Id: 312120
+    AegisName: Snake_A_Matk_5
+    Name: Snake God's Warmth (MATK) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,15;
+  - Id: 312121
+    AegisName: Snake_A_Matk_6
+    Name: Snake God's Warmth (MATK) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,21;
+  - Id: 312122
+    AegisName: Snake_A_Matk_7
+    Name: Snake God's Warmth (MATK) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,28;
+  - Id: 312123
+    AegisName: Snake_A_Matk_8
+    Name: Warmth of the Snake God (MATK) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,36;
+  - Id: 312124
+    AegisName: Snake_A_Matk_9
+    Name: Snake God's Warmth (MATK) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,45;
+  - Id: 312125
+    AegisName: Snake_A_Matk_10
+    Name: Snake God's Warmth (MATK) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,55;
+  - Id: 312126
+    AegisName: Snake_G_Blessing
+    Name: Snake God's Blessing    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bMagicAddSize,Size_All,10;
+  - Id: 312127
+    AegisName: Snake_H_Def_1
+    Name: Snake God's Poison (DEF) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,3;
+  - Id: 312128
+    AegisName: Snake_H_Def_2
+    Name: Snake God's Poison (DEF) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,9;
+  - Id: 312129
+    AegisName: Snake_H_Def_3
+    Name: Snake God's Poison (DEF) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,18;
+  - Id: 312130
+    AegisName: Snake_H_Def_4
+    Name: Snake God's Poison (DEF) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,30;
+  - Id: 312131
+    AegisName: Snake_H_Def_5
+    Name: Snake God's Poison (DEF) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,45;
+  - Id: 312132
+    AegisName: Snake_H_Def_6
+    Name: Snake God's Poison (DEF) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,63;
+  - Id: 312133
+    AegisName: Snake_H_Def_7
+    Name: Snake God's Poison (DEF) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,84;
+  - Id: 312134
+    AegisName: Snake_H_Def_8
+    Name: Snake God's Poison (DEF) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,108;
+  - Id: 312135
+    AegisName: Snake_H_Def_9
+    Name: Snake God's Poison (DEF) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,135;
+  - Id: 312136
+    AegisName: Snake_H_Def_10
+    Name: Snake God's Poison (DEF) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,165;
+  - Id: 312137
+    AegisName: Snake_H_Atk_1
+    Name: Snake God's Poison (ATK) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,1;
+  - Id: 312138
+    AegisName: Snake_H_Atk_2
+    Name: Snake God's Poison (ATK) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,3;
+  - Id: 312139
+    AegisName: Snake_H_Atk_3
+    Name: Snake God's Poison (ATK) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,6;
+  - Id: 312140
+    AegisName: Snake_H_Atk_4
+    Name: Snake God's Poison (ATK) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+  - Id: 312141
+    AegisName: Snake_H_Atk_5
+    Name: Snake God's Poison (ATK) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,15;
+  - Id: 312142
+    AegisName: Snake_H_Atk_6
+    Name: Snake God's Poison (ATK) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,21;
+  - Id: 312143
+    AegisName: Snake_H_Atk_7
+    Name: Snake God's Poison (ATK) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,28;
+  - Id: 312144
+    AegisName: Snake_H_Atk_8
+    Name: Snake God's Poison (ATK) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,36;
+  - Id: 312145
+    AegisName: Snake_H_Atk_9
+    Name: Snake God's Poison (ATK) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,45;
+  - Id: 312146
+    AegisName: Snake_H_Atk_10
+    Name: Snake God's Poison (ATK) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,55;
+  - Id: 312147
+    AegisName: Snake_H_Matk_1
+    Name: Snake God's Poison (MATK) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,1;
+  - Id: 312148
+    AegisName: Snake_H_Matk_2
+    Name: Snake God's Poison (MATK) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,3;
+  - Id: 312149
+    AegisName: Snake_H_Matk_3
+    Name: Snake God's Poison (MATK) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,6;
+  - Id: 312150
+    AegisName: Snake_H_Matk_4
+    Name: Snake God's Poison (MATK) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+  - Id: 312151
+    AegisName: Snake_H_Matk_5
+    Name: Snake God's Poison (MATK) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,15;
+  - Id: 312152
+    AegisName: Snake_H_Matk_6
+    Name: Snake God's Poison (MATK) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,21;
+  - Id: 312153
+    AegisName: Snake_H_Matk_7
+    Name: Snake God's Poison (MATK) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,28;
+  - Id: 312154
+    AegisName: Snake_H_Matk_8
+    Name: Snake God's Poison (MATK) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,36;
+  - Id: 312155
+    AegisName: Snake_H_Matk_9
+    Name: Snake God's Poison (MATK) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,45;
+  - Id: 312156
+    AegisName: Snake_H_Matk_10
+    Name: Snake God's Poison (MATK) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,55;
+  - Id: 312157
+    AegisName: Snake_G_Grace
+    Name: Snake God's Protection    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,10;
+      bonus2 bAddEle,Ele_All,10;
+  - Id: 312158
+    AegisName: Snake_S_Def_1
+    Name: The Mystery of the Snake God (DEF) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,3;
+  - Id: 312159
+    AegisName: Snake_S_Def_2
+    Name: The Mystery of the Snake God (DEF) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,9;
+  - Id: 312160
+    AegisName: Snake_S_Def_3
+    Name: Mystery of the Snake God (DEF) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,18;
+  - Id: 312161
+    AegisName: Snake_S_Def_4
+    Name: The Mystery of the Snake God (DEF) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,30;
+  - Id: 312162
+    AegisName: Snake_S_Def_5
+    Name: The Mystery of the Snake God (DEF) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,45;
+  - Id: 312163
+    AegisName: Snake_S_Def_6
+    Name: Mystery of the Snake God (DEF) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,63;
+  - Id: 312164
+    AegisName: Snake_S_Def_7
+    Name: The Mystery of the Snake God (DEF) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,84;
+  - Id: 312165
+    AegisName: Snake_S_Def_8
+    Name: The Mystery of the Snake God (DEF) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,108;
+  - Id: 312166
+    AegisName: Snake_S_Def_9
+    Name: The Mystery of the Snake God (DEF) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,135;
+  - Id: 312167
+    AegisName: Snake_S_Def_10
+    Name: The Mystery of the Snake God (DEF) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,165;
+  - Id: 312168
+    AegisName: Snake_S_Atk_1
+    Name: Mystery of the Snake God (ATK) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,1;
+  - Id: 312169
+    AegisName: Snake_S_Atk_2
+    Name: The Mystery of the Snake God (ATK) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,3;
+  - Id: 312170
+    AegisName: Snake_S_Atk_3
+    Name: Mystery of the Snake God (ATK) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,6;
+  - Id: 312171
+    AegisName: Snake_S_Atk_4
+    Name: Mystery of the Snake God (ATK) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+  - Id: 312172
+    AegisName: Snake_S_Atk_5
+    Name: Mystery of the Snake God (ATK) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,15;
+  - Id: 312173
+    AegisName: Snake_S_Atk_6
+    Name: Mystery of the Snake God (ATK) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,21;
+  - Id: 312174
+    AegisName: Snake_S_Atk_7
+    Name: Mystery of the Snake God (ATK) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,28;
+  - Id: 312175
+    AegisName: Snake_S_Atk_8
+    Name: Mystery of the Snake God (ATK) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,36;
+  - Id: 312176
+    AegisName: Snake_S_Atk_9
+    Name: The Mystery of the Snake God (ATK) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,45;
+  - Id: 312177
+    AegisName: Snake_S_Atk_10
+    Name: The Mystery of the Snake God (ATK) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,55;
+  - Id: 312178
+    AegisName: Snake_S_Matk_1
+    Name: The Mystery of the Snake God (MATK) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,1;
+  - Id: 312179
+    AegisName: Snake_S_Matk_2
+    Name: The Mystery of the Snake God (MATK) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,3;
+  - Id: 312180
+    AegisName: Snake_S_Matk_3
+    Name: The Mystery of the Snake God (MATK) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,6;
+  - Id: 312181
+    AegisName: Snake_S_Matk_4
+    Name: The Mystery of the Snake God (MATK) 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+  - Id: 312182
+    AegisName: Snake_S_Matk_5
+    Name: The Mystery of the Snake God (MATK) 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,15;
+  - Id: 312183
+    AegisName: Snake_S_Matk_6
+    Name: Mystery of the Snake God (MATK) 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,21;
+  - Id: 312184
+    AegisName: Snake_S_Matk_7
+    Name: The Mystery of the Snake God (MATK) 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,28;
+  - Id: 312185
+    AegisName: Snake_S_Matk_8
+    Name: The Mystery of the Snake God (MATK) 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,36;
+  - Id: 312186
+    AegisName: Snake_S_Matk_9
+    Name: The Mystery of the Snake God (MATK) 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,45;
+  - Id: 312187
+    AegisName: Snake_S_Matk_10
+    Name: The Mystery of the Snake God (MATK) 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,55;
+  - Id: 312188
+    AegisName: Snake_G_Glory
+    Name: Glory of the Snake God    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
   - Id: 312189
     AegisName: M_Pow3
     Name: POW+3
@@ -67437,6 +69209,13 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",2+(getrefine()/2);
+  - Id: 312302
+    AegisName: DK_Soul_DB
+    Name: Dragon Knight Soul (Dragonic Breath)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",2+(getrefine()/2);
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -71033,6 +72812,18 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000988
+    AegisName: EpisodClear19
+    Name: Episode 19 Clear Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1000989
     AegisName: Lv_Up_T_80
     Name: Level Up Ticket (80~89)    # !todo check english name
@@ -71823,6 +73614,30 @@ Body:
     Name: Root of a precious plant    # !todo check english name
     Type: Etc
     Weight: 10
+  - Id: 1001153
+    AegisName: Ep20_Ice_Egg
+    Name: Ancient Icewind Egg    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001154
+    AegisName: Ep20_Jor_Berry
+    Name: Bamberry    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001157
     AegisName: 2210_ev_fur
     Name: Gumming's Hair    # !todo check english name
@@ -72094,12 +73909,289 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001217
+    AegisName: Ep20_Cat_Whiskers
+    Name: Sacred Cat Whiskers    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001218
+    AegisName: Ep20_Jor_Device
+    Name: Horsepower Recovery Device    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001226
+    AegisName: aegis_1001226
+    Name: Legan's Advanced Magic Core    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001227
+    AegisName: aegis_1001227
+    Name: Coral bracelet    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001228
+    AegisName: aegis_1001228
+    Name: Seashell hairpin    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001229
+    AegisName: aegis_1001229
+    Name: Seaweed Belt    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001230
+    AegisName: aegis_1001230
+    Name: Scale Armor Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001231
+    AegisName: aegis_1001231
+    Name: Soft Fluorescent Cell (Sour)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001232
+    AegisName: aegis_1001232
+    Name: Soft Fluorescent Cell (salty)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001233
+    AegisName: aegis_1001233
+    Name: Fluorescent Fluorescent Cell (Daldal)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001234
+    AegisName: aegis_1001234
+    Name: Bear Hide    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001235
+    AegisName: aegis_1001235
+    Name: Monster's Tooth    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001236
+    AegisName: aegis_1001236
+    Name: Glittering Snowflakes    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001237
+    AegisName: aegis_1001237
+    Name: Angel's Tail    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001238
+    AegisName: aegis_1001238
+    Name: Mystic Magic Mass    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001239
+    AegisName: aegis_1001239
+    Name: Broken Trident    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001240
+    AegisName: aegis_1001240
+    Name: Irwin Private Hat    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001241
+    AegisName: aegis_1001241
+    Name: Private Irwin Hat    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001242
+    AegisName: aegis_1001242
+    Name: Corporal Irwin Hat    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001243
+    AegisName: aegis_1001243
+    Name: Arwin Manic Hat    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001244
+    AegisName: aegis_1001244
+    Name: Large Gray Feather    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001245
+    AegisName: aegis_1001245
+    Name: Large White Feather    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001246
+    AegisName: aegis_1001246
+    Name: Copo's Head Feather    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001247
+    AegisName: aegis_1001247
+    Name: Kkopo Eggshell Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001248
+    AegisName: EP20_D_P_Ore
+    Name: Source Stone of Pure Magical Power    # !todo check english name
+    Type: Etc
+    Weight: 30
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001249
+    AegisName: EP20_D_P_Crystal
+    Name: Crystal of Pure Magical Power    # !todo check english name
+    Type: Etc
+    Weight: 50
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001250
+    AegisName: EP20_D_P_Extract
+    Name: Pure Magic Extract    # !todo check english name
+    Type: Etc
+    Weight: 30
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001251
+    AegisName: EP20_D_Scale
+    Name: Snake God Scale    # !todo check english name
+    Type: Etc
+    Weight: 50
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1001253
     AegisName: S_Enchant_Essence
     Name: Shadow Essence    # !todo check english name
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 1001254
+    AegisName: Ep20_Ymir_Heart
+    Name: Corrupted Heart Fragment of Ymir    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001258
+    AegisName: VIP_Black_Coin
+    Name: Premium Black Coin    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001260
+    AegisName: D_EpisodClear16
+    Name: Episode 16 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001261
+    AegisName: D_EpisodClear17
+    Name: Episode 17 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001262
+    AegisName: D_EpisodClear18
+    Name: Episode 18 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001263
+    AegisName: D_EpisodClear19
+    Name: Episode 19 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

@@ -17929,6 +17929,40 @@ Body:
         Size: 25
     Hit: Single
     HitCount: 1
+  - Id: 751
+    Name: NPC_ALL_STAT_DOWN
+    Description: Decrease All Stats
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 10000
+    Status: ALL_STAT_DOWN
+  - Id: 752
+    Name: NPC_GRADUAL_GRAVITY
+    Description: Increased Gravity
+    MaxLevel: 3
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 3000
+    Status: GRADUAL_GRAVITY
+  - Id: 755
+    Name: NPC_MOVE_COORDINATE
+    Description: Change Location
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 14
   - Id: 756
     Name: NPC_WIDEBLEEDING2
     Description: Wide Bleeding
