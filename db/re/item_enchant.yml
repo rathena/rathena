@@ -21563,6 +21563,10 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: DK_Soul_DB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 72
     TargetItems:
       S_IG_Armor: true
@@ -22831,3 +22835,1598 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+  - Id: 89
+    TargetItems:
+      Glacier_Armor: true
+      Glacier_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Pow_S
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Spl_W
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Con_C
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_S_Delay
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_War
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Ran
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Mag
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Force
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_War2
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Ran2
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Mag2
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 90
+    TargetItems:
+      Glacier_Manteau: true
+      Glacier_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Speed
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Caster
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Guide
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Above
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_P_Full
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 91
+    TargetItems:
+      Glacier_Boots: true
+      Glacier_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Hp
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Sp
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_F_Cast
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_P_F
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_M_F
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Robust
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Ov_Pow
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Fi_Con
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Bu_Spl
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 92
+    TargetItems:
+      Glacier_Guard: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_D
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_A
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Res
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Mres
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Guard
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Intel
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 93
+    TargetItems:
+      Glacier_Pendant: true
+      Glacier_Necklace: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Str
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Dex
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Int
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Spd
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_F_Spirit
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_E_Archer
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Fatal
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Spell
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_P_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_M_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_A_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 94
+    TargetItems:
+      Glacier_Ring: true
+      Glacier_Earring: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Agi
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Vit
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Luk
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Spd
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_F_Spirit
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_E_Archer
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Fatal
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Spell
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_P_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_M_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_A_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 95
+    TargetItems:
+      D_Glacier_Armor: true
+      D_Glacier_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Snake_A_Def_1
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Ore
+                Amount: 75
+              - Material: EP19_D_P_Ore
+                Amount: 75
+              - Material: EP19_N_P_Ore
+                Amount: 75
+        Upgrades:
+          - Enchant: Snake_A_Def_1
+            Upgrade: Snake_A_Def_2
+            Price: 1600000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Enchant: Snake_A_Def_2
+            Upgrade: Snake_A_Def_3
+            Price: 1900000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 5
+              - Material: EP19_D_P_Crystal
+                Amount: 35
+              - Material: EP19_N_P_Crystal
+                Amount: 35
+          - Enchant: Snake_A_Def_3
+            Upgrade: Snake_A_Def_4
+            Price: 2200000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 40
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 5
+          - Enchant: Snake_A_Def_4
+            Upgrade: Snake_A_Def_5
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_A_Def_5
+            Upgrade: Snake_A_Def_6
+            Price: 2800000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 2
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_A_Def_6
+            Upgrade: Snake_A_Def_7
+            Price: 3100000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 5
+              - Material: EP19_S_F_2_Extract
+                Amount: 5
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_A_Def_7
+            Upgrade: Snake_A_Def_8
+            Price: 3400000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_S_F_3_Extract
+                Amount: 5
+          - Enchant: Snake_A_Def_8
+            Upgrade: Snake_A_Def_9
+            Price: 3700000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 14
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_Scale
+          - Enchant: Snake_A_Def_9
+            Upgrade: Snake_A_Def_10
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+                Amount: 2
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Snake_A_Atk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+          - Item: Snake_A_Matk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+        Upgrades:
+          - Enchant: Snake_A_Atk_1
+            Upgrade: Snake_A_Atk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_A_Atk_2
+            Upgrade: Snake_A_Atk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_A_Atk_3
+            Upgrade: Snake_A_Atk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_A_Atk_4
+            Upgrade: Snake_A_Atk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_A_Atk_5
+            Upgrade: Snake_A_Atk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_A_Atk_6
+            Upgrade: Snake_A_Atk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_A_Atk_7
+            Upgrade: Snake_A_Atk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_A_Atk_8
+            Upgrade: Snake_A_Atk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_A_Atk_9
+            Upgrade: Snake_A_Atk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+          - Enchant: Snake_A_Matk_1
+            Upgrade: Snake_A_Matk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_A_Matk_2
+            Upgrade: Snake_A_Matk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_A_Matk_3
+            Upgrade: Snake_A_Matk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_A_Matk_4
+            Upgrade: Snake_A_Matk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_A_Matk_5
+            Upgrade: Snake_A_Matk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_A_Matk_6
+            Upgrade: Snake_A_Matk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_A_Matk_7
+            Upgrade: Snake_A_Matk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_A_Matk_8
+            Upgrade: Snake_A_Matk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_A_Matk_9
+            Upgrade: Snake_A_Matk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Snake_G_Blessing
+            Price: 8000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 40
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+  - Id: 96
+    TargetItems:
+      D_Glacier_Manteau: true
+      D_Glacier_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Snake_H_Def_1
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Ore
+                Amount: 75
+              - Material: EP19_D_P_Ore
+                Amount: 75
+              - Material: EP19_N_P_Ore
+                Amount: 75
+        Upgrades:
+          - Enchant: Snake_H_Def_1
+            Upgrade: Snake_H_Def_2
+            Price: 1600000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Enchant: Snake_H_Def_2
+            Upgrade: Snake_H_Def_3
+            Price: 1900000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 5
+              - Material: EP19_D_P_Crystal
+                Amount: 35
+              - Material: EP19_N_P_Crystal
+                Amount: 35
+          - Enchant: Snake_H_Def_3
+            Upgrade: Snake_H_Def_4
+            Price: 2200000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 40
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 5
+          - Enchant: Snake_H_Def_4
+            Upgrade: Snake_H_Def_5
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_H_Def_5
+            Upgrade: Snake_H_Def_6
+            Price: 2800000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 2
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_H_Def_6
+            Upgrade: Snake_H_Def_7
+            Price: 3100000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 5
+              - Material: EP19_S_F_2_Extract
+                Amount: 5
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_H_Def_7
+            Upgrade: Snake_H_Def_8
+            Price: 3400000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_S_F_3_Extract
+                Amount: 5
+          - Enchant: Snake_H_Def_8
+            Upgrade: Snake_H_Def_9
+            Price: 3700000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 14
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_Scale
+          - Enchant: Snake_H_Def_9
+            Upgrade: Snake_H_Def_10
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+                Amount: 2
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Snake_H_Atk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+          - Item: Snake_H_Matk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+        Upgrades:
+          - Enchant: Snake_H_Atk_1
+            Upgrade: Snake_H_Atk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_H_Atk_2
+            Upgrade: Snake_H_Atk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_H_Atk_3
+            Upgrade: Snake_H_Atk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_H_Atk_4
+            Upgrade: Snake_H_Atk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_H_Atk_5
+            Upgrade: Snake_H_Atk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_H_Atk_6
+            Upgrade: Snake_H_Atk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_H_Atk_7
+            Upgrade: Snake_H_Atk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_H_Atk_8
+            Upgrade: Snake_H_Atk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_H_Atk_9
+            Upgrade: Snake_H_Atk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+          - Enchant: Snake_H_Matk_1
+            Upgrade: Snake_H_Matk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_H_Matk_2
+            Upgrade: Snake_H_Matk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_H_Matk_3
+            Upgrade: Snake_H_Matk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_H_Matk_4
+            Upgrade: Snake_H_Matk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_H_Matk_5
+            Upgrade: Snake_H_Matk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_H_Matk_6
+            Upgrade: Snake_H_Matk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_H_Matk_7
+            Upgrade: Snake_H_Matk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_H_Matk_8
+            Upgrade: Snake_H_Matk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_H_Matk_9
+            Upgrade: Snake_H_Matk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Snake_G_Grace
+            Price: 8000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 40
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+  - Id: 97
+    TargetItems:
+      D_Glacier_Boots: true
+      D_Glacier_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Snake_S_Def_1
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Ore
+                Amount: 75
+              - Material: EP19_D_P_Ore
+                Amount: 75
+              - Material: EP19_N_P_Ore
+                Amount: 75
+        Upgrades:
+          - Enchant: Snake_S_Def_1
+            Upgrade: Snake_S_Def_2
+            Price: 1600000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Enchant: Snake_S_Def_2
+            Upgrade: Snake_S_Def_3
+            Price: 1900000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 5
+              - Material: EP19_D_P_Crystal
+                Amount: 35
+              - Material: EP19_N_P_Crystal
+                Amount: 35
+          - Enchant: Snake_S_Def_3
+            Upgrade: Snake_S_Def_4
+            Price: 2200000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 40
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 5
+          - Enchant: Snake_S_Def_4
+            Upgrade: Snake_S_Def_5
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_S_Def_5
+            Upgrade: Snake_S_Def_6
+            Price: 2800000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 2
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_S_Def_6
+            Upgrade: Snake_S_Def_7
+            Price: 3100000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 5
+              - Material: EP19_S_F_2_Extract
+                Amount: 5
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_S_Def_7
+            Upgrade: Snake_S_Def_8
+            Price: 3400000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_S_F_3_Extract
+                Amount: 5
+          - Enchant: Snake_S_Def_8
+            Upgrade: Snake_S_Def_9
+            Price: 3700000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 14
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_Scale
+          - Enchant: Snake_S_Def_9
+            Upgrade: Snake_S_Def_10
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+                Amount: 2
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Snake_S_Atk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+          - Item: Snake_S_Matk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+        Upgrades:
+          - Enchant: Snake_S_Atk_1
+            Upgrade: Snake_S_Atk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_S_Atk_2
+            Upgrade: Snake_S_Atk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_S_Atk_3
+            Upgrade: Snake_S_Atk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_S_Atk_4
+            Upgrade: Snake_S_Atk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_S_Atk_5
+            Upgrade: Snake_S_Atk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_S_Atk_6
+            Upgrade: Snake_S_Atk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_S_Atk_7
+            Upgrade: Snake_S_Atk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_S_Atk_8
+            Upgrade: Snake_S_Atk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_S_Atk_9
+            Upgrade: Snake_S_Atk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+          - Enchant: Snake_S_Matk_1
+            Upgrade: Snake_S_Matk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_S_Matk_2
+            Upgrade: Snake_S_Matk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_S_Matk_3
+            Upgrade: Snake_S_Matk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_S_Matk_4
+            Upgrade: Snake_S_Matk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_S_Matk_5
+            Upgrade: Snake_S_Matk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_S_Matk_6
+            Upgrade: Snake_S_Matk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_S_Matk_7
+            Upgrade: Snake_S_Matk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_S_Matk_8
+            Upgrade: Snake_S_Matk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_S_Matk_9
+            Upgrade: Snake_S_Matk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Snake_G_Glory
+            Price: 8000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 40
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
