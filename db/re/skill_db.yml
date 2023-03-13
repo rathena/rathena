@@ -17907,6 +17907,28 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 747
+    Name: NPC_LEASH
+    Description: Leash
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 5
+      - Level: 2
+        Size: 10
+      - Level: 3
+        Size: 15
+      - Level: 4
+        Size: 20
+      - Level: 5
+        Size: 25
+    Hit: Single
+    HitCount: 1
   - Id: 751
     Name: NPC_ALL_STAT_DOWN
     Description: Decrease All Stats
