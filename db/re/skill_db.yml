@@ -17931,6 +17931,16 @@ Body:
     Range: 9
     Duration1: 3000
     Status: GRADUAL_GRAVITY
+  - Id: 755
+    Name: NPC_MOVE_COORDINATE
+    Description: Change Location
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 14
   - Id: 756
     Name: NPC_WIDEBLEEDING2
     Description: Wide Bleeding
