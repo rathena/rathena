@@ -8556,3 +8556,16 @@ Body:
       DisplayPc: true
       NoDispell: true
       NoClearance: true
+  - Status: ALL_STAT_DOWN
+    Icon: EFST_ALL_STAT_DOWN
+    DurationLookup: NPC_ALL_STAT_DOWN
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Flags:
+      NoDispell: true
+      NoClearance: true
