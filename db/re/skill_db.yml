@@ -17921,23 +17921,13 @@ Body:
   - Id: 754
     Name: NPC_IMMUNE_PROPERTY
     Description: Property Immune
-    MaxLevel: 10 #Official max level is 5.
-    TargetType: Self #official is Support
+    MaxLevel: 10
+    TargetType: Support
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
-    #Range: #official skill has range
-    #  - Level: 1
-    #    Size: 5
-    #  - Level: 2
-    #    Size: 10
-    #  - Level: 3
-    #    Size: 15
-    #  - Level: 4
-    #    Size: 20
-    #  - Level: 5
-    #    Size: 25
+    Range: 14 #TODO: confirm
     Duration1: 30000
   - Id: 756
     Name: NPC_WIDEBLEEDING2
