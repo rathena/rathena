@@ -1265,6 +1265,7 @@ enum sc_type : int16 {
 
 	SC_GRADUAL_GRAVITY,
 	SC_ALL_STAT_DOWN,
+	SC_KILLING_AURA,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

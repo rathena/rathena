@@ -18244,6 +18244,23 @@ Body:
     SplashArea: 14
     Duration2: 18000
     Status: Curse
+  - Id: 783
+    Name: NPC_KILLING_AURA
+    Description: Killing Aura
+    MaxLevel: 5 #TODO unknown interactions with level
+    Type: Misc
+    TargetType: Support
+    Hit: Single
+    HitCount: 1
+    DamageFlags:
+      IgnoreFlee: true
+      IgnoreDefCard: true
+      Splash: true
+    Flags:
+      IsNpc: true
+    SplashArea: 5
+    Duration1: 30000
+    Status: Killing_Aura
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack

@@ -8569,3 +8569,12 @@ Body:
     Flags:
       NoDispell: true
       NoClearance: true
+  - Status: Killing_Aura
+    Icon: EFST_KILLING_AURA
+    DurationLookup: NPC_KILLING_AURA
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

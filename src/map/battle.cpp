@@ -8019,6 +8019,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = 50;
 			md.flag |= BF_WEAPON;
 			break;
+		case NPC_KILLING_AURA:
+			md.damage = 10000;
+			break;
 #ifdef RENEWAL
 		case HT_LANDMINE:
 		case MA_LANDMINE:
