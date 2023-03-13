@@ -1128,53 +1128,79 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_KYRIE);
 	}
 
-	if (sc) {
-		int element = 0;
-		if (flag & BF_WEAPON) {
-			struct status_data *sstatus = status_get_status_data(src);
-			if(sstatus->rhw.ele == ELE_NEUTRAL && sstatus->lhw.ele > sstatus->rhw.ele)
-				element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_L, false);
-			else
-				element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-		} else if(flag & BF_MAGIC)
-			element = battle_get_magic_element(src, target, skill_id, skill_lv, d->miscflag);
+	int element;
+	if (flag & BF_WEAPON) {
+		struct status_data *sstatus = status_get_status_data(src);
+		if(sstatus->rhw.ele == ELE_NEUTRAL && sstatus->lhw.ele > sstatus->rhw.ele)
+			element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 		else
-			element = battle_get_misc_element(src, target, skill_id, skill_lv, d->miscflag);
-		
-		//for(int i = SC_IMMUNE_PROPERTY_NOTHING; i <= SC_IMMUNE_PROPERTY_UNDEAD; i++) { suggestion for after all boss skill PRs are merged?
-		//	if (sc->getSCE(i) && element == i - 916)
-		//		damage = 0;
-		//}
-		if ((sc->getSCE(SC_IMMUNE_PROPERTY_NOTHING) && element == ELE_NEUTRAL)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_WATER) && element == ELE_WATER)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_GROUND) && element == ELE_EARTH)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_FIRE) && element == ELE_FIRE)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_WIND) && element == ELE_WIND)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_DARKNESS) && element == ELE_DARK)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_SAINT) && element == ELE_HOLY)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_POISON) && element == ELE_POISON)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_TELEKINESIS) && element == ELE_GHOST)
-		|| (sc->getSCE(SC_IMMUNE_PROPERTY_UNDEAD) && element == ELE_UNDEAD))
-			damage = 0;
+			element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_R, false);
+	} else if(flag & BF_MAGIC)
+		element = battle_get_magic_element(src, target, skill_id, skill_lv, d->miscflag);
+	else
+		element = battle_get_misc_element(src, target, skill_id, skill_lv, d->miscflag);
 	
-		if (sc->getSCE(SC_DAMAGE_HEAL)) {
-			int dmg_heal_lv = sc->getSCE(SC_DAMAGE_HEAL)->val1;
-			int heal = static_cast<int>(damage);
-			if (damage > 0
-			&& ((flag & BF_WEAPON && dmg_heal_lv == 1)
-			|| (flag & BF_MAGIC && dmg_heal_lv == 2)
-			|| (flag & BF_MISC && dmg_heal_lv == 3))) {//Absorb MISC damage? Both WEAPON & MAGIC damage? Which is correct on level 3?
-				if(flag & BF_WEAPON) {
-					clif_specialeffect_value(target, EF_HEAL, heal, AREA);
-					clif_specialeffect_value(target, EF_GREEN_NUMBER, heal, AREA);
-				} else {
-					clif_specialeffect_value(target, 1143, heal, AREA);
-					clif_specialeffect_value(target, EF_GREEN_NUMBER, heal, AREA);
-				}
-				status_heal(target, damage, 0, 0);
+	switch( element ){
+		case ELE_NEUTRAL:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_NOTHING ) ){
 				damage = 0;
+				return false;
 			}
-		}
+			break;
+		case ELE_WATER:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_WATER ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_EARTH:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_GROUND ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_FIRE:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_FIRE ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_WIND:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_WIND ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_DARK:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_DARKNESS ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_HOLY:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_SAINT ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_POISON:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_POISON ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_GHOST:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_TELEKINESIS ) ){
+				damage = 0;
+				return false;
+			}
+			break;
+		case ELE_UNDEAD:
+			if( sc->getSCE( SC_IMMUNE_PROPERTY_UNDEAD ) ){
+				damage = 0;
+				return false;
+			}
+			break;
 	}
 
 	if ((sce = sc->getSCE(SC_P_ALTER)) && damage > 0) {
@@ -1445,6 +1471,21 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		if ((sce = sc->getSCE(SC_BUNSINJYUTSU)) && --sce->val2 <= 0)
 			status_change_end(target, SC_BUNSINJYUTSU);
 		return false;
+	}
+	
+	if ((sce = sc->getSCE(SC_DAMAGE_HEAL))) {
+		if (damage > 0 && (flag & sce->val2)) {
+			int heal = min(static_cast<int>(damage), INT32_MAX );
+			if(flag & BF_WEAPON) {
+				clif_specialeffect_value(target, EF_HEAL, heal, AREA);
+			} else {
+				clif_specialeffect_value(target, 1143, heal, AREA);
+			}
+			clif_specialeffect_value(target, EF_GREEN_NUMBER, heal, AREA);
+			status_heal(target, damage, 0, 0);
+			damage = 0;
+			return false;
+		}
 	}
 
 	return true;
@@ -3338,6 +3379,8 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 	
 	if (element == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
 		element = sstatus->rhw.ele;
+		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
+			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 	} else if (element == ELE_ENDOWED) //Use status element
 		element = status_get_attack_sc_element(src,status_get_sc(src));
 	else if (element == ELE_RANDOM) //Use random element
@@ -3352,31 +3395,26 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 				element = ELE_DARK;
 			}
 			break;
-		case WM_REVERBERATION:
-			if (sd)
-				element = sd->bonus.arrow_ele;
-			break;
 		case NPC_PSYCHIC_WAVE:
 		case SO_PSYCHIC_WAVE:
 			if( sc && sc->count ) {
-				if( sc->getSCE(SC_HEATER_OPTION) )
-					element = sc->getSCE(SC_HEATER_OPTION)->val3;
-				else if( sc->getSCE(SC_COOLER_OPTION) )
-					element = sc->getSCE(SC_COOLER_OPTION)->val3;
-				else if( sc->getSCE(SC_BLAST_OPTION) )
-					element = sc->getSCE(SC_BLAST_OPTION)->val3;
-				else if( sc->getSCE(SC_CURSED_SOIL_OPTION) )
-					element = sc->getSCE(SC_CURSED_SOIL_OPTION)->val3;
-				else if( sc->getSCE(SC_FLAMETECHNIC_OPTION) )
-					element = sc->getSCE(SC_FLAMETECHNIC_OPTION)->val3;
-				else if( sc->getSCE(SC_COLD_FORCE_OPTION) )
-					element = sc->getSCE(SC_COLD_FORCE_OPTION)->val3;
-				else if( sc->getSCE(SC_GRACE_BREEZE_OPTION) )
-					element = sc->getSCE(SC_GRACE_BREEZE_OPTION)->val3;
-				else if( sc->getSCE(SC_EARTH_CARE_OPTION) )
-					element = sc->getSCE(SC_EARTH_CARE_OPTION)->val3;
-				else if( sc->getSCE(SC_DEEP_POISONING_OPTION) )
-					element = sc->getSCE(SC_DEEP_POISONING_OPTION)->val3;
+				static const std::vector<sc_type> types = {
+					SC_HEATER_OPTION,
+					SC_COOLER_OPTION,
+					SC_BLAST_OPTION,
+					SC_CURSED_SOIL_OPTION,
+					SC_FLAMETECHNIC_OPTION,
+					SC_COLD_FORCE_OPTION,
+					SC_GRACE_BREEZE_OPTION,
+					SC_EARTH_CARE_OPTION,
+					SC_DEEP_POISONING_OPTION
+				};
+				for( sc_type type : types ){
+					if( sc->getSCE( type ) ){
+						element = sc->getSCE( type )->val3;
+						break;
+					}
+				}
 			}
 			break;
 		case KO_KAIHOU:
@@ -3391,6 +3429,7 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 			if (sc && sc->getSCE(SC_INSPIRATION))
 				element = ELE_NEUTRAL;
 			break;
+		case WM_REVERBERATION:
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
 			if (sd)
@@ -3402,10 +3441,8 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 }
 
 int battle_get_misc_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag) {
-	map_session_data *sd = BL_CAST(BL_PC, src);
 	int element = skill_get_ele(skill_id, skill_lv);
 	
-	element = skill_get_ele(skill_id, skill_lv);
 	if (element == ELE_WEAPON || element == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		element = ELE_NEUTRAL;
 	else if (element == ELE_RANDOM) //Use random element
