@@ -1475,7 +1475,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	
 	if ((sce = sc->getSCE(SC_DAMAGE_HEAL))) {
 		if (damage > 0 && (flag & sce->val2)) {
-			int heal = min(static_cast<int>(damage), INT32_MAX );
+			int32 heal = static_cast<int32>( i64min( damage, INT32_MAX ) );
 			if(flag & BF_WEAPON) {
 				clif_specialeffect_value(target, EF_HEAL, heal, AREA);
 			} else {
