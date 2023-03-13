@@ -100,7 +100,7 @@ int mail_removeitem(map_session_data *sd, short flag, int idx, int amount)
 	return 1;
 }
 
-bool mail_removezeny(map_session_data *sd, bool flag) {
+bool mail_removezeny( map_session_data *sd, bool flag ){
 	nullpo_retr( false, sd );
 
 	if( sd->mail.zeny > 0 ){
@@ -287,7 +287,7 @@ bool mail_setattachment(map_session_data *sd, struct mail_message *msg)
 
 		mail_removeitem(sd,1,sd->mail.item[i].index + 2,sd->mail.item[i].amount);
 	}
-	mail_removezeny(sd, true);
+	mail_removezeny(sd,true);
 
 	return true;
 }

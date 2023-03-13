@@ -281,10 +281,10 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct 
 // ids are char_ids
 void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int amount)
 {
-	if (!log_config.zeny || (log_config.zeny != 1 && abs(amount) < log_config.zeny))
+	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
 
-	if (log_config.sql_logs)
+	if( log_config.sql_logs )
 	{
 		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
 			log_config.log_zeny, target_sd.status.char_id, src_id, log_picktype2char(type), amount, mapindex_id2name(target_sd.mapindex)))
@@ -299,7 +299,7 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 		time_t curtime;
 		FILE* logfp;
 
-		if ((logfp = fopen(log_config.log_zeny, "a")) == NULL)
+		if( ( logfp = fopen(log_config.log_zeny, "a") ) == NULL )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
