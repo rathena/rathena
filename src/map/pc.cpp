@@ -14524,8 +14524,11 @@ void pc_expire_check(map_session_data *sd) {
 * @param money Amount of money to deposit
 **/
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(map_session_data *sd, int money) {
-	unsigned int limit_check = money + sd->bank_vault;
+	if (!sd->state.banking) {
+		return BDA_ERROR;
+	}
 
+	unsigned int limit_check = money + sd->bank_vault;
 	if( money <= 0 || limit_check > MAX_BANK_ZENY ) {
 		return BDA_OVERFLOW;
 	} else if ( money > sd->status.zeny ) {
@@ -14548,8 +14551,11 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(map_session_data *sd, int money) {
 * @param money Amount of money that will be withdrawn
 **/
 enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(map_session_data *sd, int money) {
+	if (!sd->state.banking) {
+		return BWA_UNKNOWN_ERROR;
+	}
+
 	unsigned int limit_check = money + sd->status.zeny;
-	
 	if( money <= 0 ) {
 		return BWA_UNKNOWN_ERROR;
 	} else if ( money > sd->bank_vault ) {
