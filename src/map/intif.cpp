@@ -2657,6 +2657,7 @@ static void intif_parse_Mail_receiver( int fd ){
 	// Only f the player is online
 	if( sd ){
 		clif_Mail_Receiver_Ack( sd, RFIFOL( fd, 6 ), RFIFOW( fd, 10 ), RFIFOW( fd, 12 ), RFIFOCP( fd, 14 ) );
+		sd->mail.dest_id = RFIFOL(fd, 6);
 	}
 }
 
@@ -2664,10 +2665,12 @@ bool intif_mail_checkreceiver( map_session_data* sd, char* name ){
 	map_session_data *tsd;
 
 	tsd = map_nick2sd( name, false );
+	sd->mail.dest_id = 0;
 
 	// If the target player is online on this map-server
 	if( tsd != NULL ){
 		clif_Mail_Receiver_Ack( sd, tsd->status.char_id, tsd->status.class_, tsd->status.base_level, name );
+		sd->mail.dest_id = tsd->status.char_id;
 		return true;
 	}
 
@@ -2787,7 +2790,7 @@ static void intif_parse_Auction_register(int fd)
 		clif_Auction_message(sd->fd, 4);
 		pc_additem(sd, &auction.item, auction.item.amount, LOG_TYPE_AUCTION);
 
-		pc_getzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
+		pc_getzeny(sd, zeny, LOG_TYPE_AUCTION);
 	}
 }
 
@@ -2917,7 +2920,7 @@ static void intif_parse_Auction_bid(int fd)
 	clif_Auction_message(sd->fd, result);
 	if( bid > 0 )
 	{
-		pc_getzeny(sd, bid, LOG_TYPE_AUCTION,NULL);
+		pc_getzeny(sd, bid, LOG_TYPE_AUCTION);
 	}
 	if( result == 1 )
 	{ // To update the list, display your buy list
