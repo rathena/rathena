@@ -8,7 +8,7 @@ niflheim,149,124,0	script	nifla_nifdun01a	WARPNPC,1,1,{
 	end;
 OnTouch:
 	if (isbegin_quest(8640) == 0) {
-		npctalk "Angry Gatekeeper: How are you? Ezergil? Go in? Do you want to go in? Kick!", "Angry Gatekeeper#lv200", bc_self;
+		npctalk "Angry Gatekeeper: How are you adventurer? Go in? Do you want to go in? Kick!", "Angry Gatekeeper#lv200", bc_self;
 		npctalk "Funny Gatekeeper's Friend: Awesome!", "Funny Gatekeeper's Friend#lv20", bc_self;
 		end;
 	}
