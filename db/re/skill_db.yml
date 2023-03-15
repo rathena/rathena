@@ -17977,6 +17977,28 @@ Body:
     Range: 9
     Duration1: 3000
     Status: GRADUAL_GRAVITY
+  - Id: 753  
+    Name: NPC_DAMAGE_HEAL
+    Description: Damage Heal
+    MaxLevel: 3
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Duration1: 30000
+    Status: DAMAGE_HEAL
+  - Id: 754
+    Name: NPC_IMMUNE_PROPERTY
+    Description: Property Immune
+    MaxLevel: 10
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 14 #TODO: confirm
+    Duration1: 30000
   - Id: 755
     Name: NPC_MOVE_COORDINATE
     Description: Change Location
