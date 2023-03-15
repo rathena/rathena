@@ -5572,10 +5572,10 @@ uint8 pc_inventoryblank(map_session_data *sd)
  * @param sd: Player
  * @param zeny: Zeny removed
  * @param type: Log type
- * @param tsd: (optional) From who to log (if null take sd)
+ * @param log_charid: (optional) From who to log (if not needed, use 0)
  * @return 0: Success, 1: Failed (Removing negative Zeny or not enough Zeny), 2: Player not found
  */
-char pc_payzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_session_data *tsd)
+char pc_payzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, uint32 log_charid)
 {
 	nullpo_retr(2,sd);
 
@@ -5592,8 +5592,7 @@ char pc_payzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_s
 	sd->status.zeny -= zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
-	if(!tsd) tsd = sd;
-	log_zeny(sd, type, tsd, -zeny);
+	log_zeny(*sd, type, log_charid, -zeny);
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Removed %dz.", zeny);
@@ -5607,10 +5606,10 @@ char pc_payzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_s
  * Attempts to give zeny to player
  * @param sd: Player
  * @param type: Log type
- * @param tsd: (optional) From who to log (if null take sd)
+ * @param log_charid: (optional) From who to log (if not needed, use 0)
  * @return -1: Player not found, 0: Success, 1: Giving negative Zeny
  */
-char pc_getzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_session_data *tsd)
+char pc_getzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, uint32 log_charid)
 {
 	nullpo_retr(-1,sd);
 
@@ -5627,8 +5626,7 @@ char pc_getzeny(map_session_data *sd, int zeny, enum e_log_pick_type type, map_s
 	sd->status.zeny += zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
-	if(!tsd) tsd = sd;
-	log_zeny(sd, type, tsd, zeny);
+	log_zeny(*sd, type, log_charid, zeny);
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
@@ -6656,7 +6654,7 @@ int pc_steal_coin(map_session_data *sd,struct block_list *target)
 		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
 		int amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
 
-		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
+		pc_getzeny(sd, amount, LOG_TYPE_STEAL);
 		md->state.steal_coin_flag = 1;
 		return 1;
 	}
@@ -9767,7 +9765,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 		if( zeny_penalty > 0 && !mapdata->flag[MF_NOZENYPENALTY]) {
 			zeny_penalty = (uint32)( sd->status.zeny * ( zeny_penalty / 10000. ) );
 			if(zeny_penalty)
-				pc_payzeny(sd, zeny_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
+				pc_payzeny(sd, zeny_penalty, LOG_TYPE_PICKDROP_PLAYER);
 		}
 	}
 
@@ -10162,7 +10160,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_ZENY:
 		if( val < 0 )
 			return false;// can't set negative zeny
-		log_zeny(sd, LOG_TYPE_SCRIPT, sd, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
+		log_zeny(*sd, LOG_TYPE_SCRIPT, sd->status.char_id, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
@@ -10301,7 +10299,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_BANK_VAULT:
 		if (val < 0)
 			return false;
-		log_zeny(sd, LOG_TYPE_BANK, sd, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
+		log_zeny(*sd, LOG_TYPE_BANK, sd->status.char_id, -(sd->bank_vault - cap_value(val, 0, MAX_BANK_ZENY)));
 		sd->bank_vault = cap_value(val, 0, MAX_BANK_ZENY);
 		pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 		return true;
@@ -14526,15 +14524,18 @@ void pc_expire_check(map_session_data *sd) {
 * @param money Amount of money to deposit
 **/
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(map_session_data *sd, int money) {
-	unsigned int limit_check = money + sd->bank_vault;
+	if (!sd->state.banking) {
+		return BDA_ERROR;
+	}
 
+	unsigned int limit_check = money + sd->bank_vault;
 	if( money <= 0 || limit_check > MAX_BANK_ZENY ) {
 		return BDA_OVERFLOW;
 	} else if ( money > sd->status.zeny ) {
 		return BDA_NO_MONEY;
 	}
 
-	if( pc_payzeny(sd,money, LOG_TYPE_BANK, NULL) )
+	if( pc_payzeny(sd, money, LOG_TYPE_BANK) )
 		return BDA_NO_MONEY;
 
 	sd->bank_vault += money;
@@ -14550,8 +14551,11 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(map_session_data *sd, int money) {
 * @param money Amount of money that will be withdrawn
 **/
 enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(map_session_data *sd, int money) {
+	if (!sd->state.banking) {
+		return BWA_UNKNOWN_ERROR;
+	}
+
 	unsigned int limit_check = money + sd->status.zeny;
-	
 	if( money <= 0 ) {
 		return BWA_UNKNOWN_ERROR;
 	} else if ( money > sd->bank_vault ) {
@@ -14562,7 +14566,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(map_session_data *sd, int money) {
 		return BWA_UNKNOWN_ERROR;
 	}
 	
-	if( pc_getzeny(sd,money, LOG_TYPE_BANK, NULL) )
+	if( pc_getzeny(sd,money, LOG_TYPE_BANK) )
 		return BWA_NO_MONEY;
 	
 	sd->bank_vault -= money;
