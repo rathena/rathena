@@ -6854,6 +6854,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	ad.amotion = (skill_get_inf(skill_id)&INF_GROUND_SKILL ? 0 : sstatus->amotion); //Amotion should be 0 for ground skills.
 	ad.dmotion = tstatus->dmotion;
 	ad.blewcount = skill_get_blewcount(skill_id, skill_lv);
+	ad.flag = BF_MAGIC|BF_SKILL;
+	ad.miscflag = mflag;
 	ad.dmg_lv = ATK_DEF;
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
