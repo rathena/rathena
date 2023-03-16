@@ -8578,3 +8578,168 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: DAMAGE_HEAL
+    Icon: EFST_DAMAGE_HEAL
+    DurationLookup: NPC_DAMAGE_HEAL
+    Flags:
+      NoDispell: true
+  - Status: IMMUNE_PROPERTY_NOTHING
+    Icon: EFST_IMMUNE_PROPERTY_NOTHING
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_WATER
+    Icon: EFST_IMMUNE_PROPERTY_WATER
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_GROUND
+    Icon: EFST_IMMUNE_PROPERTY_GROUND
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_FIRE
+    Icon: EFST_IMMUNE_PROPERTY_FIRE
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_WIND
+    Icon: EFST_IMMUNE_PROPERTY_WIND
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_POISON
+    Icon: EFST_IMMUNE_PROPERTY_POISON
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_SAINT
+    Icon: EFST_IMMUNE_PROPERTY_SAINT
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_DARKNESS
+    Icon: EFST_IMMUNE_PROPERTY_DARKNESS
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_TELEKINESIS
+    Icon: EFST_IMMUNE_PROPERTY_TELEKINESIS
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_UNDEAD: true
+  - Status: IMMUNE_PROPERTY_UNDEAD
+    Icon: EFST_IMMUNE_PROPERTY_UNDEAD
+    DurationLookup: NPC_IMMUNE_PROPERTY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    EndOnStart:
+      IMMUNE_PROPERTY_NOTHING: true
+      IMMUNE_PROPERTY_WATER: true
+      IMMUNE_PROPERTY_GROUND: true
+      IMMUNE_PROPERTY_FIRE: true
+      IMMUNE_PROPERTY_WIND: true
+      IMMUNE_PROPERTY_POISON: true
+      IMMUNE_PROPERTY_SAINT: true
+      IMMUNE_PROPERTY_DARKNESS: true
+      IMMUNE_PROPERTY_TELEKINESIS: true
