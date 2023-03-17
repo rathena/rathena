@@ -2854,7 +2854,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 	if( pc_inventoryblank(sd) < new_ )
 		return e_purchase_result::PURCHASE_FAIL_COUNT;	// Not enough space to store items
 
-	pc_payzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
+	pc_payzeny(sd, (int)z, LOG_TYPE_NPC);
 
 	for( int i = 0; i < item_list.size(); ++i ) {
 		t_itemid nameid = item_list[i].nameid;
@@ -3082,7 +3082,7 @@ uint8 npc_selllist(map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEM
 	if( z > MAX_ZENY )
 		z = MAX_ZENY;
 
-	pc_getzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
+	pc_getzeny(sd, (int)z, LOG_TYPE_NPC);
 
 	// custom merchant shop exp bonus
 	if( battle_config.shop_exp > 0 && z > 0 && ( skill = pc_checkskill(sd,MC_OVERCHARGE) ) > 0)
@@ -3315,7 +3315,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 		}
 	}
 
-	if( pc_payzeny( &sd, (int)requiredZeny, LOG_TYPE_BARTER, nullptr ) != 0 ){
+	if( pc_payzeny( &sd, (int)requiredZeny, LOG_TYPE_BARTER ) != 0 ){
 		return e_purchase_result::PURCHASE_FAIL_MONEY;
 	}
 

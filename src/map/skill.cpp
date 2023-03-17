@@ -7512,7 +7512,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_FORTUNE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_STEAL,NULL);
+		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_STEAL);
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -7651,6 +7651,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_blown(src);
 			}
 		}
+		break;
+
+	case NPC_IMMUNE_PROPERTY:
+		switch (skill_lv) {
+			case 1: type = SC_IMMUNE_PROPERTY_NOTHING; break;
+			case 2: type = SC_IMMUNE_PROPERTY_WATER; break;
+			case 3: type = SC_IMMUNE_PROPERTY_GROUND; break;
+			case 4: type = SC_IMMUNE_PROPERTY_FIRE; break;
+			case 5: type = SC_IMMUNE_PROPERTY_WIND; break;
+			case 6: type = SC_IMMUNE_PROPERTY_DARKNESS; break;
+			case 7: type = SC_IMMUNE_PROPERTY_SAINT; break;
+			case 8: type = SC_IMMUNE_PROPERTY_POISON; break;
+			case 9: type = SC_IMMUNE_PROPERTY_TELEKINESIS; break;
+			case 10: type = SC_IMMUNE_PROPERTY_UNDEAD; break;
+		}
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 
 	case PR_KYRIE:
@@ -7837,6 +7853,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TR_MYSTIC_SYMPHONY:
 	case TR_KVASIR_SONATA:
 	case EM_SPELL_ENCHANTING:
+	case NPC_DAMAGE_HEAL:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -18272,7 +18289,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				require.zeny = 0; //Zeny is reduced on skill_attack.
 			if( sd->status.zeny < require.zeny )
 				require.zeny = sd->status.zeny;
-			pc_payzeny(sd,require.zeny,LOG_TYPE_CONSUME,NULL);
+			pc_payzeny(sd,require.zeny,LOG_TYPE_CONSUME);
 		}
 	}
 

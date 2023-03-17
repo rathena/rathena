@@ -3429,7 +3429,7 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd){
 			break;
 	}
 
-	if (zeny && pc_payzeny(sd, zeny, LOG_TYPE_OTHER, nullptr)) {
+	if (zeny && pc_payzeny(sd, zeny, LOG_TYPE_OTHER)) {
 		clif_guild_castle_teleport_res(*sd, SIEGE_TP_NOT_ENOUGH_ZENY);
 		return;
 	}
@@ -17009,7 +17009,7 @@ void clif_parse_Auction_register(int fd, map_session_data *sd)
 		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1, 6, LOG_TYPE_AUCTION);
 		sd->auction.amount = 0;
 
-		pc_payzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
+		pc_payzeny(sd, zeny, LOG_TYPE_AUCTION);
 	}
 }
 
@@ -17049,7 +17049,7 @@ void clif_parse_Auction_bid(int fd, map_session_data *sd){
 	else if ( CheckForCharServer() ) // char server is down (bugreport:1138)
 		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 	else {
-		pc_payzeny(sd, bid, LOG_TYPE_AUCTION, NULL);
+		pc_payzeny(sd, bid, LOG_TYPE_AUCTION);
 		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
 	}
 }
@@ -22416,7 +22416,7 @@ void clif_parse_refineui_refine( int fd, map_session_data* sd ){
 	}
 
 	// Try to pay for the refine
-	if( pc_payzeny( sd, cost->zeny, LOG_TYPE_CONSUME, NULL ) ){
+	if( pc_payzeny( sd, cost->zeny, LOG_TYPE_CONSUME ) ){
 		clif_npc_buy_result( sd, e_purchase_result::PURCHASE_FAIL_MONEY ); // "You do not have enough zeny."
 		return;
 	}
@@ -22580,7 +22580,7 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		return false;
 	}
 
-	if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER, nullptr ) != 0 ){
+	if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER ) != 0 ){
 		return false;
 	}
 
@@ -23834,7 +23834,7 @@ void clif_parse_enchantgrade_start( int fd, map_session_data* sd ){
 		}
 	}
 
-	if( pc_payzeny( sd, option->zeny, LOG_TYPE_ENCHANTGRADE, nullptr ) > 0 ){
+	if( pc_payzeny( sd, option->zeny, LOG_TYPE_ENCHANTGRADE ) > 0 ){
 		return;
 	}
 
@@ -24280,7 +24280,7 @@ void clif_parse_enchantwindow_general( int fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
-	if( pc_payzeny( sd, enchant_slot->normal.zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+	if( pc_payzeny( sd, enchant_slot->normal.zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
 
@@ -24407,7 +24407,7 @@ void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
-	if( pc_payzeny( sd, perfect_enchant->zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+	if( pc_payzeny( sd, perfect_enchant->zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
 
@@ -24504,7 +24504,7 @@ void clif_parse_enchantwindow_upgrade( int fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
-	if( pc_payzeny( sd, upgrade->zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+	if( pc_payzeny( sd, upgrade->zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
 
@@ -24609,7 +24609,7 @@ void clif_parse_enchantwindow_reset( int fd, map_session_data* sd ){
 		materials[idx] = entry.second;
 	}
 
-	if( pc_payzeny( sd, enchant->reset.zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+	if( pc_payzeny( sd, enchant->reset.zeny, LOG_TYPE_ENCHANT ) != 0 ){
 		return;
 	}
 
