@@ -1493,6 +1493,7 @@ void chmapif_server_destroy(int id){
 		do_close(map_server[id].fd);
 		map_server[id].fd = -1;
 	}
+	map_server[id].maps.clear();
 }
 
 /**
