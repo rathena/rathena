@@ -687,6 +687,8 @@ int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* 
 			if (gc)
 			{
 				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
+				// placement new
+				new(md->guardian_data) guardian_data();
 				md->guardian_data->castle = gc;
 				md->guardian_data->number = MAX_GUARDIANS;
 				md->guardian_data->guild_id = gc->guild_id;
@@ -890,6 +892,8 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 
 	md = mob_spawn_dataset(&data);
 	md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
+	// placement new
+	new (md->guardian_data) guardian_data();
 	md->guardian_data->number = guardian;
 	md->guardian_data->guild_id = gc->guild_id;
 	md->guardian_data->castle = gc;

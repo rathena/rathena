@@ -3536,6 +3536,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 						gc->temp_guardians[i] = 0;
 				}
 
+				md->guardian_data->~guardian_data();
 				aFree(md->guardian_data);
 				md->guardian_data = NULL;
 			}
