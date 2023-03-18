@@ -144,7 +144,7 @@ struct StringBuf
 };
 typedef struct StringBuf StringBuf;
 
-#ifdef USE_MEMGR
+#ifdef USE_MEMMGR
 StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func);
 #define StringBuf_Malloc() _StringBuf_Malloc(ALC_MARK)
 void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* self);
