@@ -144,7 +144,6 @@ struct StringBuf
 };
 typedef struct StringBuf StringBuf;
 
-#ifdef USE_MEMMGR
 StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func);
 #define StringBuf_Malloc() _StringBuf_Malloc(ALC_MARK)
 void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* self);
@@ -157,14 +156,6 @@ int _StringBuf_Append(const char *file, int line, const char *func, StringBuf* s
 #define StringBuf_Append(self,sbuf) _StringBuf_Append(ALC_MARK,self,sbuf)
 int _StringBuf_AppendStr(const char *file, int line, const char *func, StringBuf* self, const char* str);
 #define StringBuf_AppendStr(self,str) _StringBuf_AppendStr(ALC_MARK,self,str)
-#else
-StringBuf* StringBuf_Malloc();
-void StringBuf_Init(StringBuf* self);
-int StringBuf_Printf(StringBuf* self, const char* fmt, ...);
-int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list args);
-int StringBuf_Append(StringBuf* self, const StringBuf* sbuf);
-int StringBuf_AppendStr(StringBuf* self, const char* str);
-#endif
 int StringBuf_Length(StringBuf* self);
 char* StringBuf_Value(StringBuf* self);
 void StringBuf_Clear(StringBuf* self);
