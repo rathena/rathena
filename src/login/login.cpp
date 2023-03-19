@@ -4,15 +4,13 @@
 #pragma warning(disable:4800)
 #include "login.hpp"
 
+#include <stdlib.h>
+#include <string.h>
 #include <string>
 #include <unordered_map>
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <bcrypt/BCrypt.hpp>
 
-#include <config/core.hpp>
 
 #include <common/cli.hpp>
 #include <common/core.hpp>
@@ -27,6 +25,7 @@
 #include <common/timer.hpp>
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
+#include <config/core.hpp>
 
 #include "account.hpp"
 #include "ipban.hpp"
