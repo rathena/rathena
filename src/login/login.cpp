@@ -534,7 +534,7 @@ void login_update_all_passwords() {
 	while (it->next(it, &acc)) {
 		if (login_update_password(acc.pass, &acc) == 1) {
 			counter++;
-			accounts->save(accounts, &acc);
+			accounts->save(accounts, &acc, false);
 		}
 	}
 	ShowInfo("Encrypted %d passwords\n", counter);
@@ -543,7 +543,7 @@ void login_update_all_passwords() {
 	accounts = NULL;
 	accounts = account_db_sql(); // needs to be initialized for to gracefully exit
 
-	runflag = CORE_ST_STOP;
+	global_core->signal_shutdown();
 }
 
 int login_get_usercount( int users ){
