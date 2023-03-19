@@ -1473,7 +1473,7 @@ int pet_change_name_ack(map_session_data *sd, char* name, int flag)
 		return 0;
 	}
 
-	memcpy(pd->pet.name, name, NAME_LENGTH);
+	safestrncpy(pd->pet.name, name, NAME_LENGTH);
 	clif_name_area(&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);

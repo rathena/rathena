@@ -97145,25 +97145,447 @@ Body:
       - Item: R001_Bestia_Card
         Rate: 1
         StealProtected: true
-#  - Id: 20935
-#    AegisName: GAN_CEANN
-#  - Id: 20936
-#    AegisName: DISGUISER
-#  - Id: 20937
-#    AegisName: BRUTAL_MURDERER
-#  - Id: 20938
-#    AegisName: GHOST_CUBE
-#  - Id: 20939
-#    AegisName: LUDE_GAL
-#  - Id: 20940
-#    AegisName: BLUEMOON_LOLI_RURI
-#  - Id: 20941
-#    AegisName: GROTE
-#  - Id: 20942
-#    AegisName: PIERROTZOIST
-#  - Id: 20943
-#    AegisName: DEATH_WITCH
-#    DamageTaken: 10
+  - Id: 20935
+    AegisName: GAN_CEANN
+    Name: Gan Ceann
+    Level: 215
+    Hp: 11785610
+    BaseExp: 267854
+    JobExp: 188128
+    Attack: 7951
+    Attack2: 922
+    Defense: 380
+    MagicDefense: 99
+    MagicResistance: 130
+    Resistance: 130
+    Str: 278
+    Agi: 166
+    Vit: 121
+    Int: 121
+    Dex: 178
+    Luk: 123
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 155
+    AttackDelay: 238
+    AttackMotion: 576
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Broken_Armor_Piece
+        Rate: 2400
+      - Item: Broken_Steel_Piece
+        Rate: 1600
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Zelunium
+        Rate: 12
+      - Item: Gan_Ceann_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20936
+    AegisName: DISGUISER
+    Name: Disguiser
+    Level: 254
+    Hp: 42303800
+    BaseExp: 335956
+    JobExp: 235169
+    Attack: 9874
+    Attack2: 1230
+    Defense: 542
+    MagicDefense: 168
+    MagicResistance: 171
+    Resistance: 187
+    Str: 314
+    Agi: 203
+    Vit: 147
+    Int: 135
+    Dex: 201
+    Luk: 198
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 384
+    AttackMotion: 768
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Red_Scarf
+        Rate: 2500
+      - Item: Tangled_Chain
+        Rate: 1800
+      - Item: White_Powder
+        Rate: 50
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 25
+      - Item: Shadowdecon
+        Rate: 25
+      - Item: Disguiser_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20937
+    AegisName: BRUTAL_MURDERER
+    Name: Brutal Murderer
+    Level: 214
+    Hp: 13909270
+    BaseExp: 269952
+    JobExp: 188966
+    Attack: 8135
+    Attack2: 998
+    Defense: 470
+    MagicDefense: 80
+    MagicResistance: 143
+    Resistance: 187
+    Str: 277
+    Agi: 174
+    Vit: 175
+    Int: 134
+    Dex: 131
+    Luk: 130
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 336
+    AttackMotion: 672
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Old_Manteau
+        Rate: 2400
+      - Item: Rusty_Cleaver
+        Rate: 1600
+      - Item: Mr_Scream
+        Rate: 20
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Zelunium
+        Rate: 12
+      - Item: Brutal_Murderer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20938
+    AegisName: GHOST_CUBE
+    Name: Ghost Cube
+    Level: 213
+    Hp: 12735150
+    BaseExp: 261542
+    JobExp: 183079
+    Attack: 8114
+    Attack2: 1032
+    Defense: 482
+    MagicDefense: 114
+    MagicResistance: 171
+    Resistance: 171
+    Str: 274
+    Agi: 185
+    Vit: 161
+    Int: 161
+    Dex: 177
+    Luk: 169
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 624
+    AttackMotion: 1248
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Piece_Of_Black_Cloth
+        Rate: 2400
+      - Item: Ectoplasm
+        Rate: 2000
+      - Item: Black_Powder
+        Rate: 250
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Zelunium
+        Rate: 12
+      - Item: Ghost_Cube_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20939
+    AegisName: LUDE_GAL
+    Name: Lude Gal
+    Level: 213
+    Hp: 12840680
+    BaseExp: 259877
+    JobExp: 181914
+    Attack: 7925
+    Attack2: 1001
+    Defense: 410
+    MagicDefense: 105
+    MagicResistance: 151
+    Resistance: 179
+    Str: 274
+    Agi: 171
+    Vit: 168
+    Int: 142
+    Dex: 168
+    Luk: 134
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Pumpkin_Bucket
+        Rate: 2500
+      - Item: Ectoplasm
+        Rate: 2000
+      - Item: Transparent_Cloth
+        Rate: 500
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 12
+      - Item: Zelunium
+        Rate: 12
+      - Item: Lude_Gal_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20940
+    AegisName: BLUEMOON_LOLI_RURI
+    Name: Blue Moon Loli Ruri
+    Level: 255
+    Hp: 46338500
+    BaseExp: 339785
+    JobExp: 237850
+    Attack: 9325
+    Attack2: 1345
+    Defense: 457
+    MagicDefense: 191
+    MagicResistance: 260
+    Resistance: 238
+    Str: 301
+    Agi: 205
+    Vit: 187
+    Int: 204
+    Dex: 192
+    Luk: 205
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 125
+    AttackDelay: 510
+    AttackMotion: 1020
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Black_Kitty_Doll
+        Rate: 500
+      - Item: Striped_Socks
+        Rate: 2400
+      - Item: Bat_Cage
+        Rate: 2000
+      - Item: Loki's_Whispers
+        Rate: 2
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 25
+      - Item: Bluemoon_Loli_Ruri_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20941
+    AegisName: GROTE
+    Name: Grote
+    Level: 253
+    Hp: 47842600
+    BaseExp: 346622
+    JobExp: 242635
+    Attack: 9354
+    Attack2: 1320
+    Defense: 456
+    MagicDefense: 117
+    MagicResistance: 153
+    Resistance: 237
+    Str: 311
+    Agi: 207
+    Vit: 187
+    Int: 121
+    Dex: 199
+    Luk: 207
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 792
+    AttackMotion: 1584
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Hanging_Doll
+        Rate: 1000
+      - Item: Rotten_Rope
+        Rate: 2500
+      - Item: Tree_Knot
+        Rate: 2000
+      - Item: Branch_Of_Dead_Tree
+        Rate: 5
+      - Item: Bloody_Dead_Branch
+        Rate: 2
+      - Item: Shadowdecon
+        Rate: 25
+      - Item: Zelunium
+        Rate: 25
+      - Item: Grote_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20942
+    AegisName: PIERROTZOIST
+    Name: Pierrotzoist
+    Level: 255
+    Hp: 38506310
+    BaseExp: 339451
+    JobExp: 237616
+    Attack: 9356
+    Attack2: 1247
+    Defense: 541
+    MagicDefense: 134
+    MagicResistance: 226
+    Resistance: 212
+    Str: 311
+    Agi: 177
+    Vit: 166
+    Int: 177
+    Dex: 201
+    Luk: 169
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 155
+    AttackDelay: 768
+    AttackMotion: 1536
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Broken_Needle
+        Rate: 2400
+      - Item: Needle_Pouch
+        Rate: 2000
+      - Item: Stuffed_Doll
+        Rate: 40
+      - Item: Ectoplasm
+        Rate: 150
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 25
+      - Item: Pierrotzoist_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20943
+    AegisName: DEATH_WITCH
+    Name: Death Witch
+    Level: 255
+    Hp: 398856250
+    BaseExp: 9051055
+    JobExp: 6335739
+    Attack: 14658
+    Attack2: 2687
+    Defense: 687
+    MagicDefense: 210
+    MagicResistance: 539
+    Resistance: 273
+    Str: 424
+    Agi: 236
+    Vit: 214
+    Int: 423
+    Dex: 241
+    Luk: 174
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 517
+    AttackMotion: 1134
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Ectoplasm
+        Rate: 200
+      - Item: Yggdrasilberry
+        Rate: 1500
+      - Item: Seed_Of_Yggdrasil
+        Rate: 1500
+      - Item: Leaf_Of_Yggdrasil
+        Rate: 1500
+      - Item: Shadowdecon
+        Rate: 1000
+      - Item: Zelunium
+        Rate: 1000
+      - Item: Death_Witch_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20944
 #    AegisName: JP_E_MONSTER_151
 #  - Id: 20945
