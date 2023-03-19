@@ -6238,8 +6238,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 					if( tsd )
 						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
-					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true, false);
-					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
+					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, BF_WEAPON|BF_SHORT|BF_NORMAL, CR_REFLECTSHIELD, 1, rdamage, ATK_DEF, rdelay ,true, false);
 				}
 		}
 
@@ -6587,8 +6586,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 				// It appears that official servers give skill reflect damage a longer delay
-				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, wd->flag, skill_id, skill_lv, rdamage, ATK_DEF, rdelay ,true, false);
-				skill_additional_effect(target, (!d_bl) ? src : d_bl, skill_id, skill_lv, wd->flag, ATK_DEF, tick);
+				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, BF_WEAPON|BF_SHORT|BF_NORMAL, CR_REFLECTSHIELD, 1, rdamage, ATK_DEF, rdelay ,true, false);
 			}
 		}
 	}
@@ -7044,7 +7042,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	tsc = status_get_sc(target);
 
 	if (tsc && tsc->getSCE(SC_MAGICMIRROR)) {
-		ad.flag = BF_WEAPON|BF_SKILL|BF_NORMAL;
+		ad.flag = BF_WEAPON|BF_NORMAL;
 	} else {
 		ad.flag = BF_MAGIC|BF_SKILL;
 	}
@@ -8581,7 +8579,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	status_change *sc = status_get_sc(src);
 
 	if (sc) {
-		if (sc->getSCE(SC_HELLS_PLANT))
+		if (skill_id == GN_HELLS_PLANT_ATK && sc->getSCE(SC_HELLS_PLANT))
 			return 0;
 	}
 
