@@ -108,6 +108,12 @@ lhz_d_n2	mapflag	restricted	6
 1@swat	mapflag	restricted	6
 
 //============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	restricted	6
+1@md_pay	mapflag	restricted	6
+
+//============================================================
 // Chicken Mode Nightmare Glastheim
 //============================================================
 1@gl_k2	mapflag	restricted	6

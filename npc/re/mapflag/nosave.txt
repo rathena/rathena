@@ -203,6 +203,12 @@ que_swat	mapflag	nosave	SavePoint
 rockmi2	mapflag	nosave	SavePoint
 
 //============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	nosave	SavePoint
+1@md_pay	mapflag	nosave	SavePoint
+
+//============================================================
 // Chicken Mode - Nightmare Glastheim
 //============================================================
 1@gl_k2	mapflag	nosave	SavePoint

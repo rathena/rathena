@@ -15,21 +15,21 @@
 #include <stdlib.h> // atoi, strtol, strtoll, exit
 
 #ifdef PCRE_SUPPORT
-#include "../../3rdparty/pcre/include/pcre.h" // preg_match
+#include <pcre.h> // preg_match
 #endif
 
-#include "../common/cbasetypes.hpp"
-#include "../common/ers.hpp"  // ers_destroy
-#include "../common/malloc.hpp"
-#include "../common/md5calc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/ers.hpp>  // ers_destroy
+#include <common/malloc.hpp>
+#include <common/md5calc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
@@ -4846,6 +4846,8 @@ void do_init_script(void) {
 	st_ers = ers_new(sizeof(struct script_state), "script.cpp::st_ers", ERS_CACHE_OPTIONS);
 	stack_ers = ers_new(sizeof(struct script_stack), "script.cpp::script_stack", ERS_OPT_FLEX_CHUNK);
 	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
+
+	add_timer_func_list( run_script_timer, "run_script_timer" );
 
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
@@ -13118,7 +13120,7 @@ BUILDIN_FUNC(warpwaitingpc)
 			{// no zeny to cover set fee
 				break;
 			}
-			pc_payzeny(sd, cd->zeny, LOG_TYPE_NPC, NULL);
+			pc_payzeny(sd, cd->zeny, LOG_TYPE_NPC);
 		}
 
 		mapreg_setreg(reference_uid(add_str("$@warpwaitingpc"), i), sd->bl.id);
@@ -14494,7 +14496,7 @@ BUILDIN_FUNC(getitemname)
 
 	char* item_name = (char *)aMalloc( ITEM_NAME_LENGTH * sizeof( char ) );
 
-	memcpy(item_name, i_data->ename.c_str(), ITEM_NAME_LENGTH);
+	safestrncpy(item_name, i_data->ename.c_str(), ITEM_NAME_LENGTH);
 	script_pushstr(st,item_name);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -21526,6 +21528,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
 	int instance_id = va_arg(ap, int);
+	int flag = va_arg(ap, int);
 	map_session_data *sd;
 
 	nullpo_retr(0, bl);
@@ -21534,6 +21537,9 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	sd = (TBL_PC *)bl;
+
+	if ((flag & IWA_NOTDEAD) != 0 && pc_isdead(sd))
+		return 0;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
@@ -21556,9 +21562,11 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		case IM_GUILD:
 			if (sd->status.guild_id != owner_id)
 				return 0;
+			break;
 		case IM_CLAN:
 			if (sd->status.clan_id != owner_id)
 				return 0;
+			break;
 	}
 
 	pc_setpos(sd, m, x, y, CLR_TELEPORT);
@@ -21570,19 +21578,18 @@ BUILDIN_FUNC(instance_warpall)
 {
 	int16 m;
 	int instance_id;
-	const char *mapn;
-	int x, y;
 
-	mapn = script_getstr(st,2);
-	x    = script_getnum(st,3);
-	y    = script_getnum(st,4);
+	const char *mapn = script_getstr(st,2);
+
 	if( script_hasdata(st,5) )
 		instance_id = script_getnum(st,5);
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
 
-	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
+	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0) {
+		ShowError("buildin_instance_warpall: Instance map for instance ID %d is not found.\n", instance_id);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
@@ -21591,8 +21598,15 @@ BUILDIN_FUNC(instance_warpall)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	int flag = IWA_NONE;
+	int x = script_getnum(st,3);
+	int y = script_getnum(st,4);
+
+	if( script_hasdata(st, 6) )
+		flag = script_getnum(st, 6);
+
 	for(const auto &it : idata->map)
-		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id);
+		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id, flag);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -26804,6 +26818,37 @@ BUILDIN_FUNC(itemlink)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(mesitemlink){
+	t_itemid nameid = script_getnum( st, 2 );
+	std::shared_ptr<item_data> data = item_db.find( nameid );
+	
+	if( data == nullptr ){
+		ShowError( "buildin_mesitemlink: Item ID %u does not exists.\n", nameid );
+		script_pushconststr( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	bool use_brackets = true;
+
+	if( script_hasdata( st, 3 ) ){
+		use_brackets = script_getnum( st, 3 ) != 0;
+	}
+
+	const char* name = nullptr;
+
+	if( script_hasdata( st, 4 ) ){
+		name = script_getstr( st, 4 );
+	}
+
+	// Create the link, depending on configuration and packet version
+	std::string itemlstr = item_db.create_item_link_for_mes( data, use_brackets, name );
+
+	// Push it to the script engine for further usage
+	script_pushstrcopy( st, itemlstr.c_str() );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(addfame) {
 	map_session_data *sd;
 
@@ -26869,7 +26914,7 @@ BUILDIN_FUNC(macro_detector) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-#include "../custom/script.inc"
+#include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
@@ -27414,7 +27459,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_enter,"s????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
-	BUILDIN_DEF(instance_warpall,"sii?"),
+	BUILDIN_DEF(instance_warpall,"sii??"),
 	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	BUILDIN_DEF(instance_check_guild,"i???"),
@@ -27618,13 +27663,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
 	BUILDIN_DEF(itemlink, "i?????????"),
+	BUILDIN_DEF(mesitemlink, "i??"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
 
-#include "../custom/script_def.inc"
+#include <custom/script_def.inc>
 
 	{NULL,NULL,NULL},
 };

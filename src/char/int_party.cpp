@@ -9,14 +9,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -536,7 +536,7 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 
 	p = std::make_shared<struct party_data>();
 
-	memcpy(p->party.name,name,NAME_LENGTH);
+	safestrncpy(p->party.name,name,NAME_LENGTH);
 	p->party.exp=0;
 	p->party.item=(item?1:0)|(item2?2:0);
 

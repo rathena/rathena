@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/malloc.hpp"
-#include "../common/md5calc.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp" //show notice
-#include "../common/socket.hpp" //wfifo session
-#include "../common/strlib.hpp" //safeprint
-#include "../common/timer.hpp" //difftick
-#include "../common/utils.hpp"
+#include <common/malloc.hpp>
+#include <common/md5calc.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp> //show notice
+#include <common/socket.hpp> //wfifo session
+#include <common/strlib.hpp> //safeprint
+#include <common/timer.hpp> //difftick
+#include <common/utils.hpp>
 
 #include "account.hpp"
 #include "ipban.hpp" //ipban_check

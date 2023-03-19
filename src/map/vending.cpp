@@ -5,11 +5,11 @@
 
 #include <stdlib.h> // atoi
 
-#include "../common/malloc.hpp" // aMalloc, aFree
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp" // ShowInfo
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"  // DIFF_TICK
+#include <common/malloc.hpp> // aMalloc, aFree
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp> // ShowInfo
+#include <common/strlib.hpp>
+#include <common/timer.hpp>  // DIFF_TICK
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
@@ -213,10 +213,10 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 		}
 	}
 
-	pc_payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd);
+	pc_payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd->status.char_id);
 	achievement_update_objective(sd, AG_SPEND_ZENY, 1, (int)z);
 	z = vending_calc_tax(sd, z);
-	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd);
+	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd->status.char_id);
 
 	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);

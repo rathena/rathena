@@ -9,19 +9,19 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/cli.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/cli.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "battle.hpp"
@@ -2804,12 +2804,12 @@ ACMD_FUNC(zeny)
 	}
 
 	if(zeny > 0){
-	    if((ret=pc_getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL)) == 1)
+	    if((ret=pc_getzeny(sd,zeny,LOG_TYPE_COMMAND)) == 1)
 		clif_displaymessage(fd, msg_txt(sd,149)); // Unable to increase the number/value.
 	}
 	else {
 	    if( sd->status.zeny < -zeny ) zeny = -sd->status.zeny;
-	    if((ret=pc_payzeny(sd,-zeny,LOG_TYPE_COMMAND,NULL)) == 1)
+	    if((ret=pc_payzeny(sd,-zeny,LOG_TYPE_COMMAND)) == 1)
 		clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 	}
 	if(!ret) clif_displaymessage(fd, msg_txt(sd,176)); //ret=0 mean cmd success
@@ -4214,7 +4214,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
 		skill_reload();
-		hom_reload_skill();
+		homunculus_db.reload();
 		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
 		atcommand_doload();
@@ -8119,7 +8119,7 @@ ACMD_FUNC(hominfo)
 ACMD_FUNC(homstats)
 {
 	struct homun_data *hd;
-	struct s_homunculus_db *db;
+	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
 	int lv, min, max, evo;
 
@@ -10809,7 +10809,7 @@ ACMD_FUNC( roulette ){
 #endif
 }
 
-#include "../custom/atcommand.inc"
+#include <custom/atcommand.inc>
 
 /**
  * Fills the reference of available commands in atcommand DBMap
@@ -10825,7 +10825,7 @@ void atcommand_basecommands(void) {
 	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
-#include "../custom/atcommand_def.inc"
+#include <custom/atcommand_def.inc>
 		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),

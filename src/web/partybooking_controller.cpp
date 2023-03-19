@@ -5,9 +5,9 @@
 
 #include <string>
 
-#include "../common/showmsg.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
+#include <common/showmsg.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
 
 #include "http.hpp"
 #include "auth.hpp"

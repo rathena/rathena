@@ -15145,7 +15145,6 @@ Body:
                 Amount: 15
               - Material: EP19_D_P_Stone
                 Amount: 3
-# TODO: 48-50? Were they removed already again?
   - Id: 51
     TargetItems:
       C_20th_Anniversary_Hat: true
@@ -21442,3 +21441,2992 @@ Body:
                 Amount: 250
               - Material: Enchant_Ticket
                 Amount: 3
+  - Id: 70
+    TargetItems:
+      S_Master_Weapon: true
+      S_Master_Shield: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Strength5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Dexterity5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Inteligence5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Vitality5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Agility5
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: Luck5
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 71
+    TargetItems:
+      S_DK_Armor: true
+      S_DK_Shoes: true
+      S_DK_Earring: true
+      S_DK_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: DK_Soul_SW
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_MC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: DK_Soul_DB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 72
+    TargetItems:
+      S_IG_Armor: true
+      S_IG_Shoes: true
+      S_IG_Earring: true
+      S_IG_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: IG_Soul_OS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_CR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 73
+    TargetItems:
+      S_SHC_Armor: true
+      S_SHC_Shoes: true
+      S_SHC_Earring: true
+      S_SHC_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SHC_Soul_ES
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_SI
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_IC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 74
+    TargetItems:
+      S_ABC_Armor: true
+      S_ABC_Shoes: true
+      S_ABC_Earring: true
+      S_ABC_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: ABC_Soul_DS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_CR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_FS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_AD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_AS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_FA
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 75
+    TargetItems:
+      S_CD_Armor: true
+      S_CD_Shoes: true
+      S_CD_Earring: true
+      S_CD_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: CD_Soul_AB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: CD_Soul_FL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: CD_Soul_PT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 76
+    TargetItems:
+      S_IQ_Armor: true
+      S_IQ_Shoes: true
+      S_IQ_Earring: true
+      S_IQ_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: IQ_Soul_FT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_JD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_EX
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_FL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 77
+    TargetItems:
+      S_MT_Armor: true
+      S_MT_Shoes: true
+      S_MT_Earring: true
+      S_MT_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: MT_Soul_AS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_SB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_MS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_TL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 78
+    TargetItems:
+      S_BO_Armor: true
+      S_BO_Shoes: true
+      S_BO_Earring: true
+      S_BO_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: BO_Soul_MT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_AZ
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_EP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 79
+    TargetItems:
+      S_WH_Armor: true
+      S_WH_Shoes: true
+      S_WH_Earring: true
+      S_WH_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: WH_Soul_GS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_CB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_ST
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_BT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_FT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: WH_Soul_SW
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 80
+    TargetItems:
+      S_TR_Armor: true
+      S_TR_Shoes: true
+      S_TR_Earring: true
+      S_TR_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: TR_Soul_RB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: TR_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: TR_Soul_MF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 81
+    TargetItems:
+      S_AG_Armor: true
+      S_AG_Shoes: true
+      S_AG_Earring: true
+      S_AG_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: AG_Soul_SV
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_MI
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_FF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_CA
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_RC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_FS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_TS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_ST
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: AG_Soul_RD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 82
+    TargetItems:
+      S_EM_Armor: true
+      S_EM_Shoes: true
+      S_EM_Earring: true
+      S_EM_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: EM_Soul_DS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_CF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_LD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_TD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: EM_Soul_VS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 83
+    TargetItems:
+      S_NW_Armor: true
+      S_NW_Shoes: true
+      S_NW_Earring: true
+      S_NW_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: NW_Soul_VN
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_OB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_WF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_MO
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_GR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 84
+    TargetItems:
+      S_SH_Armor: true
+      S_SH_Shoes: true
+      S_SH_Earring: true
+      S_SH_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SH_Soul_HB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_HC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_CS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 85
+    TargetItems:
+      S_SS_Armor: true
+      S_SS_Shoes: true
+      S_SS_Earring: true
+      S_SS_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SS_Soul_FS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_FK
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_SH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_RH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_RDH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_AH
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KW
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KK
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KN
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SS_Soul_KG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 86
+    TargetItems:
+      S_SKE_Armor: true
+      S_SKE_Shoes: true
+      S_SKE_Earring: true
+      S_SKE_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SKE_Soul_NB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_MK
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_DB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_TG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 87
+    TargetItems:
+      S_SOA_Armor: true
+      S_SOA_Shoes: true
+      S_SOA_Earring: true
+      S_SOA_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: SOA_Soul_BD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_WT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_RP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_BT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_MS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SOA_Soul_FG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 88
+    TargetItems:
+      S_HN_Armor: true
+      S_HN_Shoes: true
+      S_HN_Earring: true
+      S_HN_Pendant: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: M_Pow3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Sta3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Wis3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Spl3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Con3
+            Materials:
+              - Material: S_Enchant_Essence
+          - Item: M_Crt3
+            Materials:
+              - Material: S_Enchant_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Nimble_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Casting_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Critical_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Expert_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: Robust_Soul
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 3
+          - Item: HN_Soul_DB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_SB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_SP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_MS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_JT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_JF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_HD
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_GG
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: HN_Soul_NV
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+  - Id: 89
+    TargetItems:
+      Glacier_Armor: true
+      Glacier_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Pow_S
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Spl_W
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Con_C
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_S_Delay
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_War
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Ran
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Mag
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Force
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_War2
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Ran2
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Mag2
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 90
+    TargetItems:
+      Glacier_Manteau: true
+      Glacier_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Speed
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Caster
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Guide
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Above
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_P_Full
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 91
+    TargetItems:
+      Glacier_Boots: true
+      Glacier_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Hp
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Sp
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_F_Cast
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_P_F
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_M_F
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Robust
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Ov_Pow
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Fi_Con
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Bu_Spl
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 92
+    TargetItems:
+      Glacier_Guard: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_D
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_A
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Res
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Mres
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Guard
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_Intel
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 93
+    TargetItems:
+      Glacier_Pendant: true
+      Glacier_Necklace: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Str
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Dex
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Int
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Spd
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_F_Spirit
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_E_Archer
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Fatal
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Spell
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_P_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_M_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_A_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 94
+    TargetItems:
+      Glacier_Ring: true
+      Glacier_Earring: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_C_Orb_Agi
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Vit
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Luk
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+          - Item: Ice_C_Orb_Spd
+            Price: 1000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 30
+              - Material: Snow_F_Stone1
+                Amount: 20
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ice_C_Orb_F_Spirit
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_E_Archer
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Fatal
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+          - Item: Ice_C_Orb_Spell
+            Price: 2000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 50
+              - Material: Snow_F_Stone1
+                Amount: 40
+              - Material: Snow_F_Stone2
+                Amount: 10
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_C_Orb_P_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_M_P
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+          - Item: Ice_C_Orb_A_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep20_Cat_Whiskers
+                Amount: 70
+              - Material: Snow_F_Stone1
+                Amount: 60
+              - Material: Snow_F_Stone2
+                Amount: 20
+              - Material: Snow_F_Stone3
+                Amount: 10
+  - Id: 95
+    TargetItems:
+      D_Glacier_Armor: true
+      D_Glacier_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Snake_A_Def_1
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Ore
+                Amount: 75
+              - Material: EP19_D_P_Ore
+                Amount: 75
+              - Material: EP19_N_P_Ore
+                Amount: 75
+        Upgrades:
+          - Enchant: Snake_A_Def_1
+            Upgrade: Snake_A_Def_2
+            Price: 1600000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Enchant: Snake_A_Def_2
+            Upgrade: Snake_A_Def_3
+            Price: 1900000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 5
+              - Material: EP19_D_P_Crystal
+                Amount: 35
+              - Material: EP19_N_P_Crystal
+                Amount: 35
+          - Enchant: Snake_A_Def_3
+            Upgrade: Snake_A_Def_4
+            Price: 2200000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 40
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 5
+          - Enchant: Snake_A_Def_4
+            Upgrade: Snake_A_Def_5
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_A_Def_5
+            Upgrade: Snake_A_Def_6
+            Price: 2800000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 2
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_A_Def_6
+            Upgrade: Snake_A_Def_7
+            Price: 3100000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 5
+              - Material: EP19_S_F_2_Extract
+                Amount: 5
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_A_Def_7
+            Upgrade: Snake_A_Def_8
+            Price: 3400000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_S_F_3_Extract
+                Amount: 5
+          - Enchant: Snake_A_Def_8
+            Upgrade: Snake_A_Def_9
+            Price: 3700000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 14
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_Scale
+          - Enchant: Snake_A_Def_9
+            Upgrade: Snake_A_Def_10
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+                Amount: 2
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Snake_A_Atk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+          - Item: Snake_A_Matk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+        Upgrades:
+          - Enchant: Snake_A_Atk_1
+            Upgrade: Snake_A_Atk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_A_Atk_2
+            Upgrade: Snake_A_Atk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_A_Atk_3
+            Upgrade: Snake_A_Atk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_A_Atk_4
+            Upgrade: Snake_A_Atk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_A_Atk_5
+            Upgrade: Snake_A_Atk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_A_Atk_6
+            Upgrade: Snake_A_Atk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_A_Atk_7
+            Upgrade: Snake_A_Atk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_A_Atk_8
+            Upgrade: Snake_A_Atk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_A_Atk_9
+            Upgrade: Snake_A_Atk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+          - Enchant: Snake_A_Matk_1
+            Upgrade: Snake_A_Matk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_A_Matk_2
+            Upgrade: Snake_A_Matk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_A_Matk_3
+            Upgrade: Snake_A_Matk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_A_Matk_4
+            Upgrade: Snake_A_Matk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_A_Matk_5
+            Upgrade: Snake_A_Matk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_A_Matk_6
+            Upgrade: Snake_A_Matk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_A_Matk_7
+            Upgrade: Snake_A_Matk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_A_Matk_8
+            Upgrade: Snake_A_Matk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_A_Matk_9
+            Upgrade: Snake_A_Matk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Snake_G_Blessing
+            Price: 8000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 40
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+  - Id: 96
+    TargetItems:
+      D_Glacier_Manteau: true
+      D_Glacier_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Snake_H_Def_1
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Ore
+                Amount: 75
+              - Material: EP19_D_P_Ore
+                Amount: 75
+              - Material: EP19_N_P_Ore
+                Amount: 75
+        Upgrades:
+          - Enchant: Snake_H_Def_1
+            Upgrade: Snake_H_Def_2
+            Price: 1600000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Enchant: Snake_H_Def_2
+            Upgrade: Snake_H_Def_3
+            Price: 1900000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 5
+              - Material: EP19_D_P_Crystal
+                Amount: 35
+              - Material: EP19_N_P_Crystal
+                Amount: 35
+          - Enchant: Snake_H_Def_3
+            Upgrade: Snake_H_Def_4
+            Price: 2200000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 40
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 5
+          - Enchant: Snake_H_Def_4
+            Upgrade: Snake_H_Def_5
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_H_Def_5
+            Upgrade: Snake_H_Def_6
+            Price: 2800000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 2
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_H_Def_6
+            Upgrade: Snake_H_Def_7
+            Price: 3100000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 5
+              - Material: EP19_S_F_2_Extract
+                Amount: 5
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_H_Def_7
+            Upgrade: Snake_H_Def_8
+            Price: 3400000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_S_F_3_Extract
+                Amount: 5
+          - Enchant: Snake_H_Def_8
+            Upgrade: Snake_H_Def_9
+            Price: 3700000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 14
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_Scale
+          - Enchant: Snake_H_Def_9
+            Upgrade: Snake_H_Def_10
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+                Amount: 2
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Snake_H_Atk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+          - Item: Snake_H_Matk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+        Upgrades:
+          - Enchant: Snake_H_Atk_1
+            Upgrade: Snake_H_Atk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_H_Atk_2
+            Upgrade: Snake_H_Atk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_H_Atk_3
+            Upgrade: Snake_H_Atk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_H_Atk_4
+            Upgrade: Snake_H_Atk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_H_Atk_5
+            Upgrade: Snake_H_Atk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_H_Atk_6
+            Upgrade: Snake_H_Atk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_H_Atk_7
+            Upgrade: Snake_H_Atk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_H_Atk_8
+            Upgrade: Snake_H_Atk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_H_Atk_9
+            Upgrade: Snake_H_Atk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+          - Enchant: Snake_H_Matk_1
+            Upgrade: Snake_H_Matk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_H_Matk_2
+            Upgrade: Snake_H_Matk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_H_Matk_3
+            Upgrade: Snake_H_Matk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_H_Matk_4
+            Upgrade: Snake_H_Matk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_H_Matk_5
+            Upgrade: Snake_H_Matk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_H_Matk_6
+            Upgrade: Snake_H_Matk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_H_Matk_7
+            Upgrade: Snake_H_Matk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_H_Matk_8
+            Upgrade: Snake_H_Matk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_H_Matk_9
+            Upgrade: Snake_H_Matk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Snake_G_Grace
+            Price: 8000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 40
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+  - Id: 97
+    TargetItems:
+      D_Glacier_Boots: true
+      D_Glacier_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Snake_S_Def_1
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Ore
+                Amount: 75
+              - Material: EP19_D_P_Ore
+                Amount: 75
+              - Material: EP19_N_P_Ore
+                Amount: 75
+        Upgrades:
+          - Enchant: Snake_S_Def_1
+            Upgrade: Snake_S_Def_2
+            Price: 1600000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Enchant: Snake_S_Def_2
+            Upgrade: Snake_S_Def_3
+            Price: 1900000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 5
+              - Material: EP19_D_P_Crystal
+                Amount: 35
+              - Material: EP19_N_P_Crystal
+                Amount: 35
+          - Enchant: Snake_S_Def_3
+            Upgrade: Snake_S_Def_4
+            Price: 2200000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 40
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 5
+          - Enchant: Snake_S_Def_4
+            Upgrade: Snake_S_Def_5
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_S_Def_5
+            Upgrade: Snake_S_Def_6
+            Price: 2800000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 2
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_S_Def_6
+            Upgrade: Snake_S_Def_7
+            Price: 3100000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 5
+              - Material: EP19_S_F_2_Extract
+                Amount: 5
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_S_Def_7
+            Upgrade: Snake_S_Def_8
+            Price: 3400000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_S_F_3_Extract
+                Amount: 5
+          - Enchant: Snake_S_Def_8
+            Upgrade: Snake_S_Def_9
+            Price: 3700000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 14
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_Scale
+          - Enchant: Snake_S_Def_9
+            Upgrade: Snake_S_Def_10
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+                Amount: 2
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Snake_S_Atk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+          - Item: Snake_S_Matk_1
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 20
+              - Material: EP19_D_P_Crystal
+                Amount: 20
+              - Material: EP19_N_P_Crystal
+                Amount: 20
+        Upgrades:
+          - Enchant: Snake_S_Atk_1
+            Upgrade: Snake_S_Atk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_S_Atk_2
+            Upgrade: Snake_S_Atk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_S_Atk_3
+            Upgrade: Snake_S_Atk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_S_Atk_4
+            Upgrade: Snake_S_Atk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_S_Atk_5
+            Upgrade: Snake_S_Atk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_S_Atk_6
+            Upgrade: Snake_S_Atk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_S_Atk_7
+            Upgrade: Snake_S_Atk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_S_Atk_8
+            Upgrade: Snake_S_Atk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_S_Atk_9
+            Upgrade: Snake_S_Atk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+          - Enchant: Snake_S_Matk_1
+            Upgrade: Snake_S_Matk_2
+            Price: 2000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 45
+              - Material: EP19_D_P_Crystal
+                Amount: 45
+              - Material: EP19_N_P_Crystal
+                Amount: 45
+          - Enchant: Snake_S_Matk_2
+            Upgrade: Snake_S_Matk_3
+            Price: 2500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 10
+              - Material: EP19_D_P_Crystal
+                Amount: 50
+              - Material: EP19_N_P_Crystal
+                Amount: 50
+          - Enchant: Snake_S_Matk_3
+            Upgrade: Snake_S_Matk_4
+            Price: 3000000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 55
+              - Material: EP19_S_F_1_Extract
+                Amount: 15
+              - Material: EP19_Gla_Extract
+                Amount: 10
+          - Enchant: Snake_S_Matk_4
+            Upgrade: Snake_S_Matk_5
+            Price: 3500000
+            Materials:
+              - Material: EP20_D_P_Crystal
+                Amount: 60
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 15
+          - Enchant: Snake_S_Matk_5
+            Upgrade: Snake_S_Matk_6
+            Price: 4000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 4
+              - Material: EP19_S_F_1_Extract
+                Amount: 25
+              - Material: EP19_Gla_Extract
+                Amount: 20
+          - Enchant: Snake_S_Matk_6
+            Upgrade: Snake_S_Matk_7
+            Price: 4500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 9
+              - Material: EP19_S_F_2_Extract
+                Amount: 10
+              - Material: EP19_Gla_Extract
+                Amount: 25
+          - Enchant: Snake_S_Matk_7
+            Upgrade: Snake_S_Matk_8
+            Price: 5000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 15
+              - Material: EP19_S_F_2_Extract
+                Amount: 15
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+          - Enchant: Snake_S_Matk_8
+            Upgrade: Snake_S_Matk_9
+            Price: 5500000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 22
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_Scale
+          - Enchant: Snake_S_Matk_9
+            Upgrade: Snake_S_Matk_10
+            Price: 6000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 25
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Snake_G_Glory
+            Price: 8000000
+            Materials:
+              - Material: EP20_D_P_Extract
+                Amount: 40
+              - Material: EP20_D_Scale
+                Amount: 2
+              - Material: EP19_D_P_Stone

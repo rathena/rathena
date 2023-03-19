@@ -4,8 +4,8 @@
 #ifndef UNIT_HPP
 #define UNIT_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/timer.hpp>
 
 #include "path.hpp" // struct walkpath_data
 #include "skill.hpp" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset

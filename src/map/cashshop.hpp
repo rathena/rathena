@@ -7,12 +7,12 @@
 #include <memory> // std::shared_ptr
 #include <vector> // std::vector
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
-#include "../common/cbasetypes.hpp" // uint16, uint32
-#include "../common/database.hpp" // TypesafeYamlDatabase
-#include "../common/mmo.hpp" // t_itemid
-#include "../common/timer.hpp" // ShowWarning, ShowStatus
+#include <common/cbasetypes.hpp> // uint16, uint32
+#include <common/database.hpp> // TypesafeYamlDatabase
+#include <common/mmo.hpp> // t_itemid
+#include <common/timer.hpp> // ShowWarning, ShowStatus
 
 class map_session_data;
 
@@ -63,7 +63,7 @@ struct s_cash_item_tab{
 	std::vector<std::shared_ptr<s_cash_item>> items;
 };
 
-class CashShopDatabase : public TypesafeYamlDatabase<e_cash_shop_tab, s_cash_item_tab>{
+class CashShopDatabase : public TypesafeYamlDatabase<uint16, s_cash_item_tab>{
 public:
 	CashShopDatabase() : TypesafeYamlDatabase( "ITEM_CASH_DB", 1 ){
 
