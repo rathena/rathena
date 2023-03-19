@@ -460,9 +460,12 @@ Body:
   - Id: 62
     Name: Constellation Tower
     Enter:
-      Map: 1@ch_u
+      Map: 1@ch_t
       X: 48
       Y: 183
+    AdditionalMaps:
+       2@ch_t: true
+       3@ch_t: true
   - Id: 63
     Name: Tomb of Remorse
     Enter:
