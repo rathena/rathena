@@ -377,7 +377,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 #if PACKETVER >= 20170726
 		if (pcdb_checkid( status_get_viewdata( bl )->class_ ) && walking)
 			return 0x0;
-		else if (mobdb_checkid( status_get_viewdata( bl )->class_ ))
+		else if (mobdb_checkid( status_get_viewdata( bl )->class_ ))	// FIXME: categorize NPCs able to walk
 			return 0xC;
 		else
 			return 0x6;
