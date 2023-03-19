@@ -1904,7 +1904,42 @@ uint8 pc_isequip(map_session_data *sd,int n)
 	return ITEM_EQUIP_ACK_OK;
 }
 
-bool pc_lastpoint_instance( map_session_data& sd ){
+/**
+ * Performs some special modifications to a player's last point location,
+ * if the map has a nosave mapflag or if the map was an instance.
+ * @param sd: Player data
+ * @return True if the player should be returned to his savepoint or false if not
+ */
+bool pc_lastpoint_special( map_session_data& sd ){
+	int16 mapid = map_mapname2mapid( sd.status.last_point.map );
+
+	// Should not happen because otherwise the char-server would have sent the player to another map-server
+	if( mapid < 0 ){
+		// Return the player to his savepoint
+		return true;
+	}
+
+	struct map_data* mapdata = map_getmapdata( mapid );
+
+	if( mapdata == nullptr ){
+		// Return the player to his savepoint
+		return true;
+	}
+
+	// Maybe since the player's logout the nosave mapflag was added to the map
+	if( mapdata->flag[MF_NOSAVE] ){
+		// The map has a specific return point
+		if( mapdata->save.map ){
+			safestrncpy( sd.status.last_point.map, mapindex_id2name( mapdata->save.map ), sizeof( sd.status.last_point.map ) );
+			sd.status.last_point.x = mapdata->save.x;
+			sd.status.last_point.y = mapdata->save.y;
+			return false;
+		}else{
+			// Return the user to his save point
+			return true;
+		}
+	}
+
 	// Check if the last point was an instance
 	if( sd.status.last_point_instanceid == 0 ){
 		// Nothing to do
@@ -1953,8 +1988,6 @@ bool pc_lastpoint_instance( map_session_data& sd ){
 			}
 			break;
 	}
-
-	int16 mapid = map_mapname2mapid( sd.status.last_point.map );
 
 	int16 imapid = instance_mapid( mapid, sd.status.last_point_instanceid );
 
@@ -2111,8 +2144,8 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
 
-	// Check if the player's last point was in an instance and check if he can be warped back into it
-	if( pc_lastpoint_instance( *sd ) ){
+	// Check if the player's last point requires special handling and if conditions apply to return the player to his savepoint
+	if( pc_lastpoint_special( *sd ) ){
 		// The player should be warped back to his savepoint
 		safestrncpy( sd->status.last_point.map, sd->status.save_point.map, sizeof( sd->status.last_point.map ) );
 		sd->status.last_point.x = sd->status.save_point.x;
