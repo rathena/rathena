@@ -2693,7 +2693,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	// Trigger counter-spells to retaliate against damage causing skills.
 	if(dstsd && !status_isdead(bl) && !dstsd->autospell2.empty() &&
-		!(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)))
+		(skill_id == CR_REFLECTSHIELD || !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE))))
 	{
 		for (const auto &it : dstsd->autospell2) {
 			if (!(((it.battle_flag)&attack_type)&BF_WEAPONMASK &&
@@ -2762,7 +2762,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	// Check for player and pet autobonuses when attacked
-	if (dstsd != nullptr && !status_isdead(bl) && !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE))) {
+	if (dstsd != nullptr && !status_isdead(bl) && (skill_id == CR_REFLECTSHIELD || !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)))) {
 		// Player
 		if (!dstsd->autobonus2.empty()) {
 			for (auto &it : dstsd->autobonus2) {
