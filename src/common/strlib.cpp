@@ -948,12 +948,11 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 //
 // @author MouseJstr (original)
 
-#ifdef USE_MEMMGR
 /// Allocates a StringBuf
 StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
 {
 	StringBuf* self;
-	self = (StringBuf *)_mcalloc(1, sizeof(StringBuf), file, line, func);
+	self = (StringBuf *)aCalloc2(1, sizeof(StringBuf), file, line, func);
 	_StringBuf_Init(file, line, func, self);
 	return self;
 }
@@ -962,7 +961,7 @@ StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
 void _StringBuf_Init(const char *file, int line, const char *func,StringBuf* self)
 {
 	self->max_ = 1024;
-	self->ptr_ = self->buf_ = (char*)_mmalloc(self->max_ + 1, file, line, func);
+	self->ptr_ = self->buf_ = (char*)aMalloc2(self->max_ + 1, file, line, func);
 }
 
 /// Appends the result of printf to the StringBuf
@@ -999,7 +998,7 @@ int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* s
 		/* Else try again with more space. */
 		self->max_ *= 2; // twice the old size
 		off = (int)(self->ptr_ - self->buf_);
-		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 }
@@ -1014,7 +1013,7 @@ int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* se
 	{
 		int off = (int)(self->ptr_ - self->buf_);
 		self->max_ += needed;
-		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
@@ -1033,7 +1032,7 @@ int _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf*
 	{// not enough space, expand the buffer (minimum expansion = 1024)
 		int off = (int)(self->ptr_ - self->buf_);
 		self->max_ += max(needed, 1024);
-		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
@@ -1041,101 +1040,6 @@ int _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf*
 	self->ptr_ += needed;
 	return (int)(self->ptr_ - self->buf_);
 }
-
-#else
-/// Allocates a StringBuf
-StringBuf* StringBuf_Malloc(void)
-{
-	StringBuf* self;
-	self = (StringBuf *)aMalloc(sizeof(StringBuf));
-	StringBuf_Init(self);
-	return self;
-}
-
-/// Initializes a previously allocated StringBuf
-void StringBuf_Init(StringBuf* self)
-{
-	self->max_ = 1024;
-	self->ptr_ = self->buf_ = (char*)aMalloc(self->max_ + 1);
-}
-
-/// Appends the result of printf to the StringBuf
-int StringBuf_Printf(StringBuf* self, const char* fmt, ...)
-{
-	int len;
-	va_list ap;
-
-	va_start(ap, fmt);
-	len = StringBuf_Vprintf(self, fmt, ap);
-	va_end(ap);
-
-	return len;
-}
-
-/// Appends the result of vprintf to the StringBuf
-int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
-{
-	for(;;)
-	{
-		int n, size, off;
-		va_list apcopy;
-		/* Try to print in the allocated space. */
-		size = self->max_ - (self->ptr_ - self->buf_);
-		va_copy(apcopy, ap);
-		n = vsnprintf(self->ptr_, size, fmt, apcopy);
-		va_end(apcopy);
-		/* If that worked, return the length. */
-		if( n > -1 && n < size )
-		{
-			self->ptr_ += n;
-			return (int)(self->ptr_ - self->buf_);
-		}
-		/* Else try again with more space. */
-		self->max_ *= 2; // twice the old size
-		off = (int)(self->ptr_ - self->buf_);
-		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
-		self->ptr_ = self->buf_ + off;
-	}
-}
-
-/// Appends the contents of another StringBuf to the StringBuf
-int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
-{
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
-
-	if( needed >= available )
-	{
-		int off = (int)(self->ptr_ - self->buf_);
-		self->max_ += needed;
-		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
-		self->ptr_ = self->buf_ + off;
-	}
-
-	memcpy(self->ptr_, sbuf->buf_, needed);
-	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
-}
-
-// Appends str to the StringBuf
-int StringBuf_AppendStr(StringBuf* self, const char* str)
-{
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)strlen(str);
-
-	if( needed >= available )
-	{// not enough space, expand the buffer (minimum expansion = 1024)
-		int off = (int)(self->ptr_ - self->buf_);
-		self->max_ += max(needed, 1024);
-		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
-		self->ptr_ = self->buf_ + off;
-	}
-
-	memcpy(self->ptr_, str, needed);
-	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
-}
-#endif
 
 // Returns the length of the data in the Stringbuf
 int StringBuf_Length(StringBuf* self)
