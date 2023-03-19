@@ -3501,6 +3501,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
+			pd->~pet_data();
 			break;
 		}
 		case BL_MOB: {
