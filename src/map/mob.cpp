@@ -453,6 +453,8 @@ int mob_parse_dataset(struct spawn_data *data)
 struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 {
 	struct mob_data *md = (struct mob_data*)aCalloc(1, sizeof(struct mob_data));
+	// placement new!
+	new(md) mob_data();
 	md->bl.id= npc_get_new_npc_id();
 	md->bl.type = BL_MOB;
 	md->bl.m = data->m;

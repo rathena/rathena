@@ -3565,6 +3565,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( md->tomb_nid )
 				mvptomb_destroy(md);
+			md->~mob_data();
 			break;
 		}
 		case BL_HOM:
