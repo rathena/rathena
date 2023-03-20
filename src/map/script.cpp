@@ -4134,7 +4134,7 @@ int run_func(struct script_state *st)
 
 		if (str_data[func].func(st) == SCRIPT_CMD_FAILURE) {
 			//Report error
-			ShowWarning("'%s' returned failure.\n", get_str(func));
+			ShowWarning("Script command '%s' returned failure.\n", get_str(func));
 			script_reportsrc(st);
 		}
 	} else {
