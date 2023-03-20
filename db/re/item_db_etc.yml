@@ -50619,7 +50619,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
   - Id: 300454
     AegisName: Ice_C_Orb_Hp
-    Name: Seolhwa Mystery (Stamina)    # !todo check english name
+    Name: Glacier Flower Meow Power (Vital)
     Type: Card
     SubType: Enchant
     Flags:
@@ -50638,7 +50638,7 @@ Body:
       }
   - Id: 300455
     AegisName: aegis_300455
-    Name: Kpopo Card    # !todo check english name
+    Name: Copo Card
     Type: Card
     Weight: 10
     Locations:
@@ -50656,7 +50656,7 @@ Body:
       }
   - Id: 300456
     AegisName: aegis_300456
-    Name: Icewind Egg Card    # !todo check english name
+    Name: Icewind's Egg Card
     Type: Card
     Weight: 10
     Locations:
@@ -50676,7 +50676,7 @@ Body:
       }
   - Id: 300457
     AegisName: aegis_300457
-    Name: Gray Icewind Card    # !todo check english name
+    Name: Gray Icewind Card
     Type: Card
     Weight: 10
     Locations:
@@ -50695,7 +50695,7 @@ Body:
       }
   - Id: 300458
     AegisName: aegis_300458
-    Name: Icewind Card    # !todo check english name
+    Name: Icewind Card
     Type: Card
     Weight: 10
     Locations:
@@ -50714,7 +50714,7 @@ Body:
       }
   - Id: 300459
     AegisName: aegis_300459
-    Name: Jormungand Church Bishop Card    # !todo check english name
+    Name: Jormungandr Church Bishop Card
     Type: Card
     Weight: 10
     Locations:
@@ -50730,7 +50730,7 @@ Body:
       bonus bVariableCastrate,-3;
   - Id: 300460
     AegisName: aegis_300460
-    Name: Jormungand Guardian Card    # !todo check english name
+    Name: Jormungandr Guardian Card
     Type: Card
     Weight: 10
     Locations:
@@ -50755,7 +50755,7 @@ Body:
       }
   - Id: 300461
     AegisName: aegis_300461
-    Name: Suspicious Irwin Soldier Card    # !todo check english name
+    Name: Suspicious Iwin Soldier Card
     Type: Card
     Weight: 10
     Locations:
@@ -50774,7 +50774,7 @@ Body:
       }
   - Id: 300462
     AegisName: aegis_300462
-    Name: Greater Legan Shaman Card    # !todo check english name
+    Name: Superior Rgan Shaman Card
     Type: Card
     Weight: 10
     Locations:
@@ -50799,7 +50799,7 @@ Body:
       }
   - Id: 300463
     AegisName: aegis_300463
-    Name: Greater Legan Healer Card    # !todo check english name
+    Name: Superior Rgan Healer Card
     Type: Card
     Weight: 10
     Locations:
@@ -50824,7 +50824,7 @@ Body:
       }
   - Id: 300464
     AegisName: aegis_300464
-    Name: Jormungand Cult Shaman Card    # !todo check english name
+    Name: Jormungandr Church Shaman Card
     Type: Card
     Weight: 10
     Locations:
@@ -50841,7 +50841,7 @@ Body:
       }
   - Id: 300465
     AegisName: aegis_300465
-    Name: Jormungandr Shrine Guardian Card    # !todo check english name
+    Name: Jormungandr Sanctuary Guardian Card
     Type: Card
     Weight: 10
     Locations:
@@ -50873,7 +50873,7 @@ Body:
       }
   - Id: 300466
     AegisName: aegis_300466
-    Name: Jormungandr Sanctuary Scavenger Card    # !todo check english name
+    Name: Jormungandr Sanctuary Cleaner Card
     Type: Card
     Weight: 10
     Locations:
@@ -50892,7 +50892,7 @@ Body:
       }
   - Id: 300467
     AegisName: aegis_300467
-    Name: Angel Snail Card    # !todo check english name
+    Name: Angel Slug Card
     Type: Card
     Weight: 10
     Locations:
@@ -50907,7 +50907,7 @@ Body:
       }
   - Id: 300468
     AegisName: aegis_300468
-    Name: Snow Rabbit Snail Card    # !todo check english name
+    Name: Snow Rabbit Slug Card
     Type: Card
     Weight: 10
     Locations:
@@ -50922,7 +50922,7 @@ Body:
       }
   - Id: 300469
     AegisName: aegis_300469
-    Name: Melibe Snail Card    # !todo check english name
+    Name: Melibe Slug Card
     Type: Card
     Weight: 10
     Locations:
@@ -50939,7 +50939,7 @@ Body:
       }
   - Id: 300470
     AegisName: aegis_300470
-    Name: Worm Card    # !todo check english name
+    Name: Bear Bug Card
     Type: Card
     Weight: 10
     Locations:
@@ -50956,7 +50956,7 @@ Body:
       }
   - Id: 300471
     AegisName: aegis_300471
-    Name: Fallen Angel Snail Card    # !todo check english name
+    Name: Fallen Angel Slug Card
     Type: Card
     Weight: 10
     Locations:
@@ -50972,7 +50972,7 @@ Body:
       bonus bMaxHPrate,-20;
   - Id: 300472
     AegisName: aegis_300472
-    Name: Ultimate Rasgand Card    # !todo check english name
+    Name: Ultimate Rasgandr Card
     Type: Card
     Weight: 10
     Locations:
@@ -50994,7 +50994,7 @@ Body:
       }
   - Id: 300473
     AegisName: aegis_300473
-    Name: Blizzard Angel Card    # !todo check english name
+    Name: Snowstorm Angel Card
     Type: Card
     Weight: 10
     Locations:
@@ -51010,7 +51010,7 @@ Body:
       }
   - Id: 300474
     AegisName: aegis_300474
-    Name: Sanctuary Cleaning Leader Card    # !todo check english name
+    Name: Sanctuary Cleaning Chief Card
     Type: Card
     Weight: 10
     Locations:
@@ -53204,6 +53204,13 @@ Body:
     Script: |
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",15;
       bonus2 bSkillAtk,"DC_THROWARROW",15;
+  - Id: 310269
+    AegisName: UnPetrify_JP
+    Name: Petrified Resistance
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bResEff,Eff_Stone,10000;
   - Id: 310270
     AegisName: Improve_Orb_T_ATK
     Name: T-PowerBoost
@@ -53288,13 +53295,6 @@ Body:
          }
          autobonus "{ bonus3 bAutoSpell,\"SO_VARETYR_SPEAR\",3,1000; }",.@c,.@t,BF_WEAPON;
       }
-  - Id: 310269
-    AegisName: UnPetrify_JP
-    Name: Petrified Resistance
-    Type: Card
-    SubType: Enchant
-    Script: |
-      bonus2 bResEff,Eff_Stone,10000;
   - Id: 310274
     AegisName: MD_Geffen_Ruby1
     Name: Ruby Emblem Lv1
@@ -67058,7 +67058,7 @@ Body:
     SubType: Enchant
   - Id: 312050
     AegisName: Ice_C_Orb_Str
-    Name: Legendary Power (STR)    # !todo check english name
+    Name: Glacier Flower Meow Power (STR)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67068,7 +67068,7 @@ Body:
       }
   - Id: 312051
     AegisName: Ice_C_Orb_Dex
-    Name: Snowflake Mystery (DEX)    # !todo check english name
+    Name: Glacier Flower Meow Power (DEX)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67078,7 +67078,7 @@ Body:
       }
   - Id: 312052
     AegisName: Ice_C_Orb_Agi
-    Name: Snow Story (AGI)    # !todo check english name
+    Name: Glacier Flower Meow Power (AGI)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67088,7 +67088,7 @@ Body:
       }
   - Id: 312053
     AegisName: Ice_C_Orb_Int
-    Name: Legendary Power (INT)    # !todo check english name
+    Name: Glacier Flower Meow Power (INT)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67098,7 +67098,7 @@ Body:
       }
   - Id: 312054
     AegisName: Ice_C_Orb_Vit
-    Name: Snowflake Mystery (VIT)    # !todo check english name
+    Name: Glacier Flower Meow Power (VIT)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67108,7 +67108,7 @@ Body:
       }
   - Id: 312055
     AegisName: Ice_C_Orb_Luk
-    Name: Legendary Power (LUK)    # !todo check english name
+    Name: Glacier Flower Meow Power (LUK)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67118,7 +67118,7 @@ Body:
       }
   - Id: 312056
     AegisName: Ice_C_Orb_Def
-    Name: Seolhwa Mystery (Physical Defense)    # !todo check english name
+    Name: Glacier Flower Meow Power (Physical Defense)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67135,7 +67135,7 @@ Body:
       }
   - Id: 312057
     AegisName: Ice_C_Orb_Mdef
-    Name: Snowflake Mystery (Magical Defense)    # !todo check english name
+    Name: Glacier Flower Meow Power (Magical Defense)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67152,7 +67152,7 @@ Body:
       }
   - Id: 312058
     AegisName: Ice_C_Orb_Pow_S
-    Name: Snow Power (POW&STA)    # !todo check english name
+    Name: Glacier Flower Meow Power (POW & STA)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67174,7 +67174,7 @@ Body:
       }
   - Id: 312059
     AegisName: Ice_C_Orb_Spl_W
-    Name: Snow Power (SPL&WIS)    # !todo check english name
+    Name: Glacier Flower Meow Power (SPL & WIS)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67196,7 +67196,7 @@ Body:
       }
   - Id: 312060
     AegisName: Ice_C_Orb_Con_C
-    Name: Snowflake Mystery (CON&CRT)    # !todo check english name
+    Name: Glacier Flower Meow Power (CON & CRT)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67218,7 +67218,7 @@ Body:
       }
   - Id: 312061
     AegisName: Ice_C_Orb_War
-    Name: Seolhwa Mystery (Warrior)    # !todo check english name
+    Name: Glacier Flower Meow Power (Warrior)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67232,7 +67232,7 @@ Body:
       }
   - Id: 312062
     AegisName: Ice_C_Orb_Ran
-    Name: Seolhwa Mystery (Shooter)    # !todo check english name
+    Name: Glacier Flower Meow Power (Shooter)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67246,7 +67246,7 @@ Body:
       }
   - Id: 312063
     AegisName: Ice_C_Orb_Mag
-    Name: Legendary Power (Mage)    # !todo check english name
+    Name: Glacier Flower Meow Power (Mage)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67260,7 +67260,7 @@ Body:
       }
   - Id: 312064
     AegisName: Ice_C_Orb_War2
-    Name: Seolhwa Mystery (Berserker)    # !todo check english name
+    Name: Glacier Flower Meow Power (Berserker)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67282,7 +67282,7 @@ Body:
       }
   - Id: 312065
     AegisName: Ice_C_Orb_Ran2
-    Name: Seolhwa Mystery (Marksman)    # !todo check english name
+    Name: Glacier Flower Meow Power (Marksman)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67304,7 +67304,7 @@ Body:
       }
   - Id: 312066
     AegisName: Ice_C_Orb_Mag2
-    Name: Legendary Power (Great Mage)    # !todo check english name
+    Name: Glacier Flower Meow Power (Grand Mage)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67326,7 +67326,7 @@ Body:
       }
   - Id: 312067
     AegisName: Ice_C_Orb_Force
-    Name: Snowflake Mystery (Power Force)    # !todo check english name
+    Name: Glacier Flower Meow Power (Power Force)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67347,7 +67347,7 @@ Body:
       }
   - Id: 312068
     AegisName: Ice_C_Orb_S_Delay
-    Name: Snowflake Mystery (Global Cooldown)    # !todo check english name
+    Name: Glacier Flower Meow Power (Global Cooldown)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67364,7 +67364,7 @@ Body:
       }
   - Id: 312069
     AegisName: Ice_C_Orb_Speed
-    Name: Snowflake Mystery (Quick)    # !todo check english name
+    Name: Glacier Flower Meow Power (Fast)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67381,7 +67381,7 @@ Body:
       }
   - Id: 312070
     AegisName: Ice_C_Orb_Caster
-    Name: Legendary Power (Caster)    # !todo check english name
+    Name: Glacier Flower Meow Power (Caster)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67399,7 +67399,7 @@ Body:
       }
   - Id: 312071
     AegisName: Ice_C_Orb_Guide
-    Name: Seolhwa Mystery (Guide Attack)    # !todo check english name
+    Name: Glacier Flower Meow Power (Guide Attack)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67416,7 +67416,7 @@ Body:
       }
   - Id: 312072
     AegisName: Ice_C_Orb_Above
-    Name: Seolhwa Mystery (Above All)    # !todo check english name
+    Name: Glacier Flower Meow Power (Above All)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67431,7 +67431,7 @@ Body:
       }
   - Id: 312073
     AegisName: Ice_C_Orb_P_Full
-    Name: Snowflake Mystery (Powerful)    # !todo check english name
+    Name: Glacier Flower Meow Power (Powerful)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67452,7 +67452,7 @@ Body:
       }
   - Id: 312074
     AegisName: Ice_C_Orb_Sp
-    Name: Seolhwa Mystic Power (Spiritual Power)    # !todo check english name
+    Name: Glacier Flower Meow Power (Mental)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67469,7 +67469,7 @@ Body:
       }
   - Id: 312075
     AegisName: Ice_C_Orb_Robust
-    Name: Snow Power (Robust)    # !todo check english name
+    Name: Glacier Flower Meow Power (Robust)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67490,14 +67490,14 @@ Body:
       }
   - Id: 312076
     AegisName: Ice_C_Orb_F_Cast
-    Name: Seolhwa Mystery (fixed casting)    # !todo check english name
+    Name: Glacier Flower Meow Power (Fixed Casting)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-1000;
   - Id: 312077
     AegisName: Ice_C_Orb_P_F
-    Name: Seolhwa Mystery (Physical Force)    # !todo check english name
+    Name: Glacier Flower Meow Power (Physical Force)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67514,7 +67514,7 @@ Body:
       }
   - Id: 312078
     AegisName: Ice_C_Orb_M_F
-    Name: Snowflake Mystery (Magical Force)    # !todo check english name
+    Name: Glacier Flower Meow Power (Magical Force)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67531,7 +67531,7 @@ Body:
       }
   - Id: 312079
     AegisName: Ice_C_Orb_Ov_Pow
-    Name: Snowflake Mystery (Over Power)    # !todo check english name
+    Name: Glacier Flower Meow Power (Over Power)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67549,7 +67549,7 @@ Body:
       }
   - Id: 312080
     AegisName: Ice_C_Orb_Bu_Spl
-    Name: Legendary Power (Spell Buster)    # !todo check english name
+    Name: Glacier Flower Meow Power (Spell Buster)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67565,7 +67565,7 @@ Body:
       }
   - Id: 312081
     AegisName: Ice_C_Orb_Fi_Con
-    Name: Seolhwa Mystery (Firing Shot)    # !todo check english name
+    Name: Glacier Flower Meow Power (Firing Shot)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67583,7 +67583,7 @@ Body:
       }
   - Id: 312082
     AegisName: Ice_C_Orb_Spd
-    Name: Snow Power (Speed)    # !todo check english name
+    Name: Glacier Flower Meow Power (Speed)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67591,35 +67591,35 @@ Body:
       bonus bVariableCastrate,-10;
   - Id: 312083
     AegisName: Ice_C_Orb_F_Spirit
-    Name: Seolhwa Mystery (fighting spirit)    # !todo check english name
+    Name: Glacier Flower Meow Power (Fighting Spirit)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,12;
   - Id: 312084
     AegisName: Ice_C_Orb_E_Archer
-    Name: Seolhwa Mystery (Myeonggung)    # !todo check english name
+    Name: Glacier Flower Meow Power (Expert Archer)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,12;
   - Id: 312085
     AegisName: Ice_C_Orb_Spell
-    Name: Seolhwa Mystic Power (Magic Power)    # !todo check english name
+    Name: Glacier Flower Meow Power (Spell)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,12;
   - Id: 312086
     AegisName: Ice_C_Orb_Fatal
-    Name: Seolhwa Mystery (Deadly)    # !todo check english name
+    Name: Glacier Flower Meow Power (Fatal)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,12;
   - Id: 312087
     AegisName: Ice_C_Orb_P_P
-    Name: Seolhwa Mystery (Physical Power)    # !todo check english name
+    Name: Glacier Flower Meow Power (Physical Power)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67627,7 +67627,7 @@ Body:
       bonus bPAtk,3;
   - Id: 312088
     AegisName: Ice_C_Orb_M_P
-    Name: Snowflake Mystery (Magical Power)    # !todo check english name
+    Name: Glacier Flower Meow Power (Magical Power)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67635,7 +67635,7 @@ Body:
       bonus bSMatk,3;
   - Id: 312089
     AegisName: Ice_C_Orb_A_Force
-    Name: Seolhwa Mystery (All Force)    # !todo check english name
+    Name: Glacier Flower Meow Power (All Force)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67644,7 +67644,7 @@ Body:
       bonus bShortAtkRate,7;
   - Id: 312090
     AegisName: Ice_C_Orb_D
-    Name: Seolhwa Mystery (Defense)    # !todo check english name
+    Name: Glacier Flower Meow Power (Defense)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67661,7 +67661,7 @@ Body:
       }
   - Id: 312091
     AegisName: Ice_C_Orb_A
-    Name: Snowflake Mystery (Attack)    # !todo check english name
+    Name: Glacier Flower Meow Power (Attack)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67678,7 +67678,7 @@ Body:
       }
   - Id: 312092
     AegisName: Ice_C_Orb_Res
-    Name: Seolhwa Mystic Power (Physical Resistance)    # !todo check english name
+    Name: Glacier Flower Meow Power (Physical Resistance)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67692,7 +67692,7 @@ Body:
       }
   - Id: 312093
     AegisName: Ice_C_Orb_Mres
-    Name: Mystic Power (Magic Resistance)    # !todo check english name
+    Name: Glacier Flower Meow Power (Magical Resistance)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67706,7 +67706,7 @@ Body:
       }
   - Id: 312094
     AegisName: Ice_C_Orb_Guard
-    Name: Legendary Power (Guardian)    # !todo check english name
+    Name: Glacier Flower Meow Power (Guardian)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67728,7 +67728,7 @@ Body:
       }
   - Id: 312095
     AegisName: Ice_C_Orb_Intel
-    Name: Legendary Power (Intelligence)    # !todo check english name
+    Name: Glacier Flower Meow Power (Intelligence)
     Type: Card
     SubType: Enchant
     Script: |
@@ -67765,217 +67765,217 @@ Body:
       }
   - Id: 312096
     AegisName: Snake_A_Def_1
-    Name: Snake God's Warmth (DEF) 1Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,3;
   - Id: 312097
     AegisName: Snake_A_Def_2
-    Name: Warmth of the Snake God (DEF) 2Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,9;
   - Id: 312098
     AegisName: Snake_A_Def_3
-    Name: Snake God's Warmth (DEF) 3Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,18;
   - Id: 312099
     AegisName: Snake_A_Def_4
-    Name: Warmth of the Snake God (DEF) 4Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,30;
   - Id: 312100
     AegisName: Snake_A_Def_5
-    Name: Snake God's Warmth (DEF) 5Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,45;
   - Id: 312101
     AegisName: Snake_A_Def_6
-    Name: Snake God's Warmth (DEF) 6Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,63;
   - Id: 312102
     AegisName: Snake_A_Def_7
-    Name: Warmth of the Snake God (DEF) 7Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,84;
   - Id: 312103
     AegisName: Snake_A_Def_8
-    Name: Warmth of the Snake God (DEF) 8Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,108;
   - Id: 312104
     AegisName: Snake_A_Def_9
-    Name: Snake God's Warmth (DEF) 9Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,135;
   - Id: 312105
     AegisName: Snake_A_Def_10
-    Name: Snake God's Warmth (DEF) 10Lv    # !todo check english name
+    Name: Warmth of the Snake God (Def) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,165;
   - Id: 312106
     AegisName: Snake_A_Atk_1
-    Name: Warmth of the Snake God (ATK) 1Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,1;
   - Id: 312107
     AegisName: Snake_A_Atk_2
-    Name: Warmth of the Snake God (ATK) 2Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,3;
   - Id: 312108
     AegisName: Snake_A_Atk_3
-    Name: Warmth of the Snake God (ATK) 3Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,6;
   - Id: 312109
     AegisName: Snake_A_Atk_4
-    Name: Warmth of the Snake God (ATK) 4Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,10;
   - Id: 312110
     AegisName: Snake_A_Atk_5
-    Name: Warmth of the Snake God (ATK) 5Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,15;
   - Id: 312111
     AegisName: Snake_A_Atk_6
-    Name: Warmth of the Snake God (ATK) 6Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,21;
   - Id: 312112
     AegisName: Snake_A_Atk_7
-    Name: Warmth of the Snake God (ATK) 7Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,28;
   - Id: 312113
     AegisName: Snake_A_Atk_8
-    Name: Warmth of the Snake God (ATK) 8Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,36;
   - Id: 312114
     AegisName: Snake_A_Atk_9
-    Name: Warmth of the Snake God (ATK) 9Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,45;
   - Id: 312115
     AegisName: Snake_A_Atk_10
-    Name: Warmth of the Snake God (ATK) 10Lv    # !todo check english name
+    Name: Warmth of the Snake God (Atk) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,55;
   - Id: 312116
     AegisName: Snake_A_Matk_1
-    Name: Snake God's Warmth (MATK) 1Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,1;
   - Id: 312117
     AegisName: Snake_A_Matk_2
-    Name: Snake God's Warmth (MATK) 2Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,3;
   - Id: 312118
     AegisName: Snake_A_Matk_3
-    Name: Snake God's Warmth (MATK) 3Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,6;
   - Id: 312119
     AegisName: Snake_A_Matk_4
-    Name: Snake God's Warmth (MATK) 4Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,10;
   - Id: 312120
     AegisName: Snake_A_Matk_5
-    Name: Snake God's Warmth (MATK) 5Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,15;
   - Id: 312121
     AegisName: Snake_A_Matk_6
-    Name: Snake God's Warmth (MATK) 6Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,21;
   - Id: 312122
     AegisName: Snake_A_Matk_7
-    Name: Snake God's Warmth (MATK) 7Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,28;
   - Id: 312123
     AegisName: Snake_A_Matk_8
-    Name: Warmth of the Snake God (MATK) 8Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,36;
   - Id: 312124
     AegisName: Snake_A_Matk_9
-    Name: Snake God's Warmth (MATK) 9Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,45;
   - Id: 312125
     AegisName: Snake_A_Matk_10
-    Name: Snake God's Warmth (MATK) 10Lv    # !todo check english name
+    Name: Warmth of the Snake God (Matk) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,55;
   - Id: 312126
     AegisName: Snake_G_Blessing
-    Name: Snake God's Blessing    # !todo check english name
+    Name: Blessing of the Snake God
     Type: Card
     SubType: Enchant
     Script: |
@@ -67983,217 +67983,217 @@ Body:
       bonus2 bMagicAddSize,Size_All,10;
   - Id: 312127
     AegisName: Snake_H_Def_1
-    Name: Snake God's Poison (DEF) 1Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,3;
   - Id: 312128
     AegisName: Snake_H_Def_2
-    Name: Snake God's Poison (DEF) 2Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,9;
   - Id: 312129
     AegisName: Snake_H_Def_3
-    Name: Snake God's Poison (DEF) 3Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,18;
   - Id: 312130
     AegisName: Snake_H_Def_4
-    Name: Snake God's Poison (DEF) 4Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,30;
   - Id: 312131
     AegisName: Snake_H_Def_5
-    Name: Snake God's Poison (DEF) 5Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,45;
   - Id: 312132
     AegisName: Snake_H_Def_6
-    Name: Snake God's Poison (DEF) 6Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,63;
   - Id: 312133
     AegisName: Snake_H_Def_7
-    Name: Snake God's Poison (DEF) 7Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,84;
   - Id: 312134
     AegisName: Snake_H_Def_8
-    Name: Snake God's Poison (DEF) 8Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,108;
   - Id: 312135
     AegisName: Snake_H_Def_9
-    Name: Snake God's Poison (DEF) 9Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,135;
   - Id: 312136
     AegisName: Snake_H_Def_10
-    Name: Snake God's Poison (DEF) 10Lv    # !todo check english name
+    Name: Malice of the Snake God (Def) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,165;
   - Id: 312137
     AegisName: Snake_H_Atk_1
-    Name: Snake God's Poison (ATK) 1Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,1;
   - Id: 312138
     AegisName: Snake_H_Atk_2
-    Name: Snake God's Poison (ATK) 2Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,3;
   - Id: 312139
     AegisName: Snake_H_Atk_3
-    Name: Snake God's Poison (ATK) 3Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,6;
   - Id: 312140
     AegisName: Snake_H_Atk_4
-    Name: Snake God's Poison (ATK) 4Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,10;
   - Id: 312141
     AegisName: Snake_H_Atk_5
-    Name: Snake God's Poison (ATK) 5Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,15;
   - Id: 312142
     AegisName: Snake_H_Atk_6
-    Name: Snake God's Poison (ATK) 6Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,21;
   - Id: 312143
     AegisName: Snake_H_Atk_7
-    Name: Snake God's Poison (ATK) 7Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,28;
   - Id: 312144
     AegisName: Snake_H_Atk_8
-    Name: Snake God's Poison (ATK) 8Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,36;
   - Id: 312145
     AegisName: Snake_H_Atk_9
-    Name: Snake God's Poison (ATK) 9Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,45;
   - Id: 312146
     AegisName: Snake_H_Atk_10
-    Name: Snake God's Poison (ATK) 10Lv    # !todo check english name
+    Name: Malice of the Snake God (Atk) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,55;
   - Id: 312147
     AegisName: Snake_H_Matk_1
-    Name: Snake God's Poison (MATK) 1Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,1;
   - Id: 312148
     AegisName: Snake_H_Matk_2
-    Name: Snake God's Poison (MATK) 2Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,3;
   - Id: 312149
     AegisName: Snake_H_Matk_3
-    Name: Snake God's Poison (MATK) 3Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,6;
   - Id: 312150
     AegisName: Snake_H_Matk_4
-    Name: Snake God's Poison (MATK) 4Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,10;
   - Id: 312151
     AegisName: Snake_H_Matk_5
-    Name: Snake God's Poison (MATK) 5Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,15;
   - Id: 312152
     AegisName: Snake_H_Matk_6
-    Name: Snake God's Poison (MATK) 6Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,21;
   - Id: 312153
     AegisName: Snake_H_Matk_7
-    Name: Snake God's Poison (MATK) 7Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,28;
   - Id: 312154
     AegisName: Snake_H_Matk_8
-    Name: Snake God's Poison (MATK) 8Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,36;
   - Id: 312155
     AegisName: Snake_H_Matk_9
-    Name: Snake God's Poison (MATK) 9Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,45;
   - Id: 312156
     AegisName: Snake_H_Matk_10
-    Name: Snake God's Poison (MATK) 10Lv    # !todo check english name
+    Name: Malice of the Snake God (Matk) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,55;
   - Id: 312157
     AegisName: Snake_G_Grace
-    Name: Snake God's Protection    # !todo check english name
+    Name: Grace of the Snake God
     Type: Card
     SubType: Enchant
     Script: |
@@ -68201,217 +68201,217 @@ Body:
       bonus2 bAddEle,Ele_All,10;
   - Id: 312158
     AegisName: Snake_S_Def_1
-    Name: The Mystery of the Snake God (DEF) 1Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,3;
   - Id: 312159
     AegisName: Snake_S_Def_2
-    Name: The Mystery of the Snake God (DEF) 2Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,9;
   - Id: 312160
     AegisName: Snake_S_Def_3
-    Name: Mystery of the Snake God (DEF) 3Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,18;
   - Id: 312161
     AegisName: Snake_S_Def_4
-    Name: The Mystery of the Snake God (DEF) 4Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,30;
   - Id: 312162
     AegisName: Snake_S_Def_5
-    Name: The Mystery of the Snake God (DEF) 5Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,45;
   - Id: 312163
     AegisName: Snake_S_Def_6
-    Name: Mystery of the Snake God (DEF) 6Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,63;
   - Id: 312164
     AegisName: Snake_S_Def_7
-    Name: The Mystery of the Snake God (DEF) 7Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,84;
   - Id: 312165
     AegisName: Snake_S_Def_8
-    Name: The Mystery of the Snake God (DEF) 8Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,108;
   - Id: 312166
     AegisName: Snake_S_Def_9
-    Name: The Mystery of the Snake God (DEF) 9Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,135;
   - Id: 312167
     AegisName: Snake_S_Def_10
-    Name: The Mystery of the Snake God (DEF) 10Lv    # !todo check english name
+    Name: Mystery of the Snake God (Def) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDef,165;
   - Id: 312168
     AegisName: Snake_S_Atk_1
-    Name: Mystery of the Snake God (ATK) 1Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,1;
   - Id: 312169
     AegisName: Snake_S_Atk_2
-    Name: The Mystery of the Snake God (ATK) 2Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,3;
   - Id: 312170
     AegisName: Snake_S_Atk_3
-    Name: Mystery of the Snake God (ATK) 3Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,6;
   - Id: 312171
     AegisName: Snake_S_Atk_4
-    Name: Mystery of the Snake God (ATK) 4Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,10;
   - Id: 312172
     AegisName: Snake_S_Atk_5
-    Name: Mystery of the Snake God (ATK) 5Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,15;
   - Id: 312173
     AegisName: Snake_S_Atk_6
-    Name: Mystery of the Snake God (ATK) 6Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,21;
   - Id: 312174
     AegisName: Snake_S_Atk_7
-    Name: Mystery of the Snake God (ATK) 7Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,28;
   - Id: 312175
     AegisName: Snake_S_Atk_8
-    Name: Mystery of the Snake God (ATK) 8Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,36;
   - Id: 312176
     AegisName: Snake_S_Atk_9
-    Name: The Mystery of the Snake God (ATK) 9Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,45;
   - Id: 312177
     AegisName: Snake_S_Atk_10
-    Name: The Mystery of the Snake God (ATK) 10Lv    # !todo check english name
+    Name: Mystery of the Snake God (Atk) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,55;
   - Id: 312178
     AegisName: Snake_S_Matk_1
-    Name: The Mystery of the Snake God (MATK) 1Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,1;
   - Id: 312179
     AegisName: Snake_S_Matk_2
-    Name: The Mystery of the Snake God (MATK) 2Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 2Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,3;
   - Id: 312180
     AegisName: Snake_S_Matk_3
-    Name: The Mystery of the Snake God (MATK) 3Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 3Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,6;
   - Id: 312181
     AegisName: Snake_S_Matk_4
-    Name: The Mystery of the Snake God (MATK) 4Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 4Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,10;
   - Id: 312182
     AegisName: Snake_S_Matk_5
-    Name: The Mystery of the Snake God (MATK) 5Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 5Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,15;
   - Id: 312183
     AegisName: Snake_S_Matk_6
-    Name: Mystery of the Snake God (MATK) 6Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 6Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,21;
   - Id: 312184
     AegisName: Snake_S_Matk_7
-    Name: The Mystery of the Snake God (MATK) 7Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 7Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,28;
   - Id: 312185
     AegisName: Snake_S_Matk_8
-    Name: The Mystery of the Snake God (MATK) 8Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 8Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,36;
   - Id: 312186
     AegisName: Snake_S_Matk_9
-    Name: The Mystery of the Snake God (MATK) 9Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 9Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,45;
   - Id: 312187
     AegisName: Snake_S_Matk_10
-    Name: The Mystery of the Snake God (MATK) 10Lv    # !todo check english name
+    Name: Mystery of the Snake God (Matk) 10Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,55;
   - Id: 312188
     AegisName: Snake_G_Glory
-    Name: Glory of the Snake God    # !todo check english name
+    Name: Glory of the Snake God
     Type: Card
     SubType: Enchant
     Script: |
@@ -69211,7 +69211,7 @@ Body:
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",2+(getrefine()/2);
   - Id: 312302
     AegisName: DK_Soul_DB
-    Name: Dragon Knight Soul (Dragonic Breath)    # !todo check english name
+    Name: Dragon Knight Soul (Dragonic Breath)
     Type: Card
     SubType: Enchant
     Script: |

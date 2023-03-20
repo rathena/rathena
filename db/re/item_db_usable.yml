@@ -48634,21 +48634,6 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Blessing_Scarlet_Scroll);
-  - Id: 17780
-    AegisName: Cash_Can_Box
-    Name: Cash Can Box
-    Type: Cash
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 25308,1;
   - Id: 17712
     AegisName: 3_Life_Potion_pack9
     Name: Three Master Package IX
@@ -48971,6 +48956,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_3_LIFE_POTION_10PACK10);
+  - Id: 17780
+    AegisName: Cash_Can_Box
+    Name: Cash Can Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 25308,1;
   - Id: 17783
     AegisName: Unlimited_10_Box6
     Name: Unlimited Box VI (10)
