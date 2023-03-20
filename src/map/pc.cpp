@@ -11955,6 +11955,8 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 
 	//OnEquip script [Skotlex]
 	if (id) {
+		current_equip_item_index = n;
+		current_equip_card_id = 0;
 		//only run the script if item isn't restricted
 		if (id->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(id,sd->bl.m)))
 			run_script(id->equip_script,0,sd->bl.id,fake_nd->bl.id);
@@ -11964,15 +11966,18 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 			for( i = 0; i < MAX_SLOTS; i++ ) {
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
-
 				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
 
 				if ( data != nullptr ) {
-					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m)))
+					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {
+						current_equip_card_id = sd->inventory.u.items_inventory[n].card[i];
 						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
+					}
 				}
+				current_equip_card_id = 0;
 			}
 		}
+		current_equip_item_index = -1;
 	}
 	sd->npc_item_flag = iflag;
 
@@ -12050,6 +12055,8 @@ static void pc_unequipitem_sub(map_session_data *sd, int n, int flag) {
 
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
+		current_equip_item_index = n;
+		current_equip_card_id = 0;
 		if (sd->inventory_data[n]->unequip_script)
 			run_script(sd->inventory_data[n]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
 		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
@@ -12062,12 +12069,15 @@ static void pc_unequipitem_sub(map_session_data *sd, int n, int flag) {
 				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
 
 				if (data != nullptr) {
-					if (data->unequip_script)
+					if (data->unequip_script) {
+						current_equip_card_id = sd->inventory.u.items_inventory[n].card[i];
 						run_script(data->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+					}
 				}
-
+				current_equip_card_id = 0;
 			}
 		}
+		current_equip_item_index = -1;
 	}
 
 	sd->npc_item_flag = iflag;
