@@ -10,16 +10,15 @@
 gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
 	if(BaseLevel < 130){
 		mes "[Marry Jay]";
-		mes "Your base level is too low, come back when you hit level 130";
+		mes "Your base level is too low, come back when you hit level 130.";
 		close;
 	}
 	mes "^ff0000If you do any monster processing, such as monster taming within the dungeon, it won't count towards your progress. Please take note.^000000";
 	next;
 	.@day = gettime(DT_DAYOFWEEK);
-	//.@day = FRIDAY; // for testing
 	if(.@day != FRIDAY) {
 		mes "[Marry Jay]";
-		mes "Oh, a curious onlooker? It's Marry Jay, the person in charge of Fridays among the days of the week.";
+		mes "Oh, a curious onlooker? I'm Marry Jay, the person in charge of Fridays among the days of the week.";
 		next;
 		select("When is the opening time?");
 		mes "[Marry Jay]";
@@ -107,7 +106,7 @@ gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
 				case 2:
 					mes "[Marry Jay]";
 					mes "You have not prepared?";
-					mes "Can't really help it I guess";
+					mes "Can't really help it I guess.";
 					close;
 			}
 		}
@@ -124,7 +123,7 @@ gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
 		mes "Before we start setting up the environment here, we'll give you the chance to choose an appropriate difficulty level.";
 		mes "I could make my own choice, but each person handles it differently based on their abilities.";
 		next;
-		switch(select("Cancel:LV130 ~ 199:LV200+ ")) {
+		switch(select("Cancel:LV130 ~ 199:LV200+")) {
 			case 1:
 				close;
 			//MinLevel, Lich Lord, Nightmare, Jakk, Ghoul, Drainliar
@@ -132,7 +131,7 @@ gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
 				setarray 'mob,130,3658,3660,3662,3664,3666; break;
 			case 3:
 				if(BaseLevel < 200){
-				mes "[Marry Jay]";
+					mes "[Marry Jay]";
 					mes "You can't choose this difficulty, because your base level is below 200.";
 					close;
 				}
@@ -141,7 +140,7 @@ gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
 		}
 		if(BaseLevel < 'mob[0]){
 			mes "[Marry Jay]";
-			mes "Your base level is too low to select this, you need to be level "+'mob[0]+" or above";
+			mes "Your base level is too low to select this, you need to be level "+'mob[0]+" or above.";
 			close;
 		}
 		close2;
@@ -410,7 +409,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 	switch(select("What can you do with the Crafting Stone?:Accessory Enchantment:Reset Enchant")) {
 		case 1:
 			mes "[Amateur Collector]";
-			mes "I'm a trade expensive stones from the dungeon in exchange for my craftsmanship. I'm still a beginner, but my skills are passable.";
+			mes "I trade expensive stones from the dungeon in exchange for my craftsmanship. I'm still a beginner, but my skills are passable.";
 			mes "Please take care of me.";
 			next;
 			switch(select("I've heard this before.:I'm listening.")) {
@@ -427,7 +426,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 					mes "There is no failure in the enchantment process.";
 					next;
 					mes "[Amateur Collector]";
-					mes "However ^0000FF if the accessory has a random option, the random option will be removed after enchantment.^000000";
+					mes "However ^0000FFif the accessory has a random option, the random option will be removed after enchantment.^000000";
 					next;
 					select("Anything else?");
 					mes "[Amateur Collector]";
@@ -524,7 +523,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 					close;
 				}
 				mes "[Amateur Collector]";
-				mes "Are you sure to enhance the <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>?";
+				mes "Are you sure you want to enhance the <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>?";
 				mes "^0000FFThere is a no chance of failure^000000.";
 				next;
 				if(select("Yes, please proceed:Cancel")==2) close;
@@ -544,7 +543,7 @@ gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
 				.@enchant = enchant(1);
 				specialeffect2 EF_REPAIRWEAPON;
 				mes "[Amateur Collector]";
-				mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> has been enhanted with <ITEM>"+getitemname(.@enchant)+"<INFO>"+.@enchant+"</INFO></ITEM>.";
+				mes "The <ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM> has been enchanted with <ITEM>"+getitemname(.@enchant)+"<INFO>"+.@enchant+"</INFO></ITEM>.";
 				getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@enchant;
 			}
 			close;
