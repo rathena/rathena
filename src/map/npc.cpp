@@ -3552,6 +3552,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 		}
 	}
 
+	nd->~npc_data();
 	aFree(nd);
 
 	return 0;
@@ -4136,6 +4137,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	}
 	if( nd->u.shop.count == 0 ) {
 		ShowWarning("npc_parse_shop: Ignoring empty shop in file '%s', line '%d'.\n", filepath, strline(buffer,start-buffer));
+		nd->~npc_data();
 		aFree(nd);
 		return strchr(start,'\n');// continue
 	}

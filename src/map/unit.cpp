@@ -3501,6 +3501,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
+			pd->~pet_data();
 			break;
 		}
 		case BL_MOB: {
@@ -3536,6 +3537,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 						gc->temp_guardians[i] = 0;
 				}
 
+				md->guardian_data->~guardian_data();
 				aFree(md->guardian_data);
 				md->guardian_data = NULL;
 			}
@@ -3564,6 +3566,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( md->tomb_nid )
 				mvptomb_destroy(md);
+			md->~mob_data();
 			break;
 		}
 		case BL_HOM:

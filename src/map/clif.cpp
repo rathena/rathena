@@ -10812,7 +10812,6 @@ void clif_parse_WantToConnection(int fd, map_session_data* sd)
 	}
 
 	CREATE(sd, TBL_PC, 1);
-	// placement new
 	new(sd) map_session_data();
 	sd->fd = fd;
 #ifdef PACKET_OBFUSCATION
