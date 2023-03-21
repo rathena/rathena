@@ -8,9 +8,9 @@
 #include <string>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp" // struct party
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp> // struct party
 
 #define MAX_BG_MEMBERS 30
 
@@ -31,7 +31,7 @@ struct s_battleground_data {
 };
 
 struct s_battleground_team {
-	int16 warp_x, warp_y; ///< Team respawn coordinates
+	uint16 warp_x, warp_y; ///< Team respawn coordinates
 	std::string quit_event, ///< Team NPC Event to call on log out events
 		death_event, ///< Team NPC Event to call on death events
 		active_event, ///< Team NPC Event to call on players joining an active battleground

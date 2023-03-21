@@ -4,9 +4,9 @@
 #ifndef GUILD_HPP
 #define GUILD_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp>
 
 #include "map.hpp" // NAME_LENGTH
 
@@ -118,16 +118,18 @@ void do_final_guild(void);
 
 class CastleDatabase : public TypesafeYamlDatabase <int32, guild_castle> {
 public:
-	CastleDatabase() : TypesafeYamlDatabase("CASTLE_DB", 1) {
+	CastleDatabase() : TypesafeYamlDatabase("CASTLE_DB", 2, 1) {
 
 	}
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
 
 	// Additional
 	std::shared_ptr<guild_castle> mapname2gc(const char* mapname);
 	std::shared_ptr<guild_castle> mapindex2gc(int16 mapindex);
+	std::shared_ptr<guild_castle> find_by_clientid( uint16 client_id );
 };
 
 extern CastleDatabase castle_db;

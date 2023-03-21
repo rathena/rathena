@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/nullpo.hpp"
-#include "../common/socket.hpp"
+#include <common/nullpo.hpp>
+#include <common/socket.hpp>
 
 #include "atcommand.hpp"
 #include "battle.hpp"
@@ -629,15 +629,15 @@ void trade_tradecommit(map_session_data *sd)
 	}
 
 	if( sd->deal.zeny ) {
-		pc_payzeny(sd ,sd->deal.zeny, LOG_TYPE_TRADE, tsd);
-		pc_getzeny(tsd,sd->deal.zeny,LOG_TYPE_TRADE, sd);
+		pc_payzeny(sd ,sd->deal.zeny, LOG_TYPE_TRADE, tsd->status.char_id);
+		pc_getzeny(tsd,sd->deal.zeny,LOG_TYPE_TRADE, sd->status.char_id);
 		sd->deal.zeny = 0;
 
 	}
 
 	if ( tsd->deal.zeny) {
-		pc_payzeny(tsd,tsd->deal.zeny,LOG_TYPE_TRADE, sd);
-		pc_getzeny(sd ,tsd->deal.zeny,LOG_TYPE_TRADE, tsd);
+		pc_payzeny(tsd,tsd->deal.zeny,LOG_TYPE_TRADE, sd->status.char_id);
+		pc_getzeny(sd ,tsd->deal.zeny,LOG_TYPE_TRADE, tsd->status.char_id);
 		tsd->deal.zeny = 0;
 	}
 

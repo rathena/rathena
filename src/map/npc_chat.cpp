@@ -5,12 +5,12 @@
 
 #include "npc.hpp"
 
-#include "../../3rdparty/pcre/include/pcre.h"
+#include <pcre.h>
 
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
+#include <common/malloc.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
 
 #include "mob.hpp" // struct mob_data
 #include "pc.hpp" // map_session_data

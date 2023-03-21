@@ -1127,13 +1127,17 @@ In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
 
 	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
 
+We therefore created script command "mesitemlink" that allows you to create the correct syntax
+depending on your configured packet version. We recommend that you use this script command
+instead of hardcoding the HTML-like tags. For more details see the documentation for "mesitemlink".
+
 The following sample will open a preview window for Red Potion:
 
 	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
 	// Or in 2015:
 	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
 
-NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
+NOTE: Be aware that item links are broken in some 2015 clients.
 
 URLs
 ----
@@ -2731,7 +2735,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 Given the database ID number of an item, this function will return the text
 stored in the 'Name' field in item_db_*.yml for text version
-or 'name_english' field for SQL version.
+or 'name_english' field for SQL version. The function returns "null" if the item doesn't exist.
 
 ---------------------------------------
 
@@ -9670,9 +9674,13 @@ returns an empty string instead.
 
 *instance_id({<instance mode>})
 
-Returns the unique instance ID of the given mode. By default it returns the
-attached script instance. If <instance mode> is provided then the instance
-of the currently attached player is used. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode.
+
+By default (no parameter given) the command returns the instance ID from the attached NPC.
+If <instance mode> is provided the instance ID of the currently attached player is returned.
+If that fails, the function will return 0.
+
+Please note that the command always requires the parameter <instance mode> to get the instance ID of an attached player!
 
 Instance Mode options:
  IM_CHAR:	Attached to character.
@@ -9680,13 +9688,26 @@ Instance Mode options:
  IM_GUILD:	Attached to character's guild.
  IM_CLAN:	Attached to character's clan.
 
+Examples:
+	// Example with an attached player :
+	npctalk "The current instance ID (mode party) from the attached player is : " + instance_id(IM_PARTY);
+
+	// Example with an attached NPC on an instance map :
+	npctalk "The current instance ID from the attached NPC is : " + instance_id();
+
 ---------------------------------------
 
-*instance_warpall "<map name>",<x>,<y>{,<instance id>};
+*instance_warpall "<map name>",<x>,<y>{,<instance id>,{<flag>}};
 
 Warps all players in the <instance id> to <map name> to the given coordinates.
 If no ID is specified, the IM_PARTY instance the invoking player is attached
 to is used. If that fails, the script will come to a halt.
+
+<flag> bitmask allows to add restrictions.
+
+Available values for the <flag> bitmask:
+ IWA_NONE			No restriction. (default)
+ IWA_NOTDEAD		If dead players are warped or not
 
 ---------------------------------------
 
@@ -10987,13 +11008,13 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
-*itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+*itemlink(<item_id>{,<refine>{,<card0>{,<card1>{,<card2>{,<card3>,{<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>}}}}}}});
 
 Generates an item link string for an item that can be used for npctalk, message,
 dispbottom, and broadcast commands. The result is a clickable-item name just
 like SHIFT+Click from a player's inventory/cart/equipment window. This command can be
-used with mes but the item name will not be clickable. You should use the normal client
-tags for displaying item links in mes dialogues, if the client supports them. 
+used with mes but the item name will not be clickable. You should use script command
+"mesitemlink" for displaying item links in mes dialogues, if the client supports them. 
 
 
 Examples:
@@ -11009,6 +11030,24 @@ Examples:
 
 RandomIDArray, RandomValueArray, and RandomParamArray only works if the
 client (and server) supports the Item Random Options feature (PACKETVER >= 20150225).
+
+---------------------------------------
+
+*mesitemlink(<item_id>{,<use_brackets>{,<display_name>});
+
+Generates an itemlink string for an item and can be used with NPC's mes command.
+The NPC message will show the item's name which will be clickable and opens the
+item description client side.
+By default <use_brackets> is true which surrounds the link with brackets. Send false to disable.
+By default the link will be created with the name of the item stored in the item database,
+but in some cases it might be necessary to overwrite the <display_name> with something else.
+
+Examples:
+
+	mes mesitemlink( 1201 ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
+	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
+	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
+	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
 
 ========================
 |14.- Channel commands.|

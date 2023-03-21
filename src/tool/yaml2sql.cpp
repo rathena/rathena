@@ -20,37 +20,40 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/achievement.hpp"
-#include "../map/battle.hpp"
-#include "../map/battleground.hpp"
-#include "../map/channel.hpp"
-#include "../map/chat.hpp"
-#include "../map/date.hpp"
-#include "../map/elemental.hpp"
-#include "../map/instance.hpp"
-#include "../map/mercenary.hpp"
-#include "../map/mob.hpp"
-#include "../map/npc.hpp"
-#include "../map/pc.hpp"
-#include "../map/pet.hpp"
-#include "../map/quest.hpp"
-#include "../map/script.hpp"
-#include "../map/skill.hpp"
-#include "../map/storage.hpp"
+#define ONLY_CONSTANTS
+#include <map/achievement.hpp>
+#include <map/battle.hpp>
+#include <map/battleground.hpp>
+#include <map/cashshop.hpp>
+#include <map/channel.hpp>
+#include <map/chat.hpp>
+#include <map/date.hpp>
+#include <map/elemental.hpp>
+#include <map/homunculus.hpp>
+#include <map/instance.hpp>
+#include <map/mercenary.hpp>
+#include <map/mob.hpp>
+#include <map/npc.hpp>
+#include <map/pc.hpp>
+#include <map/pet.hpp>
+#include <map/quest.hpp>
+#include <map/script.hpp>
+#include <map/skill.hpp>
+#include <map/storage.hpp>
 
 using namespace rathena;
 using namespace rathena::server_core;
@@ -231,7 +234,7 @@ bool Yaml2SqlTool::initialize( int argc, char* argv[] ){
 	};
 
 	// Load constants
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	for( const std::string& suffix : item_table_suffixes ){
 		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {

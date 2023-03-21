@@ -3109,7 +3109,7 @@ Body:
         CardsAllowed: false
         ResultItem: Club_
         ChangeRefine: 2
-        #RandomOptionGroup: G0 # TODO: translate to our group names
+        RandomOptionGroup: Group_0
         ClearSlots: true
         RemoveGrade: true
       - BaseItem: Avd_Knife
@@ -3139,11 +3139,11 @@ Body:
         CardsAllowed: false
         ResultItem: Tsurugi
         ChangeRefine: -20
-        #RandomOptionGroup: G0 # TODO: translate to our group names
+        RandomOptionGroup: Group_0
       - BaseItem: C_Hill_Wind_Mask
         ResultItem: Katar
         ChangeRefine: 5
-        #RandomOptionGroup: G0 # TODO: translate to our group names
+        RandomOptionGroup: Group_0
         RemoveGrade: true
       - BaseItem: SeeOtter_Fan
         Materials:
@@ -4589,200 +4589,200 @@ Body:
 #          Amount: 10
 #       ResultItem: D_Glacier_M_Mace
 #       ChangeRefine: 1
-# - Item: OS_Weapon_Reform
-#   BaseItems:
-#     - BaseItem: Beam_Claymore_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Beam_Claymore_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Meuchler_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Meuchler_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Blasti_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Blasti_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Virtual_Bow_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Virtual_Bow_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: MH_P89_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: MH_P89_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: AC_B44_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: AC_B44_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: HR_S55_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: HR_S55_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Burning_Knuckle_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Burning_Knuckle_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Cannon_Rapier_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Cannon_Rapier_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Saphir_Hall_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Saphir_Hall_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Ultio_Spes_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Ultio_Spes_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Rutilus_Stick_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Rutilus_Stick_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: ElectricFox_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: ElectricFox_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Circuit_Board_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Circuit_Board_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Kuroiro_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Kuroiro_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
-#     - BaseItem: Boost_Lance_OS
-#       MinimumRefine: 7
-#       CardsAllowed: false
-#       Materials:
-#        - Material: EP17_1_EVT02
-#          Amount: 200
-#        - Material: EP17_1_EVT39
-#          Amount: 40
-#        - Material: Weapon_Stone_1
-#          Amount: 70
-#       ResultItem: Boost_Lance_AD
-#       RandomOptionGroup: G0 # TODO: translate to our group names
+  - Item: OS_Weapon_Reform
+    BaseItems:
+      - BaseItem: Beam_Claymore_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Beam_Claymore_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Meuchler_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Meuchler_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Blasti_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Blasti_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Virtual_Bow_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Virtual_Bow_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: MH_P89_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: MH_P89_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: AC_B44_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: AC_B44_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: HR_S55_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: HR_S55_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Burning_Knuckle_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Burning_Knuckle_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Cannon_Rapier_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Cannon_Rapier_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Saphir_Hall_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Saphir_Hall_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Ultio_Spes_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Ultio_Spes_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Rutilus_Stick_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Rutilus_Stick_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: ElectricFox_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: ElectricFox_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Circuit_Board_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Circuit_Board_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Kuroiro_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Kuroiro_AD
+        RandomOptionGroup: Group_0
+      - BaseItem: Boost_Lance_OS
+        MinimumRefine: 7
+        CardsAllowed: false
+        Materials:
+         - Material: EP17_1_EVT02
+           Amount: 200
+         - Material: EP17_1_EVT39
+           Amount: 40
+         - Material: Weapon_Stone_1
+           Amount: 70
+        ResultItem: Boost_Lance_AD
+        RandomOptionGroup: Group_0
   - Item: Hero_Weapon_Up_Box_5
     BaseItems:
       - BaseItem: Up_Blade_Katar

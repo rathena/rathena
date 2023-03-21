@@ -5,17 +5,17 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mapindex.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/mapindex.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "battle.hpp"
 #include "channel.hpp"
@@ -299,7 +299,7 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		uint16 mapindex = mapindex_name2idx(map_name.c_str(), nullptr);
 
-		if (map_mapindex2mapid(mapindex) < 0) {
+		if( mapindex == 0 ){
 			this->invalidWarning(node["Map"], "Map %s doesn't exist, skipping.\n", map_name.c_str());
 			return 0;
 		}
@@ -330,10 +330,193 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
+	if( this->nodeExists( node, "Type" ) ){
+		std::string type;
+
+		if( !this->asString( node, "Type", type ) ){
+			return 0;
+		}
+
+		std::string type_constant = "WOE_" + type;
+		int64 constant;
+
+		if( !script_get_constant( type_constant.c_str(), &constant ) || constant < WOE_FIRST_EDITION || constant >= WOE_MAX ){
+			this->invalidWarning( node["Type"], "Invalid WoE type %s.\n", type.c_str() );
+			return 0;
+		}
+
+		gc->type = static_cast<e_woe_type>( constant );
+	}else{
+		if( !exists ){
+			gc->type = WOE_FIRST_EDITION;
+		}
+	}
+
+	if( this->nodeExists( node, "ClientId" ) ){
+		uint16 id;
+
+		if( !this->asUInt16( node, "ClientId", id ) ){
+			return 0;
+		}
+
+		gc->client_id = id;
+	}else{
+		if( !exists ){
+			gc->client_id = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "WarpEnabled" ) ){
+		bool enabled;
+
+		if( !this->asBool( node, "WarpEnabled", enabled ) ){
+			return 0;
+		}
+
+		gc->warp_enabled = enabled;
+	}else{
+		if( !exists ){
+			gc->warp_enabled = false;
+		}
+	}
+
+	if (this->nodeExists(node, "WarpX")) {
+		uint16 warp_x;
+
+		if (!this->asUInt16(node, "WarpX", warp_x)) {
+			return 0;
+		}
+
+		if( warp_x == 0 ){
+			this->invalidWarning( node["WarpX"], "WarpX has to be greater than zero.\n" );
+			return 0;
+		}
+
+		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
+
+		// If the map is on another map-server, we cannot verify the bounds
+		if( md != nullptr && warp_x >= md->xs ){
+			this->invalidWarning( node["WarpX"], "WarpX has to be smaller than %hu.\n", md->xs );
+			return 0;
+		}
+
+		gc->warp_x = warp_x;
+	}
+	else {
+		if (!exists)
+			gc->warp_x = 0;
+	}
+
+	if (this->nodeExists(node, "WarpY")) {
+		uint16 warp_y;
+
+		if (!this->asUInt16(node, "WarpY", warp_y)) {
+			return 0;
+		}
+
+		if( warp_y == 0 ){
+			this->invalidWarning( node["WarpY"], "WarpY has to be greater than zero.\n" );
+			return 0;
+		}
+
+		map_data* md = map_getmapdata( map_mapindex2mapid( gc->mapindex ) );
+
+		// If the map is on another map-server, we cannot verify the bounds
+		if( md != nullptr && warp_y >= md->ys ){
+			this->invalidWarning( node["WarpY"], "WarpY has to be smaller than %hu.\n", md->ys );
+			return 0;
+		}
+
+		gc->warp_y = warp_y;
+	}
+	else {
+		if (!exists)
+			gc->warp_y = 0;
+	}
+
+	if (this->nodeExists(node, "WarpCost")) {
+		uint32 zeny;
+
+		if (!this->asUInt32(node, "WarpCost", zeny)) {
+			return 0;
+		}
+
+		if( zeny > MAX_ZENY ){
+			this->invalidWarning( node["WarpCost"], "WarpCost has to be smaller than %d.\n", MAX_ZENY );
+			return 0;
+		}
+
+		gc->zeny = zeny;
+	} else {
+		if (!exists)
+			gc->zeny = 100;
+	}
+
+	if (this->nodeExists(node, "WarpCostSiege")) {
+		uint32 zeny_siege;
+
+		if (!this->asUInt32(node, "WarpCostSiege", zeny_siege)) {
+			return 0;
+		}
+
+		if( zeny_siege > MAX_ZENY ){
+			this->invalidWarning( node["WarpCostSiege"], "WarpCostSiege has to be smaller than %d.\n", MAX_ZENY );
+			return 0;
+		}
+
+		gc->zeny_siege = zeny_siege;
+	}
+	else {
+		if (!exists)
+			gc->zeny_siege = 100000;
+	}
+
 	if (!exists)
 		this->put(castle_id, gc);
 
 	return 1;
+}
+
+void CastleDatabase::loadingFinished(){
+	for( const auto& pair : *this ){
+		std::shared_ptr<guild_castle> castle = pair.second;
+
+		if( castle->client_id != 0 ){
+			// Check if ClientId is unique
+			for( const auto& pair2 : *this ){
+				std::shared_ptr<guild_castle> castle2 = pair2.second;
+
+				if( castle->castle_id == castle2->castle_id ){
+					continue;
+				}
+
+				if( castle->client_id == castle2->client_id ){
+					ShowWarning( "Castle ClientId %hu is ambigous.\n", castle->client_id );
+					break;
+				}
+			}
+		}
+
+		if( castle->warp_enabled ){
+			if( castle->client_id == 0 ){
+				ShowWarning( "Warping to castle %d is enabled, but no ClientId is set. Disabling...\n", castle->castle_id );
+				castle->warp_enabled = false;
+				continue;
+			}
+
+			if( castle->warp_x == 0 ){
+				ShowWarning( "Warping to castle %d is enabled, but no WarpX is set. Disabling...\n", castle->castle_id );
+				castle->warp_enabled = false;
+				continue;
+			}
+
+			if( castle->warp_y == 0 ){
+				ShowWarning( "Warping to castle %d is enabled, but no WarpY is set. Disabling...\n", castle->castle_id );
+				castle->warp_enabled = false;
+				continue;
+			}
+		}
+	}
 }
 
 /// lookup: guild id -> guild*
@@ -357,7 +540,7 @@ struct guild* guild_searchname(char* str) {
 
 /// lookup: map index -> castle*
 std::shared_ptr<guild_castle> CastleDatabase::mapindex2gc(int16 mapindex) {
-	for (const auto &it : castle_db) {
+	for (const auto &it : *this) {
 		if (it.second->mapindex == mapindex)
 			return it.second;
 	}
@@ -367,6 +550,16 @@ std::shared_ptr<guild_castle> CastleDatabase::mapindex2gc(int16 mapindex) {
 /// lookup: map name -> castle*
 std::shared_ptr<guild_castle> CastleDatabase::mapname2gc(const char* mapname) {
 	return castle_db.mapindex2gc(mapindex_name2id(mapname));
+}
+
+std::shared_ptr<guild_castle> CastleDatabase::find_by_clientid( uint16 client_id ){
+	for( const auto &it : *this ){
+		if( it.second->client_id == client_id ){
+			return it.second;
+		}
+	}
+
+	return nullptr;
 }
 
 map_session_data* guild_getavailablesd(struct guild* g) {
@@ -1027,11 +1220,9 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		if (g->instance_id) {
 			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if (mapdata->instance_id) { // User was on the instance map
-				if (mapdata->save.map)
-					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
-				else
-					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			// User was on the instance map of the guild
+			if( g->instance_id == mapdata->instance_id ){
+				pc_setpos_savepoint( *sd );
 			}
 		}
 

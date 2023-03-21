@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
+#include <common/database.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp> // ITEM_NAME_LENGTH
 
 #include "script.hpp"
 #include "status.hpp"
@@ -48,6 +48,7 @@ enum item_itemid : t_itemid
 	ITEMID_APPLE						= 512,
 	ITEMID_HOLY_WATER					= 523,
 	ITEMID_PUMPKIN						= 535,
+	ITEMID_PET_FOOD						= 537,
 	ITEMID_RED_SLIM_POTION				= 545,
 	ITEMID_YELLOW_SLIM_POTION			= 546,
 	ITEMID_WHITE_SLIM_POTION			= 547,
@@ -1826,6 +1827,13 @@ enum e_random_item_group {
 	IG_MF_NOTELEPORT,
 	IG_MF_NORETURN,
 	IG_GIANT_FLY_WING,
+	IG_CLASS_SHADOW_WP_CUBE,
+	IG_CLASS_SHADOW_AM_CUBE,
+	IG_CLASS_SHADOW_SU_CUBE,
+	IG_CLASS_SHADOW_SD_CUBE,
+	IG_CLASS_SHADOW_PD_CUBE,
+	IG_CLASS_SHADOW_EA_CUBE,
+	IG_ENCHANT_STONE_BOX30,
 
 	IG_MAX,
 };
@@ -2143,8 +2151,12 @@ public:
 	// Additional
 	std::shared_ptr<item_data> searchname( const char* name );
 	std::shared_ptr<item_data> search_aegisname( const char *name );
-	std::string create_item_link( struct item& data );
-	std::string create_item_link( t_itemid id );
+	std::string create_item_link(struct item& item);
+	std::string create_item_link( std::shared_ptr<item_data>& data );
+	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+
+private:
+	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data);
 };
 
 extern ItemDatabase item_db;

@@ -4,10 +4,10 @@
 #ifndef PET_HPP
 #define PET_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp>
+#include <common/timer.hpp>
 
 #include "battle.hpp"
 #include "mob.hpp"

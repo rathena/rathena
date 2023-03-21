@@ -5,6 +5,7 @@ add_library(tools INTERFACE)
 target_include_directories(tools INTERFACE 
 	${YAML_INCLUDE_DIRS}
 	${ZLIB_INCLUDE_DIRS}
+	${RA_INCLUDE_DIRS}
 )
 
 target_sources(tools INTERFACE

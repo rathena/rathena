@@ -7,9 +7,9 @@
 #include <map>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/timer.hpp"
-#include "../config/core.hpp"
+#include <common/database.hpp>
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
 #include "clif.hpp" //
 #include "map.hpp" // struct block_list
@@ -104,6 +104,9 @@ struct s_npc_barter{
 	uint8 dir;
 	int16 sprite;
 	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
+	int32 npcid;
+
+	~s_npc_barter();
 };
 
 class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
@@ -1424,12 +1427,35 @@ enum e_job_types
 	JT_4_RAGFES_16,
 	JT_4_RAGFES_16_M,
 	JT_4_EXJOB_NINJA2,
-
-	JT_ROZ_MQ_LUCIAN = 10510,
+	JT_4_VR_BOOK_FAIRY,
+	JT_ROZ_MQ_LUCIAN,
 	JT_ROZ_MQ_BRITIA,
 	JT_ROZ_MQ_ASSASIN01,
 	JT_STRANGE_B_SMITH1,
 	JT_STRONGER_B_SMTIH,
+	JT_4_VR_BOOK_RED,
+	JT_4_VR_BOOK_BLUE,
+	JT_4_VR_BOOK_YELLOW,
+	JT_4_VR_BOOK_GREEN,
+	JT_4_VR_BOOK_WHITE,
+	JT_4_VR_YGNIZEM,
+
+	JT_4_JP_19TH = 10524,
+	JT_4_KING_PORING,
+	JT_4_VR_SWORDMAN_DEAD,
+	JT_GATE_SKYBLUE,
+	JT_4_CS_RIGEL,
+	JT_4_M_NILLEM,
+	JT_4_LARVA_RED,
+	JT_4_LARVA_YELLOW,
+	JT_4_LARVA_BLACK,
+	JT_4_LARVA_VIOLET,
+	JT_4_HERO_SAUSAGE,
+	JT_4_PRINCESS_SAUSAGE,
+
+	JT_ROZ_MQ_XAVIER = 13000,
+	JT_ROZ_MQ_MOCLORD,
+	JT_ROZ_MQ_SKULD,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999

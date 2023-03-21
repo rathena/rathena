@@ -4,7 +4,7 @@
 #ifndef CSV2YAML_HPP
 #define CSV2YAML_HPP
 
-#include "../common/core.hpp"
+#include <common/core.hpp>
 
 #include "yaml.hpp"
 
@@ -41,6 +41,7 @@ namespace rathena{
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
 ///Maximum amount of items a combo may require
 #define MAX_ITEMS_PER_COMBO 6
+#define MAX_HOM_SKILL_REQUIRE 5
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
@@ -61,6 +62,8 @@ std::unordered_map<uint16, s_skill_db> skill_castnodex;
 std::unordered_map<uint16, s_skill_unit_csv> skill_unit;
 std::unordered_map<uint16, s_skill_copyable> skill_copyable;
 std::unordered_map<uint16, s_skill_db> skill_nearnpc;
+
+std::unordered_map<int32, std::vector<s_homun_skill_tree_entry>> hom_skill_tree;
 
 static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
 
@@ -530,5 +533,8 @@ static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
 static bool itemdb_read_combos(const char* file);
+static bool cashshop_parse_dbrow( char* fields[], int columns, int current );
+static bool read_homunculus_skilldb(char* split[], int columns, int current);
+static bool read_homunculusdb(char* str[], int columns, int current);
 
 #endif /* CSV2YAML_HPP */

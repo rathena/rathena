@@ -10,12 +10,12 @@
 #endif
 #include <vector>
 
-#include "../common/core.hpp"
-#include "../common/grfio.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/utils.hpp"
+#include <common/core.hpp>
+#include <common/grfio.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/utils.hpp>
 
 using namespace rathena::server_core;
 

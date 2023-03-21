@@ -1567,7 +1567,7 @@ Body:
           - Option: ATTR_TOLERACE_ALL
             MinValue: 1
             MaxValue: 2
-            Chance: 50 
+            Chance: 50
           - Option: DAMAGE_SIZE_SMALL_USER
             MinValue: 3
             MaxValue: 5
@@ -11524,39 +11524,39 @@ Body:
             Chance: 714
           - Option: DAMAGE_PROPERTY_WATER_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_GROUND_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_FIRE_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_WIND_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_POISON_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_SAINT_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
           - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 714
       - Slot: 2
         Options:
@@ -11582,31 +11582,31 @@ Body:
             Chance: 666
           - Option: RACE_DAMAGE_PLANT
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_INSECT
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_FISHS
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_DEVIL
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_HUMAN
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_ANGEL
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: RACE_DAMAGE_DRAGON
             MinValue: 5
-            MaxValue: 30
+            MaxValue: 20
             Chance: 666
           - Option: CLASS_DAMAGE_NORMAL_TARGET
             MinValue: 1
@@ -12285,3 +12285,836 @@ Body:
             MinValue: 1
             MaxValue: 5
             Chance: 769
+  - Id: 145
+    Group: Group_0    # Note: this group is left empty. It can be used to remove the current options, when applied.
+# Abyss ogh enchants. Source: https://ro.gnjoy.in.th/abyss-glastheim-1st-floor/
+  - Id: 146
+    Group: AGW1
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 20
+            Chance: 5000
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 5000
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 5000
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_DAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+  - Id: 147
+    Group: AGM1
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 20
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_WATER
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_WIND
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_GROUND
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_FIRE
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_SAINT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_DARKNESS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_POISON
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+          - Option: ADDSKILLMDAMAGE_TELEKINESIS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 5000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 5000
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: RACE_MDAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+          - Option: MDAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 10
+            Chance: 5000
+  - Id: 148
+    Group: GREAT_HERO_BRAVERY
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 40
+            Chance: 666
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 2
+            Chance: 666
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 12
+            Chance: 666
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 12
+            Chance: 666
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 12
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+      - Slot: 2
+        Options:
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 666
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 3
+            MaxValue: 12
+            Chance: 666
+          - Option: RACE_DAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_DAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 25
+            Chance: 666
+          - Option: CLASS_DAMAGE_NORMAL_TARGET
+            MinValue: 1
+            MaxValue: 12
+            Chance: 666
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 1
+            MaxValue: 12
+            Chance: 666
+          - Option: WEAPON_INDESTRUCTIBLE
+            Chance: 666
+  - Id: 149
+    Group: GREAT_HERO_WISDOM
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 40
+            Chance: 435
+          - Option: HEAL_VALUE
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_WATER
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_GROUND
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_FIRE
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_WIND
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_POISON
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_SAINT
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_DARKNESS
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_TELEKINESIS
+            MinValue: 3
+            MaxValue: 12
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 25
+            Chance: 435
+      - Slot: 2
+        Options:
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 714
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 12
+            Chance: 714
+          - Option: RACE_MDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_UNDEAD
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_ANIMAL
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_PLANT
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_INSECT
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_FISHS
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_DEVIL
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_HUMAN
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_ANGEL
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: RACE_MDAMAGE_DRAGON
+            MinValue: 3
+            MaxValue: 25
+            Chance: 714
+          - Option: CLASS_MDAMAGE_NORMAL
+            MinValue: 3
+            MaxValue: 12
+            Chance: 714
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 3
+            MaxValue: 12
+            Chance: 714
+  - Id: 150
+    Group: HERO_LT_REFINE_MELEE
+    Slots:
+    - Slot: 1
+      Options:
+      - Option: VAR_ATTPOWER
+        MinValue: 5
+        MaxValue: 45
+        Chance: 588
+      - Option: VAR_PLUSASPD
+        MinValue: 1
+        MaxValue: 2
+        Chance: 588
+      - Option: VAR_PLUSASPDPERCENT
+        MinValue: 5
+        MaxValue: 15
+        Chance: 588
+      - Option: RANGE_ATTACK_DAMAGE_TARGET
+        MinValue: 3
+        MaxValue: 12
+        Chance: 588
+      - Option: MELEE_ATTACK_DAMAGE_TARGET
+        MinValue: 3
+        MaxValue: 12
+        Chance: 588
+      - Option: VAR_CRITICALSUCCESSVALUE
+        MinValue: 3
+        MaxValue: 12
+        Chance: 588
+      - Option: DEC_SPELL_DELAY_TIME
+        MinValue: 1
+        MaxValue: 5
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_WATER_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_GROUND_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_FIRE_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_WIND_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_POISON_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_SAINT_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+      - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+        MinValue: 5
+        MaxValue: 25
+        Chance: 588
+    - Slot: 2
+      Options:
+      - Option: VAR_ATKPERCENT
+        MinValue: 3
+        MaxValue: 7
+        Chance: 625
+      - Option: DAMAGE_CRI_TARGET
+        MinValue: 3
+        MaxValue: 12
+        Chance: 625
+      - Option: DEC_SPELL_CAST_TIME
+        MinValue: 5
+        MaxValue: 15
+        Chance: 625
+      - Option: RACE_DAMAGE_NOTHING
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_UNDEAD
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_ANIMAL
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_PLANT
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_INSECT
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_FISHS
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_DEVIL
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_HUMAN
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_ANGEL
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: RACE_DAMAGE_DRAGON
+        MinValue: 5
+        MaxValue: 25
+        Chance: 625
+      - Option: CLASS_DAMAGE_NORMAL_TARGET
+        MinValue: 5
+        MaxValue: 20
+        Chance: 625
+      - Option: CLASS_DAMAGE_BOSS_TARGET
+        MinValue: 5
+        MaxValue: 20
+        Chance: 625
+      - Option: WEAPON_INDESTRUCTIBLE
+        Chance: 625
+  - Id: 151
+    Group: HERO_LT_REFINE_MAGIC
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 45
+            Chance: 435
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 2
+            Chance: 435
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 5
+            MaxValue: 20
+            Chance: 435
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_NOTHING
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_WATER
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_GROUND
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_FIRE
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_WIND
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_POISON
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_SAINT
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_DARKNESS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: ADDSKILLMDAMAGE_TELEKINESIS
+            MinValue: 3
+            MaxValue: 15
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 5
+            MaxValue: 25
+            Chance: 435
+      - Slot: 2
+        Options:
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 3
+            MaxValue: 7
+            Chance: 666
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Chance: 666
+          - Option: ADDSKILLMDAMAGE_ALL
+            MinValue: 3
+            MaxValue: 12
+            Chance: 666
+          - Option: RACE_MDAMAGE_NOTHING
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_UNDEAD
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_ANIMAL
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_PLANT
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_INSECT
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_FISHS
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_DEVIL
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_HUMAN
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_ANGEL
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: RACE_MDAMAGE_DRAGON
+            MinValue: 5
+            MaxValue: 25
+            Chance: 666
+          - Option: CLASS_MDAMAGE_NORMAL
+            MinValue: 5
+            MaxValue: 20
+            Chance: 666
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 20
+            Chance: 666
