@@ -4132,8 +4132,11 @@ int run_func(struct script_state *st)
 		}
 #endif
 
-		if (str_data[func].func(st) == SCRIPT_CMD_FAILURE) //Report error
+		if (str_data[func].func(st) == SCRIPT_CMD_FAILURE) {
+			//Report error
+			ShowWarning("Script command '%s' returned failure.\n", get_str(func));
 			script_reportsrc(st);
+		}
 	} else {
 		ShowError("script:run_func: '%s' (id=%d type=%s) has no C function. please report this!!!\n", get_str(func), func, script_op2name(str_data[func].type));
 		script_reportsrc(st);
@@ -18020,7 +18023,7 @@ BUILDIN_FUNC(npcshopdelitem)
 		ARR_FIND( 0, size, n, nd->u.shop.shop_item[n].nameid == nameid );
 		if( n < size ) {
 			if (n+1 != size)
-				memmove(&nd->u.shop.shop_item[n], &nd->u.shop.shop_item[n+1], sizeof(nd->u.shop.shop_item[0])*(size-n));
+				memmove(&nd->u.shop.shop_item[n], &nd->u.shop.shop_item[n+1], sizeof(nd->u.shop.shop_item[0])*(size-(n + 1)));
 #if PACKETVER >= 20131223
 			if (nd->subtype == NPCTYPE_MARKETSHOP)
 				npc_market_delfromsql_(nd->exname, nameid, false);

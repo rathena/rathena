@@ -1480,7 +1480,7 @@ int chmapif_init(int fd){
  * @param id: id of map-serv (should be >0, FIXME)
  */
 void chmapif_server_init(int id) {
-	memset(&map_server[id], 0, sizeof(map_server[id]));
+	map_server[id] = {};
 	map_server[id].fd = -1;
 }
 

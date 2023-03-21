@@ -453,6 +453,7 @@ int mob_parse_dataset(struct spawn_data *data)
 struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 {
 	struct mob_data *md = (struct mob_data*)aCalloc(1, sizeof(struct mob_data));
+	new(md) mob_data();
 	md->bl.id= npc_get_new_npc_id();
 	md->bl.type = BL_MOB;
 	md->bl.m = data->m;
@@ -687,6 +688,7 @@ int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* 
 			if (gc)
 			{
 				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
+				new(md->guardian_data) guardian_data();
 				md->guardian_data->castle = gc;
 				md->guardian_data->number = MAX_GUARDIANS;
 				md->guardian_data->guild_id = gc->guild_id;
@@ -890,6 +892,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 
 	md = mob_spawn_dataset(&data);
 	md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
+	new (md->guardian_data) guardian_data();
 	md->guardian_data->number = guardian;
 	md->guardian_data->guild_id = gc->guild_id;
 	md->guardian_data->castle = gc;
