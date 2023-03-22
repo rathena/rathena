@@ -730,6 +730,7 @@ public:
 	int vender_id;
 	int vend_num;
 	uint16 vend_skill_lv;
+	t_itemid vend_item; ///Extended Vending system [Lilith] update version by ex0ample
 	char message[MESSAGE_SIZE];
 	struct s_vending vending[MAX_VENDING];
 

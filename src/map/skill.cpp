@@ -9122,6 +9122,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sd->state.prevend = 1;
 				sd->state.workinprogress = WIP_DISABLE_ALL;
 				sd->vend_skill_lv = skill_lv;
+				sd->vend_item = 0;
 				ARR_FIND(0, MAX_CART, i, sd->cart.u.items_cart[i].nameid && sd->cart.u.items_cart[i].id == 0);
 				if (i < MAX_CART) {
 					// Save the cart before opening the vending UI
@@ -9131,7 +9132,42 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				else{
 					// Instantly open the vending UI
 					sd->state.pending_vending_ui = false;
-					clif_openvendingreq(sd,2+skill_lv);
+				{
+					if (battle_config.extended_vending) {
+						std::shared_ptr<item_data> item;
+						char output[CHAT_SIZE_MAX];
+						int c = 0, d = 0;
+
+						if (battle_config.item_zeny)
+							d++;
+						if (battle_config.item_cash)
+							d++;
+						for (const auto &it : itemdb_vending) {
+							if ((item = item_db.find(it.first)) != nullptr && item->nameid != ITEMID_ZENY && item->nameid != ITEMID_CASH){
+								c++;
+							}
+						}
+
+						c += d;
+
+						if (c > 1) {
+							clif_vend(sd, skill_lv);
+							break;
+						}
+
+						if (c){
+							item = item_db.find(battle_config.item_zeny ? battle_config.item_zeny : battle_config.item_cash ? battle_config.item_cash : item->nameid);
+							sd->vend_item = item->nameid;
+							sprintf(output, msg_txt(sd, 1596), itemdb_name(sd->vend_item));
+							clif_messagecolor(&sd->bl, color_table[COLOR_CYAN], output, false, SELF);
+						} else {
+							sd->vend_item = 0;
+						}
+						clif_openvendingreq(sd, 2 + skill_lv);
+					} else {
+						clif_openvendingreq(sd, 2 + skill_lv);
+					}
+				}
 				}
 			}
 		}
@@ -19194,6 +19230,29 @@ void skill_identify(map_session_data *sd, int idx)
 		}
 	}
 	clif_item_identified(sd,idx,flag);
+}
+
+/**
+* Extended Vending system [Lilith] update version by ex0ample
+**/
+int skill_vending(struct map_session_data *sd, t_itemid nameid, int skill_lv) {
+	nullpo_ret(sd);
+	std::shared_ptr<item_data> item;
+	char output[1024];
+
+	if (!pc_can_give_items(sd) || (item = item_db.find(nameid)) == nullptr) {
+		sd->state.prevend = 0;
+		sd->vend_item = 0;
+		sd->state.workinprogress = WIP_DISABLE_NONE;
+		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+	} else {
+		sd->vend_item = nameid;
+		sd->state.prevend = 1;
+		clif_openvendingreq(sd, 2 + skill_lv);
+		sprintf(output, msg_txt(sd, 1594), item->ename.c_str());
+		clif_messagecolor(&sd->bl, color_table[COLOR_CYAN], output, false, SELF);
+	}
+	return 0;
 }
 
 /*==========================================
