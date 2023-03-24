@@ -22365,7 +22365,7 @@ Body:
             Rate: 7
           - Item: Spinx_Helm
             Rate: 1
-          - Item: Assassin_Mask
+          - Item: Assassin_Mask_
             Rate: 1
           - Item: Novice_Egg_Cap
             Rate: 7
