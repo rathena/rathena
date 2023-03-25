@@ -46478,7 +46478,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AL_HOLYLIGHT",50;
   - Id: 300094
-    AegisName: Papila_H_Card
+    AegisName: Papila_Ruba_H_Card
     Name: Senior Papila Ruba Card
     Type: Card
     Weight: 10
