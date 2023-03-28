@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cli.hpp"
-#include "../common/ers.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
+#include <common/cli.hpp>
+#include <common/ers.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/timer.hpp>
 
 #include "char.hpp"
 
@@ -74,7 +74,7 @@ int cnslif_parse(const char* buf)
 
 	if( n == 2 && strcmpi("server", type) == 0 ){
 		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = 0;
+			global_core->signal_shutdown();
 		}
 		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 			ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET "\n");

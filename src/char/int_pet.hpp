@@ -4,7 +4,7 @@
 #ifndef INT_PET_HPP
 #define INT_PET_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 struct s_pet;
 

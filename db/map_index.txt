@@ -1200,6 +1200,16 @@ hero_out3
 hero_out4
 hero_tra
 herosria
+1@vrac1
+1@vrac2
+1@vrclo
+1@vrhha
+2@vrclo
+bl_soul
+bl_temple
+bl_venom
+mjo_wst01
+ra_pol01
 
 //======================================================================================
 // - Other/Extra maps -
