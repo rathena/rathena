@@ -10505,7 +10505,7 @@ Body:
     Script: |
       bonus bLuk,1;
   - Id: 4546
-    AegisName: Val'khiri_Card
+    AegisName: Light_Up_Card5
     Name: Val'khiri Card
     Type: Card
     Buy: 20
@@ -11748,7 +11748,7 @@ Body:
       bonus bNoRegen,2;
       bonus bSPDrainValue,1;
   - Id: 4642
-    AegisName: Min_Toad_Card
+    AegisName: IFN_Toad_Card
     Name: Infinite Toad Card
     Type: Card
     Buy: 20
@@ -11767,7 +11767,7 @@ Body:
       }
       bonus bFlee2,2+.@b;
   - Id: 4643
-    AegisName: Min_Vagabond_Wolf_Card
+    AegisName: IFN_V_Wolf_Card
     Name: Infinite Vagabond Wolf Card
     Type: Card
     Buy: 20
@@ -11786,7 +11786,7 @@ Body:
       }
       bonus bBaseAtk,10+.@b;
   - Id: 4644
-    AegisName: Min_Vocal_Card
+    AegisName: IFN_Vocal_Card
     Name: Infinite Vocal Card
     Type: Card
     Buy: 20
@@ -11805,7 +11805,7 @@ Body:
       }
       bonus bMdef,5+.@b;
   - Id: 4645
-    AegisName: Min_Eclipse_Card
+    AegisName: IFN_Eclipse_Card
     Name: Infinite Eclipse Card
     Type: Card
     Buy: 20
@@ -11824,7 +11824,7 @@ Body:
       }
       bonus bMaxHP,300+.@b;
   - Id: 4646
-    AegisName: Min_Chimera_Card
+    AegisName: IFN_Chimera_Card
     Name: Infinite Chimera Card
     Type: Card
     Buy: 20
@@ -11838,7 +11838,7 @@ Body:
       bonus bMaxHPrate,8;
       bonus bMaxSPrate,4;
   - Id: 4647
-    AegisName: Min_Osiris_Card
+    AegisName: IFN_Osiris_Card
     Name: Infinite Osiris Card
     Type: Card
     Buy: 20
@@ -11851,7 +11851,7 @@ Body:
     Script: |
       bonus bHPGainValue,300;
   - Id: 4648
-    AegisName: Min_Eddga_Card
+    AegisName: IFN_Eddga_Card
     Name: Infinite Eddga Card
     Type: Card
     Buy: 20
@@ -11864,7 +11864,7 @@ Body:
     Script: |
       bonus4 bAutoSpellWhenHit,"SM_PROVOKE",10,500,1;
   - Id: 4649
-    AegisName: Min_Phreeoni_Card
+    AegisName: IFN_Phreeoni_Card
     Name: Infinite Phreeoni Card
     Type: Card
     Buy: 20
@@ -11877,7 +11877,7 @@ Body:
     Script: |
       bonus bCritical,100;
   - Id: 4650
-    AegisName: Min_Orc_Hero_Card
+    AegisName: IFN_OrcHero_Card
     Name: Infinite Orc Hero Card
     Type: Card
     Buy: 20
@@ -11893,7 +11893,7 @@ Body:
       bonus bVit,3;
       bonus3 bAddEffWhenHit,Eff_Stun,10000,ATF_MAGIC;
   - Id: 4651
-    AegisName: Min_Tao_Gunka_Card
+    AegisName: IFN_Tao_Gunka_Card
     Name: Infinite Tao Gunka Card
     Type: Card
     Buy: 20
@@ -15010,7 +15010,7 @@ Body:
     Script: |
       bonus bDelayrate,-6;
   - Id: 4951
-    AegisName: Darkness_Drop
+    AegisName: A_Drop_Of_Dark_
     Name: Darkness Drop
     Type: Card
     SubType: Enchant
@@ -15019,7 +15019,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,2;
       bonus2 bSubEle,Ele_Dark,1;
   - Id: 4952
-    AegisName: Fire_Drop
+    AegisName: A_Drop_Of_Fire_
     Name: Fire Drop
     Type: Card
     SubType: Enchant
@@ -15028,7 +15028,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Fire,2;
       bonus2 bSubEle,Ele_Fire,1;
   - Id: 4953
-    AegisName: Water_Drop
+    AegisName: A_Drop_Of_Water_
     Name: Water Drop
     Type: Card
     SubType: Enchant
@@ -15037,7 +15037,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,2;
       bonus2 bSubEle,Ele_Water,1;
   - Id: 4954
-    AegisName: Earth_Drop
+    AegisName: A_Drop_Of_Tree_
     Name: Earth Drop
     Type: Card
     SubType: Enchant
@@ -15046,7 +15046,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,2;
       bonus2 bSubEle,Ele_Earth,1;
   - Id: 4955
-    AegisName: Holy_Drop
+    AegisName: A_Drop_Of_Light_
     Name: Holy Drop
     Type: Card
     SubType: Enchant
@@ -15055,7 +15055,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,2;
       bonus2 bSubEle,Ele_Holy,1;
   - Id: 4956
-    AegisName: Recovery_Drop
+    AegisName: A_Drop_Of_Heal_
     Name: Recovery Drop
     Type: Card
     SubType: Enchant
@@ -15067,49 +15067,49 @@ Body:
       }
       /* TODO: Depending on some recovery items HP recovery amount + 2% */
   - Id: 4957
-    AegisName: Famitsus_Power
+    AegisName: CollaboPower
     Name: Famitsu's Power
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxHP,832;
   - Id: 4958
-    AegisName: Gemini
+    AegisName: Z_Stone_1
     Name: Gemini
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-1;
   - Id: 4959
-    AegisName: Sagittarius
+    AegisName: Z_Stone_2
     Name: Sagittarius
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,1;
   - Id: 4960
-    AegisName: Aquarius
+    AegisName: Z_Stone_3
     Name: Aquarius
     Type: Card
     SubType: Enchant
     Script: |
       bonus bUseSPrate,-2;
   - Id: 4961
-    AegisName: Aries
+    AegisName: Z_Stone_4
     Name: Aries
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,10;
   - Id: 4962
-    AegisName: Cancer
+    AegisName: Z_Stone_5
     Name: Cancer
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,3;
   - Id: 4963
-    AegisName: Taurus
+    AegisName: Z_Stone_6
     Name: Taurus
     Type: Card
     SubType: Enchant
@@ -15117,35 +15117,35 @@ Body:
       bonus bBaseAtk,4;
       bonus bHit,1;
   - Id: 4964
-    AegisName: Capricorn
+    AegisName: Z_Stone_7
     Name: Capricorn
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAddRace,RC_All,3;
   - Id: 4965
-    AegisName: Pisces
+    AegisName: Z_Stone_8
     Name: Pisces
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-2;
   - Id: 4966
-    AegisName: Scorpio
+    AegisName: Z_Stone_9
     Name: Scorpio
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bAddRace,RC_All,1;
   - Id: 4967
-    AegisName: Leo
+    AegisName: Z_Stone_10
     Name: Leo
     Type: Card
     SubType: Enchant
     Script: |
       bonus bAspdRate,3;
   - Id: 4968
-    AegisName: Virgo
+    AegisName: Z_Stone_11
     Name: Virgo
     Type: Card
     SubType: Enchant
@@ -15155,7 +15155,7 @@ Body:
          bonus2 bSkillHeal,.@skills$[.@i],1;
       }
   - Id: 4969
-    AegisName: Libra
+    AegisName: Z_Stone_12
     Name: Libra
     Type: Card
     SubType: Enchant
@@ -19218,19 +19218,19 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6407
-    AegisName: Sang_Stone_Fragment
+    AegisName: Life_Stone1
     Name: Raw Crystal Stone Fragment
     Type: Etc
     Buy: 10
     Weight: 10
   - Id: 6408
-    AegisName: Sang_Stone
+    AegisName: Life_Stone2
     Name: Raw Crystal Stone
     Type: Etc
     Buy: 10
     Weight: 10
   - Id: 6409
-    AegisName: Sang_Stone_Mass
+    AegisName: Life_Stone3
     Name: Raw Crystal Stone Mass
     Type: Etc
     Buy: 20
@@ -19864,7 +19864,7 @@ Body:
     Name: Amatsu Orb07
     Type: Etc
   - Id: 6480
-    AegisName: Event_coin
+    AegisName: Event_Coin
     Name: Poring Coin
     Type: Etc
     Trade:
@@ -19968,7 +19968,7 @@ Body:
     Name: Kafra Coin
     Type: Etc
   - Id: 6495
-    AegisName: Para_Logro_Badge
+    AegisName: Eden_Merit_Badge
     Name: Eden Merit Badge
     Type: Etc
   - Id: 6496
@@ -20075,7 +20075,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6506
-    AegisName: Memorial_Bouquet
+    AegisName: Offering_Bouquet
     Name: Offering Bouquet
     Type: Etc
     Trade:
@@ -20187,7 +20187,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6519
-    AegisName: Collected_Samples
+    AegisName: Collected_Sample
     Name: Collected Sample
     Type: Etc
     Trade:
@@ -20753,7 +20753,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6604
-    AegisName: Essence_Rune_Magic
+    AegisName: Essence_Of_Rune
     Name: Essence Rune Magic
     Type: Etc
     Flags:
@@ -21052,7 +21052,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 6671
-    AegisName: Geffen_Coin_Magic_Tournament
+    AegisName: Geffen_Magic_Coin
     Name: Geffen Coin Magic Tournament
     Type: Etc
     Buy: 10
@@ -21081,7 +21081,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6673
-    AegisName: Bossnia_Tickets
+    AegisName: Bossnia_Ticket
     Name: Bossnia Tickets
     Type: Etc
     Buy: 10
@@ -21095,7 +21095,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6674
-    AegisName: GM_Coin
+    AegisName: Daily_Coin
     Name: GM Coin
     Type: Etc
     Weight: 10
@@ -21135,7 +21135,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6683
-    AegisName: Dried_Flower
+    AegisName: Thirsty_Flower
     Name: Dried Flower
     Type: Etc
     Buy: 10
@@ -21155,7 +21155,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6685
-    AegisName: Morocc_Certification
+    AegisName: MoroccMerit
     Name: Morocc Certification
     Type: Etc
     Buy: 10
@@ -21183,7 +21183,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6687
-    AegisName: Rope__
+    AegisName: LongRopes
     Name: Rope
     Type: Etc
     Buy: 10
@@ -21290,7 +21290,7 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 6698
-    AegisName: Wooden_Axe
+    AegisName: Hatchet
     Name: Wooden Axe
     Type: Etc
     Buy: 10
@@ -21304,7 +21304,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6699
-    AegisName: Faith_Silence
+    AegisName: Silence_Of_God
     Name: Faith Silence
     Type: Etc
     Buy: 10
@@ -21319,7 +21319,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6700
-    AegisName: White_Snake_Scale
+    AegisName: White_Scale
     Name: White Snake Scale
     Type: Etc
     Buy: 10
@@ -21334,7 +21334,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6701
-    AegisName: Treasure_Dwarf
+    AegisName: Treasure_Of_Dvergr
     Name: Treasure Dwarf
     Type: Etc
     Buy: 10
@@ -21349,7 +21349,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6702
-    AegisName: Sweat_Dwarf
+    AegisName: Sweat_Of_Dvergr
     Name: Sweat Dwarf
     Type: Etc
     Buy: 10
@@ -21364,7 +21364,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6703
-    AegisName: Warrior_Tears
+    AegisName: Tear_Of_Warrior
     Name: Warrior Tears
     Type: Etc
     Buy: 10
@@ -21379,7 +21379,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6704
-    AegisName: Warrior_Anger
+    AegisName: Anger_Of_Warrior
     Name: Warrior Anger
     Type: Etc
     Buy: 10
@@ -21394,7 +21394,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6705
-    AegisName: Warrior_Certificate
+    AegisName: Medal_Of_Honor
     Name: Warrior Certificate
     Type: Etc
     Buy: 10
@@ -21409,7 +21409,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6706
-    AegisName: Guardian_Flowers
+    AegisName: Flower_Of_Guardian
     Name: Guardian Flowers
     Type: Etc
     Buy: 10
@@ -21443,7 +21443,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6709
-    AegisName: Crisp_Silk
+    AegisName: Crispy_silk
     Name: Crisp Silk
     Type: Etc
     Buy: 10
@@ -21456,7 +21456,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6710
-    AegisName: Tied_Snake
+    AegisName: Twisted_Snake
     Name: Tied Snake
     Type: Etc
     Buy: 10
@@ -21473,7 +21473,7 @@ Body:
     Name: Lovely Stick
     Type: Etc
   - Id: 6713
-    AegisName: Heart_of_Soul
+    AegisName: Soul_Of_Ahat
     Name: Heart of Soul
     Type: Etc
     Trade:
@@ -21485,7 +21485,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6714
-    AegisName: Sheenas_Soul
+    AegisName: Soul_Of_Shnaim
     Name: Sheena's Soul
     Type: Etc
     Buy: 20
@@ -21528,13 +21528,13 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6719
-    AegisName: Jitterbug's_Tooth
+    AegisName: Tooth_Of_Jitterbug
     Name: Jitterbug's Tooth
     Type: Etc
     Buy: 10
     Weight: 100
   - Id: 6722
-    AegisName: Delicious_Clam_Flesh
+    AegisName: Delicious_Clam
     Name: Delicious Clam Flesh
     Type: Etc
     Buy: 10
@@ -21547,7 +21547,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6723
-    AegisName: Delicious_Canned_Food
+    AegisName: Delicious_Can
     Name: Delicious Canned Food
     Type: Etc
     Buy: 10
@@ -21602,7 +21602,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6727
-    AegisName: Arranged_Photo_Album
+    AegisName: Meeting_Album
     Name: Arranged Photo Album
     Type: Etc
     Buy: 10
@@ -21620,7 +21620,7 @@ Body:
     Type: Etc
     Buy: 10
   - Id: 6733
-    AegisName: Tingly_Feather
+    AegisName: Itchy_Feather
     Name: Tingly Feather
     Type: Etc
     Buy: 10
@@ -21696,7 +21696,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 6746
-    AegisName: Iron_Artifacts
+    AegisName: Steel_Article
     Name: Steel Artifact
     Type: Etc
     Buy: 10
@@ -21709,7 +21709,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6747
-    AegisName: Iron_Artifacts_
+    AegisName: Steel_Article_
     Name: Steel Artifact
     Type: Etc
     Buy: 10
@@ -21750,7 +21750,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6750
-    AegisName: Failed_Engine
+    AegisName: Wrong_Engine
     Name: Failed Engine
     Type: Etc
     Buy: 10
@@ -21758,7 +21758,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6751
-    AegisName: Crushed_Can_Iron_Plate
+    AegisName: Distorted_Iron_Plate
     Name: Crushed Can Iron Plate
     Type: Etc
     Buy: 10
@@ -21807,7 +21807,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6755
-    AegisName: Contaminated_Magic
+    AegisName: Polluted_Spell
     Name: Contaminated Magic
     Type: Etc
     Buy: 20
@@ -22109,12 +22109,12 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6795
-    AegisName: Ticket_Special_RO2
+    AegisName: Ticket_Card_RO2
     Name: Ticket Special RO2
     Type: Etc
     Buy: 10
   - Id: 6796
-    AegisName: RO2_Name_Card
+    AegisName: Name_Card_RO2
     Name: RO2 Name Card
     Type: Etc
     Buy: 10
@@ -22125,7 +22125,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6803
-    AegisName: Fragments_Of_Gigan
+    AegisName: Piece_Of_Gigantes
     Name: Fragments Of Gigan
     Type: Etc
     Buy: 10
@@ -22143,7 +22143,7 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 6813
-    AegisName: Kafra_Ticket
+    AegisName: LI_Kapra's_Pass
     Name: Kafra Ticket
     Type: Etc
     Buy: 10
@@ -22274,7 +22274,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6825
-    AegisName: Air_Cleaner_Box
+    AegisName: Box_Of_Aircleaner
     Name: Air Cleaner Box
     Type: Etc
     Buy: 10
@@ -22288,7 +22288,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6826
-    AegisName: Fresh_Grapes
+    AegisName: Fresh_Grape
     Name: Fresh Grapes
     Type: Etc
     Buy: 10
@@ -22321,7 +22321,7 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6832
-    AegisName: Questioned_Parts
+    AegisName: Problematical_Part
     Name: Questioned Parts
     Type: Etc
     Buy: 10
@@ -22329,7 +22329,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6833
-    AegisName: Limited_Token_of_Ziegfried
+    AegisName: LI_Token_Of_Siegfried
     Name: (Limited) Token of Ziegfried
     Type: Etc
     Buy: 10
@@ -22355,7 +22355,7 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 6836
-    AegisName: Talisman_Of_Soul
+    AegisName: Charm_Of_Soul
     Name: Talisman Of Soul
     Type: Etc
     Buy: 10
@@ -22368,7 +22368,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6837
-    AegisName: Piece_Of_Soul_Mouse
+    AegisName: Mouse_Soul_Piece
     Name: Piece Of Soul Mouse
     Type: Etc
     Buy: 10
@@ -22381,7 +22381,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6838
-    AegisName: Secret_Orders_Of_Prophet_K
+    AegisName: Secret_Letter_K
     Name: Secret Orders Of Prophet K
     Type: Etc
     Buy: 10
@@ -22394,7 +22394,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6839
-    AegisName: Gold_Choco_Coin
+    AegisName: Gold_Chocoin
     Name: Gold Choco Coin
     Type: Etc
     Buy: 10
@@ -22406,7 +22406,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6840
-    AegisName: Silver_Choco_Coin
+    AegisName: Silver_Chocoin
     Name: Silver Choco Coin
     Type: Etc
     Buy: 10
@@ -22418,7 +22418,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6841
-    AegisName: Bronze_Choco_Coin
+    AegisName: Bronze_Chocoin
     Name: Bronze Choco Coin
     Type: Etc
     Buy: 10
@@ -22430,7 +22430,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6842
-    AegisName: Huge_Jewery
+    AegisName: Big_Jewel
     Name: Huge Jewery
     Type: Etc
     Buy: 10
@@ -22443,7 +22443,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6843
-    AegisName: Thin_Ring
+    AegisName: Grass_Ring
     Name: Thin Ring
     Type: Etc
     Buy: 10
@@ -22456,7 +22456,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6844
-    AegisName: Mild_Stone
+    AegisName: Soft_Stone
     Name: Mild Stone
     Type: Etc
     Buy: 10
@@ -22469,7 +22469,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6845
-    AegisName: That_Thing
+    AegisName: Aged_Poo
     Name: That Thing
     Type: Etc
     Buy: 10
@@ -22482,7 +22482,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6846
-    AegisName: Limited_Gym_Membership_Card
+    AegisName: LC_Max_WeightUp_Srl
     Name: (Limited)Gym Membership Card
     Type: Card
     Buy: 10
@@ -22496,7 +22496,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6847
-    AegisName: Very_Small_Box
+    AegisName: Very_Tiny_Box
     Name: Very Small Box
     Type: Etc
     Buy: 10
@@ -22522,7 +22522,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6849
-    AegisName: Request_Complete_Certificate
+    AegisName: Request_Complete
     Name: Request Complete Certificate
     Type: Etc
     Buy: 10
@@ -22535,7 +22535,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6850
-    AegisName: Questionable_Box
+    AegisName: Suspicious_Box
     Name: Questionable Box
     Type: Etc
     Buy: 10
@@ -22548,7 +22548,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6851
-    AegisName: Questionable_Document
+    AegisName: Suspicious_Paper
     Name: Questionable Document
     Type: Etc
     Buy: 10
@@ -22561,7 +22561,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6852
-    AegisName: Super_Corrector
+    AegisName: Super_Neutralizer
     Name: Super Corrector
     Type: Etc
     Buy: 10
@@ -22574,7 +22574,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6853
-    AegisName: Thanks_Bouquet
+    AegisName: Thankful_Flowers
     Name: Thanks Bouquet
     Type: Etc
     Buy: 10
@@ -22587,7 +22587,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6854
-    AegisName: Novus_Captured
+    AegisName: Captured_Novus
     Name: Novus Captured
     Type: Etc
     Buy: 10
@@ -22600,7 +22600,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6855
-    AegisName: Tatacho_Captured
+    AegisName: Captured_Tatacho
     Name: Tatacho Captured
     Type: Etc
     Buy: 10
@@ -22613,7 +22613,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6856
-    AegisName: Manuscript_Written_By_Pigoreum
+    AegisName: Blood_Pus_Script
     Name: Manuscript Written By Pigoreum
     Type: Etc
     Buy: 10
@@ -22639,7 +22639,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6858
-    AegisName: Lude_Captured
+    AegisName: Captured_Rude
     Name: Lude Captured
     Type: Etc
     Buy: 10
@@ -22652,7 +22652,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6859
-    AegisName: Wanderer_Captured
+    AegisName: Captured_Wanderer
     Name: Wanderer Captured
     Type: Etc
     Buy: 10
@@ -22665,7 +22665,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6860
-    AegisName: Piece_Of_Soul_Cow
+    AegisName: Cow_Soul_Piece
     Name: Piece Of Soul Cow
     Type: Etc
     Buy: 10
@@ -22678,7 +22678,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6862
-    AegisName: Piece_Of_Soul_Tiger
+    AegisName: Tiger_Soul_Piece
     Name: Piece Of Soul Tiger
     Type: Etc
     Buy: 10
@@ -22691,7 +22691,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6863
-    AegisName: Strong_Piece_Of_Soul_Tiger
+    AegisName: Tiger_Soul_Piece2
     Name: Strong Piece Of Soul Tiger
     Type: Etc
     Buy: 10
@@ -22730,7 +22730,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6866
-    AegisName: Piece_Of_Soul_Rabbit
+    AegisName: Rabbit_Soul_Piece
     Name: Piece Of Soul Rabbit
     Type: Etc
     Trade:
@@ -22742,7 +22742,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6867
-    AegisName: Large_Insect_Barrel
+    AegisName: InsectCollected_BigBox
     Name: Large Insect Barrel
     Type: Etc
     Trade:
@@ -22754,7 +22754,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6868
-    AegisName: Medium_Insect_Barrel
+    AegisName: InsectCollected_MidBox
     Name: Medium Insect Barrel
     Type: Etc
     Trade:
@@ -22766,7 +22766,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6869
-    AegisName: Dust
+    AegisName: Dust_14ySummerEvent
     Name: Dust
     Type: Etc
     Trade:
@@ -22934,12 +22934,12 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6882
-    AegisName: Advanced_Bait
+    AegisName: Bait_14ySummerEvent
     Name: Advanced Bait
     Type: Etc
     Buy: 10
   - Id: 6883
-    AegisName: Pet_Snow_Bunny_Exchange_Ticket
+    AegisName: Snow_Rabbit_Ticket
     Name: Pet Snow Bunny Exchange Ticket
     Type: Etc
     Buy: 10
@@ -22953,7 +22953,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6884
-    AegisName: Pet_Tikbalang_Exchange_Ticket
+    AegisName: Tikbalang_Ticket
     Name: Pet Tikbalang Exchange Ticket
     Type: Etc
     Buy: 10
@@ -22967,7 +22967,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6885
-    AegisName: Piece_Of_Soul_Dragon
+    AegisName: Dragon_Soul_Piece
     Name: Piece Of Soul Dragon
     Type: Etc
     Buy: 10
@@ -22980,7 +22980,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6886
-    AegisName: Strong_Piece_Of_Soul_Dragon
+    AegisName: Dragon_Soul_Piece2
     Name: Strong Piece Of Soul Dragon
     Type: Etc
     Buy: 10
@@ -22999,7 +22999,7 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 6893
-    AegisName: Human's_Cookbook
+    AegisName: Human_Cookbook
     Name: Human's Cookbook
     Type: Etc
     Buy: 10
@@ -23011,12 +23011,12 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 6895
-    AegisName: Processed_Ancient_Rune
+    AegisName: TE_RuneOfAncient
     Name: Processed Ancient Rune
     Type: Etc
     Buy: 10
   - Id: 6896
-    AegisName: Processed_Mystic_Rune
+    AegisName: TE_RuneOfMystery
     Name: Processed Mystic Rune
     Type: Etc
     Buy: 10
@@ -23056,21 +23056,21 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6902
-    AegisName: King_Lobster
+    AegisName: Jumbo_Shrimp
     Name: King Lobster
     Type: Etc
     Buy: 10
     Flags:
       BuyingStore: true
   - Id: 6903
-    AegisName: King_Earthworm
+    AegisName: Giant_Earthworm
     Name: King Earthworm
     Type: Etc
     Buy: 10
     Flags:
       BuyingStore: true
   - Id: 6904
-    AegisName: Piece_Of_Soul_Snake
+    AegisName: Snake_Soul_Piece
     Name: Piece Of Soul Snake
     Type: Etc
     Buy: 10
@@ -23107,7 +23107,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6907
-    AegisName: Piece_Of_Soul_Horse
+    AegisName: Horse_Soul_Piece
     Name: Piece Of Soul Horse
     Type: Etc
     Buy: 10
@@ -23169,7 +23169,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6912
-    AegisName: Piece_Of_Soul_Sheep
+    AegisName: Lamb_Soul_Piece
     Name: Piece Of Soul Sheep
     Type: Etc
     Buy: 10
@@ -23182,7 +23182,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6913
-    AegisName: Holy_Rosary
+    AegisName: Sacred_Rosary
     Name: Holy Rosary
     Type: Etc
     Buy: 10
@@ -23196,7 +23196,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6914
-    AegisName: Black_Horn
+    AegisName: Black_Soul
     Name: Black Horn
     Type: Etc
     Buy: 10
@@ -23222,7 +23222,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6916
-    AegisName: Piece_Of_Soul_Monkey
+    AegisName: Monkey_Soul_Piece
     Name: Piece Of Soul Monkey
     Type: Etc
     Buy: 10
@@ -23235,7 +23235,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6917
-    AegisName: Piece_Of_Soul_Chicken
+    AegisName: Chicken_Soul_Piece
     Name: Piece Of Soul Chicken
     Type: Etc
     Buy: 10
@@ -23403,7 +23403,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6932
-    AegisName: Rare_Book
+    AegisName: Rare_Old_Books
     Name: Rare Book
     Type: Etc
     Buy: 10
@@ -23416,7 +23416,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6933
-    AegisName: Banquet_Invitation_Letter
+    AegisName: Banquet_Invitation
     Name: Banquet Invitation Letter
     Type: Etc
     Buy: 10
@@ -23429,7 +23429,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6934
-    AegisName: Magnificent_Dish
+    AegisName: Wonderful_Cuisine
     Name: Magnificent Dish
     Type: Etc
     Buy: 10
@@ -23456,7 +23456,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6936
-    AegisName: Cold_Core
+    AegisName: Stone_Of_Chill
     Name: Cold Core
     Type: Etc
     Buy: 10
@@ -23464,7 +23464,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6937
-    AegisName: Silicone_Shell
+    AegisName: Soften_Skin
     Name: Silicone Shell
     Type: Etc
     Buy: 10
@@ -23472,7 +23472,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6938
-    AegisName: Hedgehog_Picks
+    AegisName: Porcupine_Big_Spike
     Name: Hedgehog Picks
     Type: Etc
     Buy: 10
@@ -23480,7 +23480,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6939
-    AegisName: Old_Belt
+    AegisName: Shabby_Old_Belt
     Name: Worn-Out Belt
     Type: Etc
     Buy: 10
@@ -23488,7 +23488,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6940
-    AegisName: Moving_Dark_Matter
+    AegisName: Moving_Black_Things
     Name: Moving Black Material
     Type: Etc
     Buy: 10
@@ -23496,7 +23496,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6941
-    AegisName: Fragments_Valkyrie_Power
+    AegisName: Valkyrie_Fragment
     Name: Fragments Valkyrie Power
     Type: Etc
     Buy: 10
@@ -23504,7 +23504,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6942
-    AegisName: Will_Master
+    AegisName: Will_Of_Owner
     Name: Will Master
     Type: Etc
     Buy: 10
@@ -23566,7 +23566,7 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6953
-    AegisName: Ramor_Refine_Ticket
+    AegisName: RamorRob_G_Ticket
     Name: Ramor Refine Ticket
     Type: Etc
     Buy: 10
@@ -23581,7 +23581,7 @@ Body:
     Script: |
       /*Refine succeed guarantee until +9 for item 2598 only*/
   - Id: 6954
-    AegisName: Piece_Of_Soul_Dog
+    AegisName: Dog_Soul_Piece
     Name: Piece Of Soul Dog
     Type: Etc
     Buy: 10
@@ -23594,7 +23594,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6955
-    AegisName: Piece_Of_Soul_Pig
+    AegisName: Pig_Soul_Piece
     Name: Piece Of Soul Pig
     Type: Etc
     Buy: 10
@@ -23620,7 +23620,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6957
-    AegisName: Lamb_Fleece
+    AegisName: Soft_Wool
     Name: Lamb Fleece
     Type: Etc
     Buy: 10
@@ -23633,7 +23633,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6958
-    AegisName: Lamb_Horns
+    AegisName: Lamb_Horn
     Name: Lamb Horns
     Type: Etc
     Buy: 10
@@ -24345,7 +24345,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 7062
-    AegisName: Broken_Turtle_Shell
+    AegisName: Turtle_Shell_
     Name: Broken Turtle Shell
     Type: Etc
     Buy: 280
@@ -28993,17 +28993,17 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 7638
-    AegisName: TW_Green_Box
+    AegisName: Tw_Green_Box
     Name: TW Green Box
     Type: Etc
     Weight: 10
   - Id: 7639
-    AegisName: TW_Red_Box
+    AegisName: Tw_Red_Box
     Name: TW Red Box
     Type: Etc
     Weight: 10
   - Id: 7640
-    AegisName: Butterfly_Hair_Decoration
+    AegisName: Butterfly_Hair_Clip
     Name: Butterfly Hair Decoration
     Type: Etc
     Buy: 10
@@ -29011,7 +29011,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 7641
-    AegisName: Medical_Cure_Box
+    AegisName: Cure_Box
     Name: Medical Cure Box
     Type: Etc
     Buy: 10
@@ -29039,7 +29039,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 7644
-    AegisName: Unsent_Letter
+    AegisName: Unsent_Mail
     Name: Unsent Letter
     Type: Etc
     Buy: 10
@@ -29120,7 +29120,7 @@ Body:
     Type: Etc
     Buy: 20
   - Id: 7671
-    AegisName: Firstaid_Kit
+    AegisName: 187_Firstaid_Kit
     Name: First Aid Kit
     Type: Etc
     Buy: 20
@@ -29147,7 +29147,7 @@ Body:
     Name: One Click Weapon 7UP
     Type: Etc
   - Id: 7680
-    AegisName: Oneclick_Weapon_9UP
+    AegisName: Oneclick_Weapon9UP
     Name: One Click Weapon 9UP
     Type: Etc
   - Id: 7681
@@ -29165,7 +29165,7 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 7690
-    AegisName: Special_Exchange_Coupons
+    AegisName: Special_Tiket
     Name: Special Exchange Coupons
     Type: Etc
     Buy: 10
@@ -30519,7 +30519,7 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 7856
-    AegisName: Girl_Bunch_Of_Flower_
+    AegisName: GuillotineC_Pack_Item_2
     Name: Girl's Bouquet
     Type: Etc
     Buy: 20
@@ -31148,7 +31148,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 7924
-    AegisName: Gold_Paper
+    AegisName: Special_Ticket_Lv170
     Name: Gold Paper
     Type: Etc
     Buy: 20
@@ -31159,13 +31159,13 @@ Body:
     Type: Etc
     Buy: 20
   - Id: 7926
-    AegisName: Incense
+    AegisName: Break_Box_CN
     Name: Incense
     Type: Etc
     Buy: 20
     Weight: 10
   - Id: 7927
-    AegisName: Candle_TW
+    AegisName: Old_Box_CN
     Name: Candle TW
     Type: Etc
     Buy: 20
@@ -31308,7 +31308,7 @@ Body:
     Name: Caskinya
     Type: Etc
   - Id: 7944
-    AegisName: Sealed_Box
+    AegisName: Box_Of_Seal
     Name: Sealed Box
     Type: Etc
     Buy: 10
@@ -32135,7 +32135,7 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 11056
-    AegisName: Elemental_Spirit_Guide
+    AegisName: Spiritualism_Guide
     Name: Elemental Spirit Guide
     Type: Etc
     Buy: 1000
@@ -32162,7 +32162,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 11061
-    AegisName: Honor_Proof_Exchange_List
+    AegisName: EP16List
     Name: Honor Proof Exchange List
     Type: Etc
     Buy: 20
@@ -32630,7 +32630,7 @@ Body:
     Script: |
       bonus bAtkEle,Ele_Fire;
   - Id: 13229
-    AegisName: Lightning_Bullet
+    AegisName: Lighting_Bullet
     Name: Lightning Bullet
     Type: Ammo
     SubType: Bullet
@@ -33480,7 +33480,7 @@ Body:
     Name: Muscle Knights Summertime Guide Box
     Type: Etc
   - Id: 17438
-    AegisName: Three_Master_Package_II
+    AegisName: 3_Life_Potion_pack2
     Name: Three Master Package II
     Type: Etc
     Buy: 10
@@ -33496,7 +33496,7 @@ Body:
     Script: |
       /* TODO */
   - Id: 17439
-    AegisName: Three_Master_Package_II10
+    AegisName: 3_Life_Potion_10pack2
     Name: Three Master Package II(10)
     Type: Etc
     Buy: 10
@@ -33702,7 +33702,7 @@ Body:
     Type: Etc
     Buy: 10
   - Id: 22520
-    AegisName: Stops_Buff_Reset
+    AegisName: Pc_Stop_Cancel
     Name: Stops Buff Reset
     Type: Etc
     Buy: 10
@@ -33752,7 +33752,7 @@ Body:
     Buy: 20
     Weight: 50
   - Id: 22717
-    AegisName: Wanderer_Ball
+    AegisName: Ball_Wanderer
     Name: Wanderer Ball
     Type: Etc
     Buy: 10
@@ -33765,7 +33765,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22718
-    AegisName: Lude_Ball
+    AegisName: Ball_Rude
     Name: Lude Ball
     Type: Etc
     Buy: 10
@@ -33778,7 +33778,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22719
-    AegisName: Tatacho_Ball
+    AegisName: Ball_Tatacho
     Name: Tatacho Ball
     Type: Etc
     Buy: 10
@@ -33791,7 +33791,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22720
-    AegisName: Novus_Ball
+    AegisName: Ball_Novus
     Name: Novus Ball
     Type: Etc
     Buy: 10
@@ -33804,7 +33804,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22802
-    AegisName: Safe_to_6_Equipment_Certificate
+    AegisName: Guarantee6_Box
     Name: Safe to 6 Equipment Certificate
     Type: Etc
     Buy: 10
@@ -33818,7 +33818,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22875
-    AegisName: Sealed_Beelzebub_Card
+    AegisName: Sealed_Berz_Card_
     Name: Sealed Beelzebub Card
     Type: Card
     Buy: 20
@@ -33973,7 +33973,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25043
-    AegisName: Thorny_Vine_Flute
+    AegisName: Thorn_Vines_Pipe
     Name: Thorny Vine Flute
     Type: Etc
     Trade:
@@ -33985,12 +33985,12 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25044
-    AegisName: Hard_Thorny_Vine
+    AegisName: Hard_Thorn_Vines
     Name: Hard Thorny Vine
     Type: Etc
     Weight: 10
   - Id: 25045
-    AegisName: Luxurious_Cloth
+    AegisName: High_Quality_Cloth
     Name: Luxurious Cloth
     Type: Etc
     Trade:
@@ -34002,7 +34002,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25046
-    AegisName: Boarding_Pass
+    AegisName: Embark_Warrant
     Name: Boarding Pass
     Type: Etc
     Trade:
@@ -34014,7 +34014,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25047
-    AegisName: Kahlunac
+    AegisName: Carlou_Nyac
     Name: Kahlunac
     Type: Etc
     Trade:
@@ -34026,7 +34026,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25048
-    AegisName: Hearty_Lunchbox
+    AegisName: Full_Lunch
     Name: Hearty Lunchbox
     Type: Etc
     Trade:
@@ -34038,7 +34038,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25049
-    AegisName: Basilac_Clam
+    AegisName: Basil_Rac
     Name: Basilac Clam
     Type: Etc
     Trade:
@@ -34488,27 +34488,27 @@ Body:
     Trade:
       NoCart: true
   - Id: 25127
-    AegisName: Silent_Energy_Particle
+    AegisName: Particles_Of_Energy1
     Name: Silent Energy Particle
     Type: Etc
   - Id: 25128
-    AegisName: Weak_Energy_Particle
+    AegisName: Particles_Of_Energy2
     Name: Weak Energy Particle
     Type: Etc
   - Id: 25129
-    AegisName: Unstable_Energy_Particle
+    AegisName: Particles_Of_Energy3
     Name: Unstable Energy Particle
     Type: Etc
   - Id: 25130
-    AegisName: Sinister_Energy_Particle
+    AegisName: Particles_Of_Energy4
     Name: Sinister Energy Particle
     Type: Etc
   - Id: 25131
-    AegisName: Fallen_Energy_Particle
+    AegisName: Particles_Of_Energy5
     Name: Fallen Energy Particle
     Type: Etc
   - Id: 25132
-    AegisName: Pumpkin_Deco
+    AegisName: Pumpkin_Decorations
     Name: Pumpkin Deco
     Type: Etc
     Trade:
@@ -34520,7 +34520,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25133
-    AegisName: Dried_White_Stem
+    AegisName: Dry_White_Stem
     Name: Dried White Stem
     Type: Etc
     Trade:
@@ -34573,7 +34573,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25142
-    AegisName: Doram_Token
+    AegisName: DoramToken
     Name: Doram Token
     Type: Etc
   - Id: 25143
@@ -34589,7 +34589,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25144
-    AegisName: Bridge_Postured_Doll
+    AegisName: Bridge_Stuffed_Doll
     Name: Bridge Postured Doll
     Type: Etc
     Trade:
@@ -34601,7 +34601,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25145
-    AegisName: Burnt_Spector_Doll
+    AegisName: Burned_Specter_Doll
     Name: Burnt Spector Doll
     Type: Etc
     Trade:
@@ -34613,7 +34613,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25146
-    AegisName: Cold_Blooded_Queen_Doll
+    AegisName: Relentless_Queen_Doll
     Name: Cold Blooded Queen Doll
     Type: Etc
     Trade:
@@ -34625,7 +34625,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25147
-    AegisName: Well_Eatenl_Rabbit_Doll
+    AegisName: Meal_Done_Ribbit_Doll
     Name: Well Eatenl Rabbit Doll
     Type: Etc
     Trade:
@@ -34637,7 +34637,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25148
-    AegisName: Cute_Starved_Demon_Doll
+    AegisName: Cute_Eat_Machine_Doll
     Name: Cute Starved Demon Doll
     Type: Etc
     Trade:
@@ -34649,7 +34649,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25149
-    AegisName: Doll_With_Warm_Scarf
+    AegisName: Hot_Muffler_Doll
     Name: Doll With Warm Scarf
     Type: Etc
     Trade:
@@ -34661,7 +34661,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25150
-    AegisName: Hugging_Alice_Pilow
+    AegisName: Alice_Hug_Pillow
     Name: Hugging Alice Pilow
     Type: Etc
     Trade:
@@ -35046,25 +35046,25 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25207
-    AegisName: SPAbsorb_Stone_Top
+    AegisName: Upg_SPdrainStone_Top
     Name: SPAbsorb Stone (Upper)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25208
-    AegisName: SPAbsorb_Stone_Robe
+    AegisName: Upg_SPdrainStone_Robe
     Name: SPAbsorb Stone (Garment)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25209
-    AegisName: HPAbsorb_Stone_Robe
+    AegisName: Upg_HPdrainStone_Robe
     Name: HPAbsorb Stone (Garment)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25210
-    AegisName: HPAbsorb_Stone_Top
+    AegisName: Upg_HPdrainStone_Top
     Name: HPAbsorb Stone (Upper)
     Type: Etc
     Buy: 20
@@ -35189,7 +35189,7 @@ Body:
     Buy: 1000
     Weight: 10
   - Id: 25233
-    AegisName: Cotton_Tufts
+    AegisName: Wad_Of_Cotton
     Name: Cotton Tufts
     Type: Etc
     Buy: 1000
@@ -35206,7 +35206,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25238
-    AegisName: New_Normal_Lubricant
+    AegisName: General_Lubricant_
     Name: New Normal Lubricant
     Type: Etc
     Trade:
@@ -35218,7 +35218,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25239
-    AegisName: New_Advanced_Lubricant
+    AegisName: High_RankLubricant_
     Name: New Advanced Lubricant
     Type: Etc
     Trade:
@@ -35280,7 +35280,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25249
-    AegisName: Buffalo_Bandit_Mane
+    AegisName: Mane_Of_Cow
     Name: Buffalo Bandit Mane
     Type: Etc
     Trade:
@@ -35334,14 +35334,14 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25256
-    AegisName: Hazy_Dream_Fragment
+    AegisName: HazyDream
     Name: Hazy Dream Fragment
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25257
-    AegisName: Bloody_Love_Letter
+    AegisName: Bloody_LoveLetter
     Name: Bloody Love Letter
     Type: Etc
     Buy: 780
@@ -35349,7 +35349,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 25258
-    AegisName: Broken_Arrow
+    AegisName: BrokenArrow
     Name: Broken Arrow
     Type: Etc
     Buy: 550
@@ -35357,7 +35357,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 25259
-    AegisName: Recruitment_Leaflet
+    AegisName: SubjugationFlyer
     Name: Recruitment Leaflet
     Type: Etc
     Buy: 778
@@ -35561,7 +35561,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25290
-    AegisName: Sweets_Festival_Coin
+    AegisName: Sweets_Coin
     Name: Sweets Festival Coin
     Type: Etc
   - Id: 25291
@@ -35610,7 +35610,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25297
-    AegisName: Frozen_Stone_Fragment
+    AegisName: Frozen_PieceOfRock
     Name: Frozen Stone Fragment
     Type: Etc
     Weight: 10
@@ -35625,7 +35625,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25300
-    AegisName: Ktullanux_Eye
+    AegisName: KTULLANUXsEye
     Name: Ktullanux Eye
     Type: Etc
     Weight: 10
@@ -35711,12 +35711,12 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25311
-    AegisName: Piece_of_Black_Horn
+    AegisName: PieceOfBlackSpirit
     Name: Piece of Black Horn
     Type: Etc
     Weight: 10
   - Id: 25312
-    AegisName: Fine_Old_Doll
+    AegisName: OldDoll
     Name: Fine Old Doll
     Type: Etc
     Weight: 10
@@ -35890,7 +35890,7 @@ Body:
     Name: Cupet Coin
     Type: Etc
   - Id: 25377
-    AegisName: Luxurious_Pet_Food
+    AegisName: High_Class_Pet_food
     Name: Luxurious Pet Food
     Type: Etc
     Buy: 10000
@@ -40714,7 +40714,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Holy,-30;
       bonus2 bMagicAddEle,Ele_Fire,-30;
   - Id: 27286
-    AegisName: Colorful_Teddy_Bear_Card
+    AegisName: Colorful_T_Bear_Card
     Name: Colorful Teddy Bear Card
     Type: Card
     Buy: 20
@@ -40727,7 +40727,7 @@ Body:
       bonus bMatk,5;
       bonus2 bMagicAddSize,Size_Large,15;
   - Id: 27287
-    AegisName: Shiny_Teddy_Bear_Card
+    AegisName: Shining_T_Bear_Card
     Name: Shiny Teddy Bear Card
     Type: Card
     Buy: 20
@@ -40740,7 +40740,7 @@ Body:
       bonus bUseSPrate,10;
       bonus2 bMagicAtkEle,Ele_Holy,(3*getrefine());
   - Id: 27288
-    AegisName: Hardworking_Pitman_Card
+    AegisName: Pitman_Worker_Card
     Name: Hardworking Pitman Card
     Type: Card
     Buy: 20
@@ -40770,7 +40770,7 @@ Body:
       bonus bMatk,5;
       bonus2 bMagicAddSize,Size_Medium,15;
   - Id: 27290
-    AegisName: Haunted_Obsidian_Card
+    AegisName: Sinister_Obsidian_Card
     Name: Haunted Obsidian Card
     Type: Card
     Buy: 20
@@ -40789,7 +40789,7 @@ Body:
          bonus bAspd,1;
       } }
   - Id: 27291
-    AegisName: Ancient_Tri_Joint_Card
+    AegisName: Ancient_Trijoint_Card
     Name: Ancient Tri Joint Card
     Type: Card
     Buy: 20
@@ -40802,7 +40802,7 @@ Body:
       bonus bBaseAtk,30;
       bonus bMaxHPrate,-1;
   - Id: 27292
-    AegisName: Ancient_Stalactic_Golem_Card
+    AegisName: Ancient_Sta_Golem_Card
     Name: Ancient Stalactic Golem Card
     Type: Card
     Buy: 20
@@ -40852,7 +40852,7 @@ Body:
       }
       bonus2 bIgnoreDefClassRate,Class_Boss,.@val;
   - Id: 27295
-    AegisName: Ancient_Stone_Shooter_Card
+    AegisName: Ancient_S_Shooter_Card
     Name: Ancient Stone Shooter Card
     Type: Card
     Buy: 20
@@ -40870,7 +40870,7 @@ Body:
       }
       bonus bCritAtkRate,.@crit;
   - Id: 27296
-    AegisName: Ancient_Wootan_Shooter_Card
+    AegisName: Ancient_W_Shooter_Card
     Name: Ancient Wootan Shooter Card
     Type: Card
     Buy: 20
@@ -40889,7 +40889,7 @@ Body:
          bonus bBaseAtk,40;
       } }
   - Id: 27297
-    AegisName: Ancient_Wootan_Fighter_Card
+    AegisName: Ancient_W_Fighter_Card
     Name: Ancient Wootan Fighter Card
     Type: Card
     Buy: 20
@@ -40902,7 +40902,7 @@ Body:
       bonus bCritical,5;
       bonus bCritAtkRate,10;
   - Id: 27298
-    AegisName: Ancient_Wootan_Defender_Card
+    AegisName: Ancient_W_Deffend_Card
     Name: Ancient Wootan Defender Card
     Type: Card
     Buy: 20
@@ -40918,7 +40918,7 @@ Body:
       }
       bonus2 bSubClass,Class_Boss,.@val;
   - Id: 27301
-    AegisName: Labyrinth_Doppelganger_Card
+    AegisName: Labyrinth_Dop_Card
     Name: Labyrinth Doppelganger Card
     Type: Card
     Buy: 20
@@ -41216,7 +41216,7 @@ Body:
       autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3097,5000; }";
       /* unknown transformation rates */
   - Id: 27322
-    AegisName: Demon_God's_Apostle_Ahat_Card
+    AegisName: Ahat_Card
     Name: Demon God's Apostle Ahat Card
     Type: Card
     Buy: 20
@@ -41228,7 +41228,7 @@ Body:
     Script: |
       bonus bMaxSPrate,5;
   - Id: 27323
-    AegisName: Demon_God's_Apostle_Shnaim_Card
+    AegisName: Shnaim_Card
     Name: Demon God's Apostle Shnaim Card
     Type: Card
     Buy: 20
@@ -41296,7 +41296,7 @@ Body:
       autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3029,5000; }";
       /* unknown rates */
   - Id: 27328
-    AegisName: Corrupt_Life_Card
+    AegisName: LivingDeath_Card
     Name: Corrupt Life Card
     Type: Card
     Buy: 20
@@ -41531,7 +41531,7 @@ Body:
       bonus2 bSubRace,RC_Brute,30;
       bonus2 bSubRace,RC_Player_Doram,30;
   - Id: 27347
-    AegisName: Rigid_Kaho_Card
+    AegisName: Firm_Kaho_Card
     Name: Rigid Kaho Card
     Type: Card
     Buy: 20
@@ -41543,7 +41543,7 @@ Body:
     Script: |
       bonus2 bMagicAddEle,Ele_Earth,10;
   - Id: 27348
-    AegisName: Rigid_Lava_Golem_Card
+    AegisName: Firm_Lava_G_Card
     Name: Rigid Lava Golem Card
     Type: Card
     Buy: 20
@@ -41556,7 +41556,7 @@ Body:
       .@r = getrefine();
       bonus2 bMagicAddEle,Ele_Neutral,3+((.@r>=7)*5)+((.@r>=9)*7);
   - Id: 27349
-    AegisName: Rigid_Explosion_Card
+    AegisName: Firm_Explosion_Card
     Name: Rigid Explosion Card
     Type: Card
     Buy: 20
@@ -41569,7 +41569,7 @@ Body:
       bonus2 bSubRace,RC_Dragon,15;
       bonus2 bSubDefEle,Ele_Fire,15;
   - Id: 27350
-    AegisName: Rigid_Earth_Deleter_Card
+    AegisName: Firm_Deleter1_Card
     Name: Rigid Earth Deleter Card
     Type: Card
     Buy: 20
@@ -41583,7 +41583,7 @@ Body:
       .@r = getrefine();
       bonus bMaxSPrate,2+(.@r/2);
   - Id: 27351
-    AegisName: Rigid_Sky_Deleter_Card
+    AegisName: Firm_Deleter2_Card
     Name: Rigid Sky Deleter Card
     Type: Card
     Buy: 20
@@ -41596,7 +41596,7 @@ Body:
     Script: |
       bonus bMaxHPrate,5;
   - Id: 27352
-    AegisName: Rigid_Nightmare_Terror_Card
+    AegisName: Firm_Nightmare_T_Card
     Name: Rigid Nightmare Terror Card
     Type: Card
     Buy: 20
@@ -41608,7 +41608,7 @@ Body:
     Script: |
       bonus bMaxSPrate,5;
   - Id: 27353
-    AegisName: Rigid_Blazer_Card
+    AegisName: Firm_Blazzer_Card
     Name: Rigid Blazer Card
     Type: Card
     Buy: 20
@@ -43089,7 +43089,7 @@ Body:
       bonus bMaxSPrate,30;
       bonus bHealPower,55;
   - Id: 29121
-    AegisName: Goddess_of_Justice_A
+    AegisName: JusticeOfGoddess_A
     Name: Goddess of Justice A
     Type: Card
     SubType: Enchant
@@ -43099,7 +43099,7 @@ Body:
       bonus bHit,2;
       bonus bMaxHP,300;
   - Id: 29122
-    AegisName: Goddess_of_Justice_S
+    AegisName: JusticeOfGoddess_S
     Name: Goddess of Justice S
     Type: Card
     SubType: Enchant
@@ -43109,7 +43109,7 @@ Body:
       bonus bHit,4;
       bonus bMaxHP,600;
   - Id: 29123
-    AegisName: Goddess_of_Mercy_A
+    AegisName: LoveOfGoddess_A
     Name: Goddess of Mercy A
     Type: Card
     SubType: Enchant
@@ -43119,7 +43119,7 @@ Body:
       bonus bHealPower,4;
       bonus bMaxSP,20;
   - Id: 29124
-    AegisName: Goddess_of_Mercy_S
+    AegisName: LoveOfGoddess_S
     Name: Goddess of Mercy S
     Type: Card
     SubType: Enchant
@@ -43129,7 +43129,7 @@ Body:
       bonus bHealPower,8;
       bonus bMaxSP,40;
   - Id: 29125
-    AegisName: Goddess_of_Insight_A
+    AegisName: InsightOfGoddess_A
     Name: Goddess of Insight A
     Type: Card
     SubType: Enchant
@@ -43138,7 +43138,7 @@ Body:
       bonus bLongAtkRate,5;
       bonus bCritical,5;
   - Id: 29126
-    AegisName: Goddess_of_Insight_S
+    AegisName: InsightOfGoddess_S
     Name: Goddess of Insight S
     Type: Card
     SubType: Enchant
@@ -43332,7 +43332,7 @@ Body:
     UnEquipScript: |
       hateffect HAT_EF_KAGEMUSYA,false;
   - Id: 29166
-    AegisName: A-Tolerance
+    AegisName: Reactor_A_Tolerance
     Name: A-Tolerance
     Type: Card
     SubType: Enchant
@@ -43342,7 +43342,7 @@ Body:
       bonus2 bSubRace,RC_DemiHuman,.@r/3;
       bonus2 bSubRace,RC_Formless,.@r/3;
   - Id: 29167
-    AegisName: A-Hit
+    AegisName: Reactor_A_HIT
     Name: A-Hit
     Type: Card
     SubType: Enchant
@@ -43359,7 +43359,7 @@ Body:
          bonus bHit,10;
       }
   - Id: 29168
-    AegisName: A-Flee
+    AegisName: Reactor_A_FLEE
     Name: A-Flee
     Type: Card
     SubType: Enchant
@@ -43376,7 +43376,7 @@ Body:
          bonus bFlee,10;
       }
   - Id: 29169
-    AegisName: A-Mdef
+    AegisName: Reactor_A_MDEF
     Name: A-Mdef
     Type: Card
     SubType: Enchant
@@ -43516,7 +43516,7 @@ Body:
          autobonus "{ bonus bCritical,100; }",.@c,.@t,BF_WEAPON;
       }
   - Id: 29176
-    AegisName: Tenji
+    AegisName: Sky_Ground
     Name: Tenji
     Type: Card
     SubType: Enchant
@@ -43687,289 +43687,289 @@ Body:
     Script: |
       bonus bDefEle,Ele_Poison;
   - Id: 29310
-    AegisName: Racing_RK_1
+    AegisName: Racing_E_Rune1
     Name: Racing(Rune Knight) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29311
-    AegisName: Racing_RK_2
+    AegisName: Racing_E_Rune2
     Name: Racing(Rune Knight) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29312
-    AegisName: Racing_RK_3
+    AegisName: Racing_E_Rune3
     Name: Racing(Rune Knight) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29313
-    AegisName: Racing_RG_1
+    AegisName: Racing_E_Royal1
     Name: Racing(Royal Guard) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29314
-    AegisName: Racing_RG_2
+    AegisName: Racing_E_Royal2
     Name: Racing(Royal Guard) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29315
-    AegisName: Racing_RG_3
+    AegisName: Racing_E_Royal3
     Name: Racing(Royal Guard) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29316
-    AegisName: Racing_MC_1
+    AegisName: Racing_E_Mecha1
     Name: Racing(Mechanic) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29317
-    AegisName: Racing_MC_2
+    AegisName: Racing_E_Mecha2
     Name: Racing(Mechanic) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29318
-    AegisName: Racing_MC_3
+    AegisName: Racing_E_Mecha3
     Name: Racing(Mechanic) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29319
-    AegisName: Racing_GN_1
+    AegisName: Racing_E_Gene1
     Name: Racing(Geneticist) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29320
-    AegisName: Racing_GN_2
+    AegisName: Racing_E_Gene2
     Name: Racing(Geneticist) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29321
-    AegisName: Racing_GN_3
+    AegisName: Racing_E_Gene3
     Name: Racing(Geneticist) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29322
-    AegisName: Racing_GC_1
+    AegisName: Racing_E_Cross1
     Name: Racing(Guillotine Cross) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29323
-    AegisName: Racing_GC_2
+    AegisName: Racing_E_Cross2
     Name: Racing(Guillotine Cross) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29324
-    AegisName: Racing_GC_3
+    AegisName: Racing_E_Cross3
     Name: Racing(Guillotine Cross) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29325
-    AegisName: Racing_SC_1
+    AegisName: Racing_E_Chaser1
     Name: Racing(Shadow Chaser) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29326
-    AegisName: Racing_SC_2
+    AegisName: Racing_E_Chaser2
     Name: Racing(Shadow Chaser) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29327
-    AegisName: Racing_SC_3
+    AegisName: Racing_E_Chaser3
     Name: Racing(Shadow Chaser) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29328
-    AegisName: Racing_WL_1
+    AegisName: Racing_E_Warlock1
     Name: Racing(Warlock) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29329
-    AegisName: Racing_WL_2
+    AegisName: Racing_E_Warlock2
     Name: Racing(Warlock) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29330
-    AegisName: Racing_WL_3
+    AegisName: Racing_E_Warlock3
     Name: Racing(Warlock) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29331
-    AegisName: Racing_SO_1
+    AegisName: Racing_E_Sorcer1
     Name: Racing(Sorcerer) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29332
-    AegisName: Racing_SO_2
+    AegisName: Racing_E_Sorcer2
     Name: Racing(Sorcerer) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29333
-    AegisName: Racing_SO_3
+    AegisName: Racing_E_Sorcer3
     Name: Racing(Sorcerer) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29334
-    AegisName: Racing_AB_1
+    AegisName: Racing_E_Bishop1
     Name: Racing(Archbishop) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29335
-    AegisName: Racing_AB_2
+    AegisName: Racing_E_Bishop2
     Name: Racing(Archbishop) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29336
-    AegisName: Racing_AB_3
+    AegisName: Racing_E_Bishop3
     Name: Racing(Archbishop) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29337
-    AegisName: Racing_SR_1
+    AegisName: Racing_E_Sura1
     Name: Racing(Sura) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29338
-    AegisName: Racing_SR_2
+    AegisName: Racing_E_Sura2
     Name: Racing(Sura) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29339
-    AegisName: Racing_SR_3
+    AegisName: Racing_E_Sura3
     Name: Racing(Sura) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29340
-    AegisName: Racing_RA_1
+    AegisName: Racing_E_Ranger1
     Name: Racing(Ranger) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29341
-    AegisName: Racing_RA_2
+    AegisName: Racing_E_Ranger2
     Name: Racing(Ranger) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29342
-    AegisName: Racing_RA_3
+    AegisName: Racing_E_Ranger3
     Name: Racing(Ranger) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29343
-    AegisName: Racing_WM_1
+    AegisName: Racing_E_Wand_Min1
     Name: Racing(Wanderers & Minstrel) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29344
-    AegisName: Racing_WM_2
+    AegisName: Racing_E_Wand_Min2
     Name: Racing(Wanderers & Minstrel) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29345
-    AegisName: Racing_WM_3
+    AegisName: Racing_E_Wand_Min3
     Name: Racing(Wanderers & Minstrel) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29346
-    AegisName: Racing_GS_1
+    AegisName: Racing_E_Gunner1
     Name: Racing(Gunslinger) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29347
-    AegisName: Racing_GS_2
+    AegisName: Racing_E_Gunner2
     Name: Racing(Gunslinger) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29348
-    AegisName: Racing_GS_3
+    AegisName: Racing_E_Gunner3
     Name: Racing(Gunslinger) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29349
-    AegisName: Racing_NJ_1
+    AegisName: Racing_E_Ninja1
     Name: Racing(Ninja)1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29350
-    AegisName: Racing_NJ_2
+    AegisName: Racing_E_Ninja2
     Name: Racing(Ninja)2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29351
-    AegisName: Racing_NJ_3
+    AegisName: Racing_E_Ninja3
     Name: Racing(Ninja)3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29352
-    AegisName: Racing_SN_1
+    AegisName: Racing_E_Super1
     Name: Racing(Super Novice) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29353
-    AegisName: Racing_SN_2
+    AegisName: Racing_E_Super2
     Name: Racing(Super Novice) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29354
-    AegisName: Racing_SN_3
+    AegisName: Racing_E_Super3
     Name: Racing(Super Novice) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29355
-    AegisName: Racing_SU_1
+    AegisName: Racing_E_Doram1
     Name: Racing(Summoner) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29356
-    AegisName: Racing_SU_2
+    AegisName: Racing_E_Doram2
     Name: Racing(Summoner) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29357
-    AegisName: Racing_SU_3
+    AegisName: Racing_E_Doram3
     Name: Racing(Summoner) 3Lv
     Type: Card
     SubType: Enchant
@@ -44833,37 +44833,37 @@ Body:
          autobonus "{ bonus bLuk,50; }",8,4000,BF_MAGIC;
       }
   - Id: 29579
-    AegisName: Racing_SG_1
+    AegisName: Racing_E_Star1
     Name: Racing (Star Gladiator) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29580
-    AegisName: Racing_SG_2
+    AegisName: Racing_E_Star2
     Name: Racing (Star Gladiator) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29581
-    AegisName: Racing_SG_3
+    AegisName: Racing_E_Star3
     Name: Racing (Star Gladiator) 3Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29582
-    AegisName: Racing_SL_1
+    AegisName: Racing_E_Soul1
     Name: Racing (Soul Linker) 1Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29583
-    AegisName: Racing_SL_2
+    AegisName: Racing_E_Soul2
     Name: Racing (Soul Linker) 2Lv
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29584
-    AegisName: Racing_SL_3
+    AegisName: Racing_E_Soul3
     Name: Racing (Soul Linker) 3Lv
     Type: Card
     SubType: Enchant
@@ -44910,7 +44910,7 @@ Body:
     SubType: Enchant
     Buy: 20
   - Id: 29595
-    AegisName: Howard_Memory
+    AegisName: Harword_Memory
     Name: Howard's Memory
     Type: Card
     SubType: Enchant
@@ -44922,19 +44922,19 @@ Body:
     SubType: Enchant
     Buy: 20
   - Id: 29598
-    AegisName: Catherine_Memory
+    AegisName: Katrinn_Memory
     Name: Catherine's Memory
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29599
-    AegisName: Margaretha_Memory
+    AegisName: Magaleta_Memory
     Name: Margaretha's Memory
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29600
-    AegisName: Cecil_Memory
+    AegisName: Shecil_Memory
     Name: Cecil's Memory
     Type: Card
     SubType: Enchant
@@ -44970,13 +44970,13 @@ Body:
     SubType: Enchant
     Buy: 20
   - Id: 29606
-    AegisName: Trentini_Memory
+    AegisName: Tren_Memory
     Name: Trentini's Memory
     Type: Card
     SubType: Enchant
     Buy: 20
   - Id: 29607
-    AegisName: Alphoccio_Memory
+    AegisName: Alpho_Memory
     Name: Alphoccio's Memory
     Type: Card
     SubType: Enchant
@@ -45587,7 +45587,7 @@ Body:
     Script: |
       bonus2 bSubRace,RC_Undead,10;
   - Id: 31007
-    AegisName: LoVA_Realization_Hades_Card
+    AegisName: LoVA_R_Hades_Card
     Name: LoVA Realization Hades Card
     Type: Card
     Buy: 20
@@ -45616,7 +45616,7 @@ Body:
          bonus bMaxHPrate,readparam(bStr)/60;
       }
   - Id: 31009
-    AegisName: LoVA_Realization_Lulu_Card
+    AegisName: LoVA_R_Lulu_Card
     Name: LoVA Realization Lulu Card
     Type: Card
     Buy: 20
@@ -45648,7 +45648,7 @@ Body:
          bonus bMaxSPrate,readparam(bInt)/30;
       }
   - Id: 31011
-    AegisName: LoVA_Realization_Kima_Card
+    AegisName: LoVA_R_Kima_Card
     Name: LoVA Realization Kima Card
     Type: Card
     Buy: 20
@@ -45680,7 +45680,7 @@ Body:
          bonus bDelayrate,-1;
       }
   - Id: 31013
-    AegisName: LoVA_Realization_Bahamut_Card
+    AegisName: LoVA_R_Bahamut_Card
     Name: LoVA Realization Bahamut Card
     Type: Card
     Buy: 20
@@ -45712,7 +45712,7 @@ Body:
          bonus2 bSkillAtk,"HW_GRAVITATION",9;
       }
   - Id: 31015
-    AegisName: LoVA_Realization_Ragnarok_Card
+    AegisName: LoVA_R_Ragnarok_Card
     Name: LoVA Realization Ragnarok Card
     Type: Card
     Buy: 20
@@ -46196,7 +46196,7 @@ Body:
       bonus2 bAddEle,Ele_Ghost,40;
       bonus2 bAddEle,Ele_Undead,40;
   - Id: 300076
-    AegisName: Beta_Guards_Card
+    AegisName: Beta_Guards_Ng_Card
     Name: Broken Beta Guards Card
     Type: Card
     Weight: 10
@@ -46211,7 +46211,7 @@ Body:
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",10;
       bonus2 bSkillAtk,"LG_CANNONSPEAR",10;
   - Id: 300077
-    AegisName: Omega_Cleaner_Card
+    AegisName: O_Cleaner_Ng_Card
     Name: Broken Omega Cleaner Card
     Type: Card
     Weight: 10
@@ -46255,7 +46255,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Holy,30;
       bonus2 bMagicAddEle,Ele_Water,30;
   - Id: 300080
-    AegisName: Red_Pepper_H_Card
+    AegisName: Redpepper_H_Card
     Name: Senior Red Pepper Card
     Type: Card
     Weight: 10
@@ -46415,7 +46415,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MS_MAGNUM",25;
   - Id: 300090
-    AegisName: Verporte_Card
+    AegisName: Verporte_H_Card
     Name: Verporte Card
     Type: Card
     Weight: 10
@@ -46431,7 +46431,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Earth,10;
       }
   - Id: 300091
-    AegisName: MD_Papila_Card
+    AegisName: Papila_Card
     Name: Papila Card
     Type: Card
     Weight: 10
@@ -46448,7 +46448,7 @@ Body:
       bonus2 bSkillAtk,"GS_DESPERADO",10;
       bonus2 bSkillAtk,"GS_FULLBUSTER",10;
   - Id: 300092
-    AegisName: Papila_Ruba_H_Card
+    AegisName: Papila_H_Card
     Name: Senior Papila Card
     Type: Card
     Weight: 10
@@ -46463,7 +46463,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MC_CARTREVOLUTION",50;
   - Id: 300093
-    AegisName: MD_Papila_Ruba_Card
+    AegisName: Papila_Ruba_Card
     Name: Papila Ruba Card
     Type: Card
     Weight: 10
@@ -46478,7 +46478,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AL_HOLYLIGHT",50;
   - Id: 300094
-    AegisName: MD_Papila_Ruba_H_Card
+    AegisName: Papila_Ruba_H_Card
     Name: Senior Papila Ruba Card
     Type: Card
     Weight: 10
@@ -46493,7 +46493,7 @@ Body:
       }
       bonus bCritAtkRate,2*(getrefine()/2);
   - Id: 300095
-    AegisName: MD_Papila_Cae_Card
+    AegisName: Papila_Cae_Card
     Name: Papila Cae Card
     Type: Card
     Weight: 10
@@ -46508,7 +46508,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AC_SHOWER",25;
   - Id: 300096
-    AegisName: MD_Papila_Cae_H_Card
+    AegisName: Papila_Cae_H_Card
     Name: Senior Papila Cae Card
     Type: Card
     Weight: 10
@@ -47784,7 +47784,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Undead,20;
       bonus2 bMagicAtkEle,Ele_Dark,20;
   - Id: 300192
-    AegisName: MD_Sakray_Card
+    AegisName: Sakray_Card
     Name: Sakray Card
     Type: Card
     Weight: 10
@@ -47800,7 +47800,7 @@ Body:
       bonus bPAtk,1;
       bonus bSmatk,1;
   - Id: 300193
-    AegisName: MD_Tiara_Card
+    AegisName: Tiara_Card
     Name: Tiara Card
     Type: Card
     Weight: 10
@@ -70495,7 +70495,7 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 1000311
-    AegisName: Hawk_Flute
+    AegisName: Hawk_Pipe
     Name: Hawk Flute
     Type: Etc
     Buy: 20
@@ -70640,12 +70640,12 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 1000346
-    AegisName: 4th_Job_Guide
+    AegisName: 4thjob_guidemap
     Name: 4th Job Guide
     Type: Etc
     Buy: 20
   - Id: 1000352
-    AegisName: Device_Creation_Guide
+    AegisName: Device_M_Book
     Name: Device Creation Guide
     Type: Etc
     Buy: 20
