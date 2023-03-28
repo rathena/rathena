@@ -3390,7 +3390,8 @@ void pc_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobon
 			}
 		} else {
 			// Not all required items equipped anymore
-			restore = false;
+			it = bonus.erase(it);
+			continue;
 		}
 
 		if( restore ){
