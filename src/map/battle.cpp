@@ -2550,10 +2550,6 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
-	status_change* tsc = status_get_sc(target);
-	if (tsc && tsc->getSCE(SC_MAGICMIRROR) && skill_get_type(skill_id) == BF_MAGIC)
-		return BF_SHORT;
-
 	switch (skill_id) {
 		case AC_SHOWER:
 		case AM_DEMONSTRATION:
@@ -6238,7 +6234,8 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 					if( tsd )
 						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
-					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, BF_WEAPON|BF_SHORT|BF_NORMAL, CR_REFLECTSHIELD, 1, rdamage, ATK_DEF, rdelay ,true, false);
+					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true, false);
+					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 				}
 		}
 
@@ -6586,7 +6583,8 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 				// It appears that official servers give skill reflect damage a longer delay
-				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, BF_WEAPON|BF_SHORT|BF_NORMAL, CR_REFLECTSHIELD, 1, rdamage, ATK_DEF, rdelay ,true, false);
+				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay ,true, false);
+				skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 			}
 		}
 	}
@@ -7024,6 +7022,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	ad.amotion = (skill_get_inf(skill_id)&INF_GROUND_SKILL ? 0 : sstatus->amotion); //Amotion should be 0 for ground skills.
 	ad.dmotion = tstatus->dmotion;
 	ad.blewcount = skill_get_blewcount(skill_id, skill_lv);
+	ad.flag = BF_MAGIC|BF_SKILL;
 	ad.miscflag = mflag;
 	ad.dmg_lv = ATK_DEF;
 
@@ -7040,12 +7039,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	s_elemental_data* ed = BL_CAST(BL_ELEM, src);
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
-
-	if (tsc && tsc->getSCE(SC_MAGICMIRROR)) {
-		ad.flag = BF_WEAPON|BF_NORMAL;
-	} else {
-		ad.flag = BF_MAGIC|BF_SKILL;
-	}
 
 	//Initialize variables that will be used afterwards
 	s_ele = battle_get_magic_element(src, target, skill_id, skill_lv, mflag);
