@@ -4047,7 +4047,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 		status->lhw.atk2= status->dex + status->lhw.atk + status->lhw.atk2; //Max ATK
 		status->lhw.atk = status->dex; //Min ATK
 	}
-	if (mode) //User provided mode.
+	if (mode > MD_NONE) //User provided mode.
 		status->mode = mode;
 	else if (flag&1) //Friendly Character, remove looting.
 		status->mode = static_cast<enum e_mode>(status->mode&(~MD_LOOTER));
