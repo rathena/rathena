@@ -3138,6 +3138,7 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 // In case of success returns type of reflection, otherwise 0
 //		1 - Regular reflection (Maya)
 //		2 - SL_KAITE reflection
+//		3 - NPC_MAGICMIRROR reflection
 static int skill_magic_reflect(struct block_list* src, struct block_list* bl, int type)
 {
 	status_change *sc = status_get_sc(bl);
@@ -3154,7 +3155,7 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 
 		// Magic Mirror reflection - Bypasses Boss check
 		if (sc && sc->getSCE(SC_MAGICMIRROR) && rnd()%100 < sc->getSCE(SC_MAGICMIRROR)->val2)
-			return 1;
+			return 3;
 	}
 
 	if( status_get_class_(src) == CLASS_BOSS )
@@ -3666,7 +3667,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				else if( s_ele == ELE_RANDOM) //Use random element
 					s_ele = rnd()%ELE_ALL;
 
-				dmg.flag = BF_WEAPON|BF_NORMAL|BF_SHORT;
+				if(type == 3)
+					dmg.flag = BF_WEAPON|BF_NORMAL|BF_SHORT;
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
 				if( tsc && tsc->getSCE(SC_ENERGYCOAT) ) {
