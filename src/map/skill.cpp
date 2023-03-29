@@ -3646,8 +3646,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					tsc->getSCE(SC_SPIRIT)->val3 = skill_id;
 					tsc->getSCE(SC_SPIRIT)->val4 = dsrc->id;
 				}
-			} else if( type != 2 ) /* Kaite bypasses */
-				additional_effects = false;
+			}
 
 			// Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
 #if MAGIC_REFLECTION_TYPE
