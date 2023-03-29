@@ -879,7 +879,7 @@ struct view_data* npc_get_viewdata(int class_) {
 int npc_isnear_sub(struct block_list* bl, va_list args) {
     struct npc_data *nd = (struct npc_data*)bl;
 
-    if (nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE))
+    if (nd->sc.option&OPTION_HIDE)
         return 0;
 
 	if( nd->dynamicnpc.owner_char_id != 0 ){
@@ -1017,16 +1017,16 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			nd.sc.option |= OPTION_CLOAK;
 
 		auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd.bl.id);
-	
+
 		if (it == sd->cloaked_npc.end() && option != nd.sc.option)
 			sd->cloaked_npc.push_back(nd.bl.id);
 		else if (it != sd->cloaked_npc.end() && option == nd.sc.option)
 			sd->cloaked_npc.erase(it);
-	
+
 		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG)
 			clif_changeoption_target(&nd.bl, &sd->bl);
 		else {
-			if (nd.sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
 				clif_clearunit_single(nd.bl.id, CLR_OUTSIGHT, sd->fd);
 			else
 				clif_spawn(&nd.bl);
@@ -1035,8 +1035,8 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 	}
 	else {
 		if (flag & NPCVIEW_ENABLE) {
-			nd.sc.option &= ~OPTION_INVISIBLE;
-			clif_spawn(&nd.bl);
+			nd.sc.option &= ~OPTION_HIDE;
+			nd.is_invisible = false;
 		}
 		else if (flag & NPCVIEW_HIDEOFF)
 			nd.sc.option &= ~OPTION_HIDE;
@@ -1047,13 +1047,13 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 		else if (flag & NPCVIEW_CLOAKON)
 			nd.sc.option |= OPTION_CLOAK;
 		else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
-			nd.sc.option |= OPTION_INVISIBLE;
-			clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+			nd.sc.option |= OPTION_HIDE;
+			nd.is_invisible = true;
 		}
 		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
 			clif_changeoption(&nd.bl);
 		else {
-			if (nd.sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
 				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);
 			else
 				clif_spawn(&nd.bl);
@@ -1721,7 +1721,7 @@ int npc_event_sub(map_session_data* sd, struct event_data* ev, const char* event
 		ShowWarning("npc_event: player's event queue is full, can't add event '%s' !\n", eventname);
 		return 1;
 	}
-	if( ev->nd->sc.option&OPTION_INVISIBLE )
+	if( ev->nd->is_invisible )
 	{
 		//Disabled npc, shouldn't trigger event.
 		npc_event_dequeue(sd);
@@ -1861,7 +1861,7 @@ int npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct np
 	nullpo_retr(0, sd);
 	nullpo_retr(0, nd);
 
-	if (nd->sc.option&OPTION_INVISIBLE)
+	if (nd->is_invisible)
 		return 1; // a npc was found, but it is disabled
 	if (npc_is_cloaked(nd, sd))
 		return 1;
@@ -1967,7 +1967,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 
 	for( i = 0; i < mapdata->npc_num_area; i++ )
 	{
-		if( mapdata->npc[i]->sc.option&(OPTION_INVISIBLE|OPTION_CLOAK) )
+		if( mapdata->npc[i]->is_invisible || mapdata->npc[i]->sc.option&OPTION_CLOAK )
 			continue;
 
 		if( mapdata->npc[i]->dynamicnpc.owner_char_id != 0 ){
@@ -2064,7 +2064,7 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
 	//Now check for the actual NPC on said range.
 	for (i = 0; i < mapdata->npc_num_area; i++)
 	{
-		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE)
+		if (mapdata->npc[i]->is_invisible)
 			continue;
 
 		if( mapdata->npc[i]->dynamicnpc.owner_char_id != 0 ){
@@ -2185,7 +2185,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 	if ((nd = npc_checknear(sd,&nd->bl)) == NULL)
 		return 1;
 	//Hidden/Disabled npc.
-	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
+	if (nd->class_ < 0 || nd->sc.option&OPTION_HIDE)
 		return 1;
 
 	if( npc_is_hidden_dynamicnpc( *nd, *sd ) ){
@@ -2362,7 +2362,7 @@ int npc_buysellsel(map_session_data* sd, int id, int type)
 			sd->npc_id=0;
 		return 1;
 	}
-	if (nd->sc.option & OPTION_INVISIBLE) // can't buy if npc is not visible (hack?)
+	if (nd->is_invisible) // can't buy if npc is not visible (hack?)
 		return 1;
 
 	if( npc_is_hidden_dynamicnpc( *nd, *sd ) ){
@@ -5021,7 +5021,7 @@ int npc_do_atcmd_event(map_session_data* sd, const char* command, const char* me
 		return 1;
 	}
 
-	if( ev->nd->sc.option&OPTION_INVISIBLE ) { // Disabled npc, shouldn't trigger event.
+	if( ev->nd->is_invisible ) { // Disabled npc, shouldn't trigger event.
 		npc_event_dequeue(sd);
 		return 2;
 	}

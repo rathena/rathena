@@ -553,7 +553,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			}
 			break;
 		case BL_NPC:
-			if (nd->sc.option&OPTION_INVISIBLE)
+			if (nd->is_invisible)
 				break;
 
 			int xs = -1, ys = -1;

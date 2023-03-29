@@ -221,6 +221,7 @@ struct npc_data {
 	struct navi_link navi; // for warps and the src of npcs
 	std::vector<navi_link> links; // for extra links, like warper npc
 #endif
+	bool is_invisible;
 };
 
 struct eri;
