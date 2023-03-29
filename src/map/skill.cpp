@@ -2693,7 +2693,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	// Trigger counter-spells to retaliate against damage causing skills.
 	if(dstsd && !status_isdead(bl) && !dstsd->autospell2.empty() &&
-		(skill_id == CR_REFLECTSHIELD || !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE))))
+		!(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)))
 	{
 		for (const auto &it : dstsd->autospell2) {
 			if (!(((it.battle_flag)&attack_type)&BF_WEAPONMASK &&
@@ -2762,7 +2762,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	// Check for player and pet autobonuses when attacked
-	if (dstsd != nullptr && !status_isdead(bl) && (skill_id == CR_REFLECTSHIELD || !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)))) {
+	if (dstsd != nullptr && !status_isdead(bl) && !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE))) {
 		// Player
 		if (!dstsd->autobonus2.empty()) {
 			for (auto &it : dstsd->autobonus2) {
@@ -3616,10 +3616,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		}
 	}
 
-	if(
-		(dmg.flag & BF_MAGIC || (tsc && tsc->getSCE(SC_MAGICMIRROR) && skill_get_type(skill_id) == BF_MAGIC)) &&
-		(skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1))
-	)
+	if( dmg.flag&BF_MAGIC && ( skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) )
 	{ // Earthquake on multiple targets is not counted as a target skill. [Inkfish]
 		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
@@ -3670,6 +3667,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				else if( s_ele == ELE_RANDOM) //Use random element
 					s_ele = rnd()%ELE_ALL;
 
+				dmg.flag = BF_WEAPON|BF_NORMAL|BF_SHORT;
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
 				if( tsc && tsc->getSCE(SC_ENERGYCOAT) ) {
