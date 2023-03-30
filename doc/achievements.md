@@ -12,6 +12,26 @@
 
 # Achievement Database Structure
 
+```yml
+- Id: 99                  
+   Group: Baby            
+   Name: Example Achiev
+   Targets:            
+     - Id: 0
+       Mob: XM_CELINE_KIMI
+       Count: 1
+   Condition: " BaseLevel >= 99 "
+   Map: prontera
+   Dependents:
+     - Id: 100
+   Rewards:
+     Item: Shabby_Purse
+     Amount: 10            Amount of item. (Default: 1)
+     Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+     TitleId: 1000
+   Score: 10
+```
+
 ### Id
 Unique achievement ID.
 
@@ -58,7 +78,7 @@ Unique achievement ID.
 
 - Example 1  
 Player must kill 5 Scorpions and 10 Porings
-```
+```yml
   Targets:
     - Id: 0
       Mob: SCORPION
@@ -70,7 +90,7 @@ Player must kill 5 Scorpions and 10 Porings
 
 - Example 2  
 Player must have 100 or more of ARG0 value. Using the count target value is useful for achievements that are increased in increments and not checked for a total (UI_Type = 1). IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
-```
+```yml
 Condition: " ARG0 >= 100 "
   Targets:
     - Id: 0 // Array index value
@@ -85,14 +105,14 @@ Condition: " ARG0 >= 100 "
   <summary>Examples</summary>
 
 - Example 1  
-```
-// This function will send 1 argument (ARG0) with a value of i + 1 when a friend is added.
+This function will send 1 argument (ARG0) with a value of i + 1 when a friend is added.
+```yml
 achievement_update_objective(f_sd, AG_ADD_FRIEND, 1, i + 1);
 ```
 
-- Example 2
-```
-// This function will send 2 arguments (ARG0 and ARG1) with values of weapon level and refine level, respectively, when an equipment is successfully refined.
+- Example 2  
+This function will send 2 arguments (ARG0 and ARG1) with values of weapon level and refine level, respectively, when an equipment is successfully refined.
+```yml
 achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 ```
 </details>
@@ -107,17 +127,17 @@ achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wl
 <details>
   <summary>Examples</summary>
 
-- Example 1
-```
-// Player must complete achievements 10001 and 10002 first.
+- Example 1  
+Player must complete achievements 10001 and 10002 first.
+```yml
 Dependents:
   10001: true
   10002: true
 ```
 
-- Example 2
+- Example 2  
+Used with the import, dependent achievements can be disabled. The player now only requires completion of achievement 10001.
 ```
-// Used with the import, dependent achievements can be disabled. The player now only requires completion of achievement 10001.
 Dependents:
   10002: false
 ```
@@ -128,15 +148,13 @@ Dependents:
 <details>
   <summary>Examples</summary>
 
-```
+```yml
 Item: Item Name
 Amount: Amount of Item (Default: 1)
 Script: Bonus Script
 TitleId: Title ID
 ```
 </details>
-
-
 
 ### Score
 > Achievement points that are given on completion.
