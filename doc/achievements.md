@@ -11,9 +11,9 @@
 -->
 
 # Achievement Database Structure
-
+## Sample
 ```yml
-- Id: 99                  
+ - Id: 99                  
    Group: Baby            
    Name: Example Achiev
    Targets:            
@@ -31,7 +31,7 @@
      TitleId: 1000
    Score: 10
 ```
-
+## Content
 ### Id
 Unique achievement ID.
 
