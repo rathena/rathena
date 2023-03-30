@@ -26,7 +26,7 @@
      - Id: 100
    Rewards:
      Item: Shabby_Purse
-     Amount: 10            Amount of item. (Default: 1)
+     Amount: 10
      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
      TitleId: 1000
    Score: 10
