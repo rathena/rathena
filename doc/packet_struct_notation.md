@@ -112,33 +112,33 @@ values.
 
 - Packet with multiple versions identified with different AEGIS names:
 
- ```
- /// Request for server's tick.
- /// 007e <client tick>.L (CZ_REQUEST_TIME)
- /// 0360 <client tick>.L (CZ_REQUEST_TIME2)
- ```
+```
+/// Request for server's tick.
+/// 007e <client tick>.L (CZ_REQUEST_TIME)
+/// 0360 <client tick>.L (CZ_REQUEST_TIME2)
+```
 
 - Packet with multiple versions identified with same AEGIS name:
 
- ```
- /// Cashshop Buy Ack.
- /// 0289 <cash point>.L <error>.W (ZC_PC_CASH_POINT_UPDATE)
- /// 0289 <cash point>.L <kafra point>.L <error>.W (PACKETVER >= 20070711) (ZC_PC_CASH_POINT_UPDATE)
- ```
+```
+/// Cashshop Buy Ack.
+/// 0289 <cash point>.L <error>.W (ZC_PC_CASH_POINT_UPDATE)
+/// 0289 <cash point>.L <kafra point>.L <error>.W (PACKETVER >= 20070711) (ZC_PC_CASH_POINT_UPDATE)
+```
 
 - Packet with combination of both different AEGIS names and different versions with same name:
 
- ```
- /// Sends hotkey bar.
- /// 02b9 { <is skill>.B <id>.L <count>.W }*27 (ZC_SHORTCUT_KEY_LIST)
- /// 07d9 { <is skill>.B <id>.L <count>.W }*36 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090603)
- /// 07d9 { <is skill>.B <id>.L <count>.W }*38 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090617)
- ```
+```
+/// Sends hotkey bar.
+/// 02b9 { <is skill>.B <id>.L <count>.W }*27 (ZC_SHORTCUT_KEY_LIST)
+/// 07d9 { <is skill>.B <id>.L <count>.W }*36 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090603)
+/// 07d9 { <is skill>.B <id>.L <count>.W }*38 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090617)
+```
  
 - Packet for a client command:
 
- ```
- /// /item /monster.
- /// Request to make items or spawn monsters.
- /// 013f <item/mob name>.24B (CZ_ITEM_CREATE)
- ```
+```
+/// /item /monster.
+/// Request to make items or spawn monsters.
+/// 013f <item/mob name>.24B (CZ_ITEM_CREATE)
+```
