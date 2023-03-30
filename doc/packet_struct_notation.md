@@ -11,8 +11,6 @@
 -->
 
 # Packet Structure Notation
-> Author: Ai4rei  
-> Last updated: 08/10/2012
 
 This document specifies how packets are and should be documented, to
 keep packet structure comments consistent in the entire codebase. It
@@ -26,8 +24,8 @@ regardless of architecture.
 ### Typical description of a packet
 
 ```
-Notifies the client about entering a chatroom (ZC_ENTER_ROOM).  
-00db <packet len>.W <chat id>.L { <role>.L <name>.24B }*  
+Notifies the client about entering a chatroom.  
+00db <packet len>.W <chat id>.L { <role>.L <name>.24B }* (ZC_ENTER_ROOM)
 role:  
   0 = owner (menu)  
   1 = normal  
@@ -106,8 +104,8 @@ values.
 - Packet with nested repetition blocks:
  
 ```
-/// Presents a textual list of producable items (ZC_MAKABLEITEMLIST).
-/// 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
+/// Presents a textual list of producable items.
+/// 018d <packet len>.W { <name id>.W { <material id>.W }*3 }* (ZC_MAKABLEITEMLIST)
 /// material id:
 ///     unused by the client
 ```
@@ -123,9 +121,9 @@ values.
 - Packet with multiple versions identified with same AEGIS name:
 
  ```
- /// Cashshop Buy Ack (ZC_PC_CASH_POINT_UPDATE).
- /// 0289 <cash point>.L <error>.W
- /// 0289 <cash point>.L <kafra point>.L <error>.W (PACKETVER >= 20070711)
+ /// Cashshop Buy Ack.
+ /// 0289 <cash point>.L <error>.W (ZC_PC_CASH_POINT_UPDATE)
+ /// 0289 <cash point>.L <kafra point>.L <error>.W (PACKETVER >= 20070711) (ZC_PC_CASH_POINT_UPDATE)
  ```
 
 - Packet with combination of both different AEGIS names and different versions with same name:
@@ -140,7 +138,7 @@ values.
 - Packet for a client command:
 
  ```
- /// /item /monster (CZ_ITEM_CREATE).
+ /// /item /monster.
  /// Request to make items or spawn monsters.
- /// 013f <item/mob name>.24B
+ /// 013f <item/mob name>.24B (CZ_ITEM_CREATE)
  ```
