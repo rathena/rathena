@@ -1931,6 +1931,15 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
 	}
 
+	// Target status (again), required for RELIEVE
+	sc = status_get_sc(bl);
+
+	// !TODO: Should RELIEVE needed to be down here or after some other check? Should the skill be independent of damagetaken from mob_db.yml?
+	if (sc && sc->count) {
+		if ((sce = sc->getSCE(SC_RELIEVE_ON)) && !sc->getSCE(SC_RELIEVE_OFF))
+			damage = i64max((damage - damage * sce->val2 / 100), 1);
+	}
+
 	if (bl->type == BL_MOB) { // Reduces damage received for Green Aura MVP
 		mob_data *md = BL_CAST(BL_MOB, bl);
 

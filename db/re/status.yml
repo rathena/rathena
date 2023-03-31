@@ -8742,3 +8742,22 @@ Body:
       IMMUNE_PROPERTY_SAINT: true
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
+  - Status: RELIEVE_ON
+    Icon: EFST_RELIEVE_DAMAGE
+    DurationLookup: NPC_RELIEVE_ON
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Relieve_off: true
+  - Status: Relieve_off
+    DurationLookup: NPC_RELIEVE_OFF
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Relieve_on: true
