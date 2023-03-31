@@ -5822,7 +5822,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
-      NoForcedEnd: true
   - Status: Angel_Protect
     Icon: EFST_ANGEL_PROTECT
     Flags:
