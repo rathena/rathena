@@ -11,26 +11,6 @@
 -->
 
 # Achievement Database Structure
-## Sample
-```yml
- - Id: 99                  
-   Group: Baby            
-   Name: Example Achiev
-   Targets:            
-     - Id: 0
-       Mob: XM_CELINE_KIMI
-       Count: 1
-   Condition: " BaseLevel >= 99 "
-   Map: prontera
-   Dependents:
-     - Id: 100
-   Rewards:
-     Item: Shabby_Purse
-     Amount: 10
-     Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
-     TitleId: 1000
-   Score: 10
-```
 ## Content
 ### Id
 Unique achievement ID.
@@ -138,3 +118,23 @@ TitleId: Title ID
 
 ### Score
 Achievement points that are given on completion.
+
+## Example
+```yml
+ - Id: 99                  
+   Group: Baby            
+   Name: Example Achieve
+   Targets:            
+     - Id: 0
+       Mob: XM_CELINE_KIMI
+       Count: 1
+   Condition: " BaseLevel >= 99 "
+   Map: prontera
+   Dependents:
+     - Id: 100
+   Rewards:
+     Item: Shabby_Purse
+     Amount: 10
+     Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+     TitleId: 1000
+   Score: 10
