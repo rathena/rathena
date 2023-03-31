@@ -10,7 +10,7 @@
 //============================================================
 -->
 
-# A list of client-side effects sorted by ID.
+# List of client-side effects sorted by ID
 
 The following is a compiled list of visual and sound effects which the client
 can produce when receiving a packet with id `0x1f3 (01f3 <ID>.l <type>.l)`.
