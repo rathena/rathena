@@ -1886,6 +1886,8 @@
 	export_constant(SC_IMMUNE_PROPERTY_DARKNESS);
 	export_constant(SC_IMMUNE_PROPERTY_TELEKINESIS);
 	export_constant(SC_IMMUNE_PROPERTY_UNDEAD);
+	export_constant(SC_RELIEVE_ON);
+	export_constant(SC_RELIEVE_OFF);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
