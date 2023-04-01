@@ -11,7 +11,7 @@
 -->
 
 # Achievement Database Structure
-## Content
+
 ### Id
 Unique achievement ID.
 
@@ -138,3 +138,4 @@ Achievement points that are given on completion.
      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
      TitleId: 1000
    Score: 10
+```
