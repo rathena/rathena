@@ -36202,7 +36202,11 @@ Body:
           - Exorcist_Gloves    # 28323
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",max(getskilllv("PR_TURNUNDEAD"),1),30+(10*(.@r-5));
+      .@skill_level = getskilllv("PR_TURNUNDEAD");
+      if (.@skill_level >= 2) {
+         .@rate_bonus = max(.@r, 5) - 5;
+         bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",.@skill_level,30+(10*.@rate_bonus);
+      }
   - Combos:
       - Combo:
           - Sprint_Ring_    # 28431
