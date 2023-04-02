@@ -18276,27 +18276,7 @@ Body:
     Flags:
       IsNpc: true
     Hit: Multi_Hit
-    HitCount:
-      - Level: 1
-        Count: 1
-      - Level: 2
-        Count: 2
-      - Level: 3
-        Count: 3
-      - Level: 4
-        Count: 4
-      - Level: 5
-        Count: 5
-      - Level: 6
-        Count: 6
-      - Level: 7
-        Count: 7
-      - Level: 8
-        Count: 8
-      - Level: 9
-        Count: 9
-      - Level: 10
-        Count: 10
+    HitCount: 7
     Element: Fire
     SplashArea:
       - Level: 1
