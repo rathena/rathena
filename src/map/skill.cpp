@@ -13450,6 +13450,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		case LG_EARTHDRIVE:
 		case SC_ESCAPE:
 		case SU_CN_METEOR:
+		case NPC_RAINOFMETEOR:
 			break; //Effect is displayed on respective switch case.
 		default:
 			if(skill_get_inf(skill_id)&INF_SELF_SKILL)
@@ -14328,6 +14329,31 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 
+	case NPC_RAINOFMETEOR:
+		{
+			int area = skill_get_splash(skill_id, skill_lv);
+			short tmpx = 0, tmpy = 0;
+
+			for (i = 1; i <= (skill_get_time(skill_id, skill_lv)/skill_get_unit_interval(skill_id)); i++) {
+				// Casts a double meteor in the first interval.
+				if (i == 1) {
+					// The first meteor is at the center
+					skill_unitsetting(src, skill_id, skill_lv, x, y, flag+skill_get_unit_interval(skill_id));
+
+					// The second meteor is near the first
+					tmpx = x - 1 + rnd()%3;
+					tmpy = y - 1 + rnd()%3;
+					skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag+skill_get_unit_interval(skill_id));
+				}
+				else {	// Casts 1 meteor per interval in the splash area
+					tmpx = x - area + rnd()%(area * 2 + 1);
+					tmpy = y - area + rnd()%(area * 2 + 1);
+					skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag+i*skill_get_unit_interval(skill_id));
+				}
+			}
+		}
+		break;
+
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
 		return 1;
@@ -14666,6 +14692,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case WZ_METEOR:
 	case SU_CN_METEOR:
 	case SU_CN_METEOR2:
+	case NPC_RAINOFMETEOR:
 		limit = flag;
 		flag = 0; // Flag should not influence anything else for these skills
 		break;
@@ -20959,7 +20986,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 			default:
 				if (group->val2 == 1 && (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2)) {
+					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 || group->skill_id == NPC_RAINOFMETEOR)) {
 					// Deal damage before expiration
 					break;
 				}
@@ -21015,7 +21042,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				break;
 			default:
 				if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2) {
+					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 || group->skill_id == NPC_RAINOFMETEOR) {
 					if (group->val2 == 0 && (DIFF_TICK(tick, group->tick) >= group->limit - group->interval || DIFF_TICK(tick, group->tick) >= unit->limit - group->interval)) {
 						// Unit will expire the next interval, start dropping Meteor
 						block_list *src = map_id2bl(group->src_id);
@@ -21056,7 +21083,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			}
 		}
 		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 ||
+			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 || group->skill_id == NPC_RAINOFMETEOR ||
 			((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
 			skill_delunit(unit);
 			return 0;

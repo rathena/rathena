@@ -7899,6 +7899,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if (ed)
 							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
 						break;
+					case NPC_RAINOFMETEOR:
+						skillratio += 350;	// unknown ratio
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
