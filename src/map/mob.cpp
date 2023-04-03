@@ -2193,8 +2193,9 @@ static TIMER_FUNC(mob_delay_item_drop){
  * Also performs logging and autoloot if enabled.
  * rate is the drop-rate of the item, required for autoloot.
  * flag : Killed only by homunculus/mercenary?
+ * is_map_drops : Whether drop_rate is from map_drops DB (n/100000) or not (n/10000).
  *------------------------------------------*/
-static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, bool flag)
+static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, bool flag, bool is_map_drops = false)
 {
 	TBL_PC* sd;
 	bool test_autoloot;
@@ -2205,24 +2206,19 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	if( sd == NULL ) sd = map_charid2sd(dlist->second_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->third_charid);
 	test_autoloot = sd 
-		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
+		&& (drop_rate <= (is_map_drops ? (sd->state.autoloot * 10) : sd->state.autoloot) || pc_isautolooting(sd, ditem->item_data.nameid))
 		&& (flag ? ((battle_config.homunculus_autoloot ? (battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)) : 0) || (battle_config.mercenary_autoloot ? (battle_config.mer_idle_no_share == 0 || !pc_isidle_mer(sd)) : 0)) :
 			(battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot));
 #ifdef AUTOLOOT_DISTANCE
-		test_autoloot = test_autoloot && sd->bl.m == md->bl.m
-		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
+	test_autoloot = test_autoloot && sd->bl.m == md->bl.m && check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
 #endif
 	if( test_autoloot ) {	//Autoloot.
 		struct party_data *p = party_search(sd->status.party_id);
 
-		if ((itemdb_search(ditem->item_data.nameid))->flag.broadcast &&
-			(!p || !(p->party.item & 2)) // Somehow, if party's pickup distribution is 'Even Share', no announcemet
-			)
+		if ((itemdb_search(ditem->item_data.nameid))->flag.broadcast && (!p || !(p->party.item & 2))) // Somehow, if party's pickup distribution is 'Even Share', no announcement
 			intif_broadcast_obtain_special_item(sd, ditem->item_data.nameid, md->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 
-		if (party_share_loot(party_search(sd->status.party_id),
-			sd, &ditem->item_data, sd->status.char_id) == 0
-		) {
+		if (party_share_loot(party_search(sd->status.party_id), sd, &ditem->item_data, sd->status.char_id) == 0) {
 			ers_free(item_drop_ers, ditem);
 			return;
 		}
@@ -2904,8 +2900,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if( mapdrops != nullptr ){
 			// Process map wide drops
 			for( const auto& it : mapdrops->globals ){
-				if( rnd_chance( it.second->rate, 10000 ) ){
-					mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, it.second->rate, homkillonly || merckillonly );
+				if( rnd_value( 0, 100000 ) < it.second->rate ){
+					mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, it.second->rate, (homkillonly || merckillonly), true );
 				}
 			}
 
@@ -2914,8 +2910,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if( specific != mapdrops->specific.end() ){
 				for( const auto& it : specific->second ){
-					if( rnd_chance( it.second->rate, 10000 ) ){
-						mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, it.second->rate, homkillonly || merckillonly );
+					if( rnd_value( 0, 100000 ) < it.second->rate ){
+						mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, it.second->rate, (homkillonly || merckillonly), true );
 					}
 				}
 			}
