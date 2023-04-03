@@ -36115,3 +36115,464 @@ Body:
     Script: |
       bonus bSMatk,3;
       bonus bDef,30;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - aegis_420158    # 420158
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bMagicAddSize,Size_All,15;
+  - Combos:
+      - Combo:
+          - King_of_Origin    # 311072
+          - Golden_Bug_Card    # 4128
+    Script: |
+      autobonus3 "{ bonus bAbsorbDmgMaxHP2,10; }",1000,10000,"ALL_FULL_THROTTLE";
+  - Combos:
+      - Combo:
+          - Battle_Hook_    # 1440
+          - Tournament_Shield    # 2133
+    Script: |
+      bonus bDef,2;
+      bonus bAtkRate,4;
+      if (Class == Job_Lord_Knight )
+         bonus bAspdRate,-5;
+  - Combos:
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Staff_Of_Soul    # 1472
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Wizardy_Staff    # 1473
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bDex,2;
+      bonus bMatkRate,6;
+      bonus bVariableCastrate,-.@r;
+  - Combos:
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Divine_Cross    # 2001
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Divine_Cross_    # 2017
+      - Combo:
+          - Spiritual_Ring    # 2677
+          - Divine_Cross_    # 2017
+    Script: |
+      bonus bMatkRate,10;
+      bonus bDex,2;
+      bonus2 bSubRace,RC_Demon,10;
+      bonus2 bSubRace,RC_Undead,10;
+  - Combos:
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Clip    # 2607
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Rosary    # 2608
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Rosary_    # 2626
+    Script: |
+      bonus2 bSkillAtk,"AL_HEAL",50;
+      bonus2 bSkillAtk,"PR_MAGNUS",30;
+      bonus bSPrecovRate,9;
+  - Combos:
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Demon_Hunting_Bible_BR    # 28617
+      - Combo:
+          - Spiritual_Ring    # 2677
+          - Demon_Hunting_Bible_BR    # 28617
+      - Combo:
+          - Spiritual_Ring_    # 28432
+          - Demon_Hunting_Bible    # 28602
+      - Combo:
+          - Spiritual_Ring    # 2677
+          - Demon_Hunting_Bible    # 28602
+    Script: |
+      bonus2 bVariableCastrate,"PR_MAGNUS",-25;
+  - Combos:
+      - Combo:
+          - Divine_Cross    # 2001
+          - Exorcist_Gloves    # 28323
+      - Combo:
+          - Divine_Cross_    # 2017
+          - Exorcist_Gloves    # 28323
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@skill_level = getskilllv("PR_TURNUNDEAD");
+      if (.@skill_level >= 2) {
+         .@rate_bonus = max(.@r, 5) - 5;
+         bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",.@skill_level,30+(10*.@rate_bonus);
+      }
+  - Combos:
+      - Combo:
+          - Sprint_Ring_    # 28431
+          - Sprint_Mail    # 2387
+          - Sprint_Shoes    # 2440
+      - Combo:
+          - Sprint_Ring_    # 28431
+          - Sprint_Ring    # 2744
+          - Sprint_Mail    # 2387
+          - Sprint_Shoes    # 2440
+    Script: |
+      bonus bMaxHPrate,7;
+      bonus bMaxSPrate,7;
+      bonus bVariableCastrate,-3;
+      bonus bDelayrate,-15;
+  - Combos:
+      - Combo:
+          - Sprint_Ring_    # 28431
+          - Sprint_Glove    # 2935
+    Script: |
+      bonus bVariableCastrate,-4;
+      bonus bDelayrate,-4;
+  - Combos:
+      - Combo:
+          - Sprint_Ring_    # 28431
+          - Sprint_Mail    # 2387
+          - Sprint_Shoes    # 2440
+          - Sprint_Glove    # 2935
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bDelayrate,-5;
+  - Combos:
+      - Combo:
+          - Siege_Robe_1Tier    # 15216
+          - Siege_Muffler_1Tier    # 20865
+          - Siege_Shoes_1Tier    # 22146
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
+      if (.@r>=21) {
+         bonus bMaxHP,700;
+         bonus2 bSubRace,RC_Player_Human,6;
+         bonus2 bSubRace,RC_Player_Doram,6;
+      }
+  - Combos:
+      - Combo:
+          - Siege_Suits_1Tier    # 15217
+          - Siege_Manteau_1Tier    # 20864
+          - Siege_Boots_1Tier    # 22147
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
+      if (.@r>=21) {
+         bonus bMaxHP,800;
+         bonus2 bSubRace,RC_Player_Human,7;
+         bonus2 bSubRace,RC_Player_Doram,7;
+      }
+  - Combos:
+      - Combo:
+          - Siege_Plate_1Tier    # 15218
+          - Siege_Manteau_1Tier    # 20864
+          - Siege_Greave_1Tier    # 22148
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
+      if (.@r>=21) {
+         bonus bMaxHP,900;
+         bonus2 bSubRace,RC_Player_Human,8;
+         bonus2 bSubRace,RC_Player_Doram,8;
+      }
+  - Combos:
+      - Combo:
+          - Siege_Robe_2Tier    # 450012
+          - Siege_Muffler_2Tier    # 480007
+          - Siege_Shoes_2Tier    # 470011
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
+      if (.@r>=21) {
+         bonus bMaxHP,1600;
+         bonus2 bSubRace,RC_Player_Human,7;
+         bonus2 bSubRace,RC_Player_Doram,7;
+      }
+  - Combos:
+      - Combo:
+          - Siege_Suits_2Tier    # 450013
+          - Siege_Manteau_2Tier    # 480008
+          - Siege_Boots_2Tier    # 470012
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
+      if (.@r>=21) {
+         bonus bMaxHP,1800;
+         bonus2 bSubRace,RC_Player_Human,8;
+         bonus2 bSubRace,RC_Player_Doram,8;
+      }
+  - Combos:
+      - Combo:
+          - Siege_Plate_2Tier    # 450014
+          - Siege_Manteau_2Tier    # 480008
+          - Siege_Greave_2Tier    # 470013
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
+      if (.@r>=21) {
+         bonus bMaxHP,2000;
+         bonus2 bSubRace,RC_Player_Human,9;
+         bonus2 bSubRace,RC_Player_Doram,9;
+      }
+  - Combos:
+      - Combo:
+          - E_Imune    # 27397
+          - Deviling_Card    # 4174
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Rest_1    # 29249
+    Script: |
+      bonus bMaxHP,5000;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Rest_2    # 29250
+    Script: |
+      bonus bMaxSP,100;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Rest_3    # 29251
+    Script: |
+      bonus2 bHPRegenRate,1000,5000;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Rest_4    # 29252
+    Script: |
+      bonus2 bSPRegenRate,25,5000;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity1    # 29253
+    Script: |
+      bonus2 bSubEle,Ele_Fire,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity2    # 29254
+    Script: |
+      bonus2 bSubEle,Ele_Water,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity3    # 29255
+    Script: |
+      bonus2 bSubEle,Ele_Wind,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity4    # 29256
+    Script: |
+      bonus2 bSubEle,Ele_Earth,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity5    # 29257
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity6    # 29258
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Eternity7    # 29259
+    Script: |
+      bonus2 bSubEle,Ele_Poison,15;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound1    # 29260
+    Script: |
+      bonus2 bSubRace,RC_Formless,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound2    # 29261
+    Script: |
+      bonus2 bSubRace,RC_Undead,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound3    # 29262
+    Script: |
+      bonus2 bSubRace,RC_Brute,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound4    # 29263
+    Script: |
+      bonus2 bSubRace,RC_Plant,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound5    # 29264
+    Script: |
+      bonus2 bSubRace,RC_Insect,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound6    # 29265
+    Script: |
+      bonus2 bSubRace,RC_Fish,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound7    # 29266
+    Script: |
+      bonus2 bSubRace,RC_Demon,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound8    # 29267
+    Script: |
+      bonus2 bSubRace,RC_DemiHuman,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound9    # 29268
+    Script: |
+      bonus2 bSubRace,RC_Angel,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound10    # 29269
+    Script: |
+      bonus2 bSubRace,RC_Dragon,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Blood1    # 29270
+    Script: |
+      bonus bStr,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Blood2    # 29271
+    Script: |
+      bonus bAgi,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Blood3    # 29272
+    Script: |
+      bonus bVit,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Blood4    # 29273
+    Script: |
+      bonus bInt,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Blood5    # 29274
+    Script: |
+      bonus bDex,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Blood6    # 29275
+    Script: |
+      bonus bLuk,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Honor1    # 29276
+    Script: |
+      bonus bAspd,1;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Honor2    # 29277
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Honor3    # 29278
+    Script: |
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Death1    # 29279
+    Script: |
+      bonus bAtkRate,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Death2    # 29280
+    Script: |
+      bonus bMatkRate,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Death3    # 29281
+    Script: |
+      bonus bDef,500;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Death4    # 29282
+    Script: |
+      bonus bMdef,20;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Honor_Hit    # 29382
+    Script: |
+      bonus bHit,20;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Honor_Flee    # 29383
+    Script: |
+      bonus bFlee,20;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Honor_Luk    # 29384
+    Script: |
+      bonus bFlee2,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Death_Tech    # 29385
+    Script: |
+      bonus bLongAtkRate,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Death_Luk    # 29386
+    Script: |
+      bonus bCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Neev_Wound11    # 29510
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+  - Combos:
+      - Combo:
+          - Blackhand_Of_Fate    # 19185
+          - Bracelet_Of_Puppet    # 490016
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSubRace,RC_DemiHuman,3;
+      if (.@r>=6) {
+         bonus bPerfectHitAddRate,15;
+         bonus bDelayrate,-5;
+         bonus2 bIgnoreDefRaceRate,RC_All,25;
+         bonus2 bIgnoreMdefRaceRate,RC_All,25;
+      }
+      if (.@r>=8) {
+         bonus bPerfectHitAddRate,15;
+         bonus bDelayrate,-10;
+         bonus2 bIgnoreDefRaceRate,RC_All,25;
+         bonus2 bIgnoreMdefRaceRate,RC_All,25;
+      }

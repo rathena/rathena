@@ -12065,12 +12065,12 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bBaseAtk,25-5*min(readParam(bStr)/10,5);
-      bonus bMatk,25-5*min(readParam(bInt)/10,5);
-      bonus bAspdRate,10-2*min(readParam(bAgi)/10,5);
-      bonus bMaxHP,1000-200*min(readParam(bVit)/10,5);
-      bonus bLongAtkRate,5-1*min(readParam(bDex)/10,5);
-      bonus bCritAtkRate,10-2*min(readParam(bLuk)/10,5);
+      bonus bBaseAtk,25-5*min(readparam(bStr)/10,5);
+      bonus bMatk,25-5*min(readparam(bInt)/10,5);
+      bonus bAspdRate,10-2*min(readparam(bAgi)/10,5);
+      bonus bMaxHP,1000-200*min(readparam(bVit)/10,5);
+      bonus bLongAtkRate,5-1*min(readparam(bDex)/10,5);
+      bonus bCritAtkRate,10-2*min(readparam(bLuk)/10,5);
   - Id: 4663
     AegisName: Leaf_Lunatic_Card
     Name: Leaf Lunatic Card
@@ -42050,6 +42050,42 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-5;
+  - Id: 27397
+    AegisName: E_Imune
+    Name: Nihitsu
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+  - Id: 27398
+    AegisName: Dodge3_J
+    Name: Perfect Dodge + 25
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFlee2,25;
+  - Id: 27399
+    AegisName: Offering_to_God
+    Name: Divine Offering
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus2 bSkillAtk,"PA_SACRIFICE",BaseLevel;
+  - Id: 27400
+    AegisName: Resistance_Long_Dis5
+    Name: Long Range Resistance + 5%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkDef,5;
+  - Id: 27401
+    AegisName: Absorbsprits_Lv1
+    Name: Absorb Sprits Lv 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "MO_ABSORBSPIRITS",1;
   - Id: 27413
     AegisName: Big_Fire_BR
     Name: Power of Shango    # !todo check english name
@@ -43563,6 +43599,84 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bHPDrainRate,20,3;
+  - Id: 29214
+    AegisName: E_Flameguard
+    Name: Burn
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Fire,15;
+  - Id: 29215
+    AegisName: E_Warmth
+    Name: Gale
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Wind,15;
+  - Id: 29216
+    AegisName: E_Genie
+    Name: Flood
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Water,15;
+  - Id: 29217
+    AegisName: E_Glorious
+    Name: Clay
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Earth,15;
+  - Id: 29218
+    AegisName: E_Ghost
+    Name: Grudge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,15;
+  - Id: 29219
+    AegisName: E_Angelic
+    Name: Woor
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Undead,15;
+  - Id: 29220
+    AegisName: E_Innoxious
+    Name: Venom
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Poison,15;
+  - Id: 29221
+    AegisName: E_Divine
+    Name: Desperate
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+  - Id: 29222
+    AegisName: E_Holy
+    Name: Sacred Red
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+      if (getskilllv("CR_TRUST") >= 1)
+         bonus2 bSubEle,Ele_Dark,-15;
+  - Id: 29223
+    AegisName: Water_Sky
+    Name: Water Sky
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Formless,15;
+      bonus2 bAddRace,RC_Demon,15;
+      bonus2 bAddEle,Ele_Fire,15;
+      bonus2 bMagicAddRace,RC_Formless,15;
+      bonus2 bMagicAddRace,RC_Demon,15;
+      bonus2 bMagicAddEle,Ele_Fire,15;
+      autobonus "{ bonus bVariableCastrate,-70; bonus bDelayrate,-70; bonus bUseSPrate,-70; }",5,10000,BF_WEAPON|BF_MAGIC;
   - Id: 29224
     AegisName: WhiteBody_Effect
     Name: White Body Effect
@@ -43623,6 +43737,13 @@ Body:
     SubType: Enchant
     Script: |
       bonus bHit,5;
+  - Id: 29240
+    AegisName: Hit10
+    Name: Hit+10
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,10;
   - Id: 29241
     AegisName: Critical10
     Name: Cri+10
@@ -43630,6 +43751,351 @@ Body:
     SubType: Enchant
     Script: |
       bonus bCritical,10;
+  - Id: 29242
+    AegisName: IndestructibleArmor1
+    Name: Indestructible (Armor)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bUnbreakableArmor;
+  - Id: 29243
+    AegisName: NoDispell1
+    Name: Chant Impediment
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNoCastCancel;
+  - Id: 29244
+    AegisName: PlayerTolerance1
+    Name: Player Resistance 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,1;
+      bonus2 bSubRace,RC_Player_Doram,1;
+  - Id: 29245
+    AegisName: PlayerTolerance2
+    Name: Player Resistance 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,2;
+      bonus2 bSubRace,RC_Player_Doram,2;
+  - Id: 29246
+    AegisName: PlayerTolerance3
+    Name: Player Resistance 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,3;
+      bonus2 bSubRace,RC_Player_Doram,3;
+  - Id: 29247
+    AegisName: PlayerTolerance4
+    Name: Player Resistance 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,4;
+      bonus2 bSubRace,RC_Player_Doram,4;
+  - Id: 29248
+    AegisName: PlayerTolerance5
+    Name: Player Resistance 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+  - Id: 29249
+    AegisName: Neev_Rest_1
+    Name: Neev of Rest (Physical Strength)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,((.@r>=8)?1000:((.@r>=6)?500:200));
+  - Id: 29250
+    AegisName: Neev_Rest_2
+    Name: Neev of Rest (Spirit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSP,((.@r>=8)?80:((.@r>=6)?30:10));
+  - Id: 29251
+    AegisName: Neev_Rest_3
+    Name: Neev of Rest (Life)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bHPRegenRate,((.@r>=8)?250:((.@r>=6)?100:50)),5000;
+  - Id: 29252
+    AegisName: Neev_Rest_4
+    Name: Neev of Rest (Intelligence)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSPRegenRate,((.@r>=8)?5:((.@r>=6)?2:1)),5000;
+  - Id: 29253
+    AegisName: Neev_Eternity1
+    Name: Neev of Eternity (Fire)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Fire,20;
+  - Id: 29254
+    AegisName: Neev_Eternity2
+    Name: Neev of Eternity (Water)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Water,20;
+  - Id: 29255
+    AegisName: Neev_Eternity3
+    Name: Neev of Eternity (Wind)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Wind,20;
+  - Id: 29256
+    AegisName: Neev_Eternity4
+    Name: Neev of Eternity (Earth)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Earth,20;
+  - Id: 29257
+    AegisName: Neev_Eternity5
+    Name: Neev of Eternity (Dark)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Dark,20;
+  - Id: 29258
+    AegisName: Neev_Eternity6
+    Name: Neev of Eternity (Ghost)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,20;
+  - Id: 29259
+    AegisName: Neev_Eternity7
+    Name: Neev of Eternity (Poison)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_Poison,20;
+  - Id: 29260
+    AegisName: Neev_Wound1
+    Name: Neev of Wound (Intangible)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Formless,30;
+  - Id: 29261
+    AegisName: Neev_Wound2
+    Name: Neev of Wound (Immortal)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Undead,30;
+  - Id: 29262
+    AegisName: Neev_Wound3
+    Name: Neev of Wound (Animal)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Brute,30;
+  - Id: 29263
+    AegisName: Neev_Wound4
+    Name: Neev of Wound (Plant)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Plant,30;
+  - Id: 29264
+    AegisName: Neev_Wound5
+    Name: Neev of Wound (Insect)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Insect,30;
+  - Id: 29265
+    AegisName: Neev_Wound6
+    Name: Neev of Wound (Fish Shell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Fish,30;
+  - Id: 29266
+    AegisName: Neev_Wound7
+    Name: Neev of Wound (Devil)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Demon,30;
+  - Id: 29267
+    AegisName: Neev_Wound8
+    Name: Neev of Wound (Humanoid)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_DemiHuman,30;
+  - Id: 29268
+    AegisName: Neev_Wound9
+    Name: Neev of Wound (Angel)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Angel,30;
+  - Id: 29269
+    AegisName: Neev_Wound10
+    Name: Neev of Wound (Dragon)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Dragon,30;
+  - Id: 29270
+    AegisName: Neev_Blood1
+    Name: Neev of Blood (Arm Strength)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bStr,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29271
+    AegisName: Neev_Blood2
+    Name: Neev of Blood (Quick)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAgi,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29272
+    AegisName: Neev_Blood3
+    Name: Neev of Blood (Physical Strength)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bVit,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29273
+    AegisName: Neev_Blood4
+    Name: Neev of Blood (Brains)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bInt,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29274
+    AegisName: Neev_Blood5
+    Name: Neev of Blood (Concentration)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDex,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29275
+    AegisName: Neev_Blood6
+    Name: Neev of Blood (Fortune)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bLuk,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29276
+    AegisName: Neev_Honor1
+    Name: Neev of Honor (Quick)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,((.@r>=9)?10:((.@r>=7)?8:5));
+  - Id: 29277
+    AegisName: Neev_Honor2
+    Name: Neev of Honor (Concentration)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-((.@r>=9)?15:((.@r>=7)?10:5));
+  - Id: 29278
+    AegisName: Neev_Honor3
+    Name: Neev of Honor (Skilled)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-((.@r>=9)?15:((.@r>=7)?10:5));
+  - Id: 29279
+    AegisName: Neev_Death1
+    Name: Neev of Death (Arm Strength)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,((.@r>=9)?5:((.@r>=7)?4:3));
+  - Id: 29280
+    AegisName: Neev_Death2
+    Name: Neev of Death (Brains)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,((.@r>=9)?5:((.@r>=7)?4:3));
+  - Id: 29281
+    AegisName: Neev_Death3
+    Name: Neev of Death (Physical Strength)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,((.@r>=9)?50:((.@r>=7)?25:10));
+  - Id: 29282
+    AegisName: Neev_Death4
+    Name: Neev of Death (Magic Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,((.@r>=9)?20:((.@r>=7)?10:4));
+  - Id: 29300
+    AegisName: Jade_J
+    Name: Prison
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+         bonus2 bSkillAtk,"RK_STORMBLAST",100;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus2 bSkillCooldown,"LG_CANNONSPEAR",-1000;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus2 bSkillCooldown,"WL_CRIMSONROCK",-1500;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage)
+         bonus bVariableCastrate,-15;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+         bonus2 bSkillAtk,"RA_WUGSTRIKE",30;
+      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+         bonus bAllStats,10;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+         skill "CR_PROVIDENCE",5;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+         bonus bLongAtkRate,10;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+         bonus bDelayrate,-90;
+         autobonus3 "{ sc_start SC_WEAPONBLOCKING; }",1000,50000,"GC_HALLUCINATIONWALK";
+      }
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+         bonus bFixedCastrate,-50;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+         bonus bAspdRate,20;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+         bonus bMaxHPrate,15;
+         bonus bBaseAtk,50;
+         bonus bMatk,50;
+      }
   - Id: 29302
     AegisName: Armor_Water
     Name: Water Element(Armor)
@@ -44052,6 +44518,46 @@ Body:
     Script: |
       autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000; }";
       /*Unknow Rate*/
+  - Id: 29375
+    AegisName: PlayerTolerance6
+    Name: Player Resistance 6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,6;
+      bonus2 bSubRace,RC_Player_Doram,6;
+  - Id: 29376
+    AegisName: PlayerTolerance7
+    Name: Player Resistance 7
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,7;
+      bonus2 bSubRace,RC_Player_Doram,7;
+  - Id: 29377
+    AegisName: PlayerTolerance8
+    Name: Player Resistance 8
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,8;
+      bonus2 bSubRace,RC_Player_Doram,8;
+  - Id: 29378
+    AegisName: PlayerTolerance9
+    Name: Player Resistance 9
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,9;
+      bonus2 bSubRace,RC_Player_Doram,9;
+  - Id: 29379
+    AegisName: PlayerTolerance10
+    Name: Player Resistance 10
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
   - Id: 29380
     AegisName: ATK5
     Name: ATK +5
@@ -44066,6 +44572,41 @@ Body:
     SubType: Enchant
     Script: |
       bonus bMatk,5;
+  - Id: 29382
+    AegisName: Neev_Honor_Hit
+    Name: Neev of Honor (Hit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,((.@r>=9)?40:((.@r>=7)?30:20));
+  - Id: 29383
+    AegisName: Neev_Honor_Flee
+    Name: Neev of Honor (Avoidance)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFlee,((.@r>=9)?40:((.@r>=7)?30:20));
+  - Id: 29384
+    AegisName: Neev_Honor_Luk
+    Name: Neev of Honor (Fortune)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFlee2,((.@r>=9)?7:((.@r>=7)?5:3));
+  - Id: 29385
+    AegisName: Neev_Death_Tech
+    Name: Neve of Death (Technique)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,((.@r>=9)?5:((.@r>=7)?4:3));
+  - Id: 29386
+    AegisName: Neev_Death_Luk
+    Name: Neve of Death (Fortune)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,((.@r>=9)?5:((.@r>=7)?4:3));
   - Id: 29423
     AegisName: Sura_Top
     Name: Champion Stone (Upper)
@@ -44444,6 +44985,14 @@ Body:
     Script: |
       autobonus "{ bonus bFlee2,100; bonus2 bAddClass,Class_Boss,100; }",50,10000,BF_WEAPON;
       /*Unknow Rate*/
+  - Id: 29510
+    AegisName: Neev_Wound11
+    Name: Neev of Wound (Player)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
   - Id: 29511
     AegisName: Reactor_A_Player
     Name: Q-Player
@@ -44453,6 +45002,26 @@ Body:
       .@r = getrefine();
       bonus2 bSubRace,RC_Player_Human,1+(.@r/3);
       bonus2 bSubRace,RC_Player_Doram,1+(.@r/3);
+  - Id: 29512
+    AegisName: Endurance
+    Name: Tough
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      if (.@r>=7) {
+         bonus bDef,50;
+         bonus bMdef,5;
+         bonus2 bSubRace,RC_Player_Doram,5;
+      }
+      if (.@r>=9) {
+         bonus bDef,50;
+         bonus bMdef,5;
+         bonus2 bSubRace,RC_Player_Doram,2;
+      }
   - Id: 29513
     AegisName: Highpriest_Top
     Name: High Priest Stone (Upper)
@@ -44873,6 +45442,14 @@ Body:
     Name: Arcana
     Type: Card
     SubType: Enchant
+  - Id: 29586
+    AegisName: PlayerTolerance12
+    Name: Player Resistance 12
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus2 bSubRace,RC_Player_Doram,12;
   - Id: 29587
     AegisName: Gh_md_agi
     Name: Flash
@@ -47158,6 +47735,39 @@ Body:
       bonus2 bSkillAtk,"WM_GREAT_ECHO",5+.@r;
       if (.@r>=10)
          bonus2 bSkillAtk,"WM_GREAT_ECHO",5;
+  - Id: 300137
+    AegisName: Princess_Meer_Card
+    Name: Princess Meer Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bMagicAtkEle,Ele_Fire,50;
+      bonus2 bMagicAtkEle,Ele_Wind,50;
+      bonus2 bMagicAtkEle,Ele_Water,50;
+      bonus2 bMagicAtkEle,Ele_Earth,50;
+  - Id: 300138
+    AegisName: H_B_Princess_Meer_Card
+    Name: Half Blood Princess Meer Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bFixedCast,-1000;
+      bonus bAtkRate,.@r;
+      bonus bMatkRate,.@r;
   - Id: 300139
     AegisName: Sealed_M_Flower_Card_J
     Name: Sealed Moonlight Flower Card
@@ -48066,6 +48676,46 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bShortAtkRate,6;
+  - Id: 300224
+    AegisName: L_Nihil_Card
+    Name: Nihil Miseria Heine (Sign Stamp) Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMdef,100;
+  - Id: 300225
+    AegisName: L_Spica_Card
+    Name: Spica Nerius (Sign Stamp) Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSPrate,15;
+      bonus bDelayrate,-15;
+      autobonus "{ sc_start SC_REFRESH; }",10,20000,BF_MAGIC;
+  - Id: 300226
+    AegisName: L_Skia_Card
+    Name: Skia Nerius (Sign Stamp) Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bVariableCastrate,-15;
+      autobonus "{ sc_start SC_REFRESH; }",10,20000,BF_WEAPON;
   - Id: 300227
     AegisName: EP18_Schulang_Card
     Name: Schulang Card
@@ -48090,6 +48740,15 @@ Body:
     Script: |
       bonus2 bMagicAddRace,RC_Demon,75;
       bonus2 bSubRace,RC_Demon,-25;
+  - Id: 300306
+    AegisName: Extra_Str
+    Name: Extra Str
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,readparam(bStr)/10;
+      if (readparam(bStr) >= 110)
+         bonus bAtkRate,5;
   - Id: 300230
     AegisName: ILL_Andre_Card
     Name: Diligent Andre Card
@@ -49121,6 +49780,13 @@ Body:
       bonus2 bAddRace,RC_Player_Doram,35;
       bonus2 bSubRace,RC_Brute,-10;
       bonus2 bSubRace,RC_Player_Doram,-10;
+  - Id: 300306
+    AegisName: Fortitude
+    Name: Fortitude
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNoWalkDelay;
   - Id: 300307
     AegisName: Meyer_Card
     Name: Meyer Card
@@ -49654,6 +50320,44 @@ Body:
     Script: |
       bonus bAtkRate,10;
       bonus bMaxSPrate,-50;
+  - Id: 300356
+    AegisName: L_Agnes_Card
+    Name: Agnes Lugenburg (Sign Stamp) Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bHealPower2,15;
+      bonus bAddItemHealRate,15;
+      skill "AB_CLEARANCE",5;
+  - Id: 300357
+    AegisName: L_Poe_Card_E
+    Name: Poe Richard (Sign Stamp) Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bNoKnockback;
+      autobonus "{ sc_start SC_CP_ARMOR; sc_start SC_CP_WEAPON; sc_start SC_CP_SHIELD; sc_start SC_CP_HELM; }",10,60000,BF_WEAPON|BF_MAGIC;
+  - Id: 300358
+    AegisName: L_Issac_Card
+    Name: Isaac Wigner (Sign Stamp) Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,100;
+      bonus2 bIgnoreMdefRaceRate,RC_All,100;
   - Id: 300359
     AegisName: Ice_Gangu_Card
     Name: Ice Gangu Card
@@ -50617,6 +51321,46 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
+  - Id: 300451
+    AegisName: aegis_300451
+    Name: Catherine Gaebolg (Sign Stamp) Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubSkill,"NPC_RAYOFGENESIS",50;
+      autobonus "{ sc_start SC_ASSUMPTIO; }",50,30000,BF_WEAPON|BF_MAGIC;
+  - Id: 300452
+    AegisName: aegis_300452
+    Name: Friedrich Stolz Heine (Sign Stamp) Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSPrate,15;
+      bonus bMatkRate,15;
+      skill "HW_GANBANTEIN",1;
+  - Id: 300453
+    AegisName: aegis_300453
+    Name: Kronecker Granz Heine (Sign Stamp) Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bRegenPercentSP,1,1000;
+      autobonus "{ sc_start SC_ENERGYCOAT; }",50,30000,BF_WEAPON|BF_MAGIC;
   - Id: 300454
     AegisName: Ice_C_Orb_Hp
     Name: Glacier Flower Meow Power (Vital)
@@ -52669,6 +53413,13 @@ Body:
     SubType: Enchant
     Script: |
       bonus bDelayrate,-getskilllv("ASC_BREAKER");
+  - Id: 310195
+    AegisName: Magnificat_Lv5
+    Name: Magnificat Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "PR_MAGNIFICAT",5;
   - Id: 310197
     AegisName: Tha_Anger_1
     Name: Anger Lv1
@@ -53782,6 +54533,20 @@ Body:
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,3;
+  - Id: 310336
+    AegisName: Sight_Lv1
+    Name: Sight Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "MG_SIGHT",1;
+  - Id: 310337
+    AegisName: Clairvoyance1
+    Name: Clairvoyance
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bIntravision;
   - Id: 310478
     AegisName: Wolf_Orb_Str_1
     Name: Wolf Orb (Str) Level 1
@@ -56566,6 +57331,54 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 310648
+    AegisName: Extra_Agi
+    Name: Extra Agi
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitAddRate,readparam(bAgi)/10;
+      if (readparam(bAgi) >= 110)
+         bonus bPerfectHitAddRate,5;
+  - Id: 310649
+    AegisName: Extra_Vit
+    Name: Extra Vit
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHealPower2,readparam(bVit)/10;
+      bonus bAddItemHealRate,readparam(bVit)/10;
+      if (readparam(bAgi) >= 110) {
+         bonus bHealPower2,5;
+         bonus bAddItemHealRate,5;
+      }
+  - Id: 310650
+    AegisName: Extra_Int
+    Name: Extra Int
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,readparam(bInt)/10;
+      if (readparam(bInt) >= 110)
+         bonus bMatkRate,5;
+  - Id: 310651
+    AegisName: Extra_Dex
+    Name: Extra Dex
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,readparam(bDex)/10;
+      if (readparam(bDex) >= 110)
+         bonus bLongAtkRate,5;
+  - Id: 310652
+    AegisName: Extra_Luk
+    Name: Extra Luk
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,readparam(bLuk)/10;
+      if (readparam(bLuk) >= 110)
+         bonus bCritAtkRate,5;
   - Id: 310653
     AegisName: Automatic_Orb_J01
     Name: Q-Range
@@ -57741,6 +58554,21 @@ Body:
             bonus bDef,45;
          }
       }
+  - Id: 310758
+    AegisName: PlayerTolerance13
+    Name: Player Resistance 13
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,13;
+      bonus2 bSubRace,RC_Player_Doram,13;
+  - Id: 310759
+    AegisName: E_All
+    Name: Ares
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubEle,Ele_All,5;
   - Id: 310760
     AegisName: DivineGrace_of_Kings
     Name: Heaven's Majesty
@@ -64395,6 +65223,13 @@ Body:
     SubType: Enchant
     Script: |
       skill "MG_ENERGYCOAT",1;
+  - Id: 311416
+    AegisName: aegis_311416
+    Name: Odin's Power Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "ALL_ODINS_POWER",2;
   - Id: 311425
     AegisName: aegis_311425
     Name: Spell Stone (Dual)
@@ -66221,6 +67056,13 @@ Body:
             }
          }
       }
+  - Id: 311882
+    AegisName: aegis_311882
+    Name: Skill Stone (Increase AGI Lv10)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "AL_INCAGI",10;
   - Id: 311883
     AegisName: aegis_311883
     Name: Omniscience Seeker
