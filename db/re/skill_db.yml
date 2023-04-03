@@ -18327,6 +18327,36 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+  - Id: 770
+    Name: NPC_GROUNDDRIVE
+    Description: Ground Drive
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Flags:
+      TargetHidden: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 2
+      - Level: 3
+        Count: 3
+      - Level: 4
+        Count: 4
+      - Level: 5
+        Count: 5
+    Element: Earth
+    Duration1: 100
+    Unit:
+      Id: Dummyskill
+      Layout: 2
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
   - Id: 771
     Name: NPC_RELIEVE_ON
     Description: NPC_RELIEVE_ON

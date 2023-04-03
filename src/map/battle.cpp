@@ -7355,6 +7355,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 #ifdef RENEWAL
 					case WZ_HEAVENDRIVE:
+					case NPC_GROUNDDRIVE:
 						skillratio += 25;
 						break;
 					case WZ_METEOR:
