@@ -6504,9 +6504,9 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<u
 	}
 
 	if( this->nodeExists( node, "Rate" ) ){
-		uint16 rate;
+		uint32 rate;
 
-		if( !this->asUInt16Rate( node, "Rate", rate ) ){
+		if( !this->asUInt32Rate( node, "Rate", rate ) ){
 			return false;
 		}
 
@@ -6515,11 +6515,11 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<u
 				drops.erase( index );
 				return true;
 			}else{
-				this->invalidWarning( node["Rate"], "Rate %" PRIu16 " is below minimum of 1.\n", rate );
+				this->invalidWarning( node["Rate"], "Rate %" PRIu32 " is below minimum of 1.\n", rate );
 				return false;
 			}
-		}else if( rate > 10000 ){
-			this->invalidWarning( node["Rate"], "Rate %" PRIu16 " exceeds maximum of 10000.\n", rate );
+		}else if( rate > 100000 ){
+			this->invalidWarning( node["Rate"], "Rate %" PRIu32 " exceeds maximum of 100000.\n", rate );
 			return false;
 		}
 
