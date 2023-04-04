@@ -1506,7 +1506,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv)
 {
 	map_session_data *sd = NULL, *tsd = BL_CAST(BL_PC, src);
-	status_change *sc, *tsc;
 	struct status_change_entry *sce;
 	int div_ = d->div_, flag = d->flag;
 
@@ -1537,7 +1536,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 	}
 
-	tsc = status_get_sc(bl); //check target status
+	status_change* tsc = status_get_sc(bl); //check target status
 
 	if( tsc && tsc->getSCE(SC_INVINCIBLE) && !tsc->getSCE(SC_INVINCIBLEOFF) )
 		return 1;
@@ -1825,7 +1824,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of target SC_ check
 
 	//SC effects from caster side.
-	sc = status_get_sc(src);
+	status_change* sc = status_get_sc(src);
 
 	if (sc && sc->count) {
 		if( sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
