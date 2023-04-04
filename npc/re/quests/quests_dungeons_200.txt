@@ -1458,7 +1458,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 	mes "Hero, these are the things we would like to ask of you from Amicitia.";
 	mes "Which of these would you like to help with?";
 	next;
-	switch( select( "Earth and Fire", "Water and Wind", "Werner's Trace", "Don't help" ) ) {
+	switch( select( "Earth and Fire", "Water and Wind", "Traces of Werner", "Don't help" ) ) {
 	case 1:
 		switch( checkquest(16530,PLAYTIME) ) {
 		case -1:
@@ -1480,7 +1480,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		switch( checkquest(16531,HUNTING) ) {
 		case -1:
 			mes "[Ansuriya]";
-			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>Mutant Chimera Amitera and Mutant Chimera Fillia</FONT> among the chimeras in culture.";
+			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_AMITERA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FILLIA", MOB_NAME) + "</FONT> among the chimeras in culture.";
 			next;
 			mes "[Ansuriya]";
 			mes "You will be able to recognize them right away as the attribute characteristics of earth and fire appear much stronger than those of existing entities.";
@@ -1508,7 +1508,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Ansuriya]";
-			mes "<FONT COLOR = 0000CD>The Mutant Chimera Amitera and the Mutant Chimera Fillia</FONT> will be roaming the first floor of the closed lab Amicitia.";
+			mes "<FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_AMITERA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FILLIA", MOB_NAME) + "</FONT> will be roaming the first floor of the closed lab Amicitia.";
 			next;
 			mes "[Ansuriya]";
 			mes "Please hunt 15 of each.";
@@ -1551,7 +1551,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		switch( checkquest(16533,HUNTING) ) {
 		case -1:
 			mes "[Ansuriya]";
-			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>Mutant Chimera Litus and Mutant Chimera Vanilaqus</FONT> among the chimeras that were being cultured.";
+			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LITUS", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_VANILAQUS", MOB_NAME) + "</FONT> among the chimeras that were being cultured.";
 			next;
 			mes "It's not difficult to tell them apart because they've mutated into an appearance that clearly reveals the attributes of wind and water.";
 			next;
@@ -1578,7 +1578,7 @@ pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Ansuriya]";
-			mes "<FONT COLOR = 0000CD>Mutant Chimera Litus and Mutant Chimera Vanilaqus</FONT> are staying on the first floor of the closed lab Amicitia.";
+			mes "<FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LITUS", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_VANILAQUS", MOB_NAME) + "</FONT> are staying on the first floor of the closed lab Amicitia.";
 			next;
 			mes "[Ansuriya]";
 			mes "Please hunt 15 of each.";
@@ -1779,7 +1779,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 			mes "They re-mutated the mutated homunculus and further strengthened their aggression.";
 			next;
 			mes "[Gerbena]";
-			mes "Please hunt 15 <FONT COLOR = 0000CD>Mutant Chimera Napeo and Mutant Chimera Galensis</FONT> each.";
+			mes "Please hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_NAPEO", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_GALENSIS", MOB_NAME) + "</FONT> each.";
 			mes "Both are creatures that imitate human form, but add a powerful transformation of the chimera properties to it.";
 			next;
 			mes "[Gerbena]";
@@ -1810,7 +1810,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Gerbena]";
-			mes "Please hunt 15 <FONT COLOR = 0000CD>Mutant Chimera Napeo and Mutant Chimera Galensis</FONT> each.";
+			mes "Please hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_NAPEO", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_GALENSIS", MOB_NAME) + "</FONT> each.";
 			mes "Both are creatures that imitate human form, but add a powerful transformation of the chimera properties to it.";
 			close;
 		case 2:
@@ -1826,7 +1826,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 			mes "If it's okay with you, why don't you come back tomorrow and work with us?";
 			erasequest 16537;
 			setquest 16536;
-			getexp 37253672,0;	// TODO: jexp
+			getexp 37253672,26077570;	// rebalance (unknown jexp, 70% of baseexp)
 			close;
 		}
 		end;
@@ -1860,7 +1860,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 			mes "You can't rescue them or do anything. All, every single one of them has to be killed.";
 			next;
 			mes "[Gerbena]";
-			mes "So, hero, would you like to help us hunt 15 <FONT COLOR = 0000CD>Mutant Chimera Lavaeter and Mutant Chimera Fulgor</FONT> each?";
+			mes "So, hero, would you like to help us hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LAVA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FULGOR", MOB_NAME) + "</FONT> each?";
 			next;
 			if (select( "Help hunting", "Do not hunt" ) == 2) {
 				mes "[Gerbena]";
@@ -1886,7 +1886,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 		case 0:
 		case 1:
 			mes "[Gerbena]";
-			mes "Hero, can you hunt 15 <FONT COLOR = 0000CD>Mutant Chimera Lavaeter and Mutant Chimera Fulgor</FONT> each?";
+			mes "Hero, can you hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LAVA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FULGOR", MOB_NAME) + "</FONT> each?";
 			mes "You can't rescue them or do anything. All, every single one of them has to be killed.";
 			close;
 		case 2:
@@ -1902,7 +1902,7 @@ pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
 			mes "If it's okay with you, why don't you come back tomorrow and work with us?";
 			erasequest 16539;
 			setquest 16538;
-			getexp 37325968,0;	// TODO: jexp
+			getexp 37325968,26128177;	// rebalance (unknown jexp, 70% of baseexp)
 			close;
 		}
 		end;
