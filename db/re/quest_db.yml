@@ -5054,15 +5054,39 @@ Body:
   - Id: 7892
     Title: What is Valkyrie - Standby
     TimeLimit: 4h
+  - Id: 7893
+    Title: A unique color of Ferus
+    Targets:
+      - Mob: FERUS_P
+        Count: 20
   - Id: 7894
-    Title: A unique color of Ferrus - Waiting
+    Title: A unique color of Ferus - Waiting
     TimeLimit: 4h
+  - Id: 7895
+    Title: New Mimic Investigation
+    Targets:
+      - Mob: TREASURE_MIMIC
+        Count: 10
   - Id: 7896
     Title: New Mimic Investigation - Waiting
     TimeLimit: 4h
+  - Id: 7897
+    Title: Acidus Attribute Research
+    Targets:
+      - Mob: ACIDUS_B
+        Count: 20
+      - Mob: ACIDUS_S
+        Count: 20
   - Id: 7898
-    Title: Assistance Properties Study - Standby
+    Title: Acidus Attribute Research - Standby
     TimeLimit: 4h
+  - Id: 7899
+    Title: Going against Providence
+    Targets:
+      - Mob: BONE_FERUS
+        Count: 30
+      - Mob: BONE_ACIDUS
+        Count: 30
   - Id: 7900
     Title: Going against providence - Waiting
     TimeLimit: 4h

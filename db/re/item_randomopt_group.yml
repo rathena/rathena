@@ -13118,3 +13118,667 @@ Body:
             MinValue: 5
             MaxValue: 20
             Chance: 666
+  - Id: 152
+    Group: ABYSS_DDBOX
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 500
+            MaxValue: 1500
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 100
+            MaxValue: 300
+            Chance: 10000
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+      - Slot: 2
+        Options:
+          - Option: VAR_HPACCELERATION
+            MinValue: 20
+            MaxValue: 60
+            Chance: 10000
+          - Option: VAR_SPACCELERATION
+            MinValue: 20
+            MaxValue: 60
+            Chance: 10000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 25
+            Chance: 10000
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 50
+            Chance: 10000
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 6
+            Chance: 10000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_NOTHING_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_WATER_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_GROUND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_FIRE_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_WIND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_POISON_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_SAINT_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_NOTHING_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_WATER_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_GROUND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_FIRE_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_WIND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_POISON_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_SAINT_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+      - Slot: 3
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 500
+            MaxValue: 1500
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 100
+            MaxValue: 300
+            Chance: 10000
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+  - Id: 153
+    Group: ABYSS_DDBOX2
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 750
+            MaxValue: 2000
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 200
+            MaxValue: 500
+            Chance: 10000
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 5
+            MaxValue: 13
+            Chance: 10000
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 5
+            MaxValue: 13
+            Chance: 10000
+      - Slot: 2
+        Options:
+          - Option: VAR_HPACCELERATION
+            MinValue: 30
+            MaxValue: 65
+            Chance: 10000
+          - Option: VAR_SPACCELERATION
+            MinValue: 30
+            MaxValue: 65
+            Chance: 10000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 30
+            Chance: 10000
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 25
+            MaxValue: 55
+            Chance: 10000
+          - Option: VAR_MDEFPOWER
+            MinValue: 3
+            MaxValue: 8
+            Chance: 10000
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 7
+            MaxValue: 15
+            Chance: 10000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_NOTHING_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_WATER_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_GROUND_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_FIRE_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_WIND_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_POISON_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_SAINT_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_NOTHING_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_WATER_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_GROUND_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_FIRE_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_WIND_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_POISON_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_SAINT_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 6
+            MaxValue: 10
+            Chance: 10000
+      - Slot: 3
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 550
+            MaxValue: 1700
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 150
+            MaxValue: 400
+            Chance: 10000
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+  - Id: 154
+    Group: ABYSS_DDBOX3
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 300
+            MaxValue: 1000
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 300
+            Chance: 10000
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+      - Slot: 2
+        Options:
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 18
+            Chance: 10000
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 12
+            MaxValue: 55
+            Chance: 10000
+          - Option: VAR_MDEFPOWER
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_NOTHING_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_WATER_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_GROUND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_FIRE_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_WIND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_POISON_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_SAINT_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: DAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_NOTHING_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_WATER_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_GROUND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_FIRE_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_WIND_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_POISON_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_SAINT_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: ATTR_TOLERACE_WATER
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_GROUND
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_FIRE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_WIND
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_POISON
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_SAINT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_DARKNESS
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_TELEKINESIS
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: ATTR_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+      - Slot: 3
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 800
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 300
+            Chance: 10000
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+  - Id: 155
+    Group: ABYSS_DDBOX4
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 800
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 200
+            Chance: 10000
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 10000
+      - Slot: 2
+        Options:
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 8
+            MaxValue: 18
+            Chance: 10000
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 12
+            MaxValue: 55
+            Chance: 10000
+          - Option: VAR_MDEFPOWER
+            MinValue: 3
+            MaxValue: 7
+            Chance: 10000
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 10
+            Chance: 10000
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 20
+            Chance: 10000
+      - Slot: 3
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 600
+            Chance: 10000
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 200
+            Chance: 10000
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 4
+            MaxValue: 7
+            Chance: 10000
