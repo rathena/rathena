@@ -5213,3 +5213,25 @@ Body:
       - Item: Anti_Magic_Manteau
       - Item: Comp_Anti_Manteau_TH
       - Item: Comp_Geffen_M_Muffle
+#  - Item: Loki_Coin_2
+#    TargetItems:
+#      - Item: Gambler_Seal_KR_
+#  - Item: Loki_Advice_2
+#    TargetItems:
+#      - Item: Spade_Ace_Melee
+#  - Item: Loki_Advice
+#    TargetItems:
+#      - Item: Heart_Ace_Melee
+#  - Item: Loki_Coin
+#    TargetItems:
+#      - Item: Gambler_Seal_KR_
+#  - Item: Glacier_Armor_9Refine
+#    NotSocketEnchantItem: false
+#    TargetItems:
+#      - Item: Glacier_Armor
+#      - Item: Glacier_Robe
+#      - Item: Glacier_Manteau
+#      - Item: Glacier_Muffler
+#      - Item: Glacier_Boots
+#      - Item: Glacier_Shoes
+#      - Item: Glacier_Guard

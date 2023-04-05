@@ -36576,3 +36576,499 @@ Body:
          bonus2 bIgnoreDefRaceRate,RC_All,25;
          bonus2 bIgnoreMdefRaceRate,RC_All,25;
       }
+  - Combos:
+      - Combo:
+          - Isgard_4   # 312306
+          - Ice_C_Orb_Def   # 312056
+    Script: |
+      bonus bRes,30;
+  - Combos:
+      - Combo:
+          - Isgard_4   # 312306
+          - Ice_C_Orb_Mdef   # 312057
+    Script: |
+      bonus bMRes,20;
+  - Combos:
+      - Combo:
+          - Isgard_4   # 312306
+          - Ice_C_Orb_S_Delay   # 312068
+    Script: |
+      bonus bDelayrate,-3;
+  - Combos:
+      - Combo:
+          - Isgard_4   # 312306
+          - Ice_C_Orb_F_Cast   # 312076
+    Script: |
+      bonus bFixedCast,-300;
+  - Combos:
+      - Combo:
+          - Isgard_3_Warrior   # 312307
+          - Ice_C_Orb_War   # 312061
+    Script: |
+      bonus bShortAtkRate,4;
+  - Combos:
+      - Combo:
+          - Isgard_3_Warrior   # 312307
+          - Ice_C_Orb_Guide   # 312071
+    Script: |
+      bonus bPAtk,5;
+      bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Isgard_3_Warrior   # 312307
+          - Ice_C_Orb_F_Spirit   # 312083
+    Script: |
+      bonus bShortAtkRate,8;
+      bonus bAtkRate,10;
+  - Combos:
+      - Combo:
+          - Isgard_3_Ranger   # 312308
+          - Ice_C_Orb_Ran   # 312062
+    Script: |
+      bonus bLongAtkRate,4;
+  - Combos:
+      - Combo:
+          - Isgard_3_Ranger   # 312308
+          - Ice_C_Orb_Guide   # 312071
+    Script: |
+      bonus bPAtk,5;
+      bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Isgard_3_Ranger   # 312308
+          - Ice_C_Orb_E_Archer   # 312084
+    Script: |
+      bonus bLongAtkRate,8;
+      bonus bAtkRate,10;
+  - Combos:
+      - Combo:
+          - Isgard_3_Assassin   # 312309
+          - Ice_C_Orb_War   # 312061
+    Script: |
+      bonus bShortAtkRate,5;
+  - Combos:
+      - Combo:
+          - Isgard_3_Assassin   # 312309
+          - Ice_C_Orb_Ran   # 312062
+    Script: |
+      bonus bLongAtkRate,5;
+  - Combos:
+      - Combo:
+          - Isgard_3_Assassin   # 312309
+          - Ice_C_Orb_Speed   # 312069
+    Script: |
+      bonus bCritAtkRate,4;
+      bonus bCritical,15;
+  - Combos:
+      - Combo:
+          - Isgard_3_Assassin   # 312309
+          - Ice_C_Orb_Fatal   # 312086
+    Script: |
+      bonus bCritAtkRate,8;
+      bonus bCritical,20;
+  - Combos:
+      - Combo:
+          - Isgard_3_Mage   # 312310
+          - Ice_C_Orb_Mag   # 312063
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Combos:
+      - Combo:
+          - Isgard_3_Mage   # 312310
+          - Ice_C_Orb_Caster   # 312070
+    Script: |
+      bonus bSMatk,5;
+      bonus bMatk,50;
+  - Combos:
+      - Combo:
+          - Isgard_3_Mage   # 312310
+          - Ice_C_Orb_Spell   # 312085
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,8;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - Isgard_2_Warrior2   # 312311
+          - Ice_C_Orb_War2   # 312064
+    Script: |
+      bonus bShortAtkRate,5;
+  - Combos:
+      - Combo:
+          - Isgard_2_Warrior2   # 312311
+          - Ice_C_Orb_Ov_Pow   # 312079
+    Script: |
+      bonus bPAtk,5;
+      bonus bPow,7;
+      bonus bCon,7;
+  - Combos:
+      - Combo:
+          - Isgard_2_Ranger2   # 312312
+          - Ice_C_Orb_Ran2   # 312065
+    Script: |
+      bonus bLongAtkRate,5;
+  - Combos:
+      - Combo:
+          - Isgard_2_Ranger2   # 312312
+          - Ice_C_Orb_Fi_Con   # 312081
+    Script: |
+      bonus bPAtk,5;
+      bonus bPow,7;
+      bonus bCon,7;
+  - Combos:
+      - Combo:
+          - Isgard_2_Assassin2   # 312313
+          - Ice_C_Orb_War2   # 312064
+    Script: |
+      bonus bShortAtkRate,8;
+  - Combos:
+      - Combo:
+          - Isgard_2_Assassin2   # 312313
+          - Ice_C_Orb_Ran2   # 312065
+    Script: |
+      bonus bLongAtkRate,8;
+  - Combos:
+      - Combo:
+          - Isgard_2_Assassin2   # 312313
+          - Ice_C_Orb_Ov_Pow   # 312079
+    Script: |
+      bonus bCRate,5;
+      bonus bPow,7;
+      bonus bCrt,7;
+  - Combos:
+      - Combo:
+          - Isgard_2_Assassin2   # 312313
+          - Ice_C_Orb_Fi_Con   # 312081
+    Script: |
+      bonus bCRate,5;
+      bonus bPow,7;
+      bonus bCrt,7;
+  - Combos:
+      - Combo:
+          - Isgard_2_Mage2   # 312314
+          - Ice_C_Orb_Mag2   # 312066
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Combos:
+      - Combo:
+          - Isgard_2_Mage2   # 312314
+          - Ice_C_Orb_Bu_Spl   # 312080
+    Script: |
+      bonus bSMatk,5;
+      bonus bSpl,7;
+      bonus bCon,7;
+  - Combos:
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Sword
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_B_Sword
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_R_Knife
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_B_Knife
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Axe
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Spear
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Book
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Wand
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Foxtail
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Knuckle
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Violin
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Whip
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Mace
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_M_Mace
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_T_Sword
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Katar
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_T_Axe
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Lance
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Staff
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Humma
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Bow
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Revolver
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Rifle
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Shotgun
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Gatling
+      - Combo:
+          - Glacier_Helm_1   # 400105
+          - Glacier_Launcher
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bShortAtkRate,5*(.@r_weapon/3);
+      bonus bAspdRate,4*(.@r_weapon/3);
+  - Combos:
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Sword
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_B_Sword
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_R_Knife
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_B_Knife
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Axe
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Spear
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Book
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Wand
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Foxtail
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Knuckle
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Violin
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Whip
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Mace
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_M_Mace
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_T_Sword
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Katar
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_T_Axe
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Lance
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Staff
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Humma
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Bow
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Revolver
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Rifle
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Shotgun
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Gatling
+      - Combo:
+          - Glacier_Helm_2   # 400106
+          - Glacier_Launcher
+    Script: |
+      bonus bMatkRate,5;
+      bonus bMatk,50;
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_All,5*(.@r_weapon/3);
+      bonus bAspdRate,4*(.@r_weapon/3);
+  - Combos:
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Sword
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_B_Sword
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_R_Knife
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_B_Knife
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Axe
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Spear
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Book
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Wand
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Foxtail
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Knuckle
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Violin
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Whip
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Mace
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_M_Mace
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_T_Sword
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Katar
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_T_Axe
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Lance
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Staff
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Humma
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Bow
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Revolver
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Rifle
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Shotgun
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Gatling
+      - Combo:
+          - Glacier_Helm_3   # 400107
+          - Glacier_Launcher
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus bLongAtkRate,5*(.@r_weapon/3);
+      bonus bAspdRate,4*(.@r_weapon/3);
+  - Combos:
+      - Combo:
+          - aegis_400109   # 400109
+          - Boitata_Card   # 27126
+    Script: |
+      bonus2 bAddEle,Ele_Poison,40;
+      bonus2 bAddEle,Ele_Water,40;
+  - Combos:
+      - Combo:
+          - aegis_400109   # 400109
+          - SLD_Boitata_Card   # 300195
+    Script: |
+      bonus2 bAddEle,Ele_Poison,25;
+      bonus2 bAddEle,Ele_Water,25;
+  - Combos:
+      - Combo:
+          - aegis_400110   # 400110
+          - Berzebub_Card   # 4145
+    Script: |
+      bonus2 bAddClass,Class_Boss,16;
+  - Combos:
+      - Combo:
+          - aegis_400110   # 400110
+          - Sealed_Berz_Card   # 4486
+    Script: |
+      bonus2 bAddClass,Class_Boss,8;
+  - Combos:
+      - Combo:
+          - aegis_400111   # 400111
+          - Apocalips_H_Card   # 4374
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,10;
+      bonus bVariableCastrate,-7;
+  - Combos:
+      - Combo:
+          - aegis_400111   # 400111
+          - Sealed_Apocalips_H_Card   # 4503
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,5;
+      bonus bVariableCastrate,-3;
+  - Combos:
+      - Combo:
+          - Spade_Ace_Melee   # 420213
+          - aegis_410232   # 410232
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bMatkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_470204   # 470204
+          - Fallen_Bishop_Card   # 4441
+    Script: |
+      bonus2 bMagicAddEle,Ele_Holy,15;
+      bonus bMaxSPrate,25;
+  - Combos:
+      - Combo:
+          - aegis_470204   # 470204
+          - Sealed_F_Bishop_Card   # 4539
+    Script: |
+      bonus2 bMagicAddEle,Ele_Holy,10;
+      bonus bMaxSPrate,15;

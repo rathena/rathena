@@ -48740,15 +48740,6 @@ Body:
     Script: |
       bonus2 bMagicAddRace,RC_Demon,75;
       bonus2 bSubRace,RC_Demon,-25;
-  - Id: 300306
-    AegisName: Extra_Str
-    Name: Extra Str
-    Type: Card
-    SubType: Enchant
-    Script: |
-      bonus bAtkRate,readparam(bStr)/10;
-      if (readparam(bStr) >= 110)
-         bonus bAtkRate,5;
   - Id: 300230
     AegisName: ILL_Andre_Card
     Name: Diligent Andre Card
@@ -54386,7 +54377,7 @@ Body:
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
          bonus2 bSkillAtk,"SO_VARETYR_SPEAR",50;
          bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
-      }   
+      }
   - Id: 310313
     AegisName: Latent_Release_AB
     Name: Latent Release (Archbishop)
@@ -70058,6 +70049,227 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",2+(getrefine()/2);
+  - Id: 312306
+    AegisName: Isgard_4
+    Name: Issgard Crystal
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMdef,10;
+      bonus bDef,50;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bDelayrate,-2;
+         bonus bMdef,5;
+         bonus bDef,25;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bDelayrate,-1;
+            bonus bMdef,5;
+            bonus bDef,25;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bDelayrate,-1;
+               bonus bMdef,5;
+               bonus bDef,25;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bDelayrate,-1;
+                  bonus bMdef,5;
+                  bonus bDef,25;
+               }
+            }
+         }
+      }
+  - Id: 312307
+    AegisName: Isgard_3_Warrior
+    Name: Issgard Crystal (Warrior)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bBaseAtk,20;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,2;
+         bonus bBaseAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,2;
+            bonus bBaseAtk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,2;
+               bonus bBaseAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bShortAtkRate,2;
+                  bonus bBaseAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 312308
+    AegisName: Isgard_3_Ranger
+    Name: Issgard Crystal (Shooter)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bBaseAtk,20;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,2;
+         bonus bBaseAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,2;
+            bonus bBaseAtk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,2;
+               bonus bBaseAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bLongAtkRate,2;
+                  bonus bBaseAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 312309
+    AegisName: Isgard_3_Assassin
+    Name: Issgard Crystal (Assassin)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bBaseAtk,20;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,2;
+         bonus bBaseAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,2;
+            bonus bBaseAtk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,2;
+               bonus bBaseAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritAtkRate,2;
+                  bonus bBaseAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 312310
+    AegisName: Isgard_3_Mage
+    Name: Issgard Crystal (Mage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMatk,20;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,2;
+         bonus bMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,2;
+            bonus bMatk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,2;
+               bonus bMatk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAtkEle,Ele_All,2;
+                  bonus bMatk,5;
+               }
+            }
+         }
+      }
+  - Id: 312311
+    AegisName: Isgard_2_Warrior2
+    Name: Issgard Crystal (Berserker)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bBaseAtk,30;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,2;
+         bonus bBaseAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,2;
+            bonus bBaseAtk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,2;
+               bonus bBaseAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bShortAtkRate,2;
+                  bonus bBaseAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 312312
+    AegisName: Isgard_2_Ranger2
+    Name: Issgard Crystal (Marksman)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bBaseAtk,30;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,2;
+         bonus bBaseAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,2;
+            bonus bBaseAtk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,2;
+               bonus bBaseAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bLongAtkRate,2;
+                  bonus bBaseAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 312313
+    AegisName: Isgard_2_Assassin2
+    Name: Issgard Crystal (Executioner)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bBaseAtk,30;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,2;
+         bonus bBaseAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,2;
+            bonus bBaseAtk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,2;
+               bonus bBaseAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritAtkRate,2;
+                  bonus bBaseAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 312314
+    AegisName: Isgard_2_Mage2
+    Name: Issgard Crystal (Grand Mage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMatk,30;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,2;
+         bonus bMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,2;
+            bonus bMatk,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,2;
+               bonus bMatk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAtkEle,Ele_All,2;
+                  bonus bMatk,5;
+               }
+            }
+         }
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
