@@ -244,6 +244,8 @@ current scripts have a zero in there.
 
 Unlike 'warp', 'warp2' will also be triggered by hidden player.
 
+
+
 ## Define an NPC object.
 
 **\<map name\>**,**\<x\>**,**\<y\>**,**\<facing\>****\%TAB\%script\%TAB\%****\<NPC Name\>\%TAB\%<sprite id\>,{\<code\>**}\
@@ -257,26 +259,26 @@ defined, see that below.
 Facing is a direction the NPC sprite will face in. Not all NPC sprites have
 different images depending on the direction you look from, so for some facing
 will be meaningless. Facings are counted counterclockwise in increments of 45
-degrees, where 0 means facing towards the top of the map. (So to turn the sprite
+degrees, where `0` means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast
 it's facing 5.)
 
 Sprite ID is the sprite number or constant used to display this particular NPC.
 You may also use a monster's ID instead to display a monster sprite for this NPC.
 It is possible to use a job sprite as well, but you must first define it as a
-monster sprite in 'mob_avail.yml', a full description on how to do this is not
+monster sprite in '`mob_avail.yml`', a full description on how to do this is not
 in the scope of this manual.
-A '-1' Sprite ID will make the NPC invisible (and unclickable).
-A '111' Sprite ID will make an NPC which does not have a sprite, but is still
+A '`-1`' Sprite ID will make the NPC invisible (and unclickable).
+A '`111`' Sprite ID will make an NPC which does not have a sprite, but is still
 clickable, which is useful if you want to make a clickable object of the 3D
 terrain.
 
-TriggerX and triggerY, if given, will define an area, centered on NPC and
+`TriggerX` and `triggerY`, if given, will define an area, centered on NPC and
 spanning triggerX cells in every direction across X and triggerY in every
 direction across Y. Walking into that area will trigger the NPC. If no
-'OnTouch:' special label is present in the NPC code, the execution will start
+'`OnTouch`:' special label is present in the NPC code, the execution will start
 from the beginning of the script, otherwise, it will start from the 'OnTouch:'
-label. Monsters can also trigger the NPC, though the label 'OnTouchNPC:' is
+label. Monsters can also trigger the NPC, though the label '`OnTouchNPC`:' is
 used in this case.
 
 The code part is the script code that will execute whenever the NPC is
@@ -314,35 +316,25 @@ clicking) will cause a shop window to come up. No code whatsoever runs in shop
 NPCs and you can't change the prices otherwise than by editing the script
 itself.
 
-The Item ID is the number of item in the 'db/item_db.yml' database. If Price is set
-to -1, the 'buy price' given in the item database will be used. Otherwise, the
-price you gave will be used for this item, which is how you create differing
+The Item ID is the number of item in the 'db/item_db.yml' database. If Price is set to `-1`, the 'buy price' given in the item database will be used. Otherwise, the price you gave will be used for this item, which is how you create differing
 prices for items in different shops.
 
-Optionally you can specify the discount option and set it to "yes" or "no", to enable or disable discounting.
+Optionally you can specify the discount option and set it to "`yes`" or "`no`", to enable or disable discounting.
 
 There are other types of shops available:
-cashshop - use "cashshop" in place of "shop" to use the Cash Shop interface, allowing
-you to buy items with special points that are stored as account variables
-called  #CASHPOINTS and #KAFRAPOINTS. This type of shop will not allow you to sell
-items at it, only make purchases. The layout used to define sale items still count, and
-"**\<price\>**" refers to how many points will be spent purchasing the them.
 
-"itemshop" and "pointshop" use the Shop interface, allowing you to buy items with a specific
-item or special points from a variable. 'pointshop' only supports permanent character variables,
-temporary character variables, permanent local account variables or permanent global account
-variables. These variables must be of integer type, not string. 'discount' flag is an
-optional value which makes the price at that shop become affected by discount skill.
-
-"marketshop" can have limited quantity of an item in stock.
-Use -1 in the stock field to have unlimited stock in a marketshop.
-
+| Shop Type   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| cashshop    | Uses the Cash Shop interface to buy items with special points stored as account variables called `#CASHPOINTS` and `#KAFRAPOINTS`. Does not allow selling items. The layout used to define sale items still counts and "\<price\>" refers to how many points will be spent purchasing the item.                                                                                                                                                                                                 |
+| itemshop    | Uses the Shop interface to buy items with a specific item or special points from a variable.                                                                                                                                                                                                                                                                                                                                                                                |
+| pointshop   | Uses the Shop interface to buy items with special points from a variable. Only supports permanent character variables, temporary character variables, permanent local account variables or permanent global account variables. These variables must be of integer type, not string. The 'discount' flag is an optional value which makes the price at that shop become affected by discount skill.                                                                 |
+| marketshop  | Can have limited quantity of an item in stock. Use -1 in the stock field to have unlimited stock in a marketshop.                                                                                                                      
 ## Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
-warp/warp2: **\<map name\>,\<x\>,\<y\>,\<facing\>\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<spanx\>,\<spany\>
-shop/cashshop/itemshop/pointshop/npc: -\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>
-shop/cashshop/itemshop/pointshop/npc: \<map name\>,\<x\>,\<y\>,\<facing\>\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>
-npc: -\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>,\<triggerX\>,\<triggerY\>
+warp/warp2: **\<map name\>,\<x\>,\<y\>,\<facing\>\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<spanx\>,\<spany\>\
+shop/cashshop/itemshop/pointshop/npc: -\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>\
+shop/cashshop/itemshop/pointshop/npc: \<map name\>,\<x\>,\<y\>,\<facing\>\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>\
+npc: -\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>,\<triggerX\>,\<triggerY\>\
 npc: \<map name\>,\<x\>,\<y\>,\<facing\>\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<sprite id\>,\<triggerX\>,\<triggerY\>**
 
 This will duplicate an warp/shop/cashshop/itemshop/pointshop/NPC referred to by 'label'.
@@ -437,9 +429,9 @@ pet scripts to work in there reliably.
 Beside the common decimal numbers, which are nothing special whatsoever (though
 do not expect to use fractions, since ALL numbers are integer in this language),
 the script engine also handles hexadecimal numbers, which are otherwise
-identical. Writing a number like '0x**\<hex digits\>**' will make it recognized as a
-hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try
-to 'mes 0x10' it will print '16'.
+identical. Writing a number like '**0x\<hex digits\>**' will make it recognized as a
+hexadecimal value. Notice that `0x10` is equal to `16`. Also notice that if you try
+to '`mes 0x10`' it will print '`16`'.
 
 Number values can't exceed the limits of an integer variable: Any number
 greater than INT64_MAX (9223372036854775807) or smaller than INT64_MIN
@@ -503,23 +495,23 @@ Prefix: scope and extent
 | Syntax  | Variable Type                    |
 | ------- | -------------------------------- |
 | name    | permanent character integer      |
-| name$   | permanent character string       |
+| name\$   | permanent character string       |
 | @name   | temporary character integer      |
-| @name$  | temporary character string       |
-| $name   | permanent global integer         |
-| $name$  | permanent global string          |
-| $@name  | temporary global integer         |
-| $@name$ | temporary global string          |
+| @name\$  | temporary character string       |
+| \$name   | permanent global integer         |
+| \$name\$  | permanent global string          |
+| \$@name  | temporary global integer         |
+| \$@name\$ | temporary global string          |
 | .name   | NPC integer                      |
-| .name$  | NPC string                       |
+| .name\$  | NPC string                       |
 | .@name  | scope integer                    |
-| .@name$ | scope string                     |
+| .@name\$ | scope string                     |
 | 'name   | instance integer                 |
-| 'name$  | instance string                  |
+| 'name\$  | instance string                  |
 | #name   | permanent local account integer  |
-| #name$  | permanent local account string   |
+| #name\$  | permanent local account string   |
 | ##name  | permanent global account integer |
-| ##name$ | permanent global account string  |
+| ##name\$ | permanent global account string  |
 
 
 If a variable was never set, it is considered to equal zero for integer
@@ -595,7 +587,7 @@ Variables can be accessed and modified much like in other programming languages.
 ```
 
 
-Support for modifying variable values using 'set' is still supported (and required
+Support for modifying variable values using '`set`' is still supported (and required
 to exist for this new method to work) so previous scripts will continue to work.
 
 When assigning values, all operator methods are supported which exist in the below
@@ -660,9 +652,9 @@ set .@arrayofnumbers[.@x],10;
 
 This will make **.@arrayofnumbers[100]** equal to *10*.
 
-Index numbering always starts with 0 and arrays can hold over 2 billion
+Index numbering always starts with `0` and arrays can hold over 2 billion
 variables. As such, the (guaranteed) allowed values for indices are in the
-range 0 ~ 2147483647.
+range `0 ~ 2147483647`.
 
 And array indexes probably can't be negative. Nobody tested what happens when
 you try to get a negatively numbered variable from an array, but it's not going
@@ -670,8 +662,8 @@ to be pretty.
 
 Arrays can naturally store strings:
 
-**.@menulines$[0]** is the 0th element of the **.@menulines$** array of strings. Notice
-the '$', normally denoting a string variable, before the square brackets that
+`.@menulines$[0]` is the 0th element of the `.@menulines$` array of strings. Notice
+the '`$`', normally denoting a string variable, before the square brackets that
 denotes an array index.
 
 ## Variable References
@@ -697,10 +689,10 @@ common mathematical operations or conditional operators
 
 
 There are also conditional operators. This has to do with the conditional
-command 'if' and they are meant to return either 1 if the condition is satisfied
-and 0 if it isn't. (That's what they call 'boolean' variables. 0 means 'False'.
-Anything except the zero is 'True' Odd as it is, -1 and -5 and anything below
-zero will also be True.)
+command 'if' and they are meant to return either `1` if the condition is satisfied
+and `0` if it isn't. (That's what they call 'boolean' variables. 0 means '`False`'.
+Anything except the zero is '`True`' Odd as it is, -1 and -5 and anything below
+zero will also be `True`.)
 
 You can compare numbers to each other and you compare strings to each other, but
 you can not compare numbers to strings.
@@ -721,7 +713,7 @@ you can not compare numbers to strings.
 ```
 
 
-Only ' == ' and '!=' have been tested for comparing strings. Since there's no way
+Only ' `==` ' and '`!=`' have been tested for comparing strings. Since there's no way
 to code a seriously complex data structure in this language, trying to sort
 strings by alphabet would be pointless anyway.
 
@@ -804,28 +796,34 @@ the 2,4 and 16 bit to 1).
 
 
 ### ^  - Xor.
-The bitwise operator XOR (eXclusive OR) sets a binary position to 0 if both
+The bitwise operator XOR (eXclusive OR) sets a binary position to `0` if both
 numbers have the same value in the said position. On the other hand, it
-sets to 1 if they have different values in the said binary position.
+sets to `1` if they have different values in the said binary position.
 This is another way of setting and unsetting bits in bit-masks.
 
  Example:
-	- First let's set the quests that are currently in progress:
-		set inProgress,1|8|16; // quest 1,8 and 16 are in progress
-	- After playing for a bit, the player starts another quest:
-		if (inProgress&2 == 0) {
-			// this will set the bit for quest 2 (inProgress has that bit set to 0)
-			set inProgress,inProgress^2;
-			mes "Quest 2: find a newbie and be helpful to him for an hour.";
-			close;
-		}
-	- After spending some time reading info on Xor's, the player finally completes quest 1:
-		if (inProgress&1 && isComplete) {
-			// this will unset the bit for quest 1 (inProgress has that bit set to 1)
-			set inProgress,inProgress^1;
-			mes "Quest 1 complete!! You unlocked the secrets of the Xor dynasty, use them wisely.";
-			close;
-		}
+
+\- First let's set the quests that are currently in progress:
+   set inProgress,1|8|16; // quest 1,8 and 16 are in progress
+\- After playing for a bit, the player starts another quest:
+```cpp
+   if (inProgress&2 == 0) {
+      // this will set the bit for quest 2 (inProgress has that bit set to 0)
+      set inProgress,inProgress^2;
+      mes "Quest 2: find a newbie and be helpful to him for an hour.";
+      close;
+   }
+```
+- After spending some time reading info on Xor's, the player finally completes quest 1:
+```cpp
+   if (inProgress&1 && isComplete) {
+      // this will unset the bit for quest 1 (inProgress has that bit set to 1)
+      set inProgress,inProgress^1;
+      mes "Quest 1 complete!! You unlocked the secrets of the Xor dynasty, use them wisely.";
+      close;
+   }
+```
+
 
 Unary operators with only with a single number, which follows the operator, and
 are following:
@@ -869,14 +867,11 @@ Within executable script code, some lines can be labels:
 **\<label name\>**:
 
 Labels are points of reference in your script, which can be used to route
-execution with 'goto', 'menu' and 'jump_zero' commands, invoked with 'doevent'
-and 'donpcevent' commands and are otherwise essential. A label's name may not be
-longer than 22 characters. (23rd is the ':'.) There is some confusion in the
-source about whether it's 22, 23 or 24 all over the place, so keeping labels
-under 22 characters could be wise. It may only contain alphanumeric characters
-and underscore. In addition to labels you name yourself, there are also some
-special labels which the script engine will start execution from if a special
-event happens:
+execution with '`goto`', '`menu`' and '`jump_zero`' commands, invoked with '`doevent`'
+and '`donpcevent`' commands and are otherwise essential. 
+
+A label's name may not be longer than 22 characters. (23rd is the ':'.) There is some confusion in the source about whether it's 22, 23 or 24 all over the place, so keeping labels under 22 characters could be wise. It may only contain alphanumeric characters
+and underscore. In addition to labels you name yourself, there are also some special labels which the script engine will start execution from if a special event happens:
 
 	OnClock<hour><minute>:
 	OnMinute<minute>:
@@ -885,17 +880,21 @@ event happens:
 	OnDay<month><day>:
 
 This will execute when the server clock hits the specified date or time. Hours
-and minutes are given in military time. ('0105' will mean 01:05 AM). Weekdays
-are Sun,Mon,Tue,Wed,Thu,Fri,Sat. Months are 01 to 12, days are 01 to 31.
-Remember the zero.
+and minutes are given in military time. ('`0105`' will mean `01:05 AM`). 
+
+Weekdays  are Sun,Mon,Tue,Wed,Thu,Fri,Sat. 
+
+Months are 01 to 12, days are 01 to 31.
+
+**Remember the zero.**
 
 	OnInit:
 	OnInterIfInit:
 	OnInterIfInitOnce:
 
 OnInit will execute every time the scripts loading is complete, including when
-they are reloaded with @reloadscript command. OnInterIfInit will execute when
-the map server connects to a char server, OnInterIfInitOnce will only execute
+they are reloaded with `@reloadscript` command. `OnInterIfInit` will execute when
+the map server connects to a char server, `OnInterIfInitOnce` will only execute
 once and will not execute if the map server reconnects to the char server later.
 
 	OnAgitStart:
@@ -908,16 +907,16 @@ once and will not execute if the map server reconnects to the char server later.
 	OnAgitEnd3:
 	OnAgitInit3:
 
-OnAgitStart will run whenever the server shifts into WoE mode, whether it is
-done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd
+`OnAgitStart` will run whenever the server shifts into WoE mode, whether it is
+done with `@agitstart` GM command or with '`AgitStart`' script command. OnAgitEnd
 will do likewise for the end of WoE.
 
-OnAgitInit will run when data for all castles and all guilds that hold a castle
+`OnAgitInit` will run when data for all castles and all guilds that hold a castle
 is received by map-server from the char-server after initial connect.
 
 No RID will be attached while any of the above mentioned labels are triggered, so
 no character or account-based variables will be accessible, until you attach a
-RID with 'attachrid' (see below).
+RID with '`attachrid`' (see below).
 
 The above also applies to, the last three labels, the only difference is that
 these labels are used exclusively for WoE SE, and are called independently.
@@ -925,7 +924,7 @@ these labels are used exclusively for WoE SE, and are called independently.
 **OnInstanceInit**:
 
 This label will be executed when an instance is created and initialized through
-the 'instance_create' command. It will run again if @reloadscript is used while
+the '`instance_create`' command. It will run again if `@reloadscript` is used while
 an instance is in progress.
 
 ---------------------------------------
@@ -933,7 +932,7 @@ an instance is in progress.
 **OnInstanceDestroy**:
 
 This label will be executed when an instance is destroyed by a timeout, exceeding
-the keepalive time or through the 'instance_destroy' command. It will be called
+the keepalive time or through the '`instance_destroy`' command. It will be called
 exactly before the instance will be destroyed and all other NPCs of the instance
 will still be available at this point of time.
 
@@ -958,7 +957,7 @@ chosen once the triggering character leaves the area.
 **OnTouchNPC**:
 
 Similar to OnTouch, but will only trigger for monsters. For this case, by using
-'getattachedrid' will returns GID (ID that returned when use 'monster').
+'`getattachedrid`' will returns GID (ID that returned when use 'monster').
 
 ---------------------------------------
 
@@ -973,7 +972,7 @@ It's pretty obvious when these four special labels will be invoked.
 
 **OnPCDieEvent**:
 
-This special label triggers when a player dies. The variable 'killerrid' is
+This special label triggers when a player dies. The variable '`killerrid`' is
 set to the ID of the killer.
 
 ---------------------------------------
@@ -981,22 +980,22 @@ set to the ID of the killer.
 **OnPCKillEvent**:
 
 This special label triggers when a player kills another player. The variable
-'killedrid' is set to the ID of the player killed.
+'`killedrid`' is set to the ID of the player killed.
 
 ---------------------------------------
 
 **OnNPCKillEvent**:
 
 This special label triggers when a player kills a monster without label.
-The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
-The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
+The variable '`killedrid`' is set to the Class (mob ID) of the monster killed.
+The variable '`killedgid`' is set to the ID (unique mob game ID) of the monster killed.
 
 ---------------------------------------
 
 **OnPCLoadMapEvent**:
 
 This special label triggers when a player steps in a map marked with the
-'loadevent' mapflag and attaches its RID. The fact that this label requires a
+'`loadevent`' mapflag and attaches its RID. The fact that this label requires a
 mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
@@ -1007,7 +1006,7 @@ every time a player would change maps. Imagine the server load with 1,000 player
 
 This special label triggers when a player whispers the NPC, and will run with the
 player's RID attached. It can accept up to ten parameters, which will be stored
-into separate temporary character string variables @whispervar0$ to @whispervar9$.
+into separate temporary character string variables `@whispervar0$` to `@whispervar9$`.
 See 'doc/whisper_sys.txt' for further documentation.
 
 Only the special labels which are not associated with any script command are
@@ -1019,7 +1018,7 @@ manner, but they are described with their associated commands.
 **OnNaviGenerate**:
 
 This special label triggers when running the map-server-generator binary. It is used
-in combination with 'naviregisterwarp' to register extra warps for an npc.
+in combination with '`naviregisterwarp`' to register extra warps for an npc.
 
 ---------------------------------------
 
@@ -1028,7 +1027,7 @@ in combination with 'naviregisterwarp' to register extra warps for an npc.
 These special labels are used with Mob scripts mostly, and script commands
 that requires you to point/link a command to a mob or another NPC, giving a label
 name to start from. The label name can be any of your liking, but must be
-started with "On".
+started with "`On`".
 
 #### Example:
 
@@ -1050,11 +1049,10 @@ Each time you kill one, that announce will appear in blue to everyone.
 
 #### "Global" labels
 
-There's a catch with labels and **doevent**. If you call a label (using doevent)
-and called label is in NPC that has trigger area, that label must end with
-"Global" to work globally (i.e. if RID is outside of the trigger area, which
+There's a <b><i>catch</i></b> with `labels` and `doevent`. If you call a label (using doevent) and called label is in NPC that has trigger area, that label must end with
+"`Global`" to work globally (i.e. if RID is outside of the trigger area, which
 usually happens since otherwise there would be no point calling the label with
-doevent, because OnTouch would do the job). For further reference look for
+`doevent`, because `OnTouch` would do the job). For further reference look for
 npc_event in npc.cpp.
 
 ## Scripting commands and functions
@@ -1067,7 +1065,7 @@ but is not advised, as this can lead to some hard to track errors. Calling
 functions as if they were commands will mess up the stack, so 'return' command
 will not return correctly after this happens in a particular script.
 
-All commands must end with a '**;**'.
+***All commands must end with a '`;`'.***
 
 -------------------------
 
@@ -1097,12 +1095,12 @@ From here on, we will have the commands sorted as follow:
 # 1.- Basic commands.
 
 
-\*mes "**\<string\>**"{,"**\<string\>**"{,...}};
+\***mes** "**\<string\>**"{,"**\<string\>**"{,...}};
 
 This command will display a box on the screen for the invoking character, if no
 such box is displayed already, and will print the string specified into that
-box. There is normally no 'close' or 'next' button on this box, unless you
-create one with 'close' or 'next', and while it's open the player can't do much
+box. There is normally no '`close`' or '`next`' button on this box, unless you
+create one with '`close`' or '`next`', and while it's open the player can't do much
 else, so it's important to create a button later. If the string is empty, it
 will show up as an empty line.
 
@@ -1114,9 +1112,12 @@ mes "Text that will appear in the box";
 Colors
 ------
 Inside the string you may put color codes, which will alter the color of the
-text printed after them. The color codes are all '**\<R\>****\<G\>****\<B\>**' and contain three
-hexadecimal numbers representing colors as if they were HTML colors - ^FF0000 is
-bright red, ^00FF00 is bright green, ^0000FF is bright blue, ^000000 is black.
+text printed after them. The color codes are all '**\<R\>****\<G\>****\<B\>**' and contain three hexadecimal numbers representing colors as if they were HTML colors;
+- ^FF0000 is bright red
+- ^00FF00 is bright green
+- ^0000FF is bright blue
+- ^000000 is black.
+
 ^FF00FF is a pure magenta, but it's also a color that is considered transparent
 whenever the client is drawing windows on screen, so printing text in that color
 will have kind of a weird effect. Once you've set a text's color to something,
@@ -1136,7 +1137,7 @@ mes "This is ^FF0000 red ^000000 and this is ^00FF00 green, ^000000 so.";
 
 ### Multiple Lines
 
-To display multiple lines of message while only using a single 'mes' command,
+To display multiple lines of message while only using a single '`mes`' command,
 use the script command in the following format:
 
 ```cpp
@@ -1153,7 +1154,7 @@ For clients dated 2011-10-10aRagexe onwards, you can generate navigation links
 using HTML-like labels:
 
 ```cpp
-**\<NAVI\>**Display Name**\<INFO\>**mapname,x,y,0,000,flag**\</INFO\>****\</NAVI\>**
+<NAVI>Display Name<INFO>mapname,x,y,0,000,flag<INFO><NAVI>
 ```
 
 
@@ -1164,15 +1165,15 @@ The "flag" parameter can be:
 | 0          | Do not open Navigation Window (default). |
 | 1          | Open Navigation Window. |
 
-The example below will make the [Tool Shop] text clickable and begin navigation
-to alberta (98,154) when clicked.
+The example below will make the `[Tool Shop]` text clickable and begin navigation
+to `alberta (98,154)` when clicked.
 
 ```cpp
 mes "Have you checked out the <NAVI>[ToolShop]<INFO>alberta,98,154,0,000,0<INFO><NAVI>?";
 ```
 
 
-See also 'navigateto', which can be used for certain NPC events.
+See also '`navigateto`', which can be used for certain NPC events.
 
 Items
 -----
@@ -1190,11 +1191,11 @@ In 2015 the tag name was changed to **\<ITEM\>** resulting in the following synt
 
 	<ITEM>Display Name<INFO>Item ID<INFO><ITEM>
 
-We therefore created script command "mesitemlink" that allows you to create the correct syntax
+We therefore created script command "`mesitemlink`" that allows you to create the correct syntax
 depending on your configured packet version. We recommend that you use this script command
-instead of hardcoding the HTML-like tags. For more details see the documentation for "mesitemlink".
+instead of hardcoding the HTML-like tags. For more details see the documentation for "`mesitemlink`".
 
-The following sample will open a preview window for Red Potion:
+The following sample will open a preview window for `Red Potion`:
 
 ```cpp
 mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501<INFO><ITEMLINK>?";
@@ -1224,7 +1225,7 @@ You can link to a quest:
 
 Message
 -------
-You can show a message from the msgstringtable:
+You can show a message from the `msgstringtable`:
 
 ```cpp
 <MSG>1<MSG>
@@ -1242,10 +1243,10 @@ You can show a tip box:
 
 #### \***next**;
 
-This command will display a 'next' button in the message window for the
+This command will display a '`next`' button in the message window for the
 invoking character. Clicking on it will cause the window to clear and display
 a new one. Used to segment NPC-talking, next is often used in combination with
-'mes' and 'close'.
+'`mes`' and '`close`'.
 
 If no window is currently on screen, one will be created, but once the invoking
 character clicks on it, a warning is thrown on the server console and the script
@@ -1283,9 +1284,9 @@ close;
 
 ---------------------------------------
 
-#### \***close**;
+\***close**;
 
-This command will create a 'close' button in the message window for the invoking
+This command will create a '`close`' button in the message window for the invoking
 character. If no window is currently on screen, the script execution will end. This is one
 of the ways to end a speech from an NPC. Once the button is clicked, the NPC
 script execution will end, and the message box will disappear.
@@ -1301,13 +1302,13 @@ mes "This command will not run at all, since the script has ended.";
 
 ---------------------------------------
 
-#### \***close2**;
+\***close2**;
 
-This command will create a 'close' button in the message window for the invoking
+This command will create a '`close`' button in the message window for the invoking
 character. WARNING: If no window is currently on screen, the script execution will halt
-indefinitely! See 'close'. There is one important difference, though - even though
+indefinitely! See '`close`'. There is one important difference, though - even though
 the message box will have closed, the script execution will not stop, and commands after
-'close2' will still run, meaning an 'end' has to be used to stop the script, unless you
+'`close2`' will still run, meaning an '`end`' has to be used to stop the script, unless you
 make it stop in some other manner.
 
 ```cpp
@@ -1319,21 +1320,21 @@ end;
 ```
 
 
-Don't expect things to run smoothly if you don't make your scripts 'end'.
+Don't expect things to run smoothly if you don't make your scripts '`end`'.
 
 ---------------------------------------
 
-#### \***close3**;
+\***close3**;
 
-The command is similar to 'close' but the cutin (if any) is cleared after closing.
+The command is similar to '`close`' but the cutin (if any) is cleared after closing.
 
 ---------------------------------------
 
-#### \***end**;
+\***end**;
 
 This command will stop the execution for this particular script. The two
 versions are perfectly equivalent. It is the normal way to end a script which
-does not use 'mes'.
+does not use '`mes`'.
 
 ```cpp
 if (BaseLevel **\<= 10)
@@ -1348,14 +1349,14 @@ end;
 ```
 
 
-Without the use of 'end' it would travel through the labels until the end of the
+Without the use of '`end`' it would travel through the labels until the end of the
 script. If you were lvl 10 or less, you would see all the speech lines, the use
-of 'end' stops this, and ends the script.
+of '`end`' stops this, and ends the script.
 
 ---------------------------------------
 
-\*set **\<variable\>**,**\<expression\>**{,**\<char_id\>**};\
-\*set(**\<variable\>**,**\<expression\>**{,**\<char id\>**})
+\***set** **\<variable\>**,**\<expression\>**{,**\<char_id\>**};\
+\***set**(**\<variable\>**,**\<expression\>**{,**\<char id\>**})
 
 This command will set a variable to the value that the expression results in.
 Variables may either be set through this command or directly, much like any
@@ -1382,13 +1383,16 @@ Returns the variable reference (since trunk r12870).
 
 ---------------------------------------
 
-#### \***setd** "**\<variable name\>**",**\<value\>**{,**\<char_id\>**};
+\***setd** "**\<variable name\>**",**\<value\>**{,**\<char_id\>**};
 
 Works almost identically as set, except the variable name is identified as a string
 and can thus be constructed dynamically.
 
 This command is equivalent to:
-	set getd("variable name"),**\<value\>**;
+```cpp
+set getd("variable name"),**\<value\>**;
+```
+
 
 #### Examples:
 
@@ -1402,16 +1406,18 @@ mes .@Poporing123$; // Displays "Poporing is cool".
 
 
 > NOTE:
-> **'char_id'** only works for non-server variables.
-> Player with Character ID **'char_id'** must be online.
+>
+> '`char_id`' only works for non-server variables.
+>
+> Player with Character ID '`char_id`' must be online.
 
 
 ---------------------------------------
 
-#### \***getd**("**\<variable name\>**")
+\***getd**("**\<variable name\>**")
 
 Returns a reference to a variable, the name can be constructed dynamically.
-Refer to 'setd' for usage.
+Refer to '`setd`' for usage.
 
 This can also be used to set an array dynamically:
 ```cpp
@@ -1432,7 +1438,7 @@ set .@i, getd("$" + "pikachu");
 \***getvariableofnpc**(**\<variable\>**,"**\<npc name\>**")
 
 Returns a reference to a NPC variable (. prefix) from the target NPC.
-This can only be used to get . variables.
+This can only be used to get '`.`' variables.
 
 #### Examples:
 
@@ -1449,12 +1455,12 @@ This can only be used to get . variables.
 
 
 > Note: even though function objects can have .variables,
-> **getvariableofnpc** will not work on them.
+> `getvariableofnpc` will not work on them.
 
 
 ---------------------------------------
 
-#### \***getvar** **\<variable\>**,**\<char_id\>**;
+\***getvar** **\<variable\>**,**\<char_id\>**;
 
 Get variable value from the specified player. Only player/account variables
 are allowed to be used (temporary character variable "@", permanent
@@ -1462,10 +1468,10 @@ character "", permanent local account "#", and permanent global account "##").
 
 ---------------------------------------
 
-#### \***goto** **\<label\>**;
+\***goto** **\<label\>**;
 
 This command will make the script jump to a label, usually used in conjunction
-with other command, such as "if", but often used on its own.
+with other command, such as "`if`", but often used on its own.
 
 ```cpp
 ...
@@ -1483,23 +1489,23 @@ Label:
 
 ---------------------------------------
 
-#### \***menu** "**\<option_text\>**",**\<target_label\>**{,"**\<option_text\>**",**\<target_label\>**,...};
+\***menu** "**\<option_text\>**",**\<target_label\>**{,"**\<option_text\>**",**\<target_label\>**,...};
 
-This command will create a selectable menu for the invoking character. Only one
+This command will create a `selectable menu` for the invoking character. Only one
 menu can be on screen at the same time.
 
 Depending on what the player picks from the menu, the script execution will
 continue from the corresponding label. (it's string-label pairs, not label-
 string)
 
-Options can be grouped together, separated by the character ':'.
+Options can be grouped together, separated by the character '`:`'.
 
 ```cpp
 menu "A:B",L_Wrong,"C",L_Right;
 ```
 
 
-It also sets a special temporary character variable @menu, which contains the
+It also sets a special temporary character variable `@menu`, which contains the
 number of option the player picked. (Numbering of options starts at 1.)
 This number is consistent with empty options and grouped options.
 
@@ -1520,7 +1526,7 @@ L_Right:
 ```
 
 
-If a label is '-', the script execution will continue right after the menu
+If a label is '`-`', the script execution will continue right after the menu
 command if that option is selected, this can be used to save you time, and
 optimize big scripts.
 
@@ -1583,10 +1589,10 @@ for( .@i = 0; .@i < getarraysize(.@possiblemenuitems$); .@i++ )
 ```
 
 
-This will create you an array .@menulist$ which contains the text of all items
+This will create you an array `.@menulist$` which contains the text of all items
 that should actually go into the menu based on your condition, and an array
-.@menureference, which contains their numbers in the list of possible menu items.
-(Remember, arrays start with 0.) There's less of them than the possible menu
+`.@menureference`, which contains their numbers in the list of possible menu items.
+(*Remember, arrays start with `0`*.) There's less of them than the possible menu
 items you've defined, but the menu command can handle the empty lines - only if
 they are last in the list, and if it's made this way, they are. Now comes a
 dirty trick:
@@ -1604,9 +1610,10 @@ continues execution right after the menu command. (And it's a good thing it
 doesn't, cause you can only explicitly define labels to jump to, and how do you
 know which ones to define if you don't know beforehand which options will end up
 where in your menu?)
-But how do you figure out which option the user picked? Enter the @menu.
 
-@menu contains the number of option that the user selected from the list,
+But how do you figure out which option the user picked? Enter the `@menu`.
+
+`@menu` contains the number of option that the user selected from the list,
 starting with 1 for the first option. You know now which option the user picked
 and which number in your real list of possible menu items it translated to:
 
@@ -1615,25 +1622,27 @@ mes "You selected " + .@possiblemenuitems$[.@menureference[@menu-1]] + "!";
 ```
 
 
-@menu is the number of option the user picked.
-@menu-1 is the array index for the list of actually used menu items that we
+`@menu` is the number of option the user picked.
+
+`@menu-1` is the array index for the list of actually used menu items that we
 made.
-.@menureference[@menu-1] is the number of the item in the array of possible menu
+
+`.@menureference[@menu-1]` is the number of the item in the array of possible menu
 items that we've saved just for this purpose.
 
-And .@possiblemenuitems$[.@menureference[@menu-1]] is the string that we used to
+And `.@possiblemenuitems$[.@menureference[@menu-1]]` is the string that we used to
 display the menu line the user picked. (Yes, it's a handful, but it works.)
 
-You can set up a bunch of 'if (.@menureference[@menu-1] == X) goto Y' statements to
+You can set up a bunch of '`if (.@menureference[@menu-1] == X) goto Y`' statements to
 route your execution based on the line selected and still generate a different
 menu every time, which is handy when you want to, for example, make users select
 items in any specific order before proceeding, or make a randomly shuffled menu.
 
 Kafra code bundled with the standard distribution uses a similar array-based
-menu technique for teleport lists, but it's much simpler and doesn't use @menu,
+menu technique for teleport lists, but it's much simpler and doesn't use `@menu`,
 probably since that wasn't documented anywhere.
 
-See also 'select', which is probably better in this particular case. Instead of
+See also '`select`', which is probably better in this particular case. Instead of
 menu, you could use 'select' like this:
 
 ```cpp
@@ -1646,13 +1655,12 @@ perfectly equivalent.
 
 ---------------------------------------
 
-#### \***select**("**\<option\>**"{,"**\<option\>**",...})
-#### \***prompt**("**\<option\>**"{,"**\<option\>**",...})
+\***select**("**\<option\>**"{,"**\<option\>**",...})
+\***prompt**("**\<option\>**"{,"**\<option\>**",...})
 
-This function is a <mark>handy replacement</mark> for 'menu' for some specific cases where
-you don't want a complex label structure - like, for example, asking simple yes-
-no questions. It will return the number of menu option picked, starting with 1.
-Like 'menu', it will also set the variable @menu to contain the option the user
+This function is a <mark>handy replacement</mark> for '`menu`' for some specific cases where
+you don't want a complex label structure - like, for example, asking simple yes-no questions. It will return the number of menu option picked, starting with 1.
+Like '`menu`', it will also set the variable @menu to contain the option the user
 picked.
 
 ```cpp
@@ -1661,19 +1669,19 @@ if (select("Yes:No" ) == 1)
 ```
 
 
-And like 'menu', the selected option is consistent with grouped options
+And like '`menu`', the selected option is consistent with grouped options
 and empty options.
 
-'prompt' works almost the same as select, except that when a character clicks
+'`prompt`' works almost the same as select, except that when a character clicks
 the Cancel button, this function will return 255 instead.
 
 ---------------------------------------
 
-#### \***input**(**\<variable\>**{,**\<min\>**{,**\<max\>**}})
+\***input**(**\<variable\>**{,**\<min\>**{,**\<max\>**}})
 
 This command will make an input box pop up on the client connected to the
 invoking character, to allow entering of a number or a string. This has many
-uses, one example would be a guessing game, also making use of the 'rand'
+uses, one example would be a guessing game, also making use of the '`rand`'
 function:
 
 ```cpp
@@ -1720,22 +1728,25 @@ This is done to prevent exploits in badly written scripts, which would
 let people, for example, put negative amounts of Zeny into a bank script and
 receive free Zeny as a result.
 
-Since trunk **r12192** the command has two optional arguments and a return value.
+Since trunk `r12192` the command has two optional arguments and a return value.
 
-The default value of 'min' and 'max' can be set with 'input_min_value' and
-'input_max_value' in script_athena.conf.\
-For numeric inputs the value is capped to the range [min,max].\
-Returns 1 if the value was higher than 'max', -1 if lower than 'min' and 0 otherwise.
+The default value of 'min' and 'max' can be set with '`input_min_value`' and
+'`input_max_value`' in script_athena.conf.
+
+For numeric inputs the value is capped to the range [min,max].
+
+Returns `1` if the value was higher than 'max', `-1` if lower than 'min' and `0` otherwise.
+
 For string inputs it returns 1 if the string was longer than 'max', -1 is
 shorter than 'min' and 0 otherwise.
 
 ---------------------------------------
 
-#### \***callfunc** "**\<function\>**"{,**\<argument\>**,...**\<argument\>**};
-#### \***callfunc**("**\<function\>**"{,**\<argument\>**,...**\<argument\>**})
+\***callfunc** "**\<function\>**"{,**\<argument\>**,...**\<argument\>**};
+\***callfunc**("**\<function\>**"{,**\<argument\>**,...**\<argument\>**})
 
 This command lets you call up a function NPC. A function NPC can be called from
-any script on any map server. Using the 'return' command it will come back to
+any script on any map server. Using the '`return`' command it will come back to
 the place that called it.
 
 ```cpp
@@ -1757,7 +1768,7 @@ function%TAB%script%TAB%funcNPC%TAB%{
 
 
 You can pass arguments to your function - values telling it what exactly to do -
-which will be available there with getarg() (see 'getarg')
+which will be available there with `getarg()` (see 'getarg')
 Notice that returning is not mandatory, you can end execution right there.
 
 If you want to return a real value from inside your function NPC, it is better
@@ -1784,57 +1795,72 @@ function%TAB%script%TAB%OddFunc%TAB%{
 Alternately, as of rAthena revision `15979` and `15981`, user-defined functions
 may be called directly without the use of the 'callfunc' script command.
 
-	function**\<tab\>**script**\<tab\>**SayHello**\<tab\>**{
-		mes "Hello " + getarg(0);
-		return 0;
-	}
+```cpp
+function**\<tab\>**script**\<tab\>**SayHello**\<tab\>**{
+   mes "Hello " + getarg(0);
+   return 0;
+}
 
-	place,50,50,6**\<tab\>**script**\<tab\>**Man**\<tab\>**115,{
-		mes "[Man]";
-		SayHello strcharinfo(0);
-		close;
-	}
+place,50,50,6**\<tab\>**script**\<tab\>**Man**\<tab\>**115,{
+   mes "[Man]";
+   SayHello strcharinfo(0);
+   close;
+}
+```
 
-Note:
 
- !! A user-defined function must be declared /before/ a script attempts to
- !! call it. That is to say, any functions should be placed above scripts or NPCs
- !! (or loaded in a separate file first) before attempting to call them directly.
+> Note:
+> 
+> A user-defined function must be declared /before/ a script attempts to
+> call it. 
+> That is to say, any functions should be placed above scripts or NPCs
+> (or loaded in a separate file first) before attempting to call them directly.
+
 
 ---------------------------------------
 
-\*callsub **\<label\>**{,**\<argument\>**,...**\<argument\>**};
-\*callsub(**\<label\>**{,**\<argument\>**,...**\<argument\>**})
+\***callsub** **\<label\>**{,**\<argument\>**,...**\<argument\>**};
+\***callsub**(**\<label\>**{,**\<argument\>**,...**\<argument\>**})
 
 This command will go to a specified label within the current script (do NOT use
-quotes around it) coming in as if it were a 'callfunc' call, and pass it
-arguments given, if any, which can be recovered there with 'getarg'. When done
+quotes around it) coming in as if it were a '`callfunc`' call, and pass it
+arguments given, if any, which can be recovered there with '`getarg`'. When done
 there, you should use the 'return' command to go back to the point from where
 this label was called. This is used when there is a specific thing the script
 will do over and over, this lets you use the same bit of code as many times as
 you like, to save space and time, without creating extra NPC objects which are
-needed with 'callfunc'. A label is not callable in this manner from another
+needed with '`callfunc`'. A label is not callable in this manner from another
 script.
 
 Example 1: callsub for checking (if checks pass, return to script)
-	callsub S_CheckFull, "guild_vs2",50;
-	switch( rand(4) ) {
-		case 0:	warp "guild_vs2",9,50;	end;
-		case 1:	warp "guild_vs2",49,90;	end;
-		case 2:	warp "guild_vs2",90,50;	end;
-		case 3:	warp "guild_vs2",49,9;	end;
-	}
+```cpp
+callsub S_CheckFull, "guild_vs2",50;
+switch( rand(4) ) {
+   case 0:   warp "guild_vs2",9,50;   end;
+   case 1:   warp "guild_vs2",49,90;   end;
+   case 2:   warp "guild_vs2",90,50;   end;
+   case 3:   warp "guild_vs2",49,9;   end;
+}
+```
 
+
+```cpp
 ...
+```
 
+
+```cpp
 S_CheckFull:
-	if (getmapusers(getarg(0)) \>**= getarg(1)) {
+	if (getmapusers(getarg(0)) >= getarg(1)) {
 		mes "I'm sorry, this arena is full.  Please try again later.";
 		close;
 	}
 	return;
+```
+
 
 Example 2: callsub used repeatedly, with different arguments
+```cpp
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
 	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
@@ -1851,109 +1877,124 @@ S_DunWarp:
 // getarg(0) = "map name"
 // getarg(1) = x
 // getarg(2) = y
-	if (Zeny \>**= 100) {
+	if (Zeny >= 100) {
 		Zeny -= 100;
 		warp getarg(0),getarg(1),getarg(2);
 	} else {
 		mes "Dungeon warp costs 100 Zeny.";
 	}
 	close;
+```
+
 
 ---------------------------------------
 
-\*getarg(**\<index\>**{,**\<default_value\>**})
+\***getarg**(**\<index\>**{,**\<default_value\>**})
 
-This function is used when you use the 'callsub' or 'callfunc' commands. In the
+This function is used when you use the '`callsub`' or '`callfunc`' commands. In the
 call you can specify variables that will make that call different from another
 one. This function will return an argument the function or subroutine was
 called with, and is the normal way to get them.
+
 This is another thing that can let you use the same code more than once.
 
 Argument numbering starts with 0, i.e. the first argument you gave is number 0.
 If no such argument was given, a zero is returned.
 
-	place,50,50,6**\%TAB\%**script**\%TAB\%**Woman1**\%TAB\%**115,{
-		mes "[Woman]";
-		mes "Let's see if you win...";
-		callfunc "funcNPC",2;
-		mes "Well done, you have won!";
-		close;
-	}
+```cpp
+place,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
+   mes "[Woman]";
+   mes "Let's see if you win...";
+   callfunc "funcNPC",2;
+   mes "Well done, you have won!";
+   close;
+}
 
-	place,52,50,6**\%TAB\%**script**\%TAB\%**Woman2**\%TAB\%**115,{
-		mes "[Woman]";
-		mes "Let's see if you win...";
-		callfunc "funcNPC",5;
-		mes "Well done, you have won!";
-		close;
-	}
+place,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
+   mes "[Woman]";
+   mes "Let's see if you win...";
+   callfunc "funcNPC",5;
+   mes "Well done, you have won!";
+   close;
+}
 
-	function**\%TAB\%**script**\%TAB\%**funcNPC**\%TAB\%**{
-		.@win = rand(getarg(0));
-		if (.@win == 0) return;
-		mes "Sorry, you lost.";
-		close;
-	|
+function%TAB%script%TAB%funcNPC%TAB%{
+   .@win = rand(getarg(0));
+   if (.@win == 0) return;
+   mes "Sorry, you lost.";
+   close;
+|
+```
 
-"woman1" NPC object calls the funcNPC. The argument it gives in this call is
-stated as 2, so when the random number is generated by the 'rand' function, it
-can only be 0 or 1. Whereas "woman2" gives 5 as the argument number 0 when
+
+"`woman1`" NPC object calls the funcNPC. The argument it gives in this call is
+stated as `2`, so when the random number is generated by the '`rand`' function, it
+can only be `0` or `1`. Whereas "`woman2`" gives 5 as the argument number 0 when
 calling the function, so the random number could be 0, 1, 2, 3 or 4, this makes
 "woman2" less likely to say the player won.
 
 You can pass multiple arguments in a function call:
 
-	callfunc "funcNPC",5,4,3;
+```cpp
+callfunc "funcNPC",5,4,3;
+```
 
-getarg(0) would be 5, getarg(1) would be 4 and getarg(2) would be 3.
 
-'getarg' has an optional argument since trunk r10773 and stable r10958.
+`getarg(0)` would be `5`, `getarg(1)` would be `4` and `getarg(2)` would be `3`.
+
+'`getarg`' has an optional argument since trunk `r10773` and stable `r10958`.
 If the target argument exists, it is returned.
 Otherwise, if **\<default_value\>** is present it is returned instead,
 if not the script terminates immediately.
 
-In the previous example getarg(2,-1) would be 3 and getarg(3,-1) would be -1.
+In the previous example `getarg(2,-1)` would be `3` and `getarg(3,-1`) would be `-1`.
 
 ---------------------------------------
 
-\*getargcount()
+\***getargcount**()
 
-This function is used when you use the 'callsub' or 'callfunc' commands. In the
+This function is used when you use the '`callsub`' or '`callfunc`' commands. In the
 call you can specify arguments. This function will return the number of arguments
 provided.
 
 #Example:
-	callfunc "funcNPC",5,4,3;
-	...
-	function**\%TAB\%**script**\%TAB\%**funcNPC**\%TAB\%**{
-		.@count = getargcount(); // 3
-		...
-	}
+```cpp
+callfunc "funcNPC",5,4,3;
+...
+function%TAB\%script%TAB%funcNPC%TAB%{
+   .@count = getargcount(); // 3
+   ...
+}
+```
+
 
 ---------------------------------------
 
-\*return {**\<value\>**};
+\***return** {**\<value\>**};
 
 This command causes the script execution to leave previously called function
-with callfunc or script with callsub and return to the location, where the call
+with `callfunc` or script with `callsub` and return to the location, where the call
 originated from. Optionally a return value can be supplied, when the call was
 done using the function form.
 
 Using this command outside of functions or scripts referenced by callsub will
 result in error and termination of the script.
 
-	callfunc "**\<your function\>**";// when nothing is returned
-	set **\<variable\>**,callfunc("**\<your function\>**");// when a value is being returned
+```cpp
+callfunc "<your function>";// when nothing is returned
+set <variable>,callfunc("<your function>");// when a value is being returned
+```
+
 
 ---------------------------------------
 
-\*function **\<function name\>**;
-***\<function name\>**{(**\<argument\>**,...**\<argument\>**)};
-\*function **\<function name\>** {
-**\<code\>**
-}
+\***function\<function name\>;
+\<function name\>{(\<argument\>,...\<argument\>)};\
+\*function \<function name\> {
+\<code\>
+}**
 
-This works like callfunc, and is used for cleaner and faster scripting. The function
+This works like `callfunc`, and is used for cleaner and faster scripting. The function
 must be defined and used within a script, and works like a label with arguments.
 Note that the name may only contain alphanumeric characters and underscore.
 
@@ -1967,8 +2008,9 @@ Usage:
     3. Define the function within the script.
 	**\<function name\>** {**\<code\>**}
 
-#Example:
+#### Example:
 
+```cpp
 prontera,154,189,4	script	Item Seller	767,{
 	/* Function declaration */
 	function SF_Selling;
@@ -1993,9 +2035,12 @@ prontera,154,189,4	script	Item Seller	767,{
 		return;
 	}
 }
+```
+
 
 Example with parameters and return value:
 
+```cpp
 prontera,150,150,0	script	TestNPC	123,{
 	/* Function declaration */
 	function MyAdd;
@@ -2013,128 +2058,162 @@ prontera,150,150,0	script	TestNPC	123,{
 		return getarg(0)+getarg(1);
 	}
 }
+```
+
 
 
 ---------------------------------------
 
-\*is_function("**\<function name\>**")
+\***is_function**("**\<function name\>**")
 
 This command checks whether a function exists.
-It returns 1 if function is found, or 0 if it isn't.
+It returns `1` if function is found, or `0` if it isn't.
 
-#Example:
+#### Example:
+```cpp
+function	script	try	{
+	dothat;
+}
 
-	function	script	try	{
-		dothat;
-	}
+function   script   try   {
+   dothat;
+}
 
-	-	script	test	-1,{
-		.@try = is_function("try"); // 1
-		.@not = is_function("not"); // 0
-	}
+-   script   test   -1,{
+   .@try = is_function("try"); // 1
+   .@not = is_function("not"); // 0
+}
+
+-   script  test    -1,{
+    .@try = is_function("try"); // 1
+    .@not = is_function("not"); // 0
+}
+```
 
 ---------------------------------------
 
-\*if (**\<condition\>**) **\<statement\>**;
+\***if** (**\<condition\>**) **\<statement\>**;
 
 This is the basic conditional statement command, and just about the only one
 available in this scripting language.
 
 The condition can be any expression. All expressions resulting in a non-zero
-value will be considered True, including negative values. All expressions
-resulting in a zero are false.
+value will be considered `True`, including negative values. All expressions
+resulting in a zero are `false`.
 
 If the expression results in True, the statement will be executed. If it isn't
 true, nothing happens and we move on to the next line of the script.
 
-    if (1)  mes "This will always print.";
-    if (0)  mes "And this will never print.";
-    if (5)  mes "This will also always print.";
-    if (-1) mes "Funny as it is, this will also print just fine.";
+```cpp
+if (1)  mes "This will always print.";
+if (0)  mes "And this will never print.";
+if (5)  mes "This will also always print.";
+if (-1) mes "Funny as it is, this will also print just fine.";
+```
+
 
 For more information on conditional operators see the operators section above.
 Anything that is returned by a function can be used in a condition check without
 bothering to store it in a specific variable:
 
-    if (strcharinfo(0) == "Daniel Jackson") mes "It is true, you are Daniel!";
+```cpp
+if (strcharinfo(0) == "Daniel Jackson") mes "It is true, you are Daniel!";
+```
+
 
 More examples of using the 'if' command in the real world:
 
 Example 1:
 
-	.@answer = 1;
-	input .@input;
-	if (.@input == .@answer)
-		close;
-	mes "Sorry, your answer is incorrect.";
-	close;
+```cpp
+.@answer = 1;
+input .@input;
+if (.@input == .@answer)
+   close;
+mes "Sorry, your answer is incorrect.";
+close;
+```
+
 
 Example 2:
 
-	.@answer = 1;
-	input .@input;
-	if (.@input != .@answer)
-		mes "Sorry, your answer is incorrect.";
-	close;
+```cpp
+.@answer = 1;
+input .@input;
+if (.@input != .@answer)
+   mes "Sorry, your answer is incorrect.";
+close;
+```
+
 
 Notice that examples 1 and 2 have the same effect.
 
 Example 3:
 
-	.@count++;
-	mes "[Forgetful Man]";
-	if (.@count == 1) mes "This is the first time you have talked to me.";
-	if (.@count == 2) mes "This is the second time you have talked to me.";
-	if (.@count == 3) mes "This is the third time you have talked to me.";
-	if (.@count == 4) {
-		mes "This is the fourth time you have talked to me.";
-		mes "I think I am getting amnesia, I have forgotten about you...";
-		.@count = 0;
-	}
-	close;
+```cpp
+.@count++;
+mes "[Forgetful Man]";
+if (.@count == 1) mes "This is the first time you have talked to me.";
+if (.@count == 2) mes "This is the second time you have talked to me.";
+if (.@count == 3) mes "This is the third time you have talked to me.";
+if (.@count == 4) {
+   mes "This is the fourth time you have talked to me.";
+   mes "I think I am getting amnesia, I have forgotten about you...";
+   .@count = 0;
+}
+close;
+```
+
 
 Example 4:
 
-	mes "[Quest Person]";
-	if (countitem(512) **\< 1) {  // 512 is the item ID for Apple, found in db/item_db.yml
-		mes "Can you please bring me an apple?";
-		close;
-	}
-	mes "Oh, you brought an Apple!";
-	mes "I didn't want it, I just wanted to see one.";
-	close;
+```cpp
+mes "[Quest Person]";
+if (countitem(512) **\< 1) {  // 512 is the item ID for Apple, found in db/item_db.yml
+   mes "Can you please bring me an apple?";
+   close;
+}
+mes "Oh, you brought an Apple!";
+mes "I didn't want it, I just wanted to see one.";
+close;
+```
+
 
 Example 5:
 
-	mes "[Person Checker]";
-	if ($@name$ == "") {  // global variable not yet set
-		mes "Please tell me someones name";
-		next;
-		input $@name$;
-		$@name2$ = strcharinfo(0);
-		mes "[Person Checker]";
-		mes "Thank you.";
-		close;
-	}
-	if ($@name$ == strcharinfo(0)) {  // player name matches $@name$
-		mes "You are the person that " + $@name2$ + " just mentioned.";
-		mes "Nice to meet you!";
+```cpp
+mes "[Person Checker]";
+if ($@name$ == "") {  // global variable not yet set
+   mes "Please tell me someones name";
+   next;
+   input $@name$;
+   $@name2$ = strcharinfo(0);
+   mes "[Person Checker]";
+   mes "Thank you.";
+   close;
+}
+if ($@name$ == strcharinfo(0)) {  // player name matches $@name$
+   mes "You are the person that " + $@name2$ + " just mentioned.";
+   mes "Nice to meet you!";
 
-		// reset the global variables
-		$@name$ = "";
-		$@name2$ = "";
+   // reset the global variables
+   $@name$ = "";
+   $@name2$ = "";
 
-		close;
-	}
-	mes "You are not the person that " + $name2$ + " mentioned.";
-	close;
+   close;
+}
+mes "You are not the person that " + $name2$ + " mentioned.";
+close;
+```
 
-See 'strcharinfo' for an explanation of what this function does.
+
+See '`strcharinfo`' for an explanation of what this function does.
 
 Example 6: Using complex conditions.
 
-	mes "[Multiple Checks]";
-	if (@queststarted == 1 && countitem(512) \>**= 5) {
+```cpp
+mes "[Multiple Checks]";
+	if (@queststarted == 1 && countitem(512) >= 5) {
 		mes "Well done, you have started the quest and brought me 5 Apples.";
 		@queststarted = 0;
 		delitem 512,5;
@@ -2146,54 +2225,62 @@ Example 6: Using complex conditions.
 
 The script engine also supports nested 'if' statements:
 
-	if (**\<condition\>**)
+	if (<condition>)
 		dothis;
 	else
 		dothat;
+```
 
-If the condition isn't met, it'll do the action following the 'else'.
+
+If the condition isn't met, it'll do the action following the '`else`'.
 We can also group several actions depending on a condition:
 
-	if (**\<condition\>**) {
-		dothis1;
-		dothis2;
-	} else {
-		dothat1;
-		dothat2;
-		dothat3;
-	}
+```cpp
+if (<condition>) {
+   dothis1;
+   dothis2;
+} else {
+   dothat1;
+   dothat2;
+   dothat3;
+}
+```
+
 
 Remember that if you plan to do several actions upon the condition being false, and
 you forget to use the curly braces (the { } ), the second action will be executed regardless
 the output of the condition, unless of course, you stop the execution of the script if the
-condition is true (that is, in the first grouping using a return; , and end; or a close; )
+condition is true (that is, in the first grouping using a `return`; , and `end`; or a `close`; )
 
 Also, you can have multiple conditions nested or chained.
 
-	if (**\<condition 1\>**)
-		dothis;
-	else if (**\<condition 2\>**) {
-		dothat;
-		end;
-	} else
-		dothis;
+```cpp
+if (<condition 1>)
+   dothis;
+else if (<condition 2>) {
+   dothat;
+   end;
+} else
+   dothis;
+```
+
 
 ---------------------------------------
 
-\*jump_zero (**\<condition\>**),**\<label\>**;
+\***jump_zero** (**\<condition\>**),**\<label\>**;
 
-This command works kinda like an 'if'+'goto' combination in one go. (See 'if').
+This command works kinda like an '`if`'+'`goto`' combination in one go. (See 'if').
 If the condition is false (equal to zero) this command will immediately jump to
-the specified label like in 'goto'. While 'if' is more generally useful, for
+the specified label like in '`goto`'. While 'if' is more generally useful, for
 some cases this could be an optimization.
 
 The main reason for this command is that other control statements, like
-'switch', 'for' or 'while', are disassembled into simple expressions together
+'`switch`', '`for`' or '`while`', are disassembled into simple expressions together
 with this command when a script is parsed.
 
 ---------------------------------------
 
-\*switch (expression);
+\***switch** (expression);
 
 The switch statement is similar to a series of if statements on the same expression.
 In many occasions, you may want to compare the same variable (or expression)
@@ -2211,41 +2298,47 @@ go on executing the statements of the following case (fall-through).
 
 Example 1:
 
-	switch(select("Yes:No")) {
-		case 1:
-			mes "You said yes!";
-			break;
-		case 2:
-			mes "Aww, why?";
-			break;
-	}
-	close;
+```cpp
+switch(select("Yes:No")) {
+   case 1:
+      mes "You said yes!";
+      break;
+   case 2:
+      mes "Aww, why?";
+      break;
+}
+close;
+```
+
 
 The example above would work like a menu and would go to the first case if
 the user selects option, otherwise, would go to the second one.
 
 Example 2:
 
-	switch(getgroupid()) {
-		case 1:
-			mes "Wow, you're super!";
-			break;
-		case 2:
-			mes "A helping hand!";
-			break;
-		case 3:
-			mes "10001010010011";
-			break;
-		case 4:
-			mes "Yes, milord?";
-			break;
-		default:
-			mes "Hello there!";
-			break;
-	}
+```cpp
+switch(getgroupid()) {
+   case 1:
+      mes "Wow, you're super!";
+      break;
+   case 2:
+      mes "A helping hand!";
+      break;
+   case 3:
+      mes "10001010010011";
+      break;
+   case 4:
+      mes "Yes, milord?";
+      break;
+   default:
+      mes "Hello there!";
+      break;
+}
+```
 
-The example above would print a message depending on the player's groupid.
-If there is no statement declared for the corresponding groupid, the script
+
+The example above would print a message depending on the `player's groupid`.
+If there is no statement declared for the corresponding `groupid`, the script
 would use the 'default' statement that applies to rest of possible values,
 similar to 'else' in the if-else statement.
 
@@ -2253,7 +2346,7 @@ similar to 'else' in the if-else statement.
 
 \*while (**\<condition\>**) **\<statement\>**;
 
-This is probably the simplest and most frequently used loop structure. The 'while'
+This is probably the simplest and most frequently used loop structure. The '`while`'
 statement can be interpreted as "while **\<condition\>** is true, perform **\<statement\>**".
 It is a pretest loop, meaning the conditional expression is tested before any of the
 statements in the body of the loop are performed. If the condition evaluates to
@@ -2261,40 +2354,52 @@ false, the statement(s) in the body of the loop is/are never executed. If the
 condition evaluates to true, the statement(s) are executed, then control transfers
 back to the conditional expression, which is reevaluated and the cycle continues.
 
-Multiple statements can be grouped with { }, curly braces, just like with the 'if' statement.
+Multiple statements can be grouped with `{}`, curly braces, just like with the '`if`' statement.
 
 Example 1:
-	while (switch(select("Yes:No") == 2 ))
-		mes "You picked no.";
-	close;
+```cpp
+while (switch(select("Yes:No") == 2 ))
+   mes "You picked no.";
+close;
+```
+
 
 Example 2: multiple statements
-	while (switch(select("Yes:No") == 2 )) {
-		mes "Why did you pick no?";
-		mes "You should pick yes instead!";
-	}
-	close;
+```cpp
+while (switch(select("Yes:No") == 2 )) {
+   mes "Why did you pick no?";
+   mes "You should pick yes instead!";
+}
+close;
+```
+
 
 Example 3: counter-controlled loop
-	.@i = 1;
-	while (.@i **\<= 5) {
-		mes "This line will print 5 times.";
-		.@i += 1;
-	}
-	close;
+```cpp
+.@i = 1;
+while (.@i <= 5) {
+   mes "This line will print 5 times.";
+   .@i += 1;
+}
+close;
+```
+
 
 Example 4: sentinel-controlled loop
-	mes "Input 0 to stop";
-	input .@num;
-	while (.@num != 0) {
-		mes "You entered " + .@num;
-		input .@num;
-	}
-	close;
+```cpp
+mes "Input 0 to stop";
+input .@num;
+while (.@num != 0) {
+   mes "You entered " + .@num;
+   input .@num;
+}
+close;
+```
+
 
 ---------------------------------------
 
-\*for (**\<variable initialization\>**; **\<condition\>**; **\<variable update\>**) **\<statement\>**;
+\***for** (**\<variable initialization\>**; **\<condition\>**; **\<variable update\>**) **\<statement\>**;
 
 Another pretest looping structure is the 'for' statement. It is considered a
 specialized form of the 'while' statement, and is usually associated with counter-
@@ -2306,142 +2411,178 @@ update statement is executed (this usually involves incrementing a variable).
 Then the condition is reevaluated and the cycle continues.
 
 Example 1:
-	for( .@i = 1; .@i **\<= 5; .@i++ )
-		mes "This line will print 5 times.";
+```cpp
+for( .@i = 1; .@i **\<= 5; .@i++ )
+   mes "This line will print 5 times.";
+```
+
 
 Example 2:
-	mes "This will print the numbers 1 - 5.";
-	for( .@i = 1; .@i **\<= 5; .@i++ )
-		mes "Number: " + .@i;
+```cpp
+mes "This will print the numbers 1 - 5.";
+for( .@i = 1; .@i **\<= 5; .@i++ )
+   mes "Number: " + .@i;
+```
+
 
 ---------------------------------------
 
-\*do { **\<statement\>**; } while (**\<condition\>**);
+\***do** { **\<statement\>**; } while (**\<condition\>**);
 
-The 'do...while' is the only post-test loop structure available in this script
+The '`do...while`' is the only post-test loop structure available in this script
 language. With a post-test, the statements are executed once before the condition
 is tested. When the condition is true, the statement(s) are repeated. When the
 condition is false, control is transferred to the statement following the
-'do...while' loop expression.
+'`do...while`' loop expression.
 
 Example 1: sentinel-controlled loop
-	mes "This menu will keep appearing until you pick Cancel";
-	do {
-		.@menu = select("One:Two:Three:Cancel");
-	} while (.@menu != 4);
+```cpp
+mes "This menu will keep appearing until you pick Cancel";
+do {
+   .@menu = select("One:Two:Three:Cancel");
+} while (.@menu != 4);
+```
+
 
 Example 2: counter-controlled loop
-	mes "This will countdown from 10 to 1.";
-	.@i = 10;
-	do {
-		mes .@i;
-		.@i -= 1;
-	} while (.@i \>** 0);
+```cpp
+mes "This will countdown from 10 to 1.";
+.@i = 10;
+do {
+   mes .@i;
+   .@i -= 1;
+} while (.@i \>** 0);
+```
+
 
 ---------------------------------------
 
-\*freeloop({**\<toggle\>**})
+\***freeloop**({**\<toggle\>**})
 
 Toggling this to enabled (1) allows the script instance to bypass the infinite loop
 protection, allowing your script to loop as much as it may need. Disabling (0) will
 warn you if an infinite loop is detected.
 
-The command will return the state of freeloop for the attached script, even if no
+The command will return the state of `freeloop` for the attached script, even if no
 argument is provided.
 
-#Example:
-	freeloop(1); // enable script to loop freely
+#### Example:
+```cpp
+freeloop(1); // enable script to loop freely
 
-	// be careful with what you do here
-	for ( .@i = 0; .@i **\< .@bigloop; .@i++ ) {
-		dothis;
-		// will sleep the script for 1ms when detect an infinity loop to
-		// let rAthena do what it needs to do (socket, timer, process, etc.)
-	}
+// be careful with what you do here
+for ( .@i = 0; .@i **\< .@bigloop; .@i++ ) {
+   dothis;
+   // will sleep the script for 1ms when detect an infinity loop to
+   // let rAthena do what it needs to do (socket, timer, process, etc.)
+}
 
-	freeloop(0); // disable freeloop
+freeloop(0); // disable freeloop
 
-	for ( .@i = 0; .@i **\< .@bigloop; .@i++ ) {
-		dothis;
-		// throw an infinity loop error
-	}
+for ( .@i = 0; .@i **\< .@bigloop; .@i++ ) {
+   dothis;
+   // throw an infinity loop error
+}
+```
+
 
 ---------------------------------------
 
-\*setarray **\<array name\>**[**\<first value\>**],**\<value\>**{,**\<value\>**...**\<value\>**};
+\***setarray** **\<array name\>**[**\<first value\>**],**\<value\>**{,**\<value\>**...**\<value\>**};
 
 This command will allow you to quickly fill up an array in one go. Check the
 Kafra scripts in the distribution to see this used a lot.
 
-    setarray .@array[0], 100, 200, 300, 400, 500, 600;
+```cpp
+setarray .@array[0], 100, 200, 300, 400, 500, 600;
+```
+
 
 First value is the index of the first element of the array to alter. For
-#Example:
+#### Example:
 
-    setarray .@array[0],200,200,200;
-    setarray .@array[1],300,150;
+```cpp
+setarray .@array[0],200,200,200;
+setarray .@array[1],300,150;
+```
+
 
 will produce:
 
- .@array[0]=200
- .@array[1]=300
- .@array[2]=150
+```cpp
+.@array[0]=200
+.@array[1]=300
+.@array[2]=150
+```
+
 
 ---------------------------------------
 
-\*cleararray **\<array name\>**[**\<first value to alter\>**],**\<value\>**,**\<number of values to set\>**;
+\***cleararray** **\<array name\>**[**\<first value to alter\>**],**\<value\>**,**\<number of values to set\>**;
 
 This command will change many array values at the same time to the same value.
 
-    setarray .@array[0], 100, 200, 300, 400, 500, 600;
-    // This will make all 6 values 0
-    cleararray .@array[0],0,6;
-    // This will make array element 0 change to 245
-    cleararray .@array[0],245,1;
-    // This will make elements 1 and 2 change to 345
-    cleararray .@array[1],345,2;
+```cpp
+setarray .@array[0], 100, 200, 300, 400, 500, 600;
+// This will make all 6 values 0
+cleararray .@array[0],0,6;
+// This will make array element 0 change to 245
+cleararray .@array[0],245,1;
+// This will make elements 1 and 2 change to 345
+cleararray .@array[1],345,2;
+```
 
-See 'setarray'.
+
+See '`setarray`'.
 
 ---------------------------------------
 
-\*copyarray **\<destination array\>**[**\<first value\>**],**\<source array\>**[**\<first value\>**],**\<amount of data to copy\>**;
+\***copyarray** **\<destination array\>**[**\<first value\>**],**\<source array\>**[**\<first value\>**],**\<amount of data to copy\>**;
 
 This command lets you quickly shuffle a lot of data between arrays, which is in
 some cases invaluable.
 
-    setarray .@array[0], 100, 200, 300, 400, 500, 600;
-    // So we have made .@array[]
-    copyarray .@array2[0],@array[2],2;
+```cpp
+setarray .@array[0], 100, 200, 300, 400, 500, 600;
+// So we have made .@array[]
+copyarray .@array2[0],@array[2],2;
 
-    // Now, .@array2[0] will be equal to .@array[2] (300) and
-    // .@array2[1] will be equal to .@array[3].
+// Now, .@array2[0] will be equal to .@array[2] (300) and
+// .@array2[1] will be equal to .@array[3].
+```
+
 
 So using the examples above:
- .@array[0] = 100
- .@array[1] = 200
- .@array[2] = 300
- .@array[3] = 400
- .@array[4] = 500
- .@array[5] = 600
+```cpp
+.@array[0] = 100
+.@array[1] = 200
+.@array[2] = 300
+.@array[3] = 400
+.@array[4] = 500
+.@array[5] = 600
+```
+
 
 New Array:
- .@array2[0] = 300
- .@array2[1] = 400
- .@array2[2] = 0
- .@array2[3] = 0
+```cpp
+.@array2[0] = 300
+.@array2[1] = 400
+.@array2[2] = 0
+.@array2[3] = 0
+```
 
-Notice that .@array[4] and .@array[5] won't be copied to the second array, and it will return a
-0.
+
+Notice that `.@array[4]` and `.@array[5]` won't be copied to the second array, and it will return a `0`.
 
 ---------------------------------------
 
-\*deletearray **\<array name\>**[**\<first value\>**]{,**\<how much to delete\>**};
+\***deletearray** **\<array name\>**[**\<first value\>**]{,**\<how much to delete\>**};
 
 This command will delete a specified number of array elements totally from an
 array, shifting all the elements beyond this towards the beginning.
 
-    // This will delete array element 0, and move all the other array elements
+```cpp
+// This will delete array element 0, and move all the other array elements
     // up one place.
     deletearray .@array[0],1
 
@@ -2449,152 +2590,175 @@ array, shifting all the elements beyond this towards the beginning.
 // place, and move the other elements ups, so there are no gaps.
 
     deletearray .@array[1],3
+```
+
 
 ---------------------------------------
 
-\*inarray **\<array name\>**,**\<value\>**;
+\***inarray** **\<array name\>**,**\<value\>**;
 
-This command returns the index of the first matching value found in the array.
-It will return -1 if the value is not found.
+This command `returns the index` of the first matching value found in the array.
+It will return `-1` if the value is not found.
 
-	setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
-	
-	inarray(.@array[0], 200);
-	//return 1 because 200 is in index 1
-	//another way to say it that .@array[1] == 200
-	
-	.@index = inarray(.@array[0], 600);
-	//.@index is now 5 because .@array[5] == 600
-	
-	inarray(.@array[0], 100);
-	//while index 6 is also 100, the command will return the first instance it finds
-	//return 0 because .@array[0] == 100
+```cpp
+setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
 
-	inarray(.@array[0], 800);
-	//return -1 because 800 is not an element of the array .@array
+inarray(.@array[0], 200);
+//return 1 because 200 is in index 1
+//another way to say it that .@array[1] == 200
+
+.@index = inarray(.@array[0], 600);
+//.@index is now 5 because .@array[5] == 600
+
+inarray(.@array[0], 100);
+//while index 6 is also 100, the command will return the first instance it finds
+//return 0 because .@array[0] == 100
+
+inarray(.@array[0], 800);
+//return -1 because 800 is not an element of the array .@array
+```
+
 
 For more details, see the sample in 'doc/sample/inarray.txt'.
 
 ---------------------------------------
 
-\*countinarray **\<array name\>**{[**\<start index\>**]},**\<array name\>**{[**\<start index\>**]};
+\***countinarray** **\<array name\>**{[**\<start index\>**]},**\<array name\>**{[**\<start index\>**]};
 
 This command will check for matches between the array values and return the number of matches.
 While being optional, if [**\<start index\>**] is supplied, the search will begin from the given index value.
 
-	setarray .@array[0], 100, 200, 300, 400, 500, 600;
-	
-	.@variable = 100;
-	if(countinarray(.@array[0], .@variable))
-		mes "The number 100 was found in the array .@array";
-	
-	countinarray(.@array[0], .@variable);
-	//return 1 because the number 100 is an element of the array .@array
-	
-	setarray .@array2[0],100,500;
-	countinarray(.@array[0], .@array2[0]);
-	//return 2 because the numbers 100 and 500 are elements of the array .@array
-	
-	setarray .@array3[0],100,700;
-	countinarray(.@array[0], .@array3[0]);
-	//return 1 because the number 100 is an element of the array .@array
-	//but the number 700 is not an element of the array .@array
+```cpp
+setarray .@array[0], 100, 200, 300, 400, 500, 600;
 
-	//also you can change the position between the arrays in the command
-	if(countinarray(.@array[0], .@array3[0]) == countinarray(.@array3[0], .@array[0]))
-		//This is true
+.@variable = 100;
+if(countinarray(.@array[0], .@variable))
+   mes "The number 100 was found in the array .@array";
+
+countinarray(.@array[0], .@variable);
+//return 1 because the number 100 is an element of the array .@array
+
+setarray .@array2[0],100,500;
+countinarray(.@array[0], .@array2[0]);
+//return 2 because the numbers 100 and 500 are elements of the array .@array
+
+setarray .@array3[0],100,700;
+countinarray(.@array[0], .@array3[0]);
+//return 1 because the number 100 is an element of the array .@array
+//but the number 700 is not an element of the array .@array
+
+//also you can change the position between the arrays in the command
+if(countinarray(.@array[0], .@array3[0]) == countinarray(.@array3[0], .@array[0]))
+   //This is true
+```
+
 
 For more details, see the sample in 'doc/sample/inarray.txt'.
 
----------------------------------------
 
-======================================
-|2.- Information-retrieving commands.|
-======================================
----------------------------------------
+# 2.- Information-retrieving commands.
 
-\*strcharinfo(**\<type\>**{,**\<char_id\>**})
+
+\***strcharinfo**(**\<type\>**{,**\<char_id\>**})
 
 This function will return either the name, party name or guild name for the
 invoking character. Whatever it returns is determined by type.
 
- 0 - Character's name.
- 1 - The name of the party they're in if any.
- 2 - The name of the guild they're in if any.
- 3 - The name of the map the character is in.
+```plaintext
+0 - Character's name.
+1 - The name of the party they're in if any.
+2 - The name of the guild they're in if any.
+3 - The name of the map the character is in.
+```
+
 
 If a character is not a member of any party or guild, an empty string will be
 returned when requesting that information.
 
 ---------------------------------------
 
-\*convertpcinfo(**\<char_id\>**,**\<type\>**)
-\*convertpcinfo(**\<account_id\>**,**\<type\>**)
-\*convertpcinfo(**\<player_name\>**,**\<type\>**)
+\***convertpcinfo**(**\<char_id\>**,**\<type\>**)
+\***convertpcinfo**(**\<account_id\>**,**\<type\>**)
+\***convertpcinfo**(**\<player_name\>**,**\<type\>**)
 
 This function will return the information **\<type\>** for the
 specified character. Whatever it returns is determined by type.
 
- CPC_NAME    - Character's name.
- CPC_CHAR    - Character ID.
- CPC_ACCOUNT - Account ID.
+```plaintext
+CPC_NAME    - Character's name.
+CPC_CHAR    - Character ID.
+CPC_ACCOUNT - Account ID.
+```
+
 
 If a character is not found (or not online) when requesting that information,
 an empty string will be returned for CPC_NAME, 0 for other **\<type\>**.
 
 ---------------------------------------
 
-\*strnpcinfo(**\<type\>**)
+\***strnpcinfo**(**\<type\>**)
 
 This function will return the various parts of the name of the calling NPC.
 Whatever it returns is determined by type.
 
- 0 - The NPC's display name (visible#hidden)
- 1 - The visible part of the NPC's display name
- 2 - The hidden part of the NPC's display name
- 3 - The NPC's unique name (::name)
- 4 - The name of the map the NPC is in.
+```plaintext
+0 - The NPC's display name (visible#hidden)
+1 - The visible part of the NPC's display name
+2 - The hidden part of the NPC's display name
+3 - The NPC's unique name (::name)
+4 - The name of the map the NPC is in.
+```
+
 
 ---------------------------------------
 
-\*getarraysize(**\<array name\>**)
+\***getarraysize**(**\<array name\>**)
 
 This function returns highest index of the array that is filled.
 Notice that zeros and empty strings at the end of this array are not
 counted towards this number.
 
-For #Example:
+For Example:
 
-    setarray .@array[0], 100, 200, 300, 400, 500, 600;
-    set .@arraysize,getarraysize(.@array);
+```cpp
+setarray .@array[0], 100, 200, 300, 400, 500, 600;
+set .@arraysize,getarraysize(.@array);
+```
 
-This will make .@arraysize == 6. But if you try this:
+
+This will make `.@arraysize == 6`. But if you try this:
 
     setarray .@array[0], 100, 200, 300, 400, 500, 600, 0;
     set .@arraysize,getarraysize(.@array);
 
-.@arraysize will still equal 6, even though you've set 7 values.
+`.@arraysize` will still equal `6`, even though you've set `7` values.
 
 ---------------------------------------
 
-\*getelementofarray(**\<array name\>**,**\<index\>**)
+\***getelementofarray**(**\<array name\>**,**\<index\>**)
 
 This command retrieves the value of the element of given array at given index.
 This is equivalent to using:
 
-    **\<array name\>**[**\<index\>**]
+```cpp
+<array name>[<index>]
+```
+
 
 The reason for this is, that this short form is internally converted into a call
-to getelementofarray, when the script is loaded.
+to `getelementofarray`, when the script is loaded.
 
 Also useful when passing arrays to functions or accessing another npc's arrays:
-    getelementofarray(getarg(0),**\<index\>**)
-    getelementofarray(getvariableofnpc(.var, "testNPC"),**\<index\>**)
+```cpp
+getelementofarray(getarg(0),<index>)
+getelementofarray(getvariableofnpc(.var, "testNPC"),<index>)
+```
+
 
 ---------------------------------------
 
-\*readparam(**\<parameter number\>**{,"**\<character name\>**"})
-\*readparam(**\<parameter number\>**{,**\<char_id\>**})
+\***readparam**(**\<parameter number\>**{,"**\<character name\>**"})\
+\***readparam**(**\<parameter number\>**{,**\<char_id\>**})
 
 This function will return the specified stat of the invoking character, or, if a
 character name or character id is specified, of that player. The stat can either
@@ -2602,64 +2766,76 @@ be a number or parameter name, defined in 'src/map/script_constants.hpp'.
 
 Some example parameters:
 
-StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
-JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
-BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
+    StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
+    JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
+    BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
 
 All of these also behave as variables, but don't expect to be able to just 'set'
 them - some will not work for various internal reasons.
 
 Example 1:
 
-    // Returns how many status points you haven't spent yet.
-    mes "Unused status points: " + readparam(9);
+```cpp
+// Returns how many status points you haven't spent yet.
+mes "Unused status points: " + readparam(9);
+```
+
 
 Using this particular information as a function call is not required. Typing this
 will return the same result:
 
-    mes "Unused status points: " + StatusPoint;
+```cpp
+mes "Unused status points: " + StatusPoint;
+```
+
 
 Example 2:
 
 You can also use this command to get stat values.
 
-    if (readparam(bVit) \>** 77)
-        mes "Only people with over 77 Vit are reading this!";
+```cpp
+if (readparam(bVit) \>** 77)
+    mes "Only people with over 77 Vit are reading this!";
+```
+
 
 ---------------------------------------
 
-\*getcharid(**\<type\>**{,"**\<character name\>**"})
+\***getcharid**(**\<type\>**{,"**\<character name\>**"})
 
 This function will return a unique ID number of the invoking character, or, if a
 character name is specified, of that player.
 
 Type is the kind of associated ID number required:
 
- 0 - Character ID
- 1 - Party ID
- 2 - Guild ID
- 3 - Account ID
- 4 - Battle Ground ID
- 5 - Clan ID
+     0 - Character ID
+     1 - Party ID
+     2 - Guild ID
+     3 - Account ID
+     4 - Battle Ground ID
+     5 - Clan ID
 
 For most purposes other than printing it, a number is better to have than a name
 (people do horrifying things to their character names).
 
-If the character is not in a party or not in a guild, the function will return 0
+If the character is not in a party or not in a guild, the function will return `0`
 if guild or party number is requested. If a name is specified and the character
-is not found, 0 is returned.
+is not found, `0` is returned.
 
-If getcharid(0) returns a zero, the script got called not by a character and
+If `getcharid(0)` returns a `zero`, the script got called not by a character and
 doesn't have an attached RID. Note that this will cause the map server to
-print "player not attached!" error messages, so it is preferred to use
-"playerattached" to check for the character attached to the script.
+print "`player not attached!`" error messages, so it is preferred to use
+"`playerattached`" to check for the character attached to the script.
 
+```cpp
 if (getcharid(2) == 0)
 	mes "Only members of a guild are allowed here!";
+```
+
 
 ---------------------------------------
 
-\*getnpcid(**\<type\>**{,"**\<npc name\>**"});
+\***getnpcid**(**\<type\>**{,"**\<npc name\>**"});
 
 Retrieves IDs of the currently invoked NPC. If a unique npc name is
 given, IDs of that NPC are retrieved instead. Type specifies what ID
@@ -2667,198 +2843,215 @@ to retrieve and can be one of the following:
 
     0 - NPC Game ID
 
-If an invalid type is given or the NPC does not exist, 0 is returned.
+If an invalid type is given or the NPC does not exist, `0` is returned.
 
 ---------------------------------------
 
-\*getchildid({**\<char_id\>**})
-\*getmotherid({**\<char_id\>**})
-\*getfatherid({**\<char_id\>**})
+\***getchildid**({**\<char_id\>**})\
+\***getmotherid**({**\<char_id\>**})\
+\***getfatherid**({**\<char_id\>**})
 
-These functions return the character ID of the attached player's child,
-mother, mother, or father, respectively. It returns 0 if no ID is found.
+These functions return the `character ID` of the attached player's child,
+mother, mother, or father, respectively. It returns `0` if no ID is found.
 
-    if (getmotherid()) mes "Your mother's ID is: " + getmotherid();
+```cpp
+if (getmotherid()) mes "Your mother's ID is: " + getmotherid();
+```
 
----------------------------------------
-
-\*ispartneron({**\<char_id\>**})
-
-This function returns 1 if the invoking character's marriage partner is
-currently online and 0 if they are not or if the character has no partner.
 
 ---------------------------------------
 
-\*getpartnerid({**\<char_id\>**})
+\***ispartneron**({**\<char_id\>**})
+
+This function returns `1` if the invoking character's marriage partner is
+currently online and `0` if they are not or if the character has no partner.
+
+---------------------------------------
+
+\***getpartnerid**({**\<char_id\>**})
 
 This function returns the character ID of the invoking character's marriage
-partner, if any. If the invoking character is not married, it will return 0,
+partner, if any. If the invoking character is not married, it will return `0`,
 which is a quick way to see if they are married:
 
-    if (getpartnerid()) mes "I'm not going to be your girlfriend!";
-    if (getpartnerid()) mes "You're married already!";
+```cpp
+if (getpartnerid()) mes "I'm not going to be your girlfriend!";
+if (getpartnerid()) mes "You're married already!";
+```
+
 
 ---------------------------------------
 
-\*getlook(**\<type\>**{,**\<char_id\>**})
+\***getlook**(**\<type\>**{,**\<char_id\>**})
 
 This function will return the number for the current character look value
-specified by type. See 'setlook' for valid look types.
+specified by type. See '`setlook`' for valid look types.
 
 This can be used to make a certain script behave differently for characters
 dressed in black.
 
 ---------------------------------------
 
-\*getsavepoint(**\<information type\>**{,**\<char_id\>**})
+\***getsavepoint**(**\<information type\>**{,**\<char_id\>**})
 
 This function will return information about the invoking character's save point.
 You can use it to let a character swap between several recorded save points.
 Available information types are:
 
- 0 - Map name (a string)
- 1 - X coordinate
- 2 - Y coordinate
+     0 - Map name (a string)
+     1 - X coordinate
+     2 - Y coordinate
 
 ---------------------------------------
 
-\*getcharip({"**\<character name\>**"|**\<account id\>**|**\<char id\>**})
+\***getcharip**({"**\<character name\>**"|**\<account id\>**|**\<char id\>**})
 
 This function will return the IP address of the invoking character, or, if a player
 is specified, of that character. A blank string is returned if no player is attached.
 
 #### Examples:
 
+```cpp
 // Outputs IP address of attached player.
 	mes "Your IP: " + getcharip();
 
 // Outputs IP address of character "Silver".
 	mes "Silver's IP: " + getcharip("Silver");
+```
+
 
 ---------------------------------------
 
-\*vip_status(**\<type\>**,{"**\<character name\>**"})
+\***vip_status**(**\<type\>**,{"**\<character name\>**"})
 
 Returns various information about a player's VIP status.
 
 Valid types:
- VIP_STATUS_ACTIVE - VIP status: true if the player is a VIP or false if not
- VIP_STATUS_EXPIRE - VIP expire timestamp if the player is VIP or 0 if not
- VIP_STATUS_REMAINING - VIP time remaining in seconds
 
-NOTE: This command is only available if the VIP System is enabled.
+    VIP_STATUS_ACTIVE - VIP status: true if the player is a VIP or false if not
+    VIP_STATUS_EXPIRE - VIP expire timestamp if the player is VIP or 0 if not
+    VIP_STATUS_REMAINING - VIP time remaining in seconds
+
+> NOTE: This command is only available if the VIP System is enabled.
 
 ---------------------------------------
 
-\*vip_time **\<time\>**,{"**\<character name\>**"};
+\***vip_time** **\<time\>**,{"**\<character name\>**"};
 
 Changes a player's VIP time (in minutes). A positive value will increase time, and a
 negative value will decrease time.
 
-NOTE: This command is only available if the VIP System is enabled.
+> NOTE: This command is only available if the VIP System is enabled.
 
 ---------------------------------------
 
-\*addspiritball **\<count\>**,**\<duration\>**{,**\<char_id\>**};
+\***addspiritball** **\<count\>**,**\<duration\>**{,**\<char_id\>**};
 
-Adds spirit ball to player for 'duration' in milisecond.
+Adds spirit ball to player for '`duration`' in milisecond.
 
 ---------------------------------------
 
-\*delspiritball **\<count\>**{,**\<char_id\>**};
+\***delspiritball** **\<count\>**{,**\<char_id\>**};
 
 Deletes the spirit ball(s) from player.
 
 ---------------------------------------
 
-\*countspiritball {**\<char_id\>**};
+\***countspiritball** {**\<char_id\>**};
 
 Counts the spirit ball that player has.
 
 ---------------------------------------
 
-\*ignoretimeout **\<flag\>**{,**\<char_id\>**};
+\***ignoretimeout** **\<flag\>**{,**\<char_id\>**};
 
-Disables the SECURE_NPCTIMEOUT function on the character invoking the script,
+Disables the `SECURE_NPCTIMEOUT` function on the character invoking the script,
 or by the given character ID/character name.
 
 Valid flag:
- 0 - Enabled SECURE_NPCTIMEOUT.
- 1 - Disable SECURE_NPCTIMEOUT.
 
-Note: SECURE_NPCTIMEOUT must be enabled for this to work.
+     0 - Enabled SECURE_NPCTIMEOUT.
+     1 - Disable SECURE_NPCTIMEOUT.
 
----------------------------------------
-\\
-2,2 Item-related commands
-\\
----------------------------------------
+> Note: SECURE_NPCTIMEOUT must be enabled for this to work.
 
-\*getequipid({**\<equipment slot\>**,**\<char_id\>**})
+
+# 2,2 Item-related commands
+
+
+\***getequipid**({**\<equipment slot\>**,**\<char_id\>**})
 
 This function returns the item ID of the item slot that calls the script
 on the invoking character or the specified equipment slot. If nothing is
 equipped there, it returns -1.
 Valid equipment slots are:
 
-EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script) - exclusive to getequipid
-EQI_ACC_L (0)             - Accessory 1
-EQI_ACC_R (1)             - Accessory 2
-EQI_SHOES (2)             - Footgear (shoes, boots)
-EQI_GARMENT (3)           - Garment (mufflers, hoods, manteaux)
-EQI_HEAD_LOW (4)          - Lower Headgear (beards, some masks)
-EQI_HEAD_MID (5)          - Middle Headgear (masks, glasses)
-EQI_HEAD_TOP (6)          - Upper Headgear
-EQI_ARMOR (7)             - Armor (jackets, robes)
-EQI_HAND_L (8)            - Left hand (weapons, shields)
-EQI_HAND_R (9)            - Right hand (weapons)
-EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
-EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
-EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
-EQI_COSTUME_GARMENT (13)  - Costume Garment
-EQI_AMMO (14)    		  - Arrow/Ammunition
-EQI_SHADOW_ARMOR (15)     - Shadow Armor
-EQI_SHADOW_WEAPON (16)    - Shadow Weapon
-EQI_SHADOW_SHIELD (17)    - Shadow Shield
-EQI_SHADOW_SHOES (18)     - Shadow Shoes
-EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
-EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
+| Equipment Slot | Description |
+| --- | --- |
+| EQI_COMPOUND_ON (-1) | Item slot that calls this script (In context of item script) - exclusive to getequipid |
+| EQI_ACC_L (0) | Accessory 1 |
+| EQI_ACC_R (1) | Accessory 2 |
+| EQI_SHOES (2) | Footgear (shoes, boots) |
+| EQI_GARMENT (3) | Garment (mufflers, hoods, manteaux) |
+| EQI_HEAD_LOW (4) | Lower Headgear (beards, some masks) |
+| EQI_HEAD_MID (5) | Middle Headgear (masks, glasses) |
+| EQI_HEAD_TOP (6) | Upper Headgear |
+| EQI_ARMOR (7) | Armor (jackets, robes) |
+| EQI_HAND_L (8) | Left hand (weapons, shields) |
+| EQI_HAND_R (9) | Right hand (weapons) |
+| EQI_COSTUME_HEAD_TOP (10) | Upper Costume Headgear |
+| EQI_COSTUME_HEAD_MID (11) | Middle Costume Headgear |
+| EQI_COSTUME_HEAD_LOW (12) | Lower Costume Headgear |
+| EQI_COSTUME_GARMENT (13) | Costume Garment |
+| EQI_AMMO (14) | Arrow/Ammunition |
+| EQI_SHADOW_ARMOR (15) | Shadow Armor |
+| EQI_SHADOW_WEAPON (16) | Shadow Weapon |
+| EQI_SHADOW_SHIELD (17) | Shadow Shield |
+| EQI_SHADOW_SHOES (18) | Shadow Shoes |
+| EQI_SHADOW_ACC_R (19) | Shadow Accessory 2 |
+| EQI_SHADOW_ACC_L (20) | Shadow Accessory 1 |
 
 Notice that a few items occupy several equipment slots, and if the character is
-wearing such an item, 'getequipid' will return its ID number for either slot.
+wearing such an item, '`getequipid`' will return its ID number for either slot.
 
 Can be used to check if you have something equipped, or if you haven't got
 something equipped:
 
-	if (getequipid(EQI_HEAD_TOP) == 2234)
-		mes "What a lovely Tiara you have on";
-	else
-		mes "Come back when you have a Tiara on";
-	close;
+```cpp
+if (getequipid(EQI_HEAD_TOP) == 2234)
+   mes "What a lovely Tiara you have on";
+else
+   mes "Come back when you have a Tiara on";
+close;
+```
+
 
 You can also use it to make sure people don't pass a point before removing an
 item totally from them. Let's say you don't want people to wear Legion Plate
 armor, but also don't want them to equip if after the check, you would do this:
 
-	if (getequipid(EQI_ARMOR) == 2341 || getequipid(EQI_ARMOR) == 2342) {
-		mes "You are wearing some Legion Plate Armor, please drop that in your stash before continuing";
-		close;
-	}
-	// the || is used as an or argument, there is 2341 and 2342 cause there are
-	// two different legion plate armors, one with a slot one without.
+```cpp
+if (getequipid(EQI_ARMOR) == 2341 || getequipid(EQI_ARMOR) == 2342) {
+   mes "You are wearing some Legion Plate Armor, please drop that in your stash before continuing";
+   close;
+}
+// the || is used as an or argument, there is 2341 and 2342 cause there are
+// two different legion plate armors, one with a slot one without.
 
-	if (countitem(2341) \>** 0 || countitem(2432) \>** 0) {
-		mes "You have some Legion Plate Armor in your inventory, please drop that in your stash before continuing";
-		close;
-	}
-	mes "I will lets you pass.";
-	close2;
-	warp "place",50,50;
-	end;
+if (countitem(2341) > 0 || countitem(2432) > 0) {
+   mes "You have some Legion Plate Armor in your inventory, please drop that in your stash before continuing";
+   close;
+}
+mes "I will lets you pass.";
+close2;
+warp "place",50,50;
+end;
+```
+
 
 ---------------------------------------
 
-\*getequipuniqueid(**\<equipment slot\>**{,**\<char_id\>**})
+\***getequipuniqueid**(**\<equipment slot\>**{,**\<char_id\>**})
 
 This function returns the unique ID (as a string) of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns an empty string.
@@ -2866,23 +3059,26 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
-\*getequipname(**\<equipment slot\>**{,**\<char_id\>**})
+\***getequipname**(**\<equipment slot\>**{,**\<char_id\>**})
 
-Returns the jname of the item equipped in the specified equipment slot on the
+Returns the `jname` of the item equipped in the specified equipment slot on the
 invoking character, or an empty string if nothing is equipped in that position.
-Does the same thing as getitemname(getequipid()). Useful for an NPC to state
+Does the same thing as `getitemname(getequipid())`. Useful for an NPC to state
 what your are wearing, or maybe saving as a string variable.
 See 'getequipid' for a full list of valid equipment slots.
 
-        if ( getequipname(EQI_HEAD_TOP) != "" )
-	        mes "So you are wearing a " + getequipname(EQI_HEAD_TOP) + " on your head";
-	else
-	        mes "You are not wearing any head gear";
+```cpp
+if ( getequipname(EQI_HEAD_TOP) != "" )
+        mes "So you are wearing a " + getequipname(EQI_HEAD_TOP) + " on your head";
+else
+        mes "You are not wearing any head gear";
+```
+
 
 ---------------------------------------
 
-\*getitemname(**\<item id\>**)
-\*getitemname(**\<aegis item name\>**)
+\***getitemname**(**\<item id\>**)\
+\***getitemname**(**\<aegis item name\>**)
 
 Given the database ID number of an item, this function will return the text
 stored in the 'Name' field in item_db_*.yml for text version
@@ -2895,138 +3091,156 @@ or 'name_english' field for SQL version. The function returns "null" if the item
 This function will search the invoking character's inventory for any broken
 items, and will return their item ID numbers. Since the character may have
 several broken items, 1 given as an argument will return the first one found, 2
-will return the second one, etc. Will return 0 if no such item is found.
+will return the second one, etc. Will return `0` if no such item is found.
 
-	// Let's see if they have anything broken:
-	if (getbrokenid(1) == 0)
-		mes "You don't have anything broken, quit bothering me.";
-	else
-	// They do, so let's print the name of the first broken item:
-		mes "Oh, I see you have a broken " + getitemname(getbrokenid(1)) + " here!";
-	end;
+```cpp
+// Let's see if they have anything broken:
+if (getbrokenid(1) == 0)
+   mes "You don't have anything broken, quit bothering me.";
+else
+// They do, so let's print the name of the first broken item:
+   mes "Oh, I see you have a broken " + getitemname(getbrokenid(1)) + " here!";
+end;
+```
+
 
 ---------------------------------------
 
 \*getequipisequiped(**\<equipment slot\>**{,**\<char_id\>**})
 
-This functions will return 1 if there is an equipment placed on the specified
-equipment slot and 0 otherwise. For a list of equipment slots
-see 'getequipid'. Function originally used by the refining NPCs:
+This functions will return `1` if there is an equipment placed on the specified
+equipment slot and `0` otherwise. For a list of equipment slots
+see '`getequipid`'. Function originally used by the refining NPCs:
 
-    if (getequipisequiped(EQI_HEAD_TOP)) {
-        mes "[Refiner]";
-        mes "That's a fine hat you are wearing there...";
-        close;
-	} else {
-		mes "[Refiner]";
-		mes "Do you want me to refine your dumb head?";
-		close;
-	}
+```cpp
+if (getequipisequiped(EQI_HEAD_TOP)) {
+     mes "[Refiner]";
+     mes "That's a fine hat you are wearing there...";
+     close;
+} else {
+   mes "[Refiner]";
+   mes "Do you want me to refine your dumb head?";
+   close;
+}
+```
+
 
 ---------------------------------------
 
-\*getequipisenableref(**\<equipment slot\>**{,**\<char_id\>**})
+\***getequipisenableref**(**\<equipment slot\>**{,**\<char_id\>**})
 
 Will return 1 if the item equipped on the invoking character in the specified
 equipment slot is refinable, and 0 if it isn't. For a list of equipment slots
 see 'getequipid'.
 
-	if (getequipisenableref(EQI_HEAD_TOP)) {
-		mes "[Refiner]";
-		mes "Ok I can refine this";
-		close;
-	} else {
-		mes "[Refiner]";
-		mes "I can't refine this hat!...";
-		close;
-	}
+```cpp
+if (getequipisenableref(EQI_HEAD_TOP)) {
+   mes "[Refiner]";
+   mes "Ok I can refine this";
+   close;
+} else {
+   mes "[Refiner]";
+   mes "I can't refine this hat!...";
+   close;
+}
+```
+
 
 ---------------------------------------
 
-\*getequiprefinerycnt(**\<equipment slot\>**{,**\<char_id\>**})
+\***getequiprefinerycnt**(**\<equipment slot\>**{,**\<char_id\>**})
 
 Returns the current number of pluses for the item in the specified equipment
-slot. For a list of equipment slots see 'getequipid'.
+slot. For a list of equipment slots see '`getequipid`'.
 
 Can be used to check if you have reached a maximum refine value, default for
-this is +10:
+this is `+10`:
 
-	if (getequiprefinerycnt(EQI_HEAD_TOP) **\< 10)
-		mes "I will now upgrade your " + getequipname(EQI_HEAD_TOP);
-	else
-		mes "Sorry, it's not possible to refine hats better than +10";
-	close;
+```cpp
+if (getequiprefinerycnt(EQI_HEAD_TOP) **\< 10)
+   mes "I will now upgrade your " + getequipname(EQI_HEAD_TOP);
+else
+   mes "Sorry, it's not possible to refine hats better than +10";
+close;
+```
+
 
 ---------------------------------------
 
-\*getequipweaponlv({**\<equipment slot\>**{,**\<char_id\>**}})
+\***getequipweaponlv**({**\<equipment slot\>**{,**\<char_id\>**}})
 
 This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see
-'getequipid'.
+'`getequipid`'.
 
-Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
+Only `EQI_HAND_L` and `EQI_HAND_R` normally make sense, since only weapons have
 a weapon level.
 
 If no item is equipped in this slot, or if it doesn't have a weapon level
-according to the database, 0 will be returned.
+according to the database, `0` will be returned.
 
 #### Examples:
 
-    switch (getequipweaponlv(EQI_HAND_R)) {
-      case 1: mes "You are holding a lvl 1 weapon."; break;
-      case 2: mes "You are holding a lvl 2 weapon."; break;
-      case 3: mes "You are holding a lvl 3 weapon."; break;
-      case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon."; break;
-      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
-      default: mes "Seems you don't have a weapon on."; break;
-    }
+```cpp
+switch (getequipweaponlv(EQI_HAND_R)) {
+  case 1: mes "You are holding a lvl 1 weapon."; break;
+  case 2: mes "You are holding a lvl 2 weapon."; break;
+  case 3: mes "You are holding a lvl 3 weapon."; break;
+  case 4: mes "You are holding a lvl 4 weapon."; break;
+  case 5: mes "You are holding a lvl 5 weapon."; break;
+  case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
+  default: mes "Seems you don't have a weapon on."; break;
+}
 
-    if (getequipid(EQI_HAND_L) == 0) {
-        mes "Seems you have nothing equipped here.";
-        close;
-    }
-    switch (getequipweaponlv(EQI_HAND_L)) {
-      case 0: mes "You are not holding a weapon, so it doesn't have a level."; break;
-      case 1: mes "You are holding a lvl 1 weapon."; break;
-      case 2: mes "You are holding a lvl 2 weapon."; break;
-      case 3: mes "You are holding a lvl 3 weapon."; break;
-      case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon."; break;
-      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
-    }
+if (getequipid(EQI_HAND_L) == 0) {
+    mes "Seems you have nothing equipped here.";
+    close;
+}
+switch (getequipweaponlv(EQI_HAND_L)) {
+  case 0: mes "You are not holding a weapon, so it doesn't have a level."; break;
+  case 1: mes "You are holding a lvl 1 weapon."; break;
+  case 2: mes "You are holding a lvl 2 weapon."; break;
+  case 3: mes "You are holding a lvl 3 weapon."; break;
+  case 4: mes "You are holding a lvl 4 weapon."; break;
+  case 5: mes "You are holding a lvl 5 weapon."; break;
+  case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
+}
+```
+
 
 ---------------------------------------
 
-\*getequiparmorlv({**\<equipment slot\>**{,**\<char_id\>**}})
+\***getequiparmorlv**({**\<equipment slot\>**{,**\<char_id\>**}})
 
 This function returns the armor level for the item equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see
-'getequipid'.
+'`getequipid`'.
 
 If no item is equipped in this slot, or if it doesn't have an armor level
-according to the database, 0 will be returned.
+according to the database, `0` will be returned.
 
-    if (getequipid(EQI_ARMOR) == 0) {
-        mes "Seems you have nothing equipped here.";
-        close;
-    }
-    switch (getequiparmorlv(EQI_ARMOR)) {
-      case 1: mes "You are wearing a lvl 1 armor."; break;
-      case 2: mes "You are wearing a lvl 2 armor."; break;
-      case 3: mes "You are wearing a lvl 3 armor, hm, must be a custom design..."; break;
-    }
+```cpp
+if (getequipid(EQI_ARMOR) == 0) {
+    mes "Seems you have nothing equipped here.";
+    close;
+}
+switch (getequiparmorlv(EQI_ARMOR)) {
+  case 1: mes "You are wearing a lvl 1 armor."; break;
+  case 2: mes "You are wearing a lvl 2 armor."; break;
+  case 3: mes "You are wearing a lvl 3 armor, hm, must be a custom design..."; break;
+}
+```
+
 
 ---------------------------------------
 
-\*getequippercentrefinery(**\<equipment slot\>**{,**\<enriched\>**,**\<char_id\>**})
+\***getequippercentrefinery**(**\<equipment slot\>**{,**\<enriched\>**,**\<char_id\>**})
 
 This function calculates and returns the percent value chance to successfully
 refine the item found in the specified equipment slot of the invoking character
 by +1. There is no actual formula, the success rate for a given weapon level of
 a certain refine level is found in the db/(pre-)re/refine_db.yml file. For a list of
-equipment slots see 'getequipid'.
+equipment slots see '`getequipid`'.
 
 If enriched parameter is set to true, chance to successfully refine the item with
 enriched material is returned instead.
@@ -3035,36 +3249,39 @@ These values can be displayed for the player to see, or used to calculate the
 random change of a refine succeeding or failing and then going through with it
 (which is what the official NPC refinery scripts use it for)
 
+```cpp
 // This will find a random number from 0 - 99 and if that is equal to or more
 // than the value recovered by this command it will go to L_Fail
     if (getequippercentrefinery(EQI_HAND_L)**\<=rand(100)) goto L_Fail;
+```
+
 
 ---------------------------------------
 
-\*getequiprefinecost(**\<equipment slot\>**,**\<type\>**,**\<information\>**{,**\<char id\>**})
+\***getequiprefinecost**(**\<equipment slot\>**,**\<type\>**,**\<information\>**{,**\<char id\>**})
 
 This function returns refine cost for equipment in **\<equipment slot\>** based on
 passed arguments **\<type\>** and **\<information\>**.
 
 Valid cost types are:
 
-REFINE_COST_NORMAL     - For normal refining
-REFINE_COST_HD         - For refining with HD ores
-REFINE_COST_ENRICHED   - For refining with enriched ores
+    REFINE_COST_NORMAL     - For normal refining
+    REFINE_COST_HD         - For refining with HD ores
+    REFINE_COST_ENRICHED   - For refining with enriched ores
 
 This function will return required cost for refining based on **\<information\>** argument.
 
 Valid information types are:
 
-REFINE_ZENY_COST       - Zeny
-REFINE_MATERIAL_ID     - Material Item ID
+    REFINE_ZENY_COST       - Zeny
+    REFINE_MATERIAL_ID     - Material Item ID
 
 This function will return -1 on failure. The function fails if the cost type
 is invalid or if there is no item in the equipment slot.
 
 ---------------------------------------
 
-\*getareadropitem("**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,**\<item\>**)
+\***getareadropitem**("**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,**\<item\>**)
 
 This function will count all the items with the specified ID number lying on the
 ground on the specified map within the x1/y1-x2/y2 square on it and return that
@@ -3072,12 +3289,12 @@ number.
 
 This is the only function around where a parameter may be either a string or a
 number! If it's a number, it means that only the items with that item ID number
-will be counted. If it is a string, it is assumed to mean the 'english name'
+will be counted. If it is a string, it is assumed to mean the '`english name`'
 field from the item database.
 
 ---------------------------------------
 
-\*getequipcardcnt(**\<equipment slot\>**)
+\***getequipcardcnt**(**\<equipment slot\>**)
 
 This function will return the number of cards that have been compounded onto a
 specific equipped item for the invoking character. See 'getequipid' for a list
@@ -3085,72 +3302,71 @@ of possible equipment slots.
 
 ---------------------------------------
 
-\*getinventorylist {**\<char_id\>**};
+\***getinventorylist** {**\<char_id\>**};
 
 This command sets a bunch of arrays with a complete list of whatever the
 invoking character has in their inventory, including all the data needed to
 recreate these items perfectly if they are destroyed. Here's what you get:
 
-@inventorylist_id[]                - array of item ids.
-@inventorylist_idx[]               - array of item inventory index.
-@inventorylist_amount[]            - their corresponding item amounts.
-@inventorylist_equip[]             - on which position the item is equipped (see EQP_* constants)
-                                     It will contain 0 if the item is not equipped.
-@inventorylist_refine[]            - for how much it is refined.
-@inventorylist_identify[]          - whether it is identified.
-@inventorylist_attribute[]         - whether it is broken.
-@inventorylist_card1[]             - These four arrays contain card data for the items.
-@inventorylist_card2[]               These data slots are also used to store names
-@inventorylist_card3[]               inscribed on the items, so you can explicitly check
-@inventorylist_card4[]               if the character owns an item made by a specific
-                                     craftsman.
-@inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
-@inventorylist_enchantgrade[]      - the enchantgrade of the items
-@inventorylist_count               - the number of items in these lists.
-@inventorylist_option_id1[]        - first array of random option IDs
-@inventorylist_option_value1[]     - first array of random option values
-@inventorylist_option_parameter1[] - first array of random option parameters
-@inventorylist_option_id2[]        - second array of random option IDs
-@inventorylist_option_value2[]     - second array of random option values
-@inventorylist_option_parameter2[] - second array of random option parameters
-@inventorylist_option_id3[]        - third array of random option IDs
-@inventorylist_option_value3[]     - third array of random option values
-@inventorylist_option_parameter3[] - third array of random option parameters
-@inventorylist_option_id4[]        - fourth array of random option IDs
-@inventorylist_option_value4[]     - fourth array of random option values
-@inventorylist_option_parameter4[] - fourth array of random option parameters
-@inventorylist_option_id5[]        - fifth array of random option IDs
-@inventorylist_option_value5[]     - fifth array of random option values
-@inventorylist_option_parameter5[] - fifth array of random option parameters
-@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_db.yml, bound, and rental restrictions).
-@inventorylist_favorite            - Returns if an item is favorite or not
+| Array Name | Description |
+| --- | --- |
+| @inventorylist_id[] | array of item ids |
+| @inventorylist_idx[] | array of item inventory index |
+| @inventorylist_amount[] | their corresponding item amounts |
+| @inventorylist_equip[] | on which position the item is equipped (see EQP_* constants). It will contain 0 if the item is not equipped |
+| @inventorylist_refine[] | for how much it is refined |
+| @inventorylist_identify[] | whether it is identified |
+| @inventorylist_attribute[] | whether it is broken |
+| @inventorylist_card1[] | These four arrays contain card data for the items. These data slots are also used to store names inscribed on the items, so you can explicitly check if the character owns an item made by a specific craftsman |
+| @inventorylist_card2[] | see above |
+| @inventorylist_card3[] | see above |
+| @inventorylist_card4[] | see above |
+| @inventorylist_expire[] | expire time (Unix time stamp). 0 means never expires |
+| @inventorylist_bound[] | the bound type of the items (see BOUND_* constants) |
+| @inventorylist_enchantgrade[] | the enchantgrade of the items |
+| @inventorylist_count | the number of items in these lists |
+| @inventorylist_option_id1[] | first array of random option IDs |
+| @inventorylist_option_value1[] | first array of random option values |
+| @inventorylist_option_parameter1[] | first array of random option parameters |
+| @inventorylist_option_id2[] | second array of random option IDs |
+| @inventorylist_option_value2[] | second array of random option values |
+| @inventorylist_option_parameter2[] | second array of random option parameters |
+| @inventorylist_option_id3[] | third array of random option IDs |
+| @inventorylist_option_value3[] | third array of random option values |
+| @inventorylist_option_parameter3[] | third array of random option parameters |
+| @inventorylist_option_id4[] | fourth array of random option IDs |
+| @inventorylist_option_value4[] | fourth array of random option values |
+| @inventorylist_option_parameter4[] | fourth array of random option parameters |
+| @inventorylist_option_id5[] | fifth array of random option IDs |
+| @inventorylist_option_value5[] | fifth array of random option values |
+| @inventorylist_option_parameter5[] | fifth array of random option parameters |
+| @inventorylist_tradable | Returns if an item is tradable or not (Pass item_db.yml, bound, and rental restrictions). |
+| @inventorylist_favorite | Returns if an item is favorite or not |
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
 correctly handle an NPC trader for carded and named items who could resell them
-- since NPC objects cannot own items, so they have to store item data in
-variables and recreate the items.
+since NPC objects cannot own items, so they have to store item data in variables and recreate the items.
 
 Notice that the variables this command generates are all temporary, attached to
 the character, and integer.
 
-Be sure to use @inventorylist_count to go through these arrays, and not
-'getarraysize', because the arrays are not automatically cleared between runs
-of 'getinventorylist'.
+Be sure to use `@inventorylist_count` to go through these arrays, and not
+'`getarraysize`', because the arrays are not automatically cleared between runs
+of '`getinventorylist`'.
 
 ---------------------------------------
 
-\*cardscnt()
+\***cardscnt**()
 
-This function will return the number of cards inserted into the equipment
+This function will return the `number of cards inserted into the equipment`
 from which the function is called.
 
 This function is intended for use in item scripts.
 
 ---------------------------------------
 
-\*getrefine()
+\***getrefine**()
 
 This function will return the refine count of the equipment from which the
 function is called.
@@ -3159,10 +3375,10 @@ This function is intended for use in item scripts.
 
 ---------------------------------------
 
-\*getnameditem(**\<item id\>**,"**\<name to inscribe\>**"|**\<char id\>**);
-\*getnameditem("**\<item name\>**","**\<name to inscribe\>**"|**\<char id\>**);
+\***getnameditem**(**\<item id\>**,"**\<name to inscribe\>**"|**\<char id\>**);\
+\***getnameditem**("**\<item name\>**","**\<name to inscribe\>**"|**\<char id\>**);
 
-This function is equivalent to using 'getitem', however, it will not just give
+This function is equivalent to using '`getitem`', however, it will not just give
 the character an item object, but will also inscribe it with a specified
 character's name. You may not inscribe items with arbitrary strings, only with
 names of characters that actually exist. While this isn't said anywhere
@@ -3170,89 +3386,96 @@ specifically, apparently, named items may not have cards in them, slots or no -
 these data slots are taken by the character ID who's name is inscribed. Only one
 remains free and it's not quite clear if a card may be there.
 
-This function will return 1 if an item was successfully created and 0 if it
-wasn't for whatever reason. Like 'getitem', this function will also accept an
-'english name' from the item database as an item name and will return 0 if no
+This function will return `1` if an item was successfully created and `0` if it
+wasn't for whatever reason. Like '`getitem`', this function will also accept an
+'`english name`' from the item database as an item name and will return `0` if no
 such item exists.
 
 ---------------------------------------
 
-\*getitemslots(**\<item ID\>**)
+\***getitemslots**(**\<item ID\>**)
 
 This function will look up the item with the specified ID number in the database
-and return the number of slots this kind of items has - 0 if they are not
-slotted. It will also be 0 for all non-equippable items, naturally, unless
-someone messed up the item database. It will return -1 if there is no such item.
+and return the number of slots this kind of items has; `0` if they are not
+slotted. It will also be `0` for all non-equippable items, naturally, unless
+someone messed up the item database. It will return `-1` if there is no such item.
 
-#Example:
+#### Example:
 
+```cpp
 //.@slots now has the amount of slots of the item with ID 1205.
 	.@slots = getitemslots(1205);
+```
+
 
 ---------------------------------------
 
-\*getiteminfo(**\<item ID\>**,**\<type\>**)
-\*getiteminfo(**\<item name\>**,**\<type\>**)
-\*getiteminfo(**\<aegis item name\>**,**\<type\>**)
+\***getiteminfo**(**\<item ID\>**,**\<type\>**)\
+\***getiteminfo**(**\<item name\>**,**\<type\>**)\
+\***getiteminfo**(**\<aegis item name\>**,**\<type\>**)
 
 This function will look up the item with the specified ID number in the database
 and return the info set by TYPE argument.
 It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	ITEMINFO_BUY             (0)   -  Buy Price
-	ITEMINFO_SELL            (1)   -  Sell Price
-	ITEMINFO_TYPE            (2)   -  Type
-	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
-	ITEMINFO_GENDER          (4)   -  Gender
-	ITEMINFO_LOCATIONS       (5)   -  Location(s)
-	ITEMINFO_WEIGHT          (6)   -  Weight
-	ITEMINFO_ATTACK          (7)   -  ATK
-	ITEMINFO_DEFENSE         (8)   -  DEF
-	ITEMINFO_RANGE           (9)   -  Range
-	ITEMINFO_SLOT           (10)   -  Slot
-	ITEMINFO_VIEW           (11)   -  View
-	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
-	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
-	ITEMINFO_ALIASNAME      (14)   -  AliasName
-	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
-	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
-	ITEMINFO_ID             (17)   -  item ID
-	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
-	ITEMINFO_SUBTYPE        (20)   -  Subtype
+
+| ItemInfo Type - (index_value) | Description |
+| --- | --- |
+| ITEMINFO_BUY - (0) | Buy Price |
+| ITEMINFO_SELL - (1) | Sell Price |
+| ITEMINFO_TYPE - (2) | Type |
+| ITEMINFO_MAXCHANCE - (3) | Maxchance (max drop chance of this item, e.g. 1 = 0.01%) if = 0, then monsters don't drop it at all (rare or a quest item) if = 10000, then this item is sold in NPC shops only |
+| ITEMINFO_GENDER - (4) | Gender |
+| ITEMINFO_LOCATIONS - (5) | Location(s) |
+| ITEMINFO_WEIGHT - (6) | Weight |
+| ITEMINFO_ATTACK - (7) | ATK |
+| ITEMINFO_DEFENSE - (8) | DEF |
+| ITEMINFO_RANGE - (9) | Range |
+| ITEMINFO_SLOT - (10) | Slot |
+| ITEMINFO_VIEW - (11) | View |
+| ITEMINFO_EQUIPLEVELMIN - (12) | Equipment LV |
+| ITEMINFO_WEAPONLEVEL - (13) | Weapon LV |
+| ITEMINFO_ALIASNAME - (14) | AliasName |
+| ITEMINFO_EQUIPLEVELMAX - (15) | Equipment LV Max |
+| ITEMINFO_MAGICATTACK - (16) | Matk if RENEWAL is defined |
+| ITEMINFO_ID - (17) | Item ID |
+| ITEMINFO_AEGISNAME - (18) | Aegis item name |
+| ITEMINFO_ARMORLEVEL - (19) | Armor LV |
+| ITEMINFO_SUBTYPE - (20) | Subtype |
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
 
-\*getequipcardid(**\<equipment slot\>**,**\<card slot\>**)
+\***getequipcardid**(**\<equipment slot\>**,**\<card slot\>**)
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
+This function returns `CARD_ID`, `CARD0_FORGE`, `CARD0_CREATE`, or `CARD0_PET` (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
 
-\*mergeitem({,**\<char_id\>**});
+\***mergeitem**({,**\<char_id\>**});
 
 Open merge item window to merge available item can be merged.
 
 Examples
 1. See the NPC 'npc/re/other/merge_item.txt'.
 2. Simple usage:
-    mes "Let's check if any item can be merged.";
-    close2;
-    mergeitem;
-    end;
+```cpp
+mes "Let's check if any item can be merged.";
+close2;
+mergeitem;
+end;
+```
+
 
 ---------------------------------------
 
-\*mergeitem2({**\<item_id\>**{,**\<char_id\>**}});
-\*mergeitem2({"**\<item name\>**"{,**\<char_id\>**}});
+\***mergeitem2**({**\<item_id\>**{,**\<char_id\>**}});\
+\***mergeitem2**({"**\<item name\>**"{,**\<char_id\>**}});
 
 Merge all stackable items that separated by GUID flags
 (UniqueId in item_db or in item_group).
@@ -11217,7 +11440,7 @@ For valid attribute types, see `getrandomoptinfo` command reference.
 
 \***setrandomoption**(**\<equipment slot\>**,**\<index\>**,**\<id\>**,**\<value\>**,**\<param\>**{,**\<char id\>**});
 
-Sets **\<index+1\>** th random option for equipment equipped at **\<equipment slot\>** to **\<id\>**, **\<value\>** and **\<param\>**.
+Sets **\<index+1\>**th random option for equipment equipped at **\<equipment slot\>** to **\<id\>**, **\<value\>** and **\<param\>**.
 
 See 'getequipid' for a full list of valid equipment slots.
 
@@ -11400,7 +11623,7 @@ Only for public and private channel.
 To change channel color.
 **\<color\>** uses hex RGB values.
 
-Returns `1` on success.
+Returns 1 on success.
 
 ---------------------------------------
 
