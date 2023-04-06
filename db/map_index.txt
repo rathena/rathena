@@ -1210,6 +1210,26 @@ bl_temple
 bl_venom
 mjo_wst01
 ra_pol01
+1@20cn1
+1@20cn2
+1@slug
+1@twas
+1@twbs
+1@twig
+1@twsd
+icas_in2
+jor_back4
+jor_back5
+jor_back6
+jor_maze
+jor_root1
+jor_root2
+jor_root3
+jor_safty1
+jor_safty2
+jor_sanct
+jor_twice
+jor_twig
 
 //======================================================================================
 // - Other/Extra maps -
