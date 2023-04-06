@@ -2104,3 +2104,29 @@ Body:
 #      } else {
 #        bonus bAtkRate,1;
 #      }
+#  - Mob: PHREEONI2
+#    EggItem: Phreeoni_Egg
+#    FoodItem: High_Class_Pet_food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    AllowAutoFeed: true
+#    Script: >
+#      .@intimate = getpetinfo(PETINFO_INTIMATE);
+#      if (.@intimate == PET_INTIMATE_AWKWARD || .@intimate == PET_INTIMATE_SHY) {
+#         bonus bHit,6;
+#      }
+#      if (.@intimate == PET_INTIMATE_NEUTRAL) {
+#         bonus bHit,10;
+#         bonus bPerfectHitRate,5;
+#      }
+#      if (.@intimate == PET_INTIMATE_CORDIAL) {
+#         bonus bHit,14;
+#         bonus bPerfectHitRate,10;
+#      }
+#      if (.@intimate == PET_INTIMATE_LOYAL) {
+#         bonus bHit,18;
+#         bonus bPerfectHitRate,15;
+#      }
