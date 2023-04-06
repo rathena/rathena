@@ -66075,6 +66075,37 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box29);
+  - Id: 101947
+    AegisName: A_Bubble_Gum
+    Name: "[Achievement] Bubble Gum"    # !todo check english name
+    Type: Usable
+    Delay:
+      Duration: 60000
+      Status: Reuse_Limit_D
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_ITEMBOOST,1800000,100;
+  - Id: 101948
+    AegisName: A_Bubble_Gum_Box10
+    Name: "[Achievement] Box of 10 bubble gum"    # !todo check english name
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 101947,10;
   - Id: 102193
     AegisName: aegis_102193
     Name: Costume Enchant Stone Box 30
