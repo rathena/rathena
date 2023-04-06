@@ -8490,10 +8490,10 @@ flag: Specify target
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>};
-*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>};
-*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>};
-*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>};
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
+*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
@@ -8508,6 +8508,9 @@ CastCancel from skill_db.yml is the default value of <cancel>.
 
 If <Line_ID> is defined (positive number, default 0) the monster will say the message from 'Line_ID'
 in mob_chat_db.yml when casting the skill.
+
+If <ignore_range> is true, the unit will ignore the skill range defined by the database. The default value is false.
+Attention! this setting does not work for all skills.
 
 ---------------------------------------
 
