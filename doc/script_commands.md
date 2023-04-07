@@ -40,11 +40,11 @@ Descriptive text
 	Small example if possible. Will usually be incomplete, it's there just to
 	give you an idea of how it works in practice.
 
-To find a specific command, use Ctrl+F, (or whatever keys call up a search
-function in whatever you're reading this with) put an asterisk (*) followed by the command
-name, and it should find the command description for you.
-
-If you find anything missing, please let us know!
+> To find a specific command, use Ctrl+F, (or whatever keys call up a search
+> function in whatever you're reading this with) put an asterisk (*) followed by the command
+> name, and it should find the command description for you.
+> 
+> If you find anything missing, please let us know!
 
 ## Syntax
 
@@ -122,6 +122,7 @@ tab symbol to divide their arguments.
 
 To prevent problems and confusion, the tab symbols are written as '**\%TAB\%**'
 throughout this document, even though this makes the text a bit less readable.
+
 Using an invisible symbol to denote arguments is one of the bad things about
 this language.
 
@@ -144,7 +145,9 @@ and 'doc/mapflags.txt'.
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If **xs** and **ys** are non-zero, they
 specify the '**radius**' of a spawn-rectangle area centered at x,y.
+
 Putting zeros instead of these coordinates will spawn the monsters randomly.
+
 Note this is only the initial spawn zone, as mobs random-walk, they are free
 to move away from their specified spawn region.
 
@@ -165,7 +168,9 @@ executed, it is affected by spawn rates in 'battle_athena.conf'.
 
 Delay1 and delay2 control monster respawn delays - the first one is the fixed
 base respawn time, and the second is random variance on top of the base time.
+
 Both values are given in milliseconds (1000 = 1 second).
+
 Note that the server also enforces a minimum respawn delay of 1 second (See
 /conf/battle/monster.conf::mob_respawn_time).
 
@@ -176,6 +181,7 @@ player who triggers the script must be within 'trigger' range for the event to
 work.
 
 There are two optional fields for monster size and AI.
+
 Natural enemies for AI monsters are normal monsters.
 
 **\<mob size\>** can be:
@@ -218,9 +224,14 @@ If **\<Unique name\>** is not provided, use **\<Display name\>** instead.
 
 The client has a special feature when displaying names:
 if the display name contains a '#' character, it hides that part of the name.
+
+```cpp
 ex: if your NPC is named 'Hunter#hunter1', it will be displayed as 'Hunter'
+```
+
 
 **\<Display name\>** must be at most 24 characters in length.
+
 **\<Unique name\>** must be at most 24 characters in length.
 
 ## Define a warp point
@@ -264,7 +275,9 @@ towards the bottom of the map, you use facing 4, and to make it look southeast
 it's facing 5.)
 
 Sprite ID is the sprite number or constant used to display this particular NPC.
+
 You may also use a monster's ID instead to display a monster sprite for this NPC.
+
 It is possible to use a job sprite as well, but you must first define it as a
 monster sprite in '`mob_avail.yml`', a full description on how to do this is not
 in the scope of this manual.
@@ -325,10 +338,10 @@ There are other types of shops available:
 
 | Shop Type   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| cashshop    | Uses the Cash Shop interface to buy items with special points stored as account variables called `#CASHPOINTS` and `#KAFRAPOINTS`. Does not allow selling items. The layout used to define sale items still counts and "\<price\>" refers to how many points will be spent purchasing the item.                                                                                                                                                                                                 |
-| itemshop    | Uses the Shop interface to buy items with a specific item or special points from a variable.                                                                                                                                                                                                                                                                                                                                                                                |
-| pointshop   | Uses the Shop interface to buy items with special points from a variable. Only supports permanent character variables, temporary character variables, permanent local account variables or permanent global account variables. These variables must be of integer type, not string. The 'discount' flag is an optional value which makes the price at that shop become affected by discount skill.                                                                 |
-| marketshop  | Can have limited quantity of an item in stock. Use -1 in the stock field to have unlimited stock in a marketshop.                                                                                                                      
+| cashshop    | Uses the Cash Shop interface to buy items with special points stored as account variables called `#CASHPOINTS` and `#KAFRAPOINTS`. Does not allow selling items. The layout used to define sale items still counts and "\<price\>" refers to how many points will be spent purchasing the item.         |
+| itemshop    | Uses the Shop interface to buy items with a specific item or special points from a variable.     |
+| pointshop   | Uses the Shop interface to buy items with special points from a variable. Only supports permanent character variables, temporary character variables, permanent local account variables or permanent global account variables. These variables must be of integer type, not string. The 'discount' flag is an optional value which makes the price at that shop become affected by discount skill.|
+| marketshop  | Can have limited quantity of an item in stock. Use -1 in the stock field to have unlimited stock in a marketshop. |                                                                                                                  
 ## Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
 warp/warp2: **\<map name\>,\<x\>,\<y\>,\<facing\>\%TAB\%duplicate(\<label\>)\%TAB\%\<NPC Name\>\%TAB\%\<spanx\>,\<spany\>\
@@ -384,7 +397,7 @@ Unless you use 'attachrid' to explicitly attach a character to the script first.
 Whenever we say 'invoking character', we mean 'the character who's RID is
 attached to the running script. The script function "playerattached" can be
 used to check which is the currently attached player to the script (it will
-return 0 if the there is no player attached or the attached player no longer
+return `0` if the there is no player attached or the attached player no longer
 is logged on to the map-server).
 
 ## But what about GID?
@@ -392,6 +405,7 @@ is logged on to the map-server).
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
+
 Another way would be to right click on a mob, NPC or char as GM sprited char
 to view the GID.
 
@@ -632,6 +646,7 @@ same name. You can tell between the specific variables of an array with an
 All variable types can be used as arrays.
 
 Variables stored in this way, inside an array, are also called 'array elements'.
+
 Arrays are specifically useful for storing a set of similar data (like several
 item IDs for example) and then looping through it. You can address any array
 variable as if it was a normal variable:
@@ -691,6 +706,7 @@ common mathematical operations or conditional operators
 There are also conditional operators. This has to do with the conditional
 command 'if' and they are meant to return either `1` if the condition is satisfied
 and `0` if it isn't. (That's what they call 'boolean' variables. 0 means '`False`'.
+
 Anything except the zero is '`True`' Odd as it is, -1 and -5 and anything below
 zero will also be `True`.)
 
@@ -740,6 +756,7 @@ Logical bitwise operators work only on numbers, and they are the following:
 
 Left shift moves the binary 1(s) of a number n positions to the left,
 which is the same as multiplying by 2, n times.
+
 In the other hand, Right shift moves the binary 1(s) of a number n positions
 to the right, which is the same as dividing by 2, n times.
 
@@ -799,12 +816,16 @@ the 2,4 and 16 bit to 1).
 The bitwise operator XOR (eXclusive OR) sets a binary position to `0` if both
 numbers have the same value in the said position. On the other hand, it
 sets to `1` if they have different values in the said binary position.
+
 This is another way of setting and unsetting bits in bit-masks.
 
  Example:
 
 \- First let's set the quests that are currently in progress:
-   set inProgress,1|8|16; // quest 1,8 and 16 are in progress
+```cpp
+set inProgress,1|8|16; // quest 1,8 and 16 are in progress
+```
+
 \- After playing for a bit, the player starts another quest:
 ```cpp
    if (inProgress&2 == 0) {
@@ -987,7 +1008,9 @@ This special label triggers when a player kills another player. The variable
 **OnNPCKillEvent**:
 
 This special label triggers when a player kills a monster without label.
+
 The variable '`killedrid`' is set to the Class (mob ID) of the monster killed.
+
 The variable '`killedgid`' is set to the ID (unique mob game ID) of the monster killed.
 
 ---------------------------------------
@@ -1007,6 +1030,7 @@ every time a player would change maps. Imagine the server load with 1,000 player
 This special label triggers when a player whispers the NPC, and will run with the
 player's RID attached. It can accept up to ten parameters, which will be stored
 into separate temporary character string variables `@whispervar0$` to `@whispervar9$`.
+
 See 'doc/whisper_sys.txt' for further documentation.
 
 Only the special labels which are not associated with any script command are
@@ -1241,7 +1265,7 @@ You can show a tip box:
 
 ---------------------------------------
 
-#### \***next**;
+\***next**;
 
 This command will display a '`next`' button in the message window for the
 invoking character. Clicking on it will cause the window to clear and display
@@ -1265,7 +1289,7 @@ mes "This would appear on the 2nd page";
 
 ---------------------------------------
 
-#### \***clear**;
+\***clear**;
 
 This command will clear the dialog text and continue the script without player interaction.
 
@@ -1660,6 +1684,7 @@ perfectly equivalent.
 
 This function is a <mark>handy replacement</mark> for '`menu`' for some specific cases where
 you don't want a complex label structure - like, for example, asking simple yes-no questions. It will return the number of menu option picked, starting with 1.
+
 Like '`menu`', it will also set the variable @menu to contain the option the user
 picked.
 
@@ -1737,7 +1762,7 @@ For numeric inputs the value is capped to the range [min,max].
 
 Returns `1` if the value was higher than 'max', `-1` if lower than 'min' and `0` otherwise.
 
-For string inputs it returns 1 if the string was longer than 'max', -1 is
+For string inputs it returns `1` if the string was longer than 'max', -1 is
 shorter than 'min' and 0 otherwise.
 
 ---------------------------------------
@@ -1786,7 +1811,7 @@ place,50,50,6%TAB%script%TAB%Man%TAB%115,{
 }
 function%TAB%script%TAB%OddFunc%TAB%{
    if (getarg(0)%2 == 0)
-      return 0;// it's even
+      return `0`;// it's even
    return 1;// it's odd
 }
 ```
@@ -1798,7 +1823,7 @@ may be called directly without the use of the 'callfunc' script command.
 ```cpp
 function**\<tab\>**script**\<tab\>**SayHello**\<tab\>**{
    mes "Hello " + getarg(0);
-   return 0;
+   return `0`;
 }
 
 place,50,50,6**\<tab\>**script**\<tab\>**Man**\<tab\>**115,{
@@ -1944,6 +1969,7 @@ callfunc "funcNPC",5,4,3;
 
 '`getarg`' has an optional argument since trunk `r10773` and stable `r10958`.
 If the target argument exists, it is returned.
+
 Otherwise, if **\<default_value\>** is present it is returned instead,
 if not the script terminates immediately.
 
@@ -1996,6 +2022,7 @@ set <variable>,callfunc("<your function>");// when a value is being returned
 
 This works like `callfunc`, and is used for cleaner and faster scripting. The function
 must be defined and used within a script, and works like a label with arguments.
+
 Note that the name may only contain alphanumeric characters and underscore.
 
 Usage:
@@ -2067,6 +2094,7 @@ prontera,150,150,0	script	TestNPC	123,{
 \***is_function**("**\<function name\>**")
 
 This command checks whether a function exists.
+
 It returns `1` if function is found, or `0` if it isn't.
 
 #### Example:
@@ -2348,6 +2376,7 @@ similar to 'else' in the if-else statement.
 
 This is probably the simplest and most frequently used loop structure. The '`while`'
 statement can be interpreted as "while **\<condition\>** is true, perform **\<statement\>**".
+
 It is a pretest loop, meaning the conditional expression is tested before any of the
 statements in the body of the loop are performed. If the condition evaluates to
 false, the statement(s) in the body of the loop is/are never executed. If the
@@ -2612,7 +2641,7 @@ inarray(.@array[0], 200);
 
 inarray(.@array[0], 100);
 //while index 6 is also 100, the command will return the first instance it finds
-//return 0 because .@array[0] == 100
+//return `0` because .@array[0] == 100
 
 inarray(.@array[0], 800);
 //return -1 because 800 is not an element of the array .@array
@@ -2895,7 +2924,9 @@ dressed in black.
 \***getsavepoint**(**\<information type\>**{,**\<char_id\>**})
 
 This function will return information about the invoking character's save point.
+
 You can use it to let a character swap between several recorded save points.
+
 Available information types are:
 
      0 - Map name (a string)
@@ -2929,7 +2960,7 @@ Returns various information about a player's VIP status.
 Valid types:
 
     VIP_STATUS_ACTIVE - VIP status: true if the player is a VIP or false if not
-    VIP_STATUS_EXPIRE - VIP expire timestamp if the player is VIP or 0 if not
+    VIP_STATUS_EXPIRE - VIP expire timestamp if the player is VIP or `0` if not
     VIP_STATUS_REMAINING - VIP time remaining in seconds
 
 > NOTE: This command is only available if the VIP System is enabled.
@@ -2984,6 +3015,7 @@ Valid flag:
 This function returns the item ID of the item slot that calls the script
 on the invoking character or the specified equipment slot. If nothing is
 equipped there, it returns -1.
+
 Valid equipment slots are:
 
 | Equipment Slot | Description |
@@ -3055,6 +3087,7 @@ end;
 
 This function returns the unique ID (as a string) of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns an empty string.
+
 See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
@@ -3065,6 +3098,7 @@ Returns the `jname` of the item equipped in the specified equipment slot on the
 invoking character, or an empty string if nothing is equipped in that position.
 Does the same thing as `getitemname(getequipid())`. Useful for an NPC to state
 what your are wearing, or maybe saving as a string variable.
+
 See 'getequipid' for a full list of valid equipment slots.
 
 ```cpp
@@ -3416,6 +3450,7 @@ someone messed up the item database. It will return `-1` if there is no such ite
 
 This function will look up the item with the specified ID number in the database
 and return the info set by TYPE argument.
+
 It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
@@ -3453,6 +3488,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
 This function returns `CARD_ID`, `CARD0_FORGE`, `CARD0_CREATE`, or `CARD0_PET` (for card 0, if the item is produced).
+
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -3479,6 +3515,7 @@ end;
 
 Merge all stackable items that separated by GUID flags
 (UniqueId in item_db or in item_group).
+
 If no item ID/name given, all possible items in player's inventory will be merged.
 
 ---------------------------------------
@@ -3486,6 +3523,7 @@ If no item ID/name given, all possible items in player's inventory will be merge
 \***getequiptradability**(**\<equipment slot\>**{,**\<char id\>**});
 
 Returns `true` if the item in **\<equipment slot\>** is tradable.
+
 Returns `false` otherwise.
 
 ---------------------------------------
@@ -3493,7 +3531,9 @@ Returns `false` otherwise.
 \***identifyall**({**\<type\>**{,**\<account_id\>**}});
 
 Returns the count of unidentified items in the player inventory.
+
 If **\<type\>** is `true` the command will identify all the unidentified items as well (default).
+
 If **\<type\>** is `false` the command only returns the count of unidentified items.
 
 ---------------------------------------
@@ -3647,7 +3687,9 @@ time format.
 This uses the C function 'strfmtime', which obeys special format characters. For
 a full description see, for example, the description of 'strfmtime' at
 http://www.delorie.com/gnu/docs/glibc/libc_437.html
+
 All the format characters given in there should properly work.
+
 Max length is the maximum length of a time string to generate.
 
 The example given in rAthena sample scripts works like this:
@@ -3658,6 +3700,7 @@ mes gettimestr("%Y-%m/%d %H:%M:%S",21);
 
 
 The example above will print the current date and time like '`YYYY-MM/DD HH:MM:SS`'.
+
 The following example will print the date and time when the player's VIP status
 expires by the given **\<time_tick\>**:
 
@@ -3816,6 +3859,7 @@ Upon executing this,
     $@guildmembercount   is the number of guild members that were found.
 
 The guild members will be found regardless of whether they are online or offline.
+
 Note that the names come in no particular order.
 
 Be sure to use `$@guildmembercount` to go through this array, and not
@@ -4049,6 +4093,7 @@ Valid **\<flag\>** are:
 
 This function will look up the monster with the specified **\<mob ID\>** or **\<mob name\>** in the
 mob database and return the info set by **\<type\>** argument.
+
 It will return `-1` if there is no such monster (or the type value is invalid),
 or "`null`" if you requested the monster's name.
 
@@ -4089,6 +4134,7 @@ For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
 This command will find all drops of the specified mob and return the item IDs
 and drop percentages into arrays of temporary global variables.
+
 '`getmobdrops`' returns `1` if successful and 0 if the mob ID doesn't exist.
 
 Upon executing this,
@@ -4123,7 +4169,7 @@ belong to the new mob. $@MobDrop_count will always contain the correct number
 // get a Mob ID from the user
 input .@mob_id;
 
-if (getmobdrops(.@mob_id)) {   // 'getmobdrops' returns 1 on success
+if (getmobdrops(.@mob_id)) {   // 'getmobdrops' returns `1` on success
    // immediately copy global temporary variables into scope variables,
    // since we don't know when 'getmobdrops' will get called again for
    // another mob, overwriting your global temporary variables
@@ -4149,6 +4195,7 @@ close;
 Returns the total amount of skill points a character possesses (SkillPoint+SP's used in skills)
 This command can be used to check the currently attached characters total amount of skill points.
 This means the skill points used in skill are counted, and added to SkillPoints (number of skill points not used).
+
 This command does not count skills which are set as flag 4 (permament granted) (`ALL_BUYING_STORE`/`ALL_INCCARRY`)
 
 Example 1:
@@ -4396,6 +4443,7 @@ if (checkriding()) mes "PLEASE leave your bird outside! No riding birds on the f
 \***checkdragon**({**\<char_id\>**});
 
 The 'setdragon' function toggles mounting a dragon for the invoking character.
+
 It will return `1` if successful, `0` otherwise.
 
 The available colors are:
@@ -4417,6 +4465,7 @@ dragon and `0` if they aren't.
 \***checkmadogear**({**\<char_id\>**});
 
 If **\<flag\>** is false this command will remove the mount from the character.
+
 Otherwise it gives the invoking character a Mado (if they are a Mechanic and have the skill `NC_MADOLICENCE`).
 
 When using client version `PACKETVER_MAIN_NUM` \>= `20191120` or `PACKETVER_RE_NUM` >= `20191106`
@@ -4436,6 +4485,7 @@ Mado and `0` if they don't.
 \***ismounting**({**\<char_id\>**});
 
 The '`setmounting`' function toggles cash mount for the invoking character.
+
 It will return `1` if successful, `0` otherwise.
 
 > Note: Character must not be mounting a non-cash mount (eg. dragon, peco, wug, etc.)
@@ -4456,6 +4506,7 @@ warg and `0` if they don't.
 
 Checks if the player is vending or has has a `buyingstore`. Additionally
 it gives you the information whether the player uses `autotrade` or not.
+
 Name is optional, and defaults to the attached player if omitted.
 
 The returned value is bitmask of.
@@ -4485,6 +4536,7 @@ if (.@state&2)
 
 Checks if the player is in a chatroom.
 Name is optional, and defaults to the attached player if omitted.
+
 Returns `1` if they are in a chat room, `0` if they are not.
 
 #### Examples:
@@ -4501,6 +4553,7 @@ if (checkchatting())
 \***checkidle**({"**\<Player Name\>**"})
 
 Returns the time, in seconds, that the specified player has been idle.
+
 Name is optional, and defaults to the attached player if omitted.
 
 ---------------------------------------
@@ -4509,6 +4562,7 @@ Name is optional, and defaults to the attached player if omitted.
 
 Returns the time, in seconds, that the specified player has been idle for homunculus item/exp share.
 Name is optional, and defaults to the attached player if omitted.
+
 This will only work if '`hom_idle_no_share`' and '`idletime_hom_option`' are enabled (see '/conf/battle/homunc.conf').
 
 ---------------------------------------
@@ -4517,6 +4571,7 @@ This will only work if '`hom_idle_no_share`' and '`idletime_hom_option`' are ena
 
 Returns the time, in seconds, that the specified player has been idle for mercenary item share.
 Name is optional, and defaults to the attached player if omitted.
+
 This will only work if '`mer_idle_no_share`' and '`idletime_mer_option`' are enabled (see '/conf/battle/drops.conf').
 
 ---------------------------------------
@@ -4572,6 +4627,7 @@ This function will return `1` if the invoking character has all of the item
 IDs given equipped (if item/card IDs are passed, then it checks if the items/cards are
 inserted into slots in the equipment they are currently wearing). Theoretically
 there is no limit to the number of items that may be tested for at the same time.
+
 If even one of the items given is not equipped, `0` will be returned.
 
 ```cpp
@@ -4590,7 +4646,7 @@ if (isequipped(4001)) mes "A poring card is useful, don't you think?";
 
 \***isequippedcnt**(**\<id\>**{,**\<id\>**{,..}})
 
-This function is similar to '`isequipped`', but instead of 1 or 0, it will return
+This function is similar to '`isequipped`', but instead of 1 or `0`, it will return
 the amount of item/card equipped that were found on the invoking character from the given list.
 
 Example:
@@ -4891,6 +4947,7 @@ character and produces no other output whatsoever.
 This command heals relative amounts of HP and/or SP on the invoking character.
 Unlike heal, this command is intended for use in item scripts. It applies
 potion-related bonuses, such as alchemist ranking, cards, and status changes.
+
 When used inside an NPC script, certain bonuses are omitted.
 
 The command also applies a SP/VIT-related bonus:
@@ -5026,7 +5083,7 @@ close;
 
 \***eaclass**({**\<job number\>**,**\<char_id\>**})
 
-This commands returns the "eA job-number" corresponding to the given class, and
+This commands returns the "`eA job-number`" corresponding to the given class, and
 uses the invoking player's class if none is given. The eA job-number is also a
 class number system, but it's one that comes with constants which make it easy
 to convert among classes. The command will return `-1` if you pass it a job number
@@ -5051,7 +5108,7 @@ For more information on the eA Job System, see the docs/ea_job_system.txt file.
 
 Does the opposite of eaclass. That is, given an eA job-number, it returns the
 corresponding RO class number. A gender is required because both Bard and Dancers
-share the same eA job-number (EAJ_BARDDANCER), and uses the invoking player's
+share the same eA job-number (`EAJ_BARDDANCER`), and uses the invoking player's
 gender if none is given (if no player is attached, male will be used by default).
 The command will return `-1` if there is no valid class to represent the specified
 job (for example, if you try to get the baby version of a Taekwon class).
@@ -5543,7 +5600,7 @@ getitembound3 28705,1,1,9,0,0,0,0,0,BOUND_CHAR,.@OptID,.@OptVal,.@OptParam;
 
 Create an item signed with the given character's name.
 
-The command returns 1 when the item is created successfully, or 0 if it fails.
+The command returns `1` when the item is created successfully, or `0` if it fails.
 
 Failure occurs when:
 - There is no player attached.
@@ -5750,6 +5807,7 @@ This command behaves identically to '`delitem`', but deletes items from the play
 cart, storage, or guild storage.
 
 If no cart is mounted, '`cartdelitem`' will return `-1`.
+
 If player is not in a guild or storage is open, '`guildstoragedelitem`' will return `-1`.
 
 ---------------------------------------
@@ -5810,6 +5868,7 @@ This command behaves identically to '`delitem2`', but deletes items from the pla
 cart, storage, or guild storage.
 
 If no cart is mounted, '`cartdelitem2`' will return `-1`.
+
 If player is not in a guild or storage is open, '`guildstoragedelitem2`' will return `-1`.
 
 ---------------------------------------
@@ -5852,7 +5911,7 @@ close;
 This command behaves identically to '`countitem`', but counts items from the player's
 cart, storage, or guild storage.
 
-If no cart is mounted, '`cartcountitem`' will return `-1`.
+If no cart is mounted, '`cartcountitem`' will return `-1`.\
 If player is not in a guild or storage is open, '`guildstoragecountitem`' will return `-1`.
 
 ---------------------------------------
@@ -5868,6 +5927,7 @@ Expanded version of '`countitem`' function, used for created/carded/forged items
 
 This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
+
 See 'getitem2' for an explanation of the expanded parameters.
 
 '`countitem3`' is advance version of '`countitem2`' that also use Item Random Option as criteria.
@@ -5891,6 +5951,7 @@ This command behaves identically to '`countitem2`', but counts items from the pl
 cart, storage, or guild storage.
 
 If no cart is mounted, '`cartcountitem2`' will return `-1`.
+
 If player is not in a guild or storage is open, '`guildstoragecountitem2`' will return `-1`.
 
 ---------------------------------------
@@ -5914,6 +5975,7 @@ Expanded version of '`rentalcountitem`' function, used for created/carded/forged
 
 This function will return the number of rental items for the specified item ID and
 other parameters that the invoking character has in the inventory.
+
 See '`getitem2`' for an explanation of the expanded parameters.
 
 \'`rentalcountitem3`\' is advance version of '`rentalcountitem2`' that also use Item Random Option as criteria.
@@ -5975,7 +6037,7 @@ Similar to the above example, this command allows players to obtain the specifie
 quantity of a random item from the group "**\<group id\>**". The different groups and
 their group number are specified in db/(pre-)re/item_group_db.yml
 
-If '`quantity`' is not defined or 0, it will uses defined amount from Item Group list.
+If '`quantity`' is not defined or `0`, it will uses defined amount from Item Group list.
 
 If '`sub_group`' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
 'must' item group).
@@ -6138,6 +6200,7 @@ a rune and has the appropriate raw materials in their inventory.
 This command will remove all cards of the cards slots defined in db/item_db.yml
 from the item found in the specified equipment slot of the invoking character,
 create new card items and give them to the character.
+
 If any cards were removed in this manner, it will also show a success effect.
 
 ---------------------------------------
@@ -6175,6 +6238,7 @@ end silently.
 
 This command will refine an item in the specified equipment slot of the invoking
 character by +1, or a count if given. For a list of equipment slots see '`getequipid`'.
+
 This command will also display a '`refine success`' effect on the character and put
 appropriate messages into their chat window. It will also give the character fame
 points if a weapon reached +10 this way, even though these will only take effect for
@@ -6195,6 +6259,7 @@ window.
 
 This command will downgrade an item in the specified equipment slot of the invoking
 character by -1, or a count if given. For a list of equipment slots see '`getequipid`'.
+
 This command will also display a 'refine failure' effect on the character and put
 appropriate messages into their chat window.
 
@@ -6246,7 +6311,7 @@ These commands are to equip a equipment on the attached character.
 The equip function will equip the item ID given when the player has
 this item in his/her inventory, while the autoequip function will
 equip the given item ID when this is looted. The option parameter of
-the autoequip is 1 or 0, 1 to turn it on, and 0 to turn it off.
+the autoequip is 1 or `0`, 1 to turn it on, and 0 to turn it off.
 
 #### Examples:
 
@@ -6502,6 +6567,7 @@ Possible return values:
 
 Checks if the attached player or the player with the given character id has the given permission(s).
 Permission can be a bitmask and allows to use multiple values at the same time.
+
 Returns `true` if the player has all of the given permissions or `false` if the player does at least miss one of the given permissions or is not in a guild at all.
 
 Available permissions are:
@@ -6585,6 +6651,7 @@ rebirth scripts. Ask AppleGirl why.
 
 This is a character reset command, which will reset the stats on the invoking
 character and give back all the stat points used to raise them previously.
+
 Nothing will happen to any other numbers about the character.
 
 Used in reset NPC's (duh!)
@@ -6722,9 +6789,9 @@ Possible **\<type\>** values:
 	- 5: the amount of time in milliseconds that the status has remaining
 
 If **\<type\>** is not defined or is set to 0, then the script function will either
-return 1 if the status is active, or 0 if the status is not active. If the status
+return 1 if the status is active, or `0` if the status is not active. If the status
 is not active when any of the **\<type\>** fields are provided, this script function
-will always return 0.
+will always return `0`.
 
 ---------------------------------------
 
@@ -6767,7 +6834,7 @@ character.
 
 ---------------------------------------
 
-\*\ **\<effect number\>**{,**\<send_target\>**{,"**\<NPC Name\>**"}};
+\***specialeffect** **\<effect number\>**{,**\<send_target\>**{,"**\<NPC Name\>**"}};
 
 This command will display special effect with the given number, centered on the
 specified NPCs coordinates, if any. For a full list of special effect numbers
@@ -6811,7 +6878,7 @@ This command behaves parameter same as '`specialeffect`', but use for remove eff
 
 ---------------------------------------
 
-\*\ **\<effect number\>**{,**\<send_target\>**{,"**\<Player Name\>**"}};
+\***removespecialeffect2** **\<effect number\>**{,**\<send_target\>**{,"**\<Player Name\>**"}};
 
 Work for 2018-10-02+
 This command behaves parameter same as '`specialeffect2`', but use for remove effect with **\<effect number\>** from invoking character.
@@ -6947,7 +7014,7 @@ autobonus and autobonus3).
 
 
 
-\***bonus_script** "**\<script code\\>**",**\<duration\>**{,**\<flag\>**{,**\<type\>**{,**\<status_icon\>**{,**\<char_id\>**}}}};
+\***bonus_script** "**\<script code\>**",**\<duration\>**{,**\<flag\>**{,**\<type\>**{,**\<status_icon\>**{,**\<char_id\>**}}}};
 
 This command will attach a script to a player for a given duration, in seconds.
 After that time, the script will automatically expire. The same bonus cannot be
@@ -7009,6 +7076,7 @@ it just removes non-permanent script.
 \***plagiarizeskill** **\<skill_id\>**,**\<level\>**;
 
 Enable the player to plagiarize specific skills that are copyable.
+
 Return `1` on success, `0` otherwise.
 
 > Note:
@@ -7021,6 +7089,7 @@ Return `1` on success, `0` otherwise.
 \***plagiarizeskillreset** **\<flag\>**;
 
 Remove a plagiarized skill from the player.
+
 Return `1` on success, `0` otherwise.
 
 Flag constants:
@@ -7031,9 +7100,9 @@ Flag constants:
 ---------------------------------------
 
 \***skill** **\<skill id\>**,**\<level\>**{,**\<flag\>**};
-\***skill** "**\<skill name\\>**",**\<level\>**{,**\<flag\>**};
+\***skill** "**\<skill name\>**",**\<level\>**{,**\<flag\>**};
 \***addtoskill** **\<skill id\>**,**\<level\>**{,**\<flag\>**};
-\***addtoskill** "**\<skill name\\>**",**\<level\>**{,**\<flag\>**};
+\***addtoskill** "**\<skill name\>**",**\<level\>**{,**\<flag\>**};
 
 These commands will give the invoking character a specified skill. This is also
 used for item scripts.
@@ -7080,10 +7149,11 @@ everything not equippable by the new job class anyway.
 
 ---------------------------------------
 
-\***sit** {"**\<character name\\>**"};\
-\***stand** {"**\<character name\\>**"};
+\***sit** {"**\<character name\>**"};\
+\***stand** {"**\<character name\>**"};
 
 These commands will make a character sit or stand.
+
 If no character is specified, the command will run for the invoking character.
 
 Additionnally Sitting constant is true when the character is sitting, false otherwise.
@@ -7094,6 +7164,7 @@ Additionnally Sitting constant is true when the character is sitting, false othe
 \***undisguise** {**\<char_id\>**};
 
 This command disguises the current player with a monster sprite.
+
 The disguise lasts until '`undisguise`' is issued or the player logs out.
 
 Example:
@@ -7108,13 +7179,14 @@ undisguise; // Return to normal character sprite.
 ---------------------------------------
 
 \***transform** **\<monster ID\>**,**\<duration\>**{,**\<sc type\>**,**\<val1\>**,**\<val2\>**,**\<val3\>**,**\<val4\>**};\
-\***transform** "**\<monster name\\>**",**\<duration\>**{,**\<sc type\>**,**\<val1\>**,**\<val2\>**,**\<val3\>**,**\<val4\>**};\
+\***transform** "**\<monster name\>**",**\<duration\>**{,**\<sc type\>**,**\<val1\>**,**\<val2\>**,**\<val3\>**,**\<val4\>**};\
 \***active_transform** **\<monster ID\>**,**\<duration\>**{,**\<sc type\>**,**\<val1\>**,**\<val2\>**,**\<val3\>**,**\<val4\>**};\
-\***active_transform** "**\<monster name\\>**",**\<duration\>**{,**\<sc type\>**,**\<val1\>**,**\<val2\>**,**\<val3\>**,**\<val4\>**};
+\***active_transform** "**\<monster name\>**",**\<duration\>**{,**\<sc type\>**,**\<val1\>**,**\<val2\>**,**\<val3\>**,**\<val4\>**};
 
 This command will turn a player into a monster for a given duration and can grant
 a SC attribute effect while transformed. Note that players cannot be transformed
 during War of Emperium or if already disguised.
+
 Can only be removed when you die or the duration ends.
 
 '`transform`' and '`active_transform`' can stack on each other but using '`transform`' or
@@ -7125,12 +7197,12 @@ Can only be removed when you die or the duration ends.
 # 4,3 Marriage-related commands
 
 
-\***marriage**("**\<spouse name\\>**");
+\***marriage**("**\<spouse name\>**");
 
 This function will marry two characters, the invoking character and the one
 referred to by name given, together, setting them up as each other's marriage
 partner. No second function call has to be issued (in current SVN at least) to
-make sure the marriage works both ways. The function returns 1 upon success, or
+make sure the marriage works both ways. The function returns `1` upon success, or
 0 if the marriage could not be completed, either because the other character
 wasn't found or because one of the two characters is already married.
 
@@ -7158,7 +7230,7 @@ players, telling them they are now divorced.
 
 ---------------------------------------
 
-\***adopt**("**\<parent_name\\>**","**\<baby_name\\>**");
+\***adopt**("**\<parent_name\>**","**\<baby_name\>**");
 \***adopt**(**\<parent_id\>**,**\<baby_id\>**);
 
 This function will send the client adoption request to the specified baby
@@ -7204,8 +7276,9 @@ pcstopfollow getCharID(3,"Aaron");
 \***unitblockmove** **\<id\>**,**\<option\>**;
 
 Prevents the given GID from moving when the option is 1, and enables the ID to
-move again when the option is 0. This command will run for the attached unit
-if the given GID is zero.
+move again when the option is 0.
+
+This command will run for the attached unit if the given GID is zero.
 
 #### Examples:
 ```cpp
@@ -7219,12 +7292,13 @@ pcblockmove getcharid(3),0;
 
 ---------------------------------------
 
-\***pcblockskill** **\<id\>**,**\<option\>**;
+\***pcblockskill** **\<id\>**,**\<option\>**;\
 \***unitblockskill** **\<id\>**,**\<option\>**;
 
 Prevents the given GID from casting skills when the option is 1, and enables
-the ID to cast skills again when the option is 0. This command will run for
-the attached unit if the given GID is zero.
+the ID to cast skills again when the option is 0.
+
+This command will run for the attached unit if the given GID is zero.
 
 #### Examples:
 ```cpp
@@ -7241,7 +7315,7 @@ pcblockskill getcharid(3),0;
 \***setpcblock** **\<type\>**,**\<state\>**{,**\<account ID\>**};\
 \***getpcblock** {**\<account ID\>**};
 
-'`setpcblock`' command prevents/allows the player from doing the given **\<type\>** of action according to the **\<state\>** during the player session (note: @reloadscript removes all **\<type\>** except PCBLOCK_IMMUNE).
+'`setpcblock`' command prevents/allows the player from doing the given **\<type\>** of action according to the **\<state\>** during the player session (note: @reloadscript removes all **\<type\>** except `PCBLOCK_IMMUNE`).
 
 The **\<type\>** values are bit-masks, multiples of **\<type\>** can be added to change the player action.
 
@@ -7280,7 +7354,7 @@ Available **\<type\>**:
 // getpcblock related checks
 	if (getpcblock() & PCBLOCK_IMMUNE)
 		mes "You are invulnerable!";
-
+<map\>
 	if (getpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
 		mes "You can't walk or sit.";
 
@@ -7295,7 +7369,7 @@ Available **\<type\>**:
 ---------------------------------------
 
 **macro_detector**({**\<account ID\>**});
-**macro_detector**({"**\<character name\\>**"});
+**macro_detector**({"**\<character name\>**"});
 
 This command will display the captcha UI challenge onto the invoking character or the given **\<account ID\>**/**\<character name\>**.
 
@@ -7321,13 +7395,12 @@ end;
 # 5.- Mob / NPC -related commands.
 
 
-\***monster**     "**\<map name\\>**",**\<x\>**,**\<y\>**,"**\<name to show\\>**",**\<mob id\>**,**\<amount\>**{,"**\<event label\\>**",**\<size\>**,**\<ai\>**};
-\***monster**     "**\<map name\\>**",**\<x\>**,**\<y\>**,"**\<name to show\\>**","**\<mob name\\>**",**\<amount\>**{,"**\<event label\\>**",**\<size\>**,**\<ai\>**};
-\***areamonster** "**\<map name\\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,"**\<name to show\\>**",**\<mob id\>**,**\<amount\>**{,"**\<event label\\>**",**\<size\>**,**\<ai\>**};
-\***areamonster** "**\<map name\\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,"**\<name to show\\>**","**\<mob name\\>**",**\<amount\>**{,"**\<event label\\>**",**\<size\>**,**\<ai\>**};
+\***monster**     "**\<map name\>**",**\<x\>**,**\<y\>**,"**\<name to show\>**",**\<mob id\>**,**\<amount\>**{,"**\<event label\>**",**\<size\>**,**\<ai\>**};\
+\***monster**     "**\<map name\>**",**\<x\>**,**\<y\>**,"**\<name to show\>**","**\<mob name\>**",**\<amount\>**{,"**\<event label\>**",**\<size\>**,**\<ai\>**};\
+\***areamonster** "**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,"**\<name to show\>**",**\<mob id\>**,**\<amount\>**{,"**\<event label\>**",**\<size\>**,**\<ai\>**};\
+\***areamonster** "**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,"**\<name to show\>**","**\<mob name\>**",**\<amount\>**{,"**\<event label\>**",**\<size\>**,**\<ai\>**};
 
-This command will spawn **\<amount\>** monsters with **\<mob id\>** or **\<mob name\>** on the specified
-coordinates on the specified map. If the script is invoked by a character, a special
+This command will spawn **\<amount\>** monsters with **\<mob id\>** or **\<mob name\>** on the specified coordinates on the specified map. If the script is invoked by a character, a special
 **\<map name\>**, "this", will be recognized to mean the name of the map the invoking character
 is located at. This command works fine in item scripts.
 
@@ -7345,8 +7418,10 @@ optional parameter. This label is written like '**\<NPC object name\>**::**\<lab
 and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player
 attached at this execution will be the RID of the killing character.
-The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
-The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
+
+The variable '`killedrid`' is set to the Class (mob ID) of the monster killed.
+
+The variable '`killedgid`' is set to the ID (unique mob game ID) of the monster killed.
 
 **\<size\>** can be:
 
@@ -7414,10 +7489,10 @@ For more good examples see just about any official 2-1 or 2-2 job quest script.
 
 ---------------------------------------
 
-\***areamobuseskill** "**\<map name\\>**",**\<x\>**,**\<y\>**,**\<range\>**,**\<mob id\>**,**\<skill id\>**,**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;\
-\***areamobuseskill** "**\<map name\\>**",**\<x\>**,**\<y\>**,**\<range\>**,**\<mob id\>**,"**\<skill name\\>**",**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;\
-\***areamobuseskill** "**\<map name\\>**",**\<x\>**,**\<y\>**,**\<range\>**,"**\<mob name\\>**",**\<skill id\>**,**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;\
-\***areamobuseskill** "**\<map name\\>**",**\<x\>**,**\<y\>**,**\<range\>**,"**\<mob name\\>**","**\<skill name\\>**",**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;
+\***areamobuseskill** "**\<map name\>**",**\<x\>**,**\<y\>**,**\<range\>**,**\<mob id\>**,**\<skill id\>**,**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;\
+\***areamobuseskill** "**\<map name\>**",**\<x\>**,**\<y\>**,**\<range\>**,**\<mob id\>**,"**\<skill name\>**",**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;\
+\***areamobuseskill** "**\<map name\>**",**\<x\>**,**\<y\>**,**\<range\>**,"**\<mob name\>**",**\<skill id\>**,**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;\
+\***areamobuseskill** "**\<map name\>**",**\<x\>**,**\<y\>**,**\<range\>**,"**\<mob name\>**","**\<skill name\>**",**\<skill level\>**,**\<cast time\>**,**\<cancelable\>**,**\<emotion\>**,**\<target type\>**;
 
 This command will make all monsters of the specified **\<mob id\>** or **\<mob name\>** in the specified
 area use the specified skill. **\<map name\>**, **\<x\>**, and **\<y\>** define the center of the area,
@@ -7444,7 +7519,7 @@ areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,ET_KEK,3;
 
 ---------------------------------------
 
-\***killmonster** "**\<map name\\>**","**\<event label\\>**"{,**\<type\>**};
+\***killmonster** "**\<map name\>**","**\<event label\>**"{,**\<type\>**};
 
 This command will kill all monsters that were spawned with '`monster`' or
 '`addmonster`' and have a specified event label attached to them. Commonly used to
@@ -7462,10 +7537,11 @@ as a result of this command.
 
 ---------------------------------------
 
-\***killmonsterall** "**\<map name\\>**"{,**\<type\>**};
+\***killmonsterall** "**\<map name\>**"{,**\<type\>**};
 
 This command will kill all monsters on a specified map name, regardless of how
 they were spawned or what they are. As of r12873, The behavior has changed slightly.
+
 In light of a label behavior fix for mob spawning commands that will now allow the label to trigger when there is no player, `killmonsterall` has also been modified to support this.
 
 Using this the normal/old way means labels don't trigger when a player didn't
@@ -7478,8 +7554,11 @@ command, simply use 1 for type. Any other number won't be recognized.
 \***strmobinfo**(**\<type\>**,**\<monster id\>**);
 
 This function will return information about a monster record in the database, as
-per 'db/(pre-)re/mob_db.yml'. Type is the kind of information returned. Valid types are:
-It will return 0 if there is no such monster (or the type value is invalid),
+per 'db/(pre-)re/mob_db.yml'. Type is the kind of information returned. 
+
+Valid types are:
+
+It will return `0` if there is no such monster (or the type value is invalid),
 or an empty string if you requested the monster's name.
 
     1 - 'english name' field in the database, a string.
@@ -7493,17 +7572,20 @@ or an empty string if you requested the monster's name.
 
 ---------------------------------------
 
-\***mobcount**("**\<map name\\>**","**\<event label\\>**")
+\***mobcount**("**\<map name\>**","**\<event label\>**")
 
 This function will count all the monsters on the specified map that have a given
-event label and return the number or 0 if it can't find any. Naturally, only
+event label and return the number or `0` if it can't find any. Naturally, only
 monsters spawned with '`monster`' and '`areamonster`' script commands can have non-empty
 event label.
+
 If you pass this function an empty string for the event label, it will return
 the total count of monster without event label, including permanently spawning monsters.
+
 With the dynamic mobs system enabled, where mobs are not kept
 in memory for maps with no actual people playing on them, this will return a 0
 for any such map.
+
 If the event label is given as "all", all monsters will be counted, regardless of
 having any event label attached.
 
@@ -7513,11 +7595,12 @@ is "this", it will return -1.
 
 ---------------------------------------
 
-\***clone** "**\<map name\\>**",**\<x\>**,**\<y\>**,"**\<event\\>**",**\<char id\>**{,**\<master_id\>**{,**\<mode\>**{,**\<flag\>**,**\<duration\>**}}}
+\***clone** "**\<map name\>**",**\<x\>**,**\<y\>**,"**\<event\>**",**\<char id\>**{,**\<master_id\>**{,**\<mode\>**{,**\<flag\>**,**\<duration\>**}}}
 
 This command creates a monster which is a copy of another player. The first
 four arguments serve the same purpose as in the monster script command, The
 **\<char id\>** is the character id of the player to clone (player must be online).
+
 If **\<master id\>** is given, the clone will be a 'slave/minion' of it. Master_id
 must be a character id of another online player.
 
@@ -7530,6 +7613,7 @@ monster that'll target players, if one, it is considered a summoned monster,
 and as such, it'll target other monsters. Defaults to zero.
 
 The duration specifies how long the clone will live before it is auto-removed.
+
 Specified in seconds, defaults to no limit (zero).
 
 Returned value is the monster ID of the spawned clone. If command fails,
@@ -7566,9 +7650,9 @@ summon "--ja--",-1;
 ---------------------------------------
 
 \***addmonsterdrop** **\<monster id\>**,**\<item id\>**,**\<rate\>**,{**\<steal protected\>**,{**\<random option group id\>**}};\
-\***addmonsterdrop** "**\<monster name\\>**",**\<item id\>**,**\<rate\>**,{**\<steal protected\>**,{**\<random option group id\>**}};\
+\***addmonsterdrop** "**\<monster name\>**",**\<item id\>**,**\<rate\>**,{**\<steal protected\>**,{**\<random option group id\>**}};\
 \***delmonsterdrop** **\<monster id\>**,**\<item id\>**;\
-\***delmonsterdrop** "**\<monster name\\>**",**\<item id\>**;
+\***delmonsterdrop** "**\<monster name\>**",**\<item id\>**;
 
 These commands will temporarily add or delete a monster drop, which will be reset
 when the mob database reloads or the server shuts down. They return `true` upon success, `false` otherwise.
@@ -7577,7 +7661,9 @@ If the monster already drops the specified item, its drop rate will be updated w
 the given rate (100 = 1%).
 
 If **\<steal protected\>** is true the item will be protected from `TF_STEAL` (default false).
+
 **\<random option group id\>** binds the item with the given random option group Id (default 0).
+
 The Id must be valid, like defined in db/[pre-]re/item_randomopt_group.yml
 
 #### Examples:
@@ -7613,8 +7699,8 @@ OnIdle:
 
 ---------------------------------------
 
-\***disablenpc** {"**\<NPC object name\\>**"};\
-\***enablenpc** {"**\<NPC object name\\>**"};
+\***disablenpc** {"**\<NPC object name\>**"};\
+\***enablenpc** {"**\<NPC object name\>**"};
 
 These two commands will disable and enable, respectively, an NPC object
 specified by name. The disabled NPC will disappear from sight and will no longer
@@ -7631,8 +7717,8 @@ copies, and then disable all except one.
 
 ---------------------------------------
 
-\***hideonnpc** {"**\<NPC object name\\>**"};\
-\***hideoffnpc** {"**\<NPC object name\\>**"};
+\***hideonnpc** {"**\<NPC object name\>**"};\
+\***hideoffnpc** {"**\<NPC object name\>**"};
 
 These commands will make the NPC object specified display as hidden/visible,
 even though not actually disabled per se. Hidden as in thief Hide skill, but
@@ -7641,18 +7727,19 @@ unfortunately, not detectable by Ruwach or Sight.
 As they are now, these commands are pointless, it is suggested to use
 '`disablenpc`'/'`enablenpc`', because these two commands actually unload the NPC
 sprite location and other accompanying data from memory when it is not used.
+
 However, you can use these for some quest ideas (such as cloaking NPCs talking
 while hidden then revealing.... you can wonder around =P
 
 ---------------------------------------
 
-\***unloadnpc** "**\<NPC object name\\>**";
+\***unloadnpc** "**\<NPC object name\>**";
 
 This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
-\***duplicate** "**\<NPC name\\>**","**\<map\\>**",**\<x\>**,**\<y\>**{,"**\<Duplicate NPC name\\>**"{,**\<sprite\>**{,**\<dir\>**{,**\<xs\>**{,**\<xy\>**}}}}};
+\***duplicate** "**\<NPC name\>**","**\<map\>**",**\<x\>**,**\<y\>**{,"**\<Duplicate NPC name\>**"{,**\<sprite\>**{,**\<dir\>**{,**\<xs\>**{,**\<xy\>**}}}}};
 
 This command will duplicate the NPC with the given **\<NPC name\>** on **\<map\>** at **\<x\>**/**\<y\>**.
 If **\<Duplicate NPC name\>**, **\<sprite\>**, **\<dir\>**, **\<xs\>** or **\<ys\>** is not provided the value of the original NPC will be used.
@@ -7666,9 +7753,10 @@ The Unique name of the new duplicated NPC is returned on success. An empty strin
 
 ---------------------------------------
  
-\***duplicate_dynamic**("**\<NPC name\\>**"{,**\<character ID\>**});
+\***duplicate_dynamic**("**\<NPC name\>**"{,**\<character ID\>**});
 
 This command will duplicate the NPC with the given **\<NPC name\>** near the attached player or the player with the given **\<character ID\>**.
+
 The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
 
 > NOTE:\
@@ -7678,28 +7766,30 @@ The Unique name of the new duplicated NPC is returned on success. An empty strin
 
 ---------------------------------------
 
-\***cloakonnpc** {"**\<NPC object name\\>**"{,**\<character ID\>**}};\
-\***cloakoffnpc** {"**\<NPC object name\\>**"{,**\<character ID\>**}};
+\***cloakonnpc** {"**\<NPC object name\>**"{,**\<character ID\>**}};\
+\***cloakoffnpc** {"**\<NPC object name\>**"{,**\<character ID\>**}};
 
 These commands will make the NPC object specified display as cloaked/uncloaked,
 even though not actually disabled.
+
 The player can interact with a NPC cloaked (via NPC click, monster event..)
 but the NPC trigger area is disabled.
 
 If **\<character ID\>** is given then the NPC will only display to the specified
 player until he/she leaves the map, logs out, or the npc option is changed.
+
 If no **\<character ID\>** is specified it will display to the area.
 
 ---------------------------------------
 
-\***cloakonnpcself** {"**\<NPC object name\\>**"};
-\***cloakoffnpcself** {"**\<NPC object name\\>**"};
+\***cloakonnpcself** {"**\<NPC object name\>**"};
+\***cloakoffnpcself** {"**\<NPC object name\>**"};
 
 Same command as above, but an attached player is required. The NPC will only display to the attached player.
 
 ---------------------------------------
 
-\***isnpccloaked** {"**\<NPC object name\\>**"{,**\<character ID\>**}};
+\***isnpccloaked** {"**\<NPC object name\>**"{,**\<character ID\>**}};
 
 Returns true if the NPC has been cloaked to the attached player or given
 **\<character ID\>**, false otherwise. This works in association with cloakonnpc
@@ -7707,7 +7797,7 @@ when it is targetting a specific character.
 
 ---------------------------------------
 
-\***doevent** "**\<NPC object name\>**::**\<event label\\>**";
+\***doevent** "**\<NPC object name\>**::**\<event label\>**";
 
 This command will start a new execution thread in a specified NPC object at the
 specified label. The execution of the script running this command will not stop,
@@ -7735,7 +7825,7 @@ doevent "NPC::OnLabel";
 
 ---------------------------------------
 
-\***donpcevent** "**\<NPC object name\>**::**\<event label\\>**";
+\***donpcevent** "**\<NPC object name\>**::**\<event label\>**";
 
 This command invokes the event label code within an another NPC or NPCs. It
 starts a separate instance of execution, and the invoking NPC will resume
@@ -7782,22 +7872,26 @@ A debug message also shows on the console when no events are triggered.
 
 ---------------------------------------
 
-\***cmdothernpc** "**\<npc name\\>**","**\<command\\>**";
+\***cmdothernpc** "**\<npc name\>**","**\<command\>**";
 
-This is simply "`donpcevent` **\<npc name\>**::OnCommand**\<command\\>**".
+This is simply "`donpcevent` **\<npc name\>**::OnCommand**\<command\>**".
 It is an approximation of official server script language's '`cmdothernpc`'.
 
 Returns `true` if the command was executed on the other NPC successfully, `false` if not.
 
 ---------------------------------------
 
-\***npctalk** "**\<message\\>**"{,"**\<NPC name\\>**",**\<flag\>**{,**\<color\>**}};
+\***npctalk** "**\<message\>**"{,"**\<NPC name\>**",**\<flag\>**{,**\<color\>**}};
 
 This command will display a message as if the NPC object running it was a player
 talking - that is, above their head and in the chat window.
+
 The display name of the NPC won't get appended in front of the message.
+
 If the **\<NPC name\>** option is given and not empty, then that NPC will display the message, else the attached NPC will display the message,
-the color format is in RGB (0xRRGGBB). The color is white by default.
+the color format is in RGB (0xRRGGBB). 
+
+The color is white by default.
 
 Target for **\<flag\>**:
 
@@ -7815,9 +7909,10 @@ npctalk "Hello " + strcharinfo(0) + ", how are you?";
 
 ---------------------------------------
 
-\***chatmes** "**\<message\\>**"{,"**\<NPC name\\>**"};
+\***chatmes** "**\<message\>**"{,"**\<NPC name\>**"};
 
 This command will display a message in the waitingroom (chat) of the NPC.
+
 If the **\<NPC name\>** option is given, then that NPC will display the message, else
 the attached NPC will display the message.
 
@@ -7831,10 +7926,10 @@ chatmes "Waiting 5 minutes until the next match will start";
 
 ---------------------------------------
 
-\***setnpcdisplay**("**\<npc name\\>**", "**\<display name\\>**", **\<class id\>**, **\<size\>**)\
-\***setnpcdisplay**("**\<npc name\\>**", "**\<display name\\>**", **\<class id\>**)\
-\***setnpcdisplay**("**\<npc name\\>**", "**\<display name\\>**")\
-\***setnpcdisplay**("**\<npc name\\>**", **\<class id\>**)
+\***setnpcdisplay**("**\<npc name\>**", "**\<display name\>**", **\<class id\>**, **\<size\>**)\
+\***setnpcdisplay**("**\<npc name\>**", "**\<display name\>**", **\<class id\>**)\
+\***setnpcdisplay**("**\<npc name\>**", "**\<display name\>**")\
+\***setnpcdisplay**("**\<npc name\>**", **\<class id\>**)
 
 Changes the display name and/or display class of the target NPC.
 
@@ -7886,16 +7981,16 @@ On5secs:
 
 ---------------------------------------
 
-\***initnpctimer**{ "**\<NPC name\\>**" {, **\<Attach Flag\>**} } |
-             { "**\<NPC name\\>**" | **\<Attach Flag\>** };\
-\***stopnpctimer**{ "**\<NPC name\\>**" {, **\<Detach Flag\>**}  } |
-             { "**\<NPC name\\>**" | **\<Detach Flag\>** };\
-\***startnpctimer**{ "**\<NPC name\\>**" {, **\<Attach Flag\>**} } |
-              { "**\<NPC name\\>**" | **\<Attach Flag\>** };\
-\***setnpctimer** **\<tick\>**{,"**\<NPC name\\>**"};\
-\***getnpctimer**(**\<type of information\>**{,"**\<NPC name\\>**"});\
-\***attachnpctimer** {"**\<character name\\>**"};\
-\***detachnpctimer** {"**\<NPC name\\>**"};
+\***initnpctimer**{ "**\<NPC name\>**" {, **\<Attach Flag\>**} } |
+             { "**\<NPC name\>**" | **\<Attach Flag\>** };\
+\***stopnpctimer**{ "**\<NPC name\>**" {, **\<Detach Flag\>**}  } |
+             { "**\<NPC name\>**" | **\<Detach Flag\>** };\
+\***startnpctimer**{ "**\<NPC name\>**" {, **\<Attach Flag\>**} } |
+              { "**\<NPC name\>**" | **\<Attach Flag\>** };\
+\***setnpctimer** **\<tick\>**{,"**\<NPC name\>**"};\
+\***getnpctimer**(**\<type of information\>**{,"**\<NPC name\>**"});\
+\***attachnpctimer** {"**\<character name\>**"};\
+\***detachnpctimer** {"**\<NPC name\>**"};
 
 This set of commands and functions will create and manage an NPC-based timer.
 The NPC name may be omitted, in which case the calling NPC is used as target.
@@ -8027,7 +8122,7 @@ end;
 
 \***sleep** {**\<milliseconds\>**};\
 \***sleep2** {**\<milliseconds\>**};\
-\***awake** "**\<NPC name\\>**";
+\***awake** "**\<NPC name\>**";
 
 These commands are used to control the pause of a NPC.
 
@@ -8048,10 +8143,11 @@ awake "NPC"; //Cancels any running sleep timers on the NPC 'NPC'.
 
 ---------------------------------------
 
-\***progressbar** "**\<color\\>**",**\<seconds\>**;
+\***progressbar** "**\<color\>**",**\<seconds\>**;
 
 This command works almost like `sleep2`, but displays a progress bar
 above the head of the currently attached character (like cast bar).
+
 Once the given amount of seconds passes, the script resumes. If the
 character moves while the progress bar progresses, it is aborted and
 the script ends.
@@ -8067,7 +8163,7 @@ The color is currently ignored by the client and appears always green.
 
 ---------------------------------------
 
-\***progressbar_npc** "**\<color\\>**",**\<seconds\>**{,**\<"NPC Name"\>**};
+\***progressbar_npc** "**\<color\>**",**\<seconds\>**{,**\<"NPC Name"\>**};
 
 This command works like `progressbar`, but displays a progress bar
 above the head of the currently attached (or given) NPC. Once the
@@ -8079,7 +8175,7 @@ appears always green.
 # 5,1.- End of time-related commands
 
 
-\***announce** "**\<text\\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**{,**\<char_id\>**}}}}}};
+\***announce** "**\<text\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**{,**\<char_id\>**}}}}}};
 
 This command will broadcast a message to all or most players, similar to
 `@kami`/`@kamib` GM commands.
@@ -8100,6 +8196,7 @@ The flag values are coded as constants in 'src/map/script_constants.hpp' to make
 - **bc_map**: Message is sent to everyone in the same map as the source of the broadcast (see below).
 - **bc_area**: Message is sent to players in the vicinity of the source.
 - **bc_self**: Message is sent only to current player , if the source flag is bc_pc it also can be used to send the Message to the character id if it's provided.
+
 You cannot use more than one target flag.
 
 **Source flags:**
@@ -8107,6 +8204,7 @@ You cannot use more than one target flag.
 - **bc_npc**: Broadcast source is the NPC, not the player attached to the script
   (useful when a player is not attached or the message should be sent to those
   nearby the NPC).
+  
 You cannot use more than one source flag.
 
 **Special flags:**
@@ -8119,6 +8217,7 @@ Due to the way client handles broadcasts, it is impossible to set both `bc_blue`
 The optional parameters allow usage of broadcasts in custom colors, font-weights, sizes etc.
 
 If any of the optional parameters is used, special flag is ignored.
+
 Optional parameters may not work well (or at all) depending on a game client used.
 
 The color parameter is a single number which can be in hexadecimal notation.
@@ -8153,7 +8252,7 @@ announce "This is my message just for char id 150000",bc_self,0xFFF618,FW_NORMAL
 
 ---------------------------------------
 
-\***mapannounce** "**\<map name\\>**","**\<text\\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**}}}}}};
+\***mapannounce** "**\<map name\>**","**\<text\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**}}}}}};
 
 This command will work like '`announce`' but will only broadcast to characters
 currently residing on the specified map. The flag and optional parameters
@@ -8161,7 +8260,7 @@ parameters are the same as in '`announce`', but target and source flags are igno
 
 ---------------------------------------
 
-\***areaannounce** "**\<map name\\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,"**\<text\\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**}}}}}};
+\***areaannounce** "**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,"**\<text\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**}}}}}};
 
 This command works like '`announce`' but will only broadcast to characters
 residing in the specified x1/y1-x2/y2 rectangle on the map given. The flags and
@@ -8174,7 +8273,7 @@ areaannounce "prt_church",0,0,350,350,"God's in his heaven, all right with the w
 
 ---------------------------------------
 
-\***callshop** "**\<name\\>**"{,**\<option\>**};
+\***callshop** "**\<name\>**"{,**\<option\>**};
 
 These are a series of commands used to create dynamic shops.
 
@@ -8235,8 +8334,8 @@ A full example of a dynamic shop can be found in doc/sample/npc_dynamic_shop.txt
 
 ---------------------------------------
 
-\***npcshopitem** "**\<name\\>**",**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,...}}};\
-\***npcshopitem** "**\<name\\>**",**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,...}}};
+\***npcshopitem** "**\<name\>**",**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,...}}};\
+\***npcshopitem** "**\<name\>**",**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,...}}};
 
 This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
@@ -8252,8 +8351,8 @@ The function returns `1` if shop was updated successfully, or `0` if not found.
 
 ---------------------------------------
 
-\***npcshopadditem** "**\<name\\>**",**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,...}}};\
-\***npcshopadditem** "**\<name\\>**",**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,...}}};
+\***npcshopadditem** "**\<name\>**",**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,**\<item id\>**,**\<price\>**{,...}}};\
+\***npcshopadditem** "**\<name\>**",**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,**\<item id\>**,**\<price\>**,**\<stock\>**{,...}}};
 
 This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
@@ -8269,9 +8368,10 @@ The function returns `1` if shop was updated successfully, or `0` if not found.
 
 ---------------------------------------
 
-\***npcshopdelitem** "**\<name\\>**",**\<item id\>**{,**\<item id\>**{,**\<item id\>**{,...}}};
+\***npcshopdelitem** "**\<name\>**",**\<item id\>**{,**\<item id\>**{,**\<item id\>**{,...}}};
 
 This command will remove items from the specified NPC shop or cashshop.
+
 If the item to remove exists more than once on the shop, all instances will be
 removed.
 
@@ -8282,7 +8382,7 @@ removed.
 
 ---------------------------------------
 
-\***npcshopattach** "**\<name\\>**"{,**\<flag\>**};
+\***npcshopattach** "**\<name\>**"{,**\<flag\>**};
 
 This command will attach the current script to the given NPC shop.
 When a script is attached to a shop, the events "`OnBuyItem`" and "`OnSellItem`"
@@ -8304,7 +8404,7 @@ The function returns `0` if the shop was not found, `1` otherwise.
 
 ---------------------------------------
 
-\***npcshopupdate** "**\<name\\>**",**\<item_id\>**,**\<price\>**{,**\<stock\>**}
+\***npcshopupdate** "**\<name\>**",**\<item_id\>**,**\<price\>**{,**\<stock\>**}
 
 Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
 marketshop to update the stock quantity. For unlimited stock, use `-1`.
@@ -8313,7 +8413,7 @@ For other shop types, the stock value has no effect.
 
 ---------------------------------------
 
-\***waitingroom** "**\<chatroom name\\>**",**\<limit\>**{,"**\<event label\\>**"{,**\<trigger\>**{,**\<required zeny\>**{,**\<min lvl\>**{,**\<max lvl\>**}}}}};
+\***waitingroom** "**\<chatroom name\>**",**\<limit\>**{,"**\<event label\>**"{,**\<trigger\>**{,**\<required zeny\>**{,**\<min lvl\>**{,**\<max lvl\>**}}}}};
 
 This command will create a chat room, owned by the NPC object running this
 script and displayed above the NPC sprite.
@@ -8323,7 +8423,7 @@ The maximum length of a chat room name is `60` letters.
 The limit is the maximum number of people allowed to enter the chat room.
 
 The attached NPC is included in this count. If the optional event and trigger
-parameters are given, the event label ("**\<NPC object name\>**::**\<label name\\>**")
+parameters are given, the event label ("**\<NPC object name\>**::**\<label name\>**")
 will be invoked as if with a '`doevent`' upon the number of people in the chat
 room reaching the given triggering amount.
 
@@ -8369,8 +8469,8 @@ It's not clear what happens to a waiting room if the NPC is disabled with
 
 ---------------------------------------
 
-\***enablewaitingroomevent** {"**\<NPC object name\\>**"};\
-\***disablewaitingroomevent** {"**\<NPC object name\\>**"};\
+\***enablewaitingroomevent** {"**\<NPC object name\>**"};\
+\***disablewaitingroomevent** {"**\<NPC object name\>**"};\
 \***enablearena**;\
 \***disablearena**;
 
@@ -8378,6 +8478,7 @@ This will enable and disable triggering the waiting room event (see
 '`waitingroom`') respectively. Optionally giving an NPC object name will do that
 for a specified NPC object. The chat room will not disappear when triggering is
 disabled and enabled in this manner and players will not be kicked out of it.
+
 Enabling a chat room event will also cause it to immediately check whether the
 number of users in it exceeded the trigger amount and trigger the event
 accordingly.
@@ -8387,12 +8488,13 @@ character is, for example, trying to pass a job quest trial, and no other
 characters are present in the room to mess up the script.
 
 The '`enablearena`'/'`disablearena`' commands are just aliases with no parameter.
+
 These are supposedly left here for compatibility with official server scripts,
 but no rAthena script uses these at the moment.
 
 ---------------------------------------
 
-\***getwaitingroomstate**(**\<information type\>**{,"**\<NPC object name\\>**"})
+\***getwaitingroomstate**(**\<information type\>**{,"**\<NPC object name\>**"})
 
 This function will return information about the waiting room state for the
 attached waiting room or for a waiting room attached to the specified NPC if
@@ -8416,7 +8518,7 @@ The valid information types are:
 
 ---------------------------------------
 
-\***warpwaitingpc** "**\<map name\\>**",**\<x\>**,**\<y\>**{,**\<number of people\>**};
+\***warpwaitingpc** "**\<map name\>**",**\<x\>**,**\<y\>**{,**\<number of people\>**};
 
 This command will warp the amount of characters equal to the trigger number of
 the waiting room chat attached to the NPC object running this command to the
@@ -8425,6 +8527,7 @@ longest will get warped first. It can also do a random warp on the same map
 ("Random" instead of map name) and warp to the save point ("SavePoint").
 
 The list of characters to warp is taken from the list of the chat room members.
+
 Those not in the chat room will not be considered even if they are talking to
 the NPC in question. If the number of people is given, exactly this much people
 will be warped.
@@ -8444,13 +8547,13 @@ example.
 
 ---------------------------------------
 
-\***waitingroomkick** "**\<NPC object name\\>**" , "**\<character name\\>**";
+\***waitingroomkick** "**\<NPC object name\>**" , "**\<character name\>**";
 
 This command kicks the given character from the waiting room attached to the given NPC.
 
 ---------------------------------------
 
-\***getwaitingroomusers** "**\<NPC object name\\>**";
+\***getwaitingroomusers** "**\<NPC object name\>**";
 
 This command get all the characters in the waiting room of the given NPC and stores
 their `gids` in the array `.@waitingroom_users[]`. Also, stores the number of characters
@@ -8458,13 +8561,13 @@ in the variable `.@waitingroom_usercount`.
 
 ---------------------------------------
 
-\***kickwaitingroomall** {"**\<NPC object name\\>**"};
+\***kickwaitingroomall** {"**\<NPC object name\>**"};
 
 This command kicks everybody out of a specified waiting room chat.
 
 ---------------------------------------
 
-\***setmapflagnosave** "**\<map name\\>**","**\<alternate map name\\>**",**\<x\>**,**\<y\>**;
+\***setmapflagnosave** "**\<map name\>**","**\<alternate map name\>**",**\<x\>**,**\<y\>**;
 
 This command sets the '`nosave`' flag for the specified map and also gives an
 alternate respawn-upon-relogin point.
@@ -8476,7 +8579,7 @@ specified.
 
 ---------------------------------------
 
-\***setmapflag** "**\<map name\\>**",**\<flag\>**{,**\<zone\>**{,**\<type\>**}};
+\***setmapflag** "**\<map name\>**",**\<flag\>**{,**\<zone\>**{,**\<type\>**}};
 
 This command marks a specified map with the given map flag, which will alter the
 behavior of the map. A full list of mapflags is located in 'src/map/script_constants.hpp' with the '`mf_`' prefix, and documentation can be found in 'doc/mapflags.txt'.
@@ -8507,7 +8610,7 @@ For '`skill_duration`' mapflag:
 
 ---------------------------------------
 
-\***removemapflag** "**\<map name\\>**",**\<flag\>**{,**\<zone\>**};
+\***removemapflag** "**\<map name\>**",**\<flag\>**{,**\<zone\>**};
 
 This command removes a mapflag from a specified map.
 See '`setmapflag`' for a list of mapflags.
@@ -8516,7 +8619,7 @@ The optional parameter '`zone`' is used to remove the zone from restricted mapfl
 
 ---------------------------------------
 
-\***getmapflag**("**\<map name\\>**",**\<flag\>**{,**\<type\>**})
+\***getmapflag**("**\<map name\>**",**\<flag\>**{,**\<type\>**})
 
 This command checks the status of a given mapflag and returns the mapflag's state.
 0 means OFF, and 1 means ON. See 'setmapflag' for a list of mapflags.
@@ -8534,8 +8637,8 @@ The optional parameter 'type' is used in the 'skill_damage' mapflag:
 
 ---------------------------------------
 
-\***setbattleflag** "**\<battle flag\\>**",**\<value\>**{,**\<reload\>**};\
-\***getbattleflag**("**\<battle flag\\>**")
+\***setbattleflag** "**\<battle flag\>**",**\<value\>**{,**\<reload\>**};\
+\***getbattleflag**("**\<battle flag\>**")
 
 Sets or gets the value of the given battle flag.
 Battle flags are the flags found in the battle / *.conf files and is also used in Lupus' variable rates script.
@@ -8560,10 +8663,12 @@ will only attempt to reload specific configs.
 
 ---------------------------------------
 
-\***warpportal** **\<source x\>**,**\<source y\>**,"**\<map name\\>**",**\<target x\>**,**\<target y\>**;
+\***warpportal** **\<source x\>**,**\<source y\>**,"**\<map name\>**",**\<target x\>**,**\<target y\>**;
 
 Creates a warp portal identical to the Acolyte "`Warp Portal`" skill.
+
 The source coordinates specify the portal's location on the map of the invoking NPC.
+
 The target map and coordinates determine the destination of the portal.
 
 #### Examples:
@@ -8576,7 +8681,7 @@ The target map and coordinates determine the destination of the portal.
 
 ---------------------------------------
 
-\*mapwarp "**\<from map\\>**","**\<to map\\>**",**\<x\>**,**\<y\>**{,**\<type\>**,**\<ID\>**};
+\*mapwarp "**\<from map\>**","**\<to map\>**",**\<x\>**,**\<y\>**{,**\<type\>**,**\<ID\>**};
 
 This command will collect all characters located on the From map and warp them
 wholesale to the same point on the To map, or randomly distribute them there if
@@ -8601,7 +8706,7 @@ Example:
 # 5,2.- Guild-related commands
 
 
-\***maprespawnguildid** "**\<map name\\>**",**\<guild id\>**,**\<flag\>**;
+\***maprespawnguildid** "**\<map name\>**",**\<guild id\>**,**\<flag\>**;
 
 This command goes through the specified map and for each player and monster
 found there does stuff.
@@ -8640,8 +8745,8 @@ all across the server, and they, in turn, are triggered by clock with an
 
 ---------------------------------------
 
-\***gvgon** "**\<map name\\>**";\
-\***gvgoff** "**\<map name\\>**";
+\***gvgon** "**\<map name\>**";\
+\***gvgoff** "**\<map name\>**";
 
 These commands will turn GVG mode for the specified maps on and off, setting up
 appropriate map flags. In GVG mode, maps behave as if during the time of WoE,
@@ -8649,8 +8754,8 @@ even though WoE itself may or may not actually be in effect.
 
 ---------------------------------------
 
-\*`gvgon3` "**\<map name\\>**";\
-\*`gvgoff3` "**\<map name\\>**";
+\*`gvgon3` "**\<map name\>**";\
+\*`gvgoff3` "**\<map name\>**";
 
 Theses commands behave identically to `gvgon`/`gvgoff`, but apply `GVG_TE` mapflag.
 
@@ -8678,7 +8783,7 @@ returns a guild id:
 
 ---------------------------------------
 
-\***guardian** "**\<map name\\>**",**\<x\>**,**\<y\>**,"**\<name to show\\>**",**\<mob id\>**{,"**\<event label\\>**"{,**\<guardian index\>**}};
+\***guardian** "**\<map name\>**",**\<x\>**,**\<y\>**,"**\<name to show\>**",**\<mob id\>**{,"**\<event label\>**"{,**\<guardian index\>**}};
 
 This command is roughly equivalent to '`monster`', but is meant to be used with
 castle guardian monsters and will only work with them. It will set the guardian
@@ -8694,7 +8799,7 @@ set the things up that only castle guardians need.
 
 ---------------------------------------
 
-\***guardianinfo**("**\<map name\\>**", **\<guardian number\>**, **\<type\>**);
+\***guardianinfo**("**\<map name\>**", **\<guardian number\>**, **\<type\>**);
 
 This function will return various info about the specified guardian, or -1
 if it fails for some reason. It is primarily used in the castle manager NPC.
@@ -8760,7 +8865,7 @@ sprite based sprite id in 'db/mob_avail.yml' with this.
 
 ---------------------------------------
 
-\***movenpc** "**\<NPC name\\>**",**\<x\>**,**\<y\>**{,**\<dir\>**};
+\***movenpc** "**\<NPC name\>**",**\<x\>**,**\<y\>**{,**\<dir\>**};
 
 This command looks like the NPCWalkToxy function,but is a little different.
 
@@ -8782,7 +8887,7 @@ Example:
 # 6.- Other commands.
 
 
-\*`debugmes` "**\<message\\>**";
+\*`debugmes` "**\<message\>**";
 
 This command will send a debug message to the server console (map-server window). It
 will not be displayed anywhere else.
@@ -8795,7 +8900,7 @@ debugmes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
-\***errormes** "**\<message\\>**";
+\***errormes** "**\<message\>**";
 
 This command will send an error message to the server console (map-server window). It
 will not be displayed anywhere else.
@@ -8808,7 +8913,7 @@ errormes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
-\***logmes** "**\<message\\>**";
+\***logmes** "**\<message\>**";
 
 This command will write the message given to the map server NPC log file, as
 specified in 'conf/log_athena.conf'. In the TXT version of the server, the log
@@ -8820,7 +8925,7 @@ If logs are not enabled, nothing will happen.
 
 ---------------------------------------
 
-\***globalmes** "**\<message\\>**"{,"**\<NPC name\\>**"};
+\***globalmes** "**\<message\>**"{,"**\<NPC name\>**"};
 
 This command will send a message to the chat window of all currently connected
 characters.
@@ -8851,12 +8956,14 @@ rand(2,5) would result in 2,3,4 or 5
 
 This command will mark places on the mini map in the client connected to the
 invoking character. It uses the normal X and Y coordinates from the main map.
+
 The colors of the marks are defined using a hexadecimal number, same as the ones
 used to color text in 'mes' output, but are written as hexadecimal numbers in C.
 (They look like 0x**\<six numbers\>**.)
 
 Action is what you want to do with a point, 1 will set it, while 2 will clear
 it. 0 will also set it, but automatically removes the point after 15 seconds.
+
 Point number is the number of the point - you can have several. If more than
 one point is drawn at the same coordinates, they will cycle, which can be used
 to create flashing marks.
@@ -8892,16 +8999,18 @@ viewpoint 2,40,50,3,0xFF0000;
 
 ---------------------------------------
 
-\*viewpointmap "**\<map name\\>**",**\<action\>**,**\<x\>**,**\<y\>**,**\<point number\>**,**\<color\>**;
+\*viewpointmap "**\<map name\>**",**\<action\>**,**\<x\>**,**\<y\>**,**\<point number\>**,**\<color\>**;
 
 This command will mark places on the mini map in the client for all players currently
 on the defined map. It uses the normal X and Y coordinates from the main map.
+
 The colors of the marks are defined using a hexadecimal number, same as the ones
 used to color text in 'mes' output, but are written as hexadecimal numbers in C.
 (They look like 0x**\<six numbers\>**.)
 
 Action is what you want to do with a point, 1 will set it, while 2 will clear
 it. 0 will also set it, but automatically removes the point after 15 seconds.
+
 Point number is the number of the point - you can have several. If more than
 one point is drawn at the same coordinates, they will cycle, which can be used
 to create flashing marks.
@@ -8937,7 +9046,7 @@ memory of where the points are set whatsoever.
 
 ---------------------------------------
 
-\***cutin** "**\<filename\\>**",**\<position\>**;
+\***cutin** "**\<filename\>**",**\<position\>**;
 
 This command will display a picture, usually an NPC illustration, also called
 cutin, for the currently attached client. The position parameter determines the
@@ -9004,8 +9113,8 @@ those that actually work may differ greatly between client versions.
 
 ---------------------------------------
 
-\***soundeffect** "**\<effect filename\\>**",**\<type\>**;
-\***soundeffectall** "**\<effect filename\\>**",**\<type\>**{,"**\<map name\\>**"}{,**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**};
+\***soundeffect** "**\<effect filename\>**",**\<type\>**;
+\***soundeffectall** "**\<effect filename\>**",**\<type\>**{,"**\<map name\>**"}{,**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**};
 
 These two commands will play a sound effect to either the invoking character
 only ('`soundeffect`') or multiple characters ('`soundeffectall`'). If the running
@@ -9034,8 +9143,8 @@ You can add your own effects this way, naturally.
 
 ---------------------------------------
 
-\***playBGM** "**\<BGM filename\\>**";\
-\***playBGMall** "**\<BGM filename\\>**"{,"**\<map name\\>**"{,**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**}};
+\***playBGM** "**\<BGM filename\>**";\
+\***playBGMall** "**\<BGM filename\>**"{,"**\<map name\>**"{,**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**}};
 
 These two commands will play a Background Music to either the invoking character
 only ('`playBGM`') or multiple characters ('`playBGMall`').
@@ -9043,6 +9152,7 @@ only ('`playBGM`') or multiple characters ('`playBGMall`').
 BGM filename is the filename in `/BGM/` folder. It has to be in `.mp3` extension.
 
 It's not required to specify the extension inside the script.
+
 If coordinates are omitted, BGM will be broadcasted on the entire map. If the map name
 is omitted as well the BGM will be played for the entire server.
 
@@ -9050,8 +9160,8 @@ You can add your own BGMs this way, naturally.
 
 ---------------------------------------
 
-\***pvpon** "**\<map name\\>**";
-\***pvpoff** "**\<map name\\>**";
+\***pvpon** "**\<map name\>**";
+\***pvpoff** "**\<map name\>**";
 
 These commands will turn PVP mode for the specified maps on and off. Beside
 setting the flags referred to in '`setmapflag`', '`pvpon`' will also create a PVP
@@ -9059,7 +9169,7 @@ timer and ranking as will `@pvpon` GM command do.
 
 ---------------------------------------
 
-\***atcommand** "**\<command\\>**";
+\***atcommand** "**\<command\>**";
 
 This command will run the given command line exactly as if it was typed in from
 the keyboard by the player connected to the invoking character, and that
@@ -9073,61 +9183,70 @@ atcommand "@nuke " + .@player$;
 ```
 
 
-Note that for atcommands bound using '`bindatcmd`', this command will execute the
-original atcommand, not the script-bound atcommand.
+> Note that for atcommands bound using '`bindatcmd`', this command will execute the
+> original atcommand, not the script-bound atcommand.
+
 
 ---------------------------------------
 
-\*charcommand "**\<command\\>**";
+\***charcommand** "**\<command\>**";
 
 This command will run the given command line exactly as if it was typed in from
 the keyboard from a character that belonged to an account which had GM level 99.
 
 The commands can also run without an attached rid.
 
-	// This would do the same as above, but now
-	// it doesn't need a player attached by default.
-	charcommand "#option 0 0 0 Roy";
+```cpp
+// This would do the same as above, but now
+// it doesn't need a player attached by default.
+charcommand "#option 0 0 0 Roy";
+```
+
 
 ---------------------------------------
 
-\*bindatcmd "**\<command\\>**","**\<NPC object name\>**::**\<event label\\>**"{,**\<atcommand level\>**,**\<charcommand level\>**};
+\***bindatcmd** "**\<command\>**","**\<NPC object name\>**::**\<event label\>**"{,**\<atcommand level\>**,**\<charcommand level\>**};
 
 This command will bind a NPC event label to an atcommand. Upon execution of the
 atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
 one binding. If you rebind, it will override the original binding.
-Note: The default level for atcommand is 0 while the default level for charcommand is 100.
+
+Note: The default level for atcommand is `0` while the default level for charcommand is `100`.
 
 The following variables are set upon execution:
-	.@atcmd_command$       =  The name of the @command used.
-	.@atcmd_parameters$[]  =  Array containing the given parameters, starting from an index of 0.
-	.@atcmd_numparameters  =  The number of parameters defined.
+
+    .@atcmd_command$       =  The name of the @command used.
+    .@atcmd_parameters$[]  =  Array containing the given parameters, starting from an index of 0.
+    .@atcmd_numparameters  =  The number of parameters defined.
 
 Example:
 
-	When a user types the command "@test", an angel effect will be shown.
+When a user types the command "`@test`", an angel effect will be shown.
 
-	-	script	atcmd_example	-1,{
-	OnInit:
-		bindatcmd "test",strnpcinfo(3) + "::OnAtcommand";
-		end;
-	OnAtcommand:
-		specialeffect2 EF_ANGEL2;
-		end;
-	}
+```cpp
+-   script   atcmd_example   -1,{
+OnInit:
+   bindatcmd "test",strnpcinfo(3) + "::OnAtcommand";
+   end;
+OnAtcommand:
+   specialeffect2 EF_ANGEL2;
+   end;
+}
+```
+
 
 ---------------------------------------
 
-\*unbindatcmd "**\<command\\>**";
+\***unbindatcmd** "**\<command\>**";
 
 This command will unbind a NPC event label from an atcommand.
 
 ---------------------------------------
 
-\*useatcmd "**\<command\\>**";
+\***useatcmd** "**\<command\>**";
 
 This command will execute a script-bound atcommand for the attached RID. If the
-supplied command is not bound to any script, this command will act like 'atcommand'
+supplied command is not bound to any script, this command will act like '`atcommand`'
 and attempt to execute a source-defined command.
 
 The three .@atcmd_***** variables will NOT be set when invoking script-bound atcommands
@@ -9135,11 +9254,12 @@ in this way.
 
 ---------------------------------------
 
-\*camerainfo **\<range\>**,**\<rotation\>**,**\<latitude\>**{,**\<char id\>**};
+\***camerainfo** **\<range\>**,**\<rotation\>**,**\<latitude\>**{,**\<char id\>**};
 
 This command will update the client's camera information with the given values where
 the client can be the attached character or the player given by the char id parameter.
-Note: This requires 2016-05-25aRagexeRE or newer.
+
+> Note: This requires 2016-05-25aRagexeRE or newer.
 
 The values given will be divided by 100 and transmitted as floating-point number.
 
@@ -9157,105 +9277,108 @@ The values given will be divided by 100 and transmitted as floating-point number
 
 ---------------------------------------
 
-\*refineui({**\<char id\>**})
+\***refineui**({**\<char id\>**})
 
 Opens the refine UI for the attached player or the given character id.
 
-This feature requires 2016-10-12aRagexeRE or newer.
+> This feature requires 2016-10-12aRagexeRE or newer.
 
 ---------------------------------------
 
-\*openstylist({**\<char id\>**})
+\***openstylist**({**\<char id\>**})
 
 Opens the stylist UI for the attached player or the given character id.
 
-This feature requires packet version 2015-11-04 or newer.
+> This feature requires packet version 2015-11-04 or newer.
 
 ---------------------------------------
 
-\*laphine_synthesis({**\<item id\>**})
-\*laphine_synthesis({**\<"item name"\>**})
+\***laphine_synthesis**({**\<item id\>**})\
+\***laphine_synthesis**({**\<"item name"\>**})
 
 Opens the laphine synthesis UI for **\<item ID\>** or **\<item name\>** for the attached player.
+
 If run from within an item script **\<item ID\>** or **\<item name\>** is optional.
 
-This feature requires packet version 2016-06-01 or newer.
+> This feature requires packet version 2016-06-01 or newer.
 
 ---------------------------------------
 
-\*laphine_upgrade()
+\***laphine_upgrade**()
 
 Opens the laphine upgrade UI for the attached player.
 
-This feature requires packet version 2017-07-26 or newer.
-
 This function is intended for use in item scripts.
+
+> This feature requires packet version 2017-07-26 or newer.
 
 ---------------------------------------
 
-\*openbank({**\<char id\>**})
+\***openbank**({**\<char id\>**})
 
 Opens the Bank UI for the attached player or the given character ID.
 
-This command requires packet version 2015-12-02 or newer.
+> This command requires packet version 2015-12-02 or newer.
 
 ---------------------------------------
 
-\*enchantgradeui {**\<char id\>**};
+\***enchantgradeui** {**\<char id\>**};
 
 Opens the enchantgrade UI for the attached character or the player given by the char ID parameter.
 
-This command requires packet version 2020-07-24 or newer.
+> This command requires packet version 2020-07-24 or newer.
 
 ---------------------------------------
 
-\*set_reputation_points(**\<type\>**,**\<points\>**{,**\<char id\>**})
+\***set_reputation_points**(**\<type\>**,**\<points\>**{,**\<char id\>**})
 
 Sets the reputation points via **\<points\>** for reputation group **\<type\>** for the attached player or the given character ID.
+
 **\<type\>** is the client side index as stored in the Id field of the reputation.yml database files.
 
 ---------------------------------------
 
-\*get_reputation_points(**\<type\>**{,**\<char id\>**})
+\***get_reputation_points**(**\<type\>**{,**\<char id\>**})
 
 Gets the reputation points for reputation group **\<type\>** for the attached player or the given character ID.
+
 **\<type\>** is the client side index as stored in the Id field of the reputation.yml database files.
 
 ---------------------------------------
 
-\*add_reputation_points(**\<type\>**,**\<points\>**{,**\<char id\>**})
+\***add_reputation_points**(**\<type\>**,**\<points\>**{,**\<char id\>**})
 
 Adds the reputation points via **\<points\>** for reputation group **\<type\>** for the attached player or the given character ID.
+
 **\<type\>** is the client side index as stored in the Id field of the reputation.yml database files.
 
 ---------------------------------------
 
-\*item_reform({**\<item id\>**{,**\<char id\>**}})
-\*item_reform({**\<"item name"\>**{,**\<char id\>**}})
+\***item_reform**({**\<item id\>**{,**\<char id\>**}})\
+\***item_reform**({**\<"item name"\>**{,**\<char id\>**}})
 
 Opens the item reform UI for **\<item ID\>** or **\<item name\>** for the attached player or the given character ID.
+
 If run from within an item script **\<item ID\>** or **\<item name\>** is optional.
 
-This feature requires packet version 2021-11-03 or newer.
+> This feature requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
 
-\*item_enchant(**\<client side LUA index\>**{,**\<char ID\>**});
+\***item_enchant**(**\<client side LUA index\>**{,**\<char ID\>**});
 
 Opens the enchant UI for the attached character or the player given by the **\<char ID\>** parameter.
-If the player exceeds 70% weight the client will not open the enchant UI and will trigger an
-error message instead.
 
-This command requires packet version 2021-11-03 or newer.
+If the player exceeds 70% weight the client will not open the enchant UI and will trigger an error message instead.
 
----------------------------------------
-\\
+> This command requires packet version 2021-11-03 or newer.
+
+
 6,1.- Unit-related commands
-\\
----------------------------------------
 
-\*unitwalk **\<GID\>**,**\<x\>**,**\<y\>**{,"**\<event label\\>**"};
-\*unitwalkto **\<GID\>**,**\<Target GID\>**{,"**\<event label\\>**"};
+
+\***unitwalk** **\<GID\>**,**\<x\>**,**\<y\>**{,"**\<event label\>**"};\
+\***unitwalkto** **\<GID\>**,**\<Target GID\>**{,"**\<event label\>**"};
 
 This command will tell a **\<GID\>** to walk to a position, defined either as a set of
 coordinates or another object. The command returns a 1 for success and 0 upon failure.
@@ -9265,15 +9388,16 @@ unit's current map. While there is no way to move across an entire map with 1 co
 use, this could be used in a loop to move long distances.
 
 If an object ID is passed, the initial **\<GID\>** will walk to the **\<Target GID\>** (similar to
-walking to attack). This is based on the distance from **\<GID\>** to **\<Target ID\>**. This command
-uses a hard walk check, so it will calculate a walk path with obstacles. Sending a bad
+walking to attack). This is based on the distance from **\<GID\>** to **\<Target ID\>**.
+
+This command uses a hard walk check, so it will calculate a walk path with obstacles. Sending a bad
 target ID will result in an error.
 
-An optional Event Label can be passed as well which will execute when the **\<GID\>** has reached
-the given coordinates or **\<Target GID\>**.
+An optional Event Label can be passed as well which will execute when the **\<GID\>** has reached the given coordinates or **\<Target GID\>**.
 
 #### Examples:
 
+```cpp
 // Makes player walk to the coordinates (150,150).
 	unitwalk getcharid(3),150,150;
 
@@ -9285,115 +9409,127 @@ the given coordinates or **\<Target GID\>**.
 
 // Makes player walk to another character named "WalkToMe".
 	unitwalkto getcharid(3),getcharid(3,"WalkToMe");
+```
+
 
 ---------------------------------------
 
-\*unitattack **\<GID\>**,**\<Target ID\>**{,**\<action type\>**};
-\*unitattack **\<GID\>**,"**\<Target Name\\>**"{,**\<action type\>**};
+\***unitattack** **\<GID\>**,**\<Target ID\>**{,**\<action type\>**};\
+\*unitattack **\<GID\>**,"**\<Target Name\>**"{,**\<action type\>**};
 
-This command will make a **\<GID\>** attack the specified target. It returns true upon
-success and false for all failures.
+This command will make a **\<GID\>** attack the specified target. It returns `true` upon
+success and `false` for all failures.
 
 If **\<GID\>** is a player and a non-zero **\<action type\>** is given, the unit will perform a
 continuous attack instead of a single attack.
 
-Note:
-Using unitattack with **\<GID\>** 0 means that it will use the currently attached unit.
-For players any attack requests will fail, because talking to an NPC prevents attacking a monster.
-Therefore you need to detach the player from the NPC before using this command.
+> Note:\
+> Using unitattack with **\<GID\>** 0 means that it will use the currently attached unit.\
+> For players any attack requests will fail, because talking to an NPC prevents attacking a monster.\
+> Therefore you need to detach the player from the NPC before using this command.
+
 
 ---------------------------------------
 
-\*unitkill **\<GID\>**;
+\***unitkill** **\<GID\>**;
 
 This command will kill a **\<GID\>**.
 
 ---------------------------------------
 
-\*unitwarp **\<GID\>**,"**\<map name\\>**",**\<x\>**,**\<y\>**;
+\***unitwarp** **\<GID\>**,"**\<map name\>**",**\<x\>**,**\<y\>**;
 
 This command will warp a **\<GID\>** to the specified map and coordinates.
 
 If **\<GID\>** is zero, the command runs for the unit that invoked the script. This can be
 used with "OnTouch" to warp monsters:
 
+```cpp
 OnTouch:
 	unitwarp 0,"this",-1,-1;
+```
+
 
 ---------------------------------------
 
-\*unitstopattack **\<GID\>**;
+\***unitstopattack** **\<GID\>**;
 
 This command will make a **\<GID\>** stop attacking.
 
 ---------------------------------------
 
-\*unitstopwalk **\<GID\>**{,**\<flag\>**};
+\***unitstopwalk** **\<GID\>**{,**\<flag\>**};
 
 This command will make a **\<GID\>** stop moving.
 
 Note: If this is called from OnTouch, then the walktimer attached to the unit is
 removed from OnTouch which causes this command to not stop the unit from walking.
-Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
+
+Suggest to use '`unitblockmove`' to forcefully stop the unit with OnTouch.
 
 The **\<flag\>** value affects how the unit is stopped. The following flags are bitwise
 values (can be combined using the pipe operator):
+
 	USW_NONE = Unit will keep walking to their original destination.
 	USW_FIXPOS = Issue a fixpos packet afterwards.
 	USW_MOVE_ONCE = Force the unit to move one cell if it hasn't yet.
 	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
 	USW_FORCE_STOP = Force stop moving.
 
-This command will also remove the state tracking used for 'unitwalk' and 'unitwalkto'.
+This command will also remove the state tracking used for '`unitwalk`' and '`unitwalkto`'.
 
 ---------------------------------------
 
-\*unittalk **\<GID\>**,"**\<text\\>**"{,flag};
+\***unittalk** **\<GID\>**,"**\<text\>**"{,flag};
 
 This command will make a **\<GID\>** say a message. The display name of the **\<GID\>** won't get appended in front of the message.
+
 flag: Specify target
+
    bc_area - Message is sent to players in the vicinity of the source (default).
    bc_self - Message is sent only to player attached.
 
 ---------------------------------------
 
-\*unitskilluseid **\<GID\>**,**\<skill id\>**,**\<skill lvl\>**{,**\<target id\>**,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};
-\*unitskilluseid **\<GID\>**,"**\<skill name\\>**",**\<skill lvl\>**{,**\<target id\>**,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};
-\*unitskillusepos **\<GID\>**,**\<skill id\>**,**\<skill lvl\>**,**\<x\>**,**\<y\>**{,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};
-\*unitskillusepos **\<GID\>**,"**\<skill name\\>**",**\<skill lvl\>**,**\<x\>**,**\<y\>**{,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};
+\***unitskilluseid** **\<GID\>**,**\<skill id\>**,**\<skill lvl\>**{,**\<target id\>**,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};\
+\***unitskilluseid** **\<GID\>**,"**\<skill name\>**",**\<skill lvl\>**{,**\<target id\>**,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};\
+\***unitskillusepos** **\<GID\>**,**\<skill id\>**,**\<skill lvl\>**,**\<x\>**,**\<y\>**{,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};\
+\***unitskillusepos** **\<GID\>**,"**\<skill name\>**",**\<skill lvl\>**,**\<x\>**,**\<y\>**{,**\<casttime\>**,**\<cancel\>**,**\<Line_ID\>**, **\<ignore_range\>**};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
 
 Skill ID is the ID of the skill, skill level is the level of the skill.
-Cast time is the amount of seconds to add or remove from the skill. Use a positive value to
-add and negative value to subtract. Using 0 or no value will use the default skill cast time.
+
+Cast time is the amount of seconds to add or remove from the skill. Use a positive value to add and negative value to subtract. Using `0` or no value will use the default skill cast time.
+
 For the position, the x and y are given in the UnitSkillUsePos.
 
 **\<cancel\>** defines if the cast can be interrupted when hit (true/false).
 CastCancel from skill_db.yml is the default value of **\<cancel\>**.
 
-If **\<Line_ID\>** is defined (positive number, default 0) the monster will say the message from 'Line_ID'
-in mob_chat_db.yml when casting the skill.
+If **\<Line_ID\>** is defined (positive number, default 0) the monster will say the message from 'Line_ID' in mob_chat_db.yml when casting the skill.
 
 If **\<ignore_range\>** is true, the unit will ignore the skill range defined by the database. The default value is false.
-Attention! this setting does not work for all skills.
+
+> Attention! this setting does not work for all skills.
 
 ---------------------------------------
 
-\*unitexists **\<GID\>**;
+\***unitexists** **\<GID\>**;
 
-Checks if the given Game ID exists. Returns false if the object doesn't exist, or true if
+Checks if the given Game ID exists. Returns `false` if the object doesn't exist, or `true` if
 it does.
 
 ---------------------------------------
 
-\*getunittype **\<GID\>**;
+\***getunittype** **\<GID\>**;
 
-Returns the type of object from the given Game ID. Returns -1 if the given GID does not
+Returns the type of object from the given Game ID. Returns `-1` if the given GID does not
 exist.
 
 Return values:
+
 	BL_PC   - Character object
 	BL_MOB  - Monster object
 	BL_PET  - Pet object
@@ -9404,19 +9540,20 @@ Return values:
 
 ---------------------------------------
 
-\*getunitname **\<GID\>**;
+\***getunitname** **\<GID\>**;
 
-Gets the name of the given unit. Supported types are monster, homunculus, pet, and NPC.
+Gets the name of the given unit. Supported types are `monster`, `homunculus`, `pet`, and `NPC`.
+
 Mercenary and Elemental don't support custom names.
 
 Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
-\*setunitname **\<GID\>**,"**\<new name\\>**";
+\***setunitname** **\<GID\>**,"**\<new name\>**";
 
 Changes the name of the given unit to the new name given. Supported types are monster,
-homunculus, and pet. To change an NPC's name, see 'setnpcdisplay'. Mercenary and
+homunculus, and pet. To change an NPC's name, see '`setnpcdisplay`'. Mercenary and
 Elemental don't support custom names.
 
 Changing a homunculus or pet name will be permanent.
@@ -9425,32 +9562,35 @@ Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
-\*setunittitle **\<GID\>**,**\<title\>**;
+\***setunittitle** **\<GID\>**,**\<title\>**;
 
 Apply a **\<title\>** to the given **\<GID\>**.
 
-Note: This only works on non-player types. It also will only work on mobs if battle_config.show_mob_info is not enabled.
+> Note: This only works on non-player types. It also will only work on mobs if  battle_config.show_mob_info is not enabled.
 
 ---------------------------------------
 
-\*getunittitle **\<GID\>**;
+\***getunittitle** **\<GID\>**;
 
 Returns the title of the given **\<GID\>**.
 
 ---------------------------------------
 
-\*getunitdata **\<GID\>**,**\<arrayname\>**;
-\*setunitdata **\<GID\>**,**\<parameter\>**,**\<new value\>**;
+\***getunitdata** **\<GID\>**,**\<arrayname\>**;
+\***setunitdata** **\<GID\>**,**\<parameter\>**,**\<new value\>**;
 
 This is used to get and set special data related to the unit.
-With getunitdata, the array given will be filled with the current data. In setunitdata
+
+With `getunitdata`, the array given will be filled with the current data. In setunitdata
 the indexes in the array would be used to set that data on the unit.
 
-Both getunitdata and setunitdata will return -1 if the given GID does not exist.
+Both `getunitdata` and `setunitdata` will return `-1` if the given GID does not exist.
 
-Note: When adjusting a unit's stat (STR, AGI, etc) the unit's respective statuses are
-      recalculated (HIT, FLEE, etc) automatically. Keep in mind that some stats don't
-	  affect a unit's status and will have to directly be modified.
+> Note:\
+> When adjusting a unit's stat (STR, AGI, etc) the unit's respective statuses are
+> recalculated (HIT, FLEE, etc) automatically. Keep in mind that some stats don't
+> affect a unit's status and will have to directly be modified.
+
 
 | Parameters (indexes) for monsters are: |                   |
 |---------------------------------------|-------------------|
@@ -9660,10 +9800,10 @@ setunitdata .GID,UMOB_MAXHP,1000;
 
 ---------------------------------------
 
-#### \***geteleminfo** **\<type\>**{,**\<char_id\>**};
+\***geteleminfo** **\<type\>**{,**\<char_id\>**};
 
 Get info of elemental of attached player or player by char_id.
-Other info can be obtained by 'getunitdata' command.
+Other info can be obtained by '`getunitdata`' command.
 
 Valid types are:
 ```cpp
@@ -9676,8 +9816,8 @@ Valid types are:
 ## 6,1.- End of unit-related commands
 
 
-#### \***npcskill** **\<skill id\>**,**\<skill lvl\>**,**\<stat point\>**,**\<NPC level\>**;
-#### \***npcskill** "**\<skill name\\>**",**\<skill lvl\>**,**\<stat point\>**,**\<NPC level\>**;
+\***npcskill** **\<skill id\>**,**\<skill lvl\>**,**\<stat point\>**,**\<NPC level\>**;
+\***npcskill** "**\<skill name\>**",**\<skill lvl\>**,**\<stat point\>**,**\<NPC level\>**;
 
 This command causes the attached NPC object to cast a skill on the attached
 player. The skill will have no cast time or cooldown. The player must be
@@ -9685,12 +9825,14 @@ within the default skill range or the command will fail silently.
 
 The "stat point" parameter temporarily sets all NPC stats to the given value,
 and "NPC level" is the temporary level of the NPC (used in some skills).
+
 Neither value can be greater than the max level defined in config, and will
 not work properly if the NPC has a mob sprite.
 
 Before using skills, NPCs must have basic stats applied to them depending on the
 skill being used: **UNPC_ATKMIN**, **UNPC_ATKMAX**, **UNPC_MATKMIN**, **UNPC_MATKMAX**, **UNPC_STR**,
 **UNPC_AGI**, **UNPC_VIT**, **UNPC_INT**, **UNPC_DEX**, **UNPC_LUK**.
+
 See 'setunitdata' for more information on usage.
 
 ```cpp
@@ -9702,8 +9844,8 @@ npcskill "AL_HEAL",10,99,60;
 
 ---------------------------------------
 
-#### \***day**;
-#### \***night**;
+\***day**;\
+\***night**;
 
 These two commands will switch the entire server between day and night mode
 respectively. If your server is set to cycle between day and night by
@@ -9728,14 +9870,15 @@ OnClock1800:
 
 This script allows to emulate the day/night cycle as the server does, but also
 allows triggering additional effects upon change, like announces, gifts, etc.
+
 The day/night cycle set by configuration should be disabled when this script is used.
 
 ---------------------------------------
 
-#### \***defpattern** **\<set number\>**,"**\<regular expression pattern\\>**","**\<event label\\>**";
-#### \***activatepset** **\<set number\>**;
-#### \***deactivatepset** **\<set number\>**;
-#### \***deletepset** **\<set number\>**;
+\***defpattern** **\<set number\>**,"**\<regular expression pattern\>**","**\<event label\>**";\
+\***activatepset** **\<set number\>**;\
+\***deactivatepset** **\<set number\>**;\
+\***deletepset** **\<set number\>**;
 
 This set of commands is only available if the server is compiled with regular
 expressions library enabled. Default compilation and most binary distributions
@@ -9748,6 +9891,7 @@ with these regular expression patterns.
 
 Patterns are organized into sets, which are referred to by a set number. You can
 have multiple sets patterns, and multiple patterns may be active at once.
+
 Numbers for pattern sets start at 1.
 
 '**defpattern**' will associate a given regular expression pattern with an event
@@ -9768,6 +9912,7 @@ unparalleled power of text manipulation. For an explanation of what a regular
 expression pattern is, see a few web pages:
 
 <a href="http://www.regular-expressions.info/" target="_blank">http://www.regular-expressions.info/</a>
+
 <a href="http://www.weitz.de/regex-coach/" target="_blank">http://www.weitz.de/regex-coach/</a>
 
 For an example of this in use, see doc/sample/npc_test_pcre.txt
@@ -9778,7 +9923,7 @@ they want it so much.
 
 ---------------------------------------
 
-#### \***pow**(**\<number\>**,**\<power\>**)
+\***pow**(**\<number\>**,**\<power\>**)
 
 Returns the result of the calculation.
 
@@ -9790,7 +9935,7 @@ Example:
 
 ---------------------------------------
 
-#### \***sqrt**(**\<number\>**)
+\***sqrt**(**\<number\>**)
 
 Returns the square-root of a number.
 
@@ -9802,7 +9947,7 @@ Example:
 
 ---------------------------------------
 
-#### \***distance**(**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**)
+\***distance**(**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**)
 
 Returns distance between 2 points.
 
@@ -9813,12 +9958,13 @@ Example:
 
 ---------------------------------------
 
-#### \***min**(**\<number or array\>**{,**\<number or array\>**,...})
-#### \***minimum**(**\<number or array\>**{,**\<number or array\>**,...})
-#### \***max**(**\<number or array\>**{,**\<number or array\>**,...})
-#### \***maximum**(**\<number or array\>**{,**\<number or array\>**,...})
+\***min**(**\<number or array\>**{,**\<number or array\>**,...})
+\***minimum**(**\<number or array\>**{,**\<number or array\>**,...})
+\***max**(**\<number or array\>**{,**\<number or array\>**,...})
+\***maximum**(**\<number or array\>**{,**\<number or array\>**,...})
 
 Returns the smallest (or biggest) from the set of given parameters.
+
 These parameters have to be either numbers or number arrays.
 
 Example:
@@ -9839,7 +9985,7 @@ setarray .@testarray, 4, 5, 12, 6, 7, 3, 8, 9, 10;
 
 ---------------------------------------
 
-#### \***cap_value**(**\<number\>**, **\<min\>**, **\<max\>**)
+\***cap_value**(**\<number\>**, **\<min\>**, **\<max\>**)
 
 Returns the number but capped between **\<min\>** and **\<max\>**.
 
@@ -9854,20 +10000,21 @@ Example:
 
 ---------------------------------------
 
-#### \***round**(**\<number\>**,**\<precision\>**);
-#### \***ceil**(**\<number\>**,**\<precision\>**);
-#### \***floor**(**\<number\>**,**\<precision\>**);
+\***round**(**\<number\>**,**\<precision\>**);
+\***ceil**(**\<number\>**,**\<precision\>**);
+\***floor**(**\<number\>**,**\<precision\>**);
 
 Returns **\<number\>** rounded to multiple of **\<precision\>**.
 
-`round` function will round the **\<number\>** up if its division with **\<precision\>** yield a remainder
-with a value equals to or more than half of **\<precision\>**. Otherwise, it rounds the **\<number\>** down.
+`round` function will round the **\<number\>** up if its division with **\<precision\>** yield a remainder with a value equals to or more than half of **\<precision\>**. Otherwise, it rounds the **\<number\>** down.
+
 `ceil` always round the **\<number\>** up.
+
 `floor` always round the **\<number\>** down.
 
 ---------------------------------------
 
-#### \***md5**("**\<string\\>**")
+\***md5**("**\<string\>**")
 
 Returns the md5 checksum of a number or string.
 
@@ -9921,7 +10068,8 @@ Example:
 \***setiteminfo**(**\<aegis item name\>**,**\<type\>**,**\<value\>**)
 
 This function will set some value of an item.
-Returns the new value on success, or -1 on fail (item_id not found or invalid type).
+
+Returns the new value on success, or `-1` on fail (item_id not found or invalid type).
 
 Valid types are:
 ```cpp
@@ -9959,7 +10107,9 @@ setiteminfo 7049,ITEMINFO_WEIGHT,9990; // Stone now weighs 999.0
 
 Set a new script bonus to the Item. Very useful for game events.
 You can remove an item's itemscript by leaving the itemscript argument empty.
-Returns 1 on success, or 0 on fail (item_id not found or new item script is invalid).
+
+Returns `1` on success, or `0` on fail (item_id not found or new item script is invalid).
+
 Type can optionally be used indicates which script to set (default is 0):
 ```cpp
 0 - Script
@@ -9977,9 +10127,9 @@ setitemscript 2637,"";
 
 ---------------------------------------
 
-\***atoi**("**\<string\\>**")
-\***axtoi**("**\<string\\>**")
-\***strtol**("**\<string\\>**", base)
+\***atoi**("**\<string\>**")
+\***axtoi**("**\<string\>**")
+\***strtol**("**\<string\>**", base)
 
 These commands are used to convert strings to numbers. 'atoi' will interpret
 given string as a decimal number (base 10), while 'axtoi' interprets strings as
@@ -9988,7 +10138,7 @@ is between 2 and 36 inclusive, or the special value0, which means auto-detection
 
 The 'atoi' and 'strtol' functions conform to the C functions with the same names,
 and 'axtoi' is the same as strtol, with a base of 16. Results are clamped to signed
-32 bit int range (INT_MIN ~ INT_MAX).
+32 bit int range (`INT_MIN` ~ `INT_MAX`).
 
 #### Examples:
 
@@ -10007,9 +10157,10 @@ mes axtoi("11");           // Displays 17 (1 = 1, 10 = 16)
 
 ---------------------------------------
 
-\***compare**("**\<string\\>**","**\<substring\\>**")
+\***compare**("**\<string\>**","**\<substring\>**")
 
-This command returns 1 or 0 when the substring is in the main string (1) or not (0).
+This command returns `1` or `0` when the substring is in the main string (1) or not (0).
+
 This command is not case sensitive.
 
 #### Examples:
@@ -10026,7 +10177,7 @@ if (compare("Blood Butterfly","Bloody"))
 
 ---------------------------------------
 
-\***strcmp**("**\<string\\>**","**\<string\\>**")
+\***strcmp**("**\<string\>**","**\<string\>**")
 
 This command compares two strings are returns a value:
 ```cpp
@@ -10038,7 +10189,7 @@ This command compares two strings are returns a value:
 
 ---------------------------------------
 
-\***getstrlen**("**\<string\\>**")
+\***getstrlen**("**\<string\>**")
 
 This function will return the length of the string given as an argument. It is
 useful to check if anything input by the player exceeds name length limits and
@@ -10046,10 +10197,11 @@ other length limits and asking them to try to input something else.
 
 ---------------------------------------
 
-\***charisalpha**("**\<string\\>**",**\<position\>**)
+\***charisalpha**("**\<string\>**",**\<position\>**)
 
-This function will return 1 if the character number Position in the given string
-is a letter, 0 if it isn't a letter but a digit or a space.
+This function will return `1` if the character number Position in the given string
+is a letter, `0` if it isn't a letter but a digit or a space.
+
 The first letter is position 0.
 
 ---------------------------------------
@@ -10057,6 +10209,7 @@ The first letter is position 0.
 \***charat**(**\<string\>**,**\<index\>**)
 
 Returns char at specified index. If index is out of range, returns empty string.
+
 The first letter of a string is index 0.
 
 Example:
@@ -10066,10 +10219,11 @@ charat("This is a string", 10); //returns "s"
 
 ---------------------------------------
 
-\*setchar(**\<string\>**,**\<char\>**,**\<index\>**)
+\***setchar**(**\<string\>**,**\<char\>**,**\<index\>**)
 
 Returns the original string with the char at the specified index set to the
 specified char. If index out of range, the original string will be returned.
+
 Only the 1st char in the **\<char\>** parameter will be used.
 
 Example:
@@ -10095,6 +10249,7 @@ insertchar("laughter", "s", 0); //returns "slaughter"
 \***delchar**(**\<string\>**,**\<index\>**)
 
 Returns the original string with the char at the specified index removed.
+
 If index is out of range, original string will be returned.
 
 Example:
@@ -10104,10 +10259,11 @@ delchar("Diet", 3); //returns "Die"
 
 ---------------------------------------
 
-\***strtoupper**(**\<string\>**)
+\***strtoupper**(**\<string\>**)\
 \***strtolower**(**\<string\>**)
 
 Returns the specified string in its uppercase/lowercase form.
+
 All non-alpha characters will be preserved.
 
 Example:
@@ -10117,15 +10273,17 @@ strtoupper("The duck is blue!!"); //returns "THE DUCK IS BLUE!!"
 
 ---------------------------------------
 
-\***charisupper**(**\<string\>**,**\<index\>**)
+\***charisupper**(**\<string\>**,**\<index\>**)\
 \***charislower**(**\<string\>**,**\<index\>**)
 
-Returns 1 if character at specified index of specified string is
-uppercase/lowercase. Otherwise, 0. Characters not of the alphabet will return 0.
+Returns `1` if character at specified index of specified string is
+uppercase/lowercase. Otherwise, `0`. 
+
+Characters not of the alphabet will return `0`.
 
 Example:
 ```cpp
-charisupper("rAthena", 1); //returns 1
+charisupper("rAthena", 1); //returns `1`
 ```
 
 ---------------------------------------
@@ -10213,7 +10371,7 @@ dispbottom(.@num + " " + .@str$); //prints "42 foobar"
 
 PHP style strpos. Finds a substring (needle) within a string (haystack).
 The offset parameter indicates the index of the string to start searching.
-Returns index of substring on successful search, else -1.
+Returns `index` of substring on successful search, else `-1`.
 Comparison is case sensitive.
 
 Example:
@@ -10230,7 +10388,7 @@ strpos("foobarfoo", "foo", 1); //returns 6
 
 Replaces all instances of a search string in the input with the specified
 replacement string. By default is case sensitive unless **\<usecase\>** is set
-to 0. If specified it will only replace as many instances as specified
+to `0`. If specified it will only replace as many instances as specified
 in the count parameter.
 
 Example:
@@ -10246,7 +10404,7 @@ replacestr("test test test test test", "test", "yay", 0, 3); //returns "yay yay 
 \***countstr**(**\<input\>**, **\<search\>**{, **\<usecase\>**})
 
 Counts all instances of a search string in the input. By default is case
-sensitive unless **\<usecase\>** is set to 0.
+sensitive unless **\<usecase\>** is set to `0`.
 
 Example:
 ```cpp
@@ -10263,7 +10421,7 @@ Searches a string for a match to the regular expression provided. The
 offset parameter indicates the index of the string to start searching.
 Returns offsets to captured substrings, or `0` if no match is found.
 
-This command is only available if the server is compiled with the regular
+> This command is only available if the server is compiled with the regular
 expressions library enabled.
 
 ---------------------------------------
@@ -10271,7 +10429,7 @@ expressions library enabled.
 \***setfont** **\<font\>**;
 
 This command sets the current RO client interface font to one of the
-fonts stored in data\*.eot by using an ID of the font. When the ID
+fonts stored in `data\*.eot` by using an ID of the font. When the ID
 of the currently used font is used, default interface font is used
 again.
 
@@ -10293,7 +10451,7 @@ again.
 
 \***showdigit** **\<value\>**{,**\<type\>**};
 
-Displays given numeric 'value' in large digital clock font on top of
+Displays given numeric '`value`' in large digital clock font on top of
 the screen. The optional parameter 'type' specifies visual aspects
 of the "clock" and can be one of the following values:
 
@@ -10322,12 +10480,12 @@ showdigit 60,3;
 
 ---------------------------------------
 
-\***setcell** "**\<map name\\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,**\<type\>**,**\<flag\>**;
+\***setcell** "**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,**\<type\>**,**\<flag\>**;
 
 Each map cell has several 'flags' that specify the properties of that cell.
-These include terrain properties (walkability, shootability, presence of water),
-skills (basilica, land protector, ...) and other (NPC nearby, no vending, ...).
-Each of these can be 'on' or 'off'. Together they define a cell's behavior.
+These include terrain properties (`walkability`, `shootability`, `presence of water`),
+`skills` (basilica, land protector, ...) and other (NPC nearby, no vending, ...).
+Each of these can be '`on`' or '`off`'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be **0** or **1** (0:clear flag, 1:set flag).
@@ -10367,7 +10525,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 ---------------------------------------
 
-\***checkcell** ("**\<map name\\>**",**\<x\>**,**\<y\>**,**\<type\>**);
+\***checkcell** ("**\<map name\>**",**\<x\>**,**\<y\>**,**\<type\>**);
 
 This command will return `1` or `0`, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
@@ -10402,14 +10560,16 @@ if ( !checkcell(.@map$,.@x,.@y,cell_chkpass) ) {
 
 ---------------------------------------
 
-\***getfreecell** "**\<map name\\>**",**\<rX\>**,**\<rY\>**{,**\<x\>**,**\<y\>**,**\<rangeX\>**,**\<rangeY\>**,**\<flag\>**};
+\***getfreecell** "**\<map name\>**",**\<rX\>**,**\<rY\>**{,**\<x\>**,**\<y\>**,**\<rangeX\>**,**\<rangeY\>**,**\<flag\>**};
 
 Finds a free cell on the given map and stores the reference to the found cell
-in **\<rX\>** and **\<rY\>**. Passing **\<x\>** and **\<y\>** with **\<rangeX\>** and **\<rangeY\>** allows for searching within a specified area on the given map. The **\<flag\>** is a bitmask and has the following possible values:
+in **\<rX\>** and **\<rY\>**. Passing **\<x\>** and **\<y\>** with **\<rangeX\>** and **\<rangeY\>** allows for searching within a specified area on the given map. 
+
+The **\<flag\>** is a bitmask and has the following possible values:
 ```cpp
-- 1 = Random cell on the map or from **\<x\>**,**\<y\>** range. (default)
-- 2 = The target should be able to walk to the target tile.
-- 4 = There shouldn't be any players around the target tile (use the no_spawn_on_player setting).
+1 = Random cell on the map or from <x>,<y> range. (default)
+2 = The target should be able to walk to the target tile.
+4 = There shouldn't be any players around the target tile (use the no_spawn_on_player setting).
 ```
 
 
@@ -10422,17 +10582,21 @@ getfreecell("prontera",.@x,.@y,150,150,5,5); // Find a random empty cell on 150,
 
 ---------------------------------------
 
-\***setwall** "**\<map name\\>**",**\<x\>**,**\<y\>**,**\<size\>**,**\<dir\>**,**\<shootable\>**,"**\<name\\>**";\
-\***delwall** "**\<name\\>**";
+\***setwall** "**\<map name\>**",**\<x\>**,**\<y\>**,**\<size\>**,**\<dir\>**,**\<shootable\>**,"**\<name\>**";\
+\***delwall** "**\<name\>**";
 
 Creates an invisible wall, an array of "setcell" starting from x,y and doing a
 line of the given size in the given direction. The difference with setcell is
 this one update client part too to avoid the glitch problem. Directions are the
-same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
+same as NPC sprite facing directions: 
+`0=north,
+1=northwest,
+2=west,
+etc`
 
 ---------------------------------------
 
-\***checkwall** "**\<name\\>**";
+\***checkwall** "**\<name\>**";
 
 This command will return true if the wall with the given name exists, false otherwise.
 
@@ -10451,7 +10615,7 @@ with the given character id.
 
 ---------------------------------------
 
-\***naviregisterwarp**("**\<Name of Link\\>**", "**\<dest_map\\>**", **\<dest_x\>**, **\<dest_y\>**)
+\***naviregisterwarp**("**\<Name of Link\>**", "**\<dest_map\>**", **\<dest_x\>**, **\<dest_y\>**)
 
 Only useful when using the map-server-generator. Registers an extra warp from this
 npc to the destination map/x/y for the generated client files.
@@ -10467,9 +10631,9 @@ this npc in the navigation generation.
 # 7.- Instance commands.
 
 
-\***instance_create**("**\<instance name\\>**"{,**\<instance mode\>**{,**\<owner id\>**}});
+\***instance_create**("**\<instance name\>**"{,**\<instance mode\>**{,**\<owner id\>**}});
 
-Creates an instance for the **\<owner id\>** of **\<mode\>**. The instance name, along with all other instance data, is read from 'db/(pre-)re/instance_db.yml'. Upon success, the command generates a unique instance ID, duplicates all listed maps and NPCs, sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside the instance.
+Creates an instance for the **\<owner id\>** of **\<mode\>**. The instance name, along with all other instance data, is read from 'db/(pre-)re/instance_db.yml'. Upon success, the command generates a unique instance ID, duplicates all listed maps and NPCs, sets the alive time, and triggers the "`OnInstanceInit`" label in all NPCs inside the instance.
 
 Instance Mode options:
 
@@ -10494,17 +10658,17 @@ The command returns the instance ID upon success, and these values upon failure:
 
 Destroys instance with the ID **\<instance id\>**. If no ID is specified, the instance the script is attached to is used. If that fails, the script will come to a halt.
 
-This will also trigger the "OnInstanceDestroy" label in all NPCs inside the instance.
+This will also trigger the "`OnInstanceDestroy`" label in all NPCs inside the instance.
 
 ---------------------------------------
 
-\***instance_enter**("**\<instance name\\>**",{**\<x\>**,**\<y\>**,**\<char_id\>**,**\<instance id\>**});
+\***instance_enter**("**\<instance name\>**",{**\<x\>**,**\<y\>**,**\<char_id\>**,**\<instance id\>**});
 
-Warps the attached player to the specified **\<instance id\>**. If no ID is specified, the IM_PARTY instance the invoking player is attached to is used.
+Warps the attached player to the specified **\<instance id\>**. If no ID is specified, the `IM_PARTY` instance the invoking player is attached to is used.
 
 The map and coordinates are located in 'db/(pre-)re/instance_db.yml'.
 
-The command returns IE_OK upon success, and these values upon failure:
+The command returns `IE_OK` upon success, and these values upon failure:
 
      IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
      IE_NOINSTANCE:	Character/Party/Guild/Clan does not have an instance.
@@ -10514,7 +10678,7 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 
 ---------------------------------------
 
-\***instance_npcname**("**\<npc name\\>**"{,**\<instance id\>**})
+\***instance_npcname**("**\<npc name\>**"{,**\<instance id\>**})
 
 Returns the unique name of the instanced script. If no ID is specified,
 the instance the script is attached to is used. If that fails, the script
@@ -10522,7 +10686,7 @@ will come to a halt.
 
 ---------------------------------------
 
-\***instance_mapname**("**\<map name\\>**"{,**\<instance id\>**})
+\***instance_mapname**("**\<map name\>**"{,**\<instance id\>**})
 
 Returns the unique name of the instanced map. If no instance ID is specified,
 the instance the script is attached to is used. If that fails, the command
@@ -10560,7 +10724,7 @@ npctalk "The current instance ID from the attached NPC is : " + instance_id();
 
 ---------------------------------------
 
-\***instance_warpall** "**\<map name\\>**",**\<x\>**,**\<y\>**{,**\<instance id\>**,{**\<flag\>**}};
+\***instance_warpall** "**\<map name\>**",**\<x\>**,**\<y\>**{,**\<instance id\>**,{**\<flag\>**}};
 
 Warps all players in the **\<instance id\>** to **\<map name\>** to the given coordinates.
 If no ID is specified, the `IM_PARTY` instance the invoking player is attached
@@ -10575,11 +10739,11 @@ Available values for the **\<flag\>** bitmask:
 
 ---------------------------------------
 
-\***instance_announce** **\<instance id\>**,"**\<text\\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**}}}}};
+\***instance_announce** **\<instance id\>**,"**\<text\>**",**\<flag\>**{,**\<fontColor\>**{,**\<fontType\>**{,**\<fontSize\>**{,**\<fontAlign\>**{,**\<fontY\>**}}}}};
 
 Broadcasts a message to all players in the **\<instance id\>** currently residing on an instance map. If 0 is specified for **\<instance id\>**, the instance the script is attached to is used.
 
-For details on the other parameters, see 'announce'.
+For details on the other parameters, see '`announce`'.
 
 ---------------------------------------
 
@@ -10658,9 +10822,10 @@ if (instance_check_clan(getcharid(5),2,2,149)) {
 
 ---------------------------------------
 
-\***instance_info**("**\<instance name\\>**",**\<info type\>**{,**\<instance_db map index\>**});
+\***instance_info**("**\<instance name\>**",**\<info type\>**{,**\<instance_db map index\>**});
 
 Returns the specified **\<info type\>** of the given **\<instance name\>** from the instance database.
+
 If the **\<instance name\>** is unknown or an invalid **\<info type\>** is supplied `-1` will be returned.
 
 Valid info types:
@@ -10719,10 +10884,12 @@ Valid **\<info type\>**:
 
 \***instance_list**(**\<"map name"\>**{,**\<instance mode\>**});
 
-Creates the array '.@instance_list' with possible instance IDs for the given **\<map name\>** and optional **\<mode\>**.
-Return '.@instance_list' array size.
+Creates the array '`.@instance_list`' with possible instance IDs for the given **\<map name\>** and optional **\<mode\>**.
+
+Return '`.@instance_list`' array size.
 
 Instance mode options: **IM_NONE**, **IM_CHAR**, **IM_PARTY**, **IM_GUILD**, or **IM_CLAN**
+
 If the instance mode is not provided then it will return all the instance IDs for that map.
 
 #### Examples:
@@ -10740,6 +10907,7 @@ for ( .@i = 0; .@i **\< .@size; ++.@i )
 \***getinstancevar**(**\<variable\>**,**\<instance id\>**);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
+
 This can only be used to get `'` variables.
 
 #### Examples:
@@ -10757,6 +10925,7 @@ set getinstancevar('var, instance_id(IM_GUILD)), 1;
 \***setinstancevar**(**\<variable\>**,**\<value\>**,**\<instance id\>**);
 
 This command will set an instance variable to the value that the expression results in.
+
 See 'set' command for more information.
 
 Returns the variable reference.
@@ -10772,12 +10941,15 @@ setinstancevar('var, 9, instance_id(IM_GUILD));
 # 8.- Quest Log commands.
 
 
-\***questinfo** **\<Icon\>**{,**\<Map Mark Color\>**{,"**\<condition\\>**"}};
+\***questinfo** **\<Icon\>**{,**\<Map Mark Color\>**{,"**\<condition\>**"}};
 
 This command should only be used in OnInit/OnInstanceInit labels.
-Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint" or "viewpointmap".
-When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
+Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "`viewpoint`" or "`viewpointmap`".
+
+When a user is doing some action, each NPC is checked for `questinfo` that has been set on the map.
+
 If `questinfo` is present, it will check if the player fulfill the condition.
+
 If he/she does or no condition has been set, the bubble will appear.
 
 Available **\<Icon\>**:
@@ -10797,8 +10969,7 @@ Available **\<Icon\>**:
     Job Quest	: QTYPE_JOBQUEST (Only for packetver \>**= 20170315)
     Jumping Poring	: QTYPE_JUMPING_PORING (Only for packetver \>**= 20170315)
 
-**\<Map Mark Color\>**, when used, creates a mark in the user's mini map on the position of the NPC,
-the available color values are:
+**\<Map Mark Color\>**, when used, creates a mark in the user's mini map on the position of the NPC, the available color values are:
 
     QMARK_NONE   - No Marker (default)
     QMARK_YELLOW - Yellow Marker
@@ -10839,7 +11010,7 @@ OnInit:
 \***questinfo_refresh** {**\<char_id\>**};
 
 This command refreshes each quest bubble that has been set on the map according
-to the questinfo condition for the attached/given player.
+to the `questinfo` condition for the attached/given player.
 
 ---------------------------------------
 
@@ -10847,7 +11018,7 @@ to the questinfo condition for the attached/given player.
 
 Place quest of **\<ID\>** in the users quest log, the state of which is "active".
 
-If *questinfo is set, and the same ID is specified here, the icon will be cleared when the quest is set.
+If *`questinfo` is set, and the same ID is specified here, the icon will be cleared when the quest is set.
 
 ---------------------------------------
 
@@ -10866,7 +11037,7 @@ Remove the quest of the given **\<ID\>** from the user's quest log.
 \***changequest** **\<ID\>**,**\<ID2\>**{,**\<char_id\>**};
 
 Remove quest of the given **\<ID\>** from the user's quest log.
-Add quest of the **\<ID2\>** to the the quest log, and the state is "active".
+Add quest of the **\<ID2\>** to the the quest log, and the state is "`active`".
 
 ---------------------------------------
 
@@ -10879,14 +11050,14 @@ If no additional argument supplied, return the state of the quest:
 	1  = Quest has been given, and the state is "active"
 	2  = Quest completed
 
-If parameter "PLAYTIME" is supplied:
+If parameter "`PLAYTIME`" is supplied:
 
 	-1 = Quest not started (not in quest log)
 	0  = the time limit has not yet been reached
 	1  = the time limit has not been reached but the quest is marked as complete
 	2  = the time limit has been reached
 
-If parameter "HUNTING" is supplied:
+If parameter "`HUNTING`" is supplied:
 
 	-1 = Quest not started (not in quest log)
 	0  = you haven't killed all of the target monsters and the time limit has not been reached.
@@ -10908,7 +11079,8 @@ Return the state of the quest:
 \***showevent** **\<icon\>**{,**\<mark color\>**{,**\<char_id\>**}}
 
 Show an emotion on top of a NPC, and optionally,
-a colored mark in the mini-map like "viewpoint" or "viewpointmap".
+a colored mark in the mini-map like "`viewpoint`" or "`viewpointmap`".
+
 This is used to indicate that a NPC has a quest or an event to
 a certain player.
 
@@ -10936,6 +11108,7 @@ Mark Color:
 \***open_quest_ui** {**\<quest ID\>**,{**\<char ID\>**}};
 
 Opens the quest UI for the attached player or the given character ID.
+
 Use 0 as the quest ID to open the main quest UI. If the quest ID is not 0 then the quest UI is opened to the given quest. If the quest data is not populated in the client LUB then a message will be displayed saying the quest doesn't exist.
 
 > This command requires packet version 2015-12-02 or newer.
@@ -10944,16 +11117,17 @@ Use 0 as the quest ID to open the main quest UI. If the quest ID is not 0 then t
 # 9.- Battleground commands.
 
 
-\***waitingroom2bg_single**(**\<battle group\>**,{"**\<map name\\>**",**\<x\>**,**\<y\>**{,"**\<npc name\\>**"}});
+\***waitingroom2bg_single**(**\<battle group\>**,{"**\<map name\>**",**\<x\>**,**\<y\>**{,"**\<npc name\>**"}});
 
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
-The player will also be warped to the default spawn point of the battle group or to the specified coordinates
-**\<x\>** and **\<y\>** on the given **\<map\>**.
+
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates **\<x\>** and **\<y\>** on the given **\<map\>**.
+
 > Note: The map need the mapflag `MF_BATTLEGROUND` otherwise the player is removed from the Battleground team.
 
 ---------------------------------------
 
-\***waitingroom2bg**("**\<map name\\>**",**\<x\>**,**\<y\>**,{"**\<On Quit Event\\>**","**\<On Death Event\\>**"{,"**\<NPC Name\\>**"}});
+\***waitingroom2bg**("**\<map name\>**",**\<x\>**,**\<y\>**,{"**\<On Quit Event\>**","**\<On Death Event\>**"{,"**\<NPC Name\>**"}});
 
 **\<map name\>**,**\<x\>**,**\<y\>** refer to where the "respawn" base is, where the player group will respawn when they die.
 
@@ -10961,12 +11135,11 @@ The player will also be warped to the default spawn point of the battle group or
 
 **\<On Death Event\>** refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
-If "-" is supplied for **\<map name\>** then the player will not automatically respawn after the 1 second delay.
+If "`-`" is supplied for **\<map name\>** then the player will not automatically respawn after the 1 second delay.
 
-This allows for better manipulation of **\<On Death Event\>**. The player will have to be warped to desired location
-at the end of **\<On Death Event\>**.
+This allows for better manipulation of **\<On Death Event\>**. The player will have to be warped to desired location at the end of **\<On Death Event\>**.
 
-Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
+Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and sets the array `$@arenamembers[0]` where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
 
 If the optional NPC Name parameter is left out, the waiting room of the current NPC is used.
 
@@ -10980,7 +11153,7 @@ end;
 
 ---------------------------------------
 
-\***bg_create**("**\<map name\\>**",**\<x\>**,**\<y\>**{,"**\<On Quit Event\\>**","**\<On Death Event\\>**"});
+\***bg_create**("**\<map name\>**",**\<x\>**,**\<y\>**{,"**\<On Quit Event\>**","**\<On Death Event\>**"});
 
 Creates an instance of battleground battle group that can be used with other battleground commands.
 
@@ -10990,18 +11163,19 @@ Creates an instance of battleground battle group that can be used with other bat
 
 **\<On Death Event\>** refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
-If "-" is supplied for **\<map name\>** then the player will not automatically respawn after the 1 second delay.
+If "`-`" is supplied for **\<map name\>** then the player will not automatically respawn after the 1 second delay.
 
-This allows for better manipulation of **\<On Death Event\>**. The player will have to be warped to desired location
-at the end of **\<On Death Event\>**.
+This allows for better manipulation of **\<On Death Event\>**. The player will have to be warped to desired location at the end of **\<On Death Event\>**.
 
 Returns `battle group ID` on success. Returns `0` on failure.
 
 ---------------------------------------
 
-\***bg_join**(**\<battle group\>**,{"**\<map name\\>**",{**\<x\>**,**\<y\>**{,**\<char id\>**}});
+\***bg_join**(**\<battle group\>**,{"**\<map name\>**",{**\<x\>**,**\<y\>**{,**\<char id\>**}});
 
-Adds an attached player or **\<char id\>** if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates **\<x\>** and **\<y\>** on the given **\<map\>**.
+Adds an attached player or **\<char id\>** if specified to an existing battleground group.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates **\<x\>** and **\<y\>** on the given **\<map\>**.
+
 > Note: The map need the mapflag `MF_BATTLEGROUND` otherwise the player is removed from the Battleground team.
 
 Returns `true` on success. Returns `false` on failure.
@@ -11010,7 +11184,9 @@ Returns `true` on success. Returns `false` on failure.
 
 \***bg_team_setxy** **\<Battle Group ID\>**,**\<x\>**,**\<y\>**;
 
-Updates the respawn point of the given Battle Group to x,y on the same map. **\<Battle Group ID\>** can be retrieved using getcharid(4).
+Updates the respawn point of the given Battle Group to x,y on the same map.
+
+**\<Battle Group ID\>** can be retrieved using getcharid(4).
 
 Example:
 ```cpp
@@ -11022,7 +11198,7 @@ end;
 
 ---------------------------------------
 
-\***bg_reserve**("**\<battleground_map_name\\>**"{,**\<ended\>**});
+\***bg_reserve**("**\<battleground_map_name\>**"{,**\<ended\>**});
 
 Reserves a Battleground map for the Battleground UI System. When a map is booked it prevents another similar queue from being created and will allow players to join an active Battlegrounds event.
 
@@ -11030,7 +11206,7 @@ If **\<ended\>** is true, then the Battleground is marked as over to prevent new
 
 ---------------------------------------
 
-\***bg_unbook**("**\<battleground_map_name\\>**");
+\***bg_unbook**("**\<battleground_map_name\>**");
 
 Removes a Battleground map for the Battleground UI System. When a map is unbooked it allows a queue to be created.
 
@@ -11040,12 +11216,11 @@ Removes a Battleground map for the Battleground UI System. When a map is unbooke
 
 Same as '`bg_leave`' but slaps the player with a deserter status so they can't enter another queue for the time defined in battleground_db (10 minutes by default).
 
-With the Battleground Queue System, it will also warp the player to their previous position when they joined or
-to their save point if the map had MF_NOSAVE.
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or to their save point if the map had `MF_NOSAVE`.
 
 ---------------------------------------
 
-\***bg_warp** **\<Battle Group\>**,"**\<map name\\>**",**\<x\>**,**\<y\>**;
+\***bg_warp** **\<Battle Group\>**,"**\<map name\>**",**\<x\>**,**\<y\>**;
 
 Similar to the '`warp`' command.
 
@@ -11061,12 +11236,15 @@ end;
 
 ---------------------------------------
 
-\***bg_monster** **\<Battle Group\>**,"**\<map name\\>**",**\<x\>**,**\<y\>**,"**\<name to show\\>**",**\<mob id\>**,"**\<event label\\>**";
-\***bg_monster**(**\<Battle Group\>**,"**\<map name\\>**",**\<x\>**,**\<y\>**,"**\<name to show\\>**",**\<mob id\>**,"**\<event label\\>**");
+\***bg_monster** **\<Battle Group\>**,"**\<map name\>**",**\<x\>**,**\<y\>**,"**\<name to show\>**",**\<mob id\>**,"**\<event label\>**";
+\***bg_monster**(**\<Battle Group\>**,"**\<map name\>**",**\<x\>**,**\<y\>**,"**\<name to show\>**",**\<mob id\>**,"**\<event label\>**");
 
 Similar to the '`monster`' command.
+
 Spawns a monster with allegiance to the given Battle Group.
+
 Does not allow for the summoning of multiple monsters.
+
 Monsters are similar to those in War of Emperium, in that the specified Battle Group is considered friendly.
 
 Example:
@@ -11124,7 +11302,7 @@ Destroys the Battle Group created for that battle ground.
 
 ---------------------------------------
 
-\***areapercentheal** "**\<map name\\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,**\<hp\>**,**\<sp\>**;
+\***areapercentheal** "**\<map name\>**",**\<x1\>**,**\<y1\>**,**\<x2\>**,**\<y2\>**,**\<hp\>**,**\<sp\>**;
 
 Restores a percentage of the maximum HP/SP of players within a defined area.
 This is primarily used in battleground scripts, but is not limited to them.
@@ -11150,24 +11328,28 @@ Retrieves data related to given Battle Group. Type can be one of the following:
 
 ---------------------------------------
 
-\***bg_getareausers**(**\<Battle Group\>**,"**\<map name\\>**",**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**);
+\***bg_getareausers**(**\<Battle Group\>**,"**\<map name\>**",**\<x0\>**,**\<y0\>**,**\<x1\>**,**\<y1\>**);
 
 Retrieves the amount of players belonging to the given Battle Group on the given
 map within the specified rectangular area.
 
 ---------------------------------------
 
-\***bg_updatescore** "**\<map name\\>**",**\<Guillaume Score\>**,**\<Croix Score\>**;
+\***bg_updatescore** "**\<map name\>**",**\<Guillaume Score\>**,**\<Croix Score\>**;
 
 This command will force the update of the displayed scoreboard.
+
 It is only usable when the map is defined as a Type 2 Battleground:
-mapflag	**\<map name\>**	battleground	2
+```cpp
+mapflag	<map name>	battleground	2
+```
+
 
 ---------------------------------------
 
-\***bg_info**("**\<battleground name\\>**", **\<type\>**);
+\***bg_info**("**\<battleground name\>**", **\<type\>**);
 
-Retrieves data related to given **\<battleground name\>** from the database. Requires feature.bgqueue
+Retrieves data related to given **\<battleground name\>** from the database. Requires `feature.bgqueue`
 to be enabled. **\<Type\>** can be one of the following:
 
 	BG_INFO_ID: Battleground ID.
@@ -11182,18 +11364,19 @@ to be enabled. **\<Type\>** can be one of the following:
 # 10.- Pet commands.
 
 
-\***bpet**;
+\***bpet**;\
 \***birthpet**;
 
 This command opens up a pet hatching window on the client connected to the
 invoking character. It is used in item script for the pet incubators and will
 let the player hatch an owned egg. If the character has no eggs, it will just
 open up an empty incubator window.
+
 This is still usable outside item scripts.
 
 ---------------------------------------
 
-\***pet** **\<pet id\>**;
+\***pet** **\<pet id\>**;\
 \***catchpet** **\<pet id\>**;
 
 This command is used in all the item scripts for taming items. Running this
@@ -11203,8 +11386,7 @@ will still work outside an item script.
 
 If the **\<pet id\>** is `PET_CATCH_UNIVERSAL` the item will attempt to catch the targeted monster as long as it is in the pet database and does not have the `MD_STATUS_IMMUNE` monster mode.
 
-If the **\<pet id\>** is `PET_CATCH_UNIVERSAL_ITEM` the item will attempt to catch the targeted
-monster as long as it is in the pet database and the targeted monster requires the lure item used.
+If the **\<pet id\>** is `PET_CATCH_UNIVERSAL_ITEM` the item will attempt to catch the targeted monster as long as it is in the pet database and the targeted monster requires the lure item used.
 
 See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
@@ -11224,7 +11406,7 @@ makepet 1002;
 ```
 
 
-> Notice that you absolutely have to create pet eggs with this command. If you try
+> Notice that you ***absolutely*** have to create pet eggs with this command. If you try
 > to give a pet egg with 'getitem', pet data will not be created by the char
 > server and the egg will disappear when anyone tries to hatch it.
 
@@ -11234,7 +11416,9 @@ makepet 1002;
 \***getpetinfo**(**\<type\>**{,**\<char_id\>**})
 
 This function will return pet information for the pet the invoking character
-currently has active. Valid types are:
+currently has active.
+
+Valid types are:
 
     PETINFO_ID - Pet unique ID
     PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.yml' - will tell you what kind of a pet it is.
@@ -11306,8 +11490,7 @@ such command running from an NPC script will eventually persist, but apparently,
 it is possible to usefully employ them in usable item scripts to create pet
 buffing items.
 
-Nobody tried this before, so you're essentially on your own here.
-
+> Nobody tried this before, so you're essentially on your own here.
 ---------------------------------------
 
 \***petskillbonus** **\<bonus type\>**,**\<value\>**,**\<duration\>**,**\<delay\>**;
@@ -11337,8 +11520,8 @@ when pet performance is activated.
 
 ---------------------------------------
 
-\***petskillsupport** **\<skill id\>**,**\<skill level\>**,**\<delay\>**,**\<percent hp\>**,**\<percent sp\>**;
-\***petskillsupport** "**\<skill name\\>**",**\<skill level\>**,**\<delay\>**,**\<percent hp\>**,**\<percent sp\>**;
+\***petskillsupport** **\<skill id\>**,**\<skill level\>**,**\<delay\>**,**\<percent hp\>**,**\<percent sp\>**;\
+\***petskillsupport** "**\<skill name\>**",**\<skill level\>**,**\<delay\>**,**\<percent hp\>**,**\<percent sp\>**;
 
 This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time
@@ -11350,9 +11533,9 @@ character's or the pets. Probably, Skotlex can answer that question.
 ---------------------------------------
 
 \***petskillattack** **\<skill id\>**,**\<skill level\>**,**\<rate\>**,**\<bonusrate\>**;
-\***petskillattack** "**\<skill name\\>**",**\<skill level\>**,**\<rate\>**,**\<bonusrate\>**;
-\***petskillattack2** **\<skill id\>**,**\<damage\>**,**\<number of attacks\>**,**\<rate\>**,**\<bonusrate\>**;
-\***petskillattack2** "**\<skill name\\>**",**\<damage\>**,**\<number of attacks\>**,**\<rate\>**,**\<bonusrate\>**;
+\***petskillattack** "**\<skill name\>**",**\<skill level\>**,**\<rate\>**,**\<bonusrate\>**;\
+\***petskillattack2** **\<skill id\>**,**\<damage\>**,**\<number of attacks\>**,**\<rate\>**,**\<bonusrate\>**;\
+\***petskillattack2** "**\<skill name\>**",**\<damage\>**,**\<number of attacks\>**,**\<rate\>**,**\<bonusrate\>**;
 
 These two commands will make the pet cast an attack skill on the enemy the pet's
 owner is currently fighting. Skill IDs and levels are as per '`petskillsupport`'.
@@ -11363,10 +11546,10 @@ Value of 'rate' is between 1 and 100. 100 = 100%
 
 ---------------------------------------
 
-\***petautobonus** **\<bonus script\>**,**\<rate\>**,**\<duration\>**{,**\<flag\>**,{**\<other script\>**}};
-\***petautobonus2** **\<bonus script\>**,**\<rate\>**,**\<duration\>**{,**\<flag\>**,{**\<other script\>**}};
-\***petautobonus3** **\<bonus script\>**,**\<rate\>**,**\<duration\>**,**\<skill id\>**,{**\<other script\>**};
-\***petautobonus3** **\<bonus script\>**,**\<rate\>**,**\<duration\>**,"**\<skill name\\>**",{**\<other script\>**};
+\***petautobonus** **\<bonus script\>**,**\<rate\>**,**\<duration\>**{,**\<flag\>**,{**\<other script\>**}};\
+\***petautobonus2** **\<bonus script\>**,**\<rate\>**,**\<duration\>**{,**\<flag\>**,{**\<other script\>**}};\
+\***petautobonus3** **\<bonus script\>**,**\<rate\>**,**\<duration\>**,**\<skill id\>**,{**\<other script\>**};\
+\***petautobonus3** **\<bonus script\>**,**\<rate\>**,**\<duration\>**,"**\<skill name\>**",{**\<other script\>**};
 
 See '`autobonus`' for more details.
 
@@ -11378,10 +11561,10 @@ See '`autobonus`' for more details.
 \***homevolution**;
 
 This command will try to evolve the current player's homunculus.
+
 If it doesn't work, the /swt emotion is shown.
 
-To evolve a homunculus, the invoking player must have a homunculus,
-the homunculus must not be the last evolution and the homunculus must have above 91000 intimacy with its owner.
+To evolve a homunculus, the invoking player must have a homunculus, the homunculus must not be the last evolution and the homunculus must have above 91000 intimacy with its owner.
 
 ---------------------------------------
 
@@ -11477,6 +11660,7 @@ This command is typically used in item scripts of mercenary scrolls.
 \***mercenary_delete** {**\<char id\>**{,**\<reply\>**}};
 
 This command removes the mercenary from a player.
+
 The parameter 'reply' can be one of the following values:
 
 	0 - Mercenary soldier's duty hour is over, faith increased by 1. (default)
@@ -11500,11 +11684,13 @@ currently attached character.
 
 ---------------------------------------
 
-\***mercenary_get_calls**(**\<guild\>**);
+\***mercenary_get_calls**(**\<guild\>**);\
 \***mercenary_set_calls** **\<guild\>**,**\<value\>**;
 
 Sets or gets the mercenary calls value for given guild for currently
-attached character. Guild can be one or the following constants:
+attached character. 
+
+Guild can be one or the following constants:
 
     ARCH_MERC_GUILD
     SPEAR_MERC_GUILD
@@ -11512,7 +11698,7 @@ attached character. Guild can be one or the following constants:
 
 ---------------------------------------
 
-\***mercenary_get_faith**(**\<guild\>**);
+\***mercenary_get_faith**(**\<guild\>**);\
 \***mercenary_set_faith** **\<guild\>**,**\<value\>**;
 
 Sets or gets the mercenary faith value for given guild for currently
@@ -11528,7 +11714,9 @@ attached character. Guild can be one or the following constants:
 
 Retrieves information about mercenary of the currently attached
 character. If char id is given, the information of that character is
-retrieved instead. Type specifies what information to retrieve and
+retrieved instead. 
+
+Type specifies what information to retrieve and
 can be one of the following:
 
 	0 - Mercenary ID
@@ -11552,7 +11740,7 @@ for name and `0` for all other types.
 \***getpartyname**(**\<party id\>**)
 
 This function will return the name of a party that has the specified ID number.
-If there is no such party ID, "null" will be returned.
+If there is no such party ID, "`null`" will be returned.
 
 Lets say the ID of a party was saved as a global variable:
 
@@ -11591,14 +11779,14 @@ Upon executing this,
 The party members will (apparently) be found regardless of whether they are
 online or offline. Note that the names come in no particular order.
 
-Be sure to use $@partymembercount to go through this array, and not
+Be sure to use `$@partymembercount` to go through this array, and not
 '`getarraysize`', because it is not cleared between runs of '`getpartymember`'. If
 someone with 7 party members invokes this script, the array would have 7
 elements. But if another person calls up the NPC, and he has a party of 5, the
 server will not clear the array for you, overwriting the values instead. So in
 addition to returning the 5 member names, the 6th and 7th elements from the last
 call remain, and you will get 5+2 members, of which the last 2 don't belong to
-the new guy's party. $@partymembercount will always contain the correct number,
+the new guy's party. `$@partymembercount` will always contain the correct number,
 (5) unlike '`getarraysize`()' which will return 7 in this case.
 
 If '`array_variable`' is set, the result will be stored to that variable instead
@@ -11619,7 +11807,7 @@ getpartymember getcharid(1),0;
 copyarray .@name$[0], $@partymembername$[0], $@partymembercount;
 
 // list the party member names
-for (.@i = 0; .@i **\< .@count; .@i++)
+for (.@i = 0; .@i < .@count; .@i++)
    mes (.@i +1) + ". ^0000FF" + .@name$[.@i] + "^000000";
 close;
 ```
@@ -11641,7 +11829,7 @@ if ( $@partymembercount != .register_num ) {
 }
 
 // loop through both and use 'isloggedin' to count online party members
-for ( .@i = 0; .@i **\< $@partymembercount; .@i++ )
+for ( .@i = 0; .@i < $@partymembercount; .@i++ )
    if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
       .@count_online++;
 
@@ -11671,7 +11859,7 @@ if ( $@partymembercount != .register_num ) {
    mes "You've made changes to your party !";
    close;
 }
-for ( .@i = 0; .@i **\< $@partymembercount; .@i++ ) {
+for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
    if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
       mes "You've made changes to your party !";
       close;
@@ -11710,11 +11898,11 @@ of his/her party, or, if a party ID is specified, of that party.
 
 ---------------------------------------
 
-\***party_create**("**\<party name\\>**"{,**\<character id\>**{,**\<item share\>**,**\<item share type\>**}});
+\***party_create**("**\<party name\>**"{,**\<character id\>**{,**\<item share\>**,**\<item share type\>**}});
 
 Organizes a party with the attached or specified character as leader. If
 successful, the command returns `1` and sets the global temporary variable
-"$@party_create_id" to the ID of the party created.
+"`$@party_create_id`" to the ID of the party created.
 
 Additionally, item sharing options can be provided:
 
@@ -11815,10 +12003,9 @@ Valid flag are:
 
 ---------------------------------------
 
-\***navigateto**("**\<map\\>**"{,**\<x\>**,**\<y\>**,**\<flag\>**,**\<hide_window\>**,**\<monster_id\>**,**\<char_id\>**});
+\***navigateto**("**\<map\>**"{,**\<x\>**,**\<y\>**,**\<flag\>**,**\<hide_window\>**,**\<monster_id\>**,**\<char_id\>**});
 
 Generates a navigation for attached or specified character.
-> Requires client 2011-10-10aRagEXE or newer.
 
 The flag specifies how the client will calculate the specific route.
 
@@ -11833,7 +12020,7 @@ Valid flags are:
      NAV_KAFRA_AND_SCROLL - Kafra and Scroll
      NAV_ALL - All services
 
-When flag is not specified, the default value is NAV_KAFRA_AND_AIRSHIP.
+When flag is not specified, the default value is `NAV_KAFRA_AND_AIRSHIP`.
 
 The hide_window specifies whether to display (0) or hide (1) the navigation window.
 By default the window is hidden.
@@ -11848,6 +12035,8 @@ navigation system tell you, that you have reached the desired mob.
 > solution rather than sending the map and the monster_id.
 
 
+> ***Requires*** client `2011-10-10aRagEXE` or newer.
+
 ---------------------------------------
 
 \***hateffect**(**\<Hat Effect ID\>**,**\<State\>**);
@@ -11855,9 +12044,9 @@ navigation system tell you, that you have reached the desired mob.
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
 The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
-with HAT_EF_*.
+with `HAT_EF_*`.
 
-> Requires client 2015-05-13aRagEXE or newer.
+> ***Requires*** client `2015-05-13aRagEXE` or newer.
 
 ---------------------------------------
 
@@ -11893,7 +12082,7 @@ Sets **\<index+1\>**th random option for equipment equipped at **\<equipment slo
 
 See 'getequipid' for a full list of valid equipment slots.
 
-index parameter can be 0 to `MAX_ITEM_RDM_OPT`-1 (default 0-4).
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 
 ID - ID of random option. See db/item_randomopt_db.yml for constants.
 
@@ -11905,9 +12094,10 @@ ID - ID of random option. See db/item_randomopt_db.yml for constants.
 \***randomoptgroup** **\<random option group ID\>**;
 
 This command fills the following arrays with the results of a random option group.
+
 The random option group IDs are specified in 'db/(pre-)re/item_randomopt_group.yml'.
 
-Arrays - from index 0 to `MAX_ITEM_RDM_OPT`-1 :
+Arrays - from index 0 to MAX_ITEM_RDM_OPT-1 :
 
     .@opt_id[]                - array of random option ID.
     .@opt_value[]             - array of value.
@@ -11929,6 +12119,7 @@ getitem3 28705,1,1,9,0,0,0,0,0,.@opt_id,.@opt_value,.@opt_param;
 
 The attached player joins the clan with the **\<clan id\>**. On a successful join,
 `true` is returned, else `false` if the join failed.
+
 If **\<char id\>** is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
@@ -11936,14 +12127,15 @@ If **\<char id\>** is specified, the specified player is used rather than the at
 \***clan_leave**({**\<char id\>**});
 
 The attached player will leave their clan. On a successful leave, `true` is returned, else `false` if the leave failed.
+
 If **\<char id\>** is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
 
 \***itemlink**(**\<item_id\>**{,**\<refine\>**{,**\<card0\>**{,**\<card1\>**{,**\<card2\>**{,**\<card3\>**,{**\<enchantgrade\>**{,**\<RandomIDArray\>**,**\<RandomValueArray\>**,**\<RandomParamArray\>**}}}}}}});
 
-Generates an item link string for an item that can be used for npctalk, message,
-dispbottom, and broadcast commands. The result is a clickable-item name just
+Generates an item link string for an item that can be used for `npctalk`, `message`,
+`dispbottom`, and `broadcast commands`. The result is a clickable-item name just
 like SHIFT+Click from a player's inventory/cart/equipment window. This command can be
 used with mes but the item name will not be clickable. You should use script command
 "`mesitemlink`" for displaying item links in mes dialogues, if the client supports them. 
@@ -11963,7 +12155,7 @@ npctalk "+13 BXB Bapho+VR+EA2+EA1 + 3 Options : "+itemlink(18110,13,4147,4407,48
 
 
 
-RandomIDArray, RandomValueArray, and RandomParamArray only works if the
+`RandomIDArray`, `RandomValueArray`, and `RandomParamArray` only works if the
 client (and server) supports the Item Random Options feature (PACKETVER \>**= 20150225).
 
 ---------------------------------------
@@ -11973,6 +12165,7 @@ client (and server) supports the Item Random Options feature (PACKETVER \>**= 20
 Generates an itemlink string for an item and can be used with NPC's mes command.
 The NPC message will show the item's name which will be clickable and opens the
 item description client side.
+
 By default **\<use_brackets\>** is true which surrounds the link with brackets. Send false to disable. By default the link will be created with the name of the item stored in the item database, but in some cases it might be necessary to overwrite the **\<display_name\>** with something else.
 
 #### Examples:
@@ -11989,10 +12182,11 @@ mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // W
 # 14.- Channel commands.
 
 
-\***channel_create** "**\<chname\\>**","**\<alias\\>**"{,"**\<password\\>**"{**\<option\>**{,**\<delay\>**{,**\<color\>**{,**\<char_id\>**}}}}};
+\***channel_create** "**\<chname\>**","**\<alias\>**"{,"**\<password\>**"{**\<option\>**{,**\<delay\>**{,**\<color\>**{,**\<char_id\>**}}}}};
 
-Creates a public channel with **\<chname\>** as the channel name. To protect the
+Creates a public channel with **\<chname>** as the channel name. To protect the
 channel, use **\<password\>** or write "null" to create it without a password.
+
 Channel name must start with '#' and cannot be the same as the map or ally
 channel names.
 
@@ -12032,9 +12226,9 @@ channel_create("#vip","[VIP]","vipmemberonly");
 
 ---------------------------------------
 
-\***channel_setopt** "**\<chname\\>**",**\<option\>**,**\<value\>**;
+\***channel_setopt** "**\<chname\>**",**\<option\>**,**\<value\>**;
 
-Set option for the channel. Use 1 in **\<value\>** to set it, or 0 to unset.
+Set option for the channel. Use 1 in **\<value\>** to set it, or `0` to unset.
 The **\<option\>** values are the same as the 'channel_create' options.
 
 For `CHAN_OPT_MSG_DELAY`, the delay in millisecond must be sent or use 0
@@ -12052,7 +12246,7 @@ Only for public and private channel.
 
 ---------------------------------------
 
-\***channel_getopt** "**\<chname\\>**",**\<option\>**;
+\***channel_getopt** "**\<chname\>**",**\<option\>**;
 
 Get option value for the channel. The **\<option\>** values are the same as the
 'channel_create' options. Returns true or false except for `CHAN_OPT_MSG_DELAY`
@@ -12067,16 +12261,17 @@ Only for public and private channel.
 
 ---------------------------------------
 
-\***channel_setcolor** "**\<chname\\>**",**\<color\>**;
+\***channel_setcolor** "**\<chname\>**",**\<color\>**;
 
 To change channel color.
+
 **\<color\>** uses hex RGB values.
 
-Returns 1 on success.
+returns `1` on success.
 
 ---------------------------------------
 
-\***channel_setpass** "**\<chname\\>**","**\<password\\>**";
+\***channel_setpass** "**\<chname\>**","**\<password\>**";
 
 To set, unset, or change password of a channel.
 
@@ -12088,8 +12283,8 @@ Only for public and private channel.
 
 ---------------------------------------
 
-\***channel_setgroup** "**\<chname\\>**",**\<group_id\>**{,...,**\<group_id\>**};
-\***channel_setgroup2** "**\<chname\\>**",**\<array_of_groups\>**;
+\***channel_setgroup** "**\<chname\>**",**\<group_id\>**{,...,**\<group_id\>**};
+\***channel_setgroup2** "**\<chname\>**",**\<array_of_groups\>**;
 
 Set group restriction for a channel. Only player with matching **\<group_id\>**
 are allowed to to join the channel.
@@ -12118,9 +12313,10 @@ Only for public and private channel.
 
 ---------------------------------------
 
-\***channel_chat** "**\<chname\\>**","**\<message\\>**"{,**\<color\>**};
+\***channel_chat** "**\<chname\>**","**\<message\>**"{,**\<color\>**};
 
 Sends message to the channel.
+
 Returns `1` on success.
 
 ```cpp
@@ -12134,31 +12330,36 @@ channel_chat(#rathena,"Hello World!"); // [rAthena] Hello World!
 
 ---------------------------------------
 
-\***channel_ban** "**\<chname\\>**",**\<char_id\>**;
+\***channel_ban** "**\<chname\>**",**\<char_id\>**;
 
 Ban player from a public or private channel.
+
 Channel's owner or group with `PC_PERM_CHANNEL_ADMIN` cannot be banned.
+
 Returns `1` on success.
 
 ---------------------------------------
 
-\***channel_unban** "**\<chname\\>**",**\<char_id\>**;
+\***channel_unban** "**\<chname\>**",**\<char_id\>**;
 
 Unban player from a public or private channel.
+
 Returns `1` on success.
 
 ---------------------------------------
 
-\***channel_kick** "**\<chname\\>**",**\<char_id\>**;
-\***channel_kick** "**\<chname\\>**","**\<char_name\\>**";
+\***channel_kick** "**\<chname\>**",**\<char_id\>**;
+\***channel_kick** "**\<chname\>**","**\<char_name\>**";
 
 Kick player from a public or private channel.
+
 Channel's owner or group with `PC_PERM_CHANNEL_ADMIN` cannot be kicked.
+
 Returns `1` on success.
 
 ---------------------------------------
 
-\***channel_delete** "**\<chname\\>**";
+\***channel_delete** "**\<chname\>**";
 
 Delete an existing public or private channel. Cannot delete ally or
 local map channel.
@@ -12267,7 +12468,7 @@ Gets the fame points of the attached player or the supplied **\<char id\>**.
 
 \***getfamerank**({**\<char id\>**})
 
-Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
+Returns fame rank (start from `1` to `MAX_FAME_LIST`), else `0`.
 > Note: Only works with classes that use the ranking system.
 
 ---------------------------------------
