@@ -5,6 +5,7 @@
 //===== Changelog: ===========================================
 //= 1.0 Added sp_rudus4 quests. [Capuche]
 //= 1.1 Added nif_dun01 and nif_dun02 quests. [Capuche]
+//= 1.2 Added amicitia1 and amicitia2 quests. [Capuche]
 //============================================================
 
 // sp_rudus4
@@ -1303,5 +1304,628 @@ OnTouch:
 
 OnInit:
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(8656) == 1 && isbegin_quest(8658) == 0" );
+	end;
+}
+
+
+// amicitia1
+ein_fild08,158,96,3	script	Lana#ami	4_M_ILYA,{
+	if (BaseLevel < 215) {
+		mes "[Lana]";
+		mes "Beyond this it is dangerous, so access is restricted except for adventurers above a certain level.";
+		next;
+		mes " - This area can be accessed from level 215 or higher -";
+		close;
+	}
+	mes "[Lana]";
+	mes "Would you like to go to the first floor of the Amicitia General Lab?";
+	next;
+	if (select( "Go", "Stay" ) == 2) {
+		mes "[Lana]";
+		mes "Okay. Have a nice adventure then.";
+		close;
+	}
+	mes "[Lana]";
+	mes "Okay. I will transfer you to the Amicitia General Lab.";
+	close2;
+	warp "amicitia1",242,244;
+	end;
+}
+
+pub_cat,86,33,5	script	Ansuriya#ami	4_F_REBELLION2,{
+	if (BaseLevel < 215) {
+		mes "[Ansuriya]";
+		mes "Oh, you are the hero of the last operation.";
+		mes "It's an honor to meet you in a place like this. May I buy you a drink?";
+		next;
+		mes " - This is a quest that can be performed at level 215 or higher - ";
+		close;
+	}
+	if (isbegin_quest(16529) == 0) {
+		mes "[Ansuriya]";
+		mes "Oh, you are the hero of the last operation.";
+		mes "It's an honor to meet you in a place like this. May I buy you a drink?";
+		next;
+		mes "[Gerbena]";
+		mes "Wow, " + strcharinfo(0) + "! Can I get an autograph?";
+		mes "It's an honor! Hehe~";
+		next;
+		mes "[Ansuriya]";
+		mes "Here, a glass of Tropical Sograt, please!";
+		mes "Oh, are you okay with Tropical Sograt?";
+		next;
+		mes "[Gerbena]";
+		mes "I like chocolate milk.";
+		next;
+		mes "[Ansuriya]";
+		mes "You buy it with your money.";
+		mes "By the way Gerbena, how is the Amicitia team?";
+		next;
+		emotion ET_PROFUSELY_SWAT, getnpcid(0,"Gerbena#ami");
+		mes "[Gerbena]";
+		mes "Well, that's... I've finished organizing for now.";
+		mes "However, it is true that the number of rebellions to be deployed is a bit short since the total number of members is small.";
+		next;
+		mes "[Ansuriya]";
+		mes "Hmm, what should I do? Gerbena. Do you want to go?";
+		next;
+		emotion ET_SWEAT, getnpcid(0,"Gerbena#ami");
+		mes "[Gerbena]";
+		mes "Ah, take a look. My head is falling out just with all the staff.";
+		next;
+		mes "[Ansuriya]";
+		mes "What should I do? We need two teams per floor...";
+		next;
+		emotion ET_AHA, getnpcid(0,"Gerbena#ami");
+		mes "[Gerbena]";
+		mes "You're a hero.";
+		mes "Can you help us?";
+		next;
+		emotion ET_QUESTION;
+		mes "[Ansuriya]";
+		mes "Gerbena, what are you talking about all of a sudden!";
+		next;
+		mes "[Gerbena]";
+		mes "No, the hero was assigned a mission in association with Rebellion in the last operation.";
+		mes "So I was wondering if you could apply for me again this time...";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Ansuriya]";
+		mes "Uh! yes.";
+		mes "Adventurer. What do you think?";
+		next;
+		select( "Listen to what's going on..." );
+		mes "[Ansuriya]";
+		mes "Oh, yes. That's the order.";
+		mes "Nothing else, we have discovered a new laboratory around Einbroch.";
+		next;
+		mes "[Ansuriya]";
+		mes "The name is <FONT COLOR = 0000CD>Amicitia General Lab</FONT>. According to the data provided by Rekenber, it is said to be a sister laboratory of the Werner Institute.";
+		next;
+		mes "[Ansuriya]";
+		mes "It seems that it did not conduct very illegal experiments and focused on the study of culturing chimeras as homunculus, but it is said that it was abandoned after an explosion at an underground magical power plant.";
+		next;
+		mes "[Ansuriya]";
+		mes "It came under investigation because one of the administrators of that abandoned lab was Werner.";
+		next;
+		mes "[Ansuriya]";
+		mes "As a result of the investigation, the chimeras that were being cultivated ran out of control due to an explosion accident and turned into monsters and were left unattended.";
+		next;
+		mes "[Ansuriya]";
+		mes "I couldn't tell if it was just neglected or intentionally.";
+		next;
+		mes "[Ansuriya]";
+		mes "It's not far from the city, so Rebellion took care of organizing it for safety reasons... As you've heard, we're having trouble with the lack of staff.";
+		next;
+		mes "[Gerbena]";
+		mes "With your help, we can make the cleanup easier!";
+		next;
+		mes "[Ansuriya]";
+		mes "Okay. Could you help me with the subjugation?";
+		next;
+		if (select( "Help", "Don't help" ) == 2) {
+			mes "[Ansuriya]";
+			mes "Ah... Excuse me.";
+			mes "It's our job and we're just looking for help.";
+			next;
+			mes "[Ansuriya]";
+			mes "You must have your own things to do!";
+			mes "We will try to solve this by ourselves.";
+			close;
+		}
+		mes "[Gerbena]";
+		mes "It is an honor to work with you!";
+		next;
+		mes "[Ansuriya]";
+		mes "Thank you for your cooperation!";
+		mes "Let's organize the group again...";
+		next;
+		mes "[Ansuriya]";
+		mes "Are you comfortable taking the mission alone or with the Rebellion's mission team?";
+		next;
+		select( "I'm comfortable alone" );
+		mes "[Ansuriya]";
+		mes "If so, let's combine the Rebellion mission groups into one, and the hero's solo mission... mumble mumble.";
+		mes "Oh, why am I the only one thinking. Gerbena, help me!";
+		next;
+		mes "[Gerbena]";
+		mes "Oops, yes!";
+		setquest 16529;
+		completequest 16529;
+		next;
+	}
+	mes "[Ansuriya]";
+	mes "Hero, these are the things we would like to ask of you from Amicitia.";
+	mes "Which of these would you like to help with?";
+	next;
+	switch( select( "Earth and Fire", "Water and Wind", "Traces of Werner", "Don't help" ) ) {
+	case 1:
+		switch( checkquest(16530,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Ansuriya]";
+			mes "Now, the Rebellion unit is in the process of following up.";
+			mes "It's okay, hero, to rest a little longer.";
+			next;
+			mes "[Ansuriya]";
+			mes "Thank you for being so active with us.";
+			mes "Can you come back after dawn?";
+			close;
+		case 2:
+			erasequest 16530;
+			break;
+		}
+		switch( checkquest(16531,HUNTING) ) {
+		case -1:
+			mes "[Ansuriya]";
+			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_AMITERA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FILLIA", MOB_NAME) + "</FONT> among the chimeras in culture.";
+			next;
+			mes "[Ansuriya]";
+			mes "You will be able to recognize them right away as the attribute characteristics of earth and fire appear much stronger than those of existing entities.";
+			mes "Actually, it's more like a monster than a homunculus...";
+			next;
+			mes "[Ansuriya]";
+			mes "Despite the destruction of the culture facility, the number of individuals continues to increase, so I would like to ask you to hunt about 15 specimens of each!";
+			next;
+			if (select( "Hunt", "Do not hunt" ) == 2) {
+				mes "[Ansuriya]";
+				mes "Hmm? Have you changed your mind?";
+				next;
+				mes "[Ansuriya]";
+				mes "Well, then! We have to re-organize! Ugh.";
+				mes "Hero, why don't you reconsider calmly?";
+				close;
+			}
+			mes "[Ansuriya]";
+			mes "Thank you very much for your support. The two types of chimeras will probably be roaming the ground floor of the closed lab Amicitia.";
+			next;
+			mes "[Ansuriya]";
+			mes "Please don't let the chimeras leave the lab.";
+			setquest 16531;
+			close;
+		case 0:
+		case 1:
+			mes "[Ansuriya]";
+			mes "<FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_AMITERA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FILLIA", MOB_NAME) + "</FONT> will be roaming the first floor of the closed lab Amicitia.";
+			next;
+			mes "[Ansuriya]";
+			mes "Please hunt 15 of each.";
+			close;
+		case 2:
+			mes "[Ansuriya]";
+			mes "Have you been there? You have completed all the tasks I mentioned.";
+			next;
+			mes "[Ansuriya]";
+			mes "Rebellion units are also on duty.";
+			mes "Thanks to the hero who organized it one step ahead, it seems to have made it easier to enter.";
+			next;
+			mes "[Ansuriya]";
+			mes "As expected from a hero. It is rare to find someone outside of the Rebellions who works with such sincerity and cleanliness.";
+			mes "I would be grateful if you could join the mission tomorrow as well.";
+			erasequest 16531;
+			setquest 16530;
+			getexp 17726670,12408690;	// TODO: the amount has been changed with the monster update
+			close;
+		}
+		end;
+	case 2:
+		switch( checkquest(16532,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Ansuriya]";
+			mes "Now, the Rebellion unit is in the process of following up.";
+			mes "It's okay, hero, to rest a little longer.";
+			next;
+			mes "[Ansuriya]";
+			mes "Thank you for being so active with us.";
+			mes "Can you come back after dawn?";
+			close;
+		case 2:
+			erasequest 16532;
+			break;
+		}
+		switch( checkquest(16533,HUNTING) ) {
+		case -1:
+			mes "[Ansuriya]";
+			mes "I would like to ask you to hunt <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LITUS", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_VANILAQUS", MOB_NAME) + "</FONT> among the chimeras that were being cultured.";
+			next;
+			mes "It's not difficult to tell them apart because they've mutated into an appearance that clearly reveals the attributes of wind and water.";
+			next;
+			mes "[Ansuriya]";
+			mes "The number of individuals continues to increase without the help of a culture facility, so please hunt 15 of each.";
+			next;
+			if (select( "Hunt", "Do not hunt" ) == 2) {
+				mes "[Ansuriya]";
+				mes "Hmm? Have you changed your mind?";
+				next;
+				emotion ET_KEK;
+				mes "[Ansuriya]";
+				mes "Well, then! we have to re-organize! Ugh.";
+				mes "Hero, why don't you reconsider calmly?";
+				close;
+			}
+			mes "[Ansuriya]";
+			mes "Thank you very much for your support. The two types of chimeras are staying on the first floor of the closed lab Amicitia.";
+			next;
+			mes "[Ansuriya]";
+			mes "Please don't let the chimeras leave the lab.";
+			setquest 16533;
+			close;
+		case 0:
+		case 1:
+			mes "[Ansuriya]";
+			mes "<FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LITUS", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_VANILAQUS", MOB_NAME) + "</FONT> are staying on the first floor of the closed lab Amicitia.";
+			next;
+			mes "[Ansuriya]";
+			mes "Please hunt 15 of each.";
+			close;
+		case 2:
+			mes "[Ansuriya]";
+			mes "Mission completed, confirmed.";
+			mes "Now deploy the rebellion troops.";
+			next;
+			mes "[Ansuriya]";
+			mes "Thanks to the hero who organized it one step ahead, we will be able to enter easily..";
+			mes "Thank you very much.";
+			next;
+			mes "[Ansuriya]";
+			mes "Working with someone outside of Rebellion, this is the first time I've felt such a good fit.";
+			mes "Hero, would you like to join the mission tomorrow as well?";
+			setquest 16532;
+			erasequest 16533;
+			getexp 17724090,12406890;	// TODO: the amount has been changed with the monster update
+			close;
+		}
+		end;
+	case 3:
+		switch( checkquest(16534,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Ansuriya]";
+			mes "Now, the Rebellion unit is in the process of following up.";
+			mes "It's okay, hero, to rest a little longer.";
+			next;
+			mes "[Ansuriya]";
+			mes "Thank you for being so active with us.";
+			mes "Can you come back after dawn?";
+			close;
+		case 2:
+			erasequest 16534;
+			break;
+		}
+		switch( isbegin_quest(16535) ) {
+		case 0:
+			mes "[Ansuriya]";
+			mes "This is a high-security job, so I only want to ask the hero a favor.";
+			next;
+			mes "[Ansuriya]";
+			mes "I didn't want to go through the mouths of as many people as possible, so the Rebellion units were excluded from this job.";
+			next;
+			mes "[Ansuriya]";
+			mes "Nothing else, but to find <FONT COLOR = 0000CD>Traces of Werner</FONT> on the 1st floor of the abandoned lab Amicitia.";
+			next;
+			mes "[Ansuriya]";
+			mes "What part of Amicitia was managed by Werner, what kind of experiments he conducted, etc...";
+			mes "If anything has had an impact on the Institute, please come to me.";
+			next;
+			mes "[Ansuriya]";
+			mes "Documents, files, data! Anything is fine.";
+			mes "Would you like to go for me?";
+			next;
+			if (select( "I will go", "I will not go" ) == 2) {
+				mes "[Ansuriya]";
+				mes "That's alright. But it's also annoying...";
+				next;
+				mes "[Ansuriya]";
+				mes "I would appreciate it if you could keep this request a secret.";
+				close;
+			}
+			mes "[Ansuriya]";
+			mes "Okay. It won't be easy to find... Any traces, so please come back to me with just one.";
+			mes "Then, I would like to thank you.";
+			setquest 16535;
+			close;
+		case 1:
+			mes "[Ansuriya]";
+			mes "It won't be easy to find... Any traces, so please come back to me with just one.";
+			mes "Then, I would like to thank you.";
+			close;
+		case 2:
+			mes "[Ansuriya]";
+			mes "Did you find any traces?";
+			mes "You've come to the right place. This note is in Werner's handwriting.";
+			next;
+			mes "[Ansuriya]";
+			mes "Thank you. We will hand this over to the secret wing agents for investigation.";
+			mes "Then you should be rewarded for your hard work.";
+			next;
+			mes "[Ansuriya]";
+			mes "Thank you for coming back tomorrow and working with me.";
+			mes "Because I can't just leave this to anyone.";
+			erasequest 16535;
+			erasequest 16545;
+			setquest 16534;
+			getexp 17000000,12000000;
+			close;
+		}
+		end;
+	case 4:
+		mes "[Ansuriya]";
+		mes "Hmm? Have you changed your mind?";
+		next;
+		mes "[Ansuriya]";
+		mes "Well, then! We have to re-organize! Ugh.";
+		mes "Hero, why don't you reconsider calmly?";
+		close;
+	}
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(16531,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(16533,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16535) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16530,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16532,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16534,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 215 && (checkquest(16531,HUNTING) == -1 && checkquest(16530,PLAYTIME) == -1)" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 215 && (checkquest(16533,HUNTING) == -1 && checkquest(16532,PLAYTIME) == -1)" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 215 && (isbegin_quest(16535) == 0 && checkquest(16534,PLAYTIME) == -1)" );
+	end;
+}
+
+amicitia1,57,242,3	script	Something#ami1	4_GC109,{
+	if (isbegin_quest(16535) == 1) {
+		mes "[Something]";
+		mes "There is something on the floor. Shall we take a closer look?";
+		next;
+		mes "[Something]";
+		mes "Research memo in neat handwriting. Werner's handwriting is exactly like this.";
+		next;
+		mes "[Something]";
+		mes "Let's take it and check it out.";
+		setquest 16545;
+		completequest 16535;
+		close2;
+		initnpctimer;
+		disablenpc();
+		end;
+	}
+	mes "[Something]";
+	mes "Something is off the floor.";
+	mes "It looks like it's just garbage.";
+	close;
+
+OnTimer300000:	// unknown timer
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+amicitia1,152,159,3	duplicate(Something#ami1)	Something#ami2	4_GC109
+amicitia1,262,139,3	duplicate(Something#ami1)	Something#ami3	4_GC109
+amicitia1,36,106,3	duplicate(Something#ami1)	Something#ami4	4_GC109
+amicitia1,244,49,3	duplicate(Something#ami1)	Something#ami5	4_GC109
+
+
+// amicitia2
+pub_cat,89,32,3	script	Gerbena#ami	4_M_REBELLION2,{
+	if (BaseLevel < 230) {
+		mes "[Gerbena]";
+		mes "Wow, " + strcharinfo(0) + "! Can I get an autograph?";
+		mes "It's an honor! Hehe~";
+		next;
+		mes " - This is a quest that can be performed at level 230 or higher - ";
+		close;
+	}
+	mes "[Gerbena]";
+	mes "Hero, there was a homunculus intensive culture room on the second floor of the Amicitia lab.";
+	mes "They were creating more powerful mutated chimeras.";
+	next;
+	mes "[Gerbena]";
+	mes "It's pitiful, but if they are released from the lab, they will do more damage than you can imagine.";
+	mes "Can you help me clean up these chimeras?";
+	next;
+	switch( select( "Imitation and Real", "Natural change", "Don't help" ) ) {
+	case 1:
+		switch( checkquest(16536,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Gerbena]";
+			mes "Have you already been there today? If so, how about taking a break?";
+			mes "If you overwork your body, you may not do well.";
+			next;
+			mes "[Gerbena]";
+			mes "Come back after dawn and work with us!";
+			close;
+		case 2:
+			erasequest 16536;
+			break;
+		}
+		switch( checkquest(16537,HUNTING) ) {
+		case -1:
+			mes "[Gerbena]";
+			mes "Some of the work they were doing in the incubator was mass production of mutated chimeras.";
+			next;
+			mes "[Gerbena]";
+			mes "They re-mutated the mutated homunculus and further strengthened their aggression.";
+			next;
+			mes "[Gerbena]";
+			mes "Please hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_NAPEO", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_GALENSIS", MOB_NAME) + "</FONT> each.";
+			mes "Both are creatures that imitate human form, but add a powerful transformation of the chimera properties to it.";
+			next;
+			mes "[Gerbena]";
+			mes "It's been quite some time since the lab was closed and left unattended.";
+			mes "A quick hunt would make me feel more comfortable.";
+			next;
+			if (select( "Help hunting", "Do not hunt" ) == 2) {
+				mes "[Gerbena]";
+				mes "Ah, you changed your words!";
+				mes "Gerbena is heartbroken!";
+				next;
+				mes "[Gerbena]";
+				mes "But it was our one-sided request.";
+				mes "Even if you refuse, we can't help it...";
+				close;
+			}
+			mes "[Gerbena]";
+			mes "It's an honor that you help us!";
+			mes "Can I participate with you hero?";
+			next;
+			mes "[Ansuriya]";
+			mes "He doesn't like it. He is more comfortable doing it alone, calm down, Gerbena.";
+			next;
+			mes "[Gerbena]";
+			mes "Ugh! Please take care of it for me!!";
+			setquest 16537;
+			close;
+		case 0:
+		case 1:
+			mes "[Gerbena]";
+			mes "Please hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_NAPEO", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_GALENSIS", MOB_NAME) + "</FONT> each.";
+			mes "Both are creatures that imitate human form, but add a powerful transformation of the chimera properties to it.";
+			close;
+		case 2:
+			mes "[Gerbena]";
+			mes "Now the Illusion Forces are deployed and continue their mission.";
+			mes "Thanks to the hero, it's easy to enter and subdue the Chimera.";
+			next;
+			mes "[Gerbena]";
+			mes "Ugh, I also wanted to see the hero's wonderful battle in person...";
+			mes "Maybe someday I'll have a chance to see you?";
+			next;
+			mes "[Gerbena]";
+			mes "If it's okay with you, why don't you come back tomorrow and work with us?";
+			erasequest 16537;
+			setquest 16536;
+			getexp 37253672,26077570;	// rebalance (unknown jexp, 70% of baseexp)
+			close;
+		}
+		end;
+	case 2:
+		switch( checkquest(16538,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Gerbena]";
+			mes "Have you already been there today? If so, how about taking a break?";
+			mes "If you overwork your body, you may not do well.";
+			next;
+			mes "[Gerbena]";
+			mes "Come back after dawn and work with us!";
+			close;
+		case 2:
+			erasequest 16538;
+			break;
+		}
+		switch( checkquest(16539,HUNTING) ) {
+		case -1:
+			mes "[Gerbena]";
+			mes "Among the homunculus in the intensive culture chamber, there are Mutant Chimera Lavaeter and Mutant Chimera Fulgor.";
+			next;
+			mes "[Gerbena]";
+			mes "It looks similar to the existing Homunculus Dieter and Homunculus Bayeri, but they are very different.";
+			mes "It is different from a homunculus in that it reproduces itself and it decides without an owner.";
+			next;
+			mes "[Gerbena]";
+			mes "You can't rescue them or do anything. All, every single one of them has to be killed.";
+			next;
+			mes "[Gerbena]";
+			mes "So, hero, would you like to help us hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LAVA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FULGOR", MOB_NAME) + "</FONT> each?";
+			next;
+			if (select( "Help hunting", "Do not hunt" ) == 2) {
+				mes "[Gerbena]";
+				mes "Ah, you changed your words!";
+				mes "Gerbena is heartbroken!";
+				next;
+				mes "[Gerbena]";
+				mes "But it was our one-sided request.";
+				mes "Even if you refuse, we can't help it...";
+				close;
+			}
+			mes "[Gerbena]";
+			mes "It's an honor that you help us!";
+			mes "Can I participate with you hero?";
+			next;
+			mes "[Ansuriya]";
+			mes "He said he doesn't like it. He is more comfortable doing it alone, calm down, Gerbena.";
+			next;
+			mes "[Gerbena]";
+			mes "Ugh! Please take care of it for me!!";
+			setquest 16539;
+			close;
+		case 0:
+		case 1:
+			mes "[Gerbena]";
+			mes "Hero, can you hunt 15 <FONT COLOR = 0000CD>" + getmonsterinfo("CHIMERA_LAVA", MOB_NAME) + " and " + getmonsterinfo("CHIMERA_FULGOR", MOB_NAME) + "</FONT> each?";
+			mes "You can't rescue them or do anything. All, every single one of them has to be killed.";
+			close;
+		case 2:
+			mes "[Gerbena]";
+			mes "Yes! Mission completed, confirmed. Now, Illusion troops are in!";
+			mes "Thanks to you, they will be able to easily enter and subdue the Chimera.";
+			next;
+			mes "[Gerbena]";
+			mes "Ugh, I also wanted to see the hero's beautiful battle in person...";
+			mes "Maybe someday I'll have a chance to see you?";
+			next;
+			mes "[Gerbena]";
+			mes "If it's okay with you, why don't you come back tomorrow and work with us?";
+			erasequest 16539;
+			setquest 16538;
+			getexp 37325968,26128177;	// rebalance (unknown jexp, 70% of baseexp)
+			close;
+		}
+		end;
+	case 3:
+		mes "[Gerbena]";
+		mes "Ah, you changed your words!";
+		mes "Gerbena is heartbroken!";
+		next;
+		mes "[Gerbena]";
+		mes "But it was our one-sided request.";
+		mes "Even if you refuse, we can't help it...";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(16537,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(16539,HUNTING) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16536,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(16538,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 230 && (checkquest(16537,HUNTING) == -1 && checkquest(16536,PLAYTIME) == -1)" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 230 && (checkquest(16539,HUNTING) == -1 && checkquest(16538,PLAYTIME) == -1)" );
 	end;
 }

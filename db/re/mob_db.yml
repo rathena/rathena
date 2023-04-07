@@ -96692,25 +96692,447 @@ Body:
 #    AegisName: G_SINS_WISDOM
 #  - Id: 20919
 #    AegisName: CARAT_TWEVENT
-#  - Id: 20920
-#    AegisName: CHIMERA_LAVA
-#  - Id: 20921
-#    AegisName: CHIMERA_FULGOR
-#  - Id: 20922
-#    AegisName: CHIMERA_NAPEO
-#  - Id: 20923
-#    AegisName: CHIMERA_GALENSIS
-#  - Id: 20924
-#    AegisName: CHIMERA_AMITERA
-#  - Id: 20925
-#    AegisName: CHIMERA_LITUS
-#  - Id: 20926
-#    AegisName: CHIMERA_FILLIA
-#  - Id: 20927
-#    AegisName: CHIMERA_VANILAQUS
-#  - Id: 20928
-#    AegisName: CHIMERA_THEONE
-#    DamageTaken: 10
+  - Id: 20920
+    AegisName: CHIMERA_LAVA
+    Name: Lavaeter
+    Level: 243
+    Hp: 33910920
+    BaseExp: 317899
+    JobExp: 222529
+    Attack: 8941
+    Attack2: 1178
+    Defense: 441
+    MagicDefense: 101
+    MagicResistance: 175
+    Resistance: 175
+    Str: 299
+    Agi: 203
+    Vit: 144
+    Int: 144
+    Dex: 201
+    Luk: 200
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 1152  # TODO
+    DamageMotion: 300
+    Ai: 04
+    Drops:
+      - Item: Boody_Red
+        Rate: 300
+      - Item: Cold_Magma
+        Rate: 2400
+      - Item: Burning_Heart
+        Rate: 300
+      - Item: Black_Powder
+        Rate: 250
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 20
+      - Item: Shadowdecon
+        Rate: 20
+      - Item: Lava_Eater_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20921
+    AegisName: CHIMERA_FULGOR
+    Name: Fulgor
+    Level: 244
+    Hp: 36820210
+    BaseExp: 314774
+    JobExp: 220342
+    Attack: 9023
+    Attack2: 1197
+    Defense: 511
+    MagicDefense: 142
+    MagicResistance: 168
+    Resistance: 167
+    Str: 303
+    Agi: 201
+    Vit: 137
+    Int: 138
+    Dex: 181
+    Luk: 114
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 1152
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Horn
+        Rate: 2100
+      - Item: Animal's_Skin
+        Rate: 1000
+      - Item: Crystal_Blue
+        Rate: 300
+      - Item: Mistic_Frozen
+        Rate: 50
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 20
+      - Item: Fulgor_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20922
+    AegisName: CHIMERA_NAPEO
+    Name: Napeo
+    Level: 244
+    Hp: 30324840
+    BaseExp: 315666
+    JobExp: 220966
+    Attack: 9033
+    Attack2: 1170
+    Defense: 511
+    MagicDefense: 144
+    MagicResistance: 172
+    Resistance: 203
+    Str: 301
+    Agi: 147
+    Vit: 166
+    Int: 141
+    Dex: 157
+    Luk: 207
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 190
+    AttackDelay: 576
+    AttackMotion: 1152
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Insect_Feeler
+        Rate: 2000
+      - Item: Transparent_Cloth
+        Rate: 1600
+      - Item: Shadowdecon
+        Rate: 20
+      - Item: Wind_Of_Verdure
+        Rate: 300
+      - Item: Rough_Wind
+        Rate: 50
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Napeo_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20923
+    AegisName: CHIMERA_GALENSIS
+    Name: Galensis
+    Level: 244
+    Hp: 35885800
+    BaseExp: 316687
+    JobExp: 221681
+    Attack: 9017
+    Attack2: 1211
+    Defense: 395
+    MagicDefense: 114
+    MagicResistance: 188
+    Resistance: 133
+    Str: 317
+    Agi: 186
+    Vit: 109
+    Int: 154
+    Dex: 207
+    Luk: 186
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Fluff
+        Rate: 2400
+      - Item: Animal's_Skin
+        Rate: 1600
+      - Item: Yellow_Live
+        Rate: 300
+      - Item: Great_Nature
+        Rate: 50
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 20
+      - Item: Galensis_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20924
+    AegisName: CHIMERA_AMITERA
+    Name: Amitera
+    Level: 227
+    Hp: 27974600
+    BaseExp: 297411
+    JobExp: 208188
+    Attack: 8102
+    Attack2: 981
+    Defense: 345
+    MagicDefense: 101
+    MagicResistance: 137
+    Resistance: 141
+    Str: 277
+    Agi: 188
+    Vit: 124
+    Int: 121
+    Dex: 177
+    Luk: 140
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Feather
+        Rate: 2400
+      - Item: Animal's_Skin
+        Rate: 1600
+      - Item: Shoot
+        Rate: 300
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Amitera_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20925
+    AegisName: CHIMERA_LITUS
+    Name: Litus
+    Level: 228
+    Hp: 23160350
+    BaseExp: 294168
+    JobExp: 205918
+    Attack: 8126
+    Attack2: 988
+    Defense: 421
+    MagicDefense: 125
+    MagicResistance: 144
+    Resistance: 145
+    Str: 277
+    Agi: 199
+    Vit: 127
+    Int: 126
+    Dex: 181
+    Luk: 150
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 540
+    AttackMotion: 1080
+    DamageMotion: 768
+    Ai: 04
+    Drops:
+      - Item: Soft_Leaf
+        Rate: 2400
+      - Item: Stone_Piece
+        Rate: 1600
+      - Item: Transparent_Cloth
+        Rate: 1000
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Litus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20926
+    AegisName: CHIMERA_FILLIA
+    Name: Fillia
+    Level: 229
+    Hp: 23252650
+    BaseExp: 293478
+    JobExp: 205435
+    Attack: 8322
+    Attack2: 990
+    Defense: 486
+    MagicDefense: 130
+    MagicResistance: 145
+    Resistance: 145
+    Str: 288
+    Agi: 190
+    Vit: 127
+    Int: 127
+    Dex: 177
+    Luk: 161
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 155
+    AttackDelay: 900
+    AttackMotion: 1800
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Feather_Of_Birds
+        Rate: 2500
+      - Item: Boody_Red
+        Rate: 300
+      - Item: Burning_Heart
+        Rate: 300
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Fillia_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20927
+    AegisName: CHIMERA_VANILAQUS
+    Name: Vanilaqus
+    Level: 230
+    Hp: 25505670
+    BaseExp: 296635
+    JobExp: 207645
+    Attack: 8109
+    Attack2: 997
+    Defense: 431
+    MagicDefense: 114
+    MagicResistance: 151
+    Resistance: 167
+    Str: 281
+    Agi: 165
+    Vit: 145
+    Int: 131
+    Dex: 177
+    Luk: 128
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1536
+    AttackMotion: 3072
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Crystal_Blue
+        Rate: 300
+      - Item: Sticky_Mucus
+        Rate: 2400
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Vanilaqus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20928
+    AegisName: CHIMERA_THEONE
+    Name: The One
+    Level: 245
+    Hp: 275042400
+    BaseExp: 7599887
+    JobExp: 5319921
+    Attack: 14541
+    Attack2: 2756
+    Defense: 654
+    MagicDefense: 114
+    MagicResistance: 470
+    Resistance: 271
+    Str: 415
+    Agi: 244
+    Vit: 221
+    Int: 384
+    Dex: 264
+    Luk: 188
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1440
+    AttackMotion: 2880
+    DamageMotion: 576
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Rough_Wind
+        Rate: 1000
+      - Item: Great_Nature
+        Rate: 1000
+      - Item: Mistic_Frozen
+        Rate: 1000
+      - Item: Flame_Heart
+        Rate: 1000
+      - Item: Shadowdecon
+        Rate: 1000
+      - Item: Zelunium
+        Rate: 1000
+      - Item: The_One_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20856
 #    AegisName: MD_N_ARENA_1
 #  - Id: 20857
