@@ -40,17 +40,16 @@ Descriptive text
 	Small example if possible. Will usually be incomplete, it's there just to
 	give you an idea of how it works in practice.
 
-> To find a specific command, use Ctrl+F, (or whatever keys call up a search
-> function in whatever you're reading this with) put an asterisk (*) followed by the command
-> name, and it should find the command description for you.
-> 
-> If you find anything missing, please let us know!
+To find a specific command, use Ctrl+F, (or whatever keys call up a search
+function in whatever you're reading this with) put an asterisk (*) followed by the command
+name, and it should find the command description for you.
+
+If you find anything missing, please let us know!
 
 ## Syntax
 
 Throughout this document, wherever a command wants an argument, it is given in
-**\<angle brackets\>**. This doesn't mean you should type the angle brackets. If an
-argument of a command is optional, it is given in {curly brackets}. You've
+**\<angle brackets\>**. This doesn't mean you should type the angle brackets. If an argument of a command is optional, it is given in {curly brackets}. You've
 doubtlessly seen this convention somewhere. If a command can optionally take
 an unspecified number of arguments, you'll see a list like this:
 
@@ -58,7 +57,7 @@ command **\<argument\>**{,**\<argument\>**...**\<argument\>**}
 
 This still means they will want to be separated by commas.
 
-Where a command wants a string, it will be given in "quotes", if it's a number,
+Where a command wants a string, it will be given in "`quotes`", if it's a number,
 it will be given without them. Normally, you can put an expression, like a bunch
 of functions or operators returning a value, in (round brackets) instead of most
 numbers. Round brackets will not always be required, but they're often a good
@@ -111,8 +110,7 @@ wish rAthena to ignore.
 
 Upon loading all the files, the server will execute all the top-level commands
 in them. No variables exist yet at this point, no commands can be called other
-than those given in this section. These commands set up the basic structure - create
-NPC objects, spawn monster objects, set map flags, etc. No code is actually
+than those given in this section. These commands set up the basic structure - create NPC objects, spawn monster objects, set map flags, etc. No code is actually
 executed at this point. The top-level commands are pretty confusing, since
 they aren't structured like you would expect (command name first), but rather,
 normally start with a map name.
