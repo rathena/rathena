@@ -4205,7 +4205,6 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 	if (!md) return 0; //Failed?
 
 	md->special_state.clone = 1;
-	md->damagetaken = 100; // Avoid Green Aura reduction calculation.
 
 	if (master_id || flag || duration) { //Further manipulate crafted char.
 		if (flag&1) //Friendly Character
@@ -4350,6 +4349,30 @@ bool MobDatabase::parseDropNode(std::string nodeName, const ryml::NodeRef& node,
 
 	return true;
 }
+
+/**
+ * Mob constructor
+ */
+s_mob_db::s_mob_db() :
+	id(0),
+	sprite(""),
+	name(""),
+	jname(name),
+	base_exp(0),
+	job_exp(0),
+	mexp(0),
+	range2(0),
+	range3(0),
+	race2(),
+	lv(1),
+	dropitem(),
+	mvpitem(),
+	status(),
+	vd(),
+	option(0),
+	skill(),
+	damagetaken(100)
+{}
 
 /**
  * Reads and parses an entry from the mob_db.
