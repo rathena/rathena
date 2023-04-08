@@ -6506,7 +6506,7 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<u
 	if( this->nodeExists( node, "Rate" ) ){
 		uint32 rate;
 
-		if( !this->asUInt32Rate( node, "Rate", rate ) ){
+		if( !this->asUInt32Rate( node, "Rate", rate, 100000 ) ){
 			return false;
 		}
 
