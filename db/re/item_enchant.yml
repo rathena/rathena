@@ -1289,7 +1289,7 @@ Body:
                 Amount: 2500
   - Id: 6
     TargetItems:
-      Cherry_Twig_In_Mouth: true
+      LoveLove_Balloon: true
     Reset:
       Chance: 100000
       Price: 10000
@@ -24430,3 +24430,105 @@ Body:
               - Material: EP20_D_Scale
                 Amount: 2
               - Material: EP19_D_P_Stone
+  - Id: 98
+    TargetItems:
+      Glacier_Helm_1: true
+      Glacier_Helm_2: true
+      Glacier_Helm_3: true
+    Reset:
+      Chance: 70000
+      Price: 6000000
+      Materials:
+        - Material: Enchant_Ticket
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Isgard_4
+            Price: 2000000
+            Materials:
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: Ep20_Cat_Whiskers
+                Amount: 150
+              - Material: Ep19_Snow_Flower
+                Amount: 250
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Isgard_3_Warrior
+            Price: 4000000
+            Materials:
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: Ep20_Cat_Whiskers
+                Amount: 200
+              - Material: Ep19_Snow_Flower
+                Amount: 350
+          - Item: Isgard_3_Ranger
+            Price: 4000000
+            Materials:
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: Ep20_Cat_Whiskers
+                Amount: 200
+              - Material: Ep19_Snow_Flower
+                Amount: 350
+          - Item: Isgard_3_Assassin
+            Price: 4000000
+            Materials:
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: Ep20_Cat_Whiskers
+                Amount: 200
+              - Material: Ep19_Snow_Flower
+                Amount: 350
+          - Item: Isgard_3_Mage
+            Price: 4000000
+            Materials:
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: Ep20_Cat_Whiskers
+                Amount: 200
+              - Material: Ep19_Snow_Flower
+                Amount: 350
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Isgard_2_Warrior2
+            Price: 8000000
+            Materials:
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: Ep20_Cat_Whiskers
+                Amount: 250
+              - Material: Ep19_Snow_Flower
+                Amount: 500
+          - Item: Isgard_2_Ranger2
+            Price: 8000000
+            Materials:
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: Ep20_Cat_Whiskers
+                Amount: 250
+              - Material: Ep19_Snow_Flower
+                Amount: 500
+          - Item: Isgard_2_Assassin2
+            Price: 8000000
+            Materials:
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: Ep20_Cat_Whiskers
+                Amount: 250
+              - Material: Ep19_Snow_Flower
+                Amount: 500
+          - Item: Isgard_2_Mage2
+            Price: 8000000
+            Materials:
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: Ep20_Cat_Whiskers
+                Amount: 250
+              - Material: Ep19_Snow_Flower
+                Amount: 500

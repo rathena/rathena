@@ -4566,10 +4566,10 @@ Body:
     Title: Qualifications of the Guests
     Drops:
       - Mob: MM_GB_MOROCC_1
-        Item: Heart_of_Soul
+        Item: Soul_Of_Ahat
         Rate: 10000
       - Mob: MM_GB_MOROCC_4
-        Item: Sheenas_Soul
+        Item: Soul_Of_Shnaim
         Rate: 10000
   - Id: 7597
     Title: Fall of the False God
@@ -7430,7 +7430,7 @@ Body:
     Title: Vigilante Corp
     Drops:
       - Mob: DR_RODA_FROG
-        Item: Luxurious_Cloth
+        Item: High_Quality_Cloth
         Rate: 5000
   - Id: 11445
     Title: Vigilante Corp
@@ -9504,7 +9504,7 @@ Body:
     Title: An errand out of nowhere
     Drops:
       - Mob: DR_BASILISK1
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14541
     Title: No news is not a good news
@@ -9555,7 +9555,7 @@ Body:
     Title: Dirty Creatures
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14559
     Title: Charm Effect Duration
@@ -9564,19 +9564,19 @@ Body:
     Title: New Ingredient
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14561
     Title: Dirty and Filty
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14562
     Title: The basic are the best
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14563
     Title: Free time
@@ -10586,23 +10586,57 @@ Body:
     TimeLimit: 4h
   - Id: 16528
     Title: Data Backup
+  - Id: 16529
+    Title: Abandoned Lab Amicitia
   - Id: 16530
     Title: The ground and fire
     TimeLimit: 4h
+  - Id: 16531
+    Title: Earth and Fire
+    Targets:
+      - Mob: CHIMERA_AMITERA
+        Count: 15
+      - Mob: CHIMERA_FILLIA
+        Count: 15
   - Id: 16532
     Title: Water, wind - Waiting
     TimeLimit: 4h
+  - Id: 16533
+    Title: Water and Wind
+    Targets:
+      - Mob: CHIMERA_LITUS
+        Count: 15
+      - Mob: CHIMERA_VANILAQUS
+        Count: 15
   - Id: 16534
     Title: Werner's Trace - Standby
     TimeLimit: 4h
+  - Id: 16535
+    Title: Traces of Werner
   - Id: 16536
     Title: Imitate and wait
     TimeLimit: 4h
+  - Id: 16537
+    Title: Imitation and Real
+    Targets:
+      - Mob: CHIMERA_NAPEO
+        Count: 15
+      - Mob: CHIMERA_GALENSIS
+        Count: 15
   - Id: 16538
     Title: Natural change - Waiting
     TimeLimit: 4h
+  - Id: 16539
+    Title: Natural change
+    Targets:
+      - Mob: CHIMERA_LAVA
+        Count: 15
+      - Mob: CHIMERA_FULGOR
+        Count: 15
   - Id: 16540
     Title: Data Backup
+  - Id: 16545
+    Title: Traces of Werner
   - Id: 16546
     Title: Farm Worker
   - Id: 16547

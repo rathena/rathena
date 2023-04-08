@@ -726,7 +726,7 @@ Body:
   - Item: Gunslinger_Enchant
     RewardGroup: GUNSLINGER_ENCHANT
     Requirements:
-      - Item: Drooping_Rebellion_
+      - Item: Droop_Gunslinger
   - Item: EnchantStone_Recipe
     RewardGroup: ENCHANTSTONE_RECIPE
     RequiredRequirementsCount: 3
@@ -814,10 +814,10 @@ Body:
       - Item: MaxHP_Stone
       - Item: ShrinkEffect_Bottom
       - Item: ElectricEffect_Top
-      - Item: SPAbsorb_Stone_Top
-      - Item: HPAbsorb_Stone_Top
-      - Item: SPAbsorb_Stone_Robe
-      - Item: HPAbsorb_Stone_Robe
+      - Item: Upg_SPdrainStone_Top
+      - Item: Upg_HPdrainStone_Top
+      - Item: Upg_SPdrainStone_Robe
+      - Item: Upg_HPdrainStone_Robe
       - Item: WaterFieldEffect_Bottom
       - Item: ExplodingEffect_Middle
       - Item: WhiteBodyEffect_Middle
@@ -1345,19 +1345,19 @@ Body:
         Amount: 10
       - Item: Shabby_Crown
         Amount: 10
-      - Item: Cold_Core
+      - Item: Stone_Of_Chill
         Amount: 10
-      - Item: Silicone_Shell
+      - Item: Soften_Skin
         Amount: 10
-      - Item: Hedgehog_Picks
+      - Item: Porcupine_Big_Spike
         Amount: 10
-      - Item: Old_Belt
+      - Item: Shabby_Old_Belt
         Amount: 10
-      - Item: Moving_Dark_Matter
+      - Item: Moving_Black_Things
         Amount: 10
-      - Item: Fragments_Valkyrie_Power
+      - Item: Valkyrie_Fragment
         Amount: 10
-      - Item: Will_Master
+      - Item: Will_Of_Owner
         Amount: 10
       - Item: Piece_Of_Chimera
         Amount: 10
@@ -1385,19 +1385,19 @@ Body:
         Amount: 10
       - Item: BrownRatTail
         Amount: 10
-      - Item: Frozen_Stone_Fragment
+      - Item: Frozen_PieceOfRock
         Amount: 10
       - Item: SpritJewel
         Amount: 10
       - Item: Snowball
         Amount: 10
-      - Item: Ktullanux_Eye
+      - Item: KTULLANUXsEye
         Amount: 10
-      - Item: Hazy_Dream_Fragment
+      - Item: HazyDream
         Amount: 10
-      - Item: Broken_Arrow
+      - Item: BrokenArrow
         Amount: 10
-      - Item: Recruitment_Leaflet
+      - Item: SubjugationFlyer
         Amount: 10
       - Item: IllusoryStone
         Amount: 10
@@ -1415,9 +1415,9 @@ Body:
         Amount: 10
       - Item: SuspiciousMagicCircle
         Amount: 10
-      - Item: Piece_of_Black_Horn
+      - Item: PieceOfBlackSpirit
         Amount: 10
-      - Item: Fine_Old_Doll
+      - Item: OldDoll
         Amount: 10
       - Item: OldShell
         Amount: 10
@@ -1573,7 +1573,7 @@ Body:
       - Item: C_Loose_Wave_Twin_BL
       - Item: C_Cupid_Wing_Pink
       - Item: C_Pecopeco_Cap
-      - Item: C_Green_Hat
+      - Item: C_Woodie_Hat
       - Item: C_Little_Aquarium
       - Item: C_Angel_Fluttering
       - Item: C_Niflheim_Bunny_Hat
@@ -1590,9 +1590,9 @@ Body:
       - Item: C_Morocc_Kid_Servant
       - Item: C_Monochrome_RibbonHat
       - Item: C_Khalitzburg_KN_Helm
-      - Item: C_Laser_of_Eagle
+      - Item: C_Laser_Of_Eagle
       - Item: C_Devil_Wing
-      - Item: C_Tone_of_Gold
+      - Item: C_Tone_Of_Gold
       - Item: C_Dwarf_Beard
       - Item: C_Mad_Hatter
       - Item: C_Cons_Of_Water
@@ -1753,14 +1753,14 @@ Body:
       - Item: C_Royalguard_Necklace
       - Item: C_Happy_Cat_TW
       - Item: C_Monochrome_Cap
-      - Item: C_Sky_of_Memory
+      - Item: C_Sky_Of_Memory
       - Item: C_Ice_Wing
-      - Item: C_Under_Rim_Glasses_Blue
+      - Item: C_Under_Rim_Glasses_Bu
       - Item: C_Gimmick_One_Feather
-      - Item: C_Pocketwatch_Hair_Ornament
+      - Item: C_PocketWatch_Hair_Orna
       - Item: C_Poring_Traffic_Light
       - Item: C_PGstone_Knit_Hat_PK
-      - Item: C_Lazy_Ninetail
+      - Item: C_Drooping_Nine_Tail
       - Item: C_Sakura_Wing
       - Item: C_Looking
       - Item: C_Wolf_Masquerade
@@ -1832,7 +1832,7 @@ Body:
       - Item: C_Triple_Ice_Cream
       - Item: C_Wrapping_Ribbon
       - Item: C_Bear_Head
-      - Item: C_Kindergarten_Hat
+      - Item: C_Preschool_Hat
       - Item: C_Poulet_TW
       - Item: C_Avenger
       - Item: C_WitchManteau
@@ -1840,16 +1840,16 @@ Body:
       - Item: C_Gothic_Pumpkin_Head
       - Item: C_Barrel_Helm
       - Item: C_White_Cat_On_Shoulder
-      - Item: C_Black_Rabbit_Ears
+      - Item: C_Rabbit_Hopping_BL
       - Item: C_G_DaeHyon_Sword_TW
       - Item: C_Cat_Ears_Cape_Red
-      - Item: C_Tare_W_Doll
-      - Item: C_Goat_Hat
+      - Item: C_Debril_Doll_Hat
+      - Item: C_Sheep_Hat
       - Item: C_Put_On_Coat
       - Item: C_Pink_Pajamas_Hat
       - Item: C_L_RibbonMuff_Black
       - Item: C_Black_Cat_Ears_Beret
-      - Item: C_Watery_Eyes
+      - Item: C_Teardrop
   - Item: Fan_Upgrade_Kit
     RewardGroup: FAN_UPGRADE_KIT
     Requirements:
@@ -1857,11 +1857,11 @@ Body:
   - Item: Suit_Upgrade_Kit
     RewardGroup: SUIT_UPGRADE_KIT
     Requirements:
-      - Item: Kafra_Uniform
+      - Item: Kafra_Suit
   - Item: FallenAngelWing_Reset
     RewardGroup: SCROLL_OF_FALLEN_ANGEL_WINGS
     Requirements:
-      - Item: Fallen_Angel_Wings_
+      - Item: K_Fallen_Angel_Wing
       - Item: Fallen_Angel_Wing
   - Item: JobShadow_Mix_Weapon
     RewardGroup: CLASS_SHADOW_BOX_WEAPON
@@ -2051,15 +2051,15 @@ Body:
   - Item: Candy_Bag_Scroll_Melee
     RewardGroup: CANDY_BAG_SCROLL_MELEE
     Requirements:
-      - Item: Bag_Of_Antonio_P
+      - Item: Bag_Of_Antonio_Melee
   - Item: Candy_Bag_Scroll_Range
     RewardGroup: CANDY_BAG_SCROLL_RANGE
     Requirements:
-      - Item: Bag_Of_Antonio_S
+      - Item: Bag_Of_Antonio_Range
   - Item: Candy_Bag_Scroll_Magic
     RewardGroup: CANDY_BAG_SCROLL_MAGIC
     Requirements:
-      - Item: Bag_Of_Antonio_
+      - Item: Bag_Of_Antonio_Magic
   - Item: Booster_Amplifier
     RewardGroup: BOOSTER_AMPLIFIER
     Requirements:
@@ -4550,3 +4550,265 @@ Body:
 #        Amount: 30
 #      - Item: Zelunium
 #        Amount: 250
+#  - Item: Bs_Item_M_S_60
+#    RewardGroup: BS_ITEM_M_S_60
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: EP20_D_Scale
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_61
+#    RewardGroup: BS_ITEM_M_S_61
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Will_Of_Darkness_
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_62
+#    RewardGroup: BS_ITEM_M_S_62
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: EP19_Luminant
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_63
+#    RewardGroup: BS_ITEM_M_S_63
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: EP19_D_P_Stone
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Mocadas_Slabs1
+#    RewardGroup: MOCADAS_SLABS1
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs2
+#    RewardGroup: MOCADAS_SLABS2
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs3
+#    RewardGroup: MOCADAS_SLABS3
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs4
+#    RewardGroup: MOCADAS_SLABS4
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs5
+#    RewardGroup: MOCADAS_SLABS5
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs6
+#    RewardGroup: MOCADAS_SLABS6
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs7
+#    RewardGroup: MOCADAS_SLABS7
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs8
+#    RewardGroup: MOCADAS_SLABS8
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs9
+#    RewardGroup: MOCADAS_SLABS9
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs10
+#    RewardGroup: MOCADAS_SLABS10
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs11
+#    RewardGroup: MOCADAS_SLABS11
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs12
+#    RewardGroup: MOCADAS_SLABS12
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs13
+#    RewardGroup: MOCADAS_SLABS13
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs14
+#    RewardGroup: MOCADAS_SLABS14
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs15
+#    RewardGroup: MOCADAS_SLABS15
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs16
+#    RewardGroup: MOCADAS_SLABS16
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs17
+#    RewardGroup: MOCADAS_SLABS17
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 50
+#      - Item: Mocadas_Water
+#        Amount: 50
+#      - Item: Crystal_Of_Pollution
+#        Amount: 50
+#  - Item: Mocadas_Slabs18
+#    RewardGroup: MOCADAS_SLABS18
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 50
+#      - Item: Mocadas_Water
+#        Amount: 50
+#      - Item: Crystal_Of_Pollution
+#        Amount: 50
+#  - Item: Mocadas_Slabs19
+#    RewardGroup: MOCADAS_SLABS19
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs20
+#    RewardGroup: MOCADAS_SLABS20
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs21
+#    RewardGroup: MOCADAS_SLABS21
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs22
+#    RewardGroup: MOCADAS_SLABS22
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs23
+#    RewardGroup: MOCADAS_SLABS23
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100

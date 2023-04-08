@@ -27,7 +27,7 @@
 #                                   These drops are unaffected by server drop rate and cannot be stolen.
 #     - Index                       Unique index of the drop.
 #       Item                        Item name.
-#       Rate                        Drop rate of item.
+#       Rate                        Drop rate of item, n/100000.
 #       RandomOptionGroup           Random Option Group applied to item on drop. (Default: None)
 #   SpecificDrops                   Drops for specific monsters on this map. (Default: empty)
 #     - Monster                     Monster name.
@@ -35,10 +35,10 @@
 #                                   These drops are unaffected by server drop rate and cannot be stolen.
 #         - Index                   Unique index of the drop.
 #           Item                    Item name.
-#           Rate                    Drop rate of item.
+#           Rate                    Drop rate of item, n/100000.
 #           RandomOptionGroup       Random Option Group applied to item on drop. (Default: None)
 ###########################################################################
 
 Header:
   Type: MAP_DROP_DB
-  Version: 1
+  Version: 2
