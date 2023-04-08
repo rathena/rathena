@@ -43,7 +43,6 @@ Header:
   Type: MAP_DROP_DB
   Version: 2
 
-
 Body:
   - Map: tur_d03_i
     SpecificDrops:
