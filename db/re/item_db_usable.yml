@@ -61762,6 +61762,24 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100487
+    AegisName: Loki_Coin_2
+    Name: Loki's White Coin    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100488
+    AegisName: Loki_Advice_2
+    Name: Loki's Advice (Magic)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
   - Id: 100495
     AegisName: Stone_Robe2_Box
     Name: 3rd/Expanded Stone II (Garment) Box
@@ -65446,6 +65464,42 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101363
+    AegisName: OS_Helm_Hammer
+    Name: Upgraded OS Helmet Refine Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 101364
+    AegisName: OS_Weapon_Hammer
+    Name: Upgraded OS Weapon Refine Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 101389
+    AegisName: Helm_Of_Faith_Hammer
+    Name: Helm of Faith Refine Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 101390
+    AegisName: Clock_Tower_W_Hammer
+    Name: Clock Tower Basement Refine Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
   - Id: 101416
     AegisName: aegis_101416
     Name: Costume Enchant Stone Box 27
@@ -65799,6 +65853,16 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 101637
+    AegisName: EP19_DGW_Refine
+    Name: Dim Glacier Reinforcement Device    # !todo check english name
+    Type: DelayConsume
+    Weight: 200
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
   - Id: 101639
     AegisName: D_Gw_Extractor
     Name: Dim Glacier Extractor    # !todo check english name
@@ -66051,6 +66115,66 @@ Body:
     Type: DelayConsume
     Script: |
       item_reform();
+  - Id: 101769
+    AegisName: Barmund_Plain_Reform
+    Name: Grassland Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101770
+    AegisName: Barmund_Death_Reform
+    Name: Death Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101771
+    AegisName: Barmund_Flame_Reform
+    Name: Fire Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101772
+    AegisName: Barmund_Ice_Reform
+    Name: Ice Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
   - Id: 101792
     AegisName: SubjectCape_Refine_Cube
     Name: Subject Manteau 12 Refine Cube
@@ -66075,6 +66199,96 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box29);
+  - Id: 101933
+    AegisName: Barmund_Soul_Reform
+    Name: Soul Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101934
+    AegisName: Barmund_Venom_Reform
+    Name: Poison Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101935
+    AegisName: Barmund_Temple_Reform
+    Name: Crusade Rune Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101936
+    AegisName: Barmund_S_Reform
+    Name: Soul Magic Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101937
+    AegisName: Barmund_V_Reform
+    Name: Poison Magic Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 101938
+    AegisName: Barmund_T_Reform
+    Name: Temple Magic Upgrade    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
   - Id: 101947
     AegisName: A_Bubble_Gum
     Name: "[Achievement] Bubble Gum"    # !todo check english name
@@ -66106,6 +66320,342 @@ Body:
       NoAuction: true
     Script: |
       getitem 101947,10;
+  - Id: 102017
+    AegisName: Mocadas_Refine_Box
+    Name: Smelting Mocadas Equipment 9~10    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102018
+    AegisName: Amp_Blueprint1
+    Name: Amplification Schematic (Metal Detector MK47)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102019
+    AegisName: Amp_Blueprint3
+    Name: Amplification Blueprint (Safety Saver)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102020
+    AegisName: Amp_Blueprint2
+    Name: Amplification Schematic (Gem Detector Mk47)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102021
+    AegisName: Amp_Blueprint4
+    Name: Amplification Schematic (Safety Foxtail)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102022
+    AegisName: Amp_Blueprint6
+    Name: Amplification Blueprint (Crowsword)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102023
+    AegisName: Amp_Blueprint5
+    Name: Amplification Schematic (Blocking Spear)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102024
+    AegisName: Amp_Blueprint7
+    Name: Amplification Schematic (Rubber Hammer)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102025
+    AegisName: Amp_Blueprint8
+    Name: Amplification Blueprint (Saw Ax)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102026
+    AegisName: Amp_Blueprint9
+    Name: Amplification Schematic (Safety Knuckle)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102027
+    AegisName: Amp_Blueprint10
+    Name: Amplification Schematic (Safety Manual)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102028
+    AegisName: Amp_Blueprint11
+    Name: Amplification Schematic (Welding Wand)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102029
+    AegisName: Amp_Blueprint12
+    Name: Amplification Blueprint (Detecting Staff)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102030
+    AegisName: Amp_Blueprint13
+    Name: Amplification Blueprint (Grinder Fengma Shuriken)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102031
+    AegisName: Amp_Blueprint14
+    Name: Amplification Schematic (Volt Shooter)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102032
+    AegisName: Amp_Blueprint15
+    Name: Amplified Blueprint (Bolt Crusher)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102033
+    AegisName: Amp_Blueprint16
+    Name: Amplified Schematic (Volt Revolver)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102034
+    AegisName: Amp_Blueprint17
+    Name: Amplified Schematic (Safety Whip)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102035
+    AegisName: Amp_Blueprint18
+    Name: Amplification Schematic (Safety Lute)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
+  - Id: 102040
+    AegisName: Mocadas_Slabs1
+    Name: Mocadas Slate (Sashir)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102041
+    AegisName: Mocadas_Slabs2
+    Name: Mocadas Slate (Panjira)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102042
+    AegisName: Mocadas_Slabs3
+    Name: Mocadas Slate (Jedogar)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102043
+    AegisName: Mocadas_Slabs4
+    Name: Mocadas Slate (Kiteb)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102044
+    AegisName: Mocadas_Slabs5
+    Name: Mocadas Slate (Tasiripati)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102045
+    AegisName: Mocadas_Slabs6
+    Name: Mocadas Slate (Dest)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102046
+    AegisName: Mocadas_Slabs7
+    Name: Mocadas Slate (Tavar)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102047
+    AegisName: Mocadas_Slabs8
+    Name: Mocadas Slate (Dawablunt)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102048
+    AegisName: Mocadas_Slabs9
+    Name: Mocadas Slate (Mesht)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102049
+    AegisName: Mocadas_Slabs10
+    Name: Mocadas Slate (Baru)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102050
+    AegisName: Mocadas_Slabs11
+    Name: Mocadas Slate (Blessing)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102051
+    AegisName: Mocadas_Slabs12
+    Name: Mocadas Slate (Saz)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102052
+    AegisName: Mocadas_Slabs13
+    Name: Mocadas Slate (Sharrak)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102053
+    AegisName: Mocadas_Slabs14
+    Name: Mocadas Slate (Tea Man)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102054
+    AegisName: Mocadas_Slabs15
+    Name: Mocadas Slate (Gross)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102055
+    AegisName: Mocadas_Slabs16
+    Name: Mocadas Slate (Kaguaz)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102056
+    AegisName: Mocadas_Slabs17
+    Name: Mocadas Slate (Nazal)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102057
+    AegisName: Mocadas_Slabs18
+    Name: Mocadas Slate (Kanjar)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102058
+    AegisName: Mocadas_Slabs19
+    Name: Mocadas Slate (Eisa)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102059
+    AegisName: Mocadas_Slabs20
+    Name: Mocadas Slate (Naraenzac)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102060
+    AegisName: Mocadas_Slabs21
+    Name: Mocadas Slate (Tapang)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102061
+    AegisName: Mocadas_Slabs22
+    Name: Mocadas Slate (Saka)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102062
+    AegisName: Mocadas_Slabs23
+    Name: Mocadas Slate (Thelin)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      laphine_synthesis();
+  - Id: 102072
+    AegisName: Justice_Weapon_Hammer
+    Name: Good Weapon Smelting Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102073
+    AegisName: Injustice_Weapon_Hammer
+    Name: Evil Weapon Forge Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102075
+    AegisName: GoodnEvil_Helm_Hammer
+    Name: Crown of Good and Evil Smelting Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102124
+    AegisName: F_Ein_Weapon_Hammer
+    Name: Flush Weapon Smelting Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102126
+    AegisName: Amp_Blueprint19
+    Name: Amplification Schematic (Metal Detector MK47-2)    # !todo check english name
+    Type: DelayConsume
+    Weight: 1250
+    Script: |
+      item_reform();
   - Id: 102193
     AegisName: aegis_102193
     Name: Costume Enchant Stone Box 30
@@ -66115,6 +66665,103 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box30);
+  - Id: 102224
+    AegisName: Hero_Up_Cube_11
+    Name: +11 Ancient Hero Armor Opening Cube    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102227
+    AegisName: Glacier_Armor_9Refine
+    Name: Glaceon Armor 9 refine cube    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102228
+    AegisName: EP20_DGA_Refine
+    Name: Dim Glaceon Armor Enhancer    # !todo check english name
+    Type: DelayConsume
+    Weight: 200
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 102238
+    AegisName: Isgard_Crown_Hammer
+    Name: Isgard Crown Smelting Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102277
+    AegisName: Loki_Advice
+    Name: Loki's advice (near physics)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102278
+    AegisName: Loki_Coin
+    Name: Loki's Coin    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102295
+    AegisName: Bs_Item_M_S_60
+    Name: Voitata Hat Recipe    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102308
+    AegisName: Bs_Item_M_S_61
+    Name: Beelzebub's Crown Combination Scroll    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102310
+    AegisName: Bs_Item_M_S_62
+    Name: Vesper Headgear Combination Scroll    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102311
+    AegisName: Bs_Item_M_S_63
+    Name: Groan of Corruption Recipe    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
