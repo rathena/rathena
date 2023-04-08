@@ -1715,12 +1715,9 @@
 
 // 2010-07-06aRagexeRE
 #if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || defined(PACKETVER_ZERO)
-	// packet(0x0825,-1);
-	// packet(0x0826,4);
 	parseable_packet(0x0835, -1, clif_parse_SearchStoreInfo, 2, 4, 5, 9, 13, 14, 15);
 	packet(HEADER_ZC_SEARCH_STORE_INFO_ACK, -1);
 	packet(0x0837, 3);
-	// packet(0x0838,3);
 #endif
 
 // 2010-07-13aRagexeRE
