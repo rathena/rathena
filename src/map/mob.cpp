@@ -2904,7 +2904,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if( mapdrops != nullptr ){
 			// Process map wide drops
 			for( const auto& it : mapdrops->globals ){
-				if( rnd_chance32( it.second->rate, 100000u ) ){
+				if( rnd_chance( it.second->rate, 100000u ) ){
 					// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 					int32 map_drops_rate = max(1, (it.second->rate / 10));
 					mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, map_drops_rate, (homkillonly || merckillonly) );
@@ -2916,7 +2916,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if( specific != mapdrops->specific.end() ){
 				for( const auto& it : specific->second ){
-					if( rnd_chance32( it.second->rate, 100000u ) ){
+					if( rnd_chance( it.second->rate, 100000u ) ){
 						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 						int32 map_drops_rate = max(1, (it.second->rate / 10));
 						mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, map_drops_rate, (homkillonly || merckillonly) );
