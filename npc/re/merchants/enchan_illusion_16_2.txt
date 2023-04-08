@@ -1369,11 +1369,11 @@ alberta,226,28,3	script	Equipment Researcher	4_TOWER_15,{
 		mes "What are the weapons I can exchange? Wait a minute. I'll name them.";
 		next;
 		mes "[Equipment Researcher]";
-		mes "<ITEM>Illusion Immaterial Sword<INFO>13469</INFO></ITEM>,";
-		mes "<ITEM>Illusion War Axe<INFO>1326</INFO></ITEM>,";
-		mes "<ITEM>Illusion Pole Axe<INFO>32005</INFO></ITEM>,";
-		mes "<ITEM>Illusion Wing Shuriken<INFO>13338</INFO></ITEM>,";
-		mes "<ITEM>Illusion Iron Driver<INFO>16065</INFO></ITEM>.";
+		mes "" + mesitemlink(13469, false) + ",";
+		mes "" + mesitemlink(1326, false) + ",";
+		mes "" + mesitemlink(32005, false) + ",";
+		mes "" + mesitemlink(13338, false) + ",";
+		mes "" + mesitemlink(16065, false) + ".";
 		mes "Each has two slots.";
 		next;
 		mes "[Equipment Researcher]";
@@ -1434,7 +1434,7 @@ alberta,226,28,3	script	Equipment Researcher	4_TOWER_15,{
 			break;
 		}
 		mes "[Equipment Researcher]";
-		mes "<ITEM>" + getitemname(.@reward) + "<INFO>" + .@reward + "</INFO></ITEM>?";
+		mes "" + mesitemlink(.@reward, false) + "?";
 		mes "I need " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^0000CD+9 " + getitemname(.@eq_req) + " ^000000,";
 		mes "^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + "ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + "ea^000000 as materials.";
 		break;
@@ -1448,7 +1448,7 @@ alberta,226,28,3	script	Equipment Researcher	4_TOWER_15,{
 			25312,50;			// Pretty Old Doll
 
 		mes "[Equipment Researcher]";
-		mes "You can only exchange one type of armor, <ITEM>" + getitemname(.@reward) + "<INFO>" + .@reward + "</INFO></ITEM>. It has 1 slot.";
+		mes "You can only exchange one type of armor, " + mesitemlink(.@reward, false) + ". It has 1 slot.";
 		mes "I need " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^0000CD" + getitemname(.@eq_req) + "^000000,";
 		mes "^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + " ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + " ea^000000 as materials.";
 		next;

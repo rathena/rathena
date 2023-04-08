@@ -6476,7 +6476,7 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 		next;
 		mes " - ^424242Biting nails and the fingertips are messed up.....^000000 - ";
 		next;
-		npctalk "My treasure, if the " + strmobinfo(1,3799) + " was gone... All, Munch... Muunch....", "Susceptible Soldier#", bc_self;
+		npctalk "My treasure, if the " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " was gone... All, Munch... Muunch....", "Susceptible Soldier#", bc_self;
 		mes "[Susceptible Soldier]";
 		mes "Munch, Munch... Murmur... My ^BDBDBDtreasure^000000... My ^BDBDBDprecious^000000 treasure... It's ^BDBDBDall^000000 mine...";
 		next;
@@ -6575,7 +6575,7 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 			mes "^FF0000My treasure... My revenge...";
 			mes "Not enough!!!^000000";
 			next;
-			mes " - ^424242Did I forget something? ^0000CD" + getitemname(25316) + " 5 pieces ^424242and ^0000CDkill 10 " + strmobinfo(1,3799) + ".^000000 -";
+			mes " - ^424242Did I forget something? ^0000CD" + getitemname(25316) + " 5 pieces ^424242and ^0000CDkill 10 " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + ".^000000 -";
 			close;
 		case 2:
 			mes "[Susceptible Soldier]";
@@ -6614,7 +6614,7 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 		next;
 		select( "What treasure?", "What monster?" );	// note: the selection doesn't change the dialog
 		mes "[Susceptible Soldier]";
-		mes "The damn^BDBDBDuh^000000.. mon.. ^FF0000" + strmobinfo(1,3799) + " monster^000000...";
+		mes "The damn^BDBDBDuh^000000.. mon.. ^FF0000" + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " monster^000000...";
 		mes "They took ^BDBDBDmy^000000 treasure^BDBDBDD.... My!! treasure^000000...!!";
 		next;
 		mes "[Susceptible Soldier]";
@@ -6633,11 +6633,11 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 		mes "Go, ^BDBDBDgo^000000 get it! My ^BDBDBDtreasure^000000! You can take it from them! My ^BDBDBDtreasure^000000!";
 		next;
 		mes "[Susceptible Soldier]";
-		mes "And payback to " + strmobinfo(1,3799) + ". ^FF0000Revenge^000000... Munch munch... My ^BDBDBDrevenge^000000.. Please...";
+		mes "And payback to " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + ". ^FF0000Revenge^000000... Munch munch... My ^BDBDBDrevenge^000000.. Please...";
 		mes "Get rid of 10... monsters! Munch, ^FF0000munch munch^000000... Get ^BDBDBDrid^000000 of them!!!";
 		next;
 		mes " - ^424242Narin said, I can get some ^0000CD" + getitemname(25316) + "^424242 from here. It would be enough for him. ^0000CDLet me prepare^424242 5 pieces.^000000 - ";
-		mes " - ^0000CDI need to get rid of the ^42424210 " + strmobinfo(1,3799) + " monsters.^000000 - ";
+		mes " - ^0000CDI need to get rid of the ^42424210 " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " monsters.^000000 - ";
 		setquest 16109;	// Vain Desire
 		close;
 	}
@@ -6661,14 +6661,14 @@ OnTalk:
 		npctalk "My, treasure... Munch, can't forgive...";
 		break;
 	case 1:
-		npctalk "My treasure, if the " + strmobinfo(1,3799) + " was gone... All, Munch... Muunch....";
+		npctalk "My treasure, if the " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " was gone... All, Munch... Muunch....";
 		sleep 3000;
 		npctalk "Munch... Muunch, Treasure... My treasure... Munch... Muunch...";
 		break;
 	case 2:
 		npctalk "Revenge... Revenge... Munch... Muunch... Munch... Muunch...";
 		sleep 3000;
-		npctalk "I will get payback... on... " + strmobinfo(1,3799) + "... They took my treasure!";
+		npctalk "I will get payback... on... " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + "... They took my treasure!";
 		break;
 	}
 	.talk = 0;
@@ -6927,7 +6927,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		case 0:
 		case 1:
 			mes "[Fragile Woman]";
-			mes "Please hunt turtles. ^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ". 10 monsters each.^000000";
+			mes "Please hunt turtles. ^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ". 10 monsters each.^000000";
 			next;
 			npctalk "I'm going to die. Die. Die.", "", bc_self;
 			mes "[Fragile Woman]";
@@ -6982,7 +6982,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 		mes "...Help me? Really? You won't let me die?";
 		next;
 		mes "[Fragile Woman]";
-		mes "Then please hunt turtles. ^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ". 10 monsters each.^000000";
+		mes "Then please hunt turtles. ^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ". 10 monsters each.^000000";
 		mes "Please take the meat. " + getitemname(7564) + ". 10pieces.";
 		next;
 		npctalk "I'm hungry. Please help me. I'm hungry.", "", bc_self;
@@ -7144,7 +7144,7 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 		mes "Thank you for accepting. Well, I think it's better to think of these monsters as different ones from Turtle Island.";
 		next;
 		mes "[Archeologist Leiphen]";
-		mes "^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ". ^0000CD10 monsters each.^000000 Please.";
+		mes "^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ". ^0000CD10 monsters each.^000000 Please.";
 		mes "And ^0000CDthe meat^000000, ^0000CD10 pieces^000000 please.";
 		next;
 		mes "[Archeologist Leiphen]";
@@ -7166,7 +7166,7 @@ tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
 			unittalk .@account_id, "" + .@player_name$ + " : No matter how much I hunt all I got is rotten meat.", bc_self;
 			mes "[Archeologist Leiphen]";
 			mes "No way... All of it?";
-			mes "^0000CD" + strmobinfo(1,3800) + ", " + strmobinfo(1,3802) + ", " + strmobinfo(1,3801) + ", " + strmobinfo(1,3803) + ", ^000000ALL?";
+			mes "^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ", ^000000ALL?";
 			next;
 			mes "[Archeologist Leiphen]";
 			mes "...Well, let me take ^0000CDthe " + getitemname(7564) + " ^00000010 pieces, ^0000CDlet me try first^000000 please.";
