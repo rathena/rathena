@@ -43,10 +43,3 @@ int32 rnd_value( int32 min, int32 max ){
 	return min + (int32)( rnd_uniform() * ( max - min + 1 ) );
 }
 
-bool rnd_chance( uint16 chance, uint16 base ){
-	return rnd_value( 0, base ) < chance;
-}
-
-bool rnd_chance32( int32 chance, int32 base ){
-	return rnd_value( 0, base ) < chance;
-}
