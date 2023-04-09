@@ -216,7 +216,7 @@ public:
 
 		// Prevent excessive usage during loading
 		if( this->loaded ){
-			auto cache_key = this->calculateCacheKey(key);
+			size_t cache_key = this->calculateCacheKey(key);
 			if (this->cache.size() <= cache_key) {
 				return;
 			}
@@ -229,7 +229,7 @@ public:
 
 		// Prevent excessive usage during loading
 		if( this->loaded ){
-			auto cache_key = this->calculateCacheKey(key);
+			size_t cache_key = this->calculateCacheKey(key);
 			if (this->cache.size() <= cache_key) {
 				this->cache.resize(cache_key + 1, nullptr);
 			}
