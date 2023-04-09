@@ -54,7 +54,7 @@ Body:
           - Index: 1
             Item: Huuma_Bird_Wing_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 2
             Item: Turtle_Is_Box_IL
             Rate: 5
@@ -74,7 +74,7 @@ Body:
           - Index: 0
             Item: Immaterial_Sword_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
@@ -86,14 +86,14 @@ Body:
           - Index: 0
             Item: Iron_Driver_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
           - Index: 2
             Item: War_Axe_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 3
             Item: Turtle_Is_Box_IL
             Rate: 5
@@ -102,45 +102,13 @@ Body:
           - Index: 0
             Item: Pole_Axe_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
           - Index: 2
             Item: Turtle_Is_Box_IL
             Rate: 5
-      - Monster: ILL_TURTLE_GENERAL
-        Drops:
-          - Index: 0
-            Item: Fancy_Flower_IL
-            Rate: 5000
-          - Index: 1
-            Item: Immaterial_Sword_IL
-            Rate: 5000
-#           RandomOptionGroup: BILA
-          - Index: 2
-            Item: Iron_Driver_IL
-            Rate: 5000
-#           RandomOptionGroup: BILA
-          - Index: 3
-            Item: Pole_Axe_IL
-            Rate: 5000
-#           RandomOptionGroup: BILA
-          - Index: 4
-            Item: IllusionStone
-            Rate: 1
-            # Rate: 15000
-          - Index: 5
-            Item: War_Axe_IL
-            Rate: 5000
-#           RandomOptionGroup: BILA
-          - Index: 6
-            Item: Huuma_Bird_Wing_IL
-            Rate: 5000
-#           RandomOptionGroup: BILA
-          - Index: 7
-            Item: S_Turtle_Is_Box_IL
-            Rate: 150
   - Map: tur_d04_i
     SpecificDrops:
       - Monster: ILL_ASSULTER
@@ -151,7 +119,7 @@ Body:
           - Index: 1
             Item: Huuma_Bird_Wing_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 2
             Item: Turtle_Is_Box_IL
             Rate: 5
@@ -171,7 +139,7 @@ Body:
           - Index: 0
             Item: Immaterial_Sword_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
@@ -183,14 +151,14 @@ Body:
           - Index: 0
             Item: Iron_Driver_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
           - Index: 2
             Item: War_Axe_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 3
             Item: Turtle_Is_Box_IL
             Rate: 5
@@ -199,7 +167,7 @@ Body:
           - Index: 0
             Item: Pole_Axe_IL
             Rate: 25
-#           RandomOptionGroup: SILA
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
@@ -214,27 +182,26 @@ Body:
           - Index: 1
             Item: Immaterial_Sword_IL
             Rate: 5000
-#           RandomOptionGroup: BILA
+            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 2
             Item: Iron_Driver_IL
             Rate: 5000
-#           RandomOptionGroup: BILA
+            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 3
             Item: Pole_Axe_IL
             Rate: 5000
-#           RandomOptionGroup: BILA
+            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 4
             Item: IllusionStone
-            Rate: 1
-            # Rate: 15000
+            Rate: 15000
           - Index: 5
             Item: War_Axe_IL
             Rate: 5000
-#           RandomOptionGroup: BILA
+            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 6
             Item: Huuma_Bird_Wing_IL
             Rate: 5000
-#           RandomOptionGroup: BILA
+            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 7
             Item: S_Turtle_Is_Box_IL
             Rate: 150
