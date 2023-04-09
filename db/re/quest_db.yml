@@ -10290,44 +10290,81 @@ Body:
     Title: Discovered Suspicious Sand Pile
   - Id: 16095
     Title: Discovered Suspicious Sand Pile
+  - Id: 16096
+    Title: To the unknown tortoise island
+  - Id: 16097
+    Title: Stranger on Turtle Island 1
+  - Id: 16098
+    Title: Stranger on Turtle Island 2
+  - Id: 16099
+    Title: Stranger on Turtle Island 3
+  - Id: 16100
+    Title: Stranger on Turtle Island 4
   - Id: 16101
-    Title: Kiel Hyre Academy
+    Title: Emergency food procurement 1
+    Targets:
+      - Mob: ILL_PERMETER
+        Count: 10
+      - Mob: ILL_SOLIDER
+        Count: 10
   - Id: 16102
-    Title: Kiel Hyre Academy
+    Title: Emergency food procurement 2
+    Targets:
+      - Mob: ILL_FREEZER
+        Count: 10
+      - Mob: ILL_HEATER
+        Count: 10
   - Id: 16103
-    Title: Kiel Hyre Academy
+    Title: The Secret of Strangers
   - Id: 16104
-    Title: Kiel Hyre Academy
+    Title: A long-forgotten story
   - Id: 16105
-    Title: Kiel Hyre Academy
+    Title: A short break, and a promise
     TimeLimit: 4h
   - Id: 16106
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten 1
   - Id: 16107
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten 2
   - Id: 16108
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten - Cooldown
     TimeLimit: 4h
   - Id: 16109
-    Title: Kiel Hyre Academy
+    Title: Vain Desire
+    Targets:
+      - Mob: ILL_ASSULTER
+        Count: 10
+    Drops:
+      - Mob: ILL_ASSULTER
+        Item: Shabby_Metal_Chip
+        Rate: 5000
   - Id: 16110
-    Title: Kiel Hyre Academy
+    Title: Vain Desire - Cooldown
     TimeLimit: 4h
   - Id: 16111
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger 1
+    Targets:
+      - Mob: ILL_PERMETER
+        Count: 10
+      - Mob: ILL_SOLIDER
+        Count: 10
   - Id: 16112
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger 2
+    Targets:
+      - Mob: ILL_FREEZER
+        Count: 10
+      - Mob: ILL_HEATER
+        Count: 10
   - Id: 16113
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger - Cooldown
     TimeLimit: 4h
   - Id: 16114
-    Title: Kiel Hyre Academy
+    Title: Talk with Aylvar
   - Id: 16115
-    Title: Kiel Hyre Academy
+    Title: Talk with girl
   - Id: 16116
-    Title: Kiel Hyre Academy
+    Title: Continuous story
   - Id: 16117
-    Title: Mysterious World Map
+    Title: Continuous story 2
   - Id: 16118
     Title: Hidden poem
   - Id: 16119

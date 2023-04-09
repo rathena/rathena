@@ -92500,18 +92500,291 @@ Body:
       TELEPORTBLOCK: true
       STATUSIMMUNE: true
       SKILLIMMUNE: true
-#  - Id: 3799
-#    AegisName: ILL_ASSULTER
-#  - Id: 3800
-#    AegisName: ILL_PERMETER
-#  - Id: 3801
-#    AegisName: ILL_FREEZER
-#  - Id: 3802
-#    AegisName: ILL_SOLIDER
-#  - Id: 3803
-#    AegisName: ILL_HEATER
-#  - Id: 3804
-#    AegisName: ILL_TURTLE_GENERAL
+  - Id: 3799
+    AegisName: ILL_ASSULTER
+    Name: Ominous Assulter
+    Level: 160
+    Hp: 592508
+    BaseExp: 54213
+    JobExp: 48375
+    Attack: 3049
+    Attack2: 408
+    Defense: 369
+    MagicDefense: 82
+    Str: 180
+    Agi: 161
+    Vit: 60
+    Int: 44
+    Dex: 214
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 21
+    Drops:
+      - Item: OldShell
+        Rate: 1000
+      - Item: PieceOfBlackSpirit
+        Rate: 600
+      - Item: OldDoll
+        Rate: 300
+      - Item: Rough_Wind
+        Rate: 50
+      - Item: Doram_High_Cape
+        Rate: 20
+      - Item: Huuma_Bird_Wing
+        Rate: 50
+      - Item: Old_Blue_Box
+        Rate: 50
+      - Item: OminousAssulter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3800
+    AegisName: ILL_PERMETER
+    Name: Ominous Permeter
+    Level: 157
+    Hp: 508355
+    BaseExp: 50806
+    JobExp: 41661
+    Attack: 2845
+    Attack2: 415
+    Defense: 288
+    MagicDefense: 100
+    Str: 159
+    Agi: 60
+    Vit: 135
+    Int: 90
+    Dex: 120
+    Luk: 60
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1100
+    AttackMotion: 483
+    DamageMotion: 528
+    Ai: 21
+    Drops:
+      - Item: OldShell
+        Rate: 1000
+      - Item: PieceOfBlackSpirit
+        Rate: 600
+      - Item: OldDoll
+        Rate: 300
+      - Item: Runstone_Mystic
+        Rate: 100
+      - Item: Rotten_Meat
+        Rate: 2800
+      - Item: Prickly_Fruit
+        Rate: 200
+      - Item: Elder_Branch
+        Rate: 100
+      - Item: OminousPermeter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3801
+    AegisName: ILL_FREEZER
+    Name: Ominous Freezer
+    Level: 159
+    Hp: 549071
+    BaseExp: 54892
+    JobExp: 43913
+    Attack: 2925
+    Attack2: 383
+    Defense: 146
+    MagicDefense: 80
+    Str: 154
+    Agi: 111
+    Vit: 120
+    Int: 100
+    Dex: 142
+    Luk: 60
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 170
+    AttackDelay: 1260
+    AttackMotion: 960
+    DamageMotion: 672
+    Ai: 21
+    Drops:
+      - Item: OldShell
+        Rate: 1000
+      - Item: PieceOfBlackSpirit
+        Rate: 600
+      - Item: OldDoll
+        Rate: 300
+      - Item: Rotten_Meat
+        Rate: 2800
+      - Item: Doram_High_Shoes
+        Rate: 20
+      - Item: Cold_Ice
+        Rate: 200
+      - Item: IllusoryStone
+        Rate: 100
+      - Item: OminousFreezer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3802
+    AegisName: ILL_SOLIDER
+    Name: Ominous Solider
+    Level: 161
+    Hp: 592310
+    BaseExp: 59190
+    JobExp: 49128
+    Attack: 3129
+    Attack2: 428
+    Defense: 406
+    MagicDefense: 116
+    Str: 155
+    Agi: 100
+    Vit: 170
+    Int: 42
+    Dex: 133
+    Luk: 50
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1452
+    AttackMotion: 483
+    DamageMotion: 528
+    Ai: 21
+    Drops:
+      - Item: OldShell
+        Rate: 1000
+      - Item: PieceOfBlackSpirit
+        Rate: 600
+      - Item: OldDoll
+        Rate: 300
+      - Item: Great_Nature
+        Rate: 50
+      - Item: Doram_High_Suit
+        Rate: 20
+      - Item: Rotten_Meat
+        Rate: 2800
+      - Item: Honey
+        Rate: 400
+      - Item: OminousSolider_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3803
+    AegisName: ILL_HEATER
+    Name: Ominous Heater
+    Level: 162
+    Hp: 527390
+    BaseExp: 52699
+    JobExp: 44794
+    Attack: 3249
+    Attack2: 582
+    Defense: 400
+    MagicDefense: 100
+    Str: 177
+    Agi: 95
+    Vit: 120
+    Int: 100
+    Dex: 212
+    Luk: 89
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1452
+    AttackMotion: 483
+    DamageMotion: 528
+    Ai: 21
+    Drops:
+      - Item: OldShell
+        Rate: 1000
+      - Item: PieceOfBlackSpirit
+        Rate: 600
+      - Item: OldDoll
+        Rate: 300
+      - Item: Flame_Heart
+        Rate: 50
+      - Item: Rotten_Meat
+        Rate: 2800
+      - Item: Royal_Jelly
+        Rate: 50
+      - Item: Coal
+        Rate: 500
+      - Item: OminousHeater_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3804
+    AegisName: ILL_TURTLE_GENERAL
+    Name: Ominous Turtle General
+    Level: 165
+    Hp: 11628549
+    BaseExp: 3431854
+    JobExp: 2146800
+    Attack: 6394
+    Attack2: 2808
+    Defense: 796
+    MagicDefense: 246
+    Str: 232
+    Agi: 246
+    Vit: 302
+    Int: 189
+    Dex: 424
+    Luk: 180
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 900
+    AttackMotion: 1000
+    DamageMotion: 500
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: ShipsLog
+        Rate: 4000
+      - Item: Iron_Driver
+        Rate: 300
+      - Item: War_Axe
+        Rate: 300
+      - Item: Pole_Axe
+        Rate: 300
+      - Item: Immaterial_Sword
+        Rate: 300
+      - Item: Union_Of_Tribe
+        Rate: 500
+      - Item: Yggdrasilberry
+        Rate: 1000
+      - Item: OminousTurtleG_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3805
 #    AegisName: E_HAPPY_EGG
 #  - Id: 3806
@@ -93000,8 +93273,35 @@ Body:
 #    AegisName: TW_V_B_SEYREN
 #  - Id: 3895
 #    AegisName: TW_V_B_EREMES
-#  - Id: 3896
-#    AegisName: G_ILL_ASSULTER
+  - Id: 3896
+    AegisName: G_ILL_ASSULTER
+    Name: Ominous Assaulter
+    Level: 160
+    Hp: 592508
+    Attack: 3049
+    Attack2: 408
+    Defense: 369
+    MagicDefense: 82
+    Str: 180
+    Agi: 161
+    Vit: 60
+    Int: 44
+    Dex: 214
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 21
+    Modes:
+      Detector: true
 #  - Id: 3897
 #    AegisName: MD_ORC_SKELETON
 #  - Id: 3898
