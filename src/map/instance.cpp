@@ -195,14 +195,14 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (x == 0) {
-				this->invalidWarning(node["X"], "X has to be greater than zero.\n");
+				this->invalidWarning(enterNode["X"], "X has to be greater than zero.\n");
 				return 0;
 			}
 
 			map_data *md = map_getmapdata(instance->enter.map);
 
 			if (x >= md->xs) {
-				this->invalidWarning(node["X"], "X has to be smaller than %hu.\n", md->xs);
+				this->invalidWarning(enterNode["X"], "X has to be smaller than %hu.\n", md->xs);
 				return 0;
 			}
 
@@ -216,14 +216,14 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (y == 0) {
-				this->invalidWarning(node["Y"], "Y has to be greater than zero.\n");
+				this->invalidWarning(enterNode["Y"], "Y has to be greater than zero.\n");
 				return 0;
 			}
 
 			map_data *md = map_getmapdata(instance->enter.map);
 
 			if (y >= md->ys) {
-				this->invalidWarning(node["Y"], "Y has to be smaller than %hu.\n", md->ys);
+				this->invalidWarning(enterNode["Y"], "Y has to be smaller than %hu.\n", md->ys);
 				return 0;
 			}
 
