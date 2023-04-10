@@ -166,7 +166,7 @@ struct npc_data {
 	int chat_id,touching_id;
 	unsigned int next_walktime;
 	int instance_id;
-	e_npcv_status state;
+	e_npcv_status state{NPCVIEW_ENABLE};
 
 	unsigned size : 2;
 

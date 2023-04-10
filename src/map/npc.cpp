@@ -3846,7 +3846,8 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 
 /**
  * Parses a warp npc.
- * Line definition <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+ * Line definition <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp(<state)%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+ * Line definition <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2(<state)%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
  * @param w1 : word 1 before tab (<from map name>,<fromX>,<fromY>,<facing>)
  * @param w2 : word 2 before tab (warp), keyword that sent us in this parsing
  * @param w3 : word 3 before tab (<warp name>)
@@ -3858,25 +3859,20 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
  */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int m;
 	short x, y, xs, ys, to_x, to_y;
-	unsigned short i;
 	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
-	struct npc_data *nd;
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
 	// w4=<spanx>,<spany>,<to map name>,<toX>,<toY>
-	if( sscanf(w1, "%15[^,],%6hd,%6hd", mapname, &x, &y) != 3
-	||	sscanf(w4, "%6hd,%6hd,%15[^,],%6hd,%6hd", &xs, &ys, to_mapname, &to_x, &to_y) != 5 )
-	{
+	if( sscanf(w1, "%15[^,],%6hd,%6hd", mapname, &x, &y) != 3 || sscanf(w4, "%6hd,%6hd,%15[^,],%6hd,%6hd", &xs, &ys, to_mapname, &to_x, &to_y) != 5 ) {
 		ShowError("npc_parse_warp: Invalid warp definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
 
-	m = map_mapname2mapid(mapname);
-	i = mapindex_name2id(to_mapname);
-	if( i == 0 )
-	{
+	int m = map_mapname2mapid(mapname);
+	unsigned short i = mapindex_name2id(to_mapname);
+
+	if( i == 0 ) {
 		ShowError("npc_parse_warp: Unknown destination map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), to_mapname, w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
@@ -3887,8 +3883,10 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 		ShowWarning("npc_parse_warp: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, mapdata->name, mapdata->xs, mapdata->ys,filepath,strline(buffer,start-buffer));
 	}
 
-	nd = npc_create_npc(m, x, y);
+	struct npc_data *nd = npc_create_npc(m, x, y);
 	npc_parsename(nd, w3, start, buffer, filepath);
+
+	bool is_type_warp2 = (strncasecmp(w2, "warp2", 5) == 0);
 
 	if (!battle_config.warp_point_debug)
 		nd->class_ = JT_WARPNPC;
@@ -3909,7 +3907,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	npc_warp++;
 	nd->bl.type = BL_NPC;
 	nd->subtype = NPCTYPE_WARP;
-	if (strcasecmp("warp2", w2) == 0)
+	if (is_type_warp2)
 		nd->trigger_on_hidden = true;
 	else
 		nd->trigger_on_hidden = false;
@@ -3923,6 +3921,30 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	if( map_getmapdata(nd->bl.m)->users )
 		clif_spawn(&nd->bl);
 	strdb_put(npcname_db, nd->exname, nd);
+
+	// Check if there is a <state> in w2
+	if (is_type_warp2 && strcasecmp("warp2", w2) < 0 || !is_type_warp2 && strcasecmp("warp", w2) < 0) {
+		char state_name[128];
+		size_t length = strlen(w2);
+		int shift = (is_type_warp2 ? 6 : 5);
+
+		// state name
+		if (w2[shift-1] != '(' || w2[length-1] != ')' || length <= shift || length-shift >= sizeof(state_name))
+			ShowWarning("npc_parse_warp: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
+		else {
+			safestrncpy(state_name, w2+shift, length-shift);
+			if (strcasecmp("CLOAKED", state_name) == 0)
+				nd->state = NPCVIEW_CLOAKON;
+			else if (strcasecmp("HIDDEN", state_name) == 0)
+				nd->state = NPCVIEW_HIDEON;
+			else if (strcasecmp("DISABLED", state_name) == 0)
+				nd->state = NPCVIEW_DISABLE;
+			else
+				ShowWarning("npc_parse_warp: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
+			if (nd->state != NPCVIEW_ENABLE)
+				npc_enable_target(*nd, 0, nd->state);
+		}
+	}
 
 	return strchr(start,'\n');// continue
 }
@@ -4313,8 +4335,8 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
 /**
  * Parses a npc script.
  * Line definition :
- * <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
- * <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>} * @TODO missing cashshop line definition
+ * <map name>,<x>,<y>,<facing>%TAB%script(<state)%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
+ * <map name>,<x>,<y>,<facing>%TAB%script(<state)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>} * @TODO missing cashshop line definition
  * @param w1 : word 1 before tab (<from map name>,<x>,<y>,<facing>)
  * @param w2 : word 2 before tab (script), keyword that sent us in this parsing
  * @param w3 : word 3 before tab (<NPC Name>)
@@ -4423,8 +4445,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		map_addiddb(&nd->bl);
 	}
 	strdb_put(npcname_db, nd->exname, nd);
-	nd->state = NPCVIEW_ENABLE;
 
+	// Check if there is a <state> in w2
 	if (strcasecmp("script", w2) < 0) {
 		char state_name[128];
 		size_t length = strlen(w2);
@@ -4603,7 +4625,8 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 		return end;
 
 	// copy the original npc state
-	npc_enable_target(*nd, 0, dnd->state);
+	if (dnd->state != NPCVIEW_ENABLE)
+		npc_enable_target(*nd, 0, dnd->state);
 	nd->state = dnd->state;
 
 	//-----------------------------------------
@@ -4683,6 +4706,11 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		if( map_getmapdata(wnd->bl.m)->users )
 			clif_spawn(&wnd->bl);
 		strdb_put(npcname_db, wnd->exname, wnd);
+
+		// copy the original npc state
+		if (snd->state != NPCVIEW_ENABLE)
+			npc_enable_target(*wnd, 0, snd->state);
+		wnd->state = snd->state;
 	} else {
 		static char w1[128], w2[128], w3[128], w4[128];
 		const char* stat_buf = "- call from instancing subsystem -\n";
@@ -5627,6 +5655,7 @@ int npc_parsesrcfile(const char* filepath)
 			break;
 		}
 
+		// Whether w2 contains word "script"
 		bool has_script = false;
 
 		if (count > 3 && strncasecmp(w2, "script", 6) == 0)
@@ -5676,7 +5705,7 @@ int npc_parsesrcfile(const char* filepath)
 		}
 
 		// parse the data according to w2
-		if ((strcasecmp(w2,"warp") == 0 || strcasecmp(w2,"warp2") == 0) && count > 3)
+		if ((strncasecmp(w2, "warp", 4) == 0 || strncasecmp(w2, "warp2", 5) == 0) && count > 3)
 			p = npc_parse_warp(w1,w2,w3,w4, p, buffer, filepath);
 		else if ((!strcasecmp(w2,"shop") || !strcasecmp(w2,"cashshop") || !strcasecmp(w2,"itemshop") || !strcasecmp(w2,"pointshop") || !strcasecmp(w2,"marketshop") ) && count > 3)
 			p = npc_parse_shop(w1,w2,w3,w4, p, buffer, filepath);
