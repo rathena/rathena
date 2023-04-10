@@ -5680,18 +5680,66 @@ Body:
   - Id: 8548
     Title: A Mirror - (Standby)
     TimeLimit: 4h
+  - Id: 8550
+    Title: Dealer that caused abnormal evolution
+    Targets:
+      - Mob: DELETER1_H
+        Count: 15
+      - Mob: DELETER2_H
+        Count: 15
   - Id: 8551
     Title: The Dealer That Caused Evolution (Standby)
     TimeLimit: 4h
+  - Id: 8552
+    Title: Reexamination of the Dealer that Caused the Evolution
+    Targets:
+      - Mob: DELETER1_H
+        Count: 15
+      - Mob: DELETER2_H
+        Count: 15
+  - Id: 8553
+    Title: Eradicate the nightmare that became a reality
+    Targets:
+      - Mob: NIGHTMARE_TERROR_H
+        Count: 10
   - Id: 8554
     Title: Eradicate the nightmare that became reality (Standby)
     TimeLimit: 4h
+  - Id: 8555
+    Title: Eradicate the terrifying nightmare that has become a reality
+    Targets:
+      - Mob: NIGHTMARE_TERROR_H
+        Count: 10
+  - Id: 8556
+    Title: Check density
+    Targets:
+      - Mob: LAVA_GOLEM_H
+        Count: 10
   - Id: 8557
     Title: Check Density (Standby)
     TimeLimit: 4h
+  - Id: 8558
+    Title: Check density once again
+    Targets:
+      - Mob: LAVA_GOLEM_H
+        Count: 10
+  - Id: 8559
+    Title: Small things crumbling
+    Targets:
+      - Mob: BLAZZER_H
+        Count: 10
+      - Mob: EXPLOSION_H
+        Count: 10
   - Id: 8560
     Title: Small Things (Standby)
     TimeLimit: 4h
+  - Id: 8561
+    Title: Very small things
+    Targets:
+      - Mob: BLAZZER_H
+        Count: 10
+      - Mob: EXPLOSION_H
+        Count: 10
   - Id: 8581
     Title: Sour melon is delicious - Standby
     TimeLimit: 4h

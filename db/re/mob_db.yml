@@ -95417,20 +95417,344 @@ Body:
       - Item: Prison_Breaker_Card
         Rate: 1
         StealProtected: true
-#  - Id: 20372
-#    AegisName: BLAZZER_H
-#  - Id: 20373
-#    AegisName: NIGHTMARE_TERROR_H
-#  - Id: 20374
-#    AegisName: DELETER1_H
-#  - Id: 20375
-#    AegisName: DELETER2_H
-#  - Id: 20376
-#    AegisName: EXPLOSION_H
-#  - Id: 20377
-#    AegisName: KAHO_H
-#  - Id: 20378
-#    AegisName: LAVA_GOLEM_H
+  - Id: 20372
+    AegisName: BLAZZER_H
+    Name: Rigid Blazer
+    Level: 178
+    Hp: 1218064
+    BaseExp: 110733
+    JobExp: 77513
+    Attack: 2158
+    Attack2: 1555
+    Defense: 318
+    MagicDefense: 56
+    Str: 97
+    Agi: 96
+    Vit: 73
+    Int: 131
+    Dex: 131
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1732
+    AttackMotion: 1332
+    DamageMotion: 540
+    Ai: 21
+    Drops:
+      - Item: Burning_Heart
+        Rate: 2000
+      - Item: Live_Coal
+        Rate: 1200
+      - Item: White_Herb
+        Rate: 700
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Suits
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Lava_Leather_Shoes
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Firm_Blazzer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20373
+    AegisName: NIGHTMARE_TERROR_H
+    Name: Rigid Nightmare Terror
+    Level: 179
+    Hp: 1218702
+    BaseExp: 110791
+    JobExp: 77554
+    Attack: 1812
+    Attack2: 2220
+    Defense: 194
+    MagicDefense: 60
+    Str: 81
+    Agi: 149
+    Vit: 21
+    Int: 186
+    Dex: 129
+    Luk: 61
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 1216
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 21
+    Drops:
+      - Item: Burning_Horse_Shoe
+        Rate: 2100
+      - Item: Blue_Potion
+        Rate: 15
+      - Item: Blue_Herb
+        Rate: 25
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Manteau
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Zelunium_Ore
+        Rate: 80
+      - Item: Firm_Nightmare_T_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20374
+    AegisName: DELETER1_H
+    Name: Rigid Sky Deleter
+    Level: 174
+    Hp: 1189532
+    BaseExp: 108139
+    JobExp: 75698
+    Attack: 2523
+    Attack2: 882
+    Defense: 290
+    MagicDefense: 51
+    Str: 116
+    Agi: 109
+    Vit: 63
+    Int: 76
+    Dex: 119
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1020
+    AttackMotion: 720
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 1015
+      - Item: Dragon_Canine
+        Rate: 1334
+      - Item: Dragon_Train
+        Rate: 920
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Robe
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Zelunium_Ore
+        Rate: 80
+      - Item: Firm_Deleter2_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20375
+    AegisName: DELETER2_H
+    Name: Rigid Earth Deleter
+    Level: 173
+    Hp: 1182695
+    BaseExp: 107518
+    JobExp: 75262
+    Attack: 2509
+    Attack2: 1119
+    Defense: 290
+    MagicDefense: 53
+    Str: 116
+    Agi: 137
+    Vit: 63
+    Int: 97
+    Dex: 126
+    Luk: 29
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1024
+    AttackMotion: 624
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 1016
+      - Item: Dragon_Canine
+        Rate: 1334
+      - Item: Dragon_Train
+        Rate: 820
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Armor
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Zelunium_Ore
+        Rate: 80
+      - Item: Firm_Deleter1_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20376
+    AegisName: EXPLOSION_H
+    Name: Rigid Explosion
+    Level: 171
+    Hp: 1166287
+    BaseExp: 106026
+    JobExp: 74218
+    Attack: 1902
+    Attack2: 1550
+    Defense: 230
+    MagicDefense: 54
+    Str: 89
+    Agi: 117
+    Vit: 39
+    Int: 136
+    Dex: 97
+    Luk: 69
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 1260
+    AttackMotion: 960
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Wing_Of_Red_Bat
+        Rate: 1325
+      - Item: Burning_Heart
+        Rate: 550
+      - Item: Hot_Hair
+        Rate: 750
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Sandle
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Zelunium_Ore
+        Rate: 80
+      - Item: Firm_Explosion_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20377
+    AegisName: KAHO_H
+    Name: Rigid Kaho
+    Level: 173
+    Hp: 1178774
+    BaseExp: 107162
+    JobExp: 75012
+    Attack: 2076
+    Attack2: 1718
+    Defense: 208
+    MagicDefense: 70
+    Str: 96
+    Agi: 130
+    Vit: 29
+    Int: 149
+    Dex: 112
+    Luk: 51
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1700
+    AttackMotion: 1000
+    DamageMotion: 500
+    Ai: 21
+    Drops:
+      - Item: Flame_Heart
+        Rate: 15
+      - Item: Coal
+        Rate: 75
+      - Item: Burning_Heart
+        Rate: 1500
+      - Item: Fire_Scroll_1_3
+        Rate: 50
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Hode
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Firm_Kaho_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20378
+    AegisName: LAVA_GOLEM_H
+    Name: Rigid Lava Golem
+    Level: 177
+    Hp: 1223728
+    BaseExp: 111248
+    JobExp: 77873
+    Attack: 2677
+    Attack2: 897
+    Defense: 571
+    MagicDefense: 50
+    Str: 121
+    Agi: 67
+    Vit: 179
+    Int: 76
+    Dex: 97
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 2190
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Cold_Magma
+        Rate: 921
+      - Item: White_Herb
+        Rate: 625
+      - Item: Shadowdecon_Ore
+        Rate: 80
+      - Item: Lava_Leather_Muffler
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Lava_Leather_Boots
+        Rate: 50
+        RandomOptionGroup: MAGMA3
+      - Item: Magma_Essence
+        Rate: 5
+      - Item: Zelunium_Ore
+        Rate: 80
+      - Item: Firm_Lava_G_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20379
     AegisName: ICE_GHOST_H
     Name: Ice Ghost
@@ -95671,9 +95995,60 @@ Body:
 #    AegisName: YOYO_Z
 #  - Id: 20418
 #    AegisName: ARGOS_Z
-#  - Id: 20419
-#    AegisName: MUSPELLSKOLL_H
-#    DamageTaken: 10
+  - Id: 20419
+    AegisName: MUSPELLSKOLL_H
+    Name: Rigid Muspellskoll
+    Level: 188
+    Hp: 48530254
+    BaseExp: 9706050
+    JobExp: 6794235
+    Attack: 5146
+    Attack2: 2356
+    Defense: 791
+    MagicDefense: 331
+    Str: 219
+    Agi: 132
+    Vit: 201
+    Int: 188
+    Dex: 177
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 608
+    AttackMotion: 408
+    DamageMotion: 336
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Old_Violet_Box
+        Rate: 3500
+      - Item: Yggdrasilberry
+        Rate: 3500
+      - Item: Zelunium
+        Rate: 50
+      - Item: Lava_Leather_Suits
+        Rate: 100
+        RandomOptionGroup: MAGMA3
+      - Item: Lava_Leather_Robe
+        Rate: 100
+        RandomOptionGroup: MAGMA3
+      - Item: Lava_Leather_Armor
+        Rate: 100
+        RandomOptionGroup: MAGMA3
+      - Item: Firm_Muspell_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20420
     AegisName: WANDER_MAN_H
     Name: Corrupted Wanderer

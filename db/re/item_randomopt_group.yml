@@ -13862,3 +13862,78 @@ Body:
         MinValue: 1
         MaxValue: 15
         Chance: 5000
+  - Id: 156
+    Group: MAGMA3
+    Slots: 
+      - Slot: 1
+        Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 50
+            MaxValue: 300
+            Chance: 26
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 10
+            MaxValue: 100
+            Chance: 5000
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 100
+            Chance: 5000
+    MaxRandom: 2
+    Random:
+      - Option: VAR_MAXHPAMOUNT
+        MinValue: 100
+        MaxValue: 500
+        Chance: 5000
+      - Option: VAR_MAXSPAMOUNT
+        MinValue: 10
+        MaxValue: 250
+        Chance: 5000
+      - Option: VAR_ATTPOWER
+        MinValue: 1
+        MaxValue: 20
+        Chance: 5000
+      - Option: VAR_ATTMPOWER
+        MinValue: 1
+        MaxValue: 20
+        Chance: 5000
+      - Option: VAR_HITSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 7
+        Chance: 5000
+      - Option: VAR_AVOIDSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 10
+        Chance: 5000
+      - Option: VAR_ITEMDEFPOWER
+        MinValue: 10
+        MaxValue: 150
+        Chance: 5000
+      - Option: VAR_CRITICALSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 5
+        Chance: 5000
