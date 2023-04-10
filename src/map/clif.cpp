@@ -1676,7 +1676,7 @@ static inline bool clif_npc_mayapurple(block_list *bl) {
 		npc_data *nd = map_id2nd(bl->id);
 
 		// TODO: Confirm if waitingroom cause any special cases
-		if (/* nd->chat_id == 0 && */ nd->sc.option & OPTION_INVISIBLE)
+		if (/* nd->chat_id == 0 && */ nd->is_invisible)
 			return true;
 	}
 
@@ -4034,6 +4034,8 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 		target = SELF;
 
 #if PACKETVER < 4
+	if (target != SELF && bl->type == BL_NPC && (((TBL_NPC*)bl)->is_invisible))
+		target = SELF;
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
 	if (bl->type != BL_NPC) {
@@ -5647,7 +5649,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
 			break;
 		case BL_NPC:
-			if(!(((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+			if(!(((TBL_NPC*)bl)->is_invisible))
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		default:
@@ -5661,7 +5663,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
 		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
-			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->sc.option&OPTION_INVISIBLE)))
+			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->is_invisible)))
 			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
 	return 0;
