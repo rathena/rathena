@@ -8,9 +8,9 @@
 #include <string>
 #include <unordered_map>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/sql.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/sql.hpp>
 
 struct s_storage_table;
 

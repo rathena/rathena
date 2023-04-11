@@ -1,7 +1,10 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #ifndef NAVI_H
 #define NAVI_H
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #ifdef MAP_GENERATOR
 struct navi_pos {

@@ -13,9 +13,11 @@
 //===== Additional Comments: =================================
 //= 1.0 First version, currently useless/disabled.
 //= 1.1 Implemented the 'mergeitem' script command. [Cydh]
+//= 1.2 Updated and moved to Cash Mall [Lemongrass]
 //============================================================
 
-prontera,146,95,3	script	Mergician#pron	64,{
+//prontera,146,95,3	script	Mergician#pron	1_M_WIZARD,{
+itemmall,35,75,3	script	Mergician#mall	1_M_WIZARD,{
 	if (checkweight(1301,1) == 0) {
 		mes "- Wait a second !! -";
 		mes "- You are carrying too many items -";
@@ -25,11 +27,11 @@ prontera,146,95,3	script	Mergician#pron	64,{
 		close;
 	}
 	mes "[Mergician]";
-	mes "Do you believe in the miracle of Merge god?? If so, repeat my spell loudly as I pronunce it!!!";
+	mes "Do you believe in the miracle of Merge god?? If so, repeat my spell loudly as I pronounce it!!!";
 	mes "Merge Merge, Merrrrge!!!";
 	next;
-	switch(select("What is the miracle of Merge?:Merrrrge!!!!:Abandon...")) {
-	case 1:
+	switch(select("Merrrrge!!!!:What is the miracle of Merge?:Abandon...")) {
+	case 2:
 		mes "[Mergician]";
 		mes "There is an order which rules the world and keeps the world to go well.";
 		next;
@@ -47,7 +49,7 @@ prontera,146,95,3	script	Mergician#pron	64,{
 		mes "Believe in Mergism. That is the truth.";
 		mes "Then I can help you be happy and content.";
 		close;
-	case 2:
+	case 1:
 		mes "[Mergician]";
 		mes "This is the total holy ritual to pray to the Great God, Merge! and I am borrowing the power for a while!!";
 		next;

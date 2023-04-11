@@ -180,34 +180,34 @@ Body:
     Groups:
       - Group: 0
         Items:
-          - Item: Attacker_Booster_Plate_
-          - Item: Attacker_Booster_Manteau_
-          - Item: Attacker_Booster_Greaves_
-          - Item: Attacker_Booster_Ring
+          - Item: Atker_Plate
+          - Item: Atker_Manteau
+          - Item: Atker_Greave
+          - Item: Atker_Ring
           - Item: Boost_Up_1
             Amount: 3
       - Group: 1
         Items:
-          - Item: Ranger_Booster_Suits_
-          - Item: Ranger_Booster_Manteau_
-          - Item: Ranger_Booster_Boots_
-          - Item: Range_Booster_Brooch
+          - Item: Ran_Suits
+          - Item: Ran_Manteau
+          - Item: Ran_Boots
+          - Item: Ran_Brooch
           - Item: Boost_Up_1
             Amount: 3
       - Group: 2
         Items:
-          - Item: Elemental_Booster_Robe_
-          - Item: Elemental_Booster_Muffler_
-          - Item: Elemental_Booster_Shoes_
-          - Item: Elemental_Booster_Earring
+          - Item: Ele_Robe
+          - Item: Ele_Muffler
+          - Item: Ele_Shoes
+          - Item: Ele_Earing
           - Item: Boost_Up_1
             Amount: 3
       - Group: 3
         Items:
-          - Item: Defender_Booster_Robe_
-          - Item: Defender_Booster_Muffler_
-          - Item: Defender_Booster_Shoes_
-          - Item: Defender_Booster_Earring
+          - Item: Defn_Robe
+          - Item: Defn_Muffler
+          - Item: Defn_Shoes
+          - Item: Defn_Earing
           - Item: Boost_Up_1
             Amount: 3
   - Item: Special_Coin_Pack

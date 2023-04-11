@@ -1,7 +1,9 @@
 
 COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_AR = ../common/obj/common.a
-COMMON_INCLUDE = -I../common
+COMMON_INCLUDE = -I../common/
+
+RA_INCLUDE = -I../
 
 LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
@@ -67,7 +69,7 @@ login-server: obj $(LOGIN_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 
 obj/%.o: %.cpp $(LOGIN_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):

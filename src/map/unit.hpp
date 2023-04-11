@@ -4,8 +4,8 @@
 #ifndef UNIT_HPP
 #define UNIT_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/timer.hpp>
 
 #include "path.hpp" // struct walkpath_data
 #include "skill.hpp" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
@@ -13,7 +13,7 @@
 enum sc_type : int16;
 struct block_list;
 struct unit_data;
-struct map_session_data;
+class map_session_data;
 enum clr_type : uint8;
 
 extern const short dirx[DIR_MAX]; ///lookup to know where will move to x according dir
@@ -110,8 +110,8 @@ enum e_unit_stop_walking {
 // Does walk action for unit
 int unit_walktoxy(struct block_list *bl, short x, short y, unsigned char flag);
 int unit_walktobl(struct block_list *bl, struct block_list *target, int range, unsigned char flag);
-void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type);
-bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type);
+void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd, enum sc_type type);
+bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type);
 int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
@@ -146,8 +146,8 @@ bool unit_can_attack(struct block_list *bl, int target_id);
 // Cast on a unit
 int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv);
 int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv);
-int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel);
-int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel);
+int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel, bool ignore_range = false);
+int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel, bool ignore_range = false);
 
 // Step timer used for delayed attack and skill use
 TIMER_FUNC(unit_step_timer);
@@ -165,9 +165,9 @@ void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount);
 
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);
-void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype);
+void unit_remove_map_pc(map_session_data *sd, clr_type clrtype);
 void unit_refresh(struct block_list *bl, bool walking = false);
-void unit_free_pc(struct map_session_data *sd);
+void unit_free_pc(map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);
 int unit_free(struct block_list *bl, clr_type clrtype);

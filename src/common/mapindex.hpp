@@ -4,7 +4,7 @@
 #ifndef MAPINDEX_HPP
 #define MAPINDEX_HPP
 
-#include "../common/mmo.hpp"
+#include "mmo.hpp"
 
 #define MAX_MAPINDEX 2000
 

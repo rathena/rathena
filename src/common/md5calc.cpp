@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/random.hpp"
+#include "random.hpp"
 
 #ifndef UINT_MAX
 #define UINT_MAX 4294967295U
