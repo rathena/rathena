@@ -235,7 +235,9 @@ ex: if your NPC is named 'Hunter#hunter1', it will be displayed as 'Hunter'
 ## Define a warp point
 
 **\<from mapname\>**,**\<fromX\>**,**\<fromY\>**,**\<facing\>****%TAB%warp\%TAB\%****\<warp name\>** **\%TAB\%** **\<spanx\>**,**\<spany\>**,**\<to mapname\>**,**\<toX\>**,**\<toY\>**\
-**\<from mapname\>**,**\<fromX\>**,**\<fromY\>**,**\<facing\>****%TAB%warp2\%TAB\%****\<warp name\>** **\%TAB\%\<spanx\>**,**\<spany\>**,**\<to mapname\>**,**\<toX\>**,**\<toY\>**
+**\<from mapname\>**,**\<fromX\>**,**\<fromY\>**,**\<facing\>****%TAB%warp2\%TAB\%****\<warp name\>** **\%TAB\%\<spanx\>**,**\<spany\>**,**\<to mapname\>**,**\<toX\>**,**\<toY\>**\
+**\<from mapname\>,\<fromX\>,\<fromY\>,\<facing\>%TAB%warp(\<state\>)%TAB%\<warp name\>%TAB%\<spanx\>,\<spany\>,\<to mapname\>,\<toX\>,\<toY\>**\
+**\<from mapname\>,\<fromX\>,\<fromY\>,\<facing\>%TAB%warp2(\<state\>)%TAB%\<warp name\>%TAB%\<spanx\>,\<spany\>,\<to mapname\>,\<toX\>,\<toY\>**
 
 This will define a warp NPC that will warp a player between maps, and while most
 arguments of that are obvious, some deserve special mention.
@@ -254,11 +256,23 @@ current scripts have a zero in there.
 Unlike 'warp', 'warp2' will also be triggered by hidden player.
 
 
+The basic state of the warp can be defined in `<state>`. Only one state can be defined at a time.
+Duplicate warps (including instance warps) inherit the `<state>` of the original warp.
+
+Valid `<state>` are:
+
+| State     | Meaning                           |
+|-----------|----------------------------------|
+| CLOAKED   | Make the warp specified cloaked. |
+| HIDDEN    | Make the warp specified hidden.  |
+| DISABLED  | Make the warp specified disabled.|
 
 ## Define an NPC object.
 
 **\<map name\>**,**\<x\>**,**\<y\>**,**\<facing\>****\%TAB\%script\%TAB\%****\<NPC Name\>\%TAB\%<sprite id\>,{\<code\>**}\
-**\<map name\>**,**\<x\>**,**\<y\>**,**\<facing\>****\%TAB\%**script**\%TAB\%****\<NPC Name\>****\%TAB\%****\<sprite id\>**,**\<triggerX\>**,**\<triggerY\>**,{**\<code\>**}
+**\<map name\>**,**\<x\>**,**\<y\>**,**\<facing\>****\%TAB\%**script**\%TAB\%****\<NPC Name\>****\%TAB\%****\<sprite id\>**,**\<triggerX\>**,**\<triggerY\>**,{**\<code\>**}\
+**\<map name\>,\<x\>,\<y\>,\<facing\>%TAB%script(\<state\>)%TAB%\<NPC Name\>%TAB%\<sprite id\>,{\<code\>}**
+**\<map name\>,\<x\>,\<y\>,\<facing\>%TAB%script(\<state\>)%TAB%\<NPC Name\>%TAB%\<sprite id\>,\<triggerX\>,\<triggerY\>,{\<code\>}**
 
 This will place an NPC object on a specified map at the specified location, and
 is a top-level command you will use the most in your custom scripting. The NPCs
@@ -269,33 +283,47 @@ Facing is a direction the NPC sprite will face in. Not all NPC sprites have
 different images depending on the direction you look from, so for some facing
 will be meaningless. Facings are counted counterclockwise in increments of 45
 degrees, where `0` means facing towards the top of the map. (So to turn the sprite
-towards the bottom of the map, you use facing 4, and to make it look southeast
-it's facing 5.)
+towards the bottom of the map, you use facing 4, and to make it look southeast it's facing 5.)
+
+`<state>` works like the warp `<state>` defined above, but for NPCs.
 
 Sprite ID is the sprite number or constant used to display this particular NPC.
 
 You may also use a monster's ID instead to display a monster sprite for this NPC.
 
-It is possible to use a job sprite as well, but you must first define it as a
-monster sprite in '`mob_avail.yml`', a full description on how to do this is not
-in the scope of this manual.
-A '`-1`' Sprite ID will make the NPC invisible (and unclickable).
-A '`111`' Sprite ID will make an NPC which does not have a sprite, but is still
-clickable, which is useful if you want to make a clickable object of the 3D
-terrain.
+It is possible to use a job sprite as well, but you must first define it as a monster sprite in '`mob_avail.yml`', a full description on how to do this is not in the scope of this manual.
 
-`TriggerX` and `triggerY`, if given, will define an area, centered on NPC and
-spanning triggerX cells in every direction across X and triggerY in every
-direction across Y. Walking into that area will trigger the NPC. If no
-'`OnTouch`:' special label is present in the NPC code, the execution will start
-from the beginning of the script, otherwise, it will start from the 'OnTouch:'
-label. Monsters can also trigger the NPC, though the label '`OnTouchNPC`:' is
-used in this case.
+A '`-1`' Sprite ID will make the NPC invisible (and unclickable).
+
+A '`111`' Sprite ID will make an NPC which does not have a sprite, but is still clickable, which is useful if you want to make a clickable object of the 3D terrain.
+
+`TriggerX` and `triggerY`, if given, will define an area, centered on NPC and spanning triggerX cells in every direction across X and triggerY in every direction across Y. Walking into that area will trigger the NPC. If no '`OnTouch`:' special label is present in the NPC code, the execution will start from the beginning of the script, otherwise, it will start from the 'OnTouch:' label. Monsters can also trigger the NPC, though the label '`OnTouchNPC`:' is used in this case.
 
 The code part is the script code that will execute whenever the NPC is
 triggered. It may contain commands and function calls, descriptions of which
 compose most of this document. It has to be in curly brackets, unlike elsewhere
 where we use curly brackets, these do NOT signify an optional parameter.
+
+Example of how <state> works:
+
+```cpp
+// Define a cloaked NPC :
+lighthalzen,306,267,5	script	Skia#ep162_04	4_EP16_SKIA,{
+	//...
+	end;
+
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+// Another way to define a cloaked NPC using <state> :
+lighthalzen,306,267,5	script(CLOAKED)	Skia#ep162_04	4_EP16_SKIA,{
+	//...
+	end;
+}
+```
+
 
 ## Define a 'floating' NPC object.
 
