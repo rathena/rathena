@@ -26,7 +26,7 @@ OnTouch:
 	end;
 }
 
-ba_maison,120,321,5	script	#he_admin1	MD_ASSISTANT,{
+ba_maison,120,321,5	script(CLOAKED)	#he_admin1	MD_ASSISTANT,{
 	if (ep17_2_main < 1)
 		end;
 	mes "[Flower Garden Manager]";
@@ -71,13 +71,9 @@ ba_maison,120,321,5	script	#he_admin1	MD_ASSISTANT,{
 		end;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
+ba_maison,120,321,5	script(CLOAKED)	#he_admin2	MD_ASSISTANT,{
 	if (ep17_2_main < 1)
 		end;
 	if (isbegin_quest(12497) != 2)
@@ -157,10 +153,6 @@ ba_maison,120,321,5	script	#he_admin2	MD_ASSISTANT,{
 		end;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
@@ -176,36 +168,10 @@ OnInstanceInit:
 	'hidden_garden = 0;
 	'npc_is_talking = false;
 
-	disablenpc instance_npcname("#BMD000002");
-	disablenpc instance_npcname("#carota");
-	disablenpc instance_npcname("#BMD000003");
-	disablenpc instance_npcname("#pimp25");
-	disablenpc instance_npcname("#BMD000004");
-	disablenpc instance_npcname("#BMD000005");
-	disablenpc instance_npcname("#sigma");
-	disablenpc instance_npcname("#omega");
-	disablenpc instance_npcname("#kappa");
-	disablenpc instance_npcname("#barmund");
-	for ( .@i = 1; .@i < 4; ++.@i ) {
-		disablenpc instance_npcname("#swat_" + .@i);
-		disablenpc instance_npcname("#eff_npc" + .@i);
-	}
-
 	// daily
 	'room = 0;
 	deletearray 'spawn_mobs;
 	deletearray 'summon;
-
-	disablenpc instance_npcname("#BMD_a");
-	disablenpc instance_npcname("#kappa_1");
-	disablenpc instance_npcname("#ramda_1");
-	disablenpc instance_npcname("#sigma2");
-	
-	// warps
-	for ( .@i = 1; .@i < 5; ++.@i )
-		disablenpc instance_npcname("#wp_" + .@i);
-	disablenpc instance_npcname("#bs_wp1");
-	disablenpc instance_npcname("#bs_wp2");
 	end;
 }
 
@@ -419,7 +385,7 @@ OnEvent03:
 1@herbs,56,278,4	duplicate(dummy_npc)	#mc_device	1_SHADOW_NPC
 
 
-1@herbs,110,275,4	script	#BMD000002	MD_ASSISTANT,3,3,{
+1@herbs,110,275,4	script(DISABLED)	#BMD000002	MD_ASSISTANT,3,3,{
 	if ('hidden_garden == 4) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
 		'hidden_garden = 5;
@@ -489,7 +455,7 @@ OnTouch:
 	end;
 }
 
-1@herbs,137,269,4	script	#carota	CLEAR_NPC,3,3,{
+1@herbs,137,269,4	script(DISABLED)	#carota	CLEAR_NPC,3,3,{
 	if ('npc_is_talking)
 		end;
 	if ('hidden_garden == 6) {
@@ -640,7 +606,7 @@ OnTouch:
 }
 
 
-1@herbs,250,280,4	script	#BMD000003	MD_ASSISTANT,3,3,{
+1@herbs,250,280,4	script(DISABLED)	#BMD000003	MD_ASSISTANT,3,3,{
 	if ('hidden_garden == 7) {
 		'hidden_garden = 8;
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
@@ -700,7 +666,7 @@ OnTouch:
 	end;
 }
 
-1@herbs,249,268,6	script	#pimp25	LITTLE_FATUM,3,3,{
+1@herbs,249,268,6	script(DISABLED)	#pimp25	LITTLE_FATUM,3,3,{
 	if ('pimp == 0) {
 		'pimp = 1;
 		npcstop;
@@ -813,7 +779,7 @@ OnTouch:
 }
 
 
-1@herbs,201,287,4	script	#BMD000004	MD_ASSISTANT,3,3,{
+1@herbs,201,287,4	script(DISABLED)	#BMD000004	MD_ASSISTANT,3,3,{
 	if ('hidden_garden == 10) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
 		mes "[" + 'guide_name$ + "]";
@@ -1054,7 +1020,7 @@ OnGuardKill:
 
 
 // 1@herbs,194,282,4	script	#swat_1	CLEAR_NPC,3,3,{	// unknown effects
-1@herbs,194,282,4	script	#swat_1	CLEAR_NPC,{
+1@herbs,194,282,4	script(DISABLED)	#swat_1	CLEAR_NPC,{
 	end;
 OnSummon:
 	npcspeed 150;
@@ -1083,7 +1049,7 @@ OnSummon2:
 // 1@herbs,188,276,5	duplicate(#swat_1)	#swat_3	CLEAR_NPC,3,3
 
 
-1@herbs,85,101,4	script	#BMD000005	MD_ASSISTANT,3,3,{
+1@herbs,85,101,4	script(DISABLED)	#BMD000005	MD_ASSISTANT,3,3,{
 	if ('hidden_garden == 13) {
 		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
 		'hidden_garden = 14;
@@ -1138,7 +1104,7 @@ OnTouch:
 	end;
 }
 
-1@herbs,85,56,8	script	#sigma	4_M_BARMUND,4,4,{
+1@herbs,85,56,8	script(DISABLED)	#sigma	4_M_BARMUND,4,4,{
 	if ('npc_is_talking)
 		end;
 	specialeffect EF_WHITEBODY;
@@ -1563,14 +1529,14 @@ OnEffect:
 	end;
 }
 
-1@herbs,53,97,3	duplicate(dummy_npc)	#eff_npc1	CLEAR_NPC
-1@herbs,53,98,3	duplicate(dummy_npc)	#eff_npc2	CLEAR_NPC
-1@herbs,53,99,3	duplicate(dummy_npc)	#eff_npc3	CLEAR_NPC
+1@herbs,53,97,3	duplicate(dummy_disabled_npc)	#eff_npc1	CLEAR_NPC
+1@herbs,53,98,3	duplicate(dummy_disabled_npc)	#eff_npc2	CLEAR_NPC
+1@herbs,53,99,3	duplicate(dummy_disabled_npc)	#eff_npc3	CLEAR_NPC
 
 // unknown ontouch effect
-1@herbs,82,112,6	duplicate(dummy_npc)	#omega	MD_REDPEPPER_H,4,4
-1@herbs,82,114,6	duplicate(dummy_npc)	#kappa	MD_REDPEPPER,4,4
-1@herbs,90,113,3	duplicate(dummy_npc)	#barmund	4_M_BARMUND,4,4
+1@herbs,82,112,6	duplicate(dummy_disabled_npc)	#omega	MD_REDPEPPER_H,4,4
+1@herbs,82,114,6	duplicate(dummy_disabled_npc)	#kappa	MD_REDPEPPER,4,4
+1@herbs,90,113,3	duplicate(dummy_disabled_npc)	#barmund	4_M_BARMUND,4,4
 
 
 
@@ -1615,7 +1581,7 @@ OnTouch:
 	end;
 }
 
-1@herbs,62,196,8	script	#BMD_a	MD_ASSISTANT,{
+1@herbs,62,196,8	script(DISABLED)	#BMD_a	MD_ASSISTANT,{
 	end;
 OnEvent01:
 	npcspeed 200;
@@ -2001,7 +1967,7 @@ OnEvent:
 	end;
 }
 
-1@herbs,80,196,0	script	#wp_1	WARPNPC,3,3,{
+1@herbs,80,196,0	script(DISABLED)	#wp_1	WARPNPC,3,3,{
 	end;
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2), "wp_", ""));
@@ -2043,13 +2009,13 @@ OnTouch:
 1@herbs,297,264,0	duplicate(#wp_1)	#wp_4	WARPNPC,3,3
 
 // (normal mode)
-1@herbs,147,80,0	warp2	#bs_wp1	3,3,1@herbs,94,79
+1@herbs,147,80,0	warp2(DISABLED)	#bs_wp1	3,3,1@herbs,94,79
 // (hard mode)
-1@herbs,240,80,0	warp2	#bs_wp2	3,3,1@herbs,94,79
+1@herbs,240,80,0	warp2(DISABLED)	#bs_wp2	3,3,1@herbs,94,79
 
 
 // (normal mode)
-1@herbs,168,79,3	script	#kappa_1	MD_REDPEPPER,4,4,{
+1@herbs,168,79,3	script(DISABLED)	#kappa_1	MD_REDPEPPER,4,4,{
 	if (!is_party_leader())
 		end;
 	if ('room != 4)
@@ -2067,7 +2033,7 @@ OnTouch:
 }
 
 // (hard mode)
-1@herbs,275,80,3	script	#ramda_1	MD_REDPEPPER_H,4,4,{
+1@herbs,275,80,3	script(DISABLED)	#ramda_1	MD_REDPEPPER_H,4,4,{
 	if (!is_party_leader())
 		end;
 	if ('room != 4)
@@ -2087,7 +2053,7 @@ OnTouch:	// unknown effect
 }
 
 
-1@herbs,85,77,8	script	#sigma2	MD_REDPEPPER_H,{
+1@herbs,85,77,8	script(DISABLED)	#sigma2	MD_REDPEPPER_H,{
 	if (isbegin_quest(12500) > 0)
 		.@qid = 12500;
 	else if (isbegin_quest(12499) > 0)

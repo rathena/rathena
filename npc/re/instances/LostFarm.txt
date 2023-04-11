@@ -288,23 +288,6 @@ OnInstanceInit:
 	'lost_farm = 0;
 	deletearray 'banghae;
 	'map_lost$ = instance_mapname("1@lost");
-
-	for ( .@i = 1; .@i < 7; ++.@i ) {
-		disablenpc instance_npcname("Wooden Box#0" + .@i);
-		disablenpc instance_npcname("Silk#0" + .@i);
-	}
-	for ( .@i = 1; .@i < 6; ++.@i ) {
-		disablenpc instance_npcname("banghae#10" + .@i);
-		disablenpc instance_npcname("banghae#20" + .@i);
-	}
-	disablenpc instance_npcname("#compass01");
-	disablenpc instance_npcname("Wooden Box#10");
-	disablenpc instance_npcname("Wooden Box#10-1");
-	disablenpc instance_npcname("Silk#10");
-	disablenpc instance_npcname("bossbang#301");
-	disablenpc instance_npcname("bossbang#302");
-	disablenpc instance_npcname("bossbang#401");
-	disablenpc instance_npcname("bossbang#402");
 	end;
 }
 
@@ -320,7 +303,7 @@ OnTouch:
 	end;
 }
 
-1@lost,163,47,3	script	Wooden Box#01	4_WOODBOX,{
+1@lost,163,47,3	script(DISABLED)	Wooden Box#01	4_WOODBOX,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -368,7 +351,7 @@ OnMobDead:
 }
 
 
-1@lost,163,47,3	script	Silk#01	4_EP17_BASKET,{
+1@lost,163,47,3	script(DISABLED)	Silk#01	4_EP17_BASKET,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -427,7 +410,7 @@ OnMobDead:
 }
 
 
-1@lost,214,146,3	script	Silk#02	4_EP17_BASKET,{
+1@lost,214,146,3	script(DISABLED)	Silk#02	4_EP17_BASKET,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -495,7 +478,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,214,146,3	script	Wooden Box#02	4_WOODBOX,{
+1@lost,214,146,3	script(DISABLED)	Wooden Box#02	4_WOODBOX,{
 	npctalk "Silk : Save me! I'm going to get eaten by the Pitayas!";
 	end;
 OnStart:
@@ -528,7 +511,7 @@ OnMobDead:
 }
 
 
-1@lost,91,92,3	script	Silk#03	4_EP17_BASKET,{
+1@lost,91,92,3	script(DISABLED)	Silk#03	4_EP17_BASKET,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -600,7 +583,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,91,92,3	script	Wooden Box#03	4_WOODBOX,{
+1@lost,91,92,3	script(DISABLED)	Wooden Box#03	4_WOODBOX,{
 	npctalk "Silk : Kyaaah!";
 	end;
 OnStart:
@@ -636,7 +619,7 @@ OnMobDead:
 
 
 
-1@lost,232,257,3	script	Silk#04	4_EP17_BASKET,{
+1@lost,232,257,3	script(DISABLED)	Silk#04	4_EP17_BASKET,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -715,7 +698,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,232,257,3	script	Wooden Box#04	4_WOODBOX,{
+1@lost,232,257,3	script(DISABLED)	Wooden Box#04	4_WOODBOX,{
 	npctalk "Silk : Don't come! Don't come!";
 	end;
 OnStart:
@@ -749,7 +732,7 @@ OnMobDead:
 }
 
 
-1@lost,247,119,3	script	Silk#05	4_EP17_BASKET,{
+1@lost,247,119,3	script(DISABLED)	Silk#05	4_EP17_BASKET,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -835,7 +818,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,247,119,3	script	Wooden Box#05	4_WOODBOX,{
+1@lost,247,119,3	script(DISABLED)	Wooden Box#05	4_WOODBOX,{
 	npctalk "Silk : Save the automatic doll!";
 	end;
 OnStart:
@@ -869,7 +852,7 @@ OnMobDead:
 }
 
 
-1@lost,106,160,3	script	Silk#06	4_EP17_BASKET,{
+1@lost,106,160,3	script(DISABLED)	Silk#06	4_EP17_BASKET,{
 	if (!is_party_leader()) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -973,7 +956,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,113,168,0	script	#compass01	HIDDEN_WARP_NPC,30,30,{
+1@lost,113,168,0	script(DISABLED)	#compass01	HIDDEN_WARP_NPC,30,30,{
 	end;
 OnTouch:
 	disablenpc();
@@ -982,7 +965,7 @@ OnTouch:
 	end;
 }
 
-1@lost,106,160,3	script	Wooden Box#06	4_WOODBOX,{
+1@lost,106,160,3	script(DISABLED)	Wooden Box#06	4_WOODBOX,{
 	npctalk "Silk : Save me!";
 	end;
 OnStart:
@@ -1051,7 +1034,7 @@ OnTouch:
 	end;
 }
 
-1@lost,38,265,0	script	banghae#101	HIDDEN_WARP_NPC,5,5,{
+1@lost,38,265,0	script(DISABLED)	banghae#101	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1065,7 +1048,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,38,296,0	script	banghae#102	HIDDEN_WARP_NPC,5,5,{
+1@lost,38,296,0	script(DISABLED)	banghae#102	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1079,7 +1062,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,51,317,0	script	banghae#103	HIDDEN_WARP_NPC,5,5,{
+1@lost,51,317,0	script(DISABLED)	banghae#103	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1098,7 +1081,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,92,317,0	script	banghae#104	HIDDEN_WARP_NPC,5,5,{
+1@lost,92,317,0	script(DISABLED)	banghae#104	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1112,7 +1095,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,135,317,0	script	banghae#105	HIDDEN_WARP_NPC,5,5,{
+1@lost,135,317,0	script(DISABLED)	banghae#105	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1156,7 +1139,7 @@ OnTouch:
 	end;
 }
 
-1@lost,286,267,0	script	banghae#201	HIDDEN_WARP_NPC,5,5,{
+1@lost,286,267,0	script(DISABLED)	banghae#201	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1170,7 +1153,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,287,296,0	script	banghae#202	HIDDEN_WARP_NPC,5,5,{
+1@lost,287,296,0	script(DISABLED)	banghae#202	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1184,7 +1167,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,270,317,0	script	banghae#203	HIDDEN_WARP_NPC,5,5,{
+1@lost,270,317,0	script(DISABLED)	banghae#203	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1198,7 +1181,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,232,317,0	script	banghae#204	HIDDEN_WARP_NPC,5,5,{
+1@lost,232,317,0	script(DISABLED)	banghae#204	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1212,7 +1195,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,195,317,0	script	banghae#205	HIDDEN_WARP_NPC,5,5,{
+1@lost,195,317,0	script(DISABLED)	banghae#205	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -1228,7 +1211,7 @@ OnTouch_:
 
 
 // boss
-1@lost,161,315,3	script	Wooden Box#10	4_WOODBOX,{
+1@lost,161,315,3	script(DISABLED)	Wooden Box#10	4_WOODBOX,{
 	if ('lost_farm < 19) {
 		npctalk "Silk : You must play with all the Pitayas on your way here.";
 		end;
@@ -1301,7 +1284,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,161,315,3	script	Wooden Box#10-1	4_WOODBOX,{
+1@lost,161,315,3	script(DISABLED)	Wooden Box#10-1	4_WOODBOX,{
 	switch (rand(1,3)) {
 	case 1:
 		npctalk "Silk : He-Help me~~~~!";
@@ -1316,7 +1299,7 @@ OnMobDead:
 	end;
 }
 
-1@lost,161,315,3	script	Silk#10	4_EP17_BASKET,{
+1@lost,161,315,3	script(DISABLED)	Silk#10	4_EP17_BASKET,{
 	if (!is_party_leader() && 'lost_farm < 22) {
 		mes "[Silk]";
 		mes "I'll talk to the leader of the guests!";
@@ -1445,7 +1428,7 @@ OnSlaveSummon:
 	end;
 }
 
-1@lost,135,317,0	script	bossbang#301	HIDDEN_WARP_NPC,5,5,{
+1@lost,135,317,0	script(DISABLED)	bossbang#301	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:	// note: mobs not killed when the boss dies
 	monster 'map_lost$,135,319,"Onyx",20656,1;
@@ -1456,7 +1439,7 @@ OnTouch_:	// note: mobs not killed when the boss dies
 	end;
 }
 
-1@lost,129,317,0	script	bossbang#302	HIDDEN_WARP_NPC,5,5,{
+1@lost,129,317,0	script(DISABLED)	bossbang#302	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	monster 'map_lost$,129,316,"Rutile","G_PITAYA_R",1;
@@ -1467,7 +1450,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,195,317,0	script	bossbang#401	HIDDEN_WARP_NPC,5,5,{
+1@lost,195,317,0	script(DISABLED)	bossbang#401	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	monster 'map_lost$,197,313,"Onyx",20656,1;
@@ -1478,7 +1461,7 @@ OnTouch_:
 	end;
 }
 
-1@lost,201,317,0	script	bossbang#402	HIDDEN_WARP_NPC,5,5,{
+1@lost,201,317,0	script(DISABLED)	bossbang#402	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
 	monster 'map_lost$,199,316,"Rutile","G_PITAYA_R",1;

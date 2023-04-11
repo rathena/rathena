@@ -124,39 +124,9 @@ OnInstanceInit:
 
 	// warps
 	// disablenpc instance_npcname("#ghg_w1");
-	disablenpc instance_npcname("#ghg_w2");
-	disablenpc instance_npcname("#ghg_w3");
-	disablenpc instance_npcname("#ghg_w4");
-	disablenpc instance_npcname("#ghg_wb");
 
 	// Area 1
 	// disablenpc instance_npcname("Gardener#ghg_g1");
-
-	// Area 2
-	disablenpc instance_npcname("Gardener#ghg_g2");
-
-	// Area 3
-	disablenpc instance_npcname("Gardener#ghg_g3");
-	disablenpc instance_npcname("Gardener#gmck3");
-	for ( .@i = 1; .@i < 10; ++.@i )
-		disablenpc instance_npcname("mob3_1#ghg");
-	
-	// Area 4
-	disablenpc instance_npcname("Gardener#keeper1");
-	disablenpc instance_npcname("Gardener#keeper2");
-	disablenpc instance_npcname("Gardener#keeper3");
-	disablenpc instance_npcname("Gardener#keeper4");
-
-	disablenpc instance_npcname("Gardener#ghg_gb");
-	disablenpc instance_npcname("Gardener#ghg_gb1");
-	disablenpc instance_npcname("#ghg_bosshw");
-
-	disablenpc instance_npcname("#blue1ghg");
-	disablenpc instance_npcname("#blue2ghg");
-	disablenpc instance_npcname("#blue3ghg");
-	disablenpc instance_npcname("#red1ghg");
-	disablenpc instance_npcname("#red2ghg");
-	disablenpc instance_npcname("#red3ghg");
 	end;
 }
 
@@ -191,11 +161,11 @@ OnTouch:
 	end;
 }
 
-1@ghg,269,68,0	warp2	#ghg_w2	2,2,1@ghg,311,67
-1@ghg,343,97,0	warp2	#ghg_w3	2,2,1@ghg,343,139
-1@ghg,265,309,0	warp2	#ghg_wb	2,2,1@ghg,189,287
+1@ghg,269,68,0	warp2(DISABLED)	#ghg_w2	2,2,1@ghg,311,67
+1@ghg,343,97,0	warp2(DISABLED)	#ghg_w3	2,2,1@ghg,343,139
+1@ghg,265,309,0	warp2(DISABLED)	#ghg_wb	2,2,1@ghg,189,287
 
-1@ghg,343,184,0	script	#ghg_w4	WARPNPC,2,2,{
+1@ghg,343,184,0	script(DISABLED)	#ghg_w4	WARPNPC,2,2,{
 	end;
 OnTouch:
 	switch( rand(1,4) ) {
@@ -387,7 +357,7 @@ OnMobDead:
 
 
 // Area 2
-1@ghg,316,69,3	script	Gardener#ghg_g2	4_EP17_SCISSORE,{
+1@ghg,316,69,3	script(DISABLED)	Gardener#ghg_g2	4_EP17_SCISSORE,{
 	if ('water_garden == 3) {
 		mes "[Juventus]";
 		mes "Be careful, Papillas' and other type of Papillas seems to be wandering around.";
@@ -574,10 +544,10 @@ S_Skill:
 				(.@data[UMOB_Y] - 5 * .@i);
 			break;
 		}
-		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[0],.@y[0],-2000;	// todo bypass WZ_HEAVENDRIVE skill range
-		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[1],.@y[1],-2000;
-		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[2],.@y[2],-2000;
-		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[3],.@y[3],-2000;	// note: can hit the player outside the board
+		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[0],.@y[0],-2000,false,0,true;
+		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[1],.@y[1],-2000,false,0,true;
+		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[2],.@y[2],-2000,false,0,true;
+		unitskillusepos .@gid,"WZ_HEAVENDRIVE",3,.@x[3],.@y[3],-2000,false,0,true;	// note: can hit the player outside the board
 		sleep 50;
 	}
 	end;
@@ -585,7 +555,7 @@ S_Skill:
 
 
 // Area 3
-1@ghg,341,143,3	script	Gardener#ghg_g3	4_EP17_SCISSORE,5,1,{
+1@ghg,341,143,3	script(DISABLED)	Gardener#ghg_g3	4_EP17_SCISSORE,5,1,{
 	mes "[Aditura]";
 	mes "The rose garden is a very beautiful place, but recently, we are having trouble maintaining it because of the swarms of animals and plants that appeared in groups.";
 	npctalk "The rose garden is a very beautiful place, but recently, we are having trouble maintaining it because of the swarms of animals and plants that appeared in groups.";
@@ -609,7 +579,7 @@ OnTouch_:	// note: hidden player doesn't trigger it!
 	end;
 }
 
-1@ghg,315,149,0	script	mob3_1#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,315,149,0	script(DISABLED)	mob3_1#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:	// note: hidden player doesn't trigger it!
 	disablenpc();
@@ -628,7 +598,7 @@ OnTouch_:	// note: hidden player doesn't trigger it!
 	}
 	end;
 }
-1@ghg,295,149,0	script	mob3_2#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,295,149,0	script(DISABLED)	mob3_2#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -648,7 +618,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,275,149,0	script	mob3_3#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,275,149,0	script(DISABLED)	mob3_3#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -668,7 +638,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,255,149,0	script	mob3_4#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,255,149,0	script(DISABLED)	mob3_4#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -688,7 +658,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,231,162,0	script	mob3_5#ghg	HIDDEN_WARP_NPC,3,1,{
+1@ghg,231,162,0	script(DISABLED)	mob3_5#ghg	HIDDEN_WARP_NPC,3,1,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -708,7 +678,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,255,173,0	script	mob3_6#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,255,173,0	script(DISABLED)	mob3_6#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -728,7 +698,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,275,173,0	script	mob3_7#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,275,173,0	script(DISABLED)	mob3_7#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -748,7 +718,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,295,173,0	script	mob3_8#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,295,173,0	script(DISABLED)	mob3_8#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -768,7 +738,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,315,173,0	script	mob3_9#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,315,173,0	script(DISABLED)	mob3_9#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -788,7 +758,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,344,173,3	script	Gardener#gmck3	4_EP17_SCISSORE,2,2,{
+1@ghg,344,173,3	script(DISABLED)	Gardener#gmck3	4_EP17_SCISSORE,2,2,{
 	if ('water_garden < 6) {
 		npctalk "An error... has occurred.";
 		end;
@@ -875,7 +845,7 @@ OnMobDead:
 }
 
 // (daily quest)
-1@ghg,346,248,3	script	Gardener#keeper1	4_EP17_SCISSORE,{
+1@ghg,346,248,3	script(DISABLED)	Gardener#keeper1	4_EP17_SCISSORE,{
 	if (isbegin_quest(16435) == 1) {
 		if (checkweight(1000099,1) == 0) {	// (custom)
 			mes "^008800Wait a sec!!";
@@ -903,7 +873,7 @@ OnMobDead:
 
 
 // Area 5 (boss)
-1@ghg,186,287,3	script	Gardener#ghg_gb	4_EP17_SCISSORE,{
+1@ghg,186,287,3	script(DISABLED)	Gardener#ghg_gb	4_EP17_SCISSORE,{
 	if ('water_garden == 8) {
 		mes "[Velkina]";
 		mes "If a Papilla shows up during the battle, make it follow you to the pillar of the same color.";
@@ -1004,7 +974,7 @@ OnMobDead:
 	end;
 }
 
-1@ghg,183,286,0	script	#ghg_bosshw	HIDDEN_WARP_NPC,4,4,{
+1@ghg,183,286,0	script(DISABLED)	#ghg_bosshw	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
 	.@DAMAGE = MaxHp/2;
@@ -1015,7 +985,7 @@ OnTouch:
 	end;
 }
 
-1@ghg,186,294,3	script	#blue1ghg	4_ENERGY_BLUE,2,2,{
+1@ghg,186,294,3	script(DISABLED)	#blue1ghg	4_ENERGY_BLUE,2,2,{
 	end;
 OnTouchNPC:
 	getunitdata( getattachedrid(), .@data );
@@ -1027,7 +997,7 @@ OnTouchNPC:
 1@ghg,190,287,3	duplicate(#blue1ghg)	#blue2ghg	4_ENERGY_BLUE,2,2
 1@ghg,187,280,3	duplicate(#blue1ghg)	#blue3ghg	4_ENERGY_BLUE,2,2
 
-1@ghg,179,294,3	script	#red1ghg	4_ENERGY_RED,2,2,{
+1@ghg,179,294,3	script(DISABLED)	#red1ghg	4_ENERGY_RED,2,2,{
 	end;
 OnTouchNPC:
 	getunitdata( getattachedrid(), .@data );
@@ -1039,7 +1009,7 @@ OnTouchNPC:
 1@ghg,174,287,3	duplicate(#red1ghg)	#red2ghg	4_ENERGY_RED,2,2
 1@ghg,178,280,3	duplicate(#red1ghg)	#red3ghg	4_ENERGY_RED,2,2
 
-1@ghg,187,287,3	script	Gardener#ghg_gb1	4_EP17_SCISSORE,2,2,{
+1@ghg,187,287,3	script(DISABLED)	Gardener#ghg_gb1	4_EP17_SCISSORE,2,2,{
 	if ('water_garden == 10) {
 		mes "[Velkina]";
 		mes "You didn't forget your request from Seiyu, and came in here, right?";

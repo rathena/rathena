@@ -1149,25 +1149,17 @@ OnInit:
 	end;
 }
 
-ba_maison,72,151,5	script	Tommy#172nw01	4_M_GUNSLINGER2,{
+ba_maison,72,151,5	script(CLOAKED)	Tommy#172nw01	4_M_GUNSLINGER2,{
 	mes "[Tommy]";
 	mes "This mansion is huge. I'm actually like this place.";
 	mes "I didn't even know there was something like this.";
 	close;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_maison,70,150,5	script	Meimei#172nw01	4_F_REBELLION3,{
+ba_maison,70,150,5	script(CLOAKED)	Meimei#172nw01	4_F_REBELLION3,{
 	mes "[Meimei]";
 	mes "So, this is where you are. The mercenaries...";
 	close;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 ba_maison,146,109,5	script	Tasty#172nw01	4_EP17_BASIC_B,{
@@ -2288,7 +2280,7 @@ OnInit:
 	end;
 }
 
-ba_in01,205,109,3	script	Tatio#jh5_1	4_M_TATIO,{
+ba_in01,205,109,3	script(CLOAKED)	Tatio#jh5_1	4_M_TATIO,{
 	if (checkweight(1000103,15) == 0) {	// (custom)
 		mes "^008800Wait a sec!!";
 		mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
@@ -2428,7 +2420,6 @@ ba_in01,205,109,3	script	Tatio#jh5_1	4_M_TATIO,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16452) == 1" );
 	end;
 }
@@ -2627,7 +2618,7 @@ OnInit:
 	end;
 }
 
-ba_maison,100,90,7	script	Dien#jh5_2	4_F_DIENE,{
+ba_maison,100,90,7	script(CLOAKED)	Dien#jh5_2	4_F_DIENE,{
 	if (ep17_2_main == 22) {
 		cutin "ep162_dn01",2;
 		mes "[Dien]";
@@ -2659,26 +2650,17 @@ ba_maison,100,90,7	script	Dien#jh5_2	4_F_DIENE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16450) == 1" );
 	end;
 }
 
-ba_maison,105,95,3	script	Ridsh#jh5_2	4_F_LEEDSH,{
+ba_maison,105,95,3	script(CLOAKED)	Ridsh#jh5_2	4_F_LEEDSH,{
 	npctalk "Ridsh : Tell the president to come out!", "", bc_self;
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
-ba_maison,105,90,1	script	Cotnes#jh5_2	4_F_COATNEIS,{
+ba_maison,105,90,1	script(CLOAKED)	Cotnes#jh5_2	4_F_COATNEIS,{
 	npctalk "Ridsh : Are you fine, Mr. Kaya?", "", bc_self;
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -3215,7 +3197,7 @@ OnTouch:
 	end;
 }
 
-ba_maison,116,67,5	script	Rookie#ep172_m_rk01	4_M_ROOKIE,{
+ba_maison,116,67,5	script(CLOAKED)	Rookie#ep172_m_rk01	4_M_ROOKIE,{
 	if (ep17_2_main == 25) {
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
@@ -3352,7 +3334,6 @@ ba_maison,116,67,5	script	Rookie#ep172_m_rk01	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep17_2_main == 25" );
 	end;
 }
@@ -3809,15 +3790,11 @@ OnInit:
 
 ba_in01,14,145,1	duplicate(dummy_cloaked_npc)	Rookie#ep172_rk02	4_M_ROOKIE
 
-ba_in01,13,149,5	script	Eisen Werner#ep172_eiz2	4_M_EISEN,{
+ba_in01,13,149,5	script(CLOAKED)	Eisen Werner#ep172_eiz2	4_M_EISEN,{
 	if (ep17_2_main < 30)
 		end;
 	mes "He is thoroughly constrained for what he has done.";
 	close;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 ba_in01,15,147,3	script	Elyumina#ep172_elmn02	4_EP17_ELYUMINA,{
@@ -4195,19 +4172,15 @@ OnTouch:
 	end;
 }
 
-ba_maison,36,221,3	script	Philofontes#ep172_tes02	4_M_PHILOFONTES,{
+ba_maison,36,221,3	script(CLOAKED)	Philofontes#ep172_tes02	4_M_PHILOFONTES,{
 	mes "[Philofontes]";
 	mes "Nice to see you again.";
 	mes "Mr. Crux here came from Rune-Midgarts.";
 	mes "I think he's here to deliver some important news.";
 	close;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_maison,38,219,5	script	Crux#ep172_clx02	4_EP16_CRUX,{
+ba_maison,38,219,5	script(CLOAKED)	Crux#ep172_clx02	4_EP16_CRUX,{
 	if (ep17_2_main == 33) {
 		cutin "ep16_crux_findel02",2;
 		mes "[Crux]";
@@ -4274,10 +4247,6 @@ ba_maison,38,219,5	script	Crux#ep172_clx02	4_EP16_CRUX,{
 		end;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 ba_in01,37,138,0	script	#ep172_main_evt03	HIDDEN_WARP_NPC,2,2,{
@@ -4288,7 +4257,7 @@ OnTouch:
 	end;
 }
 
-ba_in01,48,146,3	script	Crux#ep172_clx01	4_EP16_CRUX,{
+ba_in01,48,146,3	script(CLOAKED)	Crux#ep172_clx01	4_EP16_CRUX,{
 	if (ep17_2_main == 34) {
 		cutin "ep16_crux_findel02",2;
 		mes "[Crux]";
@@ -4312,10 +4281,6 @@ ba_in01,48,146,3	script	Crux#ep172_clx01	4_EP16_CRUX,{
 		warp "prt_cas",138,342;
 		end;
 	}
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -4911,17 +4876,13 @@ ba_bath,167,40,1	duplicate(dummy_cloaked_npc)	Magenta#172ba02	4_M_GUNSLINGER2
 ba_bath,165,40,7	duplicate(dummy_cloaked_npc)	Molar#172ba02	4_M_REBELLION
 ba_bath,163,41,7	duplicate(dummy_cloaked_npc)	Cyan#172ba02	4_F_REBELLION3
 
-ba_bath,166,42,3	script	Rookie#172ba02	4_M_ROOKIE,{
+ba_bath,166,42,3	script(CLOAKED)	Rookie#172ba02	4_M_ROOKIE,{
 	if (ep17_2_bath < 4) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "Will you? I'll take the blueprints from Shrine here. Adventurer, please go to the <NAVI>[boiler room]<INFO>ba_bath,286,68,0,101,0</INFO></NAVI> and ask them to shut down. I'll catch up with you soon.";
 		close3;
 	}
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -5334,7 +5295,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,270,94,5	script	Rookie#172ba03	4_M_ROOKIE,{
+ba_bath,270,94,5	script(CLOAKED)	Rookie#172ba03	4_M_ROOKIE,{
 	if (ep17_2_bath == 3) {
 		cutin "16loo_03",2;
 		mes "[Rookie]";
@@ -5358,7 +5319,6 @@ ba_bath,270,94,5	script	Rookie#172ba03	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17365) == 1" );
 	end;
 }
@@ -5375,7 +5335,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,203,58,3	script	Rookie#172ba04	4_M_ROOKIE,{
+ba_bath,203,58,3	script(CLOAKED)	Rookie#172ba04	4_M_ROOKIE,{
 	if (checkweight(1201,2) == 0) {	// (custom)
 		mes "^008800Wait a sec!!";
 		mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
@@ -5507,7 +5467,6 @@ ba_bath,203,58,3	script	Rookie#172ba04	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17367) == 1" );
 	end;
 }
@@ -5530,7 +5489,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,55,55,5	script	Marked Position#172ba01	4_ENERGY_BLUE,{
+ba_bath,55,55,5	script(CLOAKED)	Marked Position#172ba01	4_ENERGY_BLUE,{
 	if (ep17_2_bath == 6) {
 		specialeffect EF_ICEMINE_1;
 		specialeffect EF_ICECRASH;
@@ -5547,7 +5506,6 @@ ba_bath,55,55,5	script	Marked Position#172ba01	4_ENERGY_BLUE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17368) == 1" );
 	end;
 }
@@ -5563,7 +5521,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,306,121,0	script	Marked Position#172ba02	4_ENERGY_BLUE,{
+ba_bath,306,121,0	script(CLOAKED)	Marked Position#172ba02	4_ENERGY_BLUE,{
 	if (ep17_2_bath == 7) {
 		specialeffect EF_ICEMINE_1;
 		specialeffect EF_ICECRASH;
@@ -5580,7 +5538,6 @@ ba_bath,306,121,0	script	Marked Position#172ba02	4_ENERGY_BLUE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17369) == 1" );
 	end;
 }
@@ -5596,7 +5553,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,21,276,0	script	Marked Position#172ba03	4_ENERGY_BLUE,{
+ba_bath,21,276,0	script(CLOAKED)	Marked Position#172ba03	4_ENERGY_BLUE,{
 	if (ep17_2_bath == 8) {
 		specialeffect EF_ICEMINE_1;
 		specialeffect EF_ICECRASH;
@@ -5613,7 +5570,6 @@ ba_bath,21,276,0	script	Marked Position#172ba03	4_ENERGY_BLUE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17370) == 1" );
 	end;
 }
@@ -5629,7 +5585,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,155,305,0	script	Marked Position#172ba04	4_ENERGY_BLUE,{
+ba_bath,155,305,0	script(CLOAKED)	Marked Position#172ba04	4_ENERGY_BLUE,{
 	if (ep17_2_bath == 9) {
 		specialeffect EF_ICEMINE_1;
 		specialeffect EF_ICECRASH;
@@ -5653,7 +5609,6 @@ ba_bath,155,305,0	script	Marked Position#172ba04	4_ENERGY_BLUE,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17371) == 1" );
 	end;
 }
@@ -5682,7 +5637,7 @@ OnTouch:
 	end;
 }
 
-ba_bath,286,298,3	script	Unknown Creature#172ba01	4_EP17_MERMAID,{
+ba_bath,286,298,3	script(CLOAKED)	Unknown Creature#172ba01	4_EP17_MERMAID,{
 	if (checkweight(1000103,16) == 0) {	// (custom)
 		mes "^008800Wait a sec!!";
 		mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
@@ -6257,7 +6212,6 @@ ba_bath,286,298,3	script	Unknown Creature#172ba01	4_EP17_MERMAID,{
 	close;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17372) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17373) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(17374) == 1" );
@@ -7212,7 +7166,7 @@ OnTouch:
 ba_2whs01,14,282,0	duplicate(#ep172_key_ev_0)	#ep172_key_ev_1	HIDDEN_WARP_NPC,3,3
 ba_2whs01,222,257,0	duplicate(#ep172_key_ev_0)	#ep172_key_ev_2	HIDDEN_WARP_NPC,3,3
 
-ba_2whs01,110,218,0	script	Emergency Key#ep172_0	4_ENERGY_WHITE,{
+ba_2whs01,110,218,0	script(CLOAKED)	Emergency Key#ep172_0	4_ENERGY_WHITE,{
 	if (checkweight(1000102,1) == 0) {	// (custom)
 		mes "^008800Wait a sec!!";
 		mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
@@ -7255,8 +7209,6 @@ ba_2whs01,110,218,0	script	Emergency Key#ep172_0	4_ENERGY_WHITE,{
 	end;
 
 OnInit:
-	cloakonnpc();
-
 	.@id = atoi(replacestr(strnpcinfo(2),"ep172_",""));
 	.@quest_id = 17345 + .@id;
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(" + .@quest_id + ") == 1" );
@@ -7333,7 +7285,7 @@ OnTouch:
 	end;
 }
 
-ba_2whs02,37,312,3	script	Head#ep172_2whs01	4_GHOSTRING,{
+ba_2whs02,37,312,3	script(CLOAKED)	Head#ep172_2whs01	4_GHOSTRING,{
 	if (ep17_2_chirp < 6)
 		end;
 	if (ep17_2_chirp == 6) {
@@ -7507,7 +7459,6 @@ ba_2whs02,37,312,3	script	Head#ep172_2whs01	4_GHOSTRING,{
 	close;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(17349) == 1" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(17353) == 1" );
 	end;
@@ -9529,34 +9480,22 @@ OnInit:
 	end;
 }
 
-ba_pw02,45,267,3	script	Elyumina#jh_ba1	4_EP17_ELYUMINA,{
+ba_pw02,45,267,3	script(CLOAKED)	Elyumina#jh_ba1	4_EP17_ELYUMINA,{
 	emotion ET_DELIGHT;
 	npctalk "Elyumina : I just realized, My way of thinking is wrong. This guy called Varmundt isn't he amazing?", "", bc_self;
 	cloakonnpcself();
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_pw02,50,264,3	script	Rookie#jh_ba1	4_M_ROOKIE,{
+ba_pw02,50,264,3	script(CLOAKED)	Rookie#jh_ba1	4_M_ROOKIE,{
 	npctalk "Rookie : I don't know how I ended up with these two people.", "", bc_self;
 	cloakonnpcself();
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_pw02,48,262,1	script	Lazy#jh_ba1	4_M_LAZY,{
+ba_pw02,48,262,1	script(CLOAKED)	Lazy#jh_ba1	4_M_LAZY,{
 	npctalk "Lazy : Um, it's a little hard to breathe here.", "", bc_self;
 	cloakonnpcself();
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -9709,32 +9648,20 @@ OnInit:
 	end;
 }
 
-ba_maison,177,268,3	script	Rookie#jh_ba2	4_M_ROOKIE,{
+ba_maison,177,268,3	script(CLOAKED)	Rookie#jh_ba2	4_M_ROOKIE,{
 	npctalk "Rookie : Ah, Mina is so weak, I can't get used to it~!", "", bc_self;
 	cloakonnpcself();
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
-ba_maison,174,266,3	script	Elyumina#jh_ba2	4_EP17_ELYUMINA,{
+ba_maison,174,266,3	script(CLOAKED)	Elyumina#jh_ba2	4_EP17_ELYUMINA,{
 	npctalk "Elyumina : I think I'm a bit better now. It doesn't matter what happen to you when you're hated like this......", "", bc_self;
 	cloakonnpcself();
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_maison,176,270,3	script	Lazy#jh_ba2	4_M_LAZY,{
+ba_maison,176,270,3	script(CLOAKED)	Lazy#jh_ba2	4_M_LAZY,{
 	npctalk "Lazy : I've never seen Ms. Criminal Scientist so depressed before.", "", bc_self;
 	cloakonnpcself();
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -9918,23 +9845,15 @@ OnInit:
 	end;
 }
 
-ba_maison,235,45,3	script	Rookie#jh_ba3	4_M_ROOKIE,{
+ba_maison,235,45,3	script(CLOAKED)	Rookie#jh_ba3	4_M_ROOKIE,{
 	npctalk "Rookie : I'm a sinner for letting you suffer alone. We should have went there too.", "", bc_self;
 	cloakonnpcself();
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ba_maison,233,48,5	script	Lazy#jh_ba3	4_M_LAZY,{
+ba_maison,233,48,5	script(CLOAKED)	Lazy#jh_ba3	4_M_LAZY,{
 	npctalk "Lazy : I'm not in charge of combat. So, adventurer, do you have a favor to ask?", "", bc_self;
 	cloakonnpcself();
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
