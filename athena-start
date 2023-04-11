@@ -20,8 +20,7 @@ print_start() {
 get_status(){
 	PIDFILE=.$1.pid
 	if [ -e ${PIDFILE} ]; then
-		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
-		PSRUN=$(echo "$ISRUN" | awk '{ print $1 }')
+		PSRUN=$(pgrep -F ${PIDFILE})
 	fi
 	#return ${PSRUN} #seems to cause an issue for some os
 }
@@ -36,11 +35,11 @@ start_serv(){
 		echo "stat_serv, log is enabled"
 		echo "My logfile=${LOGFILE}"
 		if [ -z ${PSRUN} ]; then
-		if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
+			if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
 			mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$1" > "$FIFO" 2>&1 & PID=$!
 			#"./$1" > >(tee "$LOGRUN") 2>&1 & PID=$! #bash only
 			echo "$PID" > .$1.pid
-			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" | tee ${LOGFILE}
+			echo "Server '$1' started at $(date +"%m-%d-%H:%M-%S")" | tee ${LOGFILE}
 		else
 			echo "Cannot start '$1', because it is already running p${PSRUN}" | tee ${LOGFILE}
 		fi
@@ -48,7 +47,7 @@ start_serv(){
 		if [ -z ${PSRUN} ]; then
 			./$1&
 			echo "$!" > .$1.pid
-			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
+			echo "Server '$1' started at $(date +"%m-%d-%H:%M-%S")"
 		else
 			echo "Cannot start '$1', because it is already running p${PSRUN}"
 		fi
@@ -66,20 +65,20 @@ watch_serv(){
 			LOGFILE="$LOG_DIR/$i.launch.log"
 			LOGRUN="$LOG_DIR/$i.log"
 			FIFO=$i"_fifo"
-	
-			get_status $i
+
+			get_status ${i}
 			#echo "Echo id of $i is ${PSRUN}"
 			if [ -z ${PSRUN} ]; then
 				count=$((count+1))
 				#echo "fifo=$FIFO"
 				echo "server '$i' is down"
 				echo "server '$i' is down" >> ${LOGFILE}
-				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" 
-				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
+				echo "restarting server at time at $(date +"%m-%d-%H:%M-%S")"
+				echo "restarting server at time at $(date +"%m-%d-%H:%M-%S")" >> ${LOGFILE}
 				if [ -e $FIFO ]; then rm $FIFO; fi
 				mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$i" > "$FIFO" 2>&1 & PID=$!
 				echo "$PID" > .$i.pid
-				if [ $2 ] && [ $2 -lt $count ]; then break; fi   
+				if [ $2 ] && [ $2 -lt $count ]; then break; fi
 			fi
 		done
 		sleep $1
@@ -101,11 +100,11 @@ restart(){
 			fi
 		done
 	done
-  $0 start
+	$0 start
 }
 
 case $1 in
-    'start')
+	'start')
 		print_start
 		check_files
 		echo "Check complete."
@@ -123,7 +122,7 @@ case $1 in
 		done
 		echo "rAthena was started."
 	;;
-    'watch')
+	'watch')
 		if [ ! -d "$LOG_DIR" ]; then mkdir -p $LOG_DIR; fi
 		if [ -z $2 ]; then Restart_count=10; else Restart_count=$2; fi
 		if [ -z $3 ]; then Restart_sleep=3; else Restart_sleep=$3; fi
@@ -134,7 +133,7 @@ case $1 in
 		done
 		watch_serv $Restart_count $Restart_sleep
 		echo "Watching rAthena now."
-	;;	
+	;;
 	'stop')
 		for i in ${W_SRV} ${M_SRV} ${C_SRV} ${L_SRV}
 		do
@@ -155,7 +154,7 @@ case $1 in
 		done
 	;;
 	'restart')
-		 restart
+		 restart "$@"
 	;;
 	'status')
 		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
@@ -181,7 +180,7 @@ case $1 in
 			'start')
 				echo "syntax: 'start {--enlog}'"
 				echo "This option will start the servers"
-				echo "--enlog will write all terminal output into a log/$servname.log file"
+				echo "--enlog will write all terminal output into a log/\$servname.log file"
 			;;
 			'stop')
 				echo "This option will shut the servers down"
@@ -205,11 +204,11 @@ case $1 in
 			;;
 			'val_runonce')
 				echo "syntax: 'val_runonce'"
-				echo "This option will run valgrin with run-once to check the servers"
+				echo "This option will run valgrind with run-once to check the servers"
 			;;
 			'valchk')
 				echo "syntax: 'valchk'"
-				echo "This option will run valgrin with the servers"
+				echo "This option will run valgrind with the servers"
 			;;
 			*)
 				echo "Please specify a command you would like more info on { start | stop | restart | status | watch }"

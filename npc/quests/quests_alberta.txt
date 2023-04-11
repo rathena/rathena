@@ -608,7 +608,7 @@ alberta,120,53,1	script	Stylish Merchant#new30	51,{
 			mes "[Zic]";
 			mes "Let's see, I'll need...";
 			mes "1 ^0000FFSilk Ribbon^000000";
-			mes "50 ^0000FFHeroic Emlbem^000000";
+			mes "50 ^0000FFHeroic Emblem^000000";
 			mes "...Did you know this already?";
 			close;
 		case 2:
@@ -617,7 +617,7 @@ alberta,120,53,1	script	Stylish Merchant#new30	51,{
 			next;
 			mes "[Zic]";
 			mes "Okay, I'll need...";
-			mes "1 ^0000FFHeart hair pin^000000";
+			mes "1 ^0000FFHeart Hairpin^000000";
 			mes "10 ^0000FFSteel^000000";
 			mes "...Did you know this already?";
 			close;
@@ -627,7 +627,7 @@ alberta,120,53,1	script	Stylish Merchant#new30	51,{
 			next;
 			mes "[Zic]";
 			mes "I need to have...";
-			mes "1 ^0000FFJack a Dandy^000000";
+			mes "1 ^0000FFJack be Dandy^000000";
 			mes "1 ^0000FFScarlet Dyestuffs^000000";
 			mes "...Did you know this already?";
 			close;
@@ -760,7 +760,7 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 					mes "^0000FF1 Wizard Hat^000000";
 					mes "^0000FF400 Dragon Scale^000000";
 					mes "^0000FF50 Mould Powder^000000";
-					mes "^0000FF1 Elder Wilow Card^000000";
+					mes "^0000FF1 Elder Willow Card^000000";
 					next;
 					if ((countitem(2252) > 0) && (countitem(1036) > 399) && (countitem(4052) > 0) && (countitem(7001) > 49)) {
 						mes "[Tempestra]";

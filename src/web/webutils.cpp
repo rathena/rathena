@@ -6,36 +6,36 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <nlohmann/json.hpp>
+
 
 /**
- * Appends to_append to the JSON object obj
- * modifies the obj parameter
- * Returns true on succes, false on failure
- * 
- * Note: very hacky, if we ever add a json parser/emitter, replace this
- * I just didn't want to add one just for this functionality
+ * Merge patch into orig recursively
+ * if merge_null is true, this operates like json::merge_patch
+ * if merge_null is false, then if patch has null, it does not override orig
+ * Returns true on success
  */
-bool addToJsonObject(std::string& obj, const std::string& to_append) {
-	bool need_comma = false;
-	auto last_close_brace = std::find(obj.rbegin(), obj.rend(), '}');
-	if (last_close_brace == obj.rend()) {
-		return false;
+bool mergeData(nlohmann::json &orig, const nlohmann::json &patch, bool merge_null) {
+	if (!patch.is_object()) {
+		// then it's a value
+		if ((patch.is_null() && merge_null) || (!patch.is_null())) {
+			orig = patch;
+		}
+		return true;
 	}
-	for (auto it = last_close_brace + 1; it != obj.rend(); ++it) {
-		if (*it == '}' || *it == '"' || *it == ':') {
-			// there was a value, we need to add a comma
-			need_comma = true;
-			break;
-		} else if (*it == '{') {
-			// there was no previous value, don't add comma
-			need_comma = false;
-			break;
+
+	if (!orig.is_object()) {
+		orig = nlohmann::json::object();
+	}
+
+	for (auto it = patch.begin(); it != patch.end(); ++it) {
+		if (it.value().is_null()) {
+			if (merge_null) {
+				orig.erase(it.key());
+			}
+		} else {
+			mergeData(orig[it.key()], it.value(), merge_null);
 		}
 	}
-	obj.erase(--(last_close_brace.base()));
-	if (need_comma) {
-		obj += ",";
-	}
-	obj += to_append + "}";
 	return true;
 }

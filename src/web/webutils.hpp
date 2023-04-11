@@ -4,8 +4,10 @@
 
 #ifndef WEB_UTILS_HPP
 #define WEB_UTILS_HPP
-#include <string>
 
-bool addToJsonObject(std::string& obj, const std::string& to_append);
+#include <string>
+#include <nlohmann/json_fwd.hpp>
+
+bool mergeData(nlohmann::json &orig, const nlohmann::json &patch, bool merge_null);
 
 #endif

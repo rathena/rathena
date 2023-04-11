@@ -54,3 +54,8 @@ Body:
     Variable: RepPointsIsgard
     Minimum: -3000
     Maximum: 3000
+
+Footer:
+  Imports:
+  - Path: db/re/generator/reputation.yml
+    Generator: true

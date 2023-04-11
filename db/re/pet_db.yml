@@ -112,7 +112,7 @@ Body:
             Amount: 1
       - Target: SWEETS_DROPS
         ItemRequirements:
-          - Item: Sweets_Festival_Coin
+          - Item: Sweets_Coin
             Amount: 500
           - Item: Candy
             Amount: 50
@@ -1361,7 +1361,7 @@ Body:
   - Mob: TEDDY_BEAR
     TameItem: Little_Dall_Needle
     EggItem: Teddy_Bear_Egg
-    FoodItem: Cotton_Tufts
+    FoodItem: Wad_Of_Cotton
     Fullness: 3
     IntimacyFed: 50
     CaptureRate: 2000
@@ -1498,7 +1498,7 @@ Body:
       }
   - Mob: MOONLIGHT
     EggItem: Moonlight_Egg
-    FoodItem: Luxurious_Pet_Food
+    FoodItem: High_Class_Pet_food
     Fullness: 1
     HungryDelay: 120
     IntimacyFed: 15
@@ -1922,7 +1922,7 @@ Body:
         bonus bAspdRate,1;
       }
   - Mob: SWEETS_DROPS
-    EggItem: Sweet_Drops_Egg
+    EggItem: Sweets_Drops_Egg
     FoodItem: Candy
     Fullness: 2
     HungryDelay: 120
@@ -2060,7 +2060,7 @@ Body:
       }
 #  - Mob: BACSOJIN2
 #    EggItem: Bacsojin2_Egg_
-#    FoodItem: Luxurious_Pet_Food
+#    FoodItem: High_Class_Pet_food
 #    Fullness: 7
 #    IntimacyFed: 10
 #    CaptureRate: 0
@@ -2083,7 +2083,7 @@ Body:
 #      }
 #  - Mob: ORK_HERO2
 #    EggItem: Orc_Hero_Egg_
-#    FoodItem: Luxurious_Pet_Food
+#    FoodItem: High_Class_Pet_food
 #    Fullness: 2
 #    HungryDelay: 120
 #    IntimacyFed: 15
@@ -2103,4 +2103,30 @@ Body:
 #        bonus bAtkRate,2;
 #      } else {
 #        bonus bAtkRate,1;
+#      }
+#  - Mob: PHREEONI2
+#    EggItem: Phreeoni_Egg
+#    FoodItem: High_Class_Pet_food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    AllowAutoFeed: true
+#    Script: >
+#      .@intimate = getpetinfo(PETINFO_INTIMATE);
+#      if (.@intimate == PET_INTIMATE_AWKWARD || .@intimate == PET_INTIMATE_SHY) {
+#         bonus bHit,6;
+#      }
+#      if (.@intimate == PET_INTIMATE_NEUTRAL) {
+#         bonus bHit,10;
+#         bonus bPerfectHitRate,5;
+#      }
+#      if (.@intimate == PET_INTIMATE_CORDIAL) {
+#         bonus bHit,14;
+#         bonus bPerfectHitRate,10;
+#      }
+#      if (.@intimate == PET_INTIMATE_LOYAL) {
+#         bonus bHit,18;
+#         bonus bPerfectHitRate,15;
 #      }

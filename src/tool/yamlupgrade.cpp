@@ -3,9 +3,13 @@
 
 #include "yamlupgrade.hpp"
 
+using namespace rathena::tool_yamlupgrade;
+
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
 static bool upgrade_job_stats(std::string file, const uint32 source_version);
+static bool upgrade_status_db(std::string file, const uint32 source_version);
+static bool upgrade_map_drops_db(std::string file, const uint32 source_version);
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -69,7 +73,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 	return true;
 }
 
-int do_init(int argc, char** argv) {
+bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
@@ -96,7 +100,7 @@ int do_init(int argc, char** argv) {
 
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -107,25 +111,34 @@ int do_init(int argc, char** argv) {
 	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, uint32 source_version) -> bool {
 		return upgrade_achievement_db(path + name_ext, source_version);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("ITEM_DB", 3, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_item_db(path + name_ext, source_version);
 		})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("JOB_STATS", 2, root_paths, "job_stats", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_job_stats(path + name_ext, source_version);
 		})) {
+		return false;
+	}
+	
+	if (!process("STATUS_DB", 3, root_paths, "status", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_status_db(path + name_ext, source_version);
+		})) {
+		return 0;
+	}
+	
+	if (!process("MAP_DROP_DB", 2, root_paths, "map_drops", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_map_drops_db(path + name_ext, source_version);
+		})) {
 		return 0;
 	}
 
-	return 0;
-}
-
-void do_final(void) {
+	return true;
 }
 
 // Implementation of the upgrade functions
@@ -292,4 +305,67 @@ static bool upgrade_job_stats(std::string file, const uint32 source_version) {
 	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' job stats in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+static bool upgrade_status_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 3
+		if (source_version < 3) {
+			// Rename End to EndOnStart
+			if (input["End"].IsDefined()) {
+				input["EndOnStart"] = input["End"];
+				input.remove("End");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' statuses in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_map_drops_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 2, adjust the rates from n/10000 to n/100000
+		if( source_version < 2 ){
+			if (input["GlobalDrops"].IsDefined()) {
+				for( auto GlobalDrops : input["GlobalDrops"] ){
+					if (GlobalDrops["Rate"].IsDefined()) {
+						uint32 val = GlobalDrops["Rate"].as<uint32>() * 10;
+						GlobalDrops["Rate"] = val;
+					}
+				}
+			}
+			if (input["SpecificDrops"].IsDefined()) {
+				for( auto SpecificDrops : input["SpecificDrops"] ){
+					if (SpecificDrops["Drops"].IsDefined()) {
+						for( auto Drops : SpecificDrops["Drops"] ){
+							if (Drops["Rate"].IsDefined()) {
+								uint32 val = Drops["Rate"].as<uint32>() * 10;
+								Drops["Rate"] = val;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' rates in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<YamlUpgradeTool>( argc, argv );
 }
