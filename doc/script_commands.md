@@ -1135,12 +1135,13 @@ Colors
 ------
 Inside the string you may put color codes, which will alter the color of the
 text printed after them. The color codes are all '**\<R\>****\<G\>****\<B\>**' and contain three hexadecimal numbers representing colors as if they were HTML colors;
+
 - ^FF0000 is bright red
 - ^00FF00 is bright green
 - ^0000FF is bright blue
 - ^000000 is black.
 
-^FF00FF is a pure magenta, but it's also a color that is considered transparent
+<span style="background-color:#FF00FF; color:black"> ^FF00FF</span> is a pure magenta, but it's also a color that is considered transparent
 whenever the client is drawing windows on screen, so printing text in that color
 will have kind of a weird effect. Once you've set a text's color to something,
 you have to set it back to black unless you want all the rest of the text be in
@@ -8957,7 +8958,8 @@ invoking character. It uses the normal X and Y coordinates from the main map.
 
 The colors of the marks are defined using a hexadecimal number, same as the ones
 used to color text in 'mes' output, but are written as hexadecimal numbers in C.
-(They look like 0x**\<six numbers\>**.)
+
+(They look like `0x<six numbers>`.)
 
 Action is what you want to do with a point, 1 will set it, while 2 will clear
 it. 0 will also set it, but automatically removes the point after 15 seconds.
@@ -9004,6 +9006,7 @@ on the defined map. It uses the normal X and Y coordinates from the main map.
 
 The colors of the marks are defined using a hexadecimal number, same as the ones
 used to color text in 'mes' output, but are written as hexadecimal numbers in C.
+
 (They look like 0x**\<six numbers\>**.)
 
 Action is what you want to do with a point, 1 will set it, while 2 will clear
@@ -9057,11 +9060,8 @@ placement of the illustration and takes following values:
 	4	middle of screen without the window header, but still movable
 	255	clear all displayed cutins
 
-The picture is read from `data\texture\유저인터페이스\illust`, from both the GRF archive
-and data folder, and is required to be a bitmap. The file extension `.bmp` can be
-omitted. Magenta color (`#ff00ff`) is considered transparent. There is no limit
-placed on the size of the illustrations by the client, although loading of large
-pictures (about 700x700 and larger) causes the client to freeze shortly (lag).
+The picture is read from `data\texture\유저인터페이스\illust`, from both the GRF archive and data folder, and is required to be a bitmap. The file extension `.bmp` can be omitted. Magenta color (`#ff00ff`) is considered transparent. There is no limit placed on the size of the illustrations by the client, although loading of large pictures (about 700x700 and larger) causes the client to freeze shortly (lag).
+
 Typically the size is about 320x480. New illustrations can be added by just
 putting the new file into the location above.
 
@@ -9088,9 +9088,7 @@ end;
 \***emotion** **\<emotion number\>**{,**\<target\>**};
 
 This command makes an object display an emotion sprite above their own as
-if they were doing that emotion. For a full list of emotion numbers,
-see 'src/map/script_constants.hpp' under 'ET_'. The not so obvious ones are '`ET_QUESTION`'
-(a question mark) and '`ET_SURPRISE`' (the exclamation mark).
+if they were doing that emotion. For a full list of emotion numbers, see 'src/map/script_constants.hpp' under 'ET_'. The not so obvious ones are '`ET_QUESTION`' (a question mark) and '`ET_SURPRISE`' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
 their head. Use the target Game ID (`GID`).
@@ -9125,6 +9123,7 @@ Effect filename is the filename in a GRF. It must have the `.wav` extension.
 
 It's not quite certain what the 'type' actually does, it is sent to the client
 directly. It probably determines which directory to play the effect from.
+
 It's certain that giving 0 for the number will play sound files from '`\data\wav\`',
 but where the other numbers will read from is unclear.
 
@@ -9169,9 +9168,7 @@ timer and ranking as will `@pvpon` GM command do.
 
 \***atcommand** "**\<command\>**";
 
-This command will run the given command line exactly as if it was typed in from
-the keyboard by the player connected to the invoking character, and that
-character belonged to an account which had GM level 99.
+This command will run the given command line exactly as if it was typed in from the keyboard by the player connected to the invoking character, and that character belonged to an account which had GM level 99.
 
 ```cpp
 // This will ask the invoker for a character name and then use the '@nuke'
@@ -9189,8 +9186,7 @@ atcommand "@nuke " + .@player$;
 
 \***charcommand** "**\<command\>**";
 
-This command will run the given command line exactly as if it was typed in from
-the keyboard from a character that belonged to an account which had GM level 99.
+This command will run the given command line exactly as if it was typed in from the keyboard from a character that belonged to an account which had GM level 99.
 
 The commands can also run without an attached rid.
 
@@ -9205,8 +9201,7 @@ charcommand "#option 0 0 0 Roy";
 
 \***bindatcmd** "**\<command\>**","**\<NPC object name\>**::**\<event label\>**"{,**\<atcommand level\>**,**\<charcommand level\>**};
 
-This command will bind a NPC event label to an atcommand. Upon execution of the
-atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
+This command will bind a NPC event label to an atcommand. Upon execution of the atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
 one binding. If you rebind, it will override the original binding.
 
 Note: The default level for atcommand is `0` while the default level for charcommand is `100`.
@@ -9243,8 +9238,7 @@ This command will unbind a NPC event label from an atcommand.
 
 \***useatcmd** "**\<command\>**";
 
-This command will execute a script-bound atcommand for the attached RID. If the
-supplied command is not bound to any script, this command will act like '`atcommand`'
+This command will execute a script-bound atcommand for the attached RID. If the supplied command is not bound to any script, this command will act like '`atcommand`'
 and attempt to execute a source-defined command.
 
 The three .@atcmd_***** variables will NOT be set when invoking script-bound atcommands
