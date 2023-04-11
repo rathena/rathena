@@ -8,7 +8,7 @@
 
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
-#include "common/mmo.hpp"
+#include <common/mmo.hpp>
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,
