@@ -79,7 +79,7 @@ Server Uptime: 3 days, 8 hours, 6 minutes, 4 seconds.
 
 ---
 
-**@refresh**
+**@refresh**\
 **@refreshall**
 
 Synchronizes the player's position on the client with the one stored on the server.
@@ -146,42 +146,42 @@ Available types:
 
 ---
 
-**@agitstart**
+**@agitstart**\
 **@agitend**
 
 Starts or ends War of Emperium [FE] by invoking scripts with the `OnAgitStart`/`OnAgitEnd` labels.
 
 ---
 
-**@agitstart2**
+**@agitstart2**\
 **@agitend2**
 
 Starts or ends War of Emperium [SE] by invoking scripts with the `OnAgitStart2`/`OnAgitEnd2` labels.
 
 ---
 
-**@agitstart3**
+**@agitstart3**\
 **@agitend3**
 
 Starts or ends War of Emperium [TE] by invoking scripts with the `OnAgitStart3`/`OnAgitEnd3` labels.
 
 ---
 
-**@pvpon**
+**@pvpon**\
 **@pvpoff**
 
 Enables or disables PvP (Player vs. Player) mode on a map.
 
 ---
 
-**@gvgon**
+**@gvgon**\
 **@gvgoff**
 
 Enables or disables GvG (Guild vs. Guild) mode on a map.
 
 ---
 
-**@skillon**
+**@skillon**\
 **@skilloff**
 
 Enables or disables skill usage on a map.
@@ -194,7 +194,7 @@ Toggles Kill Steal Protection on a map.
 
 ---
 
-**@day**
+**@day**\
 **@night**
 
 Sets the server to day or night mode.
@@ -207,12 +207,12 @@ Plays the specified sound.
 
 ---
 
-**@snow**
-**@clouds**
-**@clouds2**
-**@fog**
-**@fireworks**
-**@sakura**
+**@snow**\
+**@clouds**\
+**@clouds2**\
+**@fog**\
+**@fireworks**\
+**@sakura**\
 **@leaves**
 
 Toggles weather effects on your map.
@@ -417,7 +417,7 @@ If a percentage is given, only items dropped at that rate and below will be auto
 
 ---
 
-**@alootid <+/- item name/ID\>**
+**@alootid <+/- item name/ID\>**\
 **@alootid reset**
 
 Starts or stops autolooting a specified item.
@@ -428,7 +428,7 @@ By default, 10 items can be autolooted at one time.
 
 ---
 
-**@autoloottype <+/- type name/ID\>**
+**@autoloottype <+/- type name/ID\>**\
 **@autoloottype reset**
 
 Starts or stops autolooting a specified item type.
@@ -497,7 +497,7 @@ Lists requirements to obtain the specified skill on the target character.
 
 ---
 
-**@questskill {\<skill ID\>}**
+**@questskill {\<skill ID\>}**\
 **@lostskill {\<skill ID\>}**
 
 Permanently adds or removes the specified quest skill.
@@ -571,8 +571,8 @@ Displays inventory contents of the attached player.
 
 ---
 
-**@who {\<filter\>}**
-**@who2 {\<filter\>}**
+**@who {\<filter\>}**\
+**@who2 {\<filter\>}**\
 **@who3 {\<filter\>}**
 
 Returns a list of online characters.
@@ -585,8 +585,8 @@ If a filter is given, the list will be restricted to names containing the filter
 
 ---
 
-**@whomap {\<map\>}**
-**@whomap2 {\<map\>}**
+**@whomap {\<map\>}**\
+**@whomap2 {\<map\>}**\
 **@whomap3 {\<map\>}**
 
 Returns a list of online characters in a specific map.
@@ -689,7 +689,7 @@ Opens the auction window.
 
 ---
 
-**@identify**
+**@identify**\
 **@identifyall**
 
 Opens the Identification window if any unappraised items are in your inventory.
@@ -712,8 +712,8 @@ The character will continue vending until you log in to that account again, all 
 
 ---
 
-**@monster \<monster name/ID\> {\<amount\>} /monster \<monster name\>**
-**@monstersmall \<monster name/ID\> {\<amount\>}**
+**@monster \<monster name/ID\> {\<amount\>} /monster \<monster name\>**\
+**@monstersmall \<monster name/ID\> {\<amount\>}**\
 **@monsterbig \<monster name/ID\> {\<amount\>}**
 
 Spawns the specified monster.
@@ -731,8 +731,8 @@ If a duration is specified, they will stay with you until the duration has ended
 
 ---
 
-**@clone \<player name/ID\>**
-**@slaveclone \<player name/ID\>**
+**@clone \<player name/ID\>**\
+**@slaveclone \<player name/ID\>**\
 **@evilclone \<player name/ID\>**
 
 Spawns a clone of the specified player.
@@ -767,7 +767,7 @@ attribute:
 ```
 ---
 
-**@itembound \<item name/ID\>{:\<item name/ID\>:...} \<amount\> \<bound type\>**
+**@itembound \<item name/ID\>{:\<item name/ID\>:...} \<amount\> \<bound type\>**\
 **@itembound2 \<item name/ID\> \<quantity\> \<identify_flag\> \<refine\> \<attribute\> \<card1\> \<card2\> \<card3\> \<card4\> \<bound type\>**
 
 Creates an item bounded to the character.
@@ -882,7 +882,7 @@ Deletes all inventory items (not equipped items).
 
 ---
 
-**@clearstorage**
+**@clearstorage**\
 **@cleargstorage**
 
 Deletes all items in storage (or guild storage).
@@ -895,7 +895,7 @@ Deletes all items in cart, but does not remove the cart.
 
 ---
 
-**@cleanarea**
+**@cleanarea**\
 **@cleanmap**
 
 Deletes floor items in sight range or across the entire map.
@@ -960,7 +960,7 @@ Restriction:
 
 ---
 
-**@jumpto \<player name/ID\> /shift \<player name\>**
+**@jumpto \<player name/ID\> /shift \<player name\>**\
 **@follow \<player name\>**
 
 Warps to the specified player.
@@ -969,7 +969,7 @@ Additionally, `@follow` will track the player's movements until turned off.
 
 ---
 
-**@recall \<player name\> /summon \<player name\>**
+**@recall \<player name\> /summon \<player name\>**\
 **@recallall**
 
 Warps a character to your position.
@@ -996,7 +996,7 @@ Allows other players to attack you outside of PvP.
 
 ---
 
-**@blvl <+/- amount\>**
+**@blvl <+/- amount\>**\
 **@jlvl <+/- amount\>**
 
 Changes base or job level by the specified amount.
@@ -1007,11 +1007,11 @@ Restriction:
 
 ---
 
-**@str <+/- amount\>**
-**@agi <+/- amount\>**
-**@vit <+/- amount\>**
-**@int <+/- amount\>**
-**@dex <+/- amount\>**
+**@str <+/- amount\>**\
+**@agi <+/- amount\>**\
+**@vit <+/- amount\>**\
+**@int <+/- amount\>**\
+**@dex <+/- amount\>**\
 **@luk <+/- amount\>**
 
 Changes the specified stat of your character.
@@ -1032,7 +1032,7 @@ Gives your character all skills in their current skill tree.
 
 ---
 
-**@stpoint <+/- amount\>**
+**@stpoint <+/- amount\>**\
 **@skpoint <+/- amount\>**
 
 Changes unused status or skill points by the specified amount.
@@ -1040,9 +1040,9 @@ Changes unused status or skill points by the specified amount.
 ---
 
 **@resetstat**
-/resetstate
+/resetstate\
 **@resetskill**
-/resetskill
+/resetskill\
 **@reset**
 
 Resets stats (`@streset`), skills (`@skreset`), or both (`@reset`).
@@ -1065,7 +1065,7 @@ Only works on Star Gladiator and Star Emperor classes.
 
 ---
 
-**@jobchange \<job name\>**
+**@jobchange \<job name\>**\
 **@jobchange \<job ID\> {\<upper\>}**
 
 Changes your job.
@@ -1102,8 +1102,8 @@ Summons the specified amount of soul spheres around you.
 
 ---
 
-**@mount {\<dragon color 1-5\>}**
-**@mount {\<madogear type 0-2\>}**
+**@mount {\<dragon color 1-5\>}**\
+**@mount {\<madogear type 0-2\>}**\
 **@mount2**
 
 Toggles mounting/unmounting a job mount (`@mount`) or cash mount (`@mount2`).
@@ -1128,10 +1128,10 @@ Changes Kafra Points by the specified amount.
 
 ---
 
-**@model \<hair style\> \<hair color\> \<cloth color\>**
-**@hairstyle \<default: 0-27\>**
-**@haircolor \<default: 0-8\>**
-**@dye \<default: 0-4\>**
+**@model \<hair style\> \<hair color\> \<cloth color\>**\
+**@hairstyle \<default: 0-27\>**\
+**@haircolor \<default: 0-8\>**\
+**@dye \<default: 0-4\>**\
 **@bodystyle \<default: 0-1\>**
 
 Changes appearance based on the given parameters.
@@ -1192,7 +1192,7 @@ If no string is given, the character's real name will be re-applied.
 
 ---
 
-**@size \<0-2\>**
+**@size \<0-2\>**\
 **@sizeall \<0-2\>**
 
 Changes your size (0 = Normal, 1 = Small, 2 = Large).
@@ -1201,11 +1201,11 @@ Additionally, `@sizeall` will change the size of all online players.
 
 ---
 
-**@duel {\<duel participant count\>}**
-**@duel {\<player name\>}**
-**@invite \<player name\>**
-**@accept**
-**@reject**
+**@duel {\<duel participant count\>}**\
+**@duel {\<player name\>}**\
+**@invite \<player name\>**\
+**@accept**\
+**@reject**\
 **@leave**
 
 Duel-organizing commands.
@@ -1224,8 +1224,8 @@ If no paramters are given, the character will be fully healed.
 
 ---
 
-**@alive**
-**@raisemap**
+**@alive**\
+**@raisemap**\
 **@raise**
 
 Resurrection commands.
@@ -1236,9 +1236,9 @@ Resurrection commands.
 
 ---
 
-**@disguise \<monster/npc name/ID\>**
-**@undisguise**
-**@disguiseall \<monster/npc name/ID\>**
+**@disguise \<monster/npc name/ID\>**\
+**@undisguise**\
+**@disguiseall \<monster/npc name/ID\>**\
 **@undisguiseall**
 
 Disguises or undisguises player as a monster/NPC sprite.
@@ -1301,14 +1301,14 @@ Give or remove a cart to a player and also change the cart skin based on ID:
 ```
 ---
 
-**@cloneequip \<char_id\>**
+**@cloneequip \<char_id\>**\
 **@cloneequip "\<char name\>"**
 
 `Clone` other player's equipments then equip them.
 
 ---
 
-**@clonestat \<char_id\>**
+**@clonestat \<char_id\>**\
 **@clonestat "\<char name\>"**
 
 `Clone` other player's stats.
@@ -1380,7 +1380,7 @@ Changes the gender attached to the player's character.
 
 ---
 
-**@marry \<player 1\> \<player 2\>**
+**@marry \<player 1\> \<player 2\>**\
 **@divorce \<player\>**
 
 Marries or divorces two players.
@@ -1425,7 +1425,7 @@ Displays the motd file to all players.
 
 **@broadcast \<message\>**
 /b \<message\>
-/nb \<message\>
+/nb \<message\>\
 **@localbroadcast \<message\>**
 /lb \<message\>
 /nlb \<message\>
@@ -1439,9 +1439,9 @@ Except for /nb and /nlb, the message will be prefixed with the name of the attac
 
 ---
 
-**@kami \<message\>**
-**@kamib \<message\>**
-**@kamic \<color\> \<message\>**
+**@kami \<message\>**\
+**@kamib \<message\>**\
+**@kamic \<color\> \<message\>**\
 **@lkami \<message\>**
 
 Announces a message without a name prefix.
@@ -1458,7 +1458,7 @@ Example:
 ```
 ---
 
-**@killmonster**
+**@killmonster**\
 **@killmonster2**
 
 Kills all monsters on the map.
@@ -1467,9 +1467,9 @@ Additionally, `@killmonster2` will prevent the monsters from dropping items (exc
 
 ---
 
-**@kill**
-**@nuke \<player name\>**
-**@doommap**
+**@kill**\
+**@nuke \<player name\>**\
+**@doommap**\
 **@doom**
 
 Kill commands.
@@ -1481,8 +1481,8 @@ Kill commands.
 
 ---
 
-**@mute \<time\> \<player name\>**
-**@mutearea \<time\>**
+**@mute \<time\> \<player name\>**\
+**@mutearea \<time\>**\
 **@unmute \<player name\>**
 
 Mutes or unmutes a player (prevents talking, usage of skills, and commands).
@@ -1491,8 +1491,8 @@ Mutes or unmutes a player (prevents talking, usage of skills, and commands).
 
 ---
 
-**@jail \<player name\>**
-**@jailfor \<time\> \<player name\>**
+**@jail \<player name\>**\
+**@jailfor \<time\> \<player name\>**\
 **@unjail \<player name\>**
 
 Sends the specified character to jail.
@@ -1510,14 +1510,13 @@ Restriction:
 
 ---
 
-**@kickall**
-/killall
+**@kickall /killall**
 
 Disconnects a user or all users from the server.
 
 ---
 
-**@ban \<+/- time\> \<player name\>**
+**@ban \<+/- time\> \<player name\>**\
 **@unban \<player name\>**
 
 Bans or unbans a player account for a limited time.
@@ -1532,14 +1531,14 @@ Example:
 ```
 ---
 
-**@block \<player name\>**
+**@block \<player name\>**\
 **@unblock \<player name\>**
 
 Blocks or unblocks a player from logging in indefinitely.
 
 ---
 
-**@charban \<+/- time\> \<player name\>**
+**@charban \<+/- time\> \<player name\>**\
 **@charunban \<player name\>**
 
 Bans or unbans a player for a limited time.
@@ -1563,21 +1562,21 @@ This will also send a packet to clients causing them to close.
 
 ---
 
-**@reload \<type\>**
-**@reloadatcommand**
-**@reloadbattleconf**
-**@reloadinstancedb**
-**@reloaditemdb**
-**@reloadmobdb**
-**@reloadmotd**
-**@reloadmsgconf**
-**@reloadpcdb**
-**@reloadquestdb**
-**@reloadscript**
-**@reloadskilldb**
-**@reloadstatusdb**
-**@reloadachievementdb**
-**@reloadattendancedb**
+**@reload \<type\>**\
+**@reloadatcommand**\
+**@reloadbattleconf**\
+**@reloadinstancedb**\
+**@reloaditemdb**\
+**@reloadmobdb**\
+**@reloadmotd**\
+**@reloadmsgconf**\
+**@reloadpcdb**\
+**@reloadquestdb**\
+**@reloadscript**\
+**@reloadskilldb**\
+**@reloadstatusdb**\
+**@reloadachievementdb**\
+**@reloadattendancedb**\
 **@reloadbarterdb**
 
 Reloads a database or configuration file.
@@ -1656,7 +1655,7 @@ The groups are defined in '/conf/groups.conf'.
 
 ---
 
-**@addperm {\<permission name\>}**
+**@addperm {\<permission name\>}**\
 **@rmvperm {\<permission name\>}**
 
 Temporarily changes the permissions of a character (lasts until player logs out).
@@ -1671,7 +1670,7 @@ Moves an NPC to a specified coordinate on its map.
 
 ---
 
-**@hidenpc \<npc name\>**
+**@hidenpc \<npc name\>**\
 **@shownpc \<npc name\>**
 
 Toggles the visibility of an NPC's sprite.
@@ -1805,7 +1804,7 @@ Changes guild level by the specified amount.
 
 ---
 
-**@disguiseguild \<monster/npc name/ID\> \<guild name/ID\>**
+**@disguiseguild \<monster/npc name/ID\> \<guild name/ID\>**\
 **@undisguiseguild**
 
 Disguises or undisguises all online characters of a guild.
@@ -1879,7 +1878,7 @@ Creates the specified homunculus.
 
 ---
 
-**@homevolution**
+**@homevolution**\
 **@hommutate {\<Homunculus ID\>}**
 
 Evolves or mutates your homunculus, if possible.
@@ -1951,7 +1950,7 @@ Sets the hunger level of your homunculus, with 100 being `Stuffed`.
 
 # 10. Channel Commands
 
-**@join \<#channel_name\> {\<password\>}**
+**@join \<#channel_name\> {\<password\>}**\
 **@channel join \<#channel_name\> {\<password\>}**
 
 Joins the specified channel.
@@ -1978,8 +1977,8 @@ Destroys the specified channel.
 
 ---
 
-**@channel list**
-**@channel list mine**
+**@channel list**\
+**@channel list mine**\
 **@channel list colors**
 
 `list` displays a list of all public channels.
@@ -2028,9 +2027,9 @@ JoinAnnounce \<1|0\>'   : Toggles channel announcement when a new player enters.
 
 ---
 
-**@channel ban \<#channel_name\> \<player\>**
-**@channel unban \<#channel_name\> \<player\>**
-**@channel unbanall \<#channel_name\>**
+**@channel ban \<#channel_name\> \<player\>**\
+**@channel unban \<#channel_name\> \<player\>**\
+**@channel unbanall \<#channel_name\>**\
 **@channel banlist \<#channel_name\>**
 
 Bans or unbans a player from the specified channel.
@@ -2041,16 +2040,16 @@ Bans or unbans a player from the specified channel.
 
 ---
 
-**@channel bindto <#channel_name\>**
+**@channel bindto <#channel_name\>**\
 **@channel unbind**
 
 Binds or unbinds your global chat with the specified channel, which sends all global messages to the specified channel.
 
 ---
 
-**@setquest \<quest ID\>**
-**@erasequest \<quest ID\>**
-**@completequest \<quest ID\>**
+**@setquest \<quest ID\>**\
+**@erasequest \<quest ID\>**\
+**@completequest \<quest ID\>**\
 **@checkquest \<quest ID\>**
 
 Changes/checks the status of the specified quest ID.
