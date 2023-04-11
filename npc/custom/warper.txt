@@ -345,6 +345,7 @@ D8: Restrict("RE",4,5);
 	Disp("Bio Lab 1:Bio Lab 2:Bio Lab 3:Bio Lab 4:Tomb of the Fallen"); Pick("","lhz_dun01","lhz_dun02","lhz_dun03","lhz_dun04","lhz_dun_n");
 D9: Restrict("RE");
 	setarray @c[2],87,47,262,262;
+	Disp("Brasilis Dungeon",1,2); Pick("bra_dun");
 D10: Restrict("RE",6);
 	 setarray @c[0],168,168,253,252,236,204,32,63,26,27,141,187;
 	 Disp("Byalan Dungeon",1,6); Pick("iz_dun",1);
@@ -382,7 +383,7 @@ D23: menu	"Illusion of Abyss",SubD1, "Illusion of Frozen",SubD2, "Illusion of La
 			"Illusion of Luanda",SubD4, "Illusion of Moonlight",SubD5, "Illusion of Teddy Bear",SubD6,
 			"Illusion of Twins",SubD7, "Illusion of Underwater",SubD8, "Illusion of Vampire",SubD9;
 	SubD1: Restrict("RE");
-		   setarray @c[2],132,189,100,192;
+		   setarray @c[2],132,189,99,186;
 		   Disp("Desolate Village:Bleak Turtle Palace"); Pick("","tur_d03_i","tur_d04_i");
 	SubD2: Restrict("RE");
 		   Go("ice_d03_i",149,22);

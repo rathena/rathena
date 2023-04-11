@@ -1872,6 +1872,22 @@
 	export_constant(SC_TOXIN_OF_MANDARA);
 	export_constant(SC_GOLDENE_TONE);
 	export_constant(SC_TEMPERING);
+	export_constant(SC_GRADUAL_GRAVITY);
+	export_constant(SC_ALL_STAT_DOWN);
+	export_constant(SC_KILLING_AURA);
+	export_constant(SC_DAMAGE_HEAL);
+	export_constant(SC_IMMUNE_PROPERTY_NOTHING);
+	export_constant(SC_IMMUNE_PROPERTY_WATER);
+	export_constant(SC_IMMUNE_PROPERTY_GROUND);
+	export_constant(SC_IMMUNE_PROPERTY_FIRE);
+	export_constant(SC_IMMUNE_PROPERTY_WIND);
+	export_constant(SC_IMMUNE_PROPERTY_POISON);
+	export_constant(SC_IMMUNE_PROPERTY_SAINT);
+	export_constant(SC_IMMUNE_PROPERTY_DARKNESS);
+	export_constant(SC_IMMUNE_PROPERTY_TELEKINESIS);
+	export_constant(SC_IMMUNE_PROPERTY_UNDEAD);
+	export_constant(SC_RELIEVE_ON);
+	export_constant(SC_RELIEVE_OFF);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -10100,6 +10116,29 @@
 	export_constant(WOE_FIRST_EDITION);
 	export_constant(WOE_SECOND_EDITION);
 	export_constant(WOE_THIRD_EDITION);
+
+	/* homunculus view IDs */
+	export_constant(MER_LIF);
+	export_constant(MER_AMISTR);
+	export_constant(MER_FILIR);
+	export_constant(MER_VANILMIRTH);
+	export_constant(MER_LIF2);
+	export_constant(MER_AMISTR2);
+	export_constant(MER_FILIR2);
+	export_constant(MER_VANILMIRTH2);
+	export_constant(MER_LIF_H);
+	export_constant(MER_AMISTR_H);
+	export_constant(MER_FILIR_H);
+	export_constant(MER_VANILMIRTH_H);
+	export_constant(MER_LIF_H2);
+	export_constant(MER_AMISTR_H2);
+	export_constant(MER_FILIR_H2);
+	export_constant(MER_VANILMIRTH_H2);
+	export_constant(MER_EIRA);
+	export_constant(MER_BAYERI);
+	export_constant(MER_SERA);
+	export_constant(MER_DIETER);
+	export_constant(MER_ELEANOR);
 
 	#undef export_constant
 	#undef export_constant2

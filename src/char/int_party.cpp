@@ -536,7 +536,7 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 
 	p = std::make_shared<struct party_data>();
 
-	memcpy(p->party.name,name,NAME_LENGTH);
+	safestrncpy(p->party.name,name,NAME_LENGTH);
 	p->party.exp=0;
 	p->party.item=(item?1:0)|(item2?2:0);
 

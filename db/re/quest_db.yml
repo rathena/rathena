@@ -4604,10 +4604,10 @@ Body:
     Title: Qualifications of the Guests
     Drops:
       - Mob: MM_GB_MOROCC_1
-        Item: Heart_of_Soul
+        Item: Soul_Of_Ahat
         Rate: 10000
       - Mob: MM_GB_MOROCC_4
-        Item: Sheenas_Soul
+        Item: Soul_Of_Shnaim
         Rate: 10000
   - Id: 7597
     Title: Fall of the False God
@@ -5718,18 +5718,66 @@ Body:
   - Id: 8548
     Title: A Mirror - (Standby)
     TimeLimit: 4h
+  - Id: 8550
+    Title: Dealer that caused abnormal evolution
+    Targets:
+      - Mob: DELETER1_H
+        Count: 15
+      - Mob: DELETER2_H
+        Count: 15
   - Id: 8551
     Title: The Dealer That Caused Evolution (Standby)
     TimeLimit: 4h
+  - Id: 8552
+    Title: Reexamination of the Dealer that Caused the Evolution
+    Targets:
+      - Mob: DELETER1_H
+        Count: 15
+      - Mob: DELETER2_H
+        Count: 15
+  - Id: 8553
+    Title: Eradicate the nightmare that became a reality
+    Targets:
+      - Mob: NIGHTMARE_TERROR_H
+        Count: 10
   - Id: 8554
     Title: Eradicate the nightmare that became reality (Standby)
     TimeLimit: 4h
+  - Id: 8555
+    Title: Eradicate the terrifying nightmare that has become a reality
+    Targets:
+      - Mob: NIGHTMARE_TERROR_H
+        Count: 10
+  - Id: 8556
+    Title: Check density
+    Targets:
+      - Mob: LAVA_GOLEM_H
+        Count: 10
   - Id: 8557
     Title: Check Density (Standby)
     TimeLimit: 4h
+  - Id: 8558
+    Title: Check density once again
+    Targets:
+      - Mob: LAVA_GOLEM_H
+        Count: 10
+  - Id: 8559
+    Title: Small things crumbling
+    Targets:
+      - Mob: BLAZZER_H
+        Count: 10
+      - Mob: EXPLOSION_H
+        Count: 10
   - Id: 8560
     Title: Small Things (Standby)
     TimeLimit: 4h
+  - Id: 8561
+    Title: Very small things
+    Targets:
+      - Mob: BLAZZER_H
+        Count: 10
+      - Mob: EXPLOSION_H
+        Count: 10
   - Id: 8581
     Title: Sour melon is delicious - Standby
     TimeLimit: 4h
@@ -5792,24 +5840,75 @@ Body:
   - Id: 8595
     Title: Playing with Pitaya - Standby
     TimeLimit: 4h
+  - Id: 8639
+    Title: Great banquet hall in the depths of the underworld
+  - Id: 8640
+    Title: Both the dead and the living are in high spirits
+  - Id: 8641
+    Title: He looks cute
+    Targets:
+      - Mob: GHOST_CUBE
+        Count: 15
+      - Mob: LUDE_GAL
+        Count: 15
   - Id: 8642
     Title: He looks cute - Standby
     TimeLimit: 4h
+  - Id: 8644
+    Title: That's not an instrument
+    Targets:
+      - Mob: BRUTAL_MURDERER
+        Count: 10
+      - Mob: GAN_CEANN
+        Count: 10
   - Id: 8645
     Title: That's not an instrument - Standby
     TimeLimit: 4h
+  - Id: 8647
+    Title: Playing the piano
   - Id: 8648
     Title: Playing the piano - Standby
     TimeLimit: 4h
+  - Id: 8649
+    Title: It was a great performance
+  - Id: 8650
+    Title: Guys with messy hair
+    Targets:
+      - Mob: DISGUISER
+        Count: 15
+      - Mob: BLUEMOON_LOLI_RURI
+        Count: 15
   - Id: 8651
     Title: Guys with messy hair - Standby
     TimeLimit: 4h
+  - Id: 8652
+    Title: Guys with messy hair
+    Targets:
+      - Mob: DISGUISER
+        Count: 15
+      - Mob: BLUEMOON_LOLI_RURI
+        Count: 15
+  - Id: 8653
+    Title: The ones with dolls
+    Targets:
+      - Mob: GROTE
+        Count: 10
+      - Mob: PIERROTZOIST
+        Count: 10
   - Id: 8654
     Title: The ones with dolls - Standby
     TimeLimit: 4h
+  - Id: 8655
+    Title: The ones with dolls
+  - Id: 8656
+    Title: Wake them up
   - Id: 8657
     Title: Wake them up - Standby
     TimeLimit: 4h
+  - Id: 8658
+    Title: Sorry for being sleepy (1)
+  - Id: 8659
+    Title: Sorry for being sleepy (2)
   - Id: 8661
     Title: "[Standby] Subjugation-Audumra Chowon-3"
     TimeLimit: 4h
@@ -7467,7 +7566,7 @@ Body:
     Title: Vigilante Corp
     Drops:
       - Mob: DR_RODA_FROG
-        Item: Luxurious_Cloth
+        Item: High_Quality_Cloth
         Rate: 5000
   - Id: 11445
     Title: Vigilante Corp
@@ -9604,7 +9703,7 @@ Body:
     Title: An errand out of nowhere
     Drops:
       - Mob: DR_BASILISK1
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14541
     Title: No news is not a good news
@@ -9655,7 +9754,7 @@ Body:
     Title: Dirty Creatures
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14559
     Title: Charm Effect Duration
@@ -9664,19 +9763,19 @@ Body:
     Title: New Ingredient
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14561
     Title: Dirty and Filty
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14562
     Title: The basic are the best
     Drops:
       - Mob: DR_BASILISK2
-        Item: Basilac_Clam
+        Item: Basil_Rac
         Rate: 5000
   - Id: 14563
     Title: Free time
@@ -10390,44 +10489,81 @@ Body:
     Title: Discovered Suspicious Sand Pile
   - Id: 16095
     Title: Discovered Suspicious Sand Pile
+  - Id: 16096
+    Title: To the unknown tortoise island
+  - Id: 16097
+    Title: Stranger on Turtle Island 1
+  - Id: 16098
+    Title: Stranger on Turtle Island 2
+  - Id: 16099
+    Title: Stranger on Turtle Island 3
+  - Id: 16100
+    Title: Stranger on Turtle Island 4
   - Id: 16101
-    Title: Kiel Hyre Academy
+    Title: Emergency food procurement 1
+    Targets:
+      - Mob: ILL_PERMETER
+        Count: 10
+      - Mob: ILL_SOLIDER
+        Count: 10
   - Id: 16102
-    Title: Kiel Hyre Academy
+    Title: Emergency food procurement 2
+    Targets:
+      - Mob: ILL_FREEZER
+        Count: 10
+      - Mob: ILL_HEATER
+        Count: 10
   - Id: 16103
-    Title: Kiel Hyre Academy
+    Title: The Secret of Strangers
   - Id: 16104
-    Title: Kiel Hyre Academy
+    Title: A long-forgotten story
   - Id: 16105
-    Title: Kiel Hyre Academy
+    Title: A short break, and a promise
     TimeLimit: 4h
   - Id: 16106
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten 1
   - Id: 16107
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten 2
   - Id: 16108
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten - Cooldown
     TimeLimit: 4h
   - Id: 16109
-    Title: Kiel Hyre Academy
+    Title: Vain Desire
+    Targets:
+      - Mob: ILL_ASSULTER
+        Count: 10
+    Drops:
+      - Mob: ILL_ASSULTER
+        Item: Shabby_Metal_Chip
+        Rate: 5000
   - Id: 16110
-    Title: Kiel Hyre Academy
+    Title: Vain Desire - Cooldown
     TimeLimit: 4h
   - Id: 16111
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger 1
+    Targets:
+      - Mob: ILL_PERMETER
+        Count: 10
+      - Mob: ILL_SOLIDER
+        Count: 10
   - Id: 16112
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger 2
+    Targets:
+      - Mob: ILL_FREEZER
+        Count: 10
+      - Mob: ILL_HEATER
+        Count: 10
   - Id: 16113
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger - Cooldown
     TimeLimit: 4h
   - Id: 16114
-    Title: Kiel Hyre Academy
+    Title: Talk with Aylvar
   - Id: 16115
-    Title: Kiel Hyre Academy
+    Title: Talk with girl
   - Id: 16116
-    Title: Kiel Hyre Academy
+    Title: Continuous story
   - Id: 16117
-    Title: Mysterious World Map
+    Title: Continuous story 2
   - Id: 16118
     Title: Hidden poem
   - Id: 16119
@@ -10741,23 +10877,57 @@ Body:
     TimeLimit: 4h
   - Id: 16528
     Title: Data Backup
+  - Id: 16529
+    Title: Abandoned Lab Amicitia
   - Id: 16530
     Title: The ground and fire
     TimeLimit: 4h
+  - Id: 16531
+    Title: Earth and Fire
+    Targets:
+      - Mob: CHIMERA_AMITERA
+        Count: 15
+      - Mob: CHIMERA_FILLIA
+        Count: 15
   - Id: 16532
     Title: Water, wind - Waiting
     TimeLimit: 4h
+  - Id: 16533
+    Title: Water and Wind
+    Targets:
+      - Mob: CHIMERA_LITUS
+        Count: 15
+      - Mob: CHIMERA_VANILAQUS
+        Count: 15
   - Id: 16534
     Title: Werner's Trace - Standby
     TimeLimit: 4h
+  - Id: 16535
+    Title: Traces of Werner
   - Id: 16536
     Title: Imitate and wait
     TimeLimit: 4h
+  - Id: 16537
+    Title: Imitation and Real
+    Targets:
+      - Mob: CHIMERA_NAPEO
+        Count: 15
+      - Mob: CHIMERA_GALENSIS
+        Count: 15
   - Id: 16538
     Title: Natural change - Waiting
     TimeLimit: 4h
+  - Id: 16539
+    Title: Natural change
+    Targets:
+      - Mob: CHIMERA_LAVA
+        Count: 15
+      - Mob: CHIMERA_FULGOR
+        Count: 15
   - Id: 16540
     Title: Data Backup
+  - Id: 16545
+    Title: Traces of Werner
   - Id: 16546
     Title: Farm Worker
   - Id: 16547

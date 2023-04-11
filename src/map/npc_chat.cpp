@@ -5,7 +5,7 @@
 
 #include "npc.hpp"
 
-#include "../../3rdparty/pcre/include/pcre.h"
+#include <pcre.h>
 
 #include <common/malloc.hpp>
 #include <common/showmsg.hpp>
