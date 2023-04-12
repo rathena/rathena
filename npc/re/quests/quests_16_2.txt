@@ -11387,7 +11387,7 @@ rebel_in,100,40,4	script	Butterfly Merchant#rebel_in	4_M_ORIENT02,{
 rebel_in,99,51,3	script	Imperial Operator#ext162	4_M_REPAIR,{
 	mes "[Imperial Operator]";
 	mes "Hello.";
-	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for <ITEM>[" + getitemname(6919) + "]<INFO>6919</INFO></ITEM>.";
+	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for " + mesitemlink( 6919, false ) + ".";
 	mes "I will guide you to exchange items according to your job.";
 	close2;
 	switch( eaclass() & EAJ_THIRDMASK ) {
@@ -11519,7 +11519,7 @@ rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 
 	.@s = (select( "Agenda Robe", "Consultation Robe", "Costume Combat Vestige", "Hat of Republic", "Mercenary Ring A type", "Mercenary Ring B type" ) - 1) * 2;
 	mes "[Strasse]";
-	mes "<ITEM>" + getitemname(.@item[.@s]) + "<INFO>" + .@item[.@s] + "</INFO></ITEM>? I got it.";
+	mes mesitemlink( .@item[.@s], false ) + "? I got it.";
 	mes "You need " + .@item[.@s+1] + " Schwartz Honor Tokens.";
 	mes "Are you sure you want this?";
 	next;
@@ -11536,7 +11536,7 @@ rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 	}
 	// custom text
 	mes "[Strasse]";
-	mes "Here is your <ITEM>" + getitemname(.@item[.@s]) + "<INFO>" + .@item[.@s] + "</INFO></ITEM>.";
+	mes "Here is your " + mesitemlink( .@item[.@s], false ) + ".";
 	delitem 25155, .@item[.@s+1];
 	getitem .@item[.@s],1;
 	close;
@@ -13755,7 +13755,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		emotion ET_FRET;
 		mes "[Jana Levedeva]";
 		mes "...We'll become adults in the near future.";
-		mes "We are not that much younger compared to other people here. Does putting on several years make any diffrence?";
+		mes "We are not that much younger compared to other people here. Does putting on several years make any difference?";
 		next;
 		mes "[Jana Levedeva]";
 		mes "They all know that we have better abilities than adults.";

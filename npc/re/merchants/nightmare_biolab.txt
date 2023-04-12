@@ -1773,7 +1773,7 @@ OnTimer1000:
 		.@talker_name$ = "#lhz_dun_talk_A18";
 		switch (rand(4)) {
 			case 0:  .@msg$ = "Nobody around... What is..."; break;
-			case 1:  .@msg$ = "My... survival... and escape... analyzis results..."; break;
+			case 1:  .@msg$ = "My... survival... and escape... analysis results..."; break;
 			case 2:	 .@msg$ = "Where... what... No, no... Never..."; break;
 			default: .@msg$ = "I wanna get out of here as soon as possible..."; break;
 		}

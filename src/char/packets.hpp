@@ -4,7 +4,7 @@
 #ifndef PACKETS_HPP
 #define PACKETS_HPP
 
-#include "../common/mmo.hpp"
+#include <common/mmo.hpp>
 
 #pragma warning( push )
 #pragma warning( disable : 4200 )
@@ -90,6 +90,23 @@ struct CHARACTER_INFO{
 #endif
 } __attribute__((packed));
 
+struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub{
+	int32 status;
+	char map[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+
+struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME{
+	int16 packetType;
+	int16 packetLength;
+	struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub maps[];
+} __attribute__((packed));
+
+struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME{
+	int16 packetType;
+	int8 slot;
+	int8 mapnumber;
+} __attribute__((packed));
+
 #define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id;
 
 #if PACKETVER_MAIN_NUM >= 20201007 || PACKETVER_RE_NUM >= 20211103
@@ -107,6 +124,9 @@ struct CHARACTER_INFO{
 #else
 	DEFINE_PACKET_HEADER( HC_ACCEPT_MAKECHAR, 0x6d )
 #endif
+
+DEFINE_PACKET_HEADER( HC_NOTIFY_ACCESSIBLE_MAPNAME, 0x840 )
+DEFINE_PACKET_HEADER( CH_SELECT_ACCESSIBLE_MAPNAME, 0x841 )
 
 #undef DEFINE_PACKET_HEADER
 

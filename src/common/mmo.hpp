@@ -6,7 +6,7 @@
 
 #include <time.h>
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
@@ -81,9 +81,15 @@ typedef uint32 t_itemid;
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
 #define MAX_ZENY INT_MAX ///Max zeny
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
+#ifndef MAX_CASHPOINT
+	#define MAX_CASHPOINT INT_MAX
+#endif
+#ifndef MAX_KAFRAPOINT
+	#define MAX_KAFRAPOINT INT_MAX
+#endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1454 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1500 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -173,7 +179,7 @@ const t_itemid WEDDING_RING_F = 2635;
 
 //Base Homun skill.
 #define HM_SKILLBASE 8001
-#define MAX_HOMUNSKILL 43
+#define MAX_HOMUNSKILL 59
 #define MAX_HOMUNCULUS_CLASS	52	//[orn], Increased to 60 from 16 to allow new Homun-S.
 #define HM_CLASS_BASE 6001
 #define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
@@ -353,8 +359,13 @@ enum equip_pos : uint32 {
 };
 
 struct point {
-	unsigned short map;
-	short x,y;
+	uint16 map;
+	uint16 x,y;
+};
+
+struct s_point_str{
+	char map[MAP_NAME_LENGTH_EXT];
+	uint16 x,y;
 };
 
 struct startitem {
@@ -583,7 +594,10 @@ struct mmo_charstatus {
 	uint32 mapip;
 	uint16 mapport;
 
-	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
+	struct s_point_str last_point;
+	int32 last_point_instanceid;
+	struct s_point_str save_point;
+	struct s_point_str memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
@@ -678,7 +692,7 @@ struct party_member {
 	uint32 char_id;
 	char name[NAME_LENGTH];
 	unsigned short class_;
-	unsigned short map;
+	char map[MAP_NAME_LENGTH_EXT];
 	unsigned short lv;
 	unsigned leader : 1,
 	         online : 1;
@@ -754,11 +768,25 @@ struct guild {
 	int32 chargeshout_flag_id;
 };
 
+enum e_woe_type{
+	WOE_FIRST_EDITION = 1,
+	WOE_SECOND_EDITION,
+	WOE_THIRD_EDITION,
+	WOE_MAX
+};
+
 struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NPC_NAME_LENGTH];
+	e_woe_type type;
+	uint16 client_id;
+	bool warp_enabled;
+	uint16 warp_x;
+	uint16 warp_y;
+	uint32 zeny;
+	uint32 zeny_siege;
 	int guild_id;
 	int economy;
 	int defense;

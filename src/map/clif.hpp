@@ -8,10 +8,10 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp" //dbmap
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp" // t_tick
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp> //dbmap
+#include <common/mmo.hpp>
+#include <common/timer.hpp> // t_tick
 
 #include "packets.hpp"
 #include "script.hpp"
@@ -611,6 +611,12 @@ enum e_dynamicnpc_result : int32{
 	DYNAMICNPC_RESULT_OUTOFTIME
 };
 
+enum e_siege_teleport_result : uint8 {
+	SIEGE_TP_SUCCESS = 0,
+	SIEGE_TP_NOT_ENOUGH_ZENY = 1,
+	SIEGE_TP_INVALID_MODE = 2
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -633,7 +639,7 @@ int clif_spawn(struct block_list *bl, bool walking = false);	//area
 void clif_walkok(map_session_data *sd);	// self
 void clif_move(struct unit_data *ud); //area
 void clif_changemap(map_session_data *sd, short m, int x, int y);	//self
-void clif_changemapserver(map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port);	//self
+void clif_changemapserver( map_session_data* sd, const char* map, int x, int y, uint32 ip, uint16 port );
 void clif_blown(struct block_list *bl); // area
 void clif_slide(struct block_list *bl, int x, int y); // area
 void clif_fixpos(struct block_list *bl);	// area
@@ -740,7 +746,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,
 bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
-void clif_skill_warppoint(map_session_data* sd, uint16 skill_id, uint16 skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4);
+void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
 void clif_skill_memomessage(map_session_data* sd, int type);
 void clif_skill_teleportmessage(map_session_data *sd, int type);
 void clif_skill_produce_mix_list(map_session_data *sd, int skill_id, int trigger);
@@ -861,6 +867,9 @@ void clif_guild_broken(map_session_data *sd,int flag);
 void clif_guild_xy(map_session_data *sd);
 void clif_guild_xy_single(int fd, map_session_data *sd);
 void clif_guild_xy_remove(map_session_data *sd);
+void clif_guild_castle_list(map_session_data& sd);
+void clif_guild_castle_info(map_session_data& sd, std::shared_ptr<guild_castle> castle );
+void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result);
 
 // Battleground
 void clif_bg_hp(map_session_data *sd);

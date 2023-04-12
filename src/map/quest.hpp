@@ -6,9 +6,9 @@
 
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/strlib.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/strlib.hpp>
 
 #include "map.hpp"
 

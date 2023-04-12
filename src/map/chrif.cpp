@@ -6,14 +6,14 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
 
 #include "battle.hpp"
 #include "clan.hpp"
@@ -41,7 +41,7 @@ static bool char_init_done = false; //server already initialized? Used for Inter
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,-1,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
-	 6,-1,18, 7,-1,39,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
+	 6,-1,18, 7,-1, -1, 28 + MAP_NAME_LENGTH_EXT, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30, 10, -1,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	11,10,10, 0,11, -1, 0,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, F->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
@@ -53,7 +53,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2af8: Outgoing, chrif_connect -> 'connect to charserver / auth @ charserver'
 //2af9: Incoming, chrif_connectack -> 'answer of the 2af8 login(ok / fail)'
 //2afa: Outgoing, chrif_sendmap -> 'sending our maps'
-//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not .. also received server name & default map'
+//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not .. also received server name'
 //2afc: Outgoing, chrif_scdata_request -> request sc_data for pc_authok'ed char. <- new command reuses previous one.
 //2afd: Incoming, chrif_authok -> 'client authentication ok'
 //2afe: Outgoing, send_usercount_tochar -> 'sends player count of this map server to charserver'
@@ -322,20 +322,8 @@ int chrif_save(map_session_data *sd, int flag) {
 	WFIFOL(char_fd,8) = sd->status.char_id;
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
-	// If the user is on a instance map, we have to fake his current position
-	if( map_getmapdata(sd->bl.m)->instance_id ){
-		struct mmo_charstatus status;
-
-		// Copy the whole status
-		memcpy( &status, &sd->status, sizeof( struct mmo_charstatus ) );
-		// Change his current position to his savepoint
-		memcpy( &status.last_point, &status.save_point, sizeof( struct point ) );
-		// Copy the copied status into the packet
-		memcpy( WFIFOP( char_fd, 13 ), &status, sizeof( struct mmo_charstatus ) );
-	} else {
-		// Copy the whole status into the packet
-		memcpy( WFIFOP( char_fd, 13 ), &sd->status, sizeof( struct mmo_charstatus ) );
-	}
+	// Copy the whole status into the packet
+	memcpy( WFIFOP( char_fd, 13 ), &sd->status, sizeof( struct mmo_charstatus ) );
 
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
@@ -380,11 +368,11 @@ int chrif_sendmap(int fd) {
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + instance_start * 4);
+	WFIFOHEAD( fd, 4 + instance_start * MAP_NAME_LENGTH_EXT );
 	WFIFOW(fd,0) = 0x2afa;
 	for (int i = 0; i < instance_start; i++)
-		WFIFOW(fd, 4 + i * 4) = map[i].index;
-	WFIFOW(fd, 2) = 4 + instance_start * 4;
+		safestrncpy( WFIFOCP( fd, 4 + i * MAP_NAME_LENGTH_EXT ), map[i].name, MAP_NAME_LENGTH_EXT );
+	WFIFOW( fd, 2 ) = 4 + instance_start * MAP_NAME_LENGTH_EXT;
 	WFIFOSET(fd, WFIFOW(fd, 2));
 
 	return 0;
@@ -396,8 +384,8 @@ int chrif_recvmap(int fd) {
 	uint32 ip = ntohl(RFIFOL(fd,4));
 	uint16 port = ntohs(RFIFOW(fd,8));
 
-	for(i = 10, j = 0; i < RFIFOW(fd,2); i += 4, j++) {
-		map_setipport(RFIFOW(fd,i), ip, port);
+	for( i = 10, j = 0; i < RFIFOW( fd, 2 ); i += MAP_NAME_LENGTH_EXT, j++ ){
+		map_setipport( mapindex_name2id( RFIFOCP( fd, i ) ), ip, port );
 	}
 
 	if (battle_config.etc_log)
@@ -414,8 +402,9 @@ int chrif_removemap(int fd) {
 	uint32 ip =  RFIFOL(fd,4);
 	uint16 port = RFIFOW(fd,8);
 
-	for(i = 10, j = 0; i < RFIFOW(fd, 2); i += 4, j++)
-		map_eraseipport(RFIFOW(fd, i), ip, port);
+	for( i = 10, j = 0; i < RFIFOW( fd, 2 ); i += MAP_NAME_LENGTH_EXT, j++ ){
+		map_eraseipport( mapindex_name2id( RFIFOCP( fd, i ) ), ip, port );
+	}
 
 	other_mapserver_count--;
 
@@ -441,28 +430,29 @@ int chrif_changemapserver(map_session_data* sd, uint32 ip, uint16 port) {
 
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd,39);
+	WFIFOHEAD( char_fd, 37 + MAP_NAME_LENGTH_EXT );
 	WFIFOW(char_fd, 0) = 0x2b05;
 	WFIFOL(char_fd, 2) = sd->bl.id;
 	WFIFOL(char_fd, 6) = sd->login_id1;
 	WFIFOL(char_fd,10) = sd->login_id2;
 	WFIFOL(char_fd,14) = sd->status.char_id;
-	WFIFOW(char_fd,18) = sd->mapindex;
-	WFIFOW(char_fd,20) = sd->bl.x;
-	WFIFOW(char_fd,22) = sd->bl.y;
-	WFIFOL(char_fd,24) = htonl(ip);
-	WFIFOW(char_fd,28) = htons(port);
-	WFIFOB(char_fd,30) = sd->status.sex;
-	WFIFOL(char_fd,31) = htonl(session[sd->fd]->client_addr);
-	WFIFOL(char_fd,35) = sd->group_id;
-	WFIFOSET(char_fd,39);
+	safestrncpy( WFIFOCP( char_fd, 18 ), mapindex_id2name( sd->mapindex ), MAP_NAME_LENGTH_EXT );
+	int offset = 18 + MAP_NAME_LENGTH_EXT;
+	WFIFOW( char_fd, offset + 0 ) = sd->bl.x;
+	WFIFOW( char_fd, offset + 2 ) = sd->bl.y;
+	WFIFOL( char_fd, offset + 4 ) = htonl( ip );
+	WFIFOW( char_fd, offset + 8 ) = htons( port );
+	WFIFOB( char_fd, offset + 10 ) = sd->status.sex;
+	WFIFOL( char_fd, offset + 11 ) = htonl( session[sd->fd]->client_addr );
+	WFIFOL( char_fd, offset + 15 ) = sd->group_id;
+	WFIFOSET( char_fd, 37 + MAP_NAME_LENGTH_EXT );
 
 	return 0;
 }
 
 /// map-server change (mapserv) request acknowledgement (positive or negative)
-/// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map_index>.W <x>.W <y>.W <ip>.L <port>.W
-int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, uint32 char_id, short map_index, short x, short y, uint32 ip, uint16 port) {
+/// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map>.16B <x>.W <y>.W <ip>.L <port>.W
+int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, uint32 char_id, const char* map, short x, short y, uint32 ip, uint16 port) {
 	struct auth_node *node;
 
 	if ( !( node = chrif_auth_check(account_id, char_id, ST_MAPCHANGE) ) )
@@ -473,7 +463,7 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 		clif_authfail_fd(node->fd, 0);
 		chrif_char_offline(node->sd);
 	} else
-		clif_changemapserver(node->sd, map_index, x, y, ntohl(ip), ntohs(port));
+		clif_changemapserver(node->sd, map, x, y, ntohl(ip), ntohs(port));
 
 	//Player has been saved already, remove him from memory. [Skotlex]
 	chrif_auth_delete(account_id, char_id, ST_MAPCHANGE);
@@ -578,7 +568,6 @@ void chrif_on_ready(void) {
 /**
  * Maps are sent, then received misc info from char-server
  * - Server name
- * - Default map
  * HZ 0x2afb
  **/
 int chrif_sendmapack(int fd) {
@@ -592,18 +581,10 @@ int chrif_sendmapack(int fd) {
 	// Whisper name
 	safestrncpy( wisp_server_name, RFIFOCP( fd, offs ), NAME_LENGTH );
 
-	// Default map
-	safestrncpy( map_default.mapname, RFIFOCP( fd, ( offs += NAME_LENGTH ) ), MAP_NAME_LENGTH );
-	map_default.x = RFIFOW(fd, (offs+=MAP_NAME_LENGTH));
-	map_default.y = RFIFOW(fd, (offs+=2));
-
 	// Server name
-	safestrncpy( charserver_name, RFIFOCP( fd, ( offs += 2 ) ), NAME_LENGTH );
+	safestrncpy( charserver_name, RFIFOCP( fd, offs + NAME_LENGTH ), NAME_LENGTH );
 
 	ShowStatus( "Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "' (whispername: %s).\n", charserver_name, wisp_server_name );
-
-	if (battle_config.etc_log)
-		ShowInfo("Received default map from char-server '" CL_WHITE "%s %d,%d" CL_RESET "'.\n", map_default.mapname, map_default.x, map_default.y);
 
 	chrif_on_ready();
 
@@ -1784,7 +1765,7 @@ int chrif_parse(int fd) {
 			case 0x2b00: map_setusers(RFIFOL(fd,2)); chrif_keepalive(fd); break;
 			case 0x2b03: clif_charselectok(RFIFOL(fd,2), RFIFOB(fd,6)); break;
 			case 0x2b04: chrif_recvmap(fd); break;
-			case 0x2b06: chrif_changemapserverack(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), RFIFOW(fd,18), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28)); break;
+			case 0x2b06: chrif_changemapserverack( RFIFOL( fd, 2 ), RFIFOL( fd, 6 ), RFIFOL( fd, 10 ), RFIFOL( fd, 14 ), RFIFOCP( fd, 18 ), RFIFOW( fd, 18 + MAP_NAME_LENGTH_EXT ), RFIFOW( fd, 18 + MAP_NAME_LENGTH_EXT + 2 ), RFIFOL( fd, 18 + MAP_NAME_LENGTH_EXT + 4 ), RFIFOW( fd, 18 + MAP_NAME_LENGTH_EXT + 8 ) ); break;
 			case 0x2b09: map_addnickdb(RFIFOL(fd,2), RFIFOCP(fd,6)); break;
 			case 0x2b0b: chrif_skillcooldown_load(fd); break;
 			case 0x2b0d: chrif_changedsex(fd); break;
@@ -1921,6 +1902,7 @@ int auth_db_final(DBKey key, DBData *data, va_list ap) {
 		if (node->sd->regs.arrays)
 			node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
 
+		node->sd->~map_session_data();
 		aFree(node->sd);
 	}
 

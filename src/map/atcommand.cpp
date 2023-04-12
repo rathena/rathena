@@ -9,19 +9,19 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/cli.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/cli.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "battle.hpp"
@@ -962,13 +962,13 @@ ACMD_FUNC(save)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD_FUNC(load)
-{
-	int16 m;
-
+ACMD_FUNC(load){
 	nullpo_retr(-1, sd);
 
-	m = map_mapindex2mapid(sd->status.save_point.map);
+	uint16 mapindex = mapindex_name2id( sd->status.save_point.map );
+
+	int16 m = map_mapindex2mapid( mapindex );
+
 	if (m >= 0 && map_getmapflag(m, MF_NOWARPTO) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 		clif_displaymessage(fd, msg_txt(sd,249));	// You are not authorized to warp to your save map.
 		return -1;
@@ -978,7 +978,7 @@ ACMD_FUNC(load)
 		return -1;
 	}
 
-	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
+	pc_setpos( sd, mapindex, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT );
 	clif_displaymessage(fd, msg_txt(sd,7)); // Warping to save point..
 
 	return 0;
@@ -2580,8 +2580,8 @@ ACMD_FUNC(memo)
 		clif_displaymessage(sd->fd,  msg_txt(sd,668)); // Your actual memo positions are:
 		for( i = 0; i < MAX_MEMOPOINTS; i++ )
 		{
-			if( sd->status.memo_point[i].map )
-				sprintf(atcmd_output, "%d - %s (%d,%d)", i, mapindex_id2name(sd->status.memo_point[i].map), sd->status.memo_point[i].x, sd->status.memo_point[i].y);
+			if( strcmp( "", sd->status.memo_point[i].map ) != 0 )
+				sprintf( atcmd_output, "%d - %s (%d,%d)", i, sd->status.memo_point[i].map, sd->status.memo_point[i].x, sd->status.memo_point[i].y );
 			else
 				sprintf(atcmd_output, msg_txt(sd,171), i); // %d - void
 			clif_displaymessage(sd->fd, atcmd_output);
@@ -2804,12 +2804,12 @@ ACMD_FUNC(zeny)
 	}
 
 	if(zeny > 0){
-	    if((ret=pc_getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL)) == 1)
+	    if((ret=pc_getzeny(sd,zeny,LOG_TYPE_COMMAND)) == 1)
 		clif_displaymessage(fd, msg_txt(sd,149)); // Unable to increase the number/value.
 	}
 	else {
 	    if( sd->status.zeny < -zeny ) zeny = -sd->status.zeny;
-	    if((ret=pc_payzeny(sd,-zeny,LOG_TYPE_COMMAND,NULL)) == 1)
+	    if((ret=pc_payzeny(sd,-zeny,LOG_TYPE_COMMAND)) == 1)
 		clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 	}
 	if(!ret) clif_displaymessage(fd, msg_txt(sd,176)); //ret=0 mean cmd success
@@ -4008,7 +4008,7 @@ ACMD_FUNC(idsearch)
 	for(const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
 
-		sprintf(atcmd_output, msg_txt(sd,78), item_db.create_item_link( id->nameid ).c_str(), id->nameid); // %s: %u
+		sprintf(atcmd_output, msg_txt(sd,78), item_db.create_item_link( id ).c_str(), id->nameid); // %s: %u
 		clif_displaymessage(fd, atcmd_output);
 	}
 	sprintf(atcmd_output, msg_txt(sd,79), match); // It is %d affair above.
@@ -4214,7 +4214,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
 		skill_reload();
-		hom_reload_skill();
+		homunculus_db.reload();
 		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
 		atcommand_doload();
@@ -4319,6 +4319,9 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "attendancedb") || strncmp(message, "attendancedb", 4) == 0) {
 		attendance_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
+	}else if( strstr( command, "barterdb" ) || strncmp( message, "barterdb", 4 ) == 0 ){
+		barter_db.reload();
+		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
 	}
 
 	return 0;
@@ -6653,7 +6656,7 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = item_data->nameid; // Autoloot Activated
-		sprintf(atcmd_output, msg_txt(sd,1192), item_data->name.c_str(), item_db.create_item_link( item_data->nameid ).c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
+		sprintf(atcmd_output, msg_txt(sd,1192), item_data->name.c_str(), item_db.create_item_link( item_data ).c_str(), item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
 		clif_displaymessage(fd, atcmd_output);
 		sd->state.autolooting = 1;
 		break;
@@ -6664,7 +6667,7 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = 0;
-		sprintf(atcmd_output, msg_txt(sd,1194), item_data->name.c_str(), item_db.create_item_link( item_data->nameid ).c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
+		sprintf(atcmd_output, msg_txt(sd,1194), item_data->name.c_str(), item_db.create_item_link( item_data ).c_str(), item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
 		clif_displaymessage(fd, atcmd_output);
 		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] != 0);
 		if (i == AUTOLOOTITEM_SIZE) {
@@ -6692,7 +6695,7 @@ ACMD_FUNC(autolootitem)
 					continue;
 				}
 
-				sprintf(atcmd_output, "'%s'/'%s' {%u}", item_data->name.c_str(), item_db.create_item_link( item_data->nameid ).c_str(), item_data->nameid);
+				sprintf(atcmd_output, "'%s'/'%s' {%u}", item_data->name.c_str(), item_db.create_item_link( item_data ).c_str(), item_data->nameid);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -7758,10 +7761,7 @@ ACMD_FUNC(mobinfo)
 
 			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
 
-			if (id->slots)
-				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_db.create_item_link( id->nameid ).c_str(), id->slots, (float)droprate / 100);
-			else
-				sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id->nameid ).c_str(), (float)droprate / 100);
+			sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), (float)droprate / 100);
 			strcat(atcmd_output, atcmd_output2);
 			if (++j % 3 == 0) {
 				clif_displaymessage(fd, atcmd_output);
@@ -7798,15 +7798,9 @@ ACMD_FUNC(mobinfo)
 				if (mvppercent > 0) {
 					j++;
 					if (j == 1) {
-						if (id->slots)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_db.create_item_link( id->nameid ).c_str(), id->slots, mvppercent);
-						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", item_db.create_item_link( id->nameid ).c_str(), mvppercent);
+						sprintf(atcmd_output2, " %s  %02.02f%%", item_db.create_item_link( id ).c_str(), mvppercent);
 					} else {
-						if (id->slots)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_db.create_item_link( id->nameid ).c_str(), id->slots, mvppercent);
-						else
-							sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id->nameid ).c_str(), mvppercent);
+						sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), mvppercent);
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}
@@ -8125,7 +8119,7 @@ ACMD_FUNC(hominfo)
 ACMD_FUNC(homstats)
 {
 	struct homun_data *hd;
-	struct s_homunculus_db *db;
+	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
 	int lv, min, max, evo;
 
@@ -8240,8 +8234,8 @@ ACMD_FUNC(iteminfo)
 	for (const auto &result : item_array) {
 		std::shared_ptr<item_data> item_data = result.second;
 
-		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
-			item_data->name.c_str(), item_db.create_item_link( item_data->nameid ).c_str(),item_data->slots,item_data->nameid,
+		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s' (%u) Type: %s | Extra Effect: %s
+			item_data->name.c_str(), item_db.create_item_link( item_data ).c_str(),item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
 		);
@@ -8298,7 +8292,7 @@ ACMD_FUNC(whodrops)
 	for (const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
 
-		sprintf(atcmd_output, msg_txt(sd,1285), item_db.create_item_link( id->nameid ).c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
+		sprintf(atcmd_output, msg_txt(sd,1285), item_db.create_item_link( id ).c_str(), id->nameid); // Item: '%s' (ID:%u)
 		clif_displaymessage(fd, atcmd_output);
 
 		if (id->mob[0].chance == 0) {
@@ -9246,7 +9240,7 @@ ACMD_FUNC(itemlist)
 {
 	int i, j, count, counter;
 	const char* location;
-	const struct item* items;
+	struct item* items;
 	int size;
 	StringBuf buf;
 
@@ -9274,7 +9268,7 @@ ACMD_FUNC(itemlist)
 	count = 0; // total slots occupied
 	counter = 0; // total items found
 	for( i = 0; i < size; ++i ) {
-		const struct item* it = &items[i];
+		struct item* it = &items[i];
 
 		if( it->nameid == 0  )
 			continue;
@@ -9293,10 +9287,7 @@ ACMD_FUNC(itemlist)
 			StringBuf_Clear(&buf);
 		}
 
-		if( it->refine )
-			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %u)", it->amount, item_db.create_item_link( it->nameid ).c_str(), it->refine, itd->name.c_str(), it->nameid);
-		else
-			StringBuf_Printf(&buf, "%d %s (%s, id: %u)", it->amount, item_db.create_item_link( it->nameid ).c_str(), itd->name.c_str(), it->nameid);
+		StringBuf_Printf(&buf, "%d %s (%s, id: %u)", it->amount, item_db.create_item_link( *it ).c_str(), itd->name.c_str(), it->nameid);
 
 		if( it->equip ) {
 			char equipstr[CHAT_SIZE_MAX];
@@ -9399,7 +9390,7 @@ ACMD_FUNC(itemlist)
 				if( counter2 != 1 )
 					StringBuf_AppendStr(&buf, ", ");
 
-				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, item_db.create_item_link( card->nameid ).c_str(), card->nameid);
+				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, item_db.create_item_link( card ).c_str(), card->nameid);
 			}
 
 			if( counter2 > 0 )
@@ -10818,7 +10809,7 @@ ACMD_FUNC( roulette ){
 #endif
 }
 
-#include "../custom/atcommand.inc"
+#include <custom/atcommand.inc>
 
 /**
  * Fills the reference of available commands in atcommand DBMap
@@ -10834,7 +10825,7 @@ void atcommand_basecommands(void) {
 	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
-#include "../custom/atcommand_def.inc"
+#include <custom/atcommand_def.inc>
 		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
@@ -10951,6 +10942,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadinstancedb", reload),
 		ACMD_DEF2("reloadachievementdb",reload),
 		ACMD_DEF2("reloadattendancedb",reload),
+		ACMD_DEF2("reloadbarterdb",reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),

@@ -14,6 +14,7 @@
 //= 1.5 Corrected MVP spawn variance. [L0ne_W0lf]
 //= 1.6 Added Nightmare Glastheim [Ridley8819]
 //= 1.7 Correct Spawn by Navigation's mob data. [attackjom]
+//= 1.8 Added Glast Heim Abyss mobs. [Capuche] [OptimusM]
 //============================================================
 
 //==================================================
@@ -202,3 +203,17 @@ gl_chyard_,0,0	monster	Wraith Dead	1291,31,5000
 gl_chyard_,0,0	monster	Evil Druid (Nightmare)	2480,22,60000,0,0
 gl_chyard_,0,0	monster	Mimic (Nightmare)	2479,34,60000,0,0
 gl_chyard_,0,0,0,0	boss_monster	Dark Lord	1272,1,3600000,600000,1
+
+//==================================================
+// gl_cas01_ - Glast Heim Abyss
+//==================================================
+gl_cas01_	monster	Contaminated Raydric	20367,49
+gl_cas01_	monster	Contaminated Raydric Ar	20368,77
+gl_cas01_	monster	Frozen Gargoyle	20369,27
+gl_cas01_	monster	Contaminated Sting	20370,26
+gl_cas01_	monster	Prison Breaker	20371,32
+gl_cas01_	monster	Ice Ghost	20379,42
+gl_cas01_	monster	Flame Ghost	20380,41
+gl_cas01_	monster	Corrupted Wanderer	20420,33
+gl_cas01_	boss_monster	Corrupted Spider Queen	20421,1,7200000,600000,1
+gl_cas01_	boss_monster	Corrupted Dark Lord	20422,1,3600000,600000,1

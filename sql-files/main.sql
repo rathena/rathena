@@ -259,6 +259,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `last_map` varchar(11) NOT NULL default '',
   `last_x` smallint(4) unsigned NOT NULL default '53',
   `last_y` smallint(4) unsigned NOT NULL default '111',
+  `last_instanceid` int(11) unsigned NOT NULL default '0',
   `save_map` varchar(11) NOT NULL default '',
   `save_x` smallint(4) unsigned NOT NULL default '53',
   `save_y` smallint(4) unsigned NOT NULL default '111',

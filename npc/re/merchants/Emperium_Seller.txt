@@ -28,7 +28,7 @@ prt_in,212,169,3	script	Guild Clerk	4_M_04,{
 	next;
 	mes "[Guild Clerk]";
 	mes "As part of that,";
-	mes "we are selling a limited quantity of 100 <ITEM>Emperium<INFO>714</INFO></ITEM> every day";
+	mes "we are selling a limited quantity of 100 " + mesitemlink( 714, false ) + " every day";
 	mes "from ^0000ff18:00 to 23:59^000000 from ^0000ffMonday to Saturday^000000.";
 	next;
 	mes "[Guild Clerk]";

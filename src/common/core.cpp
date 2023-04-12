@@ -3,7 +3,7 @@
 
 #include "core.hpp"
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #ifndef MINICORE
 #include "database.hpp"
@@ -28,8 +28,8 @@
 #include "strlib.hpp"
 
 #ifndef DEPRECATED_COMPILER_SUPPORT
-	#if defined( _MSC_VER ) && _MSC_VER < 1900
-		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
+	#if defined( _MSC_VER ) && _MSC_VER < 1910
+		#error "Visual Studio versions older than Visual Studio 2017 are not officially supported anymore"
 	#elif defined( __clang__ ) && __clang_major__ < 6
 		#error "clang versions older than clang 6.0 are not officially supported anymore"
 	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5
@@ -377,12 +377,12 @@ int Core::start( int argc, char **argv ){
 	}
 
 	// If initialization did not trigger shutdown
-	if( this->status != e_core_status::STOPPING ){
+	if( this->m_status != e_core_status::STOPPING ){
 		this->set_status( e_core_status::SERVER_INITIALIZED );
 
 		this->set_status( e_core_status::RUNNING );
 #ifndef MINICORE
-		if( !this->run_once ){
+		if( !this->m_run_once ){
 			// Main runtime cycle
 			while( this->get_status() == e_core_status::RUNNING ){
 				t_tick next = do_timer( gettick_nocache() );
@@ -445,15 +445,15 @@ void Core::finalize(){
 }
 
 void Core::set_status( e_core_status status ){
-	this->status = status;
+	this->m_status = status;
 }
 
 e_core_status Core::get_status(){
-	return this->status;
+	return this->m_status;
 }
 
 e_core_type Core::get_type(){
-	return this->type;
+	return this->m_type;
 }
 
 bool Core::is_running(){
@@ -461,17 +461,17 @@ bool Core::is_running(){
 }
 
 void Core::set_run_once( bool run_once ){
-	this->run_once = run_once;
+	this->m_run_once = run_once;
 }
 
 void Core::signal_crash(){
 	this->set_status( e_core_status::STOPPING );
 
-	if( this->crashed ){
+	if( this->m_crashed ){
 		ShowFatalError( "Received another crash signal, while trying to handle the last crash!\n" );
 	}else{
 		ShowFatalError( "Received a crash signal, trying to handle it as good as possible!\n" );
-		this->crashed = true;
+		this->m_crashed = true;
 		this->handle_crash();
 	}
 

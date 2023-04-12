@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 
-#include "../common/mmo.hpp" // struct party
+#include <common/mmo.hpp> // struct party
 
 struct block_list;
 class map_session_data;
@@ -79,7 +79,7 @@ int party_reply_invite(map_session_data *sd,int party_id,int flag);
 #define party_add_member(party_id,sd) party_reply_invite(sd,party_id,1)
 int party_recv_noinfo(int party_id, uint32 char_id);
 int party_recv_info(struct party* sp, uint32 char_id);
-int party_recv_movemap(int party_id,uint32 account_id,uint32 char_id, unsigned short map,int online,int lv);
+int party_recv_movemap( int party_id, uint32 account_id, uint32 char_id, int online, int lv, const char* map );
 int party_broken(int party_id);
 int party_optionchanged(int party_id,uint32 account_id,int exp,int item,int flag);
 int party_changeoption(map_session_data *sd,int exp,int item);

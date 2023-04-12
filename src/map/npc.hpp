@@ -7,9 +7,9 @@
 #include <map>
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/timer.hpp"
-#include "../config/core.hpp"
+#include <common/database.hpp>
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
 #include "clif.hpp" //
 #include "map.hpp" // struct block_list
@@ -104,6 +104,9 @@ struct s_npc_barter{
 	uint8 dir;
 	int16 sprite;
 	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
+	int32 npcid;
+
+	~s_npc_barter();
 };
 
 class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
@@ -137,6 +140,20 @@ struct s_questinfo {
 	}
 };
 
+// Status of NPC view.
+enum e_npcv_status : uint8 {
+	NPCVIEW_DISABLE  = 0x01,
+	NPCVIEW_ENABLE   = 0x02,
+	NPCVIEW_HIDEOFF  = 0x04,
+	NPCVIEW_HIDEON   = 0x08,
+	NPCVIEW_CLOAKOFF = 0x10,
+	NPCVIEW_CLOAKON  = 0x20,
+
+	NPCVIEW_VISIBLE   = NPCVIEW_ENABLE | NPCVIEW_HIDEOFF | NPCVIEW_CLOAKOFF,
+	NPCVIEW_INVISIBLE = NPCVIEW_DISABLE | NPCVIEW_HIDEON | NPCVIEW_CLOAKON,
+	NPCVIEW_CLOAK     = NPCVIEW_CLOAKOFF | NPCVIEW_CLOAKON,
+};
+
 struct npc_data {
 	struct block_list bl;
 	struct unit_data ud; //Because they need to be able to move....
@@ -149,6 +166,7 @@ struct npc_data {
 	int chat_id,touching_id;
 	unsigned int next_walktime;
 	int instance_id;
+	e_npcv_status state{NPCVIEW_ENABLE};
 
 	unsigned size : 2;
 
@@ -218,6 +236,7 @@ struct npc_data {
 	struct navi_link navi; // for warps and the src of npcs
 	std::vector<navi_link> links; // for extra links, like warper npc
 #endif
+	bool is_invisible;
 };
 
 struct eri;
@@ -1424,12 +1443,35 @@ enum e_job_types
 	JT_4_RAGFES_16,
 	JT_4_RAGFES_16_M,
 	JT_4_EXJOB_NINJA2,
-
-	JT_ROZ_MQ_LUCIAN = 10510,
+	JT_4_VR_BOOK_FAIRY,
+	JT_ROZ_MQ_LUCIAN,
 	JT_ROZ_MQ_BRITIA,
 	JT_ROZ_MQ_ASSASIN01,
 	JT_STRANGE_B_SMITH1,
 	JT_STRONGER_B_SMTIH,
+	JT_4_VR_BOOK_RED,
+	JT_4_VR_BOOK_BLUE,
+	JT_4_VR_BOOK_YELLOW,
+	JT_4_VR_BOOK_GREEN,
+	JT_4_VR_BOOK_WHITE,
+	JT_4_VR_YGNIZEM,
+
+	JT_4_JP_19TH = 10524,
+	JT_4_KING_PORING,
+	JT_4_VR_SWORDMAN_DEAD,
+	JT_GATE_SKYBLUE,
+	JT_4_CS_RIGEL,
+	JT_4_M_NILLEM,
+	JT_4_LARVA_RED,
+	JT_4_LARVA_YELLOW,
+	JT_4_LARVA_BLACK,
+	JT_4_LARVA_VIOLET,
+	JT_4_HERO_SAUSAGE,
+	JT_4_PRINCESS_SAUSAGE,
+
+	JT_ROZ_MQ_XAVIER = 13000,
+	JT_ROZ_MQ_MOCLORD,
+	JT_ROZ_MQ_SKULD,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
@@ -1466,19 +1508,6 @@ enum npce_event : uint8 {
 	NPCE_MAX
 };
 
-// Status of NPC view.
-enum e_npcv_status : uint8 {
-	NPCVIEW_DISABLE  = 0x01,
-	NPCVIEW_ENABLE   = 0x02,
-	NPCVIEW_HIDEOFF  = 0x04,
-	NPCVIEW_HIDEON   = 0x08,
-	NPCVIEW_CLOAKOFF = 0x10,
-	NPCVIEW_CLOAKON  = 0x20,
-
-	NPCVIEW_VISIBLE   = 0x16,
-	NPCVIEW_INVISIBLE = 0x29,
-	NPCVIEW_CLOAK     = 0x30,
-};
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
 int npc_event_dequeue(map_session_data* sd,bool free_script_stack=true);

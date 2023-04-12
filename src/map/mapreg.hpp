@@ -4,8 +4,8 @@
 #ifndef MAPREG_HPP
 #define MAPREG_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
 
 struct mapreg_save {
 	int64 uid;         ///< Unique ID
