@@ -2401,7 +2401,7 @@ OnInit:
 }
 
 // Jubilee Is the Priest's Name
-gef_d01_i,93,178,5	script	Marina#ilgf03	4_F_MONK,5,5,{
+gef_d01_i,93,178,5	script(CLOAKED)	Marina#ilgf03	4_F_MONK,5,5,{
 	end;
 OnTouch:
 	if (ill_vampire == 6) {
@@ -2427,9 +2427,6 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,127,153,5	duplicate(Marina#ilgf03)	Marina#ilgf04	4_F_MONK,5,5
 gef_d01_i,213,237,5	duplicate(Marina#ilgf03)	Marina#ilgf05	4_F_MONK,5,5
@@ -2452,7 +2449,7 @@ gef_d01_i,254,162,1	duplicate(dummy_cloaked_npc)	Undead#ilgf08	ILL_ZOMBIE
 gef_d01_i,252,160,1	duplicate(dummy_cloaked_npc)	Undead#ilgf09	ILL_ZOMBIE
 gef_d01_i,253,165,3	duplicate(dummy_cloaked_npc)	Marina#ilgf10	4_F_MONK
 
-gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
+gef_d01_i,250,164,5	script(CLOAKED)	Priest#ilgf01	4_M_MINISTER,5,5,{
 	if (ill_vampire != 6)
 		end;
 	.@char_id = .@char_id;
@@ -2627,10 +2624,6 @@ OnTouch:
 	if (ill_vampire == 6)
 		npctalk "This is bad, really bad!", "", bc_self;
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 /*
@@ -2641,7 +2634,7 @@ gef_d01_i,113,97,7	duplicate(dummy_npc)	Wizard#ilgf05	2_M_SAGE_B,5,5
 gef_d01_i,116,96,1	duplicate(dummy_npc)	Undead#ilgf07	GHOUL
 */
 
-gef_d01_i,49,113,3	script	Wizard#ilgf06	4_GEFFEN_01,5,5,{
+gef_d01_i,49,113,3	script(CLOAKED)	Wizard#ilgf06	4_GEFFEN_01,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2665,15 +2658,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf06" );
 	cloakonnpcself( "Wizard#ilgf07" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,46,112,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf07	4_M_ARUNA_NFM1
 gef_d01_i,47,110,7	duplicate(dummy_cloaked_npc)	Undead#ilgf06	GHOUL
 
 
-gef_d01_i,137,60,3	script	Wizard#ilgf08	1_M_WIZARD,5,5,{
+gef_d01_i,137,60,3	script(CLOAKED)	Wizard#ilgf08	1_M_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2689,14 +2679,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf08" );
 	cloakonnpcself( "Nameless Catacomb#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,136,58,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf01	4_SOIL
 
 
-gef_d01_i,67,85,5	script	Wizard#ilgf09	4_M_JOB_WIZARD,5,5,{
+gef_d01_i,67,85,5	script(CLOAKED)	Wizard#ilgf09	4_M_JOB_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2722,14 +2709,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf09" );
 	cloakonnpcself( "Wizard#ilgf10" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,67,83,1	duplicate(dummy_cloaked_npc)	Wizard#ilgf10	4_GEFFEN_05
 
 
-gef_d01_i,156,234,3	script	Wizard#ilgf11	4_M_SIT_NOVICE,5,5,{
+gef_d01_i,156,234,3	script(CLOAKED)	Wizard#ilgf11	4_M_SIT_NOVICE,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2745,13 +2729,10 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	cloakonnpcself( "Wizard#ilgf11" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
-gef_d01_i,48,255,5	script	Wizard#ilgf12	1_M_WIZARD,5,5,{
+gef_d01_i,48,255,5	script(CLOAKED)	Wizard#ilgf12	1_M_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2776,15 +2757,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf13" );
 	cloakonnpcself( "Nameless Catacomb#ilgf02" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,50,257,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf13	2_F_MAGICMASTER
 gef_d01_i,50,254,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf02	4_SOIL
 
 
-gef_d01_i,112,267,3	script	Wizard#ilgf14	4_M_JOB_WIZARD,5,5,{
+gef_d01_i,112,267,3	script(CLOAKED)	Wizard#ilgf14	4_M_JOB_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2809,15 +2787,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf15" );
 	cloakonnpcself( "Nameless Catacomb#ilgf03" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,110,266,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf15	4_M_ARUNA_NFM1
 gef_d01_i,111,264,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf03	4_SOIL
 
 
-gef_d01_i,55,167,3	script	Wizard#ilgf16	4_M_ARUNA_NFM1,5,5,{
+gef_d01_i,55,167,3	script(CLOAKED)	Wizard#ilgf16	4_M_ARUNA_NFM1,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2833,14 +2808,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf16" );
 	cloakonnpcself( "Wizard#ilgf17" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,53,166,7	duplicate(dummy_cloaked_npc)	Wizard#ilgf17	2_F_MAGICMASTER
 
 
-gef_d01_i,236,235,1	script	Wizard#ilgf18	1_M_WIZARD,5,5,{
+gef_d01_i,236,235,1	script(CLOAKED)	Wizard#ilgf18	1_M_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2856,14 +2828,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf18" );
 	cloakonnpcself( "Someone's Dream#ilgf18" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,233,237,5	duplicate(dummy_cloaked_npc)	Someone's Dream#ilgf18	NIGHTMARE
 
 
-gef_d01_i,255,201,5	script	Wizard#ilgf19	4_GEFFEN_05,5,5,{
+gef_d01_i,255,201,5	script(CLOAKED)	Wizard#ilgf19	4_GEFFEN_05,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2885,15 +2854,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf20" );
 	cloakonnpcself( "Undead#ilgf05" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,254,200,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf20	2_F_MAGICMASTER
 gef_d01_i,256,198,1	duplicate(dummy_cloaked_npc)	Undead#ilgf05	GHOUL
 
 
-gef_d01_i,204,146,1	script	Wizard#ilgf21	4_GEFFEN_05,5,5,{
+gef_d01_i,204,146,1	script(CLOAKED)	Wizard#ilgf21	4_GEFFEN_05,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2922,9 +2888,6 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf21" );
 	cloakonnpcself( "Wizard#ilgf22" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,202,149,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf22	4_M_ARUNA_NFM1
 gef_d01_i,202,152,5	duplicate(dummy_cloaked_npc)	Undead#ilgf02	GHOUL
@@ -2932,7 +2895,7 @@ gef_d01_i,200,151,5	duplicate(dummy_cloaked_npc)	Undead#ilgf03	ZOMBIE
 gef_d01_i,204,151,3	duplicate(dummy_cloaked_npc)	Undead#ilgf04	GHOUL
 
 
-gef_d01_i,257,110,1	script	Wizard#ilgf23	4_F_BOMI,5,5,{
+gef_d01_i,257,110,1	script(CLOAKED)	Wizard#ilgf23	4_F_BOMI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2950,14 +2913,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf23" );
 	cloakonnpcself( "Fast Undead#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,253,112,5	duplicate(dummy_cloaked_npc)	Fast Undead#ilgf01	GHOUL
 
 
-gef_d01_i,230,76,3	script	Wizard#ilgf24	4_M_BIBI,5,5,{
+gef_d01_i,230,76,3	script(CLOAKED)	Wizard#ilgf24	4_M_BIBI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2975,14 +2935,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf24" );
 	cloakonnpcself( "Shining Mushroom#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,228,75,3	duplicate(dummy_cloaked_npc)	Shining Mushroom#ilgf01	ILL_BLACK_MUSHROOM
 
 
-gef_d01_i,93,34,1	script	Wizard#ilgf25	4_F_BOMI,5,5,{
+gef_d01_i,93,34,1	script(CLOAKED)	Wizard#ilgf25	4_F_BOMI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -3008,16 +2965,13 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf26" );
 	cloakonnpcself( "Undead#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,94,37,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf26	1_M_WIZARD
 gef_d01_i,91,35,5	duplicate(dummy_cloaked_npc)	Undead#ilgf01	GHOUL
 
 // gef_d01_i,101,124,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf27	4_F_BOMI,5,5	// npc has official range. Effect ?
 gef_d01_i,101,124,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf27	4_F_BOMI
-gef_d01_i,99,122,7	script	Wizard#ilgf28	4_F_BOMI,5,5,{
+gef_d01_i,99,122,7	script(CLOAKED)	Wizard#ilgf28	4_F_BOMI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -3039,9 +2993,6 @@ OnTouch:
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf28";
 	cloakonnpcself( "Wizard#ilgf27" );
 	cloakonnpcself( "Wizard#ilgf28" );
-	end;
-OnInit:
-	cloakonnpc();
 	end;
 }
 // End of the "Wizard illusions"
@@ -4603,7 +4554,7 @@ OnInit:
 	end;
 }
 
-gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
+gef_d01_i,189,98,3	script(CLOAKED)	Dracula#ilgf02	4_DRACULA,{
 	if (ill_vampire < 10) {
 		mes "[Dracula]";
 		mes "What brings you? I suggest you stay away out of this place.";
@@ -4865,9 +4816,6 @@ gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
 	mes "[Dracula]";
 	mes "The bat blood she drinks sometimes causes her to go out of her mind. She calms down after a while, but if the people from the Church see her in that vulnerable state, they will try to kill her.";
 	close;
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
@@ -4981,7 +4929,7 @@ OnTouch:
 	end;
 }
 
-ice_d03_i,155,43,3	script	Zeith#frozen01	4_M_FROZEN_GC,{
+ice_d03_i,155,43,3	script(CLOAKED)	Zeith#frozen01	4_M_FROZEN_GC,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
 		mes "I'm carrying too many types of items. I should lighten my bag first.";
 		close;
@@ -5325,13 +5273,9 @@ ice_d03_i,155,43,3	script	Zeith#frozen01	4_M_FROZEN_GC,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ice_d03_i,155,43,3	script	Zeith#frozen02	4_M_GUILLOTINE,{
+ice_d03_i,155,43,3	script(CLOAKED)	Zeith#frozen02	4_M_GUILLOTINE,{
 	if (illusion_frozen == 3) {
 		if (checkquest(15112,HUNTING) == 2) {
 			mes "[^0000ffZeith^000000]";
@@ -5470,13 +5414,9 @@ OnZeithDead:
 		specialeffect EF_ICECRASH;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ice_d03_i,150,43,5	script	Vrid#frozen01	4_M_FROZEN_KN,{
+ice_d03_i,150,43,5	script(CLOAKED)	Vrid#frozen01	4_M_FROZEN_KN,{
 	if (illusion_frozen == 3) {
 		if (checkquest(15112,HUNTING) == 2) {
 			cloakoffnpcself( "Zeith#frozen02" );
@@ -5491,21 +5431,15 @@ ice_d03_i,150,43,5	script	Vrid#frozen01	4_M_FROZEN_KN,{
 		close;
 	}
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ice_d03_i,150,43,5	script	Vrid#frozen02	4_M_KNIGHT_BLACK,{
+ice_d03_i,150,43,5	script(CLOAKED)	Vrid#frozen02	4_M_KNIGHT_BLACK,{
 	end;
 OnVridDead:
 	if (illusion_frozen == 4) {
 		cloakonnpcself();
 		specialeffect EF_ICECRASH;
 	}
-	end;
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -7923,7 +7857,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,152,40,6	script	Second Young#LuE01	4_M_THAIONGBAK,{
+com_d02_i,152,40,6	script(CLOAKED)	Second Young#LuE01	4_M_THAIONGBAK,{
 	if (ill_luanda == 3) {
 		npctalk "Brother? Are you ready? Are you leaving soon? Time is running out.", "", bc_self;
 		mes "[Second Young]";
@@ -7931,7 +7865,7 @@ com_d02_i,152,40,6	script	Second Young#LuE01	4_M_THAIONGBAK,{
 		next;
 		npctalk "Yes. As the second said, we'd better start quickly. I don't feel very good.", "First Young#LuE01", bc_self;
 		mes "[First Young]";
-		mes "Yes. As the second said, it's better to start quickly. I'm not very good at it.";
+		mes "Yes. As the second said, it's better to start quickly. I don't feel very good..";
 		next;
 		npctalk "Hahaha, it's only one day. What's the big deal? Huh?!", "Third Young#LuE01", bc_self;
 		mes "[Third Young]";
@@ -8005,10 +7939,6 @@ com_d02_i,152,40,6	script	Second Young#LuE01	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 com_d02_i,154,41,4	duplicate(dummy_cloaked_npc)	First Young#LuE01	4_M_THAIONGBAK
@@ -8041,7 +7971,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,121,95,4	script	Karu#LuE02	4_M_THAIONGBAK,{
+com_d02_i,121,95,4	script(CLOAKED)	Karu#LuE02	4_M_THAIONGBAK,{
 	if (ill_luanda == 6) {
 		npctalk "Karu.. How was the hunt today?", "Asudem#LuE02", bc_self;
 		mes "[Asudem]";
@@ -8083,10 +8013,6 @@ com_d02_i,121,95,4	script	Karu#LuE02	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 com_d02_i,120,95,6	duplicate(dummy_cloaked_npc)	Asudem#LuE02	4_F_01
@@ -8112,7 +8038,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,191,271,8	script	Young#LuE03	4_M_THAIONGBAK,{
+com_d02_i,191,271,8	script(CLOAKED)	Young#LuE03	4_M_THAIONGBAK,{
 	if (ill_luanda == 8) {
 		npctalk "Uhm... It's a bit of a mess... but this is a great mural for my skills.", "", bc_self;
 		mes "[Young Man]";
@@ -8142,10 +8068,6 @@ com_d02_i,191,271,8	script	Young#LuE03	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
@@ -8169,7 +8091,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,228,95,4	script	Young#LuE04	4_M_THAIONGBAK,{
+com_d02_i,228,95,4	script(CLOAKED)	Young#LuE04	4_M_THAIONGBAK,{
 	if (ill_luanda == 10) {
 		npctalk "Oh, why am I so weak? Unlike my older brothers, my abilities are not particularly useful in battle.", "", bc_self;
 		mes "[Young Man]";
@@ -8219,10 +8141,6 @@ com_d02_i,228,95,4	script	Young#LuE04	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 // FRIDAY
@@ -8245,7 +8163,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,210,134,6	script	Young#LuE05	4_M_THAIONGBAK,{
+com_d02_i,210,134,6	script(CLOAKED)	Young#LuE05	4_M_THAIONGBAK,{
 	if (ill_luanda == 12) {
 		npctalk "I think drinking water is good enough...", "", bc_self;
 		mes "[Young Man]";
@@ -8270,15 +8188,11 @@ com_d02_i,210,134,6	script	Young#LuE05	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
 // (re)MONDAY
-com_d02_i,157,28,4	script	Chief#LuE06	4_M_JPNOJI2,{
+com_d02_i,157,28,4	script(CLOAKED)	Chief#LuE06	4_M_JPNOJI2,{
 	if (ill_luanda == 14) {
 		npctalk "Aagh!! It's an attack. Monsters are coming from all sides.", "Villager#LuE061", bc_self;
 		mes "[Chief]";
@@ -8326,10 +8240,6 @@ com_d02_i,157,28,4	script	Chief#LuE06	4_M_JPNOJI2,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 com_d02_i,155,29,6	duplicate(dummy_cloaked_npc)	Villager#LuE061	4_M_ALCHE_A
@@ -8359,7 +8269,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,43,219,4	script	Third Young#LuE07	4_M_THAIONGBAK,{
+com_d02_i,43,219,4	script(CLOAKED)	Third Young#LuE07	4_M_THAIONGBAK,{
 	if (ill_luanda == 16) {
 		npctalk "Brothers, it looks like the hunt went well this time.", "", bc_self;
 		mes "[Third Young]";
@@ -8402,10 +8312,6 @@ com_d02_i,43,219,4	script	Third Young#LuE07	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 com_d02_i,39,219,6	duplicate(dummy_cloaked_npc)	First Young#LuE07	4_M_THAIONGBAK
@@ -8413,7 +8319,7 @@ com_d02_i,41,220,4	duplicate(dummy_cloaked_npc)	Second Young#LuE07	4_M_THAIONGBA
 
 
 // (re)TUESDAY
-com_d02_i,116,94,6	script	Karu#LuE08	4_M_THAIONGBAK,{
+com_d02_i,116,94,6	script(CLOAKED)	Karu#LuE08	4_M_THAIONGBAK,{
 	if (ill_luanda == 18) {
 		npctalk "Ahh! Asudem, why? Why? My... how did I find you...", "", bc_self;
 		mes "[Karu]";
@@ -8470,10 +8376,6 @@ com_d02_i,116,94,6	script	Karu#LuE08	4_M_THAIONGBAK,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 com_d02_i,117,94,4	duplicate(dummy_cloaked_npc)	Asudem#LuE08	4_F_01
@@ -8501,7 +8403,7 @@ OnTouch:
 	end;
 }
 
-com_d02_i,268,75,4	script	Silhouette#LuE091	4_GHOST_STAND,{
+com_d02_i,268,75,4	script(CLOAKED)	Silhouette#LuE091	4_GHOST_STAND,{
 	if (ill_luanda == 20) {
 		npctalk "We must drive out all the humans and take over the land.", "", bc_self;
 		mes "[???]";
@@ -8534,10 +8436,6 @@ com_d02_i,268,75,4	script	Silhouette#LuE091	4_GHOST_STAND,{
 		mes "What about the beings I just talked to? I need to tell Luanda about my experience.";
 		close;
 	}
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 

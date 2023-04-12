@@ -3,6 +3,8 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Illusion series related merchants and enchanters
+// Note:
+// - Some dialog are missing in Illusion of Luanda exchange NPC.
 //===== Changelog: ===========================================
 //= 1.0 Initial release of Illusion of Moonlight [crazyarashi]
 //= 1.1 Cleanup and improvements [Everade]
@@ -1546,14 +1548,14 @@ com_d02_i,234,266,6	script	Village Soap#Lu	4_M_ORIENT01,{
 			}
 			.@size = callsub( S_Data, .@equipment_id[.@s], .@equip_id_refined, .@req_id, .@req_amount, .@part );
 
-			mes "<ITEM>[" + .@equipment_name$[.@s] + "]<INFO>" + .@equipment_id[.@s] + "</INFO></ITEM>";
+			mes "" + mesitemlink(.@equipment_id[.@s]) + "";
 			mes "**********************************";
 			if (.@equipment_id[.@s] == 18174)
-				mes "1 <ITEM>[+9 " + getitemname(.@equip_id_refined) + "(1)]<INFO>" + .@equip_id_refined + "</INFO></ITEM>";
+				mes "1 " + mesitemlink(.@equip_id_refined) + "";
 			else
-				mes "1 <ITEM>[+9 " + getitemname(.@equip_id_refined) + "]<INFO>" + .@equip_id_refined + "</INFO></ITEM>";
+				mes "1 " + mesitemlink(.@equip_id_refined) + "";
 			for ( .@i = 0; .@i < .@size; ++.@i )
-				mes "" + .@req_amount[.@i] + " <ITEM>[" + getitemname(.@req_id[.@i]) + "]<INFO>" + .@req_id[.@i] + "</INFO></ITEM>";
+				mes "" + .@req_amount[.@i] + " " + mesitemlink(.@req_id[.@i]) + "";
 		}
 		end;
 	}
@@ -1569,11 +1571,13 @@ com_d02_i,234,266,6	script	Village Soap#Lu	4_M_ORIENT01,{
 		mes "Eheh- This dude misunderstood me. Do you have to equip the equipment that becomes the material?";
 		close;
 	}
-	// todo
+	// todo text (currently custom)
 
 	for ( .@i = 0; .@i < .@size; ++.@i ) {
 		if (countitem(.@req_id[.@i]) < .@req_amount[.@i]) {
-			end;
+			mes "[Village Soap]";
+			mes "You don't have enough items.";
+			close;
 		}
 	}
 	delequip .@part;
