@@ -1035,8 +1035,9 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 	}
 	else {
 		if (flag & NPCVIEW_ENABLE) {
-			nd.sc.option &= ~OPTION_HIDE;
 			nd.is_invisible = false;
+			clif_spawn(&nd.bl);
+			nd.sc.option &= ~OPTION_HIDE;
 		}
 		else if (flag & NPCVIEW_HIDEOFF)
 			nd.sc.option &= ~OPTION_HIDE;
@@ -1050,8 +1051,11 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			nd.sc.option |= OPTION_HIDE;
 			nd.is_invisible = true;
 		}
-		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
+		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG) {	//Client won't display option changes for these classes [Toms]
 			clif_changeoption(&nd.bl);
+			if (nd.is_invisible)
+				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+		}
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
 				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);
@@ -4621,13 +4625,13 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 	}
 	strdb_put(npcname_db, nd->exname, nd);
 
-	if( type != NPCTYPE_SCRIPT )
-		return end;
-
 	// copy the original npc state
 	if (dnd->state != NPCVIEW_ENABLE)
 		npc_enable_target(*nd, 0, dnd->state);
 	nd->state = dnd->state;
+
+	if( type != NPCTYPE_SCRIPT )
+		return end;
 
 	//-----------------------------------------
 	// Loop through labels to export them as necessary
