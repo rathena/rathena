@@ -1,0 +1,23 @@
+//===== rAthena Script ======================================= 
+//= Magma Dungeon Warp Script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+mag_dun02,248,72,3	script	Republic Guard#mag03	4_M_EIN_SOLDIER,{
+	npctalk "Republic Guard: Be careful. You cannot enter unless you are an experienced adventurer.", "", bc_self;
+	end;
+}
+
+mag_dun02,247,68,0	script	mag02a_mag03a	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 175) {
+		npctalk "Republic Guard: A dangerous place for adventurers. You must be at least level 175 to enter.", "Republic Guard#mag03", bc_self;
+		end;
+	}
+	warp "mag_dun03",120,120;
+	end;
+}
+
+mag_dun03,124,120,0	warp2	mag03a_mag02a	1,1,mag_dun02,243,68

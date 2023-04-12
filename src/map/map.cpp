@@ -571,7 +571,7 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 			if(bl->x == x && bl->y == y && bl->type&type) {
 				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
 					npc_data *nd = BL_CAST(BL_NPC, bl);
-					if (nd->bl.m < 0 || nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE) || nd->dynamicnpc.owner_char_id != 0)
+					if (nd->bl.m < 0 || nd->sc.option&OPTION_HIDE || nd->dynamicnpc.owner_char_id != 0)
 						continue;
 				}
 				if(flag&1) {
