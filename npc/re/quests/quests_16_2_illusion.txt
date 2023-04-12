@@ -8914,7 +8914,7 @@ prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
 		mes "The problem is... the amount of essence on a fishing rod can't make a whirlpool large enough for a person to fit in.";
 		next;
 		select( "Is this amount okay?" );
-		mes "- Showed the ^4d4dffAbyssal Essence^000000 received from Gein to Jerrymon. - ";
+		mes "- Showed the ^4d4dff" + getitemname(25899) + "^000000 received from Gein to Jerrymon. - ";
 		next;
 		mes "[Jerrymon]";
 		mes "Oh, just in case, I actually found it!";
@@ -8966,10 +8966,6 @@ izlude,126,53,4	script	Sirood#SRD2	1_M_04,{
 	mes "[Sirood]";
 	mes "I thought I'd never come back...";
 	close;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 izlude,129,49,4	script	Soup#Soup	1_M_02,{
@@ -9288,7 +9284,7 @@ OnInit:
 	end;
 }
 
-izlude,132,54,4	script	Jerrymon#jerry2	1_M_01,{
+izlude,132,54,4	script(CLOAKED)	Jerrymon#jerry2	1_M_01,{
 	if (ill_underwater < 4)
 		end;
 	if (ill_underwater == 4) {
@@ -9363,7 +9359,6 @@ izlude,132,54,4	script	Jerrymon#jerry2	1_M_01,{
 	end;
 
 OnInit:
-	cloakonnpc();
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3409) == 1" );
 	end;
 }
@@ -9398,17 +9393,17 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			mes "Ah, ah... that, right? That should take precedence.";
 			next;
 			mes "[Jerrymon]";
-			mes "In order to bring Sirood back ashore, we need an additional ^4d4dffAbyssal Essence^000000. The question is how to get it...";
+			mes "In order to bring Sirood back ashore, we need an additional ^4d4dff" + getitemname(25899) + "^000000. The question is how to get it...";
 			next;
 			mes "[Jerrymon]";
 			mes "I've been watching the deep sea creatures here, and I've seen some of them glow with the essence of the abyss.";
 			mes "And they seem to threaten us sometimes.";
 			next;
 			mes "[Jerrymon]";
-			mes "In that sense, could you handle some of the deep sea creatures? Maybe we can get ^4d4dffAbyssal Essence^000000 from them.";
+			mes "In that sense, could you handle some of the deep sea creatures? Maybe we can get ^4d4dff" + getitemname(25899) + "^000000 from them.";
 			next;
 			mes "[Jerrymon]";
-			mes "Please take out 10 each of ^4d4dffDeep Sea Sropho^000000, ^4d4dffDeep Sea Deviace^000000, and ^4d4dffDeep Sea Marse^000000.";
+			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
 			next;
 			if (select( "Okay", "I'll do it next time" ) == 2) {
 				mes "[Jerrymon]";
@@ -9423,17 +9418,17 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 		case 0:
 		case 1:
 			mes "[Jerrymon]";
-			mes "Please take out 10 each of ^4d4dffDeep Sea Sropho^000000, ^4d4dffDeep Sea Deviace^000000, and ^4d4dffDeep Sea Marse^000000.";
+			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
 			next;
 			mes "[Jerrymon]";
 			mes "I'll be waiting for you here.";
 			close;
 		case 2:
 			mes "[Jerrymon]";
-			mes "Thank you for your hard work, you also brought ^4d4dffAbyssal Essence^000000!! As expected, my prediction was correct.";
+			mes "Thank you for your hard work, you also brought ^4d4dff" + getitemname(25899) + "^000000!! As expected, my prediction was correct.";
 			next;
 			mes "[Jerrymon]";
-			mes "It looks like we only need about 10 ^4d4dffAbyssal Essence^000000 to send Sirood back ashore.";
+			mes "It looks like we only need about 10 ^4d4dff" + getitemname(25899) + "^000000 to send Sirood back ashore.";
 			next;
 			mes "[Jerrymon]";
 			mes "If you collect them, I'll create a whirlpool for you.";
@@ -9456,14 +9451,14 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 	if (ill_underwater == 6) {
 		if (countitem(25899) < 10) {
 			mes "[Jerrymon]";
-			mes "Please bring ^4d4dff10 Abyssal Essence^000000.";
+			mes "Please bring ^4d4dff10 " + getitemname(25899) + "^000000.";
 			next;
 			mes "[Jerrymon]";
 			mes "I'd like to save it myself, but as you can see I'm weak, heck.";
 			close;
 		}
 		mes "[Jerrymon]";
-		mes "Thank you for your hard work!! You brought 10 ^4d4dffAbyssal Essence^000000.";
+		mes "Thank you for your hard work!! You brought 10 ^4d4dff" + getitemname(25899) + "^000000.";
 		next;
 		mes "[Jerrymon]";
 		mes "Would you like to go ashore now?";
@@ -9537,7 +9532,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 	mes "So, can you help me a bit more?";
 	next;
 	mes "[Jerrymon]";
-	mes "I need more ^4d4dffAbyssal Essence^000000, and I'd like you to take care of the ^4d4dffDeep Sea Creatures^000000 that get in the way of my research.";
+	mes "I need more ^4d4dff" + getitemname(25899) + "^000000, and I'd like you to take care of the ^4d4dffDeep Sea Creatures^000000 that get in the way of my research.";
 	next;
 	switch( select( "Okay", "I'll do it next time", "I want to go back to Izlude" ) ) {
 	case 1:
@@ -9549,13 +9544,13 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 		case -1:
 			switch( isbegin_quest(3413) ) {
 			case 0:
-				.@menu$[0] = "Collect Abyssal Essence";
+				.@menu$[0] = "Collect " + getitemname(25899) + "";
 				break;
 			case 1:
 				if (countitem(25899) < 10)
-					.@menu$[0] = "Collecting Abyssal Essence - In Progress";
+					.@menu$[0] = "Collecting " + getitemname(25899) + " - In Progress";
 				else
-					.@menu$[0] = "Collect Abyssal Essence - Done";
+					.@menu$[0] = "Collect " + getitemname(25899) + " - Done";
 				break;
 			case 2:
 				end;
@@ -9563,7 +9558,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			break;
 		case 0:
 		case 1:
-			.@menu$[0] = "^999999Abyssal Essence Collection - Pending^000000";
+			.@menu$[0] = "^999999" + getitemname(25899) + " Collection - Pending^000000";
 			break;
 		case 2:
 			break;
@@ -9607,7 +9602,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			switch( isbegin_quest(3413) ) {
 			case 0:
 				mes "[Jerrymon]";
-				mes "^4d4dffAbyssal Essence^000000 can be obtained from all the deep sea creatures here.";
+				mes "^4d4dff" + getitemname(25899) + "^000000 can be obtained from all the deep sea creatures here.";
 				mes "I need 10 right now.";
 				next;
 				mes "[Jerrymon]";
@@ -9618,14 +9613,14 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			case 1:
 				if (countitem(25899) < 10) {
 					mes "[Jerrymon]";
-					mes "I need 10 ^4d4dffAbyssal Essence^000000.";
+					mes "I need 10 ^4d4dff" + getitemname(25899) + "^000000.";
 					next;
 					mes "[Jerrymon]";
 					mes "Come back to me when you've collected all the essences!";
 					close;
 				}
 				mes "[Jerrymon]";
-				mes "You've collected all the Abyssal Essence!!";
+				mes "You've collected all the " + getitemname(25899) + "!!";
 				next;
 				mes "[Jerrymon]";
 				mes "Thank you, I'll put it to good use in my research.";
@@ -9654,7 +9649,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			switch( checkquest(3415,HUNTING) ) {
 			case -1:
 				mes "[Jerrymon]";
-				mes "Please kill 10 each of ^4d4dffDeep Sea Sropho^000000, ^4d4dffDeep Sea Deviace^000000 and ^4d4dffDeep Sea Marse^000000 that roam around here.";
+				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000 that roam around here.";
 				next;
 				mes "[Jerrymon]";
 				mes "Then take care of yourself~~!!";
@@ -9664,7 +9659,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			case 0:
 			case 1:
 				mes "[Jerrymon]";
-				mes "Please kill 10 each of ^4d4dffDeep Sea Sropho^000000, ^4d4dffDeep Sea Deviace^000000, and ^4d4dffDeep Sea Marse^000000.";
+				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
 				close;
 			case 2:
 				mes "[Jerrymon]";
@@ -9789,7 +9784,7 @@ OnTouch:
 	end;
 }
 
-iz_d04_i,125,226,5	script	Sirood#SRD4	1_M_04,{
+iz_d04_i,125,226,5	script(CLOAKED)	Sirood#SRD4	1_M_04,{
 	if (ill_underwater != 5 && ill_underwater != 6)
 		end;
 	switch( isbegin_quest(3410) ) {
@@ -9847,10 +9842,6 @@ iz_d04_i,125,226,5	script	Sirood#SRD4	1_M_04,{
 	case 2:
 		end;
 	}
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -9968,7 +9959,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 		switch( checkquest(3417,HUNTING) ) {
 		case -1:
 			mes "[Kena]";
-			mes "Please kill 10 each of ^4d4dffDeep Sea Swordfish^000000, ^4d4dffDeep Sea Phen^000000, and ^4d4dffDeep Sea King Dramoh^000000.";
+			mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SWORD_FISH", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_PHEN", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_KING_DRAMOH", MOB_NAME) + "^000000.";
 			next;
 			mes "[Kena]";
 			mes "These monsters are quite ferocious, so be very careful.";
@@ -9981,7 +9972,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 		case 0:
 		case 1:
 			mes "[Kena]";
-			mes "^4d4dffDeep Sea Swordfish^000000, ^4d4dffDeep Sea Phen^000000, and ^4d4dffDeep Sea King Dramoh^000000";
+			mes "^4d4dff" + getmonsterinfo("ILL_SWORD_FISH", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_PHEN", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_KING_DRAMOH", MOB_NAME) + "^000000.";
 			next;
 			mes "[Kena]";
 			mes "Please kill 10 of each.";
@@ -10016,7 +10007,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 		switch( checkquest(3419,HUNTING) ) {
 		case -1:
 			mes "[Kena]";
-			mes "Please take out 15 ^4d4dffDeep Sea Sedora^000000 and ^4d4dffDeep Sea Strouf^000000 each.";
+			mes "Please take out 15 ^4d4dff" + getmonsterinfo("ILL_SEDORA", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_STROUF", MOB_NAME) + "^000000 each.";
 			next;
 			mes "[Kena]";
 			mes "They are quite annoying, so be careful.";
@@ -10026,7 +10017,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 		case 0:
 		case 1:
 			mes "[Kena]";
-			mes "Please take out 15 ^4d4dffDeep Sea Sedora^000000 and ^4d4dffDeep Sea Strouf^000000 each.";
+			mes "Please take out 15 ^4d4dff" + getmonsterinfo("ILL_SEDORA", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_STROUF", MOB_NAME) + "^000000 each.";
 			close;
 		case 2:
 			mes "[Kena]";
