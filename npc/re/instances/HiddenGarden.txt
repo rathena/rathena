@@ -4,6 +4,8 @@
 //= [Walkthrough Conversion]
 //= Episode 17.2 Hidden Flower Garden
 //= Episode 17.2 Security Area 1 & 2
+//= Note:
+// - NPC_LOCKON_LASER skill is currently no implemented.
 //===== Changelog: ===========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Optimizations and cleanup [Everade]

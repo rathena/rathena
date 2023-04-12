@@ -4,6 +4,8 @@
 //= [Walkthrough Conversion]
 //= Episode 17.2 Twilight Garden
 //= Episode 17.2 Hey Sweety
+//= Note:
+// - NPC_LOCKON_LASER skill is currently no implemented.
 //===== Changelog: ===========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Optimizations and cleanup [Everade]
