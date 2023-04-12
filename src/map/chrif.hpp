@@ -6,10 +6,10 @@
 
 #include <time.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // NAME_LENGTH
-#include "../common/timer.hpp" // t_tick
-#include "../common/socket.hpp" // enum chrif_req_op
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp> // NAME_LENGTH
+#include <common/timer.hpp> // t_tick
+#include <common/socket.hpp> // enum chrif_req_op
 
 //fwd declaration
 class map_session_data;

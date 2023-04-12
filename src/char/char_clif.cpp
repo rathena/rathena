@@ -10,17 +10,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/malloc.hpp"
-#include "../common/mapindex.hpp"
-#include "../common/mmo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/malloc.hpp>
+#include <common/mapindex.hpp>
+#include <common/mmo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "char.hpp"
 #include "char_logif.hpp"
@@ -920,8 +920,8 @@ int chclif_parse_select_accessible_map( int fd, struct char_session_data* sd, ui
 	// FIXME: is this case even possible? [ultramage]
 	if( ( map_fd = map_server[mapserver].fd ) < 1 || session[map_fd] == nullptr ){
 		ShowError( "parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, mapserver );
+		map_server[mapserver] = {};
 		map_server[mapserver].fd = -1;
-		memset( &map_server[mapserver], 0, sizeof( struct mmo_map_server ) );
 		chclif_send_auth_result( fd, 1 ); // Send server closed.
 		return 1;
 	}
@@ -1090,8 +1090,8 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		if ((map_fd = map_server[i].fd) < 1 || session[map_fd] == NULL)
 		{
 			ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
+			map_server[i] = {};
 			map_server[i].fd = -1;
-			memset(&map_server[i], 0, sizeof(struct mmo_map_server));
 			chclif_send_auth_result(fd,1);  //Send server closed.
 			return 1;
 		}

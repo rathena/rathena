@@ -17907,6 +17907,497 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 747
+    Name: NPC_LEASH
+    Description: Leash
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 5
+      - Level: 2
+        Size: 10
+      - Level: 3
+        Size: 15
+      - Level: 4
+        Size: 20
+      - Level: 5
+        Size: 25
+    Hit: Single
+    HitCount: 1
+  - Id: 748
+    Name: NPC_WIDELEASH
+    Description: Wide Leash
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 5
+      - Level: 2
+        Size: 10
+      - Level: 3
+        Size: 15
+      - Level: 4
+        Size: 20
+      - Level: 5
+        Size: 25
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+  - Id: 751
+    Name: NPC_ALL_STAT_DOWN
+    Description: Decrease All Stats
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 10000
+    Status: ALL_STAT_DOWN
+  - Id: 752
+    Name: NPC_GRADUAL_GRAVITY
+    Description: Increased Gravity
+    MaxLevel: 3
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 3000
+    Status: GRADUAL_GRAVITY
+  - Id: 753  
+    Name: NPC_DAMAGE_HEAL
+    Description: Damage Heal
+    MaxLevel: 3
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Duration1: 30000
+    Status: DAMAGE_HEAL
+  - Id: 754
+    Name: NPC_IMMUNE_PROPERTY
+    Description: Property Immune
+    MaxLevel: 10
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 14 #TODO: confirm
+    Duration1: 30000
+  - Id: 755
+    Name: NPC_MOVE_COORDINATE
+    Description: Change Location
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 14
+  - Id: 756
+    Name: NPC_WIDEBLEEDING2
+    Description: Wide Bleeding
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 108000
+    Status: Bleeding
+  - Id: 757
+    Name: NPC_WIDESILENCE2
+    Description: Wide Silence
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Silence
+  - Id: 758
+    Name: NPC_WIDESTUN2
+    Description: Wide Stun
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: Stun
+  - Id: 759
+    Name: NPC_WIDESTONE2
+    Description: Wide Petrify
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration1: 100
+    Duration2: 17000
+    Status: StoneWait
+  - Id: 760
+    Name: NPC_WIDESLEEP2
+    Description: Wide Sleep
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Sleep
+  - Id: 761
+    Name: NPC_WIDECURSE2
+    Description: Wide Curse
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Curse
+  - Id: 762
+    Name: NPC_WIDECONFUSE2
+    Description: Wide Confusion
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 18000
+    Status: Confusion
+  - Id: 763
+    Name: NPC_WIDEFREEZE2
+    Description: Wide Freeze
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 27000
+    Status: Freeze
+  - Id: 764
+    Name: NPC_BLEEDING2
+    Description: Bleeding
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: -9
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    Duration2: 108000
+    Status: Bleeding
+  - Id: 765
+    Name: NPC_ICEBREATH2
+    Description: Ice Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: 6
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    SplashArea: 4
+    ActiveInstance: 14
+    Duration2: 27000
+    Status: Freeze
+  - Id: 768
+    Name: NPC_HELLJUDGEMENT2
+    Description: Hell's Judgement
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    SplashArea: 14
+    Duration2: 18000
+    Status: Curse
+  - Id: 769
+    Name: NPC_RAINOFMETEOR
+    Description: Rain of Meteor
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+    Hit: Multi_Hit
+    HitCount: 7
+    Element: Fire
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 4
+      - Level: 8
+        Area: 4
+      - Level: 9
+        Area: 5
+      - Level: 10
+        Area: 5
+    Duration1:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 2000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 5000
+      - Level: 6
+        Time: 6000
+      - Level: 7
+        Time: 7000
+      - Level: 8
+        Time: 8000
+      - Level: 9
+        Time: 9000
+      - Level: 10
+        Time: 10000
+    Unit:
+      Id: Dummyskill
+      Range: 3
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 770
+    Name: NPC_GROUNDDRIVE
+    Description: Ground Drive
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Flags:
+      TargetHidden: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 2
+      - Level: 3
+        Count: 3
+      - Level: 4
+        Count: 4
+      - Level: 5
+        Count: 5
+    Element: Earth
+    Duration1: 100
+    Unit:
+      Id: Dummyskill
+      Layout: 2
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 771
+    Name: NPC_RELIEVE_ON
+    Description: NPC_RELIEVE_ON
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    HitCount: 1
+    Duration1: -1
+    Status: Relieve_on
+  - Id: 772
+    Name: NPC_RELIEVE_OFF
+    Description: NPC_RELIEVE_OFF
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    HitCount: 1
+    Duration1: 60000
+    Status: Relieve_off
+  - Id: 783
+    Name: NPC_KILLING_AURA
+    Description: Killing Aura
+    MaxLevel: 5 #TODO unknown interactions with level
+    Type: Misc
+    TargetType: Support
+    Hit: Single
+    HitCount: 1
+    DamageFlags:
+      IgnoreFlee: true
+      IgnoreDefCard: true
+      Splash: true
+    Flags:
+      IsNpc: true
+    SplashArea: 5
+    Duration1: 30000
+    Status: Killing_Aura
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
@@ -37596,7 +38087,7 @@ Body:
         - Level: 5
           Amount: 70
       ItemCost:
-        - Item: Device_Creation_Guide
+        - Item: Device_M_Book
           Amount: 0
   - Id: 5298
     Name: MT_A_MACHINE
@@ -38400,7 +38891,7 @@ Body:
     Requires:
       SpCost: 5
       ItemCost:
-        - Item: Hawk_Flute
+        - Item: Hawk_Pipe
           Amount: 0
   - Id: 5328
     Name: WH_CALAMITYGALE
@@ -42367,6 +42858,845 @@ Body:
         PathCheck: true
         RangedSingleUnit: true
     Status: Ash
+  - Id: 8044
+    Name: MH_BLAST_FORGE
+    Description: Blast Forge
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    ActiveInstance: 1
+    CastTime:
+      - Level: 1
+        Time: 5000
+      - Level: 2
+        Time: 5000
+      - Level: 3
+        Time: 5000
+      - Level: 4
+        Time: 4500
+      - Level: 5
+        Time: 4500
+      - Level: 6
+        Time: 4500
+      - Level: 7
+        Time: 4000
+      - Level: 8
+        Time: 4000
+      - Level: 9
+        Time: 4000
+      - Level: 10
+        Time: 3500
+    AfterCastActDelay: 1000
+    Duration1: 5000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 52
+        - Level: 2
+          Amount: 59
+        - Level: 3
+          Amount: 66
+        - Level: 4
+          Amount: 73
+        - Level: 5
+          Amount: 80
+        - Level: 6
+          Amount: 87
+        - Level: 7
+          Amount: 94
+        - Level: 8
+          Amount: 101
+        - Level: 9
+          Amount: 108
+        - Level: 10
+          Amount: 115
+    Unit:
+      Id: Lava_Slide
+      Layout:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 1
+        - Level: 3
+          Size: 1
+        - Level: 4
+          Size: 1
+        - Level: 5
+          Size: 2
+        - Level: 6
+          Size: 2
+        - Level: 7
+          Size: 2
+        - Level: 8
+          Size: 2
+        - Level: 9
+          Size: 3
+        - Level: 10
+          Size: 3
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
+        PathCheck: true
+  - Id: 8045
+    Name: MH_TEMPERING
+    Description: Tempering
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 1500
+      - Level: 3
+        Time: 2000
+      - Level: 4
+        Time: 2500
+      - Level: 5
+        Time: 3000
+      - Level: 6
+        Time: 3500
+      - Level: 7
+        Time: 4000
+      - Level: 8
+        Time: 4500
+      - Level: 9
+        Time: 5000
+      - Level: 10
+        Time: 5500
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 45000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 75000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 105000
+      - Level: 6
+        Time: 120000
+      - Level: 7
+        Time: 135000
+      - Level: 8
+        Time: 150000
+      - Level: 9
+        Time: 165000
+      - Level: 10
+        Time: 180000
+    FixedCastTime: 200
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 83
+        - Level: 2
+          Amount: 91
+        - Level: 3
+          Amount: 99
+        - Level: 4
+          Amount: 107
+        - Level: 5
+          Amount: 115
+        - Level: 6
+          Amount: 123
+        - Level: 7
+          Amount: 131
+        - Level: 8
+          Amount: 139
+        - Level: 9
+          Amount: 147
+        - Level: 10
+          Amount: 155
+    Status: Tempering
+  - Id: 8046
+    Name: MH_CLASSY_FLUTTER
+    Description: Classy Flutter
+    MaxLevel: 10
+    DamageFlags:
+      NoDamage: true
+  - Id: 8047
+    Name: MH_TWISTER_CUTTER
+    Description: Twister Cutter
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
+    Range: 7
+    Element: Wind
+    Hit: Multi_Hit
+    HitCount: -2
+    CastCancel: true
+    CastTime: # !TODO: Confirm cast time
+      - Level: 1
+        Time: 600
+      - Level: 2
+        Time: 700
+      - Level: 3
+        Time: 800
+      - Level: 4
+        Time: 900
+      - Level: 5
+        Time: 1000
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1300
+      - Level: 9
+        Time: 1400
+      - Level: 10
+        Time: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 106
+        - Level: 2
+          Amount: 112
+        - Level: 3
+          Amount: 118
+        - Level: 4
+          Amount: 124
+        - Level: 5
+          Amount: 130
+        - Level: 6
+          Amount: 136
+        - Level: 7
+          Amount: 142
+        - Level: 8
+          Amount: 148
+        - Level: 9
+          Amount: 154
+        - Level: 10
+          Amount: 160
+  - Id: 8048
+    Name: MH_ABSOLUTE_ZEPHYR
+    Description: Absolute Zephyr
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -6
+    Element: Wind
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
+    CastTime: # !TODO: Confirm cast time
+      - Level: 1
+        Time: 600
+      - Level: 2
+        Time: 700
+      - Level: 3
+        Time: 800
+      - Level: 4
+        Time: 900
+      - Level: 5
+        Time: 1000
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1300
+      - Level: 9
+        Time: 1400
+      - Level: 10
+        Time: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 122
+        - Level: 2
+          Amount: 129
+        - Level: 3
+          Amount: 136
+        - Level: 4
+          Amount: 143
+        - Level: 5
+          Amount: 150
+        - Level: 6
+          Amount: 157
+        - Level: 7
+          Amount: 164
+        - Level: 8
+          Amount: 171
+        - Level: 9
+          Amount: 178
+        - Level: 10
+          Amount: 185
+  - Id: 8049
+    Name: MH_BRUSHUP_CLAW
+    Description: Brushup Claw
+    MaxLevel: 10
+    DamageFlags:
+      NoDamage: true
+  - Id: 8050
+    Name: MH_BLAZING_AND_FURIOUS
+    Description: Blazing And Furious
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+      IgnoreDefense: true
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 103
+        - Level: 2
+          Amount: 108
+        - Level: 3
+          Amount: 113
+        - Level: 4
+          Amount: 118
+        - Level: 5
+          Amount: 123
+        - Level: 6
+          Amount: 128
+        - Level: 7
+          Amount: 133
+        - Level: 8
+          Amount: 138
+        - Level: 9
+          Amount: 143
+        - Level: 10
+          Amount: 148
+      SpiritSphereCost: 1
+  - Id: 8051
+    Name: MH_THE_ONE_FIGHTER_RISES
+    Description: The One Fighter Rises
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      IgnoreDefense: true
+      Splash: true
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 100
+        - Level: 2
+          Amount: 106
+        - Level: 3
+          Amount: 112
+        - Level: 4
+          Amount: 118
+        - Level: 5
+          Amount: 124
+        - Level: 6
+          Amount: 130
+        - Level: 7
+          Amount: 136
+        - Level: 8
+          Amount: 142
+        - Level: 9
+          Amount: 148
+        - Level: 10
+          Amount: 154
+  - Id: 8052
+    Name: MH_POLISHING_NEEDLE
+    Description: Polishing Needle
+    MaxLevel: 10
+    DamageFlags:
+      NoDamage: true
+  - Id: 8053
+    Name: MH_TOXIN_OF_MANDARA
+    Description: Toxin Of Mandara
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
+      Splash: true
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    CastTime:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 1000
+      - Level: 3
+        Time: 1000
+      - Level: 4
+        Time: 1100
+      - Level: 5
+        Time: 1100
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1200
+      - Level: 9
+        Time: 1200
+      - Level: 10
+        Time: 1300
+    Duration1:
+      - Level: 1
+        Time: 2500
+      - Level: 2
+        Time: 3000
+      - Level: 3
+        Time: 3500
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 4500
+      - Level: 6
+        Time: 5000
+      - Level: 7
+        Time: 5500
+      - Level: 8
+        Time: 6000
+      - Level: 9
+        Time: 6500
+      - Level: 10
+        Time: 7000
+    FixedCastTime:
+      - Level: 1
+        Time: 500
+      - Level: 2
+        Time: 500
+      - Level: 3
+        Time: 500
+      - Level: 4
+        Time: 400
+      - Level: 5
+        Time: 400
+      - Level: 6
+        Time: 400
+      - Level: 7
+        Time: 300
+      - Level: 8
+        Time: 300
+      - Level: 9
+        Time: 300
+      - Level: 10
+        Time: 200
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 65
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 80
+        - Level: 6
+          Amount: 85
+        - Level: 7
+          Amount: 90
+        - Level: 8
+          Amount: 95
+        - Level: 9
+          Amount: 100
+        - Level: 10
+          Amount: 105
+    Status: Toxin_of_Mandara
+  - Id: 8054
+    Name: MH_NEEDLE_STINGER
+    Description: Needle Stinger
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastTime:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 1000
+      - Level: 3
+        Time: 1000
+      - Level: 4
+        Time: 1100
+      - Level: 5
+        Time: 1100
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1200
+      - Level: 9
+        Time: 1200
+      - Level: 10
+        Time: 1300
+    FixedCastTime:
+      - Level: 1
+        Time: 500
+      - Level: 2
+        Time: 500
+      - Level: 3
+        Time: 500
+      - Level: 4
+        Time: 400
+      - Level: 5
+        Time: 400
+      - Level: 6
+        Time: 400
+      - Level: 7
+        Time: 300
+      - Level: 8
+        Time: 300
+      - Level: 9
+        Time: 300
+      - Level: 10
+        Time: 200
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 74
+        - Level: 2
+          Amount: 82
+        - Level: 3
+          Amount: 90
+        - Level: 4
+          Amount: 98
+        - Level: 5
+          Amount: 106
+        - Level: 6
+          Amount: 114
+        - Level: 7
+          Amount: 122
+        - Level: 8
+          Amount: 130
+        - Level: 9
+          Amount: 138
+        - Level: 10
+          Amount: 146
+  - Id: 8055
+    Name: MH_LICHT_GEHORN
+    Description: Licht Gehorn
+    MaxLevel: 10
+    DamageFlags:
+      NoDamage: true
+  - Id: 8056
+    Name: MH_GLANZEN_SPIES
+    Description: Glanzen Spies
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
+    Range: 3
+    Element: Holy
+    Hit: Single
+    HitCount: 1
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 65
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 80
+        - Level: 6
+          Amount: 85
+        - Level: 7
+          Amount: 90
+        - Level: 8
+          Amount: 95
+        - Level: 9
+          Amount: 100
+        - Level: 10
+          Amount: 105
+  - Id: 8057
+    Name: MH_HEILIGE_PFERD
+    Description: Heilige Pferd
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    CastTime: # !TODO: Confirm cast time
+      - Level: 1
+        Time: 600
+      - Level: 2
+        Time: 700
+      - Level: 3
+        Time: 800
+      - Level: 4
+        Time: 900
+      - Level: 5
+        Time: 1000
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1300
+      - Level: 9
+        Time: 1400
+      - Level: 10
+        Time: 1500
+    FixedCastTime:
+      - Level: 1
+        Time: 2000
+      - Level: 2
+        Time: 1800
+      - Level: 3
+        Time: 1600
+      - Level: 4
+        Time: 1400
+      - Level: 5
+        Time: 1200
+      - Level: 6
+        Time: 1000
+      - Level: 7
+        Time: 800
+      - Level: 8
+        Time: 600
+      - Level: 9
+        Time: 400
+      - Level: 10
+        Time: 200
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 122
+        - Level: 2
+          Amount: 129
+        - Level: 3
+          Amount: 136
+        - Level: 4
+          Amount: 143
+        - Level: 5
+          Amount: 150
+        - Level: 6
+          Amount: 157
+        - Level: 7
+          Amount: 164
+        - Level: 8
+          Amount: 171
+        - Level: 9
+          Amount: 178
+        - Level: 10
+          Amount: 185
+  - Id: 8058
+    Name: MH_GOLDENE_TONE
+    Description: Goldene Tone
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 1500
+      - Level: 3
+        Time: 2000
+      - Level: 4
+        Time: 2500
+      - Level: 5
+        Time: 3000
+      - Level: 6
+        Time: 3500
+      - Level: 7
+        Time: 4000
+      - Level: 8
+        Time: 4500
+      - Level: 9
+        Time: 5000
+      - Level: 10
+        Time: 5500
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 40000
+      - Level: 3
+        Time: 50000
+      - Level: 4
+        Time: 60000
+      - Level: 5
+        Time: 70000
+      - Level: 6
+        Time: 80000
+      - Level: 7
+        Time: 90000
+      - Level: 8
+        Time: 100000
+      - Level: 9
+        Time: 110000
+      - Level: 10
+        Time: 120000
+    FixedCastTime: 200
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 124
+        - Level: 2
+          Amount: 133
+        - Level: 3
+          Amount: 142
+        - Level: 4
+          Amount: 151
+        - Level: 5
+          Amount: 160
+        - Level: 6
+          Amount: 169
+        - Level: 7
+          Amount: 178
+        - Level: 8
+          Amount: 187
+        - Level: 9
+          Amount: 196
+        - Level: 10
+          Amount: 205
+    Status: Goldene_Tone
+  - Id: 8059
+    Name: MH_BLAZING_LAVA
+    Description: Blazing Lava
+    MaxLevel: 10
+    DamageFlags:
+      NoDamage: true
   - Id: 8201
     Name: MS_BASH
     Description: Bash

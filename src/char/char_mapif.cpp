@@ -8,13 +8,13 @@
 #include <stdlib.h>
 #include <string.h> //memcpy
 
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
+#include <common/malloc.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
 
 #include "char.hpp"
 #include "char_logif.hpp"
@@ -387,6 +387,7 @@ int chmapif_parse_regmapuser(int fd, int id){
 				}
 			}else{
 				character = std::make_shared<struct online_char_data>( aid );
+				char_get_onlinedb()[aid] = character;
 			}
 
 			character->server = id;
@@ -662,6 +663,7 @@ int chmapif_parse_reqchangemapserv(int fd){
 
 			if( data == nullptr ){
 				data = std::make_shared<struct online_char_data>( aid );
+				char_get_onlinedb()[aid] = data;
 			}
 
 			data->char_id = char_data->char_id;
@@ -1478,7 +1480,7 @@ int chmapif_init(int fd){
  * @param id: id of map-serv (should be >0, FIXME)
  */
 void chmapif_server_init(int id) {
-	memset(&map_server[id], 0, sizeof(map_server[id]));
+	map_server[id] = {};
 	map_server[id].fd = -1;
 }
 

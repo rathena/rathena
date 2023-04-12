@@ -4,7 +4,7 @@
 #ifndef MAIL_HPP
 #define MAIL_HPP
 
-#include "../common/mmo.hpp"
+#include <common/mmo.hpp>
 
 enum mail_attach_result {
 	MAIL_ATTACH_SUCCESS = 0,

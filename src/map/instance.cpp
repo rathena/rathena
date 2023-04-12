@@ -6,16 +6,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/ers.hpp"  // ers_destroy
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/ers.hpp>  // ers_destroy
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
 
 #include "clan.hpp"
 #include "clif.hpp"
@@ -195,14 +195,14 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (x == 0) {
-				this->invalidWarning(node["X"], "X has to be greater than zero.\n");
+				this->invalidWarning(enterNode["X"], "X has to be greater than zero.\n");
 				return 0;
 			}
 
 			map_data *md = map_getmapdata(instance->enter.map);
 
 			if (x >= md->xs) {
-				this->invalidWarning(node["X"], "X has to be smaller than %hu.\n", md->xs);
+				this->invalidWarning(enterNode["X"], "X has to be smaller than %hu.\n", md->xs);
 				return 0;
 			}
 
@@ -216,14 +216,14 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (y == 0) {
-				this->invalidWarning(node["Y"], "Y has to be greater than zero.\n");
+				this->invalidWarning(enterNode["Y"], "Y has to be greater than zero.\n");
 				return 0;
 			}
 
 			map_data *md = map_getmapdata(instance->enter.map);
 
 			if (y >= md->ys) {
-				this->invalidWarning(node["Y"], "Y has to be smaller than %hu.\n", md->ys);
+				this->invalidWarning(enterNode["Y"], "Y has to be smaller than %hu.\n", md->ys);
 				return 0;
 			}
 
@@ -727,8 +727,10 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = time(nullptr) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	if (!db->infinite_timeout) {
+		idata->idle_limit = time(nullptr) + db->timeout;
+		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	}
 	idata->nomapflag = db->nomapflag;
 	idata->nonpc = db->nonpc;
 

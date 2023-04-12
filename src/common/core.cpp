@@ -3,7 +3,7 @@
 
 #include "core.hpp"
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #ifndef MINICORE
 #include "database.hpp"
@@ -28,8 +28,8 @@
 #include "strlib.hpp"
 
 #ifndef DEPRECATED_COMPILER_SUPPORT
-	#if defined( _MSC_VER ) && _MSC_VER < 1900
-		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
+	#if defined( _MSC_VER ) && _MSC_VER < 1910
+		#error "Visual Studio versions older than Visual Studio 2017 are not officially supported anymore"
 	#elif defined( __clang__ ) && __clang_major__ < 6
 		#error "clang versions older than clang 6.0 are not officially supported anymore"
 	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5

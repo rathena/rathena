@@ -6,6 +6,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master

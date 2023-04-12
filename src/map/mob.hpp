@@ -6,9 +6,9 @@
 
 #include <vector>
 
-#include "../common/database.hpp"
-#include "../common/mmo.hpp" // struct item
-#include "../common/timer.hpp"
+#include <common/database.hpp>
+#include <common/mmo.hpp> // struct item
+#include <common/timer.hpp>
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
@@ -300,7 +300,7 @@ struct s_map_drops{
 
 class MapDropDatabase : public TypesafeYamlDatabase<uint16, s_map_drops>{
 public:
-	MapDropDatabase() : TypesafeYamlDatabase( "MAP_DROP_DB", 1 ){
+	MapDropDatabase() : TypesafeYamlDatabase( "MAP_DROP_DB", 2 ){
 
 	}
 

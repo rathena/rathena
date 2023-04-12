@@ -4,7 +4,7 @@
 #ifndef CONF_HPP
 #define CONF_HPP
 
-#include "../../3rdparty/libconfig/libconfig.h"
+#include <libconfig.h>
 
 #include "cbasetypes.hpp"
 

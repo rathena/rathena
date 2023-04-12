@@ -5,8 +5,8 @@
 #ifndef MAP_PACKETS_STRUCT_HPP
 #define MAP_PACKETS_STRUCT_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
 /**
  *
