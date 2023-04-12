@@ -97392,28 +97392,514 @@ Body:
 #    AegisName: MD_THA_DOLOR
 #  - Id: 20800
 #    AegisName: MD_OBSERVATION
-#  - Id: 20801
-#    AegisName: ILL_SROPHO
-#  - Id: 20802
-#    AegisName: ILL_OBEAUNE
-#  - Id: 20803
-#    AegisName: ILL_DEVIACE
-#  - Id: 20804
-#    AegisName: ILL_MARSE
-#  - Id: 20805
-#    AegisName: ILL_MERMAN
-#  - Id: 20806
-#    AegisName: ILL_SEDORA
-#  - Id: 20807
-#    AegisName: ILL_SWORD_FISH
-#  - Id: 20808
-#    AegisName: ILL_STROUF
-#  - Id: 20809
-#    AegisName: ILL_PHEN
-#  - Id: 20810
-#    AegisName: ILL_KING_DRAMOH
-#  - Id: 20811
-#    AegisName: ILL_KRAKEN
+  - Id: 20801
+    AegisName: ILL_SROPHO
+    Name: Deep Sea Sropho
+    Level: 147
+    Hp: 336823
+    BaseExp: 30314
+    JobExp: 21220
+    Attack: 2657
+    Attack2: 340
+    Defense: 224
+    MagicDefense: 81
+    Str: 145
+    Agi: 50
+    Vit: 95
+    Int: 80
+    Dex: 110
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 550
+    AttackMotion: 1056
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Fin
+        Rate: 2500
+      - Item: Blue_Herb
+        Rate: 50
+      - Item: Crystal_Arrow_Container
+        Rate: 50
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: Electric_Eel
+        Rate: 25
+      - Item: Deepsea_Fish_Tail
+        Rate: 1000
+      - Item: ILL_Sropho_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20802
+    AegisName: ILL_OBEAUNE
+    Name: Deep Sea Obeaune
+    Level: 149
+    Hp: 340238
+    BaseExp: 30621
+    JobExp: 21434
+    Attack: 2647
+    Attack2: 384
+    Defense: 255
+    MagicDefense: 90
+    Str: 134
+    Agi: 50
+    Vit: 114
+    Int: 77
+    Dex: 114
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 936
+    AttackMotion: 1155
+    DamageMotion: 672
+    Ai: 04
+    Drops:
+      - Item: Heart_Of_Mermaid
+        Rate: 2500
+      - Item: Fin
+        Rate: 150
+      - Item: Skyblue_Jewel
+        Rate: 5
+      - Item: Saint_Robe
+        Rate: 10
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: Rotten_Deepseafish
+        Rate: 1000
+      - Item: ILL_Obeaune_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20803
+    AegisName: ILL_DEVIACE
+    Name: Deep Sea Deviace
+    Level: 150
+    Hp: 348355
+    BaseExp: 31352
+    JobExp: 21946
+    Attack: 2714
+    Attack2: 401
+    Defense: 274
+    MagicDefense: 91
+    Str: 151
+    Agi: 58
+    Vit: 121
+    Int: 80
+    Dex: 120
+    Luk: 58
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 400
+    AttackDelay: 480
+    AttackMotion: 970
+    DamageMotion: 770
+    Ai: 04
+    Drops:
+      - Item: Mistic_Frozen
+        Rate: 10
+      - Item: Tooth_Of_Ancient_Fish
+        Rate: 2500
+      - Item: Lip_Of_Ancient_Fish
+        Rate: 300
+      - Item: Katar_Of_Cold_Icicle
+        Rate: 5
+      - Item: Abysmal_Clam
+        Rate: 1000
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Deviace_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20804
+    AegisName: ILL_MARSE
+    Name: Deep Sea Marse
+    Level: 149
+    Hp: 335141
+    BaseExp: 30163
+    JobExp: 21114
+    Attack: 2851
+    Attack2: 417
+    Defense: 288
+    MagicDefense: 100
+    Str: 159
+    Agi: 60
+    Vit: 135
+    Int: 90
+    Dex: 120
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 270
+    AttackDelay: 1070
+    AttackMotion: 1512
+    DamageMotion: 485
+    Ai: 04
+    Drops:
+      - Item: Chinese_Ink
+        Rate: 2500
+      - Item: Tentacle
+        Rate: 1000
+      - Item: Water_Sprits_Armor
+        Rate: 10
+      - Item: Skyblue_Jewel
+        Rate: 5
+      - Item: Mistic_Frozen
+        Rate: 6
+      - Item: Deep_Sea_Starfish
+        Rate: 1000
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Marse_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20805
+    AegisName: ILL_MERMAN
+    Name: Deep Sea Merman
+    Level: 148
+    Hp: 337534
+    BaseExp: 30378
+    JobExp: 21265
+    Attack: 2801
+    Attack2: 401
+    Defense: 268
+    MagicDefense: 75
+    Str: 159
+    Agi: 60
+    Vit: 134
+    Int: 74
+    Dex: 110
+    Luk: 48
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 708
+    AttackMotion: 1225
+    DamageMotion: 675
+    Ai: 04
+    Drops:
+      - Item: Lip_Of_Ancient_Fish
+        Rate: 1000
+      - Item: Mistic_Frozen
+        Rate: 100
+      - Item: Yggdrasilberry
+        Rate: 80
+      - Item: Deep_Sea_Crab
+        Rate: 1000
+      - Item: Zephyrus
+        Rate: 5
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Merman_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20806
+    AegisName: ILL_SEDORA
+    Name: Deep Sea Sedora
+    Level: 199
+    Hp: 2875143
+    BaseExp: 191676
+    JobExp: 134173
+    Attack: 6574
+    Attack2: 796
+    Defense: 274
+    MagicDefense: 100
+    Str: 232
+    Agi: 147
+    Vit: 78
+    Int: 147
+    Dex: 140
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 168
+    AttackMotion: 965
+    DamageMotion: 578
+    Ai: 04
+    Drops:
+      - Item: Tentacle
+        Rate: 2000
+      - Item: Chinese_Ink
+        Rate: 1000
+      - Item: Old_Blue_Box
+        Rate: 5
+      - Item: Crystal_Blue
+        Rate: 20
+      - Item: Abysmal_Clam
+        Rate: 2500
+      - Item: Electronic_Guitar
+        Rate: 5
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Sedora_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20807
+    AegisName: ILL_SWORD_FISH
+    Name: Deep Sea Swordfish
+    Level: 199
+    Hp: 2997411
+    BaseExp: 199827
+    JobExp: 139879
+    Attack: 6678
+    Attack2: 824
+    Defense: 288
+    MagicDefense: 71
+    Str: 248
+    Agi: 160
+    Vit: 99
+    Int: 120
+    Dex: 160
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 335
+    AttackMotion: 1250
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Sharp_Scale
+        Rate: 2000
+      - Item: Gill
+        Rate: 300
+      - Item: Deepsea_Fish_Tail
+        Rate: 2500
+      - Item: Mistic_Frozen
+        Rate: 50
+      - Item: Morrigane's_Pendant
+        Rate: 10
+      - Item: Elunium_Stone
+        Rate: 25
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Sword_Fish_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20808
+    AegisName: ILL_STROUF
+    Name: Deep Sea Strouf
+    Level: 201
+    Hp: 2967419
+    BaseExp: 197828
+    JobExp: 138480
+    Attack: 5947
+    Attack2: 811
+    Defense: 277
+    MagicDefense: 80
+    Str: 224
+    Agi: 160
+    Vit: 99
+    Int: 125
+    Dex: 161
+    Luk: 64
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 276
+    AttackMotion: 672
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Fin
+        Rate: 2000
+      - Item: Skyblue_Jewel
+        Rate: 10
+      - Item: Oridecon_Stone
+        Rate: 10
+      - Item: Mistic_Frozen
+        Rate: 20
+      - Item: Deep_Sea_Starfish
+        Rate: 2500
+      - Item: Brionac
+        Rate: 50
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Strouf_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20809
+    AegisName: ILL_PHEN
+    Name: Deep Sea Phen
+    Level: 199
+    Hp: 2897158
+    BaseExp: 193144
+    JobExp: 135201
+    Attack: 5844
+    Attack2: 813
+    Defense: 219
+    MagicDefense: 90
+    Str: 208
+    Agi: 157
+    Vit: 66
+    Int: 115
+    Dex: 144
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 168
+    AttackMotion: 1154
+    DamageMotion: 865
+    Ai: 04
+    Drops:
+      - Item: Sharp_Scale
+        Rate: 2000
+      - Item: Fin
+        Rate: 1000
+      - Item: Meat
+        Rate: 300
+      - Item: Mistic_Frozen
+        Rate: 50
+      - Item: Rotten_Deepseafish
+        Rate: 2500
+      - Item: Morrigane's_Helm
+        Rate: 10
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_Phen_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20810
+    AegisName: ILL_KING_DRAMOH
+    Name: Deep Sea King Dramoh
+    Level: 205
+    Hp: 3115698
+    BaseExp: 207713
+    JobExp: 145399
+    Attack: 6081
+    Attack2: 849
+    Defense: 330
+    MagicDefense: 40
+    Str: 194
+    Agi: 151
+    Vit: 150
+    Int: 100
+    Dex: 142
+    Luk: 80
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 480
+    AttackMotion: 960
+    DamageMotion: 970
+    Ai: 04
+    Drops:
+      - Item: Nipper
+        Rate: 1500
+      - Item: Solid_Shell
+        Rate: 1500
+      - Item: Deep_Sea_Crab
+        Rate: 2500
+      - Item: Morrigane's_Belt
+        Rate: 50
+      - Item: Death_Guidance
+        Rate: 50
+      - Item: E_Abyss1
+        Rate: 250
+      - Item: ILL_King_Dramoh_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20811
+    AegisName: ILL_KRAKEN
+    Name: Deep Sea Kraken
+    Level: 204
+    Hp: 81289587
+    BaseExp: 5865974
+    JobExp: 4178562
+    Attack: 10874
+    Attack2: 1889
+    Defense: 335
+    MagicDefense: 271
+    Str: 325
+    Agi: 190
+    Vit: 169
+    Int: 277
+    Dex: 200
+    Luk: 55
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 422
+    AttackMotion: 870
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Tentacle
+        Rate: 3000
+      - Item: Mistic_Frozen
+        Rate: 500
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: IL_Kraken_Leg
+        Rate: 3000
+      - Item: Morrigane's_Manteau
+        Rate: 300
+      - Item: E_Abyss1
+        Rate: 1000
+      - Item: ILL_Kraken_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20812
 #    AegisName: MD_EVENT_HEMEL
 #  - Id: 20813
@@ -97568,8 +98054,54 @@ Body:
 #    AegisName: ELEMETAL_MASTER_S4
 #  - Id: 20842
 #    AegisName: ELEMETAL_MASTER_S5
-#  - Id: 20843
-#    AegisName: ILL_ABYSMAL_WITCH
+  - Id: 20843
+    AegisName: ILL_ABYSMAL_WITCH
+    Name: Deep Sea Witch
+    Level: 205
+    Hp: 78368745
+    BaseExp: 5896412
+    JobExp: 4143664
+    Attack: 11016
+    Attack2: 1853
+    Defense: 452
+    MagicDefense: 81
+    Str: 327
+    Agi: 194
+    Vit: 173
+    Int: 325
+    Dex: 201
+    Luk: 55
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 210
+    AttackDelay: 360
+    AttackMotion: 1250
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Crown_Of_Witch
+        Rate: 3000
+      - Item: Mistic_Frozen
+        Rate: 300
+      - Item: Morrigane's_Pendant
+        Rate: 50
+      - Item: Morrigane's_Belt
+        Rate: 50
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: E_Abyss1
+        Rate: 1000
+      - Item: ILL_Abysmal_Witch_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20844
 #    AegisName: PRAY_GIVER
 #  - Id: 20845

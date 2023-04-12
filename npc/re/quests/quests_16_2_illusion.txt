@@ -12,6 +12,7 @@
 //= 1.3 Added Illusion of Frozen [Capuche]
 //= 1.4 Added Illusion of Turtle [Capuche]
 //= 1.5 Added Illusion of Luanda [Capuche]
+//= 1.6 Added Illusion of Underwater [Capuche]
 //============================================================
 
 //============================================================
@@ -8709,4 +8710,1372 @@ S_MenuHunt:
 		break;
 	}
 	return .@menu$;
+}
+
+
+//============================================================
+//= Illusion of Underwater
+//============================================================
+prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
+	if (ill_underwater == 0) {
+		mes "[Jerrymon]";
+		mes "Um... Uhm...";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, what a surprise!!";
+		next;
+		mes "[Jerrymon]";
+		mes "What's up? I'm busy right now, so I'll talk to you later.";
+		close;
+	}
+	if (ill_underwater == 1) {
+		mes "[Jerrymon]";
+		mes "Um... Uhm...";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, what a surprise!!";
+		next;
+		mes "[Jerrymon]";
+		mes "What's up? I'm a bit busy right now...";
+		next;
+		mes "[Jerrymon]";
+		mes "Ah, you're the one introduced by Raket. I've been waiting for you.";
+		mes "Can you show me your fishing rod?";
+		next;
+		mes "- Jerrymon began to examine the rod closely. -";
+		next;
+		mes ".";
+		next;
+		mes "..";
+		next;
+		mes "...";
+		next;
+		mes "....";
+		next;
+		mes ".....";
+		next;
+		mes "[Jerrymon]";
+		mes "Yes, that's right... this substance is just that... to discover it again like this...";
+		next;
+		select( "What material are you talking about?" );
+		mes "[Jerrymon]";
+		mes "Adventurer, do you know where the deepest part of the sea is?";
+		next;
+		select( "Well...??" );
+		mes "[Jerrymon]";
+		mes "It is a place called the ^4d4dffTrench^000000. To put it simply, you can think of it as a deep cliff in the sea.";
+		next;
+		mes "[Jerrymon]";
+		mes "It is known that there are hundreds of different types of trenches in the world's oceans.";
+		next;
+		mes "[Jerrymon]";
+		mes "The widest and deepest known trench is the ^4d4dffBahia Trench^000000 near Izlude.";
+		next;
+		mes "[Jerrymon]";
+		mes "There are rare life forms at the bottom of the trench, and marine scientists like myself have shown great interest and have been exploring them.";
+		next;
+		mes "[Jerrymon]";
+		mes "Though shallow trenches can be explored to some extent.";
+		next;
+		mes "[Jerrymon]";
+		mes "But in the case of the Bahia Trench, scientists have calculated that scientifically, no life can exist because it is so incredibly deep.";
+		next;
+		mes "[Jerrymon]";
+		mes "I recently found out that there is life in the Bahia Trench.";
+		next;
+		select( "How do you know that??" );
+		mes "[Jerrymon]";
+		mes "You can tell by the stone that contains my magic.";
+		next;
+		select( "A stone with magical power?" );
+		mes "[Jerrymon]";
+		mes "Yes, I'm a mage-turned-oceanographer. I learned magic for oceanography.";
+		next;
+		mes "[Jerrymon]";
+		mes "Enchant a large boulder and make it fall to the floor where the trench exists.";
+		next;
+		mes "[Jerrymon]";
+		mes "The magic on the dropped stone is connected to me, so by measuring the distance, I can get a little idea of how deep it is and what's going on near the stone.";
+		next;
+		mes "[Jerrymon]";
+		mes "To tell you what I found out...";
+		next;
+		mes "[Jerrymon]";
+		mes "The composition of normal sea water and deep sea water is almost the same. But the only difference is the deep sea of Bahia Trench.";
+		next;
+		mes "[Jerrymon]";
+		mes "Should I say it's like water and oil? There's a section where they never mix.";
+		next;
+		mes "[Jerrymon]";
+		mes "A strong boundary was formed where they meet each other, and it felt as if the deep seawater in that section was desperately blocking the seawater coming down from above.";
+		next;
+		mes "[Jerrymon]";
+		mes "The water pressure is also much lower than that of normal seawater, so it is assumed that it has a favorable environment for life.";
+		next;
+		mes "[Jerrymon]";
+		mes "We call it ^4d4dffdeep seawater^000000";
+		next;
+		select( "Is this gloss related to what you said?" );
+		mes "[Jerrymon]";
+		mes "Yes! That's right!!";
+		mes "We only identified the existence of Abyssal Seawater deep in the Bahia Trench, and it was very difficult to obtain samples. This fishing rod has a lot of Abyssal Seawater on it...";
+		next;
+		mes "[Jerrymon]";
+		mes "Could you leave this fishing rod with me? I think I can figure something out if I extract this sea water and turn it into essence.";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, and I heard that the fishing rod was found today. Can I ask you to check if there is another floating substance in the nearby sea?";
+		next;
+		if (select( "Okay, I'll be back.", "I'm a bit busy right now..." ) == 2) {
+			mes "[Jerrymon]";
+			mes "Please come back to me when you're done!";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "Yes, thanks! I'll be waiting for you!!";
+		close2;
+		if (countitem(25898) > 0)
+			delitem 25898,1;	// Siroods_Fish_Rod
+		ill_underwater = 2;
+		erasequest 3407;
+		end;
+	}
+	if (ill_underwater == 2) {
+		mes "[Jerrymon]";
+		mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+		close;
+	}
+	if (ill_underwater == 3) {
+		if (countitem(25899) < 1) {
+			mes "[Jerrymon]";
+			mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "Ah, welcome, adventurer!";
+		next;
+		mes "[Jerrymon]";
+		mes "The investigation is going smoothly~";
+		mes "Hey, could you take a look at this?";
+		next;
+		mes "[Jerrymon]";
+		mes "See those two little water bottles here?";
+		next;
+		mes "[Jerrymon]";
+		mes "One side is normal seawater, and the other side is seawater mixed with seawater from the abyss buried in fishing rods. I'll try mixing these two.";
+		next;
+		mes " - Jerrymon poured both waters into one bottle and began to shake them together. - ";
+		next;
+		mes "[Jerrymon]";
+		mes "Now, look. As I said before, they don't mix at all, do they?";
+		next;
+		mes "[Jerrymon]";
+		mes "This... this!!";
+		next;
+		mes "[Jerrymon]";
+		mes "If you shake it like crazy!!";
+		next;
+		mes "[Jerrymon]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Wow!!!!!!</FONT></FONT></B>";
+		next;
+		mes "[Jerrymon]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Uwachachaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!</FONT></FONT></B>";
+		next;
+		mes "[Jerrymon]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Ahhhhhhh!!!!!!</FONT></FONT></B>";
+		next;
+		mes "[Jerrymon]";
+		mes "Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh...";
+		next;
+		select( "Oh, I'm going to catch someone, is it okay?" );
+		mes "[Jerrymon]";
+		mes "Keep... Whoa... Whoa... OK now.";
+		next;
+		mes "- Looking into the bottle Jerrymon is holding, I can clearly see the shape of the vortex. - ";
+		next;
+		mes "[Jerrymon]";
+		mes "Now, do you see this whirlpool!! This is the passage that connects to the bottom of the Bahia Trench!";
+		next;
+		select( "??? Isn't that just a whirlpool created by shaking it?" );
+		mes "[Jerrymon]";
+		mes "No. This is the stone that contains my magical power. Let's look at it.";
+		next;
+		mes " - Jerrymon put a glowing stone into the bottle. The glowing stone was sucked into the whirlpool inside the bottle and disappeared without a trace! - ";
+		next;
+		select( "No, how could it be?" );
+		mes "[Jerrymon]";
+		mes "Did I ever tell you that the stone that contains my magic can measure the distance to me?";
+		next;
+		mes "[Jerrymon]";
+		mes "It feels the same as the last time I threw a pebble into the Bahia Trench..";
+		mes "If you follow this whirlpool, you may be able to find the owner of the fishing rod.";
+		next;
+		mes "[Jerrymon]";
+		mes "The problem is... the amount of essence on a fishing rod can't make a whirlpool large enough for a person to fit in.";
+		next;
+		select( "Is this amount okay?" );
+		mes "- Showed the ^4d4dff" + getitemname(25899) + "^000000 received from Gein to Jerrymon. - ";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, just in case, I actually found it!";
+		next;
+		mes "[Jerrymon]";
+		mes "With this amount, I think I can create a vortex of fissures that normal people can enter. You can pass it to me.";
+		next;
+		mes "[Jerrymon]";
+		mes "The place is too small to do this much here, so let's do it in Izlude. In order to get help from your friends.";
+		mes "Then see you in Izlude!!";
+		close2;
+		delitem 25899,1;	// E_Abyss1
+		ill_underwater = 4;
+		erasequest 3408;
+		setquest 3409;
+		end;
+	}
+	if (ill_underwater == 4) {
+		mes "[Jerrymon]";
+		mes "Then let's meet in Izlude!!";
+		close;
+	}
+	mes "[Jerrymon]";
+	mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+	close;
+
+OnInit:
+	// note: no questinfo for 3407
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(3408) == 1" );
+	end;
+}
+
+
+izlude,126,53,0	script	Sirood#SRD1	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_underwater > 3)
+		cloakoffnpcself( "Jerrymon#jerry2" );
+	if (ill_underwater > 6)
+		cloakoffnpcself( "Sirood#SRD2" );
+	end;
+}
+izlude,132,54,0	duplicate(Sirood#SRD1)	Jerrymon#jerry1	HIDDEN_WARP_NPC,4,4
+
+izlude,126,53,4	script	Sirood#SRD2	1_M_04,{
+	mes "[Sirood]";
+	mes "Thank you very much, adventurer.";
+	next;
+	mes "[Sirood]";
+	mes "I thought I'd never come back...";
+	close;
+}
+
+izlude,129,49,4	script	Soup#Soup	1_M_02,{
+	if (ill_underwater < 5) {
+		mes "[Soup]";
+		mes "Hello, my name is Soup, a friend of Sirood who is missing.";
+		next;
+		mes "[Soup]";
+		mes "The four of us, Sirood, Raket, Gein, and I often enjoyed fishing.";
+		next;
+		mes "[Soup]";
+		mes "That windy day... I had been feeling very guilty for not stopping Sirood from going fishing.";
+		next;
+		mes "[Soup]";
+		mes "When I heard that Sirood's fishing pole was found, I jumped out.";
+		next;
+		mes "[Soup]";
+		mes "You must have a clue about something?";
+		close;
+	}
+	if (ill_underwater < 7) {
+		mes "[Soup]";
+		mes "I did my best.";
+		next;
+		mes "[Soup]";
+		mes "Should Sirood come back safely?";
+		close;
+	}
+	mes "[Soup]";
+	mes "Sirood is back with us.";
+	next;
+	mes "[Soup]";
+	mes "Thanks to you, adventurer. Thank you very much.";
+	close;
+}
+
+izlude,135,51,4	script	Raket#Raket	1_F_MERCHANT_01,{
+	if (ill_underwater < 5) {
+		mes "[Raket]";
+		mes "It's been exactly 3 months since Sirood went missing.";
+		next;
+		mes "[Raket]";
+		mes "Sirood's fishing rod was found.";
+		next;
+		mes "[Raket]";
+		mes "I felt that way.";
+		next;
+		select( "What do you think?" );
+		mes "[Raket]";
+		mes "Why is this only discovered now, isn't this a message from someone?";
+		next;
+		select( "Looking at it, it doesn't make sense." );
+		mes "[Raket]";
+		mes "Ha... It's just my delusion. I especially miss that child today.";
+		close;
+	}
+	if (ill_underwater < 7) {
+		mes "[Raket]";
+		mes "Heh heh... It's so hard to use all your strength...";
+		next;
+		mes "[Raket]";
+		mes "But for Sirood's sake...";
+		close;
+	}
+	mes "[Raket]";
+	mes "Thank you so much!!";
+	next;
+	mes "[Raket]";
+	mes "Now you can fish with Sirood again.";
+	next;
+	mes "[Raket]";
+	mes "I'm so glad...";
+	close;
+}
+
+izlude,132,49,5	script	Gein#Gein	4W_M_01,{
+	if (checkweight(1201,3) == 0) {
+		mes "You have too many items.";
+		mes "Please clean up your items and try again.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Gein]";
+		mes "Haha... why did this only get discovered now??";
+		mes "It's impossible, this is...";
+		next;
+		mes "- I feel serious anguish from this person. Let's come back after I've become level 140. -";
+		close;
+	}
+	if (ill_underwater == 0) {
+		mes "[Gein]";
+		mes "Haha...why did this only get discovered now??";
+		mes "It's impossible, this is...";
+		next;
+		select( "Do you have any concerns?" );
+		mes "[Gein]";
+		mes "Oh, hello...";
+		next;
+		mes "- He is very fidgety with a fishing pole in his hand. It doesn't look like he's out fishing. - ";
+		next;
+		mes "[Gein]";
+		mes "This fishing rod belongs to my friend <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Sirood</FONT></FONT></B> who went missing three months ago. I found something!!!";
+		next;
+		select( "Disappeared?" );
+		mes "[Gein]";
+		mes "Yes... Sirood is a fishing fanatic and came here to fish whenever he had a chance.";
+		next;
+		mes "[Gein]";
+		mes "Influenced by Sirood, we also fell in love with fishing, and the four of us often had a good time.";
+		next;
+		mes "[Gein]";
+		mes "Sirood's passion for fishing was to the point that he invited us to go fishing even in the rain and wind.";
+		next;
+		mes "[Gein]";
+		mes "The day Sirood went missing was exactly the same rainy and windy day. I put on my raincoat and went to go fishing.";
+		next;
+		mes "[Gein]";
+		mes "We were invited to go out together, but they all declined.";
+		next;
+		mes "[Gein]";
+		mes "Sirood went fishing alone and we haven't seen him since...";
+		next;
+		mes "[Gein]";
+		mes "I should have stopped you from leaving...";
+		next;
+		mes "- Gein started talking again after wiping away tears for a moment. -";
+		next;
+		mes "[Gein]";
+		mes "The news of Sirood's disappearance immediately spread throughout Izlude and a large-scale search was conducted with a lot of time and manpower invested, but the search ended without finding any clues.";
+		next;
+		mes "[Gein]";
+		mes "After that, we got together and ran everywhere to find Sirood, but there was no result, and we were about to give up.";
+		next;
+		mes "[Gein]";
+		mes "But just now!!";
+		next;
+		mes "[Gein]";
+		mes "After 3 months!!!";
+		next;
+		mes "[Gein]";
+		mes "Sirood's fishing pole has risen above sea level. His item was nowhere to be found during the search!";
+		next;
+		select( "Now, calm down... Are you sure it's Sirood's fishing rod?" );
+		mes "[Gein]";
+		mes "Yes, I'm sure! It's the fishing rod I've always seen.";
+		next;
+		mes "[Gein]";
+		mes "This fishing rod was made by Sirood himself, so it is the only one. You can see the initials on the handle here, S.R.D!!";
+		next;
+		select( "Oh, then why now..." );
+		mes "[Gein]";
+		mes "I'm so surprised and shocked right now that I don't know what to do.";
+		next;
+		mes "- But looking closely at the fishing rod, I feel something different. This wooden fishing rod has been submerged in water for 3 months, but it still looks the same, and I can see a bit of shiny gloss... -";
+		next;
+		select( "Isn't this fishing rod a bit strange over there?" );
+		mes "[Gein]";
+		mes "Strange, what is it?";
+		next;
+		mes "[Gein]";
+		mes "Uh...";
+		next;
+		mes "[Gein]";
+		mes "Uh.....??";
+		next;
+		mes "[Gein]";
+		mes "It's been submerged in water for 3 months... but it hasn't corroded at all. It's completely fine??";
+		next;
+		mes "[Gein]";
+		mes "Hmm... And it seems to have a subtle glow... It seems like the fishing rod is coated?";
+		next;
+		mes "-The person who seemed to be Gein's friend who was listening to the story opened his mouth. -";
+		next;
+		mes "[Raket]";
+		mes "Where is it, I want to see it!! What's wrong??";
+		next;
+		mes "[Gein]";
+		mes "This fishing rod... It was submerged in the water for 3 months, but it was found in its original form, or worse, in a state of disrepair.";
+		next;
+		mes "[Raket]";
+		mes "Ugh...";
+		next;
+		mes "[Raket]";
+		mes "Um...";
+		next;
+		mes "- Raket looked intently at his fishing pole, then answered Gein. -";
+		next;
+		mes "[Raket]";
+		mes "I'm not sure either?";
+		next;
+		mes "[Gein]";
+		mes "Certainly!! I don't know, but would you?";
+		next;
+		mes "[Raket]";
+		mes "Ummm... but I know someone who might know a little about this rod.";
+		next;
+		mes "[Gein]";
+		mes "Who??";
+		next;
+		select( "Who?" );
+		mes "[Raket]";
+		mes "His name is <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Jerrymon</FONT></FONT></B>, a marine scientist. I've met my father a few times. I know you are in the East Library of Prontera.";
+		next;
+		mes "[Gein]";
+		mes "Ah, ah... then... hey adventurer!! I'm sorry for the first meeting, but can I ask you a favor?? We can't get out of here in Izlude...";
+		next;
+		mes "[Gein]";
+		mes "Please go see Jerrymon and show him this fishing rod...even if it's trivial...I hope he has some information..";
+		next;
+		if (select( "Okay. Let's go.", "Sorry. I'm a bit busy right now..." ) == 2) {
+			mes "[Gein]";
+			mes "No... are you sure?";
+			next;
+			mes "[Gein]";
+			mes "Are you turning around after hearing about this heartbreaking story and mysterious clue...";
+			close;
+		}
+		mes "[Gein]";
+		mes "Ugh... Thanks!";
+		next;
+		mes "[Gein]";
+		mes "^4d4dffJerrymon^000000 should still be at the <NAVI>[East Library]<INFO>prontera,192,264,</INFO></NAVI> in Prontera.";
+		next;
+		mes "[Gein]";
+		mes "Now, I'll give you the fishing rod, a keepsake from Sirood. Thank you...";
+		next;
+		mes "[Raket]";
+		mes "What??? It's a keepsake!! You don't even know if Sirood is alive or dead!!";
+		next;
+		mes "[Gein]";
+		mes "Uhhh... yes I made a mistake, this is the fishing rod Sirood left behind. Please take good care of it.";
+		next;
+		mes "[Raket]";
+		mes "I'll tell Jerrymon about the contents in advance through my father!";
+		next;
+		mes "[Gein & Raket & Soup]";
+		mes "Thank you!!!";
+		close2;
+		getitem 25898,1;	// Siroods_Fish_Rod
+		ill_underwater = 1;
+		setquest 3407;
+		end;
+	}
+	if (ill_underwater == 1) {
+		mes "[Gein]";
+		mes "You can go to Prontera's <NAVI>[East Library]<INFO>prontera,192,264,</INFO></NAVI> as Raket told you.";
+		next;
+		mes "[Gein]";
+		mes "Take care of yourself!! I hope there is even the smallest clue...";
+		close;
+	}
+	if (ill_underwater == 2) {
+		mes "[Gein]";
+		mes "Ah, you're here!!!";
+		next;
+		mes "[Gein]";
+		mes "Do you have any information about Sirood?";
+		next;
+		mes "- I relayed what I heard from Jerrymon. -";
+		next;
+		mes "[Gein]";
+		mes "Ah... I see, I've never heard of a trench before.";
+		next;
+		mes "[Gein]";
+		mes "I can't believe there's such a big and deep trench near Izlude...";
+		next;
+		mes "[Gein]";
+		mes "Oh, by the way, is there anything else you need for coming back here?";
+		next;
+		select( "I was wondering if there was anything else found besides the fishing rod." );
+		mes "[Gein]";
+		mes "Oh right!!";
+		next;
+		mes "[Gein]";
+		mes "It's a chunk scooped up with a landing net near where the fishing rod was found.";
+		next;
+		mes " - This lump is what Jerrymon said.";
+		mes "^4d4dffIt must be the essence of the abyss^000000. - ";
+		next;
+		mes "[Gein]";
+		mes "Something shiny and has the same feeling of Sirood's fishing rod, so I secured it for now.";
+		mes "Could this nugget help?";
+		next;
+		select( "Thanks, that would be a great help." );
+		mes "[Gein]";
+		mes "Are you going back to Jerrymon? Please be careful.";
+		close2;
+		getitem 25899,1;	// E_Abyss1
+		ill_underwater = 3;
+		setquest 3408;
+		end;
+	}
+	if (ill_underwater == 3) {
+		mes "[Gein]";
+		mes "I hope Sirood will appear in front of us intact, just as the fishing rod appeared intact...";
+		next;
+		mes "[Gein]";
+		mes "Please let me know if you have any new information!";
+		close;
+	}
+	if (ill_underwater < 7) {
+		mes "[Gein]";
+		mes "Heh...heh...Hello adventurer, heh...heh... I'm so tired I can't move...";
+		close;
+	}
+	mes "[Gein]";
+	mes "Thank you, adventurer.";
+	next;
+	mes "[Gein]";
+	mes "To be able to meet Sirood again is like a dream.";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_underwater == 0" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "ill_underwater == 2" );
+	end;
+}
+
+izlude,132,54,4	script(CLOAKED)	Jerrymon#jerry2	1_M_01,{
+	if (ill_underwater < 4)
+		end;
+	if (ill_underwater == 4) {
+		mes "[Jerrymon]";
+		mes "Ah you're here!!";
+		next;
+		mes "[Jerrymon]";
+		mes "We are fully prepared while the adventurers are coming.";
+		next;
+		mes "- Gein gasps to say hello to his two friends. - ";
+		next;
+		mes "[Gein]";
+		mes "Ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha... ah, welcome adventurer.";
+		next;
+		mes "[Gein]";
+		mes "I'm not sure what the principle is, but I stirred it diligently as Jerrymon-sama told me to!!";
+		next;
+		mes "[Raket & Soup]";
+		mes "Hee... hee... hee... ah... hello.";
+		next;
+		mes "[Jerrymon]";
+		specialeffect EF_MAP_MAGICZONE3;
+		mes "Okay, shall we begin?";
+		next;
+		mes "[Jerrymon]";
+		mes "The whirlpool will be created soon.";
+		next;
+		mes "[Jerrymon]";
+		mes "Hold my hand when I give you a signal!!";
+		next;
+		select( "No, wait. Are you leaving right now?" );
+		mes "[Jerrymon]";
+		mes "Yes, yes, go ahead and don't think about it! Just trust me~~!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Okay now. Take my hand!";
+		next;
+		specialeffect EF_CASTSPIN2, AREA;
+		mes "[Jerrymon]";
+		mes "Wow! It spins round and round~~!!";
+		close2;
+		ill_underwater = 5;
+		erasequest 3409;
+		specialeffect EF_CASTSPIN2, AREA;
+		warp "iz_d04_i",130,227;
+		end;
+	}
+	mes "[Jerrymon]";
+	mes "Hello!!";
+	next;
+	mes "[Jerrymon]";
+	mes "Thanks to you, Adventurer, I am having a fun and exciting time every day.";
+	next;
+	mes "[Jerrymon]";
+	mes "Would you like to go to the deep sea again? I will follow you!!";
+	next;
+	if (select( "Please", "I'll go next time" ) == 2) {
+		mes "[Jerrymon]";
+		mes "Yeah... Then I'll be waiting for you.";
+		close;
+	}
+	mes "[Jerrymon]";
+	specialeffect EF_MAP_MAGICZONE3;
+	mes "Good.";
+	next;
+	specialeffect EF_CASTSPIN2;
+	mes "[Jerrymon]";
+	mes "Come on! Let's go~~!! Yay!!";
+	close2;
+	specialeffect EF_CASTSPIN2, AREA;
+	warp "iz_d04_i",130,227;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3409) == 1" );
+	end;
+}
+
+
+iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
+	if (checkweight(1201,3) == 0) {
+		mes "You have too many items.";
+		mes "Please clean up your items and try again.";
+		close;
+	}
+	if (ill_underwater < 5)
+		end;
+	if (ill_underwater == 5) {
+		switch( checkquest(3411,HUNTING) ) {
+		case -1:
+			mes "[Jerrymon]";
+			mes "Wow... this purple sea... it's fantastic!!!";
+			next;
+			mes "[Jerrymon]";
+			mes "It's so amazing that we can breathe without gills, there's no sea pressure, and even marine life that I've never seen before...!!!";
+			next;
+			mes "[Jerrymon]";
+			mes "There's more than one or two things to look into, I'll be busy.";
+			mes "Wow... so exciting!!! I think this is the most thrilling moment in my 14 years as an oceanographer!";
+			next;
+			mes "[Jerrymon]";
+			mes "Lululala~~~";
+			next;
+			select( "Oh hey, I'm here to find Sirood..." );
+			mes "[Jerrymon]";
+			mes "Ah, ah... that, right? That should take precedence.";
+			next;
+			mes "[Jerrymon]";
+			mes "In order to bring Sirood back ashore, we need an additional ^4d4dff" + getitemname(25899) + "^000000. The question is how to get it...";
+			next;
+			mes "[Jerrymon]";
+			mes "I've been watching the deep sea creatures here, and I've seen some of them glow with the essence of the abyss.";
+			mes "And they seem to threaten us sometimes.";
+			next;
+			mes "[Jerrymon]";
+			mes "In that sense, could you handle some of the deep sea creatures? Maybe we can get ^4d4dff" + getitemname(25899) + "^000000 from them.";
+			next;
+			mes "[Jerrymon]";
+			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
+			next;
+			if (select( "Okay", "I'll do it next time" ) == 2) {
+				mes "[Jerrymon]";
+				mes "Yes yes~ I'll be waiting for you here!";
+				close;
+			}
+			mes "[Jerrymon]";
+			mes "Yes yes~ I'll be waiting for you here!";
+			close2;
+			setquest 3411;
+			end;
+		case 0:
+		case 1:
+			mes "[Jerrymon]";
+			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
+			next;
+			mes "[Jerrymon]";
+			mes "I'll be waiting for you here.";
+			close;
+		case 2:
+			mes "[Jerrymon]";
+			mes "Thank you for your hard work, you also brought ^4d4dff" + getitemname(25899) + "^000000!! As expected, my prediction was correct.";
+			next;
+			mes "[Jerrymon]";
+			mes "It looks like we only need about 10 ^4d4dff" + getitemname(25899) + "^000000 to send Sirood back ashore.";
+			next;
+			mes "[Jerrymon]";
+			mes "If you collect them, I'll create a whirlpool for you.";
+			next;
+			mes "[Jerrymon]";
+			mes "Oh, and this is a stone I found while researching. I've been keeping it because it looks like something that could be used by adventurers, so please take it.";
+			next;
+			mes "[Jerrymon]";
+			mes "Then be careful!";
+			close2;
+			getitem 25271,2;	// IllusionStone
+			ill_underwater = 6;
+			erasequest 3411;
+			setquest 3412;
+			getexp 4441860,3109150;
+			end;
+		}
+		end;
+	}
+	if (ill_underwater == 6) {
+		if (countitem(25899) < 10) {
+			mes "[Jerrymon]";
+			mes "Please bring ^4d4dff10 " + getitemname(25899) + "^000000.";
+			next;
+			mes "[Jerrymon]";
+			mes "I'd like to save it myself, but as you can see I'm weak, heck.";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "Thank you for your hard work!! You brought 10 ^4d4dff" + getitemname(25899) + "^000000.";
+		next;
+		mes "[Jerrymon]";
+		mes "Would you like to go ashore now?";
+		next;
+		if (select( "Go ashore", "Not going up now" ) == 2) {
+			mes "[Jerrymon]";
+			mes "Talk to me when you're ready to go ashore!";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "I found this again while waiting for adventurer. Please accept it!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Okay, let's condense this...";
+		next;
+		mes "[Jerrymon]";
+		mes "Huh...!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Now, Adventurer and Sirood!! Can you help me?? Ehhh!!!!";
+		next;
+		mes "- A huge whirlpool was created in front of Jerrymon! -";
+		specialeffect EF_MAP_MAGICZONE3;
+		next;
+		mes "[Jerrymon]";
+		mes "Then I'll cross first!!! Follow me carefully!";
+		specialeffect EF_CASTSPIN2;
+		close2;
+		delitem 25899,10;	// E_Abyss1
+		ill_underwater = 7;
+		erasequest 3412;
+		if (isbegin_quest(3410) == 1)
+			erasequest 3410;
+		getitem 25271,2;	// IllusionStone
+		getexp 4441860,3109150;
+		warp "izlude",128,54;
+		end;
+	}
+
+	// daily
+	if (checkquest(3414,PLAYTIME) == 2 && checkquest(3416,PLAYTIME) == 2) {
+		mes "[Jerrymon]";
+		mes "I have everything I need for today's survey, thank you!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Looks like you've finished your business. Would you like to move to Izlude?";
+		next;
+		if (select( "Move", "Do not move" ) == 2) {
+			mes "[Jerrymon]";
+			mes "Please let me know if you need any help!";
+			close;
+		}
+		specialeffect EF_MAP_MAGICZONE3;
+		mes "[Jerrymon]";
+		mes "Okay, huh!";
+		next;
+		mes "[Jerrymon]";
+		mes "I'm going to cross~~ Ah!!";
+		specialeffect EF_CASTSPIN2;
+		close2;
+		warp "izlude",128,54;
+		end;
+	}
+	mes "[Jerrymon]";
+	mes "Hello, research is going well.";
+	next;
+	mes "[Jerrymon]";
+	mes "If we do well, we might be able to make the vortex linking here and Izlude last forever!";
+	next;
+	mes "[Jerrymon]";
+	mes "So, can you help me a bit more?";
+	next;
+	mes "[Jerrymon]";
+	mes "I need more ^4d4dff" + getitemname(25899) + "^000000, and I'd like you to take care of the ^4d4dffDeep Sea Creatures^000000 that get in the way of my research.";
+	next;
+	switch( select( "Okay", "I'll do it next time", "I want to go back to Izlude" ) ) {
+	case 1:
+		mes "[Jerrymon]";
+		mes "Thanks!! Can you do something for me?";
+		next;
+
+		switch( checkquest(3414,PLAYTIME) ) {
+		case -1:
+			switch( isbegin_quest(3413) ) {
+			case 0:
+				.@menu$[0] = "Collect " + getitemname(25899) + "";
+				break;
+			case 1:
+				if (countitem(25899) < 10)
+					.@menu$[0] = "Collecting " + getitemname(25899) + " - In Progress";
+				else
+					.@menu$[0] = "Collect " + getitemname(25899) + " - Done";
+				break;
+			case 2:
+				end;
+			}
+			break;
+		case 0:
+		case 1:
+			.@menu$[0] = "^999999" + getitemname(25899) + " Collection - Pending^000000";
+			break;
+		case 2:
+			break;
+		}
+
+		switch( checkquest(3416,PLAYTIME) ) {
+		case -1:
+			switch( checkquest(3415,HUNTING) ) {
+			case -1:
+				.@menu$[1] = "Kill Deep Sea Creatures";
+				break;
+			case 0:
+			case 1:
+				.@menu$[1] = "Kill sea creatures - In Progress";
+				break;
+			case 2:
+				.@menu$[1] = "Kill Deep Sea Creatures - Done";
+				break;
+			}
+			break;
+		case 0:
+		case 1:
+			.@menu$[1] = "^999999Deep Sea Creatures Killed - Pending^000000";
+			break;
+		case 2:
+			break;
+		}
+
+		switch( select( .@menu$[0], .@menu$[1], "Next time." ) ) {
+		case 1:
+			switch( checkquest(3414,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				end;	// todo
+			case 2:
+				erasequest 3414;
+				break;
+			}
+			switch( isbegin_quest(3413) ) {
+			case 0:
+				mes "[Jerrymon]";
+				mes "^4d4dff" + getitemname(25899) + "^000000 can be obtained from all the deep sea creatures here.";
+				mes "I need 10 right now.";
+				next;
+				mes "[Jerrymon]";
+				mes "Then take care of yourself~~!!";
+				close2;
+				setquest 3413;
+				end;
+			case 1:
+				if (countitem(25899) < 10) {
+					mes "[Jerrymon]";
+					mes "I need 10 ^4d4dff" + getitemname(25899) + "^000000.";
+					next;
+					mes "[Jerrymon]";
+					mes "Come back to me when you've collected all the essences!";
+					close;
+				}
+				mes "[Jerrymon]";
+				mes "You've collected all the " + getitemname(25899) + "!!";
+				next;
+				mes "[Jerrymon]";
+				mes "Thank you, I'll put it to good use in my research.";
+				close2;
+				delitem 25899,10;	// E_Abyss1
+				getexp 4441860,3109150;
+				erasequest 3413;
+				setquest 3414;
+				getitem 25271,1;	// IllusionStone
+				end;
+			case 2:
+				end;
+			}
+			end;
+		case 2:
+			switch( checkquest(3416,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				end;	// todo
+			case 2:
+				erasequest 3416;
+				break;
+			}
+			switch( checkquest(3415,HUNTING) ) {
+			case -1:
+				mes "[Jerrymon]";
+				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000 that roam around here.";
+				next;
+				mes "[Jerrymon]";
+				mes "Then take care of yourself~~!!";
+				close2;
+				setquest 3415;
+				end;
+			case 0:
+			case 1:
+				mes "[Jerrymon]";
+				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
+				close;
+			case 2:
+				mes "[Jerrymon]";
+				mes "You've finished dealing with all the deep sea creatures, thank you for your hard work.";
+				next;
+				mes "[Jerrymon]";
+				mes "I'll get back to you if I need help. Thanks!!";
+				close2;
+				getitem 25271,1;	// IllusionStone
+				getexp 4441860,3109150;
+				erasequest 3415;
+				setquest 3416;
+				end;
+			}
+			end;
+		case 3:
+			mes "[Jerrymon]";
+			mes "The only person I can ask for is you...";
+			next;
+			mes "[Jerrymon]";
+			mes "Feel free to tell me if you change your mind!!";
+			close;
+		}
+		end;
+	case 2:
+		mes "[Jerrymon]";
+		mes "I'll be staying here for a while, so let me know if you change your mind!!";
+		close;
+	case 3:
+		specialeffect EF_MAP_MAGICZONE3;
+		mes "[Jerrymon]";
+		mes "Okay, huh!";
+		next;
+		mes "[Jerrymon]";
+		mes "I'm going to cross~~ Ah!!";
+		specialeffect EF_CASTSPIN2;
+		close2;
+		warp "izlude",128,54;
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_underwater == 5 && checkquest(3411,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "ill_underwater == 5 && checkquest(3411,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(3412) == 1 && countitem(25899) >= 10" );
+
+	// daily
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ill_underwater == 7 && checkquest(3414,PLAYTIME) == -1 && isbegin_quest(3413) == 0" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3413) == 1 && countitem(25899) >= 10" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3414,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ill_underwater == 7 && checkquest(3416,PLAYTIME) == -1 && checkquest(3415,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3415,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3416,PLAYTIME) == 2" );
+	end;
+}
+
+
+iz_d04_i,134,223,4	script	Jane#Jane01	1_F_01,{
+	if (ill_underwater < 6) {
+		mes "[???]";
+		mes "Hello.";
+		next;
+		select( "Are you Sirood?" );
+		mes "[Jane]";
+		mes "No, my name is Jane.";
+		next;
+		mes "[Jane]";
+		mes "Sirood...?";
+		mes "I think I've heard that name somewhere...";
+		close;
+	}
+	mes "[Jane]";
+	mes "Hello, it looks like you've been here a while...";
+	next;
+	mes "[Jane]";
+	mes "How do you like it? Isn't this a pretty charming place too?";
+	next;
+	mes "[Jane]";
+	mes "I should go back to my hometown...";
+	close;
+}
+
+iz_d04_i,142,216,4	script	Sunrin#Sun01	4_F_03,{
+	if (ill_underwater < 6) {
+		mes "[???]";
+		mes "You said you were looking for someone named Sirood?";
+		next;
+		mes "[Sunrin]";
+		mes "My name is Sunrin.";
+		next;
+		mes "[Sunrin]";
+		mes "Sirood... ah, I think I know who it is.";
+		next;
+		mes "[Sunrin]";
+		mes "Go all the way to the left, and you'll find him.";
+		next;
+		mes "[Sunrin]";
+		mes "Then have a nice day today!!";
+		close;
+	}
+	mes "[Sunrin]";
+	mes "All the people here are immigrants and settlers.";
+	next;
+	mes "[Sunrin]";
+	mes "As you can see, there are traces of civilization in these depths, but everyone here was an outsider.";
+	next;
+	mes "[Sunrin]";
+	mes "You'll get used to it soon.";
+	next;
+	mes "[Sunrin]";
+	mes "Sea monsters do attack from time to time, but that's about it...";
+	close;
+}
+
+iz_d04_i,125,226,0	script	Sirood#SRD3	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_underwater < 7 && isbegin_quest(3410) == 0)
+		cloakoffnpcself( "Sirood#SRD4" );
+	end;
+}
+
+iz_d04_i,125,226,5	script(CLOAKED)	Sirood#SRD4	1_M_04,{
+	if (ill_underwater != 5 && ill_underwater != 6)
+		end;
+	switch( isbegin_quest(3410) ) {
+	case 0:
+		mes "[Sirood]";
+		mes "Hello, Adventurer.";
+		next;
+		mes " - Sirood greeted me as if he had been waiting. -";
+		next;
+		mes "[Sirood]";
+		mes "It looks like the message I sent reached Izlude, I'm so glad...";
+		next;
+		mes "[Sirood]";
+		mes "About 3 months ago... I went fishing on a rainy and windy day.";
+		next;
+		mes "[Sirood]";
+		mes "After I caught my first fish, I tripped and fell into the water while trying to get it out with a fishing pole.";
+		next;
+		mes "[Sirood]";
+		mes "I was trying to swim as hard as I could to get out, but I felt something pulling me in with great force.";
+		next;
+		mes "[Sirood]";
+		mes "What, it looked like a whirlpool... I thought I was going to die... and when I woke up, I found this place.";
+		next;
+		mes "[Sirood]";
+		mes "I don't know why I can't breathe or why I don't feel hungry even if I don't eat.";
+		next;
+		mes "[Sirood]";
+		mes "And observing the surroundings here, I could see small vortices forming occasionally.";
+		next;
+		mes "[Sirood]";
+		mes "I had a hunch that it was the same kind of whirlpool I was swept into.";
+		next;
+		mes "[Sirood]";
+		mes "The duration of the vortex is very short. It took me 2 months just to put my fishing rod with my name on it into the vortex.";
+		next;
+		mes "[Sirood]";
+		mes "Waiting for someone to discover...";
+		next;
+		mes "[Sirood]";
+		mes "Are you sure you came to me with that fishing rod as a clue?";
+		next;
+		select( "That's right" );
+		mes "[Sirood]";
+		mes "Ah, that's a relief... I'd appreciate it if you could take me with you when you return ashore.";
+		next;
+		mes "- I think we should talk to Jerrymon about the work to send Sirood ashore. - ";
+		close2;
+		setquest 3410;
+		end;
+	case 1:
+		mes "[Sirood]";
+		mes "Adventurer, please take me with you when you return ashore.";
+		close;
+	case 2:
+		end;
+	}
+	end;
+}
+
+iz_d04_i,146,226,4	script	Nick#Nick01	2_M_SAGE_B,{
+	mes "[Nick]";
+	mes "How is it? Is it worth living here?";
+	next;
+	mes "[Nick]";
+	mes "It's deeper here than anywhere else, and it's amazing to be able to breathe freely.";
+	mes "I'm not sure how that works.";
+	close;
+}
+
+
+// Floor 2
+iz_d04_i,129,232,5	script	Gatekeeper#guard1	4_M_KY_SOLD,{
+	if (BaseLevel < 180) {
+		mes "[Gatekeeper]";
+		mes "Your strength isn't enough to cross to the lower levels.";
+		//close;	// close is used on official
+		next;
+		mes "[Gatekeeper]";
+		mes "Please come back after you are at least level 180.";
+		close;
+	}
+	mes "[Gatekeeper]";
+	mes "If you go downstairs, you will run into some pretty vicious fish. Would that be alright?";
+	next;
+	if (select( "Sure", "I'll come next time" ) == 1) {
+		mes "[Gatekeeper]";
+		mes "Please talk to me again when you are ready to cross.";
+		close;
+	}
+	mes "[Gatekeeper]";
+	mes "Then be careful.";
+	close2;
+	warp "iz_d05_i",141,186;
+	end;
+}
+
+iz_d05_i,141,188,5	script	Guardian#guard2	4_M_KY_SOLD,{
+	mes "[Gatekeeper]";
+	mes "Hello, would you like to go upstairs again?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Gatekeeper]";
+		mes "Please talk to me again when you are ready to cross.";
+		close;
+	}
+	mes "[Gatekeeper]";
+	mes "Then be careful.";
+	close2;
+	warp "iz_d04_i",129,227;
+	end;
+}
+
+iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
+	if (checkweight(1201,3) == 0) {
+		mes "You have too many items.";
+		mes "Please clean up your items and try again.";
+		close;
+	}
+	if (BaseLevel < 180)
+		end;
+	if (ill_underwater < 5)
+		end;
+	if (checkquest(3418,PLAYTIME) == 2 && checkquest(3420,PLAYTIME) == 2) {
+		mes "[Kena]";
+		mes "Thank you for your hard work. Take a good rest today and visit us tomorrow.";
+		close;
+	}
+	mes "[Kena]";
+	mes "Hello, Adventurer.";
+	next;
+	mes "[Kena]";
+	mes "I heard that there are many dangerous deep-sea creatures in the lower layer, but when I came here, they were more dangerous than I thought.";
+	next;
+	mes "[Kena]";
+	mes "Not too long ago, there was a lot of uproar when a creature from the lower layer came up to the upper layer.";
+	next;
+	mes "[Kena]";
+	mes "The population of deep sea creatures is increasing. Adventurer, may I ask for your help?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Kena]";
+		mes "Oops...";
+		next;
+		mes "[Kena]";
+		mes "It would be dangerous if left unattended...";
+		close;
+	}
+	mes "[Kena]";
+	mes "Thank you, I'd appreciate it if you could help me defeat the deep sea creatures or fishmen.";
+	next;
+	mes "[Kena]";
+	mes "What would you like to do?";
+	next;
+	.@menu$[0] = callsub( S_Quest, "Kill Deep Sea Creatures", 3418,3417 );
+	.@menu$[1] = callsub( S_Quest, "Destroy the Deep Sea Fishmen", 3420,3419 );
+
+	switch( select( .@menu$[0], .@menu$[1], "Next time." ) ) {
+	case 1:
+		switch( checkquest(3418,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "I think this is enough for today, please come back tomorrow.";
+			close;
+		case 2:
+			erasequest 3418;
+			break;
+		}
+		switch( checkquest(3417,HUNTING) ) {
+		case -1:
+			mes "[Kena]";
+			mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SWORD_FISH", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_PHEN", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_KING_DRAMOH", MOB_NAME) + "^000000.";
+			next;
+			mes "[Kena]";
+			mes "These monsters are quite ferocious, so be very careful.";
+			next;
+			mes "[Kena]";
+			mes "Thank you.";
+			close2;
+			setquest 3417;
+			end;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "^4d4dff" + getmonsterinfo("ILL_SWORD_FISH", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_PHEN", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_KING_DRAMOH", MOB_NAME) + "^000000.";
+			next;
+			mes "[Kena]";
+			mes "Please kill 10 of each.";
+			close;
+		case 2:
+			mes "[Kena]";
+			mes "They've all been eliminated, thank you for your hard work.";
+			next;
+			mes "[Kena]";
+			mes "If you have time, please come back tomorrow. I'll be waiting for you.";
+			close2;
+			getitem 25271,1;	// IllusionStone
+			getexp 20107500,14075250;
+			erasequest 3417;
+			setquest 3418;
+			end;
+		}
+		end;
+	case 2:
+		switch( checkquest(3420,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "I think this is enough for today, please come back tomorrow.";
+			close;
+		case 2:
+			erasequest 3420;
+			break;
+		}
+		switch( checkquest(3419,HUNTING) ) {
+		case -1:
+			mes "[Kena]";
+			mes "Please take out 15 ^4d4dff" + getmonsterinfo("ILL_SEDORA", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_STROUF", MOB_NAME) + "^000000 each.";
+			next;
+			mes "[Kena]";
+			mes "They are quite annoying, so be careful.";
+			close2;
+			setquest 3419;
+			end;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "Please take out 15 ^4d4dff" + getmonsterinfo("ILL_SEDORA", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_STROUF", MOB_NAME) + "^000000 each.";
+			close;
+		case 2:
+			mes "[Kena]";
+			mes "They've all been eliminated, thank you for your hard work.";
+			next;
+			mes "[Kena]";
+			mes "Please drop by tomorrow when the time is right. I'll be waiting for you.";
+			close2;
+			getitem 25271,1;	// IllusionStone
+			getexp 20107500,14075250;
+			setquest 3420;
+			erasequest 3419;
+			end;
+		}
+		end;
+	case 3:
+		mes "[Kena]";
+		mes "Oops...";
+		next;
+		mes "[Kena]";
+		mes "It would be dangerous if left unattended...";
+		close;
+	}
+	end;
+
+S_Quest:
+	switch( checkquest(getarg(1),PLAYTIME) ) {
+	case -1:
+		switch( checkquest(getarg(2),HUNTING) ) {
+		case -1:
+			.@string$ = getarg(0);
+			break;
+		case 0:
+		case 1:
+			.@string$ = getarg(0) + " - In Progress";
+			break;
+		case 2:
+			.@string$ = getarg(0) + " - Done";
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		.@string$ = "^999999" + getarg(0) + " - Pending^000000";
+		break;
+	case 2:
+		.@string$ = getarg(0);
+		break;
+	}
+	return .@string$;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3418,PLAYTIME) == -1 && checkquest(3417,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3417,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3418,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3420,PLAYTIME) == -1 && checkquest(3419,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3419,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3420,PLAYTIME) == 2" );
+	end;
 }
