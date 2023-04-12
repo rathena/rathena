@@ -94026,28 +94026,467 @@ Body:
     DamageMotion: 384
     Modes:
       NoRandomWalk: true
-#  - Id: 20270
-#    AegisName: ILL_TRI_JOINT
-#  - Id: 20271
-#    AegisName: ILL_STALACTIC_GOLEM
-#  - Id: 20272
-#    AegisName: ILL_MEGALITH
-#  - Id: 20273
-#    AegisName: ILL_TAO_GUNKA
-#  - Id: 20274
-#    AegisName: ILL_STONE_SHOOTER
-#  - Id: 20275
-#    AegisName: ILL_WOOTAN_SHOOTER
-#  - Id: 20276
-#    AegisName: ILL_WOOTAN_FIGHTER
-#  - Id: 20277
-#    AegisName: ILL_WOOTAN_DEFENDER
-#  - Id: 20278
-#    AegisName: G_ILL_MEGALITH
-#  - Id: 20279
-#    AegisName: G_ILL_WOOTAN_SHOOTER
-#  - Id: 20280
-#    AegisName: G_ILL_WOOTAN_FIGHTER
+  - Id: 20270
+    AegisName: ILL_TRI_JOINT
+    Name: Ancient Tri Joint
+    Level: 164
+    Hp: 694500
+    BaseExp: 75839
+    JobExp: 56880
+    Attack: 2105
+    Attack2: 498
+    Defense: 144
+    MagicDefense: 5
+    Str: 77
+    Agi: 88
+    Vit: 70
+    Int: 55
+    Dex: 145
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 860
+    AttackMotion: 660
+    DamageMotion: 624
+    Ai: 07
+    Drops:
+      - Item: Cyfar
+        Rate: 1500
+      - Item: Solid_Shell
+        Rate: 550
+      - Item: Aloebera
+        Rate: 100
+      - Item: Yellow_Live
+        Rate: 80
+      - Item: Sparkling_Dust
+        Rate: 70
+      - Item: Token_Of_Bigstone
+        Rate: 250
+      - Item: Weak_Worm
+        Rate: 1000
+      - Item: Ancient_Trijoint_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20271
+    AegisName: ILL_STALACTIC_GOLEM
+    Name: Ancient Stalactic Golem
+    Level: 167
+    Hp: 725400
+    BaseExp: 79214
+    JobExp: 59410
+    Attack: 2923
+    Attack2: 521
+    Defense: 412
+    MagicDefense: 5
+    Str: 105
+    Agi: 98
+    Vit: 122
+    Int: 45
+    Dex: 158
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 632
+    AttackMotion: 518
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Hard_Mud
+        Rate: 1000
+      - Item: Brigan
+        Rate: 2425
+      - Item: Star_Crumb
+        Rate: 125
+      - Item: Great_Nature
+        Rate: 15
+      - Item: Elunium_Stone
+        Rate: 125
+      - Item: Tablet
+        Rate: 10
+      - Item: Token_Of_Bigstone
+        Rate: 250
+      - Item: Ancient_Sta_Golem_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20272
+    AegisName: ILL_MEGALITH
+    Name: Ancient Megalith
+    Level: 166
+    Hp: 708500
+    BaseExp: 77368
+    JobExp: 58026
+    Attack: 2877
+    Attack2: 511
+    Defense: 188
+    MagicDefense: 18
+    Str: 104
+    Agi: 111
+    Vit: 89
+    Int: 55
+    Dex: 214
+    Luk: 42
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1332
+    AttackMotion: 1332
+    DamageMotion: 672
+    Ai: 10
+    Drops:
+      - Item: Zargon
+        Rate: 1500
+      - Item: Stone
+        Rate: 700
+      - Item: Elunium_Stone
+        Rate: 104
+      - Item: Elunium
+        Rate: 31
+      - Item: Token_Of_Bigstone
+        Rate: 250
+      - Item: Pot_Stone
+        Rate: 1000
+      - Item: Ancient_Megalith_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20273
+    AegisName: ILL_TAO_GUNKA
+    Name: Ancient Tao Gunka
+    Level: 169
+    Hp: 19280000
+    BaseExp: 4001752
+    JobExp: 3001314
+    Attack: 5070
+    Attack2: 3028
+    Defense: 905
+    MagicDefense: 143
+    Str: 180
+    Agi: 216
+    Vit: 100
+    Int: 111
+    Dex: 212
+    Luk: 42
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 288
+    DamageMotion: 144
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Gemstone
+        Rate: 2425
+      - Item: Fragment_Of_Rock
+        Rate: 2425
+      - Item: Golden_Jewel
+        Rate: 500
+      - Item: Runstone_Rare
+        Rate: 100
+      - Item: Goibne's_Armor
+        Rate: 100
+      - Item: Goibne's_Shoulder_Arms
+        Rate: 100
+      - Item: Token_Of_Bigstone
+        Rate: 1250
+      - Item: Ancient_Tao_Gunka_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20274
+    AegisName: ILL_STONE_SHOOTER
+    Name: Ancient Stone Shooter
+    Level: 166
+    Hp: 692500
+    BaseExp: 75621
+    JobExp: 56716
+    Attack: 2711
+    Attack2: 510
+    Defense: 184
+    MagicDefense: 15
+    Str: 98
+    Agi: 86
+    Vit: 68
+    Int: 44
+    Dex: 215
+    Luk: 54
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 2413
+    AttackMotion: 1248
+    DamageMotion: 768
+    Ai: 04
+    Drops:
+      - Item: Solid_Twig
+        Rate: 2500
+      - Item: Log
+        Rate: 2500
+      - Item: Browny_Root
+        Rate: 500
+      - Item: Wooden_Block
+        Rate: 1000
+      - Item: Oridecon_Stone
+        Rate: 50
+      - Item: Hair_Leaf
+        Rate: 1000
+      - Item: Token_Of_Wootan
+        Rate: 250
+      - Item: Ancient_S_Shooter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20275
+    AegisName: ILL_WOOTAN_SHOOTER
+    Name: Ancient Wootan Shooter
+    Level: 164
+    Hp: 702100
+    BaseExp: 76669
+    JobExp: 57502
+    Attack: 2460
+    Attack2: 517
+    Defense: 142
+    MagicDefense: 21
+    Str: 90
+    Agi: 97
+    Vit: 74
+    Int: 53
+    Dex: 220
+    Luk: 45
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 857
+    AttackMotion: 1056
+    DamageMotion: 576
+    Ai: 05
+    Drops:
+      - Item: Air_Rifle
+        Rate: 2250
+      - Item: Flexible_String
+        Rate: 1750
+      - Item: Shooting_Stone
+        Rate: 1000
+      - Item: Hunter_Bow
+        Rate: 10
+      - Item: Cacao
+        Rate: 750
+      - Item: Elder_Branch
+        Rate: 50
+      - Item: Token_Of_Wootan
+        Rate: 250
+      - Item: Ancient_W_Shooter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20276
+    AegisName: ILL_WOOTAN_FIGHTER
+    Name: Ancient Wootan Fighter
+    Level: 167
+    Hp: 725500
+    BaseExp: 79225
+    JobExp: 59418
+    Attack: 3062
+    Attack2: 538
+    Defense: 205
+    MagicDefense: 8
+    Str: 110
+    Agi: 115
+    Vit: 90
+    Int: 42
+    Dex: 158
+    Luk: 42
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 912
+    AttackMotion: 1344
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Wootan_F_Fur
+        Rate: 1000
+      - Item: Shoulder_Protection
+        Rate: 2000
+      - Item: Elder_Branch
+        Rate: 50
+      - Item: Great_Leaf
+        Rate: 500
+      - Item: Banana
+        Rate: 500
+      - Item: IllusoryStone
+        Rate: 10
+      - Item: Token_Of_Wootan
+        Rate: 250
+      - Item: Ancient_W_Fighter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20277
+    AegisName: ILL_WOOTAN_DEFENDER
+    Name: Ancient Wootan Defender
+    Level: 169
+    Hp: 20154000
+    BaseExp: 4001552
+    JobExp: 3001164
+    Attack: 2535
+    Attack2: 3101
+    Defense: 874
+    MagicDefense: 143
+    Str: 90
+    Agi: 198
+    Vit: 102
+    Int: 105
+    Dex: 215
+    Luk: 165
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 288
+    DamageMotion: 144
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Wootan_D_S_Piece
+        Rate: 2250
+      - Item: Shoulder_Protection
+        Rate: 2250
+      - Item: Elder_Branch
+        Rate: 50
+      - Item: Great_Leaf
+        Rate: 500
+      - Item: Goibne's_Combat_Boots
+        Rate: 100
+      - Item: Goibne's_Helmet
+        Rate: 100
+      - Item: Token_Of_Wootan
+        Rate: 1250
+      - Item: Ancient_W_Deffend_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20278
+    AegisName: G_ILL_MEGALITH
+    Name: Ancient Megalith
+    Level: 166
+    Hp: 708500
+    Attack: 2877
+    Attack2: 511
+    Defense: 188
+    MagicDefense: 18
+    Str: 104
+    Agi: 111
+    Vit: 89
+    Int: 55
+    Dex: 214
+    Luk: 42
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1332
+    AttackMotion: 1332
+    DamageMotion: 672
+    Ai: 24
+  - Id: 20279
+    AegisName: G_ILL_WOOTAN_SHOOTER
+    Name: Ancient Wootan Shooter
+    Level: 164
+    Hp: 702100
+    Attack: 2460
+    Attack2: 517
+    Defense: 142
+    MagicDefense: 21
+    Str: 90
+    Agi: 97
+    Vit: 74
+    Int: 53
+    Dex: 220
+    Luk: 45
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 857
+    AttackMotion: 1056
+    DamageMotion: 576
+    Ai: 24
+  - Id: 20280
+    AegisName: G_ILL_WOOTAN_FIGHTER
+    Name: Ancient Wootan Fighter
+    Level: 167
+    Hp: 725500
+    Attack: 3062
+    Attack2: 538
+    Defense: 250
+    MagicDefense: 8
+    Str: 110
+    Agi: 115
+    Vit: 90
+    Int: 42
+    Dex: 158
+    Luk: 42
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 912
+    AttackMotion: 1344
+    DamageMotion: 480
+    Ai: 24
 #  - Id: 20281
 #    AegisName: E_DANDY_STAR
 #  - Id: 20282
