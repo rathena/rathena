@@ -653,7 +653,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			bool gradeExists = grade != nullptr;
 
 			if( !gradeExists ){
-				if( !this->nodesExist( gradeNode, { "Refine", "Chances", "Options" } ) ){
+				if( !this->nodesExist( gradeNode, { "Chances", "Options" } ) ){
 					return 0;
 				}
 
