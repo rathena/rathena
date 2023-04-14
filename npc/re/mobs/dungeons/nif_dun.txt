@@ -1,0 +1,18 @@
+//===== rAthena Script =======================================
+//= Niflheim dungeon Monsters Spawn Script
+//===== Description: =========================================
+//= Spawns monsters in nif_dun.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+nif_dun01	monster	Gan Ceann	GAN_CEANN,60
+nif_dun01	monster	Brutal Murderer	BRUTAL_MURDERER,60
+nif_dun01	monster	Ghost Cube	GHOST_CUBE,60
+nif_dun01	monster	Lude Gal	LUDE_GAL,60
+
+nif_dun02	monster	Disguiser	DISGUISER,80
+nif_dun02	monster	Grote	GROTE,80
+nif_dun02	monster	Pierrotzoist	PIERROTZOIST,80
+nif_dun02	monster	Blue Moon Loli Ruri	BLUEMOON_LOLI_RURI,80
+nif_dun02	boss_monster	Death Witch	DEATH_WITCH,1,21600000,600000,0

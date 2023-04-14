@@ -10,6 +10,9 @@
 //= 1.1 Script & function cleanup [Everade]
 //= 1.2 Added Illusion of Vampire [Capuche]
 //= 1.3 Added Illusion of Frozen [Capuche]
+//= 1.4 Added Illusion of Turtle [Capuche]
+//= 1.5 Added Illusion of Luanda [Capuche]
+//= 1.6 Added Illusion of Underwater [Capuche]
 //============================================================
 
 //============================================================
@@ -2399,7 +2402,7 @@ OnInit:
 }
 
 // Jubilee Is the Priest's Name
-gef_d01_i,93,178,5	script	Marina#ilgf03	4_F_MONK,5,5,{
+gef_d01_i,93,178,5	script(CLOAKED)	Marina#ilgf03	4_F_MONK,5,5,{
 	end;
 OnTouch:
 	if (ill_vampire == 6) {
@@ -2425,9 +2428,6 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,127,153,5	duplicate(Marina#ilgf03)	Marina#ilgf04	4_F_MONK,5,5
 gef_d01_i,213,237,5	duplicate(Marina#ilgf03)	Marina#ilgf05	4_F_MONK,5,5
@@ -2450,7 +2450,7 @@ gef_d01_i,254,162,1	duplicate(dummy_cloaked_npc)	Undead#ilgf08	ILL_ZOMBIE
 gef_d01_i,252,160,1	duplicate(dummy_cloaked_npc)	Undead#ilgf09	ILL_ZOMBIE
 gef_d01_i,253,165,3	duplicate(dummy_cloaked_npc)	Marina#ilgf10	4_F_MONK
 
-gef_d01_i,250,164,5	script	Priest#ilgf01	4_M_MINISTER,5,5,{
+gef_d01_i,250,164,5	script(CLOAKED)	Priest#ilgf01	4_M_MINISTER,5,5,{
 	if (ill_vampire != 6)
 		end;
 	.@char_id = .@char_id;
@@ -2625,10 +2625,6 @@ OnTouch:
 	if (ill_vampire == 6)
 		npctalk "This is bad, really bad!", "", bc_self;
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 /*
@@ -2639,7 +2635,7 @@ gef_d01_i,113,97,7	duplicate(dummy_npc)	Wizard#ilgf05	2_M_SAGE_B,5,5
 gef_d01_i,116,96,1	duplicate(dummy_npc)	Undead#ilgf07	GHOUL
 */
 
-gef_d01_i,49,113,3	script	Wizard#ilgf06	4_GEFFEN_01,5,5,{
+gef_d01_i,49,113,3	script(CLOAKED)	Wizard#ilgf06	4_GEFFEN_01,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2663,15 +2659,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf06" );
 	cloakonnpcself( "Wizard#ilgf07" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,46,112,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf07	4_M_ARUNA_NFM1
 gef_d01_i,47,110,7	duplicate(dummy_cloaked_npc)	Undead#ilgf06	GHOUL
 
 
-gef_d01_i,137,60,3	script	Wizard#ilgf08	1_M_WIZARD,5,5,{
+gef_d01_i,137,60,3	script(CLOAKED)	Wizard#ilgf08	1_M_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2687,14 +2680,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf08" );
 	cloakonnpcself( "Nameless Catacomb#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,136,58,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf01	4_SOIL
 
 
-gef_d01_i,67,85,5	script	Wizard#ilgf09	4_M_JOB_WIZARD,5,5,{
+gef_d01_i,67,85,5	script(CLOAKED)	Wizard#ilgf09	4_M_JOB_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2720,14 +2710,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf09" );
 	cloakonnpcself( "Wizard#ilgf10" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,67,83,1	duplicate(dummy_cloaked_npc)	Wizard#ilgf10	4_GEFFEN_05
 
 
-gef_d01_i,156,234,3	script	Wizard#ilgf11	4_M_SIT_NOVICE,5,5,{
+gef_d01_i,156,234,3	script(CLOAKED)	Wizard#ilgf11	4_M_SIT_NOVICE,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2743,13 +2730,10 @@ OnTouch:
 	specialeffect EF_GUARD2;
 	cloakonnpcself( "Wizard#ilgf11" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
-gef_d01_i,48,255,5	script	Wizard#ilgf12	1_M_WIZARD,5,5,{
+gef_d01_i,48,255,5	script(CLOAKED)	Wizard#ilgf12	1_M_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2774,15 +2758,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf13" );
 	cloakonnpcself( "Nameless Catacomb#ilgf02" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,50,257,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf13	2_F_MAGICMASTER
 gef_d01_i,50,254,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf02	4_SOIL
 
 
-gef_d01_i,112,267,3	script	Wizard#ilgf14	4_M_JOB_WIZARD,5,5,{
+gef_d01_i,112,267,3	script(CLOAKED)	Wizard#ilgf14	4_M_JOB_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2807,15 +2788,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf15" );
 	cloakonnpcself( "Nameless Catacomb#ilgf03" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,110,266,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf15	4_M_ARUNA_NFM1
 gef_d01_i,111,264,5	duplicate(dummy_cloaked_npc)	Nameless Catacomb#ilgf03	4_SOIL
 
 
-gef_d01_i,55,167,3	script	Wizard#ilgf16	4_M_ARUNA_NFM1,5,5,{
+gef_d01_i,55,167,3	script(CLOAKED)	Wizard#ilgf16	4_M_ARUNA_NFM1,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2831,14 +2809,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf16" );
 	cloakonnpcself( "Wizard#ilgf17" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,53,166,7	duplicate(dummy_cloaked_npc)	Wizard#ilgf17	2_F_MAGICMASTER
 
 
-gef_d01_i,236,235,1	script	Wizard#ilgf18	1_M_WIZARD,5,5,{
+gef_d01_i,236,235,1	script(CLOAKED)	Wizard#ilgf18	1_M_WIZARD,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2854,14 +2829,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf18" );
 	cloakonnpcself( "Someone's Dream#ilgf18" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,233,237,5	duplicate(dummy_cloaked_npc)	Someone's Dream#ilgf18	NIGHTMARE
 
 
-gef_d01_i,255,201,5	script	Wizard#ilgf19	4_GEFFEN_05,5,5,{
+gef_d01_i,255,201,5	script(CLOAKED)	Wizard#ilgf19	4_GEFFEN_05,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2883,15 +2855,12 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf20" );
 	cloakonnpcself( "Undead#ilgf05" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,254,200,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf20	2_F_MAGICMASTER
 gef_d01_i,256,198,1	duplicate(dummy_cloaked_npc)	Undead#ilgf05	GHOUL
 
 
-gef_d01_i,204,146,1	script	Wizard#ilgf21	4_GEFFEN_05,5,5,{
+gef_d01_i,204,146,1	script(CLOAKED)	Wizard#ilgf21	4_GEFFEN_05,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2920,9 +2889,6 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf21" );
 	cloakonnpcself( "Wizard#ilgf22" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,202,149,5	duplicate(dummy_cloaked_npc)	Wizard#ilgf22	4_M_ARUNA_NFM1
 gef_d01_i,202,152,5	duplicate(dummy_cloaked_npc)	Undead#ilgf02	GHOUL
@@ -2930,7 +2896,7 @@ gef_d01_i,200,151,5	duplicate(dummy_cloaked_npc)	Undead#ilgf03	ZOMBIE
 gef_d01_i,204,151,3	duplicate(dummy_cloaked_npc)	Undead#ilgf04	GHOUL
 
 
-gef_d01_i,257,110,1	script	Wizard#ilgf23	4_F_BOMI,5,5,{
+gef_d01_i,257,110,1	script(CLOAKED)	Wizard#ilgf23	4_F_BOMI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2948,14 +2914,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf23" );
 	cloakonnpcself( "Fast Undead#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,253,112,5	duplicate(dummy_cloaked_npc)	Fast Undead#ilgf01	GHOUL
 
 
-gef_d01_i,230,76,3	script	Wizard#ilgf24	4_M_BIBI,5,5,{
+gef_d01_i,230,76,3	script(CLOAKED)	Wizard#ilgf24	4_M_BIBI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -2973,14 +2936,11 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf24" );
 	cloakonnpcself( "Shining Mushroom#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,228,75,3	duplicate(dummy_cloaked_npc)	Shining Mushroom#ilgf01	ILL_BLACK_MUSHROOM
 
 
-gef_d01_i,93,34,1	script	Wizard#ilgf25	4_F_BOMI,5,5,{
+gef_d01_i,93,34,1	script(CLOAKED)	Wizard#ilgf25	4_F_BOMI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -3006,16 +2966,13 @@ OnTouch:
 	cloakonnpcself( "Wizard#ilgf26" );
 	cloakonnpcself( "Undead#ilgf01" );
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 gef_d01_i,94,37,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf26	1_M_WIZARD
 gef_d01_i,91,35,5	duplicate(dummy_cloaked_npc)	Undead#ilgf01	GHOUL
 
 // gef_d01_i,101,124,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf27	4_F_BOMI,5,5	// npc has official range. Effect ?
 gef_d01_i,101,124,3	duplicate(dummy_cloaked_npc)	Wizard#ilgf27	4_F_BOMI
-gef_d01_i,99,122,7	script	Wizard#ilgf28	4_F_BOMI,5,5,{
+gef_d01_i,99,122,7	script(CLOAKED)	Wizard#ilgf28	4_F_BOMI,5,5,{
 	end;
 OnTouch:
 	setpcblock PCBLOCK_NPC, true;
@@ -3037,9 +2994,6 @@ OnTouch:
 	specialeffect EF_GUARD2, AREA, "Wizard#ilgf28";
 	cloakonnpcself( "Wizard#ilgf27" );
 	cloakonnpcself( "Wizard#ilgf28" );
-	end;
-OnInit:
-	cloakonnpc();
 	end;
 }
 // End of the "Wizard illusions"
@@ -4601,7 +4555,7 @@ OnInit:
 	end;
 }
 
-gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
+gef_d01_i,189,98,3	script(CLOAKED)	Dracula#ilgf02	4_DRACULA,{
 	if (ill_vampire < 10) {
 		mes "[Dracula]";
 		mes "What brings you? I suggest you stay away out of this place.";
@@ -4863,9 +4817,6 @@ gef_d01_i,189,98,3	script	Dracula#ilgf02	4_DRACULA,{
 	mes "[Dracula]";
 	mes "The bat blood she drinks sometimes causes her to go out of her mind. She calms down after a while, but if the people from the Church see her in that vulnerable state, they will try to kill her.";
 	close;
-OnInit:
-	cloakonnpc();
-	end;
 }
 
 
@@ -4979,7 +4930,7 @@ OnTouch:
 	end;
 }
 
-ice_d03_i,155,43,3	script	Zeith#frozen01	4_M_FROZEN_GC,{
+ice_d03_i,155,43,3	script(CLOAKED)	Zeith#frozen01	4_M_FROZEN_GC,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
 		mes "I'm carrying too many types of items. I should lighten my bag first.";
 		close;
@@ -5323,13 +5274,9 @@ ice_d03_i,155,43,3	script	Zeith#frozen01	4_M_FROZEN_GC,{
 		close;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ice_d03_i,155,43,3	script	Zeith#frozen02	4_M_GUILLOTINE,{
+ice_d03_i,155,43,3	script(CLOAKED)	Zeith#frozen02	4_M_GUILLOTINE,{
 	if (illusion_frozen == 3) {
 		if (checkquest(15112,HUNTING) == 2) {
 			mes "[^0000ffZeith^000000]";
@@ -5468,13 +5415,9 @@ OnZeithDead:
 		specialeffect EF_ICECRASH;
 	}
 	end;
-
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ice_d03_i,150,43,5	script	Vrid#frozen01	4_M_FROZEN_KN,{
+ice_d03_i,150,43,5	script(CLOAKED)	Vrid#frozen01	4_M_FROZEN_KN,{
 	if (illusion_frozen == 3) {
 		if (checkquest(15112,HUNTING) == 2) {
 			cloakoffnpcself( "Zeith#frozen02" );
@@ -5489,21 +5432,15 @@ ice_d03_i,150,43,5	script	Vrid#frozen01	4_M_FROZEN_KN,{
 		close;
 	}
 	end;
-OnInit:
-	cloakonnpc();
-	end;
 }
 
-ice_d03_i,150,43,5	script	Vrid#frozen02	4_M_KNIGHT_BLACK,{
+ice_d03_i,150,43,5	script(CLOAKED)	Vrid#frozen02	4_M_KNIGHT_BLACK,{
 	end;
 OnVridDead:
 	if (illusion_frozen == 4) {
 		cloakonnpcself();
 		specialeffect EF_ICECRASH;
 	}
-	end;
-OnInit:
-	cloakonnpc();
 	end;
 }
 
@@ -5566,3 +5503,4579 @@ ice_d03_i,150,104,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen2
 ice_d03_i,110,150,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen28	4_SOIL
 ice_d03_i,150,187,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen29	4_SOIL
 ice_d03_i,187,149,3	duplicate(Heap of Dry Soil#frozen1)	Heap of Dry Soil#frozen30	4_SOIL
+
+
+//============================================================
+//= Illusion of Turtle
+//============================================================
+
+// Entrance - starter
+alberta,211,28,5	script	Knight Aylvar#illtur	4_M_YOUNGKNIGHT,{
+	.@account_id = getcharid(3);
+	.@player_name$ = strcharinfo(0);
+
+	disable_items;
+	if (ill_turtle == 0) {
+		npctalk "Aylvar : I need your help. Please, quickly!", "", bc_self;
+		mes "[Knight Aylvar]";
+		mes "Um.. Are you an adventurer?? I have a favor to ask you...";
+		next;
+		if (BaseLevel < 150) {
+			mes "[Knight Aylvar]";
+			mes "...Oh, you need more experience. Excuse me.";
+			mes "It's a high risk job.";
+			next;
+			mes " - ^0000CDLevel 150 and over can do this quest.^000000 - ";
+			close;
+		}
+		if (select( "What's going on?", "I'm very busy." ) == 2) {
+			npctalk "Aylvar : Leiphen, my friend... Please be safe.", "", bc_self;
+			mes "[Knight Aylvar]";
+			mes "Sorry to bother you.";
+			mes "God bless you.";
+			close;
+		}
+		npctalk "Aylvar : Adventurer? Ah. It's you, " + .@player_name$ + ".", "", bc_self;
+		mes "[Knight Aylvar]";
+		mes "Sorry for the sudden request.";
+		mes "I am from the Alberta Guard of the 1st Knights Division, Knight Aylvar.";
+		next;
+		mes "[Knight Aylvar]";
+		mes "Under the command of the Knights, I am on a mission to search for Alberta's 2nd Knights Division, who had disappeared in Turtle Island.";
+		mes "However, after meeting a violent storm, I arrived at a Turtle Island, but it didn't seem like the normal Turtle Island.";
+		emotion ET_QUESTION, .@account_id;
+		unittalk .@account_id, "" + .@player_name$ + " : What does it mean? It didn't seem like the normal Turtle Island?", bc_self;
+		sleep2 1500;
+		npctalk "Aylvar : It's hard to explain, it's clearly a Turtle Island, but I got goose bumps.", "", bc_self;
+		next;
+		mes "[Knight Aylvar]";
+		mes "I was in danger, but someone helped me out.";
+		next;
+		mes "[Knight Aylvar]";
+		mes "As I woke up, I felt the sea breeze from Alberta's harbor... In my hands, two pieces of this turtle shell.";
+		npctalk "Aylvar : I'm not sure how, but I knew that I barely escaped with my life.", "", bc_self;
+		next;
+		mes "[Knight Aylvar]";
+		mes "Here is only one piece I have right now.";
+		mes "My friend might have the other one. No, I mean he must still have.";
+		next;
+		if (select( "Is your friend in trouble?", "It's unbelievable." ) == 2) {
+			emotion ET_PROFUSELY_SWAT;
+			mes "[Knight Aylvar]";
+			mes "I understand. Even for me, I am bewildered, but please hear me out. I think my friend is in danger";
+		}
+		else {
+			emotion ET_PROFUSELY_SWAT;
+			mes "[Knight Aylvar]";
+			mes "Yes, it's about my friend. Sorry for such a long story, just a little more, hear me out.";
+		}
+		next;
+		npctalk "Leiphen: I'm Leiphen, a professor of archeology at Juno.", "", bc_self;
+		mes "[Knight Aylvar]";
+		mes "I show these pieces to my friend, ^0000CDLeiphen^000000.";
+		mes "He shows big interest. ^0000CDHe said that it was made from the shell of a turtle living only on Turtle Island.";
+		next;
+		mes "[Knight Aylvar]";
+		mes "After I handed the pieces to him....";
+		mes "My friend Leiphen who was looking at the pieces suddenly disappeared.";
+		npctalk "Aylvar : I saw it with my own eyes. It was right here.", "", bc_self;
+		next;
+		mes "[Knight Aylvar]";
+		mes "It happened ^FF0000half a day ago^000000.";
+		mes "In the meantime, I contacted Juno University and went to Turtle Island, but I haven't achieved any results... I was hoping I could find a clue so I figure out where Leiphen disappeared to.";
+		next;
+		mes "[Knight Aylvar]";
+		mes "" + .@player_name$ + ", please help us. Can you help me find my friend?";
+		mes "This piece might be a clue. Please take a look.";
+		next;
+		select("Please tell me your friend looks like.");
+		mes "[Knight Aylvar]";
+		mes "^0000CDHe wears glasses^000000 and has blue short hair. ^0000CDHis face is just like a scholar^000000 so you should be able to recognize him.";
+		next;
+		if (select( "Show me the piece. Let me take a look.", "Sorry but I'm busy." ) == 2) {
+			npctalk "Aylvar : Leiphen, my friend... Please be safe.", "", bc_self;
+			mes "[Knight Aylvar]";
+			mes "Sorry to bother you.";
+			mes "God bless you.";
+			close;
+		}
+		if (checkweight(25315,1) == 0) {
+			mes " - ^424242EStopped handing the piece over.^000000 - ";
+			next;
+			mes "[Knight Aylvar]";
+			mes "I am sorry, " + .@player_name$ + ". You already have too much stuff. I figure it's difficult to find my friend right now.";
+			next;
+			mes "[Knight Aylvar]";
+			mes "Can you clear up your inventory a little bit? I will be right here waiting for you.";
+			close;
+		}
+		mes " - ^424242I grabbed the piece handed over by the knight. A small leaf is carved on the turtle shell. It's a bulky piece, but somehow feels warm.^000000 - ";
+		next;
+		mes " - ^424242I was looking at the piece for a while, but suddenly something seemed to appear in my head. Suddenly a gust blows and my vision gets darker.^000000 - ";
+		next;
+		emotion ET_KEK;
+		npctalk "Aylvar : Ugh, it's the same wind like before. " + .@player_name$ + ", are you ok?", "", bc_self;
+		mes " - ^424242EAylvar's voice is getting smaller and I felt dizzy. It's starting to smell like wet clay....^000000 - ";
+		ill_turtle = 1;
+		setquest 16096;	// To the unknown tortoise island
+		close2;
+		getitem 25315,1;	// Piece_Of_Shell
+		warp "tur_d03_i",132,187;
+		end;
+	}
+	if (ill_turtle < 11) {
+		mes "[Knight Aylvar]";
+		mes "" + .@player_name$ + "! Oh, you are ok! I am... worried. After Leiphen, " + .@player_name$ + ", you also disappeared, I was really concerned.";
+		sleep2 500;
+		if (ill_turtle > 5) {
+			unittalk .@account_id, "" + .@player_name$ + " : It's ok, Archeologist Leiphen's location seems to be where I went.", bc_self;
+			sleep2 1000;
+			npctalk "Aylvar : Really? Oh. Leiphen...!", "", bc_self;
+		}
+		else {
+			unittalk .@account_id, "" + .@player_name$ + " : I am ok. I found Archeologist Leiphen.", bc_self;
+			sleep2 1000;
+			npctalk "Aylvar : Really? Good! Leiphen...!", "", bc_self;
+		}
+		next;
+		mes "[Knight Aylvar]";
+		mes "Are you going back to find Leiphen again?";
+		npctalk "Aylvar : Is there a way for me to go there?", "", bc_self;
+		sleep2 1000;
+		unittalk .@account_id, "" + .@player_name$ + " : I think it's hard for you to go there.", bc_self;
+		next;
+		if (select( "Let me go there again.", "I will go there later." ) == 2) {
+			mes "[Knight Aylvar]";
+			mes "Please save Leiphen.";
+			mes "If I can go there, I will save him myself.";
+			close;
+		}
+		mes "[Knight Aylvar]";
+		mes "Thank you. Thank you so much.";
+		mes "Please save Leiphen.";
+		next;
+		mes " - ^424242As the girl who was there told me, I squeezed the piece of the turtle shell, I felt the wind blowing my hair again.^000000 - ";
+		next;
+		npctalk "Aylvar : " + .@player_name$ + ", please be careful!", "", bc_self;
+		mes " - ^424242Before my eyes were completely dark, my cheeks felt the cooler air from the cave....^000000 -";
+		close2;
+		warp "tur_d03_i",132,187;
+		end;
+	}
+	if (ill_turtle == 11) {
+		mes "[Knight Aylvar]";
+		mes "Hi " + .@player_name$ + ". I have heard every story from Leiphen.";
+		mes "I am worried because he went there again. He said he would come back after finds out the secret of that place.";
+		next;
+		mes "[Knight Aylvar]";
+		mes "Not only Leiphen but also a kid named Narin... who you also helped. You are a great adventurer.";
+		mes "Are you going there again?";
+		next;
+		if (select( "Yes. I am going there.", "Not right now." ) == 2) {
+			emotion ET_SURPRISE;
+			mes "[Knight Aylvar]";
+			mes "Oh, since you are going there again, please make sure Leiphen is ok as well.";
+			ill_turtle = 12;
+			setquest 16114;	// Talk with Aylvar
+			completequest 16114;	// Talk with Aylvar
+			close;
+		}
+		mes "[Knight Aylvar]";
+		mes "Please come back again, " + .@player_name$ + ".";
+		mes "On the way, please make sure Leiphen is doing good.";
+		ill_turtle = 12;
+		setquest 16114;	// Talk with Aylvar
+		completequest 16114;	// Talk with Aylvar
+		close2;
+		warp "tur_d03_i",132,187;
+		end;
+	}
+	npctalk "Aylvar : He is a guy where research is more important than himself, so I want to stay closer to him.", "", bc_self;
+	mes "[Knight Aylvar]";
+	mes "Glad to see you again. I have reported the information to the Knights Division and now my job is to support Leiphen's research.";
+	mes "Are you going there again?";
+	next;
+	if (select( "Yes. I am going there.", "Not right now." ) == 2) {
+		mes "[Knight Aylvar]";
+		mes "When I heard his story, I wanted to go there too... but I can't do as he explained. I am so sad.";
+		close;
+	}
+	mes "[Knight Aylvar]";
+	mes "Please come back again, " + .@player_name$ + ".";
+	mes "If you find Leiphen, please make sure he is eating.";
+	close2;
+	emotion ET_KEK;
+	warp "tur_d03_i",132,187;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 0 && BaseLevel > 149" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 11" );
+	end;
+}
+
+
+tur_d03_i,217,73,0	warp	illtur03_04	 2,2,tur_d04_i,99,186
+tur_d04_i,99,191,0	warp	illtur04_03	 2,2,tur_d03_i,217,82
+
+tur_d03_i,132,194,3	script	Portal#illtur02	4_ENERGY_RED,{
+	if (ill_turtle < 11) {
+		mes " - ^424242Beyond the door, it appears black, and nothing seems to exist. A reddish glow is floating in front of the black sky. A nervous looking girl appears.^000000 - ";
+		next;
+		npctalk "Girl : The piece will help you. Hold tight.", "Girl#illtur01", bc_self;
+		mes "[Girl]";
+		mes "...It is this place.";
+		mes "Hopeless, desperate, and poisonous.";
+		next;
+		mes " - ^424242It's a puzzling response, but it might help. As the girl told me, I held onto the turtle shell.^000000 - ";
+		next;
+		if (select( "Back to Alberta.", "Stay here." ) == 2) {
+			unittalk getcharid(3), "" + strcharinfo(0) + " : I have something to do here.", bc_self;
+			mes "[Girl]";
+			mes "......Not going to back?";
+			close;
+		}
+		npctalk "Girl : Yes. Just... Go.", "Girl#illtur01", bc_self;
+		mes " - ^424242The smell of salty wind lifted the hem of my clothing. You can hear the waves of Alberta Harbor and the sound of seagulls....^000000 - ";
+		close2;
+		warp "alberta",219,31;
+		end;
+	}
+	if (isbegin_quest(16115) == 0) {
+		mes " - ^424242This red light is invisible to Narin. It just seems to disappear.^000000 - ";
+		next;
+		mes " - ^424242If I don't come back, she will forget. Just right before I walk into the light, Narin's voice echoed from behind me.^000000 - ";
+		next;
+		mes "[Narin]";
+		mes "I will remember... Come back. Please. Bro...!";
+		next;
+		if (select( "Nod and go to Alberta.", "Nod and turn." ) == 2) {
+			mes " - ^424242Turning around with a small smile, Narin, holding her hands, was surprised and glanced over.^000000 - ";
+			next;
+			mes "[Narin]";
+			mes "Ah? Not going back?";
+			next;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Seems like you still need me. Did you call me? I didn't hear clearly, can you tell me again?", bc_self;
+			mes "[Narin]";
+			mes "Hey!";
+			setquest 16115;	// Talk with girl
+			completequest 16115;	// Talk with girl
+			close;
+		}
+		mes " - ^424242I nodded and recalled the bulky piece I had now kept by my heart. The sea breeze from the harbor blows by my ears...^000000 - ";
+		setquest 16115;	// Talk with girl
+		completequest 16115;	// Talk with girl
+		close2;
+		warp "alberta",219,31;
+		end;
+	}
+	mes " - ^424242Now I stand in front of the familiar light. Lightly waved my hand to Narin, she closed her eyes and held both hands together.^000000 - ";
+	next;
+	mes " - ^424242With empty hands, I think of the bulky but warm piece left in my heart.^000000 - ";
+	next;
+	if (select( "Go back to Alberta.", "Stay here." ) == 2) {
+		mes " - ^424242Turning around with a small smile, Narin, holding her hands, was surprised and glanced over.^000000 - ";
+		next;
+		mes "[Narin]";
+		mes "Ah? Not going back?";
+		next;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Seems like you still need me. Did you call me? I didn't hear clearly, can you tell me again?", bc_self;
+		mes "[Narin]";
+		mes "Hay!";
+		close;
+	}
+	mes " - ^424242I will come back again. I put my hands together on my chest.^000000 - ";
+	next;
+	mes " - ^424242The consciousness became far away, and the salty, slightly fishy smell of Alberta Harbor tickled my nose.^000000 - ";
+	close2;
+	warp "alberta",219,31;
+	end;
+}
+
+tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Girl]";
+		mes "What are you doing with such a heavy bag? Clear some out.";
+		close;
+	}
+	if (ill_turtle == 0)
+		end;
+
+	.@account_id = getcharid(3);
+	.@player_name$ = strcharinfo(0);
+
+	if (ill_turtle == 1) {
+		mes "[Girl]";
+		mes "Again... Stranger.";
+		mes "And you brought that again.";
+		npctalk "Girl : That piece.", "", bc_self;
+		next;
+		emotion ET_PROFUSELY_SWAT, .@account_id;
+		unittalk .@account_id, "" + .@player_name$ + " : Who are you? This piece did something? Where am I? How did I get here?", bc_self;
+		mes "[Girl]";
+		mes "You have a lot of questions, but no need to know.";
+		next;
+		npctalk "Girl : You don't need to know. You shouldn't be here. There are things you shouldn't know.", "", bc_self;
+		mes "[Girl]";
+		mes "But ^0000CDthere is someone here like you^000000. One who shouldn't be here.";
+		mes "Go back with ^0000CDa scholar who has blue hair^000000. Do you know him?";
+		next;
+		select( "I am here to find him.", "Do you know Archeologist Leiphen?" );
+		mes "[Girl]";
+		mes "Good. I don't know his name and where he is, but I can guess.";
+		mes "^0000CDThere are two locations^000000. Go find and take him. And do not come back.";
+		next;
+		switch( select( "Ok, but I have some questions.", "How can I believe you?", "Let me know the way to go back." ) ) {
+		case 1:
+			unittalk .@account_id, "" + .@player_name$ + " : Who are you? How do you know him? Where am I?", bc_self;
+			mes "[Girl]";
+			mes "You will be gone for good. No need to know.";
+			next;
+			specialeffect EF_DETECT3;
+			sleep2 1000;
+			specialeffect2 EF_DETECT3;
+			specialeffect2 EF_CIRCLEPOWER8;
+			sleep2 500;
+			unittalk .@account_id, "" + .@player_name$ + " : Uh, what was that??", bc_self;
+			mes "[Girl]";
+			mes "A spell that will protect you for a moment.";
+			mes "It will follow you around. Curiosity killed the cat. Don't look into something that is unclear. Don't look back, or talk behind someone's back.";
+			next;
+			mes "[Girl]";
+			mes "^FF0000Don't be alarmed that you may breathe strangely.^000000";
+			unittalk .@account_id, "" + .@player_name$ + " : What do you mean?", bc_self;
+			ill_turtle = 2;
+			erasequest 16096;	// To the unknown tortoise island
+			setquest 16097;	// Stranger on Turtle Island 1
+			setquest 16098;	// Stranger on Turtle Island 2
+			setquest 16099;	// Stranger on Turtle Island 3
+			close;
+		case 2:
+			emotion ET_THINK;
+			mes "[Girl]";
+			mes "I don't know. I don't know where you came from, how could I know?";
+			next;
+			mes "[Girl]";
+			mes "However, there, the empty door... might have something, you might know about.";
+			next;
+			mes " - ^424242The girl glanced toward the back of where she was standing. Looking closely, it seems that something reddish is floating in front of the black hole. Let's go and look.^000000 - ";
+			close;
+		case 3:
+			emotion ET_THINK;
+			mes "[Girl]";
+			mes "......";
+			next;
+			mes "[Girl]";
+			mes "Go back. It's dangerous here.";
+			next;
+			mes " - ^424242The girl said briefly and stopped talking. She looks sad....^000000 - ";
+			close;
+		}
+	}
+	if (ill_turtle < 8) {
+		mes "[Girl]";
+		mes "...You, still alive?";
+		next;
+		mes "[Girl]";
+		mes "Before you get in danger, get the person you were looking for and leave.";
+		close;
+	}
+	if (ill_turtle == 8) {
+		mes "[Girl]";
+		mes "You are safe. Both of you.";
+		mes "...Sorry for the danger.";
+		sleep2 500;
+		unittalk .@account_id, "" + .@player_name$ + " : It's ok, Professor.", bc_self;
+		sleep2 2000;
+		cloakoffnpcself( "Archeologist Leiphen#illtur01" );
+		emotion ET_SWEAT, getnpcid(0,"Archeologist Leiphen#illtur01");
+		npctalk "Archeologist Leiphen : ......Oh, I thought I was going to die.", "Archeologist Leiphen#illtur01", bc_self;
+		next;
+		mes "[Girl]";
+		mes "Then, go back. To the place you came.";
+		mes "And forget everything.";
+		next;
+		npctalk "Archeologist Leiphen : How can I forget this place!?", "Archeologist Leiphen#illtur01", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Huh? What do you mean? I will come back again.";
+		mes "Until I find out all of the secrets here.";
+		next;
+		mes "[Girl]";
+		mes "Why do you ignore my warnings? Arrogant.";
+		emotion ET_HNG, getnpcid(0,"Archeologist Leiphen#illtur01");
+		npctalk "Archeologist Leiphen : I am a professor of archeology.", "Archeologist Leiphen#illtur01", bc_self;
+		mes "You may be a professor but that does not give you the right to walk around here.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "......Do you know something?";
+		mes "Please tell me. Where am I? What just happened here?";
+		npctalk "Girl : You don't need to know, you are going to leave anyway...", "", bc_self;
+		next;
+		if (select( "Stop saying that.", "You are the arrogant one." ) == 2) {
+			mes "[Girl]";
+			mes "Stop? I didn't say anything wrong. You are going to leave and forget everything soon. You will never come back.... right?";
+		}
+		else {
+			npctalk "Girl : What are you saying? I am the arrogant one?", "", bc_self;
+			mes "[Girl]";
+			mes "......Fine. Arrogant or not. Think freely. I don't care anyway.";
+		}
+		next;
+		mes "[Girl]";
+		mes "I said before.... but no one has returned. I am not expecting anyone to.";
+		npctalk "Girl : If you don't expect, there's nothing to be disappoint about.", "", bc_self;
+		next;
+		emotion ET_QUESTION, .@account_id;
+		sleep2 1000;
+		emotion ET_THINK, .@account_id;
+		unittalk .@account_id, "" + .@player_name$ + " : You mean, you want us to return home.", bc_self;
+		mes "[Girl]";
+		mes "......No one comes back. It's better to not come here. It's full of danger.";
+		next;
+		emotion ET_SURPRISE, getnpcid(0,"Archeologist Leiphen#illtur01");
+		mes "[Archeologist Leiphen]";
+		mes "You want that, but still someone is going to come back here.";
+		sleep2 1000;
+		emotion ET_ANGER;
+		npctalk "Girl : ......Think what you want.", "", bc_self;
+		next;
+		mes "[Girl]";
+		mes "Whew.........";
+		next;
+		mes "[Girl]";
+		mes "Ok. Fine. Let me tell you. Promise me you will go back after listening. It's not like I want to talk a lot.";
+		next;
+		npctalk "Girl : I'm just telling you because you're so persistent.", "", bc_self;
+		mes "[Girl]";
+		mes "...Give me a sec. I need time to think clearly. It's been a long time not talking....";
+		next;
+		npctalk "Archeologist Leiphen : Then let me look around here for a while.", "Archeologist Leiphen#illtur01", bc_self;
+		sleep2 1000;
+		cloakonnpcself( "Archeologist Leiphen#illtur01" );
+		emotion ET_OHNO, .@account_id;
+		unittalk .@account_id, "" + .@player_name$ + " : Even though it's so dangerous, you can't resist curiosity... Be careful anyway.", bc_self;
+		mes "[Girl]";
+		mes "I'll talk to you again after a while.";
+		ill_turtle = 9;
+		erasequest 16104;	// A long-forgotten story
+		setquest 16116;	// Continuous story
+		close;
+	}
+	if (ill_turtle == 9) {
+		setpcblock PCBLOCK_NPC, true;
+		cloakoffnpcself( "Archeologist Leiphen#illtur01" );
+		sleep2 500;
+		setpcblock PCBLOCK_NPC, false;
+
+		npctalk "Archeologist Leiphen : Ugh, monster!", "Archeologist Leiphen#illtur01", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Ugh! You are not a kid. It's dangerous here. Stop wandering around!", bc_self;
+		mes "[Narin]";
+		mes "Thank you for waiting...";
+		mes "It would be better to start introducing myself. I am Narin. ^0000CDOld Ghost.^000000";
+		next;
+		npctalk "Archeologist Leiphen : O..Old GGhost?", "Archeologist Leiphen#illtur01", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : ......", bc_self;
+		mes "[Narin]";
+		mes "You look like you have been through a lot of things before. I can see you are able to talk normally.";
+		mes "Ordinary people like a professor can't even see us.";
+		next;
+		mes "[Narin]";
+		mes "All the residents here are spirits bound by the burden of resentment. When you're dead, obsessed with something you desperately want, and you'll always do the same thing without realizing it..";
+		npctalk "Narin : I'm lucky, so sometimes I can get out, but eventually I go back and repeat.", "", bc_self;
+		next;
+		mes "[Narin]";
+		mes "We hate life. Those who are not bound by the burden of resentment, those who breathe strangely. We want to hear your last breath.";
+		mes "But unless you realize us, we cannot realize you either. It's a good thing.";
+		next;
+		mes "[Narin]";
+		mes "It doesn't last long. The longer you stay here, the more you notice each other. Gradually.";
+		mes "And suddenly you guys realize. That's strange. ...Then, it's over.";
+		next;
+		mes "[Narin]";
+		mes "The professor got my stuff, so I could recognize it right away. Normally I wouldn't have known.";
+		npctalk "Archeologist Leiphen : Narin's stuff...?", "Archeologist Leiphen#illtur01", bc_self;
+		sleep2 1000;
+		npctalk "Narin : Yes, turtle shell, my sculpture.", "", bc_self;
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "Oh, I knew it...!!";
+		mes "It was you who saved Aylvar. Thank you for helping my friend!";
+		next;
+		npctalk "Narin : I did it for me. No need to say thanks.", "", bc_self;
+		mes "[Narin]";
+		mes "I wanted to do it.  My obsession is...";
+		mes "^0000CDU I don't want anyone get die here. I want to save all life.^000000......";
+		mes "It was just that.";
+		next;
+		emotion ET_ANGER;
+		mes "[Narin]";
+		mes "Oh... really, it's such a silly story. It's hard to keep talking.";
+		mes "Just leave me alone for a while? Sorry for taking so long.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "It's ok. I'll leave you for a moment. " + .@player_name$ + ", let's go together.";
+		emotion ET_OK, .@account_id;
+		ill_turtle = 10;
+		erasequest 16116;	// Continuous story
+		setquest 16117;	// Continuous story 2
+		close2;
+		cloakonnpcself( "Archeologist Leiphen#illtur01" );
+		end;
+	}
+	if (ill_turtle == 10) {
+		mes "[Narin]";
+		mes "Thank you for waiting. I'm good now. Let me finish.";
+		next;
+		cloakoffnpcself( "Archeologist Leiphen#illtur01" );
+		emotion ET_DELIGHT, getnpcid(0,"Archeologist Leiphen#illtur01");
+		npctalk "Archeologist Leiphen : I'm ready. There are a lot of interesting things around here.", "Archeologist Leiphen#illtur01", bc_self;
+		mes "[Narin]";
+		mes "It's not the first time, someone is here. It's a rare event. When I first saw someone, I remembered what I wanted.";
+		next;
+		mes "[Narin]";
+		mes "The man was deathly afraid, but he was alive and left this place.";
+		mes "After that... I could stay a little longer.";
+		next;
+		mes "[Narin]";
+		mes "It's been a while, I haven't lost my mind. I was not swept away by resentment and neither reason nor emotion was lost.";
+		next;
+		mes "[Narin]";
+		mes "So I want to save all life. Those who have flowed in and even those trapped by the burden forever.";
+		mes "I realized that all those I saved went back to where they came from.";
+		npctalk "Narin : And I am alone knowing and feeling who I am, what I am doing.", "", bc_self;
+		next;
+		mes "[Narin]";
+		mes "It's... it's hard. Even I envy those trapped by this burden. But... I couldn't turn it off. The people who are in danger.";
+		mes "....";
+		mes "But I don't want to hope. If you hope... you can be betrayed.";
+		npctalk "Narin : ......This is the end of my story. Now give me the pieces and you two will be going back..", "", bc_self;
+		next;
+		mes "[Narin]";
+		mes "Oh, I almost forgot. Let me cast my spell on you again. It's weak, so it will not last long.";
+		mes "Just get out before it's over.";
+		specialeffect EF_DETECT3;
+		sleep2 1000;
+		specialeffect2 EF_DETECT3;
+		specialeffect EF_DETECT3, AREA, "Archeologist Leiphen#illtur01";
+		specialeffect2 EF_CIRCLEPOWER8;
+		specialeffect EF_CIRCLEPOWER8, AREA, "Archeologist Leiphen#illtur01";
+		next;
+		if (select( "It's been hard on you being alone.", "I am not going back." ) == 2) {
+			mes "[Narin]";
+			mes "......I didn't tell you the long story to hear that...";
+			mes "Please don't care about me....";
+			next;
+			unittalk .@account_id, "" + .@player_name$ + " : Please, we do care. I will be glad when I get back again. I will be sad if you are cold when I come here again.", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "" + .@player_name$ + ", it turns out that you speak very well.";
+		}
+		else {
+			mes "[Narin]";
+			mes "What are you talking about?! I said go back after you listen to my whole story...!";
+			mes "I don't want to worry anymore!";
+			next;
+			unittalk .@account_id, "" + .@player_name$ + " : Please, we do care. Archeologist Leiphen and myself will meet your expectations.", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "Yes. That's what I wanted to say.";
+		}
+		next;
+		mes "[Narin]";
+		mes "What do you mean...?";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : We will come back. Do not feel alone.", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Let us help other souls here like you, Narin, resolve themselves.";
+		next;
+		mes "[Narin]";
+		mes "Oh really...";
+		emotion ET_THINK;
+		mes "......No, it was a coincidence. They are, not like me.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "We will see. Right?";
+		unittalk .@account_id, "" + .@player_name$ + " : Of course. And if it doesn't work, we'll come back to try again and again.", bc_self;
+		next;
+		npctalk "Narin : No, don't. It is very dangerous here. Do not try to come back.", "", bc_self;
+		mes "[Narin]";
+		mes "It's ok. I will forget both of you. All the souls here are made like that.";
+		mes "I might remember a little longer. But I forget eventually.";
+		next;
+		emotion ET_SURPRISE, .@account_id;
+		unittalk .@account_id, "" + .@player_name$ + " : But you still remember the turtle shell pieces. You can remember again.", bc_self;
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "We can guess one fact. All the lost memories are in the subconscious mind of Narin.";
+		unittalk .@account_id, "" + .@player_name$ + " : You said you want to save all life. If you haven't given up on that wish, you can surely remember it.", bc_self;
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : If you forget us, we will remind you. As much as you forget.", bc_self;
+		sleep2 2000;
+		unittalk .@account_id, "" + .@player_name$ + " : I'll help you when you feel lonely. You won't have to forget everything.", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "I will come back. For research and for you, Narin.";
+		next;
+		mes "[Narin]";
+		mes "Really... Really? Are you going to come back here and find me?";
+		next;
+		mes "[Narin]";
+		mes "I don't need to be ... alone...?";
+		next;
+		select( "I won't leave you alone.", "Don't worry.", "I promise.", "I will come back." );	// note: the selection doesn't change the dialog
+		mes "[Narin]";
+		mes ".........";
+		next;
+		mes "[Narin]";
+		mes "......Thanks...";
+		next;
+		mes "[Narin]";
+		mes "Thanks... Really...";
+		next;
+		delitem 25315, countitem(25315);	// Piece_Of_Shell
+		specialeffect2 EF_CIRCLEPOWER2;
+		specialeffect EF_CIRCLEPOWER2, AREA, "Archeologist Leiphen#illtur01";
+		sleep2 500;
+		emotion ET_SURPRISE, getnpcid(0,"Archeologist Leiphen#illtur01");
+		mes "[Archeologist Leiphen]";
+		mes "Hu? Huh? It's just gone. The " + getitemname(25315) + ".";
+		mes "Suddenly from my hands... like it melted away.";
+		next;
+		mes "[Narin]";
+		mes "It has my wishes. Now... It doesn't need to exist.";
+		npctalk "Archeologist Leiphen : What does that mean?", "Archeologist Leiphen#illtur01", bc_self;
+		next;
+		emotion ET_ANGER;
+		mes "[Narin]";
+		mes "...I, I don't know the specifics reason... Just that it might be that way.";
+		next;
+		mes "[Narin]";
+		mes "...Oh, right. Here... I give this to you. Here, you too professor.";
+		unittalk .@account_id, "" + .@player_name$ + " : What's this?", bc_self;
+		npctalk "Archeologist Leiphen : It... It's an " + getitemname(25271) + "!", "Archeologist Leiphen#illtur01", bc_self;
+		next;
+		npctalk "Narin : ...Is it? In fact, I had it because it was pretty.", "", bc_self;
+		mes "[Narin]";
+		mes "It's a sign of promise. I will try to remember the two of you. So come... come and find me.";
+		mes "Tomorrow, and the day after tomorrow... I'll be waiting... Brother and professor.";
+		next;
+		mes "[Narin]";
+		mes "And the others... you said you would help them. I'll show you how. How you can help...";
+		next;
+		mes "[Narin]";
+		mes "^0000CDListen to what they want. Brother, even if you look very trivial, do something they'll be pleased by.^000000";
+		mes "Please... Maybe one day...";
+		next;
+		select("Don't worry. I will.");
+		mes "[Narin]";
+		mes ":)...";
+		next;
+		mes "[Narin]";
+		mes "I, I was able to stay alone so far, because I could meet you two again someday?";
+		emotion ET_OK;
+		mes "I will... remember... Please... come back.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "I will be here until I find all of the secrets.";
+		mes "Don't worry. " + .@player_name$ + " and myself will not forget about you Narin.";
+		unittalk .@account_id, "" + .@player_name$ + " : We must remember.", bc_self;
+		ill_turtle = 11;
+		erasequest 16117;	// Continuous story 2
+		setquest 16105;	// A short break, and a promise
+		getitem 25271,5;	// IllusionStone
+		getexp 2880000,1920000;
+		close2;
+		npctalk "Archeologist Leiphen : Okay, see you again!", "Archeologist Leiphen#illtur01", bc_self;
+		cloakonnpcself( "Archeologist Leiphen#illtur01" );
+		end;
+	}
+	switch( checkquest(16105,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Narin]";
+		mes "I asked you to come back... but you must leave today. It's dangerous to be here any longer.";
+		mes "There is a limit to the protection spell.";
+		next;
+		mes "[Narin]";
+		mes "The day is over and you two stay together. I'll give you a new spell.";
+		mes "If I forget again... Please I will try to remember...";
+		close;
+	case 2:
+		erasequest 16105;	// A short break, and a promise
+		break;
+	}
+	switch( checkquest(16108,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Narin]";
+		mes "Brother... Are you still here? The spell will be gone after a day, please come back after dawn.";
+		next;
+		mes "[Narin]";
+		mes "Even if I forget you brother, don't go away...please.";
+		close;
+	case 2:
+		erasequest 16108;	// A memory that should not be forgotten - Cooldown
+		break;
+	}
+	switch( isbegin_quest(16106) ) {
+	case 0:
+		mes "[Narin]";
+		mes "Again... Stranger.";
+		mes "Go back. It's dangerous...";
+		next;
+		mes " - ^424242She can't remember, but even if she doesn't remember, she's different from the other ghosts.^000000 -";
+		next;
+		mes "[Narin]";
+		mes "......Why are you mumbling like that?";
+		mes "Go back. You do not belong here.";
+		next;
+		if (select( "What does was she want...", "Go back now." ) == 2) {
+			mes " - ^424242Let's go back now. It looks like nothing has happened to the professor, yet. I will come back later.^000000 -";
+			next;
+			mes "[Narin]";
+			mes "Go back, stranger. And never be back.";
+			close;
+		}
+		mes " - ^424242...She wants me to leave with Archeologist Leiphen. Then she will remember...";
+		mes "The professor will just come back. Let's find him.^000000 -";
+		setquest 16106;	// A memory that should not be forgotten 1
+		close;
+	case 1:
+		mes "[Narin]";
+		mes "Go back. ...you not should be here.";
+		next;
+		mes " - ^424242...She wants me to leave with Archeologist Leiphen. Then she will remember...";
+		mes "The professor will just come back. Let's find him.^000000 -";
+		close;
+	case 2:
+		cloakoffnpcself( "Archeologist Leiphen#illtur01" );
+		mes "[Archeologist Leiphen]";
+		mes "I came here again. Well, everyday.";
+		sleep2 500;
+		unittalk .@account_id, "" + .@player_name$ + " : I am here too. Are you doing well?", bc_self;
+		next;
+		mes "[Narin]";
+		mes "......";
+		next;
+		mes "[Narin]";
+		mes "............";
+		next;
+		mes "[Narin]";
+		mes ".................";
+		next;
+		mes "[Narin]";
+		mes "................Aww..";
+		unittalk .@account_id, "" + .@player_name$ + " : Hey? What's going on?", bc_self;
+		next;
+		emotion ET_SWEAT;
+		mes "[Narin]";
+		mes "......Again ...I forgot again.....";
+		unittalk .@account_id, "" + .@player_name$ + " : It's ok. We are here again.", bc_self;
+		next;
+		npctalk "Narin : I was waiting as long as I can remember...", "", bc_self;
+		mes "[Narin]";
+		mes "Thank you... Um, let me cast a spell on you. You will go to the others as well today?";
+		next;
+		mes "[Narin]";
+		mes "Hope you two will be safe...";
+		specialeffect EF_DETECT3;
+		sleep2 500;
+		specialeffect2 EF_DETECT3;
+		specialeffect EF_DETECT3, AREA, "Archeologist Leiphen#illtur01";
+		specialeffect2 EF_CIRCLEPOWER8;
+		specialeffect EF_CIRCLEPOWER8, AREA, "Archeologist Leiphen#illtur01";
+		next;
+		mes "[Narin]";
+		mes "And here, a sign of promise. Professor and brother. I'm glad you came.";
+		mes "I will be waiting for tomorrow.";
+		npctalk "Archeologist Leiphen : See you tomorrow, Narin. and you.", "Archeologist Leiphen#illtur01", bc_self;
+		erasequest 16106;	// A memory that should not be forgotten 1
+		erasequest 16107;	// A memory that should not be forgotten 2
+		setquest 16108;	// A memory that should not be forgotten - Cooldown
+		getitem 25271,1;	// IllusionStone
+		getexp 1200000,1000000;
+		close2;
+		cloakonnpcself( "Archeologist Leiphen#illtur01" );
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 8" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 9" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 10" );
+
+	// daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16105,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16108,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && isbegin_quest(16106) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && isbegin_quest(16106) == 0 && checkquest(16105,PLAYTIME) == -1 && checkquest(16108,PLAYTIME) == -1" );
+	end;
+}
+
+tur_d03_i,136,187,5	duplicate(dummy_cloaked_npc)	Archeologist Leiphen#illtur01	2_M_ALCHE
+
+
+tur_d03_i,80,180,1	script	Impatient Man#illtur	4_M_URGENT_MAN,{
+	if (ill_turtle == 2) {
+		.@account_id = getcharid(3);
+		.@player_name$ = strcharinfo(0);
+
+		mes "[Impatient Man]";
+		mes "I lost her. I lost her. My baby. My pretty baby. Where are you? My baby. What's her name? My daughter. Daughter? My baby.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Hey, hello?", bc_self;
+		mes " - ^424242As she told me, there are others... but he doesn't look like Archeologist Leiphen.^000000 - ";
+		next;
+		mes "[Impatient Man]";
+		mes "Who was it? My baby, where are you? My daughter? My.... daughter? Ha, hahaha. I lost her. I lost her";
+		next;
+		npctalk "My baby is gone... My baby. My lovely baby.", "", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Did he lose his baby...?", bc_self;
+		select( "Are you looking for your baby?", "Do you want my help?" );
+		npctalk "My baby, I lost her. I lost my baby. Where are you?", "", bc_self;
+		mes "[Impatient Man]";
+		mes "No. ^FF0000You can't^000000.";
+		next;
+		npctalk "My baby? Baby? I lost, lost, my daughter... baby. Where... where?", "", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : ...Excuse me?", bc_self;
+		mes "[Impatient Man]";
+		mes "No. ^FF0000No.^000000 Can't find her.";
+		next;
+		mes "[Impatient Man]";
+		mes "No ^FF0000it can't be. My daughter.^000000 Baby... Baby? No. Ha, ha^FF0000haha. No. Ha, ha.^000000 My ^FF0000pretty baby,^000000, baby. My ^FF0000 pretty baby. No.^000000 No.";
+		ill_turtle = 3;
+		erasequest 16097;	// Stranger on Turtle Island 1
+		questinfo_refresh();
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : He's...a strange man.", bc_self;
+		mes " - ^424242Hard to communicate with...^000000 - ";
+		mes " - ^424242Let me check the other point. Let's go...^000000 - ";
+		close;
+	}
+	if (ill_turtle == 3) {
+		mes "[Impatient Man]";
+		mes "^FF0000No, my daughter. My ^000000pretty baby. No. Lost, ^FF0000lost her^000000. Lost. Boohoo... My ^FF0000pretty...baby.. Can't ^000000find, ^FF0000can't^000000 find, can't... ^FF0000find^000000......";
+		if (!.talk)
+			donpcevent "Impatient Man#illtur::OnTalk";
+		close;
+	}
+	mes "[Impatient Man]";
+	mes "I lost her. I lost her. My baby. My pretty baby. Where are you? My baby. What's her name? My daughter. Daughter? My baby.";
+	next;
+	mes "[Impatient Man]";
+	mes "Who was it? My baby... who?";
+	if (!.talk)
+		donpcevent "Impatient Man#illtur::OnTalk";
+	close;
+
+OnTalk:
+	.talk = 1;
+	switch( rand(2) ) {
+	case 0:
+		npctalk "I can't... find. My baby. Gone. My... lovely daughter.";
+		sleep 3000;
+		npctalk "I can't find. Gone... My daughter, my... daughter? My? baby...";
+		break;
+	case 1:
+		npctalk "My baby, I lost her. I lost my baby. Where are you?";
+		sleep 3000;
+		npctalk "My baby? Baby? I lost, lost, my daughter... baby. Where... where?";
+		break;
+	}
+	.talk = 0;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 2" );
+	end;
+}
+
+
+tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
+	if (ill_turtle == 3) {
+		.@account_id = getcharid(3);
+		.@player_name$ = strcharinfo(0);
+
+		mes "[Susceptible Soldier]";
+		mes "Murmur.... ^FF0000Munch^000000, munch. ^FF0000Murmur^000000...";
+		mes "The damn^BDBDBDuh..^000000 Mon..^BDBDBDDmonster^000000...";
+		next;
+		mes "[Susceptible Soldier]";
+		mes "It's all ... mine. ^BDBDBDIt all^000000 can ^BDBDBDbe^000000 mine...";
+		mes "My...my precious ^BDBDBDtreasure^000000... ^FF0000Murmur^000000...";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Hum... Hey, hello?", bc_self;
+		mes " - ^424242There is someone. He seems to be muttering something but I can't hear clearly. He doesn't look like Archeologist Leiphen^000000 - ";
+		next;
+		mes " - ^424242Biting nails and the fingertips are messed up.....^000000 - ";
+		next;
+		npctalk "My treasure, if the " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " was gone... All, Munch... Muunch....", "Susceptible Soldier#", bc_self;
+		mes "[Susceptible Soldier]";
+		mes "Munch, Munch... Murmur... My ^BDBDBDtreasure^000000... My ^BDBDBDprecious^000000 treasure... It's ^BDBDBDall^000000 mine...";
+		next;
+		select( "Have you seen this person?", "Are... are you ok?" );
+		specialeffect EF_SCREEN_QUAKE;
+		mes "[Susceptible Soldier]";
+		mes "^BDBDBDA^000000 human? A ^BDBDBDhuuu^000000man? There would ^BDBDBDbe no such thing^000000!!!!!";
+		mes "Damn ^BDBDBDyou^000000! Don't ^BDBDBDlook^000000 at me ^BDBDBDlike^000000 that... ^BDBDBDDon't^000000 look!";
+		next;
+		npctalk "Munch... Muunch, treasure... My treasure... Munch... Muunch...", "Susceptible Soldier#", bc_self;
+		sleep2 1500;
+		unittalk .@account_id, "" + .@player_name$ + " : Ugh, it'll be difficult to stay much longer. Need to avoid.", bc_self;
+		mes "[Susceptible Soldier]";
+		mes "Damn ^BDBDBDit^000000... ^BDBDBDDamn^000000 it...";
+		mes "Munch, murmur... ^FF0000Munch^000000, munch...";
+		ill_turtle = 4;
+		erasequest 16098;	// Stranger on Turtle Island 2
+		questinfo_refresh();
+		next;
+		mes " - ^424242There is the other point. Let's go...^000000 - ";
+		close;
+	}
+	if (ill_turtle == 4) {
+		mes "[Susceptible Soldier]";
+		mes "Munch, murmur... ^FF0000Munch^000000, munch. ^FF0000Munch^000000...";
+		mes "The damn^BDBDBDuh^000000 mon..^BDBDBDDmonster^000000...";
+		next;
+		mes "[Susceptible Soldier]";
+		mes "It's all mine. ^BDBDBDCould be^000000 all^ BDBDBDmine^000000...";
+		mes "My... my treasure. ^BDBDBDAll^000000 of...my... ^FF0000munch, munch^000000...";
+		if (!.talk)
+			donpcevent "Susceptible Soldier#::OnTalk";
+		close;
+	}
+	if (ill_turtle > 10) {
+		if (checkweight(1201,1) == 0) {
+			mes "[Susceptible Soldier]";
+			mes "What are you doing with such a heavy bag? Clear some space.";
+			close;
+		}
+		if (!.talk)
+			donpcevent "Susceptible Soldier#::OnTalk";
+
+		switch( checkquest(16105,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Susceptible Soldier]";
+			mes "It's..^BDBDBDit^000000 was... alive. ^BDBDBDIt's^000000 alive... Damn! ^BDBDBDAlive,^000000 alive?! I am!!! I am^BDBDBDdead^000000, dead!!";
+			mes "I can't forgive ^BDBDBDyou^000000!!! I will^BDBDBDfind^000000 and ^BDBDBDkill^000000 you all!! ^FF0000munch^000000... munch...";
+			next;
+			mes " - ^424242Still a good idea to not get close. Let's wait for a day. After dawn, come back again.^000000 - ";
+			close;
+		case 2:
+			erasequest 16105;	// A short break, and a promise
+			break;
+		}
+
+		switch( checkquest(16110,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Susceptible Soldier]";
+			mes "Ha... Ha ^BDBDBDuh^000000, my ^BDBDBDtreasure^000000... My treasure...";
+			mes "Finally ^BDBDBDI^000000 got ^BDBDBDit^000000... Finally ^BDBDBDI^000000 got...";
+			next;
+			mes "[Susceptible Soldier]";
+			mes "Who ^BDBDBDare^000000 you!? Why ^BDBDBDare^000000 you here!";
+			mes "Don't look at my ^BDBDBDtreasure^000000! ^BDBDBDI^000000 won't let you!!!!! Munch, ^FF0000munch^000000, munch...";
+			next;
+			mes " - ^424242He seems ok. ..Ok? Just leave him be. Come back after dawn.^000000 -";
+			close;
+		case 2:
+			erasequest 16110;	// Vain Desire - Cooldown
+			break;
+		}
+
+		.@quest_16109 = checkquest(16109,HUNTING);
+		if (.@quest_16109 == -1)
+			.@state = -1;
+		else if (.@quest_16109 == 2 && countitem(25316) > 4)
+			.@state = 2;
+
+		switch( .@state ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			specialeffect EF_SCREEN_QUAKE;
+			mes "[Susceptible Soldier]";
+			mes "^FF0000I need more!!!!!!!!!!^000000";
+			next;
+			mes "[Susceptible Soldier]";
+			mes "^FF0000My treasure... My revenge...";
+			mes "Not enough!!!^000000";
+			next;
+			mes " - ^424242Did I forget something? ^0000CD" + getitemname(25316) + " 5 pieces ^424242and ^0000CDkill 10 " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + ".^000000 -";
+			close;
+		case 2:
+			mes "[Susceptible Soldier]";
+			mes "Did you get payback? To the ^BDBDBDterrible^000000 monsters?";
+			mes "And my treasure... ^FF0000Munch^000000, munch... You brought ^BDBDBDmy^000000 treasure?";
+			next;
+			specialeffect EF_SCREEN_QUAKE;
+			mes "[Susceptible Soldier]";
+			mes "^FF0000Give me^000000! My treasure!";
+			next;
+			mes "[Susceptible Soldier]";
+			mes "Ha... Haha... Haha^BDBDBDha^000000ha...... Haha^BDBDBDha^000000hahaha......";
+			mes "It's shiny... shiny... It's pretty, so pretty.";
+			next;
+			mes "[Susceptible Soldier]";
+			mes "Take this. I don't need it.";
+			mes "I have my treasure ^BDBDBDnow^000000... It's shiny... Pretty.";
+			next;
+			mes " - ^424242As exchange, I took the " + getitemname(25271) + ". How could he have become obsessed with such worthless garbage without seeing anything really valuable?^000000 -";
+			next;
+			mes " - ^424242Well, it might be just the idea of a living person that the " + getitemname(25271) + " is precious.^000000 -";
+			delitem 25316,5;	// Shabby_Metal_Chip
+			erasequest 16109;	// Vain Desire
+			setquest 16110;	// Vain Desire - Cooldown
+			getitem 25271,1;	// IllusionStone
+			getexp 1200000,1000000;
+			close;
+		}
+		mes "[Susceptible Soldier]";
+		mes "Munch, murmur... ^FF0000munch^000000, munch. ^FF0000Munch^000000...";
+		mes "The damn^BDBDBDuh^000000.. mon..^BDBDBDDmonster^000000...";
+		next;
+		mes "[Susceptible Soldier]";
+		mes "It's all mine. ^BDBDBDCould be^000000 all^BDBDBDmine^000000...";
+		mes "My... my treasure. ^BDBDBDAll^000000 of... my... ^FF0000munch, munch^000000...";
+		next;
+		select( "What treasure?", "What monster?" );	// note: the selection doesn't change the dialog
+		mes "[Susceptible Soldier]";
+		mes "The damn^BDBDBDuh^000000.. mon.. ^FF0000" + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " monster^000000...";
+		mes "They took ^BDBDBDmy^000000 treasure^BDBDBDD.... My!! treasure^000000...!!";
+		next;
+		mes "[Susceptible Soldier]";
+		mes "Munch, murmur... ^FF0000munch^000000, munch.";
+		mes "Munch, ^FF0000munch^000000... Murmur...";
+		next;
+		if (select( "Let me search.", "Okay." ) == 2) {
+			mes "[Susceptible Soldier]";
+			mes "Yes... It's mine.. ^BDBDBDuh^000000... My ^BDBDBDtreasure^000000...";
+			mes "I couldn't get ^BDBDBDit^000000... The damn ^BDBDBDmon^000000.. monsters...";
+			mes "Munch, ^FF0000munch munch munch^000000...";
+			close;
+		}
+		mes "[Susceptible Soldier]";
+		mes "You? Are ^BDBDBDyou^000000 going?";
+		mes "Go, ^BDBDBDgo^000000 get it! My ^BDBDBDtreasure^000000! You can take it from them! My ^BDBDBDtreasure^000000!";
+		next;
+		mes "[Susceptible Soldier]";
+		mes "And payback to " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + ". ^FF0000Revenge^000000... Munch munch... My ^BDBDBDrevenge^000000.. Please...";
+		mes "Get rid of 10... monsters! Munch, ^FF0000munch munch^000000... Get ^BDBDBDrid^000000 of them!!!";
+		next;
+		mes " - ^424242Narin said, I can get some ^0000CD" + getitemname(25316) + "^424242 from here. It would be enough for him. ^0000CDLet me prepare^424242 5 pieces.^000000 - ";
+		mes " - ^0000CDI need to get rid of the ^42424210 " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " monsters.^000000 - ";
+		setquest 16109;	// Vain Desire
+		close;
+	}
+	mes "[An susceptible soldier]";
+	mes "Murmur.... ^FF0000Munch^000000, munch. ^FF0000Murmur^000000...";
+	mes "The damn ^BDBDBDuh^000000.. mon..^BDBDBDmonster^000000...";
+	next;
+	mes "[Susceptible Soldier]";
+	mes "It's all... mine. ^BDBDBDIt all^000000 can ^BDBDBDbe^000000 mine...";
+	mes "My... my precious ^BDBDBDtreasure^000000... ^FF0000Murmur^000000...";
+	if (!.talk)
+		donpcevent "Susceptible Soldier#::OnTalk";
+	close;
+
+OnTalk:
+	.talk = 1;
+	switch( rand(3) ) {
+	case 0:
+		npctalk "Munch... Muunch... Munch... Muunch...";
+		sleep 3000;
+		npctalk "My, treasure... Munch, can't forgive...";
+		break;
+	case 1:
+		npctalk "My treasure, if the " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + " was gone... All, Munch... Muunch....";
+		sleep 3000;
+		npctalk "Munch... Muunch, Treasure... My treasure... Munch... Muunch...";
+		break;
+	case 2:
+		npctalk "Revenge... Revenge... Munch... Muunch... Munch... Muunch...";
+		sleep 3000;
+		npctalk "I will get payback... on... " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + "... They took my treasure!";
+		break;
+	}
+	.talk = 0;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 3" );
+
+	// daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16105,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16110,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16105,PLAYTIME) == -1 && checkquest(16110,PLAYTIME) == -1 && checkquest(16109,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16109,HUNTING) == 2 && countitem(25316) > 4" );
+	end;
+}
+
+
+tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
+	disable_items;
+
+	.@char_id = getcharid(0);
+	.@account_id = getcharid(3);
+	.@player_name$ = strcharinfo(0);
+
+	if (ill_turtle == 4) {
+		mes " - ^424242Oops. It's not Archeologist Leiphen for sure.^000000 -";
+		next;
+		mes "[Fragile Woman]";
+		mes "I'm hungry. Help me. I'm so hungry.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : I'm glad that I found someone who can speak.", bc_self;
+		select( "How can I help you?", "Let me help you.", "Please help me." );
+		npctalk "I'm starving to death. If I don't eat something, I will die.", "", bc_self;
+		sleep2 3000;
+		npctalk "I'm hungry. Please help me. Please...", "", bc_self;
+		mes "[Fragile Woman]";
+		mes "I haven't had a meal today, yesterday, and the day before yesterday.";
+		mes "I'm going to die. Please help me... Please.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : I'll help. Let me share some food. Are there any animals I can hunt around?", bc_self;
+		mes "[Fragile Woman]";
+		mes "I'm going to die. Starving.";
+		mes "I'm hungry. I'm starving.";
+		next;
+		select( "So what do you want...", "Please talk clearly!" );
+		npctalk "I can eat anthing now. Please give me something.", "", bc_self;
+		mes "[Fragile Woman]";
+		mes "I haven't had a meal today. I was starving all day yesterday. My child was starving too. My husband was also starving.";
+		mes "I'm going to die. We are all going die.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Haha... I can't communicate... I want to go home.", bc_self;
+		mes " - ^424242She told me the other place, ^0000CDthe other^000000 point. Is ^0000CDTurtle Palace^424242 nearby?^000000 -";
+		ill_turtle = 5;
+		erasequest 16099;	// Stranger on Turtle Island 3
+		setquest 16100;	// Stranger on Turtle Island 4
+		close;
+	}
+	if (ill_turtle == 7) {
+		setpcblock PCBLOCK_NPC, true;
+		cloakoffnpcself( "Archeologist Leiphen#illtur03" );
+		npctalk "Archeologist Leiphen : Is this the place? I've been here a few times...", "Archeologist Leiphen#illtur03", bc_self;
+		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
+		unittalk .@account_id, "" + .@player_name$ + " : Yes. Just right here. Hello, are you ok?", bc_self;
+
+		mes "[Fragile Woman]";
+		mes "I'm hungry. I've been starving for a long time... I'm going to die. Please, please help me.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Well, this is the woman here, Professor Leiphen.", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "......um.. Hey?";
+		next;
+		npctalk "I'm hungry. Please help me. I'm hungry.", "", bc_self;
+		sleep2 1000;
+		unittalk .@account_id, "" + .@player_name$ + " : I thought it would be difficult to communicate... Let's go to the other people?", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "......";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "Who are you talking to now?";
+		mes "Nobody is here except the two of us.";
+		npctalk "I'm going to die. Die. Die.", "", bc_self;
+		sleep2 1000;
+		unittalk .@account_id, "" + .@player_name$ + " : ......", bc_self;
+		next;
+		npctalk "Ah-ha, I found.", "", bc_self;
+		cloakonnpcself( "Fragile Woman#illtur" );
+		specialeffect EF_SCREEN_QUAKE, AREA, "Rancorous Ghost#illtur01";
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur01";
+		cloakoffnpcself( "Rancorous Ghost#illtur01" );
+		mes "[Archeologist Leiphen]";
+		mes "What... is... that... sound...";
+		next;
+		specialeffect EF_SCREEN_QUAKE, AREA, "Rancorous Ghost#illtur02";
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur02";
+		cloakoffnpcself( "Rancorous Ghost#illtur02" );
+		sleep2 800;
+		npctalk "I found.", "Rancorous Ghost#illtur03", bc_self;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur03";
+		cloakoffnpcself( "Rancorous Ghost#illtur03" );
+		sleep2 800;
+		npctalk "Breathing!", "Rancorous Ghost#illtur04", bc_self;
+		specialeffect EF_SCREEN_QUAKE, AREA, "Rancorous Ghost#illtur04";
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur04";
+		cloakoffnpcself( "Rancorous Ghost#illtur04" );
+		sleep2 800;
+		npctalk "Found alive.", "Rancorous Ghost#illtur05", bc_self;
+		cloakoffnpcself( "Rancorous Ghost#illtur05" );
+		sleep2 800;
+		npctalk "Catch!", "Rancorous Ghost#illtur06", bc_self;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur06";
+		cloakoffnpcself( "Rancorous Ghost#illtur06" );
+		sleep2 800;
+		npctalk "Kill!", "Rancorous Ghost#illtur07", bc_self;
+		specialeffect EF_SCREEN_QUAKE, AREA, "Rancorous Ghost#illtur07";
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur07";
+		cloakoffnpcself( "Rancorous Ghost#illtur07" );
+		sleep2 800;
+		npctalk "Make into pieces!", "Rancorous Ghost#illtur01", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Aargh! What is this!";
+		next;
+		cloakoffnpcself( "Girl#illtur02" );
+		unittalk .@account_id, "" + .@player_name$ + " : Look out, it's dangerous!", bc_self;
+		mes "[Girl]";
+		mes "Put this in your mouth. Shh, quietly!";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Hey, you are the girl from before? What is it, a turtle shell?", bc_self;
+		mes "[Girl]";
+		mes "Don't breathe. You too.";
+		next;
+		npctalk "Archeologist Leiphen : Is there another one?", "Archeologist Leiphen#illtur03", bc_self;
+		sleep2 1000;
+		npctalk "Girl : Don't breathe! Don't talk!", "Girl#illtur02", bc_self;
+		sleep2 1000;
+		npctalk "Archeologist Leiphen : H...", "Archeologist Leiphen#illtur03", bc_self;
+		specialeffect EF_CLOAKING, AREA, "Archeologist Leiphen#illtur03";
+		sleep2 1000;
+		npctalk "Where are they?", "Rancorous Ghost#illtur02", bc_self;
+		npctalk "They just vanished.", "Rancorous Ghost#illtur04", bc_self;
+		npctalk "They are gone.", "Rancorous Ghost#illtur06", bc_self;
+		npctalk "How could it be?", "Rancorous Ghost#illtur01", bc_self;
+		npctalk "Who did it?", "Rancorous Ghost#illtur05", bc_self;
+		sleep2 1000;
+		npctalk "Disappeared!", "Rancorous Ghost#illtur03", bc_self;
+		npctalk "Gone. Completely gone!", "Rancorous Ghost#illtur07", bc_self;
+		npctalk "I saw living things?", "Rancorous Ghost#illtur05", bc_self;
+		npctalk "I will find them!", "Rancorous Ghost#illtur04", bc_self;
+		npctalk "Should have killed!", "Rancorous Ghost#illtur06", bc_self;
+		mes "[Girl]";
+		mes "Now I can't see both of you... But don't go. I'm speaking in a quiet voice.";
+		next;
+		npctalk "Girl : ......Are you here?", "Girl#illtur02", bc_self;
+		mes "[Girl]";
+		mes "You are here, right?";
+		mes "I'm saying this once, so listen carefully.";
+		next;
+		mes "[Girl]";
+		mes "You won't be caught if you bite on that and hold your breath.";
+		mes "Just get out of here, quickly. Go back to where we met.";
+		next;
+		mes "[Girl]";
+		mes "The place where you met me for the first time... Remember? I'll be waiting.";
+		next;
+		npctalk "Gone. The living people.", "Rancorous Ghost#illtur05", bc_self;
+		sleep2 1000;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur03";
+		cloakonnpcself( "Rancorous Ghost#illtur03" );
+		npctalk "No, my baby...", "Rancorous Ghost#illtur03", bc_self;
+		sleep2 1000;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur07";
+		cloakonnpcself( "Rancorous Ghost#illtur07" );
+		npctalk "All here are dead.", "Rancorous Ghost#illtur07", bc_self;
+		sleep2 1000;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur04";
+		cloakonnpcself( "Rancorous Ghost#illtur04" );
+		npctalk "My treasure...", "Rancorous Ghost#illtur04", bc_self;
+		sleep2 1000;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur05";
+		cloakonnpcself( "Rancorous Ghost#illtur05" );
+		npctalk "Let's go back.", "Girl#illtur02", bc_self;
+		sleep2 1000;
+		cloakonnpcself( "Girl#illtur02" );
+		npctalk "I'm hungry... Hungry.", "Rancorous Ghost#illtur02", bc_self;
+		sleep2 1000;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur02";
+		cloakonnpcself( "Rancorous Ghost#illtur02" );
+		cloakoffnpcself( "Fragile Woman#illtur" );
+		npctalk "As always.", "Rancorous Ghost#illtur01", bc_self;
+		sleep2 1000;
+		specialeffect EF_DANCE1, AREA, "Rancorous Ghost#illtur01";
+		cloakonnpcself( "Rancorous Ghost#illtur01" );
+		npctalk "It's all dead...", "Rancorous Ghost#illtur06", bc_self;
+		sleep2 1000;
+		cloakonnpcself( "Rancorous Ghost#illtur06" );
+		sleep2 3000;
+		unittalk .@account_id, "" + .@player_name$ + " : We don't have a choice, just believe her. Let's go upward!", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Let's gooo!";
+		next;
+		mes " - ^424242Archeologist Leiphen held his breath and nodded.^000000 - ";
+		ill_turtle = 8;
+		erasequest 16103;	// The Secret of Strangers
+		setquest 16104;	// A long-forgotten story
+		close2;
+		cloakonnpcself( "Archeologist Leiphen#illtur03" );
+		end;
+	}
+	if (ill_turtle > 10) {
+		switch( checkquest(16105,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Fragile Woman]";
+			mes "I'm hungry... Hungry. I'm going to die.";
+			next;
+			mes "[Fragile Woman]";
+			mes "I can eat anything in front of me. From head to toe...";
+			next;
+			mes " - ^424242I should be closer. After dawn, maybe calmer.";
+			close2;
+			npctalk "I'm hungry. Please help me. I'm hungry.", "", bc_self;
+			end;
+		case 2:
+			erasequest 16105;	// A short break, and a promise
+			break;
+		}
+		switch( checkquest(16113,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Fragile Woman]";
+			mes "Meat... Easily digestible meat. Hungry. Hungry. Too good. Meat...";
+			mes "I'm hungry. Want more. Yummy. Too tasty.";
+			next;
+			unittalk .@account_id, "" + .@player_name$ + " : Looking at the happiness she gets with " + getitemname(7564) + ".... I feel sorry.", bc_self;
+			mes " - ^424242Still... satisfied. Let's come back after dawn.^000000 -";
+			close;
+		case 2:
+			erasequest 16113;	// Endless Hunger - Cooldown
+			break;
+		}
+
+		.@quest_16111 = checkquest(16111,HUNTING);
+		.@quest_16112 = checkquest(16112,HUNTING);
+		if (.@quest_16111 == -1 || .@quest_16112 == -1)
+			.@state = -1;
+		else if (.@quest_16111 == 2 && .@quest_16112 == 2 && countitem(7564) > 9)
+			.@state = 2;
+
+		switch( .@state ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Fragile Woman]";
+			mes "Please hunt turtles. ^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ". 10 monsters each.^000000";
+			next;
+			npctalk "I'm going to die. Die. Die.", "", bc_self;
+			mes "[Fragile Woman]";
+			mes "Give me. ^0000CDThe " + getitemname(7564) + ". 10 pieces.^000000";
+			mes "It's ok. I need " + getitemname(7564) + ", or I will just die. Starving and suffering.";
+			close;
+		case 2:
+			if (checkweight(1201,1) == 0) {
+				mes "[Fragile Woman]";
+				mes "What are you doing with such a heavy bag? Clear it out some.";
+				close;
+			}
+			setpcblock PCBLOCK_NPC, true;
+			npctalk "I'm hungry. Please help me. I'm hungry.", "", bc_self;
+			sleep2 500;
+			setpcblock PCBLOCK_NPC, false;
+			unittalk .@account_id, "" + .@player_name$ + " : I came back. I finished the hunting.", bc_self;
+
+			mes "[Fragile Woman]";
+			mes "Ah..ah.. The nice smell of meat.";
+			mes "It smells delicious. It looks so delicious. Please give it to me. Hungry. Hurry.";
+			next;
+			unittalk .@account_id, "" + .@player_name$ + " : ...It smells rotten...", bc_self;
+			mes "[Fragile Woman]";
+			mes "Delicious. It's so delicious. Happy. It's really good.";
+			next;
+			npctalk "Woman : chomp chomp, munch....", "", bc_self;
+			mes " - ^424242......she is holding it with her bare hands and eating..^000000 -";
+			next;
+			mes "[Fragile Woman]";
+			mes "Ahah, I'm full. I'm not die now. I'm full.";
+			mes "Here, I give you this. Can't eat though..";
+			next;
+			npctalk "I'm going to die. Die. Die.", "", bc_self;
+			sleep2 500;
+			unittalk .@account_id, "" + .@player_name$ + " : ... " + getitemname(25271) + "?", bc_self;
+			mes "[Fragile Woman]";
+			mes "I ate everything. Sorry. That's the only thing I can give you.";
+			delitem 7564,10;	// Rotten_Meat
+			erasequest 16111;	// Endless Hunger 1
+			erasequest 16112;	// Endless Hunger 2
+			setquest 16113;	// Endless Hunger - Cooldown
+			getitem 25271,1;	// IllusionStone
+			getexp 1200000,1000000;
+			close;
+		}
+		mes "[Fragile Woman]";
+		mes "I'm hungry. Help me. Please. Hungry.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : How.. can I help you?", bc_self;
+		mes "[Fragile Woman]";
+		mes "...Help me? Really? You won't let me die?";
+		next;
+		mes "[Fragile Woman]";
+		mes "Then please hunt turtles. ^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ". 10 monsters each.^000000";
+		mes "Please take the meat. " + getitemname(7564) + ". 10pieces.";
+		next;
+		npctalk "I'm hungry. Please help me. I'm hungry.", "", bc_self;
+		sleep2 500;
+		unittalk .@account_id, "" + .@player_name$ + " : It's all rotten meat.", bc_self;
+		mes "[Fragile Woman]";
+		mes "It's ok. Or I will die. Starving...";
+		mes "Take the meat. ^0000CDThe " + getitemname(7564) + ". 10 pieces.^000000";
+		next;
+		mes " - ^424242Archeologist Leiphen couldn't eat... But according to Narin, she will be happy. I can only get the " + getitemname(7564) + " in here.^000000 -";
+		next;
+		npctalk "I'm going to die. Die. Die.", "", bc_self;
+		if (select( "I will take it.", "I can't help you now." ) == 2) {
+			mes "[Fragile Woman]";
+			mes "I'm going to die. Starve to death.";
+			next;
+			mes "[Fragile Woman]";
+			mes "^FF0000I can eat anything. Really anything. I can eat.. chomp chomp.^000000";
+			close;
+		}
+		mes "[Fragile Woman]";
+		mes "Thank you. Meat, I will die if I can't eat.";
+		mes "I can now live some more.";
+		unittalk .@account_id, "" + .@player_name$ + " : ......", bc_self;
+		setquest 16111;	// Endless Hunger 1
+		setquest 16112;	// Endless Hunger 2
+		close;
+	}
+	mes "[Fragile Woman]";
+	mes "Hungry. I'm so hungry I can't move..";
+	mes "Please... please have mercy. I've been starving for too long...";
+	if (!.talk)
+		donpcevent "Fragile Woman#illtur::OnTalk";
+	close;
+
+OnTalk:
+	.talk = 1;
+	switch( rand(2) ) {
+	case 0:
+		npctalk "I'm hungry. Please help me. I'm hungry.";
+		sleep 3000;
+		npctalk "I can eat anthing now. Please give me something.";
+		break;
+	case 1:
+		npctalk "I will starve to death. If I don't eat something, I will die.";
+		sleep 3000;
+		npctalk "I'm hungry. Please help me. Please...";
+		break;
+	}
+	.talk = 0;
+	end;
+
+OnInit:
+	// cloakonnpc();
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 4" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 7" );
+
+	// daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16111,HUNTING) == 2 && checkquest(16112,HUNTING) == 2 && countitem(7564) > 9" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16105,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16113,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle > 10 && checkquest(16105,PLAYTIME) == -1 && checkquest(16113,PLAYTIME) == -1 && isbegin_quest(16111) == 0" );
+	end;
+}
+
+tur_d04_i,100,112,3	duplicate(dummy_cloaked_npc)	Girl#illtur02	4_F_NARIN
+tur_d04_i,101,110,3	duplicate(dummy_cloaked_npc)	Archeologist Leiphen#illtur03	2_M_ALCHE
+tur_d04_i,96,112,5	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur02	4_F_NFDEADMGCIAN
+tur_d04_i,94,108,7	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur03	4_M_NFDEADSWDMAN
+tur_d04_i,91,111,5	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur04	4_F_NFDEADMGCIAN
+tur_d04_i,97,104,7	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur05	4_F_NFDEADMGCIAN
+tur_d04_i,107,109,3	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur06	4_F_NFDEADMGCIAN
+tur_d04_i,104,112,3	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur07	4_M_NFDEADSWDMAN
+tur_d04_i,102,102,1	duplicate(dummy_cloaked_npc)	Rancorous Ghost#illtur01	4_M_NFDEADSWDMAN
+
+
+tur_d04_i,26,167,0	script	#illtur01	HIDDEN_WARP_NPC,15,15,{
+	end;
+OnTouch:
+	if (ill_turtle == 5 || ill_turtle == 6 || ill_turtle > 10)
+		cloakoffnpcself( "Archeologist Leiphen#illtur02" );
+	end;
+}
+
+tur_d04_i,26,167,5	script	Archeologist Leiphen#illtur02	2_M_ALCHE,{
+	.@account_id = getcharid(3);
+	.@player_name$ = strcharinfo(0);
+
+	if (ill_turtle == 5) {
+		unittalk .@account_id, "" + .@player_name$ + " : Dr. Leiphen! You are Archeologist Leiphen, right?", bc_self;
+		mes " - ^424242The guy...? I finally found him.^000000 -";
+		next;
+		emotion ET_SURPRISE, .@account_id;
+		mes "[Archeologist Leiphen]";
+		mes "Oh my god... Human, a human? A real human?";
+		mes "Oh thank God! Thank you. I thought I was going to die here!";
+		npctalk "Archeologist Leiphen : How did you know it was me?", "", bc_self;
+		sleep2 1000;
+		unittalk .@account_id, "" + .@player_name$ + " : Aylvar sent me to look for you. I'm adventurer " + .@player_name$ + ".", bc_self;
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "huu... without Aylvar and " + .@player_name$ + " I would have died.";
+		mes "^FF0000I couldn't sleep^000000 and eat for several days. I was wandering around.";
+		next;
+		sleep2 1000;
+		emotion ET_QUESTION, .@account_id;
+		unittalk .@account_id, "" + .@player_name$ + " : I heard you were missing for half a day...", bc_self;
+		mes " - ^424242Several days? It's weird.^000000 -";
+		next;
+		npctalk "Archeologist Leiphen : This Turtle Island is, not the Turtle Island we know.", "", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Anyway, have you heard from Aylvar? I was hesitant when I heard.";
+		mes "...Aylvar was right about this place.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "There are a lot of things I'd like to research, but it's better to go back for now.";
+		mes "I'm exhausted and don't have some tools to make proper reasoning. It's better to prepare and come back.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Come back here?", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Of course I have to come back. It's a place where I can discover all new facts about the history of Turtle Island.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : ...You are an implacable scholar after all.", bc_self;
+		emotion ET_HNG;
+		mes "[Archeologist Leiphen]";
+		mes "I'll take that as a compliment.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Well, then you are going back for now? Let me guide you out...", bc_self;
+		sleep2 1000;
+		npctalk "Archeologist Leiphen : Stomach growling...", "", bc_self;
+		emotion ET_SWEAT;
+		mes "[Archeologist Leiphen]";
+		mes "hum...";
+		mes "I'm sorry but I'm hungry... I can't move right now.";
+		mes "If you are okay, can you hunt some monsters around?";
+		next;
+		sleep2 500;
+		unittalk .@account_id, "" + .@player_name$ + " : You want me to hunt?", bc_self;
+		sleep2 1000;
+		npctalk "Archeologist Leiphen : After a long research expedition, I was able to have a few meals at the survey site..", "", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "The essence is a turtle, so I can eat but I couldn't hunt alone, so I starved all this time....";
+		mes "The monsters here are much stronger than the monsters on the Turtle Island we know. Please?";
+		next;
+		if (select( "What kind of monster do you want?", "I think it's better to just go." ) == 1) {
+			mes "[Archeologist Leiphen]";
+			mes "...I'm sorry, can't move.";
+			mes "Can you carry me out?";
+			unittalk .@account_id, "" + .@player_name$ + " : ....How many monsters do you need me to hunt?", bc_self;
+		}
+		else {
+			mes "[Archeologist Leiphen]";
+			mes "Well, if the monster hunting is too cumbersome... you can carry me out..";
+			unittalk .@account_id, "" + .@player_name$ + " : I will hunt the monster.", bc_self;
+		}
+		emotion ET_FRET, .@account_id;
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "Thank you for accepting. Well, I think it's better to think of these monsters as different ones from Turtle Island.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ". ^0000CD10 monsters each.^000000 Please.";
+		mes "And ^0000CDthe meat^000000, ^0000CD10 pieces^000000 please.";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "In the meantime, I will make a fire.";
+		mes "Phew... I'm struggling all of a sudden. I'm an archaeologist, not a hero of an adventure story.";
+		ill_turtle = 6;
+		erasequest 16100;	// Stranger on Turtle Island 4
+		setquest 16101;	// Emergency food procurement 1
+		setquest 16102;	// Emergency food procurement 2
+		close;
+	}
+	if (ill_turtle == 6) {
+		if (checkquest(16101,HUNTING) != 2 || checkquest(16102,HUNTING) != 2 || countitem(7564) < 10) {
+			npctalk "Archeologist Leiphen : Oh, you came back. I was waiting.", "", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : ...It's too bad. Leiphen, the flesh of the hunted monster is all rotten..", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "Oops... The fire didn't go well. I can't burn books or tools.";
+			next;
+			unittalk .@account_id, "" + .@player_name$ + " : No matter how much I hunt all I got is rotten meat.", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "No way... All of it?";
+			mes "^0000CD" + getmonsterinfo("ILL_PERMETER", MOB_NAME) + ", " + getmonsterinfo("ILL_SOLIDER", MOB_NAME) + ", " + getmonsterinfo("ILL_FREEZER", MOB_NAME) + ", " + getmonsterinfo("ILL_HEATER", MOB_NAME) + ", ^000000ALL?";
+			next;
+			mes "[Archeologist Leiphen]";
+			mes "...Well, let me take ^0000CDthe " + getitemname(7564) + " ^00000010 pieces, ^0000CDlet me try first^000000 please.";
+			mes "I can't move without chewing and swallowing something...";
+			npctalk "Archeologist Leiphen : Or you can carry me out...", "", bc_self;
+			sleep2 1500;
+			unittalk .@account_id, "" + .@player_name$ + " : Let me go hunt more.", bc_self;
+			close;
+		}
+		npctalk "Archeologist Leiphen : Oh, you came back, " + .@player_name$ + ".", "", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Too bad. There was nothing to burn... So I can't make a fire.";
+		next;
+		sleep2 1000;
+		unittalk .@account_id, "" + .@player_name$ + " : I hunted the monsters by the type but all I got was rotten. I brought only " + getitemname(7564) + ".", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "That's really weird. You hunt living monsters, but somehow it only gives rotten meat?";
+		mes "I can't cook the rotten meat, but I can try to eat!";
+		sleep2 1500;
+		npctalk "Archeologist Leiphen : Chewing on... Yuck... ??!", "", bc_self;
+		sleep2 2000;
+		unittalk .@account_id, "" + .@player_name$ + " : Oops, are you ok?", bc_self;
+		next;
+		emotion ET_CRY;
+		mes "[Archeologist Leiphen]";
+		mes "Ugh... I can't eat. Sorry... You tried for nothing...";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "There is no one around here except me and you, right? I've been around here for days ^FF0000but I haven't seen anyone^000000.";
+		mes "If there are others, I can ask for their help.";
+		next;
+		unittalk .@account_id, "" + .@player_name$ + " : Umm, I saw some people here.", bc_self;
+		sleep2 500;
+		emotion ET_HUK;
+		npctalk "Archeologist Leiphen : Really? Some people?", "", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "Did you see people? Oh, you should have told me earlier. Where did you see them? Let's go and talk now!";
+		mes "I want to ask them something!";
+		next;
+		sleep2 500;
+		unittalk .@account_id, "" + .@player_name$ + " : You said you want me to carry you out...?", bc_self;
+		sleep2 1000;
+		unittalk .@account_id, "" + .@player_name$ + " : But, there are some weird people. I'm not sure we can talk...", bc_self;
+		mes "[Archeologist Leiphen]";
+		mes "I'm ok now! Let's go!";
+		next;
+		mes "[Archeologist Leiphen]";
+		mes "Even if we can't talk, I can still figure something out by looking at people's lifestyle.";
+		mes "Okay, let's go! Please show me the way! To the nearest place!";
+		next;
+		emotion ET_SCRATCH, .@account_id;
+		mes " - ^424242I didn't mean that about the talking part, but let's go anyway.";
+		mes "To the nearest place... ^FF0000Let's go to the hungry ^424242woman.^000000 -";
+		delitem 7564,10;	// Rotten_Meat
+		ill_turtle = 7;
+		erasequest 16101;	// Emergency food procurement 1
+		erasequest 16102;	// Emergency food procurement 2
+		setquest 16103;	// The Secret of Strangers
+		close;
+	}
+	if (ill_turtle == 7) {
+		npctalk "Archeologist Leiphen : You said the nearest place is somewhere here? I'm all good. Show me the way!", "", bc_self;
+		end;
+	}
+	if (ill_turtle > 10) {
+		switch( isbegin_quest(16106) ) {
+		case 0:
+			npctalk "Archeologist Leiphen : If " + .@player_name$ + " can sooth the entangled spirits, I'd like to talk with them someday. About this place...", "", bc_self;
+			end;
+		case 1:
+			npctalk "Archeologist Leiphen : Hello, " + .@player_name$ + ".", "", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "You are here again today.";
+			next;
+			unittalk .@account_id, "" + .@player_name$ + " : You are always here.", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "As I told you, I'm not going to leave until I found the secret of this place.";
+			mes "Are you here to go to Narin?";
+			next;
+			npctalk "Archeologist Leiphen : Well, eating and sleeping were solved in Alberta. I got a decent accommodation.", "", bc_self;
+			sleep2 1000;
+			unittalk .@account_id, "" + .@player_name$ + " : Don't you have a class?", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "Uh, I didn't tell you. I'm taking a sabbatical year.";
+			next;
+			emotion ET_SWEAT, .@account_id;
+			emotion ET_DELIGHT, .@account_id;
+			unittalk .@account_id, "" + .@player_name$ + " : Okay... Let's go together?", bc_self;
+			mes "[Archeologist Leiphen]";
+			mes "Let's go!";
+			completequest 16106;	// A memory that should not be forgotten 1
+			setquest 16107;	// A memory that should not be forgotten 2
+			close;
+		case 2:
+			npctalk "Archeologist Leiphen : Are you going to the Turtle Island to meet Narin? Let's hurry!", "", bc_self;
+			end;
+		}
+		end;
+	}
+	end;
+
+OnInit:
+	cloakonnpc();
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 5" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_turtle == 6 && checkquest(16101,HUNTING) == 2 && checkquest(16102,HUNTING) == 2 && countitem(7564) > 9" );
+
+	// daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16106) == 1" );
+	end;
+}
+
+
+// Others npcs
+tur_d03_i,147,170,7	script	#illturg11	CLEAR_NPC,{
+	mes " - ^424242I think I saw something.^000000 -";
+	close;
+}
+tur_d03_i,137,170,0	script	#illturgg11	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	.@num = atoi( replacestr( strnpcinfo(2), "illturgg", "" ) );
+	if (.talk[.@num])
+		end;
+	.talk[.@num] = 1;
+	switch(.@num) {
+	case 11:
+		setnpcdisplay( "#illturg11", 4_M_NFDEADSWDMAN );
+		npctalk "Where am I? Where is everybody?", "#illturg11";
+		sleep 1000;
+		npctalk "I'm thirsty... Thirsty.", "#illturg11";
+		sleep 1000;
+		setnpcdisplay( "#illturg11", CLEAR_NPC );
+		break;
+	case 12:
+		setnpcdisplay( "#illturg12", 4_M_NFDEADSWDMAN );
+		npctalk "Liar, liar.", "#illturg12";
+		sleep 1000;
+		npctalk "You said you'd come back?", "#illturg12";
+		sleep 1000;
+		setnpcdisplay( "#illturg12", CLEAR_NPC );
+		break;
+	case 13:
+		setnpcdisplay( "#illturg13", 4_F_NFDEADMGCIAN );
+		npctalk "Ahha, Ahahaha, haha...", "#illturg13";
+		sleep 1000;
+		npctalk "Ahha... ha... boohoo...", "#illturg13";
+		sleep 1000;
+		setnpcdisplay( "#illturg13", CLEAR_NPC );
+		break;
+	case 21:
+		setnpcdisplay( "#illturg21", 4_F_NFDEADMGCIAN );
+		npctalk "Where am I? Where is my boss??", "#illturg21";
+		sleep 1000;
+		npctalk "Who is there? Who is there?", "#illturg21";
+		sleep 1000;
+		setnpcdisplay( "#illturg21", CLEAR_NPC );
+		break;
+	case 22:
+		setnpcdisplay( "#illturg22", 4_M_NFDEADSWDMAN );
+		npctalk "Ha-ah...ah, too cold.. I want to go back...", "#illturg22";
+		sleep 1000;
+		npctalk "Anyone here? Anyone...?", "#illturg22";
+		sleep 1000;
+		setnpcdisplay( "#illturg22", CLEAR_NPC );
+		break;
+	case 23:
+		setnpcdisplay( "#illturg23", 4_M_NFDEADSWDMAN );
+		sleep2 1000;
+		npctalk "Ahahahahahahahahahahahahahahahaha", "#illturg23", bc_self;
+		setnpcdisplay( "#illturg23", CLEAR_NPC );
+		break;
+	case 24:
+		setnpcdisplay( "#illturg24", 4_M_NFDEADSWDMAN );
+		npctalk "Did you wait? Did you wait for me?", "#illturg24", bc_self;
+		sleep2 1000;
+		npctalk "It's late, it's already too late.", "#illturg24", bc_self;
+		setnpcdisplay( "#illturg24", CLEAR_NPC );
+		break;
+	}
+	sleep 4000;
+	.talk[.@num] = 0;
+	end;
+}
+
+tur_d03_i,142,229,1	script	#illturg12	CLEAR_NPC,{
+	mes " - ^424242It seems to be getting a little cold.^000000 -";
+	close;
+}
+tur_d03_i,146,223,0	duplicate(#illturgg11)	#illturgg12	HIDDEN_WARP_NPC,5,5
+
+tur_d03_i,214,105,7	script	#illturg13	CLEAR_NPC,{
+	mes " - ^424242I feel strange...^000000 -";
+	close;
+}
+tur_d03_i,207,104,0	duplicate(#illturgg11)	#illturgg13	HIDDEN_WARP_NPC,5,5
+
+tur_d04_i,99,153,7	script	#illturg21	CLEAR_NPC,{
+	mes " - ^424242...?^000000 -";
+	close;
+}
+tur_d04_i,99,160,0	duplicate(#illturgg11)	#illturgg21	HIDDEN_WARP_NPC,3,3
+
+tur_d04_i,37,137,7	script	#illturg22	CLEAR_NPC,{
+	mes " - ^424242I feel weird, but nothing is here...^000000 -";
+	close;
+}
+tur_d04_i,45,137,0	duplicate(#illturgg11)	#illturgg22	HIDDEN_WARP_NPC,3,3
+
+tur_d04_i,76,35,7	script	#illturg23	CLEAR_NPC,{
+	mes " - ^424242I'm in a bad mood...^000000 -";
+	close;
+}
+tur_d04_i,69,31,0	duplicate(#illturgg11)	#illturgg23	HIDDEN_WARP_NPC,3,3
+
+tur_d04_i,135,133,1	script	#illturg24	CLEAR_NPC,{
+	mes " - ^424242I heard something.^000000 -";
+	close;
+}
+tur_d04_i,137,126,0	duplicate(#illturgg11)	#illturgg24	HIDDEN_WARP_NPC,3,3
+
+
+
+//============================================================
+//= Illusion of Luanda
+//============================================================
+// Warps
+beach_dun2,248,254,4	script	#IL_Luanda	4_ENERGY_BLUE,{
+	mes "This is a totem that glows softly in blue.";
+	next;
+	if (select( "Touch it", "Leave it" ) == 2)
+		end;
+	if (BaseLevel < 160) {
+		mes "- You cannot enter the area because your level is too low.";
+		close;
+	}
+	warp "com_d02_i",249,243;
+	end;
+}
+
+com_d02_i,254,243,0	warp2	IL_Luanda#Luanda	1,1,beach_dun2,249,243
+
+
+// Reward npc
+com_d02_i,241,255,4	script	Defense Manager Luanda#Lu	4_M_THAIONGBAK,{
+	if (BaseLevel < 160)	// shouldn't happen
+		end;
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed because you have too many items. -";
+		close;
+	}
+	if (ill_luanda == 0) {
+		emotion ET_QUESTION;
+		mes "[Luanda]";
+		mes "Who are you?";
+		next;
+		mes "[Luanda]";
+		mes "Ah! Ah! Ah!";
+		mes "I've heard that they hire adventurers because they don't have enough hands to defend the village. I guess that's you?";
+		next;
+		mes "[Luanda]";
+		mes "By the way, haven't I seen you somewhere? Your face looks strangely familiar.";
+		next;
+		mes "[Luanda]";
+		mes "Oops, I'm not in a position to compare similar faces... We're twins. Ha ha ha";
+		next;
+		mes "[Luanda]";
+		mes "Should I say hello? Nice to meet you. I'm Luanda, the defense manager of this cave.";
+		next;
+		mes "[Luanda]";
+		mes "For simple quests, we have prepared a request board, so you can find them and report them to me.";
+		next;
+		mes "[Luanda]";
+		mes "The quest itself doesn't have to be difficult, as you just have to go around the cave and deal with the monsters or bring the byproducts of the monsters.";
+		next;
+		mes "[Luanda]";
+		mes "Since you've been hired by the village, I'd like you to work hard and lighten the burden a bit. It's really hard these days. Please.";
+		next;
+		ill_luanda = 1;
+		emotion ET_KIK;
+		mes "[Luanda]";
+		mes "Then have a good time. Adventurer.";
+		close;
+	}
+	if (ill_luanda == 2) {	// first time (walk near any shadow npc)
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about the strange shimmering you had witnessed.";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Luanda]";
+		mes "A strange shimmer? As you said, it's a really strange phenomenon.";
+		next;
+		mes "[Luanda]";
+		mes "I've lived in the village for a long time, but it seems like a phenomenon I've never heard of. I'm guessing, but I think it's just started happening recently.";
+		next;
+		mes "[Luanda]";
+		mes "I don't live alone in the village, and if someone had seen it, it would have been rumored, but hearing it for the first time would make my guess clear.";
+		next;
+		mes "[Luanda]";
+		mes "It could be dangerous, so if you find it, why don't you avoid it? There's no need to take a risk.";
+		next;
+		ill_luanda = 3;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 5) {	// MONDAY vortex 153/33
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about three young men you met and talked to.";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Luanda]";
+		mes "Uh.. huh?! You saw me and young men who look like like my brothers.";
+		next;
+		mes "[Luanda]";
+		mes "It seems like it happened a long time ago. Unlike Mao, I don't have a very good memory.";
+		next;
+		mes "[Luanda]";
+		mes "I vaguely remember it. I did warn a stranger I met before I went hunting with my brothers.";
+		next;
+		mes "[Luanda]";
+		mes "It's not uncommon to see strangers in town, so my memory is hazy, but I remember it.";
+		next;
+		mes "[Luanda]";
+		mes "It's interesting. If what you're saying is true, doesn't that mean you've been talking to me in the past?";
+		next;
+		mes "[Luanda]";
+		mes "Ah! Come to think of it, do you remember the first time we met? Didn't I say I was used to being an adventurer?";
+		next;
+		mes "[Luanda]";
+		mes "As expected, I don't think it was a bad feeling. I really can't believe it. An adventurer who met me in the past...";
+		next;
+		mes "[Luanda]";
+		mes "That sounds like something similar could happen in the future, right?";
+		next;
+		emotion ET_SORRY;
+		mes "[Luanda]";
+		mes "I apologize. Deep down, I felt that it was annoying for adventurers to talk to me. Now, I'll ask you first.";
+		next;
+		mes "[Luanda]";
+		mes "If you ever go through something similar, please let me know. I'm begging you.";
+		next;
+		ill_luanda = 6;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 7) {// TUESDAY vortex 118/100
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told him about Karoo and Asudem.";
+		next;
+		emotion ET_SMILE;
+		mes "[Luanda]";
+		mes "Puhahaha I think you came to see the place where Hyung-nim and sister-in-law are dating.";
+		next;
+		emotion ET_SMILE;
+		mes "[Luanda]";
+		mes "Oh my gosh.. that place is where my brother and sister-in-law often went on dates.";
+		next;
+		mes "[Luanda]";
+		mes "My brother might think it's a secret place only he knows, but it's a place everyone in the village knows.";
+		next;
+		mes "[Luanda]";
+		mes "It's quite a popular spot among village lovers. It's quiet and a good place for a date.";
+		next;
+		mes "[Luanda]";
+		mes "Recently, I haven't had much to laugh about because of various things, but thanks to you, I laughed out loud. I look forward to the next story.";
+		next;
+		ill_luanda = 8;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 9) {// WEDNESDAY vortex 193/267
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about who was painting murals in the cave.";
+		next;
+		mes "[Luanda]";
+		mes "Have you ever met me when I was painting the mural? I don't remember, but...";
+		next;
+		mes "[Luanda]";
+		mes "I think I can tell you why I painted the mural.";
+		next;
+		mes "[Luanda]";
+		mes "It's not much of a secret, but each of my brothers has a mysterious ability.";
+		next;
+		mes "[Luanda]";
+		mes "In the case of Karoo-hyung, he has the ability to see accurately even from a distance..";
+		next;
+		mes "[Luanda]";
+		mes "Maknae Maru has an excellent memory that never forgets what she has seen and the ability to read her opponent's mind..";
+		next;
+		mes "[Luanda]";
+		mes "I'm not always correct, but I can see into the future. Ah! I have more abilities than that.";
+		next;
+		mes "[Luanda]";
+		mes "I can see people's good and evil energy. In the case of adventurers...";
+		next;
+		mes "[Luanda]";
+		mes "I can feel the good energy that can't be touched. That's why I feel more bitter.";
+		next;
+		mes "[Luanda]";
+		mes "Coming back to the original story, the reason I'm painting the mural is because one day I dreamed of a village burning down.";
+		next;
+		mes "[Luanda]";
+		mes "Many monsters have come to town and people are crying out in pain because of it...";
+		next;
+		mes "[Luanda]";
+		mes "After the hellish dream, I saw myself recording the day's events on a mural in a cave.";
+		next;
+		mes "[Luanda]";
+		mes "Haha, don't worry too much. The dream hasn't happened yet.";
+		next;
+		mes "[Luanda]";
+		mes "Do you know? If I paint the mural in advance, will the future I saw in my dream change?";
+		next;
+		mes "[Luanda]";
+		mes "An adventurer I haven't seen in my dreams is helping us, so I'm sure we can change it.";
+		next;
+		ill_luanda = 10;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 11) {// THURSDAY vortex 228/91
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about Mao, who was training alone.";
+		next;
+		mes "[Luanda]";
+		mes "Mao guy... you've been thinking about a lot of things.";
+		next;
+		mes "[Luanda]";
+		mes "Brother Karu lives separately from his sister-in-law, and we still live together, but I don't think he cared too much about his sister.";
+		next;
+		mes "[Luanda]";
+		mes "It's said that I lost my mind after having a painful dream, but somehow my anxiety...";
+		next;
+		mes "[Luanda]";
+		mes "Looks like he's been infested with Mao. Maybe because of his abilities, he's often swayed by other people's emotions...";
+		next;
+		mes "[Luanda]";
+		mes "He... training to become stronger... even if he doesn't become stronger... he's still enough...";
+		next;
+		emotion ET_THANKS;
+		mes "[Luanda]";
+		mes "Thank you. Thanks to you, I found out about Mao's troubles.";
+		next;
+		ill_luanda = 12;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 13) {// FRIDAY vortex 208/130
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about someone who was taking something from the cave.";
+		next;
+		mes "[Luanda]";
+		mes "You saw that too. I think we've talked about it before. In my dream, I saw monsters coming into town.";
+		next;
+		mes "[Luanda]";
+		mes "And in preparation for that time, the village warriors evacuated the elderly and weak to this place, and they stored supplies here and there in the cave.";
+		next;
+		mes "[Luanda]";
+		mes "These are literally emergency items. It would be perfect if they were not used, but...";
+		next;
+		mes "[Luanda]";
+		mes "You don't know how the world works. If you find something, just ignore it.";
+		next;
+		ill_luanda = 14;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 15) {// (re)MONDAY vortex 153/33
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about the story of meeting the villagers and the village chief.";
+		next;
+		mes "[Luanda]";
+		mes "You really came to see what happened a while ago. It wasn't as much damage as you saw in your dream, but it was a lot of damage.";
+		next;
+		mes "[Luanda]";
+		mes "When I think of that day, my heart hurts. All of a sudden, when my brothers were away...";
+		next;
+		mes "[Luanda]";
+		mes "Still, the village chief, the best elder in the village, seems to have suffered less damage because he was calm. Thanks for the story.";
+		next;
+		ill_luanda = 16;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 17) {// SATURDAY vortex 42/215
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about the story of meeting the brothers who ran somewhere in a hurry.";
+		next;
+		mes "[Luanda]";
+		mes "You must have seen the day my brothers and I came back from hunting. There was a big disaster in the village and it was the next day.";
+		next;
+		mes "[Luanda]";
+		mes "Kuh.. If me and my brothers hadn't emptied the village... the people wouldn't have been taken by the monsters...";
+		next;
+		mes "[Luanda]";
+		mes "If so... my sister-in-law also...";
+		next;
+		select( "It's not your fault." );
+		mes "[Luanda]";
+		mes "I know. It's not because of me and my brothers.. but.. that day.. we.. .. .. it's just a pity";
+		next;
+		select( "You'd better calm down first." );
+		mes "[Luanda]";
+		mes "You've shown me, adventurer, something I wouldn't have seen. I'm just here to tell you what I remember...";
+		next;
+		ill_luanda = 18;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 19) {// (re)THURSDAY vortex 228/91
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about the story of seeing Karu and Asudem.";
+		next;
+		mes "[Luanda]";
+		mes "... ... ...";
+		next;
+		mes "[Luanda]";
+		mes "Ka.. Karu hyungnim.. hyungnim";
+		mes "That's the reason why you shut yourself up in the west cave.";
+		next;
+		mes "[Luanda]";
+		mes "I feel resentful of myself for not being able to help with the village defense.";
+		next;
+		mes "[Luanda]";
+		mes "Your heart... I can't even imagine your sister-in-law's... whoo... your sorrow...";
+		next;
+		mes "[Luanda]";
+		mes "When the situation here is sorted out, I will look for my older brother. He must be alone in pain and sorrow.";
+		next;
+		mes "[Luanda]";
+		mes "My heart hurts like this too, but if you know the youngest who struggles because of his abilities... I'll have to prepare. Thank you, adventurer.";
+		next;
+		ill_luanda = 20;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (ill_luanda == 21) {	// SUNDAY vortex 263/72
+		mes "[Luanda]";
+		mes "What's up, adventurer?";
+		next;
+		mes "Told Luanda about stories of unknown people.";
+		next;
+		mes "[Luanda]";
+		mes "It sounds like a conversation between a Wootan or Megalith monster targeting the village.";
+		next;
+		mes "[Luanda]";
+		mes "Follow a strong leader? Recently, I felt that the movements of these guys are disturbingly orderly...";
+		next;
+		mes "[Luanda]";
+		mes "It seems that a monster has appeared to lead them.";
+		next;
+		mes "[Luanda]";
+		mes "It's embarrassing. Even now, all we can do is block it.";
+		next;
+		mes "[Luanda]";
+		mes "This is not the time to be sad. We need to build more defenses and take other measures.";
+		next;
+		mes "[Luanda]";
+		mes "A strong leader is also a problem... but a power that has been handed down as a legend? This is a story I've never heard of before.";
+		next;
+		mes "[Luanda]";
+		mes "I'm guessing this is the reason why the monsters are attacking the village, but I'll have to tell the chief and investigate.";
+		next;
+		emotion ET_THANKS;
+		mes "[Luanda]";
+		mes "The story you just told me was really helpful. Thank you, adventurer.";
+		next;
+		ill_luanda = 22;
+		getexp 1120000,650000;
+		erasequest 5847;
+		mes "Reported to Luanda and gained experience.";
+		close;
+	}
+	if (isbegin_quest(5848) == 1 && countitem(25638) > 2) {
+		delitem 25638,3;	// Token_Of_Bigstone
+		erasequest 5848;
+		setquest 5849;
+		.@amount = 1;
+	}
+	if (isbegin_quest(5850) == 1 && countitem(25633) > 2) {
+		delitem 25633,3;	// Token_Of_Wootan
+		erasequest 5850;
+		setquest 5851;
+		.@amount += 1;
+	}
+	if (checkquest(5852,HUNTING) == 2) {
+		erasequest 5852;
+		setquest 5853;
+		.@amount += 1;
+	}
+	if (checkquest(5854,HUNTING) == 2) {
+		erasequest 5854;
+		setquest 5855;
+		.@amount += 1;
+	}
+	if (.@amount > 0) {
+		getitem 25271, .@amount;	// IllusionStone
+		getexp (4300000 * .@amount), (2800000 * .@amount);
+		emotion ET_THANKS;
+		mes "[Luanda]";
+		if (.@amount > 1)
+			mes "It's a situation where even one request is regrettable, but " + .@amount + "... really.";
+		else
+			mes "Each and every request is precious. Thank you again and again.";
+		mes "You worked hard.";
+		close;
+	}
+	mes "[Luanda]";
+	mes "What's up, adventurer?";
+	next;
+	switch( select( "Is there no request here?", "What is this cave?", "Why are monsters invading?" ) ) {
+	case 1:
+		mes "[Luanda]";
+		mes "For quests that are recruiting in town, there is a separate request board.";
+		next;
+		mes "[Luanda]";
+		mes "Ah! Watch your mind. The location is in the middle of the battlefield, so I installed it in the corner for safety reasons.";
+		next;
+		mes "[Luanda]";
+		mes "There are cases where you cannot complete a request on the bulletin board right away, but there is no specific time limit, so don't be in a hurry.";
+		close;
+	case 2:
+		mes "[Luanda]";
+		mes "Adventurer, you are really curious about everything.";
+		next;
+		mes "[Luanda]";
+		mes "The Luanda Caves are strategically the only way out north of town.";
+		next;
+		mes "[Luanda]";
+		mes "That's why we're defending against monster attacks here.";
+		next;
+		select( "Luanda Cave? Luanda?" );
+		mes "[Luanda]";
+		mes "Ah! Did you notice? Yes, my name is Luanda too. The village elders say...";
+		next;
+		mes "[Luanda]";
+		mes "The triplets are said to have been named Karu, Luanda, and Mao after the village caves.";
+		next;
+		mes "[Luanda]";
+		mes "My neighborhood friends teased me a bit when I was young, but I don't have any complaints about the name.";
+		next;
+		mes "[Luanda]";
+		mes "I heard they were named after the guardians of the village. I'm rather proud of them.";
+		close;
+	case 3:
+		mes "[Luanda]";
+		mes "It's very puzzling to us too. If we knew why, we'd have put everything away.";
+		next;
+		mes "[Luanda]";
+		mes "This isn't a town with plenty of food, and I don't think there's any particular reason for monsters to target it.";
+		next;
+		mes "[Luanda]";
+		mes "But what can we do? We're just living here, and the monsters keep coming, so we have to live while blocking them.";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(5847) == 1" );
+	end;
+}
+
+
+// Shadow npcs and main quest related
+com_d02_i,1,1,1	script	com_d02_i_init_shadow_npc	-1,{
+	end;
+OnInit:
+OnHour00:	// updated every 3h at a fixed time
+OnHour03:
+OnHour06:
+OnHour09:
+OnHour12:
+OnHour15:
+OnHour18:
+OnHour21:
+	setarray .@num[1],1,2,3,4,5,6,7;
+	.@today = gettime(DT_DAYOFWEEK);
+	.@today = (.@today == 0 ? 7 : .@today);	// SUNDAY - 0
+	deletearray .@num[.@today],1;
+	deletearray .@num[ rand(1,6) ],1;	// note: should the previous enabled vortex be taken into account?
+
+	for ( .@i = 1; .@i < 6; ++.@i )
+		disablenpc "Shimmer#Lu0" + .@num[.@i];
+	end;
+}
+
+// MONDAY
+com_d02_i,153,33,1	script	Shimmer#Lu01	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 3) {
+		cloakoffnpcself( "First Young#LuE01" );
+		cloakoffnpcself( "Second Young#LuE01" );
+		cloakoffnpcself( "Third Young#LuE01" );
+		end;
+	}
+	if (ill_luanda == 4) {
+		cloakoffnpcself( "Second Young#LuE01" );
+		end;
+	}
+	if (ill_luanda == 14) {
+		cloakoffnpcself( "Chief#LuE06" );
+		cloakoffnpcself( "Villager#LuE061" );
+		cloakoffnpcself( "Villager#LuE062" );
+		cloakoffnpcself( "Villager#LuE063" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,152,40,6	script(CLOAKED)	Second Young#LuE01	4_M_THAIONGBAK,{
+	if (ill_luanda == 3) {
+		npctalk "Brother? Are you ready? Are you leaving soon? Time is running out.", "", bc_self;
+		mes "[Second Young]";
+		mes "Brother? Are you ready? Are you leaving soon? Time is running out.";
+		next;
+		npctalk "Yes. As the second said, we'd better start quickly. I don't feel very good.", "First Young#LuE01", bc_self;
+		mes "[First Young]";
+		mes "Yes. As the second said, it's better to start quickly. I don't feel very good..";
+		next;
+		npctalk "Hahaha, it's only one day. What's the big deal? Huh?!", "Third Young#LuE01", bc_self;
+		mes "[Third Young]";
+		mes "Hahaha, it's only one day. What's the big deal? Huh?!";
+		next;
+		npctalk "Brothers, there's someone over there. A stranger?", "Third Young#LuE01", bc_self;
+		mes "[Third Young]";
+		mes "Brothers, there is someone over there. A stranger?";
+		next;
+		npctalk "Looks like a stranger? If I remember correctly, I haven't seen that face in the neighborhood.", "Third Young#LuE01", bc_self;
+		mes "[Third Young]";
+		mes "Looks like a stranger? If I remember correctly, I haven't seen that face in the neighborhood.";
+		next;
+		npctalk "If it's the youngest's memory, that's it. It's odd to be a stranger at this age.", "First Young#LuE01", bc_self;
+		mes "[First Young]";
+		mes "If it's the youngest's memory, that's it. It's odd to be a stranger at this age.";
+		next;
+		npctalk "Brother, I don't think you're dangerous. This isn't the time. Brother, let's go first.", "", bc_self;
+		mes "[Second Young]";
+		mes "Brother, I don't think you're dangerous. This isn't the time. Brother, let's go first.";
+		next;
+		npctalk "I'll catch up soon.", "", bc_self;
+		mes "[Second Young]";
+		mes "I'll catch up soon.";
+		next;
+		npctalk "Looking at the expression on the second's face, I see that the stranger has something to say? Youngest, let's go first.", "First Young#LuE01", bc_self;
+		mes "[First Young]";
+		mes "Looking at the second expression, you can see that the stranger has something to say? Youngest, let's go first.";
+		next;
+		npctalk "Take care. Don't be late...", "First Young#LuE01", bc_self;
+		mes "[First Young]";
+		mes "Take care. Don't be late...";
+		next;
+		cloakonnpcself( "First Young#LuE01" );
+		sleep2 500;
+		cloakonnpcself( "Third Young#LuE01" );
+		npctalk "Yes bro.", "", bc_self;
+		mes "[Second Young]";
+		mes "Yes, bro.";
+		next;
+		npctalk "Hey stranger, look at me for a second.", "", bc_self;
+		mes "[Second Young]";
+		mes "Hey stranger, look at me for a second.";
+		ill_luanda = 4;
+		close;
+	}
+	if (ill_luanda == 4) {
+		npctalk "You? Can't you feel anything but good vibes? What the hell are you doing?", "", bc_self;
+		mes "[Second Young]";
+		mes "You? Can't you feel anything but good vibes? What the hell are you doing?";
+		next;
+		select( "What are you talking about?" );
+		npctalk "I can see it. Hmm... you can't see it though.", "", bc_self;
+		mes "[Second Young]";
+		mes "I can see it. Hmm.. you can't see it though.";
+		next;
+		npctalk "I'm telling you that I feel good vibes from you. Leave this place right now.", "", bc_self;
+		mes "[Second Young]";
+		mes "I'm telling you because I feel good vibes from you. Leave this place right now.";
+		next;
+		npctalk "A lot of monsters will come to this town soon. Don't die in vain and leave this place.", "", bc_self;
+		mes "[Second Young]";
+		mes "A lot of monsters will come to this town soon. Don't die in vain and leave this place.";
+		next;
+		cloakonnpcself();
+		ill_luanda = 5;
+		setquest 5847;
+		mes "The young man finished what he was saying and disappeared. He must have followed his brothers who went before him. What the hell is he doing?";
+		next;
+		mes "Should I ask Mr. Luanda about what happened?";
+		close;
+	}
+	end;
+}
+
+com_d02_i,154,41,4	duplicate(dummy_cloaked_npc)	First Young#LuE01	4_M_THAIONGBAK
+com_d02_i,156,39,4	duplicate(dummy_cloaked_npc)	Third Young#LuE01	4_M_THAIONGBAK
+
+
+// TUESDAY
+com_d02_i,118,100,1	script	Shimmer#Lu02	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 6) {
+		cloakoffnpcself( "Karu#LuE02" );
+		cloakoffnpcself( "Asudem#LuE02" );
+		end;
+	}
+	if (ill_luanda == 18) {
+		cloakoffnpcself( "Karu#LuE08" );
+		cloakoffnpcself( "Asudem#LuE08" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,121,95,4	script(CLOAKED)	Karu#LuE02	4_M_THAIONGBAK,{
+	if (ill_luanda == 6) {
+		npctalk "Karu.. How was the hunt today?", "Asudem#LuE02", bc_self;
+		mes "[Asudem]";
+		mes "Karu.. how was the hunt today?";
+		next;
+		npctalk "Hahaha Asudem... No honey. Don't you trust my skills? I caught plenty this time as usual.", "", bc_self;
+		mes "[Karu]";
+		mes "Hahaha Asudem... No honey. Don't you trust my skills? I caught plenty this time as usual.";
+		next;
+		npctalk "Phi~ braggart, Master Mao has already told me everything.", "Asudem#LuE02", bc_self;
+		mes "[Asudem]";
+		mes "Phi~ braggart, Master Mao has already told me everything.";
+		next;
+		npctalk "I heard that only Master Luanda and Master Mao were running around this time? You lay on top of a tree and just shouted...", "Asudem#LuE02", bc_self;
+		mes "[Asudem]";
+		mes "I heard that only Master Luanda and Master Mao were running around this time? You lay on top of a tree and just shouted...";
+		next;
+		npctalk "Wow... these guys are real...", "", bc_self;
+		mes "[Karu]";
+		mes "Wow...these guys are real...";
+		next;
+		npctalk "Honey? Who's there?", "Asudem#LuE02", bc_self;
+		mes "[Asudem]";
+		mes "Honey? Who's there?";
+		next;
+		npctalk "Who's coming all the way to this eerie place? Huh?! Really... It was a good date.", "", bc_self;
+		mes "[Karu]";
+		mes "Who's coming all the way to this eerie place? Huh?! Really... It was a good date.";
+		next;
+		npctalk "Honey, let's go, I think today's date is over. Hey, let's do some errands~ We'll get out of here...", "", bc_self;
+		mes "[Karu]";
+		mes "Honey, let's go, I think today's date is over. Hey, let's go do some errands~ We'll get out of here...";
+		next;
+		cloakonnpcself();
+		cloakonnpcself( "Asudem#LuE02" );
+		ill_luanda = 7;
+		setquest 5847;
+		mes "It looks like I interrupted the couple's date. I need to tell Luanda what happened.";
+		close;
+	}
+	end;
+}
+
+com_d02_i,120,95,6	duplicate(dummy_cloaked_npc)	Asudem#LuE02	4_F_01
+
+
+// WEDNESDAY
+com_d02_i,193,267,1	script	Shimmer#Lu03	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 8) {
+		cloakoffnpcself( "Young#LuE03" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,191,271,8	script(CLOAKED)	Young#LuE03	4_M_THAIONGBAK,{
+	if (ill_luanda == 8) {
+		npctalk "Uhm... It's a bit of a mess... but this is a great mural for my skills.", "", bc_self;
+		mes "[Young Man]";
+		mes "Uhm... It's a bit of a mess... but this is a great mural for my skills.";
+		next;
+		npctalk "I draw what I see in my dreams, but... will the things I see really happen?", "", bc_self;
+		mes "[Young Man]";
+		mes "I draw what I see in my dreams, but... will the things I see really happen?";
+		next;
+		npctalk "It would be nice if it was just a dream...", "", bc_self;
+		mes "[Young Man]";
+		mes "It would be nice if it was just a dream...";
+		next;
+		npctalk "First, let's do what I can. Huh? You?", "", bc_self;
+		mes "[Young Man]";
+		mes "First, let's do what I can. Huh? You?";
+		next;
+		select( "Do you remember me?" );
+		npctalk "Ah! You? The stranger I saw last time!! Are you still here? I'm sure I'll...", "", bc_self;
+		mes "[Young Man]";
+		mes "Ah! You? The stranger I saw last time!! Are you still here? I'm sure I'll...";
+		next;
+		cloakonnpcself();
+		ill_luanda = 9;
+		setquest 5847;
+		mes "The young man has disappeared. Didn't you say that this young man was Mr. Luanda? I should tell Luanda what I've been through.";
+		close;
+	}
+	end;
+}
+
+
+// THURSDAY
+com_d02_i,228,91,1	script	Shimmer#Lu04	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 10) {
+		cloakoffnpcself( "Young#LuE04" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,228,95,4	script(CLOAKED)	Young#LuE04	4_M_THAIONGBAK,{
+	if (ill_luanda == 10) {
+		npctalk "Oh, why am I so weak? Unlike my older brothers, my abilities are not particularly useful in battle.", "", bc_self;
+		mes "[Young Man]";
+		mes "Oh, why am I so weak? Unlike my older brothers, my abilities are not particularly useful in battle.";
+		next;
+		npctalk "Huh?! You're the stranger Luanda took an interest in on his way out hunting?", "", bc_self;
+		mes "[Young Man]";
+		mes "Huh?! You're the stranger Luanda took an interest in on the way out hunting?";
+		next;
+		npctalk "Should I say aloud since I met you? My name is Mao. I'm the younger brother of Luanda, whom you met the other day.", "", bc_self;
+		mes "[Young Man]";
+		mes "Should I say aloud since I met you? My name is Mao. I'm the younger brother of Luanda, whom you met the other day.";
+		next;
+		select( "I..." );
+		npctalk "Hahaha Nice to meet you. I don't know if you noticed, but my siblings are triplets.", "", bc_self;
+		mes "[Young Man]";
+		mes "Hahaha Nice to meet you. I don't know if you noticed, but my siblings are triplets.";
+		next;
+		npctalk "My brothers were abandoned in the village as babies. The villagers picked them up and raised them.", "", bc_self;
+		mes "[Young Man]";
+		mes "My brothers were abandoned in the village as babies. The villagers picked them up and raised them.";
+		next;
+		npctalk "They also named them Karu, Luanda, and Mao after the caves around town.", "", bc_self;
+		mes "[Young Man]";
+		mes "They also named them Karu, Luanda, and Mao after the caves around town.";
+		next;
+		npctalk "They said it was the name of the guardian spirits that guarded the old village.", "", bc_self;
+		mes "[Young Man]";
+		mes "They said it was the name of the guardian spirits that guarded the old village.";
+		next;
+		npctalk "Huh? Why am I telling you this?", "", bc_self;
+		mes "[Young Man]";
+		mes "Huh? Why am I telling you this?";
+		next;
+		npctalk "I think I lost my mind because the practice didn't go well.", "", bc_self;
+		mes "[Young Man]";
+		mes "I think I lost my mind because the practice didn't go well.";
+		next;
+		npctalk "I'm still training... in vain?! You can't believe someone else's...", "", bc_self;
+		mes "[Young Man]";
+		mes "I'm still practicing.. in vain?! You can't believe someone else's...";
+		next;
+		cloakonnpcself();
+		ill_luanda = 11;
+		setquest 5847;
+		mes "Karu has disappeared. I need to tell Luanda about what happened.";
+		close;
+	}
+	end;
+}
+
+// FRIDAY
+com_d02_i,208,130,1	script	Shimmer#Lu05	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 12) {
+		cloakoffnpcself( "Young#LuE05" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,210,134,6	script(CLOAKED)	Young#LuE05	4_M_THAIONGBAK,{
+	if (ill_luanda == 12) {
+		npctalk "I think drinking water is good enough...", "", bc_self;
+		mes "[Young Man]";
+		mes "I think drinking water is good enough...";
+		next;
+		npctalk "It would be most perfect not to have to use these things...", "", bc_self;
+		mes "[Young Man]";
+		mes "It would be most perfect not to have to use these things..";
+		next;
+		npctalk "Huh?! It's you again? Don't you think we see each other quite often? The other day someone was talking...", "", bc_self;
+		mes "[Young Man]";
+		mes "Huh?! It's you again? Don't you think we see each other quite often? The other day someone was talking...";
+		next;
+		npctalk "Just disappeared... the words...", "", bc_self;
+		mes "[Young Man]";
+		mes "Just disappeared... the words...";
+		next;
+		cloakonnpcself();
+		ill_luanda = 13;
+		setquest 5847;
+		mes "The young man has disappeared again. I need to tell Mr. Luanda.";
+		close;
+	}
+	end;
+}
+
+
+// (re)MONDAY
+com_d02_i,157,28,4	script(CLOAKED)	Chief#LuE06	4_M_JPNOJI2,{
+	if (ill_luanda == 14) {
+		npctalk "Aagh!! It's an attack. Monsters are coming from all sides.", "Villager#LuE061", bc_self;
+		mes "[Chief]";
+		mes "Aagh!! It's an attack. Monsters are coming from all sides.";
+		next;
+		npctalk "Cheap... where are the twins? They should be there...", "Villager#LuE062", bc_self;
+		mes "[Chief]";
+		mes "Cheap... where are the twins? They should be there...";
+		next;
+		npctalk "Did the twins find out and leave? Be patient.. They'll be back soon..", "", bc_self;
+		mes "[Chief]";
+		mes "Did the twins find out and leave? Be patient.. They'll be back soon..";
+		next;
+		npctalk "Chief, what about the villagers captured by the monsters? They already...", "Villager#LuE063", bc_self;
+		mes "[Chief]";
+		mes "Chief, what about the villagers captured by the monsters? They already...";
+		next;
+		npctalk "Don't talk negatively. Everyone's alive. Cancer isn't alive...", "", bc_self;
+		mes "[Chief]";
+		mes "Don't talk negatively. Everyone's alive. Cancer is not alive...";
+		next;
+		npctalk "Ha.. But Chief..", "Villager#LuE063", bc_self;
+		mes "[Chief]";
+		mes "Ha.. but Chief..";
+		next;
+		npctalk "Huh.. What should I do... As Luanda advised, we have to escape to this place...", "", bc_self;
+		mes "[Chief]";
+		mes "Huh.. What should I do.. As Luanda advised, we have to escape to this place...";
+		next;
+		npctalk "Huh? You haven't seen it? Did you get caught up in your travels? Tsk tsk, you're out of luck..", "", bc_self;
+		mes "[Chief]";
+		mes "Huh? You haven't seen it? Did you get caught up in your travels? Tsk tsk, you're out of luck..";
+		next;
+		npctalk "We're in no position to take care of anyone right now, so take care of yourself..", "", bc_self;
+		mes "[Chief]";
+		mes "We're in no position to take care of anyone right now, so take care of yourself..";
+		next;
+		cloakonnpcself();
+		cloakonnpcself( "Villager#LuE061" );
+		cloakonnpcself( "Villager#LuE062" );
+		cloakonnpcself( "Villager#LuE063" );
+		ill_luanda = 15;
+		setquest 5847;
+		mes "The Chief who is worried about me has disappeared. I have to tell Mr. Luanda what I've been through.";
+		close;
+	}
+	end;
+}
+
+com_d02_i,155,29,6	duplicate(dummy_cloaked_npc)	Villager#LuE061	4_M_ALCHE_A
+com_d02_i,153,28,6	duplicate(dummy_cloaked_npc)	Villager#LuE062	4_M_03
+com_d02_i,154,26,6	duplicate(dummy_cloaked_npc)	Villager#LuE063	4_M_02
+
+
+// SATURDAY
+com_d02_i,42,215,1	script	Shimmer#Lu06	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 16) {
+		cloakoffnpcself( "First Young#LuE07" );
+		cloakoffnpcself( "Second Young#LuE07" );
+		cloakoffnpcself( "Third Young#LuE07" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,43,219,4	script(CLOAKED)	Third Young#LuE07	4_M_THAIONGBAK,{
+	if (ill_luanda == 16) {
+		npctalk "Brothers, it looks like the hunt went well this time.", "", bc_self;
+		mes "[Third Young]";
+		mes "Brothers, it looks like the hunt went well this time.";
+		next;
+		npctalk "Something was a bit sinister, but I think this time it will be quite profitable, youngest.", "First Young#LuE07", bc_self;
+		mes "[First Young]";
+		mes "Something was a bit sinister, but I think it will be quite profitable this time, youngest.";
+		next;
+		npctalk "Huh? Brother, over there.. I've seen him before.", "", bc_self;
+		mes "[Third Young]";
+		mes "Huh? Brother, over there.. I've seen him before.";
+		next;
+		npctalk "Yeah, I guess so? That's a face I can remember too.", "First Young#LuE07", bc_self;
+		mes "[First Young]";
+		mes "Yeah, I guess so? That's a face I remember too.";
+		next;
+		npctalk "I heard that the stern-faced second warned you, but what a fearless outsider you are.", "The First Young#LuE07", bc_self;
+		mes "[First Young]";
+		mes "I heard that the stern-faced second warned you, but what a fearless outsider you are.";
+		next;
+		npctalk "Brother.. I'm all the same..", "", bc_self;
+		mes "[Third Young]";
+		mes "Brother.. I'm all the same..";
+		next;
+		npctalk "Brother! It's a big deal. Ma.. The smell of blood comes from the village.", "Second Young#LuE07", bc_self;
+		mes "[Second Young]";
+		mes "Brother! It's a big deal. Ma.. The smell of blood is coming from the village.";
+		next;
+		npctalk "What? Smell of blood? Smell of blood from the village side? No way? It's not time to pay attention to strangers. Let's go quickly.", "First Young#LuE07", bc_self;
+		mes "[First Young]";
+		mes "What? Smell of blood? Smell of blood from the village side? No way? It's not time to pay attention to strangers. Let's go quickly.";
+		next;
+		cloakonnpcself( "First Young#LuE07" );
+		cloakonnpcself( "Second Young#LuE07" );
+		cloakonnpcself();
+		ill_luanda = 17;
+		setquest 5847;
+		mes "The brothers disappeared quickly. I have to tell Luanda what happened.";
+		close;
+	}
+	end;
+}
+
+com_d02_i,39,219,6	duplicate(dummy_cloaked_npc)	First Young#LuE07	4_M_THAIONGBAK
+com_d02_i,41,220,4	duplicate(dummy_cloaked_npc)	Second Young#LuE07	4_M_THAIONGBAK
+
+
+// (re)TUESDAY
+com_d02_i,116,94,6	script(CLOAKED)	Karu#LuE08	4_M_THAIONGBAK,{
+	if (ill_luanda == 18) {
+		npctalk "Ahh! Asudem, why? Why? My... how did I find you...", "", bc_self;
+		mes "[Karu]";
+		mes "Aww! Asudem, why? Why? My... how did I find you...";
+		next;
+		npctalk "Ka.. Karu..", "Asudem#LuE08", bc_self;
+		mes "[Asudem]";
+		mes "Ka.. Karu..";
+		next;
+		npctalk "Hey, hey, hey, Asudem... honey...", "", bc_self;
+		mes "[Karu]";
+		mes "Hey, hey, hey, Asudem.. honey..";
+		next;
+		npctalk "Karu, don't be too sad.. You found me like this..", "Asudem#LuE08", bc_self;
+		mes "[Asudem]";
+		mes "Karu, don't be too sad.. You found me like this..";
+		next;
+		npctalk "I... I'm... glad...", "Asudem#LuE08", bc_self;
+		mes "[Asudem]";
+		mes "I... I'm... glad...";
+		next;
+		npctalk "This.. it's not about dying.. their curse.. on you..", "", bc_self;
+		mes "[Karu]";
+		mes "This.. it's not about dying.. their curse.. on you..";
+		next;
+		npctalk "All.. you no longer..", "", bc_self;
+		mes "[Karu]";
+		mes "All.. you no longer..";
+		next;
+		npctalk "Ah.. Karu.. My husband.. Sa..", "Asudem#LuE08", bc_self;
+		mes "[Asudem]";
+		mes "Ah.. Karu.. My husband.. Sa..";
+		next;
+		specialeffect EF_MAGICROD, AREA, "Asudem#LuE08";
+		sleep2 1000;
+		specialeffect EF_MAGICROD, AREA, "Asudem#LuE08";
+		sleep2 1000;
+		specialeffect EF_MENTALBREAK, AREA, "Asudem#LuE08";
+		sleep2 1000;
+		specialeffect EF_POISONSMOKE2, AREA, "Asudem#LuE08";
+		cloakonnpcself( "Asudem#LuE08" );
+		cloakoffnpcself( "Medusa#LuE08" );
+		sleep2 1000;
+		specialeffect EF_TELEPORTATION, AREA, "Medusa#LuE08";
+		cloakonnpcself( "Medusa#LuE08" );
+		npctalk "Asudem!!!!!!!!!!!!!!!", "", bc_self;
+		mes "[karoo]";
+		mes "Asudem!!!!!!!!!!!!!!!";
+		next;
+		cloakonnpcself();
+		ill_luanda = 19;
+		setquest 5847;
+		mes "I witnessed a sad event. I must tell Luanda about my experience.";
+		close;
+	}
+	end;
+}
+
+com_d02_i,117,94,4	duplicate(dummy_cloaked_npc)	Asudem#LuE08	4_F_01
+com_d02_i,117,94,4	duplicate(dummy_cloaked_npc)	Medusa#LuE08	MEDUSA
+
+
+// SUNDAY
+com_d02_i,263,72,1	script	Shimmer#Lu07	1_SHADOW_NPC,7,7,{
+	specialeffect EF_M07;
+	end;
+OnTouch:
+	if (ill_luanda == 1) {	// first time (any 1_SHADOW_NPC trigger it)
+		mes "It's a bizarre shimmer that you're likely to be sucked into.";
+		next;
+		ill_luanda = 2;
+		setquest 5847;
+		mes "It seems like a phenomenon that can't be ignored. I'll have to talk to Luanda, the head of defense.";
+		close;
+	}
+	if (ill_luanda == 20) {
+		cloakoffnpcself( "Silhouette#LuE091" );
+		cloakoffnpcself( "Silhouette#LuE092" );
+		end;
+	}
+	end;
+}
+
+com_d02_i,268,75,4	script(CLOAKED)	Silhouette#LuE091	4_GHOST_STAND,{
+	if (ill_luanda == 20) {
+		npctalk "We must drive out all the humans and take over the land.", "", bc_self;
+		mes "[???]";
+		mes "We must drive out all the humans and take over the land.";
+		next;
+		npctalk "Hehehe Other times, I'd say it's crazy, but if we follow a strong leader...", "Silhouette#LuE092", bc_self;
+		mes "[???]";
+		mes "Hehehe Other times, I'd say it's crazy, but if we follow a strong leader...";
+		next;
+		npctalk "That's not crazy kkkk.", "", bc_self;
+		mes "[???]";
+		mes "That's not crazy kkkk.";
+		next;
+		npctalk "Once we claim the land, the legendary power will be ours too.", "Silhouette#LuE092", bc_self;
+		mes "[???]";
+		mes "Once we claim the land, the legendary power will be ours too.";
+		next;
+		npctalk "Sniff... I can smell the humans. It's not time to run into them yet. Let's go.", "", bc_self;
+		mes "[???]";
+		mes "Sniff.. I can smell the humans. It's not time to run into them yet. Let's go.";
+		next;
+		npctalk "Hehehehe I hope that day will come soon...", "Silhouette#LuE092", bc_self;
+		mes "[???]";
+		mes "Hehehe I hope that day will come soon..";
+		next;
+		cloakonnpcself();
+		cloakonnpcself( "Silhouette#LuE092" );
+		ill_luanda = 21;
+		setquest 5847;
+		mes "What about the beings I just talked to? I need to tell Luanda about my experience.";
+		close;
+	}
+	end;
+}
+
+com_d02_i,266,76,6	duplicate(dummy_cloaked_npc)	Silhouette#LuE092	4_GHOST_STAND
+
+
+// Daily quests
+com_d02_i,238,266,4	script	Request Board#Lu	4_BOARD3,{
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed because you have too many items. -";
+		close;
+	}
+	if (ill_luanda == 0) {
+		mes "It's a bulletin board with things requested by the village written on it, but it doesn't seem to be the case now.";
+		close;
+	}
+
+	.@quest_menu$[0] = callsub( S_MenuGather, 5848,5849, "Evidence of eradication of Megaliths" );
+	.@quest_menu$[1] = callsub( S_MenuGather, 5850,5851, "Evidence of eradication of Wootan" );
+	.@quest_menu$[2] = callsub( S_MenuHunt, 5852,5853, "Operation to eradicate Megaliths" );
+	.@quest_menu$[3] = callsub( S_MenuHunt, 5854,5855, "Operation to eradicate Wootan" );
+
+	.@playtime_5849 = checkquest(5849,PLAYTIME);
+	.@playtime_5851 = checkquest(5851,PLAYTIME);
+	.@playtime_5853 = checkquest(5853,PLAYTIME);
+	.@playtime_5855 = checkquest(5855,PLAYTIME);
+
+	// menu to take all quests at once
+	if (.@playtime_5849 > 0 || .@playtime_5851 > 0 || .@playtime_5853 > 0 || .@playtime_5855 > 0) {	// at least one of the quests is in cooldown
+		.@quest_menu$[4] = "^777777[Waiting] Receive all quests^000000";
+		.@all_quests = 0;
+	}
+	else if (isbegin_quest(5848) > 0 || isbegin_quest(5850) > 0 || isbegin_quest(5852) > 0 || isbegin_quest(5854) > 0) {	// at least one of the quests is in progress
+		.@quest_menu$[4] = "^777777[Progress] Receive all quests^000000";
+		.@all_quests = 1;
+	}
+	else {	// can take all quests
+		.@quest_menu$[4] = "[Daily] Accept all quests";
+		.@all_quests = 2;
+	}
+
+	switch( select( .@quest_menu$[0], .@quest_menu$[1], .@quest_menu$[2], .@quest_menu$[3], .@quest_menu$[4] ) ) {
+	case 1:
+		switch( .@playtime_5849 ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "This quest can be done again tomorrow.";
+			close;
+		case 2:
+			break;
+		}
+		switch( isbegin_quest(5848) ) {
+		case 0:
+			mes "The village is having a lot of trouble with the Megaliths. I will reward you if you bring me 3 " + getitemname(25638) + " as proof of defeating the Megaliths.";
+			mes "  ";
+			mes "Chief";
+			next;
+			if (select( "Accept request", "Do not accept" ) == 2)
+				end;
+			setquest 5848;
+			open_quest_ui(5848);
+			mes "Your request has been received. Please report to ^FF0000Defense Manager Luanda^000000.";
+			close;
+		case 1:
+		case 2:
+			// note: the amount of item is not checked
+			mes "^FF0000Evidence of eradication of Megaliths^000000";
+			mes "Your request is in progress.";
+			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
+			next;
+			if (select( "Do not cancel", "Cancel" ) == 1)
+				end;
+			erasequest 5848;
+			mes "The request has been cancelled.";
+			close;
+		}
+		end;
+	case 2:
+		switch( .@playtime_5851 ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "This quest can be done again tomorrow.";
+			close;
+		case 2:
+			break;
+		}
+		switch( isbegin_quest(5850) ) {
+		case 0:
+			mes "Wootan tribes are causing a lot of trouble in the village. I will reward you if you bring 3 " + getitemname(25633) + " as proof that you have defeated them.";
+			mes "  ";
+			mes "Chief";
+			next;
+			if (select( "Accept request", "Do not accept" ) == 2)
+				end;
+			setquest 5850;
+			open_quest_ui(5850);
+			mes "Your request has been received. Please report to ^FF0000Defense Manager Luanda^000000.";
+			close;
+		case 1:
+		case 2:
+			// note: the amount of item is not checked
+			mes "^FF0000Evidence of extermination of Wootan^000000";
+			mes "Your request is in progress.";
+			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
+			next;
+			if (select( "Do not cancel", "Cancel" ) == 1)
+				end;
+			erasequest 5850;
+			mes "The request has been cancelled.";
+			close;
+		}
+		end;
+	case 3:
+		switch( .@playtime_5853 ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "This quest can be done again tomorrow.";
+			close;
+		case 2:
+			break;
+		}
+		switch( checkquest(5852,HUNTING) ) {
+		case -1:
+			mes "We've planned to subdue the megaliths. Anyone who can catch 5 " + getmonsterinfo("ILL_TRI_JOINT",MOB_NAME) + ", " + getmonsterinfo("ILL_STALACTIC_GOLEM",MOB_NAME) + ", and " + getmonsterinfo("ILL_MEGALITH",MOB_NAME) + ", please apply.";
+			mes "  ";
+			mes "Chief";
+			next;
+			if (select( "Accept request", "Do not accept" ) == 2)
+				end;
+			setquest 5852;
+			open_quest_ui(5852);
+			mes "Your request has been received. Please report to ^FF0000Defense Manager Luanda^000000.";
+			close;
+		case 0:
+		case 1:
+			mes "^FF0000 Megalith extermination^000000";
+			mes "Your request is in progress.";
+			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
+			next;
+			if (select( "Do not cancel", "Cancel" ) == 1)
+				end;
+			erasequest 5852;
+			mes "The request has been cancelled.";
+			close;
+		case 2:
+			mes "You can receive the reward for this quest from Defense Manager Luanda.";
+			close;
+		}
+		end;
+	case 4:
+		switch( .@playtime_5855 ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "This quest can be done again tomorrow.";
+			close;
+		case 2:
+			break;
+		}
+		switch( checkquest(5854,HUNTING) ) {
+		case -1:
+			mes "We have planned to subdue the Wutan tribe. Anyone who can catch 5 " + getmonsterinfo("ILL_STONE_SHOOTER",MOB_NAME) + ", " + getmonsterinfo("ILL_WOOTAN_SHOOTER",MOB_NAME) + ", and " + getmonsterinfo("ILL_WOOTAN_FIGHTER",MOB_NAME) + ", please apply.";
+			mes "  ";
+			mes "Chief";
+			next;
+			if (select( "Accept request", "Do not accept" ) == 2)
+				end;
+			setquest 5854;
+			open_quest_ui(5854);
+			mes "Your request has been received. Please report to ^FF0000Defense Manager Luanda^000000.";
+			close;
+		case 0:
+		case 1:
+			mes "^FF0000Evidence of eradication of megaliths^000000";
+			mes "Your request is in progress.";
+			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
+			next;
+			if (select( "Do not cancel", "Cancel" ) == 1)
+				end;
+			erasequest 5854;
+			mes "The request has been cancelled.";
+			close;
+		case 2:
+			mes "You can receive the reward for this quest from Defense Manager Luanda.";
+			close;
+		}
+		end;
+	case 5:
+		switch( .@all_quests ) {
+		case 0:	// at least one of the quests is in cooldown
+			mes "There is a quest whose cooldown has not passed.";
+			close;
+		case 1:	// at least one of the quests is in progress
+			mes "Some quests are in progress.";
+			close;
+		case 2:	// can take all quests
+			mes "Are you sure you want to receive all quests on the Quest Board?";
+			next;
+			if (select( "Accept", "Do not accept" ) == 2)
+				end;
+			setquest 5848;
+			setquest 5850;
+			setquest 5852;
+			setquest 5854;
+			mes "All quests on the quest board have been received.";
+			close;
+		}
+		end;
+	}
+	end;
+
+S_MenuGather:
+	.@string$ = getarg(2);
+
+	switch( checkquest(getarg(1),PLAYTIME) ) {
+	case -1:
+		switch( isbegin_quest(getarg(0)) ) {
+		case 0:
+			.@menu$ = "[Daily] " + .@string$;
+			break;
+		case 1:
+		case 2:
+			// note: the amount of item is not checked
+			.@menu$ = "^777777[Progress] " + .@string$ + "^000000";
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		.@menu$ = "^777777[Waiting]" + .@string$ + "^000000";
+		break;
+	case 2:
+		erasequest getarg(1);
+		.@menu$ = "[Daily]" + .@string$;
+		break;
+	}
+	return .@menu$;
+
+S_MenuHunt:
+	.@string$ = getarg(2);
+
+	switch( checkquest(getarg(1),PLAYTIME) ) {
+	case -1:
+		switch( checkquest(getarg(0),HUNTING) ) {
+		case -1:
+			.@menu$ = "[Daily] " + .@string$;
+			break;
+		case 0:
+		case 1:
+			.@menu$ = "^777777[Progress] " + .@string$ + "^000000";
+			break;
+		case 2:
+			.@menu$ = "^777777[Reward] " + .@string$ + "^000000";
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		.@menu$ = "^777777[Waiting] " + .@string$ + "^000000";
+		break;
+	case 2:
+		erasequest getarg(1);
+		.@menu$ = "[Daily] " + .@string$;
+		break;
+	}
+	return .@menu$;
+}
+
+
+//============================================================
+//= Illusion of Underwater
+//============================================================
+prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
+	if (ill_underwater == 0) {
+		mes "[Jerrymon]";
+		mes "Um... Uhm...";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, what a surprise!!";
+		next;
+		mes "[Jerrymon]";
+		mes "What's up? I'm busy right now, so I'll talk to you later.";
+		close;
+	}
+	if (ill_underwater == 1) {
+		mes "[Jerrymon]";
+		mes "Um... Uhm...";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, what a surprise!!";
+		next;
+		mes "[Jerrymon]";
+		mes "What's up? I'm a bit busy right now...";
+		next;
+		mes "[Jerrymon]";
+		mes "Ah, you're the one introduced by Raket. I've been waiting for you.";
+		mes "Can you show me your fishing rod?";
+		next;
+		mes "- Jerrymon began to examine the rod closely. -";
+		next;
+		mes ".";
+		next;
+		mes "..";
+		next;
+		mes "...";
+		next;
+		mes "....";
+		next;
+		mes ".....";
+		next;
+		mes "[Jerrymon]";
+		mes "Yes, that's right... this substance is just that... to discover it again like this...";
+		next;
+		select( "What material are you talking about?" );
+		mes "[Jerrymon]";
+		mes "Adventurer, do you know where the deepest part of the sea is?";
+		next;
+		select( "Well...??" );
+		mes "[Jerrymon]";
+		mes "It is a place called the ^4d4dffTrench^000000. To put it simply, you can think of it as a deep cliff in the sea.";
+		next;
+		mes "[Jerrymon]";
+		mes "It is known that there are hundreds of different types of trenches in the world's oceans.";
+		next;
+		mes "[Jerrymon]";
+		mes "The widest and deepest known trench is the ^4d4dffBahia Trench^000000 near Izlude.";
+		next;
+		mes "[Jerrymon]";
+		mes "There are rare life forms at the bottom of the trench, and marine scientists like myself have shown great interest and have been exploring them.";
+		next;
+		mes "[Jerrymon]";
+		mes "Though shallow trenches can be explored to some extent.";
+		next;
+		mes "[Jerrymon]";
+		mes "But in the case of the Bahia Trench, scientists have calculated that scientifically, no life can exist because it is so incredibly deep.";
+		next;
+		mes "[Jerrymon]";
+		mes "I recently found out that there is life in the Bahia Trench.";
+		next;
+		select( "How do you know that??" );
+		mes "[Jerrymon]";
+		mes "You can tell by the stone that contains my magic.";
+		next;
+		select( "A stone with magical power?" );
+		mes "[Jerrymon]";
+		mes "Yes, I'm a mage-turned-oceanographer. I learned magic for oceanography.";
+		next;
+		mes "[Jerrymon]";
+		mes "Enchant a large boulder and make it fall to the floor where the trench exists.";
+		next;
+		mes "[Jerrymon]";
+		mes "The magic on the dropped stone is connected to me, so by measuring the distance, I can get a little idea of how deep it is and what's going on near the stone.";
+		next;
+		mes "[Jerrymon]";
+		mes "To tell you what I found out...";
+		next;
+		mes "[Jerrymon]";
+		mes "The composition of normal sea water and deep sea water is almost the same. But the only difference is the deep sea of Bahia Trench.";
+		next;
+		mes "[Jerrymon]";
+		mes "Should I say it's like water and oil? There's a section where they never mix.";
+		next;
+		mes "[Jerrymon]";
+		mes "A strong boundary was formed where they meet each other, and it felt as if the deep seawater in that section was desperately blocking the seawater coming down from above.";
+		next;
+		mes "[Jerrymon]";
+		mes "The water pressure is also much lower than that of normal seawater, so it is assumed that it has a favorable environment for life.";
+		next;
+		mes "[Jerrymon]";
+		mes "We call it ^4d4dffdeep seawater^000000";
+		next;
+		select( "Is this gloss related to what you said?" );
+		mes "[Jerrymon]";
+		mes "Yes! That's right!!";
+		mes "We only identified the existence of Abyssal Seawater deep in the Bahia Trench, and it was very difficult to obtain samples. This fishing rod has a lot of Abyssal Seawater on it...";
+		next;
+		mes "[Jerrymon]";
+		mes "Could you leave this fishing rod with me? I think I can figure something out if I extract this sea water and turn it into essence.";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, and I heard that the fishing rod was found today. Can I ask you to check if there is another floating substance in the nearby sea?";
+		next;
+		if (select( "Okay, I'll be back.", "I'm a bit busy right now..." ) == 2) {
+			mes "[Jerrymon]";
+			mes "Please come back to me when you're done!";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "Yes, thanks! I'll be waiting for you!!";
+		close2;
+		if (countitem(25898) > 0)
+			delitem 25898,1;	// Siroods_Fish_Rod
+		ill_underwater = 2;
+		erasequest 3407;
+		end;
+	}
+	if (ill_underwater == 2) {
+		mes "[Jerrymon]";
+		mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+		close;
+	}
+	if (ill_underwater == 3) {
+		if (countitem(25899) < 1) {
+			mes "[Jerrymon]";
+			mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "Ah, welcome, adventurer!";
+		next;
+		mes "[Jerrymon]";
+		mes "The investigation is going smoothly~";
+		mes "Hey, could you take a look at this?";
+		next;
+		mes "[Jerrymon]";
+		mes "See those two little water bottles here?";
+		next;
+		mes "[Jerrymon]";
+		mes "One side is normal seawater, and the other side is seawater mixed with seawater from the abyss buried in fishing rods. I'll try mixing these two.";
+		next;
+		mes " - Jerrymon poured both waters into one bottle and began to shake them together. - ";
+		next;
+		mes "[Jerrymon]";
+		mes "Now, look. As I said before, they don't mix at all, do they?";
+		next;
+		mes "[Jerrymon]";
+		mes "This... this!!";
+		next;
+		mes "[Jerrymon]";
+		mes "If you shake it like crazy!!";
+		next;
+		mes "[Jerrymon]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Wow!!!!!!</FONT></FONT></B>";
+		next;
+		mes "[Jerrymon]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Uwachachaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!</FONT></FONT></B>";
+		next;
+		mes "[Jerrymon]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Ahhhhhhh!!!!!!</FONT></FONT></B>";
+		next;
+		mes "[Jerrymon]";
+		mes "Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh...";
+		next;
+		select( "Oh, I'm going to catch someone, is it okay?" );
+		mes "[Jerrymon]";
+		mes "Keep... Whoa... Whoa... OK now.";
+		next;
+		mes "- Looking into the bottle Jerrymon is holding, I can clearly see the shape of the vortex. - ";
+		next;
+		mes "[Jerrymon]";
+		mes "Now, do you see this whirlpool!! This is the passage that connects to the bottom of the Bahia Trench!";
+		next;
+		select( "??? Isn't that just a whirlpool created by shaking it?" );
+		mes "[Jerrymon]";
+		mes "No. This is the stone that contains my magical power. Let's look at it.";
+		next;
+		mes " - Jerrymon put a glowing stone into the bottle. The glowing stone was sucked into the whirlpool inside the bottle and disappeared without a trace! - ";
+		next;
+		select( "No, how could it be?" );
+		mes "[Jerrymon]";
+		mes "Did I ever tell you that the stone that contains my magic can measure the distance to me?";
+		next;
+		mes "[Jerrymon]";
+		mes "It feels the same as the last time I threw a pebble into the Bahia Trench..";
+		mes "If you follow this whirlpool, you may be able to find the owner of the fishing rod.";
+		next;
+		mes "[Jerrymon]";
+		mes "The problem is... the amount of essence on a fishing rod can't make a whirlpool large enough for a person to fit in.";
+		next;
+		select( "Is this amount okay?" );
+		mes "- Showed the ^4d4dff" + getitemname(25899) + "^000000 received from Gein to Jerrymon. - ";
+		next;
+		mes "[Jerrymon]";
+		mes "Oh, just in case, I actually found it!";
+		next;
+		mes "[Jerrymon]";
+		mes "With this amount, I think I can create a vortex of fissures that normal people can enter. You can pass it to me.";
+		next;
+		mes "[Jerrymon]";
+		mes "The place is too small to do this much here, so let's do it in Izlude. In order to get help from your friends.";
+		mes "Then see you in Izlude!!";
+		close2;
+		delitem 25899,1;	// E_Abyss1
+		ill_underwater = 4;
+		erasequest 3408;
+		setquest 3409;
+		end;
+	}
+	if (ill_underwater == 4) {
+		mes "[Jerrymon]";
+		mes "Then let's meet in Izlude!!";
+		close;
+	}
+	mes "[Jerrymon]";
+	mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+	close;
+
+OnInit:
+	// note: no questinfo for 3407
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(3408) == 1" );
+	end;
+}
+
+
+izlude,126,53,0	script	Sirood#SRD1	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_underwater > 3)
+		cloakoffnpcself( "Jerrymon#jerry2" );
+	if (ill_underwater > 6)
+		cloakoffnpcself( "Sirood#SRD2" );
+	end;
+}
+izlude,132,54,0	duplicate(Sirood#SRD1)	Jerrymon#jerry1	HIDDEN_WARP_NPC,4,4
+
+izlude,126,53,4	script	Sirood#SRD2	1_M_04,{
+	mes "[Sirood]";
+	mes "Thank you very much, adventurer.";
+	next;
+	mes "[Sirood]";
+	mes "I thought I'd never come back...";
+	close;
+}
+
+izlude,129,49,4	script	Soup#Soup	1_M_02,{
+	if (ill_underwater < 5) {
+		mes "[Soup]";
+		mes "Hello, my name is Soup, a friend of Sirood who is missing.";
+		next;
+		mes "[Soup]";
+		mes "The four of us, Sirood, Raket, Gein, and I often enjoyed fishing.";
+		next;
+		mes "[Soup]";
+		mes "That windy day... I had been feeling very guilty for not stopping Sirood from going fishing.";
+		next;
+		mes "[Soup]";
+		mes "When I heard that Sirood's fishing pole was found, I jumped out.";
+		next;
+		mes "[Soup]";
+		mes "You must have a clue about something?";
+		close;
+	}
+	if (ill_underwater < 7) {
+		mes "[Soup]";
+		mes "I did my best.";
+		next;
+		mes "[Soup]";
+		mes "Should Sirood come back safely?";
+		close;
+	}
+	mes "[Soup]";
+	mes "Sirood is back with us.";
+	next;
+	mes "[Soup]";
+	mes "Thanks to you, adventurer. Thank you very much.";
+	close;
+}
+
+izlude,135,51,4	script	Raket#Raket	1_F_MERCHANT_01,{
+	if (ill_underwater < 5) {
+		mes "[Raket]";
+		mes "It's been exactly 3 months since Sirood went missing.";
+		next;
+		mes "[Raket]";
+		mes "Sirood's fishing rod was found.";
+		next;
+		mes "[Raket]";
+		mes "I felt that way.";
+		next;
+		select( "What do you think?" );
+		mes "[Raket]";
+		mes "Why is this only discovered now, isn't this a message from someone?";
+		next;
+		select( "Looking at it, it doesn't make sense." );
+		mes "[Raket]";
+		mes "Ha... It's just my delusion. I especially miss that child today.";
+		close;
+	}
+	if (ill_underwater < 7) {
+		mes "[Raket]";
+		mes "Heh heh... It's so hard to use all your strength...";
+		next;
+		mes "[Raket]";
+		mes "But for Sirood's sake...";
+		close;
+	}
+	mes "[Raket]";
+	mes "Thank you so much!!";
+	next;
+	mes "[Raket]";
+	mes "Now you can fish with Sirood again.";
+	next;
+	mes "[Raket]";
+	mes "I'm so glad...";
+	close;
+}
+
+izlude,132,49,5	script	Gein#Gein	4W_M_01,{
+	if (checkweight(1201,3) == 0) {
+		mes "You have too many items.";
+		mes "Please clean up your items and try again.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Gein]";
+		mes "Haha... why did this only get discovered now??";
+		mes "It's impossible, this is...";
+		next;
+		mes "- I feel serious anguish from this person. Let's come back after I've become level 140. -";
+		close;
+	}
+	if (ill_underwater == 0) {
+		mes "[Gein]";
+		mes "Haha...why did this only get discovered now??";
+		mes "It's impossible, this is...";
+		next;
+		select( "Do you have any concerns?" );
+		mes "[Gein]";
+		mes "Oh, hello...";
+		next;
+		mes "- He is very fidgety with a fishing pole in his hand. It doesn't look like he's out fishing. - ";
+		next;
+		mes "[Gein]";
+		mes "This fishing rod belongs to my friend <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Sirood</FONT></FONT></B> who went missing three months ago. I found something!!!";
+		next;
+		select( "Disappeared?" );
+		mes "[Gein]";
+		mes "Yes... Sirood is a fishing fanatic and came here to fish whenever he had a chance.";
+		next;
+		mes "[Gein]";
+		mes "Influenced by Sirood, we also fell in love with fishing, and the four of us often had a good time.";
+		next;
+		mes "[Gein]";
+		mes "Sirood's passion for fishing was to the point that he invited us to go fishing even in the rain and wind.";
+		next;
+		mes "[Gein]";
+		mes "The day Sirood went missing was exactly the same rainy and windy day. I put on my raincoat and went to go fishing.";
+		next;
+		mes "[Gein]";
+		mes "We were invited to go out together, but they all declined.";
+		next;
+		mes "[Gein]";
+		mes "Sirood went fishing alone and we haven't seen him since...";
+		next;
+		mes "[Gein]";
+		mes "I should have stopped you from leaving...";
+		next;
+		mes "- Gein started talking again after wiping away tears for a moment. -";
+		next;
+		mes "[Gein]";
+		mes "The news of Sirood's disappearance immediately spread throughout Izlude and a large-scale search was conducted with a lot of time and manpower invested, but the search ended without finding any clues.";
+		next;
+		mes "[Gein]";
+		mes "After that, we got together and ran everywhere to find Sirood, but there was no result, and we were about to give up.";
+		next;
+		mes "[Gein]";
+		mes "But just now!!";
+		next;
+		mes "[Gein]";
+		mes "After 3 months!!!";
+		next;
+		mes "[Gein]";
+		mes "Sirood's fishing pole has risen above sea level. His item was nowhere to be found during the search!";
+		next;
+		select( "Now, calm down... Are you sure it's Sirood's fishing rod?" );
+		mes "[Gein]";
+		mes "Yes, I'm sure! It's the fishing rod I've always seen.";
+		next;
+		mes "[Gein]";
+		mes "This fishing rod was made by Sirood himself, so it is the only one. You can see the initials on the handle here, S.R.D!!";
+		next;
+		select( "Oh, then why now..." );
+		mes "[Gein]";
+		mes "I'm so surprised and shocked right now that I don't know what to do.";
+		next;
+		mes "- But looking closely at the fishing rod, I feel something different. This wooden fishing rod has been submerged in water for 3 months, but it still looks the same, and I can see a bit of shiny gloss... -";
+		next;
+		select( "Isn't this fishing rod a bit strange over there?" );
+		mes "[Gein]";
+		mes "Strange, what is it?";
+		next;
+		mes "[Gein]";
+		mes "Uh...";
+		next;
+		mes "[Gein]";
+		mes "Uh.....??";
+		next;
+		mes "[Gein]";
+		mes "It's been submerged in water for 3 months... but it hasn't corroded at all. It's completely fine??";
+		next;
+		mes "[Gein]";
+		mes "Hmm... And it seems to have a subtle glow... It seems like the fishing rod is coated?";
+		next;
+		mes "-The person who seemed to be Gein's friend who was listening to the story opened his mouth. -";
+		next;
+		mes "[Raket]";
+		mes "Where is it, I want to see it!! What's wrong??";
+		next;
+		mes "[Gein]";
+		mes "This fishing rod... It was submerged in the water for 3 months, but it was found in its original form, or worse, in a state of disrepair.";
+		next;
+		mes "[Raket]";
+		mes "Ugh...";
+		next;
+		mes "[Raket]";
+		mes "Um...";
+		next;
+		mes "- Raket looked intently at his fishing pole, then answered Gein. -";
+		next;
+		mes "[Raket]";
+		mes "I'm not sure either?";
+		next;
+		mes "[Gein]";
+		mes "Certainly!! I don't know, but would you?";
+		next;
+		mes "[Raket]";
+		mes "Ummm... but I know someone who might know a little about this rod.";
+		next;
+		mes "[Gein]";
+		mes "Who??";
+		next;
+		select( "Who?" );
+		mes "[Raket]";
+		mes "His name is <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Jerrymon</FONT></FONT></B>, a marine scientist. I've met my father a few times. I know you are in the East Library of Prontera.";
+		next;
+		mes "[Gein]";
+		mes "Ah, ah... then... hey adventurer!! I'm sorry for the first meeting, but can I ask you a favor?? We can't get out of here in Izlude...";
+		next;
+		mes "[Gein]";
+		mes "Please go see Jerrymon and show him this fishing rod...even if it's trivial...I hope he has some information..";
+		next;
+		if (select( "Okay. Let's go.", "Sorry. I'm a bit busy right now..." ) == 2) {
+			mes "[Gein]";
+			mes "No... are you sure?";
+			next;
+			mes "[Gein]";
+			mes "Are you turning around after hearing about this heartbreaking story and mysterious clue...";
+			close;
+		}
+		mes "[Gein]";
+		mes "Ugh... Thanks!";
+		next;
+		mes "[Gein]";
+		mes "^4d4dffJerrymon^000000 should still be at the <NAVI>[East Library]<INFO>prontera,192,264,</INFO></NAVI> in Prontera.";
+		next;
+		mes "[Gein]";
+		mes "Now, I'll give you the fishing rod, a keepsake from Sirood. Thank you...";
+		next;
+		mes "[Raket]";
+		mes "What??? It's a keepsake!! You don't even know if Sirood is alive or dead!!";
+		next;
+		mes "[Gein]";
+		mes "Uhhh... yes I made a mistake, this is the fishing rod Sirood left behind. Please take good care of it.";
+		next;
+		mes "[Raket]";
+		mes "I'll tell Jerrymon about the contents in advance through my father!";
+		next;
+		mes "[Gein & Raket & Soup]";
+		mes "Thank you!!!";
+		close2;
+		getitem 25898,1;	// Siroods_Fish_Rod
+		ill_underwater = 1;
+		setquest 3407;
+		end;
+	}
+	if (ill_underwater == 1) {
+		mes "[Gein]";
+		mes "You can go to Prontera's <NAVI>[East Library]<INFO>prontera,192,264,</INFO></NAVI> as Raket told you.";
+		next;
+		mes "[Gein]";
+		mes "Take care of yourself!! I hope there is even the smallest clue...";
+		close;
+	}
+	if (ill_underwater == 2) {
+		mes "[Gein]";
+		mes "Ah, you're here!!!";
+		next;
+		mes "[Gein]";
+		mes "Do you have any information about Sirood?";
+		next;
+		mes "- I relayed what I heard from Jerrymon. -";
+		next;
+		mes "[Gein]";
+		mes "Ah... I see, I've never heard of a trench before.";
+		next;
+		mes "[Gein]";
+		mes "I can't believe there's such a big and deep trench near Izlude...";
+		next;
+		mes "[Gein]";
+		mes "Oh, by the way, is there anything else you need for coming back here?";
+		next;
+		select( "I was wondering if there was anything else found besides the fishing rod." );
+		mes "[Gein]";
+		mes "Oh right!!";
+		next;
+		mes "[Gein]";
+		mes "It's a chunk scooped up with a landing net near where the fishing rod was found.";
+		next;
+		mes " - This lump is what Jerrymon said.";
+		mes "^4d4dffIt must be the essence of the abyss^000000. - ";
+		next;
+		mes "[Gein]";
+		mes "Something shiny and has the same feeling of Sirood's fishing rod, so I secured it for now.";
+		mes "Could this nugget help?";
+		next;
+		select( "Thanks, that would be a great help." );
+		mes "[Gein]";
+		mes "Are you going back to Jerrymon? Please be careful.";
+		close2;
+		getitem 25899,1;	// E_Abyss1
+		ill_underwater = 3;
+		setquest 3408;
+		end;
+	}
+	if (ill_underwater == 3) {
+		mes "[Gein]";
+		mes "I hope Sirood will appear in front of us intact, just as the fishing rod appeared intact...";
+		next;
+		mes "[Gein]";
+		mes "Please let me know if you have any new information!";
+		close;
+	}
+	if (ill_underwater < 7) {
+		mes "[Gein]";
+		mes "Heh...heh...Hello adventurer, heh...heh... I'm so tired I can't move...";
+		close;
+	}
+	mes "[Gein]";
+	mes "Thank you, adventurer.";
+	next;
+	mes "[Gein]";
+	mes "To be able to meet Sirood again is like a dream.";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_underwater == 0" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "ill_underwater == 2" );
+	end;
+}
+
+izlude,132,54,4	script(CLOAKED)	Jerrymon#jerry2	1_M_01,{
+	if (ill_underwater < 4)
+		end;
+	if (ill_underwater == 4) {
+		mes "[Jerrymon]";
+		mes "Ah you're here!!";
+		next;
+		mes "[Jerrymon]";
+		mes "We are fully prepared while the adventurers are coming.";
+		next;
+		mes "- Gein gasps to say hello to his two friends. - ";
+		next;
+		mes "[Gein]";
+		mes "Ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha... ah, welcome adventurer.";
+		next;
+		mes "[Gein]";
+		mes "I'm not sure what the principle is, but I stirred it diligently as Jerrymon-sama told me to!!";
+		next;
+		mes "[Raket & Soup]";
+		mes "Hee... hee... hee... ah... hello.";
+		next;
+		mes "[Jerrymon]";
+		specialeffect EF_MAP_MAGICZONE3;
+		mes "Okay, shall we begin?";
+		next;
+		mes "[Jerrymon]";
+		mes "The whirlpool will be created soon.";
+		next;
+		mes "[Jerrymon]";
+		mes "Hold my hand when I give you a signal!!";
+		next;
+		select( "No, wait. Are you leaving right now?" );
+		mes "[Jerrymon]";
+		mes "Yes, yes, go ahead and don't think about it! Just trust me~~!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Okay now. Take my hand!";
+		next;
+		specialeffect EF_CASTSPIN2, AREA;
+		mes "[Jerrymon]";
+		mes "Wow! It spins round and round~~!!";
+		close2;
+		ill_underwater = 5;
+		erasequest 3409;
+		specialeffect EF_CASTSPIN2, AREA;
+		warp "iz_d04_i",130,227;
+		end;
+	}
+	mes "[Jerrymon]";
+	mes "Hello!!";
+	next;
+	mes "[Jerrymon]";
+	mes "Thanks to you, Adventurer, I am having a fun and exciting time every day.";
+	next;
+	mes "[Jerrymon]";
+	mes "Would you like to go to the deep sea again? I will follow you!!";
+	next;
+	if (select( "Please", "I'll go next time" ) == 2) {
+		mes "[Jerrymon]";
+		mes "Yeah... Then I'll be waiting for you.";
+		close;
+	}
+	mes "[Jerrymon]";
+	specialeffect EF_MAP_MAGICZONE3;
+	mes "Good.";
+	next;
+	specialeffect EF_CASTSPIN2;
+	mes "[Jerrymon]";
+	mes "Come on! Let's go~~!! Yay!!";
+	close2;
+	specialeffect EF_CASTSPIN2, AREA;
+	warp "iz_d04_i",130,227;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3409) == 1" );
+	end;
+}
+
+
+iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
+	if (checkweight(1201,3) == 0) {
+		mes "You have too many items.";
+		mes "Please clean up your items and try again.";
+		close;
+	}
+	if (ill_underwater < 5)
+		end;
+	if (ill_underwater == 5) {
+		switch( checkquest(3411,HUNTING) ) {
+		case -1:
+			mes "[Jerrymon]";
+			mes "Wow... this purple sea... it's fantastic!!!";
+			next;
+			mes "[Jerrymon]";
+			mes "It's so amazing that we can breathe without gills, there's no sea pressure, and even marine life that I've never seen before...!!!";
+			next;
+			mes "[Jerrymon]";
+			mes "There's more than one or two things to look into, I'll be busy.";
+			mes "Wow... so exciting!!! I think this is the most thrilling moment in my 14 years as an oceanographer!";
+			next;
+			mes "[Jerrymon]";
+			mes "Lululala~~~";
+			next;
+			select( "Oh hey, I'm here to find Sirood..." );
+			mes "[Jerrymon]";
+			mes "Ah, ah... that, right? That should take precedence.";
+			next;
+			mes "[Jerrymon]";
+			mes "In order to bring Sirood back ashore, we need an additional ^4d4dff" + getitemname(25899) + "^000000. The question is how to get it...";
+			next;
+			mes "[Jerrymon]";
+			mes "I've been watching the deep sea creatures here, and I've seen some of them glow with the essence of the abyss.";
+			mes "And they seem to threaten us sometimes.";
+			next;
+			mes "[Jerrymon]";
+			mes "In that sense, could you handle some of the deep sea creatures? Maybe we can get ^4d4dff" + getitemname(25899) + "^000000 from them.";
+			next;
+			mes "[Jerrymon]";
+			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
+			next;
+			if (select( "Okay", "I'll do it next time" ) == 2) {
+				mes "[Jerrymon]";
+				mes "Yes yes~ I'll be waiting for you here!";
+				close;
+			}
+			mes "[Jerrymon]";
+			mes "Yes yes~ I'll be waiting for you here!";
+			close2;
+			setquest 3411;
+			end;
+		case 0:
+		case 1:
+			mes "[Jerrymon]";
+			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
+			next;
+			mes "[Jerrymon]";
+			mes "I'll be waiting for you here.";
+			close;
+		case 2:
+			mes "[Jerrymon]";
+			mes "Thank you for your hard work, you also brought ^4d4dff" + getitemname(25899) + "^000000!! As expected, my prediction was correct.";
+			next;
+			mes "[Jerrymon]";
+			mes "It looks like we only need about 10 ^4d4dff" + getitemname(25899) + "^000000 to send Sirood back ashore.";
+			next;
+			mes "[Jerrymon]";
+			mes "If you collect them, I'll create a whirlpool for you.";
+			next;
+			mes "[Jerrymon]";
+			mes "Oh, and this is a stone I found while researching. I've been keeping it because it looks like something that could be used by adventurers, so please take it.";
+			next;
+			mes "[Jerrymon]";
+			mes "Then be careful!";
+			close2;
+			getitem 25271,2;	// IllusionStone
+			ill_underwater = 6;
+			erasequest 3411;
+			setquest 3412;
+			getexp 4441860,3109150;
+			end;
+		}
+		end;
+	}
+	if (ill_underwater == 6) {
+		if (countitem(25899) < 10) {
+			mes "[Jerrymon]";
+			mes "Please bring ^4d4dff10 " + getitemname(25899) + "^000000.";
+			next;
+			mes "[Jerrymon]";
+			mes "I'd like to save it myself, but as you can see I'm weak, heck.";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "Thank you for your hard work!! You brought 10 ^4d4dff" + getitemname(25899) + "^000000.";
+		next;
+		mes "[Jerrymon]";
+		mes "Would you like to go ashore now?";
+		next;
+		if (select( "Go ashore", "Not going up now" ) == 2) {
+			mes "[Jerrymon]";
+			mes "Talk to me when you're ready to go ashore!";
+			close;
+		}
+		mes "[Jerrymon]";
+		mes "I found this again while waiting for adventurer. Please accept it!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Okay, let's condense this...";
+		next;
+		mes "[Jerrymon]";
+		mes "Huh...!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Now, Adventurer and Sirood!! Can you help me?? Ehhh!!!!";
+		next;
+		mes "- A huge whirlpool was created in front of Jerrymon! -";
+		specialeffect EF_MAP_MAGICZONE3;
+		next;
+		mes "[Jerrymon]";
+		mes "Then I'll cross first!!! Follow me carefully!";
+		specialeffect EF_CASTSPIN2;
+		close2;
+		delitem 25899,10;	// E_Abyss1
+		ill_underwater = 7;
+		erasequest 3412;
+		if (isbegin_quest(3410) == 1)
+			erasequest 3410;
+		getitem 25271,2;	// IllusionStone
+		getexp 4441860,3109150;
+		warp "izlude",128,54;
+		end;
+	}
+
+	// daily
+	if (checkquest(3414,PLAYTIME) == 2 && checkquest(3416,PLAYTIME) == 2) {
+		mes "[Jerrymon]";
+		mes "I have everything I need for today's survey, thank you!!";
+		next;
+		mes "[Jerrymon]";
+		mes "Looks like you've finished your business. Would you like to move to Izlude?";
+		next;
+		if (select( "Move", "Do not move" ) == 2) {
+			mes "[Jerrymon]";
+			mes "Please let me know if you need any help!";
+			close;
+		}
+		specialeffect EF_MAP_MAGICZONE3;
+		mes "[Jerrymon]";
+		mes "Okay, huh!";
+		next;
+		mes "[Jerrymon]";
+		mes "I'm going to cross~~ Ah!!";
+		specialeffect EF_CASTSPIN2;
+		close2;
+		warp "izlude",128,54;
+		end;
+	}
+	mes "[Jerrymon]";
+	mes "Hello, research is going well.";
+	next;
+	mes "[Jerrymon]";
+	mes "If we do well, we might be able to make the vortex linking here and Izlude last forever!";
+	next;
+	mes "[Jerrymon]";
+	mes "So, can you help me a bit more?";
+	next;
+	mes "[Jerrymon]";
+	mes "I need more ^4d4dff" + getitemname(25899) + "^000000, and I'd like you to take care of the ^4d4dffDeep Sea Creatures^000000 that get in the way of my research.";
+	next;
+	switch( select( "Okay", "I'll do it next time", "I want to go back to Izlude" ) ) {
+	case 1:
+		mes "[Jerrymon]";
+		mes "Thanks!! Can you do something for me?";
+		next;
+
+		switch( checkquest(3414,PLAYTIME) ) {
+		case -1:
+			switch( isbegin_quest(3413) ) {
+			case 0:
+				.@menu$[0] = "Collect " + getitemname(25899) + "";
+				break;
+			case 1:
+				if (countitem(25899) < 10)
+					.@menu$[0] = "Collecting " + getitemname(25899) + " - In Progress";
+				else
+					.@menu$[0] = "Collect " + getitemname(25899) + " - Done";
+				break;
+			case 2:
+				end;
+			}
+			break;
+		case 0:
+		case 1:
+			.@menu$[0] = "^999999" + getitemname(25899) + " Collection - Pending^000000";
+			break;
+		case 2:
+			break;
+		}
+
+		switch( checkquest(3416,PLAYTIME) ) {
+		case -1:
+			switch( checkquest(3415,HUNTING) ) {
+			case -1:
+				.@menu$[1] = "Kill Deep Sea Creatures";
+				break;
+			case 0:
+			case 1:
+				.@menu$[1] = "Kill sea creatures - In Progress";
+				break;
+			case 2:
+				.@menu$[1] = "Kill Deep Sea Creatures - Done";
+				break;
+			}
+			break;
+		case 0:
+		case 1:
+			.@menu$[1] = "^999999Deep Sea Creatures Killed - Pending^000000";
+			break;
+		case 2:
+			break;
+		}
+
+		switch( select( .@menu$[0], .@menu$[1], "Next time." ) ) {
+		case 1:
+			switch( checkquest(3414,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				end;	// todo
+			case 2:
+				erasequest 3414;
+				break;
+			}
+			switch( isbegin_quest(3413) ) {
+			case 0:
+				mes "[Jerrymon]";
+				mes "^4d4dff" + getitemname(25899) + "^000000 can be obtained from all the deep sea creatures here.";
+				mes "I need 10 right now.";
+				next;
+				mes "[Jerrymon]";
+				mes "Then take care of yourself~~!!";
+				close2;
+				setquest 3413;
+				end;
+			case 1:
+				if (countitem(25899) < 10) {
+					mes "[Jerrymon]";
+					mes "I need 10 ^4d4dff" + getitemname(25899) + "^000000.";
+					next;
+					mes "[Jerrymon]";
+					mes "Come back to me when you've collected all the essences!";
+					close;
+				}
+				mes "[Jerrymon]";
+				mes "You've collected all the " + getitemname(25899) + "!!";
+				next;
+				mes "[Jerrymon]";
+				mes "Thank you, I'll put it to good use in my research.";
+				close2;
+				delitem 25899,10;	// E_Abyss1
+				getexp 4441860,3109150;
+				erasequest 3413;
+				setquest 3414;
+				getitem 25271,1;	// IllusionStone
+				end;
+			case 2:
+				end;
+			}
+			end;
+		case 2:
+			switch( checkquest(3416,PLAYTIME) ) {
+			case -1:
+				break;
+			case 0:
+			case 1:
+				end;	// todo
+			case 2:
+				erasequest 3416;
+				break;
+			}
+			switch( checkquest(3415,HUNTING) ) {
+			case -1:
+				mes "[Jerrymon]";
+				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000 that roam around here.";
+				next;
+				mes "[Jerrymon]";
+				mes "Then take care of yourself~~!!";
+				close2;
+				setquest 3415;
+				end;
+			case 0:
+			case 1:
+				mes "[Jerrymon]";
+				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
+				close;
+			case 2:
+				mes "[Jerrymon]";
+				mes "You've finished dealing with all the deep sea creatures, thank you for your hard work.";
+				next;
+				mes "[Jerrymon]";
+				mes "I'll get back to you if I need help. Thanks!!";
+				close2;
+				getitem 25271,1;	// IllusionStone
+				getexp 4441860,3109150;
+				erasequest 3415;
+				setquest 3416;
+				end;
+			}
+			end;
+		case 3:
+			mes "[Jerrymon]";
+			mes "The only person I can ask for is you...";
+			next;
+			mes "[Jerrymon]";
+			mes "Feel free to tell me if you change your mind!!";
+			close;
+		}
+		end;
+	case 2:
+		mes "[Jerrymon]";
+		mes "I'll be staying here for a while, so let me know if you change your mind!!";
+		close;
+	case 3:
+		specialeffect EF_MAP_MAGICZONE3;
+		mes "[Jerrymon]";
+		mes "Okay, huh!";
+		next;
+		mes "[Jerrymon]";
+		mes "I'm going to cross~~ Ah!!";
+		specialeffect EF_CASTSPIN2;
+		close2;
+		warp "izlude",128,54;
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_underwater == 5 && checkquest(3411,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "ill_underwater == 5 && checkquest(3411,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(3412) == 1 && countitem(25899) >= 10" );
+
+	// daily
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ill_underwater == 7 && checkquest(3414,PLAYTIME) == -1 && isbegin_quest(3413) == 0" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3413) == 1 && countitem(25899) >= 10" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3414,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ill_underwater == 7 && checkquest(3416,PLAYTIME) == -1 && checkquest(3415,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3415,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3416,PLAYTIME) == 2" );
+	end;
+}
+
+
+iz_d04_i,134,223,4	script	Jane#Jane01	1_F_01,{
+	if (ill_underwater < 6) {
+		mes "[???]";
+		mes "Hello.";
+		next;
+		select( "Are you Sirood?" );
+		mes "[Jane]";
+		mes "No, my name is Jane.";
+		next;
+		mes "[Jane]";
+		mes "Sirood...?";
+		mes "I think I've heard that name somewhere...";
+		close;
+	}
+	mes "[Jane]";
+	mes "Hello, it looks like you've been here a while...";
+	next;
+	mes "[Jane]";
+	mes "How do you like it? Isn't this a pretty charming place too?";
+	next;
+	mes "[Jane]";
+	mes "I should go back to my hometown...";
+	close;
+}
+
+iz_d04_i,142,216,4	script	Sunrin#Sun01	4_F_03,{
+	if (ill_underwater < 6) {
+		mes "[???]";
+		mes "You said you were looking for someone named Sirood?";
+		next;
+		mes "[Sunrin]";
+		mes "My name is Sunrin.";
+		next;
+		mes "[Sunrin]";
+		mes "Sirood... ah, I think I know who it is.";
+		next;
+		mes "[Sunrin]";
+		mes "Go all the way to the left, and you'll find him.";
+		next;
+		mes "[Sunrin]";
+		mes "Then have a nice day today!!";
+		close;
+	}
+	mes "[Sunrin]";
+	mes "All the people here are immigrants and settlers.";
+	next;
+	mes "[Sunrin]";
+	mes "As you can see, there are traces of civilization in these depths, but everyone here was an outsider.";
+	next;
+	mes "[Sunrin]";
+	mes "You'll get used to it soon.";
+	next;
+	mes "[Sunrin]";
+	mes "Sea monsters do attack from time to time, but that's about it...";
+	close;
+}
+
+iz_d04_i,125,226,0	script	Sirood#SRD3	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_underwater < 7 && isbegin_quest(3410) == 0)
+		cloakoffnpcself( "Sirood#SRD4" );
+	end;
+}
+
+iz_d04_i,125,226,5	script(CLOAKED)	Sirood#SRD4	1_M_04,{
+	if (ill_underwater != 5 && ill_underwater != 6)
+		end;
+	switch( isbegin_quest(3410) ) {
+	case 0:
+		mes "[Sirood]";
+		mes "Hello, Adventurer.";
+		next;
+		mes " - Sirood greeted me as if he had been waiting. -";
+		next;
+		mes "[Sirood]";
+		mes "It looks like the message I sent reached Izlude, I'm so glad...";
+		next;
+		mes "[Sirood]";
+		mes "About 3 months ago... I went fishing on a rainy and windy day.";
+		next;
+		mes "[Sirood]";
+		mes "After I caught my first fish, I tripped and fell into the water while trying to get it out with a fishing pole.";
+		next;
+		mes "[Sirood]";
+		mes "I was trying to swim as hard as I could to get out, but I felt something pulling me in with great force.";
+		next;
+		mes "[Sirood]";
+		mes "What, it looked like a whirlpool... I thought I was going to die... and when I woke up, I found this place.";
+		next;
+		mes "[Sirood]";
+		mes "I don't know why I can't breathe or why I don't feel hungry even if I don't eat.";
+		next;
+		mes "[Sirood]";
+		mes "And observing the surroundings here, I could see small vortices forming occasionally.";
+		next;
+		mes "[Sirood]";
+		mes "I had a hunch that it was the same kind of whirlpool I was swept into.";
+		next;
+		mes "[Sirood]";
+		mes "The duration of the vortex is very short. It took me 2 months just to put my fishing rod with my name on it into the vortex.";
+		next;
+		mes "[Sirood]";
+		mes "Waiting for someone to discover...";
+		next;
+		mes "[Sirood]";
+		mes "Are you sure you came to me with that fishing rod as a clue?";
+		next;
+		select( "That's right" );
+		mes "[Sirood]";
+		mes "Ah, that's a relief... I'd appreciate it if you could take me with you when you return ashore.";
+		next;
+		mes "- I think we should talk to Jerrymon about the work to send Sirood ashore. - ";
+		close2;
+		setquest 3410;
+		end;
+	case 1:
+		mes "[Sirood]";
+		mes "Adventurer, please take me with you when you return ashore.";
+		close;
+	case 2:
+		end;
+	}
+	end;
+}
+
+iz_d04_i,146,226,4	script	Nick#Nick01	2_M_SAGE_B,{
+	mes "[Nick]";
+	mes "How is it? Is it worth living here?";
+	next;
+	mes "[Nick]";
+	mes "It's deeper here than anywhere else, and it's amazing to be able to breathe freely.";
+	mes "I'm not sure how that works.";
+	close;
+}
+
+
+// Floor 2
+iz_d04_i,129,232,5	script	Gatekeeper#guard1	4_M_KY_SOLD,{
+	if (BaseLevel < 180) {
+		mes "[Gatekeeper]";
+		mes "Your strength isn't enough to cross to the lower levels.";
+		//close;	// close is used on official
+		next;
+		mes "[Gatekeeper]";
+		mes "Please come back after you are at least level 180.";
+		close;
+	}
+	mes "[Gatekeeper]";
+	mes "If you go downstairs, you will run into some pretty vicious fish. Would that be alright?";
+	next;
+	if (select( "Sure", "I'll come next time" ) == 1) {
+		mes "[Gatekeeper]";
+		mes "Please talk to me again when you are ready to cross.";
+		close;
+	}
+	mes "[Gatekeeper]";
+	mes "Then be careful.";
+	close2;
+	warp "iz_d05_i",141,186;
+	end;
+}
+
+iz_d05_i,141,188,5	script	Guardian#guard2	4_M_KY_SOLD,{
+	mes "[Gatekeeper]";
+	mes "Hello, would you like to go upstairs again?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Gatekeeper]";
+		mes "Please talk to me again when you are ready to cross.";
+		close;
+	}
+	mes "[Gatekeeper]";
+	mes "Then be careful.";
+	close2;
+	warp "iz_d04_i",129,227;
+	end;
+}
+
+iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
+	if (checkweight(1201,3) == 0) {
+		mes "You have too many items.";
+		mes "Please clean up your items and try again.";
+		close;
+	}
+	if (BaseLevel < 180)
+		end;
+	if (ill_underwater < 5)
+		end;
+	if (checkquest(3418,PLAYTIME) == 2 && checkquest(3420,PLAYTIME) == 2) {
+		mes "[Kena]";
+		mes "Thank you for your hard work. Take a good rest today and visit us tomorrow.";
+		close;
+	}
+	mes "[Kena]";
+	mes "Hello, Adventurer.";
+	next;
+	mes "[Kena]";
+	mes "I heard that there are many dangerous deep-sea creatures in the lower layer, but when I came here, they were more dangerous than I thought.";
+	next;
+	mes "[Kena]";
+	mes "Not too long ago, there was a lot of uproar when a creature from the lower layer came up to the upper layer.";
+	next;
+	mes "[Kena]";
+	mes "The population of deep sea creatures is increasing. Adventurer, may I ask for your help?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Kena]";
+		mes "Oops...";
+		next;
+		mes "[Kena]";
+		mes "It would be dangerous if left unattended...";
+		close;
+	}
+	mes "[Kena]";
+	mes "Thank you, I'd appreciate it if you could help me defeat the deep sea creatures or fishmen.";
+	next;
+	mes "[Kena]";
+	mes "What would you like to do?";
+	next;
+	.@menu$[0] = callsub( S_Quest, "Kill Deep Sea Creatures", 3418,3417 );
+	.@menu$[1] = callsub( S_Quest, "Destroy the Deep Sea Fishmen", 3420,3419 );
+
+	switch( select( .@menu$[0], .@menu$[1], "Next time." ) ) {
+	case 1:
+		switch( checkquest(3418,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "I think this is enough for today, please come back tomorrow.";
+			close;
+		case 2:
+			erasequest 3418;
+			break;
+		}
+		switch( checkquest(3417,HUNTING) ) {
+		case -1:
+			mes "[Kena]";
+			mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SWORD_FISH", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_PHEN", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_KING_DRAMOH", MOB_NAME) + "^000000.";
+			next;
+			mes "[Kena]";
+			mes "These monsters are quite ferocious, so be very careful.";
+			next;
+			mes "[Kena]";
+			mes "Thank you.";
+			close2;
+			setquest 3417;
+			end;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "^4d4dff" + getmonsterinfo("ILL_SWORD_FISH", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_PHEN", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_KING_DRAMOH", MOB_NAME) + "^000000.";
+			next;
+			mes "[Kena]";
+			mes "Please kill 10 of each.";
+			close;
+		case 2:
+			mes "[Kena]";
+			mes "They've all been eliminated, thank you for your hard work.";
+			next;
+			mes "[Kena]";
+			mes "If you have time, please come back tomorrow. I'll be waiting for you.";
+			close2;
+			getitem 25271,1;	// IllusionStone
+			getexp 20107500,14075250;
+			erasequest 3417;
+			setquest 3418;
+			end;
+		}
+		end;
+	case 2:
+		switch( checkquest(3420,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "I think this is enough for today, please come back tomorrow.";
+			close;
+		case 2:
+			erasequest 3420;
+			break;
+		}
+		switch( checkquest(3419,HUNTING) ) {
+		case -1:
+			mes "[Kena]";
+			mes "Please take out 15 ^4d4dff" + getmonsterinfo("ILL_SEDORA", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_STROUF", MOB_NAME) + "^000000 each.";
+			next;
+			mes "[Kena]";
+			mes "They are quite annoying, so be careful.";
+			close2;
+			setquest 3419;
+			end;
+		case 0:
+		case 1:
+			mes "[Kena]";
+			mes "Please take out 15 ^4d4dff" + getmonsterinfo("ILL_SEDORA", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_STROUF", MOB_NAME) + "^000000 each.";
+			close;
+		case 2:
+			mes "[Kena]";
+			mes "They've all been eliminated, thank you for your hard work.";
+			next;
+			mes "[Kena]";
+			mes "Please drop by tomorrow when the time is right. I'll be waiting for you.";
+			close2;
+			getitem 25271,1;	// IllusionStone
+			getexp 20107500,14075250;
+			setquest 3420;
+			erasequest 3419;
+			end;
+		}
+		end;
+	case 3:
+		mes "[Kena]";
+		mes "Oops...";
+		next;
+		mes "[Kena]";
+		mes "It would be dangerous if left unattended...";
+		close;
+	}
+	end;
+
+S_Quest:
+	switch( checkquest(getarg(1),PLAYTIME) ) {
+	case -1:
+		switch( checkquest(getarg(2),HUNTING) ) {
+		case -1:
+			.@string$ = getarg(0);
+			break;
+		case 0:
+		case 1:
+			.@string$ = getarg(0) + " - In Progress";
+			break;
+		case 2:
+			.@string$ = getarg(0) + " - Done";
+			break;
+		}
+		break;
+	case 0:
+	case 1:
+		.@string$ = "^999999" + getarg(0) + " - Pending^000000";
+		break;
+	case 2:
+		.@string$ = getarg(0);
+		break;
+	}
+	return .@string$;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3418,PLAYTIME) == -1 && checkquest(3417,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3417,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3418,PLAYTIME) == 2" );
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3420,PLAYTIME) == -1 && checkquest(3419,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3419,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3420,PLAYTIME) == 2" );
+	end;
+}

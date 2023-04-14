@@ -40,3 +40,29 @@ function	script	F_22507	{// ShabbyOldScroll
 	else if (.@r == 10) warp "pay_fild10",147,267;
 	end;
 }
+
+// Return a value according to the quests states.
+// -1 : One of the quest has a different state
+//  0 : All the quests are not started
+//  1 : All the quests are started
+//  2 : All the quests are completed
+function	script	F_queststatus	{
+	.@type = getarg(0);
+	.@base = checkquest(getarg(1),.@type);
+	.@size = getargcount();
+
+	for ( .@i = 2; .@i < .@size; ++.@i ) {
+		if (checkquest(getarg(.@i),.@type) != .@base)
+			return -1;
+	}
+	switch( .@base ) {
+	case -1:
+		return 0;
+	case 0:
+	case 1:
+		return 1;
+	case 2:
+		return 2;
+	}
+	end;
+}	
