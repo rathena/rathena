@@ -7875,8 +7875,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case CD_ARBITRIUM:
+						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += 100 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
+						RE_LVL_DMOD(100);
+						break;
 					case CD_ARBITRIUM_ATK:
-						skillratio += -100 + 200 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 550 * skill_lv + 5 * sstatus->spl;
+						skillratio += 100 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
 						RE_LVL_DMOD(100);
 						break;
 					case CD_PNEUMATICUS_PROCELLA:
