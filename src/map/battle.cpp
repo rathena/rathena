@@ -2938,7 +2938,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 #ifdef RENEWAL
 			case ASC_BREAKER:
 #endif
-			case LG_CANNONSPEAR:
 			case GC_CROSSIMPACT:
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
@@ -3161,7 +3160,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 					hitrate += pc_checkskill(sd, GN_REMODELING_CART) * 4;
 				break;
 			case LG_BANISHINGPOINT:
-				hitrate += 3 * skill_lv;
+				hitrate += 5 * skill_lv;
 				break;
 			case GC_VENOMPRESSURE:
 				hitrate += 10 + 4 * skill_lv;
@@ -4523,7 +4522,22 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case PA_SHIELDCHAIN:
 #ifdef RENEWAL
-			skillratio = 60 + 40 * skill_lv;
+			skillratio = -100 + 300 + 200 * skill_lv;
+
+			if( sd != nullptr ){
+				int16 index = sd->equip_index[EQI_HAND_L];
+
+				// Damage affected by the shield's weight and refine.
+				if( index >= 0 && sd->inventory_data[index] != nullptr && sd->inventory_data[index]->type == IT_ARMOR ){
+					skillratio += sd->inventory_data[index]->weight / 10 + 4 * sd->inventory.u.items_inventory[index].refine;
+				}
+
+				// Damage affected by shield mastery
+				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
+					skillratio += skill_lv * 14 * pc_checkskill( sd, IG_SHIELD_MASTERY );
+				}
+			}
+
 			RE_LVL_DMOD(100);
 #else
 			skillratio += 30 * skill_lv;
@@ -4871,28 +4885,40 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(120);
 			break;
 		case LG_CANNONSPEAR:
-			skillratio += -100 + skill_lv * (50 + sstatus->str);
+			skillratio += -100 + skill_lv * ( 120 + sstatus->str );
+
+			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) ){
+				skillratio += 400;
+			}
+
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_SPEAR_SCAR))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_BANISHINGPOINT:
-			skillratio += -100 + (80 * skill_lv) + ((sd) ? pc_checkskill(sd,SM_BASH) * 30 : 0);
+			skillratio += -100 + ( 100 * skill_lv );
+
+			if( sd != nullptr ){
+				skillratio += pc_checkskill( sd, SM_BASH ) * 70;
+			}
+
+			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) ){
+				skillratio += 800;
+			}
+
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_SPEAR_SCAR))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_SHIELDPRESS:
 			skillratio += -100 + 200 * skill_lv + sstatus->str;
 			if (sd) {
+				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
+					skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
+				}
+
 				short index = sd->equip_index[EQI_HAND_L];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
 					skillratio += sd->inventory_data[index]->weight / 10;
 			}
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_PINPOINTATTACK:
 			skillratio += -100 + 100 * skill_lv + 5 * status_get_agi(src);
@@ -4911,17 +4937,20 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case LG_OVERBRAND:
 			if(sc && sc->getSCE(SC_OVERBRANDREADY))
-				skillratio += -100 + 450 * skill_lv;
+				skillratio += -100 + 500 * skill_lv;
 			else
-				skillratio += -100 + 300 * skill_lv;
+				skillratio += -100 + 350 * skill_lv;
 			skillratio += ((sd) ? pc_checkskill(sd, CR_SPEARQUICKEN) * 50 : 0);
 			RE_LVL_DMOD(100);
 			break;
 		case LG_EARTHDRIVE:
-			skillratio += -100 + 380 * skill_lv + ((sstatus->str + sstatus->vit) / 6); // !TODO: What's the STR/VIT bonus?
+			skillratio += -100 + 380 * skill_lv + sstatus->str + sstatus->vit; // !TODO: What's the STR/VIT bonus?
+
+			if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
+				skillratio += skill_lv * 37 * pc_checkskill( sd, IG_SHIELD_MASTERY );
+			}
+
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case LG_HESPERUSLIT:
 			if (sc && sc->getSCE(SC_INSPIRATION))
@@ -5415,6 +5444,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case IG_SHIELD_SHOOTING:
 			skillratio += -100 + 600 * skill_lv + 5 * sstatus->pow;
+			skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
 			if (sd) { // Damage affected by the shield's weight and refine. Need official formula. [Rytech]
 				short index = sd->equip_index[EQI_HAND_L];
 
@@ -5422,8 +5452,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 					skillratio += sd->inventory_data[index]->weight / 20 * sd->inventory.u.items_inventory[index].refine;
 			}
 			RE_LVL_DMOD(100);
-			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-				skillratio += skillratio * i / 100;
 			break;
 		case IG_OVERSLASH:
 			skillratio += -100 + 60 * skill_lv + 5 * sstatus->pow;
@@ -6525,7 +6553,11 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				wd.div_ = min(wd.div_ + wd.miscflag, 3); // Number of hits doesn't go above 3.
 				break;
 			case IG_OVERSLASH:
-				wd.div_ = min(wd.div_ + wd.miscflag, 5); // Number of hits doesn't appear to go above 5.
+				if( wd.miscflag >= 4 ){
+					wd.div_ = 7;
+				}else if( wd.miscflag >= 2 ){
+					wd.div_ = 5;
+				}
 				break;
 			case SHC_ETERNAL_SLASH:
 				if (sc && sc->getSCE(SC_E_SLASH_COUNT))
@@ -7480,9 +7512,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100); // ! TODO: Confirm new formula
 						break;
 					case LG_RAYOFGENESIS:
-						skillratio += -100 + 230 * skill_lv + sstatus->int_ / 6; // !TODO: What's the INT bonus?
-						if (sc && sc->getSCE(SC_INSPIRATION))
-							skillratio += 70 * skill_lv;
+						skillratio += -100 + 350 * skill_lv + sstatus->int_; // !TODO: What's the INT bonus?
 						RE_LVL_DMOD(100);
 						break;
 					case NPC_RAYOFGENESIS:
@@ -7789,13 +7819,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
 							skillratio += skillratio * i / 100;
 						break;
-					case IG_CROSS_RAIN:// Need official damage increase from Spear and Sword Mastery. [Rytech]
-						skillratio += -100 + 30 * skill_lv + 5 * sstatus->spl + 5 * pc_checkskill(sd, IG_SPEAR_SWORD_M);
+					case IG_CROSS_RAIN:
+						if( sc && sc->getSCE( SC_HOLY_S ) ){
+							skillratio += -100 + ( 250 + 10 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
+						}else{
+							skillratio += -100 + ( 150 + 5 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
+						}
+						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
-						if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-							skillratio += skillratio * i / 100;
-						if (sc && sc->getSCE(SC_HOLY_S))
-							skillratio += 20 * skill_lv;
 						break;
 					case CD_ARBITRIUM:
 					case CD_ARBITRIUM_ATK:
