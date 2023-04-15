@@ -7920,34 +7920,49 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						}
 						break;
 					case EM_DIAMOND_STORM:
-						skillratio += -100 + 700 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 1250 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_DILUVIO ) ){
+							skillratio += 3500 + 500 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_SUMMON_ELEMENTAL_DILUVIO))
-							skillratio += skillratio * 30 / 100;
 						break;
 					case EM_LIGHTNING_LAND:
-						skillratio += -100 + 150 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_PROCELLA ) ){
+							skillratio += 400 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_SUMMON_ELEMENTAL_PROCELLA))
-							skillratio += skillratio * 30 / 100;
 						break;
 					case EM_VENOM_SWAMP:
-						skillratio += -100 + 150 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+
+						if( sc && sc->getSCE( SC_SUMMON_ELEMENTAL_SERPENS ) ){
+							skillratio += 400 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_SUMMON_ELEMENTAL_SERPENS))
-							skillratio += skillratio * 30 / 100;
 						break;
 					case EM_CONFLAGRATION:
-						skillratio += -100 + 150 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_ARDOR ) ){
+							skillratio += 400 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_SUMMON_ELEMENTAL_ARDOR))
-							skillratio += skillratio * 30 / 100;
 						break;
 					case EM_TERRA_DRIVE:
-						skillratio += -100 + 700 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 1250 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
+							skillratio += 3500 + 500 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_SUMMON_ELEMENTAL_TERREMOTUS))
-							skillratio += skillratio * 30 / 100;
 						break;
 					case ABC_FROM_THE_ABYSS_ATK:
 						skillratio += 50 + 70 * skill_lv + 5 * sstatus->spl;
