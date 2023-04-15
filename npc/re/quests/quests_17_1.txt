@@ -6905,26 +6905,31 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		cutin "",255;
 		end;
 	case 2:
-		cutin "16loo_01",2;
-		mes "[Rookie]";
-		mes "I'll let you know if we come across more information. Until then, please get some rest.";
-		mes "Also, Elyumina will be kept here with us for the time being.";
-		next;
-		cutin "16loo_01",2;
-		mes "[Rookie]";
-		mes "While he's with us, we'll also see if he can modify the damaged weapons found here for us.";
-		next;
-		mes "[Rookie]";
-		mes "If you're interested in that, you should ask Captain Volkova's <NAVI>[subordinates]<INFO>sp_cor,108,130,0,101,0</INFO></NAVI> for more details.";
-		next;
-		cutin "16loo_02",2;
-		mes "[Rookie]";
-		mes "There are still many things to do around here. If you're not busy, maybe you can stay and help us.";
-		mes "Now, good luck, Adventurer! We'll contact you if we come across new information!";
-		close3;
+		break;
 	}
 	// Episode 17.2 - START - (Walkthrough Conversion)
-/*	if (isbegin_quest(18000) == 0) {
+	if (BaseLevel < 130) {
+		mes "[Rookie]";
+		mes "I'll get back to you when I get more info. So take a break for a while.";
+		mes "Elyumina should also be in charge here for the time being.";
+		next;
+		cutin "16loo_01.bmp",2;
+		mes "[Rookie]";
+		mes "We'll keep an eye on it and suggest modifying the damaged weapons we can get here for our own use.";
+		next;
+		mes "[Rookie]";
+		mes "If you're an adventurer, if you're interested, it's managed by Captain Volkova's <NAVI>[subordinates]<INFO>sp_cor,108,130,0,101,0</INFO></NAVI>, so go and ask.";
+		next;
+		cutin "16loo_02.bmp",2;
+		mes "[Rookie]";
+		mes "There's still quite a bit of work to do around here, so if you're free, feel free to help out.";
+		mes "Then good luck, adventurer! I'll be in touch when I learn something new!";
+		next;
+		cutin "",255;
+		mes "^4d4dffThese quests are available from level 130 or higher.^000000";
+		close;
+	}
+	if (ep17_2_main == 0) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "You're welcome.";
@@ -6950,19 +6955,20 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "... Hmm, for some reason, I feel like I'm always playing the role of a gatekeeper?";
 		mes "Is it only for adventurers? You must be feeling bad, huh? Ha-ha-ha-ha";
+		ep17_2_main = 1;
 		setquest 18000;
 		next;
 		mes "[Rookie]";
 		mes "I'll open the door anytime you need to need, adventurer. Just let me know.";
 		close3;
 	}
-	if (isbegin_quest(18000) == 1) {
+	if (ep17_2_main == 1) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "Shall we go?";
 		mes "To the great mansion left by the great sages?";
 		next;
-		if (select("Let's Go!:Not now.") == 2) {
+		if (select( "Let's Go!", "Not now." ) == 2) {
 			mes "[Rookie]";
 			mes "Let me know whenever you are ready.";
 			close3;
@@ -6998,14 +7004,15 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		next;
 		mes "[Rookie]";
 		mes "Then, this way.";
-		completequest 18000;
+		ep17_2_main = 2;
+		erasequest 18000;
 		setquest 18001;
 		close2;
 		cutin "",255;
 		warp "ba_pw02",275,20;
 		end;
 	}
-	if (isbegin_quest(18001) == 1) {
+	if (ep17_2_main == 2) {
 		mes "[Rookie]";
 		mes "Go ahead and enter the mansion through this sewer.";
 		mes "Most of the colleagues who went in first cleaned up already.";
@@ -7019,11 +7026,11 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 	mes "The path we took with you adventurer is a fresh feeling for me.";
 	mes "I feel really alive these days.";
 	close;
-*/ // Episode 17.2 - END
-	end;
 
 OnInit:
-	questinfo (QTYPE_QUEST, QMARK_YELLOW, " isbegin_quest(16360) == 1 ");
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16360) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16360) == 2 && isbegin_quest(18000) == 0 && BaseLevel >= 130 && ep17_2_main == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18000) == 1" );
 	end;
 }
 
@@ -8629,10 +8636,11 @@ sp_cor,235,292,7	script	Rebellion#171_rvs_39	4_M_REBELLION2,{
 	close;
 }
 
-sp_cor,260,280,3	script	Rebellion#171_rvs_40	4_F_ANYA,{
-	npctalk "We're on high alert! Keep a lookout!","",bc_self;
-	end;
-}
+// duplicated ?
+// sp_cor,260,280,3	script	Rebellion#171_rvs_40	4_F_ANYA,{
+	// npctalk "We're on high alert! Keep a lookout!","",bc_self;
+	// end;
+// }
 
 sp_cor,63,144,3	script	Worker#171_rvs_44	1_M_SIGNMONK,{
 	mes "[Worker]";

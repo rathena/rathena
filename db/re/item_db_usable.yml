@@ -60006,21 +60006,21 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      /* bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,5; }",900,1,0,EFST_BATH_FOAM_A; */
+      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,5; }",900,1,0,EFST_BATH_FOAM_A;
   - Id: 100148
     AegisName: Bath_Foam_B
     Name: Bath Foam B
     Type: Usable
     Weight: 10
     Script: |
-      /* bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,10; }",900,1,0,EFST_BATH_FOAM_B; */
+      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,10; }",900,1,0,EFST_BATH_FOAM_B;
   - Id: 100149
     AegisName: Bath_Foam_C
     Name: Bath Foam C
     Type: Usable
     Weight: 10
     Script: |
-      /* bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C; */
+      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C;
   - Id: 100151
     AegisName: Skill_Sha_M_S_Weapon
     Name: Skill Shadow Weapon Combination Scroll
