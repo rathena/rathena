@@ -37763,12 +37763,32 @@ Body:
       Critical: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: -8
+    HitCount: 3
     Element: Weapon
-    SplashArea: 1
+    SplashArea: 2
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 3000
+    AfterCastActDelay: 300
+    Cooldown:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 2800
+      - Level: 3
+        Time: 2600
+      - Level: 4
+        Time: 2400
+      - Level: 5
+        Time: 2200
+      - Level: 6
+        Time: 2000
+      - Level: 7
+        Time: 1800
+      - Level: 8
+        Time: 1600
+      - Level: 9
+        Time: 1400
+      - Level: 10
+        Time: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -37793,7 +37813,6 @@ Body:
           Amount: 55
       Weapon:
         Katar: true
-      State: Hidden
   - Id: 5288
     Name: SHC_SHADOW_SENSE
     Description: Shadow Sense
@@ -37813,7 +37832,7 @@ Body:
     CastCancel: true
     AfterCastActDelay: 500
     Duration1: 3000
-    Cooldown: 1500
+    Cooldown: 750
     Requires:
       SpCost: 40
       Status:
@@ -37889,10 +37908,10 @@ Body:
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
-    GiveAp: 3
+    GiveAp: 1
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 3000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
