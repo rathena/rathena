@@ -1638,6 +1638,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 		if (tsc->getSCE(SC_HOLY_OIL) && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage += damage * 50 / 100;// Need official adjustment. [Rytech]
+
+		if( tsc->getSCE( SC_RUSH_QUAKE1 ) && ( flag&BF_WEAPON ) == BF_WEAPON ){
+			damage += damage * 50 / 100;
+		}
+
 		if (tsc->getSCE(SC_SHADOW_SCAR)) // !TODO: Need official adjustment for this too.
 			damage += damage * (3 * tsc->getSCE(SC_SHADOW_SCAR)->val1) / 100;
 
@@ -4825,7 +4830,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 50 * skill_lv;
 			break;
 		case NC_BOOSTKNUCKLE:
-			skillratio += 200 * skill_lv + sstatus->dex / 6; // !TODO: What's the DEX bonus?
+			skillratio += -100 + 260 * skill_lv + sstatus->dex; // !TODO: What's the DEX bonus?
 			RE_LVL_DMOD(100);
 			break;
 		case NC_PILEBUNKER:
@@ -4833,7 +4838,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NC_VULCANARM:
-			skillratio += -100 + 140 * skill_lv + sstatus->dex / 6; // !TODO: What's the DEX bonus?
+			skillratio += -100 + 230 * skill_lv + sstatus->dex; // !TODO: What's the DEX bonus?
 			RE_LVL_DMOD(100);
 			break;
 		case NC_FLAMELAUNCHER:
@@ -4842,7 +4847,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(150);
 			break;
 		case NC_ARMSCANNON:
-			skillratio += -100 + 400 + 300 * skill_lv;
+			skillratio += -100 + 400 + 350 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case NC_AXEBOOMERANG:
@@ -4865,10 +4870,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 350 + 50 * skill_lv;
 			break;
 		case NC_AXETORNADO:
-			skillratio += -100 + 200 + 180 * skill_lv + sstatus->vit / 6; // !TODO: What's the VIT bonus?
+			skillratio += -100 + 200 + 180 * skill_lv + sstatus->vit * 2;
+			if (sc && sc->getSCE(SC_AXE_STOMP))
+				skillratio += 380;
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_AXE_STOMP))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case SC_FATALMENACE:
 			skillratio += 120 * skill_lv + sstatus->agi / 6; // !TODO: What's the AGI bonus?
@@ -5496,7 +5501,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_AXE_STOMP:
-			skillratio += -100 + 350 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 400 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_RUSH_QUAKE:
@@ -6573,7 +6578,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				break;
 			case MT_AXE_STOMP:
 				if (sd && sd->status.weapon == W_2HAXE)
-					wd.div_ = 2;
+					wd.div_ = 3;
 				break;
 		}
 	} else {

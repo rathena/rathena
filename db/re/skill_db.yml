@@ -22460,15 +22460,15 @@ Body:
     Element: Weapon
     CastTime:
       - Level: 1
-        Time: 100
+        Time: 40
       - Level: 2
-        Time: 200
+        Time: 80
       - Level: 3
-        Time: 300
+        Time: 120
       - Level: 4
-        Time: 400
+        Time: 160
       - Level: 5
-        Time: 500
+        Time: 200
     Requires:
       SpCost:
         - Level: 1
@@ -22645,11 +22645,11 @@ Body:
       - Level: 2
         Area: 1
       - Level: 3
-        Area: 1
+        Area: 2
       - Level: 4
         Area: 2
       - Level: 5
-        Area: 2
+        Area: 3
     CastTime:
       - Level: 1
         Time: 1000
@@ -22661,18 +22661,18 @@ Body:
         Time: 1800
       - Level: 5
         Time: 2000
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Cooldown:
       - Level: 1
-        Time: 100
+        Time: 50
       - Level: 2
-        Time: 150
+        Time: 75
       - Level: 3
-        Time: 200
+        Time: 100
       - Level: 4
-        Time: 250
+        Time: 125
       - Level: 5
-        Time: 300 
+        Time: 150
     FixedCastTime:
       - Level: 1
         Time: 500
@@ -38025,11 +38025,11 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     AfterCastActDelay: 500
-    Duration1: 5000
-    Cooldown: 2000
+    Duration1: 10000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38084,9 +38084,32 @@ Body:
     CastCancel: true
     AfterCastActDelay: 500
     Cooldown: 60000
+    Duration1: 30000
+    Duration2: 
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+      - Level: 6
+        Time: 180000
+      - Level: 7
+        Time: 210000
+      - Level: 8
+        Time: 240000
+      - Level: 9
+        Time: 270000
+      - Level: 10
+        Time: 300000
     Requires:
       SpCost: 150
       ApCost: 150
+    Status: Rush_Quake2
   - Id: 5297
     Name: MT_M_MACHINE
     Description: Manufacture Machine
@@ -38234,6 +38257,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -38244,8 +38268,8 @@ Body:
         Time: 240000
       - Level: 4
         Time: 300000
-    Cooldown: 60000
-    FixedCastTime: 3000
+    Cooldown: 30000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38274,6 +38298,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -38284,8 +38309,8 @@ Body:
         Time: 240000
       - Level: 4
         Time: 300000
-    Cooldown: 60000
-    FixedCastTime: 3000
+    Cooldown: 30000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38314,6 +38339,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -38324,8 +38350,8 @@ Body:
         Time: 240000
       - Level: 4
         Time: 300000
-    Cooldown: 60000
-    FixedCastTime: 3000
+    Cooldown: 30000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38353,6 +38379,7 @@ Body:
     HitCount: 1
     ActiveInstance: 1
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -38364,7 +38391,7 @@ Body:
       - Level: 4
         Time: 300000
     Cooldown: 60000
-    FixedCastTime: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1

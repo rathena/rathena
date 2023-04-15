@@ -1280,6 +1280,9 @@ enum sc_type : int16 {
 	SC_RELIEVE_ON,
 	SC_RELIEVE_OFF,
 
+	SC_RUSH_QUAKE1,
+	SC_RUSH_QUAKE2,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

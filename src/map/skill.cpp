@@ -2209,6 +2209,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case EM_TERRA_DRIVE:
 		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 40 + 10 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
+	case MT_RUSH_QUAKE:
+		sc_start( src, bl, SC_RUSH_QUAKE1, 100, skill_lv, skill_get_time( skill_id, skill_lv ) );
+		break;
 	} //end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai && md->special_state.ai != AI_ABR && md->special_state.ai != AI_BIONIC)
@@ -5751,7 +5754,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						skill_id = SU_LUNATICCARROTBEAT2;
 					break;
 				case DK_SERVANT_W_PHANTOM:
-				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
 						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
@@ -5827,6 +5829,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 					if (tsc && tsc->getSCE(SC_SOUNDBLEND))
 						skill_area_temp[0] = 1 + rnd()%4;
+					break;
+				case MT_RUSH_QUAKE:
+					// Jump to the target before attacking.
+					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
+						skill_blown( src, src, 1, direction_opposite( static_cast<enum directions>( map_calc_dir( bl, src->x, src->y ) ) ), BLOWN_NONE);
+					}
+					clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 ); // Trigger animation
+					clif_blown( src );
+					// TODO: does this buff start before or after dealing damage? [Muh]
+					sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
 					break;
 			}
 
