@@ -39436,7 +39436,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 5
     Element: Water
     SplashArea:
       - Level: 1
@@ -39464,7 +39464,7 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -39498,7 +39498,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 5
     Element: Earth
     SplashArea:
       - Level: 1
@@ -39526,7 +39526,7 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -39560,7 +39560,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 5
     Element: Wind
     SplashArea:
       - Level: 1
@@ -39588,7 +39588,7 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -39622,7 +39622,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 5
     Element: Fire
     SplashArea:
       - Level: 1
@@ -39650,7 +39650,7 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -39686,6 +39686,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -39699,7 +39700,7 @@ Body:
       - Level: 5
         Time: 360000
     Cooldown: 30000
-    FixedCastTime: 4000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39728,6 +39729,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -39741,7 +39743,7 @@ Body:
       - Level: 5
         Time: 360000
     Cooldown: 30000
-    FixedCastTime: 4000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39770,6 +39772,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 10
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -39783,7 +39786,7 @@ Body:
       - Level: 5
         Time: 360000
     Cooldown: 30000
-    FixedCastTime: 4000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39830,6 +39833,7 @@ Body:
     HitCount: 1
     ActiveInstance: 1
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -39843,10 +39847,20 @@ Body:
       - Level: 5
         Time: 180000
     Cooldown: 60000
-    FixedCastTime: 4000
+    FixedCastTime: 1000
     Requires:
       SpCost: 100
-      ApCost: 100
+      ApCost:
+        - Level: 1
+          Amount: 100
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 60
       ItemCost:
         - Item: High_Plant_Bottle
           Amount: 3

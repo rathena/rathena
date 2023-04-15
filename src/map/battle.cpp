@@ -2577,6 +2577,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		// Renewal changes to ranged physical damage
 #endif
 		case SR_RAMPAGEBLASTER:
+		case BO_ACIDIFIED_ZONE_WATER_ATK:
+		case BO_ACIDIFIED_ZONE_FIRE_ATK:
+		case BO_ACIDIFIED_ZONE_GROUND_ATK:
+		case BO_ACIDIFIED_ZONE_WIND_ATK:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -5582,19 +5586,16 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
 		case BO_ACIDIFIED_ZONE_WIND_ATK:
 		case BO_ACIDIFIED_ZONE_FIRE_ATK:
-			skillratio += -100 + 250 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_RESEARCHREPORT)) { // Does this also affect skills like acid demo? [Rytech]
+			skillratio += -100 + 400 * skill_lv + 5 * sstatus->pow;
+
+			if( sc != nullptr && sc->getSCE( SC_RESEARCHREPORT ) ){
 				skillratio += skillratio * 50 / 100;
 
 				if (tstatus->race == RC_FORMLESS || tstatus->race == RC_PLANT)
 					skillratio += skillratio * 50 / 100;
-
-				// Skill description is sounding a bit too crazy.
-				// I need more info on this before allowing this part to work to avoid overpowered issues. [Rytech]
-				//skillratio += 5 * sstatus->pow;
-				//RE_LVL_DMOD(100);
 			}
+
+			RE_LVL_DMOD(100);
 			break;
 		case TR_ROSEBLOSSOM:
 		case TR_ROSEBLOSSOM_ATK:// Same damage formula? [Rytech]

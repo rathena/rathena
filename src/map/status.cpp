@@ -2899,10 +2899,10 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 						// Its unknown how the summoner's stats affects the bionic's stats.
 						// I decided to do something similar to elementals for now until I know.
 						// Also added hit increase from Bionic-Mastery for balance reasons. [Rytech]
-						status->max_hp = (5000 + 2000 * bionic_mastery) * mstatus->vit / 100;
+						status->max_hp = (5000 + 40000 * bionic_mastery) * mstatus->vit / 100;
 						//status->max_sp = (50 + 20 * bionic_mastery) * mstatus->int_ / 100;// Wait what??? Bionic Mastery increases MaxSP? They have SP???
-						status->rhw.atk = (2 * mstatus->batk + 200 * bionic_mastery) * 70 / 100;
-						status->rhw.atk2 = 2 * mstatus->batk + 200 * bionic_mastery;
+						status->rhw.atk = (2 * mstatus->batk + 600 * bionic_mastery) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 600 * bionic_mastery;
 						status->def = mstatus->def + 20 * bionic_mastery;
 						status->mdef = mstatus->mdef + 4 * bionic_mastery;
 						status->hit = mstatus->hit + 5 * bionic_mastery / 2;
