@@ -35391,6 +35391,7 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Ground
+    GiveAp: 4
     Range: 9
     Hit: Single
     HitCount: 1
@@ -35983,7 +35984,7 @@ Body:
     FixedCastTime: 4000
     Requires:
       SpCost: 60
-      ApCost: 200
+      ApCost: 150
     Status: Climax
   - Id: 5233
     Name: AG_ROCK_DOWN
@@ -35997,12 +35998,32 @@ Body:
     Hit: Multi_Hit
     HitCount: -5
     Element: Earth
-    SplashArea: 1
-    GiveAp: 4
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 1
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
-    Cooldown: 4000
+    AfterCastActDelay: 500
+    Cooldown:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 2100
+      - Level: 3
+        Time: 1500
+      - Level: 4
+        Time: 900
+      - Level: 5
+        Time: 300
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -36028,11 +36049,21 @@ Body:
     Element: Wind
     SplashArea: 1
     ActiveInstance: 14
-    GiveAp: 4
+    GiveAp: 1
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
-    Cooldown: 4000
+    AfterCastActDelay: 500
+    Cooldown:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 2100
+      - Level: 3
+        Time: 1500
+      - Level: 4
+        Time: 900
+      - Level: 5
+        Time: 300
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -36058,11 +36089,21 @@ Body:
     Element: Fire
     SplashArea: 1
     ActiveInstance: 14
-    GiveAp: 4
+    GiveAp: 1
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
-    Cooldown: 4000
+    AfterCastActDelay: 500
+    Cooldown:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 2100
+      - Level: 3
+        Time: 1500
+      - Level: 4
+        Time: 900
+      - Level: 5
+        Time: 300
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -36082,10 +36123,23 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: -2
+    HitCount: 1
     Element: Fire
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
     Requires:
       SpCost: 1
   - Id: 5237
@@ -36101,20 +36155,20 @@ Body:
     Element: Water
     SplashArea:
       - Level: 1
-        Area: 2
-      - Level: 2
-        Area: 2
-      - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
         Area: 4
-    GiveAp: 4
+      - Level: 2
+        Area: 4
+      - Level: 3
+        Area: 5
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    GiveAp: 1
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
-    Cooldown: 4000
+    AfterCastActDelay: 500
+    Cooldown: 300
     FixedCastTime: 1500
     Requires:
       SpCost:

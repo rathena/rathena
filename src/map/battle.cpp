@@ -702,8 +702,6 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				}
 				cardfix = cardfix * (100 + sd->indexed_bonus.magic_addsize[tstatus->size] + sd->indexed_bonus.magic_addsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 + sd->indexed_bonus.magic_addclass[tstatus->class_] + sd->indexed_bonus.magic_addclass[CLASS_ALL]) / 100;
-				if (sd->status.weapon == W_2HSTAFF)// 2-Handed Staff Mastery
-					cardfix = cardfix * (100 + pc_checkskill(sd, AG_TWOHANDSTAFF)) / 100;
 				for (const auto &it : sd->add_mdmg) {
 					if (it.id == t_class) {
 						cardfix = cardfix * (100 + it.val) / 100;
@@ -7146,6 +7144,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		case TR_METALIC_FURY:// Deals up to 5 additional hits. But what affects the number of hits? [Rytech]
 			ad.div_ = min(ad.div_ + mflag, 5); // Number of hits doesn't go above 5.
 			break;
+		case AG_CRIMSON_ARROW_ATK:
+			if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
+				ad.div_ = 2;
+			}
+			break;
 	}
 
 	//Set miscellaneous data that needs be filled
@@ -7745,7 +7748,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_MYSTERY_ILLUSION:
-						skillratio += -100 + 250 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_VIOLENT_QUAKE_ATK:
@@ -7820,20 +7823,38 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ROCK_DOWN:
-						skillratio += -100 + 750 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
+							skillratio += 250 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case AG_STORM_CANNON:
 						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
+							skillratio += 250 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW:
-					case AG_CRIMSON_ARROW_ATK:
 						skillratio += -100 + 300 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
+					case AG_CRIMSON_ARROW_ATK:
+						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
 					case AG_FROZEN_SLASH:
-						skillratio += -100 + 750 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
+							skillratio += 250 * skill_lv;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case IG_JUDGEMENT_CROSS:
