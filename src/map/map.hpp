@@ -10,34 +10,48 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp" // CORE_ST_LAST
-#include "../common/db.hpp"
-#include "../common/mapindex.hpp"
-#include "../common/mmo.hpp"
-#include "../common/msg_conf.hpp"
-#include "../common/timer.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp> // CORE_ST_LAST
+#include <common/db.hpp>
+#include <common/mapindex.hpp>
+#include <common/mmo.hpp>
+#include <common/msg_conf.hpp>
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
+#include "navi.hpp"
 #include "script.hpp"
+
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_map{
+		class MapServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_crash() override;
+				void handle_shutdown() override;
+
+			public:
+				MapServer() : Core( e_core_type::MAP ){
+
+				}
+		};
+	}
+}
 
 struct npc_data;
 struct item_data;
 struct Channel;
-
-enum E_MAPSERVER_ST {
-	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
-	MAPSERVER_ST_STARTING,
-	MAPSERVER_ST_SHUTDOWN,
-	MAPSERVER_ST_LAST
-};
 
 struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
 int map_msg_config_read(const char *cfgName,int lang);
-const char* map_msg_txt(struct map_session_data *sd,int msg_number);
+const char* map_msg_txt(map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
 
@@ -346,6 +360,9 @@ enum e_race2 : uint8{
 	RC2_TEMPLE_DEMON,
 	RC2_ILLUSION_VAMPIRE,
 	RC2_MALANGDO,
+	RC2_EP172ALPHA,
+	RC2_EP172BETA,
+	RC2_EP172BATH,
 	RC2_MAX
 };
 
@@ -550,7 +567,8 @@ enum _sp {
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
-	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2 // 2102-2103
+	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2, // 2102-2103
+	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, // 2104-2105
 };
 
 enum _look {
@@ -644,12 +662,13 @@ enum e_mapflag : int16 {
 	MF_PRIVATEAIRSHIP_SOURCE,
 	MF_PRIVATEAIRSHIP_DESTINATION,
 	MF_SKILL_DURATION,
-	MF_NOCASHSHOP,
+	MF_NOCASHSHOP, // 70
 	MF_NORODEX,
 	MF_NORENEWALEXPPENALTY,
 	MF_NORENEWALDROPPENALTY,
 	MF_NOPETCAPTURE,
 	MF_NOBUYINGSTORE,
+	MF_NODYNAMICNPC,
 	MF_MAX
 };
 
@@ -812,6 +831,13 @@ struct map_data {
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
+#ifdef MAP_GENERATOR
+	struct {
+		std::vector<const struct npc_data *> npcs;
+		std::vector<const struct navi_link *> warps_into;
+		std::vector<const struct navi_link *> warps_outof;
+	} navi;
+#endif
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -823,6 +849,14 @@ struct map_data_other_server {
 	uint32 ip;
 	uint16 port;
 };
+
+struct inter_conf {
+	uint32 start_status_points;
+	bool emblem_woe_change;
+	uint32 emblem_transparency_limit;
+};
+
+extern struct inter_conf inter_config;
 
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk);
 int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
@@ -837,8 +871,6 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
-
-extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;
@@ -1023,13 +1055,6 @@ extern char channel_conf[];
 
 extern char wisp_server_name[];
 
-struct s_map_default {
-	char mapname[MAP_NAME_LENGTH];
-	unsigned short x;
-	unsigned short y;
-};
-extern struct s_map_default map_default;
-
 /// Type of 'save_settings'
 enum save_settings_type {
 	CHARSAVE_NONE		= 0x000, /// Never
@@ -1079,7 +1104,7 @@ int map_get_new_object_id(void);
 int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
 bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
 //
-int map_quit(struct map_session_data *);
+int map_quit(map_session_data *);
 // npc
 bool map_addnpc(int16 m,struct npc_data *);
 
@@ -1098,11 +1123,11 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
 // player to map session
 void map_addnickdb(int charid, const char* nick);
 void map_delnickdb(int charid, const char* nick);
-void map_reqnickdb(struct map_session_data* sd,int charid);
+void map_reqnickdb(map_session_data* sd,int charid);
 const char* map_charid2nick(int charid);
-struct map_session_data* map_charid2sd(int charid);
+map_session_data* map_charid2sd(int charid);
 
-struct map_session_data * map_id2sd(int id);
+map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
@@ -1123,12 +1148,12 @@ int map_eraseipport(unsigned short map, uint32 ip, uint16 port);
 int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
-void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
+void map_foreachpc(int (*func)(map_session_data* sd, va_list args), ...);
 void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
-struct map_session_data * map_nick2sd(const char* nick, bool allow_partial);
+map_session_data * map_nick2sd(const char* nick, bool allow_partial);
 struct mob_data * map_getmob_boss(int16 m);
 struct mob_data * map_id2boss(int id);
 
@@ -1169,7 +1194,7 @@ void map_flags_init(void);
 
 bool map_iwall_exist(const char* wall_name);
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
-void map_iwall_get(struct map_session_data *sd);
+void map_iwall_get(map_session_data *sd);
 bool map_iwall_remove(const char *wall_name);
 
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
@@ -1206,7 +1231,7 @@ extern const char*MSG_CONF_NAME_POR;
 extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
-typedef struct map_session_data TBL_PC;
+typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
 typedef struct mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
@@ -1220,7 +1245,7 @@ typedef struct s_elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-#include "../common/sql.hpp"
+#include <common/sql.hpp>
 
 extern int db_use_sqldbs;
 
@@ -1240,6 +1265,7 @@ extern char mob_skill2_table[32];
 extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
+extern char partybookings_table[32];
 extern char roulette_table[32];
 extern char guild_storage_log_table[32];
 

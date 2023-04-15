@@ -4,6 +4,8 @@
 #ifndef MALLOC_HPP
 #define MALLOC_HPP
 
+#include <config/core.hpp>
+
 #include "cbasetypes.hpp"
 
 #define ALC_MARK __FILE__, __LINE__, __func__
@@ -39,6 +41,12 @@
 #	define aStrdup(p)		_mstrdup(p,ALC_MARK)
 #	define aFree(p)			_mfree(p,ALC_MARK)
 
+#	define aMalloc2(n,file,line,func)		_mmalloc(n,file,line,func)
+#	define aCalloc2(m,n,file,line,func)		_mcalloc(m,n,file,line,func)
+#	define aRealloc2(p,n,file,line,func)	_mrealloc(p,n,file,line,func)
+#	define aStrdup2(p,file,line,func)		_mstrdup(p,file,line,func)
+#	define aFree2(p,file,line,func)			_mfree(p,file,line,func)
+
 	void* _mmalloc	(size_t size, const char *file, int line, const char *func);
 	void* _mcalloc	(size_t num, size_t size, const char *file, int line, const char *func);
 	void* _mrealloc	(void *p, size_t size, const char *file, int line, const char *func);
@@ -52,6 +60,12 @@
 #	define aRealloc(p,n)	aRealloc_(p,n,ALC_MARK)
 #	define aStrdup(p)		aStrdup_(p,ALC_MARK)
 #	define aFree(p)			aFree_(p,ALC_MARK)
+
+#	define aMalloc2(n,file,line,func)		aMalloc_((n),file,line,func)
+#	define aCalloc2(m,n,file,line,func)		aCalloc_((m),(n),file,line,func)
+#	define aRealloc2(p,n,file,line,func)	aRealloc_(p,n,file,line,func)
+#	define aStrdup2(p,file,line,func)		aStrdup_(p,file,line,func)
+#	define aFree2(p,file,line,func)			aFree_(p,file,line,func)
 
 	void* aMalloc_	(size_t size, const char *file, int line, const char *func);
 	void* aCalloc_	(size_t num, size_t size, const char *file, int line, const char *func);

@@ -35,7 +35,7 @@ project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
-set(CMAKE_CXX_STANDARD 11) # C++11...
+set(CMAKE_CXX_STANDARD 14) # C++14...
 set(CMAKE_CXX_STANDARD_REQUIRED ON) #...is required...
 #set(CMAKE_CXX_EXTENSIONS OFF) #...without compiler extensions like gnu++11
 
@@ -226,6 +226,10 @@ endif()
 message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
 endif()
 
+#
+# enable web server?
+#
+option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 
 #
 # Test for big endian

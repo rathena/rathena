@@ -82,6 +82,7 @@ CREATE TABLE `item_db2_re` (
   `equip_level_min` tinyint(3) unsigned DEFAULT NULL,
   `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
   `refineable` tinyint(1) unsigned DEFAULT NULL,
+  `gradable` tinyint(1) unsigned DEFAULT NULL,
   `view` smallint(5) unsigned DEFAULT NULL,
   `alias_name` varchar(50) DEFAULT NULL,
   `flag_buyingstore` tinyint(1) unsigned DEFAULT NULL,

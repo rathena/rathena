@@ -883,7 +883,7 @@ OnTimer28500:
 	mes "Hey there, are you alive?";
 	mes "I did not expect to meet someone who is still alive.";
 	next;
-	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
+	.@item_name_req$ = getitemname(6672);// Gray_Shard
 	mes "[King]";
 	mes "Do you possibly have the ^006400" + .@item_name_req$ + "^000000?";
 	mes "Can you give it to me?";

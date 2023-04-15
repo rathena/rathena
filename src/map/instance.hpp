@@ -10,9 +10,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp>
 
 #include "script.hpp"
 
@@ -81,6 +81,8 @@ struct s_instance_data {
 		keep_timer(INVALID_TIMER),
 		idle_limit(0),
 		idle_timer(INVALID_TIMER),
+		nonpc(false),
+		nomapflag(false),
 		regs(),
 		map() { }
 };
@@ -94,6 +96,8 @@ struct s_instance_db {
 	bool nonpc;
 	bool nomapflag;
 	bool destroyable; ///< Destroyable flag
+	bool infinite_limit; ///< Infinite limit flag
+	bool infinite_timeout; ///< Infinite timeout limit flag
 	struct point enter; ///< Instance entry point
 	std::vector<int16> maplist; ///< Maps in instance
 };
@@ -113,13 +117,13 @@ extern InstanceDatabase instance_db;
 extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
 
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
-void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target);
+void instance_getsd(int instance_id, map_session_data *&sd, enum send_target *target);
 
 int instance_create(int owner_id, const char *name, e_instance_mode mode);
 bool instance_destroy(int instance_id);
 void instance_destroy_command(map_session_data *sd);
-e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, const char *name, short x, short y);
-bool instance_reqinfo(struct map_session_data *sd, int instance_id);
+e_instance_enter instance_enter(map_session_data *sd, int instance_id, const char *name, short x, short y);
+bool instance_reqinfo(map_session_data *sd, int instance_id);
 bool instance_addusers(int instance_id);
 bool instance_delusers(int instance_id);
 void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]);

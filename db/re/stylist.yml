@@ -304,10 +304,10 @@ Body:
       - Index: 1
         Value: 0
         CostsHuman:
-            RequiredItem: Clothing_Dye_Coupon_II
+            RequiredItem: Clothing_Dye_Coupon2
             RequiredItemBox: CCloth_Dye_Coupon2_Box
         CostsDoram:
-            RequiredItem: Clothing_Dye_Coupon_II
+            RequiredItem: Clothing_Dye_Coupon2
             RequiredItemBox: CCloth_Dye_Coupon2_Box
       - Index: 2
         Value: 2
