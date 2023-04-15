@@ -40059,12 +40059,12 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 120000
+    Duration1: 150000
+    Cooldown: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 250
-      ApCost: 100
+      ApCost: 125
       Weapon:
         Bow: true
         Musical: true
@@ -40103,25 +40103,25 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
-    GiveAp: 5
+    GiveAp: 3
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 500
-    Cooldown: 3000
+    Cooldown: 500
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 215
+          Amount: 105
         - Level: 2
-          Amount: 230
+          Amount: 110
         - Level: 3
-          Amount: 245
+          Amount: 115
         - Level: 4
-          Amount: 260
+          Amount: 120
         - Level: 5
-          Amount: 275
+          Amount: 125
       Weapon:
         Bow: true
         Musical: true
@@ -40184,15 +40184,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 66
         - Level: 2
-          Amount: 92
+          Amount: 72
         - Level: 3
-          Amount: 104
+          Amount: 78
         - Level: 4
-          Amount: 116
+          Amount: 84
         - Level: 5
-          Amount: 128
+          Amount: 90
       Weapon:
         Bow: true
         Musical: true
@@ -40202,7 +40202,7 @@ Body:
       AmmoAmount: 1
   - Id: 5356
     Name: TR_METALIC_FURY
-    Description: Metalic Fury
+    Description: Metallic Fury
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
@@ -40225,17 +40225,17 @@ Body:
         Area: 3
     GiveAp:
       - Level: 1
-        Amount: 4
+        Amount: 2
       - Level: 2
-        Amount: 4
+        Amount: 2
       - Level: 3
-        Amount: 4
+        Amount: 2
       - Level: 4
-        Amount: 5
+        Amount: 3
       - Level: 5
-        Amount: 5
+        Amount: 3
     CastCancel: true
-    Cooldown: 1000
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
@@ -40268,17 +40268,27 @@ Body:
     Element: Weapon
     GiveAp:
       - Level: 1
-        Amount: 2
+        Amount: 1
       - Level: 2
-        Amount: 2
+        Amount: 1
       - Level: 3
-        Amount: 2
+        Amount: 1
       - Level: 4
-        Amount: 3
+        Amount: 2
       - Level: 5
-        Amount: 3
+        Amount: 2
     CastCancel: true
-    CastTime: 1000
+    CastTime:
+      - Level: 1
+        Time: 2000
+      - Level: 2
+        Time: 1750
+      - Level: 3
+        Time: 1500
+      - Level: 4
+        Time: 1250
+      - Level: 5
+        Time: 1000
     Duration1:
       - Level: 1
         Time: 10000
@@ -40291,7 +40301,17 @@ Body:
       - Level: 5
         Time: 20000
     Cooldown: 1000
-    FixedCastTime: 1000
+    FixedCastTime:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 750
+      - Level: 3
+        Time: 500
+      - Level: 4
+        Time: 250
+      - Level: 5
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
