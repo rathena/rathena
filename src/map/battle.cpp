@@ -4527,7 +4527,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
 					skillratio += skill_lv * 14 * pc_checkskill( sd, IG_SHIELD_MASTERY );
 				}
-            }
+			}
 
 			RE_LVL_DMOD(100);
 #else

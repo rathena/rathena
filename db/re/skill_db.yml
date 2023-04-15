@@ -37003,6 +37003,7 @@ Body:
     Element: Holy
     GiveAp: 5
     CastCancel: true
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 4500
     Cooldown: 5000
