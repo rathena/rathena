@@ -2572,7 +2572,6 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		// Renewal changes to ranged physical damage
 #endif
 		case SR_RAMPAGEBLASTER:
-		case DK_HACKANDSLASHER_ATK: // 2 cell cast range.
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2590,6 +2589,18 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 
 			if (sd && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
 				return BF_LONG;
+
+			break;
+		}
+		case DK_HACKANDSLASHER:
+		case DK_HACKANDSLASHER_ATK: {
+			map_session_data* sd = BL_CAST( BL_PC, src );
+
+			if( sd != nullptr && ( sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR ) ){
+				return BF_LONG;
+			}
+
+			break;
 		}
 	}
 
@@ -3845,7 +3856,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				if(status_get_lv(src) > 100)
 					damagevalue = damagevalue * status_get_lv(src) / 100;
 				if(sd)
-					damagevalue = damagevalue * (90 + 10 * pc_checkskill(sd, RK_DRAGONTRAINING)) / 100;
+					damagevalue = damagevalue * ( 90 + 10 * pc_checkskill( sd, RK_DRAGONTRAINING ) + ( pc_checkskill( sd, DK_DRAGONIC_AURA ) >= 1 ? ( sstatus->pow / 4 + sstatus->patk / 2 ) : 0 ) ) / 100;
 				if (sc && sc->getSCE(SC_DRAGONIC_AURA))// Need official damage increase. [Rytech]
 					damagevalue += damagevalue * 50 / 100;
 				ATK_ADD(wd->damage, wd->damage2, damagevalue);
@@ -4132,8 +4143,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 2 * sc->getSCE(SC_TRUESIGHT)->val1;
 		if (sc->getSCE(SC_CONCENTRATION) && (skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER && skill_id != NPC_DRAGONBREATH))
 			skillratio += sc->getSCE(SC_CONCENTRATION)->val2;
-		if (sc && sc->getSCE(SC_VIGOR))// Lacking info on how damage is increased. Guessing for now. [Rytech]
-			skillratio += skillratio * 50 / 100;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
@@ -4680,13 +4689,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 600 + 200 * skill_lv;
 			if (sd)
 				skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
-			RE_LVL_DMOD(100);
 			if (sc) {
+				if( sc->getSCE( SC_DRAGONIC_AURA ) ){
+					skillratio += sc->getSCE( SC_DRAGONIC_AURA )->val1 * 160;
+				}
+
 				if (sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
 					skillratio *= 2;
-				if (sc->getSCE(SC_DRAGONIC_AURA))// Need official damage increase. [Rytech]
-					skillratio += skillratio * 50 / 100;
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case RK_WINDCUTTER:
 			if (sd) {
@@ -5308,7 +5319,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
 		case DK_SERVANTWEAPON_ATK:
-			skillratio += 50 + 50 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 200 + 50 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_SERVANT_W_PHANTOM:
@@ -5320,18 +5331,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case DK_HACKANDSLASHER:
-			skillratio += -100 + 500 + 250 * skill_lv;
-			if (sd && sd->status.weapon == W_2HSWORD) {
-				skillratio += 5 * sstatus->pow;
-				RE_LVL_DMOD(100); // Only takes place with 2h Sword
-			}
-			break;
 		case DK_HACKANDSLASHER_ATK:
-			skillratio += 600 + 120 * skill_lv;
-			if (sd && sd->status.weapon == W_2HSPEAR) {
-				skillratio += 5 * sstatus->pow;
-				RE_LVL_DMOD(100); // Only takes place with 2h Spear
-			}
+			skillratio += -100 + 500 + 250 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
 			break;
 		case DK_DRAGONIC_AURA:
 			skillratio += 950 * skill_lv + 10 * sstatus->pow;
@@ -5339,8 +5342,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 450 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case DK_MADNESS_CRUSHER:// How does weight affect the damage? [Rytech]
-			skillratio += -100 + 450 * skill_lv + 5 * sstatus->pow;
+		case DK_MADNESS_CRUSHER:
+			skillratio += -100 + 600 * skill_lv + 5 * sstatus->pow;
+			if( sd != nullptr ){
+				int16 index = sd->equip_index[EQI_HAND_R];
+
+				if( index >= 0 && sd->inventory_data[index] != nullptr ){
+					skillratio += sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->weapon_level;
+				}
+			}
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
 				skillratio *= 2;
@@ -9098,6 +9108,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (sc->getSCE(SC_GIANTGROWTH) && (wd.flag&BF_SHORT) && rnd()%100 < sc->getSCE(SC_GIANTGROWTH)->val2 && !is_infinite_defense(target, wd.flag) && !vellum_damage)
 			wd.damage += wd.damage * 150 / 100; // 2.5 times damage
 
+		if( sc->getSCE( SC_VIGOR ) && ( wd.flag&BF_SHORT ) && !is_infinite_defense( target, wd.flag ) && !vellum_damage ){
+			int mod = 200;
+
+			wd.damage += wd.damage * mod / 100;
+		}
+
 		if( sd && battle_config.arrow_decrement && sc->getSCE(SC_FEARBREEZE) && sc->getSCE(SC_FEARBREEZE)->val4 > 0) {
 			short idx = sd->equip_index[EQI_AMMO];
 			if (idx >= 0 && sd->inventory.u.items_inventory[idx].amount >= sc->getSCE(SC_FEARBREEZE)->val4) {
@@ -9305,9 +9321,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 
 		if( sc ){
-			// It has a success chance of triggering even tho the description says nothing about it.
-			// TODO: Need to find out what the official success chance is. [Rytech]
-			if( sc->getSCE(SC_SERVANTWEAPON) && sd->servantball > 0 && rnd() % 100 < 20 ){
+			if( sc->getSCE( SC_SERVANTWEAPON ) && sd->servantball > 0 && rnd() % 100 < ( 3 * sc->getSCE( SC_SERVANTWEAPON )->val1 ) ){
 				uint16 skill_id = DK_SERVANTWEAPON_ATK;
 				uint16 skill_lv = sc->getSCE(SC_SERVANTWEAPON)->val1;
 

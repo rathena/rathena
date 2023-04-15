@@ -34872,6 +34872,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      Splash: true
       Critical: true
     Range: 1
     Hit: Single
@@ -34879,6 +34880,7 @@ Body:
     Element: Weapon
     Requires:
       SpCost: 1
+    SplashArea: 4
   - Id: 5203
     Name: DK_SERVANT_W_SIGN
     Description: Servant Weapon Sign
@@ -35029,12 +35031,36 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 2
     Hit: Single
     HitCount: 1
     Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
     CastCancel: true
     AfterCastActDelay: 500
+    Cooldown: 300
     Requires:
       SpCost:
         - Level: 1
@@ -35080,19 +35106,19 @@ Body:
       - Level: 3
         Area: 1
       - Level: 4
-        Area: 1
+        Area: 2
       - Level: 5
         Area: 2
       - Level: 6
         Area: 2
       - Level: 7
-        Area: 2
+        Area: 3
       - Level: 8
-        Area: 2
+        Area: 3
       - Level: 9
         Area: 3
       - Level: 10
-        Area: 3
+        Area: 4
     Requires:
       SpCost: 1
   - Id: 5210
@@ -35139,7 +35165,7 @@ Body:
     GiveAp: 2
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 2000
+    Cooldown: 350
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -35217,19 +35243,19 @@ Body:
     GiveAp: 1
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 1000
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
-          Amount: 30
-        - Level: 2
-          Amount: 35
-        - Level: 3
           Amount: 40
-        - Level: 4
+        - Level: 2
           Amount: 45
-        - Level: 5
+        - Level: 3
           Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
       Weapon:
         2hSword: true
         2hAxe: true
