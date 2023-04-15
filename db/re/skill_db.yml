@@ -36299,7 +36299,7 @@ Body:
         Time: 6000
       - Level: 5
         Time: 7000
-    Cooldown: 5000
+    Cooldown: 3000
     Requires:
       SpCost:
         - Level: 1
@@ -36362,6 +36362,7 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -36377,12 +36378,13 @@ Body:
     Status: Massive_F_Blaster
   - Id: 5244
     Name: IQ_EXPOSION_BLASTER
-    Description: Exposion Blaster
+    Description: Explosion Blaster
     MaxLevel: 5
     Type: Weapon
     TargetType: Self
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -36398,10 +36400,20 @@ Body:
         Area: 3
       - Level: 5
         Area: 4
-    GiveAp: 5
+    GiveAp: 4
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 5000
+    AfterCastActDelay:
+      - Level: 1
+        Time: 500
+      - Level: 2
+        Time: 400
+      - Level: 3
+        Time: 300
+      - Level: 4
+        Time: 200
+      - Level: 5
+        Time: 0
+    Cooldown: 4000
     Requires:
       SpCost:
         - Level: 1
@@ -36518,7 +36530,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 60
-      ApCost: 100
+      ApCost: 50
       Status:
         First_Faith_Power: true
     Status: Second_Judge
@@ -36650,9 +36662,10 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: -2
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -36727,7 +36740,7 @@ Body:
       Splash: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: -3
+    HitCount: 5
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -36756,7 +36769,7 @@ Body:
           Amount: 85
   - Id: 5254
     Name: IQ_THIRD_EXOR_FLAME
-    Description: Third Exor Flame
+    Description: Third Exorcism Flame
     MaxLevel: 5
     TargetType: Self
     DamageFlags:
@@ -36781,7 +36794,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 60
-      ApCost: 150
+      ApCost: 100
       Status:
         Second_Judge: true
     Status: Third_Exor_Flame
