@@ -6889,15 +6889,8 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 
 		channel_pcquit(sd,4); //quit map chan
 
-		// Remove Cloaked NPC if changing to another map
-		for (auto it = sd->cloaked_npc.begin(); it != sd->cloaked_npc.end(); ++it) {
-			block_list *npc_bl = map_id2bl(*it);
-
-			if (npc_bl && npc_bl->m != m) {
-				sd->cloaked_npc.erase(it);
-				break;
-			}
-		}
+		// Remove Cloaked NPCs on map change
+		sd->cloaked_npc.clear();
 	}
 
 	if( m < 0 )
