@@ -617,7 +617,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	}
 	if (checkquest(7879,HUNTING) == 2) {
 		mes "[Sally]";
-		mes "We were able to collect enough data for Poisonous and Toxious!";
+		mes "We were able to collect enough data for " + getmonsterinfo("POISONOUS", MOB_NAME) + " and " + getmonsterinfo("TOXIOUS", MOB_NAME) + "!";
 		erasequest 7879;
 		setquest 7880;
 		getexp 27512240,19258560;
@@ -625,7 +625,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	}
 	if (checkquest(7881,HUNTING) == 2) {
 		mes "[Sally]";
-		mes "I have collected enough data for Green and Red Minerals!";
+		mes "I have collected enough data for " + getmonsterinfo("MINERAL_G", MOB_NAME) + " and " + getmonsterinfo("MINERAL_R", MOB_NAME) + "!";
 		erasequest 7881;
 		setquest 7882;
 		getexp 27836640,19485600;
@@ -633,7 +633,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	}
 	if (checkquest(7883,HUNTING) == 2) {
 		mes "[Sally]";
-		mes "The data for White and Purple Minerals are as follows. It was very helpful.";
+		mes "The data for " + getmonsterinfo("MINERAL_W", MOB_NAME) + " and " + getmonsterinfo("MINERAL_P", MOB_NAME) + " are as follows. It was very helpful.";
 		erasequest 7883;
 		setquest 7884;
 		getexp 27838400,19486880;
@@ -641,7 +641,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	}
 	if (checkquest(7885,HUNTING) == 2) {
 		mes "[Sally]";
-		mes "Abyssman's data is always amazing.";
+		mes "" + getmonsterinfo("ABYSSMAN", MOB_NAME) + "'s data is always amazing.";
 		erasequest 7885;
 		setquest 7886;
 		getexp 6938800,4857160;
@@ -649,7 +649,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	}
 	if (checkquest(7887,HUNTING) == 2) {
 		mes "[Sally]";
-		mes "You have successfully obtained Jewelry Ant's and White Porcellio's data!";
+		mes "You have successfully obtained " + getmonsterinfo("JEWELIANT", MOB_NAME) + " and " + getmonsterinfo("PORCELLIO_W", MOB_NAME) + " data!";
 		erasequest 7887;
 		setquest 7888;
 		getexp 13854240,9697960;
@@ -663,7 +663,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	mes "Just like you!";
 	mes "Would you like to help protect the poor trainee researcher's job?";
 	next;
-	switch( select( "New Toxic Gas Research", "Special Mineral Research 1", "Special Mineral Research 2", "Abyssman Research", "Mine Bug Research", "Why are you doing this?" ) ) {
+	switch( select( "New Poison Research", "Special Mineral Research 1", "Special Mineral Research 2", "Abyssman Research", "Mineworm Research", "Why are you doing this?" ) ) {
 	case 1:
 		switch( checkquest(7880,PLAYTIME) ) {
 		case -1:
@@ -685,7 +685,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 			mes "It is difficult to deal with the monsters occupying the mines with the manpower here, so we have to deal with both.";
 			next;
 			mes "[Sally]";
-			mes "I'm collecting data while the adventurer is fighting ^4d4dffPoisonous and Toxious^000000.";
+			mes "I'm collecting data while the adventurer is fighting ^4d4dff" + getmonsterinfo("POISONOUS", MOB_NAME) + " and " + getmonsterinfo("TOXIOUS", MOB_NAME) + "^000000.";
 			mes "Isn't it a good deal?";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
@@ -695,13 +695,13 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 				close;
 			}
 			mes "[Sally]";
-			mes "Then please take care of the ^4d4dffPoisonous and Toxious^000000 that appear on the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
+			mes "Then please take care of the ^4d4dff" + getmonsterinfo("POISONOUS", MOB_NAME) + " and " + getmonsterinfo("TOXIOUS", MOB_NAME) + "^000000 that appear on the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
 			setquest 7879;
 			close;
 		case 0:
 		case 1:
 			mes "[Sally]";
-			mes "Poisonous and Toxious are here on the 3rd floor of the Einbech Mine Dungeon.";
+			mes "" + getmonsterinfo("POISONOUS", MOB_NAME) + " and " + getmonsterinfo("TOXIOUS", MOB_NAME) + " are here on the 3rd floor of the Einbech Mine Dungeon.";
 			mes "Probably, it's hard to deal with ordinary people like me, so I'll have to hide and watch what you kill and collect data.";
 			close;
 		case 2:
@@ -725,7 +725,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		switch( checkquest(7881,HUNTING) ) {
 		case -1:
 			mes "[Sally]";
-			mes "There are several types of Minerals. The Minerals we want to investigate this time are ^4d4dffGreen Mineral and Red Mineral^000000.";
+			mes "There are several types of Minerals. The Minerals we want to investigate this time are ^4d4dff" + getmonsterinfo("MINERAL_G", MOB_NAME) + " and " + getmonsterinfo("MINERAL_R", MOB_NAME) + "^000000.";
 			mes "Collect data necessary for research while controlling the number of individuals!";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
@@ -735,13 +735,13 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 				close;
 			}
 			mes "[Sally]";
-			mes "Then please take care of the ^4d4dffGreen and Red Minerals^000000 that appear on the ^4d4dff3rd floor of the Einbech mine dungeon^000000!";
+			mes "Then please take care of the ^4d4dff" + getmonsterinfo("MINERAL_G", MOB_NAME) + " and " + getmonsterinfo("MINERAL_R", MOB_NAME) + "^000000 that appear on the ^4d4dff3rd floor of the Einbech mine dungeon^000000!";
 			setquest 7881;
 			close;
 		case 0:
 		case 1:
 			mes "[Sally]";
-			mes "Green Minerals and Red Minerals are found here on the 3rd floor of the Einbech Mine Dungeon.";
+			mes "" + getmonsterinfo("MINERAL_G", MOB_NAME) + " and " + getmonsterinfo("MINERAL_R", MOB_NAME) + " are found here on the 3rd floor of the Einbech Mine Dungeon.";
 			mes "Be careful, they are dangerous.";
 			close;
 		case 2:
@@ -765,7 +765,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		switch( checkquest(7883,HUNTING) ) {
 		case -1:
 			mes "[Sally]";
-			mes "There are several types of Minerals. The Minerals we want to investigate this time are ^4d4dffWhite Minerals and Purple Minerals^000000.";
+			mes "There are several types of Minerals. The Minerals we want to investigate this time are ^4d4dff" + getmonsterinfo("MINERAL_W", MOB_NAME) + " and " + getmonsterinfo("MINERAL_P", MOB_NAME) + "s^000000.";
 			mes "Collect data necessary for research while controlling the number of individuals!";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
@@ -775,13 +775,13 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 				close;
 			}
 			mes "[Sally]";
-			mes "Then please take care of the ^4d4dffWhite Mineral and Purple Mineral^000000 that appear on the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
+			mes "Then please take care of the ^4d4dff" + getmonsterinfo("MINERAL_W", MOB_NAME) + " and " + getmonsterinfo("MINERAL_P", MOB_NAME) + "^000000 that appear on the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
 			setquest 7883;
 			close;
 		case 0:
 		case 1:
 			mes "[Sally]";
-			mes "White minerals and Purple minerals are found here on the 3rd floor of the Einbech Mine Dungeon.";
+			mes "" + getmonsterinfo("MINERAL_W", MOB_NAME) + " and " + getmonsterinfo("MINERAL_P", MOB_NAME) + " are found here on the 3rd floor of the Einbech Mine Dungeon.";
 			mes "Be careful, they are dangerous.";
 			close;
 		case 2:
@@ -806,8 +806,8 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		case -1:
 			mes "[Sally]";
 			mes "If you look into an abyss, it is said that the abyss is eaten, not meowed.";
-			mes "I think the popular name Abyssman is also like that.";
-			mes "So we need data from ^4d4dffAbyssman^000000.";
+			mes "I think the popular name " + getmonsterinfo("ABYSSMAN", MOB_NAME) + " is also like that.";
+			mes "So we need data from ^4d4dff" + getmonsterinfo("ABYSSMAN", MOB_NAME) + "^000000.";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
 				mes "[Sally]";
@@ -816,13 +816,13 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 				close;
 			}
 			mes "[Sally]";
-			mes "Then, please take care of the ^4d4dffAbyssmen^000000 who appear in the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
+			mes "Then, please take care of the ^4d4dff" + getmonsterinfo("ABYSSMAN", MOB_NAME) + "^000000 who appear in the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
 			setquest 7885;
 			close;
 		case 0:
 		case 1:
 			mes "[Sally]";
-			mes "The Abyssman are here on the 3rd floor of the Einbech Mine Dungeon.";
+			mes "The " + getmonsterinfo("ABYSSMAN", MOB_NAME) + " are here on the 3rd floor of the Einbech Mine Dungeon.";
 			mes "Be careful, they are dangerous.";
 			close;
 		case 2:
@@ -847,7 +847,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		case -1:
 			mes "[Sally]";
 			mes "Specialized insects live in dark places like dungeons.";
-			mes "The data to be collected this time are ^4d4dffWhite Porcellio and Jewelry Ant^000000, also known as mineworms.";
+			mes "The data to be collected this time are ^4d4dff" + getmonsterinfo("PORCELLIO_W", MOB_NAME) + " and " + getmonsterinfo("JEWELIANT", MOB_NAME) + "^000000, also known as mineworms.";
 			mes "Is it very different from the normal Porcellio?";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
@@ -857,13 +857,13 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 				close;
 			}
 			mes "[Sally]";
-			mes "Then, please take care of the ^4d4dffWhite Porcellio and Jewelry Ant^000000 who appear in the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
+			mes "Then, please take care of the ^4d4dff" + getmonsterinfo("PORCELLIO_W", MOB_NAME) + " and " + getmonsterinfo("JEWELIANT", MOB_NAME) + "^000000 who appear in the ^4d4dff3rd floor of the Einbech Mine Dungeon^000000!";
 			setquest 7887;
 			close;
 		case 0:
 		case 1:
 			mes "[Sally]";
-			mes "White Porcellio and Jewelry Ant are here on the 3rd floor of the Einbech Mine Dungeon.";
+			mes "" + getmonsterinfo("PORCELLIO_W", MOB_NAME) + " and " + getmonsterinfo("JEWELIANT", MOB_NAME) + " are here on the 3rd floor of the Einbech Mine Dungeon.";
 			mes "Be careful, they are dangerous.";
 			close;
 		case 2:
@@ -917,85 +917,4 @@ einbech,154,244,5	script	Need help#exsk_	4_F_JOB_BLACKSMITH,{
 	mes "[Atri]";
 	mes "Of course, I'd rather learn the sword faster! It's only ten years since I've sharpened a pickaxe, so I'll learn it quickly.";
 	close;
-}
-
-einbech,149,257,4	script	Site manager Elmen#extdq0	4_TOWER_16,{
-	if (checkweight(25814,100) == 0 || checkweight(1201,1) == 0 || (MaxWeight - Weight) < 10000) {
-		mes "- You cannot proceed because you have too many items. -";
-		close;
-	}
-	mes "[Elmen]";
-	mes "Hello. Adventurer.";
-	mes "If you're here to purchase Dynite mining equipment or refine ore into Dynite, you've come to the right place.";
-	next;
-	switch( select( "Dynite Refinement", "Dynite Shop", "Dynite Equipment Exchange" ) ) {
-	case 1:
-		npctalk "Elmen: You can refine up to 100 Dynite at a time. The machine is small.", "", bc_self;
-		mes "[Elmen]";
-		mes "<ITEM>[Dynite]<INFO>25814</INFO></ITEM> Refined Ore.";
-		mes "<ITEM>[Radium]<INFO>25809</INFO></ITEM> ^777777(currently " + countitem(25809) + ")^000000";
-		mes "<ITEM>[Lindium]<INFO>25810</INFO></ITEM> ^777777(currently " + countitem(25810) + ")^000000";
-		mes "<ITEM>[Odium]<INFO>25811</INFO></ITEM> ^777777(currently " + countitem(25811) + ")^000000";
-		mes "<ITEM>[Ferdium]<INFO>25812</INFO></ITEM> ^777777(currently " + countitem(25812) + ")^000000";
-		mes "<ITEM>[Fidium]<INFO>25813</INFO></ITEM> ^777777(currently " + countitem(25813) + ")^000000";
-		mes "You need one each of the five types of ore.";
-		next;
-		input .@val;
-		if (.@val > 100) {
-			mes "[Elmen]";
-			mes "I'm sorry. Adventurer.";
-			mes "Dynite Refinement can only be refined up to 100 at a time? The machine is small, so there is no help. Please understand.";
-			close;
-		}
-		if (.@val == 0) {
-			mes "[Elmen]";
-			mes "Cancel?";
-			mes "If you need refinement of the Dynite, please find it anytime. There is no one who can do it without me.";
-			close;
-		}
-		if (countitem(25809) < .@val || countitem(25810) < .@val || countitem(25811) < .@val || countitem(25812) < .@val || countitem(25813) < .@val) {
-			mes "[Elmen]";
-			mes "Hey! This makes it difficult for each other, don't you run out of materials needed for refining? The materials!";
-			close;
-		}
-		specialeffect EF_REPAIRWEAPON;
-		progressbar_npc "FFFF00",1;
-		delitem 25809,.@val;	// Ein_REDIUM
-		delitem 25810,.@val;	// Ein_RINDIUM
-		delitem 25811,.@val;	// Ein_ODIUM
-		delitem 25812,.@val;	// Ein_PURDIUM
-		delitem 25813,.@val;	// Ein_WHIDIUM
-		getitem 25814,.@val;	// Ein_DYNITE
-		mes "[Elmen]";
-		mes "" + .@val + " Dynite have been refined. It's perfect today!";
-		close;
-	case 2:
-		mes "[Elmen]";
-		mes "There are various accessories and modification permits. Look carefully at what you want before buying.";
-		close2;
-		callshop "barter_ein_dun03";
-		end;
-	case 3:
-		mes "[Elmen]";
-		mes "I can exchange the equipment with the Dynite, but it's already in a tightly sealed box.";
-		mes "Give me 50 ^4d4dffDynites^000000 and I will open a ^4d4dffa weapon box^000000 for you.";
-		next;
-		mes "[Elmen]";
-		mes "I don't know what will come out, but the quality is good. Would you like to open it?";
-		next;
-		if (select( "Close your eyes and exchange.", "Do not exchange." ) == 2) {
-			mes "[Elmen]";
-			mes "Kee, this is a waste, it was a good deal.";
-			close;
-		}
-		if (countitem(25814) < 50) {
-			mes "[Elmen]";
-			mes "You don't have enough Dynite friends.";
-			mes "I don't know what's going to come out, so it's hard to go anywhere and get this kind of equipment at this price.";
-			close;
-		}
-		// unknown text
-		getgroupitem(IG_Ein_1HITEMbox);
-		end;
-	}
 }

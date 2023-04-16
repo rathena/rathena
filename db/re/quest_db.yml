@@ -5152,7 +5152,7 @@ Body:
     Title: New Poison Research - Standby
     TimeLimit: 4h
   - Id: 7881
-    Title: Unusual Mineral Research 1
+    Title: Special Mineral Research 1
     Targets:
       - Mob: MINERAL_G
         Count: 20
@@ -5162,7 +5162,7 @@ Body:
     Title: Special Mineral Research 1 - Standby
     TimeLimit: 4h
   - Id: 7883
-    Title: Special Mineral Research2
+    Title: Special Mineral Research 2
     Targets:
       - Mob: MINERAL_W
         Count: 20
@@ -5172,12 +5172,12 @@ Body:
     Title: Special Mineral Research 2 - Standby
     TimeLimit: 4h
   - Id: 7885
-    Title: Research Abyssman
+    Title: Abyssman Research
     Targets:
       - Mob: ABYSSMAN
         Count: 10
   - Id: 7886
-    Title: Research Abyssman - Standby
+    Title: Abyssman Research - Waiting
     TimeLimit: 4h
   - Id: 7887
     Title: Mineworm Research

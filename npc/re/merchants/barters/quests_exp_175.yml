@@ -45,7 +45,6 @@ Header:
   Type: BARTER_DB
   Version: 1
 
-# ein_dun03 shop
 Body:
   - Name: barter_ein_dun03
     Items:
