@@ -146,9 +146,11 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 		memset(WFIFOP(fd, header+n*size+32), 0, 128); // Unknown
 #endif
 #ifdef DEBUG
-		ShowDebug("Sending the client to char-server %s with ip %d.%d.%d.%d and port %hu\n",
-				  ch_server[i].name, CONVIP((subnet_char_ip) ? subnet_char_ip : ch_server[i].ip),
-				  ch_server[i].port);
+		ShowDebug(
+			"Sending the client (%d %d.%d.%d.%d) to char-server %s with ip %d.%d.%d.%d and port "
+			"%hu\n",
+			sd->account_id, CONVIP(ip), ch_server[i].name,
+			CONVIP((subnet_char_ip) ? subnet_char_ip : ch_server[i].ip), ch_server[i].port);
 #endif
 		n++;
 	}
