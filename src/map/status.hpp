@@ -165,8 +165,7 @@ struct s_enchantgradeoption{
 
 struct s_enchantgradelevel{
 	e_enchantgrade grade;
-	uint16 refine;
-	uint16 chance;
+	uint16 chances[MAX_REFINE + 1];
 	uint16 bonus;
 	bool announceSuccess;
 	bool announceFail;
@@ -186,7 +185,7 @@ struct s_enchantgrade{
 
 class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{
 public:
-	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 2, 1 ){
+	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 3 ){
 
 	}
 
@@ -1262,6 +1261,24 @@ enum sc_type : int16 {
 	SC_TOXIN_OF_MANDARA,
 	SC_GOLDENE_TONE,
 	SC_TEMPERING,
+
+	SC_GRADUAL_GRAVITY,
+	SC_ALL_STAT_DOWN,
+	SC_KILLING_AURA,
+	SC_DAMAGE_HEAL,
+	SC_IMMUNE_PROPERTY_NOTHING,
+	SC_IMMUNE_PROPERTY_WATER,
+	SC_IMMUNE_PROPERTY_GROUND,
+	SC_IMMUNE_PROPERTY_FIRE,
+	SC_IMMUNE_PROPERTY_WIND,
+	SC_IMMUNE_PROPERTY_POISON,
+	SC_IMMUNE_PROPERTY_SAINT,
+	SC_IMMUNE_PROPERTY_DARKNESS,
+	SC_IMMUNE_PROPERTY_TELEKINESIS,
+	SC_IMMUNE_PROPERTY_UNDEAD,
+
+	SC_RELIEVE_ON,
+	SC_RELIEVE_OFF,
 
 	SC_RUSH_QUAKE1,
 	SC_RUSH_QUAKE2,

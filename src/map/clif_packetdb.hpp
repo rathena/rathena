@@ -1682,16 +1682,6 @@
 	packet( HEADER_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, sizeof( struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER ) );
 #endif
 
-// 2010-06-01aRagexeRE
-#if PACKETVER >= 20100601
-	//packet(0x0825,-1);
-	//packet(0x0826,4);
-	parseable_packet(0x0835,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	packet( HEADER_ZC_SEARCH_STORE_INFO_ACK, -1 );
-	packet(0x0837,3);
-	//packet(0x0838,3);
-#endif
-
 // 2010-06-08aRagexeRE
 #if PACKETVER >= 20100608
 	parseable_packet(0x0838,2,clif_parse_SearchStoreInfoNextPage,0);
@@ -1721,6 +1711,13 @@
 // 2010-07-01aRagexeRE
 #if PACKETVER >= 20100701
 	packet(0x083A,5); // Search Stalls Feature
+#endif
+
+// 2010-07-06aRagexeRE
+#if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || defined(PACKETVER_ZERO)
+	parseable_packet(0x0835, -1, clif_parse_SearchStoreInfo, 2, 4, 5, 9, 13, 14, 15);
+	packet(HEADER_ZC_SEARCH_STORE_INFO_ACK, -1);
+	packet(0x0837, 3);
 #endif
 
 // 2010-07-13aRagexeRE
