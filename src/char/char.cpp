@@ -91,6 +91,7 @@ online_char_data::online_char_data( uint32 account_id ){
 	this->server = -1;
 	this->fd = -1;
 	this->waiting_disconnect = INVALID_TIMER;
+	this->pincode_success = false;
 }
 
 void char_set_charselect(uint32 account_id) {
