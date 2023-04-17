@@ -235,15 +235,15 @@ struct auth_node {
 std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& char_get_authdb();
 
 struct online_char_data {
-	uint32 account_id;
-	uint32 char_id;
-	int fd;
-	int waiting_disconnect;
-	short server; // -2: unknown server, -1: not connected, 0+: id of server
-	bool pincode_success;
+	uint32 account_id{-1};
+	uint32 char_id{-1};
+	int fd{-1};
+	int waiting_disconnect{INVALID_TIMER};
+	short server{-1}; // -2: unknown server, -1: not connected, 0+: id of server
+	bool pincode_success{false};
 
-public: 
-	online_char_data( uint32 account_id );
+public:
+	online_char_data(uint32 account_id) : account_id(account_id) {};
 };
 
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb();

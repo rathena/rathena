@@ -85,14 +85,6 @@ std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& char_get_authdb()
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb() { return online_char_db; }
 std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>>& char_get_chardb() { return char_db; }
 
-online_char_data::online_char_data( uint32 account_id ){
-	this->account_id = account_id;
-	this->char_id = -1;
-	this->server = -1;
-	this->fd = -1;
-	this->waiting_disconnect = INVALID_TIMER;
-}
-
 void char_set_charselect(uint32 account_id) {
 	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id );
 
