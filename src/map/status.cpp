@@ -14925,7 +14925,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 	//Clears buffs with specified flag and type
 	for (const auto &it : status_db) {
 		sc_type status = static_cast<sc_type>(it.first);
-		std::bitset<SCF_MAX> flag = it.second->flag;
+		const std::bitset<SCF_MAX>& flag = it.second->flag;
 		bool end = false;
 		if (!sc->getSCE(status))
 			continue;
