@@ -6978,7 +6978,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				}
 				break;
 			case NPC_DARKBREATH:
+#ifdef RENEWAL
+				ad.damage = tstatus->hp * (skill_lv <= 5 ? 100 / (2 * (6 - skill_lv)) : 50) / 100;
+#else
 				ad.damage = ( tstatus->hp * std::min( 10 * skill_lv, 50 ) ) / 100;
+#endif
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
