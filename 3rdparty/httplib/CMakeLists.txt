@@ -1,4 +1,4 @@
-add_library(httplib STATIC ${HTTPLIB_SOURCES})
+add_library(httplib STATIC)
 
 target_sources(httplib PRIVATE "httplib.cc")
 
