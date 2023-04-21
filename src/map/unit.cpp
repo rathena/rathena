@@ -3079,7 +3079,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		}
 		if (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL);
-		if (sc->getSCE(SC_PROVOKE) && sc->getSCE(SC_PROVOKE)->val4 == 1)
+		if (sc->getSCE(SC_PROVOKE) && sc->getSCE(SC_PROVOKE)->val4 == 1 && !sc->getSCE(SC_AUTOBERSERK))
 			status_change_end(bl, SC_PROVOKE); //End infinite provoke to prevent exploit
 	}
 
