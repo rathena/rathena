@@ -58,5 +58,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInsta
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 
+# For windows, we need to copy scripts over
+if (WIN32)
+    
+endif()
+
+add_subdirectory(db)
+add_subdirectory(conf)
 add_subdirectory(3rdparty)
 add_subdirectory(src)
