@@ -4056,7 +4056,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 	else if (flag&1) //Friendly Character, remove looting.
 		status->mode = static_cast<enum e_mode>(status->mode&(~MD_LOOTER));
 	else if (flag&2) // Clone follows the creator, add MD_NORANDOMWALK
-		status->mode = static_cast<enum e_mode>(status->mode&MD_NORANDOMWALK);
+		status->mode = static_cast<enum e_mode>(status->mode|MD_NORANDOMWALK);
 	status->hp = status->max_hp;
 	status->sp = status->max_sp;
 	memcpy(&db->vd, &sd->vd, sizeof(struct view_data));
