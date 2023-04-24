@@ -7297,7 +7297,7 @@ static void pc_checkallowskill(map_session_data *sd)
 				status_change_end(&sd->bl, status);
 		}
 		if (flag[SCF_REQUIRENOWEAPON]) { 
-			if (sd->sc.data[status] && sd->status.weapon)
+			if (sd->sc.getSCE(status) && sd->status.weapon)
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
 
