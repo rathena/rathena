@@ -19,4 +19,3 @@ function(copy_import_files SRC_DIR DST_DIR FILE_LIST)
         file(COPY ${SRC_DIR}/${FILE} DESTINATION ${DST_DIR})
     endforeach()
 endfunction()
-
