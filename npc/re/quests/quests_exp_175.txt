@@ -661,7 +661,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 	mes "[Sally]";
 	mes "I am desperately looking for help from a talented adventurer.";
 	mes "Just like you!";
-	mes "Would you like to help protect the poor trainee researcher's job?";
+	mes "Would you like to help protect this poor trainee researcher's job?";
 	next;
 	switch( select( "New Poison Research", "Special Mineral Research 1", "Special Mineral Research 2", "Abyssman Research", "Mineworm Research", "Why are you doing this?" ) ) {
 	case 1:
@@ -702,7 +702,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		case 1:
 			mes "[Sally]";
 			mes "" + getmonsterinfo("POISONOUS", MOB_NAME) + " and " + getmonsterinfo("TOXIOUS", MOB_NAME) + " are here on the 3rd floor of the Einbech Mine Dungeon.";
-			mes "Probably, it's hard to deal with ordinary people like me, so I'll have to hide and watch what you kill and collect data.";
+			mes "They're hard for ordinary people like me to deal with, so I'll have to hide and watch you do the work then collect data.";
 			close;
 		case 2:
 			end;
@@ -726,7 +726,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		case -1:
 			mes "[Sally]";
 			mes "There are several types of Minerals. The Minerals we want to investigate this time are ^4d4dff" + getmonsterinfo("MINERAL_G", MOB_NAME) + " and " + getmonsterinfo("MINERAL_R", MOB_NAME) + "^000000.";
-			mes "Collect data necessary for research while controlling the number of individuals!";
+			mes "Let's collect the data needed for research while controlling the number of individuals!";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
 				mes "[Sally]";
@@ -766,7 +766,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		case -1:
 			mes "[Sally]";
 			mes "There are several types of Minerals. The Minerals we want to investigate this time are ^4d4dff" + getmonsterinfo("MINERAL_W", MOB_NAME) + " and " + getmonsterinfo("MINERAL_P", MOB_NAME) + "s^000000.";
-			mes "Collect data necessary for research while controlling the number of individuals!";
+			mes "Let's collect the data needed for research while controlling the number of individuals!";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
 				mes "[Sally]";
@@ -847,7 +847,7 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		case -1:
 			mes "[Sally]";
 			mes "Specialized insects live in dark places like dungeons.";
-			mes "The data to be collected this time are ^4d4dff" + getmonsterinfo("PORCELLIO_W", MOB_NAME) + " and " + getmonsterinfo("JEWELIANT", MOB_NAME) + "^000000, also known as mineworms.";
+			mes "The data to be collected this time are ^4d4dff" + getmonsterinfo("PORCELLIO_W", MOB_NAME) + " and " + getmonsterinfo("JEWELIANT", MOB_NAME) + "^000000, also known as Mineworms.";
 			mes "Is it very different from the normal Porcellio?";
 			next;
 			if (select( "Received a request", "Rejected" ) == 2) {
@@ -874,11 +874,11 @@ einbech,143,244,3	script	Apprentice Researcher Sally#extdq01	4_F_LGTGIRL,{
 		mes "[Sally]";
 		mes "Um? That's to be a full-time employee!";
 		mes "Not long ago, I joined Regenschrum as a trainee researcher, but this is what I was appointed for.";
-		mes "It's about collecting data on mining monsters, so this personnel evaluation depends on it.";
+		mes "It's about collecting data on mining monsters, so my evaluation depends on that.";
 		next;
 		mes "[Sally]";
 		mes "And there were constant complaints from the headquarters asking what to do with the mine monsters.";
-		mes "While collecting data, it also moderates monster subjugation. Whoops, if that's the case, this evaluation is a win-win, a win-win!";
+		mes "While collecting data, it also regulates the number of individuals. This evaluation is a win-win, a win-win!";
 		close;
 	}
 	end;
@@ -899,11 +899,11 @@ OnInit:
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(7888,PLAYTIME) == 2" );
 
 	// not started
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7879) == 0 && checkquest(7880,PLAYTIME) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7881) == 0 && checkquest(7882,PLAYTIME) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7883) == 0 && checkquest(7884,PLAYTIME) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7885) == 0 && checkquest(7886,PLAYTIME) == -1" );
-	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7887) == 0 && checkquest(7888,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 180 && isbegin_quest(7879) == 0 && checkquest(7880,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 180 && isbegin_quest(7881) == 0 && checkquest(7882,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 180 && isbegin_quest(7883) == 0 && checkquest(7884,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 180 && isbegin_quest(7885) == 0 && checkquest(7886,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 180 && isbegin_quest(7887) == 0 && checkquest(7888,PLAYTIME) == -1" );
 	end;
 }
 
@@ -915,6 +915,6 @@ einbech,156,243,3	script	Need help#exsk	1_M_SMITH,{
 
 einbech,154,244,5	script	Need help#exsk_	4_F_JOB_BLACKSMITH,{
 	mes "[Atri]";
-	mes "Of course, I'd rather learn the sword faster! It's only ten years since I've sharpened a pickaxe, so I'll learn it quickly.";
+	mes "After all, it would be faster for me to learn the sword! I've only been picking a pickaxe for 10 years, so I'll learn it soon.";
 	close;
 }

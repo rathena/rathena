@@ -66,7 +66,7 @@ einbech,149,257,4	script	Site manager Elmen#extdq0	4_TOWER_16,{
 	case 3:
 		mes "[Elmen]";
 		mes "I can exchange the equipment with the Dynite, but it's already in a tightly sealed box.";
-		mes "Give me 50 ^4d4dffDynites^000000 and I will open a ^4d4dffa weapon box^000000 for you.";
+		mes "Give me 50 ^4d4dffDynites^000000 and I will open a ^4d4dffweapon box^000000 for you.";
 		next;
 		mes "[Elmen]";
 		mes "I don't know what will come out, but the quality is good. Would you like to open it?";
@@ -83,7 +83,7 @@ einbech,149,257,4	script	Site manager Elmen#extdq0	4_TOWER_16,{
 			close;
 		}
 		// unknown text
-		getgroupitem(IG_Ein_1HITEMbox);
+		getgroupitem(IG_EIN_1HITEMBOX);
 		end;
 	}
 }
