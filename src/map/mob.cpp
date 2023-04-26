@@ -6545,7 +6545,7 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<u
 	}
 
 	if( !exists ){
-		drops[drop->nameid] = drop;
+		drops[index] = drop;
 	}
 
 	return true;
