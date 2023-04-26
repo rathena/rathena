@@ -45,17 +45,42 @@ Header:
   Type: BARTER_DB
   Version: 1
 
-Footer:
-  Imports:
-  - Path: npc/re/merchants/barters/Extended_Ammunition.yml
-  - Path: npc/re/merchants/barters/Gemstone_Bagger.yml
-  - Path: npc/re/merchants/barters/quests_16_1.yml
-  - Path: npc/re/merchants/barters/quests_16_2.yml
-  - Path: npc/re/merchants/barters/quests_17_1.yml
-  - Path: npc/re/merchants/barters/quests_17_2.yml
-  - Path: npc/re/merchants/barters/refine.yml
-  - Path: npc/re/merchants/barters/enchantgrade.yml
-  - Path: npc/re/merchants/barters/cashmall.yml
-  - Path: npc/re/merchants/barters/rgsr_in.yml
-  - Path: npc/re/merchants/barters/enchan_illusion_16_2.yml
-  - Path: npc/re/merchants/barters/quests_exp_175.yml
+Body:
+  - Name: barter_ein_dun03
+    Items:
+      - Index: 0
+        Item: Ein_SAFETY_PENDR
+        RequiredItems:
+          - Index: 0
+            Item: Ein_DYNITE
+            Amount: 75
+      - Index: 1
+        Item: Ein_SAFETY_PENDL
+        RequiredItems:
+          - Index: 0
+            Item: Ein_DYNITE
+            Amount: 75
+      - Index: 2
+        Item: Ein_SAFETY_EPAULR
+        RequiredItems:
+          - Index: 0
+            Item: Ein_DYNITE
+            Amount: 75
+      - Index: 3
+        Item: Ein_SAFETY_EPAULL
+        RequiredItems:
+          - Index: 0
+            Item: Ein_DYNITE
+            Amount: 75
+      - Index: 4
+        Item: Ein_Ddbox2
+        RequiredItems:
+          - Index: 0
+            Item: Ein_DYNITE
+            Amount: 30
+      - Index: 5
+        Item: Ein_Ddbox
+        RequiredItems:
+          - Index: 0
+            Item: Ein_DYNITE
+            Amount: 30
