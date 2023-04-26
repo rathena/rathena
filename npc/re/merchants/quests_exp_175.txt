@@ -82,6 +82,7 @@ einbech,149,257,4	script	Site manager Elmen#extdq0	4_TOWER_16,{
 			mes "I don't know what's going to come out, so it's hard to go anywhere and get this kind of equipment at this price.";
 			close;
 		}
+		delitem 25814,50;
 		// unknown text
 		getgroupitem(IG_EIN_1HITEMBOX);
 		end;
