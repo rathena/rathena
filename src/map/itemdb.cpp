@@ -1168,6 +1168,10 @@ void ItemDatabase::loadingFinished(){
 			ShowWarning( "Item %s (%u) is a shield and should have a view id. Defaulting to Guard...\n", item->name.c_str(), item->nameid );
 			item->look = 1;
 		}
+
+		// let's export the ITEMID_AEGIS_NAME constants
+		std::string key = "ITEMID_" + item->name;
+		script_set_constant(key.c_str(), item->nameid, false, false);
 	}
 
 	if( !this->exists( ITEMID_DUMMY ) ){

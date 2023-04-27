@@ -5044,6 +5044,10 @@ void MobDatabase::loadingFinished() {
 		mob->status.max_sp = cap_value(mob->status.max_sp, 1, UINT32_MAX);
 		mob->status.hp = mob->status.max_hp;
 		mob->status.sp = mob->status.max_sp;
+
+		// let's export the MOBID_AEGIS_NAME constants
+		std::string key = "MOBID_" + mob->sprite;
+		script_set_constant(key.c_str(), mob->id, false, false);
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
