@@ -462,8 +462,8 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 		}
 
 		// pay up
-		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd);
-		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd);
+		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd->status.char_id);
+		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd->status.char_id);
 		pl_sd->buyingstore.zenylimit-= zeny;
 
 		// notify clients

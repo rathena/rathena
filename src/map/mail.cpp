@@ -28,6 +28,7 @@ void mail_clear(map_session_data *sd)
 		sd->mail.item[i].amount = 0;
 	}
 	sd->mail.zeny = 0;
+	sd->mail.dest_id = 0;
 
 	return;
 }
@@ -53,7 +54,7 @@ int mail_removeitem(map_session_data *sd, short flag, int idx, int amount)
 
 	if( flag ){
 		if( battle_config.mail_attachment_price > 0 ){
-			if( pc_payzeny( sd, battle_config.mail_attachment_price, LOG_TYPE_MAIL, NULL ) ){
+			if( pc_payzeny( sd, battle_config.mail_attachment_price, LOG_TYPE_MAIL ) ){
 				return false;
 			}
 		}
@@ -105,7 +106,8 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 	if( sd->mail.zeny > 0 ){
 		//Zeny send
 		if( flag ){
-			if( pc_payzeny( sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_MAIL, NULL ) ){
+			// It's possible that we don't know what the dest_id is, so it will be 0
+			if (pc_payzeny(sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_MAIL, sd->mail.dest_id)) {
 				return false;
 			}
 		}else{
@@ -355,7 +357,7 @@ void mail_getattachment(map_session_data* sd, struct mail_message* msg, int zeny
 		sd->mail.pending_zeny -= zeny;
 
 		// Add the zeny
-		pc_getzeny(sd, zeny,LOG_TYPE_MAIL, NULL);
+		pc_getzeny(sd, zeny, LOG_TYPE_MAIL, msg->send_id);
 		clif_mail_getattachment( sd, msg, 0, MAIL_ATT_ZENY );
 	}
 }
@@ -387,7 +389,7 @@ void mail_deliveryfail(map_session_data *sd, struct mail_message *msg){
 	}
 
 	if( msg->zeny > 0 ){
-		pc_getzeny(sd,msg->zeny + msg->zeny*battle_config.mail_zeny_fee/100 + zeny,LOG_TYPE_MAIL, NULL); //Zeny receive (due to failure)
+		pc_getzeny(sd,msg->zeny + msg->zeny*battle_config.mail_zeny_fee/100 + zeny,LOG_TYPE_MAIL); //Zeny receive (due to failure)
 	}
 
 	clif_Mail_send(sd, WRITE_MAIL_FAILED);

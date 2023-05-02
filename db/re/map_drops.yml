@@ -27,7 +27,7 @@
 #                                   These drops are unaffected by server drop rate and cannot be stolen.
 #     - Index                       Unique index of the drop.
 #       Item                        Item name.
-#       Rate                        Drop rate of item.
+#       Rate                        Drop rate of item, n/100000.
 #       RandomOptionGroup           Random Option Group applied to item on drop. (Default: None)
 #   SpecificDrops                   Drops for specific monsters on this map. (Default: empty)
 #     - Monster                     Monster name.
@@ -35,10 +35,173 @@
 #                                   These drops are unaffected by server drop rate and cannot be stolen.
 #         - Index                   Unique index of the drop.
 #           Item                    Item name.
-#           Rate                    Drop rate of item.
+#           Rate                    Drop rate of item, n/100000.
 #           RandomOptionGroup       Random Option Group applied to item on drop. (Default: None)
 ###########################################################################
 
 Header:
   Type: MAP_DROP_DB
-  Version: 1
+  Version: 2
+
+Body:
+  - Map: tur_d03_i
+    SpecificDrops:
+      - Monster: ILL_ASSULTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Huuma_Bird_Wing_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_PERMETER
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_FREEZER
+        Drops:
+          - Index: 0
+            Item: Immaterial_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_SOLIDER
+        Drops:
+          - Index: 0
+            Item: Iron_Driver_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: War_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_HEATER
+        Drops:
+          - Index: 0
+            Item: Pole_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+  - Map: tur_d04_i
+    SpecificDrops:
+      - Monster: ILL_ASSULTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Huuma_Bird_Wing_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_PERMETER
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_FREEZER
+        Drops:
+          - Index: 0
+            Item: Immaterial_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_SOLIDER
+        Drops:
+          - Index: 0
+            Item: Iron_Driver_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: War_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_HEATER
+        Drops:
+          - Index: 0
+            Item: Pole_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_TURTLE_GENERAL
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 5000
+          - Index: 1
+            Item: Immaterial_Sword_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Iron_Driver_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Pole_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 4
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 5
+            Item: War_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 6
+            Item: Huuma_Bird_Wing_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 7
+            Item: S_Turtle_Is_Box_IL
+            Rate: 150

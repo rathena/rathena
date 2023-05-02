@@ -2035,7 +2035,7 @@ Body:
     Name: I really love it!
     Condition: " BaseLevel == 99 && (Class >= JOB_SWORDMAN && Class <= JOB_THIEF) "
     Rewards:
-      Item: E_Bubble_Gum_Box
+      Item: A_Bubble_Gum_Box10
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
     Score: 30
   - Id: 200031

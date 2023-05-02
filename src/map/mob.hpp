@@ -300,7 +300,7 @@ struct s_map_drops{
 
 class MapDropDatabase : public TypesafeYamlDatabase<uint16, s_map_drops>{
 public:
-	MapDropDatabase() : TypesafeYamlDatabase( "MAP_DROP_DB", 1 ){
+	MapDropDatabase() : TypesafeYamlDatabase( "MAP_DROP_DB", 2 ){
 
 	}
 

@@ -952,7 +952,7 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
 {
 	StringBuf* self;
-	self = (StringBuf *)_mcalloc(1, sizeof(StringBuf), file, line, func);
+	self = (StringBuf *)aCalloc2(1, sizeof(StringBuf), file, line, func);
 	_StringBuf_Init(file, line, func, self);
 	return self;
 }
@@ -961,7 +961,7 @@ StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
 void _StringBuf_Init(const char *file, int line, const char *func,StringBuf* self)
 {
 	self->max_ = 1024;
-	self->ptr_ = self->buf_ = (char*)_mmalloc(self->max_ + 1, file, line, func);
+	self->ptr_ = self->buf_ = (char*)aMalloc2(self->max_ + 1, file, line, func);
 }
 
 /// Appends the result of printf to the StringBuf
@@ -998,7 +998,7 @@ int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* s
 		/* Else try again with more space. */
 		self->max_ *= 2; // twice the old size
 		off = (int)(self->ptr_ - self->buf_);
-		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 }
@@ -1013,7 +1013,7 @@ int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* se
 	{
 		int off = (int)(self->ptr_ - self->buf_);
 		self->max_ += needed;
-		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
@@ -1032,7 +1032,7 @@ int _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf*
 	{// not enough space, expand the buffer (minimum expansion = 1024)
 		int off = (int)(self->ptr_ - self->buf_);
 		self->max_ += max(needed, 1024);
-		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
