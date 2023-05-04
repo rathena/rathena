@@ -40,26 +40,27 @@ Header:
   Version: 1
 
 Body:
-#  - Item: Ein_Ddbox
-#    TargetItems:
-#      - Item: Ein_BHSWORD
-#      - Item: Detecting_Staff
-#      - Item: Ein_BHHuuma
-#      - Item: Ein_BHKATAR
-#      - Item: Ein_BHAXE
-#      - Item: Ein_BHBOW
-#      - Item: Ein_1HKNUCK
-#      - Item: Ein_1HHAMMER
-#      - Item: Ein_1HWAND
-#      - Item: Ein_1HWHIP
-#      - Item: Ein_1HBOOK
-#      - Item: Ein_1HDAGGER
-#      - Item: Ein_1HMAGGER
-#      - Item: Ein_1HSPEAR
-#      - Item: Ein_1HLUTE
-#      - Item: Ein_1HSWORD
-#      - Item: Ein_1HGUN
-#      - Item: Ein_1H_Foxtail
+  - Item: Ein_Ddbox
+    RandomOptionGroup: EIN_DDBOX
+    TargetItems:
+      - Item: Ein_BHSWORD
+      - Item: Ein_BHSTAFF
+      - Item: Ein_BHHuuma
+      - Item: Ein_BHKATAR
+      - Item: Ein_BHAXE
+      - Item: Ein_BHBOW
+      - Item: Ein_1HKNUCK
+      - Item: Ein_1HHAMMER
+      - Item: Ein_1HWAND
+      - Item: Ein_1HWHIP
+      - Item: Ein_1HBOOK
+      - Item: Ein_1HDAGGER
+      - Item: Ein_1HMAGGER
+      - Item: Ein_1HSPEAR
+      - Item: Ein_1HLUTE
+      - Item: Ein_1HSWORD
+      - Item: Ein_1HGUN
+      - Item: Ein_1H_Foxtail
   - Item: Metal_Rifine_Ticket
     ResultRefine: 7
     CardsAllowed: true
@@ -76,26 +77,27 @@ Body:
       - Item: Metal_Revolver
       - Item: Metal_Huuma_Shuriken
       - Item: Metal_Foxtail
-#  - Item: Ein_Ddbox2
-#    TargetItems:
-#      - Item: Ein_BHSWORD
-#      - Item: Detecting_Staff
-#      - Item: Ein_BHHuuma
-#      - Item: Ein_BHKATAR
-#      - Item: Ein_BHAXE
-#      - Item: Ein_BHBOW
-#      - Item: Ein_1HKNUCK
-#      - Item: Ein_1HHAMMER
-#      - Item: Ein_1HWAND
-#      - Item: Ein_1HWHIP
-#      - Item: Ein_1HBOOK
-#      - Item: Ein_1HDAGGER
-#      - Item: Ein_1HMAGGER
-#      - Item: Ein_1HSPEAR
-#      - Item: Ein_1HLUTE
-#      - Item: Ein_1HSWORD
-#      - Item: Ein_1HGUN
-#      - Item: Ein_1H_Foxtail
+  - Item: Ein_Ddbox2
+    RandomOptionGroup: EIN_DDBOX2
+    TargetItems:
+      - Item: Ein_BHSWORD
+      - Item: Ein_BHSTAFF
+      - Item: Ein_BHHuuma
+      - Item: Ein_BHKATAR
+      - Item: Ein_BHAXE
+      - Item: Ein_BHBOW
+      - Item: Ein_1HKNUCK
+      - Item: Ein_1HHAMMER
+      - Item: Ein_1HWAND
+      - Item: Ein_1HWHIP
+      - Item: Ein_1HBOOK
+      - Item: Ein_1HDAGGER
+      - Item: Ein_1HMAGGER
+      - Item: Ein_1HSPEAR
+      - Item: Ein_1HLUTE
+      - Item: Ein_1HSWORD
+      - Item: Ein_1HGUN
+      - Item: Ein_1H_Foxtail
   - Item: Gemstone_Of_Time
     RandomOptionGroup: GEMSTONE_OF_TIME
     TargetItems:

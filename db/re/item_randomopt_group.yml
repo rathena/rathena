@@ -14651,3 +14651,341 @@ Body:
             MinValue: 1
             MaxValue: 5
             Chance: 5000
+  - Id: 163
+    Group: EIN_DDBOX
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 45
+            Chance: 5000
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 35
+            Chance: 5000
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 7
+            MaxValue: 35
+            Chance: 5000
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 2
+            Chance: 5000
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 2
+            MaxValue: 10
+            Chance: 5000
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 5
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 10
+            Chance: 5000
+    MaxRandom: 3
+    Random:
+      - Option: RACE_DAMAGE_NOTHING
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_UNDEAD
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_ANIMAL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_PLANT
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_INSECT
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_FISHS
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_HUMAN
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_ANGEL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_DEVIL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_DAMAGE_DRAGON
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: CLASS_DAMAGE_NORMAL_TARGET
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: CLASS_DAMAGE_BOSS_TARGET
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_NOTHING
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_UNDEAD
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_ANIMAL
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_PLANT
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_INSECT
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_FISHS
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_DEVIL
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_HUMAN
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_ANGEL
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_DEF_PERCENT_DRAGON
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
+        MinValue: 3
+        MaxValue: 18
+        Chance: 5000
+  - Id: 164
+    Group: EIN_DDBOX2
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 45
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 10
+            Chance: 5000
+      - Slot: 2
+        Options:
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 7
+            MaxValue: 35
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_NOTHING_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 3
+            MaxValue: 20
+            Chance: 5000
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 5
+            MaxValue: 10
+            Chance: 5000
+    MaxRandom: 3
+    Random:
+      - Option: HEAL_VALUE
+        MinValue: 7
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_MDAMAGE_NOTHING
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_UNDEAD
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_ANIMAL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_PLANT
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_INSECT
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_FISHS
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_HUMAN
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_ANGEL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_DEVIL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_MDAMAGE_DRAGON
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: CLASS_MDAMAGE_NORMAL
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: CLASS_MDAMAGE_BOSS
+        MinValue: 3
+        MaxValue: 20
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_NOTHING
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_UNDEAD
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_ANIMAL
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_PLANT
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_INSECT
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_FISHS
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_DEVIL
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_HUMAN
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_ANGEL
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: RACE_IGNORE_MDEF_PERCENT_DRAGON
+        MinValue: 3
+        MaxValue: 25
+        Chance: 5000
+      - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
+        MinValue: 3
+        MaxValue: 18
+        Chance: 5000
+      - Option: DEC_SPELL_CAST_TIME
+        MinValue: 5
+        MaxValue: 10
+        Chance: 5000

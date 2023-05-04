@@ -14925,34 +14925,35 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 	//Clears buffs with specified flag and type
 	for (const auto &it : status_db) {
 		sc_type status = static_cast<sc_type>(it.first);
-		std::bitset<SCF_MAX> flag = it.second->flag;
-
+		const std::bitset<SCF_MAX>& flag = it.second->flag;
+		bool end = false;
 		if (!sc->getSCE(status))
 			continue;
 		// Skip status with SCF_NOCLEARBUFF, no matter what
 		if (flag[SCF_NOCLEARBUFF])
 			continue;
 		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA and has the SCF_REMOVEONLUXANIMA flag
-		if ((type & SCCB_LUXANIMA) && !flag[SCF_REMOVEONLUXANIMA])
-			continue;
+		if ((type & SCCB_LUXANIMA) && flag[SCF_REMOVEONLUXANIMA])
+			end = true;
 		// &SCCB_CHEM_PROTECT : Clears AM_CP_ARMOR/HELP/SHIELD/WEAPON
-		if ((type & SCCB_CHEM_PROTECT) && !flag[SCF_REMOVECHEMICALPROTECT])
-			continue;
+		else if ((type & SCCB_CHEM_PROTECT) && flag[SCF_REMOVECHEMICALPROTECT])
+			end = true;
 		// &SCCB_REFRESH : Cleared by RK_REFRESH and has the SCF_REMOVEONREFRESH flag
-		if ((type & SCCB_REFRESH) && !flag[SCF_REMOVEONREFRESH])
-			continue;
-		// &SCCB_DEBUFFS : Clears debuffs - skip if it is not a debuff
-		if (type & SCCB_DEBUFFS && !flag[SCF_DEBUFF] && !(type & SCCB_BUFFS))
-			continue;
+		else if ((type & SCCB_REFRESH) && flag[SCF_REMOVEONREFRESH])
+			end = true;
+		// &SCCB_DEBUFFS : Clears debuffs
+		else if ((type & SCCB_DEBUFFS) && flag[SCF_DEBUFF])
+			end = true;
 		// &SCCB_BUFFS : Clears buffs - skip if it is a debuff
-		if (type & SCCB_BUFFS && flag[SCF_DEBUFF] && !(type & SCCB_DEBUFFS))
-			continue;
+		else if ((type & SCCB_BUFFS) && !flag[SCF_DEBUFF])
+			end = true;
 		// &SCCB_HERMODE : Cleared by CG_HERMODE and has the SCF_REMOVEONHERMODE flag
-		if ((type & SCCB_HERMODE) && !flag[SCF_REMOVEONHERMODE])
-			continue;
+		else if ((type & SCCB_HERMODE) && flag[SCF_REMOVEONHERMODE])
+			end = true;
 		if (status == SC_SATURDAYNIGHTFEVER || status == SC_BERSERK) // Mark to not lose HP
 			sc->getSCE(status)->val2 = 0;
-		status_change_end(bl, status);
+		if(end)
+			status_change_end(bl, status);
 	}
 
 	//Removes bonus_script

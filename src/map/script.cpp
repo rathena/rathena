@@ -6652,7 +6652,7 @@ BUILDIN_FUNC(inarray)
 {
 	struct script_data *data;
 	const char* name;
-	int id, i, array_size;
+	int id;
 	map_session_data* sd = NULL;
 	struct reg_db *ref = NULL;
 	data = script_getdata(st, 2);
@@ -6671,15 +6671,15 @@ BUILDIN_FUNC(inarray)
 	if (not_server_variable(*name) && !script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	array_size = script_array_highest_key(st, sd, name, ref) - 1;
+	const uint32 array_size = script_array_highest_key(st, sd, name, ref);
 
-	if (array_size < 0)
+	if (array_size == 0)
 	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (array_size > SCRIPT_MAX_ARRAYSIZE)
+	if (array_size >= SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_inarray: The array is too large.\n");
 		script_reportdata(data);
@@ -6692,7 +6692,7 @@ BUILDIN_FUNC(inarray)
 	if( is_string_variable( name ) ){
 		const char* value = script_getstr( st, 3 );
 
-		for( i = 0; i <= array_size; ++i ){
+		for( uint32 i = 0; i < array_size; ++i ){
 			const char* temp = get_val2_str( st, reference_uid( id, i ), ref );
 
 			if( !strcmp( temp, value ) ){
@@ -6708,7 +6708,7 @@ BUILDIN_FUNC(inarray)
 	}else{
 		int64 value = script_getnum64( st, 3 );
 
-		for( i = 0; i <= array_size; ++i ){
+		for( uint32 i = 0; i < array_size; ++i ){
 			int64 temp = get_val2_num( st, reference_uid( id, i ), ref );
 
 			if( temp == value ){
@@ -6731,7 +6731,7 @@ BUILDIN_FUNC(countinarray)
 	struct script_data *data1 , *data2;
 	const char* name1;
 	const char* name2;
-	int id1, id2, i, j, array_size1, array_size2, case_count = 0;
+	int id1, id2, case_count = 0;
 	map_session_data* sd = NULL;
 	struct reg_db *ref1 = NULL, *ref2 = NULL;
 	data1 = script_getdata(st, 2);
@@ -6754,16 +6754,16 @@ BUILDIN_FUNC(countinarray)
 	if (not_server_variable(*name1) && not_server_variable(*name2) && !script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
-	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
+	const uint32 array_size1 = script_array_highest_key(st, sd, name1, ref1);
+	const uint32 array_size2 = script_array_highest_key(st, sd, name2, ref2);
 
-	if (array_size1 < 0 || array_size2 < 0)
+	if (array_size1 == 0 || array_size2 == 0)
 	{
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (array_size1 > SCRIPT_MAX_ARRAYSIZE || array_size2 > SCRIPT_MAX_ARRAYSIZE)
+	if (array_size1 >= SCRIPT_MAX_ARRAYSIZE || array_size2 >= SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_countinarray: The array is too large.\n");
 		script_reportdata(data1);
@@ -6772,9 +6772,9 @@ BUILDIN_FUNC(countinarray)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	i = reference_getindex(data1);
-	j = reference_getindex(data2);
-	if (array_size1 < i || array_size2 < j)
+	uint32 i = reference_getindex(data1);
+	uint32 j = reference_getindex(data2);
+	if (i > array_size1 - 1 || j > array_size2 - 1)
 	{	//To prevent unintended behavior
 		ShowError("buildin_countinarray: The given index of the array is higher than the array size.\n");
 		script_reportdata(data1);
@@ -6787,10 +6787,10 @@ BUILDIN_FUNC(countinarray)
 	id2 = reference_getid(data2);
 
 	if( is_string_variable( name1 ) && is_string_variable( name2 ) ){
-		for( ; i <= array_size1; ++i ){
+		for( ; i < array_size1; ++i ){
 			const char* temp1 = get_val2_str( st, reference_uid( id1, i ), ref1 );
 
-			for( j = reference_getindex( data2 ); j <= array_size2; j++ ){
+			for( j = reference_getindex( data2 ); j < array_size2; j++ ){
 				const char* temp2 = get_val2_str( st, reference_uid( id2, j ), ref2 );
 
 				if( !strcmp( temp1, temp2 ) ){
@@ -6805,10 +6805,10 @@ BUILDIN_FUNC(countinarray)
 			script_removetop( st, -1, 0 );
 		}
 	}else if( !is_string_variable( name1 ) && !is_string_variable( name2 ) ){
-		for( ; i <= array_size1; ++i ){
+		for( ; i < array_size1; ++i ){
 			int64 temp1 = get_val2_num( st, reference_uid( id1, i ), ref1 );
 
-			for( j = reference_getindex( data2 ); j <= array_size2; j++ ){
+			for( j = reference_getindex( data2 ); j < array_size2; j++ ){
 				int64 temp2 = get_val2_num( st, reference_uid( id2, j ), ref2 );
 
 				if( temp1 == temp2 ){
@@ -17002,16 +17002,16 @@ BUILDIN_FUNC(implode)
 	}
 
 	//count chars
-	size_t array_size = script_array_highest_key( st, sd, name, reference_getref( data ) ) - 1;
+	const uint32 array_size = script_array_highest_key( st, sd, name, reference_getref( data ) );
 
-	if(array_size == -1) { //empty array check (AmsTaff)
+	if(array_size == 0) {
 		ShowWarning("script:implode: array length = 0\n");
 		script_pushstrcopy( st, "NULL" );
 	} else {
 		const char *glue = nullptr, *temp;
 		size_t len = 0, glue_len = 0, k = 0;
 
-		for( int i = 0; i <= array_size; ++i ){
+		for( uint32 i = 0; i < array_size; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len += strlen(temp);
 			// Remove stack entry from get_val2_str
@@ -17022,13 +17022,13 @@ BUILDIN_FUNC(implode)
 		if( script_hasdata(st,3) ) {
 			glue = script_getstr(st,3);
 			glue_len = strlen(glue);
-			len += glue_len * array_size;
+			len += glue_len * (size_t)( array_size - 1 );
 		}
 
 		char* output = (char*)aMalloc( len + 1 );
 
 		//build output
-		for( int i = 0; i < array_size; ++i ){
+		for( uint32 i = 0; i < array_size - 1; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len = strlen(temp);
 			memcpy(&output[k], temp, len);
@@ -17042,7 +17042,7 @@ BUILDIN_FUNC(implode)
 			}
 		}
 
-		temp = get_val2_str( st, reference_uid( id, array_size ), reference_getref( data ) );
+		temp = get_val2_str( st, reference_uid( id, array_size - 1), reference_getref( data ) );
 		len = strlen(temp);
 		memcpy(&output[k], temp, len);
 		k += len;
