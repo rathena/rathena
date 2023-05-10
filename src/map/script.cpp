@@ -11164,7 +11164,8 @@ BUILDIN_FUNC(monster)
 
 		if (mobid > 0) {
 			md = map_id2md(mobid);
-			md->next_walktime = INVALID_TIMER;
+			if (md)
+				md->next_walktime = INVALID_TIMER;
 
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
 		}
@@ -11287,7 +11288,8 @@ BUILDIN_FUNC(areamonster)
 
 		if (mobid > 0) {
 			md = map_id2md(mobid);
-			md->next_walktime = INVALID_TIMER;
+			if (md)
+				md->next_walktime = INVALID_TIMER;
 
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
 		}
