@@ -2374,7 +2374,7 @@ void clif_npc_market_purchase_ack( map_session_data *sd, e_purchase_result res, 
 	p->result = ( res == e_purchase_result::PURCHASE_SUCCEED ? 1 : 0 );
 #endif
 
-	if( p->result ){
+	if( res == e_purchase_result::PURCHASE_SUCCEED ){
 		for( int i = 0, j, count = 0; i < list.size(); i++ ){
 			ARR_FIND( 0, nd->u.shop.count, j, list[i].nameid == nd->u.shop.shop_item[j].nameid );
 
