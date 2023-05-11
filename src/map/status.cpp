@@ -1925,10 +1925,13 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	status_change *sc = NULL, *tsc;
 	int hide_flag;
 
-	status = src ? status_get_status_data(src) : &dummy_status;
-
-	if (src && src->type != BL_PC && status_isdead(src))
-		return false;
+	if (src) {
+		if (src->type != BL_PC && status_isdead(src))
+			return false;
+		sc = status_get_sc(src);
+		status = status_get_status_data(src);
+	}else
+		status = &dummy_status;
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
@@ -1972,9 +1975,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		default:
 			break;
 	}
-
-	if ( src )
-		sc = status_get_sc(src);
 
 	if( sc && sc->count ) {
 		if (sc->getSCE(SC_ALL_RIDING))
