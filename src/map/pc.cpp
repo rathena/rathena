@@ -3087,9 +3087,6 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, uint16 id, uint1
 
 	struct s_autospell entry = {};
 
-	if (rate < -1000 || rate > 1000)
-		ShowWarning("pc_bonus_autospell: Item bonus rate %d exceeds -1000~1000 range, capping.\n", rate);
-
 	entry.id = id;
 	entry.lv = lv;
 	entry.rate = cap_value(rate, -1000, 1000);
@@ -3123,9 +3120,6 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, uint16 s
 		return;
 
 	struct s_autospell entry = {};
-
-	if (rate < -1000 || rate > 1000)
-		ShowWarning("pc_bonus_onskill: Item bonus rate %d exceeds -1000~1000 range, capping.\n", rate);
 
 	entry.trigger_skill = src_skill;
 	entry.id = id;
@@ -3274,9 +3268,6 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 	}
 
 	struct s_add_drop entry = {};
-
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_item_drop: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
 
 	entry.nameid = nameid;
 	entry.group = group;
@@ -3485,9 +3476,6 @@ static void pc_bonus_addele(map_session_data* sd, unsigned char ele, short rate,
 
 	struct s_addele2 entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_addele: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
-
 	entry.ele = ele;
 	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
@@ -3531,9 +3519,6 @@ static void pc_bonus_subele(map_session_data* sd, unsigned char ele, short rate,
 
 	struct s_addele2 entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_subele: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
-
 	entry.ele = ele;
 	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
@@ -3575,9 +3560,6 @@ static void pc_bonus_subrace(map_session_data* sd, unsigned char race, short rat
 
 	struct s_addrace2 entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_subrace: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
-
 	entry.race = race;
 	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
@@ -3605,13 +3587,8 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
 
 	struct s_item_bonus entry = {};
 
-	if (cap_rate && (val < -10000 || val > 10000)) {
-		ShowWarning("pc_bonus_itembonus: Item bonus val %d exceeds -10000~10000 range, capping.\n", val);
-		val = cap_value(val, -10000, 10000);
-	}
-
 	entry.id = id;
-	entry.val = val;
+	entry.val = cap_value(val, -10000, 10000);
 
 	bonus.push_back(entry);
 }
@@ -3649,9 +3626,6 @@ static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, i
 	}
 
 	struct s_vanish_bonus entry = {};
-
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_addvanish: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
 
 	entry.rate = cap_value(rate, -10000, 10000);
 	entry.per = per;
