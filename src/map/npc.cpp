@@ -3621,6 +3621,8 @@ void npc_loadsrcfiles() {
 #endif
 		npc_parsesrcfile(file.c_str());
 	}
+	int npc_total = npc_warp + npc_shop + npc_script;
+
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
@@ -3628,7 +3630,7 @@ void npc_loadsrcfiles() {
 		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
-		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+		npc_total, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 }
 
 /// Parses and sets the name and exname of a npc.
