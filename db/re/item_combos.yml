@@ -4405,7 +4405,7 @@ Body:
       bonus bAspdRate,3;
       bonus bAspd,1;
       bonus2 bAddClass,Class_All,-5;
-      if (getequiprefinerycnt(EQI_HAND_R) >= 10 && getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == 11)
+      if (getequiprefinerycnt(EQI_HAND_R) >= 10 && getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == 11)
          bonus bAspd,1;
   - Combos:
       - Combo:
@@ -7291,7 +7291,7 @@ Body:
           - Tree_Of_Sprout_JP
           - Tendrilion_Card
     Script: |
-      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW);
+      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       if (.@type == W_BOOK || .@type == W_STAFF || .@type == W_2HSTAFF) {
          bonus2 bMagicAddRace,RC_Player_Human, getequiprefinerycnt(EQI_HAND_R)*2;
       }
