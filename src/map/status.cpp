@@ -1922,7 +1922,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  */
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag) {
 	struct status_data *status;
-	status_change *sc = NULL, *tsc;
+	status_change *sc, *tsc;
 	int hide_flag;
 
 	if (src) {
