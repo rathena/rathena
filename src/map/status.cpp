@@ -1930,7 +1930,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		sc = status_get_sc(src);
 		status = status_get_status_data(src);
-	}else
+	}else{
 		status = &dummy_status;
 
 	if (!skill_id) { // Normal attack checks.
