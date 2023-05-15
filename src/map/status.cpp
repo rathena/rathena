@@ -1935,6 +1935,11 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		sc = nullptr;
 	}
 
+	if(target)
+		tsc = status_get_sc(target);
+	else
+		tsc = nullptr;
+
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
 			return false;
@@ -1950,12 +1955,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( skill_id ) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
-			if( flag && target ) {
-				// Gloria Avoids pretty much everything....
-				tsc = status_get_sc(target);
-				if(tsc && tsc->option&OPTION_HIDE)
-					return false;
-			}
+			if( flag && tsc && tsc->option&OPTION_HIDE)
+					return false; // Gloria Avoids pretty much everything....
 			break;
 #endif
 		case GN_WALLOFTHORN:
@@ -2096,10 +2097,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 	}
 
-	if (target == NULL || target == src) // No further checking needed.
+	if (target == nullptr || target == src) // No further checking needed.
 		return true;
-
-	tsc = status_get_sc(target);
 
 	if (tsc && tsc->count) {
 		/**
