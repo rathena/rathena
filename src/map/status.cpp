@@ -1932,6 +1932,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		status = status_get_status_data(src);
 	}else{
 		status = &dummy_status;
+		sc = nullptr;
+	}
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
