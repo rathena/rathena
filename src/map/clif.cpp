@@ -17353,9 +17353,9 @@ void clif_cashshop_result( map_session_data *sd, t_itemid item_id, uint16 result
 #if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined( PACKETVER_ZERO )
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT packet;
+	struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT packet = {};
 
-	packet.packetType = 0x849;
+	packet.packetType = HEADER_ZC_SE_PC_BUY_CASHITEM_RESULT;
 	if( item_id != 0 ){
 		packet.itemId = client_nameid( item_id );
 	}else{
@@ -17365,7 +17365,7 @@ void clif_cashshop_result( map_session_data *sd, t_itemid item_id, uint16 result
 	packet.cashPoints = sd->cashPoints;
 	packet.kafraPoints = sd->kafraPoints;
 
-	clif_send( &packet, sizeof( struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 #endif
 }
 
