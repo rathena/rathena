@@ -17229,6 +17229,7 @@ void clif_cashshop_list( map_session_data* sd ){
 		struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *p = (struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *)packet_buffer;
 
 		p->packetType = HEADER_ZC_ACK_SCHEDULER_CASHITEM;
+		p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM );
 		p->count = 0;
 		p->tabNum = tab->tab;
 
@@ -17247,9 +17248,8 @@ void clif_cashshop_list( map_session_data* sd ){
 			}
 #endif
 			p->count++;
+			p->packetLength += sizeof( p->items[0] );
 		}
-
-		p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM ) + p->count * sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub );
 
 		clif_send( p, p->packetLength, &sd->bl, SELF );
 	}
