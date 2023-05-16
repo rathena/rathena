@@ -5767,8 +5767,6 @@ template <typename T> bool clif_skilldata( map_session_data& sd, T& data, struct
 	}else{
 		data.level2 = 0;
 	}
-#else
-	safestrncpy( data.name, skill_get_name( skill_id ), sizeof( data.name ) );
 #endif
 
 	// TODO: This should actually check if skill requirements are fulfilled as well...
@@ -5813,6 +5811,10 @@ void clif_skillinfoblock( map_session_data& sd ){
 		if( !clif_skilldata( sd, p->skills[j], skill, skill_id ) ){
 			continue;
 		}
+
+#if !( PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918 )
+		safestrncpy( p->skills[j].name, skill_get_name( skill_id ), sizeof( p->skills[j].name ) );
+#endif
 
 		p->packetLength += sizeof( struct SKILLDATA );
 		j++;
