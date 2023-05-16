@@ -42,3 +42,4 @@ int32 rnd_value( int32 min, int32 max ){
 
 	return min + (int32)( rnd_uniform() * ( max - min + 1 ) );
 }
+

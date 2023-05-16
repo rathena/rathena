@@ -8,12 +8,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
 
 #include "battle.hpp"
 #include "map.hpp"
@@ -504,7 +504,7 @@ int distance_client(int dx, int dy)
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
-	temp_dist -= 0.0625;
+	temp_dist -= 0.1;
 
 	if(temp_dist < 0) temp_dist = 0;
 
@@ -513,4 +513,12 @@ int distance_client(int dx, int dy)
 
 bool direction_diagonal( enum directions direction ){
 	return direction == DIR_NORTHWEST || direction == DIR_SOUTHWEST || direction == DIR_SOUTHEAST || direction == DIR_NORTHEAST;
+}
+
+bool direction_opposite( enum directions direction ){
+	if( direction == DIR_CENTER || direction == DIR_MAX ){
+		return direction;
+	}else{
+		return static_cast<enum directions>( ( direction + DIR_MAX / 2 ) % DIR_MAX );
+	}
 }

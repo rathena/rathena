@@ -1,12 +1,6 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Veins Quests
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 2.5
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Collection of Veins Quests 
 //= Stone Quest:
@@ -25,7 +19,7 @@
 //= - Missing addition to High Priest Zhed to start quest.
 //= - Infiltrate Thor Volcano Base. What is Arunafeltz up to?
 //= - Variable in use: rachel_camel (max 27)
-//===== Additional Comments: ================================= 
+//===== Changelog: =========================================
 //= 1.0 First version, Added Veins Stone quest. [L0ne_W0lf]
 //= 1.1 Added Veins Spy Quest. [L0ne_W0lf]
 //= 1.2 Added Veins Siblings Quest. [L0ne_W0lf]
@@ -48,11 +42,12 @@
 //= 2.2 Moved "Wincing Old Man" to pre-re/re coordinates. [Euphy]
 //= 2.3 Fixed incorrect use of 'close'. [Joseph]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
-//= 2.5 Added GM management NPC. [Euphy]
-//============================================================ 
+//= 2.5 Added GM management NPC and quest log support. [Euphy]
+//= 2.6 Commented custom quest log support for Nameless Island Access Quest [Everade]
+//============================================================
 
 // Stone Quest :: veins_stone
-//============================================================ 
+//============================================================
 -	script	::WincingOldMan_veins	-1,{
 	if ((MaxWeight - Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a moment! -";
@@ -644,7 +639,7 @@ ve_in02,68,39,7	script	Factory Worker#ve2	943,{
 }
 
 // Spy Quest :: veins_secret
-//============================================================ 
+//============================================================
 prontera,202,122,0	script	Kid#sch	703,{
 	if (que_sch == 0) {
 		mes "[Rooney]";
@@ -2665,7 +2660,7 @@ sec_in02,10,43,4	script	Extra Story Patch	809,{
 }
 
 // Siblings Quest :: veins_camel
-//============================================================ 
+//============================================================
 veins,327,185,3	script	Kid#camelcamel	944,{
 	if (MISC_QUEST & 8192) {
 		if (rachel_camel == 0) {
@@ -3147,7 +3142,7 @@ veins,327,185,3	script	Kid#camelcamel	944,{
 				mes "I'm happy that";
 				mes "I can help you too!";
 				set aru_monas,16;
-				changequest 17011,17012;
+				//changequest 17011,17012;
 				close;
 			}
 			else if (aru_monas < 26) {
@@ -5074,7 +5069,7 @@ veins,221,120,5	script	Young Town Native	943,{
 }
 
 // Thor Volcano Base Quest :: veins_camp
-//============================================================ 
+//============================================================
 ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 	if (aru_vol == 2) {
 		mes "[Guard Karlum]";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20200602
+//= 20220402
 //===== Description: =========================================
 //= Explanation of the item_db.yml file and structure.
 //============================================================
@@ -219,6 +219,10 @@ Refineable: Defines if the item can be refined.
 
 ---------------------------------------
 
+Gradable: Defines if the item can be graded.
+
+---------------------------------------
+
 View: For normal items, defines a replacement view-sprite for the item.
 
 ---------------------------------------
@@ -280,10 +284,10 @@ Script: Script to execute when the item is used/equipped.
 
 ---------------------------------------
 
-OnEquip_Script: Script to execute when the item is equipped.
-                Warning, not all item bonuses will work here as expected.
+EquipScript: Script to execute when the item is equipped.
+             Warning, not all item bonuses will work here as expected.
 
 ---------------------------------------
 
-OnUnequip_Script: Script to execute when the item is unequipped or when a rental item expires.
-                  Warning, not all item bonuses will work here as expected.
+UnEquipScript: Script to execute when the item is unequipped or when a rental item expires.
+               Warning, not all item bonuses will work here as expected.
