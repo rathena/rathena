@@ -1922,23 +1922,18 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  */
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag) {
 	struct status_data *status;
-	status_change *sc, *tsc;
 	int hide_flag;
 
 	if (src) {
 		if (src->type != BL_PC && status_isdead(src))
 			return false;
-		sc = status_get_sc(src);
 		status = status_get_status_data(src);
 	}else{
 		status = &dummy_status;
-		sc = nullptr;
 	}
 
-	if(target)
-		tsc = status_get_sc(target);
-	else
-		tsc = nullptr;
+	status_change *sc = status_get_sc(src);
+	status_change *tsc = status_get_sc(target);
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
@@ -1956,7 +1951,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 #ifndef RENEWAL
 		case PA_PRESSURE:
 			if( flag && tsc && tsc->option&OPTION_HIDE)
-					return false; // Gloria Avoids pretty much everything....
+				return false; // Gloria Avoids pretty much everything....
 			break;
 #endif
 		case GN_WALLOFTHORN:
