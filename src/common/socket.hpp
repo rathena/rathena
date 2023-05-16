@@ -28,7 +28,12 @@
 
 // socket I/O macros
 #define RFIFOHEAD(fd)
-#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
+#define WFIFOHEAD( fd, size ) \
+	do{ \
+		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
+			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+		} \
+	}while( false )
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
