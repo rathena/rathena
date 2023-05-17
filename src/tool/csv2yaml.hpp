@@ -42,6 +42,10 @@ namespace rathena{
 ///Maximum amount of items a combo may require
 #define MAX_ITEMS_PER_COMBO 6
 #define MAX_HOM_SKILL_REQUIRE 5
+#define MAX_SKILL_CHANGEMATERIAL_DB 75
+#define MAX_SKILL_CHANGEMATERIAL_SET 3
+#define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
+#define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
@@ -65,7 +69,24 @@ std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 
 std::unordered_map<int32, std::vector<s_homun_skill_tree_entry>> hom_skill_tree;
 
-static uint32 level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
+struct s_skill_produce_db_csv {
+	std::string produced_name,
+		req_skill_name;
+	uint32 req_skill_lv,
+		itemlv;
+	std::map<std::string, uint32> item_consumed;
+	std::vector<std::string> item_notconsumed;
+};
+
+std::map<uint32, std::vector<s_skill_produce_db_csv>> skill_produce;
+
+struct s_skill_changematerial_db_csv {
+	uint16 baserate;
+	std::map<uint16, uint16> qty;
+};
+std::unordered_map<std::string, s_skill_changematerial_db_csv> skill_changematerial_db;
+
+static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
 
 struct s_item_flag_csv2yaml {
 	bool buyingstore, dead_branch, group, guid, broadcast, bindOnEquip, delay_consume;
@@ -508,7 +529,10 @@ static bool mob_parse_row_chatdb( char* fields[], size_t columns, size_t current
 static bool read_homunculus_expdb(const char* file);
 static bool mob_readdb_group( char* str[], size_t columns, size_t current );
 static bool mob_readdb_group_yaml(void);
-static bool skill_parse_row_createarrowdb( char* fields[], size_t columns, size_t current );
+static bool skill_parse_row_producedb(char* fields[], int columns, int current);
+static bool skill_producedb_yaml();
+static bool skill_parse_row_changematerialdb(char* fields[], int columns, int current);
+static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
 static bool pc_read_statsdb(const char* file);
 static bool guild_read_castledb( char* str[], size_t columns, size_t current );
 static bool exp_guild_parse_row( char* split[], size_t columns, size_t current );

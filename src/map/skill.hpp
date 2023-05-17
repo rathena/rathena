@@ -29,8 +29,6 @@ struct status_change_entry;
 class status_change;
 class SkillImpl;
 
-#define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
-#define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
@@ -452,15 +450,38 @@ enum e_dance_overlap : int32 {
 };
 
 /// Create Database item
-struct s_skill_produce_db {
+struct s_skill_produce_db_entry {
 	t_itemid nameid; /// Product ID
 	uint16 req_skill; /// Required Skill
-	unsigned char req_skill_lv, /// Required Skill Level
+	uint16 req_skill_lv, /// Required Skill Level
 		itemlv; /// Item Level
-	t_itemid mat_id[MAX_PRODUCE_RESOURCE]; /// Materials needed
-	uint16 mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
+	std::unordered_map<t_itemid, uint16> materials;
+
+	// additional rates/quantity data for skill_changematerial 
+	uint16 baserate;
+	std::unordered_map<uint16, uint16> qty;
 };
-extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
+
+struct s_skill_produce_db {
+	uint16 itemlv; /// Item Level
+	std::unordered_map<t_itemid, std::shared_ptr<s_skill_produce_db_entry>> data;	/// item, entry
+};
+
+class SkillProduceDatabase : public TypesafeYamlDatabase<uint16, s_skill_produce_db> {
+private:
+	uint16 total_id = 0;
+
+public:
+	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	bool add_itemconsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed);
+};
+
+extern SkillProduceDatabase skill_produce_db;
 
 /// Creating database arrow
 struct s_skill_arrow_db {
@@ -635,8 +656,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-int16 skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, int16 produce_idx );
+short skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int trigger, int qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
