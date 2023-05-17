@@ -310,6 +310,17 @@ endif()
 
 
 #
+# Enable EPOLL (default=OFF)
+# Only for Linux
+#
+option( ENABLE_EXTRA_SOCKET_POLL "enable SOCKET_EPOLL (default=OFF)" OFF )
+if( ENABLE_EXTRA_SOCKET_POLL )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DSOCKET_EPOLL" )
+	message( STATUS "Enabled SOCKET_EPOLL" )
+endif()
+
+
+#
 # Enable builtin memory manager (default=default)
 #
 set( MEMMGR_OPTIONS "default;yes;no" )
