@@ -3,18 +3,23 @@
 
 #include "int_mail.hpp"
 
+#include <memory>
+
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
 
 #include "char.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
+
+using namespace rathena;
 
 bool mail_loadmessage(int mail_id, struct mail_message* msg);
 void mapif_Mail_return( int fd, uint32 char_id, int mail_id, uint32 account_id_receiver = 0, uint32 account_id_sender = 0 );
@@ -460,10 +465,10 @@ bool mapif_Mail_delete( int fd, uint32 char_id, int mail_id, uint32 account_id )
 
 	// If the char server triggered this, check if we have to notify a map server
 	if( fd <= 0 ){
-		struct online_char_data* character;
+		std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id );
 
 		// Check for online players
-		if( ( character = (struct online_char_data*)idb_get( char_get_onlinedb(), account_id ) ) != nullptr && character->server >= 0 ){
+		if( character != nullptr && character->server >= 0 ){
 			fd = map_server[character->server].fd;
 		}else{
 			// The request was triggered inside the character server or the player is offline now
@@ -561,10 +566,10 @@ void mapif_Mail_return( int fd, uint32 char_id, int mail_id, uint32 account_id_r
 
 	// If the char server triggered this, check if we have to notify a map server
 	if( fd <= 0 ){
-		struct online_char_data* character;
+		std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), account_id_sender );
 
 		// Check for online players
-		if( ( character = (struct online_char_data*)idb_get( char_get_onlinedb(), account_id_sender ) ) != nullptr && character->server >= 0 ){
+		if( character != nullptr && character->server >= 0 ){
 			fd = map_server[character->server].fd;
 		}else{
 			// The request was triggered inside the character server or the player is offline now

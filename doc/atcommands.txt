@@ -1419,6 +1419,7 @@ This will also send a packet to clients causing them to close.
 @reloadstatusdb
 @reloadachievementdb
 @reloadattendancedb
+@reloadbarterdb
 
 Reloads a database or configuration file.
 
@@ -1427,10 +1428,11 @@ Databases:
 -- itemdb: Item Database
 -- mobdb: Monster Database
 -- questdb: Quest Database
--- script: NPC Scripts
+-- script: NPC Scripts and Barter Database
 -- skilldb: Skill Database
 -- achievementdb: Achievement Database
 -- attendancedb: Attendance Database
+-- barterdb: Barter Database
 
 Configuration files:
 -- atcommand: Atcommand Settings
@@ -1450,11 +1452,12 @@ Affected files:
 -- msgconf: atcommands.yml
 -- pcdb: statpoint.yml, job_exp.yml, skill_tree.yml, attr_fix.yml, job_stats.yml, job_basepoints.yml, level_penalty.yml
 -- questdb: quest_db.yml
--- script: /npc/*.txt, /npc/*.conf
+-- script: /npc/*.txt, /npc/*.conf, /npc/barters.yml
 -- skilldb: skill_db.yml, skill_nocast_db.txt, skill_changematerial_db.txt, skill_damage_db.txt, abra_db.yml, create_arrow_db.yml, produce_db.txt, spellbook_db.yml, magicmushroom_db.yml
 -- statusdb: attr_fix.yml, size_fix.yml, refine.yml
 -- achievementdb: achievement_db.yml
 -- attendancedb: attendance.yml
+-- barterdb: /npc/barters.yml
 
 Restriction:
 	- Used from 'atcommand' or 'useatcmd'. For @reload & @reloadscript

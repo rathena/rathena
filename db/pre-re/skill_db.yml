@@ -9325,15 +9325,13 @@ Body:
     Name: NPC_WEAPONBRAKER
     Description: Break weapon
     MaxLevel: 10
-    Type: Weapon
-    TargetType: Attack
+    TargetType: Self
     Flags:
       IsNpc: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    Element: Weapon
-    Status: BrokenWeapon
+    Duration: 30000
+    Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
     Description: Break armor

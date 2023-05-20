@@ -2,8 +2,6 @@
 
 This is a tool to generate files that are hard to manually create.
 
-Only navigation files can be generated at this time.
-
 ## How to run
 ### Linux
 Run `make tools`.
@@ -21,6 +19,8 @@ On Windows, prefix with `/`
 
 option | feature
 ---|---
-generate-navi | create navigation files
+`generate-navi` | create navigation files
+`generate-reputation` | create reputation bson files
+`generate-itemmoveinfo` | create itemmoveinfov5.txt
 
 

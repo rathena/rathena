@@ -1,4 +1,7 @@
-#include "../config/core.hpp"
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include <config/core.hpp>
 
 #ifdef MAP_GENERATOR
 
@@ -11,10 +14,10 @@
 #include <queue>
 #include <vector>
 
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/utils.hpp"
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/showmsg.hpp>
+#include <common/utils.hpp>
 #include "map.hpp"
 #include "mob.hpp"
 #include "navi.hpp"
@@ -548,6 +551,9 @@ void write_npc_distances() {
 
 	for (int mapid = 0; mapid < map_num; mapid++) {
 		auto m = map_getmapdata(mapid);
+#ifdef DETAILED_LOADING_OUTPUT
+		ShowStatus("Loading [%i/%i]" CL_CLL "\r", mapid, map_num);
+#endif
 		if (m->navi.npcs.size() == 0) {
 			// ShowStatus("Skipped %s NPC distance table, no NPCs in map (%d/%d)\n", map[m].name, m, map_num);
 			continue;
