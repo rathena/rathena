@@ -7488,7 +7488,7 @@ void clif_parse_BankOpen(int fd, map_session_data* sd) {
 		return;
 	}
 	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
-		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use Bank on this map.
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
 		return;
 	}
 	else {
@@ -7563,7 +7563,7 @@ void clif_parse_BankCheck(int fd, map_session_data* sd) {
 		return;
 	}
 	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
-		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use Bank on this map.
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
 		return;
 	}
 	else {
@@ -7603,7 +7603,7 @@ void clif_parse_BankDeposit(int fd, map_session_data* sd) {
 		return;
 	}
 	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
-		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use Bank on this map.
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
 		return;
 	}
 	else {
@@ -7646,7 +7646,7 @@ void clif_parse_BankWithdraw(int fd, map_session_data* sd) {
 		return;
 	}
 	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
-		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use Bank on this map.
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
 		return;
 	}
 	else {
