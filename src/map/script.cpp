@@ -4851,7 +4851,7 @@ void do_init_script(void) {
 	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
 
 	add_timer_func_list( run_script_timer, "run_script_timer" );
-	add_timer_func_list( mob_size_timer, "mob_size_timer" );
+	add_timer_func_list( unit_size_timer, "unit_size_timer" );
 
 
 	ers_chunk_size(st_ers, 10);
@@ -19601,7 +19601,7 @@ BUILDIN_FUNC(setunitname)
 /*==========================================
  * Timer function for sleep
  *------------------------------------------*/
-TIMER_FUNC(mob_size_timer){
+TIMER_FUNC(unit_size_timer){
 	block_list *bl = (block_list *)data;	
 	unit_refresh( bl, true );
 	return 0;
@@ -19654,7 +19654,7 @@ BUILDIN_FUNC(setunitsize)
 	}
 	
 	// Timer to unit_refresh, so it doesn't get stucked visuallly 
-	add_timer(gettick()+725,mob_size_timer,bl->id,(intptr_t)bl);
+	add_timer(gettick()+725,unit_size_timer,bl->id,(intptr_t)bl);
 	
 	return SCRIPT_CMD_SUCCESS;
 }
