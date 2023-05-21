@@ -4602,6 +4602,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoTomb |");
 	if (map_getmapflag(m_id, MF_NOCOSTUME))
 		strcat(atcmd_output, " NoCostume |");
+	if (map_getmapflag(m_id, MF_NOBANK))
+		strcat(atcmd_output, " NoBank |");
 	clif_displaymessage(fd, atcmd_output);
 
 	switch (list) {
