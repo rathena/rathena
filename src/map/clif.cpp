@@ -7487,6 +7487,10 @@ void clif_parse_BankOpen(int fd, map_session_data* sd) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
 		return;
 	}
+	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
+		return;
+	}
 	else {
 		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
@@ -7558,6 +7562,10 @@ void clif_parse_BankCheck(int fd, map_session_data* sd) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
 		return;
 	}
+	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
+		return;
+	}
 	else {
 		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
@@ -7592,6 +7600,10 @@ void clif_parse_BankDeposit(int fd, map_session_data* sd) {
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
+		return;
+	}
+	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
 		return;
 	}
 	else {
@@ -7631,6 +7643,10 @@ void clif_parse_BankWithdraw(int fd, map_session_data* sd) {
         nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
+		return;
+	}
+	if( map_getmapflag( sd->bl.m, MF_NOBANK ) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 831 ) ); // You cannot use the Bank on this map.
 		return;
 	}
 	else {

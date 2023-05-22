@@ -288,6 +288,12 @@ Disable the ability to capture pets on a map.
 
 ---------------------------------------
 
+*nobank
+
+Disable Bank on a map.
+
+---------------------------------------
+
 =====================
 | 2. Battle-related |
 =====================
