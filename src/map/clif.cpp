@@ -17249,6 +17249,15 @@ void clif_cashshop_list( map_session_data* sd ){
 #endif
 			p->count++;
 			p->packetLength += sizeof( p->items[0] );
+
+			if( ( static_cast<size_t>( p->packetLength ) + sizeof( p->items[0] ) ) >= INT16_MAX ){
+				// Send current data
+				clif_send( p, p->packetLength, &sd->bl, SELF );
+
+				// Start a new packet
+				p->count = 0;
+				p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM );
+			}
 		}
 
 		clif_send( p, p->packetLength, &sd->bl, SELF );
