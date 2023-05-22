@@ -10343,7 +10343,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 						}
 
 						// Set these to pass the check below.
-						mask |= JOBL_UPPER;
+						mask = sd->class_;
 						target_class = sd->class_;
 						break;
 					default:
