@@ -26,6 +26,17 @@ services:
             replicas: 1
             placement:
                 constraints: [node.role == manager]
+    migration:
+        image: "rathena/rathena-flyway:${version:-nightly}"
+        command: "-user=ragnarok -password=ragnarok -url=jdbc:mysql://rathena-db:3306/ragnarok migrate"
+        depends_on:
+            - db
+        restart: on-failure
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
     login:
         image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
         command: "./login-server"
