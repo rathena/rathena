@@ -45,7 +45,10 @@ services:
         environment:
             <<: *common-environment
         depends_on:
-            - db
+            db:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
         deploy:
             mode: replicated
             replicas: 1
@@ -60,7 +63,12 @@ services:
         environment:
             <<: *common-environment
         depends_on:
-            - login
+            db:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
+            login:
+                condition: service_started
         deploy:
             mode: replicated
             replicas: 1
@@ -75,7 +83,12 @@ services:
         environment:
             <<: *common-environment
         depends_on:
-            - char
+            db:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
+            char:
+                condition: service_started
         deploy:
             mode: replicated
             replicas: 1
