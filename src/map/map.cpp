@@ -5102,6 +5102,13 @@ int mapgenerator_get_options(int argc, char** argv) {
 	return 1;
 }
 
+int map_data::isMapFlagSet(int flag) const {
+	if (flag < 0 || flag > flags.size())
+		return 0;
+	
+	return flags[flag];
+}
+
 /// Called when a terminate signal is received.
 void MapServer::handle_shutdown(){
 	ShowStatus("Shutting down...\n");

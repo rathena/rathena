@@ -839,6 +839,8 @@ struct map_data {
 		std::vector<const struct navi_link *> warps_outof;
 	} navi;
 #endif
+
+	int isMapFlagSet(int flag) const;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
