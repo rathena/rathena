@@ -182,6 +182,10 @@ if(ENABLE_EXTRA_BUILDBOT_CODE)
 	target_compile_definitions(common PUBLIC "-DBUILDBOT")
 endif()
 
+if(ENABLE_EPOLL)
+	target_compile_definitions(common PRIVATE "-DSOCKET_EPOLL")
+endif()
+
 target_include_directories(common PUBLIC
 	"${MYSQL_INCLUDE_DIRS}"
 	"${ZLIB_INCLUDE_DIRS}"
