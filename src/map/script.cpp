@@ -11381,7 +11381,7 @@ BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 	safesnprintf(event,EVENT_NAME_LENGTH, "%s::%s%s",npc,script_config.oncommand_event_name,command);
 	check_event(st, event);
 
-	if( !npc_event_do(event) )
+	if( !npc_event_do(event) ) {
 		struct npc_data * nd = map_id2nd(st->oid);
 		ShowDebug("NPCEvent '%s' not found! (source: %s)\n", event, nd ? nd->name : "Unknown");
 		return SCRIPT_CMD_FAILURE;
