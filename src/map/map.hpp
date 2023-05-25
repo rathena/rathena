@@ -808,7 +808,6 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::vector<int> flags;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -844,6 +843,9 @@ struct map_data {
 	void setMapFlag(int flag, int value);
 	void initMapFlags();
 	void copyFlags(const map_data& other);
+
+private:
+	std::vector<int> flags;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
