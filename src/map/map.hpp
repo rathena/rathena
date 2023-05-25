@@ -843,6 +843,7 @@ struct map_data {
 	int getMapFlag(int flag) const;
 	void setMapFlag(int flag, int value);
 	void initMapFlags();
+	void copyFlags(const map_data& other);
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).

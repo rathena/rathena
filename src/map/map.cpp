@@ -3635,7 +3635,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	memcpy(&dst_map->save, &src_map->save, sizeof(struct point));
 	memcpy(&dst_map->damage_adjust, &src_map->damage_adjust, sizeof(struct s_skill_damage));
 
-	dst_map->flags = src_map->flags;
+	dst_map->copyFlags(*src_map);
 	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
@@ -5128,6 +5128,9 @@ void map_data::initMapFlags() {
 	flags.resize(MF_MAX, 0);
 }
 
+void map_data::copyFlags(const map_data& other) {
+	flags = other.flags;
+}
 
 /// Called when a terminate signal is received.
 void MapServer::handle_shutdown(){
