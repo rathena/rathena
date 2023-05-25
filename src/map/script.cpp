@@ -5126,7 +5126,6 @@ BUILDIN_FUNC(menu)
 			{// not a label
 				StringBuf_Destroy(&buf);
 				ShowError("buildin_menu: Argument #%d (from 1) is not a label or label not found.\n", i);
-				script_reportdata(data);
 				return SCRIPT_CMD_FAILURE;
 			}
 
@@ -5195,7 +5194,6 @@ BUILDIN_FUNC(menu)
 		if( !data_islabel(script_getdata(st, i + 1)) )
 		{// TODO remove this temporary crash-prevention code (fallback for multiple scripts requesting user input)
 			ShowError("buildin_menu: Unexpected data in label argument\n");
-			script_reportdata(script_getdata(st, i + 1));
 			return SCRIPT_CMD_FAILURE;
 		}
 		pc_setreg(sd, add_str("@menu"), menu);
@@ -5379,7 +5377,6 @@ BUILDIN_FUNC(goto)
 	if( !data_islabel(script_getdata(st,2)) )
 	{
 		ShowError("buildin_goto: Not a label\n");
-		script_reportdata(script_getdata(st,2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -5460,7 +5457,6 @@ BUILDIN_FUNC(callsub)
 
 	if( !data_islabel(script_getdata(st,2)) && !data_isfunclabel(script_getdata(st,2)) ) {
 		ShowError("buildin_callsub: Argument is not a label\n");
-		script_reportdata(script_getdata(st,2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6120,7 +6116,6 @@ BUILDIN_FUNC(input)
 	data = script_getdata(st,2);
 	if( !data_isreference(data) ){
 		ShowError("script:input: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 	uid = reference_getuid(data);
@@ -6183,7 +6178,6 @@ BUILDIN_FUNC(setr)
 	if( !data_isreference(data) )
 	{
 		ShowError("script:set: not a variable\n");
-		script_reportdata(script_getdata(st,2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6265,7 +6259,6 @@ BUILDIN_FUNC(setarray)
 	if( !data_isreference(data) )
 	{
 		ShowError("script:setarray: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6313,7 +6306,6 @@ BUILDIN_FUNC(cleararray)
 	if( !data_isreference(data) )
 	{
 		ShowError("script:cleararray: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6371,8 +6363,6 @@ BUILDIN_FUNC(copyarray)
 	if( !data_isreference(data1) || !data_isreference(data2) )
 	{
 		ShowError("script:copyarray: not a variable\n");
-		script_reportdata(data1);
-		script_reportdata(data2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6387,8 +6377,6 @@ BUILDIN_FUNC(copyarray)
 
 	if( is_string != is_string_variable( name2 ) ){
 		ShowError("script:copyarray: type mismatch\n");
-		script_reportdata(data1);
-		script_reportdata(data2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6454,7 +6442,6 @@ BUILDIN_FUNC(getarraysize)
 	if( !data_isreference(data) )
 	{
 		ShowError("script:getarraysize: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6491,7 +6478,6 @@ BUILDIN_FUNC(deletearray)
 	data = script_getdata(st, 2);
 	if( !data_isreference(data) ) {
 		ShowError("script:deletearray: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6506,7 +6492,6 @@ BUILDIN_FUNC(deletearray)
 
 	if (!(src = script_array_src(st, sd, name, reference_getref(data)))) {
 		ShowError("script:deletearray: not a array\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6606,10 +6591,7 @@ BUILDIN_FUNC(getelementofarray)
 	if( !data_isreference(data) )
 	{
 		ShowError("script:getelementofarray: not a variable\n");
-		script_reportdata(data);
-		script_pushnil(st);
-		st->state = END;
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	id = reference_getid(data);
@@ -6617,7 +6599,6 @@ BUILDIN_FUNC(getelementofarray)
 	i = script_getnum(st, 3);
 	if (i < 0 || i >= SCRIPT_MAX_ARRAYSIZE) {
 		ShowWarning("script:getelementofarray: index out of range (%" PRId64 ")\n", i);
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6661,7 +6642,6 @@ BUILDIN_FUNC(inarray)
 	if (array_size >= SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_inarray: The array is too large.\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6718,8 +6698,6 @@ BUILDIN_FUNC(countinarray)
 	if (!data_isreference(data1) || !data_isreference(data2))
 	{
 		ShowError("buildin_countinarray: not a variable\n");
-		script_reportdata(data1);
-		script_reportdata(data2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6743,8 +6721,6 @@ BUILDIN_FUNC(countinarray)
 	if (array_size1 >= SCRIPT_MAX_ARRAYSIZE || array_size2 >= SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_countinarray: The array is too large.\n");
-		script_reportdata(data1);
-		script_reportdata(data2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6753,8 +6729,6 @@ BUILDIN_FUNC(countinarray)
 	if (i > array_size1 - 1 || j > array_size2 - 1)
 	{	//To prevent unintended behavior
 		ShowError("buildin_countinarray: The given index of the array is higher than the array size.\n");
-		script_reportdata(data1);
-		script_reportdata(data2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6793,8 +6767,6 @@ BUILDIN_FUNC(countinarray)
 		}
 	}else{
 		ShowError("buildin_countinarray: Arrays do not match , You can't compare an int array to a string array.\n");
-		script_reportdata(data1);
-		script_reportdata(data2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -11974,7 +11946,6 @@ BUILDIN_FUNC(getunits)
 		if (!data_isreference(data))
 		{
 			ShowError("buildin_%s: not a variable\n", command);
-			script_reportdata(data);
 			return SCRIPT_CMD_FAILURE;
 		}
 		id = reference_getid(data);
@@ -16839,7 +16810,6 @@ BUILDIN_FUNC(explode)
 
 	if( !data_isreference(data) ) {
 		ShowError("script:explode: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -16849,8 +16819,7 @@ BUILDIN_FUNC(explode)
 
 	if( !is_string_variable(name) ) {
 		ShowError("script:explode: not string array\n");
-		script_reportdata(data);
-		return SCRIPT_CMD_FAILURE;// data type mismatch
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( not_server_variable(*name) ) {
@@ -16887,7 +16856,6 @@ BUILDIN_FUNC(implode)
 
 	if( !data_isreference(data) ) {
 		ShowError("script:implode: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -16896,8 +16864,7 @@ BUILDIN_FUNC(implode)
 
 	if( !is_string_variable(name) ) {
 		ShowError("script:implode: not string array\n");
-		script_reportdata(data);
-		return SCRIPT_CMD_FAILURE;// data type mismatch
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	map_session_data* sd = nullptr;
@@ -17594,7 +17561,6 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 			}
 		} else {
 			ShowError("script:query_sql: not a variable\n");
-			script_reportdata(data);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -18316,14 +18282,12 @@ BUILDIN_FUNC(searchitem)
 	if( !data_isreference(data) )
 	{
 		ShowError("buildin_searchitem: Argument %s is not a variable.\n", name);
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( is_string_variable(name) )
 	{// string array
 		ShowError("buildin_searchitem: Argument %s is not an integer array.\n", name);
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19990,7 +19954,6 @@ BUILDIN_FUNC(getvariableofnpc)
 	if( !data_isreference(data) )
 	{// Not a reference (aka varaible name)
 		ShowError("buildin_getvariableofnpc: not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19998,7 +19961,6 @@ BUILDIN_FUNC(getvariableofnpc)
 	if( *name != '.' || name[1] == '@' )
 	{// not a npc variable
 		ShowError("buildin_getvariableofnpc: invalid scope (not npc variable)\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -23666,7 +23628,6 @@ BUILDIN_FUNC(getvar) {
 	data = script_getdata(st, 2);
 	if (!data_isreference(data)) {
 		ShowError("buildin_getvar: Not a variable\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -23674,13 +23635,11 @@ BUILDIN_FUNC(getvar) {
 
 	if (reference_toparam(data)) {
 		ShowError("buildin_getvar: '%s' is a parameter - please use readparam instead\n", name);
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (name[0] == '.' || name[0] == '$' || name[0] == '\'') { // Not a PC variable
 		ShowError("buildin_getvar: Invalid scope (not PC variable)\n");
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -23963,7 +23922,6 @@ BUILDIN_FUNC(minmax){
 			// Check if it's a string variable
 			if( is_string_variable( name ) ){
 				ShowError( "buildin_%s: illegal type, need integer!\n", functionname );
-				script_reportdata( data );
 				return SCRIPT_CMD_FAILURE;
 			}
 
@@ -23978,7 +23936,6 @@ BUILDIN_FUNC(minmax){
 			// Try to find the array's source pointer
 			if( !script_array_src( st, sd, name, reference_getref( data ) ) ){
 				ShowError( "buildin_%s: not a array!\n", functionname );
-				script_reportdata( data );
 				return SCRIPT_CMD_FAILURE;
 			}
 
@@ -24003,7 +23960,6 @@ BUILDIN_FUNC(minmax){
 			}
 		}else{
 			ShowError( "buildin_%s: not a supported data type!\n", functionname );
-			script_reportdata( data );
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -25747,7 +25703,6 @@ BUILDIN_FUNC(getinstancevar)
 
 	if (!data_isreference(data)) {
 		ShowError("buildin_getinstancevar: %s is not a variable.\n", script_getstr(st, 2));
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -25755,7 +25710,6 @@ BUILDIN_FUNC(getinstancevar)
 
 	if (*name != '\'') {
 		ShowError("buildin_getinstancevar: Invalid scope. %s is not an instance variable.\n", name);
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -25790,7 +25744,6 @@ BUILDIN_FUNC(setinstancevar)
 
 	if (!data_isreference(data)) {
 		ShowError("buildin_%s: %s is not a variable.\n", command, script_getstr(st, 2));
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -25798,7 +25751,6 @@ BUILDIN_FUNC(setinstancevar)
 
 	if (*name != '\'') {
 		ShowError("buildin_%s: Invalid scope. %s is not an instance variable.\n", command, name);
-		script_reportdata(data);
 		return SCRIPT_CMD_FAILURE;
 	}
 
