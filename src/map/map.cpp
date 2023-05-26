@@ -5117,7 +5117,7 @@ void map_data::setMapFlag(int flag, int value) {
 	if (flag < 0 || flag > flags.size()) {
 		// This is debugged because we didn't previously check for out-of-bounds
 		ShowError("map_data::getMapFlag: flag %d out of bounds (0-%d)\n", flag, flags.size() - 1);
-		return 0;
+		return;
 	}
 #endif
 	flags[flag] = value;
