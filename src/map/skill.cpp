@@ -5329,7 +5329,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if (path) {
 			if(skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist)) {
 #ifdef RENEWAL
-				if (map_getmapdata(src->m)->flag[MF_PVP])
+				if (map_getmapdata(src->m)->getMapFlag(MF_PVP))
 					dist += 2; // Knockback is 4 on PvP maps
 #endif
 				skill_blown(src, bl, dist, dir, BLOWN_NONE);
