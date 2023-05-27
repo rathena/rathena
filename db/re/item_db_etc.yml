@@ -70272,7 +70272,7 @@ Body:
       }
   - Id: 312315
     AegisName: Flame_R_1
-    Name: Flame Rune 1Lv    # !todo check english name
+    Name: Flame Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70280,7 +70280,7 @@ Body:
       bonus bBaseAtk,10;
   - Id: 312316
     AegisName: Flame_R_2
-    Name: Flame Rune 2Lv    # !todo check english name
+    Name: Flame Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70288,7 +70288,7 @@ Body:
       bonus bBaseAtk,15;
   - Id: 312317
     AegisName: Flame_R_3
-    Name: Flame Rune 3Lv    # !todo check english name
+    Name: Flame Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70296,7 +70296,7 @@ Body:
       bonus bBaseAtk,20;
   - Id: 312318
     AegisName: Flame_R_4
-    Name: Flame Rune 4Lv    # !todo check english name
+    Name: Flame Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70304,7 +70304,7 @@ Body:
       bonus bBaseAtk,25;
   - Id: 312319
     AegisName: Flame_R_5
-    Name: Flame Rune 5Lv    # !todo check english name
+    Name: Flame Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70313,7 +70313,7 @@ Body:
       bonus2 bAddClass,Class_Boss,5;
   - Id: 312320
     AegisName: Earth_R_1
-    Name: Earth Rune 1Lv    # !todo check english name
+    Name: Earth Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70321,7 +70321,7 @@ Body:
       bonus bDef,30;
   - Id: 312321
     AegisName: Earth_R_2
-    Name: Earth Rune 2Lv    # !todo check english name
+    Name: Earth Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70329,7 +70329,7 @@ Body:
       bonus bDef,60;
   - Id: 312322
     AegisName: Earth_R_3
-    Name: Earth Rune 3Lv    # !todo check english name
+    Name: Earth Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70337,7 +70337,7 @@ Body:
       bonus bDef,90;
   - Id: 312323
     AegisName: Earth_R_4
-    Name: Earth Rune 4Lv    # !todo check english name
+    Name: Earth Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70345,7 +70345,7 @@ Body:
       bonus bDef,120;
   - Id: 312324
     AegisName: Earth_R_5
-    Name: Earth Rune 5Lv    # !todo check english name
+    Name: Earth Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70354,14 +70354,14 @@ Body:
       bonus2 bAddClass,Class_Boss,10;
   - Id: 312325
     AegisName: Flame_Earth_R_1
-    Name: Flame Earth Rune 1Lv    # !todo check english name
+    Name: Fiery Earth Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,10*(readparam(bStr)/20);
   - Id: 312326
     AegisName: Flame_Earth_R_2
-    Name: Flame Earth Rune 2Lv    # !todo check english name
+    Name: Fiery Earth Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70371,7 +70371,7 @@ Body:
       bonus bCon,2*.@str;
   - Id: 312327
     AegisName: Flame_Earth_R_3
-    Name: Flame Earth Rune 3Lv    # !todo check english name
+    Name: Fiery Earth Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70384,7 +70384,7 @@ Body:
       }
   - Id: 312328
     AegisName: Flame_Earth_R_4
-    Name: Flame Earth Rune 4Lv    # !todo check english name
+    Name: Fiery Earth Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70398,7 +70398,7 @@ Body:
       }
   - Id: 312329
     AegisName: Flame_Earth_R_5
-    Name: Flame Earth Rune 5Lv    # !todo check english name
+    Name: Fiery Earth Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70416,7 +70416,7 @@ Body:
       }
   - Id: 312330
     AegisName: Flame_Earth_R_6
-    Name: Flame Earth Rune Lv 6    # !todo check english name
+    Name: Fiery Earth Rune 6Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70435,7 +70435,7 @@ Body:
       }
   - Id: 312331
     AegisName: Flame_Earth_R_7
-    Name: Flame Earth Rune 7Lv    # !todo check english name
+    Name: Fiery Earth Rune 7Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70457,7 +70457,7 @@ Body:
       }
   - Id: 312332
     AegisName: Flame_Earth_R_8
-    Name: Flame Earth Rune Lv 8    # !todo check english name
+    Name: Fiery Earth Rune 8Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70480,7 +70480,7 @@ Body:
       }
   - Id: 312333
     AegisName: Flame_Earth_R_9
-    Name: Flame Earth Rune 9Lv    # !todo check english name
+    Name: Fiery Earth Rune 9Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70506,7 +70506,7 @@ Body:
       }
   - Id: 312334
     AegisName: Flame_Earth_R_10
-    Name: Flame Earth Rune Lv 10    # !todo check english name
+    Name: Fiery Earth Rune 10Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70533,7 +70533,7 @@ Body:
       }
   - Id: 312335
     AegisName: Ice_R_1
-    Name: Frost Rune 1Lv    # !todo check english name
+    Name: Ice Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70541,7 +70541,7 @@ Body:
       bonus bBaseAtk,10;
   - Id: 312336
     AegisName: Ice_R_2
-    Name: Frost Rune 2Lv    # !todo check english name
+    Name: Ice Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70549,7 +70549,7 @@ Body:
       bonus bBaseAtk,15;
   - Id: 312337
     AegisName: Ice_R_3
-    Name: Frost Rune 3Lv    # !todo check english name
+    Name: Ice Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70557,7 +70557,7 @@ Body:
       bonus bBaseAtk,20;
   - Id: 312338
     AegisName: Ice_R_4
-    Name: Frost Rune 4Lv    # !todo check english name
+    Name: Ice Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70565,7 +70565,7 @@ Body:
       bonus bBaseAtk,25;
   - Id: 312339
     AegisName: Ice_R_5
-    Name: Frost Rune 5Lv    # !todo check english name
+    Name: Ice Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70574,7 +70574,7 @@ Body:
       bonus2 bAddClass,Class_Boss,5;
   - Id: 312340
     AegisName: Storm_R_1
-    Name: Storm Rune 1Lv    # !todo check english name
+    Name: Storm Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70582,7 +70582,7 @@ Body:
       bonus bDef,30;
   - Id: 312341
     AegisName: Storm_R_2
-    Name: Storm Rune 2Lv    # !todo check english name
+    Name: Storm Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70590,7 +70590,7 @@ Body:
       bonus bDef,60;
   - Id: 312342
     AegisName: Storm_R_3
-    Name: Storm Rune 3Lv    # !todo check english name
+    Name: Storm Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70598,7 +70598,7 @@ Body:
       bonus bDef,90;
   - Id: 312343
     AegisName: Storm_R_4
-    Name: Storm Rune 4Lv    # !todo check english name
+    Name: Storm Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70606,7 +70606,7 @@ Body:
       bonus bDef,120;
   - Id: 312344
     AegisName: Storm_R_5
-    Name: Storm Rune 5Lv    # !todo check english name
+    Name: Storm Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70615,14 +70615,14 @@ Body:
       bonus2 bAddClass,Class_Boss,10;
   - Id: 312345
     AegisName: Ice_Storm_R_1
-    Name: Cold Storm Rune 1Lv    # !todo check english name
+    Name: Icy Storm Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,10*(readparam(bDex)/20);
   - Id: 312346
     AegisName: Ice_Storm_R_2
-    Name: Cold Storm Rune 2Lv    # !todo check english name
+    Name: Icy Storm Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70632,7 +70632,7 @@ Body:
       bonus bCon,2*.@dex;
   - Id: 312347
     AegisName: Ice_Storm_R_3
-    Name: Cold Storm Rune 3Lv    # !todo check english name
+    Name: Icy Storm Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70645,7 +70645,7 @@ Body:
       }
   - Id: 312348
     AegisName: Ice_Storm_R_4
-    Name: Cold Storm Rune 4Lv    # !todo check english name
+    Name: Icy Storm Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70659,7 +70659,7 @@ Body:
       }
   - Id: 312349
     AegisName: Ice_Storm_R_5
-    Name: Cold Storm Rune 5Lv    # !todo check english name
+    Name: Icy Storm Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70677,7 +70677,7 @@ Body:
       }
   - Id: 312350
     AegisName: Ice_Storm_R_6
-    Name: Cold Storm Rune 6Lv    # !todo check english name
+    Name: Icy Storm Rune 6Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70696,7 +70696,7 @@ Body:
       }
   - Id: 312351
     AegisName: Ice_Storm_R_7
-    Name: Cold Storm Rune 7Lv    # !todo check english name
+    Name: Icy Storm Rune 7Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70718,7 +70718,7 @@ Body:
       }
   - Id: 312352
     AegisName: Ice_Storm_R_8
-    Name: Cold Storm Rune Lv 8    # !todo check english name
+    Name: Icy Storm Rune 8Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70741,7 +70741,7 @@ Body:
       }
   - Id: 312353
     AegisName: Ice_Storm_R_9
-    Name: Cold Storm Rune 9Lv    # !todo check english name
+    Name: Icy Storm Rune 9Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70767,7 +70767,7 @@ Body:
       }
   - Id: 312354
     AegisName: Ice_Storm_R_10
-    Name: Cold Storm Rune 10Lv    # !todo check english name
+    Name: Icy Storm Rune 10Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70794,7 +70794,7 @@ Body:
       }
   - Id: 312355
     AegisName: Soul_R_1
-    Name: Soul Rune 1Lv    # !todo check english name
+    Name: Soul Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70802,7 +70802,7 @@ Body:
       bonus bMatk,10;
   - Id: 312356
     AegisName: Soul_R_2
-    Name: Soul Rune 2Lv    # !todo check english name
+    Name: Soul Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70810,7 +70810,7 @@ Body:
       bonus bMatk,15;
   - Id: 312357
     AegisName: Soul_R_3
-    Name: Soul Rune 3Lv    # !todo check english name
+    Name: Soul Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70818,7 +70818,7 @@ Body:
       bonus bMatk,20;
   - Id: 312358
     AegisName: Soul_R_4
-    Name: Soul Rune 4Lv    # !todo check english name
+    Name: Soul Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70826,7 +70826,7 @@ Body:
       bonus bMatk,25;
   - Id: 312359
     AegisName: Soul_R_5
-    Name: Soul Rune 5Lv    # !todo check english name
+    Name: Soul Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70835,7 +70835,7 @@ Body:
       bonus2 bMagicAddClass,Class_Boss,5;
   - Id: 312360
     AegisName: Purify_R_1
-    Name: Purification Rune 1Lv    # !todo check english name
+    Name: Purifying Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70843,7 +70843,7 @@ Body:
       bonus bDef,30;
   - Id: 312361
     AegisName: Purify_R_2
-    Name: Purification Rune 2Lv    # !todo check english name
+    Name: Purifying Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70851,7 +70851,7 @@ Body:
       bonus bDef,60;
   - Id: 312362
     AegisName: Purify_R_3
-    Name: Purification Rune 3Lv    # !todo check english name
+    Name: Purifying Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70859,7 +70859,7 @@ Body:
       bonus bDef,90;
   - Id: 312363
     AegisName: Purify_R_4
-    Name: Purification Rune 4Lv    # !todo check english name
+    Name: Purifying Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70867,7 +70867,7 @@ Body:
       bonus bDef,120;
   - Id: 312364
     AegisName: Purify_R_5
-    Name: Purification Rune 5Lv    # !todo check english name
+    Name: Purifying Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70876,14 +70876,14 @@ Body:
       bonus2 bMagicAddClass,Class_Boss,10;
   - Id: 312365
     AegisName: Soul_Purify_R_1
-    Name: Soul Purification Rune 1Lv    # !todo check english name
+    Name: Soul Purifying Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatk,10*(readparam(bInt)/20);
   - Id: 312366
     AegisName: Soul_Purify_R_2
-    Name: Soul Purification Rune 2Lv    # !todo check english name
+    Name: Soul Purifying Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70893,7 +70893,7 @@ Body:
       bonus bCon,2*.@int;
   - Id: 312367
     AegisName: Soul_Purify_R_3
-    Name: Soul Purification Rune 3Lv    # !todo check english name
+    Name: Soul Purifying Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70906,7 +70906,7 @@ Body:
       }
   - Id: 312368
     AegisName: Soul_Purify_R_4
-    Name: Soul Purification Rune 4Lv    # !todo check english name
+    Name: Soul Purifying Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70920,7 +70920,7 @@ Body:
       }
   - Id: 312369
     AegisName: Soul_Purify_R_5
-    Name: Soul Purification Rune 5Lv    # !todo check english name
+    Name: Soul Purifying Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70938,7 +70938,7 @@ Body:
       }
   - Id: 312370
     AegisName: Soul_Purify_R_6
-    Name: Soul Purification Rune 6Lv    # !todo check english name
+    Name: Soul Purifying Rune 6Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70957,7 +70957,7 @@ Body:
       }
   - Id: 312371
     AegisName: Soul_Purify_R_7
-    Name: Soul Purification Rune 7Lv    # !todo check english name
+    Name: Soul Purifying Rune 7Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -70979,7 +70979,7 @@ Body:
       }
   - Id: 312372
     AegisName: Soul_Purify_R_8
-    Name: Soul Purification Rune Lv 8    # !todo check english name
+    Name: Soul Purifying Rune 8Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71002,7 +71002,7 @@ Body:
       }
   - Id: 312373
     AegisName: Soul_Purify_R_9
-    Name: Soul Purification Rune 9Lv    # !todo check english name
+    Name: Soul Purifying Rune 9Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71028,7 +71028,7 @@ Body:
       }
   - Id: 312374
     AegisName: Soul_Purify_R_10
-    Name: Soul Purification Rune 10Lv    # !todo check english name
+    Name: Soul Purifying Rune 10Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71055,7 +71055,7 @@ Body:
       }
   - Id: 312375
     AegisName: Corrupt_R_1
-    Name: Corruption Rune 1Lv    # !todo check english name
+    Name: Corruption Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71063,7 +71063,7 @@ Body:
       bonus bBaseAtk,10;
   - Id: 312376
     AegisName: Corrupt_R_2
-    Name: Corruption Rune 2Lv    # !todo check english name
+    Name: Corruption Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71071,7 +71071,7 @@ Body:
       bonus bBaseAtk,15;
   - Id: 312377
     AegisName: Corrupt_R_3
-    Name: Corruption Rune 3Lv    # !todo check english name
+    Name: Corruption Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71079,7 +71079,7 @@ Body:
       bonus bBaseAtk,20;
   - Id: 312378
     AegisName: Corrupt_R_4
-    Name: Corruption Rune 4Lv    # !todo check english name
+    Name: Corruption Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71087,7 +71087,7 @@ Body:
       bonus bBaseAtk,25;
   - Id: 312379
     AegisName: Corrupt_R_5
-    Name: Corruption Rune 5Lv    # !todo check english name
+    Name: Corruption Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71096,7 +71096,7 @@ Body:
       bonus2 bAddClass,Class_Boss,10;
   - Id: 312380
     AegisName: Poison_R_1
-    Name: Poison Rune 1Lv    # !todo check english name
+    Name: Poison Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71104,7 +71104,7 @@ Body:
       bonus bDef,30;
   - Id: 312381
     AegisName: Poison_R_2
-    Name: Poison Rune Lv 2    # !todo check english name
+    Name: Poison Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71112,7 +71112,7 @@ Body:
       bonus bDef,60;
   - Id: 312382
     AegisName: Poison_R_3
-    Name: Poison Rune 3Lv    # !todo check english name
+    Name: Poison Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71120,7 +71120,7 @@ Body:
       bonus bDef,90;
   - Id: 312383
     AegisName: Poison_R_4
-    Name: Poison Rune 4Lv    # !todo check english name
+    Name: Poison Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71128,7 +71128,7 @@ Body:
       bonus bDef,120;
   - Id: 312384
     AegisName: Poison_R_5
-    Name: Poison Rune 5Lv    # !todo check english name
+    Name: Poison Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71137,14 +71137,14 @@ Body:
       bonus2 bAddClass,Class_Boss,10;
   - Id: 312385
     AegisName: Corrupt_Poison_R_1
-    Name: Corruption Poison Rune 1Lv    # !todo check english name
+    Name: Corrupted Poison Rune 1Lv
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,10*(readparam(bLuk)/20);
   - Id: 312386
     AegisName: Corrupt_Poison_R_2
-    Name: Corruption Poison Rune 2Lv    # !todo check english name
+    Name: Corrupted Poison Rune 2Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71154,7 +71154,7 @@ Body:
       bonus bCrt,2*.@luk;
   - Id: 312387
     AegisName: Corrupt_Poison_R_3
-    Name: Poison Rune of Corruption Lv 3    # !todo check english name
+    Name: Corrupted Poison Rune 3Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71167,7 +71167,7 @@ Body:
       }
   - Id: 312388
     AegisName: Corrupt_Poison_R_4
-    Name: Poison Rune of Corruption Lv 4    # !todo check english name
+    Name: Corrupted Poison Rune 4Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71182,7 +71182,7 @@ Body:
       }
   - Id: 312389
     AegisName: Corrupt_Poison_R_5
-    Name: Corruption Poison Rune 5Lv    # !todo check english name
+    Name: Corrupted Poison Rune 5Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71201,7 +71201,7 @@ Body:
       }
   - Id: 312390
     AegisName: Corrupt_Poison_R_6
-    Name: Poison Rune of Corruption Lv 6    # !todo check english name
+    Name: Corrupted Poison Rune 6Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71221,7 +71221,7 @@ Body:
       }
   - Id: 312391
     AegisName: Corrupt_Poison_R_7
-    Name: Corruption Poison Rune 7Lv    # !todo check english name
+    Name: Corrupted Poison Rune 7Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71244,7 +71244,7 @@ Body:
       }
   - Id: 312392
     AegisName: Corrupt_Poison_R_8
-    Name: Poison Rune of Corruption Lv 8    # !todo check english name
+    Name: Corrupted Poison Rune 8Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71268,7 +71268,7 @@ Body:
       }
   - Id: 312393
     AegisName: Corrupt_Poison_R_9
-    Name: Corruption Poison Rune 9Lv    # !todo check english name
+    Name: Corrupted Poison Rune 9Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71295,7 +71295,7 @@ Body:
       }
   - Id: 312394
     AegisName: Corrupt_Poison_R_10
-    Name: Poison Rune of Corruption Lv 10    # !todo check english name
+    Name: Corrupted Poison Rune 10Lv
     Type: Card
     SubType: Enchant
     Script: |
@@ -71323,35 +71323,35 @@ Body:
       }
   - Id: 312398
     AegisName: aegis_312398
-    Name: Shinkiro Stone (Garment)    # !todo check english name
+    Name: Shinkiro Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SS_KUNAIWAIKYOKU",5;
   - Id: 312399
     AegisName: aegis_312399
-    Name: Shiranui Stone (Garment)    # !todo check english name
+    Name: Shiranui Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SS_ANTENPOU",10;
   - Id: 312400
     AegisName: aegis_312400
-    Name: shadow cross stone    # !todo check english name
+    Name: Shadow Cross Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,4*(getskilllv("SHC_SHADOW_SENSE")/2);
   - Id: 312401
     AegisName: aegis_312401
-    Name: cardinal stone (Garment)    # !todo check english name
+    Name: Cardinal Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"CD_FRAMEN",5;
   - Id: 312402
     AegisName: aegis_312402
-    Name: Super Novice Stone (Garment)    # !todo check english name
+    Name: Super Novice Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
@@ -71359,28 +71359,28 @@ Body:
       skill "NV_TRANSCENDENCE",10;
   - Id: 312403
     AegisName: aegis_312403
-    Name: Super Novice Stone (Upper)    # !todo check english name
+    Name: Super Novice Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-3*getskilllv("NV_TRANSCENDENCE");
   - Id: 312404
     AegisName: aegis_312404
-    Name: Super Novice Stone (Middle)    # !todo check english name
+    Name: Super Novice Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,2*getskilllv("NV_BREAKTHROUGH");
   - Id: 312405
     AegisName: aegis_312405
-    Name: Super Novice Stone (Lower)    # !todo check english name
+    Name: Super Novice Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus3 "{ bonus2 bMagicAtkEle,Ele_All,15; }",1000,300000,"NV_HELPANGEL";
   - Id: 312406
     AegisName: Experience_Badge
-    Name: Experience Badge    # !todo check english name
+    Name: Experience Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71402,7 +71402,7 @@ Body:
       }
   - Id: 312407
     AegisName: Beholder_Badge
-    Name: Beholder Badge    # !todo check english name
+    Name: Beholder Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71424,7 +71424,7 @@ Body:
       }
   - Id: 312408
     AegisName: Hallow_Badge
-    Name: Hello Badge    # !todo check english name
+    Name: Hallow Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71446,7 +71446,7 @@ Body:
       }
   - Id: 312409
     AegisName: Clamorous_Badge
-    Name: Klamourous Badge    # !todo check english name
+    Name: Clamorous Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71468,7 +71468,7 @@ Body:
       }
   - Id: 312410
     AegisName: Chemical_Badge
-    Name: Chemical Badge    # !todo check english name
+    Name: Chemical Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71490,7 +71490,7 @@ Body:
       }
   - Id: 312411
     AegisName: Insecticide_Badge
-    Name: Insecticide Badge    # !todo check english name
+    Name: Insecticide Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71512,7 +71512,7 @@ Body:
       }
   - Id: 312412
     AegisName: Fisher_Badge
-    Name: Fisher Badge    # !todo check english name
+    Name: Fisher Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71534,7 +71534,7 @@ Body:
       }
   - Id: 312413
     AegisName: Decussate_Badge
-    Name: Decersate Badge    # !todo check english name
+    Name: Decussate Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71556,7 +71556,7 @@ Body:
       }
   - Id: 312414
     AegisName: Murderer_Badge
-    Name: Murderer Badge    # !todo check english name
+    Name: Murderer Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71578,7 +71578,7 @@ Body:
       }
   - Id: 312415
     AegisName: Satanic_Badge
-    Name: Satanic Badge    # !todo check english name
+    Name: Satanic Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -71600,7 +71600,7 @@ Body:
       }
   - Id: 312416
     AegisName: Dragoon_Badge
-    Name: Dragoon Badge    # !todo check english name
+    Name: Dragoon Badge
     Type: Card
     SubType: Enchant
     Script: |
@@ -76867,42 +76867,42 @@ Body:
       DropEffect: CLIENT
   - Id: 1001322
     AegisName: ShinkiroStone_Robe
-    Name: Shinkiro Stone (Garment)    # !todo check english name
+    Name: Shinkiro Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001323
     AegisName: ShiranuiStone_Robe
-    Name: Shiranui Stone (Garment)    # !todo check english name
+    Name: Shiranui Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001324
     AegisName: ShaCrossStone_Robe
-    Name: Shadow Cross Stone (Garment)    # !todo check english name
+    Name: Shadow Cross Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001325
     AegisName: CardinalStone_Robe
-    Name: Cardinal Stone (Garment)    # !todo check english name
+    Name: Cardinal Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001326
     AegisName: SuNoviceStone_Robe
-    Name: Super Novice Stone (Garment)    # !todo check english name
+    Name: Super Novice Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001327
     AegisName: SuNoviceStone_Top
-    Name: Super Novice Stone (Upper)    # !todo check english name
+    Name: Super Novice Stone (Upper)
     Type: Etc
     Weight: 100
   - Id: 1001328
     AegisName: SuNoviceStone_Middle
-    Name: Super Novice Stone (Middle)    # !todo check english name
+    Name: Super Novice Stone (Middle)
     Type: Etc
     Weight: 100
   - Id: 1001329
     AegisName: SuNoviceStone_Bottom
-    Name: Super Novice Stone (Lower)    # !todo check english name
+    Name: Super Novice Stone (Lower)
     Type: Etc
     Weight: 100
   - Id: 1001330
