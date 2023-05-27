@@ -3588,7 +3588,7 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
 	struct s_item_bonus entry = {};
 
 	entry.id = id;
-	entry.val = cap_value(val, -10000, 10000);
+	entry.val = cap_rate ? cap_value(val, -10000, 10000) : val;
 
 	bonus.push_back(entry);
 }

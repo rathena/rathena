@@ -10325,12 +10325,26 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 						target_class = MAPID_WIZARD;
 						break;
 					case SL_HIGH:
-						if( sd->status.base_level < 70 ){
+						if( sd->status.base_level >= 70 ){
 							return 0;
 						}
 
-						mask |= JOBL_UPPER;
-						target_class = MAPID_NOVICE_HIGH;
+						switch (sd->class_) {
+							case MAPID_SWORDMAN_HIGH:
+							case MAPID_MAGE_HIGH:
+							case MAPID_ARCHER_HIGH:
+							case MAPID_ACOLYTE_HIGH:
+							case MAPID_MERCHANT_HIGH:
+							case MAPID_THIEF_HIGH:
+								// Only these classes are allowed.
+								break;
+							default:
+								return 0;
+						}
+
+						// Set these to pass the check below.
+						mask = sd->class_;
+						target_class = sd->class_;
 						break;
 					default:
 						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
