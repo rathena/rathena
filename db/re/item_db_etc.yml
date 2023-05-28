@@ -50612,10 +50612,10 @@ Body:
       if (getequiparmorlv() == 2) {
         .@rate += 8;
       }
-      bonus2 bMagicSubDefEle,Ele_Dark,.@rate;
-      bonus2 bMagicSubDefEle,Ele_Holy,.@rate;
-      bonus2 bMagicSubDefEle,Ele_Fire,.@rate;
-      bonus2 bMagicSubDefEle,Ele_Neutral,.@rate;
+      bonus2 bMagicAtkEle,Ele_Dark,.@rate;
+      bonus2 bMagicAtkEle,Ele_Holy,.@rate;
+      bonus2 bMagicAtkEle,Ele_Fire,.@rate;
+      bonus2 bMagicAtkEle,Ele_Neutral,.@rate;
   - Id: 300376
     AegisName: Eyes_Dollocaris_Card
     Name: Two-Eye Dollocaris Card
@@ -51738,7 +51738,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bLongAtkRate,30*(readparam(bLuk)/20)+5*(getrefine()/3);
+      bonus bLongAtkRate,30+5*(getrefine()/3);
       bonus bCritical,-5*(readparam(bLuk)/20);
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
          bonus2 bAddClass,Class_Boss,10;
@@ -51754,7 +51754,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bShortAtkRate,30*(readparam(bLuk)/20)+5*(getrefine()/3);
+      bonus bShortAtkRate,30+5*(getrefine()/3);
       bonus bCritical,-5*(readparam(bLuk)/20);
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
          bonus2 bAddClass,Class_Boss,10;
@@ -70270,6 +70270,1356 @@ Body:
             }
          }
       }
+  - Id: 312315
+    AegisName: Flame_R_1
+    Name: Flame Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bBaseAtk,10;
+  - Id: 312316
+    AegisName: Flame_R_2
+    Name: Flame Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,6;
+      bonus bBaseAtk,15;
+  - Id: 312317
+    AegisName: Flame_R_3
+    Name: Flame Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,9;
+      bonus bBaseAtk,20;
+  - Id: 312318
+    AegisName: Flame_R_4
+    Name: Flame Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+      bonus bBaseAtk,25;
+  - Id: 312319
+    AegisName: Flame_R_5
+    Name: Flame Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bBaseAtk,30;
+      bonus2 bAddClass,Class_Boss,5;
+  - Id: 312320
+    AegisName: Earth_R_1
+    Name: Earth Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bDef,30;
+  - Id: 312321
+    AegisName: Earth_R_2
+    Name: Earth Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,6;
+      bonus bDef,60;
+  - Id: 312322
+    AegisName: Earth_R_3
+    Name: Earth Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,9;
+      bonus bDef,90;
+  - Id: 312323
+    AegisName: Earth_R_4
+    Name: Earth Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+      bonus bDef,120;
+  - Id: 312324
+    AegisName: Earth_R_5
+    Name: Earth Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bDef,150;
+      bonus2 bAddClass,Class_Boss,10;
+  - Id: 312325
+    AegisName: Flame_Earth_R_1
+    Name: Fiery Earth Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10*(readparam(bStr)/20);
+  - Id: 312326
+    AegisName: Flame_Earth_R_2
+    Name: Fiery Earth Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+  - Id: 312327
+    AegisName: Flame_Earth_R_3
+    Name: Fiery Earth Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bPAtk,6;
+      }
+  - Id: 312328
+    AegisName: Flame_Earth_R_4
+    Name: Fiery Earth Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+      }
+  - Id: 312329
+    AegisName: Flame_Earth_R_5
+    Name: Fiery Earth Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,9;
+         }
+      }
+  - Id: 312330
+    AegisName: Flame_Earth_R_6
+    Name: Fiery Earth Rune 6Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
+            bonus bPAtk,9;
+         }
+      }
+  - Id: 312331
+    AegisName: Flame_Earth_R_7
+    Name: Fiery Earth Rune 7Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,12;
+            }
+         }
+      }
+  - Id: 312332
+    AegisName: Flame_Earth_R_8
+    Name: Fiery Earth Rune 8Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,14;
+               bonus bPAtk,12;
+            }
+         }
+      }
+  - Id: 312333
+    AegisName: Flame_Earth_R_9
+    Name: Fiery Earth Rune 9Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,14;
+               bonus bPAtk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,15;
+               }
+            }
+         }
+      }
+  - Id: 312334
+    AegisName: Flame_Earth_R_10
+    Name: Fiery Earth Rune 10Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@str = (readparam(bStr)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@str;
+      bonus bPow,2*.@str;
+      bonus bCon,2*.@str;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,14;
+               bonus bPAtk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bShortAtkRate,18;
+                  bonus bPAtk,15;
+               }
+            }
+         }
+      }
+  - Id: 312335
+    AegisName: Ice_R_1
+    Name: Ice Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus bBaseAtk,10;
+  - Id: 312336
+    AegisName: Ice_R_2
+    Name: Ice Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,6;
+      bonus bBaseAtk,15;
+  - Id: 312337
+    AegisName: Ice_R_3
+    Name: Ice Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,9;
+      bonus bBaseAtk,20;
+  - Id: 312338
+    AegisName: Ice_R_4
+    Name: Ice Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,12;
+      bonus bBaseAtk,25;
+  - Id: 312339
+    AegisName: Ice_R_5
+    Name: Ice Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,30;
+      bonus2 bAddClass,Class_Boss,5;
+  - Id: 312340
+    AegisName: Storm_R_1
+    Name: Storm Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus bDef,30;
+  - Id: 312341
+    AegisName: Storm_R_2
+    Name: Storm Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,6;
+      bonus bDef,60;
+  - Id: 312342
+    AegisName: Storm_R_3
+    Name: Storm Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,9;
+      bonus bDef,90;
+  - Id: 312343
+    AegisName: Storm_R_4
+    Name: Storm Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,12;
+      bonus bDef,120;
+  - Id: 312344
+    AegisName: Storm_R_5
+    Name: Storm Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bDef,150;
+      bonus2 bAddClass,Class_Boss,10;
+  - Id: 312345
+    AegisName: Ice_Storm_R_1
+    Name: Icy Storm Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10*(readparam(bDex)/20);
+  - Id: 312346
+    AegisName: Ice_Storm_R_2
+    Name: Icy Storm Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+  - Id: 312347
+    AegisName: Ice_Storm_R_3
+    Name: Icy Storm Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bPAtk,6;
+      }
+  - Id: 312348
+    AegisName: Ice_Storm_R_4
+    Name: Icy Storm Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+      }
+  - Id: 312349
+    AegisName: Ice_Storm_R_5
+    Name: Icy Storm Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,9;
+         }
+      }
+  - Id: 312350
+    AegisName: Ice_Storm_R_6
+    Name: Icy Storm Rune 6Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+         }
+      }
+  - Id: 312351
+    AegisName: Ice_Storm_R_7
+    Name: Icy Storm Rune 7Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,12;
+            }
+         }
+      }
+  - Id: 312352
+    AegisName: Ice_Storm_R_8
+    Name: Icy Storm Rune 8Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,14;
+               bonus bPAtk,12;
+            }
+         }
+      }
+  - Id: 312353
+    AegisName: Ice_Storm_R_9
+    Name: Icy Storm Rune 9Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,14;
+               bonus bPAtk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,15;
+               }
+            }
+         }
+      }
+  - Id: 312354
+    AegisName: Ice_Storm_R_10
+    Name: Icy Storm Rune 10Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@dex = (readparam(bDex)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@dex;
+      bonus bPow,2*.@dex;
+      bonus bCon,2*.@dex;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,14;
+               bonus bPAtk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bLongAtkRate,18;
+                  bonus bPAtk,15;
+               }
+            }
+         }
+      }
+  - Id: 312355
+    AegisName: Soul_R_1
+    Name: Soul Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+      bonus bMatk,10;
+  - Id: 312356
+    AegisName: Soul_R_2
+    Name: Soul Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,6;
+      bonus bMatk,15;
+  - Id: 312357
+    AegisName: Soul_R_3
+    Name: Soul Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,9;
+      bonus bMatk,20;
+  - Id: 312358
+    AegisName: Soul_R_4
+    Name: Soul Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,12;
+      bonus bMatk,25;
+  - Id: 312359
+    AegisName: Soul_R_5
+    Name: Soul Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bMatk,30;
+      bonus2 bMagicAddClass,Class_Boss,5;
+  - Id: 312360
+    AegisName: Purify_R_1
+    Name: Purifying Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+      bonus bDef,30;
+  - Id: 312361
+    AegisName: Purify_R_2
+    Name: Purifying Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,6;
+      bonus bDef,60;
+  - Id: 312362
+    AegisName: Purify_R_3
+    Name: Purifying Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,9;
+      bonus bDef,90;
+  - Id: 312363
+    AegisName: Purify_R_4
+    Name: Purifying Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,12;
+      bonus bDef,120;
+  - Id: 312364
+    AegisName: Purify_R_5
+    Name: Purifying Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bDef,150;
+      bonus2 bMagicAddClass,Class_Boss,10;
+  - Id: 312365
+    AegisName: Soul_Purify_R_1
+    Name: Soul Purifying Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10*(readparam(bInt)/20);
+  - Id: 312366
+    AegisName: Soul_Purify_R_2
+    Name: Soul Purifying Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+  - Id: 312367
+    AegisName: Soul_Purify_R_3
+    Name: Soul Purifying Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bSMatk,6;
+      }
+  - Id: 312368
+    AegisName: Soul_Purify_R_4
+    Name: Soul Purifying Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+      }
+  - Id: 312369
+    AegisName: Soul_Purify_R_5
+    Name: Soul Purifying Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      .@g = getenchantgrade();
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bSMatk,9;
+         }
+      }
+  - Id: 312370
+    AegisName: Soul_Purify_R_6
+    Name: Soul Purifying Rune 6Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      .@g = getenchantgrade();
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            bonus bSMatk,9;
+         }
+      }
+  - Id: 312371
+    AegisName: Soul_Purify_R_7
+    Name: Soul Purifying Rune 7Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      .@g = getenchantgrade();
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            bonus bSMatk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSMatk,12;
+            }
+         }
+      }
+  - Id: 312372
+    AegisName: Soul_Purify_R_8
+    Name: Soul Purifying Rune 8Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      .@g = getenchantgrade();
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            bonus bSMatk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,14;
+               bonus bSMatk,12;
+            }
+         }
+      }
+  - Id: 312373
+    AegisName: Soul_Purify_R_9
+    Name: Soul Purifying Rune 9Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      .@g = getenchantgrade();
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            bonus bSMatk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,14;
+               bonus bSMatk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,15;
+               }
+            }
+         }
+      }
+  - Id: 312374
+    AegisName: Soul_Purify_R_10
+    Name: Soul Purifying Rune 10Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@int = (readparam(bInt)/20);
+      .@g = getenchantgrade();
+      bonus bMatk,10*.@int;
+      bonus bSpl,2*.@int;
+      bonus bCon,2*.@int;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,6;
+         bonus bSMatk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            bonus bSMatk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,14;
+               bonus bSMatk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAtkEle,Ele_All,18;
+                  bonus bSMatk,15;
+               }
+            }
+         }
+      }
+  - Id: 312375
+    AegisName: Corrupt_R_1
+    Name: Corruption Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,3;
+      bonus bBaseAtk,10;
+  - Id: 312376
+    AegisName: Corrupt_R_2
+    Name: Corruption Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,6;
+      bonus bBaseAtk,15;
+  - Id: 312377
+    AegisName: Corrupt_R_3
+    Name: Corruption Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,9;
+      bonus bBaseAtk,20;
+  - Id: 312378
+    AegisName: Corrupt_R_4
+    Name: Corruption Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,12;
+      bonus bBaseAtk,25;
+  - Id: 312379
+    AegisName: Corrupt_R_5
+    Name: Corruption Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,15;
+      bonus bBaseAtk,30;
+      bonus2 bAddClass,Class_Boss,10;
+  - Id: 312380
+    AegisName: Poison_R_1
+    Name: Poison Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,3;
+      bonus bDef,30;
+  - Id: 312381
+    AegisName: Poison_R_2
+    Name: Poison Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,6;
+      bonus bDef,60;
+  - Id: 312382
+    AegisName: Poison_R_3
+    Name: Poison Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,9;
+      bonus bDef,90;
+  - Id: 312383
+    AegisName: Poison_R_4
+    Name: Poison Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,12;
+      bonus bDef,120;
+  - Id: 312384
+    AegisName: Poison_R_5
+    Name: Poison Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bDef,150;
+      bonus2 bAddClass,Class_Boss,10;
+  - Id: 312385
+    AegisName: Corrupt_Poison_R_1
+    Name: Corrupted Poison Rune 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10*(readparam(bLuk)/20);
+  - Id: 312386
+    AegisName: Corrupt_Poison_R_2
+    Name: Corrupted Poison Rune 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+  - Id: 312387
+    AegisName: Corrupt_Poison_R_3
+    Name: Corrupted Poison Rune 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bPAtk,6;
+      }
+  - Id: 312388
+    AegisName: Corrupt_Poison_R_4
+    Name: Corrupted Poison Rune 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+      }
+  - Id: 312389
+    AegisName: Corrupt_Poison_R_5
+    Name: Corrupted Poison Rune 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bPAtk,9;
+         }
+      }
+  - Id: 312390
+    AegisName: Corrupt_Poison_R_6
+    Name: Corrupted Poison Rune 6Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+         }
+      }
+  - Id: 312391
+    AegisName: Corrupt_Poison_R_7
+    Name: Corrupted Poison Rune 7Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,12;
+            }
+         }
+      }
+  - Id: 312392
+    AegisName: Corrupt_Poison_R_8
+    Name: Corrupted Poison Rune 8Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,14;
+               bonus bPAtk,12;
+            }
+         }
+      }
+  - Id: 312393
+    AegisName: Corrupt_Poison_R_9
+    Name: Corrupted Poison Rune 9Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,14;
+               bonus bPAtk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,15;
+               }
+            }
+         }
+      }
+  - Id: 312394
+    AegisName: Corrupt_Poison_R_10
+    Name: Corrupted Poison Rune 10Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@luk = (readparam(bLuk)/20);
+      .@g = getenchantgrade();
+      bonus bBaseAtk,10*.@luk;
+      bonus bPow,2*.@luk;
+      bonus bCrt,2*.@luk;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,6;
+         bonus bLongAtkRate,6;
+         bonus bPAtk,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,9;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,14;
+               bonus bPAtk,12;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritAtkRate,18;
+                  bonus bPAtk,15;
+               }
+            }
+         }
+      }
+  - Id: 312398
+    AegisName: aegis_312398
+    Name: Shinkiro Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_KUNAIWAIKYOKU",5;
+  - Id: 312399
+    AegisName: aegis_312399
+    Name: Shiranui Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SS_ANTENPOU",10;
+  - Id: 312400
+    AegisName: aegis_312400
+    Name: Shadow Cross Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,4*(getskilllv("SHC_SHADOW_SENSE")/2);
+  - Id: 312401
+    AegisName: aegis_312401
+    Name: Cardinal Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"CD_FRAMEN",5;
+  - Id: 312402
+    AegisName: aegis_312402
+    Name: Super Novice Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "NV_BREAKTHROUGH",5;
+      skill "NV_TRANSCENDENCE",10;
+  - Id: 312403
+    AegisName: aegis_312403
+    Name: Super Novice Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-3*getskilllv("NV_TRANSCENDENCE");
+  - Id: 312404
+    AegisName: aegis_312404
+    Name: Super Novice Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("NV_BREAKTHROUGH");
+  - Id: 312405
+    AegisName: aegis_312405
+    Name: Super Novice Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus3 "{ bonus2 bMagicAtkEle,Ele_All,15; }",1000,300000,"NV_HELPANGEL";
+  - Id: 312406
+    AegisName: Experience_Badge
+    Name: Experience Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,10;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,4;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,3;
+            }
+         }
+      }
+  - Id: 312407
+    AegisName: Beholder_Badge
+    Name: Beholder Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312408
+    AegisName: Hallow_Badge
+    Name: Hallow Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312409
+    AegisName: Clamorous_Badge
+    Name: Clamorous Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312410
+    AegisName: Chemical_Badge
+    Name: Chemical Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312411
+    AegisName: Insecticide_Badge
+    Name: Insecticide Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312412
+    AegisName: Fisher_Badge
+    Name: Fisher Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312413
+    AegisName: Decussate_Badge
+    Name: Decussate Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312414
+    AegisName: Murderer_Badge
+    Name: Murderer Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312415
+    AegisName: Satanic_Badge
+    Name: Satanic Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
+  - Id: 312416
+    AegisName: Dragoon_Badge
+    Name: Dragoon Badge
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (BaseLevel<175) {
+         bonus2 bExpAddRace,RC_All,15;
+      }
+      if (BaseLevel>=175) {
+         bonus2 bExpAddRace,RC_All,7;
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bExpAddRace,RC_All,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bExpAddRace,RC_All,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bExpAddRace,RC_All,5;
+            }
+         }
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -75246,6 +76596,371 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001289
+    AegisName: Bar_D_Docu_1
+    Name: In-depth 1st floor research material    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001290
+    AegisName: Bar_D_Fl_Energy
+    Name: Deep Fire Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001291
+    AegisName: Bar_D_Ea_Energy
+    Name: Deep Earth Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001292
+    AegisName: Bar_D_Ic_Energy
+    Name: Deep Cold Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001293
+    AegisName: Bar_D_St_Energy
+    Name: Deep Storm Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001294
+    AegisName: Bar_D_So_Energy
+    Name: Deep Soul Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001295
+    AegisName: Bar_D_Pu_Energy
+    Name: Deep Cleansing Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001296
+    AegisName: Bar_D_Co_Energy
+    Name: Deep Corruption Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001297
+    AegisName: Bar_D_Po_Energy
+    Name: Deep Poison Energy    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001298
+    AegisName: Bar_D_Fl_Crystal
+    Name: Deep Flame Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001299
+    AegisName: Bar_D_Ea_Crystal
+    Name: Deep Earth Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001300
+    AegisName: Bar_D_Ic_Crystal
+    Name: Deep Ice Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001301
+    AegisName: Bar_D_St_Crystal
+    Name: Deep Storm Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001302
+    AegisName: Bar_D_So_Crystal
+    Name: Deep Soul Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001303
+    AegisName: Bar_D_Pu_Crystal
+    Name: Deep Purification Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001304
+    AegisName: Bar_D_Co_Crystal
+    Name: Depth Corruption Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001305
+    AegisName: Bar_D_Po_Crystal
+    Name: Deep Poison Crystal    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001306
+    AegisName: Bar_D_Fl_Rune
+    Name: Rune of Deep Fire    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001307
+    AegisName: Bar_D_Ea_Rune
+    Name: Deep Earth Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001308
+    AegisName: Bar_D_Ic_Rune
+    Name: Deep Cold Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001309
+    AegisName: Bar_D_St_Rune
+    Name: Deep Storm Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001310
+    AegisName: Bar_D_So_Rune
+    Name: Deep Soul Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001311
+    AegisName: Bar_D_Pu_Rune
+    Name: Deep Cleansing Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001312
+    AegisName: Bar_D_Co_Rune
+    Name: Deep Corruption Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001313
+    AegisName: Bar_D_Po_Rune
+    Name: Rune of Deep Poison    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001314
+    AegisName: Bar_D_Fl_Essence
+    Name: Essence of Deep Fire    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001315
+    AegisName: Bar_D_Ea_Essence
+    Name: Essence of Deep Earth    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001316
+    AegisName: Bar_D_Ic_Essence
+    Name: Essence of Deep Cold    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001317
+    AegisName: Bar_D_St_Essence
+    Name: Essence of the Deep Storm    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001318
+    AegisName: Bar_D_So_Essence
+    Name: Deep Soul Essence    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001319
+    AegisName: Bar_D_Pu_Essence
+    Name: Essence of Deep Purification    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001320
+    AegisName: Bar_D_Co_Essence
+    Name: Essence of Deep Corruption    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001321
+    AegisName: Bar_D_Po_Essence
+    Name: Essence of Deep Venom    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001322
+    AegisName: ShinkiroStone_Robe
+    Name: Shinkiro Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001323
+    AegisName: ShiranuiStone_Robe
+    Name: Shiranui Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001324
+    AegisName: ShaCrossStone_Robe
+    Name: Shadow Cross Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001325
+    AegisName: CardinalStone_Robe
+    Name: Cardinal Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001326
+    AegisName: SuNoviceStone_Robe
+    Name: Super Novice Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001327
+    AegisName: SuNoviceStone_Top
+    Name: Super Novice Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001328
+    AegisName: SuNoviceStone_Middle
+    Name: Super Novice Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001329
+    AegisName: SuNoviceStone_Bottom
+    Name: Super Novice Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001330
+    AegisName: aegis_1001330
+    Name: Deep Fire Sample    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001331
+    AegisName: aegis_1001331
+    Name: Deep Earth Sample    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001332
+    AegisName: aegis_1001332
+    Name: Deep Frost Sample    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001333
+    AegisName: aegis_1001333
+    Name: Deep Storm Sample    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001334
+    AegisName: aegis_1001334
+    Name: Depth Soul Sample    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001335
+    AegisName: aegis_1001335
+    Name: Purification Sample of the Depths    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001336
+    AegisName: aegis_1001336
+    Name: Depth Corruption Sample    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001337
+    AegisName: aegis_1001337
+    Name: Deadly Poison Specimen of the Depths    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
