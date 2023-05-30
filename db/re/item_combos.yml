@@ -37484,7 +37484,7 @@ Body:
     Script: |
       bonus bBaseAtk,30;
       bonus bMatk,30;
-      bonus bVariableCastrate,-20;
+      bonus bVariableCastrate,-5;
       bonus bFixedCast,-200;
       bonus2 bMagicAddClass,Class_Boss,20;
   - Combos:
