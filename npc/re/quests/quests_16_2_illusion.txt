@@ -13,6 +13,7 @@
 //= 1.4 Added Illusion of Turtle [Capuche]
 //= 1.5 Added Illusion of Luanda [Capuche]
 //= 1.6 Added Illusion of Underwater [Capuche]
+//= 1.6.1 Temp fix Illusion of Underwater because prt_elib is not implemented yet [mazvi]
 //============================================================
 
 //============================================================
@@ -8716,7 +8717,8 @@ S_MenuHunt:
 //============================================================
 //= Illusion of Underwater
 //============================================================
-prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
+//prt_elib,57,18,4 (PS: Use prt_elib when it's implemented)
+prt_in,157,66,4	script	Jerrymon#jerry	1_M_01,{
 	if (ill_underwater == 0) {
 		mes "[Jerrymon]";
 		mes "Um... Uhm...";
