@@ -42,14 +42,32 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 	}
 	.@md_name$ = "Weekend Dungeon";
 
-	if (is_party_leader() == false) {
-		mes "[Marry Jae]";
-		mes "You need to form a party of one member or more.";
-		close;
-	}
 	switch( checkquest(12378,PLAYTIME) ) {
 	case -1:
-		break;
+		if (is_party_leader() == true) {
+			mes "[Marry Jae]";
+			mes "I think you're just about ready.";
+			mes "Now, would you like to enter it now?";
+			next;
+			switch( select( "Prepare Memorial Dungeon", "Enter Weekend Dungeon", "Cancel" ) ) {
+			case 1:
+				instance_create(.@md_name$);
+				mes "[Marry Jae]";
+				mes "The Memorial Dungeon has been created.";
+				mes "You may now enter.";
+				close;
+			case 2:
+				callsub L_Enter;
+			case 3:
+				mes "[Marry Jae]";
+				mes "You have not prepared?";
+				mes "Can't really help it I guess.";
+				close;
+			}
+		}
+		if (select("Enter Weekend Dungeon:Cancel") == 2)
+			end;
+		callsub L_Enter;
 	case 0:
 	case 1:
 		switch( checkquest(12377,PLAYTIME) ) {
@@ -61,7 +79,9 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 			close;
 		case 0:
 		case 1:
-			break;
+			if(select(Enter Weekend Dungeon:Cancel") == 2)
+				end;
+			callsub L_Enter;
 		}
 		break;
 	case 2:
@@ -73,41 +93,27 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 		close;
 	}
 	mes "[Marry Jae]";
-	mes "I think you're just about ready.";
-	mes "Now, would you like to enter it now?";
-	next;
-	switch( select( "Prepare Memorial Dungeon", "Enter Weekend Dungeon", "Cancel" ) ) {
-	case 1:
-		instance_create(.@md_name$);
-		mes "[Marry Jae]";
-		mes "The Memorial Dungeon has been created.";
-		mes "You may now enter.";
-		close;
-	case 2:
-		switch( instance_enter(.@md_name$) ) {
-		case IE_NOMEMBER:
-			end;
-		case IE_NOINSTANCE:
-			mes "There is no Memorial Dungeon registered.";
-			close;
-		case IE_OTHER:
-			mes "An unknown error has occurred.";
-			close;
-		case IE_OK:
-			mes "[Marry Jae]";
-			mes "Off you go!";
-			mapannounce "pay_arche", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
-			if (isbegin_quest(12377) == 0)
-				setquest 12377;
-			if (isbegin_quest(12378) == 0)
-				setquest 12378;
-			end;
-		}
+	mes "You need to form a party of one member or more.";
+	close;
+
+L_Enter:
+	switch( instance_enter(.@md_name$) ) {
+	case IE_NOMEMBER:
 		end;
-	case 3:
+	case IE_NOINSTANCE:
+		mes "There is no Memorial Dungeon registered.";
+		close;
+	case IE_OTHER:
+		mes "An unknown error has occurred.";
+		close;
+	case IE_OK:
 		mes "[Marry Jae]";
-		mes "You have not prepared?";
-		mes "Can't really help it I guess.";
+		mes "Off you go!";
+		mapannounce "pay_arche", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+		if (isbegin_quest(12377) == 0)
+			setquest 12377;
+		if (isbegin_quest(12378) == 0)
+			setquest 12378;
 		close;
 	}
 }
