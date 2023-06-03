@@ -98074,7 +98074,7 @@ Body:
         Rate: 10
       - Item: Iron
         Rate: 500
-      - Item: Ep172_Bh_knuck
+      - Item: Ep172_Bh_Knuck
         Rate: 3
         RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Ep172_Bh_Bow3
@@ -98413,7 +98413,7 @@ Body:
       - Item: Ep172_Bh_Staff
         Rate: 5
         RandomOptionGroup: AUTO_IMP_MAGIC_2
-      - Item: Ep172_Bh_knuck
+      - Item: Ep172_Bh_Knuck
         Rate: 5
         RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Old_Violet_Box
@@ -98448,7 +98448,6 @@ Body:
     AttackMotion: 768
     DamageMotion: 480
     Ai: 04
-    Drops:
   - Id: 20639
     AegisName: EP17_2_BETA_GUARDS_NG
     Name: Broken Beta Guards

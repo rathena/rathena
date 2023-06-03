@@ -1922,13 +1922,18 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  */
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag) {
 	struct status_data *status;
-	status_change *sc = NULL, *tsc;
 	int hide_flag;
 
-	status = src ? status_get_status_data(src) : &dummy_status;
+	if (src) {
+		if (src->type != BL_PC && status_isdead(src))
+			return false;
+		status = status_get_status_data(src);
+	}else{
+		status = &dummy_status;
+	}
 
-	if (src && src->type != BL_PC && status_isdead(src))
-		return false;
+	status_change *sc = status_get_sc(src);
+	status_change *tsc = status_get_sc(target);
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
@@ -1945,12 +1950,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( skill_id ) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
-			if( flag && target ) {
-				// Gloria Avoids pretty much everything....
-				tsc = status_get_sc(target);
-				if(tsc && tsc->option&OPTION_HIDE)
-					return false;
-			}
+			if( flag && tsc && tsc->option&OPTION_HIDE)
+				return false; // Gloria Avoids pretty much everything....
 			break;
 #endif
 		case GN_WALLOFTHORN:
@@ -1972,9 +1973,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		default:
 			break;
 	}
-
-	if ( src )
-		sc = status_get_sc(src);
 
 	if( sc && sc->count ) {
 		if (sc->getSCE(SC_ALL_RIDING))
@@ -2094,10 +2092,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 	}
 
-	if (target == NULL || target == src) // No further checking needed.
+	if (target == nullptr || target == src) // No further checking needed.
 		return true;
-
-	tsc = status_get_sc(target);
 
 	if (tsc && tsc->count) {
 		/**
@@ -10329,12 +10325,26 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 						target_class = MAPID_WIZARD;
 						break;
 					case SL_HIGH:
-						if( sd->status.base_level < 70 ){
+						if( sd->status.base_level >= 70 ){
 							return 0;
 						}
 
-						mask |= JOBL_UPPER;
-						target_class = MAPID_NOVICE_HIGH;
+						switch (sd->class_) {
+							case MAPID_SWORDMAN_HIGH:
+							case MAPID_MAGE_HIGH:
+							case MAPID_ARCHER_HIGH:
+							case MAPID_ACOLYTE_HIGH:
+							case MAPID_MERCHANT_HIGH:
+							case MAPID_THIEF_HIGH:
+								// Only these classes are allowed.
+								break;
+							default:
+								return 0;
+						}
+
+						// Set these to pass the check below.
+						mask = sd->class_;
+						target_class = sd->class_;
 						break;
 					default:
 						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
@@ -10596,7 +10606,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_POISONREACT:
 #ifdef RENEWAL
-			val2=(val1 - ((val1-1) % 1 - 1)) / 2;
+			val2= (val1 + 1) / 2;
 #else
 			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
 #endif

@@ -4405,7 +4405,7 @@ Body:
       bonus bAspdRate,3;
       bonus bAspd,1;
       bonus2 bAddClass,Class_All,-5;
-      if (getequiprefinerycnt(EQI_HAND_R) >= 10 && getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == 11)
+      if (getequiprefinerycnt(EQI_HAND_R) >= 10 && getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == 11)
          bonus bAspd,1;
   - Combos:
       - Combo:
@@ -7291,7 +7291,7 @@ Body:
           - Tree_Of_Sprout_JP
           - Tendrilion_Card
     Script: |
-      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW);
+      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       if (.@type == W_BOOK || .@type == W_STAFF || .@type == W_2HSTAFF) {
          bonus2 bMagicAddRace,RC_Player_Human, getequiprefinerycnt(EQI_HAND_R)*2;
       }
@@ -37072,3 +37072,125 @@ Body:
     Script: |
       bonus2 bMagicAddEle,Ele_Holy,10;
       bonus bMaxSPrate,15;
+  - Combos:
+      - Combo:
+          - aegis_312398   # 312398
+          - aegis_311912   # 311912
+    Script: |
+      bonus2 bSkillAtk,"SS_KUNAIWAIKYOKU",10;
+  - Combos:
+      - Combo:
+          - aegis_312398   # 312398
+          - aegis_311913   # 311913
+    Script: |
+      bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",10;
+  - Combos:
+      - Combo:
+          - aegis_312398   # 312398
+          - aegis_311914   # 311914
+    Script: |
+      bonus bLongAtkRate,3*getskilllv("SS_SHIMIRU");
+  - Combos:
+      - Combo:
+          - aegis_312399   # 312399
+          - aegis_311915   # 311915
+    Script: |
+      bonus2 bSkillAtk,"SS_SEKIENHOU",10;
+  - Combos:
+      - Combo:
+          - aegis_312399   # 312399
+          - aegis_311916   # 311916
+    Script: |
+      bonus bVariableCastrate,-3*getskilllv("SS_TOKEDASU");
+  - Combos:
+      - Combo:
+          - aegis_312399   # 312399
+          - aegis_311917   # 311917
+    Script: |
+      bonus2 bSkillAtk,"SS_RAIDENPOU",10;
+  - Combos:
+      - Combo:
+          - aegis_312400   # 312400
+          - aegis_311433   # 311433
+    Script: |
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
+  - Combos:
+      - Combo:
+          - aegis_312400   # 312400
+          - aegis_311434   # 311434
+    Script: |
+      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",10;
+  - Combos:
+      - Combo:
+          - aegis_312400   # 312400
+          - aegis_311435   # 311435
+    Script: |
+      bonus bCRate,getskilllv("SHC_SHADOW_SENSE");
+  - Combos:
+      - Combo:
+          - aegis_312401   # 312401
+          - Archbishop_Top3   # 311356
+    Script: |
+      bonus2 bSkillAtk,"CD_FRAMEN",10;
+  - Combos:
+      - Combo:
+          - aegis_312401   # 312401
+          - Archbishop_Middle3   # 311357
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,3*(getskilllv("CD_FIDUS_ANIMUS")/2);
+  - Combos:
+      - Combo:
+          - aegis_312401   # 312401
+          - Archbishop_Bottom3   # 311358
+    Script: |
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
+  - Combos:
+      - Combo:
+          - aegis_312402   # 312402
+          - Warlock_Middle   # 29469
+    Script: |
+      bonus2 bSkillAtk,"AB_JUDEX",3*getskilllv("NV_TRANSCENDENCE");
+  - Combos:
+      - Combo:
+          - aegis_312402   # 312402
+          - Shadowchaser_Bottom   # 29479
+    Script: |
+      bonus2 bSkillAtk,"RK_WINDCUTTER",3*getskilllv("NV_BREAKTHROUGH");
+  - Combos:
+      - Combo:
+          - aegis_312402   # 312402
+          - Paladin_Top   # 29517
+    Script: |
+      bonus bMdef,15;
+      bonus bDef,120;
+  - Combos:
+      - Combo:
+          - aegis_312403   # 312403
+          - aegis_312402   # 312402
+    Script: |
+      bonus2 bSkillAtk,"AB_JUDEX",3*getskilllv("NV_TRANSCENDENCE");
+  - Combos:
+      - Combo:
+          - aegis_312404   # 312404
+          - aegis_312402   # 312402
+    Script: |
+      bonus2 bSkillAtk,"RK_WINDCUTTER",3*getskilllv("NV_BREAKTHROUGH");
+  - Combos:
+      - Combo:
+          - aegis_312405   # 312405
+          - aegis_312402   # 312402
+    Script: |
+      bonus bMaxHPrate,15;
+  - Combos:
+      - Combo:
+          - Diamond_Ace_Range   # 420220
+          - aegis_410232   # 410232
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus bAtkRate,5;
+  - Combos:
+      - Combo:
+          - SeeOtter_Fan_LT   # 490374
+          - FurSeal_Fan_LT   # 490375
+    Script: |
+      bonus bAllTraitStats,3;

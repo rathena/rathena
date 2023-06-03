@@ -66762,6 +66762,43 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 102342
+    AegisName: Loki_Advice_3
+    Name: Loki's advice (distance physics)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102343
+    AegisName: Loki_Coin_3
+    Name: Loki's Black Coin    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102344
+    AegisName: Fan_Upgrade_Kit_EX
+    Name: Fan Modification Kit EX    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 102373
+    AegisName: Bar_D_A_Seal
+    Name: Deep Runic Armor Inscription    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102374
+    AegisName: Bar_D_A_Unseal
+    Name: Depth Rune Armor Unengraved    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
