@@ -10606,7 +10606,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_POISONREACT:
 #ifdef RENEWAL
-			val2=(val1 - ((val1-1) % 1 - 1)) / 2;
+			val2= (val1 + 1) / 2;
 #else
 			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
 #endif

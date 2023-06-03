@@ -9870,7 +9870,7 @@ iz_d04_i,129,232,5	script	Gatekeeper#guard1	4_M_KY_SOLD,{
 	mes "[Gatekeeper]";
 	mes "If you go downstairs, you will run into some pretty vicious fish. Would that be alright?";
 	next;
-	if (select( "Sure", "I'll come next time" ) == 1) {
+	if (select( "Sure", "I'll come next time" ) == 2) {
 		mes "[Gatekeeper]";
 		mes "Please talk to me again when you are ready to cross.";
 		close;
