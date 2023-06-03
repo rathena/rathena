@@ -13,7 +13,6 @@
 //= 1.4 Added Illusion of Turtle [Capuche]
 //= 1.5 Added Illusion of Luanda [Capuche]
 //= 1.6 Added Illusion of Underwater [Capuche]
-//= 1.6.1 Temp fix Illusion of Underwater because prt_elib is not implemented yet [mazvi]
 //============================================================
 
 //============================================================
