@@ -17245,6 +17245,7 @@ void clif_cashshop_list( map_session_data* sd ){
 		struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *p = (struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *)packet_buffer;
 
 		p->packetType = HEADER_ZC_ACK_SCHEDULER_CASHITEM;
+		p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM );
 		p->count = 0;
 		p->tabNum = tab->tab;
 
@@ -17263,9 +17264,17 @@ void clif_cashshop_list( map_session_data* sd ){
 			}
 #endif
 			p->count++;
-		}
+			p->packetLength += sizeof( p->items[0] );
 
-		p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM ) + p->count * sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub );
+			if( ( static_cast<size_t>( p->packetLength ) + sizeof( p->items[0] ) ) >= INT16_MAX ){
+				// Send current data
+				clif_send( p, p->packetLength, &sd->bl, SELF );
+
+				// Start a new packet
+				p->count = 0;
+				p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM );
+			}
+		}
 
 		clif_send( p, p->packetLength, &sd->bl, SELF );
 	}
@@ -17300,12 +17309,10 @@ void clif_cashshop_show( map_session_data *sd, struct npc_data *nd ){
 
 	npc_shop_currency_type( sd, nd, cost, true );
 
-	uint16 len = sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST ) + nd->u.shop.count * sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub );
-	WFIFOHEAD( fd, len );
-	struct PACKET_ZC_PC_CASH_POINT_ITEMLIST* p = (struct PACKET_ZC_PC_CASH_POINT_ITEMLIST *)WFIFOP( fd, 0 );
+	struct PACKET_ZC_PC_CASH_POINT_ITEMLIST* p = (struct PACKET_ZC_PC_CASH_POINT_ITEMLIST*)packet_buffer;
 
-	p->packetType = 0x287;
-	p->packetLength = len;
+	p->packetType = HEADER_ZC_PC_CASH_POINT_ITEMLIST;
+	p->packetLength = sizeof( *p );
 	p->cashPoints = cost[0];
 #if PACKETVER >= 20070711
 	p->kafraPoints = cost[1];
@@ -17323,9 +17330,11 @@ void clif_cashshop_show( map_session_data *sd, struct npc_data *nd ){
 		p->items[i].viewSprite = id->look;
 		memset( p->items[i].unused, 0, sizeof( p->items[i].unused ) );
 #endif
+
+		p->packetLength += sizeof( p->items[0] );
 	}
 
-	WFIFOSET( fd, len );
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 }
 
 /// Cashshop Buy Ack (ZC_PC_CASH_POINT_UPDATE).
@@ -17369,9 +17378,9 @@ void clif_cashshop_result( map_session_data *sd, t_itemid item_id, uint16 result
 #if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined( PACKETVER_ZERO )
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT packet;
+	struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT packet = {};
 
-	packet.packetType = 0x849;
+	packet.packetType = HEADER_ZC_SE_PC_BUY_CASHITEM_RESULT;
 	if( item_id != 0 ){
 		packet.itemId = client_nameid( item_id );
 	}else{
@@ -17381,7 +17390,7 @@ void clif_cashshop_result( map_session_data *sd, t_itemid item_id, uint16 result
 	packet.cashPoints = sd->cashPoints;
 	packet.kafraPoints = sd->kafraPoints;
 
-	clif_send( &packet, sizeof( struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 #endif
 }
 

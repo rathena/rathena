@@ -94,6 +94,8 @@
 // should be merged with any of above later
 #define CREATE(result, type, number) (result) = (type *) aCalloc ((number), sizeof(type))
 #define RECREATE(result, type, number) (result) = (type *) aRealloc ((result), sizeof(type) * (number))
+#define CREATE2( result, type, number, file, line, func ) (result) = (type*)aCalloc2( ( number ), sizeof( type ), ( file ), ( line ), ( func ) )
+#define RECREATE2( result, type, number, file, line, func ) (result) = (type*)aRealloc2( ( result ), sizeof( type ) * ( number ), ( file ), ( line ), ( func ) )
 
 ////////////////////////////////////////////////
 
