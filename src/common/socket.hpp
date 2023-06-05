@@ -17,6 +17,7 @@
 #include <time.h>
 
 #include "cbasetypes.hpp"
+#include "malloc.hpp"
 #include "timer.hpp" // t_tick
 
 #ifndef MAXCONN
@@ -27,7 +28,12 @@
 
 // socket I/O macros
 #define RFIFOHEAD(fd)
-#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
+#define WFIFOHEAD( fd, size ) \
+	do{ \
+		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
+			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+		} \
+	}while( false )
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
@@ -127,8 +133,10 @@ extern bool session_isActive(int fd);
 
 int make_listen_bind(uint32 ip, uint16 port);
 int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
-int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
-int realloc_writefifo(int fd, size_t addition);
+#define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
+#define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
+int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func );
+int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func );
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 

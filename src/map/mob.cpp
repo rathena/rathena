@@ -568,7 +568,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		struct map_data *mapdata = map_getmapdata(md->bl.m);
 		char output[128];
 		
-		if( mapdata->flag[MF_ALLOWKS] || mapdata_flag_ks(mapdata) )
+		if( mapdata->getMapFlag(MF_ALLOWKS) || mapdata_flag_ks(mapdata) )
 			return false; // Ignores GVG, PVP and AllowKS map flags
 
 		if( md->get_bosstype() == BOSSTYPE_MVP || md->master_id )

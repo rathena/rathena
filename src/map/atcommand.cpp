@@ -4432,7 +4432,7 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	/* Skill damage adjustment info [Cydh] */
-	if (mapdata->flag[MF_SKILL_DAMAGE]) {
+	if (mapdata->getMapFlag(MF_SKILL_DAMAGE)) {
 		clif_displaymessage(fd,msg_txt(sd,1052)); // Skill Damage Adjustments:
 		sprintf(atcmd_output, msg_txt(sd, 1053), // > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d
 			mapdata->damage_adjust.rate[SKILLDMG_PC],

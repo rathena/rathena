@@ -842,7 +842,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
+	if (mapdata->getMapFlag(MF_NOSKILL) && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
@@ -870,11 +870,11 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 	uint32 skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
 	if( (skill_nocast&1 && !mapdata_flag_vs2(mapdata)) ||
-		(skill_nocast&2 && mapdata->flag[MF_PVP]) ||
+		(skill_nocast&2 && mapdata->getMapFlag(MF_PVP)) ||
 		(skill_nocast&4 && mapdata_flag_gvg2_no_te(mapdata)) ||
-		(skill_nocast&8 && mapdata->flag[MF_BATTLEGROUND]) ||
+		(skill_nocast&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) ){
+		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) ){
 			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
@@ -888,7 +888,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
 		case ALL_PRONTERA_RECALL:
-			if(mapdata->flag[MF_NOWARP]) {
+			if(mapdata->getMapFlag(MF_NOWARP)) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
 			}
@@ -898,7 +898,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
-			if(mapdata->flag[MF_NOTELEPORT]) {
+			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
 			}
@@ -906,7 +906,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
-			if (mapdata->flag[MF_NOMEMO]) {
+			if (mapdata->getMapFlag(MF_NOMEMO)) {
 				clif_skill_teleportmessage(sd,1);
 				return true;
 			}
@@ -955,7 +955,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 			return false; // always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]
-			if (mapdata->flag[MF_NOICEWALL]) {
+			if (mapdata->getMapFlag(MF_NOICEWALL)) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return true;
 			}
@@ -971,7 +971,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 			if (
 				!(battle_config.emergency_call&((is_agit_start())?2:1)) ||
 				!(battle_config.emergency_call&(mapdata_flag_gvg2(mapdata)?8:4)) ||
-				(battle_config.emergency_call&16 && mapdata->flag[MF_NOWARPTO] && !(mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE]))
+				(battle_config.emergency_call&16 && mapdata->getMapFlag(MF_NOWARPTO) && !(mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
 			)	{
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return true;
@@ -5329,7 +5329,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if (path) {
 			if(skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist)) {
 #ifdef RENEWAL
-				if (map_getmapdata(src->m)->flag[MF_PVP])
+				if (map_getmapdata(src->m)->getMapFlag(MF_PVP))
 					dist += 2; // Knockback is 4 on PvP maps
 #endif
 				skill_blown(src, bl, dist, dir, BLOWN_NONE);
@@ -9543,8 +9543,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct map_data *mapdata = &map[src->m];
 
 			//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
-			if( mapdata->flag[MF_NOTELEPORT] &&
-				!(mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata) )
+			if( mapdata->getMapFlag(MF_NOTELEPORT) &&
+				!(mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata) )
 			) {
 				clif_skill_nodamage(src, bl, TK_HIGHJUMP, skill_lv, 1);
 				break;
@@ -23336,7 +23336,7 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	if (check_flag&1 && mapdata->flag[MF_BATTLEGROUND])
+	if (check_flag&1 && mapdata->getMapFlag(MF_BATTLEGROUND))
 		return false;
 	if (check_flag&2 && mapdata_flag_gvg(mapdata))
 		return false;
