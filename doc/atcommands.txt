@@ -1207,6 +1207,27 @@ Opens the enchantgrade UI.
 
 ---------------------------------------
 
+@setcard <equip position> <slot> <card_id>
+
+Adds a card or enchant to the specific slot of the equipment.
+
+<equip position>:
+1: Lower Headgear
+2: Right Hand
+4: Garment
+8: Left Accessory
+16: Body Armor
+32: Left Hand
+64: Shoes
+128: Right Accessory
+256: Top Headgear
+512: Mid Headgear
+
+<slot> number: 0-3.
+<card_id>: Can actually be any existing card or enchant item. Put 0 to remove it.
+
+---------------------------------------
+
 ==============================
 | 5. Administrative Commands |
 ==============================
