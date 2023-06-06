@@ -9841,6 +9841,7 @@ Body:
     Duration1: 30000
     CastTimeFlags:
       IgnoreDex: true
+      IgnoreStatus: true
       IgnoreItemBonus: true
     Requires:
       SpCost:
