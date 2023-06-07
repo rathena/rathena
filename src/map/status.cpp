@@ -13415,9 +13415,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			}
 			break;
 		case SC_JAILED:
-			if (tid == INVALID_TIMER)
-				break;
-			// Natural expiration.
 			if(sd && sd->mapindex == sce->val2)
 				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, CLR_TELEPORT);
 			break; // Guess hes not in jail :P
