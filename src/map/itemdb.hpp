@@ -2039,6 +2039,8 @@ struct item_data
 
 	uint32 value_buy;
 	uint32 value_sell;
+	bool has_value_buy;
+	bool has_value_sell;
 	item_types type;
 	uint8 subtype;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]

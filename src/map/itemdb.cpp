@@ -207,6 +207,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			buy = MAX_ZENY;
 		}
 
+		item->has_value_buy = true;
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
@@ -225,6 +226,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			sell = MAX_ZENY;
 		}
 
+		item->has_value_sell = true;
 		item->value_sell = sell;
 	} else {
 		if (!exists) {
@@ -1153,9 +1155,9 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		// When a particular price is not given, we should base it off the other one
-		if (item->value_buy == 0 && item->value_sell > 0)
+		if (!item->has_value_buy && item->has_value_sell)
 			item->value_buy = item->value_sell * 2;
-		else if (item->value_buy > 0 && item->value_sell == 0)
+		else if (item->has_value_buy && !item->has_value_sell)
 			item->value_sell = item->value_buy / 2;
 
 		if (item->value_buy / 124. < item->value_sell / 75.) {

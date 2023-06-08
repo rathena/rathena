@@ -1880,6 +1880,7 @@ Body:
     Name: Trap
     Type: Etc
     Buy: 75
+    Sell: 0
     Weight: 2
     Flags:
       BuyingStore: true
@@ -2098,6 +2099,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 1
+    Sell: 0
     Weight: 1
     Attack: 25
     Jobs:
@@ -2116,6 +2118,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2136,6 +2139,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2156,6 +2160,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 4
+    Sell: 0
     Weight: 1
     Attack: 40
     Jobs:
@@ -2174,6 +2179,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2194,6 +2200,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2214,6 +2221,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2234,6 +2242,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2254,6 +2263,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2274,6 +2284,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2295,6 +2306,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2315,6 +2327,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2335,6 +2348,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2355,6 +2369,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2376,6 +2391,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 20
+    Sell: 0
     Weight: 1
     Attack: 10
     Jobs:
@@ -2396,6 +2412,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 30
+    Sell: 0
     Weight: 1
     Attack: 50
     Jobs:
@@ -2414,6 +2431,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 40
+    Sell: 0
     Weight: 3
     Attack: 50
     Jobs:
@@ -2434,6 +2452,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 5
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2454,6 +2473,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2474,6 +2494,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 1
     Jobs:
@@ -2494,6 +2515,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -2525,6 +2547,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
+    Sell: 0
     Weight: 1
     Attack: 50
     Jobs:
@@ -2546,6 +2569,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 45
     Jobs:
@@ -2564,6 +2588,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 35
     Jobs:
@@ -2582,6 +2607,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 45
     Jobs:
@@ -2600,6 +2626,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -31291,6 +31318,7 @@ Body:
     Name: Special Alloy Trap
     Type: Etc
     Buy: 300
+    Sell: 0
     Weight: 2
     Flags:
       BuyingStore: true

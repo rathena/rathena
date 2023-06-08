@@ -4299,6 +4299,7 @@ Body:
     Name: Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4309,6 +4310,7 @@ Body:
     Name: Iron Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4319,6 +4321,7 @@ Body:
     Name: Steel Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4329,6 +4332,7 @@ Body:
     Name: Oridecon Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4339,6 +4343,7 @@ Body:
     Name: Fire Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4349,6 +4354,7 @@ Body:
     Name: Silver Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4359,6 +4365,7 @@ Body:
     Name: Wind Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4369,6 +4376,7 @@ Body:
     Name: Stone Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4379,6 +4387,7 @@ Body:
     Name: Crystal Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4389,6 +4398,7 @@ Body:
     Name: Shadow Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4399,6 +4409,7 @@ Body:
     Name: Immaterial Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4409,6 +4420,7 @@ Body:
     Name: Rusty Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -6317,6 +6329,7 @@ Body:
     Name: Holy Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -8312,6 +8325,7 @@ Body:
     Name: Special Alloy Trap Box
     Type: Usable
     Buy: 30000
+    Sell: 0
     Weight: 100
     Flags:
       BuyingStore: true
@@ -10918,6 +10932,7 @@ Body:
     Name: Arrow Of Elf Cntr
     Type: Usable
     Buy: 500
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -10928,6 +10943,7 @@ Body:
     Name: Hunting Arrow Cntr
     Type: Usable
     Buy: 500
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -12128,6 +12144,7 @@ Body:
     Name: Siege Arrow Quiver S
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 100
     EquipLevelMin: 130
     Flags:
@@ -12139,6 +12156,7 @@ Body:
     Name: Siege Arrow Quiver A
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 100
     EquipLevelMin: 95
     Flags:
@@ -57584,6 +57602,7 @@ Body:
     Name: Trap Box
     Type: Usable
     Buy: 20
+    Sell: 0
     Weight: 250
     Script: |
       getitem "Booby_Trap",500;
@@ -60179,6 +60198,7 @@ Body:
     Name: Poison Arrow Quiver
     Type: Usable
     Buy: 20
+    Sell: 0
     Weight: 250
     Script: |
       getitem "Poison_Arrow",500;
