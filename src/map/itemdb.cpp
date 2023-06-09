@@ -1192,6 +1192,7 @@ void ItemDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+	ItemDatabase::hasPriceValue.clear();
 }
 
 /**
