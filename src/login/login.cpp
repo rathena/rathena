@@ -9,6 +9,9 @@
 #include <string>
 #include <unordered_map>
 
+#include <bcrypt/BCrypt.hpp>
+
+
 #include <common/cli.hpp>
 #include <common/core.hpp>
 #include <common/malloc.hpp>
@@ -17,7 +20,7 @@
 #include <common/msg_conf.hpp>
 #include <common/random.hpp>
 #include <common/showmsg.hpp>
-#include <common/socket.hpp> //ip2str
+#include <common/socket.hpp>  //ip2str
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
 #include <common/utilities.hpp>
@@ -56,7 +59,10 @@ int subnet_count = 0; //number of subnet config
 int login_fd; // login server file descriptor socket
 
 //early declaration
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass);
+bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass, uint8 passwd_type);
+int login_update_password(const char * passwd, struct mmo_account *acc);
+void login_set_defaults();
+int login_lan_config_read(const char *lancfgName);
 
 ///Accessors
 AccountDB* login_get_accounts_db(void){
@@ -248,7 +254,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	memset(&acc, '\0', sizeof(acc));
 	acc.account_id = -1; // assigned by account db
 	safestrncpy(acc.userid, userid, sizeof(acc.userid));
-	safestrncpy(acc.pass, pass, sizeof(acc.pass));
+	safestrncpy(acc.pass, BCrypt::generateHash(pass).c_str(), sizeof(acc.pass));
 	acc.sex = sex;
 	safestrncpy(acc.email, "a@a.com", sizeof(acc.email));
 	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(NULL) + login_config.start_limited_time : 0;
@@ -258,6 +264,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = MIN_CHARS;
+	acc.passwd_type = 1;
 #ifdef VIP_ENABLE
 	acc.vip_time = 0;
 	acc.old_group = 0;
@@ -345,9 +352,15 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 0; // 0 = Unregistered ID
 	}
 
-	if( !login_check_password(sd->md5key, sd->passwdenc, sd->passwd, acc.pass) ) {
+	if( !login_check_password(sd->md5key, sd->passwdenc, sd->passwd, acc.pass, acc.passwd_type) ) {
 		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password
+	}
+
+	// at this point, update password in db if needed
+	if (login_update_password(sd->passwd, &acc) < 0) {
+		ShowNotice("Failed to run bcrypt, see above error for details\n");
+		// TODO: should we fail here?
 	}
 
 	if( acc.expiration_time != 0 && acc.expiration_time < time(NULL) ) {
@@ -450,11 +463,25 @@ bool login_check_encrypted(const char* str1, const char* str2, const char* passw
  * @param passwdenc: encode key of client
  * @param passwd: pass to check
  * @param refpass: pass register in db
+ * @param passwd_type: pass type in db
  * @return true if matching else false
  */
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass) {
+bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass, uint8 passwd_type) {
+	if (passwd_type == 1) { // bcrypt(pass)
+		return BCrypt::validatePassword(passwd, refpass);
+	} else if (passwd_type == 2) { // bcrypt(MD5(pass))
+		char md5pwd[PASSWD_LENGTH];
+		MD5_String(passwd, md5pwd);
+		return BCrypt::validatePassword(md5pwd, refpass);
+	}
 	if(passwdenc == 0){
-		return (0==strcmp(passwd, refpass));
+		if (strlen(refpass) != 32) { // not MD5 password
+			return 0 == strcmp(passwd, refpass);
+		}
+		// md5 password
+		char md5pwd[PASSWD_LENGTH];
+		MD5_String(passwd, md5pwd);
+		return (0 == strcmp(md5pwd, refpass));
 	}
 	else {
 		// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
@@ -462,6 +489,62 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 		return ((passwdenc&0x01) && login_check_encrypted(md5key, refpass, passwd)) ||
 		       ((passwdenc&0x02) && login_check_encrypted(refpass, md5key, passwd));
 	}
+}
+
+/**
+ * Check if password needs to be updated, and update it if necessary.
+ * Assume password is already validated as correct
+ * @param passwd: raw passwd
+ * @param acc: the account to update
+ * @return 1 if updated, 0 if already updated, -1 if error
+ */
+int login_update_password(const char * passwd, struct mmo_account *acc) {
+	if (acc->passwd_type == 1) { // already done
+		return 0;
+	}
+	try {
+		// not hashed correctly (just bcrypt), update acc with new hash
+		auto dbpasslen = strlen(acc->pass);
+		bool was_md5 = (dbpasslen == 32); // MD5 is 32 chars
+		safestrncpy(acc->pass, BCrypt::generateHash(passwd).c_str(), sizeof(acc->pass));
+		acc->passwd_type = was_md5 ? 2 : 1;
+	} catch (const std::exception& e) {
+		ShowDebug("%s\n", e.what());
+		return -1;
+	}
+	ShowInfo("Encrypted password for %s\n", acc->userid);
+	return 1;
+}
+
+/**
+ * Update all passwords.
+ * Stop the login server after this is done.
+ */
+void login_update_all_passwords() {
+
+	login_set_defaults();
+
+	login_config_read(login_config.loginconf_name, true);
+	msg_config_read(login_config.msgconf_name);
+	login_lan_config_read(login_config.lanconf_name);
+
+	accounts->init(accounts);
+	auto it = accounts->iterator(accounts);
+	struct mmo_account acc;
+	int counter = 0;
+	while (it->next(it, &acc)) {
+		if (login_update_password(acc.pass, &acc) == 1) {
+			counter++;
+			accounts->save(accounts, &acc, false);
+		}
+	}
+	ShowInfo("Encrypted %d passwords\n", counter);
+	it->destroy(it);
+	accounts->destroy(accounts);
+	accounts = NULL;
+	accounts = account_db_sql(); // needs to be initialized for to gracefully exit
+
+	global_core->signal_shutdown();
 }
 
 int login_get_usercount( int users ){

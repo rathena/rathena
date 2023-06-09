@@ -6,7 +6,7 @@ ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
 	SERVER_DEPENDS=common login char map web import
 	COMMON_DEPENDS=libconfig rapidyaml yaml-cpp
-	LOGIN_DEPENDS=libconfig common
+	LOGIN_DEPENDS=libconfig common libbcrypt
 	CHAR_DEPENDS=libconfig common rapidyaml
 	MAP_DEPENDS=libconfig common rapidyaml
 	WEB_DEPENDS=libconfig common yaml-cpp httplib
@@ -71,6 +71,9 @@ yaml-cpp:
 httplib:
 	@$(MAKE) -C 3rdparty/httplib
 
+libbcrypt:
+	@${MAKE} -C 3rdparty/libbcrypt
+
 import:
 # 1) create conf/import folder
 # 2) add missing files
@@ -88,6 +91,7 @@ import:
 
 clean:
 	@$(MAKE) -C src/common $@
+	@$(MAKE) -C 3rdparty/libbcrypt $@
 	@$(MAKE) -C 3rdparty/libconfig $@
 	@$(MAKE) -C 3rdparty/rapidyaml $@
 	@$(MAKE) -C 3rdparty/yaml-cpp $@
@@ -102,6 +106,7 @@ help:
 	@echo "most common targets are 'all' 'server' 'conf' 'clean' 'help'"
 	@echo "possible targets are:"
 	@echo "'common'      - builds object files used for the three servers"
+	@echo "'libbcrypt'   - builds object files of libbcrypt"
 	@echo "'libconfig'   - builds object files of libconfig"
 	@echo "'rapidyaml'   - builds object files of rapidyaml"
 	@echo "'yaml-cpp'    - builds object files of yaml-cpp"
