@@ -66762,6 +66762,24 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 102332
+    AegisName: aegis_102332
+    Name: Costume Enchant Stone Box 31
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box31);
+  - Id: 102333
+    AegisName: aegis_102333
+    Name: 3rd/Expanded Stone III (Garment) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      /* TODO getgroupitem(IG_THIRD_JOB_STONE_GARMENT_BOX3); */
   - Id: 102342
     AegisName: Loki_Advice_3
     Name: Loki's advice (distance physics)    # !todo check english name

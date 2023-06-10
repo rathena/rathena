@@ -40155,6 +40155,21 @@ Body:
       else {
          bonus2 bAddRace2,RC2_SCARABA,15;
       }
+  - Id: 27210
+    AegisName: SLD_Thanatos_Card
+    Name: Sealed Memory of Thanatos Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSPDrainValue,((.@r>=15)?-2:-3);
+      bonus bDef,((.@r>=15)?-40:-60);
+      bonus bFlee,((.@r>=15)?-40:-60);
+      bonus bDefRatioAtkClass,Class_All;
   - Id: 27211
     AegisName: SLD_Baphomet_Card
     Name: Sealed Baphomet Card
@@ -42086,6 +42101,78 @@ Body:
     SubType: Enchant
     Script: |
       skill "MO_ABSORBSPIRITS",1;
+  - Id: 27402
+    AegisName: Latent_Release_SU
+    Name: Latent Release (Summoner)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (BaseJob == Job_Summoner) {
+         bonus2 bAddEle,Ele_All,25;
+         bonus2 bMagicAddEle,Ele_All,25;
+         bonus bNoKnockback;
+      }
+  - Id: 27403
+    AegisName: Latent_Release_SJ
+    Name: Latent Release (Star Empire)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+         bonus2 bIgnoreDefRaceRate,RC_All,100;
+  - Id: 27404
+    AegisName: Latent_Release_SP
+    Name: Latent Release (Soul Reaper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus bMaxHPrate,20;
+         bonus bMaxSPrate,20;
+         skill "HW_GANBANTEIN",1;
+      }
+  - Id: 27405
+    AegisName: Latent_Release_KG
+    Name: Latent Release (Kagerou)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Kagerou)
+         bonus2 bSkillCooldown,"KO_MEIKYOUSISUI",-290000;
+  - Id: 27406
+    AegisName: Latent_Release_OB
+    Name: Latent Release (Oboro)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Oboro)
+         bonus2 bSkillCooldown,"KO_MEIKYOUSISUI",-290000;
+  - Id: 27407
+    AegisName: Latent_Release_RL
+    Name: Latent Release (Rebellion)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Gunslinger)
+         bonus2 bHPDrainRate,1000,2;
   - Id: 27413
     AegisName: Big_Fire_BR
     Name: Power of Shango    # !todo check english name
@@ -45480,6 +45567,13 @@ Body:
     Name: Hundred Lucks
     Type: Card
     SubType: Enchant
+  - Id: 29593
+    AegisName: Unfrozen_JP
+    Name: Freezing Resistance
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bResEff,Eff_Freeze,10000;
   - Id: 29594
     AegisName: Seyren_Memory
     Name: Seyren's Memory
@@ -48425,9 +48519,24 @@ Body:
       bonus bDelayrate,-5;
       bonus bPAtk,1;
       bonus bSmatk,1;
+  - Id: 300194
+    AegisName: SLD_V_Kimera_Card
+    Name: Sealed Venomous Chimera Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,500;
+      bonus bMaxSP,100;
+      bonus bMaxHPrate,((.@r>=15)?12:((.@r>=12)?8:0));
+      bonus bMaxSPrate,((.@r>=15)?12:((.@r>=12)?8:0));
   - Id: 300195
     AegisName: SLD_Boitata_Card
-    Name: Sealed Voitata Card    # !todo check english name
+    Name: Sealed Boitata Card
     Type: Card
     Weight: 10
     Locations:
@@ -48445,9 +48554,65 @@ Body:
          bonus2 bAddEle,Ele_Earth,10;
          bonus2 bAddEle,Ele_Wind,10;
       }
+  - Id: 300197
+    AegisName: SLD_Ill_Dracula_Card
+    Name: Sealed Furious Dracula Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      skill "PF_HPCONVERSION",1;
+      bonus bMaxSP,-1500;
+      if (.@r>=15)
+         bonus bMaxSP,1000;
+  - Id: 300198
+    AegisName: SLD_Gopinich_Card
+    Name: Sealed Gopinich Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSPDrainValue,((.@r>=15)?4:3);
+      bonus bUseSPrate,50;
+  - Id: 300199
+    AegisName: SLD_Mechaspider_Card
+    Name: Sealed Mechaspider Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bBreakWeaponRate,500;
+      bonus bBreakArmorRate,500;
+  - Id: 300200
+    AegisName: SLD_ILL_Ktullanux_Car
+    Name: Sealed Awaken Ktullanux Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Water,10+(.@r*2);
+      if (.@r>=15)
+         bonus2 bMagicAtkEle,Ele_Water,10;
   - Id: 300201
     AegisName: SLD_P_Spi_Q_Card
-    Name: Sealed Tainted Broodmother Card    # !todo check english name
+    Name: Sealed Tainted Spider Queen Card
     Type: Card
     Weight: 10
     Locations:
@@ -48463,9 +48628,20 @@ Body:
          bonus2 bMagicAtkEle,Ele_Earth,25;
          bonus2 bMagicAtkEle,Ele_Water,25;
       }
+  - Id: 300202
+    AegisName: SLD_P_Dark_L_Card
+    Name: Sealed Polluted Dark Lord Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAspd,1;
   - Id: 300203
     AegisName: SLD_F_Muspell_Card
-    Name: Sealed Hardened Muspellscall Card    # !todo check english name
+    Name: Sealed Firm Muspellskoll Card
     Type: Card
     Weight: 10
     Locations:
@@ -48740,6 +48916,15 @@ Body:
     Script: |
       bonus2 bMagicAddRace,RC_Demon,75;
       bonus2 bSubRace,RC_Demon,-25;
+  - Id: 300229
+    AegisName: Extra_Str
+    Name: Extra Str
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,readparam(bStr)/10;
+      if (readparam(bStr) >= 110)
+         bonus bAtkRate,5;
   - Id: 300230
     AegisName: ILL_Andre_Card
     Name: Diligent Andre Card
@@ -54524,6 +54709,71 @@ Body:
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,3;
+  - Id: 310331
+    AegisName: Latent_Release_WL_JP
+    Name: Latent Release (Warlock)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+         bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-80000;
+    UnEquipScript: |
+      sc_end SC_TELEKINESIS_INTENSE;
+  - Id: 310332
+    AegisName: Latent_Release_GC_JP
+    Name: Latent Release (Guillotine Cross)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+         autobonus3 "{ bonus bFlee2,100; }",1000,3000,"ASC_METEORASSAULT";
+  - Id: 310333
+    AegisName: Latent_Release_MI_JP
+    Name: Latent Release (Minstrel)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Bard)
+         skill "RA_UNLIMIT",5;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
+  - Id: 310334
+    AegisName: Latent_Release_RA_JP
+    Name: Latent Release (Ranger)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+         bonus bDelayrate,-90;
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-180000;
+      }
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
+  - Id: 310335
+    AegisName: Latent_Release_WA_JP
+    Name: Latent Release (Wanderer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,12;
+      bonus2 bSubRace,RC_Player_Human,12;
+      bonus bRestartFullRecover;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Dancer)
+         skill "RA_UNLIMIT",5;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
   - Id: 310336
     AegisName: Sight_Lv1
     Name: Sight Lv1
@@ -67069,6 +67319,71 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillCooldown,"ALL_FULL_THROTTLE",-600000;
+  - Id: 311891
+    AegisName: aegis_311891
+    Name: Latent Release (Archmage I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311892
+    AegisName: aegis_311892
+    Name: Latent Release (Abyss Chaser I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311893
+    AegisName: aegis_311893
+    Name: Latent Release (Inquisitor I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311894
+    AegisName: aegis_311894
+    Name: Latent Release (Imperial Guard I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311895
+    AegisName: aegis_311895
+    Name: Latent Release (Wind Hawk I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311896
+    AegisName: aegis_311896
+    Name: Latent Release (Elemental Master I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311897
+    AegisName: aegis_311897
+    Name: Latent Release (Cardinal I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311898
+    AegisName: aegis_311898
+    Name: Latent Release (Shadow Cross I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311899
+    AegisName: aegis_311899
+    Name: Latent Release (Dragon Knight I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311900
+    AegisName: aegis_311900
+    Name: Latent Release (Troubadour I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311901
+    AegisName: aegis_311901
+    Name: Latent Release (Trouvere I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311902
+    AegisName: aegis_311902
+    Name: Latent Release (Biolo I)
+    Type: Card
+    SubType: Enchant
+  - Id: 311903
+    AegisName: aegis_311903
+    Name: Latent Release (Meister I)
+    Type: Card
+    SubType: Enchant
   - Id: 311905
     AegisName: aegis_311905
     Name: Freeze Resistance
@@ -69254,6 +69569,31 @@ Body:
       bonus2 bAddRace,RC_All,10;
       bonus2 bAddRace,RC_Player_Human,-10;
       bonus2 bAddRace,RC_Player_Doram,-10;
+  - Id: 312031
+    AegisName: aegis_312031
+    Name: Latent Release (Archmage II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312037
+    AegisName: aegis_312037
+    Name: Latent Release (Elemental Master II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312038
+    AegisName: aegis_312038
+    Name: Latent Release (Cardinal II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312040
+    AegisName: aegis_312040
+    Name: Latent Release (Dragon Knight II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312043
+    AegisName: aegis_312043
+    Name: Latent Release (Biolo II)
+    Type: Card
+    SubType: Enchant
   - Id: 312189
     AegisName: M_Pow3
     Name: POW+3
@@ -70049,6 +70389,20 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",2+(getrefine()/2);
+  - Id: 312304
+    AegisName: aegis_312304
+    Name: Latent Release (Cardinal III)
+    Type: Card
+    SubType: Enchant
+  - Id: 312305
+    AegisName: aegis_312305
+    Name: Eternality of Heaven
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bMagicAddSize,Size_All,15;
+      autobonus "{ bonus bAllStats,BaseLevel/10; bonus bMaxHPrate,BaseLevel/10; bonus bFlee,10*(BaseLevel/10); bonus bBaseAtk,10*(BaseLevel/10); bonus bMatk,10*(BaseLevel/10); }",10,10000,BF_WEAPON|BF_MAGIC;
   - Id: 312306
     AegisName: Isgard_4
     Name: Issgard Crystal
