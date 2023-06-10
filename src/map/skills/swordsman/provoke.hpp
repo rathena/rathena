@@ -4,9 +4,9 @@
 #include "../skill.hpp"
 
 
-class Provoke : Skill<Provoke> {
+class Provoke : public Skill<Provoke> {
 public:
-	int castend_nodamage_id() {
+	int castendNoDamageId() const {
 		return 0;
 	};
 

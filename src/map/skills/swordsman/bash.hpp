@@ -5,9 +5,9 @@
 #include "../skills.hpp"
 
 
-class Bash : Skill<Bash> {
+class Bash : public Skill<Bash> {
 public:
-	int castend_damage_id() {
+	int castendDamageId() const {
 		return 0;
 	};
 

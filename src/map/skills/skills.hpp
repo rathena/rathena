@@ -5,13 +5,7 @@
 #define MAP_SKILLS_HPP
 
 #include <unordered_map>
-
-enum e_skill;
-
-template <typename T>
-class Skill;
-
-inline std::unordered_map<e_skill, Skill> skills;
+#include "skill.hpp"
 
 /// List of Skills
 enum e_skill {

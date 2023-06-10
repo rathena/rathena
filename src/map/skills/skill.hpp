@@ -15,15 +15,19 @@ constexpr int MAX_SKILL_LEVEL = 13;
 template <typename T>
 class Skill {
 public:
-	int castend_damage_id() {
-		return as_underlying().castend_damage_id();
+	int castend_damage_id() const {
+		return as_underlying().castendDamageId();
 	};
-	int castend_nodamage_id() {
-		return as_underlying().castend_nodamage_id();
+	int castend_nodamage_id() const {
+		return as_underlying().castendNoDamageId();
 	};
-	int castend_pos2() {
-		return as_underlying().castend_pos2();
+	int castend_pos2() const {
+		return as_underlying().castendPos2();
 	};
+
+	uint16_t getSkillID() const {
+		return nameid;
+	}
 
 protected:
 	explicit Skill(e_skill skillid) : nameid(static_cast<uint16_t>(skillid)) {};
@@ -37,6 +41,10 @@ private:
 
 	inline T& as_underlying() {
 		return static_cast<T&>(*this);
+	}
+
+	inline const T& as_underlying() const {
+		return static_cast<const T&>(*this);
 	}
 };
 
