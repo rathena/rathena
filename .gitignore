@@ -139,6 +139,14 @@ Thumbs.db
 /yamlupgrade.bat
 /navigenerator.bat
 
+# Linux script tools
+/athena-start
+/configure
+/configure.ac
+/function.sh
+/install.sh
+/uninstall.sh
+
 # dlls
 /libmysql.dll
 /pcre8.dll

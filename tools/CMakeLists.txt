@@ -11,11 +11,30 @@ function(copy_to_source_dir FILENAMES)
     endforeach()
 endfunction()
 
-set(FILES_TO_COPY
-"serv.bat"
-"logserv.bat"
-"charserv.bat"
-"mapserv.bat"
-    "runserver.bat"
+if(WIN32)
+    set(WIN_FILES_TO_COPY
+        "charserv.bat"
+        "csv2yaml.bat"
+        "logserv.bat"
+        "mapcache.bat"
+        "mapserv.bat"
+        "runserver.bat"
+        "serv.bat"
+        "webserv.bat"
+        "yaml2sql.bat"
+        "yamlupgrade.bat"
+        "navigenerator.bat"
+    )
+    copy_to_source_dir("${WIN_FILES_TO_COPY}")
+else()
+    set(LINUX_FILES_TO_COPY
+        "athena-start"
+        "configure"
+        "configure.ac"
+        "function.sh"
+        "install.sh"
+        "uninstall.sh"
+    )
 
-)
+    copy_to_source_dir("${LINUX_FILES_TO_COPY}")
+endif()
