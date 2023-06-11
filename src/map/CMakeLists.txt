@@ -102,8 +102,18 @@ if(WIN32)
 	set_target_properties(map-server PROPERTIES FOLDER "Servers")
 endif()
 
-target_link_libraries(map-server PUBLIC	common)
+target_link_libraries(map-server PUBLIC
+	common
+	${PCRE_LIBRARIES}
+)
 
+target_include_directories(map-server PUBLIC
+	${PCRE_INCLUDE_DIRS}
+)
+
+if(WITH_PCRE)
+	target_compile_definitions(map-server PUBLIC "-DPCRE_SUPPORT")
+endif()
 
 # map-server-generator
 add_executable(map-server-generator)
@@ -122,4 +132,13 @@ target_compile_definitions(map-server-generator PUBLIC "-DMAP_GENERATOR")
 target_link_libraries(map-server-generator PUBLIC
 	common
 	json
+	${PCRE_LIBRARIES}
 )
+
+target_include_directories(map-server-generator PUBLIC
+	${PCRE_INCLUDE_DIRS}
+)
+
+if(PCRE_FOUND)
+	target_compile_definitions(map-server-generator PUBLIC "-DPCRE_SUPPORT")
+endif()
