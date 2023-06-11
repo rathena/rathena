@@ -186,6 +186,10 @@ if(ENABLE_EPOLL)
 	target_compile_definitions(common PRIVATE "-DSOCKET_EPOLL")
 endif()
 
+if(ENABLE_VIP)
+	target_compile_definitions(common INTERFACE "-DVIP_ENABLE")
+endif()
+
 target_include_directories(common PUBLIC
 	"${MYSQL_INCLUDE_DIRS}"
 	"${ZLIB_INCLUDE_DIRS}"

@@ -20,6 +20,7 @@ option(ENABLE_MEMMGR "Enable memory manager (default=ON)" ON)
 option(ENABLE_PROFILER "Enable profiler (default=OFF)" OFF)
 option(ENABLE_EXTRA_BUILDBOT_CODE "Enable extra buildbot code (default=OFF)" OFF)
 option(ENABLE_EPOLL "Use epoll instead of select (default=OFF)" OFF)
+option(ENABLE_VIP "Enable VIP system (default=OFF)" OFF)
 
 
 # Set a default build type if none was specified
