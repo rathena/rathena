@@ -140,12 +140,10 @@ Thumbs.db
 /navigenerator.bat
 
 # Linux script tools
-/athena-start
-/configure
-/configure.ac
-/function.sh
-/install.sh
-/uninstall.sh
+# /athena-start
+# /function.sh
+# /install.sh
+# /uninstall.sh
 
 # dlls
 /libmysql.dll
