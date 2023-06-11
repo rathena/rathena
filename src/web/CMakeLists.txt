@@ -5,7 +5,6 @@ find_package(Threads REQUIRED)
 
 target_sources(web-server PRIVATE
 	"auth.cpp"
-	"auth.hpp"
 	"charconfig_controller.cpp"
 	"emblem_controller.cpp"
 	"merchantstore_controller.cpp"
