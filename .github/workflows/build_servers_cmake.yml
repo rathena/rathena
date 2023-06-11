@@ -40,15 +40,10 @@ jobs:
         run: cmake -E make_directory ${{github.workspace}}/build
 
       - name: Configure CMake
-        # Use a bash shell so we can use the same syntax for environment variable
-        # access regardless of the host operating system
-        shell: bash
         working-directory: ${{github.workspace}}/build
-
-        run: cmake -S ${{github.workspace}} -B ${{github.workspace}}/build
+        run: cmake ..
 
       - name: Build
         working-directory: ${{github.workspace}}/build
-        shell: bash
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: cmake --build .
