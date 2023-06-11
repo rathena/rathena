@@ -31,23 +31,24 @@ jobs:
       matrix:
           # The ubuntu-latest label currently points to ubuntu-22.04.
           # Available: ubuntu-22.04, ubuntu-20.04
-          os: [ubuntu-latest]
+          os: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
 
-      # Install latest CMake.
-      - uses: lukka/get-cmake@latest
-
       - name: Create build directory
-        run: mkdir cbuild
+        run: cmake -E make_directory ${{github.workspace}}/build
 
-      - name: Create Unix Makefiles
-        run: |
-          cd cbuild
-          cmake -G "Unix Makefiles" ..
+      - name: Configure CMake
+        # Use a bash shell so we can use the same syntax for environment variable
+        # access regardless of the host operating system
+        shell: bash
+        working-directory: ${{github.workspace}}/build
 
-      - name: Command - make
-        run: |
-          cd cbuild
-          make
+        run: cmake -S ${{github.workspace}} -B ${{github.workspace}}/build
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        shell: bash
+        # Execute the build.  You can specify a specific target with "--target <NAME>"
+        run: cmake --build .
