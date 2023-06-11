@@ -1,0 +1,57 @@
+//===== rAthena Script =======================================
+//= Varmundt's Biosphere
+//===== Description: =========================================
+//= [Walkthrough Conversion] 
+//= Varmundt's Biosphere Dungeon Warps Script
+//===== Changelog: ===========================================
+//= 1.0 First version [Capuche]
+//============================================================
+
+bl_ice,36,81	warp2	#icetoba	1,1,ba_in01,307,38
+bl_lava,163,14	warp2	#lavatoba	1,1,ba_in01,311,53
+bl_grass,157,16	warp2	#grasstoba	1,1,ba_in01,325,53
+bl_death,315,59,0	warp2	#deathtoba	1,1,ba_in01,339,53
+
+ba_in01,310,38,0	script	#batoice	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 230) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_ice",39,81;
+	end;
+}
+
+ba_in01,311,56,0	script	#batolava	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 230) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_lava",163,17;
+	end;
+}
+
+ba_in01,325,56,0	script	#batograss	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 230) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_grass",157,19;
+	end;
+}
+
+ba_in01,339,56,0	script	#batodeath	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 230) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_death",315,62;
+	end;
+}

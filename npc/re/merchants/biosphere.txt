@@ -1,0 +1,252 @@
+//===== rAthena Script =======================================
+//= Varmundt's Biosphere
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Varmundt's Biosphere guide / exchange npcs
+//===== Changelog: ===========================================
+//= 1.0 Initial release [Capuche]
+//============================================================
+
+// Guide
+ba_in01,252,353,5	script	Admin beta#ms01	4_EP17_BASIC_B,3,3,{
+	mes "[Admin beta]";
+	mes "Guest, do you need a guide inside the mansion?";
+	next;
+	mes "[Admin beta]";
+	mes "Inside this door is the biosphere, an artificial habitat created by Varmundt for ecological research, and the bathhouse, Meditatio.";
+	next;
+	switch( select( "Information on artificial habitats", "Information on the baths" ) ) {
+	case 1:
+		mes "[Admin beta]";
+		mes "Are you curious about artificial habitats?";
+		next;
+		switch( select( "What is artificial habitat?", "Guidance on artificial habitat location" ) ) {
+		case 1:
+			mes "[Admin beta]";
+			mes "As mentioned earlier, the artificial habitat was directly managed by Varmundt as a space created by imitating the actual natural environment and topography for ecological research.";
+			next;
+			mes "[Admin beta]";
+			mes "Varmundt created a specimen environment of a place he was particularly interested in, and released and studied specimen life forms suitable for it.";
+			next;
+			mes "[Admin beta]";
+			mes "However, due to the prolonged absence of the master, the artificial habitat has been firmly closed until now.";
+			next;
+			mes "[Admin beta]";
+			mes "Since Varmundt also had the key, we didn't bother to open it for the sake of a pure environment uncontaminated by external factors...";
+			next;
+			mes "[Admin beta]";
+			mes "But recently I felt the need to open the door to the artificial habitat after reports of unusual energy inside.";
+			next;
+			mes "[Admin beta]";
+			mes "Found it!";
+			next;
+			select( "What?" );
+			mes "[Admin beta]";
+			mes "Mansion manager Alpha has scanned the mansion and finally found the master key.";
+			next;
+			mes "[Admin beta]";
+			mes "But, unlike us, who are always the same over time, life seems to change...";
+			next;
+			mes "[Admin beta]";
+			mes "The specimen organisms have grown and become stronger in their habitats as they have been left isolated from the outside world for a long time. From a biological point of view, this is a great achievement, and even Varmundt would be delighted...";
+			next;
+			mes "[Admin beta]";
+			mes "No, um... We were very happy, too. I was happy until a lot of monsters flocked to the open door after a long time.";
+			next;
+			mes "[Admin beta]";
+			mes "If you look at the magic group that we put on to identify the monster family, it was the monster in the data, but the monsters that survived for a long time in extreme situations were stronger than the monsters in the data we had.";
+			next;
+			if (BaseLevel < 230) {
+				mes "[Admin beta]";
+				mes "So it's a little difficult situation, but we're a bit incapable of responding, so I hope you can help me a little...";
+				next;
+				mes "[Admin beta]";
+				mes "I think it will be difficult for guests who are adventurers to enter. It is a place where dangerous monsters are concentrated, so the door is only open to adventurers whose base level is 230^000000 or higher.";
+				next;
+				mes "[Admin beta]";
+				mes "I hope you can help me next time.";
+				close;
+			}
+			mes "[Admin beta]";
+			mes "With no data, we are not strong enough to deal with powerful monsters, so we closed the door and waited for the guests.";
+			next;
+			select( "Me?" );
+			mes "[Admin beta]";
+			mes "From what I've observed, the guest likes adventure. I've also seen " + ( Sex ? "him" : "her" ) + " ignite a sense of challenge toward new things in this mansion.";
+			mes "The customer is very strong and the response to all variables was very quick and accurate.";
+			next;
+			mes "[Admin beta]";
+			mes "That's why we decided to first open up an artificial habitat that no one has visited in years, to our experienced adventurer guests.";
+			next;
+			mes "[Admin beta]";
+			mes "We want to focus on man-made habitat management while our guests are adventurous with monsters.";
+			next;
+			select( "It seems to be passing it on somehow..." );
+			mes "[Admin beta]";
+			mes "Shouldn't you leave the job to the experts? Let's leave it to the experts who are a bit more specialized in dealing with monsters. It is our judgment that there is no one other than the customer who can handle this difficult task.";
+			next;
+			mes "[Admin beta]";
+			mes "Besides, not all artificial habitats are open, but only the most urgent cold, flame, grassland, and death specimen environments, so the burden will be small.";
+			next;
+			mes "[Admin beta]";
+			mes "You may own anything you got from the artificial habitat. One more here.";
+			next;
+			mes "[Admin beta]";
+			mes "Rare items obtained from monsters will be made into strong equipment <NAVI>[here]<INFO>ba_in01,362,48,0,101,0</INFO></NAVI>, so it would be a good idea to take a look at them as adventurers. It's a mutual aid to the last degree.";
+			close;
+		case 2:
+			switch( select( "Sample environment - ^0000cdIce^000000", "Sample environment - ^ff0000Fire^000000", "Sample environment - ^006600Grassland^000000", "Sample environment - ^660099Death^000000", "Equipment Combination" ) ) {
+			case 1:
+				mes "[Admin beta]";
+				mes "Sample Environment - <FONT COLOR = 0000cd><B>Ice</B></FONT>";
+				mes "It embodies the ecosystem of a region dominated by bitter cold. It is home to powerful monsters that survived the bitter cold.";
+				close2;
+				navigateto("ba_in01",310,38);
+				end;
+			case 2:
+				mes "[Admin beta]";
+				mes "Sample Environment - <FONT COLOR = ff0000><B>Fire</B></FONT>";
+				mes "This is the implementation of the ecosystem of the flame region. The monsters that survived burn even hotter in the land where everything melts.";
+				close2;
+				navigateto("ba_in01",311,56);
+				end;
+			case 3:
+				mes "[Admin beta]";
+				mes "Sample Environment - <FONT COLOR = 006600><B>Grass</B></FONT>";
+				mes "It embodies the ecosystem of the grassland area. Unlike other habitats, you might think that it is a temperate environment, but living things grow better in such an environment.";
+				close2;
+				navigateto("ba_in01",325,56);
+				end;
+			case 4:
+				mes "[Admin beta]";
+				mes "Sample Environment - <FONT COLOR = 660099><B>Death</B></FONT>";
+				mes "This is a place that embodies the ecosystem of the area where the aura of death is present. There are many monsters who have gained more power at the border of death and life, so be careful.";
+				close2;
+				navigateto("ba_in01",339,56);
+				end;
+			case 5:
+				mes "[Admin beta]";
+				mes "Adventurous guests show great interest in powerful equipment.";
+				next;
+				mes "[Admin beta]";
+				mes "So, I've found a way to transform runes and equipment obtained from artificial habitats into powerful equipment that can't be found anywhere, so if you're interested, please visit it.";
+				close2;
+				navigateto("ba_in01",362,48);
+				end;
+			}
+		}
+		end;
+	case 2:
+		mes "[Admin beta]";
+		mes "The Large Bath Meditatio is the largest recreational facility in the Varmundt Mansion. The owner used to end the day here by relieving old fatigue.";
+		next;
+		mes "[Admin beta]";
+		mes "Varmundt showed great interest in the various effects of water and herbs, and gradually expanded the bath facilities in the mansion, and Meditatio has the current bath facilities.";
+		next;
+		mes "[Admin beta]";
+		mes "Varmundt provided bathing facilities to the guests staying at the mansion. The guests admired the fairly large bathing facilities and cherished them without hesitation.";
+		next;
+		mes "[Admin beta]";
+		mes "Meditatio has baths with unique nicknames. Among the guests, the place called the Fountain of Wisdom seems to be particularly popular.";
+		next;
+		select( "That's a nice place" );
+		mes "[Admin beta]";
+		mes "But... It looks like there's been a bit of a problem lately. Oh, that's right. It would be nice for an adventurer who is an expert in this field to visit.";
+		next;
+		mes "[Admin beta]";
+		mes "Go to the <NAVI>[gentleman]<INFO>ba_in01,384,38,0,101,0</INFO></NAVI> who manages it, and you will get directions.";
+		close;
+	}
+	end;
+
+OnTouch:
+	npctalk "Guest, do you need a guide inside the mansion?", "", bc_self;
+	end;
+}
+
+
+// Exchange npcs
+ba_in01,358,50,8	script	Omega#ms01	EP17_2_OMEGA_CLEANER,{
+	mes "[Omega]";
+	mes "Vrr-R-R-R-R-R-R-R-R";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "It seems to convert the pieces of runes obtained inside the artificial habitat into complete runes.";";
+	close2;
+	callshop( "barter_biosphere_1" );
+	end;
+
+OnWalk1:
+	npctalk "Vrr-R-R-R-R-R-R";
+	unitstopwalk getnpcid(0), USW_FORCE_STOP;
+	unitwalk getnpcid(0),365,50, strnpcinfo(0) + "::OnWalk2";
+	end;
+OnWalk2:
+	unitstopwalk getnpcid(0), USW_FORCE_STOP;
+	unitwalk getnpcid(0),358,50, strnpcinfo(0) + "::OnWalk1";
+	end;
+OnInit:
+	npcspeed 500;	// todo check
+	donpcevent strnpcinfo(0) + "::OnWalk1";
+	end;
+}
+
+ba_in01,359,53,5	script	Beta#ms02	4_EP17_TABLET,3,3,{
+	mes "[Beta]";
+	mes "If you came here, you must have learned something from the artificial habitat, right?";
+	next;
+	mes "[Beta]";
+	mes "If you bring Varmundt's gear you acquired in the artificial habitat with the runes, we'll engrave the runes on your gear. Please think of it as a small thank you to the adventurers who help us.";
+	next;
+	mes "[Beta]";
+	mes "The rune used for engraving is being handled by Omega in front of me. Bring me the rune fragment and I will turn it into a complete rune.";
+	next;
+	mes "[Beta]";
+	mes "Then please take a look at my inventory. These beautiful gear...!";
+	close2;
+	callshop( "barter_biosphere_2" );
+	end;
+
+OnTouch:
+	npctalk "Guest, do you have any items from the artificial habitat?", "", bc_self;
+	end;
+}
+
+ba_in01,361,53,5	script	Beta#ms03	4_EP17_SCISSORE,{
+	mes "[Beta]";
+	mes "Hey, adventurers? That's great. Welcome back. Listen to me. Great equipment that adventurers might be interested in, I know.";
+	next;
+	mes "[Beta]";
+	mes "One day, the rune fragments I brought from the artificial habitat were turned into whole runes by Omega here.";
+	next;
+	mes "[Beta]";
+	mes "I was looking at the runes, and I suddenly remembered something, so I imprinted the runes on the equipment left by the guests using some matching items as a medium. I think this is the genius the guests were talking about.";
+	next;
+	mes "[Beta]";
+	mes "But it's not possible for all equipment, uh, that's only for some equipment... oh wow!! Just take a look. I'll imprint it as a thank you to the customers who help us!";
+	close2;
+	callshop( "barter_biosphere_3" );
+	end;
+}
+
+ba_in01,363,53,5	script	Beta#ms04	4_EP17_BASKET,3,3,{
+	mes "[Beta]";
+	mes "Do you have Varmundt's engraving equipment obtained from the artificial habitat?";
+	mes "^0000cdIf the equipment is refined at least to 7^000000, you can enchant it.";
+	mes "In the case of a ring, it is possible to enchant it at any time.";
+	next;
+	mes "[Beta]";
+	mes "You can enchant up to 2 times if you bring a rune that matches the property of each equipment and a small fee. You can also reset the enchantment.";
+	next;
+	.@base_index = 52;	// Grassland Enchantment index
+	.@s = select( "Grassland Equipment Enchantment", "Fire Equipment Enchantment", "Ice Equipment Enchantment", "Death Equipment Enchantment", "Soul Equipment Enchantment", "Poison Equipment Enchantment", "Church Equipment Enchantment" ) - 1;
+	mes "[Beta]";
+	mes "Okay, I'll help you enchant right away.";
+	close2;
+	item_enchant( .@base_index + .@s );
+	end;
+
+OnTouch:
+	npctalk "If you have Varmundt's engraving equipment, come this way.", "", bc_self;
+	end;
+}
