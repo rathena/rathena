@@ -171,7 +171,7 @@ ba_in01,358,50,8	script	Omega#ms01	EP17_2_OMEGA_CLEANER,{
 	mes "Vrr-R-R-R-R-R-R-R-R";
 	next;
 	mes "[" + strcharinfo(0) + "]";
-	mes "It seems to convert the pieces of runes obtained inside the artificial habitat into complete runes.";";
+	mes "It seems to convert the pieces of runes obtained inside the artificial habitat into complete runes.";
 	close2;
 	callshop( "barter_biosphere_1" );
 	end;
@@ -186,7 +186,7 @@ OnWalk2:
 	unitwalk getnpcid(0),358,50, strnpcinfo(0) + "::OnWalk1";
 	end;
 OnInit:
-	npcspeed 500;	// todo check
+	npcspeed 900;
 	donpcevent strnpcinfo(0) + "::OnWalk1";
 	end;
 }
