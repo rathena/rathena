@@ -1,0 +1,283 @@
+//===== rAthena Script =======================================
+//= Half Moon in the Daylight Enchanter
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Half Moon in the Daylight related enchanter
+//===== Changelog: ===========================================
+//= 1.0 Initial release [Everade]
+//= 1.1 Clean-up [Capuche]
+//============================================================
+
+rachel,177,139,3	script	Temple Item Manager#0hmoon	4_M_TRAINEE,{
+	disable_items;
+	if (MaxWeight - Weight < 1000 || checkweight(5819,1) == 0) {
+		npctalk "Reduce your weight please.", "", bc_self;
+		end;
+	}
+	mes "[Temple Item Manager]";
+	mes "If you have 1 ^0000cd" + getitemname(28387) + "^000000 and a ^0000cd" + getitemname(25088) + "^000000, I will grant you the power of the Goddess.";
+	next;
+	mes "[Temple Item Manager]";
+	mes "I'll do a good job. Leave it to me.";
+	next;
+	switch( select( "What is a Goddess' power?", "Well then, please.", "It's nothing." ) ) {
+	case 1:
+		mes "[Temple Item Manager]";
+		mes "What is the power of a Goddess? Did you just ask about the power of the Goddess?";
+		next;
+		if (select( "No.", "Yes. I asked." ) == 1) {
+			 mes "[Temple Item Manager]";
+			 mes "I'd like to talk to you, please listen.";
+			 close;
+		}
+		mes "[Temple Item Manager]";
+		mes "Power of the Goddess!!! I love the Goddess! Goddess, you're awesome!!!";
+		next;
+		mes "[Temple Item Manager]";
+		mes "There's a story that needs to be told first.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I've always been a fan of the ^0000cdGoddess^000000. As I entered the temple and started my life as a devoted follower, my life began to blossom.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "One day before I went to sleep, I had a ^0000cddream^000000 while I way praying to the Goddess.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I heard the ^0000cdvoice^000000 of Goddess Freya in the full light.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "But unfortunately, as soon as I woke up, I forgot all about my dream. That's how dreams are.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I cried endlessly because I felt sorry for that fact. But if the Goddess lets me hear her voice through a dream, wouldn't we too, be able to reach the Goddess through dreaming?";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I started to study dreams with all my passion. I thought this was the will of the Goddess, who's trying to convey to me through them.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "While I was working hard on my research, I made the ^0000cdPassage of Dreams^000000 at the request of our aunt, High Priestess Niren, who's right next to me. It's the result of what I dedicated my life to.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I can't reach the Goddess yet... But there aren't many people who encounter the Goddess in their dreams... Like me...";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Anyway, when I first heard the request from our aunt, High Priestess Niren, I was surprised.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Would you dare to enter the Pope's dream...? The High Priestess Niren convinced me to enter her dream, but there was nothing that I could do to help her.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "And the persuasion was surprisingly convincing.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "So what's the Power of the Goddess?";
+		next;
+		mes "[Temple Item Manager]";
+		mes "When I first entered the Pope's dream, I was amazed.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why?";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Of my ^0000cdgenius^000000.";
+		emotion ET_SWEAT;
+		next;
+		mes "[Temple Item Manager]";
+		mes "Can anyone else in the world create a device that allows them to enter other people's dreams and experience them vividly? Kya- After all, Goddess' beloved lamb.";
+		emotion ET_SWEAT;
+		next;
+		mes "[Temple Item Manager]";
+		mes "As I was walking through the Pope's dream, I accidentally found a ^0000cdPriest's Necklace^000000 from the priest and a special energetic ^0000cdFragment^000000 from the faceless shrine there.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "And I went around trying to find out as much as I could in my dreams, but when the Pope found me, she rejected me fiercely in fear.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I'm not the Pope's closest confidant, so I must have been just a stranger to her.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "So I was thrown out of the Pope's dream.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "By the way. When I woke up from my dream, I had the Priest's Necklace from the shrine and the strange fragment still in my hands. What do you think?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Amazing.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Oh Goddess, please pity the blunt sensibility of an adventurer who can express these tremendous results in a word that is just amazing-";
+		emotion ET_SWEAT;
+		next;
+		mes "[Temple Item Manager]";
+		mes "I was able to bring out the things I got from other people's dreams. This is a big deal! Let's get down to business because you don't seem to empathize.";
+		emotion ET_SWEAT;
+		next;
+		mes "[Temple Item Manager]";
+		mes "I began to study the necklace and the strange fragment of the shrine. The strange fragment was named the ^0000cdDream Fragment^000000, meaning the fragment obtained in a dream. Kyah- Name Sense!";
+		next;
+		mes "[Temple Item Manager]";
+		mes "They seemed normal when being separated, however I felt a subtle energy when I stacked them on top of each other.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "From then on, I entered the Pope's dream and began to study by collecting them one by one, without being noticed by the Pope.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I discovered that by collecting about ^0000cd100 Dream Fragments^000000, compressing them with force, and putting them into the ^0000cdPriest's Necklace^000000, I can grant it ^0000cdspecial powers^000000.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "And by continuously researching and researching, I've succeeded in separating that power into three degrees.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "This power can help the wearer's ^0000cdphysical^000000, ^0000cdmagical^000000, or ^0000cdranged^000000 attacks. Without any side effects!";
+		next;
+		mes "[Temple Item Manager]";
+		mes "I gave these powers the names of ^0000cdGoddess of Justice, Goddess of Mercy, Goddess of Insight^000000, respectively. Isn't that plausible?";
+		next;
+		mes "[Temple Item Manager]";
+		mes "But what's even more surprising is that if you put a larger amount of ^0000cdDream Fragments^000000, that's about ^0000cd1000pcs^000000 or so, you can enchant an even more ^0000cdpowerful power^000000.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Any more than that, the Priest's Necklace couldn't hold up to, so all the items I've gathered were destroyed. I'm still working on it, so I'm sure I'll succeed someday.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "So, give me a three-line summary.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Oh my, what should I do with this person? Still, I'm a kind Lamb of the Goddess, so I'll tell you briefly.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "If you bring me ^0000cd1 Priest's Necklace and 100 Dream Fragments^000000 obtained in a dream, your ^0000cdPriest's Necklace will be enchanted with the Power of the Goddess^000000.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "And if you bring an enchanted ^0000ffPriest's Necklace with Goddess Power^000000 and ^0000ff1000 pieces of Dream Fragments^000000, you'll get even more power.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "That's it!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, thank you.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Would you like to hear it one more time?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh no, that's enough. That's all right.";
+		next;
+		mes "[Temple Item Manager]";
+		mes "Oh, that's a shame. I was going to go into more detail this time.";
+		close;
+	case 2:
+		mes "[Temple Item Manager]";
+		mes "Great decision! Do you want it on your ^0000cdleft^000000? Or the ^0000cdright^000000 side? I'm confident either way!...";
+		next;
+		switch( select( "Left", "Right", "Cancel" ) ) {
+		case 1:
+			.@part = EQI_ACC_L;
+			break;
+		case 2:
+			.@part = EQI_ACC_R;
+			break;
+		case 3:
+			mes "[Temple Item Manager]";
+			mes "Oh, why!!! I'm being nice to you!!!";
+			close;
+		}
+		.@itemid = getequipid(.@part);
+
+		if (.@itemid != 28387) {
+			mes "[Temple Item Manager]";
+			mes "Uh, wait! That's not the ^0000cd" + mesitemlink(28387, false) + "^000000, is it? Can you check it again?";
+			close;
+		}
+		.@card = getequipcardid(.@part,3);
+
+		if (getiteminfo(.@card, ITEMINFO_SUBTYPE) == CARD_ENCHANT) {
+			npctalk "This necklace of yours already has an enchantment.";
+			end;
+		}
+		mes "[Temple Item Manager]";
+		mes "What special abilities would you like to enchant your necklace with?";
+		next;
+		setarray .@enhance_n$[0], "Goddess of Justice", "Goddess of Mercy", "Goddess of Insight";
+		.@s = select( .@enhance_n$[0], .@enhance_n$[1], .@enhance_n$[2], "Cancel" ) -1;
+
+		switch( .@s ) {
+		default:
+			setarray .@enhance_a[0],29121,29123,29125;
+			setarray .@enhance_s[0],29122,29124,29126;
+
+			mes "[Temple Item Manager]";
+			mes "You have selected the " + .@enhance_n$[.@s] + " enchantment.";
+			mes "Please select the class";
+			mes "" + mesitemlink(.@enhance_a[.@s], false) + "";
+			mes "" + mesitemlink(.@enhance_s[.@s], false) + "";
+			next;
+			switch( select( "A Class", "S Class" ) ) {
+			case 1:
+				.@enchant = .@enhance_a[.@s];
+				.@cost = 100;
+				.@class = 1;
+				break;
+			case 2:
+				.@enchant = .@enhance_s[.@s];
+				.@cost = 1000;
+				.@class = 2;
+				break;
+			}
+			mes "[Temple Item Manager]";
+			mes "The necklace will be enchanted with the " + mesitemlink(.@enchant, false) + "";
+			mes "Are you really sure to proceed with this enchantment process?";
+			next;
+			if (select( "No, I need time to consider.","Yes, please proceed." ) == 1)
+				break;
+			.@card = getequipcardid(.@part,3);	// re-defined
+
+			mes "[Temple Item Manager]";
+			if (!getequipisequiped(.@part) || isequipped(28387) < 1) {
+				mes "You aren't wearing the " + mesitemlink(28387, false) + "...!";
+				close;
+			}
+			if (.@enchant == .@card) {
+				mes "Your " + mesitemlink(28387, false) + " already has an enchant.";
+				close;
+			}
+			if (countitem(25088) < .@cost) {
+				mes "You didn't bring enough " + mesitemlink(25088, false) + "!";
+				close;
+			}
+			if (.@class == 2 && (.@enchant == 29122 && .@card != 29121 || .@enchant == 29124 && .@card != 29123 || .@enchant == 29126 && .@card != 29125)) {
+				mes "You need to have your necklace enchanted with " + mesitemlink(.@enhance_a[.@s], false) + " first.";
+				close;
+			}
+			specialeffect2 182;
+			specialeffect2 205;
+			specialeffect2 102;
+			specialeffect2 104;
+			mes "The necklace has been enchanted according to your specifications.";
+			delitem 25088,.@cost; //Fragment of Dream
+			delequip .@part;
+			getitem2 28387,1,1,0,0,0,0,0,.@enchant; //Priest's Necklace
+			close;
+		case 3:
+			break;
+		}
+		break;
+	case 3:
+		break;
+	}
+	mes "[Temple Item Manager]";
+	mes "Nothing? Did you forget what to say?";
+	next;
+	mes "[Temple Item Manager]";
+	mes "If you're not busy right now, would you like to eat with me?";
+	next;
+	mes "[Temple Item Manager]";
+	mes "Why don't you take the time with me to talk about dreams, science, and the goddess?";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Well, I'm busy so...";
+	next;
+	mes "[Temple Item Manager]";
+	mes "Even if you have nothing to say, just listen to me!!!";
+	close;
+}

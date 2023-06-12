@@ -165,8 +165,7 @@ struct s_enchantgradeoption{
 
 struct s_enchantgradelevel{
 	e_enchantgrade grade;
-	uint16 refine;
-	uint16 chance;
+	uint16 chances[MAX_REFINE + 1];
 	uint16 bonus;
 	bool announceSuccess;
 	bool announceFail;
@@ -186,7 +185,7 @@ struct s_enchantgrade{
 
 class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{
 public:
-	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 2, 1 ){
+	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 3 ){
 
 	}
 
@@ -1280,6 +1279,9 @@ enum sc_type : int16 {
 
 	SC_RELIEVE_ON,
 	SC_RELIEVE_OFF,
+
+	SC_RUSH_QUAKE1,
+	SC_RUSH_QUAKE2,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -3029,6 +3031,7 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONUNEQUIPWEAPON,
 	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_REMOVEONHERMODE,
+	SCF_REQUIRENOWEAPON,
 	SCF_MAX
 };
 

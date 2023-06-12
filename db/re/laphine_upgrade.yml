@@ -40,26 +40,27 @@ Header:
   Version: 1
 
 Body:
-#  - Item: Ein_Ddbox
-#    TargetItems:
-#      - Item: Ein_BHSWORD
-#      - Item: Detecting_Staff
-#      - Item: Ein_BHHuuma
-#      - Item: Ein_BHKATAR
-#      - Item: Ein_BHAXE
-#      - Item: Ein_BHBOW
-#      - Item: Ein_1HKNUCK
-#      - Item: Ein_1HHAMMER
-#      - Item: Ein_1HWAND
-#      - Item: Ein_1HWHIP
-#      - Item: Ein_1HBOOK
-#      - Item: Ein_1HDAGGER
-#      - Item: Ein_1HMAGGER
-#      - Item: Ein_1HSPEAR
-#      - Item: Ein_1HLUTE
-#      - Item: Ein_1HSWORD
-#      - Item: Ein_1HGUN
-#      - Item: Ein_1H_Foxtail
+  - Item: Ein_Ddbox
+    RandomOptionGroup: EIN_DDBOX
+    TargetItems:
+      - Item: Ein_BHSWORD
+      - Item: Ein_BHSTAFF
+      - Item: Ein_BHHuuma
+      - Item: Ein_BHKATAR
+      - Item: Ein_BHAXE
+      - Item: Ein_BHBOW
+      - Item: Ein_1HKNUCK
+      - Item: Ein_1HHAMMER
+      - Item: Ein_1HWAND
+      - Item: Ein_1HWHIP
+      - Item: Ein_1HBOOK
+      - Item: Ein_1HDAGGER
+      - Item: Ein_1HMAGGER
+      - Item: Ein_1HSPEAR
+      - Item: Ein_1HLUTE
+      - Item: Ein_1HSWORD
+      - Item: Ein_1HGUN
+      - Item: Ein_1H_Foxtail
   - Item: Metal_Rifine_Ticket
     ResultRefine: 7
     CardsAllowed: true
@@ -76,26 +77,27 @@ Body:
       - Item: Metal_Revolver
       - Item: Metal_Huuma_Shuriken
       - Item: Metal_Foxtail
-#  - Item: Ein_Ddbox2
-#    TargetItems:
-#      - Item: Ein_BHSWORD
-#      - Item: Detecting_Staff
-#      - Item: Ein_BHHuuma
-#      - Item: Ein_BHKATAR
-#      - Item: Ein_BHAXE
-#      - Item: Ein_BHBOW
-#      - Item: Ein_1HKNUCK
-#      - Item: Ein_1HHAMMER
-#      - Item: Ein_1HWAND
-#      - Item: Ein_1HWHIP
-#      - Item: Ein_1HBOOK
-#      - Item: Ein_1HDAGGER
-#      - Item: Ein_1HMAGGER
-#      - Item: Ein_1HSPEAR
-#      - Item: Ein_1HLUTE
-#      - Item: Ein_1HSWORD
-#      - Item: Ein_1HGUN
-#      - Item: Ein_1H_Foxtail
+  - Item: Ein_Ddbox2
+    RandomOptionGroup: EIN_DDBOX2
+    TargetItems:
+      - Item: Ein_BHSWORD
+      - Item: Ein_BHSTAFF
+      - Item: Ein_BHHuuma
+      - Item: Ein_BHKATAR
+      - Item: Ein_BHAXE
+      - Item: Ein_BHBOW
+      - Item: Ein_1HKNUCK
+      - Item: Ein_1HHAMMER
+      - Item: Ein_1HWAND
+      - Item: Ein_1HWHIP
+      - Item: Ein_1HBOOK
+      - Item: Ein_1HDAGGER
+      - Item: Ein_1HMAGGER
+      - Item: Ein_1HSPEAR
+      - Item: Ein_1HLUTE
+      - Item: Ein_1HSWORD
+      - Item: Ein_1HGUN
+      - Item: Ein_1H_Foxtail
   - Item: Gemstone_Of_Time
     RandomOptionGroup: GEMSTONE_OF_TIME
     TargetItems:
@@ -3056,174 +3058,180 @@ Body:
 #  - Item: Abyss_Ddbox4
 #    TargetItems:
 #      - Item: Dragon_Boots
-#  - Item: Auto_Imp_Melee_1
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Melee_2
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Melee_3
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Magic_1
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Magic_2
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Magic_3
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Melee_1
+    RandomOptionGroup: AUTO_IMP_MELEE_1
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Melee_2
+    RandomOptionGroup: AUTO_IMP_MELEE_2
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Melee_3
+    RandomOptionGroup: AUTO_IMP_MELEE_3
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Magic_1
+    RandomOptionGroup: AUTO_IMP_MAGIC_1
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Magic_2
+    RandomOptionGroup: AUTO_IMP_MAGIC_2
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Magic_3
+    RandomOptionGroup: AUTO_IMP_MAGIC_3
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
 #  - Item: Class_Sha_R_M_Melee
 #    TargetItems:
 #      - Item: S_Swordman_earring
@@ -5213,3 +5221,25 @@ Body:
       - Item: Anti_Magic_Manteau
       - Item: Comp_Anti_Manteau_TH
       - Item: Comp_Geffen_M_Muffle
+#  - Item: Loki_Coin_2
+#    TargetItems:
+#      - Item: Gambler_Seal_KR_
+#  - Item: Loki_Advice_2
+#    TargetItems:
+#      - Item: Spade_Ace_Melee
+#  - Item: Loki_Advice
+#    TargetItems:
+#      - Item: Heart_Ace_Melee
+#  - Item: Loki_Coin
+#    TargetItems:
+#      - Item: Gambler_Seal_KR_
+#  - Item: Glacier_Armor_9Refine
+#    NotSocketEnchantItem: false
+#    TargetItems:
+#      - Item: Glacier_Armor
+#      - Item: Glacier_Robe
+#      - Item: Glacier_Manteau
+#      - Item: Glacier_Muffler
+#      - Item: Glacier_Boots
+#      - Item: Glacier_Shoes
+#      - Item: Glacier_Guard

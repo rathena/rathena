@@ -49384,3 +49384,127 @@ Body:
             Rate: 400
           - Item: Critical_Stone_Bottom
             Rate: 400
+  - Group: ENCHANT_STONE_BOX31
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Range_Stone_Robe_D
+            Rate: 10
+          - Item: Melee_Stone_Robe_D
+            Rate: 10
+          - Item: Magic_Stone_Robe_D
+            Rate: 10
+          - Item: SmatkStone_Robe
+            Rate: 10
+          - Item: M_PATKStone_Robe
+            Rate: 10
+          - Item: R_PATKStone_Robe
+            Rate: 10
+          - Item: ShinkiroStone_Robe
+            Rate: 10
+          - Item: ShiranuiStone_Robe
+            Rate: 10
+          - Item: ShaCrossStone_Robe
+            Rate: 10
+          - Item: CardinalStone_Robe
+            Rate: 10
+          - Item: ReloadStone_Robe_D
+            Rate: 10
+          - Item: CriticalStone_Robe_D
+            Rate: 10
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: CastStone_Robe_D
+            Rate: 40
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: KagerouStone_Top3
+            Rate: 80
+          - Item: KagerouStone_Middle3
+            Rate: 80
+          - Item: KagerouStone_Bottom3
+            Rate: 80
+          - Item: OboroStone_Top3
+            Rate: 80
+          - Item: OboroStone_Middle3
+            Rate: 80
+          - Item: OboroStone_Bottom3
+            Rate: 80
+          - Item: GuillcrossStone_Top3
+            Rate: 80
+          - Item: GuillcrossStone_Middle3
+            Rate: 80
+          - Item: GuillcrossStone_Bottom3
+            Rate: 80
+          - Item: ArchbishopStone_Top3
+            Rate: 80
+          - Item: ArchbishopStone_Middle3
+            Rate: 80
+          - Item: ArchbishopStone_Bottom3
+            Rate: 80
+          - Item: SuNoviceStone_Top
+            Rate: 150
+          - Item: SuNoviceStone_Middle
+            Rate: 150
+          - Item: SuNoviceStone_Bottom
+            Rate: 150
+          - Item: SuNoviceStone_Robe
+            Rate: 150
+          - Item: Stone_Robe_Box
+            Rate: 190
+          - Item: aegis_102333
+            Rate: 190
+          - Item: Magic_Stone_Top
+            Rate: 200
+          - Item: Magic_Stone_Middle
+            Rate: 200
+          - Item: Magic_Stone_Bottom
+            Rate: 200
+          - Item: Range_Stone_Top
+            Rate: 200
+          - Item: Range_Stone
+            Rate: 200
+          - Item: Range_Stone_Bottom
+            Rate: 200
+          - Item: Melee_Stone_Top
+            Rate: 200
+          - Item: Melee_Stone_Middle
+            Rate: 200
+          - Item: Melee_Stone_Bottom
+            Rate: 200
+          - Item: ReloadStone_Top
+            Rate: 200
+          - Item: ReloadStone_Middle
+            Rate: 200
+          - Item: ReloadStone_Bottom
+            Rate: 200
+          - Item: EXPStone_Middle
+            Rate: 200
+          - Item: EXPStone_Bottom
+            Rate: 200
+          - Item: EXPStone_Top
+            Rate: 200
+          - Item: Stone_Top_Box
+            Rate: 400
+          - Item: Stone_Top2_Box
+            Rate: 400
+          - Item: Stone_Middle_Box
+            Rate: 400
+          - Item: Stone_Middle2_Box
+            Rate: 400
+          - Item: Stone_Bottom_Box
+            Rate: 400
+          - Item: Stone_Bottom2_Box
+            Rate: 400
+          - Item: CastingStone_Top
+            Rate: 400
+          - Item: CastingStone_Middle
+            Rate: 400
+          - Item: CastingStone_Bottom
+            Rate: 400
+          - Item: Critical_Stone
+            Rate: 400
+          - Item: Critical_Stone_Top
+            Rate: 400
+          - Item: Critical_Stone_Bottom
+            Rate: 400

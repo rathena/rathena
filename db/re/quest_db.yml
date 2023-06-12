@@ -1271,9 +1271,15 @@ Body:
   - Id: 3388
     Title: Harvest Festival Sweets Delivery - Standby
     TimeLimit: 4h
+  - Id: 3389
+    Title: Removing Biomagnetic Jamming Chips
+  - Id: 3390
+    Title: Eorpa, The Manager of the Second Power Plant
   - Id: 3391
     Title: Illusion Sprinkled Potato Chips - Standby
     TimeLimit: 4h
+  - Id: 3392
+    Title: Plated Chip Spread by Illusion
   - Id: 3400
     Title: Insect Monster Hunt - Standby
     TimeLimit: 4h
@@ -1286,15 +1292,61 @@ Body:
   - Id: 3406
     Title: Dragon Monster Hunt - Standby
     TimeLimit: 4h
+  - Id: 3407
+    Title: The Fishing Rod of the Missing Person
+  - Id: 3408
+    Title: Procurement of Abyssal Essence
+  - Id: 3409
+    Title: Vortex leading to the Deep Sea
+  - Id: 3410
+    Title: Sirud to the Surface
+  - Id: 3411
+    Title: Defeating Deep Sea Creatures
+    Targets:
+      - Mob: ILL_SROPHO
+        Count: 10
+      - Mob: ILL_MARSE
+        Count: 10
+      - Mob: ILL_DEVIACE
+        Count: 10
+  - Id: 3412
+    Title: Collect Abyssal Essence
+  - Id: 3413
+    Title: Collect Abyssal Essence - Daily
   - Id: 3414
     Title: Collect Abyssal Essence - Standby
     TimeLimit: 4h
+  - Id: 3415
+    Title: Defeat Deep Sea Creatures in the Upper Layers - Daily
+    Targets:
+      - Mob: ILL_SROPHO
+        Count: 10
+      - Mob: ILL_MARSE
+        Count: 10
+      - Mob: ILL_DEVIACE
+        Count: 10
   - Id: 3416
     Title: Defeat Deep Sea Creatures in the Upper Layers - Standby
     TimeLimit: 4h
+  - Id: 3417
+    Title: Defeat Deep Sea Creatures in the Lower Layers - Daily
+    Targets:
+      - Mob: ILL_SWORD_FISH
+        Count: 10
+      - Mob: ILL_PHEN
+        Count: 10
+      - Mob: ILL_KING_DRAMOH
+        Count: 10
   - Id: 3418
     Title: Defeat Deep Sea Creatures in the Lower Layers - Standby
     TimeLimit: 4h
+  - Id: 3419
+    Title: Defeat Deep Sea fishmen in the Lower Layers - Daily
+    Targets:
+      - Mob: ILL_SEDORA
+        Count: 15
+      - Mob: ILL_STROUF
+        Count: 15
   - Id: 3420
     Title: Defeat Deep Sea fishmen in the Lower Layers - Standby
     TimeLimit: 4h
@@ -2803,15 +2855,39 @@ Body:
   - Id: 5846
     Title: Welcome Corridor
     TimeLimit: 4h
+  - Id: 5847
+    Title: A story to tell Luanda
+  - Id: 5848
+    Title: Evidence of Fighting the Megaliths
   - Id: 5849
     Title: "[Waiting] Evidence to Fight Megaliths"
     TimeLimit: 4h
+  - Id: 5850
+    Title: Evidence of Fighting the Utans
   - Id: 5851
     Title: "[Waiting] Evidence of Fighting the Utans"
     TimeLimit: 4h
+  - Id: 5852
+    Title: Operation of Geosokki
+    Targets:
+      - Mob: ILL_TRI_JOINT
+        Count: 5
+      - Mob: ILL_STALACTIC_GOLEM
+        Count: 5
+      - Mob: ILL_MEGALITH
+        Count: 5
   - Id: 5853
     Title: "[Waiting] Operation to Fight Megalithic"
     TimeLimit: 4h
+  - Id: 5854
+    Title: Operation of Utans
+    Targets:
+      - Mob: ILL_STONE_SHOOTER
+        Count: 5
+      - Mob: ILL_WOOTAN_SHOOTER
+        Count: 5
+      - Mob: ILL_WOOTAN_FIGHTER
+        Count: 5
   - Id: 5855
     Title: "[Wait] Utan Fighting Operation"
     TimeLimit: 4h
@@ -2848,9 +2924,41 @@ Body:
     Title: Morning's Menu Selection
   - Id: 5871
     Title: Morning's Menu Selection
+  - Id: 5892
+    Title: Cleaning Robot Omega
+  - Id: 5893 
+    Title: Cleaning the Sewage Treatment Plant I
+    Targets:
+      - Mob: EP17_2_VENENUM3
+        Count: 44
+  - Id: 5894
+    Title: Cleaning the Sewage Treatment Plant II
+    Targets:
+      - Mob: EP17_2_CRAMP
+        Count: 44
+  - Id: 5895
+    Title: Cleaning the Sewage Treatment Plant III
+    Targets:
+      - Mob: EP17_2_WATERFALL
+        Count: 44
   - Id: 5896
     Title: "[Waiting] Cleaning the sewage treatment plant."
     TimeLimit: 4h
+  - Id: 5897
+    Title: Cleaning the First Power Plant I
+    Targets:
+      - Mob: EP17_2_BELLARE3
+        Count: 44
+  - Id: 5898
+    Title: Cleaning the First Power Plant II
+    Targets:
+      - Mob: EP17_2_DOLOR3
+        Count: 44
+  - Id: 5899
+    Title: Cleaning the First Power Plant III
+    Targets:
+      - Mob: EP17_2_PLASMA_Y
+        Count: 44
   - Id: 5900
     Title: "[Waiting] Cleaning the first power plant."
     TimeLimit: 4h
@@ -5033,20 +5141,53 @@ Body:
   - Id: 7868
     Title: Mercenary vs Mercenary - Waiting
     TimeLimit: 4h
+  - Id: 7879
+    Title: New Poison Research
+    Targets:
+      - Mob: POISONOUS
+        Count: 20
+      - Mob: TOXIOUS
+        Count: 20
   - Id: 7880
-    Title: New toxic gas research - Standby
+    Title: New Poison Research - Standby
     TimeLimit: 4h
+  - Id: 7881
+    Title: Special Mineral Research 1
+    Targets:
+      - Mob: MINERAL_G
+        Count: 20
+      - Mob: MINERAL_R
+        Count: 20
   - Id: 7882
-    Title: Special mineral research 1 - Waiting
+    Title: Special Mineral Research 1 - Standby
     TimeLimit: 4h
+  - Id: 7883
+    Title: Special Mineral Research 2
+    Targets:
+      - Mob: MINERAL_W
+        Count: 20
+      - Mob: MINERAL_P
+        Count: 20
   - Id: 7884
-    Title: Special mineral research 2 - Waiting
+    Title: Special Mineral Research 2 - Standby
     TimeLimit: 4h
+  - Id: 7885
+    Title: Abyssman Research
+    Targets:
+      - Mob: ABYSSMAN
+        Count: 10
   - Id: 7886
     Title: Abyssman Research - Waiting
     TimeLimit: 4h
+  - Id: 7887
+    Title: Mineworm Research
+    Targets:
+      - Mob: JEWELIANT
+        Count: 10
+      - Mob: PORCELLIO_W
+        Count: 10
   - Id: 7888
-    Title: Gwangin bug research - Waiting
+    Title: Mineworm Research - Standby
     TimeLimit: 4h
   - Id: 7890
     Title: X century XX gold-waiting
@@ -5680,27 +5821,125 @@ Body:
   - Id: 8548
     Title: A Mirror - (Standby)
     TimeLimit: 4h
+  - Id: 8550
+    Title: Dealer that caused abnormal evolution
+    Targets:
+      - Mob: DELETER1_H
+        Count: 15
+      - Mob: DELETER2_H
+        Count: 15
   - Id: 8551
     Title: The Dealer That Caused Evolution (Standby)
     TimeLimit: 4h
+  - Id: 8552
+    Title: Reexamination of the Dealer that Caused the Evolution
+    Targets:
+      - Mob: DELETER1_H
+        Count: 15
+      - Mob: DELETER2_H
+        Count: 15
+  - Id: 8553
+    Title: Eradicate the nightmare that became a reality
+    Targets:
+      - Mob: NIGHTMARE_TERROR_H
+        Count: 10
   - Id: 8554
     Title: Eradicate the nightmare that became reality (Standby)
     TimeLimit: 4h
+  - Id: 8555
+    Title: Eradicate the terrifying nightmare that has become a reality
+    Targets:
+      - Mob: NIGHTMARE_TERROR_H
+        Count: 10
+  - Id: 8556
+    Title: Check density
+    Targets:
+      - Mob: LAVA_GOLEM_H
+        Count: 10
   - Id: 8557
     Title: Check Density (Standby)
     TimeLimit: 4h
+  - Id: 8558
+    Title: Check density once again
+    Targets:
+      - Mob: LAVA_GOLEM_H
+        Count: 10
+  - Id: 8559
+    Title: Small things crumbling
+    Targets:
+      - Mob: BLAZZER_H
+        Count: 10
+      - Mob: EXPLOSION_H
+        Count: 10
   - Id: 8560
     Title: Small Things (Standby)
     TimeLimit: 4h
+  - Id: 8561
+    Title: Very small things
+    Targets:
+      - Mob: BLAZZER_H
+        Count: 10
+      - Mob: EXPLOSION_H
+        Count: 10
   - Id: 8581
     Title: Sour melon is delicious - Standby
     TimeLimit: 4h
   - Id: 8583
     Title: SACOM's performance analysis - Standby
     TimeLimit: 4h
+  - Id: 8586
+    Title: Keeping Breeding Ground
   - Id: 8587
     Title: Daily farm experience - Standby
     TimeLimit: 4h
+  - Id: 8588
+    Title: Tail Collection
+    Drops:
+      - Mob: MD_PITAYA_R
+        Item: PITAYA_TAIL_R
+        Rate: 1500
+      - Mob: MD_PITAYA_B
+        Item: PITAYA_TAIL_B
+        Rate: 1500
+      - Mob: MD_PITAYA_G
+        Item: PITAYA_TAIL_G
+        Rate: 1500
+      - Mob: MD_PITAYA_Y
+        Item: PITAYA_TAIL_Y
+        Rate: 1500
+      - Mob: MD_PITAYA_V
+        Item: PITAYA_TAIL_P
+        Rate: 1500
+      - Mob: MD_PITAYA_BOSS
+        Item: PITAYA_TAIL_BOSS
+        Rate: 1500
+  - Id: 8589
+    Title: It's Boss Meow!
+  - Id: 8590
+    Title: Play with the Red Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_R
+        Count: 20
+  - Id: 8591
+    Title: Play with the Yellow Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_Y
+        Count: 20
+  - Id: 8592
+    Title: Play with the Blue Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_B
+        Count: 20
+  - Id: 8593
+    Title: Play with the Purple Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_V
+        Count: 20
+  - Id: 8594
+    Title: Play with the Green Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_G
+        Count: 20
   - Id: 8595
     Title: Playing with Pitaya - Standby
     TimeLimit: 4h
@@ -7544,12 +7783,63 @@ Body:
   - Id: 11614
     Title: How many octopus can I eat? (Standby)
     TimeLimit: 4h
+  - Id: 11615
+    Title: Sewer Pipe Straggler
+  - Id: 11616
+    Title: Sewer Pipe Straggler
+  - Id: 11617
+    Title: Sewer Pipe Straggler
+  - Id: 11618
+    Title: Sewer Pipe Straggler
+  - Id: 11620
+    Title: Sewer Pipe Straggler
+  - Id: 11621
+    Title: Be quiet in the Library!
+  - Id: 11622
+    Title: Be quiet in the Library!
+  - Id: 11623
+    Title: Be quiet in the Library!
+  - Id: 11624
+    Title: Be quiet in the Library!
+  - Id: 11625
+    Title: Be quiet in the Library!
+  - Id: 11626
+    Title: Be quiet in the Library!
+  - Id: 11627
+    Title: Be quiet in the Library!
+  - Id: 11628
+    Title: Be quiet in the Library!
+  - Id: 11629
+    Title: Be quiet in the Library!
+  - Id: 11630
+    Title: Be quiet in the Library!
+  - Id: 11631
+    Title: Be quiet in the Library!
+  - Id: 11632
+    Title: Be quiet in the Library!
+  - Id: 11633
+    Title: Be quiet in the Library!
+  - Id: 11634
+    Title: Hunting Bookworm
+    Targets:
+      - Mob: EP17_2_BOOKWORM
+        Count: 20
   - Id: 11635
-    Title: The ultimate bookworm hunt
+    Title: Hunting Bookworm - Waiting
     TimeLimit: 4h
+  - Id: 11636
+    Title: Hunting Roaming Spellbook
+    Targets:
+      - Mob: EP17_2_ROAMING_SPLBOOK
+        Count: 20
   - Id: 11637
-    Title: The ultimate rule
+    Title: Hunting Roaming Spellbook - Waiting
     TimeLimit: 4h
+  - Id: 11638
+    Title: Ultimate Scrap Metal Collection
+    Targets:
+      - Mob: EP17_2_GUARDIAN_PARTS
+        Count: 20
   - Id: 11639
     Title: The ultimate collection of scrap metal
     TimeLimit: 4h
@@ -8580,9 +8870,21 @@ Body:
   - Id: 12496
     Title: Waiting for permission to enter the flower garden
     TimeLimit: +1h
+  - Id: 12497
+    Title: Security Clearance
   - Id: 12498
-    Title: Waiting for permission to enter the security zone
+    Title: Security Clearance - Waiting
     TimeLimit: 4h
+  - Id: 12499
+    Title: Red Pepper - Kappa Suppression
+    Targets:
+      - Mob: MD_REDPEPPER
+        Count: 1
+  - Id: 12500
+    Title: Red Pepper - Lambda Suppression
+    Targets:
+      - Mob: MD_REDPEPPER_H
+        Count: 1
   - Id: 12506
     Title: Let's try again to seal the crack
     TimeLimit: 4h
@@ -10290,44 +10592,81 @@ Body:
     Title: Discovered Suspicious Sand Pile
   - Id: 16095
     Title: Discovered Suspicious Sand Pile
+  - Id: 16096
+    Title: To the unknown tortoise island
+  - Id: 16097
+    Title: Stranger on Turtle Island 1
+  - Id: 16098
+    Title: Stranger on Turtle Island 2
+  - Id: 16099
+    Title: Stranger on Turtle Island 3
+  - Id: 16100
+    Title: Stranger on Turtle Island 4
   - Id: 16101
-    Title: Kiel Hyre Academy
+    Title: Emergency food procurement 1
+    Targets:
+      - Mob: ILL_PERMETER
+        Count: 10
+      - Mob: ILL_SOLIDER
+        Count: 10
   - Id: 16102
-    Title: Kiel Hyre Academy
+    Title: Emergency food procurement 2
+    Targets:
+      - Mob: ILL_FREEZER
+        Count: 10
+      - Mob: ILL_HEATER
+        Count: 10
   - Id: 16103
-    Title: Kiel Hyre Academy
+    Title: The Secret of Strangers
   - Id: 16104
-    Title: Kiel Hyre Academy
+    Title: A long-forgotten story
   - Id: 16105
-    Title: Kiel Hyre Academy
+    Title: A short break, and a promise
     TimeLimit: 4h
   - Id: 16106
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten 1
   - Id: 16107
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten 2
   - Id: 16108
-    Title: Kiel Hyre Academy
+    Title: A memory that should not be forgotten - Cooldown
     TimeLimit: 4h
   - Id: 16109
-    Title: Kiel Hyre Academy
+    Title: Vain Desire
+    Targets:
+      - Mob: ILL_ASSULTER
+        Count: 10
+    Drops:
+      - Mob: ILL_ASSULTER
+        Item: Shabby_Metal_Chip
+        Rate: 5000
   - Id: 16110
-    Title: Kiel Hyre Academy
+    Title: Vain Desire - Cooldown
     TimeLimit: 4h
   - Id: 16111
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger 1
+    Targets:
+      - Mob: ILL_PERMETER
+        Count: 10
+      - Mob: ILL_SOLIDER
+        Count: 10
   - Id: 16112
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger 2
+    Targets:
+      - Mob: ILL_FREEZER
+        Count: 10
+      - Mob: ILL_HEATER
+        Count: 10
   - Id: 16113
-    Title: Kiel Hyre Academy
+    Title: Endless Hunger - Cooldown
     TimeLimit: 4h
   - Id: 16114
-    Title: Kiel Hyre Academy
+    Title: Talk with Aylvar
   - Id: 16115
-    Title: Kiel Hyre Academy
+    Title: Talk with girl
   - Id: 16116
-    Title: Kiel Hyre Academy
+    Title: Continuous story
   - Id: 16117
-    Title: Mysterious World Map
+    Title: Continuous story 2
   - Id: 16118
     Title: Hidden poem
   - Id: 16119
@@ -10543,18 +10882,73 @@ Body:
   - Id: 16414
     Title: Happy Cuppet Walk-Wait
     TimeLimit: 4h
+  - Id: 16427
+    Title: Poisoning
+  - Id: 16428
+    Title: Making the Antidote
+  - Id: 16429
+    Title: Silva Papila
+    Targets:
+      - Mob: MD_SILVA_PAPILIA
+        Count: 1
+  - Id: 16430
+    Title: Completion of the Antidote
+  - Id: 16431
+    Title: Hunting Silva Papila
+    Targets:
+      - Mob: MD_SILVA_PAPILIA
+        Count: 1
   - Id: 16432
-    Title: Silva Papilia Hunt-Standby
+    Title: Hunting Silva Papila - Waiting
     TimeLimit: 4h
+  - Id: 16433
+    Title: Hunting Senior Papila
+    Targets:
+      - Mob: MD_GRAN_PAPILIA
+        Count: 1
   - Id: 16434
-    Title: Grand Papelia Hunting-Standby
+    Title: Hunting Senior Papila - Waiting
     TimeLimit: 4h
+  - Id: 16435
+    Title: Searching for Gardener
   - Id: 16436
-    Title: Search-wait for gardeners
+    Title: Searching for Gardener - Waiting
     TimeLimit: 4h
+  - Id: 16437
+    Title: Water Garden
+  - Id: 16438
+    Title: Water Garden Hard
   - Id: 16439
-    Title: Award Garden-Waiting
+    Title: Water Garden - Waiting
     TimeLimit: 4h
+  - Id: 16440
+    Title: I would like to know what it is
+  - Id: 16441
+    Title: I would like to know what it is
+  - Id: 16442
+    Title: The story of the managers
+  - Id: 16443
+    Title: The story of the managers
+  - Id: 16444
+    Title: The story of the managers
+  - Id: 16445
+    Title: The story of the managers
+  - Id: 16446
+    Title: I would like to know what it is
+  - Id: 16447
+    Title: I would like to know what it is
+  - Id: 16448
+    Title: I would like to know what it is
+  - Id: 16449
+    Title: I would like to know what it is
+  - Id: 16450
+    Title: I would like to know what it is
+  - Id: 16451
+    Title: I would like to know what it is
+  - Id: 16452
+    Title: I would like to know what it is
+  - Id: 16453
+    Title: I would like to know what it is
   - Id: 16521
     Title: 4th floor of Rudus, an organic field for waste specimens
   - Id: 16522
@@ -10748,21 +11142,136 @@ Body:
   - Id: 17327
     Title: (Standby) Delicious noodles
     TimeLimit: 4h
+  - Id: 17333
+    Title: "Mansion's Guest"
+  - Id: 17334
+    Title: "Repeater Confirmed: Restaurant"
+  - Id: 17335
+    Title: Parts of the repeater
+    Drops:
+      - Mob: EP17_2_BETA_BASIC_NG
+        Item: Autodoll_Communicator
+        Rate: 5000
+  - Id: 17336
+    Title: "Repeater Confirmed: Riverbank"
+  - Id: 17337
+    Title: "Repeater Confirmed: Central Garden"
+  - Id: 17338
+    Title: Repeater confirmation complete
+  - Id: 17339
+    Title: Supply the spare parts
+  - Id: 17340
+    Title: Supply the spare parts
+    Drops:
+      - Mob: EP17_2_BETA_BASIC_NG
+        Item: Autodoll_Communicator
+        Rate: 5000
   - Id: 17341
-    Title: (Standby) No signal
+    Title: No Signal - Waiting
     TimeLimit: 4h
+  - Id: 17342
+    Title: "I don't like it"
+    Targets:
+      - Mob: EP17_2_OMEGA_CLEANER_NG
+        Count: 5
+  - Id: 17343
+    Title: I am scared
+  - Id: 17344
+    Title: I do not have a key
+  - Id: 17345
+    Title: Staircase Key 1
+  - Id: 17346
+    Title: Staircase Key 2
+  - Id: 17347
+    Title: Staircase Key 3
+  - Id: 17348
+    Title: Secure the key
+  - Id: 17349
+    Title: The door opened
+  - Id: 17350
+    Title: Head body arms legs
+  - Id: 17351
+    Title: Head body arms legs
+  - Id: 17352
+    Title: Head body arms legs
+  - Id: 17353
+    Title: Head body arms legs
+  - Id: 17354
+    Title: Head body arms legs
+  - Id: 17355
+    Title: Head body arms legs
+  - Id: 17356
+    Title: Head body arms legs
+  - Id: 17357
+    Title: Head body arms legs
+  - Id: 17358
+    Title: Basement status check completed
+  - Id: 17359
+    Title: Ground warehouse clearance
+    Targets:
+      - Mob: EP17_2_HEART_HUNTER_H
+        Count: 20
   - Id: 17360
-    Title: (Standby) Clean the warehouse floor
+    Title: Ground warehouse clearance - Waiting
     TimeLimit: 4h
+  - Id: 17361
+    Title: Basement warehouse clearance
+    Targets:
+      - Mob: EP17_2_BETA_ITEMKEEPER
+        Count: 20
   - Id: 17362
-    Title: (Standby) Organize the underground warehouse
+    Title: Basement warehouse clearance - Waiting
     TimeLimit: 4h
+  - Id: 17363
+    Title: Exploring bathhouse
+  - Id: 17364
+    Title: Request to shut down the boiler
+  - Id: 17365
+    Title: "Is it already stopped?"
+  - Id: 17366
+    Title: "All of a sudden?"
+  - Id: 17367
+    Title: Countermeasure preparations
+  - Id: 17368
+    Title: Trap installation 1
+  - Id: 17369
+    Title: Trap installation 2
+  - Id: 17370
+    Title: Trap installation 3
+  - Id: 17371
+    Title: Trap installation 4
+  - Id: 17372
+    Title: Trap installation complete
+  - Id: 17373
+    Title: "Anyway, let's talk"
+  - Id: 17374
+    Title: "Why on earth did you do that?"
+  - Id: 17375
+    Title: "Boiler's request"
+  - Id: 17376
+    Title: Between hot and cold baths
+    Targets:
+      - Mob: EP17_2_BETA_CLEANER_A
+        Count: 10
+      - Mob: EP17_2_BETA_CLEANER_B
+        Count: 10
   - Id: 17377
-    Title: (Standby) Between hot and cold baths
+    Title: Between hot and cold baths - Waiting
     TimeLimit: 4h
+  - Id: 17378
+    Title: "Sweepy's request"
+  - Id: 17379
+    Title: "I'm cleaning the bathhouse"
+    Targets:
+      - Mob: EP17_2_MARC
+        Count: 15
+      - Mob: EP17_2_PIRANHA
+        Count: 15
   - Id: 17380
-    Title: (Standby) I'm cleaning the bathhouse
+    Title: Cleaning the bathhouse - Waiting
     TimeLimit: 4h
+  - Id: 17381
+    Title: Joining the company
   - Id: 17388
     Title: (Standby) There's still cold air left
     TimeLimit: 4h
@@ -10802,54 +11311,69 @@ Body:
   - Id: 18000
     Title: Ready to enter
   - Id: 18001
-    Title: Delivery for Rooney
+    Title: Mansion Sewer
   - Id: 18002
-    Title: Delivery for Rooney
+    Title: Broken core collection
   - Id: 18003
-    Title: Delivery for Rooney
+    Title: Broken Core 01
   - Id: 18004
-    Title: Lasda's Request
+    Title: Broken Core 02
   - Id: 18005
-    Title: Jesse's Request
+    Title: Broken Core 03
   - Id: 18006
-    Title: Sir Krieg's Approval
+    Title: Broken Core 04
   - Id: 18007
-    Title: Sir Krieg's Trust
+    Title: Broken Core 05
   - Id: 18008
-    Title: Sir Krieg's Trust
+    Title: Broken Core 06
   - Id: 18009
-    Title: Into the prison
+    Title: Broken Core 07
   - Id: 18010
-    Title: Jail Break
+    Title: Broken Core 08
   - Id: 18011
-    Title: Bodyguard work
+    Title: Broken Core 09
   - Id: 18012
-    Title: Bodyguard work
+    Title: Broken Core 10
   - Id: 18013
-    Title: Bodyguard work
+    Title: To the designated point
   - Id: 18014
-    Title: Bodyguard work
+    Title: Unexpected big fish
   - Id: 18015
-    Title: Bodyguard work
+    Title: Tracking Illusion
   - Id: 18016
-    Title: Bodyguard work
+    Title: Strategy planning
   - Id: 18017
-    Title: Jail Break
+    Title: Pest Extermination
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
   - Id: 18018
-    Title: Jail Break
+    Title: To the non-official lounge
   - Id: 18019
-    Title: Vitre's Songs
+    Title: Conversation with Sweetie
   - Id: 18020
-    Title: Vitre's Songs
+    Title: Greeting
   - Id: 18021
-    Title: Vitre's Songs
+    Title: A guest
   - Id: 18022
-    Title: Vitre's Songs
+    Title: Hey! Sweetie
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
   - Id: 18023
-    Title: Vitre the Spy
+    Title: Hey! Sweetie - Waiting
     TimeLimit: 4h
+  - Id: 18024
+    Title: Core collection
+    Drops:
+      - Mob: G_EP17_2_HEART_HUNTER
+        Item: Broken_Dollcore
+        Rate: 5000
+      - Mob: G_BELLARE3
+        Item: Broken_Dollcore
+        Rate: 5000
   - Id: 18025
-    Title: Collecting cores - Standby
+    Title: Core collection - Waiting
     TimeLimit: 4h
   - Id: 18028
     Title: The Memory of Thanatos the Magistrate - Waiting

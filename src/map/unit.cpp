@@ -553,7 +553,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			}
 			break;
 		case BL_NPC:
-			if (nd->sc.option&OPTION_INVISIBLE)
+			if (nd->is_invisible)
 				break;
 
 			int xs = -1, ys = -1;
@@ -2061,7 +2061,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 			if (!src->prev)
 				return 0; // Warped away!
-		} else if( sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
+		} else if( sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB  && skill_id != SHC_SAVAGE_IMPACT ) {
 			status_change_end(src,SC_CLOAKINGEXCEED);
 
 			if (!src->prev)

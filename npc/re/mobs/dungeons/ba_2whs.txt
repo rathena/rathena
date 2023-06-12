@@ -1,0 +1,17 @@
+//===== rAthena Script =======================================
+//= Monsters from Varmundt's Mansion
+//===== Changelog: ===========================================
+//= 1.0 First version. [JohnnyPlayy]
+//============================================================
+
+//= Tartar Cellar - Level 1
+//============================================================
+ba_2whs01,0,0	monster	Broken Beta Guards	20639,30,5000
+ba_2whs01,0,0	monster	Broken Omega Cleaner	20641,90,5000
+ba_2whs01,0,0	monster	Heart Hunter Skirmisher	20682,70,5000
+
+//= Tartar Cellar - Level 2
+//============================================================
+ba_2whs02,0,0	monster	Broken Warehouse Manager	20637,80,5000
+ba_2whs02,0,0	monster	Broken Beta Guards	20639,80,5000
+ba_2whs02,0,0	monster	Broken Omega Cleaner	20641,20,5000

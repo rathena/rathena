@@ -3,11 +3,16 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Illusion series related merchants and enchanters
+// Note:
+// - Some dialog are missing in Illusion of Luanda exchange NPC.
 //===== Changelog: ===========================================
 //= 1.0 Initial release of Illusion of Moonlight [crazyarashi]
 //= 1.1 Cleanup and improvements [Everade]
 //= 1.2 Added Illusion of Vampire enchanter [Capuche]
 //= 1.3 Added Illusion of Frozen enchanter [Capuche]
+//= 1.4 Added Illusion of Turtle enchanter [Capuche]
+//= 1.5 Added Illusion of Luanda enchanter [Capuche]
+//= 1.6 Added Illusion of Underwater exchange [Capuche]
 //============================================================
 
 //============================================================
@@ -1333,5 +1338,340 @@ S_Enchant:
 OnTouch:
 	if (isbegin_quest(12415) == 0)
 		npctalk "Illusion Enchanter: Come talk to me if you're interested in the Illusion equipment!", "", bc_self;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Turtle
+//============================================================
+
+// Exchange npc
+alberta,226,28,3	script	Equipment Researcher	4_TOWER_15,{
+	disable_items;
+
+	.@illusion_stone_name$ = getitemname(25271);
+
+	mes "[Equipment Researcher]";
+	mes "I'm the one who researches " + .@illusion_stone_name$ + " to enhance armors and weapons.";
+	mes "If you have the materials I need for my research, wouldn't you hand them over?";
+	mes "If you give me some equipment and some materials, I'll exchange them for my reinforced equipment.";
+	next;
+	switch( select( "What are you doing here?", "Exchange Weapon", "Exchange Armor" ) ) {
+	case 1:
+		mes "[Equipment Researcher]";
+		mes "I'm working on how to use an " + .@illusion_stone_name$ + " to strengthen equipment.";
+		mes "I went to go to the place where " + .@illusion_stone_name$ + " was found, and I barely got back..";
+		next;
+		mes "[Equipment Researcher]";
+		mes "I think I met a girl...";
+		mes "Anyway, after that, I couldn't find a way to go back.";
+		mes "Here, we're getting research materials from adventurers with " + .@illusion_stone_name$ + ", and I'm offering enhanced equipment instead.";
+		close;
+	case 2:
+		mes "[Equipment Researcher]";
+		mes "What are the weapons I can exchange? Wait a minute. I'll name them.";
+		next;
+		mes "[Equipment Researcher]";
+		mes "" + mesitemlink(13469, false) + ",";
+		mes "" + mesitemlink(1326, false) + ",";
+		mes "" + mesitemlink(32005, false) + ",";
+		mes "" + mesitemlink(13338, false) + ",";
+		mes "" + mesitemlink(16065, false) + ".";
+		mes "Each has two slots.";
+		next;
+		mes "[Equipment Researcher]";
+		mes "As a material, you can bring ^0000CDexisting weapons that have been refined over +9.^000000";
+		mes "And I need some ^0000CD" + .@illusion_stone_name$ + " and other materials.^000000";
+		mes "If you pick the weapon you want, I'll tell you in detail.";
+		next;
+		mes "[Equipment Researcher]";
+		mes "Of course, we're giving you new weapons, so don't forget that all the existing ^0000CDsmelting and enchantments^000000 will disappear.";
+		mes "I need to see the performance of the weapons to be exchanged, so you must ^0000CDwear them^000000.";
+		mes "So, what kind of weapon do you want?";
+		next;
+		switch( select( "Illusion Immaterial Sword", "Illusion War Axe", "Illusion Pole Axe", "Illusion Wing Shuriken", "Illusion Iron Driver" ) ) {
+		case 1:
+			.@reward = 13469;		// Illusion Immaterial Sword
+			.@eq_req = 1141;		// Immaterial Sword
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,100,			// Illusion Stones
+				25314,50;			// Ships Log
+			break;
+		case 2:
+			.@reward = 1326;		// Illusion War Axe
+			.@eq_req = 1306;		// War Axe
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,100,			// Illusion Stones
+				25311,200;			// Black Piece of Soul
+			break;
+		case 3:
+			.@reward = 32005;		// Illusion Pole Axe
+			.@eq_req = 1417;		// Pole Axe
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,100,			// Illusion Stones
+				25311,200;			// Black Piece of Soul
+			break;
+		case 4:
+			.@reward = 13338;		// Illusion Wing Shuriken
+			.@eq_req = 13300;		// Huuma Wing Shuriken
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,100,			// Illusion Stones
+				25313,200;			// Old Turtle Shells
+			break;
+		case 5:
+			.@reward = 16065;		// Illusion Iron Driver
+			.@eq_req = 1529;		// Iron Driver
+			.@part = EQI_HAND_R;
+
+			setarray .@items_req[0],
+				25271,100,			// Illusion Stones
+				25313,200;			// Old Turtle Shells
+			break;
+		}
+		mes "[Equipment Researcher]";
+		mes "" + mesitemlink(.@reward, false) + "?";
+		mes "I need " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^0000CD+9 " + getitemname(.@eq_req) + " ^000000,";
+		mes "^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + "ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + "ea^000000 as materials.";
+		break;
+	case 3:
+		.@reward = 19247;		// Illusion Fancy Flower
+		.@eq_req = 2207;		// Fancy Flower
+		.@part = EQI_HEAD_TOP;
+
+		setarray .@items_req[0],
+			25271,50,			// Illusion Stones
+			25312,50;			// Pretty Old Doll
+
+		mes "[Equipment Researcher]";
+		mes "You can only exchange one type of armor, " + mesitemlink(.@reward, false) + ". It has 1 slot.";
+		mes "I need " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^0000CD" + getitemname(.@eq_req) + "^000000,";
+		mes "^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + " ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + " ea^000000 as materials.";
+		next;
+		mes "[Equipment Researcher]";
+		mes "Of course, we're giving you new weapons, so don't forget that all the existing ^0000CDsmelting and enchantments^000000 will disappear.";
+		mes "I need to see the performance of the weapons to be exchanged, so you must ^0000CDwear them^000000.";
+		break;
+	}
+	mes "Would you like to exchange it right now?";
+	next;
+	if (select( "Exchange " + getitemname(.@reward), "Cancel" ) == 2) {
+		mes "[Equipment Researcher]";
+		mes "Yeah, come back if you change your mind.";
+		close;
+	}
+	if (countitem(.@items_req[0]) < .@items_req[1] || countitem(.@items_req[2]) < .@items_req[3]) {
+		mes "[Equipment Researcher]";
+		mes "Well... you're running out of ingredients.";
+		mes "Bring me ^0000CD" + getitemname(.@items_req[0]) + " " + .@items_req[1] + "ea^000000 and ^0000CD" + getitemname(.@items_req[2]) + " " + .@items_req[3] + " ea^000000. Then I'll exchange it for you..";
+		close;
+	}
+	// custom texts and checks
+	.@equip_id = getequipid(.@part);
+	if (.@equip_id == -1) {
+		mes "[Equipment Researcher]";
+		if (.@part == EQI_HAND_R)
+			mes "Where's your weapon?";
+		else
+			mes "Why don't you go wear that equipment first?";
+		close;
+	}
+	if (.@equip_id != .@eq_req) {
+		mes "[Equipment Researcher]";
+		mes "Please equip " + callfunc("F_GetArticle",getitemname(.@eq_req)) + " ^4d4fff+9 " + getitemname(.@eq_req) + ".^000000";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) < 9) {
+		mes "[Equipment Researcher]";
+		mes "I can only upgrade equipment that is ^4d4fffrefined to at least +9.^000000";
+		close;
+	}
+	mes "[Equipment Researcher]";
+	mes "There you go.";
+	delequip .@part;
+	delitem .@items_req[0], .@items_req[1];
+	delitem .@items_req[2], .@items_req[3];
+	getitem .@reward,1;
+	close;
+}
+
+
+//============================================================
+//= Illusion of Luanda
+//============================================================
+
+// Exchange npc
+com_d02_i,234,266,6	script	Village Soap#Lu	4_M_ORIENT01,{
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed because you have too many items. -";
+		close;
+	}
+	disable_items;
+	setarray .@equipment_id[0],
+		18174,
+		28626,
+		19366,
+		15348,
+		22192,
+		20923;
+	setarray .@equipment_name$[0],
+		getitemname(.@equipment_id[0]),
+		getitemname(.@equipment_id[1]),
+		getitemname(.@equipment_id[2]),
+		getitemname(.@equipment_id[3]),
+		getitemname(.@equipment_id[4]),
+		getitemname(.@equipment_id[5]);
+
+	mes "[Village Soap]";
+	mes "I've also rolled up my sleeves for the adventurers who work hard for the village. Can I make your equipment stronger? Is there anything on the list you want?";
+	next;
+	.@s = select( "[Material Check] View catalog.", "[Production Request] " + .@equipment_name$[0], "[Production Request] " + .@equipment_name$[1], "[Production Request] " + .@equipment_name$[2],
+		"[Production Request] " + .@equipment_name$[3], "[Production Request] " + .@equipment_name$[4], "[Production Request] " + .@equipment_name$[5] ) - 2;
+	if (.@s == -1) {
+		mes "[Village Soap]";
+		mes "Are you curious about the ingredients? Take a look.";
+		while(1) {
+			next;
+			.@s = select( "Stop watching", "[Material Check] " + .@equipment_name$[0], "[Material Check] " + .@equipment_name$[1], "[Material Check] " + .@equipment_name$[2],
+				"[Material Check] " + .@equipment_name$[3], "[Material Check] " + .@equipment_name$[4], "[Material Check] " + .@equipment_name$[5] ) - 2;
+			if (.@s == -1) {
+				mes "[Village Soap]";
+				mes "If you equip the required equipment and bring the ingredients, I'll make it for you in no time.";
+				close;
+			}
+			.@size = callsub( S_Data, .@equipment_id[.@s], .@equip_id_refined, .@req_id, .@req_amount, .@part );
+
+			mes "" + mesitemlink(.@equipment_id[.@s]) + "";
+			mes "**********************************";
+			if (.@equipment_id[.@s] == 18174)
+				mes "1 " + mesitemlink(.@equip_id_refined) + "";
+			else
+				mes "1 " + mesitemlink(.@equip_id_refined) + "";
+			for ( .@i = 0; .@i < .@size; ++.@i )
+				mes "" + .@req_amount[.@i] + " " + mesitemlink(.@req_id[.@i]) + "";
+		}
+		end;
+	}
+	.@size = callsub( S_Data, .@equipment_id[.@s], .@equip_id_refined, .@req_id, .@req_amount, .@part );
+
+	if (getequiprefinerycnt(.@part) < 9) {
+		mes "[Village Soap]";
+		mes "I don't care what this equipment is, but it needs to be refined to at least +9.";
+		close;
+	}
+	if (getequipid(.@part) != .@equip_id_refined) {
+		mes "[Village Soap]";
+		mes "Eheh- This dude misunderstood me. Do you have to equip the equipment that becomes the material?";
+		close;
+	}
+	// todo text (currently custom)
+
+	for ( .@i = 0; .@i < .@size; ++.@i ) {
+		if (countitem(.@req_id[.@i]) < .@req_amount[.@i]) {
+			mes "[Village Soap]";
+			mes "You don't have enough items.";
+			close;
+		}
+	}
+	delequip .@part;
+	for ( .@i = 0; .@i < .@size; ++.@i )
+		delitem .@req_id[.@i], .@req_amount[.@i];
+	getitem .@equipment_id[.@s],1;
+	end;
+
+S_Data:
+	switch( getarg(0) ) {
+	case 18174:
+		set getarg(1), 1726;	// .@equip_id_refined,
+		setarray .@req[0],
+			25636,50,
+			25640,50,
+			25637,50,
+			25271,80;
+		set getarg(4), EQI_HAND_R;
+		break;
+	case 28626:
+		set getarg(1), 1552;
+		setarray .@req[0],
+			25642,100,
+			25271,50;
+		set getarg(4), EQI_HAND_R;
+		break;
+	case 19366:
+		set getarg(1), 5128;
+		setarray .@req[0],
+			25634,30,
+			25633,150,
+			25271,120;
+		set getarg(4), EQI_HEAD_TOP;
+		break;
+	case 15348:
+		set getarg(1), 2354;
+		setarray .@req[0],
+			25641,100,
+			25638,150,
+			25271,80;
+		set getarg(4), EQI_ARMOR;
+		break;
+	case 22192:
+		set getarg(1), 2419;
+		setarray .@req[0],
+			25635,100,
+			25633,150,
+			25271,80;
+		set getarg(4), EQI_SHOES;
+		break;
+	case 20923:
+		set getarg(1), 2520;
+		setarray .@req[0],
+			25639,30,
+			25638,150,
+			25271,120;
+		set getarg(4), EQI_GARMENT;
+		break;
+	}
+	.@size = getarraysize(.@req);
+
+	for ( .@i = 0; .@i < .@size; .@i += 2 ) {
+		set getelementofarray(getarg(2), .@i/2), .@req[.@i];
+		set getelementofarray(getarg(3), .@i/2), .@req[.@i+1];
+	}
+	return (.@size/2);
+}
+
+
+//============================================================
+//= Illusion of Underwater
+//============================================================
+
+iz_d04_i,134,228,4	script	Horen#Horen	4_M_BIBI,{
+	if (checkweight(1201,3) == 0) {
+		mes "Conversation cannot proceed because you have too many items.";
+		mes "Please clean up your inventory and try again.";
+		close;
+	}
+	mes "[Horen]";
+	mes "Hello. If you have rare materials from this place, I can enhance your equipment.";
+	next;
+	mes "[Horen]";
+	mes "Would you like to see upgradeable equipment?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Horen]";
+		mes "Come back if interested.";
+		close;
+	}
+	mes "[Horen]";
+	mes "There are many types, so take your time. If you want something, I can enhance it right away.";
+	close2;
+	callshop( "barter_ill_underwater" );
 	end;
 }

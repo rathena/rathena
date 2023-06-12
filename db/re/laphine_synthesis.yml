@@ -4550,3 +4550,265 @@ Body:
 #        Amount: 30
 #      - Item: Zelunium
 #        Amount: 250
+#  - Item: Bs_Item_M_S_60
+#    RewardGroup: BS_ITEM_M_S_60
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: EP20_D_Scale
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_61
+#    RewardGroup: BS_ITEM_M_S_61
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Will_Of_Darkness_
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_62
+#    RewardGroup: BS_ITEM_M_S_62
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: EP19_Luminant
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_63
+#    RewardGroup: BS_ITEM_M_S_63
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: EP19_D_P_Stone
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Mocadas_Slabs1
+#    RewardGroup: MOCADAS_SLABS1
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs2
+#    RewardGroup: MOCADAS_SLABS2
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs3
+#    RewardGroup: MOCADAS_SLABS3
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs4
+#    RewardGroup: MOCADAS_SLABS4
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs5
+#    RewardGroup: MOCADAS_SLABS5
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs6
+#    RewardGroup: MOCADAS_SLABS6
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs7
+#    RewardGroup: MOCADAS_SLABS7
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs8
+#    RewardGroup: MOCADAS_SLABS8
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs9
+#    RewardGroup: MOCADAS_SLABS9
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs10
+#    RewardGroup: MOCADAS_SLABS10
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs11
+#    RewardGroup: MOCADAS_SLABS11
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs12
+#    RewardGroup: MOCADAS_SLABS12
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs13
+#    RewardGroup: MOCADAS_SLABS13
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs14
+#    RewardGroup: MOCADAS_SLABS14
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs15
+#    RewardGroup: MOCADAS_SLABS15
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs16
+#    RewardGroup: MOCADAS_SLABS16
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs17
+#    RewardGroup: MOCADAS_SLABS17
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 50
+#      - Item: Mocadas_Water
+#        Amount: 50
+#      - Item: Crystal_Of_Pollution
+#        Amount: 50
+#  - Item: Mocadas_Slabs18
+#    RewardGroup: MOCADAS_SLABS18
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 50
+#      - Item: Mocadas_Water
+#        Amount: 50
+#      - Item: Crystal_Of_Pollution
+#        Amount: 50
+#  - Item: Mocadas_Slabs19
+#    RewardGroup: MOCADAS_SLABS19
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs20
+#    RewardGroup: MOCADAS_SLABS20
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs21
+#    RewardGroup: MOCADAS_SLABS21
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs22
+#    RewardGroup: MOCADAS_SLABS22
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
+#  - Item: Mocadas_Slabs23
+#    RewardGroup: MOCADAS_SLABS23
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Mocadas_Gold
+#        Amount: 100
+#      - Item: Mocadas_Water
+#        Amount: 100
+#      - Item: Crystal_Of_Pollution
+#        Amount: 100
