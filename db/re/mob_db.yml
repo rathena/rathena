@@ -109789,14 +109789,14 @@ Body:
   - Id: 21548
     AegisName: ECO_CORNUS
     Name: Verdant Corinus
-    Level: 250
-    Hp: 4537500
+    Level: 254
+    Hp: 27113233
     BaseExp: 129643
     JobExp: 86429
     Attack: 10804
     Attack2: 5876
-    Defense: 281
-    MagicDefense: 110
+    Defense: 434
+    MagicDefense: 243
     MagicResistance: 250
     Resistance: 250
     Str: 198
@@ -109832,14 +109832,14 @@ Body:
   - Id: 21549
     AegisName: ECO_PINGUICULA
     Name: Verdant Pinguicula
-    Level: 251
-    Hp: 3652050
+    Level: 252
+    Hp: 25130533
     BaseExp: 104344
     JobExp: 69563
     Attack: 10231
     Attack2: 6746
-    Defense: 213
-    MagicDefense: 115
+    Defense: 513
+    MagicDefense: 198
     MagicResistance: 250
     Resistance: 250
     Str: 180
@@ -109875,14 +109875,14 @@ Body:
   - Id: 21550
     AegisName: ECO_HUNTER_FLY
     Name: Verdant Hunter Fly
-    Level: 249
-    Hp: 3361500
+    Level: 255
+    Hp: 22902181
     BaseExp: 96043
     JobExp: 64029
     Attack: 9976
     Attack2: 5769
-    Defense: 329
-    MagicDefense: 109
+    Defense: 339
+    MagicDefense: 368
     MagicResistance: 250
     Resistance: 250
     Str: 178
@@ -109920,14 +109920,14 @@ Body:
   - Id: 21551
     AegisName: ECO_ROCKER
     Name: Verdant Rocker
-    Level: 245
-    Hp: 4520250
+    Level: 253
+    Hp: 29188380
     BaseExp: 129150
     JobExp: 86100
     Attack: 11293
     Attack2: 4904
-    Defense: 320
-    MagicDefense: 149
+    Defense: 431
+    MagicDefense: 241
     MagicResistance: 250
     Resistance: 250
     Str: 270
@@ -109965,14 +109965,14 @@ Body:
   - Id: 21552
     AegisName: ECO_SAVAGE
     Name: Verdant Savage
-    Level: 247
-    Hp: 5261100
+    Level: 252
+    Hp: 30895777
     BaseExp: 150317
     JobExp: 100211
     Attack: 10997
     Attack2: 4223
-    Defense: 380
-    MagicDefense: 103
+    Defense: 566
+    MagicDefense: 248
     MagicResistance: 250
     Resistance: 250
     Str: 230
@@ -110009,13 +110009,13 @@ Body:
     AegisName: ECO_FLORA
     Name: Verdant Flora
     Level: 254
-    Hp: 3352800
+    Hp: 26231246
     BaseExp: 95794
     JobExp: 63863
     Attack: 12087
     Attack2: 4380
-    Defense: 288
-    MagicDefense: 211
+    Defense: 480
+    MagicDefense: 185
     MagicResistance: 250
     Resistance: 250
     Str: 339
@@ -110051,14 +110051,14 @@ Body:
   - Id: 21554
     AegisName: ECO_HILL_WIND
     Name: Verdant Hill Wind
-    Level: 250
-    Hp: 3375000
+    Level: 252
+    Hp: 23931278
     BaseExp: 96429
     JobExp: 64286
     Attack: 9897
     Attack2: 4786
-    Defense: 280
-    MagicDefense: 144
+    Defense: 305
+    MagicDefense: 166
     MagicResistance: 250
     Resistance: 250
     Str: 288
@@ -110140,14 +110140,14 @@ Body:
   - Id: 21556
     AegisName: ECO_EXPLOSION
     Name: Blazing Explosion
-    Level: 255
-    Hp: 4628250
+    Level: 252
+    Hp: 23438635
     BaseExp: 132236
     JobExp: 88157
     Attack: 9867
     Attack2: 6877
-    Defense: 311
-    MagicDefense: 90
+    Defense: 298
+    MagicDefense: 313
     MagicResistance: 250
     Resistance: 250
     Str: 201
@@ -110189,8 +110189,8 @@ Body:
     JobExp: 70280
     Attack: 9799
     Attack2: 7899
-    Defense: 211
-    MagicDefense: 97
+    Defense: 443
+    MagicDefense: 250
     MagicResistance: 250
     Resistance: 250
     Str: 180
@@ -110226,14 +110226,14 @@ Body:
   - Id: 21558
     AegisName: ECO_JAKK
     Name: Blazing Jakk
-    Level: 245
-    Hp: 3528000
+    Level: 252
+    Hp: 21917288
     BaseExp: 100800
     JobExp: 67200
     Attack: 8780
     Attack2: 4567
-    Defense: 155
-    MagicDefense: 98
+    Defense: 310
+    MagicDefense: 170
     MagicResistance: 250
     Resistance: 250
     Str: 178
@@ -110270,13 +110270,13 @@ Body:
     AegisName: ECO_LAVA_GOLEM
     Name: Blazing Lava Golem
     Level: 254
-    Hp: 5715000
+    Hp: 29549062
     BaseExp: 163286
     JobExp: 108857
     Attack: 10329
     Attack2: 3879
-    Defense: 480
-    MagicDefense: 200
+    Defense: 624
+    MagicDefense: 273
     MagicResistance: 250
     Resistance: 250
     Str: 270
@@ -110313,13 +110313,13 @@ Body:
     AegisName: ECO_MAJORUROS
     Name: Blazing Majoruros
     Level: 253
-    Hp: 5199150
+    Hp: 25488079
     BaseExp: 148547
     JobExp: 99031
     Attack: 11076
     Attack2: 6776
-    Defense: 389
-    MagicDefense: 108
+    Defense: 480
+    MagicDefense: 185
     MagicResistance: 250
     Resistance: 250
     Str: 230
@@ -110356,13 +110356,13 @@ Body:
     AegisName: ECO_HYDRO
     Name: Blazing Hydrolancer
     Level: 255
-    Hp: 5622750
+    Hp: 25367918
     BaseExp: 160650
     JobExp: 107100
     Attack: 12003
     Attack2: 8540
-    Defense: 534
-    MagicDefense: 105
+    Defense: 445
+    MagicDefense: 251
     MagicResistance: 250
     Resistance: 250
     Str: 339
@@ -110404,8 +110404,8 @@ Body:
     JobExp: 84299
     Attack: 8830
     Attack2: 5020
-    Defense: 422
-    MagicDefense: 98
+    Defense: 303
+    MagicDefense: 319
     MagicResistance: 250
     Resistance: 250
     Str: 288
@@ -110486,13 +110486,13 @@ Body:
     AegisName: ECO_ICE_TITAN
     Name: Glacial Ice Titan
     Level: 252
-    Hp: 6350400
+    Hp: 29583419
     BaseExp: 181440
     JobExp: 120960
     Attack: 10110
     Attack2: 6400
-    Defense: 398
-    MagicDefense: 287
+    Defense: 601
+    MagicDefense: 263
     MagicResistance: 250
     Resistance: 250
     Str: 201
@@ -110528,14 +110528,14 @@ Body:
   - Id: 21565
     AegisName: ECO_SIROMA
     Name: Glacial Siroma
-    Level: 251
-    Hp: 4593300
+    Level: 252
+    Hp: 25201125
     BaseExp: 131237
     JobExp: 87491
     Attack: 7983
     Attack2: 5679
-    Defense: 144
-    MagicDefense: 138
+    Defense: 306
+    MagicDefense: 167
     MagicResistance: 250
     Resistance: 250
     Str: 112
@@ -110571,14 +110571,14 @@ Body:
   - Id: 21566
     AegisName: ECO_SNOWIER
     Name: Glacial Snowier
-    Level: 249
-    Hp: 5415750
+    Level: 254
+    Hp: 28555443
     BaseExp: 154736
     JobExp: 103157
     Attack: 11089
     Attack2: 4899
-    Defense: 288
-    MagicDefense: 200
+    Defense: 459
+    MagicDefense: 260
     MagicResistance: 250
     Resistance: 250
     Str: 178
@@ -110615,13 +110615,13 @@ Body:
     AegisName: ECO_CENTIPEDE
     Name: Glacial Centipede
     Level: 252
-    Hp: 3969000
+    Hp: 21467484
     BaseExp: 113400
     JobExp: 75600
     Attack: 8979
     Attack2: 6790
-    Defense: 90
-    MagicDefense: 180
+    Defense: 309
+    MagicDefense: 327
     MagicResistance: 250
     Resistance: 250
     Str: 187
@@ -110659,14 +110659,14 @@ Body:
   - Id: 21568
     AegisName: ECO_AQUA_ELEMENTAL
     Name: Glacial Aqua Elemental
-    Level: 247
-    Hp: 3816150
+    Level: 253
+    Hp: 25223418
     BaseExp: 109033
     JobExp: 72689
     Attack: 7877
     Attack2: 6900
-    Defense: 50
-    MagicDefense: 391
+    Defense: 311
+    MagicDefense: 331
     MagicResistance: 250
     Resistance: 250
     Str: 166
@@ -110703,13 +110703,13 @@ Body:
     AegisName: ECO_ANGELGOLT
     Name: Glacial Angelgolt
     Level: 254
-    Hp: 4991100
+    Hp: 24831628
     BaseExp: 142603
     JobExp: 95069
     Attack: 9870
     Attack2: 10110
-    Defense: 113
-    MagicDefense: 280
+    Defense: 442
+    MagicDefense: 249
     MagicResistance: 250
     Resistance: 250
     Str: 215
@@ -110745,14 +110745,14 @@ Body:
   - Id: 21570
     AegisName: ECO_RHYNCHO
     Name: Glacial Rhyncho
-    Level: 250
-    Hp: 5250000
+    Level: 255
+    Hp: 28018013
     BaseExp: 150000
     JobExp: 100000
     Attack: 8790
     Attack2: 6770
-    Defense: 120
-    MagicDefense: 200
+    Defense: 506
+    MagicDefense: 195
     MagicResistance: 250
     Resistance: 250
     Str: 197
@@ -110832,14 +110832,14 @@ Body:
   - Id: 21572
     AegisName: ECO_ANCIENT_MUMMY
     Name: Grave Ancient Mummy
-    Level: 250
-    Hp: 4950000
+    Level: 253
+    Hp: 28033464
     BaseExp: 141429
     JobExp: 94286
     Attack: 10997
     Attack2: 4223
-    Defense: 329
-    MagicDefense: 108
+    Defense: 472
+    MagicDefense: 182
     MagicResistance: 250
     Resistance: 250
     Str: 198
@@ -110875,14 +110875,14 @@ Body:
   - Id: 21573
     AegisName: ECO_LUDE
     Name: Grave Lude
-    Level: 251
-    Hp: 3652050
+    Level: 252
+    Hp: 26320301
     BaseExp: 104344
     JobExp: 69563
     Attack: 12087
     Attack2: 4380
-    Defense: 320
-    MagicDefense: 105
+    Defense: 294
+    MagicDefense: 158
     MagicResistance: 250
     Resistance: 250
     Str: 180
@@ -110918,14 +110918,14 @@ Body:
   - Id: 21574
     AegisName: ECO_RAGGED_ZOMBIE
     Name: Grave Ragged Zombie
-    Level: 249
-    Hp: 4407300
+    Level: 252
+    Hp: 28560234
     BaseExp: 125923
     JobExp: 83949
     Attack: 9897
     Attack2: 4786
-    Defense: 380
-    MagicDefense: 98
+    Defense: 400
+    MagicDefense: 222
     MagicResistance: 250
     Resistance: 250
     Str: 178
@@ -110961,14 +110961,14 @@ Body:
   - Id: 21575
     AegisName: ECO_WRAITH
     Name: Grave Wraith Dead
-    Level: 245
-    Hp: 3711750
+    Level: 254
+    Hp: 29822370
     BaseExp: 106050
     JobExp: 70700
     Attack: 13220
     Attack2: 7716
-    Defense: 288
-    MagicDefense: 289
+    Defense: 434
+    MagicDefense: 244
     MagicResistance: 250
     Resistance: 250
     Str: 270
@@ -111004,14 +111004,14 @@ Body:
   - Id: 21576
     AegisName: ECO_FLAME_SKULL
     Name: Grave Flame Skull
-    Level: 247
-    Hp: 3667950
+    Level: 252
+    Hp: 21469657
     BaseExp: 104799
     JobExp: 69866
     Attack: 10997
     Attack2: 4223
-    Defense: 389
-    MagicDefense: 391
+    Defense: 318
+    MagicDefense: 340
     MagicResistance: 250
     Resistance: 250
     Str: 230
@@ -111050,13 +111050,13 @@ Body:
     AegisName: ECO_BANSHEE
     Name: Grave Banshee
     Level: 254
-    Hp: 4724400
+    Hp: 24831628
     BaseExp: 134983
     JobExp: 89989
     Attack: 10110
     Attack2: 6400
-    Defense: 534
-    MagicDefense: 280
+    Defense: 442
+    MagicDefense: 249
     MagicResistance: 250
     Resistance: 250
     Str: 339
@@ -111094,14 +111094,14 @@ Body:
   - Id: 21578
     AegisName: ECO_KNIGHT_OF_ABYSS
     Name: Grave Abysmal Knight
-    Level: 250
-    Hp: 5625000
+    Level: 255
+    Hp: 26602843
     BaseExp: 160714
     JobExp: 107143
     Attack: 7983
     Attack2: 5679
-    Defense: 422
-    MagicDefense: 200
+    Defense: 478
+    MagicDefense: 185
     MagicResistance: 250
     Resistance: 250
     Str: 288

@@ -56,7 +56,7 @@ ba_in01,252,353,5	script	Admin beta#ms01	4_EP17_BASIC_B,3,3,{
 			mes "[Admin beta]";
 			mes "If you look at the magic group that we put on to identify the monster family, it was the monster in the data, but the monsters that survived for a long time in extreme situations were stronger than the monsters in the data we had.";
 			next;
-			if (BaseLevel < 230) {
+			if (BaseLevel < 240) {
 				mes "[Admin beta]";
 				mes "So it's a little difficult situation, but we're a bit incapable of responding, so I hope you can help me a little...";
 				next;

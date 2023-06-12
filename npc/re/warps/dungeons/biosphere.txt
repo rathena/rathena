@@ -15,7 +15,7 @@ bl_death,315,59,0	warp2	#deathtoba	1,1,ba_in01,339,53
 ba_in01,310,38,0	script	#batoice	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (BaseLevel < 230) {
+	if (BaseLevel < 240) {
 		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
 		close;
 	}
@@ -26,7 +26,7 @@ OnTouch:
 ba_in01,311,56,0	script	#batolava	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (BaseLevel < 230) {
+	if (BaseLevel < 240) {
 		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
 		close;
 	}
@@ -37,7 +37,7 @@ OnTouch:
 ba_in01,325,56,0	script	#batograss	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (BaseLevel < 230) {
+	if (BaseLevel < 240) {
 		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
 		close;
 	}
@@ -48,7 +48,7 @@ OnTouch:
 ba_in01,339,56,0	script	#batodeath	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (BaseLevel < 230) {
+	if (BaseLevel < 240) {
 		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
 		close;
 	}
