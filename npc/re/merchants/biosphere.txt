@@ -8,7 +8,7 @@
 //============================================================
 
 // Guide
-ba_in01,252,353,5	script	Admin beta#ms01	4_EP17_BASIC_B,3,3,{
+ba_in01,252,353,5	script	Admin beta#ms01	4_EP17_BASIC_B,{
 	mes "[Admin beta]";
 	mes "Guest, do you need a guide inside the mansion?";
 	next;
@@ -158,34 +158,47 @@ ba_in01,252,353,5	script	Admin beta#ms01	4_EP17_BASIC_B,3,3,{
 		close;
 	}
 	end;
-
-OnTouch:
-	npctalk "Guest, do you need a guide inside the mansion?", "", bc_self;
-	end;
 }
 
 
 // Exchange npcs
 ba_in01,358,50,8	script	Omega#ms01	EP17_2_OMEGA_CLEANER,{
+	if (.npc_is_walking) {
+		npcstop();
+		.npc_is_walking = false;
+	}
 	mes "[Omega]";
 	mes "Vrr-R-R-R-R-R-R-R-R";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "It seems to convert the pieces of runes obtained inside the artificial habitat into complete runes.";
-	close2;
+	close2,{
+	if (!.npc_is_walking) {
+		.npc_is_walking = true;
+		donpcevent "Omega#ms01::OnWalk";
+	}
 	callshop( "barter_biosphere_1" );
 	end;
 
+OnWalk:
+	if (.walk_toward_1)
+		donpcevent strnpcinfo(0) + "::OnWalk1";
+	else
+		donpcevent strnpcinfo(0) + "::OnWalk2";
+	end;
 OnWalk1:
 	npctalk "Vrr-R-R-R-R-R-R";
 	unitstopwalk getnpcid(0), USW_FORCE_STOP;
 	unitwalk getnpcid(0),365,50, strnpcinfo(0) + "::OnWalk2";
+	.walk_toward_1 = false;
 	end;
 OnWalk2:
 	unitstopwalk getnpcid(0), USW_FORCE_STOP;
 	unitwalk getnpcid(0),358,50, strnpcinfo(0) + "::OnWalk1";
+	.walk_toward_1 = true;
 	end;
 OnInit:
+    setunittitle( getnpcid(0), "<Rune exchange>" );
 	npcspeed 900;
 	donpcevent strnpcinfo(0) + "::OnWalk1";
 	end;
@@ -210,9 +223,13 @@ ba_in01,359,53,5	script	Beta#ms02	4_EP17_TABLET,3,3,{
 OnTouch:
 	npctalk "Guest, do you have any items from the artificial habitat?", "", bc_self;
 	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Varmundt Equipment Imprint>" );
+	end;
 }
 
-ba_in01,361,53,5	script	Beta#ms03	4_EP17_SCISSORE,{
+ba_in01,361,53,5	script	Beta#ms03	4_EP17_SCISSORE,3,3,{
 	mes "[Beta]";
 	mes "Hey, adventurers? That's great. Welcome back. Listen to me. Great equipment that adventurers might be interested in, I know.";
 	next;
@@ -227,8 +244,17 @@ ba_in01,361,53,5	script	Beta#ms03	4_EP17_SCISSORE,{
 	close2;
 	callshop( "barter_biosphere_3" );
 	end;
+
+OnTouch:
+	npctalk "Guest, amazing equipment! I know it!", "", bc_self;
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<General Equipment Imprinting>" );
+	end;
 }
 
+// Enchant of basic equipment
 ba_in01,363,53,5	script	Beta#ms04	4_EP17_BASKET,3,3,{
 	mes "[Beta]";
 	mes "Do you have Varmundt's engraving equipment obtained from the artificial habitat?";
@@ -238,15 +264,133 @@ ba_in01,363,53,5	script	Beta#ms04	4_EP17_BASKET,3,3,{
 	mes "[Beta]";
 	mes "You can enchant up to 2 times if you bring a rune that matches the property of each equipment and a small fee. You can also reset the enchantment.";
 	next;
-	.@base_index = 52;	// Grassland Enchantment index
+	setarray .@index[0],16,17,18,19,57,58,59;
 	.@s = select( "Grassland Equipment Enchantment", "Fire Equipment Enchantment", "Ice Equipment Enchantment", "Death Equipment Enchantment", "Soul Equipment Enchantment", "Poison Equipment Enchantment", "Church Equipment Enchantment" ) - 1;
 	mes "[Beta]";
 	mes "Okay, I'll help you enchant right away.";
 	close2;
-	item_enchant( .@base_index + .@s );
+	item_enchant( .@index[.@s] );
 	end;
 
 OnTouch:
 	npctalk "If you have Varmundt's engraving equipment, come this way.", "", bc_self;
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Equipment enchantment>" );
+	end;
+}
+
+// Equipment reform
+ba_in01,368,55,5	script	Beta#ms05	MD_BETA_SCISSORE_NG,3,3,{
+	mes "[Beta]";
+	mes "Do you have Varmundt's engraved equipment? Wouldn't you like to make it more powerful?";
+	mes "If you bring the ^0000cdequipment refined at least to 7^000000, I will try my best.";
+	mes "The ring does not have to be refined.";
+	next;
+	mes "[Beta]";
+	mes "You can rest assured that the level of refinement, cards, enchantments, and grades of your current equipment will be maintained.";
+	mes "However, ^0000cdVarmundt Soul, Deadly Poison, and Temple Ring retain only cards and enchantments^000000.";
+	mes "Then, run! Is it?";
+	next;
+	switch( select( "Upgrade Grassland Gear", "Upgrade Fire Gear", "Upgrade Ice Gear", "Upgrade Death Gear", "Upgrade Sooul Gear", "Upgrade Venom Gear", "Upgrade Temple Gear" ) ) {
+	case 1:
+		.@item_id = 101769;	// Varmundt_Plain_Reform
+		break;
+	case 2:
+		.@item_id = 101771;	// Varmundt_Flame_Reform
+		break;
+	case 3:
+		.@item_id = 101772;	// Varmundt_Ice_Reform
+		break;
+	case 4:
+		.@item_id = 101770;	// Varmundt_Death_Reform
+		break;
+	case 5:
+		mes "[Beta]";
+		mes "The Varmundt Soul Rune Ring can be upgraded to " + mesitemlink(490302) + " by using Soul Essence.";
+		mes "You can use horsepower to upgrade to " + mesitemlink(490305) + ", which one do you prefer?";
+		next;
+		switch( select( getitemname(490302), getitemname(490305) ) ) {
+		case 1:
+			.@item_id = 101933;	// Varmundt_Soul_Reform
+			break;
+		case 2:
+			.@item_id = 101936;	// Varmundt_S_Reform
+			break;
+		}
+		break;
+	case 6:
+		mes "[Beta]";
+		mes "Varmundt Poison Rune Ring can be upgraded to " + mesitemlink(490303) + " by using Essence of Poison.";
+		mes "You can use horsepower to upgrade to " + mesitemlink(490306) + ", which one do you prefer?";
+		next;
+		switch( select( getitemname(490303), getitemname(490306) ) ) {
+		case 1:
+			.@item_id = 101934;	// Varmundt_Venom_Reform
+			break;
+		case 2:
+			.@item_id = 101937;	// Varmundt_V_Reform
+			break;
+		}
+		break;
+	case 7:
+		mes "[Beta]";
+		mes "The Varmundt Temple Rune Ring can be upgraded with " + mesitemlink(490304) + " by using the Essence of the Holy Temple.";
+		mes "You can use horsepower to upgrade to " + mesitemlink(490307) + ", which one do you prefer?";
+		next;
+		switch( select( getitemname(490304), getitemname(490307) ) ) {
+		case 1:
+			.@item_id = 101935;	// Varmundt_Temple_Reform
+			break;
+		case 2:
+			.@item_id = 101938;	// Varmundt_T_Reform
+			break;
+		}
+		break;
+	}
+	mes "[Beta]";
+	mes "Okay, I'll help you right away.";
+	close2;
+	item_reform( .@item_id );
+	end;
+
+OnTouch:
+	npctalk "Do you want to make Varmundt's engraved equipment more powerful?", "", bc_self;
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Varmundt Equipment Modification>" );
+	end;
+}
+
+// Enchant of reformed equipment
+ba_in01,371,55,5	script	Beta#ms06	EP17_2_BETA_ITEMKEEPER,3,3,{
+	mes "[Beta]";
+	mes "If you have ^0000cd7 refined Varmundt's upgraded equipment^000000, how about enchanting it?";
+	mes "I don't even look at the refine rate of Varmundt's ring.";
+	next;
+	mes "[Beta]";
+	mes "Of course you need some ingredients too.";
+	mes "Requires runes and essences that match the attributes of each equipment, Barmil tickets, and a small fee.";
+	mes "In the case of a ring, you need runes for each attribute, magic power, and a small fee.";
+	next;
+	mes "[Beta]";
+	mes "If you bring everything, we can enchant it up to three times. Reset is also possible.";
+	next;
+	setarray .@index[0],52,53,54,55,60,61,62;
+	.@s = select( "Grassland Equipment Enchantment", "Fire Equipment Enchantment", "Ice Equipment Enchantment", "Death Equipment Enchantment", "Soul Equipment Enchantment", "Poison Equipment Enchantment", "Temple Equipment Enchantment" ) - 1 ;
+	mes "[Beta]";
+	mes "Excellent choice. I'll help you right away.";
+	close2;
+	item_enchant( .@index[.@s] );
+	end;
+
+OnTouch:
+	npctalk "Do you have the upgraded Varmundt's gear? If so, let's take a look.", "", bc_self;
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Enchant Modified Equipment>" );
 	end;
 }
