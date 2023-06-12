@@ -10,7 +10,7 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #include "cbasetypes.hpp"
 #include "core.hpp"
@@ -23,6 +23,7 @@ private:
 	uint16 version;
 	uint16 minimumVersion;
 	std::string currentFile;
+	bool shouldLoadGenerator{false};
 
 	bool verifyCompatibility( const ryml::Tree& rootNode );
 	bool load( const std::string& path );
@@ -55,6 +56,8 @@ protected:
 	bool asString(const ryml::NodeRef& node, const std::string &name, std::string &out);
 	bool asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum=10000);
 	bool asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum=10000);
+
+	void setGenerator(bool shouldLoad);
 
 	virtual void loadingFinished();
 
@@ -178,11 +181,11 @@ public:
 	}
 
 	void loadingFinished() override{
+		size_t max_key = 0;
 		// Cache all known values
 		for (auto &pair : *this) {
 			// Calculate the key that should be used
 			size_t key = this->calculateCacheKey(pair.first);
-
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() <= key) {
 				// Some keys compute to 0, so we allocate a minimum of 500 (250*2) entries
@@ -196,19 +199,15 @@ public:
 
 			// Insert the value into the cache
 			this->cache[key] = pair.second;
+
+			// keep track of highest known key for easy resize
+			max_key = std::max(max_key, key);
 		}
 
-		for( auto it = this->cache.rbegin(); it != this->cache.rend(); it++ ){
-			if( *it != nullptr ){
-				// Resize to only fit all existing non null entries
-				this->cache.resize( this->cache.rend() - it );
-
-				// Free the memory that was allocated too much
-				this->cache.shrink_to_fit();
-				break;
-			}
-		}
-
+		// Resize to only fit all existing non null entries
+		this->cache.resize(max_key);
+		// Free the memory that was allocated too much
+		this->cache.shrink_to_fit();
 		this->loaded = true;
 	}
 
@@ -217,7 +216,11 @@ public:
 
 		// Prevent excessive usage during loading
 		if( this->loaded ){
-			this->cache[this->calculateCacheKey( key )] = nullptr;
+			size_t cache_key = this->calculateCacheKey(key);
+			if (this->cache.size() <= cache_key) {
+				return;
+			}
+			this->cache[cache_key] = nullptr;
 		}
 	}
 
@@ -226,7 +229,11 @@ public:
 
 		// Prevent excessive usage during loading
 		if( this->loaded ){
-			this->cache[this->calculateCacheKey( key )] = ptr;
+			size_t cache_key = this->calculateCacheKey(key);
+			if (this->cache.size() <= cache_key) {
+				this->cache.resize(cache_key + 1, nullptr);
+			}
+			this->cache[cache_key] = ptr;
 		}
 	}
 };

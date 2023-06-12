@@ -18,6 +18,8 @@
 #include "showmsg.hpp"
 #include "timer.hpp"
 
+using namespace rathena::server_core;
+
 //map confs
 const char* MAP_CONF_NAME;
 const char* INTER_CONF_NAME;
@@ -110,14 +112,12 @@ int cli_get_options(int argc, char ** argv) {
 					MSG_CONF_NAME_EN = argv[++i];
 			}
 			else if (strcmp(arg, "run-once") == 0) { // close the map-server as soon as its done.. for testing [Celest]
-				runflag = CORE_ST_STOP;
-			}
-			else if (SERVER_TYPE & (ATHENA_SERVER_LOGIN | ATHENA_SERVER_CHAR)) { //login or char
+				global_core->set_run_once( true );
+			}else if( global_core->get_type() == e_core_type::LOGIN || global_core->get_type() == e_core_type::CHARACTER ){
 				if (strcmp(arg, "lan-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						LAN_CONF_NAME = argv[++i];
-				}
-				else if (SERVER_TYPE == ATHENA_SERVER_LOGIN) { //login
+				}else if( global_core->get_type() == e_core_type::LOGIN ){
 					if (strcmp(arg, "login-config") == 0) {
 						if (opt_has_next_value(arg, i, argc))
 							LOGIN_CONF_NAME = argv[++i];
@@ -126,8 +126,7 @@ int cli_get_options(int argc, char ** argv) {
 						ShowError("Unknown option '%s'.\n", argv[i]);
 						exit(EXIT_FAILURE);
 					}
-				}
-				else if (SERVER_TYPE == ATHENA_SERVER_CHAR) { //char
+				}else if( global_core->get_type() == e_core_type::CHARACTER ){
 					if (strcmp(arg, "char-config") == 0) {
 						if (opt_has_next_value(arg, i, argc))
 							CHAR_CONF_NAME = argv[++i];
@@ -141,8 +140,7 @@ int cli_get_options(int argc, char ** argv) {
 						exit(EXIT_FAILURE);
 					}
 				}
-			}
-			else if (SERVER_TYPE == ATHENA_SERVER_MAP) { //map
+			}else if( global_core->get_type() == e_core_type::MAP ){
 				if (strcmp(arg, "map-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						MAP_CONF_NAME = argv[++i];

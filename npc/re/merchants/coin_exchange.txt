@@ -670,7 +670,7 @@ malangdo,162,146,5	script	Wandering Merchant#mal	495,{
 		case 5: //Malang_Crab_Box1
 		case 12: //Malang_Crab_Box2
 			mes "This is a ^DC143CBow^000000 which increases LUK + 3 and 50% of critical damage,";
-			mes "and increases 20% of long rage phyical ATK when Base Lv. is over 100.";
+			mes "and increases 20% of long rage physical ATK when Base Lv. is over 100.";
 			mes "Base ATK is 120.";
 			next;
 			mes "[Wandering Merchant]";

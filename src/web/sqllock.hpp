@@ -6,11 +6,12 @@
 
 #include <mutex>
 
-#include "../common/sql.hpp"
+#include <common/sql.hpp>
 
 enum locktype {
 	LOGIN_SQL_LOCK,
 	CHAR_SQL_LOCK,
+	MAP_SQL_LOCK,
 	WEB_SQL_LOCK
 };
 

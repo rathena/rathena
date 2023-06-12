@@ -4,7 +4,7 @@
 #ifndef MERCENARY_HPP
 #define MERCENARY_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
