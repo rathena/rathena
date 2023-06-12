@@ -21133,7 +21133,8 @@ TIMER_FUNC(skill_unit_timer){
 	return 0;
 }
 
-static int skill_unit_temp[20];  // temporary storage for tracking skill unit skill ids as players move in/out of them
+static std::vector<int16> skill_unit_cell; // Temporary storage for tracking skill unit skill IDs as players move in/out of them
+
 /*==========================================
  * flag :
  *	1 : store that skill_unit in array
@@ -21143,13 +21144,11 @@ static int skill_unit_temp[20];  // temporary storage for tracking skill unit sk
 int skill_unit_move_sub(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = (struct skill_unit *)bl;
-
 	struct block_list* target = va_arg(ap,struct block_list*);
 	t_tick tick = va_arg(ap,t_tick);
 	int flag = va_arg(ap,int);
 	bool dissonance;
 	uint16 skill_id;
-	int i;
 
 	nullpo_ret(unit);
 	nullpo_ret(target);
@@ -21184,17 +21183,11 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 		if( group->src_id == target->id && group->state.song_dance&0x2 ) { //Ensemble check to see if they went out/in of the area [Skotlex]
 			if( flag&1 ) {
 				if( flag&2 ) { //Clear this skill id.
-					ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == skill_id );
-					if( i < ARRAYLENGTH(skill_unit_temp) )
-						skill_unit_temp[i] = 0;
+					util::vector_erase_if_exists(skill_unit_cell, skill_id);
 				}
 			} else {
 				if( flag&2 ) { //Store this skill id.
-					ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
-					if( i < ARRAYLENGTH(skill_unit_temp) )
-						skill_unit_temp[i] = skill_id;
-					else
-						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell! (skill_id: %hu)\n", skill_id );
+					skill_unit_cell.push_back(skill_id);
 				}
 			}
 
@@ -21210,20 +21203,14 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 		if( flag&1 ) {
 			int result = skill_unit_onplace(unit,target,tick);
 
-			if( flag&2 && result ) { //Clear skill ids we have stored in onout.
-				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
-				if( i < ARRAYLENGTH(skill_unit_temp) )
-					skill_unit_temp[i] = 0;
+			if( flag&2 && result > 0 ) { //Clear skill ids we have stored in onout.
+				util::vector_erase_if_exists(skill_unit_cell, result);
 			}
 		} else {
 			int result = skill_unit_onout(unit,target,tick);
 
-			if( flag&2 && result ) { //Store this unit id.
-				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
-				if( i < ARRAYLENGTH(skill_unit_temp) )
-					skill_unit_temp[i] = skill_id;
-				else
-					ShowError("skill_unit_move_sub: Reached limit of unit objects per cell! (skill_id: %hu)\n", skill_id );
+			if( flag&2 && result > 0 ) { //Store this unit id.
+				skill_unit_cell.push_back(skill_id);
 			}
 		}
 
@@ -21256,16 +21243,14 @@ int skill_unit_move(struct block_list *bl, t_tick tick, int flag)
 		return 0;
 
 	if( flag&2 && !(flag&1) ) //Onout, clear data
-		memset(skill_unit_temp, 0, sizeof(skill_unit_temp));
+		skill_unit_cell.clear();
 
 	map_foreachincell(skill_unit_move_sub,bl->m,bl->x,bl->y,BL_SKILL,bl,tick,flag);
 
 	if( flag&2 && flag&1 ) { //Onplace, check any skill units you have left.
-		int i;
-
-		for( i = 0; i < ARRAYLENGTH(skill_unit_temp); i++ )
-			if( skill_unit_temp[i] )
-				skill_unit_onleft(skill_unit_temp[i], bl, tick);
+		for (const auto &it : skill_unit_cell) {
+			skill_unit_onleft(it, bl, tick);
+		}
 	}
 
 	return 0;
