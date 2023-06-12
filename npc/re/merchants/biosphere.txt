@@ -172,7 +172,7 @@ ba_in01,358,50,8	script	Omega#ms01	EP17_2_OMEGA_CLEANER,{
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "It seems to convert the pieces of runes obtained inside the artificial habitat into complete runes.";
-	close2,{
+	close2;
 	if (!.npc_is_walking) {
 		.npc_is_walking = true;
 		donpcevent "Omega#ms01::OnWalk";
