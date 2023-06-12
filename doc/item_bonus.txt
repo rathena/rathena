@@ -30,7 +30,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC2_Treasure, RC2_BioLab, RC2_Manuk, RC2_Splendide, RC2_Scaraba, RC2_OGH_ATK_DEF, RC2_OGH_Hidden,
 	RC2_Bio5_Swordman_Thief, RC2_Bio5_Acolyte_Merchant, RC2_Bio5_Mage_Archer, RC2_Bio5_MVP,
 	RC2_Clocktower, RC2_Thanatos, RC2_Faceworm, RC2_Hearthunter, RC2_Rockridge, RC2_Werner_Lab,
-	RC2_Temple_Demon, RC2_Illusion_Vampire, RC2_Malangdo
+	RC2_Temple_Demon, RC2_Illusion_Vampire, RC2_Malangdo, RC2_EP172ALPHA, RC2_EP172BETA, RC2_EP172BATH
 
 * Class (c)
 	Class_Normal, Class_Boss, Class_Guardian, Class_All
@@ -321,6 +321,11 @@ bonus2 bIgnoreMdefRace2Rate,mr,n; 	Disregard n% of the target's MDEF if the targ
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
 bonus2 bIgnoreDefClassRate,c,n;	Disregard n% of the target's DEF if the target belongs to class c
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
+
+Ignore Res
+----------
+bonus2 bIgnoreResRaceRate,r,n;		Disregard n% of the target's Res if the target belongs to race r
+bonus2 bIgnoreMResRaceRate,r,n; 	Disregard n% of the target's MRes if the target belongs to race r
 
 Experience
 ----------

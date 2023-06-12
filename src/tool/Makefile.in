@@ -4,6 +4,10 @@ COMMON_DIR_OBJ = $(COMMON_OBJ:%=../common/obj/%)
 COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_INCLUDE = -I../common/
 
+RA_INCLUDE = -I../
+
+LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
+
 RAPIDYAML_OBJ = $(shell find ../../3rdparty/rapidyaml/src/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
 RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
 RAPIDYAML_AR = ../../3rdparty/rapidyaml/obj/ryml.a
@@ -70,7 +74,7 @@ obj_all:
 
 obj_all/%.o: %.cpp $(COMMON_H) $(OTHER_H) $(RAPIDYAML_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RAPIDYAML_INCLUDE) $(YAML_CPP_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(YAML_CPP_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 $(COMMON_DIR_OBJ):

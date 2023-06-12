@@ -6,9 +6,10 @@ name: Validate NPC Scripts and DB Changes
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
