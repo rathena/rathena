@@ -6393,8 +6393,6 @@ void clif_skill_produce_mix_list( map_session_data *sd, int skill_id, int trigge
 
 	int count = 0;
 	for (const auto &itemlvit : skill_produce_db) {
-		if (itemlvit.second->data.empty())
-			continue;
 		for (const auto &datait : itemlvit.second->data) {
 			if (skill_can_produce_mix(sd, datait.second->nameid, trigger, 1) != nullptr &&
 				(skill_id <= 0 || (skill_id > 0 && datait.second->req_skill == skill_id))
@@ -6446,8 +6444,6 @@ void clif_cooking_list( map_session_data *sd, int trigger, uint16 skill_id, int 
 	int count = 0;
 
 	for (const auto &itemlvit : skill_produce_db) {
-		if (itemlvit.second->data.empty())
-			continue;
 		for (const auto &datait : itemlvit.second->data) {
 			if( skill_can_produce_mix( sd, datait.second->nameid, trigger, qty ) == nullptr ){
 				continue;
@@ -19518,8 +19514,6 @@ void clif_elementalconverter_list( map_session_data *sd ){
 
 	int count = 0;
 	for (const auto &itemlvit : skill_produce_db) {
-		if (itemlvit.second->data.empty())
-			continue;
 		for (const auto &datait : itemlvit.second->data) {
 			if( skill_can_produce_mix( sd, datait.second->nameid, 23, 1 ) ){
 				p->items[count].itemId = client_nameid( datait.second->nameid );

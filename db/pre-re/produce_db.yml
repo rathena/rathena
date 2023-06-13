@@ -51,4 +51,3 @@ Header:
 Footer:
   Imports:
   - Path: db/pre-re/skill_produce_db.yml
-  - Path: db/pre-re/skill_changematerial_db.yml

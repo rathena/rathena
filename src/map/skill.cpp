@@ -21408,17 +21408,15 @@ std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data
 	std::shared_ptr<s_skill_produce_db_entry> produce = nullptr;
 
 	for (const auto &itemlvit : skill_produce_db) {
-		if (itemlvit.second->data.empty())
-			continue;
 		for (const auto &datait : itemlvit.second->data) {
-			if (datait.second->nameid == nameid) {
-				if (datait.second->req_skill > 0 && pc_checkskill(sd, datait.second->req_skill) < datait.second->req_skill_lv)
-					continue; // must iterate again to check other skills that produce it. [malufett]
-				if (datait.second->req_skill > 0 && sd->menuskill_id > 0 && sd->menuskill_id != datait.second->req_skill)
-					continue; // special case
-				produce = datait.second;
-				break;
-			}
+			if (datait.second->nameid != nameid)
+				continue;
+			if (datait.second->req_skill > 0 && pc_checkskill(sd, datait.second->req_skill) < datait.second->req_skill_lv)
+				continue; // must iterate again to check other skills that produce it. [malufett]
+			if (datait.second->req_skill > 0 && sd->menuskill_id > 0 && sd->menuskill_id != datait.second->req_skill)
+				continue; // special case
+			produce = datait.second;
+			break;
 		}
 		if (produce != nullptr)
 			break;
@@ -21539,32 +21537,30 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		}
 	}
 
-	if (!produce->materials.empty()) {
-		for (const auto &mat : produce->materials) {
-			short x, j;
-			t_itemid id = mat.first;
+	for (const auto &mat : produce->materials) {
+		short x, j;
+		t_itemid id = mat.first;
 
-			if (!item_db.exists(id))
-				continue;
-			num++;
-			x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * mat.second;
-			do {
-				int y = 0;
+		if (!item_db.exists(id))
+			continue;
+		num++;
+		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * mat.second;
+		do {
+			int y = 0;
 
-				j = pc_search_inventory(sd,id);
+			j = pc_search_inventory(sd,id);
 
-				if (j >= 0) {
-					y = sd->inventory.u.items_inventory[j].amount;
-					if (y > x)
-						y = x;
-					pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
-				} else {
-					ShowError("skill_produce_mix: material item error\n");
-					return false;
-				}
-				x -= y;
-			} while( j >= 0 && x > 0 );
-		}
+			if (j >= 0) {
+				y = sd->inventory.u.items_inventory[j].amount;
+				if (y > x)
+					y = x;
+				pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
+			} else {
+				ShowError("skill_produce_mix: material item error\n");
+				return false;
+			}
+			x -= y;
+		} while( j >= 0 && x > 0 );
 	}
 
 	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB)) && itemdb_type(nameid) == IT_WEAPON )
@@ -21987,7 +21983,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		}
 
 		if (skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success
-			int k = 0, l;
+			bool is_produce_success = false;
 			bool isStackable = itemdb_isstackable(tmp_item.nameid);
 
 			if (!produce->qty.empty()) {
@@ -21995,7 +21991,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 					if (rnd()%1000 < qtyit.second){
 						uint16 total_qty = qty * qtyit.first;
 						tmp_item.amount = (isStackable ? total_qty : 1);
-						for (l = 0; l < total_qty; l += tmp_item.amount) {
+						for ( int l = 0; l < total_qty; l += tmp_item.amount ) {
 							if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 								clif_additem(sd,0,0,flag);
 								if( battle_config.skill_drop_items_full ){
@@ -22003,11 +21999,11 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 								}
 							}
 						}
-						k++;
+						is_produce_success = true;
 					}
 				}
 			}
-			if (k) {
+			if (is_produce_success) {
 				clif_produceeffect(sd,6,nameid);
 				clif_misceffect(&sd->bl,5);
 				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
@@ -22474,7 +22470,7 @@ int skill_elementalanalysis(map_session_data* sd, int n, uint16 skill_lv, unsign
 }
 
 int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list) {
-	int k, c, p = 0, amount;
+	int k, c, qty = 0, amount;
 	t_itemid nameid;
 
 	nullpo_ret(sd);
@@ -22494,7 +22490,7 @@ int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list)
 		if (data->materials.empty())
 			return 0;
 
-		p = 0;
+		qty = 0;
 		do {
 			c = 0;
 			// Verification of overlap between the objects required and the list submitted.
@@ -22512,20 +22508,20 @@ int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list)
 						clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
 						return 0;
 					}
-					if (nameid == mat.first && (amount - p * mat.second) >= mat.second && (amount - p * mat.second) % mat.second == 0) // must be in exact amount
+					if (nameid == mat.first && (amount - qty * mat.second) >= mat.second && (amount - qty * mat.second) % mat.second == 0) // must be in exact amount
 						c++; // match
 				}
 			}
-			p++;
+			qty++;
 		} while(n == data->materials.size() && c == n);
-		p--;
-		if ( p > 0 ) {
-			skill_produce_mix(sd,GN_CHANGEMATERIAL,datait.second->nameid,0,0,0,p, datait.second);
+		qty--;
+		if ( qty > 0 ) {
+			skill_produce_mix(sd,GN_CHANGEMATERIAL,datait.second->nameid,0,0,0,qty, datait.second);
 			return 1;
 		}
 	}
 
-	if( p == 0)
+	if( qty == 0)
 		clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_CANT_COMBINE);
 
 	return 0;
@@ -24570,7 +24566,7 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
 	return true;
 }
 
-bool SkillProduceDatabase::add_itemconsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed) {
+bool SkillProduceDatabase::addItemConsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed) {
 	for (const auto &it : node) {
 		if (this->nodeExists(it, "Clear")) {
 			std::string item_name;
@@ -24767,12 +24763,12 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		}
 
 		if (this->nodeExists(subit, "Consumed")) {
-			if (!this->add_itemconsumed(subit["Consumed"], entry, true))
+			if (!this->addItemConsumed(subit["Consumed"], entry, true))
 				return 0;
 		}
 
 		if (this->nodeExists(subit, "NotConsumed")) {
-			if (!this->add_itemconsumed(subit["NotConsumed"], entry, false))
+			if (!this->addItemConsumed(subit["NotConsumed"], entry, false))
 				return 0;
 		}
 
