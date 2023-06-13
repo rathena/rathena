@@ -10002,7 +10002,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case AM_TWILIGHT3:
 		if (sd) {
 			int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
-			short alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
+
+			auto produce_alcohol = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100);
+			auto produce_acid = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50);
+			auto produce_fire = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50);
+
 			if( ebottle >= 0 )
 				ebottle = sd->inventory.u.items_inventory[ebottle].amount;
 			//check if you can produce all three, if not, then fail:
@@ -23018,8 +23022,6 @@ short skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int trigger, 
 		}
 	}
 
-	if (produce->materials.empty())
-		return produce;
 
 	// Check on player's inventory
 	for (const auto &it : produce->materials) {
