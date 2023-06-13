@@ -1645,7 +1645,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Product: aegis_100371
+      - Product: Homun_F_Tablet
         SkillName: AM_PHARMACY
         SkillLevel: 1
         Consumed:
@@ -1663,33 +1663,33 @@ Body:
         SkillName: SA_CREATECON
         SkillLevel: 1
         Consumed:
-          - Item: Scorpion's_Tail
-            Amount: 3
+          - Item: Boody_Red
+            Amount: 1
           - Item: Scroll
             Amount: 1
       - Product: Elemental_Water
         SkillName: SA_CREATECON
         SkillLevel: 1
         Consumed:
+          - Item: Crystal_Blue
+            Amount: 1
           - Item: Scroll
             Amount: 1
-          - Item: Snail's_Shell
-            Amount: 3
       - Product: Elemental_Earth
         SkillName: SA_CREATECON
         SkillLevel: 1
         Consumed:
-          - Item: Horn
-            Amount: 3
           - Item: Scroll
+            Amount: 1
+          - Item: Wind_Of_Verdure
             Amount: 1
       - Product: Elemental_Wind
         SkillName: SA_CREATECON
         SkillLevel: 1
         Consumed:
-          - Item: Colorful_Shell
-            Amount: 3
           - Item: Scroll
+            Amount: 1
+          - Item: Yellow_Live
             Amount: 1
   - ItemLevel: 24
     Recipe:
@@ -2203,18 +2203,18 @@ Body:
             Amount: 10
           - Item: Empty_Potion
             Amount: 5
-          - Item: Red_Syrup
+          - Item: High_RedPotion
             Amount: 15
       - Product: Concentrated_B_P
         SkillName: GN_S_PHARMACY
         SkillLevel: 1
         Consumed:
-          - Item: Blue_Syrup
-            Amount: 15
           - Item: Empty_Cylinder
             Amount: 10
           - Item: Empty_Potion
             Amount: 5
+          - Item: High_BluePotion
+            Amount: 15
       - Product: Concentrated_G_P
         SkillName: GN_S_PHARMACY
         SkillLevel: 1
@@ -2223,9 +2223,9 @@ Body:
             Amount: 10
           - Item: Empty_Potion
             Amount: 5
-          - Item: White_Syrup
+          - Item: High_WhitePotion
             Amount: 10
-          - Item: Yellow_Syrup
+          - Item: High_YelloPotion
             Amount: 10
   - ItemLevel: 30
     Recipe:
@@ -2336,7 +2336,7 @@ Body:
           - Item: Portable_Furnace
             Amount: 5
         NotConsumed:
-          - Item: Device_Creation_Guide
+          - Item: Device_M_Book
       - Product: Auto_Battle_Capsule
         SkillName: MT_M_MACHINE
         SkillLevel: 1
@@ -2348,7 +2348,7 @@ Body:
           - Item: Portable_Furnace
             Amount: 5
         NotConsumed:
-          - Item: Device_Creation_Guide
+          - Item: Device_M_Book
   - ItemLevel: 32
     Recipe:
       - Product: Flame_Acid_Bottle

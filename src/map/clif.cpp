@@ -6370,8 +6370,6 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 	int count = 0;
 
 	for (const auto &itemlvit : skill_produce_db) {
-		if (itemlvit.second->data.empty())
-			continue;
 		for (const auto &datait : itemlvit.second->data) {
 			if( skill_can_produce_mix( sd, datait.second->nameid, trigger, qty ) == nullptr ){
 				continue;
@@ -19623,10 +19621,14 @@ void clif_elementalconverter_list( map_session_data& sd ){
 	p->packetLength = sizeof( *p );
 
 	int count = 0;
-	for( int i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if( skill_can_produce_mix( sd, skill_produce_db[i].nameid, 23, 1 ) ){
-			p->items[count].itemId = client_nameid( skill_produce_db[i].nameid );
-			count++;
+	for (const auto &itemlvit : skill_produce_db) {
+		if (itemlvit.second->data.empty())
+			continue;
+		for (const auto &datait : itemlvit.second->data) {
+			if( skill_can_produce_mix( sd, datait.second->nameid, 23, 1 ) ){
+				p->items[count].itemId = client_nameid( datait.second->nameid );
+				count++;
+			}
 		}
 	}
 
