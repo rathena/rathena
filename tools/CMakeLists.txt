@@ -29,8 +29,6 @@ if(WIN32)
 else()
     set(LINUX_FILES_TO_COPY
         "athena-start"
-        "configure"
-        "configure.ac"
         "function.sh"
         "install.sh"
         "uninstall.sh"
