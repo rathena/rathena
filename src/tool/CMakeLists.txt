@@ -37,3 +37,5 @@ if(WIN32)
 		"yaml.hpp"
 	)
 endif()
+
+add_custom_target(tools DEPENDS mapcache csv2yaml yaml2sql yamlupgrade map-server-generator)
