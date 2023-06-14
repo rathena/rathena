@@ -1,4 +1,5 @@
 include(CheckCSourceRuns)
+include(CheckFunctionExists)
 
 #
 # Test monotonic clock
@@ -188,6 +189,16 @@ endif()
 
 if(ENABLE_VIP)
 	target_compile_definitions(common INTERFACE "-DVIP_ENABLE")
+endif()
+
+CHECK_FUNCTION_EXISTS(setrlimit HAVE_SETRLIMIT)
+if (HAVE_SETRLIMIT)
+	target_compile_definitions(common PUBLIC "-DHAVE_SETRLIMIT")
+endif()
+
+CHECK_FUNCTION_EXISTS(strnlen HAVE_STRNLEN)
+if (HAVE_STRNLEN)
+	target_compile_definitions(common PUBLIC "-DHAVE_STRNLEN")
 endif()
 
 target_include_directories(common PUBLIC
