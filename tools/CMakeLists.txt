@@ -28,7 +28,7 @@ if(WIN32)
     copy_to_source_dir("${WIN_FILES_TO_COPY}")
 else()
     set(LINUX_FILES_TO_COPY
-        "athena-start"
+        "athena-start.sh"
         "function.sh"
         "install.sh"
         "uninstall.sh"

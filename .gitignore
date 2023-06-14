@@ -140,7 +140,7 @@ Thumbs.db
 /navigenerator.bat
 
 # Linux script tools
-# /athena-start
+/athena-start.sh
 # /function.sh
 # /install.sh
 # /uninstall.sh
