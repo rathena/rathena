@@ -2369,19 +2369,27 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 #endif
 
 			sd->state.autocast = 1;
-			skill_consume_requirement(sd,skill,autospl_skill_lv,1);
+			int flag = SKILL_NOCONSUME_REQ;
+			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
+				if (!skill_check_condition_castbegin(sd, skill, autospl_skill_lv) || !skill_check_condition_castend(sd, skill, autospl_skill_lv)) {
+					sd->state.autocast = 0;
+					continue;
+				}
+				skill_consume_requirement(sd, skill, autospl_skill_lv,1);
+				flag = 0;
+			}
 #ifndef RENEWAL
 			skill_toggle_magicpower(src, skill);
 #endif
 			switch (type) {
 				case CAST_GROUND:
-					skill_castend_pos2(src, tbl->x, tbl->y, skill, autospl_skill_lv, tick, 0);
+					skill_castend_pos2(src, tbl->x, tbl->y, skill, autospl_skill_lv, tick, flag);
 					break;
 				case CAST_NODAMAGE:
-					skill_castend_nodamage_id(src, tbl, skill, autospl_skill_lv, tick, 0);
+					skill_castend_nodamage_id(src, tbl, skill, autospl_skill_lv, tick, flag);
 					break;
 				case CAST_DAMAGE:
-					skill_castend_damage_id(src, tbl, skill, autospl_skill_lv, tick, 0);
+					skill_castend_damage_id(src, tbl, skill, autospl_skill_lv, tick, flag);
 					break;
 			}
 			sd->state.autocast = 0;
@@ -2503,16 +2511,24 @@ int skill_onskillusage(map_session_data *sd, struct block_list *bl, uint16 skill
 
 		sd->state.autocast = 1;
 		it.lock = true;
-		skill_consume_requirement(sd,skill,skill_lv,1);
+		int flag = SKILL_NOCONSUME_REQ;
+		if (it.flag & AUTOSPELL_FORCE_CONSUME) {
+			if (!skill_check_condition_castbegin(sd, skill, skill_lv) || !skill_check_condition_castend(sd, skill, skill_lv)) {
+				sd->state.autocast = 0;
+				continue;
+			}
+			skill_consume_requirement(sd, skill, skill_lv,1);
+			flag = 0;
+		}
 		switch( type ) {
 			case CAST_GROUND:
-				skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skill_lv, tick, 0);
+				skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skill_lv, tick, flag);
 				break;
 			case CAST_NODAMAGE:
-				skill_castend_nodamage_id(&sd->bl, tbl, skill, skill_lv, tick, 0);
+				skill_castend_nodamage_id(&sd->bl, tbl, skill, skill_lv, tick, flag);
 				break;
 			case CAST_DAMAGE:
-				skill_castend_damage_id(&sd->bl, tbl, skill, skill_lv, tick, 0);
+				skill_castend_damage_id(&sd->bl, tbl, skill, skill_lv, tick, flag);
 				break;
 		}
 		it.lock = false;
@@ -2738,16 +2754,24 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				continue;
 
 			dstsd->state.autocast = 1;
-			skill_consume_requirement(dstsd,autospl_skill_id,autospl_skill_lv,1);
+			int flag = SKILL_NOCONSUME_REQ;
+			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
+				if (!skill_check_condition_castbegin(sd, autospl_skill_id, autospl_skill_lv) || !skill_check_condition_castend(sd, autospl_skill_id, autospl_skill_lv)) {
+					sd->state.autocast = 0;
+					continue;
+				}
+				skill_consume_requirement(sd, autospl_skill_id, autospl_skill_lv,1);
+				flag = 0;
+			}
 			switch (type) {
 				case CAST_GROUND:
-					skill_castend_pos2(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, tick, 0);
+					skill_castend_pos2(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, tick, flag);
 					break;
 				case CAST_NODAMAGE:
-					skill_castend_nodamage_id(bl, tbl, autospl_skill_id, autospl_skill_lv, tick, 0);
+					skill_castend_nodamage_id(bl, tbl, autospl_skill_id, autospl_skill_lv, tick, flag);
 					break;
 				case CAST_DAMAGE:
-					skill_castend_damage_id(bl, tbl, autospl_skill_id, autospl_skill_lv, tick, 0);
+					skill_castend_damage_id(bl, tbl, autospl_skill_id, autospl_skill_lv, tick, flag);
 					break;
 			}
 			dstsd->state.autocast = 0;
@@ -7019,7 +7043,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 
 		// perform skill requirement consumption
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+		if (!(flag&SKILL_NOCONSUME_REQ))
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
@@ -12773,7 +12798,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		skill_onskillusage(sd, bl, skill_id, tick);
 		// perform skill requirement consumption
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+		if (!(flag&SKILL_NOCONSUME_REQ))
+			skill_consume_requirement(sd,skill_id,skill_lv,2);	
 	}
 
 	map_freeblock_unlock();
@@ -14397,7 +14423,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		skill_onskillusage(sd, NULL, skill_id, tick);
 		// perform skill requirement consumption
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+		if (!(flag&SKILL_NOCONSUME_REQ))
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
@@ -17091,6 +17118,9 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 
 	//Can only update state when weapon/arrow info is checked.
 	sd->state.arrow_atk = require.ammo?1:0;
+	
+	if (sd->state.autocast)
+		require.sp = 0;
 
 	// perform skill-group checks
 	if(skill_id != WM_GREAT_ECHO && inf2[INF2_ISCHORUS]) {
