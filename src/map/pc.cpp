@@ -5094,7 +5094,7 @@ void pc_bonus3(map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 
 	case SP_ADDEFF_ONSKILL: // bonus3 bAddEffOnSkill,sk,eff,n;
-		PC_BONUS_CHK_SC(type2,SP_ADDEFF_ONSKILL);
+		PC_BONUS_CHK_SC(type3,SP_ADDEFF_ONSKILL);
 		if( sd->state.lr_flag != 2 )
 			pc_bonus_addeff_onskill(sd->addeff_onskill, (sc_type)type3, val, type2, ATF_TARGET, 0);
 		break;

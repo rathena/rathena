@@ -1350,30 +1350,152 @@ Body:
   - Id: 3420
     Title: Defeat Deep Sea fishmen in the Lower Layers - Standby
     TimeLimit: 4h
+  - Id: 3446
+    Title: Illusion Investigation Team - Jiroker
+  - Id: 3447
+    Title: Illusion of Moonlight 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: pay_d03_i
+        MapMobTargets:
+          ILL_MUNAK: true
+          ILL_BON_GUN: true
+          ILL_SOHEE: true
+          ILL_ARCHER_SKELETON: true
+          ILL_NINE_TAIL: true
+          ILL_FURY_HERO: true
   - Id: 3448
     Title: Illusion of Moonlight 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3449
+    Title: Illusion Investigation Team - Elysia
+  - Id: 3450
+    Title: Illusion of Frozen 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ice_d03_i
+        MapMobTargets:
+          ILL_GAZETI: true
+          ILL_SNOWIER: true
+          ILL_ICE_TITAN: true
+          ILL_ICEICLE: true
   - Id: 3451
     Title: Illusion of Frozen 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3452
+    Title: Illusion Investigation Team - Radimir
+  - Id: 3453
+    Title: Illusion of Vampire 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: gef_d01_i
+        MapMobTargets:
+          ILL_ZOMBIE: true
+          ILL_BLACK_MUSHROOM: true
+          ILL_DRAINLIAR: true
+          ILL_ZOMBIE_C: true
+          ILL_NIGHTMARE: true
+          ILL_GHOUL: true
   - Id: 3454
     Title: Illusion of Vampire 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3455
+    Title: Illusion Investigation Team - Machoko
+  # - Id: 3456
+    # Title: Illusion of Teddy Bear 100 Kills
+    # Targets:
+      # - Id: 1
+        # Count: 100
+        # Location: ein_d02_i
+        # MapMobTargets:
+          # ILL_TEDDY_BEAR_B: true
+          # ILL_MINERAL: true
+          # ILL_PITMAN: true
+          # ILL_TEDDY_BEAR_R: true
+          # ILL_TEDDY_BEAR_Y: true
+          # ILL_TEDDY_BEAR_W: true
+          # ILL_OBSIDIAN: true
+          # ILL_TEDDY_BEAR_G: true
   - Id: 3457
     Title: Illusion of Teddy Bear 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3458
+    Title: Illusion Investigation Team - Orian
+  - Id: 3459
+    Title: Illusion of Abyss 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: tur_d04_i
+        MapMobTargets:
+          ILL_PERMETER: true
+          ILL_FREEZER: true
+          ILL_ASSULTER: true
+          ILL_SOLIDER: true
+          ILL_HEATER: true
   - Id: 3460
     Title: Illusion of Abyss 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3461
+    Title: Illusion Investigation Team - Cassis
+  - Id: 3462
+    Title: Illusion of Luanda 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: com_d02_i
+        MapMobTargets:
+          ILL_TRI_JOINT: true
+          ILL_WOOTAN_SHOOTER: true
+          ILL_MEGALITH: true
+          ILL_STONE_SHOOTER: true
+          ILL_STALACTIC_GOLEM: true
+          ILL_WOOTAN_FIGHTER: true
   - Id: 3463
     Title: Illusion of Luanda 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3464
+    Title: Illusion Investigation Team - Terrian
+  # - Id: 3465
+    # Title: Illusion of Labyrinth 100 Kills
+    # Targets:
+      # - Id: 1
+        # Count: 100
+        # Location: prt_mz03_i
+        # MapMobTargets:
+          # ILL_STEM_WORM: true
+          # ILL_GHOSTRING: true
+          # ILL_POPORING: true
+          # ILL_MANTIS: true
+          # ILL_HUNTER_FLY: true
+          # ILL_SIDE_WINDER: true
+          # ILL_BAPHOMET_J: true
+          # ILL_KILLER_MANTIS: true
   - Id: 3466
     Title: Illusion of Labyrinth 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3467
+    Title: Illusion Investigation Team - Lister
+  - Id: 3468
+    Title: Illusion of Underwater 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: iz_d05_i
+        MapMobTargets:
+          ILL_SEDORA: true
+          ILL_SWORD_FISH: true
+          ILL_PHEN: true
+          ILL_STROUF: true
+          ILL_KING_DRAMOH: true
   - Id: 3469
     Title: Illusion of Underwater 100 Kills - Standby
     TimeLimit: 4h
+  - Id: 3470
+    Title: Join the Illusion Investigation Team
   - Id: 3471
     Title: Subjugation-Einbroch Field-2
     Targets:
@@ -1452,6 +1574,24 @@ Body:
   - Id: 3504
     Title: Look at the Sky - Standby
     TimeLimit: 4h
+  - Id: 3507
+    Title: Illusion Investigation Team - Sheshin
+  # - Id: 3508
+    # Title: Illusion of Twins 100 Kills
+    # Targets:
+      # - Id: 1
+        # Count: 100
+        # Location: ant_d02_i
+        # MapMobTargets:
+          # ILL_ANDRE_LARVA: true
+          # ILL_ANT_EGG: true
+          # ILL_FARMILIAR: true
+          # ILL_ANDRE: true
+          # ILL_DENIRO: true
+          # ILL_PIERE: true
+          # ILL_GIEARTH: true
+          # ILL_SOLDIER_ANDR: true
+          # ILL_VITATA: true
   - Id: 3509
     Title: Illusion of Twins 100 Kills - Standby
     TimeLimit: 4h

@@ -26325,7 +26325,7 @@ Body:
           - Goddess_of_Abundance    # 311073
           - Sealed_Atroce_Card_J    # 300330
     Script: |
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       autobonus "{ bonus bAspdRate,30; }",5,30000,0,"{}";
   - Combos:
       - Combo:
@@ -33224,7 +33224,7 @@ Body:
           - Glittering_Cat_Choker    # 490149
           - Runaway_Magic    # 4876
     Script: |
-      if  (BaseJob == Job_Summoner) {
+      if (BaseJob == Job_Summoner) {
          skill "MG_FIREWALL",10;
          bonus bNoKnockback;
       }
@@ -37194,3 +37194,327 @@ Body:
           - FurSeal_Fan_LT   # 490375
     Script: |
       bonus bAllTraitStats,3;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_312031    # 312031
+    Script: |
+      bonus2 bSkillCooldown,"AG_FROZEN_SLASH",-300;
+      bonus2 bSkillCooldown,"AG_ROCK_DOWN",-300;
+  - Combos:
+      - Combo:
+          - aegis_490340    # 490340
+          - aegis_311883    # 311883
+    Script: |
+      bonus bAtkRate,30;
+      bonus bMatkRate,30;
+      skill "MO_CALLSPIRITS",2;
+  - Combos:
+      - Combo:
+          - aegis_312305    # 312305
+          - AncientKing_Groza_Card    # 27127
+    Script: |
+      autobonus "{ bonus bAllStats,BaseLevel/10; bonus bMaxHPrate,BaseLevel/10; bonus bFlee,10*(BaseLevel/10); bonus bBaseAtk,10*(BaseLevel/10); bonus bMatk,10*(BaseLevel/10); }",10,10000,BF_WEAPON|BF_MAGIC;
+  - Combos:
+      - Combo:
+          - aegis_312305    # 312305
+          - Abyss_AncientKing_Card    # 27128
+    Script: |
+      bonus2 bHPDrainRate,1000,2;
+  - Combos:
+      - Combo:
+          - aegis_312305    # 312305
+          - aegis_490337    # 490337
+    Script: |
+      bonus bAtkRate,BaseLevel/5;
+      bonus bMatkRate,BaseLevel/5;
+      bonus bPerfectHitAddRate,25;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_311891    # 311891
+    Script: |
+      bonus2 bSkillFixedCast,"AG_ALL_BLOOM",-1000;
+      bonus2 bSkillFixedCast,"AG_CRYSTAL_IMPACT",-1000;
+      bonus2 bSkillFixedCast,"AG_DESTRUCTIVE_HURRICANE",-1000;
+      bonus2 bSkillFixedCast,"AG_VIOLENT_QUAKE",-1000;
+      bonus2 bSkillFixedCast,"AG_CRIMSON_ARROW",-1000;
+      bonus2 bSkillFixedCast,"AG_FROZEN_SLASH",-1000;
+      bonus2 bSkillFixedCast,"AG_STORM_CANNON",-1000;
+      bonus2 bSkillFixedCast,"AG_ROCK_DOWN",-1000;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311892    # 311892
+    Script: |
+      bonus2 bSkillCooldown,"ABC_CHAIN_REACTION_SHOT",-300;
+      bonus2 bSkillCooldown,"ABC_FRENZY_SHOT",-300;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311893    # 311893
+    Script: |
+      bonus2 bSkillCooldown,"IQ_MASSIVE_F_BLASTER",-200;
+      bonus2 bSkillCooldown,"IQ_EXPOSION_BLASTER",-100;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311894    # 311894
+    Script: |
+      bonus2 bSkillCooldown,"IG_OVERSLASH",-300;
+      bonus2 bSkillCooldown,"IG_GRAND_JUDGEMENT",-300;
+      bonus2 bSkillCooldown,"IG_SHIELD_SHOOTING",-300;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311895    # 311895
+    Script: |
+      bonus2 bSkillFixedCast,"WH_CRESCIVE_BOLT",-500;
+      bonus2 bSkillFixedCast,"WH_GALESTORM",-500;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_311896    # 311896
+    Script: |
+      bonus2 bSkillFixedCast,"EM_CONFLAGRATION",-500;
+      bonus2 bSkillFixedCast,"EM_DIAMOND_STORM",-500;
+      bonus2 bSkillFixedCast,"EM_LIGHTNING_LAND",-500;
+      bonus2 bSkillFixedCast,"EM_TERRA_DRIVE",-500;
+      bonus2 bSkillFixedCast,"EM_VENOM_SWAMP",-500;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_312037    # 312037
+    Script: |
+      bonus2 bSkillCooldown,"EM_DIAMOND_STORM",-500;
+      bonus2 bSkillCooldown,"EM_TERRA_DRIVE",-500;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_311897    # 311897
+    Script: |
+      bonus2 bSkillFixedCast,"CD_ARBITRIUM",-500;
+      bonus2 bSkillFixedCast,"CD_PNEUMATICUS_PROCELLA",-500;
+      bonus2 bSkillFixedCast,"CD_FRAMEN",-500;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_312038    # 312038
+    Script: |
+      bonus2 bSkillCooldown,"CD_ARBITRIUM",-500;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_312304    # 312304
+    Script: |
+      bonus2 bSkillCooldown,"CD_EFFLIGO",-300;
+      bonus2 bSkillCooldown,"CD_PETITIO",-300;
+  - Combos:
+      - Combo:
+          - Clinging_Doram_1    # 19347
+          - Latent_Release_SU    # 27402
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,-12;
+      bonus2 bSubRace,RC_Player_Human,-12;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311898    # 311898
+    Script: |
+      bonus2 bSkillCooldown,"SHC_SAVAGE_IMPACT",-300;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311899    # 311899
+    Script: |
+      bonus2 bSkillCooldown,"DK_HACKANDSLASHER",-500;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_312040    # 312040
+    Script: |
+      bonus2 bSkillCooldown,"DK_MADNESS_CRUSHER",-500;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311900    # 311900
+      - Combo:
+          - Hero    # 29509
+          - aegis_311901    # 311901
+    Script: |
+      bonus2 bSkillFixedCast,"TR_RHYTHMSHOOTING",-500;
+      bonus2 bSkillFixedCast,"TR_ROSEBLOSSOM",-500;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311902    # 311902
+    Script: |
+      bonus2 bSkillFixedCast,"BO_ACIDIFIED_ZONE_FIRE",-500;
+      bonus2 bSkillFixedCast,"BO_ACIDIFIED_ZONE_GROUND",-500;
+      bonus2 bSkillFixedCast,"BO_ACIDIFIED_ZONE_WATER",-500;
+      bonus2 bSkillFixedCast,"BO_ACIDIFIED_ZONE_WIND",-500;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_312043    # 312043
+    Script: |
+      bonus2 bSkillCooldown,"BO_ACIDIFIED_ZONE_FIRE",-300;
+      bonus2 bSkillCooldown,"BO_ACIDIFIED_ZONE_GROUND",-300;
+      bonus2 bSkillCooldown,"BO_ACIDIFIED_ZONE_WATER",-300;
+      bonus2 bSkillCooldown,"BO_ACIDIFIED_ZONE_WIND",-300;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_311903    # 311903
+    Script: |
+      bonus2 bSkillCooldown,"MT_AXE_STOMP",-300;
+      bonus2 bSkillCooldown,"MT_RUSH_QUAKE",-300;
+  - Combos:
+      - Combo:
+          - Anony_Sm_Shoes    # 22178
+          - B_Ygnizem_Card    # 4352
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "SM_MAGNUM",10;
+      bonus2 bHPRegenRate,5000,10000;
+      bonus2 bHPRegenRate,100,10000;
+      if (BaseLevel >= 100) {
+         bonus bStr,10*.@r;
+         bonus bFlee,15*.@r;
+      }
+      else if (BaseLevel <= 99) {
+         bonus bStr,3*.@r;
+         bonus bFlee,5*.@r;
+      }
+  - Combos:
+      - Combo:
+          - Anony_Sm_Shoes    # 22178
+          - Sealed_B_Ygnizem_Card_J    # 300318
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus2 bHPRegenRate,1500,10000;
+      bonus2 bHPRegenRate,30,10000;
+      if (BaseLevel >= 100) {
+         bonus bStr,4*.@r;
+         bonus bFlee,5*.@r;
+      }
+      else if (BaseLevel <= 99) {
+         bonus bStr,.@r;
+         bonus bFlee,2*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480275    # 480275
+          - Phreeoni_Card    # 4121
+      - Combo:
+          - aegis_480275    # 480275
+          - Sealed_Phreeoni_Card    # 4537
+    Script: |
+      bonus bFlee,-150;
+      bonus2 bResEff,Eff_Stone,10000;
+      bonus bPerfectHitAddRate,50;
+  - Combos:
+      - Combo:
+          - Occult_Nature_Cape    # 480276
+          - Ep172_Bh_Staff    # 640005
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_Water,20;
+      bonus2 bMagicAtkEle,Ele_Earth,20;
+      bonus2 bSkillAtk,"WL_JACKFROST",10*(.@r/2);
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",10*(.@r/2);
+      if (.@r>=13) {
+         bonus2 bSkillCooldown,"WL_JACKFROST",-3000;
+         bonus2 bSkillCooldown,"WL_EARTHSTRAIN",-3000;
+      }
+  - Combos:
+      - Combo:
+          - Occult_Nature_Cape    # 480276
+          - Ep172_1h_Book2    # 540005
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,50;
+      skill "TF_DOUBLE",5;
+      bonus2 bSkillAtk,"MG_FIREBOLT",10*.@r;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10*.@r;
+      bonus2 bSkillAtk,"MG_COLDBOLT",10*.@r;
+      if (.@r>=13)
+         bonus3 bAutoSpell,"SO_PSYCHIC_WAVE",5,70;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_490367    # 490367
+    Script: |
+      bonus2 bAddEle,Ele_All,15;
+      bonus2 bSkillCooldown,"RA_UNLIMIT",-45000;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
+  - Combos:
+      - Combo:
+          - Water_Sprits_Armor    # 2346
+          - SLD_ILL_Ktullanux_Car    # 300200
+      - Combo:
+          - Water_Sprits_Armor_    # 2347
+          - SLD_ILL_Ktullanux_Car    # 300200
+    Script: |
+      bonus3 bAutoSpellWhenHit,"WZ_WATERBALL",3,10;
+  - Combos:
+      - Combo:
+          - Sealed_D_Lord_Card    # 4488
+          - SLD_P_Dark_L_Card    # 300202
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus2 bMagicAtkEle,Ele_Fire,((.@r>=15)?12:8);
+      bonus2 bSkillAtk,"WZ_METEOR",((.@r>=15)?12:8);
+  - Combos:
+      - Combo:
+          - Magic_Star_TW    # 19393
+          - Magic_Circle_TW    # 420087
+    Script: |
+      bonus bMatkRate,readparam(bStr)/20;
+      bonus bDelayrate,-(readparam(bAgi)/20);
+      bonus2 bMagicAddRace,RC_All,readparam(bVit)/20;
+      bonus2 bMagicAddClass,Class_All,readparam(bInt)/20;
+      bonus2 bMagicAddSize,Size_All,readparam(bDex)/20;
+      bonus2 bMagicAddEle,Ele_All,readparam(bLuk)/20;
+  - Combos:
+      - Combo:
+          - Magic_Star_TW    # 19393
+          - Star_Force_Ring_TW    # 32243
+    Script: |
+      bonus bBaseAtk,30;
+      bonus bMatk,30;
+      bonus bVariableCastrate,-5;
+      bonus bFixedCast,-200;
+      bonus2 bMagicAddClass,Class_Boss,20;
+  - Combos:
+      - Combo:
+          - Star_Force_Ring_TW    # 32243
+          - Magic_Circle_TW    # 420087
+    Script: |
+      bonus bVariableCastrate,-20;
+  - Combos:
+      - Combo:
+          - Sunglasses    # 2201
+          - SLD_Mob_Scarf    # 420089
+      - Combo:
+          - Sunglasses_    # 2202
+          - SLD_Mob_Scarf    # 420089
+      - Combo:
+          - Glasses    # 2203
+          - SLD_Mob_Scarf    # 420089
+      - Combo:
+          - Glasses_    # 2204
+          - SLD_Mob_Scarf    # 420089
+    Script: |
+      .@a = (readparam(bStr)+readparam(bLuk))/80;
+      .@b = (readparam(bAgi)+readparam(bVit))/80;
+      .@c = (readparam(bInt)+readparam(bDex))/80;
+      bonus2 bAddClass,Class_All,2*.@a;
+      bonus bCritical,2*.@a;
+      bonus bCritAtkRate,4*.@a;
+      bonus bMatk,40*.@c;
+      bonus bVariableCastrate,-.@c;
+      bonus bHealPower,3*.@c;
+      bonus bAspdRate,2*.@b;
+      bonus bMaxHPrate,2*.@b;
