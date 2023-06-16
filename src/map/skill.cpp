@@ -888,6 +888,9 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
 		case ALL_PRONTERA_RECALL:
+		case ALL_GLASTHEIM_RECALL:
+		case ALL_THANATOS_RECALL:
+		case ALL_LIGHTHALZEN_RECALL:
 			if(mapdata->getMapFlag(MF_NOWARP)) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
@@ -11649,6 +11652,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
 	case ALL_PRONTERA_RECALL:
+	case ALL_GLASTHEIM_RECALL:
+	case ALL_THANATOS_RECALL:
+	case ALL_LIGHTHALZEN_RECALL:
 		if( sd )
 		{
 			short x=0, y=0; // Destiny position.
@@ -11681,6 +11687,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					y = 192;
 				}
 				mapindex  = mapindex_name2id(MAP_PRONTERA);
+				break;
+			case ALL_GLASTHEIM_RECALL:
+				x = 200;
+				y = 268;
+				mapindex  = mapindex_name2id(MAP_GLASTHEIM);
+				break;
+			case ALL_THANATOS_RECALL:
+				x = 139;
+				y = 156;
+				mapindex  = mapindex_name2id(MAP_THANATOS);
+				break;
+			case ALL_LIGHTHALZEN_RECALL:
+				x = 307;
+				y = 307;
+				mapindex  = mapindex_name2id(MAP_LIGHTHALZEN);
 				break;
 			}
 
