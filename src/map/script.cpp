@@ -4851,6 +4851,8 @@ void do_init_script(void) {
 	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
 
 	add_timer_func_list( run_script_timer, "run_script_timer" );
+	add_timer_func_list( unit_size_timer, "unit_size_timer" );
+
 
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
@@ -19591,6 +19593,67 @@ BUILDIN_FUNC(setunitname)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+ * Timer function for sleep
+ *------------------------------------------*/
+TIMER_FUNC(unit_size_timer){
+	block_list *bl = (block_list *)data;	
+	unit_refresh( bl, true );
+	return 0;
+}
+
+/**
+ * Sets a unit's size.
+ * setunitsize <GID>,<size>;
+ * size: 1 = small, 2 = big
+ * Supported unit types are [MOB|NPC]
+ */
+BUILDIN_FUNC(setunitsize)
+{
+	int gid = script_getnum(st, 2);
+	int size= script_getnum(st, 3);
+	block_list *bl = map_id2bl(gid);
+
+	if (bl == nullptr) {
+		ShowWarning("buildin_setmobsize: Unable to find object with given game ID %d!\n", gid);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch(bl->type) {
+		case BL_MOB:
+			{
+				TBL_MOB *md = (TBL_MOB*)bl;
+				
+				if(size == SZ_BIG) 
+					clif_specialeffect(&md->bl, EF_GIANTBODY, AREA);
+				else if(size == SZ_MEDIUM)
+					clif_specialeffect(&md->bl, EF_BABYBODY, AREA);
+				md->special_state.size = size;
+			}
+		break;
+		case BL_NPC:
+		    {
+				TBL_NPC *nd = (TBL_NPC*)bl;
+
+				if(nd) {
+					if(size == SZ_BIG) 
+						clif_specialeffect(&nd->bl, EF_GIANTBODY, AREA);
+					else if(size == SZ_MEDIUM)
+						clif_specialeffect(&nd->bl, EF_BABYBODY, AREA);
+					clif_efst_status_change_sub(bl, bl, AREA);
+					nd->size = size;
+				}
+			}
+		break;
+
+	}
+	
+	// Timer to unit_refresh, so it doesn't get stucked visuallly 
+	add_timer(gettick()+725,unit_size_timer,bl->id,(intptr_t)bl);
+	
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Sets a unit's title.
  * setunittitle <GID>,<title>;
@@ -27388,6 +27451,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setunitdata,"iii"),
 	BUILDIN_DEF(unitwalk,"iii?"),
 	BUILDIN_DEF2(unitwalk,"unitwalkto","ii?"),
+	BUILDIN_DEF(setunitsize,"ii"), // [SapitoSucio]
 	BUILDIN_DEF(unitkill,"i"),
 	BUILDIN_DEF(unitwarp,"isii"),
 	BUILDIN_DEF(unitattack,"iv?"),
