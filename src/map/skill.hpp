@@ -656,8 +656,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-short skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int trigger, int qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
+std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int trigger, int qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, std::shared_ptr<s_skill_produce_db_entry> produce = nullptr );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
