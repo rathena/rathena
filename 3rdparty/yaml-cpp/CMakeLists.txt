@@ -84,3 +84,4 @@ set( YAML_DEFINITIONS
 include_directories(${YAML_INCLUDE_DIRS} ${YAML_SOURCE_DIR})
 #message(STATUS "YAML_INCLUDE_DIRS : ${YAML_INCLUDE_DIRS}, YAML_SOURCE_DIR=${YAML_SOURCE_DIR}")
 ADD_LIBRARY(${this_target} STATIC ${YAML_SOURCES} )
+target_compile_definitions(${this_target} PUBLIC "-DYAML_CPP_STATIC_DEFINE")
