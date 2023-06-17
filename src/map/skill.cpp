@@ -888,6 +888,9 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
 		case ALL_PRONTERA_RECALL:
+		case ALL_GLASTHEIM_RECALL:
+		case ALL_THANATOS_RECALL:
+		case ALL_LIGHTHALZEN_RECALL:
 			if(mapdata->getMapFlag(MF_NOWARP)) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
@@ -10362,9 +10365,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int8 dx[9] = {-1, 1, 0, 0,-1, 1,-1, 1, 0};
 			int8 dy[9] = { 0, 0, 1,-1, 1,-1,-1, 1, 0};
 			uint8 j = 0, calls = 0, called = 0;
-			struct guild *g;
 			// i don't know if it actually summons in a circle, but oh well. ;P
-			g = sd?sd->guild:guild_search(status_get_guild_id(src));
+			auto g = sd?sd->guild:guild_search(status_get_guild_id(src));
 			if (!g)
 				break;
 
@@ -10377,10 +10379,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			for (i = 0; i < g->max_member && (!calls || (calls && called < calls)); i++, j++) {
+			for (i = 0; i < g->guild.max_member && (!calls || (calls && called < calls)); i++, j++) {
 				if (j > 8)
 					j = 0;
-				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
+				if ((dstsd = g->guild.member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
 					if (map_getmapflag(dstsd->bl.m, MF_NOWARP) && !map_flag_gvg2(dstsd->bl.m))
 						continue;
 					if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, pc_get_group_level(dstsd)))
@@ -10401,7 +10403,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case GD_CHARGESHOUT_FLAG:
 		if (sd && sd->guild && sd->state.gmaster_flag == 1) {
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->guild.name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
 
 			if (md) {
 				sd->guild->chargeshout_flag_id = md->bl.id;
@@ -11649,6 +11651,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
 	case ALL_PRONTERA_RECALL:
+	case ALL_GLASTHEIM_RECALL:
+	case ALL_THANATOS_RECALL:
+	case ALL_LIGHTHALZEN_RECALL:
 		if( sd )
 		{
 			short x=0, y=0; // Destiny position.
@@ -11681,6 +11686,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					y = 192;
 				}
 				mapindex  = mapindex_name2id(MAP_PRONTERA);
+				break;
+			case ALL_GLASTHEIM_RECALL:
+				x = 200;
+				y = 268;
+				mapindex  = mapindex_name2id(MAP_GLASTHEIM);
+				break;
+			case ALL_THANATOS_RECALL:
+				x = 139;
+				y = 156;
+				mapindex  = mapindex_name2id(MAP_THANATOS);
+				break;
+			case ALL_LIGHTHALZEN_RECALL:
+				x = 307;
+				y = 307;
+				mapindex  = mapindex_name2id(MAP_LIGHTHALZEN);
 				break;
 			}
 

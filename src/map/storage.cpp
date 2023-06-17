@@ -561,7 +561,7 @@ char storage_guild_storageopen(map_session_data* sd)
 		return GSTORAGE_NO_GUILD;
 
 #ifdef OFFICIAL_GUILD_STORAGE
-	if (!guild_checkskill(sd->guild, GD_GUILD_STORAGE))
+	if (!guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE))
 		return GSTORAGE_NO_STORAGE; // Can't open storage if the guild has not learned the skill
 #endif
 
@@ -573,7 +573,7 @@ char storage_guild_storageopen(map_session_data* sd)
 #if PACKETVER >= 20140205
 	int pos;
 
-	if ((pos = guild_getposition(sd)) < 0 || !(sd->guild->position[pos].mode&GUILD_PERM_STORAGE))
+	if ((pos = guild_getposition(*sd)) < 0 || !(sd->guild->guild.position[pos].mode&GUILD_PERM_STORAGE))
 		return GSTORAGE_NO_PERMISSION; // Guild member doesn't have permission
 #endif
 
@@ -584,7 +584,7 @@ char storage_guild_storageopen(map_session_data* sd)
 
 	if((gstor = guild2storage2(sd->status.guild_id)) == nullptr
 #ifdef OFFICIAL_GUILD_STORAGE
-		|| (gstor->max_amount != guild_checkskill(sd->guild, GD_GUILD_STORAGE) * 100)
+		|| (gstor->max_amount != guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE) * 100)
 #endif
 	) {
 		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);

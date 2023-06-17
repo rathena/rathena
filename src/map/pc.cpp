@@ -1225,7 +1225,7 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
 		case NPCTYPE_SHOP:
 			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND_SELLABLE && (
 				item->bound != BOUND_GUILD ||
-				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(sd->guild && sd->status.char_id == sd->guild->guild.member[0].char_id) ||
 				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
 				))
 				return true;
@@ -1233,7 +1233,7 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
 		case NPCTYPE_ITEMSHOP:
 			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND && (
 				item->bound != BOUND_GUILD ||
-				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(sd->guild && sd->status.char_id == sd->guild->guild.member[0].char_id) ||
 				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
 				))
 				return true;
@@ -7161,10 +7161,8 @@ uint8 pc_checkskill(map_session_data *sd, uint16 skill_id)
 		return 0;
 	}
 	if (SKILL_CHK_GUILD(skill_id) ) {
-		struct guild *g;
-
-		if( sd->status.guild_id>0 && (g=sd->guild)!=NULL)
-			return guild_checkskill(g,skill_id);
+		if (sd->status.guild_id>0 && sd->guild)
+			return guild_checkskill(sd->guild->guild,skill_id);
 		return 0;
 	}
 	return (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
@@ -9954,11 +9952,11 @@ void pc_revive(map_session_data *sd,unsigned int hp, unsigned int sp, unsigned i
 	if(battle_config.pc_invincible_time > 0)
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 
-	if( sd->state.gmaster_flag ) {
-		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
-		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
-		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
-		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
+	if (sd->state.gmaster_flag && sd->guild) {
+		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild->guild,GD_LEADERSHIP));
+		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild->guild,GD_GLORYWOUNDS));
+		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild->guild,GD_SOULCOLD));
+		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild->guild,GD_HAWKEYES));
 	}
 }
 

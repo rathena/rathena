@@ -809,7 +809,7 @@ ACMD_FUNC(who) {
 				}
 				default: {
 					struct party_data *p = party_search(pl_sd->status.party_id);
-					struct guild *g = pl_sd->guild;
+					auto &g = pl_sd->guild;
 
 					StringBuf_Printf(&buf, msg_txt(sd,343), pl_sd->status.name); // "Name: %s "
 					if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
@@ -817,7 +817,7 @@ ACMD_FUNC(who) {
 					if (p != NULL)
 						StringBuf_Printf(&buf, msg_txt(sd,345), p->party.name); // " | Party: '%s'"
 					if (g != NULL)
-						StringBuf_Printf(&buf, msg_txt(sd,346), g->name); // " | Guild: '%s'"
+						StringBuf_Printf(&buf, msg_txt(sd,346), g->guild.name); // " | Guild: '%s'"
 					break;
 				}
 			}
@@ -861,7 +861,6 @@ ACMD_FUNC(whogm)
 	int level;
 	char match_text[CHAT_SIZE_MAX];
 	char player_name[NAME_LENGTH];
-	struct guild *g;
 	struct party_data *p;
 
 	nullpo_retr(-1, sd);
@@ -914,10 +913,10 @@ ACMD_FUNC(whogm)
 		clif_displaymessage(fd, atcmd_output);
 
 		p = party_search(pl_sd->status.party_id);
-		g = pl_sd->guild;
+		auto &g = pl_sd->guild;
 
 		sprintf(atcmd_output,msg_txt(sd,916),	// Party: '%s' | Guild: '%s'
-			p?p->party.name:msg_txt(sd,917), g?g->name:msg_txt(sd,917));	// None.
+			p?p->party.name:msg_txt(sd,917), g?g->guild.name:msg_txt(sd,917));	// None.
 
 		clif_displaymessage(fd, atcmd_output);
 		count++;
@@ -3050,7 +3049,6 @@ ACMD_FUNC(trait_all) {
 ACMD_FUNC(guildlevelup) {
 	int level = 0;
 	short added_level;
-	struct guild *guild_info;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%11d", &level) < 1 || level == 0) {
@@ -3058,7 +3056,9 @@ ACMD_FUNC(guildlevelup) {
 		return -1;
 	}
 
-	if (sd->status.guild_id <= 0 || (guild_info = sd->guild) == NULL) {
+	auto &guild_info = sd->guild;
+
+	if (sd->status.guild_id <= 0 || guild_info == nullptr) {
 		clif_displaymessage(fd, msg_txt(sd,43)); // You're not in a guild.
 		return -1;
 	}
@@ -3068,13 +3068,13 @@ ACMD_FUNC(guildlevelup) {
 	//}
 
 	added_level = (short)level;
-	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((short)MAX_GUILDLEVEL - guild_info->guild_lv))) // fix positive overflow
-		added_level = (short)MAX_GUILDLEVEL - guild_info->guild_lv;
-	else if (level < 0 && (level < -MAX_GUILDLEVEL || added_level < (1 - guild_info->guild_lv))) // fix negative overflow
-		added_level = 1 - guild_info->guild_lv;
+	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((short)MAX_GUILDLEVEL - guild_info->guild.guild_lv))) // fix positive overflow
+		added_level = (short)MAX_GUILDLEVEL - guild_info->guild.guild_lv;
+	else if (level < 0 && (level < -MAX_GUILDLEVEL || added_level < (1 - guild_info->guild.guild_lv))) // fix negative overflow
+		added_level = 1 - guild_info->guild.guild_lv;
 
 	if (added_level != 0) {
-		intif_guild_change_basicinfo(guild_info->guild_id, GBI_GUILDLV, &added_level, sizeof(added_level));
+		intif_guild_change_basicinfo(guild_info->guild.guild_id, GBI_GUILDLV, &added_level, sizeof(added_level));
 		clif_displaymessage(fd, msg_txt(sd,179)); // Guild level changed.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,45)); // Guild level change failed.
@@ -3856,12 +3856,10 @@ ACMD_FUNC(breakguild)
 	nullpo_retr(-1, sd);
 
 	if (sd->status.guild_id) { // Check if the player has a guild
-		struct guild *g;
-		g = sd->guild; // Search the guild
-		if (g) { // Check if guild was found
+		if (sd->guild) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master
 				int ret = 0;
-				ret = guild_break(sd, g->name); // Break guild
+				ret = guild_break(sd, sd->guild->guild.name); // Break guild
 				if (ret) { // Check if anything went wrong
 					return 0; // Guild was broken
 				} else {
@@ -4083,7 +4081,6 @@ ACMD_FUNC(guildrecall)
 	struct s_mapiterator* iter;
 	int count;
 	char guild_name[NAME_LENGTH];
-	struct guild *g;
 	nullpo_retr(-1, sd);
 
 	memset(guild_name, '\0', sizeof(guild_name));
@@ -4099,9 +4096,8 @@ ACMD_FUNC(guildrecall)
 		return -1;
 	}
 
-	if ((g = guild_searchname(guild_name)) == NULL && // name first to avoid error when name begin with a number
-	    (g = guild_search(atoi(message))) == NULL)
-	{
+	auto g = guild_searchnameid(guild_name);
+	if (!g) {
 		clif_displaymessage(fd, msg_txt(sd,94)); // Incorrect name/ID, or no one from the guild is online.
 		return -1;
 	}
@@ -4111,7 +4107,7 @@ ACMD_FUNC(guildrecall)
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if (sd->status.account_id != pl_sd->status.account_id && pl_sd->status.guild_id == g->guild_id)
+		if (sd->status.account_id != pl_sd->status.account_id && pl_sd->status.guild_id == g->guild.guild_id)
 		{
 			if (pc_get_group_level(pl_sd) > pc_get_group_level(sd) || (pl_sd->bl.m == sd->bl.m && pl_sd->bl.x == sd->bl.x && pl_sd->bl.y == sd->bl.y))
 				continue; // Skip GMs greater than you...             or chars already on the cell
@@ -4126,7 +4122,7 @@ ACMD_FUNC(guildrecall)
 	}
 	mapit_free(iter);
 
-	sprintf(atcmd_output, msg_txt(sd,93), g->name); // All online characters of the %s guild have been recalled to your position.
+	sprintf(atcmd_output, msg_txt(sd,93), g->guild.name); // All online characters of the %s guild have been recalled to your position.
 	clif_displaymessage(fd, atcmd_output);
 	if (count) {
 		sprintf(atcmd_output, msg_txt(sd,1033), count); // Because you are not authorized to warp from some maps, %d player(s) have not been recalled.
@@ -4791,7 +4787,6 @@ ACMD_FUNC(mount_peco)
 ACMD_FUNC(guildspy)
 {
 	char guild_name[NAME_LENGTH];
-	struct guild *g;
 	nullpo_retr(-1, sd);
 
 	memset(guild_name, '\0', sizeof(guild_name));
@@ -4807,20 +4802,20 @@ ACMD_FUNC(guildspy)
 		return -1;
 	}
 
-	if ((g = guild_searchname(guild_name)) != NULL || // name first to avoid error when name begin with a number
-	    (g = guild_search(atoi(message))) != NULL) {
-		if (sd->guildspy == g->guild_id) {
-			sd->guildspy = 0;
-			sprintf(atcmd_output, msg_txt(sd,103), g->name); // No longer spying on the %s guild.
-			clif_displaymessage(fd, atcmd_output);
-		} else {
-			sd->guildspy = g->guild_id;
-			sprintf(atcmd_output, msg_txt(sd,104), g->name); // Spying on the %s guild.
-			clif_displaymessage(fd, atcmd_output);
-		}
-	} else {
+	auto g = guild_searchnameid(guild_name);
+	if (!g) {
 		clif_displaymessage(fd, msg_txt(sd,94)); // Incorrect name/ID, or no one from the specified guild is online.
 		return -1;
+	}
+
+	if (sd->guildspy == g->guild.guild_id) {
+		sd->guildspy = 0;
+		sprintf(atcmd_output, msg_txt(sd,103), g->guild.name); // No longer spying on the %s guild.
+		clif_displaymessage(fd, atcmd_output);
+	} else {
+		sd->guildspy = g->guild.guild_id;
+		sprintf(atcmd_output, msg_txt(sd,104), g->guild.name); // Spying on the %s guild.
+		clif_displaymessage(fd, atcmd_output);
 	}
 
 	return 0;
@@ -5506,8 +5501,6 @@ ACMD_FUNC(disguiseguild)
 {
 	int id = 0, i;
 	char monster[NAME_LENGTH], guild[NAME_LENGTH];
-	
-	struct guild *g;
 
 	memset(monster, '\0', sizeof(monster));
 	memset(guild, '\0', sizeof(guild));
@@ -5533,14 +5526,15 @@ ACMD_FUNC(disguiseguild)
 		return -1;
 	}
 
-	if( (g = guild_searchname(guild)) == NULL && (g = guild_search(atoi(guild))) == NULL ) {
+	auto g = guild_searchnameid(guild);
+	if (!g) {
 		clif_displaymessage(fd, msg_txt(sd,94)); // Incorrect name/ID, or no one from the guild is online.
 		return -1;
 	}
 
-	for( i = 0; i < g->max_member; i++ ){
+	for( i = 0; i < g->guild.max_member; i++ ){
 		map_session_data *pl_sd;
-		if( (pl_sd = g->member[i].sd) && !pc_isriding(pl_sd) )
+		if( (pl_sd = g->guild.member[i].sd) && !pc_isriding(pl_sd) )
 			pc_disguise(pl_sd, id);
 	}
 
@@ -5592,7 +5586,6 @@ ACMD_FUNC(undisguiseall)
 ACMD_FUNC(undisguiseguild)
 {
 	char guild_name[NAME_LENGTH];
-	struct guild *g;
 	int i;
 	nullpo_retr(-1, sd);
 
@@ -5603,14 +5596,15 @@ ACMD_FUNC(undisguiseguild)
 		return -1;
 	}
 
-	if( (g = guild_searchname(guild_name)) == NULL && (g = guild_search(atoi(message))) == NULL ) {
+	auto g = guild_searchnameid(guild_name);
+	if (!g) {
 		clif_displaymessage(fd, msg_txt(sd,94)); // Incorrect name/ID, or no one from the guild is online.
 		return -1;
 	}
 
-	for(i = 0; i < g->max_member; i++){
+	for(i = 0; i < g->guild.max_member; i++){
 		map_session_data *pl_sd;
-		if( (pl_sd = g->member[i].sd) && pl_sd->disguise )
+		if( (pl_sd = g->guild.member[i].sd) && pl_sd->disguise )
 			pc_disguise(pl_sd, 0);
 	}
 
@@ -6028,13 +6022,10 @@ ACMD_FUNC(clearstorage)
 ACMD_FUNC(cleargstorage)
 {
 	int i, j;
-	struct guild *g;
 	struct s_storage *gstorage;
 	nullpo_retr(-1, sd);
 
-	g = sd->guild;
-
-	if (g == NULL) {
+	if (!sd->guild) {
 		clif_displaymessage(fd, msg_txt(sd,43)); // You're not in a guild.
 		return -1;
 	}
@@ -6487,13 +6478,12 @@ ACMD_FUNC(autotrade) {
  *------------------------------------------*/
 ACMD_FUNC(changegm)
 {
-	struct guild *g;
 	map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	if (sd->status.guild_id == 0 || (g = sd->guild) == NULL || strcmp(g->master,sd->status.name)) {
+	if (sd->status.guild_id == 0 || sd->guild == NULL || strcmp(sd->guild->guild.master,sd->status.name)) {
 		clif_displaymessage(fd, msg_txt(sd,1181)); // You need to be a Guild Master to use this command.
 		return -1;
 	}
@@ -6522,7 +6512,7 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
-	if( battle_config.guild_leaderchange_delay && DIFF_TICK(time(NULL),sd->guild->last_leader_change) < battle_config.guild_leaderchange_delay ){
+	if( battle_config.guild_leaderchange_delay && DIFF_TICK(time(NULL),sd->guild->guild.last_leader_change) < battle_config.guild_leaderchange_delay ){
 #if PACKETVER >= 20151001
 		clif_msg(sd, GUILD_MASTER_DELAY);
 #else
@@ -8588,7 +8578,6 @@ ACMD_FUNC(sizeguild)
 	int size = SZ_SMALL, i;
 	char guild[NAME_LENGTH];
 	map_session_data *pl_sd;
-	struct guild *g;
 	nullpo_retr(-1, sd);
 
 	memset(guild, '\0', sizeof(guild));
@@ -8598,15 +8587,16 @@ ACMD_FUNC(sizeguild)
 		return -1;
 	}
 
-	if( (g = guild_searchname(guild)) == NULL && (g = guild_search(atoi(guild))) == NULL ) {
+	auto g = guild_searchnameid(guild);
+	if (!g) {
 		clif_displaymessage(fd, msg_txt(sd,94)); // Incorrect name/ID, or no one from the guild is online.
 		return -1;
 	}
 
 	size = cap_value(size,SZ_SMALL,SZ_BIG);
 
-	for( i = 0; i < g->max_member; i++ ) {
-		if( (pl_sd = g->member[i].sd) && pl_sd->state.size != size ) {
+	for( i = 0; i < g->guild.max_member; i++ ) {
+		if( (pl_sd = g->guild.member[i].sd) && pl_sd->state.size != size ) {
 			if( pl_sd->state.size ) {
 				pl_sd->state.size = SZ_SMALL;
 				pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
