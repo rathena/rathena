@@ -5,16 +5,14 @@
 #include "../skills.hpp"
 
 
-class Bash : public Skill<Bash> {
+class Bash : public Skill {
 public:
 	int castendDamageId() const {
-		return 0;
+		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 	};
 
 	Bash() : Skill(e_skill::SM_BASH) {};
 
-private:
-	friend class Skill<Bash>;
 };
 
 #endif // SKILLS_SWORDSMAN_BASH_HPP

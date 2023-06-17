@@ -4,7 +4,7 @@
 #include "../skill.hpp"
 
 
-class Provoke : public Skill<Provoke> {
+class Provoke : public Skill {
 public:
 	int castendNoDamageId() const {
 		return 0;
@@ -13,7 +13,6 @@ public:
 	Provoke() : Skill(e_skill::SM_PROVOKE) {};
 
 private:
-	friend class Skill<Provoke>;
 };
 
 #endif // SKILLS_SWORDSMAN_PROVOKE_HPP
