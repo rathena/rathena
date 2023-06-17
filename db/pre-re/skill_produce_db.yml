@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2022 rAthena Development Team
+#   Copyright(C) 2023 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -34,14 +34,10 @@
 #      NotConsumed:            List of items not consumed to produce the Product. (Default: null)
 #        - Item                AegisName of the unconsumed item.
 #          Clear               Remove the item with the given AegisName from NotConsumed. (Optional)
-#
-###########################################################################
-# Additional fields for Change Material (ItemLevel: 26):
-#
-#      BaseRate                Base rate (in n/10%). (Default: 1000)
-#      Make:                   List of item amounts with their individual rate produced by Change Material. (Default: null)
-#        - Amount              Amount of item created (unique to the list).
-#          Rate                Rate to create the Amount (in n/10%). Default: 1000. 0 to remove on import.
+#      BaseRate                Base rate (in n/10%) for Change Material (ItemLevel: 26). (Default: 1000)
+#      Make:                   List of item amounts with their individual rate produced by Change Material (ItemLevel: 26). (Default: null)
+#        - Amount              Amount of item created (unique to the list) for Change Material (ItemLevel: 26).
+#          Rate                Rate to create the Amount (in n/10%) for Change Material (ItemLevel: 26). (Default: 1000. 0 to remove on import)
 ###########################################################################
 
 Header:
