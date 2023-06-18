@@ -21,6 +21,9 @@
     <ClInclude Include="src\collectionstack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\depthguard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\directives.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -87,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\convert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\depthguard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\directives.cpp">

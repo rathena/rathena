@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="src\collectionstack.h" />
     <ClInclude Include="src\contrib\graphbuilderadapter.h" />
+    <ClCompile Include="src\depthguard.h" />
     <ClInclude Include="src\directives.h" />
     <ClInclude Include="src\emitterstate.h" />
     <ClInclude Include="src\emitterutils.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="src\contrib\graphbuilder.cpp" />
     <ClCompile Include="src\contrib\graphbuilderadapter.cpp" />
     <ClCompile Include="src\convert.cpp" />
+    <ClCompile Include="src\depthguard.cpp" />
     <ClCompile Include="src\directives.cpp" />
     <ClCompile Include="src\emit.cpp" />
     <ClCompile Include="src\emitfromevents.cpp" />
