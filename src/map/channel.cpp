@@ -171,7 +171,7 @@ int channel_delete(struct Channel *channel, bool force) {
 		aFree(channel);
 		break;
 	case CHAN_TYPE_ALLY: {
-		struct guild *g = guild_search(channel->gid);
+		auto g = guild_search(channel->gid);
 		if(g) g->channel = NULL;
 		aFree(channel);
 		break;
@@ -277,19 +277,20 @@ int channel_mjoin(map_session_data *sd) {
  *   0: Success
  *  -1: Invalid guild or no channel for guild
  */
-int channel_ajoin(struct guild *g){
+int channel_ajoin(MapGuild &g) {
 	int i, j;
 	map_session_data *pl_sd;
 
-	if(!g || !g->channel) return -1;
+	if (!g.channel)
+		return -1;
 	for (i = 0; i < MAX_GUILDALLIANCE; i++){
-		struct guild *ag; //allied guld
-		struct guild_alliance *ga = &g->alliance[i]; //guild alliance
+		std::shared_ptr<MapGuild> ag; //allied guild
+		struct guild_alliance *ga = &g.guild.alliance[i]; //guild alliance
 		if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id))){
-			for (j = 0; j < ag->max_member; j++){ //load all guildmember
-				pl_sd = ag->member[j].sd;
+			for (j = 0; j < ag->guild.max_member; j++){ //load all guildmember
+				pl_sd = ag->guild.member[j].sd;
 				if(channel_haspc(ag->channel,pl_sd)==1)  //only if they are in their own guildchan
-					channel_join(g->channel,pl_sd);
+					channel_join(g.channel,pl_sd);
 			}
 		}
 	}
@@ -308,17 +309,16 @@ int channel_ajoin(struct guild *g){
  */
 int channel_gjoin(map_session_data *sd, int flag){
 	struct Channel *channel;
-	struct guild *g;
 
 	if(!sd || sd->state.autotrade) return -1;
-	g = sd->guild;
+	auto &g = sd->guild;
 	if(!g) return -2;
 
 	channel = g->channel;
 	if(!channel){
-		channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,g->guild_id);
+		channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,g->guild.guild_id);
 		g->channel = channel;
-		channel_ajoin(g);
+		channel_ajoin(*g);
 	}
 	if(flag&1) {
 		channel_join(channel,sd);	//join our guild chat
@@ -326,8 +326,8 @@ int channel_gjoin(map_session_data *sd, int flag){
 	if(flag&2){
 		int i;
 		for (i = 0; i < MAX_GUILDALLIANCE; i++){
-			struct guild *ag; //allied guld
-			struct guild_alliance *ga = &g->alliance[i]; //guild alliance
+			std::shared_ptr<MapGuild> ag; //allied guild
+			struct guild_alliance *ga = &g->guild.alliance[i]; //guild alliance
 			if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id)) ) //only join allies
 				channel_join(ag->channel,sd);
 		}
@@ -401,14 +401,14 @@ int channel_pcquit(map_session_data *sd, int type){
 
 	// Leave all chat channels.
 	if(type&(1|2) && channel_config.ally_tmpl.name[0] && sd->guild){ //quit guild and ally chan
-		struct guild *g = sd->guild;
+		auto &g = sd->guild;
 		if(type&1 && channel_haspc(g->channel,sd)==1){
 			channel_clean(g->channel,sd,0); //leave guild chan
 		}
 		if(type&2){
 			for (i = 0; i < MAX_GUILDALLIANCE; i++) { //leave all alliance chan
-				struct guild *ag; //allied guild
-				if( g->alliance[i].guild_id && (ag = guild_search(g->alliance[i].guild_id) ) ) {
+				std::shared_ptr<MapGuild> ag; //allied guild
+				if( g->guild.alliance[i].guild_id && (ag = guild_search(g->guild.alliance[i].guild_id) ) ) {
 					if(channel_haspc(ag->channel,sd) == 1)
 						channel_clean(ag->channel,sd,0);
 					break;
@@ -519,7 +519,7 @@ struct Channel* channel_name2channel(char *chname, map_session_data *sd, int fla
 	}
 	else if(sd && (strcmpi(chname + 1,channel_config.ally_tmpl.name) == 0) && sd->guild){
 		if(flag&1 && !sd->guild->channel)
-			sd->guild->channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,sd->guild->guild_id);
+			sd->guild->channel = channel_create_simple(NULL,NULL,CHAN_TYPE_ALLY,sd->guild->guild.guild_id);
 		if(flag&2 && channel_pc_haschan(sd,mapdata->channel) < 1)
 			channel_gjoin(sd,3);
 		return sd->guild->channel;
@@ -630,7 +630,7 @@ int channel_display_list(map_session_data *sd, const char *options){
 			clif_displaymessage(sd->fd, output);
 		}
 		if( channel_config.ally_tmpl.name[0] && sd->status.guild_id ) {
-			struct guild *g = sd->guild;
+			auto &g = sd->guild;
 			if (g && g->channel) {
 				sprintf(output, msg_txt(sd,1409), g->channel->name, db_size(((struct Channel *)g->channel)->users));// - #%s (%d users)
 				clif_displaymessage(sd->fd, output);

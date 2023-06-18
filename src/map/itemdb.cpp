@@ -196,6 +196,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->subtype = 0;
 	}
 
+	bool has_buy = false, has_sell = false;
+
 	if (this->nodeExists(node, "Buy")) {
 		uint32 buy;
 
@@ -207,6 +209,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			buy = MAX_ZENY;
 		}
 
+		has_buy = true;
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
@@ -225,12 +228,15 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			sell = MAX_ZENY;
 		}
 
+		has_sell = true;
 		item->value_sell = sell;
 	} else {
 		if (!exists) {
 			item->value_sell = 0;
 		}
 	}
+
+	hasPriceValue[item->nameid] = { has_buy, has_sell };
 
 	if (this->nodeExists(node, "Weight")) {
 		uint32 weight;
@@ -1153,9 +1159,9 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		// When a particular price is not given, we should base it off the other one
-		if (item->value_buy == 0 && item->value_sell > 0)
+		if (!hasPriceValue[item->nameid].has_buy && hasPriceValue[item->nameid].has_sell)
 			item->value_buy = item->value_sell * 2;
-		else if (item->value_buy > 0 && item->value_sell == 0)
+		else if (hasPriceValue[item->nameid].has_buy && !hasPriceValue[item->nameid].has_sell)
 			item->value_sell = item->value_buy / 2;
 
 		if (item->value_buy / 124. < item->value_sell / 75.) {
@@ -1186,6 +1192,7 @@ void ItemDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+	hasPriceValue.clear();
 }
 
 /**
