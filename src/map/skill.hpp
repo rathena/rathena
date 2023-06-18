@@ -479,6 +479,7 @@ public:
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	bool addItemConsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed);
+	void loadingFinished() override;
 };
 
 extern SkillProduceDatabase skill_produce_db;

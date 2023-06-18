@@ -23065,10 +23065,15 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 
 	nullpo_ret(sd);
 
-	status = status_get_status_data(&sd->bl);
+	if (!item_db.exists(nameid))
+		return false;
+
+	int skill_lv = 0;
 
 	if( sd->skill_id_old == skill_id )
 		skill_lv = sd->skill_lv_old;
+
+	qty = max(1, qty);
 
 	if (produce == nullptr) {
 		produce = skill_can_produce_mix(sd,nameid,-1, qty);
@@ -23076,77 +23081,108 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			return false;
 	}
 
-	if (qty < 1)
-		qty = 1;
-
-	if (!skill_id) //A skill can be specified for some override cases.
+	if (!skill_id) // A skill can be specified for some override cases.
 		skill_id = produce->req_skill;
-
-	if( skill_id == GC_RESEARCHNEWPOISON )
+	else if( skill_id == GC_RESEARCHNEWPOISON )
 		skill_id = GC_CREATENEWPOISON;
 
-	int slot[3];
+	int num_required = -1; // exclude the recipe
 
-	slot[0] = slot1;
-	slot[1] = slot2;
-	slot[2] = slot3;
-
-	for (i = 0, sc = 0, ele = 0; i < 3; i++) { //Note that qty should always be one if you are using these!
-		int16 j;
-		if (slot[i] <= 0)
+	for ( const auto &it : produce->materials ) {
+		if (!item_db.exists(it.first))
 			continue;
-		j = pc_search_inventory(sd,slot[i]);
-		if (j < 0)
-			continue;
-		if (slot[i] == ITEMID_STAR_CRUMB) {
-			pc_delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
-			sc++;
-		}
-		if (slot[i] >= ITEMID_FLAME_HEART && slot[i] <= ITEMID_GREAT_NATURE && ele == 0) {
-			static const int32 ele_table[4] = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH };
-			pc_delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
-			ele = ele_table[slot[i]-ITEMID_FLAME_HEART];
-		}
-	}
 
-	for (const auto &mat : produce->materials) {
-		short x, j;
-		t_itemid id = mat.first;
+		num_required++;
+		int16 qty_required;
 
-		if (!item_db.exists(id))
-			continue;
-		num++;
-		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * mat.second;
+		if (skill_id == RK_RUNEMASTERY)
+			qty_required = it.second;
+		else
+			qty_required = static_cast<int16>(qty * it.second);
+
 		do {
-			int y = 0;
+			int16 index = pc_search_inventory(sd, it.first);
 
-			j = pc_search_inventory(sd,id);
-
-			if (j >= 0) {
-				y = sd->inventory.u.items_inventory[j].amount;
-				if (y > x)
-					y = x;
-				pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
-			} else {
-				ShowError("skill_produce_mix: material item error\n");
+			if (index < 0) {
+				ShowError("skill_produce_mix: material item error.\n");
 				return false;
 			}
-			x -= y;
-		} while( j >= 0 && x > 0 );
+
+			int16 inv_amount = sd->inventory.u.items_inventory[index].amount;
+			inv_amount = min(inv_amount, qty_required);
+
+			pc_delitem(sd,index,inv_amount,0,0,LOG_TYPE_PRODUCE);
+
+			qty_required -= inv_amount;
+		} while( qty_required > 0 );
 	}
 
-	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB)) && itemdb_type(nameid) == IT_WEAPON )
-		wlv = itemdb_wlv(nameid);
-	else
-		wlv = 0;
 
-	if (!equip) {
+	int star_crumb = 0, ele = 0, flag = 0;
+
+	std::vector<int32> slots = { slot1, slot2, slot3 };	// TODO int32 to t_itemid ?
+
+	std::unordered_map<t_itemid, int32> ele_table = {
+		{ ITEMID_FLAME_HEART, ELE_FIRE },
+		{ ITEMID_MISTIC_FROZEN, ELE_WATER },
+		{ ITEMID_ROUGH_WIND, ELE_WIND },
+		{ ITEMID_GREAT_NATURE, ELE_EARTH },
+	};
+
+	for ( const auto &it : slots ) {	// Note that qty should always be one if you are using these!
+		if (it <= 0)
+			continue;
+		int16 index = pc_search_inventory(sd, it);
+		if (index < 0)
+			continue;
+		if (it == ITEMID_STAR_CRUMB) {
+			pc_delitem(sd,index,1,1,0,LOG_TYPE_PRODUCE);
+			star_crumb++;
+		}
+		else if (ele == 0 && ele_table.count(it) > 0) {
+			pc_delitem(sd,index,1,1,0,LOG_TYPE_PRODUCE);
+			ele = ele_table[it];
+		}
+	}
+
+	bool is_equip_type = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB);
+	int weapon_level = (is_equip_type && itemdb_type(nameid) == IT_WEAPON) ? itemdb_wlv(nameid) : 0;
+	int make_per = 0;
+	struct status_data *status = status_get_status_data(&sd->bl);
+	
+	if (is_equip_type) {	// Weapon Forging - skill bonuses are straight from kRO website, other things from a jRO calculator [DracoRPG]
+		make_per = 5000 + ((sd->class_&JOBL_THIRD) ? 1400 : sd->status.job_level*20) + status->dex*10 + status->luk*10; // Base
+		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
+		// Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10
+		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100;
+		//  Oridecon Research bonus (custom): +1/+2/+3/+4/+5
+		if( weapon_level >= 3 ){
+			make_per += pc_checkskill(sd, BS_ORIDEOCON) * 100;
+		}
+		// Element Stone: -20%
+		if( ele > 0 ){
+			make_per -= 2000;
+		}
+		// Star Crumb: -15% each
+		make_per -= star_crumb * 1500;
+		//  Weapon level malus: -0/-10/-20/-30
+		if( weapon_level > 1 ){
+			make_per -= ( weapon_level * 1000 );
+		}
+		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > -1) make_per+= 1000; // Emperium Anvil: +10
+		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > -1)   make_per+= 500; // Golden Anvil: +5
+		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > -1) make_per+= 300; // Oridecon Anvil: +3
+		else if (pc_search_inventory(sd,ITEMID_ANVIL) > -1)          make_per+= 0; // Anvil: +0?
+		if (battle_config.wp_rate != 100)
+			make_per = make_per * battle_config.wp_rate / 100;
+	}
+	else {
 		switch (skill_id) {
 			case BS_IRON:
 			case BS_STEEL:
-			case BS_ENCHANTEDSTONE:
+			case BS_ENCHANTEDSTONE: {
 				// Ores & Metals Refining - skill bonuses are straight from kRO website [DracoRPG]
-				i = pc_checkskill(sd,skill_id);
+				int i = pc_checkskill(sd,skill_id);
 				make_per = sd->status.job_level*20 + status->dex*10 + status->luk*10; //Base chance
 				switch (nameid) {
 					case ITEMID_IRON:
@@ -23163,6 +23199,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 						break;
 				}
 				break;
+			}
 			case ASC_CDP:
 				make_per = (2000 + 40*status->dex + 20*status->luk);
 				break;
@@ -23269,8 +23306,8 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				break;
 			case GN_S_PHARMACY:
 				{
-					int32 difficulty = (620 - 20 * skill_lv); // (620 - 20 * Skill Level)
-					const int32 production_count[] = { 7, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
+					int difficulty = (620 - 20 * skill_lv); // (620 - 20 * Skill Level)
+					const int production_count[] = { 7, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
 
 					switch (nameid) { // Item difficulty factor
 						case ITEMID_HP_INCREASE_POTION_SMALL:
@@ -23301,7 +23338,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 					make_per = status->int_ + status->dex / 2 + status->luk + sd->status.job_level + (30 + rnd() % 120 + 1) + // Caster's INT + (Caster's DEX / 2) + Caster's LUK + Caster's Job Level + Random number between (30 ~ 150) +
 						sd->status.base_level + 5 * (pc_checkskill(sd, AM_LEARNINGPOTION) - 20) + pc_checkskill(sd, CR_FULLPROTECTION) * (6 + rnd() % 4 + 1); // Caster's Base Level + (5 x (Potion Research Skill Level - 20)) + (Full Chemical Protection Skill Level x Random number between (6 ~ 10))
 					make_per -= difficulty;
-					qty = production_count[skill_lv - 1];
+
+					if (util::vector_exists(production_count, skill_lv-1))
+						qty = production_count[skill_lv-1];
 
 					// Determine quantity from difficulty
 					if (make_per < 1)
@@ -23380,9 +23419,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				make_per = 100000;
 				break;
 			default:
-				if (sd->menuskill_id == AM_PHARMACY &&
-					sd->menuskill_val > 10 && sd->menuskill_val <= 20)
-				{	//Assume Cooking Dish
+				if (sd->menuskill_id == AM_PHARMACY && sd->menuskill_val > 10 && sd->menuskill_val <= 20) {	//Assume Cooking Dish
 					if (sd->menuskill_val >= 15) //Legendary Cooking Set.
 						make_per = 10000; //100% Success
 					else
@@ -23390,59 +23427,44 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 							+ 20  * (sd->status.base_level + 1)
 							+ 20  * (status->dex + 1)
 							+ 100 * (rnd()%(30+5*(sd->cook_mastery/400) - (6+sd->cook_mastery/80)) + (6+sd->cook_mastery/80))
-							- 400 * (produce->itemlv - 11 + 1)
+							- 400 * (produce->itemlv - 11 + 1)	// TODO
 							- 10  * (100 - status->luk + 1)
-							- 500 * (num - 1)
+							- 500 * (num_required - 1)
 							- 100 * (rnd()%4 + 1);
 					break;
 				}
 				make_per = 5000;
 				break;
 		}
-	} else { // Weapon Forging - skill bonuses are straight from kRO website, other things from a jRO calculator [DracoRPG]
-		make_per = 5000 + ((sd->class_&JOBL_THIRD)?1400:sd->status.job_level*20) + status->dex*10 + status->luk*10; // Base
-		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
-		// Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10
-		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100;
-		//  Oridecon Research bonus (custom): +1/+2/+3/+4/+5
-		if( wlv >= 3 ){
-			make_per += pc_checkskill(sd, BS_ORIDEOCON) * 100;
-		}
-		// Element Stone: -20%
-		if( ele ){
-			make_per -= 2000;
-		}
-		// Star Crumb: -15% each
-		make_per -= sc * 1500;
-		//  Weapon level malus: -0/-10/-20/-30
-		if( wlv > 1 ){
-			make_per -= ( wlv * 1000 );
-		}
-		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > -1) make_per+= 1000; // Emperium Anvil: +10
-		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > -1)   make_per+= 500; // Golden Anvil: +5
-		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > -1) make_per+= 300; // Oridecon Anvil: +3
-		else if (pc_search_inventory(sd,ITEMID_ANVIL) > -1)          make_per+= 0; // Anvil: +0?
-		if (battle_config.wp_rate != 100)
-			make_per = make_per * battle_config.wp_rate / 100;
 	}
 
 	if (sd->class_&JOBL_BABY) //if it's a Baby Class
 		make_per = (make_per * 50) / 100; //Baby penalty is 50% (bugreport:4847)
 
-	if (make_per < 1) make_per = 1;
+	make_per = max(1, make_per);
 
 	if (qty > 1 || rnd()%10000 < make_per){ //Success, or crafting multiple items.
-		struct item tmp_item;
-		memset(&tmp_item,0,sizeof(tmp_item));
+		struct item tmp_item = {0};
+
 		tmp_item.nameid = nameid;
-		tmp_item.amount = 1;
 		tmp_item.identify = 1;
-		if (equip) {
+
+		if (is_equip_type) {
+			tmp_item.amount = 1;
 			tmp_item.card[0] = CARD0_FORGE;
-			tmp_item.card[1] = ((sc*5)<<8)+ele;
+			tmp_item.card[1] = ((star_crumb*5)<<8)+ele;
 			tmp_item.card[2] = GetWord(sd->status.char_id,0); // CharId
 			tmp_item.card[3] = GetWord(sd->status.char_id,1);
-		} else {
+
+			//		if(log_config.produce > 0)
+			//			log_produce(sd,nameid,slot1,slot2,slot3,1);
+			//TODO update PICKLOG
+			clif_produceeffect(sd,0,nameid);
+			clif_misceffect(&sd->bl,3);
+			if (weapon_level >= 3 && ((ele > 0 ? 1 : 0) + star_crumb) >= 3) // Fame point system [DracoRPG]
+				pc_addfame(*sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
+		}
+		else {
 			//Flag is only used on the end, so it can be used here. [Skotlex]
 			switch (skill_id) {
 				case BS_DAGGER:
@@ -23477,57 +23499,59 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				tmp_item.card[2] = GetWord(sd->status.char_id,0); // CharId
 				tmp_item.card[3] = GetWord(sd->status.char_id,1);
 			}
-		}
 
-//		if(log_config.produce > 0)
-//			log_produce(sd,nameid,slot1,slot2,slot3,1);
-//TODO update PICKLOG
+			//		if(log_config.produce > 0)
+			//			log_produce(sd,nameid,slot1,slot2,slot3,1);
+			//TODO update PICKLOG
 
 		if (equip) {
 			clif_produceeffect(sd,0,nameid);
-			clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
+			clif_misceffect(&sd->bl,3);
 			if (wlv >= 3 && ((ele? 1 : 0) + sc) >= 3) // Fame point system [DracoRPG]
 				pc_addfame(*sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
 		} else {
-			int32 fame = 0;
+			int fame = 0;
 			tmp_item.amount = 0;
 
-			for (i = 0; i < qty; i++) {	//Apply quantity modifiers.
-				if ((skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id == GN_S_PHARMACY || skill_id == MT_M_MACHINE || skill_id == BO_BIONIC_PHARMACY) && make_per > 1) {
-					tmp_item.amount = qty;
-					break;
+			if ((skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id == GN_S_PHARMACY || skill_id == MT_M_MACHINE || skill_id == BO_BIONIC_PHARMACY) && make_per > 1)
+				tmp_item.amount = qty;
+			else {
+				int fame = 0;
+
+				for (int i = 0; i < qty; i++) {	//Apply quantity modifiers.
+					if (qty == 1 || rnd()%10000 < make_per) { //Success
+						tmp_item.amount++;
+						if (nameid < ITEMID_RED_SLIM_POTION || nameid > ITEMID_WHITE_SLIM_POTION)
+							continue;
+						if (skill_id != AM_PHARMACY &&
+							skill_id != AM_TWILIGHT1 &&
+							skill_id != AM_TWILIGHT2 &&
+							skill_id != AM_TWILIGHT3)
+							continue;
+						//Add fame as needed.
+						switch(++sd->potion_success_counter) {
+							case 3:
+								fame += battle_config.fame_pharmacy_3; // Success to prepare 3 Condensed Potions in a row
+								break;
+							case 5:
+								fame += battle_config.fame_pharmacy_5; // Success to prepare 5 Condensed Potions in a row
+								break;
+							case 7:
+								fame += battle_config.fame_pharmacy_7; // Success to prepare 7 Condensed Potions in a row
+								break;
+							case 10:
+								fame += battle_config.fame_pharmacy_10; // Success to prepare 10 Condensed Potions in a row
+								sd->potion_success_counter = 0;
+								break;
+						}
+					} else //Failure
+						sd->potion_success_counter = 0;
 				}
-				if (qty == 1 || rnd()%10000 < make_per) { //Success
-					tmp_item.amount++;
-					if (nameid < ITEMID_RED_SLIM_POTION || nameid > ITEMID_WHITE_SLIM_POTION)
-						continue;
-					if (skill_id != AM_PHARMACY &&
-						skill_id != AM_TWILIGHT1 &&
-						skill_id != AM_TWILIGHT2 &&
-						skill_id != AM_TWILIGHT3)
-						continue;
-					//Add fame as needed.
-					switch(++sd->potion_success_counter) {
-						case 3:
-							fame += battle_config.fame_pharmacy_3; // Success to prepare 3 Condensed Potions in a row
-							break;
-						case 5:
-							fame += battle_config.fame_pharmacy_5; // Success to prepare 5 Condensed Potions in a row
-							break;
-						case 7:
-							fame += battle_config.fame_pharmacy_7; // Success to prepare 7 Condensed Potions in a row
-							break;
-						case 10:
-							fame += battle_config.fame_pharmacy_10; // Success to prepare 10 Condensed Potions in a row
-							sd->potion_success_counter = 0;
-							break;
-					}
-				} else //Failure
-					sd->potion_success_counter = 0;
+
+				if (fame > 0)
+					pc_addfame(*sd, fame);
 			}
 
-			if (fame)
-				pc_addfame(*sd, fame);
 			//Visual effects and the like.
 			switch (skill_id) {
 				case AM_PHARMACY:
@@ -23554,75 +23578,71 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			}
 		}
 
-		if (skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success
-			int k = 0, l;
+		if (tmp_item.amount > 0) { // Success from first roll (BaseRate)
+			bool is_produce_success = false;
 			bool isStackable = itemdb_isstackable(tmp_item.nameid);
 
-			if (!produce->qty.empty()) {
-				for (const auto &qtyit : produce->qty) {
-					if (rnd()%1000 < qtyit.second){
-						uint16 total_qty = qty * qtyit.first;
-						tmp_item.amount = (isStackable ? total_qty : 1);
-						for (l = 0; l < total_qty; l += tmp_item.amount) {
-							if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
-								clif_additem(sd,0,0,flag);
-								if( battle_config.skill_drop_items_full ){
-									map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
-								}
-							}
-						}
-						k++;
+			for ( const auto &qtyit : produce->qty ) {
+				if (rnd()%1000 >= qtyit.second)
+					continue;
+				uint16 total_qty = qty * qtyit.first;
+				tmp_item.amount = (isStackable ? total_qty : 1);
+
+				for ( int i = 0; i < total_qty; i += tmp_item.amount ) {
+					e_additem_result flag_item = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE);
+
+					if (flag_item != ADDITEM_SUCCESS)
+						continue;
+					clif_additem(sd,0,0,flag_item);
+					if( battle_config.skill_drop_items_full ){
+						map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 					}
 				}
+				is_produce_success = true;
 			}
-			if (is_produce_success) {
-				clif_produceeffect(sd,6,nameid);
-				clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-				clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
+
+			if (is_produce_success) { // Success from second roll (additional Rate / amount)
+				switch (skill_id) {
+					case RK_RUNEMASTERY:
+						clif_produceeffect(sd, 4, nameid);
+						clif_misceffect(&sd->bl, 5);
+						break;
+					case GN_MIX_COOKING:
+					case GN_MAKEBOMB:
+					case GN_S_PHARMACY:
+						clif_produceeffect(sd, 6, nameid);
+						clif_misceffect(&sd->bl, 5);
+						clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+						break;
+					case MT_M_MACHINE:
+						clif_produceeffect(sd, 0, nameid);
+						clif_misceffect(&sd->bl, 3);
+						clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+						break;
+					case BO_BIONIC_PHARMACY:
+						clif_produceeffect(sd, 2, nameid);
+						clif_misceffect(&sd->bl, 5);
+						clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+						break;
+					case GN_CHANGEMATERIAL:
+						clif_produceeffect(sd,6, nameid);
+						clif_misceffect(&sd->bl,5);
+						clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+						break;
+				}
 				return true;
 			}
-		} else if (tmp_item.amount) { //Success
-			if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
-				clif_additem(sd,0,0,flag);
-				if( battle_config.skill_drop_items_full ){
-					map_addflooritem(&tmp_item,tmp_item.amount,sd->m,sd->x,sd->y,0,0,0,4,0);
-				}
-			}
-			switch (skill_id) {
-				case RK_RUNEMASTERY:
-					clif_produceeffect(sd, 4, nameid);
-					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					break;
-				case GN_MIX_COOKING:
-				case GN_MAKEBOMB:
-				case GN_S_PHARMACY:
-					clif_produceeffect(sd, 6, nameid);
-					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
-					break;
-				case MT_M_MACHINE:
-					clif_produceeffect(sd, 0, nameid);
-					clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
-					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
-					break;
-				case BO_BIONIC_PHARMACY:
-					clif_produceeffect(sd, 2, nameid);
-					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
-					break;
-			}
-			return true;
 		}
 	}
 
 	//Failure
-//	if(log_config.produce)
-//		log_produce(sd,nameid,slot1,slot2,slot3,0);
-//TODO update PICKLOG
+	//	if(log_config.produce)
+	//		log_produce(sd,nameid,slot1,slot2,slot3,0);
+	//TODO update PICKLOG
 
-	if (equip) {
+	if (is_equip_type) {
 		clif_produceeffect(sd,1,nameid);
-		clif_misceffect( *sd, NOTIFYEFFECT_REFINE_FAILURE );
+		clif_misceffect(&sd->bl,2);
 	} else {
 		switch (skill_id) {
 			case ASC_CDP: //25% Damage yourself, and display same effect as failed potion.
@@ -23649,11 +23669,11 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				break;
 			case GN_MIX_COOKING:
 				if (qty == 0) {
-					item tmp_item;
-					const t_itemid compensation[5] = { ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER };
-					int32 rate = rnd() % 1000 + 1;
+					int i;
+					struct item tmp_item = {0};
 
-					memset(&tmp_item, 0, sizeof(tmp_item));
+					const t_itemid compensation[5] = { ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER };
+					int rate = rnd() % 1000 + 1;
 
 					if (rate < 500)
 						i = 0;
@@ -26298,7 +26318,7 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			}
 		}
 
-		if (this->nodeExists(subit, "Make")) {	// note: Quantity is only used for skill changematerial (itemlv 26)
+		if (this->nodeExists(subit, "Make")) {
 			const ryml::NodeRef &QuantityNode = subit["Make"];
 
 			for (const auto &Quantityit : QuantityNode) {
@@ -26379,6 +26399,18 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		this->put(itemlv, produce);
 
 	return 1;
+}
+
+void SkillProduceDatabase::loadingFinished() {
+	for ( auto &produce : *this ) {
+		for ( auto &data : produce.second->data ) {
+			if (!data.second->qty.empty())
+				continue;
+			data.second->qty.insert({ 1, 1000 });
+		}
+	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 const std::string SkillArrowDatabase::getDefaultLocation() {
