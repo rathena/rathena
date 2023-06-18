@@ -5430,6 +5430,154 @@ Body:
             Rate: 1706
           - Item: Thief_Bug_Egg_Card
             Rate: 1801
+  - Group: CARDALBUM_ACC
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Spore_Card
+            Rate: 1
+          - Item: Kukre_Card
+            Rate: 1
+          - Item: Tarou_Card
+            Rate: 1
+          - Item: Poporing_Card
+            Rate: 1
+          - Item: Worm_Tail_Card
+            Rate: 1
+          - Item: Muka_Card
+            Rate: 1
+          - Item: Smokie_Card
+            Rate: 1
+          - Item: Poison_Spore_Card
+            Rate: 1
+          - Item: Yoyo_Card
+            Rate: 1
+          - Item: Vitata_Card
+            Rate: 1
+          - Item: Zerom_Card
+            Rate: 1
+          - Item: Pirate_Skel_Card
+            Rate: 1
+          - Item: Phen_Card
+            Rate: 1
+          - Item: Mantis_Card
+            Rate: 1
+          - Item: Marine_Sphere_Card
+            Rate: 1
+          - Item: Kobold_Card
+            Rate: 1
+          - Item: Obeaune_Card
+            Rate: 1
+          - Item: Horong_Card
+            Rate: 1
+          - Item: Joker_Card
+            Rate: 1
+          - Item: Gargoyle_Card
+            Rate: 1
+          - Item: Galapago_Card
+            Rate: 1
+          - Item: Rice_Cake_Boy_Card
+            Rate: 1
+          - Item: Poison_Toad_Card
+            Rate: 1
+          - Item: Raydric_Archer_Card
+            Rate: 1
+          - Item: Wraith_Card
+            Rate: 1
+          - Item: Lude_Card
+            Rate: 1
+          - Item: Marin_Card
+            Rate: 1
+          - Item: Mimic_Card
+            Rate: 1
+          - Item: Violy_Card
+            Rate: 1
+          - Item: Bon_Gun_Card
+            Rate: 1
+          - Item: Blazzer_Card
+            Rate: 1
+          - Item: Sageworm_Card
+            Rate: 1
+          - Item: Stem_Worm_Card
+            Rate: 1
+          - Item: Spring_Rabbit_Card
+            Rate: 1
+          - Item: Sleeper_Card
+            Rate: 1
+          - Item: Shinobi_Card
+            Rate: 1
+          - Item: Wild_Ginseng_Card
+            Rate: 1
+          - Item: Owl_Duke_Card
+            Rate: 1
+          - Item: Owl_Baron_Card
+            Rate: 1
+          - Item: Alligator_Card
+            Rate: 1
+          - Item: Orc_Archer_Card
+            Rate: 1
+          - Item: Evil_Cloud_Hermit_Card
+            Rate: 1
+          - Item: Wind_Ghost_Card
+            Rate: 1
+          - Item: Li_Me_Mang_Ryang_Card
+            Rate: 1
+          - Item: Dancing_Dragon_Card
+            Rate: 1
+          - Item: Tengu_Card
+            Rate: 1
+          - Item: Greatest_General_Card
+            Rate: 1
+          - Item: Cookie_Card
+            Rate: 1
+          - Item: Quve_Card
+            Rate: 1
+          - Item: Hylozoist_Card
+            Rate: 1
+          - Item: See_Otter_Card
+            Rate: 1
+          - Item: Blood_Butterfly_Card
+            Rate: 1
+          - Item: Heater_Card
+            Rate: 1
+          - Item: Anopheles_Card
+            Rate: 1
+          - Item: Armaia_Card
+            Rate: 1
+          - Item: Whikebain_Card
+            Rate: 1
+          - Item: Erend_Card
+            Rate: 1
+          - Item: Gremlin_Card
+            Rate: 1
+          - Item: Beholder_Card
+            Rate: 1
+          - Item: Green_Iguana_Card
+            Rate: 1
+          - Item: Hydro_Card
+            Rate: 1
+          - Item: Dragon_Egg_Card
+            Rate: 1
+          - Item: Plasma_Card
+            Rate: 1
+          - Item: Retribution_Card
+            Rate: 1
+          - Item: Snowier_Card
+            Rate: 1
+          - Item: Siroma_Card
+            Rate: 1
+          - Item: Gazeti_Card
+            Rate: 1
+          - Item: Galion_Card
+            Rate: 1
+          - Item: Stapo_Card
+            Rate: 1
+          - Item: Imp_Card
+            Rate: 1
+          - Item: Ragged_Zombie_Card
+            Rate: 1
+          - Item: Hell_Poodle_Card
+            Rate: 1
   - Group: CARDALBUM_ARMOR
     SubGroups:
       - SubGroup: 1
