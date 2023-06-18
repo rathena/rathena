@@ -21,9 +21,6 @@
     <ClInclude Include="src\collectionstack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\depthguard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\directives.h">
       <Filter>Header Files</Filter>
     </ClInclude>

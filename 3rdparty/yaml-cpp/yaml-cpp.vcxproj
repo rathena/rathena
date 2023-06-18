@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClInclude Include="src\collectionstack.h" />
     <ClInclude Include="src\contrib\graphbuilderadapter.h" />
-    <ClCompile Include="src\depthguard.h" />
     <ClInclude Include="src\directives.h" />
     <ClInclude Include="src\emitterstate.h" />
     <ClInclude Include="src\emitterutils.h" />
