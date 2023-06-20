@@ -19591,6 +19591,53 @@ BUILDIN_FUNC(setunitname)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(setbodysize)
+{
+	struct block_list* bl = NULL;
+	struct view_data* vd;
+	TBL_MOB* md = NULL;
+	TBL_NPC* nd = NULL;
+
+	if(!script_rid2bl(2,bl))
+	{
+		script_pushconststr(st, "Unknown");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  md = map_id2md(bl->id); break;
+		case BL_NPC:  nd = map_id2nd(bl->id); break;
+		default:
+			ShowWarning("buildin_setbodysize: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:
+			if (!md) {
+				ShowWarning("buildin_setbodysize: Error in finding object BL_MOB!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		case BL_NPC:
+			if (!nd) {
+				ShowWarning("buildin_setbodysize: Error in finding object BL_NPC!\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		default:
+			ShowWarning("buildin_setbodysize: Unknown object type!\n");
+			return SCRIPT_CMD_FAILURE;
+
+	}
+	struct unit_data* ud = unit_bl2ud(bl);
+	ud->body_size = script_getnum(st, 3);
+
+	clif_body_size(bl, ud->body_size);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Sets a unit's title.
  * setunittitle <GID>,<title>;
@@ -27668,6 +27715,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getbaseexp_ratio, "i??"),
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
 	BUILDIN_DEF(enchantgradeui, "?" ),
+	BUILDIN_DEF(setbodysize, "ii"),
 
 	BUILDIN_DEF(set_reputation_points, "ii?"),
 	BUILDIN_DEF(get_reputation_points, "i?"),
