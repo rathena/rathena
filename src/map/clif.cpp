@@ -6592,7 +6592,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 }
 
 void clif_body_size(struct block_list *bl, int val1) {
-	struct map_session_data *sd = NULL;
+	map_session_data *sd = NULL;
 
 	nullpo_retv(bl);
 
