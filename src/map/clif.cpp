@@ -1686,7 +1686,6 @@ static inline bool clif_npc_mayapurple(block_list *bl) {
  **/
 int clif_spawn( struct block_list *bl, bool walking ){
 	struct view_data *vd;
-	struct unit_data* ud = unit_bl2ud(bl);
 
 	vd = status_get_viewdata(bl);
 	if( !vd || vd->class_ == JT_INVISIBLE )
