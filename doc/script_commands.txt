@@ -8953,10 +8953,10 @@ Valid types are:
 
 *setbodysize <GID>, <size value>;
 
-This command allows you to change the size of a mob/NPC.
-Size value ranges from 1 to 400
+This command allows the adjustment of the size of a mob/NPC.
+Size value ranges from 1 to 400.
 
-Example
+Example:
 
 	prontera,156,183,4	script	SetBodySizeNPC	10164,{
 		for(.@i = 0; .@i < 20; .@i++) {
