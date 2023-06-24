@@ -19593,16 +19593,16 @@ BUILDIN_FUNC(setunitname)
 
 BUILDIN_FUNC(setbodysize)
 {
-	struct block_list* bl = NULL;
-	struct view_data* vd;
-	TBL_MOB* md = NULL;
-	TBL_NPC* nd = NULL;
+	block_list* bl;
 
 	if(!script_rid2bl(2,bl))
 	{
 		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	TBL_MOB* md;
+	TBL_NPC* nd;
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_id2md(bl->id); break;
