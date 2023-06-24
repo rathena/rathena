@@ -8958,6 +8958,7 @@ Size value ranges from 1 to 400.
 
 Example:
 
+	// Spawn 20 Poring at random sizes ranging from 10~300.
 	prontera,156,183,4	script	SetBodySizeNPC	10164,{
 		for(.@i = 0; .@i < 20; .@i++) {
 			monster "prontera",156,180,"Poring",1001,1;
