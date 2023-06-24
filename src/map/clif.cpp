@@ -6593,11 +6593,9 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 }
 
 void clif_body_size(struct block_list *bl, int val1) {
-	map_session_data *sd = NULL;
-
 	nullpo_retv(bl);
 
-	sd = BL_CAST(BL_PC, bl);
+	map_session_data *sd = BL_CAST(BL_PC, bl);
 
 	clif_status_change_sub(bl, bl->id, 1421, 1, 9999, val1, 0, 0, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
 }
