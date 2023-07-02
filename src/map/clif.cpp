@@ -23297,7 +23297,7 @@ void clif_parse_laphine_synthesis( int fd, map_session_data* sd ){
 			return;
 		}
 
-		if( sd->inventory_data[i] == nullptr ){
+		if( sd->inventory_data[index] == nullptr ){
 			return;
 		}
 

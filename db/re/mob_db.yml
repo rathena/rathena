@@ -105499,6 +105499,38 @@ Body:
 #    AegisName: HEROS_IN_ORB_4
 #  - Id: 21870
 #    AegisName: VR_MD_DEVIL
+#  - Id: 21871
+#    AegisName: SEASON_MOB_161
+#  - Id: 21872
+#    AegisName: SEASON_MOB_162
+#  - Id: 21873
+#    AegisName: SEASON_MOB_163
+#  - Id: 21874
+#    AegisName: SEASON_MOB_164
+#  - Id: 21875
+#    AegisName: SEASON_MOB_165
+#  - Id: 21876
+#    AegisName: SEASON_MOB_166
+#  - Id: 21877
+#    AegisName: SEASON_MOB_167
+#  - Id: 21878
+#    AegisName: SEASON_MOB_168
+#  - Id: 21879
+#    AegisName: SEASON_MOB_169
+#  - Id: 21880
+#    AegisName: SEASON_MOB_170
+#  - Id: 21881
+#    AegisName: SEASON_MOB_171
+#  - Id: 21882
+#    AegisName: SEASON_MOB_172
+#  - Id: 21883
+#    AegisName: SEASON_MOB_173
+#  - Id: 21884
+#    AegisName: SEASON_MOB_174
+#  - Id: 21885
+#    AegisName: SEASON_MOB_175
+#  - Id: 21886
+#    AegisName: SEASON_MOB_176
 #  - Id: 21887
 #    AegisName: HEROS_OUT_ORB
 #  - Id: 21888
@@ -105613,6 +105645,10 @@ Body:
 #    AegisName: ECO_ODIUM
 #  - Id: 21943
 #    AegisName: ECO_GLOOMUNDERNIGHT
+#  - Id: 21944
+#    AegisName: E_PORING_2023
+#  - Id: 21945
+#    AegisName: E_LUNATIC_2023
 #  - Id: 21946
 #    AegisName: BURNING_KNIGHT
 #  - Id: 21947
@@ -105637,8 +105673,426 @@ Body:
 #    AegisName: G_BURNING_KNIGHT
 #  - Id: 21957
 #    AegisName: G_TIMBERS
+#  - Id: 21958
+#    AegisName: SEASON_MOB_177
+#  - Id: 21959
+#    AegisName: SEASON_MOB_178
+#  - Id: 21960
+#    AegisName: SEASON_MOB_179
+#  - Id: 21961
+#    AegisName: SEASON_MOB_180
+#  - Id: 21962
+#    AegisName: SEASON_MOB_181
+#  - Id: 21963
+#    AegisName: SEASON_MOB_182
 #  - Id: 21964
 #    AegisName: 2301_EV_RICE_FLOUR
+#  - Id: 21965
+#    AegisName: EP20_COPO
+#  - Id: 21966
+#    AegisName: EP20_ICEWIND1
+#  - Id: 21967
+#    AegisName: EP20_ICEWIND2
+#  - Id: 21968
+#    AegisName: EP20_EGGCOPO
+#  - Id: 21969
+#    AegisName: EP20_RABBIT_ICESLUG
+#  - Id: 21970
+#    AegisName: EP20_MELIBE_ICESLUG
+#  - Id: 21971
+#    AegisName: EP20_ICEBEAR
+#  - Id: 21972
+#    AegisName: EP20_JORMUNGUARD1
+#  - Id: 21973
+#    AegisName: EP20_JORMUNGUARD2
+#  - Id: 21974
+#    AegisName: EP20_FAKE_IWIN_SN
+#  - Id: 21975
+#    AegisName: EP20_FAKE_IWIN_SY
+#  - Id: 21976
+#    AegisName: EP20_FAKE_IWIN_SB
+#  - Id: 21977
+#    AegisName: EP20_FAKE_IWIN_SG
+#  - Id: 21978
+#    AegisName: EP20_FAKE_IWIN_SR
+#  - Id: 21979
+#    AegisName: EP20_DEMIGOD_LASGAND
+#  - Id: 21980
+#    AegisName: EP20_BOSS_CLANER
+#  - Id: 21981
+#    AegisName: MD_EP20_BOSS_LASGAND
+#  - Id: 21982
+#    AegisName: MD_EP20_FALLENANGEL
+#  - Id: 21983
+#    AegisName: EP20_ANGEL_ICESLUG
+#  - Id: 21984
+#    AegisName: EP20_ICEEGG
+#  - Id: 21985
+#    AegisName: EP20_RGAN_WARLOCK
+#  - Id: 21986
+#    AegisName: EP20_RGAN_HEALER
+#  - Id: 21987
+#    AegisName: EP20_JORGAN_WARLOCK
+#  - Id: 21988
+#    AegisName: EP20_JORGAN_HEALER
+#  - Id: 21989
+#    AegisName: EP20_JORGAN_GUARDIAN
+#  - Id: 21990
+#    AegisName: EP20_JORGAN_CLEANER
+#  - Id: 21991
+#    AegisName: MD_EP20_JOR_G_P
+#  - Id: 21992
+#    AegisName: MD_EP20_JOR_G_Y
+#  - Id: 21993
+#    AegisName: MD_EP20_JOR_WARLOCK
+#  - Id: 21994
+#    AegisName: EP20_MD_HEARTHUNTER1
+#  - Id: 21995
+#    AegisName: EP20_NPC_COCOPO
+#  - Id: 21996
+#    AegisName: EP20_SNOW_ANGEL
+#  - Id: 21997
+#    AegisName: G_EP20_JORMUNGUARD1
+#  - Id: 21998
+#    AegisName: G_EP20_JORMUNGUARD2
+#  - Id: 21999
+#    AegisName: G_EP20_JORGAN_CLEANER
+#  - Id: 22000
+#    AegisName: G_EP20_ANGEL_ICESLUG
+#  - Id: 22001
+#    AegisName: G_EP20_RGAN_WARLOCK
+#  - Id: 22002
+#    AegisName: G_EP20_JORGAN_HEALER
+#  - Id: 22003
+#    AegisName: G_EP20_JORGAN_GUARDIAN
+#  - Id: 22004
+#    AegisName: EP20_MD_BOX1
+#  - Id: 22005
+#    AegisName: EP20_MD_BOX2
+#  - Id: 22006
+#    AegisName: EP20_NPC_NYAR
+#  - Id: 22007
+#    AegisName: EP20_NPC_LASGAND
+#  - Id: 22008
+#    AegisName: AB_YEMOB_001
+#  - Id: 22009
+#    AegisName: AB_YEMOB_002
+#  - Id: 22010
+#    AegisName: AB_YEMOB_003
+#  - Id: 22011
+#    AegisName: AB_YEMOB_004
+#  - Id: 22012
+#    AegisName: AB_YEMOB_005
+#  - Id: 22013
+#    AegisName: AB_YEMOB_006
+#  - Id: 22014
+#    AegisName: AB_YEMOB_007
+#  - Id: 22015
+#    AegisName: AB_YEMOB_008
+#  - Id: 22016
+#    AegisName: AB_YEMOB_009
+#  - Id: 22017
+#    AegisName: AB_YEMOB_010
+#  - Id: 22018
+#    AegisName: AB_YEMOB_011
+#  - Id: 22019
+#    AegisName: AB_YEMOB_012
+#  - Id: 22020
+#    AegisName: AB_YEMOB_013
+#  - Id: 22021
+#    AegisName: AB_YEMOB_014
+#  - Id: 22022
+#    AegisName: AB_YEMOB_015
+#  - Id: 22023
+#    AegisName: AB_YEMOB_016
+#  - Id: 22024
+#    AegisName: AB_YEMOB_017
+#  - Id: 22025
+#    AegisName: AB_YEMOB_018
+#  - Id: 22026
+#    AegisName: AB_YEMOB_019
+#  - Id: 22027
+#    AegisName: AB_YEMOB_020
+#  - Id: 22028
+#    AegisName: AB_YEMOB_021
+#  - Id: 22029
+#    AegisName: AB_YEMOB_022
+#  - Id: 22030
+#    AegisName: AB_YEMOB_023
+#  - Id: 22031
+#    AegisName: AB_YEMOB_024
+#  - Id: 22032
+#    AegisName: AB_YEMOB_025
+#  - Id: 22033
+#    AegisName: AB_YEMOB_026
+#  - Id: 22034
+#    AegisName: AB_YEMOB_027
+#  - Id: 22035
+#    AegisName: AB_YEMOB_028
+#  - Id: 22036
+#    AegisName: AB_YEMOB_029
+#  - Id: 22037
+#    AegisName: AB_YEMOB_030
+#  - Id: 22038
+#    AegisName: AB_YEMOB_031
+#  - Id: 22039
+#    AegisName: AB_YEMOB_032
+#  - Id: 22040
+#    AegisName: AB_YEMOB_033
+#  - Id: 22041
+#    AegisName: AB_YEMOB_034
+#  - Id: 22042
+#    AegisName: AB_YEMOB_035
+#  - Id: 22043
+#    AegisName: AB_YEMOB_036
+#  - Id: 22044
+#    AegisName: AB_YEMOB_037
+#  - Id: 22045
+#    AegisName: AB_YEMOB_038
+#  - Id: 22046
+#    AegisName: AB_YEMOB_039
+#  - Id: 22047
+#    AegisName: AB_YEMOB_040
+#  - Id: 22048
+#    AegisName: AB_YEMOB_041
+#  - Id: 22049
+#    AegisName: AB_YEMOB_042
+#  - Id: 22050
+#    AegisName: AB_YEMOB_043
+#  - Id: 22051
+#    AegisName: AB_YEMOB_044
+#  - Id: 22052
+#    AegisName: AB_YEMOB_045
+#  - Id: 22053
+#    AegisName: AB_YEMOB_046
+#  - Id: 22054
+#    AegisName: AB_YEMOB_047
+#  - Id: 22055
+#    AegisName: AB_YEMOB_048
+#  - Id: 22056
+#    AegisName: AB_YEMOB_049
+#  - Id: 22057
+#    AegisName: AB_YEMOB_050
+#  - Id: 22058
+#    AegisName: AB_YEMOB_051
+#  - Id: 22059
+#    AegisName: AB_YEMOB_052
+#  - Id: 22060
+#    AegisName: AB_YEMOB_053
+#  - Id: 22061
+#    AegisName: AB_YEMOB_054
+#  - Id: 22062
+#    AegisName: AB_YEMOB_055
+#  - Id: 22063
+#    AegisName: AB_YEMOB_056
+#  - Id: 22064
+#    AegisName: AB_YEMOB_057
+#  - Id: 22065
+#    AegisName: AB_YEMOB_058
+#  - Id: 22066
+#    AegisName: AB_YEMOB_059
+#  - Id: 22067
+#    AegisName: AB_YEMOB_060
+#  - Id: 22068
+#    AegisName: AB_YEMOB_061
+#  - Id: 22069
+#    AegisName: AB_YEMOB_062
+#  - Id: 22070
+#    AegisName: AB_YEMOB_063
+#  - Id: 22071
+#    AegisName: AB_YEMOB_064
+#  - Id: 22072
+#    AegisName: AB_YEMOB_065
+#  - Id: 22073
+#    AegisName: AB_YEMOB_066
+#  - Id: 22074
+#    AegisName: AB_YEMOB_067
+#  - Id: 22075
+#    AegisName: AB_YEMOB_068
+#  - Id: 22076
+#    AegisName: AB_YEMOB_069
+#  - Id: 22077
+#    AegisName: AB_YEMOB_070
+#  - Id: 22078
+#    AegisName: AB_YEMOB_071
+#  - Id: 22079
+#    AegisName: AB_YEMOB_072
+#  - Id: 22080
+#    AegisName: AB_YEMOB_073
+#  - Id: 22081
+#    AegisName: AB_YEMOB_074
+#  - Id: 22082
+#    AegisName: AB_YEMOB_075
+#  - Id: 22083
+#    AegisName: AB_YEMOB_076
+#  - Id: 22084
+#    AegisName: AB_YEMOB_077
+#  - Id: 22085
+#    AegisName: AB_YEMOB_078
+#  - Id: 22086
+#    AegisName: AB_YEMOB_079
+#  - Id: 22087
+#    AegisName: AB_YEMOB_080
+#  - Id: 22088
+#    AegisName: AB_YEMOB_081
+#  - Id: 22089
+#    AegisName: AB_YEMOB_082
+#  - Id: 22090
+#    AegisName: AB_YEMOB_083
+#  - Id: 22091
+#    AegisName: AB_YEMOB_084
+#  - Id: 22092
+#    AegisName: AB_YEMOB_085
+#  - Id: 22093
+#    AegisName: AB_YEMOB_086
+#  - Id: 22094
+#    AegisName: AB_YEMOB_087
+#  - Id: 22095
+#    AegisName: AB_YEMOB_088
+#  - Id: 22096
+#    AegisName: AB_YEMOB_089
+#  - Id: 22097
+#    AegisName: AB_YEMOB_090
+#  - Id: 22098
+#    AegisName: AB_YEMOB_091
+#  - Id: 22099
+#    AegisName: AB_YEMOB_092
+#  - Id: 22100
+#    AegisName: AB_YEMOB_093
+#  - Id: 22101
+#    AegisName: AB_YEMOB_094
+#  - Id: 22102
+#    AegisName: AB_YEMOB_095
+#  - Id: 22103
+#    AegisName: AB_YEMOB_096
+#  - Id: 22104
+#    AegisName: AB_YEMOB_097
+#  - Id: 22105
+#    AegisName: AB_YEMOB_098
+#  - Id: 22106
+#    AegisName: AB_YEMOB_099
+#  - Id: 22107
+#    AegisName: AB_YEMOB_100
+#  - Id: 22108
+#    AegisName: AB_YEMOB_101
+#  - Id: 22109
+#    AegisName: AB_YEMOB_102
+#  - Id: 22110
+#    AegisName: AB_YEMOB_103
+#  - Id: 22111
+#    AegisName: AB_YEMOB_104
+#  - Id: 22112
+#    AegisName: AB_YEMOB_105
+#  - Id: 22113
+#    AegisName: AB_YEMOB_106
+#  - Id: 22114
+#    AegisName: AB_YEMOB_107
+#  - Id: 22115
+#    AegisName: AB_YEMOB_108
+#  - Id: 22116
+#    AegisName: AB_YEMOB_109
+#  - Id: 22117
+#    AegisName: AB_YEMOB_110
+#  - Id: 22118
+#    AegisName: AB_YEMOB_111
+#  - Id: 22119
+#    AegisName: AB_YEMOB_112
+#  - Id: 22120
+#    AegisName: AB_YEMOB_113
+#  - Id: 22121
+#    AegisName: AB_YEMOB_114
+#  - Id: 22122
+#    AegisName: AB_YEMOB_115
+#  - Id: 22123
+#    AegisName: AB_YEMOB_116
+#  - Id: 22124
+#    AegisName: AB_YEMOB_117
+#  - Id: 22125
+#    AegisName: AB_YEMOB_118
+#  - Id: 22126
+#    AegisName: AB_YEMOB_119
+#  - Id: 22127
+#    AegisName: AB_YEMOB_120
+#  - Id: 22128
+#    AegisName: AB_YEMOB_121
+#  - Id: 22129
+#    AegisName: AB_YEMOB_122
+#  - Id: 22130
+#    AegisName: AB_YEMOB_123
+#  - Id: 22131
+#    AegisName: AB_YEMOB_124
+#  - Id: 22132
+#    AegisName: AB_YEMOB_125
+#  - Id: 22133
+#    AegisName: AB_YEMOB_126
+#  - Id: 22134
+#    AegisName: AB_YEMOB_127
+#  - Id: 22135
+#    AegisName: AB_YEMOB_128
+#  - Id: 22136
+#    AegisName: AB_YEMOB_129
+#  - Id: 22137
+#    AegisName: AB_YEMOB_130
+#  - Id: 22138
+#    AegisName: AB_YEMOB_131
+#  - Id: 22139
+#    AegisName: AB_YEMOB_132
+#  - Id: 22140
+#    AegisName: BIO_ANOLIAN
+#  - Id: 22141
+#    AegisName: BIO_SKEL_ARCHER
+#  - Id: 22142
+#    AegisName: BIO_DRAGON_TAIL
+#  - Id: 22143
+#    AegisName: BIO_LAVA_TOAD
+#  - Id: 22144
+#    AegisName: BIO_LITTLE_FATUM
+#  - Id: 22145
+#    AegisName: BIO_STING
+#  - Id: 22146
+#    AegisName: BIO_EMPATHIZER
+#  - Id: 22147
+#    AegisName: BIO_FIRE_FRILLDORA
+#  - Id: 22148
+#    AegisName: BIO_HOLY_FRUS
+#  - Id: 22149
+#    AegisName: BIO_HOLY_SKOGUL
+#  - Id: 22150
+#    AegisName: BIO_KAPHA
+#  - Id: 22151
+#    AegisName: BIO_SKEL_SOLDIER
+#  - Id: 22152
+#    AegisName: BIO_PINGUICULA_D
+#  - Id: 22153
+#    AegisName: BIO_POM_SPIDER
+#  - Id: 22154
+#    AegisName: BIO_PRAY_GIVER
+#  - Id: 22155
+#    AegisName: BIO_WOOD_GOBLIN
+#  - Id: 22156
+#    AegisName: VR_MD_LAKE
+#  - Id: 22157
+#    AegisName: VR_MD_DESSERT
+#  - Id: 22158
+#    AegisName: VR_MD_SNOW
+#  - Id: 22159
+#    AegisName: VR_MD_OCEAN
+#  - Id: 22160
+#    AegisName: VR_MD_FOREST
+#  - Id: 22161
+#    AegisName: VR_MD_TILBY
+#  - Id: 22162
+#    AegisName: VR_MD_POPE
+#  - Id: 22163
+#    AegisName: VR_MD_TILBY2
+#  - Id: 22164
+#    AegisName: VR_MD_RAINBOW
+#  - Id: 22171
+#    AegisName: MD_COMMON_BOSS
+#  - Id: 22172
+#    AegisName: E_MANANANGGAL
+#  - Id: 22173
+#    AegisName: E_WAKWAK
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
@@ -105709,6 +106163,294 @@ Body:
 #    AegisName: 20TH_EVENT_CO_CMDER
 #  - Id: 23009
 #    AegisName: PITAYA_R_PET
+#  - Id: 23010
+#    AegisName: JP_MAZEMOB_101
+#  - Id: 23011
+#    AegisName: JP_MAZEMOB_102
+#  - Id: 23012
+#    AegisName: JP_MAZEMOB_103
+#  - Id: 23013
+#    AegisName: JP_MAZEMOB_104
+#  - Id: 23014
+#    AegisName: JP_MAZEMOB_105
+#  - Id: 23015
+#    AegisName: JP_MAZEMOB_106
+#  - Id: 23016
+#    AegisName: JP_MAZEMOB_107
+#  - Id: 23017
+#    AegisName: JP_MAZEMOB_108
+#  - Id: 23018
+#    AegisName: JP_MAZEMOB_109
+#  - Id: 23019
+#    AegisName: JP_MAZEMOB_110
+#  - Id: 23020
+#    AegisName: JP_MAZEMOB_111
+#  - Id: 23021
+#    AegisName: JP_MAZEMOB_112
+#  - Id: 23022
+#    AegisName: JP_MAZEMOB_113
+#  - Id: 23023
+#    AegisName: JP_MAZEMOB_114
+#  - Id: 23024
+#    AegisName: JP_MAZEMOB_115
+#  - Id: 23025
+#    AegisName: JP_MAZEMOB_116
+#  - Id: 23026
+#    AegisName: JP_MAZEMOB_117
+#  - Id: 23027
+#    AegisName: JP_MAZEMOB_118
+#  - Id: 23028
+#    AegisName: JP_MAZEMOB_119
+#  - Id: 23029
+#    AegisName: JP_MAZEMOB_120
+#  - Id: 23030
+#    AegisName: JP_MAZEMOB_121
+#  - Id: 23031
+#    AegisName: JP_MAZEMOB_122
+#  - Id: 23032
+#    AegisName: JP_MAZEMOB_123
+#  - Id: 23033
+#    AegisName: JP_MAZEMOB_124
+#  - Id: 23034
+#    AegisName: JP_MAZEMOB_125
+#  - Id: 23035
+#    AegisName: JP_MAZEMOB_126
+#  - Id: 23036
+#    AegisName: JP_MAZEMOB_127
+#  - Id: 23037
+#    AegisName: JP_MAZEMOB_128
+#  - Id: 23038
+#    AegisName: JP_MAZEMOB_129
+#  - Id: 23039
+#    AegisName: JP_MAZEMOB_130
+#  - Id: 23040
+#    AegisName: JP_MAZEMOB_131
+#  - Id: 23041
+#    AegisName: JP_MAZEMOB_132
+#  - Id: 23042
+#    AegisName: JP_MAZEMOB_133
+#  - Id: 23043
+#    AegisName: JP_MAZEMOB_134
+#  - Id: 23044
+#    AegisName: JP_MAZEMOB_135
+#  - Id: 23045
+#    AegisName: JP_MAZEMOB_136
+#  - Id: 23046
+#    AegisName: JP_MAZEMOB_137
+#  - Id: 23047
+#    AegisName: JP_MAZEMOB_138
+#  - Id: 23048
+#    AegisName: JP_MAZEMOB_139
+#  - Id: 23049
+#    AegisName: JP_MAZEMOB_140
+#  - Id: 23050
+#    AegisName: JP_MAZEMOB_141
+#  - Id: 23051
+#    AegisName: JP_MAZEMOB_142
+#  - Id: 23052
+#    AegisName: JP_MAZEMOB_143
+#  - Id: 23053
+#    AegisName: JP_MAZEMOB_144
+#  - Id: 23054
+#    AegisName: JP_MAZEMOB_145
+#  - Id: 23055
+#    AegisName: JP_MAZEMOB_146
+#  - Id: 23056
+#    AegisName: JP_MAZEMOB_147
+#  - Id: 23057
+#    AegisName: JP_MAZEMOB_148
+#  - Id: 23058
+#    AegisName: JP_MAZEMOB_149
+#  - Id: 23059
+#    AegisName: JP_MAZEMOB_150
+#  - Id: 23060
+#    AegisName: EP20_ARMOERDCOPO
+#  - Id: 23061
+#    AegisName: MIN_ECLIPSE_TW
+#  - Id: 23062
+#    AegisName: E_GOLDEN_SAVAGE
+#  - Id: 23063
+#    AegisName: SEASON_MOB_183
+#  - Id: 23064
+#    AegisName: SEASON_MOB_184
+#  - Id: 23065
+#    AegisName: SEASON_MOB_185
+#  - Id: 23066
+#    AegisName: SEASON_MOB_186
+#  - Id: 23067
+#    AegisName: SEASON_MOB_187
+#  - Id: 23068
+#    AegisName: SEASON_MOB_188
+#  - Id: 23069
+#    AegisName: SEASON_MOB_189
+#  - Id: 23070
+#    AegisName: SEASON_MOB_190
+#  - Id: 23071
+#    AegisName: SEASON_MOB_191
+#  - Id: 23072
+#    AegisName: SEASON_MOB_192
+#  - Id: 23073
+#    AegisName: SEASON_MOB_193
+#  - Id: 23074
+#    AegisName: SAND_BAG_MAN01
+#  - Id: 23075
+#    AegisName: SAND_BAG_MAN02
+#  - Id: 23076
+#    AegisName: SAND_BAG_MAN03
+#  - Id: 23077
+#    AegisName: SAND_BAG_MAN04
+#  - Id: 23078
+#    AegisName: SAND_BAG_MAN05
+#  - Id: 23079
+#    AegisName: SAND_BAG_MAN06
+#  - Id: 23080
+#    AegisName: SAND_BAG_MAN07
+#  - Id: 23081
+#    AegisName: SAND_BAG_MAN08
+#  - Id: 23082
+#    AegisName: SAND_BAG_MAN09
+#  - Id: 23083
+#    AegisName: SAND_BAG_MAN10
+#  - Id: 23084
+#    AegisName: SAND_BAG_MAN11
+#  - Id: 23085
+#    AegisName: SAND_BAG_MAN12
+#  - Id: 23086
+#    AegisName: SAND_BAG_MAN13
+#  - Id: 23087
+#    AegisName: SAND_BAG_MAN14
+#  - Id: 23088
+#    AegisName: SAND_BAG_MAN15
+#  - Id: 23089
+#    AegisName: SAND_BAG_MAN16
+#  - Id: 23090
+#    AegisName: SAND_BAG_MAN17
+#  - Id: 23091
+#    AegisName: SAND_BAG_MAN18
+#  - Id: 23092
+#    AegisName: SAND_BAG_MAN19
+#  - Id: 23093
+#    AegisName: SAND_BAG_MAN20
+#  - Id: 23094
+#    AegisName: SAND_BAG_MAN21
+#  - Id: 23095
+#    AegisName: SAND_BAG_MAN22
+#  - Id: 23096
+#    AegisName: SAND_BAG_MAN23
+#  - Id: 23097
+#    AegisName: SAND_BAG_MAN24
+#  - Id: 23098
+#    AegisName: SAND_BAG_MAN25
+#  - Id: 23099
+#    AegisName: SAND_BAG_MAN26
+#  - Id: 23100
+#    AegisName: SAND_BAG_MAN27
+#  - Id: 23101
+#    AegisName: SAND_BAG_MAN28
+#  - Id: 23102
+#    AegisName: SAND_BAG_MAN29
+#  - Id: 23103
+#    AegisName: SAND_BAG_MAN30
+#  - Id: 23104
+#    AegisName: SAND_BAG_MAN31
+#  - Id: 23105
+#    AegisName: SAND_BAG_MAN32
+#  - Id: 23106
+#    AegisName: SAND_BAG_MAN33
+#  - Id: 23107
+#    AegisName: SAND_BAG_MAN34
+#  - Id: 23108
+#    AegisName: SAND_BAG_MAN35
+#  - Id: 23109
+#    AegisName: SAND_BAG_MAN36
+#  - Id: 23110
+#    AegisName: SAND_BAG_MAN37
+#  - Id: 23111
+#    AegisName: SAND_BAG_MAN38
+#  - Id: 23112
+#    AegisName: SAND_BAG_MAN39
+#  - Id: 23113
+#    AegisName: SAND_BAG_MAN40
+#  - Id: 23114
+#    AegisName: SAND_BAG_MAN41
+#  - Id: 23115
+#    AegisName: SAND_BAG_MAN42
+#  - Id: 23116
+#    AegisName: SAND_BAG_MAN43
+#  - Id: 23117
+#    AegisName: SAND_BAG_MAN44
+#  - Id: 23118
+#    AegisName: SAND_BAG_MAN45
+#  - Id: 23119
+#    AegisName: SAND_BAG_MAN46
+#  - Id: 23120
+#    AegisName: SAND_BAG_MAN47
+#  - Id: 23121
+#    AegisName: SAND_BAG_MAN48
+#  - Id: 23122
+#    AegisName: SAND_BAG_MAN49
+#  - Id: 23123
+#    AegisName: SAND_BAG_MAN50
+#  - Id: 23124
+#    AegisName: SAND_BAG_MAN51
+#  - Id: 23125
+#    AegisName: SAND_BAG_MAN52
+#  - Id: 23126
+#    AegisName: SAND_BAG_MAN53
+#  - Id: 23127
+#    AegisName: SAND_BAG_MAN54
+#  - Id: 23128
+#    AegisName: SAND_BAG_MAN55
+#  - Id: 23129
+#    AegisName: SAND_BAG_MAN56
+#  - Id: 23130
+#    AegisName: SAND_BAG_MAN57
+#  - Id: 23131
+#    AegisName: SAND_BAG_MAN58
+#  - Id: 23132
+#    AegisName: SAND_BAG_MAN59
+#  - Id: 23133
+#    AegisName: SAND_BAG_MAN60
+#  - Id: 23134
+#    AegisName: SAND_BAG_MAN61
+#  - Id: 23135
+#    AegisName: SAND_BAG_MAN62
+#  - Id: 23136
+#    AegisName: SAND_BAG_MAN63
+#  - Id: 23137
+#    AegisName: SAND_BAG_MAN64
+#  - Id: 23138
+#    AegisName: SAND_BAG_MAN65
+#  - Id: 23139
+#    AegisName: SAND_BAG_MAN66
+#  - Id: 23140
+#    AegisName: SAND_BAG_MAN67
+#  - Id: 23141
+#    AegisName: SAND_BAG_MAN68
+#  - Id: 23142
+#    AegisName: SAND_BAG_MAN69
+#  - Id: 23143
+#    AegisName: SAND_BAG_MAN70
+#  - Id: 23144
+#    AegisName: SAND_BAG_MAN71
+#  - Id: 23145
+#    AegisName: SAND_BAG_MAN72
+#  - Id: 23146
+#    AegisName: SAND_BAG_MAN73
+#  - Id: 23147
+#    AegisName: SAND_BAG_MAN74
+#  - Id: 23148
+#    AegisName: SAND_BAG_MAN75
+#  - Id: 23149
+#    AegisName: SAND_BAG_MAN76
+#  - Id: 23150
+#    AegisName: SAND_BAG_MAN77
+#  - Id: 23151
+#    AegisName: SAND_BAG_MAN78
+#  - Id: 23152
+#    AegisName: SAND_BAG_MAN79
+#  - Id: 23153
+#    AegisName: SAND_BAG_MAN80
 #  - Id: 25019
 #    AegisName: MQ_M_MOCLORD
 #  - Id: 25020
@@ -105751,6 +106493,20 @@ Body:
 #    AegisName: 06_EVENT_THIEF_FAIRY
 #  - Id: 25039
 #    AegisName: MD_MOROCC
+#  - Id: 25040
+#    AegisName: MQ_STALACTIC_GOLEM
+#  - Id: 25041
+#    AegisName: ILL_BLACK_MUSHROOM_H
+#  - Id: 25042
+#    AegisName: ILL_GHOUL_H
+#  - Id: 25043
+#    AegisName: ILL_NIGHTMARE_H
+#  - Id: 25044
+#    AegisName: ILL_DRAINLIAR_H
+#  - Id: 25045
+#    AegisName: ILL_ZOMBIE_H
+#  - Id: 25046
+#    AegisName: ILL_ZOMBIE_C_H
 #  - Id: 25047
 #    AegisName: ICE_TITAN_FV
 #  - Id: 25049
@@ -105777,6 +106533,18 @@ Body:
 #    AegisName: THA_HORROR_FV
 #  - Id: 25060
 #    AegisName: VOID_MIMIC_FV
+#  - Id: 25061
+#    AegisName: ILL_NINE_TAIL_H
+#  - Id: 25062
+#    AegisName: ILL_MUNAK_H
+#  - Id: 25063
+#    AegisName: ILL_BON_GUN_H
+#  - Id: 25064
+#    AegisName: ILL_SOHEE_H
+#  - Id: 25065
+#    AegisName: ILL_ARCHER_SKELETON_H
+#  - Id: 25066
+#    AegisName: ILL_FURY_HERO_H
 #  - Id: 25072
 #    AegisName: HOLY_FRUS_FV
 #  - Id: 25073
