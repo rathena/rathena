@@ -41547,7 +41547,7 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_Fire,100;
       bonus2 bSubEle,Ele_Fire,50;
-      /*TODO Imprison State Resist*/
+      bonus2 bResEff,Eff_WhiteImprison,10000;
   - Id: 27345
     AegisName: Dragon_Zilant_Card
     Name: Ancient Dragon Zilant Card
@@ -53650,7 +53650,7 @@ Body:
     Script: |
       bonus bPerfectHitAddRate,20;
       autobonus "{ bonus bDex,100; }",30,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 3253,10000; }";
-      /*TODO Imprison State Resist*/
+      bonus2 bResEff,Eff_WhiteImprison,10000;
   - Id: 310195
     AegisName: Magnificat_Lv5
     Name: Magnificat Lv5
