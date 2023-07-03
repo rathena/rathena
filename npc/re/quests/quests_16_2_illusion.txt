@@ -9500,7 +9500,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 	}
 
 	// daily
-	if (checkquest(3414,PLAYTIME) == 2 && checkquest(3416,PLAYTIME) == 2) {
+	if ((checkquest(3414,PLAYTIME) == 0 || checkquest(3414,PLAYTIME) == 1) && (checkquest(3416,PLAYTIME) == 0 || checkquest(3416,PLAYTIME) == 1)) {
 		mes "[Jerrymon]";
 		mes "I have everything I need for today's survey, thank you!!";
 		next;
@@ -9909,7 +9909,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 		end;
 	if (ill_underwater < 5)
 		end;
-	if (checkquest(3418,PLAYTIME) == 2 && checkquest(3420,PLAYTIME) == 2) {
+	if ((checkquest(3418,PLAYTIME) == 0 || checkquest(3418,PLAYTIME) == 1) && (checkquest(3420,PLAYTIME) == 0 || checkquest(3420,PLAYTIME) == 1)) {
 		mes "[Kena]";
 		mes "Thank you for your hard work. Take a good rest today and visit us tomorrow.";
 		close;

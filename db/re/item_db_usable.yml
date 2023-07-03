@@ -8330,7 +8330,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      getitem 7940,100;
+      getitem 7940,500;
   - Id: 12342
     AegisName: Manuk's_Opportunity
     Name: Manuk's Opportunity
