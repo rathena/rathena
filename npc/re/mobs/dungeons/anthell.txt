@@ -144,7 +144,7 @@ OnMobDead:
 			.boss_spawn = true;
 			.count = 0;
 			killmonster "ant_d02_i", "ant_d02_i_boss::OnBossDeath";
-			// mapannounce "ant_d02_i", "", bc_map;	// todo
+			mapannounce "ant_d02_i", "An inaudible noise approaches...", bc_map, "0x70dbdb";
 			getunitdata( killedgid, .@data );
 			monster "ant_d02_i", .@data[UMOB_X], .@data[UMOB_Y], "--ja--", 21395,1, "ant_d02_i_boss::OnBossDeath";	// ILL_MAYA
 			end;

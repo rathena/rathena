@@ -2,7 +2,7 @@
 //= Terra Gloria - Illusion
 //===== Description: =========================================
 //= [Walkthrough Conversion]
-//= Quest NPCs for Episode 16.2 - Illusion series
+//= Quest NPCs - Illusion series
 //
 //- Note: Probably missing some questinfo on Illusion of Vampire.
 //===== Changelog: ===========================================
@@ -6284,7 +6284,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		if (isbegin_quest(8731) == 0) {
 			mes "[Mirko]";
 			mes "Occasionally if you defeat Gutsy Giearth";
-			mes "you can get ^0000FFFine Dry Sand^000000, can you collect about 20 of them?";
+			mes "you can get ^0000FF" + getitemname(1000504) + "^000000, can you collect about 20 of them?";
 			next;
 			if (select( "Accept", "Quit" ) == 2) {
 				mes "[Mirko]";
@@ -6299,8 +6299,8 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		}
 		if (countitem(1000504) < 20) {
 			mes "[Mirko]";
-			mes "Hunt Gutsy Giearth from the Garden of Perception";
-			mes "and collect 20 ^0000FFFine Dry Sand^000000.";
+			mes "Hunt " + getmonsterinfo("ILL_GIEARTH", MOB_NAME) + " from the Garden of Perception";
+			mes "and collect 20 ^0000FF" + getitemname(1000504) + "^000000.";
 			close;
 		}
 		delitem 1000504,20;	// Dry_Sand
@@ -6328,8 +6328,8 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		}
 		if (isbegin_quest(8733) == 0) {
 			mes "[Mirko]";
-			mes "Sometimes if you defeat Diligent Andre or Diligent Deniro who haunt the Garden of Perception";
-			mes "you can get ^0000FFOpaque Liquid^000000, can you collect about 20 of them?";
+			mes "Sometimes if you defeat " + getmonsterinfo("ILL_ANDRE", MOB_NAME) + " or " + getmonsterinfo("ILL_DENIRO", MOB_NAME) + " who haunt the Garden of Perception";
+			mes "you can get ^0000FF" + getitemname(1000505) + "^000000, can you collect about 20 of them?";
 			next;
 			if (select( "Accept", "Quit" ) == 2) {
 				mes "[Mirko]";
@@ -6344,8 +6344,8 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		}
 		if (countitem(1000505) < 20) {
 			mes "[Mirko]";
-			mes "Hunt Diligent Andre and Diligent Deniro from the Garden of Perception";
-			mes "and collect 20 ^0000FFOpaque Liquid^000000.";
+			mes "Hunt " + getmonsterinfo("ILL_ANDRE", MOB_NAME) + " and " + getmonsterinfo("ILL_DENIRO", MOB_NAME) + " from the Garden of Perception";
+			mes "and collect 20 ^0000FF" + getitemname(1000505) + "^000000.";
 			close;
 		}
 		delitem 1000505,20;	// Opaque_Liquid
@@ -6378,9 +6378,9 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 			mes "it seems to be alleviated just by the reduction of the monsters.";
 			next;
 			mes "[Mirko]";
-			mes "Can you kill ^0000FF10 Diligent Vitata^000000,";
-			mes "^0000FF10 Diligent Soldier Andre^000000,";
-			mes "^0000FF10 Diligent Piere^000000";
+			mes "Can you kill ^0000FF10 " + getmonsterinfo("ILL_VITATA", MOB_NAME) + "^000000,";
+			mes "^0000FF10 " + getmonsterinfo("ILL_SOLDIER_ANDR", MOB_NAME) + "^000000,";
+			mes "^0000FF10 " + getmonsterinfo("ILL_PIERE", MOB_NAME) + "^000000";
 			mes "and come back?";
 			next;
 			if (select( "Accept", "Quit" ) == 2) {
@@ -6396,9 +6396,9 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		case 0:
 		case 1:
 			mes "[Mirko]";
-			mes "Can you kill ^0000FF10 Diligent Vitata^000000,";
-			mes "^0000FF10 Diligent Soldier Andre^000000,";
-			mes "^0000FF10 Diligent Piere^000000";
+			mes "Can you kill ^0000FF10 " + getmonsterinfo("ILL_VITATA", MOB_NAME) + "^000000,";
+			mes "^0000FF10 " + getmonsterinfo("ILL_SOLDIER_ANDR", MOB_NAME) + "^000000,";
+			mes "^0000FF10 " + getmonsterinfo("ILL_PIERE", MOB_NAME) + "^000000";
 			mes "and come back?";
 			close;
 		case 2:
@@ -6430,7 +6430,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		if (isbegin_quest(8737) == 0) {
 			mes "[Mirko]";
 			mes "I picked up an unknown shell the other day. It seems that all the monsters in the Garden of Perception, like ants, have them.";
-			mes "Can you collect about 20 ^0000FFShell of Cognition^000000?";
+			mes "Can you collect about 20 ^0000FF" + getitemname(1000506) + "^000000?";
 			next;
 			if (select( "Accept", "Quit" ) == 2) {
 				mes "[Mirko]";
@@ -6446,7 +6446,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		if (countitem(1000506) < 20) {
 			mes "[Mirko]";
 			mes "Hunt the monsters from the Garden of Perception";
-			mes "and collect 20 ^0000FFShell of Cognition^000000.";
+			mes "and collect 20 ^0000FF" + getitemname(1000506) + "^000000.";
 			close;
 		}
 		delitem 1000506,20;	// Shell_Of_Cognition
@@ -6504,7 +6504,7 @@ OnTouch:
 anthell02,168,171,0	duplicate(#il_ant002)	#il_ant003	HIDDEN_WARP_NPC,3,3
 
 // anthell02,177,181,3	script	Gona#ant2	MINSTREL,{
-anthell02,177,181,3	script	Gona#ant2	HIDDEN_NPC,{
+anthell02,177,181,3	script(CLOAKED)	Gona#ant2	HIDDEN_NPC,{
 	if (ill_anthell < 5)
 		end;
 	if (ill_anthell == 5) {
@@ -6540,8 +6540,6 @@ anthell02,177,181,3	script	Gona#ant2	HIDDEN_NPC,{
 	close;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4068;
 	setunitdata .@npc_id, UNPC_SEX, SEX_MALE;
@@ -6551,7 +6549,7 @@ OnInit:
 }
 
 // anthell02,174,177,5	script	Julio#ant2	SURA,{
-anthell02,174,177,5	script	Julio#ant2	HIDDEN_NPC,{
+anthell02,174,177,5	script(CLOAKED)	Julio#ant2	HIDDEN_NPC,{
 	mes "[Julio]";
 	mes "Don't talk to me...";
 	mes "Don't even pat me on the back...";
@@ -6559,8 +6557,6 @@ anthell02,174,177,5	script	Julio#ant2	HIDDEN_NPC,{
 	close;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4070;
 	setunitdata .@npc_id, UNPC_SEX, SEX_MALE;
@@ -6571,15 +6567,13 @@ OnInit:
 }
 
 // anthell02,167,186,6	script	Briashen#ant2	RANGER,{
-anthell02,167,186,6	script	Briashen#ant2	HIDDEN_NPC,{
+anthell02,167,186,6	script(CLOAKED)	Briashen#ant2	HIDDEN_NPC,{
 	mes "[Briashen]";
 	mes "...";
 	mes "Thanks...";
 	close;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4056;
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
@@ -6662,7 +6656,7 @@ OnTouch:
 ant_d02_i,65,246,0	duplicate(#il_tw1)	#ep18w02_1	HIDDEN_WARP_NPC,3,3
 
 // ant_d02_i,44,258,6	script	Briashen#part1	RANGER,{
-ant_d02_i,44,258,6	script	Briashen#part1	HIDDEN_NPC,{
+ant_d02_i,44,258,6	script(CLOAKED)	Briashen#part1	HIDDEN_NPC,{
 	if (ill_anthell < 3)
 		end;
 	if (ill_anthell == 3) {
@@ -6825,8 +6819,6 @@ ant_d02_i,44,258,6	script	Briashen#part1	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4056;
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
@@ -6850,7 +6842,7 @@ OnTouch:
 }
 
 // ant_d02_i,86,189,2	script	Rwella#part2	RANGER,{
-ant_d02_i,86,189,2	script	Rwella#part2	HIDDEN_NPC,{
+ant_d02_i,86,189,2	script(CLOAKED)	Rwella#part2	HIDDEN_NPC,{
 	if (ill_anthell == 6 && isbegin_quest(8725) == 0) {
 		mes "[Rwella]";
 		mes "What? What's your name?";
@@ -6930,8 +6922,6 @@ ant_d02_i,86,189,2	script	Rwella#part2	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4056;
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
@@ -6954,7 +6944,7 @@ OnTouch:
 }
 
 // ant_d02_i,258,42,2	script	Khahris#part3	RANGER,{
-ant_d02_i,258,42,2	script	Khahris#part3	HIDDEN_NPC,{
+ant_d02_i,258,42,2	script(CLOAKED)	Khahris#part3	HIDDEN_NPC,{
 	if (ill_anthell == 6 && isbegin_quest(8726) == 0) {
 		mes "[Khahris]";
 		mes "What? What's your name?";
@@ -7046,8 +7036,6 @@ ant_d02_i,258,42,2	script	Khahris#part3	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4056;
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
@@ -7070,7 +7058,7 @@ OnTouch:
 }
 
 // ant_d02_i,259,147,7	script	Khahris#part4	GUNSLINGER,{
-ant_d02_i,259,147,7	script	Khahris#part4	HIDDEN_NPC,{
+ant_d02_i,259,147,7	script(CLOAKED)	Khahris#part4	HIDDEN_NPC,{
 	if (ill_anthell == 6 && isbegin_quest(8727) == 0) {
 		mes "[Khahris]";
 		mes "What? What's your name?";
@@ -7167,8 +7155,6 @@ ant_d02_i,259,147,7	script	Khahris#part4	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 24;
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 3;
@@ -7195,7 +7181,7 @@ OnTouch:
 }
 
 // ant_d02_i,130,73,2	script	Briashen#part8	RANGER,{
-ant_d02_i,130,73,2	script	Briashen#part8	HIDDEN_NPC,{
+ant_d02_i,130,73,2	script(CLOAKED)	Briashen#part8	HIDDEN_NPC,{
 	if (ill_anthell == 8) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "!";
@@ -7291,8 +7277,6 @@ ant_d02_i,130,73,2	script	Briashen#part8	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	cloakonnpc();
-
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id, UNPC_CLASS, 4056;
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
@@ -7304,12 +7288,8 @@ OnInit:
 	end;
 }
 
-ant_d02_i,125,73,6	script	Vitata#part9	ILL_VITATA,{
+ant_d02_i,125,73,6	script(CLOAKED)	Vitata#part9	ILL_VITATA,{
 	npctalk "...", "", bc_self;
-	end;
-
-OnInit:
-	cloakonnpc();
 	end;
 }
 
