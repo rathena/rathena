@@ -1949,8 +1949,8 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
-      RequireWeapon: true
       RemoveOnHermode: true
+      RequireNoWeapon: true
   - Status: Spirit
     Icon: EFST_SOULLINK
     DurationLookup: SL_HIGH

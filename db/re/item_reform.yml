@@ -6980,3 +6980,1732 @@ Body:
             Amount: 300
         ResultItem: Dimmension_W_Keyring
         ChangeRefine: 1
+  - Item: Barmund_Soul_Reform
+    BaseItems:
+      - BaseItem: Barmund_Soul_Ring
+        CardsAllowed: false
+        Materials:
+          - Material: Acc_Stone_4
+            Amount: 100
+          - Material: Soul_Barmund_Rune2
+            Amount: 20
+          - Material: Barmund_Soul_Essence
+            Amount: 50
+          - Material: Zelunium
+            Amount: 300
+          - Material: BarMealTicket
+            Amount: 500
+        ResultItem: Soul_Rune_Ring
+  - Item: Barmund_Venom_Reform
+    BaseItems:
+      - BaseItem: Barmund_Venom_Ring
+        CardsAllowed: false
+        Materials:
+          - Material: Acc_Stone_4
+            Amount: 100
+          - Material: Venom_Barmund_Rune2
+            Amount: 20
+          - Material: Barmund_Venom_Essence
+            Amount: 50
+          - Material: Zelunium
+            Amount: 300
+          - Material: BarMealTicket
+            Amount: 500
+        ResultItem: Venom_Rune_Ring
+  - Item: Barmund_Temple_Reform
+    BaseItems:
+      - BaseItem: Barmund_Temple_Ring
+        CardsAllowed: false
+        Materials:
+          - Material: Acc_Stone_4
+            Amount: 100
+          - Material: Temple_Barmund_Rune2
+            Amount: 20
+          - Material: Barmund_Temple_Essence
+            Amount: 50
+          - Material: Zelunium
+            Amount: 300
+          - Material: BarMealTicket
+            Amount: 500
+        ResultItem: Temple_Rune_Ring
+  - Item: Barmund_S_Reform
+    BaseItems:
+      - BaseItem: Barmund_Soul_Ring
+        CardsAllowed: false
+        Materials:
+          - Material: Acc_Stone_4
+            Amount: 100
+          - Material: Soul_Barmund_Rune2
+            Amount: 5
+          - Material: Barmund_Water
+            Amount: 10
+          - Material: Zelunium
+            Amount: 300
+          - Material: BarMealTicket
+            Amount: 500
+        ResultItem: Soul_M_Ring
+  - Item: Barmund_V_Reform
+    BaseItems:
+      - BaseItem: Barmund_Venom_Ring
+        CardsAllowed: false
+        Materials:
+          - Material: Acc_Stone_4
+            Amount: 100
+          - Material: Venom_Barmund_Rune2
+            Amount: 5
+          - Material: Barmund_Water3
+            Amount: 10
+          - Material: Zelunium
+            Amount: 300
+          - Material: BarMealTicket
+            Amount: 500
+        ResultItem: Venom_M_Ring
+  - Item: Barmund_T_Reform
+    BaseItems:
+      - BaseItem: Barmund_Temple_Ring
+        CardsAllowed: false
+        Materials:
+          - Material: Acc_Stone_4
+            Amount: 100
+          - Material: Temple_Barmund_Rune2
+            Amount: 5
+          - Material: Barmund_Water2
+            Amount: 10
+          - Material: Zelunium
+            Amount: 300
+          - Material: BarMealTicket
+            Amount: 500
+        ResultItem: Temple_M_Ring
+  - Item: Amp_Blueprint1
+    BaseItems:
+      - BaseItem: Ein_1HDAGGER
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 75
+          - Material: Mjo_Energy
+            Amount: 75
+          - Material: Mjo_Treasure
+            Amount: 30
+          - Material: Shadowdecon
+            Amount: 75
+          - Material: Ein_DYNITE
+            Amount: 75
+        ResultItem: F_Ein_1HDAGGER
+        ChangeRefine: -20
+  - Item: Amp_Blueprint2
+    BaseItems:
+      - BaseItem: Ein_1HMAGGER
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HMAGGER
+        ChangeRefine: -20
+  - Item: Amp_Blueprint3
+    BaseItems:
+      - BaseItem: Ein_1HSWORD
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HSWORD
+        ChangeRefine: -20
+  - Item: Amp_Blueprint4
+    BaseItems:
+      - BaseItem: Ein_1H_Foxtail
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1H_Foxtail
+        ChangeRefine: -20
+  - Item: Amp_Blueprint5
+    BaseItems:
+      - BaseItem: Ein_1HSPEAR
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HSPEAR
+        ChangeRefine: -20
+  - Item: Amp_Blueprint6
+    BaseItems:
+      - BaseItem: Ein_BHSWORD
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_BHSWORD
+        ChangeRefine: -20
+  - Item: Amp_Blueprint7
+    BaseItems:
+      - BaseItem: Ein_1HHAMMER
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HHAMMER
+        ChangeRefine: -20
+  - Item: Amp_Blueprint8
+    BaseItems:
+      - BaseItem: Ein_BHAXE
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_BHAXE
+        ChangeRefine: -20
+  - Item: Amp_Blueprint9
+    BaseItems:
+      - BaseItem: Ein_1HKNUCK
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HKNUCK
+        ChangeRefine: -20
+  - Item: Amp_Blueprint10
+    BaseItems:
+      - BaseItem: Ein_1HBOOK
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HBOOK
+        ChangeRefine: -20
+  - Item: Amp_Blueprint11
+    BaseItems:
+      - BaseItem: Ein_1HWAND
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HWAND
+        ChangeRefine: -20
+  - Item: Amp_Blueprint12
+    BaseItems:
+      - BaseItem: Ein_BHSTAFF
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_BHSTAFF
+        ChangeRefine: -20
+  - Item: Amp_Blueprint13
+    BaseItems:
+      - BaseItem: Ein_BHHuuma
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_BHHuuma
+        ChangeRefine: -20
+  - Item: Amp_Blueprint14
+    BaseItems:
+      - BaseItem: Ein_BHBOW
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_BHBOW
+        ChangeRefine: -20
+  - Item: Amp_Blueprint15
+    BaseItems:
+      - BaseItem: Ein_BHKATAR
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_BHKATAR
+        ChangeRefine: -20
+  - Item: Amp_Blueprint16
+    BaseItems:
+      - BaseItem: Ein_1HGUN
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HGUN
+        ChangeRefine: -20
+  - Item: Amp_Blueprint17
+    BaseItems:
+      - BaseItem: Ein_1HWHIP
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HWHIP
+        ChangeRefine: -20
+  - Item: Amp_Blueprint18
+    BaseItems:
+      - BaseItem: Ein_1HLUTE
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 100
+          - Material: Mjo_Energy
+            Amount: 100
+          - Material: Mjo_Treasure
+            Amount: 50
+          - Material: Shadowdecon
+            Amount: 150
+          - Material: Ein_DYNITE
+            Amount: 100
+        ResultItem: F_Ein_1HLUTE
+        ChangeRefine: -20
+  - Item: Mocadas_Refine_Box
+    BaseItems:
+      - BaseItem: Mocadas_G_Sword
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_G_Sword
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Spear
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Spear
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Stem
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Stem
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Spellbooks
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Spellbooks
+        ChangeRefine: 1
+      - BaseItem: Mocadas_C_Sword
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_C_Sword
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Katar
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Katar
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Axe
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Axe
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Judgement
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Judgement
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Knuckle
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Knuckle
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Rod
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Rod
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Bow
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Bow
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Instrument
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Instrument
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Whip
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Whip
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Foxtail
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Foxtail
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Wand
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Wand
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Book
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Book
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Knife
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Knife
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Hall
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Hall
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Launcher
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Launcher
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Rifle
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Rifle
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Shotgun
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Shotgun
+        ChangeRefine: 1
+      - BaseItem: Mocadas_Gatling
+        MinimumRefine: 9
+        MaximumRefine: 10
+        CardsAllowed: false
+        Materials:
+          - Material: Mocadas_Water
+            Amount: 150
+          - Material: Mocadas_Gold
+            Amount: 150
+        ResultItem: Mocadas_Gatling
+        ChangeRefine: 1
+  - Item: Justice_Weapon_Hammer
+    BaseItems:
+      - BaseItem: Punish_Hall
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Punish_Hall
+        ChangeRefine: 1
+      - BaseItem: Saint_Bringer
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Saint_Bringer
+        ChangeRefine: 1
+      - BaseItem: Humma_Brilliance
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Humma_Brilliance
+        ChangeRefine: 1
+      - BaseItem: Luppiter_Spear
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Luppiter_Spear
+        ChangeRefine: 1
+      - BaseItem: Holy_Raise_Spear
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Holy_Raise_Spear
+        ChangeRefine: 1
+      - BaseItem: Lightforce_Foxtail_Wand
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Lightforce_Foxtail_Wand
+        ChangeRefine: 1
+      - BaseItem: Shining_Light_Katar
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Shining_Light_Katar
+        ChangeRefine: 1
+      - BaseItem: Angel_Wing_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Angel_Wing_Bow
+        ChangeRefine: 1
+      - BaseItem: Guardian_Saber
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Guardian_Saber
+        ChangeRefine: 1
+      - BaseItem: Holy_Light_Dagger
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Holy_Light_Dagger
+        ChangeRefine: 1
+      - BaseItem: Light_Power_Harp
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Light_Power_Harp
+        ChangeRefine: 1
+      - BaseItem: Light_Power_Spark
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Light_Power_Spark
+        ChangeRefine: 1
+      - BaseItem: Lighting_Splatter
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Lighting_Splatter
+        ChangeRefine: 1
+      - BaseItem: Justice_Bomber
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Justice_Bomber
+        ChangeRefine: 1
+      - BaseItem: Last_Dawn
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Last_Dawn
+        ChangeRefine: 1
+      - BaseItem: Devil_Hunter
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devil_Hunter
+        ChangeRefine: 1
+      - BaseItem: Road_Of_Glory
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Road_Of_Glory
+        ChangeRefine: 1
+      - BaseItem: Victory_Sword
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Victory_Sword
+        ChangeRefine: 1
+      - BaseItem: Divine_Buster
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Divine_Buster
+        ChangeRefine: 1
+      - BaseItem: Orign_Of_Life
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Orign_Of_Life
+        ChangeRefine: 1
+      - BaseItem: Destiny_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Destiny_Staff
+        ChangeRefine: 1
+      - BaseItem: Blessed_Bible
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Blessed_Bible
+        ChangeRefine: 1
+      - BaseItem: Soul_Liberator
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Soul_Liberator
+        ChangeRefine: 1
+  - Item: Injustice_Weapon_Hammer
+    BaseItems:
+      - BaseItem: Demonic_Claw
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Demonic_Claw
+        ChangeRefine: 1
+      - BaseItem: Sealed_Bible
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Sealed_Bible
+        ChangeRefine: 1
+      - BaseItem: Darkness_Tablet
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Darkness_Tablet
+        ChangeRefine: 1
+      - BaseItem: Devil_Wing_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devil_Wing_Staff
+        ChangeRefine: 1
+      - BaseItem: Doom_Bible
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Doom_Bible
+        ChangeRefine: 1
+      - BaseItem: Soul_Harvest
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Soul_Harvest
+        ChangeRefine: 1
+      - BaseItem: The_Reaper
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: The_Reaper
+        ChangeRefine: 1
+      - BaseItem: Underworld_Knife
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Underworld_Knife
+        ChangeRefine: 1
+      - BaseItem: Devil_Cursed_Sword
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devil_Cursed_Sword
+        ChangeRefine: 1
+      - BaseItem: Dark_Angel_Ray_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Dark_Angel_Ray_Bow
+        ChangeRefine: 1
+      - BaseItem: Crime_Violine
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Crime_Violine
+        ChangeRefine: 1
+      - BaseItem: Crime_Whip
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Crime_Whip
+        ChangeRefine: 1
+      - BaseItem: RG_5649
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: RG_5649
+        ChangeRefine: 1
+      - BaseItem: Devil_L_Launcher
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devil_L_Launcher
+        ChangeRefine: 1
+      - BaseItem: Screaming_Rifle
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Screaming_Rifle
+        ChangeRefine: 1
+      - BaseItem: Devils_Bullet
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devils_Bullet
+        ChangeRefine: 1
+      - BaseItem: Outlaw_Cursed_Shotgun
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Outlaw_Cursed_Shotgun
+        ChangeRefine: 1
+      - BaseItem: Blood_Rapier
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Blood_Rapier
+        ChangeRefine: 1
+      - BaseItem: Destruction_Axe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Destruction_Axe
+        ChangeRefine: 1
+      - BaseItem: Devil_Claw
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devil_Claw
+        ChangeRefine: 1
+      - BaseItem: Execution_Great_Sword
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Execution_Great_Sword
+        ChangeRefine: 1
+      - BaseItem: Devil_Guardian_Sword
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Devil_Guardian_Sword
+        ChangeRefine: 1
+      - BaseItem: Darkness_Foxtail_Model
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Darkness_Foxtail_Model
+        ChangeRefine: 1
+  - Item: GoodnEvil_Helm_Hammer
+    BaseItems:
+      - BaseItem: GoodnEvil_Circlet_DK
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_DK
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_IG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_IG
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_AG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_AG
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_EM
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_EM
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_CD
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_CD
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_IQ
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_IQ
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_MT
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_MT
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_BO
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_BO
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_SHC
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_SHC
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_ABC
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_ABC
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_WH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_WH
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_TR
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_TR
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_SS
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_SS
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_SKE
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_SKE
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_SOA
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_SOA
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_HN
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_HN
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_SH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_SH
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_NW
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_NW
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_NW2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_NW2
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_NW3
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_NW3
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_NW4
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_NW4
+        ChangeRefine: 1
+      - BaseItem: GoodnEvil_Circlet_NW5
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: GoodnEvil_Circlet_NW5
+        ChangeRefine: 1
+  - Item: Amp_Blueprint19
+    BaseItems:
+      - BaseItem: Ein_1HDAGGER
+        CardsAllowed: false
+        Materials:
+          - Material: Weapon_Stone_3
+            Amount: 25
+          - Material: Mjo_Energy
+            Amount: 25
+          - Material: Mjo_Treasure
+            Amount: 20
+          - Material: Shadowdecon
+            Amount: 75
+          - Material: Ein_DYNITE
+            Amount: 25
+        ResultItem: F_Ein_1HDAGGER2
+        ChangeRefine: -20
+  - Item: F_Ein_Weapon_Hammer
+    BaseItems:
+      - BaseItem: F_Ein_1HGUN
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HGUN
+        ChangeRefine: 1
+      - BaseItem: F_Ein_BHBOW
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_BHBOW
+        ChangeRefine: 1
+      - BaseItem: F_Ein_BHHuuma
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_BHHuuma
+        ChangeRefine: 1
+      - BaseItem: F_Ein_BHSTAFF
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_BHSTAFF
+        ChangeRefine: 1
+      - BaseItem: F_Ein_BHAXE
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_BHAXE
+        ChangeRefine: 1
+      - BaseItem: F_Ein_BHKATAR
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_BHKATAR
+        ChangeRefine: 1
+      - BaseItem: F_Ein_BHSWORD
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_BHSWORD
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HHAMMER
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HHAMMER
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HWHIP
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HWHIP
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HLUTE
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HLUTE
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HKNUCK
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HKNUCK
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HWAND
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HWAND
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1H_Foxtail
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1H_Foxtail
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HBOOK
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HBOOK
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HSPEAR
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HSPEAR
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HDAGGER2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HDAGGER2
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HDAGGER
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HDAGGER
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HMAGGER
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HMAGGER
+        ChangeRefine: 1
+      - BaseItem: F_Ein_1HSWORD
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: F_Ein_1HSWORD
+        ChangeRefine: 1
+  - Item: Hero_Up_Cube_11
+    BaseItems:
+      - BaseItem: Royal_Bow_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Royal_Bow_K
+      - BaseItem: Shadow_Staff_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Shadow_Staff_K
+      - BaseItem: Iron_Nail_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Iron_Nail_K
+      - BaseItem: Ancient_Hero_Boots
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Great_Hero_Boots
+      - BaseItem: Blue_Crystal_Staff
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Blue_Crystal_Staff
+      - BaseItem: Freezing_Rod
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Freezing_Rod
+      - BaseItem: Sword_Of_Bluefire
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Sword_Of_Bluefire
+      - BaseItem: Iron_Staff
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Iron_Staff
+      - BaseItem: Oriental_Sword
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Oriental_Sword
+      - BaseItem: Fog_Dew_Sword
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Fog_Dew_Sword
+      - BaseItem: Humma_Clear
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Humma_Clear
+      - BaseItem: Narcis_Bow
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Narcis_Bow
+      - BaseItem: Magic_Sword
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Magic_Sword
+      - BaseItem: Avenger
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Avenger
+      - BaseItem: Undine_Spear_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Undine_Spear_K
+      - BaseItem: Demon_Hunting_Bible_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Demon_Hunting_Bible
+      - BaseItem: Shiver_Katar_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Shiver_Katar_K
+      - BaseItem: OneSkyOneSun
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_OneSkyOneSun
+      - BaseItem: SoulWeight
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_SoulWeight
+      - BaseItem: MeawFoxtail
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_MeawFoxtail
+      - BaseItem: Freedom_Stick
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Freedom_Stick
+      - BaseItem: Blessed_Knife
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Blessed_Knife
+      - BaseItem: Dragonic_Slayer
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Dragonic_Slayer
+      - BaseItem: Light_Blade
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Light_Blade
+      - BaseItem: Slate_Sword
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Slate_Sword
+      - BaseItem: Trumpet_Shell_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Trumpet_Shell_K
+      - BaseItem: Barb_Wire_K
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Barb_Wire_K
+      - BaseItem: Meteor_Striker
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Meteor_Striker
+      - BaseItem: Saint_Hall
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Saint_Hall
+      - BaseItem: Ray_Knuckle
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Ray_Knuckle
+      - BaseItem: Blade_Katar
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Blade_Katar
+      - BaseItem: Fatalist
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Fatalist
+      - BaseItem: Scalet_Dragon_L_Bow
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Scalet_Dragon_L_Bow
+      - BaseItem: Crimson_Rose
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Crimson_Rose
+      - BaseItem: Master_Soul_Rifle
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Master_Soul_Rifle
+      - BaseItem: Demon_S_Shot
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Demon_S_Shot
+      - BaseItem: Golden_L_Launcher
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_Golden_L_Launcher
+      - BaseItem: The_Black_Gatling
+        MinimumRefine: 11
+        CardsAllowed: false
+        ResultItem: Up_The_Black_Gatling
+  - Item: EP20_DGA_Refine
+    BaseItems:
+      - BaseItem: D_Glacier_Armor
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Ep20_Cat_Whiskers
+            Amount: 40
+          - Material: EP19_D_P_Crystal
+            Amount: 10
+          - Material: EP19_N_P_Crystal
+            Amount: 10
+          - Material: EP20_D_P_Crystal
+            Amount: 10
+        ResultItem: D_Glacier_Armor
+        ChangeRefine: 1
+      - BaseItem: D_Glacier_Robe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Ep20_Cat_Whiskers
+            Amount: 40
+          - Material: EP19_D_P_Crystal
+            Amount: 10
+          - Material: EP19_N_P_Crystal
+            Amount: 10
+          - Material: EP20_D_P_Crystal
+            Amount: 10
+        ResultItem: D_Glacier_Robe
+        ChangeRefine: 1
+      - BaseItem: D_Glacier_Manteau
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Ep20_Cat_Whiskers
+            Amount: 40
+          - Material: EP19_D_P_Crystal
+            Amount: 10
+          - Material: EP19_N_P_Crystal
+            Amount: 10
+          - Material: EP20_D_P_Crystal
+            Amount: 10
+        ResultItem: D_Glacier_Manteau
+        ChangeRefine: 1
+      - BaseItem: D_Glacier_Muffler
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Ep20_Cat_Whiskers
+            Amount: 40
+          - Material: EP19_D_P_Crystal
+            Amount: 10
+          - Material: EP19_N_P_Crystal
+            Amount: 10
+          - Material: EP20_D_P_Crystal
+            Amount: 10
+        ResultItem: D_Glacier_Muffler
+        ChangeRefine: 1
+      - BaseItem: D_Glacier_Boots
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Ep20_Cat_Whiskers
+            Amount: 40
+          - Material: EP19_D_P_Crystal
+            Amount: 10
+          - Material: EP19_N_P_Crystal
+            Amount: 10
+          - Material: EP20_D_P_Crystal
+            Amount: 10
+        ResultItem: D_Glacier_Boots
+        ChangeRefine: 1
+      - BaseItem: D_Glacier_Shoes
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Ep20_Cat_Whiskers
+            Amount: 40
+          - Material: EP19_D_P_Crystal
+            Amount: 10
+          - Material: EP19_N_P_Crystal
+            Amount: 10
+          - Material: EP20_D_P_Crystal
+            Amount: 10
+        ResultItem: D_Glacier_Shoes
+        ChangeRefine: 1
+  - Item: Isgard_Crown_Hammer
+    BaseItems:
+      - BaseItem: Glacier_Helm_1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Glacier_Helm_1
+        ChangeRefine: 1
+      - BaseItem: Glacier_Helm_2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Glacier_Helm_2
+        ChangeRefine: 1
+      - BaseItem: Glacier_Helm_3
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: Glacier_Helm_3
+        ChangeRefine: 1

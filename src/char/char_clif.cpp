@@ -817,6 +817,11 @@ void chclif_send_map_data( int fd, std::shared_ptr<struct mmo_charstatus> cd, ui
 #if PACKETVER >= 20170315
 	memset(WFIFOP(fd, 28), 0, 128); // Unknown
 #endif
+#ifdef DEBUG
+	ShowDebug("Sending the client (%d %d.%d.%d.%d) to map-server with ip %d.%d.%d.%d and port %hu\n",
+			  cd->account_id, CONVIP(ipl), CONVIP((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip),
+			  map_server[map_server_index].port);
+#endif
 	WFIFOSET(fd,size);
 }
 

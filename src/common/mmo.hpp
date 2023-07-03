@@ -595,6 +595,7 @@ struct mmo_charstatus {
 	uint16 mapport;
 
 	struct s_point_str last_point;
+	int32 last_point_instanceid;
 	struct s_point_str save_point;
 	struct s_point_str memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
@@ -742,7 +743,7 @@ struct guild_skill {
 };
 
 struct Channel;
-struct guild {
+struct mmo_guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
 	t_exp exp;
@@ -757,14 +758,7 @@ struct guild {
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
-	struct Channel *channel;
-	int instance_id;
 	time_t last_leader_change;
-
-	/* Used by char-server to save events for guilds */
-	unsigned short save_flag;
-
-	int32 chargeshout_flag_id;
 };
 
 enum e_woe_type{

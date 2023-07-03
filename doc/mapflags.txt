@@ -288,6 +288,18 @@ Disable the ability to capture pets on a map.
 
 ---------------------------------------
 
+*nobank
+
+Disable Bank on a map.
+
+---------------------------------------
+
+*norodex
+
+Disable RODex on a map.
+
+---------------------------------------
+
 =====================
 | 2. Battle-related |
 =====================

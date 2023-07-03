@@ -750,25 +750,23 @@ static void delete_session(int fd)
 	}
 }
 
-int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size)
-{
+int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func ){
 	if( !session_isValid(fd) )
 		return 0;
 
 	if( session[fd]->max_rdata != rfifo_size && session[fd]->rdata_size < rfifo_size) {
-		RECREATE(session[fd]->rdata, unsigned char, rfifo_size);
+		RECREATE2( session[fd]->rdata, unsigned char, rfifo_size, file, line, func );
 		session[fd]->max_rdata  = rfifo_size;
 	}
 
 	if( session[fd]->max_wdata != wfifo_size && session[fd]->wdata_size < wfifo_size) {
-		RECREATE(session[fd]->wdata, unsigned char, wfifo_size);
+		RECREATE2( session[fd]->wdata, unsigned char, wfifo_size, file, line, func );
 		session[fd]->max_wdata  = wfifo_size;
 	}
 	return 0;
 }
 
-int realloc_writefifo(int fd, size_t addition)
-{
+int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func ){
 	size_t newsize;
 
 	if( !session_isValid(fd) ) // might not happen
@@ -788,7 +786,7 @@ int realloc_writefifo(int fd, size_t addition)
 	else // no change
 		return 0;
 
-	RECREATE(session[fd]->wdata, unsigned char, newsize);
+	RECREATE2( session[fd]->wdata, unsigned char, newsize, file, line, func );
 	session[fd]->max_wdata  = newsize;
 
 	return 0;
