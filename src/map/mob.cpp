@@ -6175,9 +6175,9 @@ uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 	
 	if (this->nodeExists(node, "Ratio")) {
-		uint16 ratio;
+		uint32 ratio;
 
-		if (!this->asUInt16(node, "Ratio", ratio))
+		if (!this->asUInt32(node, "Ratio", ratio))
 			return 0;
 
 		data->drop_ratio = ratio;
