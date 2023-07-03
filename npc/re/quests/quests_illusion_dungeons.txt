@@ -10797,7 +10797,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		}
 		if (isbegin_quest(8731) == 0) {
 			mes "[Mirko]";
-			mes "Occasionally if you defeat Gutsy Giearth";
+			mes "Occasionally if you defeat " + getmonsterinfo("ILL_GIEARTH", MOB_NAME) + "";
 			mes "you can get ^0000FF" + getitemname(1000504) + "^000000, can you collect about 20 of them?";
 			next;
 			if (select( "Accept", "Quit" ) == 2) {
