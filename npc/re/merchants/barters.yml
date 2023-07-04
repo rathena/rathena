@@ -57,5 +57,5 @@ Footer:
   - Path: npc/re/merchants/barters/enchantgrade.yml
   - Path: npc/re/merchants/barters/cashmall.yml
   - Path: npc/re/merchants/barters/rgsr_in.yml
-  - Path: npc/re/merchants/barters/enchan_illusion_16_2.yml
+  - Path: npc/re/merchants/barters/enchan_illusion_dungeons.yml
   - Path: npc/re/merchants/barters/quests_exp_175.yml
