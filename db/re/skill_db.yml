@@ -32937,6 +32937,63 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 1
+  - Id: 3043
+    Name: ALL_GLASTHEIM_RECALL
+    Description: Return To Glast Heim
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Cooldown: 300000
+    FixedCastTime: 1000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    CastDelayFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Requires:
+      SpCost: 1
+  - Id: 3044
+    Name: ALL_THANATOS_RECALL
+    Description: Return To Thanatos
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Cooldown: 300000
+    FixedCastTime: 1000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    CastDelayFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Requires:
+      SpCost: 1
+  - Id: 3045
+    Name: ALL_LIGHTHALZEN_RECALL
+    Description: Return To Lighthalzen
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Cooldown: 300000
+    FixedCastTime: 1000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    CastDelayFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Requires:
+      SpCost: 1
   - Id: 5001
     Name: GC_DARKCROW
     Description: Dark Claw

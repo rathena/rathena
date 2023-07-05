@@ -154,7 +154,7 @@ static int add_path(struct node_heap *heap, int16 x, int16 y, int g_cost, struct
  * Note: uses global g_open_set, therefore this method can't be called in parallel or recursivly.
  *------------------------------------------*/
 bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *from, const struct navi_pos *dest, cell_chk cell) {
-	register int i, x, y, dx = 0, dy = 0;
+	int i, x, y, dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(from->m);
 	struct navi_walkpath_data s_wpd;
 

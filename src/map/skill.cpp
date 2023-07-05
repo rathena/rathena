@@ -842,7 +842,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
+	if (mapdata->getMapFlag(MF_NOSKILL) && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
@@ -870,11 +870,11 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 	uint32 skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
 	if( (skill_nocast&1 && !mapdata_flag_vs2(mapdata)) ||
-		(skill_nocast&2 && mapdata->flag[MF_PVP]) ||
+		(skill_nocast&2 && mapdata->getMapFlag(MF_PVP)) ||
 		(skill_nocast&4 && mapdata_flag_gvg2_no_te(mapdata)) ||
-		(skill_nocast&8 && mapdata->flag[MF_BATTLEGROUND]) ||
+		(skill_nocast&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) ){
+		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) ){
 			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
@@ -888,7 +888,10 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
 		case ALL_PRONTERA_RECALL:
-			if(mapdata->flag[MF_NOWARP]) {
+		case ALL_GLASTHEIM_RECALL:
+		case ALL_THANATOS_RECALL:
+		case ALL_LIGHTHALZEN_RECALL:
+			if(mapdata->getMapFlag(MF_NOWARP)) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
 			}
@@ -898,7 +901,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
-			if(mapdata->flag[MF_NOTELEPORT]) {
+			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
 			}
@@ -906,7 +909,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
-			if (mapdata->flag[MF_NOMEMO]) {
+			if (mapdata->getMapFlag(MF_NOMEMO)) {
 				clif_skill_teleportmessage(sd,1);
 				return true;
 			}
@@ -955,7 +958,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 			return false; // always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]
-			if (mapdata->flag[MF_NOICEWALL]) {
+			if (mapdata->getMapFlag(MF_NOICEWALL)) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return true;
 			}
@@ -971,7 +974,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 			if (
 				!(battle_config.emergency_call&((is_agit_start())?2:1)) ||
 				!(battle_config.emergency_call&(mapdata_flag_gvg2(mapdata)?8:4)) ||
-				(battle_config.emergency_call&16 && mapdata->flag[MF_NOWARPTO] && !(mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE]))
+				(battle_config.emergency_call&16 && mapdata->getMapFlag(MF_NOWARPTO) && !(mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
 			)	{
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return true;
@@ -5329,7 +5332,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if (path) {
 			if(skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist)) {
 #ifdef RENEWAL
-				if (map_getmapdata(src->m)->flag[MF_PVP])
+				if (map_getmapdata(src->m)->getMapFlag(MF_PVP))
 					dist += 2; // Knockback is 4 on PvP maps
 #endif
 				skill_blown(src, bl, dist, dir, BLOWN_NONE);
@@ -9543,8 +9546,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct map_data *mapdata = &map[src->m];
 
 			//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
-			if( mapdata->flag[MF_NOTELEPORT] &&
-				!(mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata) )
+			if( mapdata->getMapFlag(MF_NOTELEPORT) &&
+				!(mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata) )
 			) {
 				clif_skill_nodamage(src, bl, TK_HIGHJUMP, skill_lv, 1);
 				break;
@@ -10362,9 +10365,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int8 dx[9] = {-1, 1, 0, 0,-1, 1,-1, 1, 0};
 			int8 dy[9] = { 0, 0, 1,-1, 1,-1,-1, 1, 0};
 			uint8 j = 0, calls = 0, called = 0;
-			struct guild *g;
 			// i don't know if it actually summons in a circle, but oh well. ;P
-			g = sd?sd->guild:guild_search(status_get_guild_id(src));
+			auto g = sd?sd->guild:guild_search(status_get_guild_id(src));
 			if (!g)
 				break;
 
@@ -10377,10 +10379,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			for (i = 0; i < g->max_member && (!calls || (calls && called < calls)); i++, j++) {
+			for (i = 0; i < g->guild.max_member && (!calls || (calls && called < calls)); i++, j++) {
 				if (j > 8)
 					j = 0;
-				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
+				if ((dstsd = g->guild.member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
 					if (map_getmapflag(dstsd->bl.m, MF_NOWARP) && !map_flag_gvg2(dstsd->bl.m))
 						continue;
 					if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, pc_get_group_level(dstsd)))
@@ -10401,7 +10403,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case GD_CHARGESHOUT_FLAG:
 		if (sd && sd->guild && sd->state.gmaster_flag == 1) {
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->guild.name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
 
 			if (md) {
 				sd->guild->chargeshout_flag_id = md->bl.id;
@@ -10690,6 +10692,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case RK_LUXANIMA:
 		status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		break;
 	case RK_GIANTGROWTH:
 	case RK_STONEHARDSKIN:
 	case RK_VITALITYACTIVATION:
@@ -11646,6 +11651,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
 	case ALL_PRONTERA_RECALL:
+	case ALL_GLASTHEIM_RECALL:
+	case ALL_THANATOS_RECALL:
+	case ALL_LIGHTHALZEN_RECALL:
 		if( sd )
 		{
 			short x=0, y=0; // Destiny position.
@@ -11678,6 +11686,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					y = 192;
 				}
 				mapindex  = mapindex_name2id(MAP_PRONTERA);
+				break;
+			case ALL_GLASTHEIM_RECALL:
+				x = 200;
+				y = 268;
+				mapindex  = mapindex_name2id(MAP_GLASTHEIM);
+				break;
+			case ALL_THANATOS_RECALL:
+				x = 139;
+				y = 156;
+				mapindex  = mapindex_name2id(MAP_THANATOS);
+				break;
+			case ALL_LIGHTHALZEN_RECALL:
+				x = 307;
+				y = 307;
+				mapindex  = mapindex_name2id(MAP_LIGHTHALZEN);
 				break;
 			}
 
@@ -21130,7 +21153,8 @@ TIMER_FUNC(skill_unit_timer){
 	return 0;
 }
 
-static int skill_unit_temp[20];  // temporary storage for tracking skill unit skill ids as players move in/out of them
+static std::vector<int16> skill_unit_cell; // Temporary storage for tracking skill unit skill IDs as players move in/out of them
+
 /*==========================================
  * flag :
  *	1 : store that skill_unit in array
@@ -21140,13 +21164,11 @@ static int skill_unit_temp[20];  // temporary storage for tracking skill unit sk
 int skill_unit_move_sub(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = (struct skill_unit *)bl;
-
 	struct block_list* target = va_arg(ap,struct block_list*);
 	t_tick tick = va_arg(ap,t_tick);
 	int flag = va_arg(ap,int);
 	bool dissonance;
 	uint16 skill_id;
-	int i;
 
 	nullpo_ret(unit);
 	nullpo_ret(target);
@@ -21181,17 +21203,11 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 		if( group->src_id == target->id && group->state.song_dance&0x2 ) { //Ensemble check to see if they went out/in of the area [Skotlex]
 			if( flag&1 ) {
 				if( flag&2 ) { //Clear this skill id.
-					ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == skill_id );
-					if( i < ARRAYLENGTH(skill_unit_temp) )
-						skill_unit_temp[i] = 0;
+					util::vector_erase_if_exists(skill_unit_cell, skill_id);
 				}
 			} else {
 				if( flag&2 ) { //Store this skill id.
-					ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
-					if( i < ARRAYLENGTH(skill_unit_temp) )
-						skill_unit_temp[i] = skill_id;
-					else
-						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell! (skill_id: %hu)\n", skill_id );
+					skill_unit_cell.push_back(skill_id);
 				}
 			}
 
@@ -21207,20 +21223,14 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 		if( flag&1 ) {
 			int result = skill_unit_onplace(unit,target,tick);
 
-			if( flag&2 && result ) { //Clear skill ids we have stored in onout.
-				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
-				if( i < ARRAYLENGTH(skill_unit_temp) )
-					skill_unit_temp[i] = 0;
+			if( flag&2 && result > 0 ) { //Clear skill ids we have stored in onout.
+				util::vector_erase_if_exists(skill_unit_cell, result);
 			}
 		} else {
 			int result = skill_unit_onout(unit,target,tick);
 
-			if( flag&2 && result ) { //Store this unit id.
-				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
-				if( i < ARRAYLENGTH(skill_unit_temp) )
-					skill_unit_temp[i] = skill_id;
-				else
-					ShowError("skill_unit_move_sub: Reached limit of unit objects per cell! (skill_id: %hu)\n", skill_id );
+			if( flag&2 && result > 0 ) { //Store this unit id.
+				skill_unit_cell.push_back(skill_id);
 			}
 		}
 
@@ -21253,16 +21263,14 @@ int skill_unit_move(struct block_list *bl, t_tick tick, int flag)
 		return 0;
 
 	if( flag&2 && !(flag&1) ) //Onout, clear data
-		memset(skill_unit_temp, 0, sizeof(skill_unit_temp));
+		skill_unit_cell.clear();
 
 	map_foreachincell(skill_unit_move_sub,bl->m,bl->x,bl->y,BL_SKILL,bl,tick,flag);
 
 	if( flag&2 && flag&1 ) { //Onplace, check any skill units you have left.
-		int i;
-
-		for( i = 0; i < ARRAYLENGTH(skill_unit_temp); i++ )
-			if( skill_unit_temp[i] )
-				skill_unit_onleft(skill_unit_temp[i], bl, tick);
+		for (const auto &it : skill_unit_cell) {
+			skill_unit_onleft(it, bl, tick);
+		}
 	}
 
 	return 0;
@@ -23333,7 +23341,7 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	if (check_flag&1 && mapdata->flag[MF_BATTLEGROUND])
+	if (check_flag&1 && mapdata->getMapFlag(MF_BATTLEGROUND))
 		return false;
 	if (check_flag&2 && mapdata_flag_gvg(mapdata))
 		return false;

@@ -1097,7 +1097,7 @@ void bg_queue_join_guild(const char *name, map_session_data *sd)
 		return; // Someone has bypassed the client check for being in a guild
 	}
 	
-	if (strcmp(sd->status.name, sd->guild->master) != 0) {
+	if (strcmp(sd->status.name, sd->guild->guild.master) != 0) {
 		clif_bg_queue_apply_result(BG_APPLY_PARTYGUILD_LEADER, name, sd);
 		return; // Not the guild leader
 	}
@@ -1110,16 +1110,16 @@ void bg_queue_join_guild(const char *name, map_session_data *sd)
 			return;
 		}
 
-		struct guild* g = sd->guild;
+		auto &g = sd->guild;
 
-		if (g->connect_member > bg->max_players) {
+		if (g->guild.connect_member > bg->max_players) {
 			clif_bg_queue_apply_result(BG_APPLY_PLAYER_COUNT, name, sd);
 			return; // Too many guild members online
 		}
 
 		std::vector<map_session_data *> list;
 
-		for (const auto &it : g->member) {
+		for (const auto &it : g->guild.member) {
 			if (list.size() == bg->max_players)
 				break;
 
