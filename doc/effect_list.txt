@@ -72,8 +72,8 @@ Number	Description
 53.	Puff of Purpulish Smoke?
 54.	Cast Initiation Aura (Water Element)
 55.	Cast Initiation Aura (Fire Element)
-56.	Cast Initiation Aura (Wind Element)
-57.	Cast Initiation Aura (Earth Element)
+56.	Cast Initiation Aura (Earth Element)
+57.	Cast Initiation Aura (Wind Element)
 58.	Cast Initiation Aura (Holy Element)
 59.	Cast Initiation Aura (Poison Element)
 60.	Cast target circle
@@ -277,7 +277,7 @@ Number	Description
 258.	Elemental Endow (Earth)
 259.	Map Light Pillar Animation 3
 260.	Map Light Pillar Animation 4
-261.	Fury Cast Animation 
+261.	Fury Cast Animation
 262.	Raging Quadruple Blow
 263.	Raging Quadruple Blow 2
 264.	(Nothing)
