@@ -4102,906 +4102,1334 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: Poring_Card
-            Rate: 10
-          - Item: Fabre_Card
-            Rate: 10
-          - Item: Pupa_Card
-            Rate: 6
-          - Item: Drops_Card
-            Rate: 11
-          - Item: Poring__Card
-            Rate: 1
-          - Item: Lunatic_Card
-            Rate: 7
-          - Item: Pecopeco_Egg_Card
-            Rate: 4
-          - Item: Picky_Card
-            Rate: 10
-          - Item: Chonchon_Card
-            Rate: 10
-          - Item: Wilow_Card
-            Rate: 10
-          - Item: Picky__Card
-            Rate: 10
-          - Item: Thief_Bug_Egg_Card
-            Rate: 8
-          - Item: Andre_Egg_Card
-            Rate: 7
-          - Item: Roda_Frog_Card
-            Rate: 5
-          - Item: Condor_Card
-            Rate: 7
-          - Item: Thief_Bug_Card
-            Rate: 7
-          - Item: Savage_Babe_Card
-            Rate: 5
-          - Item: Hornet_Card
-            Rate: 5
-          - Item: Farmiliar_Card
-            Rate: 5
-          - Item: Rocker_Card
-            Rate: 5
-          - Item: Spore_Card
-            Rate: 5
-          - Item: Desert_Wolf_Babe_Card
-            Rate: 5
-          - Item: Plankton_Card
-            Rate: 5
-          - Item: Skeleton_Card
-            Rate: 5
-          - Item: Thief_Bug_Female_Card
-            Rate: 3
-          - Item: Kukre_Card
-            Rate: 3
-          - Item: Tarou_Card
-            Rate: 3
-          - Item: Wolf_Card
-            Rate: 3
-          - Item: Mandragora_Card
-            Rate: 3
-          - Item: Pecopeco_Card
-            Rate: 3
-          - Item: Ambernite_Card
-            Rate: 3
-          - Item: Poporing_Card
-            Rate: 3
-          - Item: Worm_Tail_Card
-            Rate: 3
-          - Item: Hydra_Card
-            Rate: 3
-          - Item: Muka_Card
-            Rate: 3
-          - Item: Snake_Card
-            Rate: 3
-          - Item: Zombie_Card
-            Rate: 3
-          - Item: Stainer_Card
-            Rate: 3
-          - Item: Creamy_Card
-            Rate: 3
-          - Item: Coco_Card
-            Rate: 3
-          - Item: Steel_Chonchon_Card
-            Rate: 3
-          - Item: Andre_Card
-            Rate: 3
-          - Item: Smokie_Card
-            Rate: 3
-          - Item: Horn_Card
-            Rate: 3
-          - Item: Martin_Card
-            Rate: 3
-          - Item: Ghostring_Card
-            Rate: 1
-          - Item: Poison_Spore_Card
-            Rate: 3
-          - Item: Vadon_Card
-            Rate: 3
-          - Item: Thief_Bug_Male_Card
-            Rate: 3
-          - Item: Yoyo_Card
-            Rate: 3
-          - Item: Elder_Wilow_Card
-            Rate: 3
           - Item: Vitata_Card
-            Rate: 1
-          - Item: Angeling_Card
-            Rate: 1
-          - Item: Marina_Card
-            Rate: 3
-          - Item: Dustiness_Card
-            Rate: 3
-          - Item: Metaller_Card
-            Rate: 2
-          - Item: Thara_Frog_Card
-            Rate: 2
-          - Item: Goblin_Card
-            Rate: 2
-          - Item: Cornutus_Card
-            Rate: 2
-          - Item: Anacondaq_Card
-            Rate: 2
-          - Item: Caramel_Card
-            Rate: 2
-          - Item: Zerom_Card
-            Rate: 2
-          - Item: Kaho_Card
-            Rate: 2
-          - Item: Orc_Warrior_Card
-            Rate: 2
-          - Item: Megalodon_Card
-            Rate: 2
-          - Item: Scorpion_Card
-            Rate: 2
-          - Item: Drainliar_Card
-            Rate: 2
-          - Item: Eggyra_Card
-            Rate: 2
-          - Item: Orc_Zombie_Card
-            Rate: 2
+            Rate: 95
           - Item: Golem_Card
-            Rate: 2
-          - Item: Pirate_Skel_Card
-            Rate: 2
-          - Item: BigFoot_Card
-            Rate: 2
-          - Item: Argos_Card
-            Rate: 2
-          - Item: Magnolia_Card
-            Rate: 2
-          - Item: Phen_Card
-            Rate: 2
-          - Item: Savage_Card
-            Rate: 2
-          - Item: Mantis_Card
-            Rate: 2
-          - Item: Flora_Card
-            Rate: 2
-          - Item: Hode_Card
-            Rate: 2
+            Rate: 95
           - Item: Desert_Wolf_Card
-            Rate: 1
+            Rate: 95
           - Item: Rafflesia_Card
-            Rate: 1
+            Rate: 95
           - Item: Marine_Sphere_Card
-            Rate: 1
+            Rate: 95
           - Item: Orc_Skeleton_Card
-            Rate: 1
+            Rate: 95
           - Item: Soldier_Skeleton_Card
-            Rate: 1
+            Rate: 95
           - Item: Giearth_Card
-            Rate: 1
+            Rate: 95
           - Item: Frilldora_Card
-            Rate: 1
+            Rate: 95
           - Item: Sword_Fish_Card
-            Rate: 1
+            Rate: 95
           - Item: Munak_Card
-            Rate: 1
+            Rate: 95
           - Item: Kobold_Card
-            Rate: 1
+            Rate: 95
           - Item: Skel_Worker_Card
-            Rate: 1
+            Rate: 95
           - Item: Obeaune_Card
-            Rate: 1
+            Rate: 95
           - Item: Archer_Skeleton_Card
-            Rate: 1
+            Rate: 95
           - Item: Marse_Card
-            Rate: 1
+            Rate: 95
           - Item: Zenorc_Card
-            Rate: 1
+            Rate: 95
           - Item: Matyr_Card
-            Rate: 1
+            Rate: 95
           - Item: Dokebi_Card
-            Rate: 1
+            Rate: 95
           - Item: Pasana_Card
-            Rate: 1
+            Rate: 95
           - Item: Sohee_Card
-            Rate: 1
+            Rate: 95
           - Item: Sand_Man_Card
-            Rate: 1
+            Rate: 95
           - Item: Whisper_Card
-            Rate: 1
+            Rate: 95
           - Item: Horong_Card
-            Rate: 1
+            Rate: 95
           - Item: Requiem_Card
-            Rate: 1
+            Rate: 95
           - Item: Marc_Card
-            Rate: 1
+            Rate: 95
           - Item: Mummy_Card
-            Rate: 1
+            Rate: 95
           - Item: Verit_Card
-            Rate: 1
+            Rate: 95
           - Item: Myst_Card
-            Rate: 1
+            Rate: 95
           - Item: Jakk_Card
-            Rate: 1
+            Rate: 95
           - Item: Ghoul_Card
-            Rate: 1
+            Rate: 95
           - Item: Strouf_Card
-            Rate: 1
+            Rate: 95
           - Item: Marduk_Card
-            Rate: 1
+            Rate: 95
           - Item: Marionette_Card
-            Rate: 1
+            Rate: 95
           - Item: Argiope_Card
-            Rate: 1
+            Rate: 95
           - Item: Hunter_Fly_Card
-            Rate: 1
+            Rate: 95
           - Item: Isis_Card
-            Rate: 1
+            Rate: 95
           - Item: Side_Winder_Card
-            Rate: 1
+            Rate: 95
           - Item: Petit_Card
-            Rate: 1
+            Rate: 95
           - Item: Bathory_Card
-            Rate: 1
+            Rate: 95
           - Item: Petit__Card
-            Rate: 1
+            Rate: 95
           - Item: Deviruchi_Card
-            Rate: 1
+            Rate: 95
+          - Item: Medusa_Card
+            Rate: 95
           - Item: Deviace_Card
-            Rate: 1
+            Rate: 95
+          - Item: Minorous_Card
+            Rate: 95
           - Item: Nightmare_Card
-            Rate: 1
+            Rate: 95
           - Item: Baphomet__Card
-            Rate: 1
+            Rate: 95
+          - Item: Scorpion_King_Card
+            Rate: 95
           - Item: Daydric_Card
-            Rate: 1
+            Rate: 95
           - Item: Khalitzburg_Card
-            Rate: 1
+            Rate: 95
+          - Item: Anubis_Card
+            Rate: 95
           - Item: Joker_Card
-            Rate: 1
+            Rate: 95
+          - Item: Knight_Of_Abyss_Card
+            Rate: 95
           - Item: Evil_Druid_Card
-            Rate: 1
+            Rate: 95
           - Item: Gargoyle_Card
-            Rate: 1
+            Rate: 95
           - Item: Goat_Card
-            Rate: 1
+            Rate: 95
           - Item: Gajomart_Card
-            Rate: 1
+            Rate: 95
           - Item: Galapago_Card
-            Rate: 1
+            Rate: 95
           - Item: Crab_Card
-            Rate: 1
+            Rate: 95
           - Item: Rice_Cake_Boy_Card
-            Rate: 1
+            Rate: 95
+          - Item: Goblin_Leader_Card
+            Rate: 95
           - Item: Steam_Goblin_Card
-            Rate: 1
+            Rate: 95
           - Item: Goblin_Archer_Card
-            Rate: 1
+            Rate: 95
           - Item: Flying_Deleter_Card
-            Rate: 1
+            Rate: 95
           - Item: Nine_Tail_Card
-            Rate: 1
+            Rate: 95
           - Item: Antique_Firelock_Card
-            Rate: 1
+            Rate: 95
           - Item: Grand_Peco_Card
-            Rate: 1
+            Rate: 95
           - Item: Grizzly_Card
-            Rate: 1
+            Rate: 95
           - Item: Gullinbursti_Card
-            Rate: 1
+            Rate: 95
           - Item: Gig_Card
-            Rate: 1
+            Rate: 95
           - Item: Nightmare_Terror_Card
-            Rate: 1
+            Rate: 95
           - Item: Neraid_Card
-            Rate: 1
+            Rate: 95
           - Item: Dark_Frame_Card
-            Rate: 1
+            Rate: 95
+          - Item: Dark_Priest_Card
+            Rate: 95
           - Item: The_Paper_Card
-            Rate: 1
+            Rate: 95
           - Item: Demon_Pungus_Card
-            Rate: 1
-          - Item: Deviling_Card
-            Rate: 1
+            Rate: 95
           - Item: Poison_Toad_Card
-            Rate: 1
+            Rate: 95
           - Item: Dullahan_Card
-            Rate: 1
+            Rate: 95
           - Item: Dryad_Card
-            Rate: 1
+            Rate: 95
           - Item: Dragon_Tail_Card
-            Rate: 1
+            Rate: 95
           - Item: Driller_Card
-            Rate: 1
+            Rate: 95
           - Item: Disguise_Card
-            Rate: 1
+            Rate: 95
           - Item: Diabolic_Card
-            Rate: 1
+            Rate: 95
           - Item: Lava_Golem_Card
-            Rate: 1
+            Rate: 95
           - Item: Rideword_Card
-            Rate: 1
+            Rate: 95
           - Item: Raggler_Card
-            Rate: 1
+            Rate: 95
           - Item: Raydric_Archer_Card
-            Rate: 1
+            Rate: 95
           - Item: Leib_Olmai_Card
-            Rate: 1
+            Rate: 95
           - Item: Wraith_Dead_Card
-            Rate: 1
+            Rate: 95
           - Item: Wraith_Card
-            Rate: 1
+            Rate: 95
           - Item: Loli_Ruri_Card
-            Rate: 1
+            Rate: 95
           - Item: Rotar_Zairo_Card
-            Rate: 1
+            Rate: 95
           - Item: Lude_Card
-            Rate: 1
+            Rate: 95
           - Item: Rybio_Card
-            Rate: 1
+            Rate: 95
           - Item: Leaf_Cat_Card
-            Rate: 1
+            Rate: 95
           - Item: Marin_Card
-            Rate: 1
+            Rate: 95
           - Item: Merman_Card
-            Rate: 1
+            Rate: 95
           - Item: Megalith_Card
-            Rate: 1
+            Rate: 95
           - Item: Majoruros_Card
-            Rate: 1
+            Rate: 95
           - Item: Civil_Servant_Card
-            Rate: 1
+            Rate: 95
           - Item: Mini_Demon_Card
-            Rate: 1
+            Rate: 95
           - Item: Mimic_Card
-            Rate: 1
+            Rate: 95
           - Item: Mystcase_Card
-            Rate: 1
+            Rate: 95
           - Item: Miyabi_Ningyo_Card
-            Rate: 1
+            Rate: 95
           - Item: Violy_Card
-            Rate: 1
+            Rate: 95
           - Item: Wander_Man_Card
-            Rate: 1
+            Rate: 95
+          - Item: Vocal_Card
+            Rate: 95
           - Item: Bon_Gun_Card
-            Rate: 1
+            Rate: 95
           - Item: Brilight_Card
-            Rate: 1
+            Rate: 95
           - Item: Bloody_Murderer_Card
-            Rate: 1
+            Rate: 95
           - Item: Blazzer_Card
-            Rate: 1
+            Rate: 95
           - Item: Sasquatch_Card
-            Rate: 1
+            Rate: 95
           - Item: Live_Peach_Tree_Card
-            Rate: 1
+            Rate: 95
           - Item: Succubus_Card
-            Rate: 1
+            Rate: 95
           - Item: Sageworm_Card
-            Rate: 1
+            Rate: 95
           - Item: Solider_Card
-            Rate: 1
+            Rate: 95
           - Item: Skeleton_General_Card
-            Rate: 1
+            Rate: 95
           - Item: Skel_Prisoner_Card
-            Rate: 1
+            Rate: 95
           - Item: Stalactic_Golem_Card
-            Rate: 1
+            Rate: 95
           - Item: Stem_Worm_Card
-            Rate: 1
+            Rate: 95
           - Item: Stone_Shooter_Card
-            Rate: 1
+            Rate: 95
           - Item: Sting_Card
-            Rate: 1
+            Rate: 95
           - Item: Spring_Rabbit_Card
-            Rate: 1
+            Rate: 95
           - Item: Sleeper_Card
-            Rate: 1
+            Rate: 95
           - Item: C_Tower_Manager_Card
-            Rate: 1
+            Rate: 95
           - Item: Shinobi_Card
-            Rate: 1
+            Rate: 95
           - Item: Increase_Soil_Card
-            Rate: 1
+            Rate: 95
           - Item: Wild_Ginseng_Card
-            Rate: 1
+            Rate: 95
           - Item: Baby_Leopard_Card
-            Rate: 1
+            Rate: 95
           - Item: Anolian_Card
-            Rate: 1
+            Rate: 95
           - Item: Cookie_XMAS_Card
-            Rate: 1
-          - Item: Owl_Duke_Card
-            Rate: 1
-          - Item: Owl_Baron_Card
-            Rate: 1
+            Rate: 95
           - Item: Iron_Fist_Card
-            Rate: 1
+            Rate: 95
           - Item: Arclouse_Card
-            Rate: 1
+            Rate: 95
           - Item: Apocalips_Card
-            Rate: 1
-          - Item: Antonio_Card
-            Rate: 1
+            Rate: 95
           - Item: Alarm_Card
-            Rate: 1
+            Rate: 95
           - Item: Am_Mut_Card
-            Rate: 1
+            Rate: 95
           - Item: Assulter_Card
-            Rate: 1
+            Rate: 95
           - Item: Aster_Card
-            Rate: 1
+            Rate: 95
           - Item: Ancient_Mummy_Card
-            Rate: 1
+            Rate: 95
           - Item: Ancient_Worm_Card
-            Rate: 1
+            Rate: 95
           - Item: Elder_Card
-            Rate: 1
+            Rate: 95
           - Item: Alligator_Card
-            Rate: 1
+            Rate: 95
           - Item: Alice_Card
-            Rate: 1
+            Rate: 95
           - Item: Orc_Lady_Card
-            Rate: 1
+            Rate: 95
           - Item: Orc_Archer_Card
-            Rate: 1
+            Rate: 95
           - Item: Wild_Rose_Card
-            Rate: 1
+            Rate: 95
           - Item: Wicked_Nymph_Card
-            Rate: 1
+            Rate: 95
           - Item: Wooden_Golem_Card
-            Rate: 1
+            Rate: 95
           - Item: Wootan_Shooter_Card
-            Rate: 1
+            Rate: 95
           - Item: Wootan_Fighter_Card
-            Rate: 1
+            Rate: 95
           - Item: Evil_Cloud_Hermit_Card
-            Rate: 1
+            Rate: 95
           - Item: Wind_Ghost_Card
-            Rate: 1
+            Rate: 95
           - Item: Li_Me_Mang_Ryang_Card
-            Rate: 1
+            Rate: 95
           - Item: Explosion_Card
-            Rate: 1
+            Rate: 95
           - Item: Injustice_Card
-            Rate: 1
+            Rate: 95
           - Item: Incubus_Card
-            Rate: 1
+            Rate: 95
           - Item: Giant_Spider_Card
-            Rate: 1
+            Rate: 95
           - Item: Giant_Honet_Card
-            Rate: 1
+            Rate: 95
           - Item: Dancing_Dragon_Card
-            Rate: 1
+            Rate: 95
           - Item: Shellfish_Card
-            Rate: 1
+            Rate: 95
           - Item: Zombie_Master_Card
-            Rate: 1
+            Rate: 95
           - Item: Zombie_Prisoner_Card
-            Rate: 1
+            Rate: 95
           - Item: Zherlthsh_Card
-            Rate: 1
+            Rate: 95
           - Item: Gibbet_Card
-            Rate: 1
+            Rate: 95
           - Item: Deleter_Card
-            Rate: 1
+            Rate: 95
           - Item: Geographer_Card
-            Rate: 1
+            Rate: 95
           - Item: Zipper_Bear_Card
-            Rate: 1
+            Rate: 95
           - Item: Tengu_Card
-            Rate: 1
+            Rate: 95
           - Item: Greatest_General_Card
-            Rate: 1
+            Rate: 95
           - Item: Chepet_Card
-            Rate: 1
+            Rate: 95
           - Item: Choco_Card
-            Rate: 1
+            Rate: 95
           - Item: Karakasa_Card
-            Rate: 1
+            Rate: 95
           - Item: Kapha_Card
-            Rate: 1
+            Rate: 95
           - Item: Carat_Card
-            Rate: 1
+            Rate: 95
           - Item: Caterpillar_Card
-            Rate: 1
-          - Item: Cat_O_Nine_Tail_Card
-            Rate: 1
+            Rate: 95
+          - Item: Kobold_Leader_Card
+            Rate: 95
           - Item: Kobold_Archer_Card
-            Rate: 1
+            Rate: 95
           - Item: Cookie_Card
-            Rate: 1
+            Rate: 95
           - Item: Quve_Card
-            Rate: 1
+            Rate: 95
           - Item: Kraben_Card
-            Rate: 1
+            Rate: 95
           - Item: Cramp_Card
-            Rate: 1
+            Rate: 95
           - Item: Cruiser_Card
-            Rate: 1
+            Rate: 95
           - Item: Cremy_Fear_Card
-            Rate: 1
+            Rate: 95
           - Item: Clock_Card
-            Rate: 1
-          - Item: Chimera_Card
-            Rate: 1
+            Rate: 95
           - Item: Killer_Mantis_Card
-            Rate: 1
+            Rate: 95
+          - Item: Whisper_Boss_Card
+            Rate: 95
           - Item: Tamruan_Card
-            Rate: 1
+            Rate: 95
           - Item: Kind_Of_Beetle_Card
-            Rate: 1
+            Rate: 95
           - Item: Tri_Joint_Card
-            Rate: 1
+            Rate: 95
           - Item: Parasite_Card
-            Rate: 1
+            Rate: 95
           - Item: Panzer_Goblin_Card
-            Rate: 1
+            Rate: 95
           - Item: Permeter_Card
-            Rate: 1
+            Rate: 95
           - Item: Fur_Seal_Card
-            Rate: 1
+            Rate: 95
           - Item: Punk_Card
-            Rate: 1
+            Rate: 95
           - Item: Penomena_Card
-            Rate: 1
+            Rate: 95
           - Item: Pest_Card
-            Rate: 1
+            Rate: 95
           - Item: Fake_Angel_Card
-            Rate: 1
+            Rate: 95
+          - Item: Mobster_Card
+            Rate: 95
           - Item: Freezer_Card
-            Rate: 1
+            Rate: 95
+          - Item: Bloody_Knight_Card
+            Rate: 95
           - Item: Hylozoist_Card
-            Rate: 1
-          - Item: High_Orc_Card
-            Rate: 1
+            Rate: 95
           - Item: Garm_Baby_Card
-            Rate: 1
+            Rate: 95
           - Item: Harpy_Card
-            Rate: 1
+            Rate: 95
           - Item: See_Otter_Card
-            Rate: 1
+            Rate: 95
           - Item: Blood_Butterfly_Card
-            Rate: 1
+            Rate: 95
           - Item: Hyegun_Card
-            Rate: 1
+            Rate: 95
           - Item: Phendark_Card
-            Rate: 1
+            Rate: 95
           - Item: Heater_Card
-            Rate: 1
+            Rate: 95
           - Item: Waste_Stove_Card
-            Rate: 1
+            Rate: 95
           - Item: Venomous_Card
-            Rate: 3
+            Rate: 95
           - Item: Noxious_Card
-            Rate: 1
+            Rate: 95
           - Item: Pitman_Card
-            Rate: 3
+            Rate: 95
           - Item: Ungoliant_Card
-            Rate: 1
+            Rate: 95
           - Item: Porcellio_Card
-            Rate: 1
+            Rate: 95
           - Item: Obsidian_Card
-            Rate: 1
+            Rate: 95
           - Item: Mineral_Card
-            Rate: 1
+            Rate: 95
           - Item: Teddy_Bear_Card
-            Rate: 1
+            Rate: 95
           - Item: Metaling_Card
-            Rate: 1
+            Rate: 95
           - Item: Mole_Card
-            Rate: 1
-          - Item: Anopheles_Card
-            Rate: 3
-          - Item: Hill_Wind_Card
-            Rate: 3
+            Rate: 95
           - Item: Ygnizem_Card
-            Rate: 1
-          - Item: Armaia_Card
-            Rate: 3
+            Rate: 95
           - Item: Whikebain_Card
-            Rate: 1
+            Rate: 95
           - Item: Erend_Card
-            Rate: 1
-          - Item: Rawrel_Card
-            Rate: 3
+            Rate: 95
           - Item: Kavac_Card
-            Rate: 1
+            Rate: 95
           - Item: Removal_Card
-            Rate: 1
-          - Item: Gemini_Card
-            Rate: 1
-          - Item: Gremlin_Card
-            Rate: 3
+            Rate: 95
           - Item: Beholder_Card
-            Rate: 1
+            Rate: 95
           - Item: Seyren_Card
-            Rate: 1
-          - Item: Eremes_Card
-            Rate: 3
+            Rate: 95
           - Item: Harword_Card
-            Rate: 1
+            Rate: 95
+          - Item: Magaleta_Card
+            Rate: 95
           - Item: Katrinn_Card
-            Rate: 1
+            Rate: 95
           - Item: Shecil_Card
-            Rate: 1
+            Rate: 95
           - Item: Venatu_Card
-            Rate: 1
+            Rate: 95
           - Item: Dimik_Card
-            Rate: 1
+            Rate: 95
           - Item: Archdam_Card
-            Rate: 1
+            Rate: 95
           - Item: Chung_E_Card
-            Rate: 1
+            Rate: 95
           - Item: Orc_Baby_Card_Card
-            Rate: 1
-          - Item: Green_Iguana_Card
-            Rate: 3
+            Rate: 95
           - Item: Acidus_Card
-            Rate: 1
+            Rate: 95
           - Item: Acidus__Card
-            Rate: 1
-          - Item: Ferus_Card
-            Rate: 3
+            Rate: 95
           - Item: Ferus__Card
-            Rate: 1
+            Rate: 95
           - Item: Novus__Card
-            Rate: 1
-          - Item: Novus_Card
-            Rate: 3
-          - Item: Hydro_Card
-            Rate: 1
-          - Item: Dragon_Egg_Card
-            Rate: 3
+            Rate: 95
           - Item: Ancient_Mimic_Card
-            Rate: 1
-          - Item: Deathword_Card
-            Rate: 3
+            Rate: 95
           - Item: Plasma_Card
-            Rate: 1
+            Rate: 95
           - Item: Breeze_Card
-            Rate: 1
-          - Item: Retribution_Card
-            Rate: 3
-          - Item: Observation_Card
-            Rate: 1
-          - Item: Shelter_Card
-            Rate: 1
-          - Item: Solace_Card
-            Rate: 1
-          - Item: Tha_Maero_Card
-            Rate: 1
-          - Item: Tha_Odium_Card
-            Rate: 1
-          - Item: Tha_Despero_Card
-            Rate: 1
+            Rate: 95
           - Item: Aliza_Card
-            Rate: 1
+            Rate: 95
           - Item: Alicel_Card
-            Rate: 1
+            Rate: 95
           - Item: Aliot_Card
-            Rate: 1
+            Rate: 95
           - Item: Skogul_Card
-            Rate: 1
+            Rate: 95
           - Item: Frus_Card
-            Rate: 1
+            Rate: 95
           - Item: Agav_Card
-            Rate: 1
+            Rate: 95
           - Item: Echio_Card
-            Rate: 1
+            Rate: 95
           - Item: Vanberk_Card
-            Rate: 1
+            Rate: 95
           - Item: Isilla_Card
-            Rate: 1
+            Rate: 95
           - Item: Hodremlin_Card
-            Rate: 1
+            Rate: 95
           - Item: Seeker_Card
-            Rate: 1
-          - Item: Snowier_Card
-            Rate: 2
+            Rate: 95
           - Item: Siroma_Card
-            Rate: 1
+            Rate: 95
           - Item: Ice_Titan_Card
-            Rate: 1
+            Rate: 95
           - Item: Gazeti_Card
-            Rate: 1
+            Rate: 95
           - Item: Muscipular_Card
-            Rate: 1
-          - Item: Drosera_Card
-            Rate: 2
+            Rate: 95
           - Item: Roween_Card
-            Rate: 1
-          - Item: Galion_Card
-            Rate: 1
-          - Item: Stapo_Card
-            Rate: 3
-          - Item: Byorgue_Card
-            Rate: 1
-          - Item: Sword_Guardian_Card
-            Rate: 1
-          - Item: Bow_Guardian_Card
-            Rate: 1
-          - Item: Salamander_Card
-            Rate: 1
-          - Item: Kasa_Card
-            Rate: 1
-          - Item: Magmaring_Card
-            Rate: 2
+            Rate: 95
           - Item: Imp_Card
-            Rate: 1
+            Rate: 95
           - Item: Knocker_Card
-            Rate: 1
+            Rate: 95
           - Item: Zombie_Slaughter_Card
-            Rate: 1
-          - Item: Ragged_Zombie_Card
-            Rate: 2
-          - Item: Hell_Poodle_Card
-            Rate: 2
-          - Item: Banshee_Card
-            Rate: 2
+            Rate: 95
           - Item: Flame_Skull_Card
-            Rate: 1
-          - Item: Necromancer_Card
-            Rate: 1
+            Rate: 95
           - Item: Tatacho_Card
-            Rate: 1
+            Rate: 95
           - Item: Aqua_Elemental_Card
-            Rate: 2
+            Rate: 95
           - Item: Draco_Card
-            Rate: 2
+            Rate: 95
           - Item: Luciola_Vespa_Card
-            Rate: 1
+            Rate: 95
+          - Item: P_Skeleton_Card
+            Rate: 95
           - Item: Centipede_Card
-            Rate: 1
+            Rate: 95
           - Item: Cornus_Card
-            Rate: 1
+            Rate: 95
           - Item: Dark_Shadow_Card
-            Rate: 1
+            Rate: 95
           - Item: Banshee_Master_Card
-            Rate: 1
+            Rate: 95
           - Item: Centipede_Larva_Card
-            Rate: 2
+            Rate: 95
           - Item: Hilsrion_Card
-            Rate: 2
+            Rate: 95
           - Item: Duneirre_Card
-            Rate: 1
+            Rate: 95
           - Item: Lata_Card
-            Rate: 1
+            Rate: 95
           - Item: Ringco_Card
-            Rate: 1
+            Rate: 95
           - Item: Pillar_Card
-            Rate: 1
-          - Item: Hardrock_Mommos_Card
-            Rate: 1
-          - Item: Tendrilion_Card
-            Rate: 1
+            Rate: 95
           - Item: Aunoe_Card
-            Rate: 1
+            Rate: 95
           - Item: Panat_Card
-            Rate: 1
+            Rate: 95
           - Item: Beholder_Master_Card
-            Rate: 1
+            Rate: 95
           - Item: Heavy_Metaling_Card
-            Rate: 1
+            Rate: 95
           - Item: Pinguicula_Dark_Card
-            Rate: 1
+            Rate: 95
           - Item: Naga_Card
-            Rate: 1
+            Rate: 95
           - Item: Nepenthes_Card
-            Rate: 1
+            Rate: 95
           - Item: Egg_Of_Draco_Card
-            Rate: 1
+            Rate: 95
           - Item: Bradium_Goram_Card
-            Rate: 1
+            Rate: 95
           - Item: Ancient_Tree_Card
-            Rate: 1
+            Rate: 95
           - Item: Jakudam_Card
-            Rate: 1
+            Rate: 95
           - Item: Cobalt_Mineral_Card
-            Rate: 1
+            Rate: 95
           - Item: Pinguicula_Card
-            Rate: 1
+            Rate: 95
           - Item: Hell_Apocalips_Card
-            Rate: 1
+            Rate: 95
           - Item: Scaraba_Card
-            Rate: 1
+            Rate: 95
           - Item: Dolomedes_Card
-            Rate: 1
+            Rate: 95
           - Item: Miming_Card
-            Rate: 1
+            Rate: 95
           - Item: Little_Fatum_Card
-            Rate: 1
+            Rate: 95
           - Item: Parus_Card
-            Rate: 1
+            Rate: 95
           - Item: Angra_Mantis_Card
-            Rate: 1
+            Rate: 95
           - Item: Pom_Spider_Card
-            Rate: 1
+            Rate: 95
           - Item: Alnoldi_Card
-            Rate: 1
+            Rate: 95
           - Item: Comodo_Card
-            Rate: 1
+            Rate: 95
           - Item: Cendrawasih_Card
-            Rate: 1
+            Rate: 95
           - Item: Banaspaty_Card
-            Rate: 1
+            Rate: 95
           - Item: Butoijo_Card
-            Rate: 1
+            Rate: 95
           - Item: Sedora_Card
-            Rate: 1
+            Rate: 95
           - Item: Sropho_Card
-            Rate: 1
+            Rate: 95
           - Item: Pot_Dofle_Card
-            Rate: 1
+            Rate: 95
           - Item: Siorava_Card
-            Rate: 1
+            Rate: 95
           - Item: Red_Eruma_Card
-            Rate: 1
-          - Item: Wild_Rider_Card
-            Rate: 1
+            Rate: 95
           - Item: Mini_Octopus_Card
-            Rate: 1
+            Rate: 95
           - Item: Alphoccio_Card
-            Rate: 1
+            Rate: 95
           - Item: Ceila_Card
-            Rate: 1
+            Rate: 95
           - Item: Chen_Card
-            Rate: 1
+            Rate: 95
           - Item: Flamel_Card
-            Rate: 1
+            Rate: 95
           - Item: Gertie_Card
-            Rate: 1
+            Rate: 95
           - Item: Randel_Card
-            Rate: 1
+            Rate: 95
           - Item: Trentini_Card
-            Rate: 1
-          - Item: Soheon_Card
-            Rate: 1
-          - Item: Elvira_Card
-            Rate: 1
-          - Item: Lora_Card
-            Rate: 1
-          - Item: Rudo_Card
-            Rate: 1
+            Rate: 95
           - Item: Bungisngis_Card
-            Rate: 1
+            Rate: 95
           - Item: Engkanto_Card
-            Rate: 1
+            Rate: 95
           - Item: Manananggal_Card
-            Rate: 1
+            Rate: 95
           - Item: Mangkukulam_Card
-            Rate: 1
+            Rate: 95
           - Item: Tikbalang_Card
-            Rate: 1
+            Rate: 95
           - Item: Tiyanak_Card
-            Rate: 1
+            Rate: 95
           - Item: Wakwak_Card
-            Rate: 1
+            Rate: 95
           - Item: Jejeling_Card
-            Rate: 1
+            Rate: 95
           - Item: Menblatt_Card
-            Rate: 1
+            Rate: 95
           - Item: Petal_Card
-            Rate: 1
+            Rate: 95
           - Item: Cenere_Card
-            Rate: 1
+            Rate: 95
           - Item: AntiqueBook_Card
-            Rate: 1
+            Rate: 95
           - Item: LichternB_Card
-            Rate: 1
+            Rate: 95
           - Item: LichternY_Card
-            Rate: 1
+            Rate: 95
           - Item: LichternR_Card
-            Rate: 1
+            Rate: 95
           - Item: LichternG_Card
-            Rate: 1
+            Rate: 95
+          - Item: FaithfulManager_Card
+            Rate: 95
+          - Item: White_Knightage_Card
+            Rate: 95
+          - Item: Khaliz_Knightage_Card
+            Rate: 95
           - Item: Big_Ben_Card
-            Rate: 1
+            Rate: 95
           - Item: Big_Bell_Card
-            Rate: 1
+            Rate: 95
           - Item: Neo_Punk_Card
-            Rate: 1
+            Rate: 95
           - Item: Arc_Elder_Card
-            Rate: 1
+            Rate: 95
           - Item: Time_Keeper_Card
-            Rate: 1
-          - Item: Owl_Viscount_Card
-            Rate: 1
-          - Item: Owl_Marquees_Card
-            Rate: 1
+            Rate: 95
+          - Item: P_Archer_Skeleton_Card
+            Rate: 95
+          - Item: P_Soldier_Skeleton_Card
+            Rate: 95
+          - Item: P_Amdarais_Card
+            Rate: 95
+          - Item: Immotal_Corps_Card
+            Rate: 95
+          - Item: Watcher_Card
+            Rate: 95
+          - Item: Tappy_Card
+            Rate: 95
+          - Item: Frozenwolf_Card
+            Rate: 95
+          - Item: Zombie_Guard_Card
+            Rate: 95
+          - Item: Grave_Arclouse_Card
+            Rate: 95
+          - Item: Grave_Mimic_Card
+            Rate: 95
+          - Item: Grave_Minorous_Card
+            Rate: 95
+          - Item: Grave_Mummy_Card
+            Rate: 95
+          - Item: Grave_A_Mummy_Card
+            Rate: 95
+          - Item: Grave_Verit_Card
+            Rate: 95
+          - Item: Eggring_Card
+            Rate: 95
+          - Item: Basilisk1_Card
+            Rate: 95
+          - Item: Basilisk2_Card
+            Rate: 95
+          - Item: Leaf_Lunatic_Card
+            Rate: 95
+          - Item: Grass_Fabre_Card
+            Rate: 95
+          - Item: Wild_Honet_Card
+            Rate: 95
+          - Item: Sw_Roda_Frog_Card
+            Rate: 95
+          - Item: Hunter_Wolf_Card
+            Rate: 95
+          - Item: Trance_Spore_Card
+            Rate: 95
+          - Item: Ju_Mandragora_Card
+            Rate: 95
+          - Item: Fru_Pom_Spider_Card
+            Rate: 95
+          - Item: Step_Card
+            Rate: 95
+          - Item: Rock_Step_Card
+            Rate: 95
+          - Item: Kick_Step_Card
+            Rate: 95
+          - Item: KickAndKick_Card
+            Rate: 95
+          - Item: GreenCenere_Card
+            Rate: 95
+          - Item: RepairRobot_T_Card
+            Rate: 95
+          - Item: ExplorationRover_T_Card
+            Rate: 95
+          - Item: Scr_MT_Robots_Card
+            Rate: 95
+          - Item: GC109_Card
+            Rate: 95
+          - Item: DR815_Card
+            Rate: 95
+          - Item: Fire_Condor_Card
+            Rate: 95
+          - Item: Fire_Sand_Man_Card
+            Rate: 95
+          - Item: Fire_Frilldora_Card
+            Rate: 95
+          - Item: Fire_Golem_Card
+            Rate: 95
+          - Item: Fulbuk_Card
+            Rate: 95
+          - Item: AngerNineTail_Card
+            Rate: 95
+          - Item: BitterBonGun_Card
+            Rate: 95
+          - Item: BitterSohee_Card
+            Rate: 95
+          - Item: BitterMunak_Card
+            Rate: 95
+          - Item: BitterArcherSk_Card
+            Rate: 95
+          - Item: WizardOfVeritas_Card
+            Rate: 95
+          - Item: FuryHero_Card
+            Rate: 95
+          - Item: SweetNightM_Card
+            Rate: 95
+          - Item: MattDrainliar_Card
+            Rate: 95
+          - Item: LivingDead_Card
+            Rate: 95
+          - Item: AngerGazeti_Card
+            Rate: 95
+          - Item: AngerSnowier_Card
+            Rate: 95
+          - Item: AngerIceTitan_Card
+            Rate: 95
+          - Item: OminousSolider_Card
+            Rate: 95
+          - Item: OminousPermeter_Card
+            Rate: 95
+          - Item: OminousHeater_Card
+            Rate: 95
+          - Item: OminousAssulter_Card
+            Rate: 95
+          - Item: OminousFreezer_Card
+            Rate: 95
+          - Item: Iara_Card
+            Rate: 95
+          - Item: Piranha_Card
+            Rate: 95
+          - Item: Curupira_Card
+            Rate: 95
+          - Item: Toucan_Card
+            Rate: 95
+          - Item: Jaguar_Card
+            Rate: 95
+          - Item: Headless_Mule_Card
+            Rate: 95
+          - Item: Human_Kimera_Card
+            Rate: 95
+          - Item: Matter_Kimera_Card
+            Rate: 95
+          - Item: Heart_Hunter_Card
+            Rate: 95
+          - Item: Wood_Goblin_Card
+            Rate: 95
+          - Item: Les_Card
+            Rate: 95
+          - Item: Uzhas_Card
+            Rate: 95
+          - Item: Vavayaga_Card
+            Rate: 95
+          - Item: Mavka_Card
+            Rate: 95
+          - Item: Faceworm_Card
+            Rate: 95
+          - Item: Faceworm_Egg_Card
+            Rate: 95
+          - Item: Faceworm_L_Card
+            Rate: 95
+          - Item: Payon_Soldier_Card
+            Rate: 95
+          - Item: Cowraiders1_Card
+            Rate: 95
+          - Item: Cowraiders2_Card
+            Rate: 95
+          - Item: Cowraiders3_Card
+            Rate: 95
+          - Item: E_Cowraiders1_Card
+            Rate: 95
+          - Item: E_Cowraiders2_Card
+            Rate: 95
+          - Item: E_Cowraiders3_Card
+            Rate: 95
+          - Item: Rr_Cramp_Card
+            Rate: 95
+          - Item: Rr_Arclouse_Card
+            Rate: 95
+          - Item: Gaster_Card
+            Rate: 95
+          - Item: Coyote_Card
+            Rate: 95
+          - Item: AirShip_Raid_Card
+            Rate: 95
+          - Item: Archi_Card
+            Rate: 95
+          - Item: Dio_Anemos_Card
+            Rate: 95
+          - Item: Geffen_Gang_Card
+            Rate: 95
+          - Item: Geffen_Thug_Card
+            Rate: 95
+          - Item: Geffen_Thief_Card
+            Rate: 95
+          - Item: Pa_Monk_Card
+            Rate: 95
+          - Item: Ordre_Card
+            Rate: 95
+          - Item: Blut_Hase_Card
+            Rate: 95
+          - Item: Kuro_Akuma_Card
+            Rate: 95
+          - Item: Hyper_Death_Card
+            Rate: 95
+          - Item: Rechenier_Card
+            Rate: 95
+          - Item: Odorico_Card
+            Rate: 95
+          - Item: Jew_Card
+            Rate: 95
+          - Item: Evil_Shadow_Card
+            Rate: 95
+          - Item: Colorful_T_Bear_Card
+            Rate: 95
+          - Item: Pitman_Worker_Card
+            Rate: 95
+          - Item: Fragment_Of_Soul_Card
+            Rate: 95
+          - Item: Sinister_Obsidian_Card
+            Rate: 95
+          - Item: Ancient_Trijoint_Card
+            Rate: 95
+          - Item: Ancient_Sta_Golem_Card
+            Rate: 95
+          - Item: Ancient_Megalith_Card
+            Rate: 95
+          - Item: Ancient_S_Shooter_Card
+            Rate: 95
+          - Item: Ancient_W_Shooter_Card
+            Rate: 95
+          - Item: Ancient_W_Fighter_Card
+            Rate: 95
+          - Item: E_EA2S_Card
+            Rate: 95
+          - Item: Bellare_Card
+            Rate: 95
+          - Item: High_Bellare_Card
+            Rate: 95
+          - Item: Sanare_Card
+            Rate: 95
+          - Item: High_Sanare_Card
+            Rate: 95
+          - Item: Plaga_Card
+            Rate: 95
+          - Item: Mutant_Plaga_Card
+            Rate: 95
+          - Item: Dolor_Card
+            Rate: 95
+          - Item: Mt_Dolor_Card
+            Rate: 95
+          - Item: Venenum_Card
+            Rate: 95
+          - Item: Mt_Venenum_Card
+            Rate: 95
+          - Item: Caput_Card
+            Rate: 95
+          - Item: Mt_Caput_Card
+            Rate: 95
+          - Item: E_EA1L_Card
+            Rate: 95
+          - Item: LivingDeath_Card
+            Rate: 95
+          - Item: Chaos_Ba_Jr_Card
+            Rate: 95
+          - Item: Chaos_S_Winder_Card
+            Rate: 95
+          - Item: Chaos_H_Fly_Card
+            Rate: 95
+          - Item: Chaos_Mantis_Card
+            Rate: 95
+          - Item: Chaos_Goring_Card
+            Rate: 95
+          - Item: Chaos_K_Mantis_Card
+            Rate: 95
+          - Item: Chaos_Poporing_Card
+            Rate: 95
+          - Item: Chaos_Stem_W_Card
+            Rate: 95
+          - Item: Firm_Kaho_Card
+            Rate: 95
+          - Item: Firm_Lava_G_Card
+            Rate: 95
+          - Item: Firm_Explosion_Card
+            Rate: 95
+          - Item: Firm_Deleter1_Card
+            Rate: 95
+          - Item: Firm_Deleter2_Card
+            Rate: 95
+          - Item: Firm_Nightmare_T_Card
+            Rate: 95
+          - Item: Firm_Blazzer_Card
+            Rate: 95
+          - Item: Polluted_Raydric_Card
+            Rate: 95
+          - Item: Polluted_Ray_A_Card
+            Rate: 95
+          - Item: Frozen_Gargoyle_Card
+            Rate: 95
+          - Item: Polluted_Sting_Card
+            Rate: 95
+          - Item: Prison_Breaker_Card
+            Rate: 95
+          - Item: Flame_Ghost_Card
+            Rate: 95
+          - Item: Polluted_W_Man_Card
+            Rate: 95
+          - Item: C_White_Knight_Card
+            Rate: 95
+          - Item: C_Khaliz_Knight_Card
+            Rate: 95
+          - Item: C_Raydric_Card
+            Rate: 95
+          - Item: C_Raydric_Archer_Card
+            Rate: 95
+          - Item: XM_Tree_Card
+            Rate: 95
+          - Item: XM_Cookie_Card
+            Rate: 95
+          - Item: XM_Mystcase_Card
+            Rate: 95
+          - Item: XM_Lude_Card
+            Rate: 95
+          - Item: XM_Hylozoist_Card
+            Rate: 95
+          - Item: XM_Marionette_Card
+            Rate: 95
+          - Item: XM_Teddy_Bear_Card
+            Rate: 95
+          - Item: Poisonous_Card
+            Rate: 95
+          - Item: Toxious_Card
+            Rate: 95
+          - Item: Porcellio_W_Card
+            Rate: 95
+          - Item: Neo_Mineral_Card
+            Rate: 95
+          - Item: Abyss_Man_Card
+            Rate: 95
+          - Item: Jeweliant_Card
+            Rate: 95
+          - Item: Angelgolt_Card
+            Rate: 95
+          - Item: Plasma_Spt_Card
+            Rate: 95
+          - Item: Plasma_Arch_Card
+            Rate: 95
+          - Item: Holy_Frus_Card
+            Rate: 95
+          - Item: Holy_Skogul_Card
+            Rate: 95
+          - Item: Ferus_P_Card
+            Rate: 95
+          - Item: Treasure_Mimic_Card
+            Rate: 95
+          - Item: Acidus_B_Card
+            Rate: 95
+          - Item: Acidus_S_Card
+            Rate: 95
+          - Item: Bone_Ferus_Card
+            Rate: 95
+          - Item: Bone_Acidus_Card
+            Rate: 95
+          - Item: Beta_Guards_Ng_Card
+            Rate: 95
+          - Item: O_Cleaner_Ng_Card
+            Rate: 95
+          - Item: Assistant_Card
+            Rate: 95
+          - Item: Assistant_H_Card
+            Rate: 95
+          - Item: Dry_Rafflesia_Card
+            Rate: 95
+          - Item: Dry_Rafflesia_H_Card
+            Rate: 95
+          - Item: Alnoldi_Ex_Card
+            Rate: 95
+          - Item: Alnoldi_Ex_H_Card
+            Rate: 95
+          - Item: Beta_Scissore_Ng_Card
+            Rate: 95
+          - Item: B_Scissore_Ng_H_Card
+            Rate: 95
+          - Item: Verporta_Card
+            Rate: 95
+          - Item: Verporte_H_Card
+            Rate: 95
+          - Item: Papila_Card
+            Rate: 95
+          - Item: Papila_H_Card
+            Rate: 95
+          - Item: Papila_Ruba_Card
+            Rate: 95
+          - Item: Papila_Ruba_H_Card
+            Rate: 95
+          - Item: Papila_Cae_Card
+            Rate: 95
+          - Item: Papila_Cae_H_Card
+            Rate: 95
+          - Item: Aries_Card
+            Rate: 95
+          - Item: Aries_H_Card
+            Rate: 95
+          - Item: Beta_Cleaner_Card
+            Rate: 95
+          - Item: Beta_Baths_A_Card
+            Rate: 95
+          - Item: Bath_Mermaid_Card
+            Rate: 95
+          - Item: Bookworm_Card
+            Rate: 95
+          - Item: Roaming_Splbook_Card
+            Rate: 95
+          - Item: Pitaya_R_Card
+            Rate: 95
+          - Item: Venenum3_Card
+            Rate: 95
+          - Item: EP17_2_Cramp_Card
+            Rate: 95
+          - Item: Waterfall_Card
+            Rate: 95
+          - Item: Bellare3_Card
+            Rate: 95
+          - Item: Dolor3_Card
+            Rate: 95
+          - Item: Plasma_Y_Card
+            Rate: 95
+          - Item: Plaga3_Card
+            Rate: 95
+          - Item: Sanare3_Card
+            Rate: 95
+          - Item: Plasma_R_Card
+            Rate: 95
+          - Item: Plasma_R2_Card
+            Rate: 95
+          - Item: EP17_2_Phen_Card
+            Rate: 95
+          - Item: EP17_2_Sword_Fish_Card
+            Rate: 95
+          - Item: EP17_2_Piranha_Card
+            Rate: 95
+          - Item: EP17_2_Marc_Card
+            Rate: 95
+          - Item: Pitaya_Y_Card
+            Rate: 95
+          - Item: Pitaya_V_Card
+            Rate: 95
+          - Item: Pitaya_B_Card
+            Rate: 95
+          - Item: Pitaya_G_Card
+            Rate: 95
+          - Item: ILL_Sropho_Card
+            Rate: 95
+          - Item: ILL_Obeaune_Card
+            Rate: 95
+          - Item: ILL_Deviace_Card
+            Rate: 95
+          - Item: ILL_Marse_Card
+            Rate: 95
+          - Item: ILL_Merman_Card
+            Rate: 95
+          - Item: ILL_Sedora_Card
+            Rate: 95
+          - Item: ILL_Sword_Fish_Card
+            Rate: 95
+          - Item: ILL_Strouf_Card
+            Rate: 95
+          - Item: ILL_Phen_Card
+            Rate: 95
+          - Item: ILL_King_Dramoh_Card
+            Rate: 95
+          - Item: Poring__Card
+            Rate: 190
+          - Item: Metaller_Card
+            Rate: 190
+          - Item: Thara_Frog_Card
+            Rate: 190
+          - Item: Goblin_Card
+            Rate: 190
+          - Item: Cornutus_Card
+            Rate: 190
+          - Item: Anacondaq_Card
+            Rate: 190
+          - Item: Caramel_Card
+            Rate: 190
+          - Item: Zerom_Card
+            Rate: 190
+          - Item: Kaho_Card
+            Rate: 190
+          - Item: Orc_Warrior_Card
+            Rate: 190
+          - Item: Megalodon_Card
+            Rate: 190
+          - Item: Scorpion_Card
+            Rate: 190
+          - Item: Drainliar_Card
+            Rate: 190
+          - Item: Eggyra_Card
+            Rate: 190
+          - Item: Orc_Zombie_Card
+            Rate: 190
+          - Item: Pirate_Skel_Card
+            Rate: 190
+          - Item: BigFoot_Card
+            Rate: 190
+          - Item: Argos_Card
+            Rate: 190
+          - Item: Magnolia_Card
+            Rate: 190
+          - Item: Phen_Card
+            Rate: 190
+          - Item: Savage_Card
+            Rate: 190
+          - Item: Mantis_Card
+            Rate: 190
+          - Item: Flora_Card
+            Rate: 190
+          - Item: Hode_Card
+            Rate: 190
+          - Item: Snowier_Card
+            Rate: 190
+          - Item: Drosera_Card
+            Rate: 190
+          - Item: Magmaring_Card
+            Rate: 190
+          - Item: Ragged_Zombie_Card
+            Rate: 190
+          - Item: Hell_Poodle_Card
+            Rate: 190
+          - Item: Banshee_Card
+            Rate: 190
+          - Item: Kukre_Card
+            Rate: 284
+          - Item: Pecopeco_Card
+            Rate: 284
+          - Item: Hydra_Card
+            Rate: 284
+          - Item: Muka_Card
+            Rate: 284
+          - Item: Snake_Card
+            Rate: 284
+          - Item: Zombie_Card
+            Rate: 284
+          - Item: Stainer_Card
+            Rate: 284
+          - Item: Creamy_Card
+            Rate: 284
+          - Item: Coco_Card
+            Rate: 284
+          - Item: Steel_Chonchon_Card
+            Rate: 284
+          - Item: Andre_Card
+            Rate: 284
+          - Item: Smokie_Card
+            Rate: 284
+          - Item: Horn_Card
+            Rate: 284
+          - Item: Martin_Card
+            Rate: 284
+          - Item: Poison_Spore_Card
+            Rate: 284
+          - Item: Vadon_Card
+            Rate: 284
+          - Item: Thief_Bug_Male_Card
+            Rate: 284
+          - Item: Yoyo_Card
+            Rate: 284
+          - Item: Elder_Wilow_Card
+            Rate: 284
+          - Item: Marina_Card
+            Rate: 284
+          - Item: Dustiness_Card
+            Rate: 284
+          - Item: Anopheles_Card
+            Rate: 284
+          - Item: Hill_Wind_Card
+            Rate: 284
+          - Item: Armaia_Card
+            Rate: 284
+          - Item: Rawrel_Card
+            Rate: 284
+          - Item: Gremlin_Card
+            Rate: 284
+          - Item: Eremes_Card
+            Rate: 284
+          - Item: Green_Iguana_Card
+            Rate: 284
+          - Item: Ferus_Card
+            Rate: 284
+          - Item: Novus_Card
+            Rate: 284
+          - Item: Dragon_Egg_Card
+            Rate: 284
+          - Item: Deathword_Card
+            Rate: 284
+          - Item: Stapo_Card
+            Rate: 284
+          - Item: Pecopeco_Egg_Card
+            Rate: 379
+          - Item: Roda_Frog_Card
+            Rate: 474
+          - Item: Savage_Babe_Card
+            Rate: 474
+          - Item: Desert_Wolf_Babe_Card
+            Rate: 474
+          - Item: Plankton_Card
+            Rate: 474
+          - Item: Skeleton_Card
+            Rate: 474
+          - Item: Pupa_Card
+            Rate: 569
+          - Item: Ambernite_Card
+            Rate: 569
+          - Item: Poporing_Card
+            Rate: 569
+          - Item: Worm_Tail_Card
+            Rate: 569
+          - Item: Thief_Bug_Female_Card
+            Rate: 853
+          - Item: Tarou_Card
+            Rate: 853
+          - Item: Wolf_Card
+            Rate: 853
+          - Item: Mandragora_Card
+            Rate: 853
+          - Item: Hornet_Card
+            Rate: 948
+          - Item: Farmiliar_Card
+            Rate: 948
+          - Item: Rocker_Card
+            Rate: 948
+          - Item: Spore_Card
+            Rate: 948
+          - Item: Novice_Poring_Card
+            Rate: 948
+          - Item: Andre_Egg_Card
+            Rate: 1137
+          - Item: Condor_Card
+            Rate: 1137
+          - Item: Thief_Bug_Card
+            Rate: 1137
+          - Item: Lunatic_Card
+            Rate: 1327
+          - Item: Poring_Card
+            Rate: 1422
+          - Item: Fabre_Card
+            Rate: 1611
+          - Item: Picky_Card
+            Rate: 1611
+          - Item: Chonchon_Card
+            Rate: 1611
+          - Item: Wilow_Card
+            Rate: 1611
+          - Item: Picky__Card
+            Rate: 1611
+          - Item: Drops_Card
+            Rate: 1706
+          - Item: Thief_Bug_Egg_Card
+            Rate: 1801
   - Group: CARDALBUM_ACC
     SubGroups:
       - SubGroup: 1
@@ -13267,68 +13695,190 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: Ghostring_Card
-            Rate: 1
-          - Item: Angeling_Card
-            Rate: 1
-          - Item: Gryphon_Card
-            Rate: 1
-          - Item: Dark_Illusion_Card
-            Rate: 1
-          - Item: Deviling_Card
-            Rate: 1
-          - Item: Dragon_Fly_Card
-            Rate: 10
-          - Item: Vagabond_Wolf_Card
-            Rate: 10
-          - Item: Mastering_Card
-            Rate: 10
-          - Item: Maya_Puple_Card
-            Rate: 1
-          - Item: Mutant_Dragon_Card
-            Rate: 10
-          - Item: Mysteltainn_Card
-            Rate: 1
-          - Item: Vocal_Card
-            Rate: 1
-          - Item: Owl_Duke_Card
-            Rate: 5
-          - Item: Owl_Baron_Card
-            Rate: 5
-          - Item: Archangeling_Card
-            Rate: 1
-          - Item: Executioner_Card
-            Rate: 1
-          - Item: Tirfing_Card
-            Rate: 1
-          - Item: Eclipse_Card
-            Rate: 10
-          - Item: Chepet_Card
-            Rate: 10
-          - Item: Choco_Card
-            Rate: 10
-          - Item: Cat_O_Nine_Tail_Card
-            Rate: 5
-          - Item: Kobold_Leader_Card
-            Rate: 10
-          - Item: Chimera_Card
-            Rate: 10
+          - Item: Real_Eremes_Card
+            Rate: 3
+          - Item: Real_Magaleta_Card
+            Rate: 3
+          - Item: Real_Katrinn_Card
+            Rate: 3
+          - Item: Real_Shecil_Card
+            Rate: 3
+          - Item: Real_Harword_Card
+            Rate: 3
+          - Item: Real_Seyren_Card
+            Rate: 3
+          - Item: Real_Randel_Card
+            Rate: 3
+          - Item: Real_Flamel_Card
+            Rate: 3
+          - Item: Real_Ceila_Card
+            Rate: 3
+          - Item: Real_Chen_Card
+            Rate: 3
+          - Item: Real_Gertie_Card
+            Rate: 3
+          - Item: Real_Trentini_Card
+            Rate: 3
+          - Item: Real_Alphoccio_Card
+            Rate: 3
+          - Item: Bomi_Card
+            Rate: 3
+          - Item: Knight_Sakray_Card
+            Rate: 3
+          - Item: Chaos_Acolyte_Card
+            Rate: 3
+          - Item: As_Bdy_Knight_Card
+            Rate: 3
+          - Item: As_Wind_Ghost_Card
+            Rate: 3
+          - Item: Fenrir_Card_
+            Rate: 16
+          - Item: UndeadKnightM_Card
+            Rate: 16
+          - Item: UndeadKnightF_Card
+            Rate: 16
+          - Item: Faceworm_D_Card
+            Rate: 16
+          - Item: Irene_Elder_Card
+            Rate: 16
           - Item: Toad_Card
-            Rate: 10
+            Rate: 16
+          - Item: Gigantes_Card
+            Rate: 16
+          - Item: Fei_Kanabian_Card
+            Rate: 16
+          - Item: Ahat_Card
+            Rate: 16
+          - Item: Shnaim_Card
+            Rate: 16
+          - Item: Brinaranea_Card
+            Rate: 16
+          - Item: Muspellskoll_Card
+            Rate: 16
+          - Item: Antonio_Card
+            Rate: 156
+          - Item: Dy_Card
+            Rate: 156
+          - Item: Ghostring_Card
+            Rate: 312
+          - Item: Angeling_Card
+            Rate: 312
+          - Item: Gryphon_Card
+            Rate: 312
+          - Item: Dark_Illusion_Card
+            Rate: 312
+          - Item: Deviling_Card
+            Rate: 312
+          - Item: Maya_Puple_Card
+            Rate: 312
+          - Item: Mysteltainn_Card
+            Rate: 312
+          - Item: Vocal_Card
+            Rate: 312
+          - Item: Archangeling_Card
+            Rate: 312
+          - Item: Executioner_Card
+            Rate: 312
+          - Item: Tirfing_Card
+            Rate: 312
+          - Item: Eclipse_Card
+            Rate: 312
           - Item: Bloody_Knight_Card
-            Rate: 1
+            Rate: 312
           - Item: Ungoliant_Card
-            Rate: 1
+            Rate: 312
           - Item: Gemini_Card
-            Rate: 1
+            Rate: 312
+          - Item: King_Dramoh_Card
+            Rate: 312
+          - Item: Wild_Rider_Card
+            Rate: 312
+          - Item: Soheon_Card
+            Rate: 312
+          - Item: Elvira_Card
+            Rate: 312
+          - Item: Lora_Card
+            Rate: 312
+          - Item: Rudo_Card
+            Rate: 312
+          - Item: IFN_Toad_Card
+            Rate: 312
+          - Item: IFN_V_Wolf_Card
+            Rate: 312
+          - Item: IFN_Vocal_Card
+            Rate: 312
+          - Item: IFN_Eclipse_Card
+            Rate: 312
+          - Item: IFN_Chimera_Card
+            Rate: 312
+          - Item: Owl_Duke_Card
+            Rate: 1559
+          - Item: Owl_Baron_Card
+            Rate: 1559
+          - Item: Cat_O_Nine_Tail_Card
+            Rate: 1559
+          - Item: Gold_Scaraba_Card
+            Rate: 1559
+          - Item: Owl_Viscount_Card
+            Rate: 1559
+          - Item: Owl_Marquees_Card
+            Rate: 1559
+          - Item: Hardrock_Mommos_Card
+            Rate: 1871
+          - Item: Tendrilion_Card
+            Rate: 1871
+          - Item: Chepet_Card
+            Rate: 2183
+          - Item: Choco_Card
+            Rate: 2183
+          - Item: Kobold_Leader_Card
+            Rate: 2183
+          - Item: Dragon_Fly_Card
+            Rate: 3118
+          - Item: Vagabond_Wolf_Card
+            Rate: 3118
+          - Item: Mastering_Card
+            Rate: 3118
+          - Item: Mutant_Dragon_Card
+            Rate: 3118
+          - Item: Chimera_Card
+            Rate: 3118
+          - Item: Toad_Card
+            Rate: 3118
           - Item: Hydro_Card
-            Rate: 1
+            Rate: 3118
+          - Item: Retribution_Card
+            Rate: 3118
+          - Item: Observation_Card
+            Rate: 3118
+          - Item: Shelter_Card
+            Rate: 3118
+          - Item: Solace_Card
+            Rate: 3118
           - Item: Tha_Maero_Card
-            Rate: 3
+            Rate: 3118
           - Item: Tha_Odium_Card
-            Rate: 3
+            Rate: 3118
           - Item: Tha_Despero_Card
-            Rate: 3
+            Rate: 3118
+          - Item: Tha_Dolor_Card
+            Rate: 3118
+          - Item: Skeggiold_Card
+            Rate: 3118
+          - Item: Galion_Card
+            Rate: 3118
+          - Item: Byorgue_Card
+            Rate: 3118
+          - Item: Sword_Guardian_Card
+            Rate: 3118
+          - Item: Bow_Guardian_Card
+            Rate: 3118
+          - Item: Salamander_Card
+            Rate: 3118
+          - Item: Kasa_Card
+            Rate: 3118
+          - Item: Necromancer_Card
+            Rate: 3118
   - Group: MAGICIAN_CARD_BOX
     SubGroups:
       - SubGroup: 0

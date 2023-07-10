@@ -10,7 +10,7 @@
 
 #include "map.hpp" // NAME_LENGTH
 
-struct guild;
+struct mmo_guild;
 struct guild_member;
 struct guild_position;
 struct guild_castle;
@@ -27,20 +27,29 @@ struct guardian_data {
 	std::shared_ptr<guild_castle> castle;
 };
 
+class MapGuild {
+public:
+	struct mmo_guild guild;
+	struct Channel *channel;
+	int instance_id;
+	int32 chargeshout_flag_id;
+};
+
 uint16 guild_skill_get_max(uint16 id);
 
-int guild_checkskill(struct guild *g,int id);
-bool guild_check_skill_require(struct guild *g,uint16 id); // [Komurka]
-int guild_checkcastles(struct guild *g); // [MouseJstr]
+int guild_checkskill(const struct mmo_guild &g,int id);
+bool guild_check_skill_require(const struct mmo_guild &g,uint16 id); // [Komurka]
+int guild_checkcastles(const struct mmo_guild &g); // [MouseJstr]
 bool guild_isallied(int guild_id, int guild_id2); //Checks alliance based on guild Ids. [Skotlex]
 
 void do_init_guild(void);
-struct guild *guild_search(int guild_id);
-struct guild *guild_searchname(char *str);
+std::shared_ptr<MapGuild> guild_search(int guild_id);
+std::shared_ptr<MapGuild> guild_searchname(const char *str);
+std::shared_ptr<MapGuild> guild_searchnameid(const char *str);
 
-map_session_data *guild_getavailablesd(struct guild *g);
-int guild_getindex(struct guild *g,uint32 account_id,uint32 char_id);
-int guild_getposition(map_session_data *sd);
+map_session_data* guild_getavailablesd(const struct mmo_guild &g);
+int guild_getindex(const struct mmo_guild &g, uint32 account_id, uint32 char_id);
+int guild_getposition(const map_session_data &sd);
 t_exp guild_payexp(map_session_data *sd,t_exp exp);
 t_exp guild_getexp(map_session_data *sd,t_exp exp); // [Celest]
 
@@ -48,7 +57,7 @@ int guild_create(map_session_data *sd, const char *name);
 int guild_created(uint32 account_id,int guild_id);
 int guild_request_info(int guild_id);
 int guild_recv_noinfo(int guild_id);
-int guild_recv_info(struct guild *sg);
+int guild_recv_info(const struct mmo_guild &sg);
 int guild_npc_request_info(int guild_id,const char *ev);
 int guild_invite(map_session_data *sd,map_session_data *tsd);
 int guild_reply_invite(map_session_data *sd,int guild_id,int flag);
@@ -73,7 +82,7 @@ int guild_check_alliance(int guild_id1, int guild_id2, int flag);
 int guild_send_memberinfoshort(map_session_data *sd,int online);
 int guild_recv_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int online,int lv,int class_);
 int guild_change_memberposition(int guild_id,uint32 account_id,uint32 char_id,short idx);
-int guild_memberposition_changed(struct guild *g,int idx,int pos);
+int guild_memberposition_changed(struct mmo_guild &g,int idx,int pos);
 int guild_change_position(int guild_id,int idx,int mode,int exp_mode,const char *name);
 int guild_position_changed(int guild_id,int idx,struct guild_position *p);
 int guild_change_notice(map_session_data *sd,int guild_id,const char *mes1,const char *mes2);

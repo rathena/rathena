@@ -2044,16 +2044,16 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 		if ((status_bl_has_mode(bl,MD_SKILLIMMUNE) || (class_ == MOBID_EMPERIUM && !skill_get_inf2(skill_id, INF2_TARGETEMPERIUM))) && flag&BF_SKILL) //Skill immunity.
 			return false;
 		if( src->type != BL_MOB || mob_is_clone( ((struct mob_data*)src)->mob_id ) ){
-			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
+			auto g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
 
-			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g,GD_APPROVAL) <= 0 ))
+			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g->guild, GD_APPROVAL) <= 0 ))
 				return false;
 
 			if (g != nullptr) {
-				if (battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
+				if (battle_config.guild_max_castles && guild_checkcastles(g->guild)>=battle_config.guild_max_castles)
 					return false; // [MouseJstr]
 
-				if (md->special_state.ai == AI_GUILD && g->guild_id == md->master_id)
+				if (md->special_state.ai == AI_GUILD && g->guild.guild_id == md->master_id)
 					return false;
 			}
 		}
@@ -4027,7 +4027,23 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
-		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
+		if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
+			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
+		{
+			int chance = rnd()%100;
+			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
+				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
+				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
+				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
+				case 2:
+				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
+			}
+			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
+			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
+			if (wd->div_ > 1)
+				wd->type = DMG_MULTI_HIT;
+		}
+		if( wd->div_ == 1 && ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
 			|| ( pc_checkskill_flag(*sd, TF_DOUBLE) > SKILL_FLAG_PERMANENT && sd->weapontype1 != W_FIST )
 			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
 			|| ( sc && sc->getSCE(SC_KAGEMUSYA) && sd->weapontype1 != W_FIST )) // Will fail bare-handed
@@ -4048,7 +4064,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->type = DMG_MULTI_HIT;
 			}
 		}
-		else if( ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
+		if( wd->div_ == 1 && ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
 			|| (sc && sc->count && sc->getSCE(SC_E_CHAIN) && (skill_lv = sc->getSCE(SC_E_CHAIN)->val1) > 0)) //Chain Action of ETERNAL_CHAIN
 			&& rnd()%100 < 5*skill_lv ) //Success rate
 		{
@@ -4056,22 +4072,6 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			wd->type = DMG_MULTI_HIT;
 
 			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
-		}
-		else if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
-			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
-		{
-			int chance = rnd()%100;
-			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
-				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
-				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
-				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
-				case 2:
-				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
-			}
-			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
-			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
-			if (wd->div_ > 1)
-				wd->type = DMG_MULTI_HIT;
 		}
 	}
 
