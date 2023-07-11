@@ -7,16 +7,16 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "clif.hpp"
 #include "intif.hpp"
@@ -281,7 +281,7 @@ int mercenary_delete(s_mercenary_data *md, int reply) {
 	if( md->devotion_flag )
 	{
 		md->devotion_flag = 0;
-		status_change_end(&sd->bl, SC_DEVOTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_DEVOTION);
 	}
 
 	switch( reply )

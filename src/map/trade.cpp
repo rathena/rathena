@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/nullpo.hpp"
-#include "../common/socket.hpp"
+#include <common/nullpo.hpp>
+#include <common/socket.hpp>
 
 #include "atcommand.hpp"
 #include "battle.hpp"
@@ -28,7 +28,7 @@
  * @param sd : player requesting the trade
  * @param target_sd : player requested
  */
-void trade_traderequest(struct map_session_data *sd, struct map_session_data *target_sd)
+void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 {
 	nullpo_retv(sd);
 
@@ -55,7 +55,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	}
 
 	if ( sd->trade_partner != 0 ) { // If a character tries to trade to another one then cancel the previous one
-		struct map_session_data *previous_sd = map_id2sd(sd->trade_partner);
+		map_session_data *previous_sd = map_id2sd(sd->trade_partner);
 
 		if( previous_sd ){
 			previous_sd->trade_partner = 0;
@@ -101,9 +101,9 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
  * Weird enough, the client should only send 3/4
  * and the server is the one that can reply 0~2
  */
-void trade_tradeack(struct map_session_data *sd, int type)
+void trade_tradeack(map_session_data *sd, int type)
 {
-	struct map_session_data *tsd;
+	map_session_data *tsd;
 
 	nullpo_retv(sd);
 
@@ -174,7 +174,7 @@ void trade_tradeack(struct map_session_data *sd, int type)
  * @param sd : player to check
  * @return -1:zeny hack, 0:all fine, 1:item hack
  */
-int impossible_trade_check(struct map_session_data *sd)
+int impossible_trade_check(map_session_data *sd)
 {
 	struct item inventory[MAX_INVENTORY];
 	char message_to_gm[200];
@@ -240,7 +240,7 @@ int impossible_trade_check(struct map_session_data *sd)
  * @param tsd : player 2 trading
  * @return 0:error, 1:success
  */
-int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
+int trade_check(map_session_data *sd, map_session_data *tsd)
 {
 	struct item inventory[MAX_INVENTORY];
 	struct item inventory2[MAX_INVENTORY];
@@ -344,9 +344,9 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
  * @param index : index of item in inventory
  * @param amount : amount of item to add from index
  */
-void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
+void trade_tradeadditem(map_session_data *sd, short index, short amount)
 {
-	struct map_session_data *target_sd;
+	map_session_data *target_sd;
 	struct item *item;
 	int trade_i, trade_weight;
 	int src_lv, dst_lv;
@@ -362,11 +362,9 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	}
 
 	if( !amount ) { // Why do this.. ~.~ just send an ack, the item won't display on the trade window.
-		clif_tradeitemok(sd, index, 0);
+		clif_tradeitemok(*sd, -2, EXITEM_ADD_SUCCEED); // We pass -2 which will becomes 0 in clif_tradeitemok (Official behavior)
 		return;
 	}
-
-	index -= 2; // 0 is for zeny, 1 is unknown. Gravity, go figure...
 
 	// Item checks...
 	if( index < 0 || index >= MAX_INVENTORY )
@@ -381,7 +379,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( !itemdb_cantrade(item, src_lv, dst_lv) && // Can't trade
 		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) { // Can't partner-trade
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
@@ -390,13 +388,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	if( item->expire_time ) { // Rental System
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
@@ -411,13 +409,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		clif_tradeitemok(sd, index+2, 1);
+		// clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT); // We do not know if the server respond with this or not since the official client prevents this case client-side.
 		return;
 	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
 	if( target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight ) { // fail to add item -- the player was over weighted.
-		clif_tradeitemok(sd, index+2, 1);
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
 		return;
 	}
 
@@ -435,7 +433,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	sd->deal.weight += trade_weight;
 
-	clif_tradeitemok(sd, index+2, 0); // Return the index as it was received
+	clif_tradeitemok(*sd, index, EXITEM_ADD_SUCCEED); // Return the index as it was received
 	clif_tradeadditem(sd, target_sd, index+2, amount);
 }
 
@@ -446,9 +444,9 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
  * @param sd : Player who's adding zeny
  * @param amount : zeny amount
  */
-void trade_tradeaddzeny(struct map_session_data* sd, int amount)
+void trade_tradeaddzeny(map_session_data* sd, int amount)
 {
-	struct map_session_data* target_sd;
+	map_session_data* target_sd;
 
 	nullpo_retv(sd);
 
@@ -473,9 +471,9 @@ void trade_tradeaddzeny(struct map_session_data* sd, int amount)
  * 'Ok' button on the trade window is pressed.
  * @param sd : Player that pressed the button
  */
-void trade_tradeok(struct map_session_data *sd)
+void trade_tradeok(map_session_data *sd)
 {
-	struct map_session_data *target_sd;
+	map_session_data *target_sd;
 
 	if(sd->state.deal_locked || !sd->state.trading)
 		return;
@@ -486,7 +484,7 @@ void trade_tradeok(struct map_session_data *sd)
 	}
 
 	sd->state.deal_locked = 1;
-	clif_tradeitemok(sd, 0, 0);
+	clif_tradeitemok(*sd, -2, EXITEM_ADD_SUCCEED); // We pass -2 which will becomes 0 in clif_tradeitemok (Official behavior)
 	clif_tradedeal_lock(sd, 0);
 	clif_tradedeal_lock(target_sd, 1);
 }
@@ -495,9 +493,9 @@ void trade_tradeok(struct map_session_data *sd)
  * 'Cancel' is pressed. (or trade was force-cancelled by the code)
  * @param sd : Player that pressed the button
  */
-void trade_tradecancel(struct map_session_data *sd)
+void trade_tradecancel(map_session_data *sd)
 {
-	struct map_session_data *target_sd;
+	map_session_data *target_sd;
 	int trade_i;
 
 	nullpo_retv(sd);
@@ -561,9 +559,9 @@ void trade_tradecancel(struct map_session_data *sd)
  * lock sd and tsd trade data, execute the trade, clear, then save players
  * @param sd : Player that has click on trade button
  */
-void trade_tradecommit(struct map_session_data *sd)
+void trade_tradecommit(map_session_data *sd)
 {
-	struct map_session_data *tsd;
+	map_session_data *tsd;
 	int trade_i;
 
 	nullpo_retv(sd);
@@ -631,15 +629,15 @@ void trade_tradecommit(struct map_session_data *sd)
 	}
 
 	if( sd->deal.zeny ) {
-		pc_payzeny(sd ,sd->deal.zeny, LOG_TYPE_TRADE, tsd);
-		pc_getzeny(tsd,sd->deal.zeny,LOG_TYPE_TRADE, sd);
+		pc_payzeny(sd ,sd->deal.zeny, LOG_TYPE_TRADE, tsd->status.char_id);
+		pc_getzeny(tsd,sd->deal.zeny,LOG_TYPE_TRADE, sd->status.char_id);
 		sd->deal.zeny = 0;
 
 	}
 
 	if ( tsd->deal.zeny) {
-		pc_payzeny(tsd,tsd->deal.zeny,LOG_TYPE_TRADE, sd);
-		pc_getzeny(sd ,tsd->deal.zeny,LOG_TYPE_TRADE, tsd);
+		pc_payzeny(tsd,tsd->deal.zeny,LOG_TYPE_TRADE, sd->status.char_id);
+		pc_getzeny(sd ,tsd->deal.zeny,LOG_TYPE_TRADE, tsd->status.char_id);
 		tsd->deal.zeny = 0;
 	}
 

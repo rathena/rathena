@@ -5,15 +5,15 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "battle.hpp"
 #include "chrif.hpp"
@@ -25,6 +25,8 @@
 #include "mob.hpp"
 #include "party.hpp"
 #include "pc.hpp"
+
+using namespace rathena;
 
 static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second);
 
@@ -162,13 +164,6 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					return 0;
 				}
 
-				if (!this->nodeExists(targetNode, "Mob") && !this->nodeExists(targetNode, "MinLevel") && !this->nodeExists(targetNode, "MaxLevel") &&
-						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") &&
-						!this->nodeExists(targetNode, "Location") && !this->nodeExists(targetNode, "MapName")) {
-					this->invalidWarning(targetNode, "Targets is missing required field, skipping.\n");
-					return 0;
-				}
-
 				target = std::make_shared<s_quest_objective>();
 				target->index = index;
 				target->mob_id = mob_id;
@@ -279,7 +274,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 					uint16 mapindex = mapindex_name2idx(location.c_str(), nullptr);
 
-					if (mapindex == 0) {
+					if (mapindex == 0 && strcmpi(location.c_str(), "All") != 0) {
 						this->invalidWarning(targetNode["Location"], "Map \"%s\" not found.\n", location.c_str());
 						return 0;
 					}
@@ -294,6 +289,35 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						return 0;
 
 					target->map_name = map_name;
+				}
+
+				if (this->nodeExists(targetNode, "MapMobTargets")) {
+					const auto& MapMobTargetsNode = targetNode["MapMobTargets"];
+
+					for (const auto& MapMobTargetsIt : MapMobTargetsNode) {
+						std::string mob_name;
+						c4::from_chars(MapMobTargetsIt.key(), &mob_name);
+
+						std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
+
+						if (!mob) {
+							this->invalidWarning(MapMobTargetsNode[MapMobTargetsIt.key()], "Mob %s does not exist, skipping.\n", mob_name.c_str());
+							continue;
+						}
+
+						bool active;
+
+						if (!this->asBool(MapMobTargetsNode, mob_name, active))
+							return 0;
+
+						if (!active) {
+							util::vector_erase_if_exists(target->mobs_allowed, mob->id);
+							continue;
+						}
+
+						if (!util::vector_exists( target->mobs_allowed, mob->id ))
+							target->mobs_allowed.push_back(mob->id);
+					}
 				}
 
 				// if max_level is set, min_level is 1
@@ -477,7 +501,7 @@ std::shared_ptr<s_quest_db> quest_search(int quest_id)
  * @param sd : Player's data
  * @return 0 in case of success, nonzero otherwise (i.e. the player has no quests)
  */
-int quest_pc_login(struct map_session_data *sd)
+int quest_pc_login(map_session_data *sd)
 {
 	if (!sd->avail_quests)
 		return 1;
@@ -528,7 +552,7 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
  * @param quest_id : ID of the quest to add.
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_add(struct map_session_data *sd, int quest_id)
+int quest_add(map_session_data *sd, int quest_id)
 {
 	std::shared_ptr<s_quest_db> qi = quest_search(quest_id);
 
@@ -574,7 +598,7 @@ int quest_add(struct map_session_data *sd, int quest_id)
  * @param qid2 : New quest to add
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_change(struct map_session_data *sd, int qid1, int qid2)
+int quest_change(map_session_data *sd, int qid1, int qid2)
 {
 	std::shared_ptr<s_quest_db> qi = quest_search(qid2);
 
@@ -623,7 +647,7 @@ int quest_change(struct map_session_data *sd, int qid1, int qid2)
  * @param quest_id : ID of the quest to remove
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_delete(struct map_session_data *sd, int quest_id)
+int quest_delete(map_session_data *sd, int quest_id)
 {
 	int i;
 
@@ -671,7 +695,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 
-	struct map_session_data *sd = BL_CAST(BL_PC, bl);
+	map_session_data *sd = BL_CAST(BL_PC, bl);
 
 	nullpo_ret(sd);
 
@@ -695,7 +719,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
  * @param mob_size: Monster Size
  * @param mob_element: Monster Element
  */
-void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
+void quest_update_objective(map_session_data *sd, struct mob_data* md)
 {
 	nullpo_retv(sd);
 
@@ -708,11 +732,13 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 			continue;
 
 		// Process quest objectives
+		uint8 total_check = 7; // Must pass all checks
+
 		for (int j = 0; j < qi->objectives.size(); j++) {
-			uint8 objective_check = 0; // Must pass all 6 checks
+			uint8 objective_check = 0;
 
 			if (qi->objectives[j]->mob_id == md->mob_id)
-				objective_check = 6;
+				objective_check = total_check;
 			else if (qi->objectives[j]->mob_id == 0) {
 				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= md->level)
 					objective_check++;
@@ -724,17 +750,21 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 					objective_check++;
 				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
 					objective_check++;
-				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn != nullptr))
+				if (qi->objectives[j]->mapid < 0)
 					objective_check++;
-				else if (qi->objectives[j]->mapid >= 0) {
+				else if (qi->objectives[j]->mapid == sd->bl.m)
+					objective_check++;
+				else {
 					struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 					if (mapdata->instance_id && mapdata->instance_src_map == qi->objectives[j]->mapid)
 						objective_check++;
 				}
+				if (qi->objectives[j]->mobs_allowed.empty() || util::vector_exists( qi->objectives[j]->mobs_allowed, md->mob_id ))
+					objective_check++;
 			}
 
-			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
+			if (objective_check == total_check && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd, &sd->quest_log[i]);
@@ -747,7 +777,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 				continue;
 			if (it->rate < 10000 && rnd()%10000 >= it->rate)
 				continue; // TODO: Should this be affected by server rates?
-			if (!itemdb_exists(it->nameid))
+			if (!item_db.exists(it->nameid))
 				continue;
 
 			struct item entry = {};
@@ -765,7 +795,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 
 			if ((result = pc_additem(sd, &entry, 1, LOG_TYPE_QUEST)) != ADDITEM_SUCCESS) // Failed to obtain the item
 				clif_additem(sd, 0, 0, result);
-//			else if (it.isAnnounced || itemdb_exists(it.nameid)->flag.broadcast)
+//			else if (it.isAnnounced || item_db.find(it.nameid)->flag.broadcast)
 //				intif_broadcast_obtain_special_item(sd, it.nameid, it.mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
@@ -781,7 +811,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
  * @return 0 in case of success, nonzero otherwise
  * @author [Inkfish]
  */
-int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status)
+int quest_update_status(map_session_data *sd, int quest_id, e_quest_state status)
 {
 	int i;
 
@@ -830,7 +860,7 @@ int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state
  *              1 if the quest's timeout has expired
  *              0 otherwise
  */
-int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type)
+int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
 {
 	int i;
 
@@ -872,7 +902,7 @@ int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type ty
  * @param sd : Character's data
  * @param ap : Ignored
  */
-static int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
+static int quest_reload_check_sub(map_session_data *sd, va_list ap)
 {
 	nullpo_ret(sd);
 

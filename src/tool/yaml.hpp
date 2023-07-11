@@ -23,39 +23,46 @@
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/achievement.hpp"
-#include "../map/battle.hpp"
-#include "../map/battleground.hpp"
-#include "../map/channel.hpp"
-#include "../map/chat.hpp"
-#include "../map/date.hpp"
-#include "../map/instance.hpp"
-#include "../map/elemental.hpp"
-#include "../map/mercenary.hpp"
-#include "../map/mob.hpp"
-#include "../map/npc.hpp"
-#include "../map/pc.hpp"
-#include "../map/pet.hpp"
-#include "../map/quest.hpp"
-#include "../map/script.hpp"
-#include "../map/skill.hpp"
-#include "../map/storage.hpp"
+#define ONLY_CONSTANTS
+#include <map/achievement.hpp>
+#include <map/battle.hpp>
+#include <map/battleground.hpp>
+#include <map/cashshop.hpp>
+#include <map/channel.hpp>
+#include <map/chat.hpp>
+#include <map/date.hpp>
+#include <map/elemental.hpp>
+#include <map/homunculus.hpp>
+#include <map/instance.hpp>
+#include <map/mercenary.hpp>
+#include <map/mob.hpp>
+#include <map/npc.hpp>
+#include <map/pc.hpp>
+#include <map/pet.hpp>
+#include <map/quest.hpp>
+#include <map/script.hpp>
+#include <map/skill.hpp>
+#include <map/storage.hpp>
 
 using namespace rathena;
+
+/// Uncomment this line to enable the ability for the conversion tools to automatically convert
+/// all files with no user interaction, whether it be from CSV to YAML or YAML to SQL.
+//#define CONVERT_ALL
 
 #ifndef WIN32
 int getch(void) {

@@ -112,7 +112,7 @@ Body:
             Amount: 1
       - Target: SWEETS_DROPS
         ItemRequirements:
-          - Item: Sweets_Festival_Coin
+          - Item: Sweets_Coin
             Amount: 500
           - Item: Candy
             Amount: 50
@@ -168,7 +168,6 @@ Body:
             Amount: 30
           - Item: Leaf_Lunatic_Card
             Amount: 1
-
   - Mob: PICKY
     TameItem: Earthworm_The_Dude
     EggItem: Picky_Egg
@@ -626,11 +625,11 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bDef,2;
         bonus bMdef,2;
-        bonus2 bResEff,Eff_Stun,200;
+        bonus2 bResEff,Eff_Stun,-200;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDef,1;
         bonus bMdef,1;
-        bonus2 bResEff,Eff_Stun,100;
+        bonus2 bResEff,Eff_Stun,-100;
       }
   - Mob: BON_GUN
     TameItem: Heart_Of_Her
@@ -877,9 +876,9 @@ Body:
       .@i = getpetinfo(PETINFO_INTIMATE);
       
       if (.@i >= PET_INTIMATE_LOYAL) {
-        autobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,5000,BF_SHORT|BF_NORMAL;
+        petautobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,5000,BF_SHORT|BF_NORMAL;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        autobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,3000,BF_SHORT|BF_NORMAL;
+        petautobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,3000,BF_SHORT|BF_NORMAL;
       }
   - Mob: MEDUSA
     TameItem: Splendid_Mirror
@@ -1361,7 +1360,7 @@ Body:
   - Mob: TEDDY_BEAR
     TameItem: Little_Dall_Needle
     EggItem: Teddy_Bear_Egg
-    FoodItem: Cotton_Tufts
+    FoodItem: Wad_Of_Cotton
     Fullness: 3
     IntimacyFed: 50
     CaptureRate: 2000
@@ -1498,7 +1497,7 @@ Body:
       }
   - Mob: MOONLIGHT
     EggItem: Moonlight_Egg
-    FoodItem: Luxurious_Pet_Food
+    FoodItem: High_Class_Pet_food
     Fullness: 1
     HungryDelay: 120
     IntimacyFed: 15
@@ -1511,15 +1510,15 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,6;
         bonus bHit,6;
-        autobonus "{ bonus2 bHPRegenRate,500,1000; bonus2 bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,500,1000; bonus2 bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,5;
         bonus bHit,5;
-        autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,4;
         bonus bHit,4;
-        autobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
       } else {
         bonus bCritical,3;
         bonus bHit,3;
@@ -1574,7 +1573,7 @@ Body:
 #    Evolution:
 #      - Target: ORK_HERO2
 #        ItemRequirements:
-#          - Item: Powerful_Soul_Essence
+#          - Item: Mightysoul_Essence
 #            Amount: 30
 #          - Item: Orc_Warrior_Card
 #            Amount: 10
@@ -1667,11 +1666,11 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,5;
         bonus bHit,5;
-        autobonus "{ bonus2 bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,4;
         bonus bHit,4;
-        autobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,3;
         bonus bHit,3;
@@ -1682,7 +1681,7 @@ Body:
     Evolution:
       - Target: MOONLIGHT
         ItemRequirements:
-          - Item: Powerful_Soul_Essence
+          - Item: Mightysoul_Essence
             Amount: 30
           - Item: Nine_Tail_Card
             Amount: 10
@@ -1780,10 +1779,10 @@ Body:
       
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxSP,150;
-        autobonus "{ bonus2 bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
+        petautobonus "{ bonus2 bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxSP,150;
-        autobonus "{ bonus2 bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
+        petautobonus "{ bonus2 bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMaxSP,100;
       } else {
@@ -1922,7 +1921,7 @@ Body:
         bonus bAspdRate,1;
       }
   - Mob: SWEETS_DROPS
-    EggItem: Sweet_Drops_Egg
+    EggItem: Sweets_Drops_Egg
     FoodItem: Candy
     Fullness: 2
     HungryDelay: 120
@@ -2060,7 +2059,7 @@ Body:
       }
 #  - Mob: BACSOJIN2
 #    EggItem: Bacsojin2_Egg_
-#    FoodItem: Luxurious_Pet_Food
+#    FoodItem: High_Class_Pet_food
 #    Fullness: 7
 #    IntimacyFed: 10
 #    CaptureRate: 0
@@ -2083,7 +2082,7 @@ Body:
 #      }
 #  - Mob: ORK_HERO2
 #    EggItem: Orc_Hero_Egg_
-#    FoodItem: Luxurious_Pet_Food
+#    FoodItem: High_Class_Pet_food
 #    Fullness: 2
 #    HungryDelay: 120
 #    IntimacyFed: 15
@@ -2104,3 +2103,70 @@ Body:
 #      } else {
 #        bonus bAtkRate,1;
 #      }
+#  - Mob: PHREEONI2
+#    EggItem: Phreeoni_Egg
+#    FoodItem: High_Class_Pet_food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    AllowAutoFeed: true
+#    Script: >
+#      .@intimate = getpetinfo(PETINFO_INTIMATE);
+#      if (.@intimate == PET_INTIMATE_AWKWARD || .@intimate == PET_INTIMATE_SHY) {
+#         bonus bHit,6;
+#      }
+#      if (.@intimate == PET_INTIMATE_NEUTRAL) {
+#         bonus bHit,10;
+#         bonus bPerfectHitRate,5;
+#      }
+#      if (.@intimate == PET_INTIMATE_CORDIAL) {
+#         bonus bHit,14;
+#         bonus bPerfectHitRate,10;
+#      }
+#      if (.@intimate == PET_INTIMATE_LOYAL) {
+#         bonus bHit,18;
+#         bonus bPerfectHitRate,15;
+#      }
+  - Mob: EP17_2_CHILD_ADMIN1
+    CaptureRate : 1000
+    EggItem: Ep17_2_C_Admin1_Egg
+    EquipItem: Ep_17_2_C_Admin1_Acc
+    FoodItem: Cloud_Cotton
+    Fullness: 2
+    IntimacyFed: 20
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bAddRace2,RC2_EP172BETA,10;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus2 bAddRace2,RC2_EP172BETA,6;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus2 bAddRace2,RC2_EP172BETA,3;
+      }
+    Evolution:
+      - Target: EP17_2_CHILD_ADMIN2
+        ItemRequirements:
+          - Item: Mystery_Piece
+            Amount: 10
+          - Item: Broken_Steel_Piece
+            Amount: 50
+          - Item: BarMealTicket
+            Amount: 500
+  - Mob: EP17_2_CHILD_ADMIN2
+    CaptureRate : 1000
+    EggItem: Ep17_2_C_Admin2_Egg
+    EquipItem: Ep_17_2_C_Admin2_Acc
+    FoodItem: Pet_Food
+    Fullness: 2
+    IntimacyFed: 20
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bAddRace2,RC2_EP172ALPHA,15;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus2 bAddRace2,RC2_EP172ALPHA,8;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus2 bAddRace2,RC2_EP172ALPHA,4;
+      }

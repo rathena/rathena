@@ -165,7 +165,6 @@ Disables shop creation on a map from the ALL_BUYING_STORE skill.
 *nousecart
 
 Disables cart usage on a map.
-[Not fully implemented.]
 
 ---------------------------------------
 
@@ -286,6 +285,18 @@ Disable renewal experience penalty due to level difference on a map.
 *nopetcapture
 
 Disable the ability to capture pets on a map.
+
+---------------------------------------
+
+*nobank
+
+Disable Bank on a map.
+
+---------------------------------------
+
+*norodex
+
+Disable RODex on a map.
 
 ---------------------------------------
 
