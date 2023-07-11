@@ -8707,8 +8707,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	status_change *tsc = status_get_sc(tbl);
 
 	if (tsc) { // These statuses do not reflect any damage (off the target)
-		if ((tsc->getSCE[SC_SAFETYWALL] && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) ||
-			tsc->getSCE[SC_WHITEIMPRISON] || tsc->getSCE[SC_DARKCROW] || tsc->getSCE[SC_KYOMU])
+		if ((tsc->getSCE(SC_SAFETYWALL) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) ||
+			tsc->getSCE(SC_WHITEIMPRISON) || tsc->getSCE(SC_DARKCROW) || tsc->getSCE(SC_KYOMU))
 			return 0;
 	}
 
