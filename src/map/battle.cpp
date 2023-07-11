@@ -4027,7 +4027,23 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
-		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
+		if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
+			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
+		{
+			int chance = rnd()%100;
+			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
+				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
+				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
+				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
+				case 2:
+				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
+			}
+			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
+			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
+			if (wd->div_ > 1)
+				wd->type = DMG_MULTI_HIT;
+		}
+		if( wd->div_ == 1 && ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
 			|| ( pc_checkskill_flag(*sd, TF_DOUBLE) > SKILL_FLAG_PERMANENT && sd->weapontype1 != W_FIST )
 			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
 			|| ( sc && sc->getSCE(SC_KAGEMUSYA) && sd->weapontype1 != W_FIST )) // Will fail bare-handed
@@ -4048,7 +4064,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->type = DMG_MULTI_HIT;
 			}
 		}
-		else if( ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
+		if( wd->div_ == 1 && ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
 			|| (sc && sc->count && sc->getSCE(SC_E_CHAIN) && (skill_lv = sc->getSCE(SC_E_CHAIN)->val1) > 0)) //Chain Action of ETERNAL_CHAIN
 			&& rnd()%100 < 5*skill_lv ) //Success rate
 		{
@@ -4056,22 +4072,6 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			wd->type = DMG_MULTI_HIT;
 
 			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
-		}
-		else if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
-			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
-		{
-			int chance = rnd()%100;
-			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
-				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
-				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
-				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
-				case 2:
-				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
-			}
-			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
-			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
-			if (wd->div_ > 1)
-				wd->type = DMG_MULTI_HIT;
 		}
 	}
 
@@ -8714,10 +8714,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	status_change *sc = status_get_sc(src);
 
 	if (sc) {
-		if (sc->getSCE(SC_HELLS_PLANT))
+		if (skill_id == GN_HELLS_PLANT_ATK && sc->getSCE(SC_HELLS_PLANT))
 			return 0;
-		if (sc->getSCE(SC_REF_T_POTION))
-			return 1; // Returns 1 damage
 	}
 
 	map_session_data *tsd = BL_CAST(BL_PC, tbl);
@@ -8726,7 +8724,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && tsd && tsd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * tsd->bonus.short_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
 		} else if( status_reflect && tsc && tsc->count ) {
 			if( tsc->getSCE(SC_REFLECTSHIELD) ) {
 				status_change_entry *sce_d;
@@ -8747,7 +8744,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					rdamage = 0;
 				else {
 					rdamage += damage * tsc->getSCE(SC_REFLECTSHIELD)->val2 / 100;
-					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8766,26 +8762,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	} else {
 		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
 			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (rdamage > 0) {
-		map_session_data* sd = BL_CAST(BL_PC, src);
-		if (sd && sd->bonus.reduce_damage_return != 0) {
-			rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (sc) {
-		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
-			rdamage -= damage * sc->getSCE(SC_REFLECTDAMAGE)->val2 / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
-			rdamage -= damage * sc->getSCE(SC_VENOMBLEED)->val2 / 100;
-			rdamage = i64max(rdamage, 1);
 		}
 	}
 
@@ -8804,7 +8780,29 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 0);
+	}
+
+	int64 reduce = 0;
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd && sd->bonus.reduce_damage_return != 0) {
+		reduce += (sd->bonus.reduce_damage_return);
+	}
+
+	if (sc) {
+		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
+			reduce += sc->getSCE(SC_REFLECTDAMAGE)->val2;
+		}
+		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
+			reduce += sc->getSCE(SC_VENOMBLEED)->val2;
+		}
+		if (sc->getSCE(SC_REF_T_POTION))
+			reduce += 100;
+	}
+
+	if (rdamage > 0) {
+		rdamage -= rdamage * i64min(100, reduce) / 100;
+		rdamage = i64max(rdamage, 1);
 	}
 
 	if (rdamage == 0)
