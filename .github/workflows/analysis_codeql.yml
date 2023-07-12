@@ -86,7 +86,7 @@ jobs:
 
       - name: Build
         working-directory: ${{github.workspace}}/build
-        run: cmake --build -j2 . --target server
+        run: cmake --build . -j2 --target server
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2

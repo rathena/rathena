@@ -46,4 +46,4 @@ jobs:
       - name: Build
         working-directory: ${{github.workspace}}/build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: cmake --build -j2 . --target server tools
+        run: cmake --build . -j2 --target server tools

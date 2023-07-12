@@ -70,7 +70,7 @@ jobs:
 
       - name: Build
         working-directory: ${{github.workspace}}/build
-        run: cmake --build -j2 . --target server
+        run: cmake --build . -j2 --target server
 
       - name: Run Once - login-server
         run: ./login-server --run-once
