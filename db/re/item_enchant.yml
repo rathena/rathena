@@ -24532,3 +24532,1245 @@ Body:
                 Amount: 250
               - Material: Ep19_Snow_Flower
                 Amount: 500
+  - Id: 99
+    TargetItems:
+      Flame_E_R_Armor: true
+      Flame_E_R_Armor2: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Flame_R_1
+            Price: 2500000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Flame_Essence
+                Amount: 75
+              - Material: Bar_D_Fl_Rune
+                Amount: 50
+              - Material: Bar_D_Fl_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Flame_R_1
+            Upgrade: Flame_R_2
+            Price: 1000000
+            Materials:
+              - Material: Flame_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_Fl_Energy
+                Amount: 150
+              - Material: Bar_D_Fl_Crystal
+                Amount: 100
+          - Enchant: Flame_R_2
+            Upgrade: Flame_R_3
+            Price: 1500000
+            Materials:
+              - Material: Flame_Barmund_Rune
+                Amount: 125
+              - Material: Flame_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_Fl_Crystal
+                Amount: 150
+          - Enchant: Flame_R_3
+            Upgrade: Flame_R_4
+            Price: 2000000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Flame_Essence
+                Amount: 25
+              - Material: Bar_D_Fl_Rune
+                Amount: 50
+          - Enchant: Flame_R_4
+            Upgrade: Flame_R_5
+            Price: 2500000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Flame_Essence
+                Amount: 50
+              - Material: Bar_D_Fl_Rune
+                Amount: 75
+              - Material: Bar_D_Fl_Essence
+                Amount: 70
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Earth_R_1
+            Price: 2500000
+            Materials:
+              - Material: Plain_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Plain_Essence
+                Amount: 75
+              - Material: Bar_D_Ea_Rune
+                Amount: 50
+              - Material: Bar_D_Ea_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Earth_R_1
+            Upgrade: Earth_R_2
+            Price: 1000000
+            Materials:
+              - Material: Plain_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_Ea_Energy
+                Amount: 150
+              - Material: Bar_D_Ea_Crystal
+                Amount: 100
+          - Enchant: Earth_R_2
+            Upgrade: Earth_R_3
+            Price: 1500000
+            Materials:
+              - Material: Plain_Barmund_Rune
+                Amount: 125
+              - Material: Plain_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_Ea_Crystal
+                Amount: 150
+          - Enchant: Earth_R_3
+            Upgrade: Earth_R_4
+            Price: 2000000
+            Materials:
+              - Material: Plain_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Plain_Essence
+                Amount: 25
+              - Material: Bar_D_Ea_Rune
+                Amount: 50
+          - Enchant: Earth_R_4
+            Upgrade: Earth_R_5
+            Price: 2500000
+            Materials:
+              - Material: Plain_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Plain_Essence
+                Amount: 50
+              - Material: Bar_D_Ea_Rune
+                Amount: 75
+              - Material: Bar_D_Ea_Essence
+                Amount: 70
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Flame_Earth_R_1
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_Fl_Rune
+                Amount: 75
+              - Material: Bar_D_Ea_Rune
+                Amount: 75
+              - Material: Bar_D_Fl_Essence
+                Amount: 50
+              - Material: Bar_D_Ea_Essence
+                Amount: 50
+        Upgrades:
+          - Enchant: Flame_Earth_R_1
+            Upgrade: Flame_Earth_R_2
+            Price: 2000000
+            Materials:
+              - Material: Flame_Barmund_Rune
+                Amount: 50
+              - Material: Plain_Barmund_Rune
+                Amount: 50
+              - Material: Bar_D_Fl_Crystal
+                Amount: 25
+              - Material: Bar_D_Ea_Crystal
+                Amount: 25
+          - Enchant: Flame_Earth_R_2
+            Upgrade: Flame_Earth_R_3
+            Price: 2500000
+            Materials:
+              - Material: Flame_Barmund_Rune
+                Amount: 70
+              - Material: Plain_Barmund_Rune
+                Amount: 70
+              - Material: Flame_Barmund_Rune2
+                Amount: 15
+              - Material: Plain_Barmund_Rune2
+                Amount: 15
+              - Material: Bar_D_Fl_Crystal
+                Amount: 35
+              - Material: Bar_D_Ea_Crystal
+                Amount: 35
+          - Enchant: Flame_Earth_R_3
+            Upgrade: Flame_Earth_R_4
+            Price: 3000000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 25
+              - Material: Plain_Barmund_Rune2
+                Amount: 25
+              - Material: Bar_D_Fl_Crystal
+                Amount: 45
+              - Material: Bar_D_Ea_Crystal
+                Amount: 45
+          - Enchant: Flame_Earth_R_4
+            Upgrade: Flame_Earth_R_5
+            Price: 3500000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 35
+              - Material: Plain_Barmund_Rune2
+                Amount: 35
+              - Material: Bar_D_Fl_Crystal
+                Amount: 55
+              - Material: Bar_D_Ea_Crystal
+                Amount: 55
+              - Material: Bar_D_Fl_Rune
+                Amount: 25
+              - Material: Bar_D_Ea_Rune
+                Amount: 25
+          - Enchant: Flame_Earth_R_5
+            Upgrade: Flame_Earth_R_6
+            Price: 4000000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 45
+              - Material: Plain_Barmund_Rune2
+                Amount: 45
+              - Material: Bar_D_Fl_Rune
+                Amount: 35
+              - Material: Bar_D_Ea_Rune
+                Amount: 35
+          - Enchant: Flame_Earth_R_6
+            Upgrade: Flame_Earth_R_7
+            Price: 4500000
+            Materials:
+              - Material: Flame_Barmund_Rune2
+                Amount: 55
+              - Material: Plain_Barmund_Rune2
+                Amount: 55
+              - Material: Barmund_Flame_Essence
+                Amount: 35
+              - Material: Barmund_Plain_Essence
+                Amount: 35
+              - Material: Bar_D_Fl_Rune
+                Amount: 45
+              - Material: Bar_D_Ea_Rune
+                Amount: 45
+          - Enchant: Flame_Earth_R_7
+            Upgrade: Flame_Earth_R_8
+            Price: 5000000
+            Materials:
+              - Material: Barmund_Flame_Essence
+                Amount: 45
+              - Material: Barmund_Plain_Essence
+                Amount: 45
+              - Material: Bar_D_Fl_Rune
+                Amount: 55
+              - Material: Bar_D_Ea_Rune
+                Amount: 55
+          - Enchant: Flame_Earth_R_8
+            Upgrade: Flame_Earth_R_9
+            Price: 5500000
+            Materials:
+              - Material: Barmund_Flame_Essence
+                Amount: 55
+              - Material: Barmund_Plain_Essence
+                Amount: 55
+              - Material: Bar_D_Fl_Rune
+                Amount: 65
+              - Material: Bar_D_Ea_Rune
+                Amount: 65
+              - Material: Bar_D_Fl_Essence
+                Amount: 50
+              - Material: Bar_D_Ea_Essence
+                Amount: 50
+          - Enchant: Flame_Earth_R_9
+            Upgrade: Flame_Earth_R_10
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_Fl_Rune
+                Amount: 80
+              - Material: Bar_D_Ea_Rune
+                Amount: 80
+              - Material: Bar_D_Fl_Essence
+                Amount: 70
+              - Material: Bar_D_Ea_Essence
+                Amount: 70
+  - Id: 100
+    TargetItems:
+      Ice_S_R_Suits: true
+      Ice_S_R_Suits2: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ice_R_1
+            Price: 2500000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Ice_Essence
+                Amount: 75
+              - Material: Bar_D_Ic_Rune
+                Amount: 50
+              - Material: Bar_D_Ic_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Ice_R_1
+            Upgrade: Ice_R_2
+            Price: 1000000
+            Materials:
+              - Material: Ice_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_Ic_Energy
+                Amount: 150
+              - Material: Bar_D_Ic_Crystal
+                Amount: 100
+          - Enchant: Ice_R_2
+            Upgrade: Ice_R_3
+            Price: 1500000
+            Materials:
+              - Material: Ice_Barmund_Rune
+                Amount: 125
+              - Material: Ice_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_Ic_Crystal
+                Amount: 150
+          - Enchant: Ice_R_3
+            Upgrade: Ice_R_4
+            Price: 2000000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Ice_Essence
+                Amount: 25
+              - Material: Bar_D_Ic_Rune
+                Amount: 50
+          - Enchant: Ice_R_4
+            Upgrade: Ice_R_5
+            Price: 2500000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Ice_Essence
+                Amount: 50
+              - Material: Bar_D_Ic_Rune
+                Amount: 75
+              - Material: Bar_D_Ic_Essence
+                Amount: 70
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Storm_R_1
+            Price: 2500000
+            Materials:
+              - Material: Plain_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Plain_Essence
+                Amount: 75
+              - Material: Bar_D_St_Rune
+                Amount: 50
+              - Material: Bar_D_St_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Storm_R_1
+            Upgrade: Storm_R_2
+            Price: 1000000
+            Materials:
+              - Material: Plain_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_St_Energy
+                Amount: 150
+              - Material: Bar_D_St_Crystal
+                Amount: 100
+          - Enchant: Storm_R_2
+            Upgrade: Storm_R_3
+            Price: 1500000
+            Materials:
+              - Material: Plain_Barmund_Rune
+                Amount: 125
+              - Material: Plain_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_St_Crystal
+                Amount: 150
+          - Enchant: Storm_R_3
+            Upgrade: Storm_R_4
+            Price: 2000000
+            Materials:
+              - Material: Plain_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Plain_Essence
+                Amount: 25
+              - Material: Bar_D_St_Rune
+                Amount: 50
+          - Enchant: Storm_R_4
+            Upgrade: Storm_R_5
+            Price: 2500000
+            Materials:
+              - Material: Plain_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Plain_Essence
+                Amount: 50
+              - Material: Bar_D_St_Rune
+                Amount: 75
+              - Material: Bar_D_St_Essence
+                Amount: 70
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ice_Storm_R_1
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_Ic_Rune
+                Amount: 75
+              - Material: Bar_D_St_Rune
+                Amount: 75
+              - Material: Bar_D_Ic_Essence
+                Amount: 50
+              - Material: Bar_D_St_Essence
+                Amount: 50
+        Upgrades:
+          - Enchant: Ice_Storm_R_1
+            Upgrade: Ice_Storm_R_2
+            Price: 2000000
+            Materials:
+              - Material: Ice_Barmund_Rune
+                Amount: 50
+              - Material: Plain_Barmund_Rune
+                Amount: 50
+              - Material: Bar_D_Ic_Crystal
+                Amount: 25
+              - Material: Bar_D_St_Crystal
+                Amount: 25
+          - Enchant: Ice_Storm_R_2
+            Upgrade: Ice_Storm_R_3
+            Price: 2500000
+            Materials:
+              - Material: Ice_Barmund_Rune
+                Amount: 70
+              - Material: Plain_Barmund_Rune
+                Amount: 70
+              - Material: Ice_Barmund_Rune2
+                Amount: 15
+              - Material: Plain_Barmund_Rune2
+                Amount: 15
+              - Material: Bar_D_Ic_Crystal
+                Amount: 35
+              - Material: Bar_D_St_Crystal
+                Amount: 35
+          - Enchant: Ice_Storm_R_3
+            Upgrade: Ice_Storm_R_4
+            Price: 3000000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 25
+              - Material: Plain_Barmund_Rune2
+                Amount: 25
+              - Material: Bar_D_Ic_Crystal
+                Amount: 45
+              - Material: Bar_D_St_Crystal
+                Amount: 45
+          - Enchant: Ice_Storm_R_4
+            Upgrade: Ice_Storm_R_5
+            Price: 3500000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 35
+              - Material: Plain_Barmund_Rune2
+                Amount: 35
+              - Material: Bar_D_Ic_Crystal
+                Amount: 55
+              - Material: Bar_D_St_Crystal
+                Amount: 55
+              - Material: Bar_D_Ic_Rune
+                Amount: 25
+              - Material: Bar_D_St_Rune
+                Amount: 25
+          - Enchant: Ice_Storm_R_5
+            Upgrade: Ice_Storm_R_6
+            Price: 4000000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 45
+              - Material: Plain_Barmund_Rune2
+                Amount: 45
+              - Material: Bar_D_Ic_Rune
+                Amount: 35
+              - Material: Bar_D_St_Rune
+                Amount: 35
+          - Enchant: Ice_Storm_R_6
+            Upgrade: Ice_Storm_R_7
+            Price: 4500000
+            Materials:
+              - Material: Ice_Barmund_Rune2
+                Amount: 55
+              - Material: Plain_Barmund_Rune2
+                Amount: 55
+              - Material: Barmund_Ice_Essence
+                Amount: 35
+              - Material: Barmund_Plain_Essence
+                Amount: 35
+              - Material: Bar_D_Ic_Rune
+                Amount: 45
+              - Material: Bar_D_St_Rune
+                Amount: 45
+          - Enchant: Ice_Storm_R_7
+            Upgrade: Ice_Storm_R_8
+            Price: 5000000
+            Materials:
+              - Material: Barmund_Ice_Essence
+                Amount: 45
+              - Material: Barmund_Plain_Essence
+                Amount: 45
+              - Material: Bar_D_Ic_Rune
+                Amount: 55
+              - Material: Bar_D_St_Rune
+                Amount: 55
+          - Enchant: Ice_Storm_R_8
+            Upgrade: Ice_Storm_R_9
+            Price: 5500000
+            Materials:
+              - Material: Barmund_Ice_Essence
+                Amount: 55
+              - Material: Barmund_Plain_Essence
+                Amount: 55
+              - Material: Bar_D_Ic_Rune
+                Amount: 65
+              - Material: Bar_D_St_Rune
+                Amount: 65
+              - Material: Bar_D_Ic_Essence
+                Amount: 50
+              - Material: Bar_D_St_Essence
+                Amount: 50
+          - Enchant: Ice_Storm_R_9
+            Upgrade: Ice_Storm_R_10
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_Ic_Rune
+                Amount: 80
+              - Material: Bar_D_St_Rune
+                Amount: 80
+              - Material: Bar_D_Ic_Essence
+                Amount: 70
+              - Material: Bar_D_St_Essence
+                Amount: 70
+  - Id: 101
+    TargetItems:
+      Soul_P_R_Robe: true
+      Soul_P_R_Robe2: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Soul_R_1
+            Price: 2500000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Soul_Essence
+                Amount: 75
+              - Material: Bar_D_So_Rune
+                Amount: 50
+              - Material: Bar_D_So_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Soul_R_1
+            Upgrade: Soul_R_2
+            Price: 1000000
+            Materials:
+              - Material: Soul_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_So_Energy
+                Amount: 150
+              - Material: Bar_D_So_Crystal
+                Amount: 100
+          - Enchant: Soul_R_2
+            Upgrade: Soul_R_3
+            Price: 1500000
+            Materials:
+              - Material: Soul_Barmund_Rune
+                Amount: 125
+              - Material: Soul_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_So_Crystal
+                Amount: 150
+          - Enchant: Soul_R_3
+            Upgrade: Soul_R_4
+            Price: 2000000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Soul_Essence
+                Amount: 25
+              - Material: Bar_D_So_Rune
+                Amount: 50
+          - Enchant: Soul_R_4
+            Upgrade: Soul_R_5
+            Price: 2500000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Soul_Essence
+                Amount: 50
+              - Material: Bar_D_So_Rune
+                Amount: 75
+              - Material: Bar_D_So_Essence
+                Amount: 70
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Purify_R_1
+            Price: 2500000
+            Materials:
+              - Material: Temple_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Temple_Essence
+                Amount: 75
+              - Material: Bar_D_Pu_Rune
+                Amount: 50
+              - Material: Bar_D_Pu_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Purify_R_1
+            Upgrade: Purify_R_2
+            Price: 1000000
+            Materials:
+              - Material: Temple_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_Pu_Energy
+                Amount: 150
+              - Material: Bar_D_Pu_Crystal
+                Amount: 100
+          - Enchant: Purify_R_2
+            Upgrade: Purify_R_3
+            Price: 1500000
+            Materials:
+              - Material: Temple_Barmund_Rune
+                Amount: 125
+              - Material: Temple_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_Pu_Crystal
+                Amount: 150
+          - Enchant: Purify_R_3
+            Upgrade: Purify_R_4
+            Price: 2000000
+            Materials:
+              - Material: Temple_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Temple_Essence
+                Amount: 25
+              - Material: Bar_D_Pu_Rune
+                Amount: 50
+          - Enchant: Purify_R_4
+            Upgrade: Purify_R_5
+            Price: 2500000
+            Materials:
+              - Material: Temple_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Temple_Essence
+                Amount: 50
+              - Material: Bar_D_Pu_Rune
+                Amount: 75
+              - Material: Bar_D_Pu_Essence
+                Amount: 70
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Soul_Purify_R_1
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_So_Rune
+                Amount: 75
+              - Material: Bar_D_Pu_Rune
+                Amount: 75
+              - Material: Bar_D_So_Essence
+                Amount: 50
+              - Material: Bar_D_Pu_Essence
+                Amount: 50
+        Upgrades:
+          - Enchant: Soul_Purify_R_1
+            Upgrade: Soul_Purify_R_2
+            Price: 2000000
+            Materials:
+              - Material: Soul_Barmund_Rune
+                Amount: 50
+              - Material: Temple_Barmund_Rune
+                Amount: 50
+              - Material: Bar_D_So_Crystal
+                Amount: 25
+              - Material: Bar_D_Pu_Crystal
+                Amount: 25
+          - Enchant: Soul_Purify_R_2
+            Upgrade: Soul_Purify_R_3
+            Price: 2500000
+            Materials:
+              - Material: Soul_Barmund_Rune
+                Amount: 70
+              - Material: Temple_Barmund_Rune
+                Amount: 70
+              - Material: Soul_Barmund_Rune2
+                Amount: 15
+              - Material: Temple_Barmund_Rune2
+                Amount: 15
+              - Material: Bar_D_So_Crystal
+                Amount: 35
+              - Material: Bar_D_Pu_Crystal
+                Amount: 35
+          - Enchant: Soul_Purify_R_3
+            Upgrade: Soul_Purify_R_4
+            Price: 3000000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 25
+              - Material: Temple_Barmund_Rune2
+                Amount: 25
+              - Material: Bar_D_So_Crystal
+                Amount: 45
+              - Material: Bar_D_Pu_Crystal
+                Amount: 45
+          - Enchant: Soul_Purify_R_4
+            Upgrade: Soul_Purify_R_5
+            Price: 3500000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 35
+              - Material: Temple_Barmund_Rune2
+                Amount: 35
+              - Material: Bar_D_So_Crystal
+                Amount: 55
+              - Material: Bar_D_Pu_Crystal
+                Amount: 55
+              - Material: Bar_D_So_Rune
+                Amount: 25
+              - Material: Bar_D_Pu_Rune
+                Amount: 25
+          - Enchant: Soul_Purify_R_5
+            Upgrade: Soul_Purify_R_6
+            Price: 4000000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 45
+              - Material: Temple_Barmund_Rune2
+                Amount: 45
+              - Material: Bar_D_So_Rune
+                Amount: 35
+              - Material: Bar_D_Pu_Rune
+                Amount: 35
+          - Enchant: Soul_Purify_R_6
+            Upgrade: Soul_Purify_R_7
+            Price: 4500000
+            Materials:
+              - Material: Soul_Barmund_Rune2
+                Amount: 55
+              - Material: Temple_Barmund_Rune2
+                Amount: 55
+              - Material: Barmund_Soul_Essence
+                Amount: 35
+              - Material: Barmund_Temple_Essence
+                Amount: 35
+              - Material: Bar_D_So_Rune
+                Amount: 45
+              - Material: Bar_D_Pu_Rune
+                Amount: 45
+          - Enchant: Soul_Purify_R_7
+            Upgrade: Soul_Purify_R_8
+            Price: 5000000
+            Materials:
+              - Material: Barmund_Soul_Essence
+                Amount: 45
+              - Material: Barmund_Temple_Essence
+                Amount: 45
+              - Material: Bar_D_So_Rune
+                Amount: 55
+              - Material: Bar_D_Pu_Rune
+                Amount: 55
+          - Enchant: Soul_Purify_R_8
+            Upgrade: Soul_Purify_R_9
+            Price: 5500000
+            Materials:
+              - Material: Barmund_Soul_Essence
+                Amount: 55
+              - Material: Barmund_Temple_Essence
+                Amount: 55
+              - Material: Bar_D_So_Rune
+                Amount: 65
+              - Material: Bar_D_Pu_Rune
+                Amount: 65
+              - Material: Bar_D_So_Essence
+                Amount: 50
+              - Material: Bar_D_Pu_Essence
+                Amount: 50
+          - Enchant: Soul_Purify_R_9
+            Upgrade: Soul_Purify_R_10
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_So_Rune
+                Amount: 80
+              - Material: Bar_D_Pu_Rune
+                Amount: 80
+              - Material: Bar_D_So_Essence
+                Amount: 70
+              - Material: Bar_D_Pu_Essence
+                Amount: 70
+  - Id: 102
+    TargetItems:
+      Corrupt_P_R_Cloth: true
+      Corrupt_P_R_Cloth2: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Corrupt_R_1
+            Price: 2500000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Death_Essence
+                Amount: 75
+              - Material: Bar_D_Co_Rune
+                Amount: 50
+              - Material: Bar_D_Co_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Corrupt_R_1
+            Upgrade: Corrupt_R_2
+            Price: 1000000
+            Materials:
+              - Material: Death_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_Co_Energy
+                Amount: 150
+              - Material: Bar_D_Co_Crystal
+                Amount: 100
+          - Enchant: Corrupt_R_2
+            Upgrade: Corrupt_R_3
+            Price: 1500000
+            Materials:
+              - Material: Death_Barmund_Rune
+                Amount: 125
+              - Material: Death_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_Co_Crystal
+                Amount: 150
+          - Enchant: Corrupt_R_3
+            Upgrade: Corrupt_R_4
+            Price: 2000000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Death_Essence
+                Amount: 25
+              - Material: Bar_D_Co_Rune
+                Amount: 50
+          - Enchant: Corrupt_R_4
+            Upgrade: Corrupt_R_5
+            Price: 2500000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Death_Essence
+                Amount: 50
+              - Material: Bar_D_Co_Rune
+                Amount: 75
+              - Material: Bar_D_Co_Essence
+                Amount: 70
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Poison_R_1
+            Price: 2500000
+            Materials:
+              - Material: Venom_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Venom_Essence
+                Amount: 75
+              - Material: Bar_D_Po_Rune
+                Amount: 50
+              - Material: Bar_D_Po_Essence
+                Amount: 30
+        Upgrades:
+          - Enchant: Poison_R_1
+            Upgrade: Poison_R_2
+            Price: 1000000
+            Materials:
+              - Material: Venom_Barmund_Rune
+                Amount: 100
+              - Material: Bar_D_Po_Energy
+                Amount: 150
+              - Material: Bar_D_Po_Crystal
+                Amount: 100
+          - Enchant: Poison_R_2
+            Upgrade: Poison_R_3
+            Price: 1500000
+            Materials:
+              - Material: Venom_Barmund_Rune
+                Amount: 125
+              - Material: Venom_Barmund_Rune2
+                Amount: 50
+              - Material: Bar_D_Po_Crystal
+                Amount: 150
+          - Enchant: Poison_R_3
+            Upgrade: Poison_R_4
+            Price: 2000000
+            Materials:
+              - Material: Venom_Barmund_Rune2
+                Amount: 75
+              - Material: Barmund_Venom_Essence
+                Amount: 25
+              - Material: Bar_D_Po_Rune
+                Amount: 50
+          - Enchant: Poison_R_4
+            Upgrade: Poison_R_5
+            Price: 2500000
+            Materials:
+              - Material: Venom_Barmund_Rune2
+                Amount: 100
+              - Material: Barmund_Venom_Essence
+                Amount: 50
+              - Material: Bar_D_Po_Rune
+                Amount: 75
+              - Material: Bar_D_Po_Essence
+                Amount: 70
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Corrupt_Poison_R_1
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_Co_Rune
+                Amount: 75
+              - Material: Bar_D_Po_Rune
+                Amount: 75
+              - Material: Bar_D_Co_Essence
+                Amount: 50
+              - Material: Bar_D_Po_Essence
+                Amount: 50
+        Upgrades:
+          - Enchant: Corrupt_Poison_R_1
+            Upgrade: Corrupt_Poison_R_2
+            Price: 2000000
+            Materials:
+              - Material: Death_Barmund_Rune
+                Amount: 50
+              - Material: Venom_Barmund_Rune
+                Amount: 50
+              - Material: Bar_D_Co_Crystal
+                Amount: 25
+              - Material: Bar_D_Po_Crystal
+                Amount: 25
+          - Enchant: Corrupt_Poison_R_2
+            Upgrade: Corrupt_Poison_R_3
+            Price: 2500000
+            Materials:
+              - Material: Death_Barmund_Rune
+                Amount: 70
+              - Material: Venom_Barmund_Rune
+                Amount: 70
+              - Material: Death_Barmund_Rune2
+                Amount: 15
+              - Material: Venom_Barmund_Rune2
+                Amount: 15
+              - Material: Bar_D_Co_Crystal
+                Amount: 35
+              - Material: Bar_D_Po_Crystal
+                Amount: 35
+          - Enchant: Corrupt_Poison_R_3
+            Upgrade: Corrupt_Poison_R_4
+            Price: 3000000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 25
+              - Material: Venom_Barmund_Rune2
+                Amount: 25
+              - Material: Bar_D_Co_Crystal
+                Amount: 45
+              - Material: Bar_D_Po_Crystal
+                Amount: 45
+          - Enchant: Corrupt_Poison_R_4
+            Upgrade: Corrupt_Poison_R_5
+            Price: 3500000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 35
+              - Material: Venom_Barmund_Rune2
+                Amount: 35
+              - Material: Bar_D_Co_Crystal
+                Amount: 55
+              - Material: Bar_D_Po_Crystal
+                Amount: 55
+              - Material: Bar_D_Co_Rune
+                Amount: 25
+              - Material: Bar_D_Po_Rune
+                Amount: 25
+          - Enchant: Corrupt_Poison_R_5
+            Upgrade: Corrupt_Poison_R_6
+            Price: 4000000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 45
+              - Material: Venom_Barmund_Rune2
+                Amount: 45
+              - Material: Bar_D_Co_Rune
+                Amount: 35
+              - Material: Bar_D_Po_Rune
+                Amount: 35
+          - Enchant: Corrupt_Poison_R_6
+            Upgrade: Corrupt_Poison_R_7
+            Price: 4500000
+            Materials:
+              - Material: Death_Barmund_Rune2
+                Amount: 55
+              - Material: Venom_Barmund_Rune2
+                Amount: 55
+              - Material: Barmund_Death_Essence
+                Amount: 35
+              - Material: Barmund_Venom_Essence
+                Amount: 35
+              - Material: Bar_D_Co_Rune
+                Amount: 45
+              - Material: Bar_D_Po_Rune
+                Amount: 45
+          - Enchant: Corrupt_Poison_R_7
+            Upgrade: Corrupt_Poison_R_8
+            Price: 5000000
+            Materials:
+              - Material: Barmund_Death_Essence
+                Amount: 45
+              - Material: Barmund_Venom_Essence
+                Amount: 45
+              - Material: Bar_D_Co_Rune
+                Amount: 55
+              - Material: Bar_D_Po_Rune
+                Amount: 55
+          - Enchant: Corrupt_Poison_R_8
+            Upgrade: Corrupt_Poison_R_9
+            Price: 5500000
+            Materials:
+              - Material: Barmund_Death_Essence
+                Amount: 55
+              - Material: Barmund_Venom_Essence
+                Amount: 55
+              - Material: Bar_D_Co_Rune
+                Amount: 65
+              - Material: Bar_D_Po_Rune
+                Amount: 65
+              - Material: Bar_D_Co_Essence
+                Amount: 50
+              - Material: Bar_D_Po_Essence
+                Amount: 50
+          - Enchant: Corrupt_Poison_R_9
+            Upgrade: Corrupt_Poison_R_10
+            Price: 6000000
+            Materials:
+              - Material: Bar_D_Co_Rune
+                Amount: 80
+              - Material: Bar_D_Po_Rune
+                Amount: 80
+              - Material: Bar_D_Co_Essence
+                Amount: 70
+              - Material: Bar_D_Po_Essence
+                Amount: 70
+  - Id: 103
+    TargetItems:
+      Officer_Cap_LT: true
+    Reset:
+      Chance: 100000
+      Price: 300000
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 500000
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Strength3
+                Chance: 16666
+              - Item: Dexterity3
+                Chance: 16666
+              - Item: Inteligence3
+                Chance: 16667
+              - Item: Vitality3
+                Chance: 16667
+              - Item: Agility3
+                Chance: 16667
+              - Item: Luck3
+                Chance: 16667
+          - Enchantgrade: 1
+            Items:
+              - Item: Strength3
+                Chance: 16666
+              - Item: Dexterity3
+                Chance: 16666
+              - Item: Inteligence3
+                Chance: 16667
+              - Item: Vitality3
+                Chance: 16667
+              - Item: Agility3
+                Chance: 16667
+              - Item: Luck3
+                Chance: 16667
+          - Enchantgrade: 2
+            Items:
+              - Item: Strength3
+                Chance: 16666
+              - Item: Dexterity3
+                Chance: 16666
+              - Item: Inteligence3
+                Chance: 16667
+              - Item: Vitality3
+                Chance: 16667
+              - Item: Agility3
+                Chance: 16667
+              - Item: Luck3
+                Chance: 16667
+          - Enchantgrade: 3
+            Items:
+              - Item: Strength3
+                Chance: 16666
+              - Item: Dexterity3
+                Chance: 16666
+              - Item: Inteligence3
+                Chance: 16667
+              - Item: Vitality3
+                Chance: 16667
+              - Item: Agility3
+                Chance: 16667
+              - Item: Luck3
+                Chance: 16667
+          - Enchantgrade: 4
+            Items:
+              - Item: Strength3
+                Chance: 16666
+              - Item: Dexterity3
+                Chance: 16666
+              - Item: Inteligence3
+                Chance: 16667
+              - Item: Vitality3
+                Chance: 16667
+              - Item: Agility3
+                Chance: 16667
+              - Item: Luck3
+                Chance: 16667
+      - Slot: 2
+        Price: 1000000
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Experience_Badge
+                Chance: 1000
+              - Item: Beholder_Badge
+                Chance: 9900
+              - Item: Hallow_Badge
+                Chance: 9900
+              - Item: Clamorous_Badge
+                Chance: 9900
+              - Item: Chemical_Badge
+                Chance: 9900
+              - Item: Insecticide_Badge
+                Chance: 9900
+              - Item: Fisher_Badge
+                Chance: 9900
+              - Item: Decussate_Badge
+                Chance: 9900
+              - Item: Murderer_Badge
+                Chance: 9900
+              - Item: Satanic_Badge
+                Chance: 9900
+              - Item: Dragoon_Badge
+                Chance: 9900
+          - Enchantgrade: 1
+            Items:
+              - Item: Experience_Badge
+                Chance: 1000
+              - Item: Beholder_Badge
+                Chance: 9900
+              - Item: Hallow_Badge
+                Chance: 9900
+              - Item: Clamorous_Badge
+                Chance: 9900
+              - Item: Chemical_Badge
+                Chance: 9900
+              - Item: Insecticide_Badge
+                Chance: 9900
+              - Item: Fisher_Badge
+                Chance: 9900
+              - Item: Decussate_Badge
+                Chance: 9900
+              - Item: Murderer_Badge
+                Chance: 9900
+              - Item: Satanic_Badge
+                Chance: 9900
+              - Item: Dragoon_Badge
+                Chance: 9900
+          - Enchantgrade: 2
+            Items:
+              - Item: Experience_Badge
+                Chance: 1000
+              - Item: Beholder_Badge
+                Chance: 9900
+              - Item: Hallow_Badge
+                Chance: 9900
+              - Item: Clamorous_Badge
+                Chance: 9900
+              - Item: Chemical_Badge
+                Chance: 9900
+              - Item: Insecticide_Badge
+                Chance: 9900
+              - Item: Fisher_Badge
+                Chance: 9900
+              - Item: Decussate_Badge
+                Chance: 9900
+              - Item: Murderer_Badge
+                Chance: 9900
+              - Item: Satanic_Badge
+                Chance: 9900
+              - Item: Dragoon_Badge
+                Chance: 9900
+          - Enchantgrade: 3
+            Items:
+              - Item: Experience_Badge
+                Chance: 1000
+              - Item: Beholder_Badge
+                Chance: 9900
+              - Item: Hallow_Badge
+                Chance: 9900
+              - Item: Clamorous_Badge
+                Chance: 9900
+              - Item: Chemical_Badge
+                Chance: 9900
+              - Item: Insecticide_Badge
+                Chance: 9900
+              - Item: Fisher_Badge
+                Chance: 9900
+              - Item: Decussate_Badge
+                Chance: 9900
+              - Item: Murderer_Badge
+                Chance: 9900
+              - Item: Satanic_Badge
+                Chance: 9900
+              - Item: Dragoon_Badge
+                Chance: 9900
+          - Enchantgrade: 4
+            Items:
+              - Item: Experience_Badge
+                Chance: 1000
+              - Item: Beholder_Badge
+                Chance: 9900
+              - Item: Hallow_Badge
+                Chance: 9900
+              - Item: Clamorous_Badge
+                Chance: 9900
+              - Item: Chemical_Badge
+                Chance: 9900
+              - Item: Insecticide_Badge
+                Chance: 9900
+              - Item: Fisher_Badge
+                Chance: 9900
+              - Item: Decussate_Badge
+                Chance: 9900
+              - Item: Murderer_Badge
+                Chance: 9900
+              - Item: Satanic_Badge
+                Chance: 9900
+              - Item: Dragoon_Badge
+                Chance: 9900

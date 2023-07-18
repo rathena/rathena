@@ -1019,6 +1019,9 @@ Body:
   - Command: roulette
     Help: |
       Opens the roulette UI.
+  - Command: setcard 
+    Help: |
+      Adds a card or enchant to the specific slot of the equipment.
 
 Footer:
   Imports:

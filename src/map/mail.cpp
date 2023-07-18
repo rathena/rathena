@@ -190,6 +190,9 @@ enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amo
 				for( j = 0; j < MAIL_MAX_ITEM; j++ ){
 					if (sd->mail.item[j].nameid == 0)
 						continue;
+					if (sd->inventory_data[sd->mail.item[j].index] == nullptr) {
+						return MAIL_ATTACH_ERROR;
+					}
 					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
 				}
 
@@ -215,6 +218,9 @@ enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amo
 			if( battle_config.mail_attachment_weight ){
 				// Only need to sum up all entries until the new entry
 				for( j = 0; j < i; j++ ){
+					if (sd->inventory_data[sd->mail.item[j].index] == nullptr) {
+						return MAIL_ATTACH_ERROR;
+					}
 					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
 				}
 
