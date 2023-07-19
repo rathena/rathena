@@ -5,11 +5,11 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/sql.hpp" // SQL_INNODB
-#include "../common/strlib.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/sql.hpp> // SQL_INNODB
+#include <common/strlib.hpp>
 
 #include "battle.hpp"
 #include "homunculus.hpp"
@@ -278,17 +278,16 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct 
 }
 
 /// logs zeny transactions
-void log_zeny(map_session_data* sd, e_log_pick_type type, map_session_data* src_sd, int amount)
+// ids are char_ids
+void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int amount)
 {
-	nullpo_retv(sd);
-
 	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
-			log_config.log_zeny, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
+			log_config.log_zeny, target_sd.status.char_id, src_id, log_picktype2char(type), amount, mapindex_id2name(target_sd.mapindex)))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -304,7 +303,7 @@ void log_zeny(map_session_data* sd, e_log_pick_type type, map_session_data* src_
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_sd->status.name, src_sd->status.account_id, sd->status.name, sd->status.account_id, amount);
+		fprintf(logfp, "%s - [%d] ->\t%s[%d]\t%d\t\n", timestring, src_id, target_sd.status.name, target_sd.status.char_id, amount);
 		fclose(logfp);
 	}
 }

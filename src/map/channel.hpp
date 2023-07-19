@@ -4,13 +4,13 @@
 #ifndef CHANNEL_HPP
 #define CHANNEL_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
 //namespace rA {
 
 class map_session_data;
-struct guild;
+struct mmo_guild;
 struct DBMap;
 
 #define CHAN_NAME_LENGTH 20
@@ -95,7 +95,7 @@ int channel_delete(struct Channel *channel, bool force);
 int channel_join(struct Channel *channel, map_session_data *sd);
 int channel_mjoin(map_session_data *sd);
 int channel_gjoin(map_session_data *sd, int flag);
-int channel_ajoin(struct guild *g);
+int channel_ajoin(struct mmo_guild &g);
 int channel_clean(struct Channel *channel, map_session_data *sd, int flag);
 int channel_pcquit(map_session_data *sd, int type);
 

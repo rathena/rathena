@@ -4,8 +4,8 @@
 #ifndef LOG_HPP
 #define LOG_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
 struct block_list;
 class map_session_data;
@@ -78,7 +78,7 @@ enum e_log_feeding_type : uint8
 /// new logs
 void log_pick_pc(map_session_data* sd, e_log_pick_type type, int amount, struct item* itm);
 void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm);
-void log_zeny(map_session_data* sd, e_log_pick_type type, map_session_data* src_sd, int amount);
+void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int amount);
 void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount );
 void log_npc( struct npc_data* nd, const char* message );
 void log_npc(map_session_data* sd, const char *message);

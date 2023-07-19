@@ -5,8 +5,10 @@
 #define INT_GUILD_HPP
 
 #include <string>
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
+
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp>
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,
@@ -24,7 +26,7 @@ enum e_guild_action : uint32 {
 	GS_REMOVE = 0x8000,
 };
 
-struct guild;
+struct mmo_guild;
 struct guild_castle;
 
 struct s_guild_exp_db {
@@ -44,6 +46,12 @@ public:
 
 	// Additional
 	t_exp get_nextexp(uint16 level);
+};
+
+class CharGuild {
+public:
+	struct mmo_guild guild;
+	unsigned short save_flag;
 };
 
 int inter_guild_parse_frommap(int fd);

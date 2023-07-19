@@ -5,19 +5,20 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" // last_tick
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> // last_tick
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utils.hpp>
 
 #include "achievement.hpp"
 #include "atcommand.hpp"	//msg_txt()
 #include "battle.hpp"
+#include "chrif.hpp" // charserver_name
 #include "clif.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
@@ -45,7 +46,7 @@ static void party_fill_member(struct party_member* member, map_session_data* sd,
 	member->char_id    = sd->status.char_id;
 	safestrncpy(member->name, sd->status.name, NAME_LENGTH);
 	member->class_     = sd->status.class_;
-	member->map        = sd->mapindex;
+	safestrncpy( member->map, mapindex_id2name( sd->mapindex ), sizeof( member->map ) );
 	member->lv         = sd->status.base_level;
 	member->online     = 1;
 	member->leader     = leader;
@@ -452,6 +453,105 @@ int party_invite(map_session_data *sd,map_session_data *tsd)
 	return 1;
 }
 
+bool party_isleader( map_session_data* sd ){
+	if( sd == nullptr ){
+		return false;
+	}
+
+	if( sd->status.party_id == 0 ){
+		return false;
+	}
+
+	struct party_data* party = party_search( sd->status.party_id );
+
+	if( party == nullptr ){
+		return false;
+	}
+
+	for( int i = 0; i < MAX_PARTY; i++ ){
+		if( party->party.member[i].char_id == sd->status.char_id ){
+			return party->party.member[i].leader != 0;
+		}
+	}
+
+	return false;
+}
+
+void party_join( map_session_data* sd, int party_id ){
+	nullpo_retv( sd );
+
+	// Player is in a party already now
+	if( sd->status.party_id != 0 ){
+		return;
+	}
+
+	// Player is already associated with a party
+	if( sd->party_creating || sd->party_joining ){
+		return;
+	}
+
+	struct party_data* party = party_search( party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	int i;
+
+	if( battle_config.block_account_in_same_party ){
+		ARR_FIND( 0, MAX_PARTY, i, party->party.member[i].account_id == sd->status.account_id );
+
+		if( i < MAX_PARTY ){
+			// Player is in the party with a different character already
+			return;
+		}
+	}
+
+	// Confirm if there is an open slot in the party
+	ARR_FIND( 0, MAX_PARTY, i, party->party.member[i].account_id == 0 );
+
+	if( i == MAX_PARTY ){
+		// Party is already full
+		return;
+	}
+
+	struct party_member member = {};
+
+	sd->party_joining = true;
+	party_fill_member( &member, sd, 0 );
+	intif_party_addmember( party_id, &member );
+}
+
+bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booking_requirement* booking ){
+	char world_name[NAME_LENGTH * 2 + 1];
+
+	Sql_EscapeString( mmysql_handle, world_name, charserver_name );
+
+	if( Sql_Query( mmysql_handle, "SELECT `minimum_level`, `maximum_level` FROM `%s` WHERE `world_name` = '%s' AND `account_id` = '%u' AND `char_id` = '%u'", partybookings_table, world_name, account_id, char_id ) != SQL_SUCCESS) {
+		Sql_ShowDebug( mmysql_handle );
+
+		return false;
+	}
+
+	if( Sql_NextRow( mmysql_handle ) != SQL_SUCCESS ){
+		Sql_FreeResult( mmysql_handle );
+
+		return false;
+	}
+
+	char* data;
+
+	Sql_GetData( mmysql_handle, 0, &data, nullptr );
+	booking->minimum_level = (uint16)strtoul( data, nullptr, 10 );
+
+	Sql_GetData( mmysql_handle, 1, &data, nullptr );
+	booking->maximum_level = (uint16)strtoul( data, nullptr, 10 );
+
+	Sql_FreeResult( mmysql_handle );
+
+	return true;
+}
+
 int party_reply_invite(map_session_data *sd,int party_id,int flag)
 {
 	map_session_data* tsd;
@@ -680,14 +780,12 @@ int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char 
 		clif_name_area(&sd->bl); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 
-		if( p->instance_id ) {
+		if( p != nullptr && p->instance_id ){
 			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if( mapdata->instance_id ) { // User was on the instance map
-				if( mapdata->save.map )
-					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
-				else
-					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			// User was on the instance map of the party
+			if( mapdata != nullptr && p->instance_id == mapdata->instance_id ){
+				pc_setpos_savepoint( *sd );
 			}
 		}
 	}
@@ -818,7 +916,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 		if (tmi == MAX_PARTY)
 			return 0; // Shouldn't happen
 
-		if (battle_config.change_party_leader_samemap && p->party.member[mi].map != p->party.member[tmi].map) {
+		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
 			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
 			return 0;
 		}
@@ -853,8 +951,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 /// - changes maps
 /// - logs in or out
 /// - gains a level (disabled)
-int party_recv_movemap(int party_id,uint32 account_id,uint32 char_id, unsigned short map_idx,int online,int lv)
-{
+int party_recv_movemap( int party_id, uint32 account_id, uint32 char_id, int online, int lv, const char* map ){
 	struct party_member* m;
 	struct party_data* p;
 	int i;
@@ -871,7 +968,7 @@ int party_recv_movemap(int party_id,uint32 account_id,uint32 char_id, unsigned s
 	}
 
 	m = &p->party.member[i];
-	m->map = map_idx;
+	safestrncpy( m->map, map, sizeof( m->map ) );
 	m->online = online;
 	m->lv = lv;
 	//Check if they still exist on this map server
@@ -1135,7 +1232,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_ex
 #endif
 
 		if (zeny) // zeny from mobs [Valaris]
-			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER,NULL);
+			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER);
 	}
 }
 

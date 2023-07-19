@@ -6,10 +6,10 @@
 
 #include <time.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // NAME_LENGTH
-#include "../common/timer.hpp" // t_tick
-#include "../common/socket.hpp" // enum chrif_req_op
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp> // NAME_LENGTH
+#include <common/timer.hpp> // t_tick
+#include <common/socket.hpp> // enum chrif_req_op
 
 //fwd declaration
 class map_session_data;
@@ -43,7 +43,6 @@ int chrif_setip(const char* ip);
 void chrif_setport(uint16 port);
 
 int chrif_isconnected(void);
-void chrif_check_shutdown(void);
 
 extern int chrif_connected;
 extern int other_mapserver_count;
