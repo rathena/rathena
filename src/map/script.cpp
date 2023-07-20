@@ -18239,7 +18239,16 @@ BUILDIN_FUNC(addmonsterdrop)
 	mob->dropitem[c].rate = rate;
 	mob->dropitem[c].steal_protected = steal_protected > 0;
 	mob->dropitem[c].randomopt_group = group;
-	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+	item_data::drop_chance drop{static_cast<uint32>(rate), mob->id};
+	itm->mobs.insert(
+		std::lower_bound(
+			itm->mobs.begin(),
+			itm->mobs.end(),
+			drop,
+			[](const auto &drop, const auto &it) {
+				return drop.chance > it.chance;
+			}),
+		drop);
 
 	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
@@ -18270,25 +18279,38 @@ BUILDIN_FUNC(delmonsterdrop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if(mob) { //We got a valid monster, check for item drop on monster
-		unsigned char i;
-		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-			if(mob->dropitem[i].nameid == item_id) {
-				mob->dropitem[i].nameid = 0;
-				mob->dropitem[i].rate = 0;
-				mob->dropitem[i].steal_protected = false;
-				mob->dropitem[i].randomopt_group = 0;
-				mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
-				script_pushint(st,1);
-				return SCRIPT_CMD_SUCCESS;
-			}
-		}
-		//No drop on that monster
-		script_pushint(st,0);
-	} else {
-		ShowWarning("delmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
+	if (!mob) {
+		if (script_isstring(st, 2))
+			ShowWarning("delmonsterdrop: bad mob name given %s\n", script_getstr(st, 2));
+		else
+			ShowWarning("delmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	unsigned char i;
+	for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		if(mob->dropitem[i].nameid != item_id) {
+			continue;
+		}
+		mob->dropitem[i].nameid = 0;
+		mob->dropitem[i].rate = 0;
+		mob->dropitem[i].steal_protected = false;
+		mob->dropitem[i].randomopt_group = 0;
+
+		std::shared_ptr<item_data> itm = item_db.find(item_id);
+		if (itm) {
+			auto it = std::find_if(itm->mobs.begin(), itm->mobs.end(), [&mob](const auto &drop) {
+				return drop.mob_id == mob->id;
+			});
+			if (it != itm->mobs.end())
+				itm->mobs.erase(it);
+		}
+
+		script_pushint(st,1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	//No drop on that monster
+	script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
