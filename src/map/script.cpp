@@ -4988,12 +4988,6 @@ BUILDIN_FUNC(close)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
-	npc_data* nd = map_id2nd( st->oid );
-
-	if( nd != nullptr && nd->dynamicnpc.owner_char_id != 0 ){
-		nd->dynamicnpc.last_interaction = gettick();
-	}
-
 	const char* command = script_getfuncname( st );
 
 	if( !st->mes_active ) {
@@ -5023,12 +5017,6 @@ BUILDIN_FUNC(close2)
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
-
-	npc_data* nd = map_id2nd( st->oid );
-
-	if( nd != nullptr && nd->dynamicnpc.owner_char_id != 0 ){
-		nd->dynamicnpc.last_interaction = gettick();
-	}
 
 	st->state = STOP;
 
@@ -10359,12 +10347,6 @@ BUILDIN_FUNC(end)
 	sd = map_id2sd(st->rid);
 
 	st->state = END;
-
-	npc_data* nd = map_id2nd( st->oid );
-
-	if( nd != nullptr && nd->dynamicnpc.owner_char_id != 0 ){
-		nd->dynamicnpc.last_interaction = gettick();
-	}
 
 	if( st->mes_active )
 		st->mes_active = 0;
