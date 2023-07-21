@@ -1123,12 +1123,6 @@ TIMER_FUNC(npc_secure_timeout_timer){
 
 	if( DIFF_TICK(cur_tick,sd->npc_idle_tick) > (timeout*1000) ) {
 		pc_close_npc(sd,1);
-	} else if(sd->st && (sd->st->state == END || sd->st->state == CLOSE)){
-		// stop timer the script is already ending
-		if( sd->npc_idle_timer != INVALID_TIMER ){
-			delete_timer( sd->npc_idle_timer, npc_secure_timeout_timer );
-			sd->npc_idle_timer = INVALID_TIMER;
-		}
 	} else { //Create a new instance of ourselves to continue
 		sd->npc_idle_timer = add_timer(cur_tick + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_secure_timeout_timer,sd->bl.id,0);
 	}
