@@ -5706,7 +5706,7 @@ DEFINE_PACKET_HEADER(ZC_DISAPPEAR_BUYING_STORE_ENTRY, 0x0816);
 struct PACKET_ZC_SPECIALPOPUP {
 	int16 PacketType;
 	int16 ppId;
-	int16 val1;
+	int16 val1; //ignored
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SPECIALPOPUP, 0x0bbe);
 #endif
