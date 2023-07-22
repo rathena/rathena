@@ -19871,6 +19871,17 @@ static void clif_loadConfirm( map_session_data *sd ){
 /// 0447
 void clif_parse_blocking_playcancel( int fd, map_session_data *sd ){
 	clif_loadConfirm( sd );
+	clif_updateSpecialPopup(sd);
+}
+
+void clif_updateSpecialPopup(map_session_data *sd) {
+	nullpo_retv(sd);
+	
+	int m = sd->bl.m;
+
+	if (map_getmapflag(m, MF_SPECIALPOPUP) > 0) {
+		clif_specialpopup(sd, map_getmapflag(m, MF_SPECIALPOPUP));
+	}
 }
 
 /// req world info (CZ_CLIENT_VERSION)
@@ -25154,6 +25165,19 @@ void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 	}
 
 	clif_partybooking_reply( tsd, sd, p->accept );
+#endif
+}
+
+/// Displays special popups (ZC_SPECIALPOPUP).
+/// Wokrs only if player moved map to another map.
+/// 0bbe <popup id>.L
+void clif_specialpopup(map_session_data* sd, int id ){
+#if PACKETVER >= 20221005
+	struct PACKET_ZC_SPECIALPOPUP p = { 0 };
+
+	p.PacketType = HEADER_ZC_SPECIALPOPUP;
+	p.ppId = id;
+	clif_send( &p, sizeof( p ), &sd->bl, AREA);
 #endif
 }
 
