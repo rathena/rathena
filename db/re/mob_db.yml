@@ -104791,26 +104791,461 @@ Body:
 #    AegisName: E_SWEETS_DROPS
 #  - Id: 21385
 #    AegisName: ANDRE_LARVA
-#  - Id: 21386
-#    AegisName: ILL_ANDRE
-#  - Id: 21387
-#    AegisName: ILL_SOLDIER_ANDR
-#  - Id: 21388
-#    AegisName: ILL_ANDRE_LARVA
-#  - Id: 21389
-#    AegisName: ILL_DENIRO
-#  - Id: 21390
-#    AegisName: ILL_PIERE
-#  - Id: 21391
-#    AegisName: ILL_ANT_EGG
-#  - Id: 21392
-#    AegisName: ILL_GIEARTH
-#  - Id: 21393
-#    AegisName: ILL_FARMILIAR
-#  - Id: 21394
-#    AegisName: ILL_VITATA
-#  - Id: 21395
-#    AegisName: ILL_MAYA
+  - Id: 21386
+    AegisName: ILL_ANDRE
+    Name: Diligent Andre
+    Level: 167
+    Hp: 839882
+    BaseExp: 80476
+    JobExp: 61811
+    Attack: 4653
+    Attack2: 569
+    Defense: 168
+    MagicDefense: 22
+    Str: 111
+    Agi: 158
+    Vit: 91
+    Int: 70
+    Dex: 194
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Excalibur
+        Rate: 5
+      - Item: IL_Twins_Feeler
+        Rate: 150
+      - Item: IL_Twins_Leg
+        Rate: 150
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Opaque_Liquid
+        Rate: 2000
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Andre_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21387
+    AegisName: ILL_SOLDIER_ANDR
+    Name: Diligent Soldier Andre
+    Level: 169
+    Hp: 943547
+    BaseExp: 83348
+    JobExp: 62487
+    Attack: 5569
+    Attack2: 545
+    Defense: 201
+    MagicDefense: 30
+    Str: 198
+    Agi: 176
+    Vit: 98
+    Int: 88
+    Dex: 201
+    Luk: 101
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 1288
+    AttackMotion: 648
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Doom_Slayer
+        Rate: 5
+      - Item: IL_Twins_Jaw
+        Rate: 100
+      - Item: IL_Twins_Leg
+        Rate: 200
+      - Item: IL_Twins_Feeler
+        Rate: 200
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Andre_soldier_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21388
+    AegisName: ILL_ANDRE_LARVA
+    Name: Diligent Andre Larva
+    Level: 164
+    Hp: 819978
+    BaseExp: 64798
+    JobExp: 46871
+    Attack: 3984
+    Attack2: 308
+    Defense: 121
+    MagicDefense: 10
+    Str: 82
+    Agi: 66
+    Vit: 59
+    Int: 54
+    Dex: 75
+    Luk: 108
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 792
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Sprint_Glove
+        Rate: 5
+      - Item: Guard
+        Rate: 7
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Andre_larva_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21389
+    AegisName: ILL_DENIRO
+    Name: Diligent Deniro
+    Level: 167
+    Hp: 819978
+    BaseExp: 81114
+    JobExp: 61044
+    Attack: 4855
+    Attack2: 544
+    Defense: 170
+    MagicDefense: 19
+    Str: 136
+    Agi: 149
+    Vit: 92
+    Int: 89
+    Dex: 185
+    Luk: 88
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 576
+    Ai: 21
+    Drops:
+      - Item: Sprint_Mail
+        Rate: 5
+      - Item: IL_Twins_Feeler
+        Rate: 150
+      - Item: IL_Twins_Jaw
+        Rate: 50
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Opaque_Liquid
+        Rate: 2000
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Deniro_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21390
+    AegisName: ILL_PIERE
+    Name: Diligent Piere
+    Level: 167
+    Hp: 825541
+    BaseExp: 82688
+    JobExp: 60487
+    Attack: 5042
+    Attack2: 557
+    Defense: 178
+    MagicDefense: 18
+    Str: 190
+    Agi: 144
+    Vit: 86
+    Int: 63
+    Dex: 175
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 576
+    Ai: 21
+    Drops:
+      - Item: Gelerdria
+        Rate: 5
+      - Item: IL_Twins_Jaw
+        Rate: 50
+      - Item: IL_Twins_Leg
+        Rate: 150
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Piere_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21391
+    AegisName: ILL_ANT_EGG
+    Name: Mushy Ant Egg
+    Level: 164
+    Hp: 659810
+    BaseExp: 34992
+    JobExp: 23555
+    Defense: 100
+    MagicDefense: 9
+    Vit: 65
+    Luk: 200
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 1001
+    AttackMotion: 1
+    DamageMotion: 1
+    Ai: 06
+    Drops:
+      - Item: Sprint_Shoes
+        Rate: 5
+      - Item: Siver_Guard
+        Rate: 5
+      - Item: Shell
+        Rate: 2000
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Phracon
+        Rate: 500
+      - Item: Jellopy
+        Rate: 2500
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Ant_egg_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21392
+    AegisName: ILL_GIEARTH
+    Name: Gutsy Giearth
+    Level: 168
+    Hp: 864988
+    BaseExp: 81566
+    JobExp: 61655
+    Attack: 4955
+    Attack2: 560
+    Defense: 223
+    MagicDefense: 21
+    Str: 160
+    Agi: 97
+    Vit: 155
+    Int: 104
+    Dex: 94
+    Luk: 151
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1848
+    AttackMotion: 1296
+    DamageMotion: 432
+    Ai: 21
+    Drops:
+      - Item: Thorn_Staff
+        Rate: 5
+      - Item: IL_Twins_Hat
+        Rate: 50
+      - Item: IL_Twins_Shovel
+        Rate: 50
+      - Item: Coal
+        Rate: 200
+      - Item: Elder_Pixie's_Beard
+        Rate: 4000
+      - Item: Dry_Sand
+        Rate: 2000
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Giearth_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21393
+    AegisName: ILL_FARMILIAR
+    Name: Gutsy Familiar
+    Level: 166
+    Hp: 761002
+    BaseExp: 79844
+    JobExp: 60180
+    Attack: 4472
+    Attack2: 542
+    Defense: 144
+    MagicDefense: 10
+    Str: 90
+    Agi: 162
+    Vit: 70
+    Int: 115
+    Dex: 188
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Ancient_Dagger
+        Rate: 5
+      - Item: IL_Twins_Fang
+        Rate: 75
+      - Item: IL_Twins_Fur
+        Rate: 150
+      - Item: Tooth_Of_Bat
+        Rate: 5500
+      - Item: Red_Herb
+        Rate: 700
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Farmiliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21394
+    AegisName: ILL_VITATA
+    Name: Diligent Vitata
+    Level: 169
+    Hp: 879511
+    BaseExp: 83348
+    JobExp: 62487
+    Attack: 4566
+    Attack2: 2984
+    Defense: 168
+    MagicDefense: 166
+    Str: 177
+    Agi: 199
+    Vit: 144
+    Int: 142
+    Dex: 223
+    Luk: 56
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 300
+    AttackDelay: 1768
+    AttackMotion: 768
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Sprint_Ring
+        Rate: 5
+      - Item: IL_Twins_Acid
+        Rate: 75
+      - Item: IL_Twins_Jaw
+        Rate: 75
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Scell
+        Rate: 300
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: ILL_Vitata_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21395
+    AegisName: ILL_MAYA
+    Name: Silent Maya
+    Level: 175
+    Hp: 24512365
+    BaseExp: 4401752
+    JobExp: 3601314
+    Attack: 7844
+    Attack2: 3827
+    Defense: 998
+    MagicDefense: 184
+    Str: 251
+    Agi: 206
+    Vit: 238
+    Int: 322
+    Dex: 244
+    Luk: 248
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 864
+    AttackMotion: 1000
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+      - Item: Dea_Staff
+        Rate: 300
+      - Item: IL_Twins_Acid
+        Rate: 10000
+      - Item: IL_Twins_Crown
+        Rate: 3000
+      - Item: IL_Twins_Leg
+        Rate: 10000
+      - Item: Shadowdecon
+        Rate: 100
+      - Item: Shell_Of_Cognition
+        Rate: 2000
+      - Item: Mother's_Nightmare
+        Rate: 10
+      - Item: ILL_Maya_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 21396
 #    AegisName: SEASON_MOB_016
 #  - Id: 21397

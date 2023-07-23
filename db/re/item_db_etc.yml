@@ -41534,6 +41534,20 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-4;
+  - Id: 27344
+    AegisName: Witch_Zilant_Card
+    Name: Witch Zilant Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Fire,100;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bResEff,Eff_WhiteImprison,10000;
   - Id: 27345
     AegisName: Dragon_Zilant_Card
     Name: Ancient Dragon Zilant Card
@@ -53628,6 +53642,15 @@ Body:
     SubType: Enchant
     Script: |
       bonus bDelayrate,-getskilllv("ASC_BREAKER");
+  - Id: 310192
+    AegisName: Extreme
+    Name: Extreme
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitAddRate,20;
+      autobonus "{ bonus bDex,100; }",30,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 3253,10000; }";
+      bonus2 bResEff,Eff_WhiteImprison,10000;
   - Id: 310195
     AegisName: Magnificat_Lv5
     Name: Magnificat Lv5

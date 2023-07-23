@@ -3147,6 +3147,7 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 // In case of success returns type of reflection, otherwise 0
 //		1 - Regular reflection (Maya)
 //		2 - SL_KAITE reflection
+//		3 - NPC_MAGICMIRROR reflection
 static int skill_magic_reflect(struct block_list* src, struct block_list* bl, int type)
 {
 	status_change *sc = status_get_sc(bl);
@@ -3160,11 +3161,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		// Item-based reflection - Bypasses Boss check
 		if (sd && sd->bonus.magic_damage_return && type && rnd()%100 < sd->bonus.magic_damage_return)
 			return 1;
-	}
 
-	// Magic Mirror reflection - Bypasses Boss check
-	if (sc && sc->getSCE(SC_MAGICMIRROR) && rnd()%100 < sc->getSCE(SC_MAGICMIRROR)->val2)
-		return 1;
+		// Magic Mirror reflection - Bypasses Boss check
+		if (sc && sc->getSCE(SC_MAGICMIRROR) && rnd()%100 < sc->getSCE(SC_MAGICMIRROR)->val2)
+			return 3;
+	}
 
 	if( status_get_class_(src) == CLASS_BOSS )
 		return 0;
@@ -3655,8 +3656,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					tsc->getSCE(SC_SPIRIT)->val3 = skill_id;
 					tsc->getSCE(SC_SPIRIT)->val4 = dsrc->id;
 				}
-			} else if( type != 2 ) /* Kaite bypasses */
-				additional_effects = false;
+			}
 
 			// Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
 #if MAGIC_REFLECTION_TYPE
@@ -3676,6 +3676,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				else if( s_ele == ELE_RANDOM) //Use random element
 					s_ele = rnd()%ELE_ALL;
 
+				if(type == 3)
+					dmg.flag = BF_WEAPON|BF_NORMAL|BF_SHORT;
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
 				if( tsc && tsc->getSCE(SC_ENERGYCOAT) ) {
@@ -3689,9 +3691,19 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
 				}
 
-				if (dmg.damage > 0 && tsd && tsd->bonus.reduce_damage_return != 0) {
-					dmg.damage -= dmg.damage * tsd->bonus.reduce_damage_return / 100;
-					dmg.damage = i64max(dmg.damage, 1);
+				int64 reduce = 0;
+
+				if (tsd && tsd->bonus.reduce_damage_return != 0) {
+					reduce += tsd->bonus.reduce_damage_return;
+				}
+				if (tsc && tsc->getSCE(SC_REFLECTDAMAGE)) {
+					reduce += (tsc->getSCE(SC_REFLECTDAMAGE)->val2);
+				}
+				if (tsc && tsc->getSCE(SC_REF_T_POTION))
+					reduce += 100;
+				if (dmg.damage > 0) {
+					dmg.damage -= dmg.damage * i64min(100, reduce) / 100;
+					dmg.damage = i64max(dmg.damage, dmg.div_);
 				}
 			}
 #endif

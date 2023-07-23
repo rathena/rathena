@@ -15,7 +15,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 * Status effect (eff)
 	Eff_Bleeding, Eff_Blind, Eff_Burning, Eff_Confusion, Eff_Crystalize, Eff_Curse, Eff_DPoison,
 	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun, Eff_Freezing,
-	Eff_Heat, Eff_Deepsleep
+	Eff_Heat, Eff_Deepsleep, Eff_WhiteImprison
 
 * Element (e)
 	Ele_Dark, Ele_Earth, Ele_Fire, Ele_Ghost, Ele_Holy, Ele_Neutral, Ele_Poison,
