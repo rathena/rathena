@@ -14,6 +14,7 @@
 //= 1.5 Added Illusion of Luanda enchanter [Capuche]
 //= 1.6 Added Illusion of Underwater exchange [Capuche]
 //= 1.7 Added Illusion of Twins enchanter [Capuche]
+//= 1.8 Added Illusion Merchant [Haydrich]
 //============================================================
 
 //============================================================
@@ -1702,5 +1703,37 @@ OnInit:
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
 	setunitdata .@npc_id, UNPC_HAIRSTYLE, 11;
 	setunitdata .@npc_id, UNPC_HAIRCOLOR, 6;
+	end;
+}
+
+//============================================================
+//= Illusion Merchant
+//============================================================
+-	marketshop	market_resonance_stone	-1,100003:2000000:99999,100004:2000000:99999
+// prontera,88,113,5	script	Illusion Merchant#0829	MAGICIAN_H,{
+prontera,88,113,5	script	Illusion Merchant#0829	HIDDEN_NPC,{
+	mes "[Illusion Merchant]";
+	mes "I'm selling two random optional weapon grant scrolls that I made myself. You can choose the payment method you like.";
+	next;
+	switch( select( "Purchase with Zeny.", "Purchase with Illusion Stones" )) {
+		mes "[Illusion Merchant]";
+		mes "I hope you like it.";
+		close2;
+		case 1: callshop "market_resonance_stone"; end;
+		case 2: callshop "resonance_stone_barter"; end;
+	}
+OnInit:
+	.@npc_id = getnpcid(0);
+	setunitdata .@npc_id,UNPC_CLASS,2;
+	setunitdata .@npc_id,UNPC_SEX,2;
+	setunitdata .@npc_id,UNPC_HEADTOP,142;
+	setunitdata .@npc_id,UNPC_HEADMIDDLE,92;
+	setunitdata .@npc_id,UNPC_HAIRSTYLE,2;
+	setunitdata .@npc_id,UNPC_HAIRCOLOR,2;
+	end;
+OnClock0000:
+	if (gettime(DT_DAYOFWEEK) == 1) //custom until confirmed
+		npcshopupdate "market_resonance_stone",100003,2000000,99999;
+		npcshopupdate "market_resonance_stone",100004,2000000,99999;
 	end;
 }
