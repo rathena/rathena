@@ -412,3 +412,17 @@ Body:
           - Index: 3
             Item: IllusionStone
             Amount: 120
+  - Name: resonance_stone_barter
+    Items:
+      - Index: 0
+        Item: ILL_Piece_A
+        RequiredItems:
+          - Index: 0
+            Item: IllusionStone
+            Amount: 10
+      - Index: 1
+        Item: ILL_Piece_B
+        RequiredItems:
+          - Index: 0
+            Item: IllusionStone
+            Amount: 10
