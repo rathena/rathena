@@ -22224,7 +22224,7 @@ Body:
   - Combos:
       - Combo:
           - Cvt_Physical_Wing
-          - Victory_Wing_Ear
+          - Victory_Wing_Ear_
     Script: |
       bonus bDelayrate,-15;
       bonus bAtkRate,7;
@@ -22249,7 +22249,7 @@ Body:
   - Combos:
       - Combo:
           - Cvt_Magical_Wing
-          - Victory_Wing_Ear
+          - Victory_Wing_Ear_
     Script: |
       bonus bDelayrate,-15;
       bonus bMatkRate,7;
