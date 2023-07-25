@@ -1724,7 +1724,7 @@ prontera,88,113,5	script	Illusion Merchant#0829	HIDDEN_NPC,{
 	}
 OnInit:
 	.@npc_id = getnpcid(0);
-	setunitdata .@npc_id,UNPC_CLASS,2;
+	setunitdata .@npc_id,UNPC_CLASS,4003;	// MAGICIAN_H
 	setunitdata .@npc_id,UNPC_SEX,2;
 	setunitdata .@npc_id,UNPC_HEADTOP,142;
 	setunitdata .@npc_id,UNPC_HEADMIDDLE,92;
