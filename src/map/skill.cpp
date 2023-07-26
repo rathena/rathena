@@ -2179,18 +2179,6 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 	case ABC_CHAIN_REACTION_SHOT:
 		skill_castend_damage_id(src, bl, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick, SD_LEVEL);
 		break;
-	case WH_DEEPBLINDTRAP:// Need official success chances for all 4 Windhawk traps.
-		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_SOLIDTRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_SWIFTTRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_LIGHTNINGSTRIKE, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_FLAMETRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_CONFLAGRATION, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
 	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
 		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
 	case WM_METALICSOUND:

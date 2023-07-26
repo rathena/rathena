@@ -5592,7 +5592,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case WH_SOLIDTRAP:
 		case WH_SWIFTTRAP:
 		case WH_FLAMETRAP:
-			skillratio += -100 + 250 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 850 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			skillratio += skillratio * (20 * (sd ? pc_checkskill(sd, WH_ADVANCED_TRAP) : 5)) / 100;
 			break;
