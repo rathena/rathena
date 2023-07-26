@@ -37927,25 +37927,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 28
+          Amount: 45
         - Level: 2
-          Amount: 31
+          Amount: 48
         - Level: 3
-          Amount: 34
+          Amount: 51
         - Level: 4
-          Amount: 37
+          Amount: 54
         - Level: 5
-          Amount: 40
+          Amount: 57
         - Level: 6
-          Amount: 43
+          Amount: 60
         - Level: 7
-          Amount: 46
+          Amount: 63
         - Level: 8
-          Amount: 49
+          Amount: 66
         - Level: 9
-          Amount: 52
+          Amount: 69
         - Level: 10
-          Amount: 55
+          Amount: 72
       Weapon:
         Katar: true
   - Id: 5288
