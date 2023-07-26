@@ -37826,33 +37826,52 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 60000
+        Time: 30000
       - Level: 2
-        Time: 80000
+        Time: 60000
       - Level: 3
-        Time: 100000
+        Time: 90000
       - Level: 4
         Time: 120000
       - Level: 5
-        Time: 140000
+        Time: 150000
       - Level: 6
-        Time: 160000
-      - Level: 7
         Time: 180000
+      - Level: 7
+        Time: 210000
       - Level: 8
-        Time: 200000
-      - Level: 9
-        Time: 220000
-      - Level: 10
         Time: 240000
+      - Level: 9
+        Time: 270000
+      - Level: 10
+        Time: 300000
     Cooldown: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost:
+        - Level: 1
+          Amount: 152
+        - Level: 2
+          Amount: 149
+        - Level: 3
+          Amount: 146
+        - Level: 4
+          Amount: 143
+        - Level: 5
+          Amount: 140
+        - Level: 6
+          Amount: 137
+        - Level: 7
+          Amount: 134
+        - Level: 8
+          Amount: 131
+        - Level: 9
+          Amount: 128
+        - Level: 10
+          Amount: 125
     Status: Shadow_Exceed
   - Id: 5286
     Name: SHC_DANCING_KNIFE
