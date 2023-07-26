@@ -39201,10 +39201,11 @@ Body:
     CastCancel: true
     CastTime: 800
     AfterCastActDelay: 500
+    Cooldown: 150
     FixedCastTime: 200
     Requires:
-      SpCost: 120
-      ApCost: 15
+      SpCost: 80
+      ApCost: 12
       Weapon:
         Bow: true
       State: Falcon
