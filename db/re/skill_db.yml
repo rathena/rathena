@@ -37986,25 +37986,25 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 30000
+        Time: 75000
       - Level: 2
-        Time: 40000
-      - Level: 3
-        Time: 50000
-      - Level: 4
-        Time: 60000
-      - Level: 5
-        Time: 70000
-      - Level: 6
-        Time: 80000
-      - Level: 7
-        Time: 90000
-      - Level: 8
         Time: 100000
+      - Level: 3
+        Time: 125000
+      - Level: 4
+        Time: 150000
+      - Level: 5
+        Time: 175000
+      - Level: 6
+        Time: 200000
+      - Level: 7
+        Time: 225000
+      - Level: 8
+        Time: 250000
       - Level: 9
-        Time: 110000
+        Time: 275000
       - Level: 10
-        Time: 120000
+        Time: 300000
     Cooldown: 3000
     Requires:
       SpCost:
