@@ -5558,7 +5558,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case WH_HAWKRUSH:
-			skillratio += -100 + 200 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 500 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case WH_HAWKBOOMERANG:// Affected by trait stats??? CON for sure but the other one unknown. Likely POW. [Rytech]
