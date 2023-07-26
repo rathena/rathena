@@ -37960,16 +37960,16 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: 2
+    Range: 3
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     CastCancel: true
     AfterCastActDelay: 500
     Duration1: 3000
-    Cooldown: 750
+    Cooldown: 500
     Requires:
-      SpCost: 40
+      SpCost: 60
       Status:
         Weaponblock_On: true
     Status: E_Slash_Count
