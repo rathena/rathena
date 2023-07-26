@@ -118,10 +118,10 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 				}
 			}
 			else {
-			mes "[Archer Guildsman]";
-			mes "Well, alright.";
-			mes "See you next time.";
-			close;
+				mes "[Archer Guildsman]";
+				mes "Well, alright.";
+				mes "See you next time.";
+				close;
 			}
 		}
 		mes "[Archer Guildsman]";
