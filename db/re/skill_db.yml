@@ -38084,23 +38084,22 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    GiveAp: 5
+    GiveAp: 3
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 5000
+    Cooldown: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 43
-        - Level: 2
           Amount: 46
+        - Level: 2
+          Amount: 54
         - Level: 3
-          Amount: 49
+          Amount: 62
         - Level: 4
-          Amount: 52
+          Amount: 70
         - Level: 5
-          Amount: 55
+          Amount: 78
       Weapon:
         Katar: true
       Status:
