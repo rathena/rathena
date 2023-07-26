@@ -38146,9 +38146,10 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 500
     Duration1: 20000
     Cooldown: 60000
+    FixedCastTime: 500
     Requires:
       SpCost: 150
       ApCost: 150
