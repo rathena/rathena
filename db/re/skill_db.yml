@@ -38022,7 +38022,7 @@ Body:
       IgnoreDefense: true
     Range: 2
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 2
     Element: Weapon
     GiveAp: 2
     CastCancel: true
