@@ -5511,7 +5511,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SHADOW_STAB:
-			skillratio += -100 + 750 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 300 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_IMPACT_CRATER:
