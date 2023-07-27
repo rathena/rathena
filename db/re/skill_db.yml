@@ -38264,7 +38264,6 @@ Body:
       - Level: 10
         Area: 3
     CastCancel: true
-    AfterCastActDelay: 500
     Cooldown: 60000
     Duration1: 30000
     Duration2: 
