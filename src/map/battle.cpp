@@ -7795,7 +7795,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_STRANTUM_TREMOR:
-						skillratio += -100 + 250 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 100 + 730 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ALL_BLOOM_ATK:

@@ -35640,22 +35640,22 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 250
     Duration1: 4000
     Cooldown: 5000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 35
+          Amount: 74
         - Level: 2
-          Amount: 45
+          Amount: 79
         - Level: 3
-          Amount: 55
+          Amount: 84
         - Level: 4
-          Amount: 65
+          Amount: 89
         - Level: 5
-          Amount: 75
+          Amount: 94
     Unit:
       Id: Strantum_Tremor
       Range:
