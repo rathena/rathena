@@ -5496,7 +5496,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
-				skillratio += 20 * skill_lv;	// !TODO: this should be the total ratio? no POW ratio?
+				skillratio += 20 * skill_lv + 3 * sstatus->pow;	// !TODO: check POW ratio
 			}
 
 			RE_LVL_DMOD(100);
@@ -5505,7 +5505,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 265 * skill_lv + 2 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
-				skillratio += 100 * skill_lv + 3 * sstatus->pow;	// !TODO: this should be the total ratio?
+				skillratio += 100 * skill_lv + 3 * sstatus->pow;
 			}
 
 			RE_LVL_DMOD(100);
