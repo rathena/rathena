@@ -35859,22 +35859,22 @@ Body:
     Element: Wind
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 250
     Duration1: 3000
     Cooldown: 5000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 45
+          Amount: 78
         - Level: 2
-          Amount: 55
+          Amount: 82
         - Level: 3
-          Amount: 65
+          Amount: 86
         - Level: 4
-          Amount: 75
+          Amount: 90
         - Level: 5
-          Amount: 85
+          Amount: 94
     Unit:
       Id: Tornado_Storm
       Range:

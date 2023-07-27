@@ -7829,7 +7829,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += skillratio * 150 / 100;
 						break;
 					case AG_TORNADO_STORM:
-						skillratio += -100 + 90 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 100 + 760 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_FLORAL_FLARE_ROAD:
