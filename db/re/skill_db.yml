@@ -35512,7 +35512,7 @@ Body:
         Area: 4
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 1200
@@ -35530,15 +35530,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
-        - Level: 2
-          Amount: 90
-        - Level: 3
-          Amount: 100
-        - Level: 4
           Amount: 110
+        - Level: 2
+          Amount: 114
+        - Level: 3
+          Amount: 118
+        - Level: 4
+          Amount: 122
         - Level: 5
-          Amount: 120
+          Amount: 126
     Unit:
       Id: Violent_Quake
       Range:
