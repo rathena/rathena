@@ -7878,10 +7878,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_FROZEN_SLASH:
-						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 250 + 900 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 250 * skill_lv;
+							skillratio += 150 + 350 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);

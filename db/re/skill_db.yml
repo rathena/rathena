@@ -36221,24 +36221,24 @@ Body:
         Area: 5
       - Level: 5
         Area: 6
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 450
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 45
+          Amount: 84
         - Level: 2
-          Amount: 55
+          Amount: 87
         - Level: 3
-          Amount: 65
+          Amount: 90
         - Level: 4
-          Amount: 75
+          Amount: 93
         - Level: 5
-          Amount: 85
+          Amount: 96
   - Id: 5238
     Name: IQ_POWERFUL_FAITH
     Description: Powerful Faith
