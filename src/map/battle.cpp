@@ -7777,7 +7777,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_MYSTERY_ILLUSION:
-						skillratio += -100 + 500 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 950 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_VIOLENT_QUAKE_ATK:

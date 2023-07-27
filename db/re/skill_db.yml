@@ -35448,29 +35448,29 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Ground
-    GiveAp: 4
+    GiveAp: 5
     Range: 9
     Hit: Single
     HitCount: 1
     Element: Dark
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Duration1: 4000
     Cooldown: 4000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 78
         - Level: 2
-          Amount: 90
+          Amount: 86
         - Level: 3
-          Amount: 100
+          Amount: 94
         - Level: 4
-          Amount: 110
+          Amount: 102
         - Level: 5
-          Amount: 120
+          Amount: 110
     Unit:
       Id: Mystery_Illusion
       Range:
