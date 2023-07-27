@@ -36066,7 +36066,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
@@ -36085,15 +36085,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 65
+          Amount: 68
         - Level: 2
-          Amount: 70
+          Amount: 74
         - Level: 3
-          Amount: 75
-        - Level: 4
           Amount: 80
+        - Level: 4
+          Amount: 86
         - Level: 5
-          Amount: 85
+          Amount: 92
   - Id: 5234
     Name: AG_STORM_CANNON
     Description: Storm Cannon
