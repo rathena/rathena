@@ -35910,22 +35910,22 @@ Body:
     Element: Fire
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 250
     Duration1: 5000
     Cooldown: 5000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 30
-        - Level: 2
-          Amount: 40
-        - Level: 3
-          Amount: 50
-        - Level: 4
-          Amount: 60
-        - Level: 5
           Amount: 70
+        - Level: 2
+          Amount: 76
+        - Level: 3
+          Amount: 82
+        - Level: 4
+          Amount: 88
+        - Level: 5
+          Amount: 94
     Unit:
       Id: Floral_Flare_Road
       Range:
