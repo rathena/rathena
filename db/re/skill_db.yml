@@ -39251,25 +39251,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 64
         - Level: 2
-          Amount: 91
+          Amount: 68
         - Level: 3
-          Amount: 102
+          Amount: 72
         - Level: 4
-          Amount: 113
+          Amount: 76
         - Level: 5
-          Amount: 124
+          Amount: 80
         - Level: 6
-          Amount: 135
+          Amount: 84
         - Level: 7
-          Amount: 146
+          Amount: 88
         - Level: 8
-          Amount: 157
+          Amount: 92
         - Level: 9
-          Amount: 168
+          Amount: 96
         - Level: 10
-          Amount: 179
+          Amount: 100
       Weapon:
         Bow: true
       Ammo:
