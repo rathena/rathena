@@ -36106,7 +36106,7 @@ Body:
     Element: Wind
     SplashArea: 1
     ActiveInstance: 14
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
@@ -36125,15 +36125,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 60
+          Amount: 78
         - Level: 2
-          Amount: 70
+          Amount: 82
         - Level: 3
-          Amount: 80
+          Amount: 86
         - Level: 4
           Amount: 90
         - Level: 5
-          Amount: 100
+          Amount: 94
   - Id: 5235
     Name: AG_CRIMSON_ARROW
     Description: Crimson Arrow
