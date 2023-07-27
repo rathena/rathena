@@ -35380,22 +35380,22 @@ Body:
         Area: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Duration2: 900000
-    Cooldown: 6000
+    Cooldown: 2000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 108
         - Level: 2
-          Amount: 90
+          Amount: 114
         - Level: 3
-          Amount: 100
-        - Level: 4
-          Amount: 110
-        - Level: 5
           Amount: 120
+        - Level: 4
+          Amount: 126
+        - Level: 5
+          Amount: 132
     Status: Climax_Des_Hu
   - Id: 5216
     Name: AG_RAIN_OF_CRYSTAL

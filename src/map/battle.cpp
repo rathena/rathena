@@ -7762,14 +7762,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE:
-						skillratio += -100 + 1600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 250 + 2800 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						if (sc && sc->getSCE(SC_CLIMAX))
 						{
 							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 2;
+								skillratio *= 3;
 							else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
-								skillratio += skillratio * 70 / 100;
+								skillratio += skillratio * 50 / 100;
 						}
 						break;
 					case AG_RAIN_OF_CRYSTAL:
