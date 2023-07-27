@@ -36146,7 +36146,7 @@ Body:
     Element: Fire
     SplashArea: 1
     ActiveInstance: 14
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
@@ -36165,15 +36165,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 65
+          Amount: 86
         - Level: 2
-          Amount: 75
+          Amount: 88
         - Level: 3
-          Amount: 85
+          Amount: 90
         - Level: 4
-          Amount: 95
+          Amount: 92
         - Level: 5
-          Amount: 105
+          Amount: 94
   - Id: 5236
     Name: AG_CRIMSON_ARROW_ATK
     Description: Crimson Arrow Attack
