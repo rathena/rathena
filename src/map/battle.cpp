@@ -7773,7 +7773,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						}
 						break;
 					case AG_RAIN_OF_CRYSTAL:
-						skillratio += -100 + 150 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 180 + 760 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_MYSTERY_ILLUSION:

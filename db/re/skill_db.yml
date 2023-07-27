@@ -35408,22 +35408,22 @@ Body:
     Element: Water
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 250
     Duration1: 4000
     Cooldown: 5000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 84
         - Level: 2
-          Amount: 50
+          Amount: 88
         - Level: 3
-          Amount: 60
+          Amount: 92
         - Level: 4
-          Amount: 70
+          Amount: 96
         - Level: 5
-          Amount: 80
+          Amount: 100
     Unit:
       Id: Rain_Of_Crystal
       Range:
