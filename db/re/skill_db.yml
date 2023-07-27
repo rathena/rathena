@@ -39167,8 +39167,8 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 300000
+    Duration1: 180000
+    Cooldown: 180000
     FixedCastTime: 1000
     Requires:
       SpCost: 300
