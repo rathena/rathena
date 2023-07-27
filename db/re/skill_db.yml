@@ -35817,22 +35817,22 @@ Body:
         Area: 7
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Duration2: 900000
-    Cooldown: 6000
+    Cooldown: 2000
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
-        - Level: 2
-          Amount: 90
-        - Level: 3
           Amount: 100
+        - Level: 2
+          Amount: 108
+        - Level: 3
+          Amount: 116
         - Level: 4
-          Amount: 110
+          Amount: 124
         - Level: 5
-          Amount: 120
+          Amount: 132
     Status: Climax_CryImp
   - Id: 5226
     Name: AG_CRYSTAL_IMPACT_ATK
