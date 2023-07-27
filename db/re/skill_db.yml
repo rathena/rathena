@@ -35619,15 +35619,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
-        - Level: 2
           Amount: 90
+        - Level: 2
+          Amount: 95
         - Level: 3
           Amount: 100
         - Level: 4
-          Amount: 110
+          Amount: 105
         - Level: 5
-          Amount: 120
+          Amount: 110
   - Id: 5221
     Name: AG_STRANTUM_TREMOR
     Description: Strantum Tremor
@@ -35979,12 +35979,12 @@ Body:
     CastCancel: true
     CastTime: 8000
     AfterCastActDelay: 500
-    Duration1: 15000
-    Cooldown: 60000
+    Duration1: 6000
+    Cooldown: 6000
     FixedCastTime: 2000
     Requires:
-      SpCost: 150
-      ApCost: 150
+      SpCost: 130
+      ApCost: 25
     Unit:
       Id: Astral_Strike
       Range:
