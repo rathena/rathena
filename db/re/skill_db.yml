@@ -37734,32 +37734,32 @@ Body:
         Area: 3
       - Level: 10
         Area: 4
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 1000
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 32
-        - Level: 2
-          Amount: 34
-        - Level: 3
-          Amount: 36
-        - Level: 4
           Amount: 38
-        - Level: 5
-          Amount: 40
-        - Level: 6
-          Amount: 42
-        - Level: 7
+        - Level: 2
+          Amount: 41
+        - Level: 3
           Amount: 44
-        - Level: 8
-          Amount: 46
-        - Level: 9
-          Amount: 48
-        - Level: 10
+        - Level: 4
+          Amount: 47
+        - Level: 5
           Amount: 50
+        - Level: 6
+          Amount: 53
+        - Level: 7
+          Amount: 56
+        - Level: 8
+          Amount: 59
+        - Level: 9
+          Amount: 62
+        - Level: 10
+          Amount: 65
       Weapon:
         Mace: true
         2hMace: true
