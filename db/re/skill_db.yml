@@ -37494,11 +37494,10 @@ Body:
     HitCount: -7
     Element: Weapon
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 60000
+    Cooldown: 500
     Requires:
-      SpCost: 60
-      ApCost: 100
+      SpCost: 75
+      ApCost: 12
       Weapon:
         Mace: true
         2hMace: true
