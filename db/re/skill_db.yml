@@ -36623,33 +36623,23 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
-    GiveAp: 1
+    SplashArea: 3
+    GiveAp: 4
     CastCancel: true
     Duration1: 5000
-    Cooldown: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 36
+          Amount: 41
         - Level: 2
-          Amount: 42
+          Amount: 47
         - Level: 3
-          Amount: 48
+          Amount: 53
         - Level: 4
-          Amount: 54
+          Amount: 59
         - Level: 5
-          Amount: 60
+          Amount: 65
     Status: Second_Brand
   - Id: 5250
     Name: IQ_SECOND_JUDGEMENT
