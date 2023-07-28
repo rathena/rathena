@@ -5450,7 +5450,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_THIRD_CONSECRATION:
-			skillratio += -100 + 650 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IG_GRAND_JUDGEMENT:
