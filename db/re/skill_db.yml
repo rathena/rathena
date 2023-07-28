@@ -41176,11 +41176,11 @@ Body:
     CastCancel: true
     CastTime: 8000
     AfterCastActDelay: 500
-    Cooldown: 60000
-    FixedCastTime: 2000
+    Cooldown: 5000
+    FixedCastTime: 1500
     Requires:
-      SpCost: 150
-      ApCost: 150
+      SpCost: 140
+      ApCost: 30
   - Id: 5381
     Name: EM_ELEMENTAL_VEIL
     Description: Elemental Veil
