@@ -41000,15 +41000,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 70
+          Amount: 97
         - Level: 2
-          Amount: 80
+          Amount: 101
         - Level: 3
-          Amount: 90
+          Amount: 105
         - Level: 4
-          Amount: 100
+          Amount: 109
         - Level: 5
-          Amount: 110
+          Amount: 113
     Unit:
       Id: Conflagration
       Range: 4
