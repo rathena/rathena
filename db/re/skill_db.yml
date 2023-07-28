@@ -37378,30 +37378,30 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 2000
+    Cooldown: 1500
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 50
+          Amount: 94
         - Level: 2
-          Amount: 60
+          Amount: 96
         - Level: 3
-          Amount: 70
+          Amount: 98
         - Level: 4
-          Amount: 80
-        - Level: 5
-          Amount: 90
-        - Level: 6
           Amount: 100
+        - Level: 5
+          Amount: 102
+        - Level: 6
+          Amount: 104
         - Level: 7
-          Amount: 110
+          Amount: 106
         - Level: 8
-          Amount: 120
+          Amount: 108
         - Level: 9
-          Amount: 130
+          Amount: 110
         - Level: 10
-          Amount: 140
+          Amount: 112
     Status: HandicapState_DeepSilence
   - Id: 5274
     Name: CD_ARBITRIUM_ATK
