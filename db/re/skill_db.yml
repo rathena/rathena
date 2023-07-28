@@ -40879,20 +40879,20 @@ Body:
     AfterCastActDelay: 500
     Duration1: 100
     Duration2: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 80
         - Level: 2
-          Amount: 88
+          Amount: 84
         - Level: 3
-          Amount: 92
+          Amount: 88
         - Level: 4
-          Amount: 96
+          Amount: 92
         - Level: 5
-          Amount: 100
+          Amount: 96
     Unit:
       Id: Dummyskill
       Range: 4
