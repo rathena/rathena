@@ -37519,20 +37519,30 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 120000
-      - Level: 2
-        Time: 150000
-      - Level: 3
         Time: 180000
-      - Level: 4
+      - Level: 2
         Time: 210000
-      - Level: 5
+      - Level: 3
         Time: 240000
+      - Level: 4
+        Time: 270000
+      - Level: 5
+        Time: 300000
     Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 60
-      ApCost: 200
+      ApCost:
+        - Level: 1
+          Amount: 200
+        - Level: 2
+          Amount: 190
+        - Level: 3
+          Amount: 180
+        - Level: 4
+          Amount: 170
+        - Level: 5
+          Amount: 160
     Status: Competentia
   - Id: 5279
     Name: CD_PNEUMATICUS_PROCELLA
