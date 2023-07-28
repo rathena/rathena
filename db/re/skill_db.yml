@@ -36447,15 +36447,15 @@ Body:
     Element: Weapon
     SplashArea:
       - Level: 1
-        Area: 2
+        Area: 3
       - Level: 2
-        Area: 2
+        Area: 3
       - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
         Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
     GiveAp: 4
     CastCancel: true
     AfterCastActDelay:
@@ -36469,19 +36469,19 @@ Body:
         Time: 200
       - Level: 5
         Time: 0
-    Cooldown: 4000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 70
         - Level: 2
-          Amount: 90
+          Amount: 75
         - Level: 3
-          Amount: 100
+          Amount: 80
         - Level: 4
-          Amount: 110
+          Amount: 85
         - Level: 5
-          Amount: 120
+          Amount: 90
   - Id: 5245
     Name: IQ_FIRST_BRAND
     Description: First Brand
