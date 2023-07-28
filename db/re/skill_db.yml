@@ -36551,22 +36551,32 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    Duration1:
+    Duration1: 300000
+    Cooldown:
       - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 120000
-      - Level: 3
         Time: 180000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 120000
       - Level: 4
-        Time: 240000
+        Time: 90000
       - Level: 5
-        Time: 300000
-    Cooldown: 150000
+        Time: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
-      ApCost: 50
+      ApCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 50
+        - Level: 5
+          Amount: 40
       Status:
         First_Faith_Power: true
     Status: Second_Judge
