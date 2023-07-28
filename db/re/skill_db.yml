@@ -36672,22 +36672,12 @@ Body:
       Critical: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 3
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
     Duration1: 600000
-    Cooldown: 2000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
