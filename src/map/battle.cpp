@@ -7975,7 +7975,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_VENOM_SWAMP:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
 
 						if( sc && sc->getSCE( SC_SUMMON_ELEMENTAL_SERPENS ) ){
 							skillratio += 400 * skill_lv;

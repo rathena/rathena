@@ -40961,15 +40961,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
-        - Level: 2
-          Amount: 88
-        - Level: 3
           Amount: 92
+        - Level: 2
+          Amount: 97
+        - Level: 3
+          Amount: 102
         - Level: 4
-          Amount: 96
+          Amount: 107
         - Level: 5
-          Amount: 100
+          Amount: 112
     Unit:
       Id: Venom_Swamp
       Range: 4
