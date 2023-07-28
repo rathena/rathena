@@ -7917,9 +7917,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case CD_FRAMEN:
-						skillratio += -100 + 500 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + (800 + 5* pc_checkskill(sd,CD_FIDUS_ANIMUS)) * skill_lv +  5 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-							skillratio += 150 * skill_lv;
+							skillratio += 100 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:// Is this affected by BaseLV and SPL too??? [Rytech]

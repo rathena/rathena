@@ -37787,7 +37787,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
@@ -37806,15 +37806,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 80
         - Level: 2
-          Amount: 45
+          Amount: 83
         - Level: 3
-          Amount: 50
+          Amount: 86
         - Level: 4
-          Amount: 55
+          Amount: 89
         - Level: 5
-          Amount: 60
+          Amount: 92
   - Id: 5285
     Name: SHC_SHADOW_EXCEED
     Description: Shadow Exceed
