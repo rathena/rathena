@@ -37556,13 +37556,12 @@ Body:
     Element: Holy
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 500
     Duration1: 12000
-    Cooldown: 60000
+    Cooldown: 5000
     FixedCastTime: 2000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 30
     Unit:
       Id: Pneumaticus_Procella
       Range:
