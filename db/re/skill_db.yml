@@ -37826,33 +37826,52 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 60000
+        Time: 30000
       - Level: 2
-        Time: 80000
+        Time: 60000
       - Level: 3
-        Time: 100000
+        Time: 90000
       - Level: 4
         Time: 120000
       - Level: 5
-        Time: 140000
+        Time: 150000
       - Level: 6
-        Time: 160000
-      - Level: 7
         Time: 180000
+      - Level: 7
+        Time: 210000
       - Level: 8
-        Time: 200000
-      - Level: 9
-        Time: 220000
-      - Level: 10
         Time: 240000
+      - Level: 9
+        Time: 270000
+      - Level: 10
+        Time: 300000
     Cooldown: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost:
+        - Level: 1
+          Amount: 152
+        - Level: 2
+          Amount: 149
+        - Level: 3
+          Amount: 146
+        - Level: 4
+          Amount: 143
+        - Level: 5
+          Amount: 140
+        - Level: 6
+          Amount: 137
+        - Level: 7
+          Amount: 134
+        - Level: 8
+          Amount: 131
+        - Level: 9
+          Amount: 128
+        - Level: 10
+          Amount: 125
     Status: Shadow_Exceed
   - Id: 5286
     Name: SHC_DANCING_KNIFE
@@ -37927,25 +37946,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 28
+          Amount: 45
         - Level: 2
-          Amount: 31
+          Amount: 48
         - Level: 3
-          Amount: 34
+          Amount: 51
         - Level: 4
-          Amount: 37
+          Amount: 54
         - Level: 5
-          Amount: 40
+          Amount: 57
         - Level: 6
-          Amount: 43
+          Amount: 60
         - Level: 7
-          Amount: 46
+          Amount: 63
         - Level: 8
-          Amount: 49
+          Amount: 66
         - Level: 9
-          Amount: 52
+          Amount: 69
         - Level: 10
-          Amount: 55
+          Amount: 72
       Weapon:
         Katar: true
   - Id: 5288
@@ -37960,16 +37979,16 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: 2
+    Range: 3
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     CastCancel: true
     AfterCastActDelay: 500
     Duration1: 3000
-    Cooldown: 750
+    Cooldown: 500
     Requires:
-      SpCost: 40
+      SpCost: 60
       Status:
         Weaponblock_On: true
     Status: E_Slash_Count
@@ -37986,25 +38005,25 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 30000
+        Time: 75000
       - Level: 2
-        Time: 40000
-      - Level: 3
-        Time: 50000
-      - Level: 4
-        Time: 60000
-      - Level: 5
-        Time: 70000
-      - Level: 6
-        Time: 80000
-      - Level: 7
-        Time: 90000
-      - Level: 8
         Time: 100000
+      - Level: 3
+        Time: 125000
+      - Level: 4
+        Time: 150000
+      - Level: 5
+        Time: 175000
+      - Level: 6
+        Time: 200000
+      - Level: 7
+        Time: 225000
+      - Level: 8
+        Time: 250000
       - Level: 9
-        Time: 110000
+        Time: 275000
       - Level: 10
-        Time: 120000
+        Time: 300000
     Cooldown: 3000
     Requires:
       SpCost:
@@ -38043,22 +38062,21 @@ Body:
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 1000
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
-          Amount: 45
+          Amount: 40
         - Level: 2
-          Amount: 50
+          Amount: 45
         - Level: 3
-          Amount: 55
+          Amount: 50
         - Level: 4
-          Amount: 60
+          Amount: 55
         - Level: 5
-          Amount: 65
+          Amount: 60
       Weapon:
         Dagger: true
   - Id: 5292
@@ -38084,23 +38102,22 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    GiveAp: 5
+    GiveAp: 3
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 5000
+    Cooldown: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 43
-        - Level: 2
           Amount: 46
+        - Level: 2
+          Amount: 54
         - Level: 3
-          Amount: 49
+          Amount: 62
         - Level: 4
-          Amount: 52
+          Amount: 70
         - Level: 5
-          Amount: 55
+          Amount: 78
       Weapon:
         Katar: true
       Status:
@@ -38148,9 +38165,10 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 500
     Duration1: 20000
     Cooldown: 60000
+    FixedCastTime: 500
     Requires:
       SpCost: 150
       ApCost: 150

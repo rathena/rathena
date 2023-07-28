@@ -2485,9 +2485,11 @@ Body:
       - Item: Gelerdria_IL
       - Item: Thorn_Staff_IL
       - Item: Dea_Staff_IL
-#  - Item: Joy_Of_Victory
-#    TargetItems:
-#      - Item: Victory_Wing_Ear_
+  - Item: Joy_Of_Victory
+    RandomOptionGroup: JOY_OF_VICTORY
+    CardsAllowed: true
+    TargetItems:
+      - Item: Victory_Wing_Ear_
   - Item: Ancient_Hero_Bravery
     RandomOptionGroup: ANCIENT_HERO_BRAVERY
     TargetItems:
@@ -4618,9 +4620,11 @@ Body:
 #      - Item: Poenitentia_Ramus
 #      - Item: Poenitentia_Planta
 #      - Item: Poenitentia_Ferrum
-#  - Item: Overclocker
-#    TargetItems:
-#      - Item: Battle_Processor_
+  - Item: Overclocker
+    RandomOptionGroup: OVERCLOCKER
+    CardsAllowed: true
+    TargetItems:
+      - Item: Battle_Processor_
 #  - Item: Sakray_Regret
 #    TargetItems:
 #      - Item: Poenitentia_Ensis
@@ -5098,9 +5102,11 @@ Body:
       - Item: MeawFoxtail_LT
       - Item: OneSkyOneSun_LT
       - Item: SoulWeight_LT
-#  - Item: Lens_Craft_Stone
-#    TargetItems:
-#      - Item: Deepblue_Sunglasses_
+  - Item: Lens_Craft_Stone
+    RandomOptionGroup: LENS_CRAFT_STONE
+    CardsAllowed: true
+    TargetItems:
+      - Item: Deepblue_Sunglasses_
 #  - Item: FullPenest_Shadow_Up
 #    MaximumRefine: 10
 #    TargetItems:
