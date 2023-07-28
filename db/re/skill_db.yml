@@ -36423,14 +36423,13 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea: 4
+    SplashArea: 5
     CastCancel: true
-    AfterCastActDelay: 500
-    Duration1: 300000
-    Cooldown: 60000
+    Duration1: 150000
+    Cooldown: 5000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 12
     Status: Massive_F_Blaster
   - Id: 5244
     Name: IQ_EXPOSION_BLASTER
