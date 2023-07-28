@@ -36653,33 +36653,23 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
-    GiveAp: 2
+    SplashArea: 3
+    GiveAp: 4
     CastCancel: true
     Duration1: 5000
-    Cooldown: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 45
-        - Level: 2
           Amount: 50
-        - Level: 3
+        - Level: 2
           Amount: 55
-        - Level: 4
+        - Level: 3
           Amount: 60
-        - Level: 5
+        - Level: 4
           Amount: 65
+        - Level: 5
+          Amount: 70
     Status: Second_Brand
   - Id: 5251
     Name: IQ_THIRD_PUNISH
