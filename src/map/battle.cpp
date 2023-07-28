@@ -7960,7 +7960,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_DILUVIO ) ){
-							skillratio += 5000 + 250 * skill_lv  + 10 * sstatus->spl;
+							skillratio += 5000 + 250 * skill_lv  + 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
@@ -7996,7 +7996,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
-							skillratio += 5000 + 250 * skill_lv + 10 * sstatus->spl;
+							skillratio += 5000 + 250 * skill_lv + 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
