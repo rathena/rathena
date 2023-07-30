@@ -38681,15 +38681,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 48
         - Level: 2
-          Amount: 45
+          Amount: 52
         - Level: 3
-          Amount: 50
+          Amount: 56
         - Level: 4
-          Amount: 55
-        - Level: 5
           Amount: 60
+        - Level: 5
+          Amount: 64
       Weapon:
         Dagger: true
         1hSword: true
