@@ -38864,11 +38864,11 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 100
-    Cooldown: 60000
+    Cooldown: 3000
     FixedCastTime: 1000
     Requires:
-      SpCost: 150
-      ApCost: 150
+      SpCost: 125
+      ApCost: 15
     Unit:
       Id: Dummyskill
       Range: 4
