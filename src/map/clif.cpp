@@ -274,6 +274,18 @@ static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned i
 	return len;
 }
 
+// To show Critical Hit Rate on Status Window.
+static inline short critical_rate_shown(map_session_data *sd) {
+#ifndef RENEWAL
+	return (sd->battle_status.cri/10);
+#else
+	if (sd->status.weapon == W_KATAR)
+		return (sd->battle_status.cri/20);	// Critical Hit Rate is doubled when wielding a Katar type weapon (but not shown on Status Window)
+	else
+		return (sd->battle_status.cri/10);
+#endif
+}
+
 
 static char map_ip_str[128];
 static uint32 map_ip;
@@ -3597,7 +3609,7 @@ void clif_updatestatus(map_session_data *sd,int type)
 		}
 		break;
 	case SP_CRITICAL:
-		WFIFOL(fd,4)=sd->battle_status.cri/10;
+		WFIFOL(fd,4)=critical_rate_shown(sd);
 		break;
 	case SP_MATK1:
 		WFIFOL(fd,4)=pc_rightside_matk(sd);
@@ -4115,7 +4127,7 @@ void clif_initialstatus(map_session_data *sd) {
 	WBUFW(buf,32) = sd->battle_status.hit;
 	WBUFW(buf,34) = sd->battle_status.flee;
 	WBUFW(buf,36) = sd->battle_status.flee2/10;
-	WBUFW(buf,38) = sd->battle_status.cri/10;
+	WBUFW(buf,38) = critical_rate_shown(sd);
 	WBUFW(buf,40) = sd->battle_status.amotion; // aspd
 	WBUFW(buf,42) = 0;  // always 0 (plusASPD)
 
@@ -15711,7 +15723,7 @@ void clif_check(int fd, map_session_data* pl_sd)
 	WFIFOW(fd,30) = pl_sd->battle_status.hit;
 	WFIFOW(fd,32) = pl_sd->battle_status.flee;
 	WFIFOW(fd,34) = pl_sd->battle_status.flee2/10;
-	WFIFOW(fd,36) = pl_sd->battle_status.cri/10;
+	WFIFOW(fd,36) = critical_rate_shown(pl_sd);
 	WFIFOW(fd,38) = (2000-pl_sd->battle_status.amotion)/10;  // aspd
 	WFIFOW(fd,40) = 0;  // FIXME: What is 'plusASPD' supposed to be? Maybe adelay?
 	WFIFOSET(fd,packet_len(0x214));
