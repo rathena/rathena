@@ -38756,21 +38756,20 @@ Body:
         Area: 4
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
-    Cooldown: 1500
+    Cooldown: 1000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 35
         - Level: 2
-          Amount: 50
+          Amount: 45
         - Level: 3
-          Amount: 60
+          Amount: 55
         - Level: 4
-          Amount: 70
+          Amount: 65
         - Level: 5
-          Amount: 80
+          Amount: 75
       Weapon:
         Bow: true
       Ammo:
@@ -41228,10 +41227,12 @@ Body:
     TargetType: Attack
     DamageFlags:
       IgnoreFlee: true
+      Splash: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
+    SplashArea: 3
     Requires:
       SpCost: 1
   - Id: 5383
