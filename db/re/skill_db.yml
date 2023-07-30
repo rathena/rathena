@@ -38965,7 +38965,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: 1
-    GiveAp: 4
+    GiveAp: 5
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
