@@ -38199,21 +38199,31 @@ Body:
         Area: 3
     GiveAp: 3
     CastCancel: true
-    AfterCastActDelay: 500
-    Duration1: 10000
-    Cooldown: 1000
+    AfterCastActDelay: 250
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 15000
+      - Level: 3
+        Time: 20000
+      - Level: 4
+        Time: 25000
+      - Level: 5
+        Time: 30000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 25
+          Amount: 46
         - Level: 2
-          Amount: 30
+          Amount: 53
         - Level: 3
-          Amount: 35
+          Amount: 60
         - Level: 4
-          Amount: 40
+          Amount: 67
         - Level: 5
-          Amount: 45
+          Amount: 74
       Weapon:
         1hAxe: true
         2hAxe: true
@@ -38254,7 +38264,6 @@ Body:
       - Level: 10
         Area: 3
     CastCancel: true
-    AfterCastActDelay: 500
     Cooldown: 60000
     Duration1: 30000
     Duration2: 
