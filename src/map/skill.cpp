@@ -2179,18 +2179,6 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 	case ABC_CHAIN_REACTION_SHOT:
 		skill_castend_damage_id(src, bl, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick, SD_LEVEL);
 		break;
-	case WH_DEEPBLINDTRAP:// Need official success chances for all 4 Windhawk traps.
-		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_SOLIDTRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_SWIFTTRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_LIGHTNINGSTRIKE, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_FLAMETRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_CONFLAGRATION, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
 	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
 		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
 	case WM_METALICSOUND:
@@ -12973,7 +12961,6 @@ TIMER_FUNC(skill_castend_id){
 	map_session_data *sd;
 	struct mob_data *md;
 	struct unit_data *ud;
-	status_change *sc = NULL;
 	int flag = 0;
 
 	src = map_id2bl(id);
@@ -12992,6 +12979,7 @@ TIMER_FUNC(skill_castend_id){
 
 	sd = BL_CAST(BL_PC,  src);
 	md = BL_CAST(BL_MOB, src);
+	status_change *sc = status_get_sc(src);
 
 	if( src->prev == NULL ) {
 		ud->skilltimer = INVALID_TIMER;
@@ -13155,6 +13143,11 @@ TIMER_FUNC(skill_castend_id){
 								sd->skill_id_old = ud->skill_id; // Prevents AP bonus on non Retro Spection use.
 							}
 							break;
+						case WH_CRESCIVE_BOLT:
+							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
+								add_ap += 2;
+							}
+							break;
 					}
 
 					status_heal(&sd->bl, 0, 0, add_ap, 0);
@@ -13204,7 +13197,7 @@ TIMER_FUNC(skill_castend_id){
 				else
 					type = SC_STRIPSHIELD;
 
-				if ((sc = status_get_sc(src)) && sc->getSCE(type)) {
+				if (sc && sc->getSCE(type)) {
 					const struct TimerData* timer = get_timer(sc->getSCE(type)->timer);
 
 					if (timer && timer->func == status_change_timer && DIFF_TICK(timer->tick, gettick() + skill_get_time(ud->skill_id, ud->skill_lv)) > 0)
@@ -13233,7 +13226,6 @@ TIMER_FUNC(skill_castend_id){
 			sd->skill_keep_using.tid = add_timer( sd->ud.canact_tick + 100, skill_keep_using, sd->bl.id, 0 );
 		}
 
-		sc = status_get_sc(src);
 		if(sc && sc->count) {
 			if (ud->skill_id != RA_CAMOUFLAGE)
 				status_change_end(src, SC_CAMOUFLAGE); // Applies to the first skill if active
