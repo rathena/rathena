@@ -36334,17 +36334,16 @@ Body:
     Element: Weapon
     SplashArea:
       - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
         Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 3000
@@ -36356,19 +36355,19 @@ Body:
         Time: 6000
       - Level: 5
         Time: 7000
-    Cooldown: 3000
+    Cooldown: 2000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 30
+          Amount: 45
         - Level: 2
-          Amount: 40
+          Amount: 55
         - Level: 3
-          Amount: 50
+          Amount: 65
         - Level: 4
-          Amount: 60
+          Amount: 75
         - Level: 5
-          Amount: 70
+          Amount: 85
       ItemCost:
         - Item: Holy_Water
           Amount: 1
@@ -36424,14 +36423,13 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea: 4
+    SplashArea: 5
     CastCancel: true
-    AfterCastActDelay: 500
-    Duration1: 300000
-    Cooldown: 60000
+    Duration1: 150000
+    Cooldown: 5000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 12
     Status: Massive_F_Blaster
   - Id: 5244
     Name: IQ_EXPOSION_BLASTER
@@ -36448,15 +36446,15 @@ Body:
     Element: Weapon
     SplashArea:
       - Level: 1
-        Area: 2
+        Area: 3
       - Level: 2
-        Area: 2
+        Area: 3
       - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
         Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
     GiveAp: 4
     CastCancel: true
     AfterCastActDelay:
@@ -36470,19 +36468,19 @@ Body:
         Time: 200
       - Level: 5
         Time: 0
-    Cooldown: 4000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 70
         - Level: 2
-          Amount: 90
+          Amount: 75
         - Level: 3
-          Amount: 100
+          Amount: 80
         - Level: 4
-          Amount: 110
+          Amount: 85
         - Level: 5
-          Amount: 120
+          Amount: 90
   - Id: 5245
     Name: IQ_FIRST_BRAND
     Description: First Brand
@@ -36491,46 +36489,26 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
-    Range: 2
+    Range: 3
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
-    Duration1:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 2000
-      - Level: 3
-        Time: 3000
-      - Level: 4
-        Time: 4000
-      - Level: 5
-        Time: 5000
-    Cooldown: 500
+    Duration1: 5000
+    Cooldown: 300
     Requires:
       SpCost:
         - Level: 1
-          Amount: 22
+          Amount: 46
         - Level: 2
-          Amount: 29
-        - Level: 3
-          Amount: 36
-        - Level: 4
-          Amount: 43
-        - Level: 5
           Amount: 50
+        - Level: 3
+          Amount: 54
+        - Level: 4
+          Amount: 58
+        - Level: 5
+          Amount: 62
     Status: First_Brand
   - Id: 5246
     Name: IQ_FIRST_FAITH_POWER
@@ -36544,18 +36522,18 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    Duration1:
+    Duration1: 300000
+    Cooldown:
       - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 120000
-      - Level: 3
         Time: 180000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 120000
       - Level: 4
-        Time: 240000
+        Time: 90000
       - Level: 5
-        Time: 300000
-    Cooldown: 150000
+        Time: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
@@ -36572,22 +36550,32 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    Duration1:
+    Duration1: 300000
+    Cooldown:
       - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 120000
-      - Level: 3
         Time: 180000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 120000
       - Level: 4
-        Time: 240000
+        Time: 90000
       - Level: 5
-        Time: 300000
-    Cooldown: 150000
+        Time: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
-      ApCost: 50
+      ApCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 50
+        - Level: 5
+          Amount: 40
       Status:
         First_Faith_Power: true
     Status: Second_Judge
@@ -36603,33 +36591,23 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
-    GiveAp: 3
+    SplashArea: 3
+    GiveAp: 4
     CastCancel: true
     Duration1: 5000
-    Cooldown: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 46
+          Amount: 51
         - Level: 2
-          Amount: 52
+          Amount: 57
         - Level: 3
-          Amount: 58
+          Amount: 63
         - Level: 4
-          Amount: 64
+          Amount: 69
         - Level: 5
-          Amount: 70
+          Amount: 75
     Status: Second_Brand
   - Id: 5249
     Name: IQ_SECOND_FAITH
@@ -36643,33 +36621,23 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
-    GiveAp: 1
+    SplashArea: 3
+    GiveAp: 4
     CastCancel: true
     Duration1: 5000
-    Cooldown: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 36
+          Amount: 41
         - Level: 2
-          Amount: 42
+          Amount: 47
         - Level: 3
-          Amount: 48
+          Amount: 53
         - Level: 4
-          Amount: 54
+          Amount: 59
         - Level: 5
-          Amount: 60
+          Amount: 65
     Status: Second_Brand
   - Id: 5250
     Name: IQ_SECOND_JUDGEMENT
@@ -36683,33 +36651,23 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
-    GiveAp: 2
+    SplashArea: 3
+    GiveAp: 4
     CastCancel: true
     Duration1: 5000
-    Cooldown: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 45
-        - Level: 2
           Amount: 50
-        - Level: 3
+        - Level: 2
           Amount: 55
-        - Level: 4
+        - Level: 3
           Amount: 60
-        - Level: 5
+        - Level: 4
           Amount: 65
+        - Level: 5
+          Amount: 70
     Status: Second_Brand
   - Id: 5251
     Name: IQ_THIRD_PUNISH
@@ -36722,22 +36680,12 @@ Body:
       Critical: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 3
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
     Duration1: 600000
-    Cooldown: 2000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -36762,19 +36710,9 @@ Body:
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
-    Cooldown: 2000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -36799,19 +36737,9 @@ Body:
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
-    Cooldown: 2000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -36836,22 +36764,32 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    Duration1:
+    Duration1: 300000
+    Cooldown:
       - Level: 1
-        Time: 30000
+        Time: 180000
       - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
         Time: 150000
-    Cooldown: 150000
+      - Level: 3
+        Time: 120000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
-      ApCost: 100
+      ApCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 105
+        - Level: 3
+          Amount: 90
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 60
       Status:
         Second_Judge: true
     Status: Third_Exor_Flame
