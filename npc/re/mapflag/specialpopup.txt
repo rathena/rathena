@@ -1,4 +1,20 @@
 
+herosria	mapflag	specialpopup	1
+hero_in1	mapflag	specialpopup	1
+hero_in2	mapflag	specialpopup	1
+hero_in3	mapflag	specialpopup	1
+hero_in4	mapflag	specialpopup	1
+hero_out1	mapflag	specialpopup	1
+hero_out2	mapflag	specialpopup	1
+hero_out3	mapflag	specialpopup	1
+hero_out4	mapflag	specialpopup	1
+hero_ent1	mapflag	specialpopup	1
+hero_ent2	mapflag	specialpopup	1
+hero_ent3	mapflag	specialpopup	1
+
+hero_tra	mapflag	specialpopup	2
+hero_dun1	mapflag	specialpopup	2
+
 bl_ice	mapflag	specialpopup	3
 bl_lava	mapflag	specialpopup	3
 bl_grass	mapflag	specialpopup	3
@@ -18,3 +34,5 @@ tha_t12	mapflag	specialpopup	4
 ama_dun01	mapflag	specialpopup	5
 
 lhz_dun_n	mapflag	specialpopup	6
+
+bl_depth1	mapflag	specialpopup	7
