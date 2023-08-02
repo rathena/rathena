@@ -37378,30 +37378,30 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 2000
+    Cooldown: 1500
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 50
+          Amount: 94
         - Level: 2
-          Amount: 60
+          Amount: 96
         - Level: 3
-          Amount: 70
+          Amount: 98
         - Level: 4
-          Amount: 80
-        - Level: 5
-          Amount: 90
-        - Level: 6
           Amount: 100
+        - Level: 5
+          Amount: 102
+        - Level: 6
+          Amount: 104
         - Level: 7
-          Amount: 110
+          Amount: 106
         - Level: 8
-          Amount: 120
+          Amount: 108
         - Level: 9
-          Amount: 130
+          Amount: 110
         - Level: 10
-          Amount: 140
+          Amount: 112
     Status: HandicapState_DeepSilence
   - Id: 5274
     Name: CD_ARBITRIUM_ATK
@@ -37494,11 +37494,10 @@ Body:
     HitCount: -7
     Element: Weapon
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 60000
+    Cooldown: 500
     Requires:
-      SpCost: 60
-      ApCost: 100
+      SpCost: 75
+      ApCost: 12
       Weapon:
         Mace: true
         2hMace: true
@@ -37519,20 +37518,30 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 120000
-      - Level: 2
-        Time: 150000
-      - Level: 3
         Time: 180000
-      - Level: 4
+      - Level: 2
         Time: 210000
-      - Level: 5
+      - Level: 3
         Time: 240000
+      - Level: 4
+        Time: 270000
+      - Level: 5
+        Time: 300000
     Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 60
-      ApCost: 200
+      ApCost:
+        - Level: 1
+          Amount: 200
+        - Level: 2
+          Amount: 190
+        - Level: 3
+          Amount: 180
+        - Level: 4
+          Amount: 170
+        - Level: 5
+          Amount: 160
     Status: Competentia
   - Id: 5279
     Name: CD_PNEUMATICUS_PROCELLA
@@ -37546,13 +37555,12 @@ Body:
     Element: Holy
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 500
     Duration1: 12000
-    Cooldown: 60000
+    Cooldown: 5000
     FixedCastTime: 2000
     Requires:
       SpCost: 150
-      ApCost: 150
+      ApCost: 30
     Unit:
       Id: Pneumaticus_Procella
       Range:
@@ -37734,32 +37742,32 @@ Body:
         Area: 3
       - Level: 10
         Area: 4
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 1000
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 32
-        - Level: 2
-          Amount: 34
-        - Level: 3
-          Amount: 36
-        - Level: 4
           Amount: 38
-        - Level: 5
-          Amount: 40
-        - Level: 6
-          Amount: 42
-        - Level: 7
+        - Level: 2
+          Amount: 41
+        - Level: 3
           Amount: 44
-        - Level: 8
-          Amount: 46
-        - Level: 9
-          Amount: 48
-        - Level: 10
+        - Level: 4
+          Amount: 47
+        - Level: 5
           Amount: 50
+        - Level: 6
+          Amount: 53
+        - Level: 7
+          Amount: 56
+        - Level: 8
+          Amount: 59
+        - Level: 9
+          Amount: 62
+        - Level: 10
+          Amount: 65
       Weapon:
         Mace: true
         2hMace: true
@@ -37787,7 +37795,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
@@ -37806,15 +37814,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 80
         - Level: 2
-          Amount: 45
+          Amount: 83
         - Level: 3
-          Amount: 50
+          Amount: 86
         - Level: 4
-          Amount: 55
+          Amount: 89
         - Level: 5
-          Amount: 60
+          Amount: 92
   - Id: 5285
     Name: SHC_SHADOW_EXCEED
     Description: Shadow Exceed
