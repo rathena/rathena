@@ -13213,7 +13213,7 @@ BUILDIN_FUNC(addrid)
 	iter = mapit_getallusers();
 
 	int type = script_getnum(st,2);
-	int forceflag = (script_hasdata(st,3) ? script_getnum(st,3) : 0);
+	bool forceflag = (script_hasdata(st,3) ? script_getnum(st,3) != 0 : 0);
 
 	switch(type) {
 		case 0:
