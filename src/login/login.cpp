@@ -403,8 +403,8 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	// update session data
 	sd->account_id = acc.account_id;
-	sd->login_id1 = rnd() + 1;
-	sd->login_id2 = rnd() + 1;
+	sd->login_id1 = new_random(UINT32_MAX) + 1;
+	sd->login_id2 = new_random(UINT32_MAX) + 1;
 	safestrncpy(sd->lastlogin, acc.lastlogin, sizeof(sd->lastlogin));
 	sd->sex = acc.sex;
 	sd->group_id = acc.group_id;

@@ -17,6 +17,17 @@ void rnd_init( void ){
 	uint32_distribution = std::uniform_int_distribution<uint32>( 0, UINT32_MAX );
 }
 
+/*
+ * Generates a random number in the interval [0, n-1]
+ * Equal to rnd()%n
+ * @param n number of possible values
+ * @return random number
+ */
+uint32 new_random( uint32 n ) {
+	std::uniform_int_distribution<uint32> dist(0, n-1);
+	return dist(generator);
+}
+
 /// Generates a random number in the interval [0, SINT32_MAX]
 int32 rnd( void ){
 	return int31_distribution( generator );

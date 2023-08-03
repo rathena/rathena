@@ -2872,7 +2872,7 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
 
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
+		if (entry->rate == 0 || new_random(random->total_rate) < entry->rate)	// always return entry for rate 0 ('must' item)
 			return entry;
 	}
 
@@ -4441,7 +4441,7 @@ void s_random_opt_group::apply( struct item& item ){
 		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
-			if( rnd() % 10000 < option->chance ){
+			if( new_random(10000) < option->chance ){
 				apply_sub( item.option[i], option );
 				break;
 			}
@@ -4466,7 +4466,7 @@ void s_random_opt_group::apply( struct item& item ){
 
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
-			if( rnd() % 10000 < option->chance ){
+			if( new_random(10000) < option->chance ){
 				apply_sub( item.option[i], option );
 			}
 		}

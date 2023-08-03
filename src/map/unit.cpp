@@ -2625,7 +2625,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 			int i;
 
 			for( i = 0; i < 12; i++ ) {
-				int k = rnd()%8; // Pick a Random Dir
+				int k = new_random(8); // Pick a Random Dir
 
 				dx = -dirx[k] * 2;
 				dy = -diry[k] * 2;

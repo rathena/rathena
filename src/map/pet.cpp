@@ -710,7 +710,7 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 	if (DIFF_TICK(pd->ud.canact_tick, gettick()) > 0)
 		return 0;
 
-	if (rnd()%100 < (pd->a_skill->rate +pd->pet.intimate*pd->a_skill->bonusrate/1000)) { // Skotlex: Use pet's skill
+	if (new_random(100) < (pd->a_skill->rate +pd->pet.intimate*pd->a_skill->bonusrate/1000)) { // Skotlex: Use pet's skill
 		int inf;
 		struct block_list *bl;
 
@@ -782,8 +782,8 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 			rate = 1;
 	}
 
-	if(rnd()%10000 < rate) {
-		if(pd->target_id == 0 || rnd()%10000 < pet_db_ptr->change_target_rate)
+	if(new_random(10000) < rate) {
+		if(pd->target_id == 0 || new_random(10000) < pet_db_ptr->change_target_rate)
 			pd->target_id = bl->id;
 	}
 
@@ -942,7 +942,7 @@ static int pet_performance(map_session_data *sd, struct pet_data *pd)
 		val = 1;
 
 	pet_stop_walking(pd,2000<<8);
-	clif_pet_performance(pd, rnd()%val + 1);
+	clif_pet_performance(pd, new_random(val) + 1);
 	pet_lootitem_drop(pd,NULL);
 
 	return 1;
@@ -1315,7 +1315,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	if(battle_config.pet_catch_rate != 100)
 		pet_catch_rate = (pet_catch_rate*battle_config.pet_catch_rate)/100;
 
-	if(rnd()%10000 < pet_catch_rate) {
+	if(new_random(10000) < pet_catch_rate) {
 		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
@@ -1672,7 +1672,7 @@ static int pet_randomwalk(struct pet_data *pd,t_tick tick)
 			d = 5;
 
 		for(i = 0; i < retrycount; i++) {
-			int r = rnd(), x, y;
+			int r = new_random(UINT32_MAX), x, y;
 
 			x = pd->bl.x+r%(d*2+1)-d;
 			y = pd->bl.y+r/(d*2+1)%(d*2+1)-d;
@@ -1702,7 +1702,7 @@ static int pet_randomwalk(struct pet_data *pd,t_tick tick)
 				c += pd->status.speed;
 		}
 
-		pd->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME+c;
+		pd->next_walktime = tick+new_random(1000)+MIN_RANDOMWALKTIME+c;
 
 		return 1;
 	}

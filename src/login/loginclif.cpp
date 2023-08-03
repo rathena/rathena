@@ -378,7 +378,7 @@ static int logclif_parse_reqkey(int fd, struct login_session_data *sd){
 	RFIFOSKIP(fd,2);
 	{
 		memset(sd->md5key, '\0', sizeof(sd->md5key));
-		sd->md5keylen = (uint16)(12 + rnd() % 4);
+		sd->md5keylen = (uint16)(12 + new_random(4));
 		MD5_Salt(sd->md5keylen, sd->md5key);
 
 		WFIFOHEAD(fd,4 + sd->md5keylen);
