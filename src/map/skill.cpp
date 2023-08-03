@@ -23643,7 +23643,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "HitRate")) {
-		if (!this->parseNode("HitRate", "Rate", node, skill->hitrate.rate))
+		if (!this->parseNode("Rates", "Rate", node["HitRate"], skill->hitrate.rate))
 			return 0;
 
 		const auto &skillsNode = node["HitRate"];
