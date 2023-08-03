@@ -39676,13 +39676,13 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 30000
+        Time: 90000
       - Level: 2
-        Time: 40000
+        Time: 120000
       - Level: 3
-        Time: 50000
+        Time: 150000
       - Level: 4
-        Time: 60000
+        Time: 180000
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -39708,7 +39708,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: 5
+    HitCount: 7
     Element: Water
     SplashArea:
       - Level: 1
@@ -39734,22 +39734,22 @@ Body:
         Amount: 5
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 10000
-    Cooldown: 1000
+    Cooldown: 500
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 51
         - Level: 2
-          Amount: 52
+          Amount: 54
         - Level: 3
-          Amount: 64
+          Amount: 57
         - Level: 4
-          Amount: 76
+          Amount: 60
         - Level: 5
-          Amount: 88
+          Amount: 63
       ItemCost:
         - Item: Icicle_Acid_Bottle
           Amount: 2
@@ -39770,7 +39770,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: 5
+    HitCount: 7
     Element: Earth
     SplashArea:
       - Level: 1
@@ -39796,22 +39796,22 @@ Body:
         Amount: 5
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 10000
-    Cooldown: 1000
+    Cooldown: 500
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 51
         - Level: 2
-          Amount: 52
+          Amount: 54
         - Level: 3
-          Amount: 64
+          Amount: 57
         - Level: 4
-          Amount: 76
+          Amount: 60
         - Level: 5
-          Amount: 88
+          Amount: 63
       ItemCost:
         - Item: Earth_Acid_Bottle
           Amount: 2
@@ -39832,7 +39832,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: 5
+    HitCount: 7
     Element: Wind
     SplashArea:
       - Level: 1
@@ -39858,22 +39858,22 @@ Body:
         Amount: 5
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 10000
-    Cooldown: 1000
+    Cooldown: 500
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 51
         - Level: 2
-          Amount: 52
+          Amount: 54
         - Level: 3
-          Amount: 64
+          Amount: 57
         - Level: 4
-          Amount: 76
+          Amount: 60
         - Level: 5
-          Amount: 88
+          Amount: 63
       ItemCost:
         - Item: Gale_Acid_Bottle
           Amount: 2
@@ -39894,7 +39894,7 @@ Body:
       Splash: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: 5
+    HitCount: 7
     Element: Fire
     SplashArea:
       - Level: 1
@@ -39920,22 +39920,22 @@ Body:
         Amount: 5
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 10000
-    Cooldown: 1000
+    Cooldown: 500
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 51
         - Level: 2
-          Amount: 52
+          Amount: 54
         - Level: 3
-          Amount: 64
+          Amount: 57
         - Level: 4
-          Amount: 76
+          Amount: 60
         - Level: 5
-          Amount: 88
+          Amount: 63
       ItemCost:
         - Item: Flame_Acid_Bottle
           Amount: 2
@@ -40087,9 +40087,9 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 120000
-    FixedCastTime: 1000
+    Duration1: 150000
+    Cooldown: 60000
+    FixedCastTime: 500
     Requires:
       SpCost: 60
       ApCost: 100
