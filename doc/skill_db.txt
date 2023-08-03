@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220126
+//= 20230803
 //===== Description: =========================================
 //= Explanation of the skill_db.yml file and structure.
 //============================================================
@@ -154,6 +154,27 @@ Sequence Map Form
       Count: 8
     - Level: 5
       Count: 10
+
+---------------------------------------
+
+HitRate: Skill hit rate. Rate is 100 by default.
+
+Can be defined in scalar form or sequence map form:
+Scalar Form
+  HitRate: 120
+
+Sequence Map Form
+  HitRate:
+    - Level: 1
+      Count: 120
+    - Level: 2
+      Count: 140
+    - Level: 3
+      Count: 160
+    - Level: 4
+      Count: 180
+    - Level: 5
+      Count: 200
 
 ---------------------------------------
 

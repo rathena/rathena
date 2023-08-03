@@ -34,6 +34,8 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 
+using namespace rathena;
+
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
@@ -3097,98 +3099,49 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 		hitrate += pc_checkskill(sd,AC_VULTURE);
 #endif
 
-	if(skill_id) {
-		switch(skill_id) { //Hit skill modifiers
+	if (skill_id > 0) {
+		switch (skill_id) { //Hit skill modifiers
 			//It is proven that bonus is applied on final hitrate, not hit.
-			case SM_BASH:
-			case MS_BASH:
-				hitrate += hitrate * 5 * skill_lv / 100;
-				break;
-			case MS_MAGNUM:
-			case SM_MAGNUM:
-				hitrate += hitrate * 10 * skill_lv / 100;
-				break;
-			case KN_AUTOCOUNTER:
-			case PA_SHIELDCHAIN:
-			case NPC_WATERATTACK:
-			case NPC_GROUNDATTACK:
-			case NPC_FIREATTACK:
-			case NPC_WINDATTACK:
-			case NPC_POISONATTACK:
-			case NPC_HOLYATTACK:
-			case NPC_DARKNESSATTACK:
-			case NPC_TELEKINESISATTACK:
-			case NPC_UNDEADATTACK:
-			case NPC_CHANGEUNDEAD:
-			case NPC_EARTHQUAKE:
-			case NPC_POISON:
-			case NPC_BLINDATTACK:
-			case NPC_SILENCEATTACK:
-			case NPC_STUNATTACK:
-			case NPC_PETRIFYATTACK:
-			case NPC_CURSEATTACK:
-			case NPC_SLEEPATTACK:
-			case NPC_BLEEDING:
-			case NPC_BLEEDING2:
-				hitrate += hitrate * 20 / 100;
-				break;
-			case NPC_FIREBREATH:
-			case NPC_ICEBREATH:
-			case NPC_ICEBREATH2:
-			case NPC_THUNDERBREATH:
-			case NPC_ACIDBREATH:
-			case NPC_DARKNESSBREATH:
-				hitrate *= 2;
-				break;
-			case KN_PIERCE:
-			case ML_PIERCE:
-				hitrate += hitrate * 5 * skill_lv / 100;
-				break;
-			case AS_SONICBLOW:
-				if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0)
-#ifdef RENEWAL
-					hitrate += hitrate * 90 / 100;
-#else
-					hitrate += hitrate * 50 / 100;
-#endif
-				break;
-#ifdef RENEWAL
-			case RG_BACKSTAP:
-				hitrate += skill_lv; // !TODO: What's the rate increase?
-				break;
-#endif
-			case RK_SONICWAVE:
-				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
-				break;
 			case MC_CARTREVOLUTION:
 			case GN_CART_TORNADO:
 			case GN_CARTCANNON:
-				if (sd && pc_checkskill(sd, GN_REMODELING_CART))
-					hitrate += pc_checkskill(sd, GN_REMODELING_CART) * 4;
-				break;
-			case LG_BANISHINGPOINT:
-				hitrate += 5 * skill_lv;
-				break;
-			case GC_VENOMPRESSURE:
-				hitrate += 10 + 4 * skill_lv;
-				break;
-			case SC_FATALMENACE:
-				if (skill_lv < 6)
-					hitrate -= 35 - 5 * skill_lv;
-				else if (skill_lv > 6)
-					hitrate += 5 * skill_lv - 30;
-				break;
+			{
+				uint16 cart_remodel_lv = pc_checkskill(sd, GN_REMODELING_CART);
+
+				if (sd && cart_remodel_lv > 0)
+					hitrate = hitrate * skill_get_hitrate(GN_REMODELING_CART, cart_remodel_lv) / 100;
+			}
+			break;
 			case RL_SLUGSHOT:
-				{
-					int8 dist = distance_bl(src, target);
-					if (dist > 3) {
-						// Reduce n hitrate for each cell after initial 3 cells. Different each level
-						// -10:-9:-8:-7:-6
-						dist -= 3;
-						hitrate -= ((11 - skill_lv) * dist);
-					}
+			{
+				uint32 dist = distance_bl(src, target);
+
+				if (dist > 3) {
+					// Reduce n hitrate for each cell after initial 3 cells.
+					hitrate -= (skill_get_hitrate(RL_SLUGSHOT, skill_lv) * (dist - 3));
 				}
-				break;
+			}
+			break;
+			default:
+			{
+				struct s_skill_hitrate skill_hitrate = skill_db.find(skill_id)->hitrate;
+
+				if (skill_hitrate.rate[skill_lv] != 100) { // Hit skill modifiers
+					bool req_fail = false;
+
+					// List of skills required to be learned before adjusting hitrate (players only).
+					for (uint16 skill_req : skill_hitrate.skills) {
+						if (sd && pc_checkskill(sd, skill_req) == 0) {
+							req_fail = true;
+							break;
+						}
+					}
+
+					if (!req_fail)
+						hitrate = hitrate * skill_hitrate.rate[skill_lv] / 100;
+				}
+			}
+			break;
 		}
 	} else if (sd && wd->type&DMG_MULTI_HIT && wd->div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
 		hitrate += pc_checkskill(sd,TF_DOUBLE);

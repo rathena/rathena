@@ -246,6 +246,12 @@ struct s_skill_copyable { // [Cydh]
 	uint16 req_opt;
 };
 
+/// Skill HitRate structure.
+struct s_skill_hitrate{
+	int32 rate[MAX_SKILL_LEVEL];
+	std::vector<uint16> skills;
+};
+
 /// Database skills
 struct s_skill_db {
 	uint16 nameid;								///< Skill ID
@@ -259,6 +265,7 @@ struct s_skill_db {
 	int32 splash[MAX_SKILL_LEVEL];				///< Splash effect
 	uint16 max;									///< Max level
 	int32 num[MAX_SKILL_LEVEL];					///< Number of hit
+	struct s_skill_hitrate hitrate;				///< Hitrate
 	bool castcancel;							///< Cancel cast when being hit
 	uint16 cast_def_rate;						///< Def rate during cast a skill
 	e_battle_flag skill_type;					///< Skill type
@@ -315,7 +322,7 @@ private:
 	template<typename T, size_t S> bool parseNode(const std::string& nodeName, const std::string& subNodeName, const ryml::NodeRef& node, T(&arr)[S]);
 
 public:
-	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
+	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 4, 1) {
 		this->clear();
 	}
 
@@ -498,6 +505,7 @@ int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
 #define skill_get_index(skill_id) skill_db.get_index((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
 int skill_get_type( uint16 skill_id );
 e_damage_type skill_get_hit( uint16 skill_id );
+int skill_get_hitrate( uint16 skill_id, uint16 skill_lv );
 int skill_get_inf( uint16 skill_id );
 int skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int skill_get_max( uint16 skill_id );
