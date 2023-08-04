@@ -36117,15 +36117,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 68
+          Amount: 72
         - Level: 2
-          Amount: 74
+          Amount: 76
         - Level: 3
           Amount: 80
         - Level: 4
-          Amount: 86
+          Amount: 84
         - Level: 5
-          Amount: 92
+          Amount: 88
   - Id: 5234
     Name: AG_STORM_CANNON
     Description: Storm Cannon
