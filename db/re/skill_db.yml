@@ -36197,15 +36197,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 86
+          Amount: 74
         - Level: 2
-          Amount: 88
+          Amount: 78
         - Level: 3
-          Amount: 90
+          Amount: 82
         - Level: 4
-          Amount: 92
+          Amount: 86
         - Level: 5
-          Amount: 94
+          Amount: 90
   - Id: 5236
     Name: AG_CRIMSON_ARROW_ATK
     Description: Crimson Arrow Attack
