@@ -5592,7 +5592,7 @@ BUILDIN_FUNC(rand)
 	if( range <= 1 )
 		script_pushint(st, min);
 	else
-		script_pushint(st, new_random(range) + min);
+		script_pushint(st, rnd(range) + min);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -5656,8 +5656,8 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 
 		// find a suitable map cell
 		do {
-			tx = new_random(x3-x2+1)+x2;
-			ty = new_random(y3-y2+1)+y2;
+			tx = rnd(x3-x2+1)+x2;
+			ty = rnd(y3-y2+1)+y2;
 			j++;
 		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < max );
 
@@ -5815,8 +5815,8 @@ BUILDIN_FUNC(warpparty)
 
 			i = 0;
 			do {
-				x = new_random(mapdata->xs - 2) + 1;
-				y = new_random(mapdata->ys - 2) + 1;
+				x = rnd(mapdata->xs - 2) + 1;
+				y = rnd(mapdata->ys - 2) + 1;
 			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
 
 			if (i >= 1000) {
@@ -5881,8 +5881,8 @@ BUILDIN_FUNC(warpparty)
 					uint8 attempts = 10;
 
 					do {
-						nx = x0 + new_random(x1 - x0 + 1);
-						ny = y0 + new_random(y1 - y0 + 1);
+						nx = x0 + rnd(x1 - x0 + 1);
+						ny = y0 + rnd(y1 - y0 + 1);
 					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
 
 					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
@@ -10693,8 +10693,8 @@ BUILDIN_FUNC(savepoint)
 			x0 = x - dx, y0 = y - dy;
 		uint8 n = 10;
 		do {
-			x = x0 + new_random(x1-x0+1);
-			y = y0 + new_random(y1-y0+1);
+			x = x0 + rnd(x1-x0+1);
+			y = y0 + rnd(y1-y0+1);
 		} while (m != -1 && (--n) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
 	}
 
@@ -12545,7 +12545,7 @@ BUILDIN_FUNC(homunculus_mutate)
 	if(script_hasdata(st,2))
 		homun_id = script_getnum(st,2);
 	else
-		homun_id = 6048 + new_random(4);
+		homun_id = 6048 + rnd(4);
 
 	if( sd->hd->homunculus.vaporize == HOM_ST_MORPH ) {
 		int m_class = hom_class2mapid(sd->hd->homunculus.class_);

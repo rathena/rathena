@@ -7203,7 +7203,7 @@ ACMD_FUNC(pettalk)
 		};
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
-		if( i == ET_DICE1 ) i = new_random(6) + ET_DICE1; // randomize /dice
+		if( i == ET_DICE1 ) i = rnd(6) + ET_DICE1; // randomize /dice
 		if( i < ARRAYLENGTH(emo) )
 		{
 			if (sd->emotionlasttime + 1 >= time(NULL)) { // not more than 1 per second
@@ -7961,7 +7961,7 @@ ACMD_FUNC(hommutate)
 	}
 
 	if (!message || !*message) {
-		homun_id = 6048 + new_random(4);
+		homun_id = 6048 + rnd(4);
 	} else {
 		homun_id = atoi(message);
 	}
@@ -9077,8 +9077,8 @@ ACMD_FUNC(clone)
 	}
 
 	do {
-		x = sd->bl.x + new_random(10) - 5;
-		y = sd->bl.y + new_random(10) - 5;
+		x = sd->bl.x + rnd(10) - 5;
+		y = sd->bl.y + rnd(10) - 5;
 	} while (map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) && i++ < 10);
 
 	if (i >= 10) {

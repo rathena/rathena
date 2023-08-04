@@ -23,7 +23,7 @@ void rnd_init( void ){
  * @param n number of possible values
  * @return random number
  */
-uint32 new_random( uint32 n ) {
+uint32 rnd(uint32 n) {
 	std::uniform_int_distribution<uint32> dist(0, n-1);
 	return dist(generator);
 }

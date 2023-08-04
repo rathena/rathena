@@ -1669,7 +1669,7 @@ int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
 	}
 	if(free_cell==0)
 		return 0;
-	free_cell = new_random(free_cell);
+	free_cell = rnd(free_cell);
 	*x = free_cells[free_cell][0];
 	*y = free_cells[free_cell][1];
 	return 1;
@@ -1736,8 +1736,8 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 	}
 
 	while(tries--) {
-		*x = (rx >= 0) ? (new_random(rx2) - rx + bx):(new_random(mapdata->xs - 2) + 1);
-		*y = (ry >= 0) ? (new_random(ry2) - ry + by):(new_random(mapdata->ys - 2) + 1);
+		*x = (rx >= 0) ? (rnd(rx2) - rx + bx):(rnd(mapdata->xs - 2) + 1);
+		*y = (ry >= 0) ? (rnd(ry2) - ry + by):(rnd(mapdata->ys - 2) + 1);
 
 		if (*x == bx && *y == by)
 			continue; //Avoid picking the same target tile.
@@ -1870,7 +1870,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 
 	if (!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
 		return 0;
-	r = new_random(UINT32_MAX);
+	r = rnd(UINT32_MAX);
 
 	CREATE(fitem, struct flooritem_data, 1);
 	fitem->bl.type=BL_ITEM;
@@ -3089,8 +3089,8 @@ int map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 	if (dist < 1) dist =1;
 
 	do {
-		short j = 1 + 2*(new_random(4)); //Pick a random diagonal direction
-		short segment = 1+(new_random(dist)); //Pick a random interval from the whole vector in that direction
+		short j = 1 + 2*(rnd(4)); //Pick a random diagonal direction
+		short segment = 1+(rnd(dist)); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
 		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
