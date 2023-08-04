@@ -37327,34 +37327,35 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
+    GiveAp: 2
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 1500
+    Cooldown: 1000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 94
+          Amount: 107
         - Level: 2
-          Amount: 96
+          Amount: 109
         - Level: 3
-          Amount: 98
+          Amount: 111
         - Level: 4
-          Amount: 100
+          Amount: 113
         - Level: 5
-          Amount: 102
+          Amount: 115
         - Level: 6
-          Amount: 104
+          Amount: 117
         - Level: 7
-          Amount: 106
+          Amount: 119
         - Level: 8
-          Amount: 108
+          Amount: 121
         - Level: 9
-          Amount: 110
+          Amount: 123
         - Level: 10
-          Amount: 112
+          Amount: 125
     Status: HandicapState_DeepSilence
   - Id: 5274
     Name: CD_ARBITRIUM_ATK
