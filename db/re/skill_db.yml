@@ -35838,15 +35838,15 @@ Body:
     Element: Water
     SplashArea:
       - Level: 1
-        Area: 3
+        Area: 4
       - Level: 2
         Area: 4
       - Level: 3
         Area: 5
       - Level: 4
-        Area: 6
+        Area: 5
       - Level: 5
-        Area: 7
+        Area: 6
     CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
@@ -35856,15 +35856,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 100
+          Amount: 170
         - Level: 2
-          Amount: 108
+          Amount: 174
         - Level: 3
-          Amount: 116
+          Amount: 178
         - Level: 4
-          Amount: 124
+          Amount: 182
         - Level: 5
-          Amount: 132
+          Amount: 186
     Status: Climax_CryImp
   - Id: 5226
     Name: AG_CRYSTAL_IMPACT_ATK
