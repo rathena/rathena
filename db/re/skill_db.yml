@@ -36157,15 +36157,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 78
+          Amount: 79
         - Level: 2
-          Amount: 82
+          Amount: 79
         - Level: 3
-          Amount: 86
+          Amount: 82
         - Level: 4
-          Amount: 90
+          Amount: 85
         - Level: 5
-          Amount: 94
+          Amount: 88
   - Id: 5235
     Name: AG_CRIMSON_ARROW
     Description: Crimson Arrow
