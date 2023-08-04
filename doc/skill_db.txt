@@ -159,12 +159,15 @@ Sequence Map Form
 
 HitRate: Skill hit rate.
 
-Rates - Rate is 100 by default.
+Rates - Adjust the hit rate of the skill. Rate is 100% by default.
 
 Can be defined in scalar form or sequence map form:
 Scalar Form
   HitRate:
-	Rates: 120
+    Rates: 120 # Skill HitRate is increased by 20%.
+
+  HitRate:
+    Rates: 60 # Skill HitRate is decreased by 40%.
 
 Sequence Map Form
   HitRate:
