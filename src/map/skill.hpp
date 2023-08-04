@@ -249,7 +249,7 @@ struct s_skill_copyable { // [Cydh]
 /// Skill HitRate structure.
 struct s_skill_hitrate{
 	int32 rate[MAX_SKILL_LEVEL];
-	std::vector<uint16> skills;
+	std::unordered_map<uint16, uint16> skills;
 };
 
 /// Database skills

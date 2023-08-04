@@ -23661,15 +23661,19 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					return 0;
 				}
 
-				bool active;
+				uint16 req_skill_lv;
 
-				if (!this->asBool(skillsNode, req_skill_name, active))
+				if (!this->asUInt16(skillsNode, req_skill_name, req_skill_lv))
 					return 0;
 
-				if (active)
-					skill->hitrate.skills.push_back(req_skill_id);
-				else
-					util::vector_erase_if_exists(skill->hitrate.skills, req_skill_id);
+				if (req_skill_lv > 0)
+					skill->hitrate.skills.insert({ req_skill_id, req_skill_lv });
+				else {
+					auto req_exists = util::umap_find(skill->hitrate.skills, req_skill_id);
+
+					if (req_exists)
+						skill->hitrate.skills.erase(req_skill_id);
+				}
 			}
 		}
 	} else {

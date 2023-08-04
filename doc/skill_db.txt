@@ -180,12 +180,12 @@ Sequence Map Form
       - Level: 5
         Count: 200
 
-Skills - If a skill is required to be learned, then the sequence map form is needed.
+Skills - List of skills required to be learned before hit rate is adjusted. Set skill level to 0 to disable.
 
 Skills: # Requires both NV_BASIC and SM_BASH to be learned. If skill check fails then default (100) value is used.
-  NV_BASIC: true # Requires Novice's Basic Skill to be learned.
-  SM_BASH: true # Requires Bash to be learned.
-  SM_MAGNUM: false # Remove Magnum Break from requirements. Useful for import.
+  NV_BASIC: 9 # Requires level 9 of Novice's Basic Skill to be learned.
+  SM_BASH: 5 # Requires level 5 of Bash to be learned.
+  SM_MAGNUM: 0 # Remove Magnum Break from requirements. Useful for import.
 
 ---------------------------------------
 

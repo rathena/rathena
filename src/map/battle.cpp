@@ -3130,8 +3130,8 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 					bool req_fail = false;
 
 					// List of skills required to be learned before adjusting hitrate (players only).
-					for (uint16 skill_req : skill_hitrate.skills) {
-						if (sd && pc_checkskill(sd, skill_req) == 0) {
+					for (const auto &skill_req : skill_hitrate.skills) {
+						if (sd && pc_checkskill(sd, skill_req.first) < skill_req.second) {
 							req_fail = true;
 							break;
 						}

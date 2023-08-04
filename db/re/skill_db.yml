@@ -38,7 +38,7 @@
 #     - Level                 Skill level.
 #       Count                 Number of hits at specific skill level.
 #   HitRate                   Skill hit rate.
-#     Rates:                  Rate. (Default: 100)
+#     Rates:                  Hit rate. (Default: 100)
 #       - Level               Skill level.
 #         Rate                Rate is a percent of hit rate added to hit rate.
 #     Skills:                 Skill flagged as a requirement (players only). (Optional)
@@ -5109,7 +5109,7 @@ Body:
         - Level: 10
           Rate: 90
       Skills:
-        AS_SONICACCEL: true
+        AS_SONICACCEL: 1
     Element: Weapon
     Duration2: 4500
     Cooldown: 1000
