@@ -36262,15 +36262,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 103
         - Level: 2
-          Amount: 87
+          Amount: 106
         - Level: 3
-          Amount: 90
+          Amount: 109
         - Level: 4
-          Amount: 93
+          Amount: 112
         - Level: 5
-          Amount: 96
+          Amount: 115
   - Id: 5238
     Name: IQ_POWERFUL_FAITH
     Description: Powerful Faith
