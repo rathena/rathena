@@ -35447,28 +35447,28 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 85
         - Level: 2
-          Amount: 88
+          Amount: 95
         - Level: 3
-          Amount: 92
+          Amount: 105
         - Level: 4
-          Amount: 96
+          Amount: 115
         - Level: 5
-          Amount: 100
+          Amount: 125
     Unit:
       Id: Rain_Of_Crystal
       Range:
         - Level: 1
-          Size: 6
+          Size: 4
         - Level: 2
-          Size: 7
+          Size: 4
         - Level: 3
-          Size: 8
+          Size: 5
         - Level: 4
-          Size: 9
+          Size: 5
         - Level: 5
-          Size: 10
+          Size: 6
       Interval: 500
       Target: Enemy
       Flag:
