@@ -36417,8 +36417,9 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea: 5
+    SplashArea: 4
     CastCancel: true
+    AfterCastActDelay: 500
     Duration1: 150000
     Cooldown: 5000
     Requires:
