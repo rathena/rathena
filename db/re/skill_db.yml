@@ -36335,11 +36335,11 @@ Body:
       - Level: 2
         Area: 3
       - Level: 3
-        Area: 4
+        Area: 3
       - Level: 4
         Area: 4
       - Level: 5
-        Area: 5
+        Area: 4
     CastCancel: true
     Duration1:
       - Level: 1
@@ -36352,7 +36352,7 @@ Body:
         Time: 6000
       - Level: 5
         Time: 7000
-    Cooldown: 2000
+    Cooldown: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36365,9 +36365,6 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 85
-      ItemCost:
-        - Item: Holy_Water
-          Amount: 1
     Status: Holy_Oil
   - Id: 5242
     Name: IQ_SINCERE_FAITH
