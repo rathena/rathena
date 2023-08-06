@@ -78,15 +78,6 @@ endif()
 set(C4CORE_AMALGAMATED ${C4CORE_SRC_DIR}/../src_singleheader/c4/c4core_all.hpp)
 list(TRANSFORM C4CORE_SRC_FILES PREPEND "${C4CORE_SRC_DIR}/" OUTPUT_VARIABLE C4CORE_SRC_FILES_FULL)
 
-# [rathena]
-# remove this, we don't use it and don't need it poluting our solution
-# add_custom_target(c4core-amalgamate
-#     python ${CMAKE_CURRENT_LIST_DIR}/tools/amalgamate.py ${C4CORE_AMALGAMATED}
-#     COMMENT "${CMAKE_CURRENT_LIST_DIR}/tools/amalgamate.py ${C4CORE_AMALGAMATED}"
-#     BYPRODUCTS ${C4CORE_AMALGAMATED}
-#     DEPENDS ${C4CORE_SRC_FILES_FULL}
-#     )
-
 c4_add_library(c4core
     INC_DIRS
        $<BUILD_INTERFACE:${C4CORE_SRC_DIR}> $<INSTALL_INTERFACE:include>
