@@ -40879,20 +40879,20 @@ Body:
     AfterCastActDelay: 500
     Duration1: 100
     Duration2: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 80
         - Level: 2
-          Amount: 88
+          Amount: 84
         - Level: 3
-          Amount: 92
+          Amount: 88
         - Level: 4
-          Amount: 96
+          Amount: 92
         - Level: 5
-          Amount: 100
+          Amount: 96
     Unit:
       Id: Dummyskill
       Range: 4
@@ -40922,15 +40922,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 65
+          Amount: 94
         - Level: 2
-          Amount: 70
+          Amount: 98
         - Level: 3
-          Amount: 80
+          Amount: 102
         - Level: 4
-          Amount: 85
+          Amount: 106
         - Level: 5
-          Amount: 95
+          Amount: 110
     Unit:
       Id: Lightning_Land
       Range: 4
@@ -40961,15 +40961,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
-        - Level: 2
-          Amount: 88
-        - Level: 3
           Amount: 92
+        - Level: 2
+          Amount: 97
+        - Level: 3
+          Amount: 102
         - Level: 4
-          Amount: 96
+          Amount: 107
         - Level: 5
-          Amount: 100
+          Amount: 112
     Unit:
       Id: Venom_Swamp
       Range: 4
@@ -41000,15 +41000,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 70
+          Amount: 97
         - Level: 2
-          Amount: 80
+          Amount: 101
         - Level: 3
-          Amount: 90
+          Amount: 105
         - Level: 4
-          Amount: 100
+          Amount: 109
         - Level: 5
-          Amount: 110
+          Amount: 113
     Unit:
       Id: Conflagration
       Range: 4
@@ -41034,20 +41034,20 @@ Body:
     AfterCastActDelay: 500
     Duration1: 100
     Duration2: 10000
-    Cooldown: 2000
+    Cooldown: 1000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 80
         - Level: 2
-          Amount: 88
+          Amount: 84
         - Level: 3
-          Amount: 92
+          Amount: 88
         - Level: 4
-          Amount: 96
+          Amount: 92
         - Level: 5
-          Amount: 100
+          Amount: 96
     Unit:
       Id: Dummyskill
       Range: 4
@@ -41176,11 +41176,11 @@ Body:
     CastCancel: true
     CastTime: 8000
     AfterCastActDelay: 500
-    Cooldown: 60000
-    FixedCastTime: 2000
+    Cooldown: 5000
+    FixedCastTime: 1500
     Requires:
-      SpCost: 150
-      ApCost: 150
+      SpCost: 140
+      ApCost: 30
   - Id: 5381
     Name: EM_ELEMENTAL_VEIL
     Description: Elemental Veil
