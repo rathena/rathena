@@ -35218,7 +35218,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     AfterCastActDelay: 500
     Cooldown: 350
@@ -35226,15 +35226,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 34
+          Amount: 36
         - Level: 2
-          Amount: 38
+          Amount: 44
         - Level: 3
-          Amount: 42
+          Amount: 52
         - Level: 4
-          Amount: 46
+          Amount: 60
         - Level: 5
-          Amount: 50
+          Amount: 68
       Weapon:
         2hSword: true
         2hSpear: true
