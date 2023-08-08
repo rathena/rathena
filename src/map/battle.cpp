@@ -3109,7 +3109,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				uint16 cart_remodel_lv = pc_checkskill(sd, GN_REMODELING_CART);
 
 				if (sd && cart_remodel_lv > 0)
-					hitrate = hitrate * skill_get_hitrate(GN_REMODELING_CART, cart_remodel_lv) / 100;
+					hitrate = hitrate * static_cast<int16>(skill_get_hitrate(GN_REMODELING_CART, cart_remodel_lv)) / 100;
 			}
 			break;
 			case RL_SLUGSHOT:
@@ -3118,27 +3118,30 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 
 				if (dist > 3) {
 					// Reduce n hitrate for each cell after initial 3 cells.
-					hitrate -= (skill_get_hitrate(RL_SLUGSHOT, skill_lv) * (dist - 3));
+					hitrate -= (static_cast<int16>(skill_get_hitrate(RL_SLUGSHOT, skill_lv)) * (dist - 3));
 				}
 			}
 			break;
 			default:
 			{
-				struct s_skill_hitrate skill_hitrate = skill_db.find(skill_id)->hitrate;
+				s_skill_hitrate &skill_hitrate = skill_db.find(skill_id)->hitrate;
 
 				if (skill_hitrate.rate[skill_lv] != 100) { // Hit skill modifiers
 					bool req_fail = false;
 
 					// List of skills required to be learned before adjusting hitrate (players only).
-					for (const auto &skill_req : skill_hitrate.skills) {
-						if (sd && pc_checkskill(sd, skill_req.first) < skill_req.second) {
-							req_fail = true;
-							break;
+					if (sd) {
+						for (const auto &skill_req : skill_hitrate.skills) {
+							if (pc_checkskill(sd, skill_req.first) < skill_req.second) {
+								req_fail = true;
+								break;
+							}
 						}
 					}
 
+					// If there were no requirements or the requirements were fulfilled successfully, apply the changed hitrate
 					if (!req_fail)
-						hitrate = hitrate * skill_hitrate.rate[skill_lv] / 100;
+						hitrate = hitrate * static_cast<int16>(skill_hitrate.rate[skill_lv]) / 100;
 				}
 			}
 			break;
