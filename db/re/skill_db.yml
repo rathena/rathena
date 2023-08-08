@@ -35188,7 +35188,7 @@ Body:
     HitCount: 1
     Element: Weapon
     CastCancel: true
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Duration1: 300000
     Cooldown: 60000
     Requires:
