@@ -34999,10 +34999,10 @@ Body:
     HitCount: 5
     Element: Weapon
     SplashArea: 6
-    GiveAp: 3
+    GiveAp: 2
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 3000
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
