@@ -5400,9 +5400,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio *= 2;
 			break;
 		case DK_STORMSLASH:
-			skillratio += -100 + 120 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 170 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_GIANTGROWTH))
+			if (sc && sc->getSCE(SC_GIANTGROWTH) && rnd()%100 < 30)
 				skillratio *= 2;
 			break;
 		case IQ_OLEUM_SANCTUM:
