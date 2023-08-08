@@ -9234,7 +9234,10 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			wd.damage += wd.damage * 150 / 100; // 2.5 times damage
 
 		if( sc->getSCE( SC_VIGOR ) && ( wd.flag&BF_SHORT ) && !is_infinite_defense( target, wd.flag ) && !vellum_damage ){
-			int mod = 200;
+			int mod = 100 + sc->getSCE(SC_VIGOR)->val1 * 15;
+
+			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
+				mod += sc->getSCE(SC_VIGOR)->val1 * 10;
 
 			wd.damage += wd.damage * mod / 100;
 		}

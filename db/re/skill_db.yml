@@ -35272,7 +35272,7 @@ Body:
     Cooldown: 60000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 125
     Status: Vigor
   - Id: 5213
     Name: DK_STORMSLASH
