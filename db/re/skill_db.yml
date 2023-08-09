@@ -34861,8 +34861,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    HitCount: 1
     GiveAp:
       - Level: 1
         Amount: 6
@@ -34931,8 +34929,8 @@ Body:
       Splash: true
       Critical: true
     Range: 1
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     Requires:
       SpCost: 1
