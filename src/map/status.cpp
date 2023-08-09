@@ -12527,7 +12527,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_VIGOR:
 			val2 = 100 - 10 * (val1 - 1); // HP consumption with each attack is reduced by skill lvl
-			val2 = min(val2, 0);
+			val2 = max(val2, 0);
 			break;
 		case SC_POWERFUL_FAITH:
 			val2 = 5 + 5 * val1;// ATK Increase
