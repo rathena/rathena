@@ -5376,8 +5376,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case DK_HACKANDSLASHER:
 		case DK_HACKANDSLASHER_ATK:
-			skillratio += -100 + 500 + 250 * skill_lv;
-			skillratio += 5 * sstatus->pow;
+			skillratio += -100 + 300 + 700 * skill_lv;
+			skillratio += 7 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_DRAGONIC_AURA:

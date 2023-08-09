@@ -35087,8 +35087,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 2
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -35112,30 +35112,30 @@ Body:
       - Level: 10
         Area: 4
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 300
+    AfterCastActDelay: 250
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 34
+          Amount: 36
         - Level: 2
-          Amount: 38
+          Amount: 40
         - Level: 3
-          Amount: 42
+          Amount: 44
         - Level: 4
-          Amount: 46
+          Amount: 48
         - Level: 5
-          Amount: 50
+          Amount: 52
         - Level: 6
-          Amount: 54
+          Amount: 56
         - Level: 7
-          Amount: 58
+          Amount: 60
         - Level: 8
-          Amount: 62
+          Amount: 64
         - Level: 9
-          Amount: 66
+          Amount: 68
         - Level: 10
-          Amount: 70
+          Amount: 72
       Weapon:
         2hSword: true
         2hSpear: true
@@ -35148,8 +35148,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 2
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
