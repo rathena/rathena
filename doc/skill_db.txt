@@ -173,15 +173,15 @@ Sequence Map Form
   HitRate:
     Rates:
       - Level: 1
-        Count: 120
+        Rate: 120
       - Level: 2
-        Count: 140
+        Rate: 140
       - Level: 3
-        Count: 160
+        Rate: 160
       - Level: 4
-        Count: 180
+        Rate: 180
       - Level: 5
-        Count: 200
+        Rate: 200
 
 Skills - List of skills required to be learned before hit rate is adjusted. Set skill level to 0 to disable.
 
