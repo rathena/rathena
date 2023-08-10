@@ -37010,12 +37010,12 @@ Body:
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 1000
+    Cooldown: 700
     FixedCastTime: 500
     Requires:
       SpCost:
