@@ -37086,35 +37086,35 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 5
+    GiveAp: 7
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 4500
-    Cooldown: 5000
+    Cooldown: 4500
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 50
+          Amount: 67
         - Level: 2
-          Amount: 54
-        - Level: 3
-          Amount: 58
-        - Level: 4
-          Amount: 62
-        - Level: 5
-          Amount: 66
-        - Level: 6
           Amount: 70
-        - Level: 7
-          Amount: 74
-        - Level: 8
-          Amount: 78
-        - Level: 9
+        - Level: 3
+          Amount: 73
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 79
+        - Level: 6
           Amount: 82
+        - Level: 7
+          Amount: 85
+        - Level: 8
+          Amount: 88
+        - Level: 9
+          Amount: 91
         - Level: 10
-          Amount: 86
+          Amount: 94
     Unit:
       Id: Cross_Rain
       Range:
