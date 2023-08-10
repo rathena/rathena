@@ -3535,6 +3535,15 @@ Body:
       BuyingStore: true
     Script: |
       itemheal 325,0;
+  - Id: 11562
+    AegisName: Pie_Fruit
+    Name: Pie Fruit
+    Type: Healing
+    Weight: 30
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemheal rand(65,90),rand(35,40);
   - Id: 11563
     AegisName: Hot_Tee
     Name: Hot Tea
@@ -53640,21 +53649,20 @@ Body:
       getitem 23042,30;
   - Id: 23044
     AegisName: Elvira_Candy
-    Name: Elvira Candy    # !todo check english name
+    Name: Elvira Candy
     Type: Usable
     Weight: 10
     Delay:
-      Duration: 10000
+      Duration: 60000
     Flags:
       BuyingStore: true
     Script: |
       specialeffect2 EF_HEAL3;
-      sc_end SC_SILENCE;
-      sc_end SC_BLEEDING;
-      sc_end SC_POISON;
-      sc_end SC_CURSE;
-      sc_end SC_ORCISH;
-      sc_end SC_CHANGEUNDEAD;
+      sc_end SC_CURSEDCIRCLE;
+      sc_end SC_SLOWCAST;
+      sc_end SC_CRITICALWOUND;
+      sc_end SC_CRYSTALIZE;
+      /*Todo Howling Effect And Sit Effect From Skill*/
   - Id: 23045
     AegisName: Mont_Blanc_Cake
     Name: Mont Blanc
