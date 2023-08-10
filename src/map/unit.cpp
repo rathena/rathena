@@ -2431,8 +2431,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		//char temp[70];
 		//snprintf(temp, sizeof(temp), "edit here");
 		if(DIFF_TICK(ud->attackabletime, gettick()) <= 0 && skill_check_unit_movepos2(0, src, target->x, target->y, 1, 1)) {
-			if (sd->jumpattack.penalty > 0)
-				sc_start(NULL, src, SC_JUMPPENALTY, 100, 0, status_get_adelay(src));
+			sc_start(NULL, src, SC_JUMPPENALTY, 100, 0, status_get_adelay(src));
 			if (sd->jumpattack.mobid > 0) {
 				clif_specialeffect(src, 1751, AREA);
 				if((!sc->getSCE(SC_DELSEFFECT) || sc->getSCE(SC_DELSEFFECT)->val1 != 1751))
