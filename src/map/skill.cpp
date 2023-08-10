@@ -3957,7 +3957,10 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					break;
 				}
 			}
-			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL?-1:skill_lv, dmg_type);
+			if (sd && sd->state.jumpattack == 1 && skill_id == 0) {
+				dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2,false);
+			} else
+				dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL?-1:skill_lv, dmg_type);
 			break;
 	}
 
@@ -6914,7 +6917,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			} else {
 				skill_area_temp[1] = bl->id;
 				map_foreachinallrange(skill_area_sub, bl,
-					sd->bonus.splash_range, BL_CHAR,
+					(sd->state.jumpattack == 1)?sd->jumpattack.splash:sd->bonus.splash_range, BL_CHAR, //PC custom normal attack
 					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
 					skill_castend_damage_id);
 				flag|=1; //Set flag to 1 so ammo is not double-consumed. [Skotlex]
@@ -23357,6 +23360,10 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 		return false;
 
 	return unit_movepos(bl, dst_x, dst_y, easy, checkpath);
+}
+
+bool skill_check_unit_movepos2(uint8 check_flag, struct block_list* bl, short dst_x, short dst_y, int easy, bool checkpath) { //PC custom normal attack jump
+	return skill_check_unit_movepos(check_flag, bl, dst_x, dst_y, easy, checkpath);
 }
 
 /**

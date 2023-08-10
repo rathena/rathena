@@ -5289,6 +5289,16 @@ void pc_bonus5(map_session_data *sd,int type,int type2,int type3,int type4,int t
 		if( sd->state.lr_flag != 2 )
 			pc_bonus_addeff_onskill(sd->addeff_onskill, (sc_type)type3, type4, type2, type5, val);
 		break;
+		
+	case SP_JUMPRANGE: //bonus4 bJumprange,range,splash,atkrate,mobid;
+		if (sd->state.lr_flag == 2)
+			break;
+		sd->jumpattack.range += type2;
+		sd->jumpattack.splash += type3;
+		sd->jumpattack.rate += type4;
+		sd->jumpattack.penalty += type5;
+		sd->jumpattack.mobid = val;
+		break;
 
 	default:
 		if (current_equip_combo_pos > 0) {

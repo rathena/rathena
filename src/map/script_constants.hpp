@@ -856,6 +856,7 @@
 	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
+	export_constant2("bJumprange", SP_JUMPRANGE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
@@ -1892,6 +1893,8 @@
 	export_constant(SC_RELIEVE_OFF);
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
+	export_constant(SC_JUMPPENALTY);
+	export_constant(SC_DELSEFFECT);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);

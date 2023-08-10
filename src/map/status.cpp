@@ -3729,6 +3729,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
 		+ sizeof(sd->sp_vanish_race)
+		+ sizeof(sd->jumpattack)
 	);
 
 	memset(&sd->bonus, 0, sizeof(sd->bonus));
@@ -4331,6 +4332,16 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
 		base_status->rhw.range += skill_get_range2(&sd->bl, SU_SOULATTACK, skill, true);
+	
+	if (sd->jumpattack.range > 0) {
+		if (sd->jumpattack.range > base_status->rhw.range) {
+			int range_before = base_status->rhw.range;
+			base_status->rhw.original_range = range_before;
+			base_status->rhw.range = sd->jumpattack.range;
+		} else {
+			base_status->rhw.original_range = base_status->rhw.range;
+		}
+	}
 
 // ----- FLEE CALCULATION -----
 
@@ -8220,6 +8231,10 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 
 		if (sd && (skill_lv = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
 			bonus += skill_lv;
+		if (sc->getSCE(SC_JUMPPENALTY)) {
+			if (sd && sd->jumpattack.penalty > 0)
+				bonus -= sd->jumpattack.penalty;
+		}
 	}
 
 	return bonus;
@@ -11281,6 +11296,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			else
 				val2 = 0; // 0 -> Half stat.
 			break;
+		case SC_JUMPPENALTY:
+			sd->state.jumpattack = 1;
+			break;
 		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 1;
 			tick = INFINITE_TICK;
@@ -13406,6 +13424,13 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				}
 				break;
 #endif
+		case SC_JUMPPENALTY:
+			sd->state.jumpattack = 0;
+			break;
+		case SC_DELSEFFECT:
+			if(!(sce->val1 == 1751 && sc->getSCE(SC_VIGOR)))
+				clif_specialeffect_remove(bl, sce->val1, AREA, bl);
+			break;
 		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 0;
 			break;

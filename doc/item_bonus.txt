@@ -503,3 +503,10 @@ bonus bClassChange,n;     		Gives a n/100% chance to change the attacked monster
 bonus bAddStealRate,n;    		Increases success rate of Steal skill by n/100%
 bonus bNoMadoFuel;			Nullify Magic Gear Fuel requirement for skills.
 bonus bNoWalkDelay;				Give infinite Endure.
+
+bonus5 bJumprange,range,splash,atkrate,penalty,mobid;
+	range: jump range
+	splash: splash range of the first attack after jump. slash effect will be added if you set this.
+	atkrate: attack ratio of the first attack after jump.
+	penalty: aspd penalty of the first attack after jump. 100 will be reduced aspd by 100%.
+	mobid: which mob the character will transfer during the first attack after jump. this will not be activated if your character is already in transform status.

@@ -455,6 +455,7 @@ public:
 		bool roulette_open;
 		t_itemid item_reform;
 		uint64 item_enchant_index;
+		unsigned int jumpattack : 1;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -627,6 +628,11 @@ public:
 			per;	///< % HP/SP vanished/gained
 	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX];
 	// zeroed structures end here
+	
+	struct s_jumpattack {
+		short range, splash;
+		int rate, penalty, mobid;
+	} jumpattack;
 
 	// zeroed vars start here.
 	struct s_bonus {
