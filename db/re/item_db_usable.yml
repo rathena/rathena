@@ -47044,7 +47044,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 23023,432000;
+      rentitem 12887,432000;
   - Id: 17475
     AegisName: LC_Max_Weight_Up_10Box
     Name: (Limited)Gym Membership Card Box(10)
