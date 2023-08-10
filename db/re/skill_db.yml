@@ -36993,12 +36993,31 @@ Body:
     Element: Holy
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 1000
-    Cooldown: 60000
+    Cooldown: 5000
     FixedCastTime: 1000
     Requires:
-      SpCost: 150
-      ApCost: 150
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 65
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 80
+        - Level: 6
+          Amount: 85
+        - Level: 7
+          Amount: 90
+        - Level: 8
+          Amount: 95
+        - Level: 9
+          Amount: 100
+        - Level: 10
+          Amount: 105
+      ApCost: 10
   - Id: 5265
     Name: IG_SHIELD_SHOOTING
     Description: Shield Shooting
