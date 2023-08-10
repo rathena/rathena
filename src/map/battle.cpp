@@ -5363,31 +5363,31 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
 		case DK_SERVANTWEAPON_ATK:
-			skillratio += -100 + 200 + 50 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 500 + 400 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_SERVANT_W_PHANTOM:
-			skillratio += 100 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 200 + 300 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_SERVANT_W_DEMOL:
-			skillratio += 600 + 120 * skill_lv;
+			skillratio += -100 + 500 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_HACKANDSLASHER:
 		case DK_HACKANDSLASHER_ATK:
-			skillratio += -100 + 500 + 250 * skill_lv;
-			skillratio += 5 * sstatus->pow;
+			skillratio += -100 + 300 + 700 * skill_lv;
+			skillratio += 7 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_DRAGONIC_AURA:
-			skillratio += 950 * skill_lv + 10 * sstatus->pow;
+			skillratio += 3650 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
-				skillratio += 450 * skill_lv;
+				skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_MADNESS_CRUSHER:
-			skillratio += -100 + 600 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 400 + 800 * skill_lv + 7 * sstatus->pow;
 			if( sd != nullptr ){
 				int16 index = sd->equip_index[EQI_HAND_R];
 
@@ -5400,9 +5400,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio *= 2;
 			break;
 		case DK_STORMSLASH:
-			skillratio += -100 + 120 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 170 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_GIANTGROWTH))
+			if (sc && sc->getSCE(SC_GIANTGROWTH) && rnd()%100 < 30)
 				skillratio *= 2;
 			break;
 		case IQ_OLEUM_SANCTUM:
@@ -9234,7 +9234,10 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			wd.damage += wd.damage * 150 / 100; // 2.5 times damage
 
 		if( sc->getSCE( SC_VIGOR ) && ( wd.flag&BF_SHORT ) && !is_infinite_defense( target, wd.flag ) && !vellum_damage ){
-			int mod = 200;
+			int mod = 100 + sc->getSCE(SC_VIGOR)->val1 * 15;
+
+			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
+				mod += sc->getSCE(SC_VIGOR)->val1 * 10;
 
 			wd.damage += wd.damage * mod / 100;
 		}
