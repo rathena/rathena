@@ -37046,34 +37046,34 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 3
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
-    Cooldown: 1000
+    Cooldown: 700
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 41
+          Amount: 38
         - Level: 2
-          Amount: 44
+          Amount: 41
         - Level: 3
-          Amount: 47
+          Amount: 44
         - Level: 4
-          Amount: 50
+          Amount: 47
         - Level: 5
-          Amount: 53
+          Amount: 50
         - Level: 6
-          Amount: 56
+          Amount: 53
         - Level: 7
-          Amount: 59
+          Amount: 56
         - Level: 8
-          Amount: 62
+          Amount: 59
         - Level: 9
-          Amount: 65
+          Amount: 62
         - Level: 10
-          Amount: 68
+          Amount: 65
       Status:
         Attack_Stance: true
   - Id: 5267
