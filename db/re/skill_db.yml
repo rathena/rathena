@@ -36949,33 +36949,32 @@ Body:
     SplashArea: 3
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
-    Duration1: 300000
-    Cooldown: 60000
+    Duration1: 150000
+    Cooldown: 5000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 41
+          Amount: 51
         - Level: 2
-          Amount: 44
+          Amount: 54
         - Level: 3
-          Amount: 47
+          Amount: 57
         - Level: 4
-          Amount: 50
+          Amount: 60
         - Level: 5
-          Amount: 53
+          Amount: 63
         - Level: 6
-          Amount: 56
+          Amount: 66
         - Level: 7
-          Amount: 59
+          Amount: 69
         - Level: 8
-          Amount: 62
+          Amount: 72
         - Level: 9
-          Amount: 65
+          Amount: 75
         - Level: 10
-          Amount: 68
-      ApCost: 150
+          Amount: 78
+      ApCost: 15
       Weapon:
         1hSpear: true
         2hSpear: true
