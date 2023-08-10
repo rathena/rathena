@@ -6917,7 +6917,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			} else {
 				skill_area_temp[1] = bl->id;
 				map_foreachinallrange(skill_area_sub, bl,
-					(sd->state.jumpattack == 1)?sd->jumpattack.splash:sd->bonus.splash_range, BL_CHAR, //PC custom normal attack
+					(sd->state.jumpattack == 1)?sd->jumpattack.splash:sd->bonus.splash_range, BL_CHAR,
 					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
 					skill_castend_damage_id);
 				flag|=1; //Set flag to 1 so ammo is not double-consumed. [Skotlex]
