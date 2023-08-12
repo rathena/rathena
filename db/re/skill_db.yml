@@ -36949,33 +36949,32 @@ Body:
     SplashArea: 3
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
-    Duration1: 300000
-    Cooldown: 60000
+    Duration1: 150000
+    Cooldown: 5000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 41
+          Amount: 51
         - Level: 2
-          Amount: 44
+          Amount: 54
         - Level: 3
-          Amount: 47
+          Amount: 57
         - Level: 4
-          Amount: 50
+          Amount: 60
         - Level: 5
-          Amount: 53
+          Amount: 63
         - Level: 6
-          Amount: 56
+          Amount: 66
         - Level: 7
-          Amount: 59
+          Amount: 69
         - Level: 8
-          Amount: 62
+          Amount: 72
         - Level: 9
-          Amount: 65
+          Amount: 75
         - Level: 10
-          Amount: 68
-      ApCost: 150
+          Amount: 78
+      ApCost: 15
       Weapon:
         1hSpear: true
         2hSpear: true
@@ -36994,12 +36993,31 @@ Body:
     Element: Holy
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 1000
-    Cooldown: 60000
+    Cooldown: 5000
     FixedCastTime: 1000
     Requires:
-      SpCost: 150
-      ApCost: 150
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 65
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 80
+        - Level: 6
+          Amount: 85
+        - Level: 7
+          Amount: 90
+        - Level: 8
+          Amount: 95
+        - Level: 9
+          Amount: 100
+        - Level: 10
+          Amount: 105
+      ApCost: 10
   - Id: 5265
     Name: IG_SHIELD_SHOOTING
     Description: Shield Shooting
@@ -37010,12 +37028,12 @@ Body:
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
     Duration1: 10000
-    Cooldown: 1000
+    Cooldown: 700
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -37046,34 +37064,34 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 3
-    GiveAp: 2
+    GiveAp: 3
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
-    Cooldown: 1000
+    Cooldown: 700
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 41
+          Amount: 38
         - Level: 2
-          Amount: 44
+          Amount: 41
         - Level: 3
-          Amount: 47
+          Amount: 44
         - Level: 4
-          Amount: 50
+          Amount: 47
         - Level: 5
-          Amount: 53
+          Amount: 50
         - Level: 6
-          Amount: 56
+          Amount: 53
         - Level: 7
-          Amount: 59
+          Amount: 56
         - Level: 8
-          Amount: 62
+          Amount: 59
         - Level: 9
-          Amount: 65
+          Amount: 62
         - Level: 10
-          Amount: 68
+          Amount: 65
       Status:
         Attack_Stance: true
   - Id: 5267
@@ -37086,35 +37104,35 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 5
+    GiveAp: 7
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 4500
-    Cooldown: 5000
+    Cooldown: 4500
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 50
+          Amount: 67
         - Level: 2
-          Amount: 54
-        - Level: 3
-          Amount: 58
-        - Level: 4
-          Amount: 62
-        - Level: 5
-          Amount: 66
-        - Level: 6
           Amount: 70
-        - Level: 7
-          Amount: 74
-        - Level: 8
-          Amount: 78
-        - Level: 9
+        - Level: 3
+          Amount: 73
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 79
+        - Level: 6
           Amount: 82
+        - Level: 7
+          Amount: 85
+        - Level: 8
+          Amount: 88
+        - Level: 9
+          Amount: 91
         - Level: 10
-          Amount: 86
+          Amount: 94
     Unit:
       Id: Cross_Rain
       Range:
