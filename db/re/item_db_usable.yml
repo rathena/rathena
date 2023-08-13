@@ -6691,7 +6691,7 @@ Body:
   - Id: 12212
     AegisName: Giant_Fly_Wing
     Name: Giant Fly Wing
-    Type: DelayConsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Trade:
@@ -9480,7 +9480,7 @@ Body:
   - Id: 12438
     AegisName: F_Giant_Fly_Wing
     Name: F Giant Fly Wing
-    Type: DelayConsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Script: |
@@ -10028,7 +10028,7 @@ Body:
   - Id: 12494
     AegisName: E_Giant_Fly_Wing
     Name: E Giant Fly Wing
-    Type: DelayConsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Script: |
@@ -46162,7 +46162,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12212,86400;
+      rentitem 23023,86400;
   - Id: 17315
     AegisName: Silvervine_Box10_
     Name: Lucky Silvervine Fruit Box(10)
@@ -47044,7 +47044,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12212,432000;
+      rentitem 12887,432000;
   - Id: 17475
     AegisName: LC_Max_Weight_Up_10Box
     Name: (Limited)Gym Membership Card Box(10)
