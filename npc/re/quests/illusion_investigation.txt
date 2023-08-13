@@ -206,7 +206,7 @@ pay_d03_i,149,34,5	script	Jiroker#ziroker	4_M_ORIENT02,{
 		mes "Ugh... To come to a place like this...";
 		next;
 		mes "[Jiroker]";
-		mes "I usually pretended to be brave, but I think I was conscious of Elysia, the member I have a crush on.";
+		mes "I usually pretended to be brave, but I think I was conscious of Allysia, the member I have a crush on.";
 		next;
 		mes "[Jiroker]";
 		mes "Actually, I'm the one who's more timid than anyone else... heck";
@@ -312,86 +312,86 @@ OnInit:
 	end;
 }
 
-ice_dun02,142,18,5	script	Elysia#elisia	4_F_OPERATION,{
+ice_dun02,142,18,5	script	Allysia#elisia	4_F_OPERATION,{
 	if (BaseLevel < 120) {
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Oh, must you have a hard time enduring the cold here?";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Come back when you're a little hotter.";
 		next;
 		mes "^4d4dff== This is a level 120 or higher quest. ==^000000";
 		close;
 	}
 	if (isbegin_quest(3470) == 0) {
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Hello~";
 		next;
-		mes "[Elysia]";
-		mes "I'm Elysia from the Illusion Investigation Team~";
+		mes "[Allysia]";
+		mes "I'm Allysia from the Illusion Investigation Team~";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "It's really cold here...";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "I'd like to ask the adventurer for help...";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "You haven't joined the investigation team yet.";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "If you don't mind, why don't you join the Illusionary Survey Corps? Then you can help me!!!";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the investigator in Prontera, and come!!";
 		close;
 	}
 	if (isbegin_quest(3449) == 0) {
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Hello~";
 		next;
-		mes "[Elysia]";
-		mes "I'm Elysia from the Illusion Investigation Team~";
+		mes "[Allysia]";
+		mes "I'm Allysia from the Illusion Investigation Team~";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "It's really cold here...";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "I never thought I would be sent to such a dangerous place alone... I wanted to come with G-Locker...";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Well, even if there was a G-Locker, he's a coward, so I'd be in a position to protect him...";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "You pretended to be brave... but I already noticed";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Is Jirocker doing his investigation safely in the abandoned village? I'm worried.";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Hmm... Actually, now is not the time to worry about G-Locker, Adventurer. Can you help me?";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Did you hear that this is an investigation into how the monster population is maintained? Many adventurers come here to hunt, but it's a bit lacking.";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "It's easy to figure out the number of monsters when you deal with them hotly. How about you? Would you like to participate in the investigation of this place?";
 		next;
 		if (select( "Participate", "Do not participate" ) == 2) {
-			mes "[Elysia]";
+			mes "[Allysia]";
 			mes "Yeah, that's right...";
 			next;
-			mes "[Elysia]";
+			mes "[Allysia]";
 			mes "Then I'll be shivering a little longer...";
 			close;
 		}
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Oh yes!! Thanks!!";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "After entering, kill 100 monsters of any type.";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "I look forward to your hot hunting skills~~!!";
 		close2;
 		setquest 3449;
@@ -404,10 +404,10 @@ ice_dun02,142,18,5	script	Elysia#elisia	4_F_OPERATION,{
 		break;
 	case 0:
 	case 1:
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Ah, I think this should be enough for today!!";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "If you come after tomorrow, you'll have something else to do~";
 		close;
 	case 2:
@@ -416,44 +416,44 @@ ice_dun02,142,18,5	script	Elysia#elisia	4_F_OPERATION,{
 	}
 	switch( checkquest(3450,HUNTING) ) {
 	case -1:
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Ah, nice to meet you!! Are you here today to help with the investigation??";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Your help is the same as last time~";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "If you kill 100 monsters of any type, would you like to participate?";
 		next;
 		if (select( "Participate", "Do not participate" ) == 2) {
-			mes "[Elysia]";
+			mes "[Allysia]";
 			mes "Okay... I'll keep shivering in the cold...";
 			close;
 		}
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Thank you";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "After entering, kill 100 monsters of any type.";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Then be careful!";
 		close2;
 		setquest 3450;
 		end;
 	case 0:
 	case 1:
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Kill 100 monsters regardless of type.";
 		close;
 	case 2:
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Have you finished already? You've done it hotly as expected~";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Then I'll do the rest of the research for you~";
 		next;
-		mes "[Elysia]";
+		mes "[Allysia]";
 		mes "Thank you for your hard work. I hope we can meet again!!";
 		close2;
 		erasequest 3450;
