@@ -945,12 +945,6 @@ public:
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
 
-/**
- * ERS for the bulk of pc vars
- **/
-extern struct eri *num_reg_ers;
-extern struct eri *str_reg_ers;
-
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
 
@@ -1547,11 +1541,11 @@ int64 pc_readparam(map_session_data *sd, int64 type);
 bool pc_setparam(map_session_data *sd, int64 type, int64 val);
 int64 pc_readreg(map_session_data *sd, int64 reg);
 bool pc_setreg(map_session_data *sd, int64 reg, int64 val);
-char *pc_readregstr(map_session_data *sd, int64 reg);
+std::string pc_readregstr(map_session_data *sd, int64 reg);
 bool pc_setregstr(map_session_data *sd, int64 reg, const char *str);
 int64 pc_readregistry(map_session_data *sd, int64 reg);
 bool pc_setregistry(map_session_data *sd, int64 reg, int64 val);
-char *pc_readregistry_str(map_session_data *sd, int64 reg);
+std::string pc_readregistry_str(map_session_data *sd, int64 reg);
 bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val);
 
 #define pc_readglobalreg(sd,reg) pc_readregistry(sd,reg)

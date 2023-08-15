@@ -146,13 +146,7 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 			aFree(node->char_dat);
 
 		if ( node->sd ) {
-			if (node->sd->regs.vars)
-				node->sd->regs.vars->destroy(node->sd->regs.vars, script_reg_destroy);
-
-			if (node->sd->regs.arrays)
-				node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
-
-			node->sd->~map_session_data();
+			script_free_vars(node->sd->regs.vars);
 			aFree(node->sd);
 		}
 
@@ -1896,13 +1890,7 @@ int auth_db_final(DBKey key, DBData *data, va_list ap) {
 		aFree(node->char_dat);
 
 	if (node->sd) {
-		if (node->sd->regs.vars)
-			node->sd->regs.vars->destroy(node->sd->regs.vars, script_reg_destroy);
-
-		if (node->sd->regs.arrays)
-			node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
-
-		node->sd->~map_session_data();
+		script_free_vars(node->sd->regs.vars);
 		aFree(node->sd);
 	}
 

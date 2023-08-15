@@ -17,13 +17,17 @@
 #include "map.hpp" // mmysql_handle
 #include "script.hpp"
 
-static struct eri *mapreg_ers;
-
 bool skip_insert = false;
 
 static char mapreg_table[32] = "mapreg";
 static bool mapreg_dirty = false; // Whether there are modified regs to be saved
-struct reg_db regs;
+
+// Put in a namespace to avoid conflicts with others variables
+namespace mapreg {
+	struct reg_db regs;
+}
+
+static auto& regs = mapreg::regs;
 
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
 
@@ -36,8 +40,7 @@ struct reg_db regs;
  */
 int64 mapreg_readreg(int64 uid)
 {
-	struct mapreg_save *m = (struct mapreg_save *)i64db_get(regs.vars, uid);
-	return m ? m->u.i : 0;
+	return regs.vars->getnum(uid);
 }
 
 /**
@@ -46,10 +49,9 @@ int64 mapreg_readreg(int64 uid)
  * @param uid: variable's unique identifier
  * @return: variable's string value
  */
-char* mapreg_readregstr(int64 uid)
+std::string mapreg_readregstr(int64 uid)
 {
-	struct mapreg_save *m = (struct mapreg_save *)i64db_get(regs.vars, uid);
-	return m ? m->u.str : NULL;
+	return regs.vars->getstr(uid);
 }
 
 /**
@@ -61,28 +63,22 @@ char* mapreg_readregstr(int64 uid)
  */
 bool mapreg_setreg(int64 uid, int64 val)
 {
-	struct mapreg_save *m;
 	int num = script_getvarid(uid);
 	uint32 i = script_getvaridx(uid);
 	const char* name = get_str(num);
 
 	if (val != 0) {
-		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			m->u.i = val;
+		if (regs.vars->exists(uid)) {
+			auto& m = regs.vars->get(uid);
+			m = val;
+
 			if (name[1] != '@') {
-				m->save = true;
 				mapreg_dirty = true;
+				m.save = true;
 			}
 		} else {
-			if (i)
-				script_array_update(&regs, uid, false);
-
-			m = ers_alloc(mapreg_ers, struct mapreg_save);
-
-			m->u.i = val;
-			m->uid = uid;
-			m->save = false;
-			m->is_string = false;
+			reg_db::entry m = val;
+			m.uid = uid;
 
 			if (name[1] != '@' && !skip_insert) {// write new variable to database
 				char esc_name[32 * 2 + 1];
@@ -90,15 +86,11 @@ bool mapreg_setreg(int64 uid, int64 val)
 				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%" PRIu32 "','%" PRId64 "')", mapreg_table, esc_name, i, val))
 					Sql_ShowDebug(mmysql_handle);
 			}
-			i64db_put(regs.vars, uid, m);
+
+			regs.vars->move(uid, m);
 		}
 	} else { // val == 0
-		if (i)
-			script_array_update(&regs, uid, true);
-		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			ers_free(mapreg_ers, m);
-		}
-		i64db_remove(regs.vars, uid);
+		regs.vars->erase(uid);
 
 		if (name[1] != '@') {// Remove from database because it is unused.
 			char esc_name[32 * 2 + 1];
@@ -118,57 +110,44 @@ bool mapreg_setreg(int64 uid, int64 val)
  * @param str: new value
  * @return: true value was successfully set
  */
-bool mapreg_setregstr(int64 uid, const char* str)
+bool mapreg_setregstr(int64 uid, std::string str)
 {
-	struct mapreg_save *m;
 	int num = script_getvarid(uid);
 	uint32 i = script_getvaridx(uid);
 	const char* name = get_str(num);
 
-	if (str == NULL || *str == 0) {
-		if (i)
-			script_array_update(&regs, uid, true);
+	if (str.empty()) {
 		if (name[1] != '@') {
 			char esc_name[32 * 2 + 1];
 			Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
 			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%" PRIu32 "'", mapreg_table, esc_name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
-		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			if (m->u.str != NULL)
-				aFree(m->u.str);
-			ers_free(mapreg_ers, m);
-		}
-		i64db_remove(regs.vars, uid);
+		regs.vars->erase(uid);
 	} else {
-		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			if (m->u.str != NULL)
-				aFree(m->u.str);
-			m->u.str = aStrdup(str);
+		if (regs.vars->exists(uid)) {
+			auto& m = regs.vars->get(uid);
+			m = str;
+
 			if (name[1] != '@') {
 				mapreg_dirty = true;
-				m->save = true;
+				m.save = true;
 			}
 		} else {
-			if (i)
-				script_array_update(&regs, uid, false);
+			reg_db::entry m = str;
 
-			m = ers_alloc(mapreg_ers, struct mapreg_save);
-
-			m->uid = uid;
-			m->u.str = aStrdup(str);
-			m->save = false;
-			m->is_string = true;
+			m.uid = uid;
 
 			if (name[1] != '@' && !skip_insert) { //put returned null, so we must insert.
 				char esc_name[32 * 2 + 1];
 				char esc_str[255 * 2 + 1];
 				Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-				Sql_EscapeStringLen(mmysql_handle, esc_str, str, strnlen(str, 255));
+				Sql_EscapeStringLen(mmysql_handle, esc_str, str.c_str(), min(str.size(), 255));
 				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%" PRIu32 "','%s')", mapreg_table, esc_name, i, esc_str))
 					Sql_ShowDebug(mmysql_handle);
 			}
-			i64db_put(regs.vars, uid, m);
+
+			regs.vars->move(uid, m);
 		}
 	}
 
@@ -210,7 +189,7 @@ static void script_load_mapreg(void)
 		int s = add_str(varname);
 		int64 uid = reference_uid(s, index);
 
-		if( i64db_exists(regs.vars, uid) ) {
+		if( regs.vars->exists(uid) ) {
 			ShowWarning("load_mapreg: duplicate! '%s' => '%s' skipping...\n",varname,value);
 			continue;
 		}
@@ -233,30 +212,28 @@ static void script_load_mapreg(void)
 static void script_save_mapreg(void)
 {
 	if (mapreg_dirty) {
-		DBIterator *iter = db_iterator(regs.vars);
-		struct mapreg_save *m;
-		for (m = static_cast<mapreg_save *>(dbi_first(iter)); dbi_exists(iter); m = static_cast<mapreg_save *>(dbi_next(iter))) {
-			if (m->save) {
-				int num = script_getvarid(m->uid);
-				uint32 i = script_getvaridx(m->uid);
+		for (auto& [uid, reg] : *regs.vars) {
+			auto num = reg_db::GetID(uid);
+			auto index = reg_db::GetIndex(uid);
+
+			if (reg.save) {
 				const char* name = get_str(num);
-				if (!m->is_string) {
+				if (!reg.is_string) {
 					char esc_name[32 * 2 + 1];
 					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%" PRId64 "' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapreg_table, m->u.i, esc_name, i))
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%" PRId64 "' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapreg_table, reg.i64_value, esc_name, index))
 						Sql_ShowDebug(mmysql_handle);
 				} else {
 					char esc_str[2 * 255 + 1];
 					char esc_name[32 * 2 + 1];
 					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-					Sql_EscapeStringLen(mmysql_handle, esc_str, m->u.str, safestrnlen(m->u.str, 255));
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapreg_table, esc_str, esc_name, i))
+					Sql_EscapeStringLen(mmysql_handle, esc_str, reg.str_value.c_str(), min(reg.str_value.size(), 255));
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapreg_table, esc_str, esc_name, index))
 						Sql_ShowDebug(mmysql_handle);
 				}
-				m->save = false;
+				reg.save = false;
 			}
 		}
-		dbi_destroy(iter);
 		mapreg_dirty = false;
 	}
 }
@@ -270,29 +247,6 @@ static TIMER_FUNC(script_autosave_mapreg){
 }
 
 /**
- * Destroys a mapreg_save structure, freeing the contained string, if any.
- *
- * @see DBApply
- */
-int mapreg_destroyreg(DBKey key, DBData *data, va_list ap)
-{
-	struct mapreg_save *m = NULL;
-
-	if (data->type != DB_DATA_PTR) // Sanity check
-		return 0;
-
-	m = static_cast<mapreg_save *>(db_data2ptr(data));
-
-	if (m->is_string) {
-		if (m->u.str)
-			aFree(m->u.str);
-	}
-	ers_free(mapreg_ers, m);
-
-	return 0;
-}
-
-/**
  * Reloads mapregs, saving to database beforehand.
  *
  * This has the effect of clearing the temporary variables, and
@@ -302,12 +256,8 @@ void mapreg_reload(void)
 {
 	script_save_mapreg();
 
-	regs.vars->clear(regs.vars, mapreg_destroyreg);
-
-	if (regs.arrays) {
-		regs.arrays->destroy(regs.arrays, script_free_array_db);
-		regs.arrays = NULL;
-	}
+	script_free_vars(regs.vars);
+	regs.vars = reg_db::create();
 
 	script_load_mapreg();
 }
@@ -319,12 +269,7 @@ void mapreg_final(void)
 {
 	script_save_mapreg();
 
-	regs.vars->destroy(regs.vars, mapreg_destroyreg);
-
-	ers_destroy(mapreg_ers);
-
-	if (regs.arrays)
-		regs.arrays->destroy(regs.arrays, script_free_array_db);
+	script_free_vars(regs.vars);
 }
 
 /**
@@ -332,11 +277,9 @@ void mapreg_final(void)
  */
 void mapreg_init(void)
 {
-	regs.vars = i64db_alloc(DB_OPT_BASE);
-	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.cpp:mapreg_ers", ERS_OPT_CLEAN);
+	regs.vars = reg_db::create();
 
 	skip_insert = false;
-	regs.arrays = NULL;
 
 	script_load_mapreg();
 

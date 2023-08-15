@@ -9809,7 +9809,7 @@ ACMD_FUNC(set) {
 	uid = reference_uid( add_str( name ), index );
 
 	if( is_str ) {// string variable
-		char* value;
+		std::string value;
 
 		switch( reg[0] ) {
 			case '@':
@@ -9829,10 +9829,10 @@ ACMD_FUNC(set) {
 				break;
 		}
 
-		if( value == NULL || *value == '\0' ){// empty string
+		if( value.empty() ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
 		}else{
-			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now: %s
+			sprintf(atcmd_output,msg_txt(sd,1374),reg,value.c_str()); // %s value is now: %s
 		}
 	} else {// integer variable
 		int64 value;
