@@ -40344,31 +40344,21 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp:
-      - Level: 1
-        Amount: 2
-      - Level: 2
-        Amount: 2
-      - Level: 3
-        Amount: 2
-      - Level: 4
-        Amount: 3
-      - Level: 5
-        Amount: 3
+    GiveAp: 2
     CastCancel: true
-    Cooldown: 500
+    Cooldown: 300
     Requires:
       SpCost:
         - Level: 1
-          Amount: 120
+          Amount: 70
         - Level: 2
-          Amount: 132
+          Amount: 76
         - Level: 3
-          Amount: 144
+          Amount: 82
         - Level: 4
-          Amount: 156
+          Amount: 88
         - Level: 5
-          Amount: 168
+          Amount: 94
       Weapon:
         Musical: true
         Whip: true
