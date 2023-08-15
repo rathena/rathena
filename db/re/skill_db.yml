@@ -40436,15 +40436,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 40
         - Level: 2
-          Amount: 92
+          Amount: 50
         - Level: 3
-          Amount: 104
+          Amount: 60
         - Level: 4
-          Amount: 116
+          Amount: 70
         - Level: 5
-          Amount: 128
+          Amount: 80
       Weapon:
         Musical: true
         Whip: true
