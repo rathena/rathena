@@ -393,7 +393,7 @@ int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
  * @param sd : Player to save registry
  * @return 1=msg sent, -1=error
  */
-int intif_saveregistry(struct map_session_data *sd)
+int intif_saveregistry(map_session_data *sd)
 {
 	int plen = 0;
 	size_t len;
