@@ -40229,20 +40229,20 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 500
-    Cooldown: 500
+    Cooldown: 700
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 105
+          Amount: 70
         - Level: 2
-          Amount: 110
+          Amount: 76
         - Level: 3
-          Amount: 115
+          Amount: 82
         - Level: 4
-          Amount: 120
+          Amount: 88
         - Level: 5
-          Amount: 125
+          Amount: 94
       Weapon:
         Bow: true
         Musical: true
