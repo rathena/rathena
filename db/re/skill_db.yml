@@ -40299,21 +40299,21 @@ Body:
         Amount: 2
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
-    Cooldown: 1000
+    AfterCastActDelay: 350
+    Cooldown: 1150
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 66
+          Amount: 36
         - Level: 2
-          Amount: 72
+          Amount: 40
         - Level: 3
-          Amount: 78
+          Amount: 44
         - Level: 4
-          Amount: 84
+          Amount: 48
         - Level: 5
-          Amount: 90
+          Amount: 52
       Weapon:
         Bow: true
         Musical: true
