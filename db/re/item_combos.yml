@@ -8668,7 +8668,7 @@ Body:
       bonus bHealPower,.@heal;
       bonus bAddItemHealRate,.@heal;
       bonus2 bVariableCastrate,"AB_CHEAL",-100;
-      bonus2 bResEff,EFF_Bleeding,10000;
+      bonus2 bResEff,Eff_Bleeding,10000;
       bonus2 bResEff,Eff_Confusion,10000;
   - Combos:
       - Combo:
@@ -11028,7 +11028,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus bSpeedRate,25;
-      bonus bCritAtkRate,4*(readparam(bluk)/20);
+      bonus bCritAtkRate,4*(readparam(bLuk)/20);
       if (.@r >= 7) {
          bonus bAspdRate,8;
          bonus2 bSubRace,RC_DemiHuman,8;
@@ -13401,7 +13401,7 @@ Body:
           - Sura_Robe    # 29426
           - Sura_Bottom    # 29425
     Script: |
-      bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER","CH_SOULCOLLECT",300,1;
+      bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER","CH_SOULCOLLECT",1,300;
   - Combos:
       - Combo:
           - Sura_Robe2    # 29427
@@ -26122,11 +26122,13 @@ Body:
           - Bell_Pigeon_J     # 19321
           - Valhalla_Idol_     # 19110
     Script: |
-      bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50+(readparam(bStr)/18),0;
-      bonus bMagicAtkDef,5;
-      bonus2 bIgnoreMdefRaceRate,RC_All,5*(readparam(bLuk)/18);
-      bonus bBaseAtk,25;
-      bonus2 bIgnoreDefRaceRate,RC_All,5;
+      .@a = (readparam(bStr)/18);
+      .@b = (readparam(bLuk)/18);
+      bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0;
+      bonus bMatkRate,5*.@a;
+      bonus2 bIgnoreMdefRaceRate,RC_All,5*.@a;
+      bonus bBaseAtk,25*.@b;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@b;
   - Combos:
       - Combo:
           - Jasper_Ring     # 490113
@@ -40030,3 +40032,2577 @@ Body:
       bonus bMaxHP,150;
       bonus bMaxSP,50;
       bonus bHit,10;
+  - Combos:
+      - Combo:
+          - Save_The_King    # 13465
+          - Kings_Guard    # 28927
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_L);
+      bonus2 bSkillAtk,"CR_GRANDCROSS",20*.@r;
+      bonus2 bSkillAtk,"SM_BASH",20*.@r;
+      bonus2 bSkillAtk,"CR_HOLYCROSS",20*.@r;
+  - Combos:
+      - Combo:
+          - Save_The_King    # 13465
+          - Kings_Mail    # 15386
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bSkillAtk,"CR_GRANDCROSS",20*.@r;
+      bonus2 bSkillAtk,"SM_BASH",20*.@r;
+      bonus2 bSkillAtk,"CR_HOLYCROSS",20*.@r;
+  - Combos:
+      - Combo:
+          - Kings_Mail    # 15386
+          - Kings_Guard    # 28927
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bSubEle,Ele_Dark,5*.@r;
+  - Combos:
+      - Combo:
+          - Lunar_Rainbow     # 19156
+          - Rainbow_Foxtail    # 26163
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,15*.@r;
+      bonus bMatk,15*.@r;
+      bonus bAspdRate,2*.@r;
+  - Combos:
+      - Combo:
+          - Bloody_Knight_Card    # 4320
+          - Rainbow_Foxtail    # 26163
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus3 bAutoSpell,"WL_HELLINFERNO",3,30;
+      bonus2 bSkillAtk,"WL_HELLINFERNO",10*.@r;
+  - Combos:
+      - Combo:
+          - Knight_Windstorm_Card    # 4318
+          - Rainbow_Foxtail    # 26163
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",10*.@r;
+      bonus2 bMagicAtkEle,Ele_Water,5*.@r;
+      if (getskilllv("SU_SPRITEMABLE") == 1)
+         bonus3 bAutoSpell,"SO_DIAMONDDUST",5,50;
+  - Combos:
+      - Combo:
+          - aegis_300392    # 300392
+          - Rainbow_Foxtail    # 26163
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",3*.@r;
+      bonus2 bMagicAtkEle,Ele_Water,.@r;
+      if (getskilllv("SU_SPRITEMABLE") == 1)
+         bonus3 bAutoSpell,"SO_DIAMONDDUST",5,20;
+  - Combos:
+      - Combo:
+          - Moon_Eyepatch    # 5971
+          - Dwarf_Beard_J    # 19320
+    Script: |
+      bonus2 bAddEle,Ele_Water,50;
+  - Combos:
+      - Combo:
+          - Elvira_Pendant    # 28436
+          - Elvira_Boots    # 22140
+    Script: |
+      bonus bAtkRate,10;
+      bonus bMatkRate,10;
+      bonus2 bSubEle,Ele_Wind,20;
+  - Combos:
+      - Combo:
+          - Soheon_Winged_Robe    # 20796
+          - So_Heon_Saber    # 28519
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bMatk,5*.@r;
+      bonus bHealPower,2*.@r;
+  - Combos:
+      - Combo:
+          - Rora_Plate_Mail    # 15208
+          - Lora_Iron_Ball    # 16053
+    Script: |
+      bonus bBaseAtk,10*getequiprefinerycnt(EQI_HAND_R);
+  - Combos:
+      - Combo:
+          - Rudo_Black_Wings    # 20853
+          - Rudo_Heart_Roll    # 28912
+    Script: |
+      bonus2 bSubEle,Ele_Holy,3*getequiprefinerycnt(EQI_HAND_L);
+  - Combos:
+      - Combo:
+          - Flame_Bird    # 19412
+          - Phoenix_Foxtail    # 550018
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,15*.@r;
+      bonus bMatk,15*.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_All,10*.@r;
+  - Combos:
+      - Combo:
+          - Mutant_Dragon_Card    # 4203
+          - Phoenix_Foxtail    # 550018
+    Script: |
+      bonus3 bAutoSpell,"WZ_METEOR",5,30;
+      bonus2 bSkillAtk,"WZ_METEOR",10*getequiprefinerycnt(EQI_HAND_R);
+  - Combos:
+      - Combo:
+          - Boitata_Card    # 27126
+          - Phoenix_Foxtail    # 550018
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      if (getskilllv("SU_SPRITEMABLE") == 1)
+         bonus3 bAutoSpell,"WL_CRIMSONROCK",5,30;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",10*.@r;
+      bonus2 bMagicAtkEle,Ele_Fire,5*.@r;
+  - Combos:
+      - Combo:
+          - aegis_300402    # 300402
+          - Phoenix_Foxtail    # 550018
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      if (getskilllv("SU_SPRITEMABLE") == 1)
+         bonus3 bAutoSpell,"WL_CRIMSONROCK",5,30;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",3*.@r;
+      bonus2 bMagicAtkEle,Ele_Fire,2*.@r;
+  - Combos:
+      - Combo:
+          - Kings_Eager    # 28712
+          - Kings_Bless    # 28713
+    Script: |
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,GC_CROSSIMPACT,10;
+  - Combos:
+      - Combo:
+          - Cursed_Devils_Mail    # 15173
+          - Cursed_Devils_Manteau    # 20818
+          - Cursed_Devils_Boots    # 22119
+    Script: |
+      bonus bMaxHP,6666;
+      bonus bMaxSP,666;
+      bonus2 bSubEle,Ele_All,5;
+      bonus bLongAtkDef,5;
+  - Combos:
+      - Combo:
+          - Cursed_Devils_Mail    # 15173
+          - Cursed_Demon_Ring    # 28518
+    Script: |
+      bonus bAtkRate,10;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - Cursed_Devils_Manteau    # 20818
+          - Cursed_Demon_Ring    # 28518
+    Script: |
+      bonus2 bSubEle,Ele_Water,30;
+      bonus2 bSubEle,Ele_Wind,30;
+  - Combos:
+      - Combo:
+          - Cursed_Devils_Boots    # 22119
+          - Cursed_Demon_Ring    # 28518
+    Script: |
+      bonus bAspdRate,10;
+      bonus bVariableCastrate,-10;
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - Alice_Card    # 4253
+          - Witchslayer_Greatshield    # 460010
+      - Combo:
+          - Gaster_Card_J    # 27191
+          - Witchslayer_Greatshield    # 460010
+      - Combo:
+          - Pa_Monk_Card    # 27254
+          - Ordre_Card    # 27255
+          - Blut_Hase_Card    # 27256
+          - Witchslayer_Greatshield    # 460010
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_L);
+      bonus2 bSubClass,Class_Normal,-10;
+      bonus2 bSubClass,Class_Boss,-10;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+         bonus2 bSubClass,Class_Normal,-10;
+         bonus2 bSubClass,Class_Boss,-10;
+         if (.@r>=7) {
+             bonus2 bSubClass,Class_Normal,-10;
+             bonus2 bSubClass,Class_Boss,-10;
+             if (.@r>=9) {
+                 bonus2 bSubClass,Class_Normal,-10;
+                 bonus2 bSubClass,Class_Boss,-10;
+             }
+         }
+      }
+  - Combos:
+      - Combo:
+          - Brave_suit    # 15349
+          - Brave_muffler    # 20924
+          - Brave_shoes    # 22193
+    Script: |
+      bonus2 bAddRace,RC_Player_Doram,50;
+      bonus2 bAddRace,RC_Player_Human,50;
+      bonus2 bMagicAddRace,RC_Player_Doram,50;
+      bonus2 bMagicAddRace,RC_Player_Human,50;
+      bonus2 bResEff,Eff_WhiteImprison,10000;
+      /*Todo When Using Elvira Candy Activates Masquerade Ignorance*/
+  - Combos:
+      - Combo:
+          - Tao_Gunka_Card    # 4302
+          - Brave_suit    # 15349
+    Script: |
+      bonus bMaxHPrate,-100;
+  - Combos:
+      - Combo:
+          - Brave_suit    # 15349
+          - aegis_300407    # 300407
+    Script: |
+      bonus bMaxHPrate,-30;
+  - Combos:
+      - Combo:
+          - MD_Geffen_Suits    # 450149
+          - MD_Geffen_Cloth_JP    # 480331
+    Script: |
+      bonus bMdef,50;
+      bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - MD_Geffen_Robe    # 450150
+          - MD_Geffen_Cloth_JP    # 480331
+    Script: |
+      bonus bHealPower,30;
+      bonus bUseSPrate,-10;
+  - Combos:
+      - Combo:
+          - Heros_TriumphantSong    # 311074
+          - MD_Geffen_Cloth_JP    # 480331
+    Script: |
+      bonus2 bSubClass,Class_Normal,5;
+      bonus2 bSubClass,Class_Boss,5;
+      bonus2 bSubEle,Ele_Ghost,30;
+  - Combos:
+      - Combo:
+          - Illusion_Box_Garden    # 311075
+          - aegis_410247    # 410247
+    Script: |
+      bonus2 bAddClass,Class_Boss,10;
+      bonus2 bMagicAddClass,Class_Boss,10;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bSubRace,RC_Player_Human,5;
+  - Combos:
+      - Combo:
+          - FaceWorm_Skin    # 20717
+          - Comp_Temporal_Boots_TW    # 22258
+      - Combo:
+          - FaceWorm_Skin_    # 20718
+          - Comp_Temporal_Boots_TW    # 22258
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - Temporal_Boots_TW    # 22202
+          - aegis_490332    # 490332
+    Script: |
+      if (readparam(bStr)>=120) {
+         bonus bAtkRate,8;
+         bonus2 bAddSize,Size_All,8;
+      }
+      if (readparam(bAgi)>=120) {
+         bonus bAspdRate,4;
+         bonus bCritAtkRate,15;
+      }
+      if (readparam(bVit)>=120) {
+         bonus bMaxHPrate,8;
+         bonus bDelayrate,-8;
+      }
+      if (readparam(bInt)>=120) {
+         bonus bMatkRate,8;
+         bonus2 bMagicAtkEle,Ele_All,8;
+      }
+      if (readparam(bDex)>=120) {
+         bonus bLongAtkRate,5;
+         bonus bAtkRate,8;
+      }
+      if (readparam(bLuk)>=120) {
+         bonus bCritAtkRate,10;
+         bonus bAspd,1;
+      }
+  - Combos:
+      - Combo:
+          - Temporal_Cape_TW    # 480076
+          - aegis_490332    # 490332
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_All,5;
+         bonus2 bIgnoreMdefRaceRate,RC_All,5;
+         bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-5;
+      }
+      if (.@r>=12) {
+         bonus2 bIgnoreDefRaceRate,RC_All,15;
+         bonus2 bIgnoreMdefRaceRate,RC_All,15;
+         bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-15;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-15;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480322    # 480322
+          - aegis_610055    # 610055
+      - Combo:
+          - aegis_480323    # 480323
+          - aegis_610055    # 610055
+      - Combo:
+          - aegis_480339    # 480339
+          - aegis_610055    # 610055
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,30;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"AS_SONICBLOW",20;
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",20;
+      if (.@sum>=18) {
+         bonus bBaseAtk,15;
+         bonus2 bAddSize,Size_All,5;
+      }
+      if (.@sum>=21) {
+         bonus2 bSkillAtk,"AS_SONICBLOW",10;
+         bonus2 bSkillAtk,"ASC_METEORASSAULT",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480322    # 480322
+          - aegis_560050    # 560050
+      - Combo:
+          - aegis_480323    # 480323
+          - aegis_560050    # 560050
+      - Combo:
+          - aegis_480339    # 480339
+          - aegis_560050    # 560050
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,30;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",20;
+      bonus2 bSkillAtk,"MO_COMBOFINISH",20;
+      if (.@sum>=18) {
+         bonus bBaseAtk,15;
+         bonus2 bAddSize,Size_All,5;
+      }
+      if (.@sum>=21) {
+         bonus2 bSkillAtk,"MO_CHAINCOMBO",10;
+         bonus2 bSkillAtk,"MO_COMBOFINISH",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480322    # 480322
+          - aegis_630034    # 630034
+      - Combo:
+          - aegis_480323    # 480323
+          - aegis_630034    # 630034
+      - Combo:
+          - aegis_480339    # 480339
+          - aegis_630034    # 630034
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,30;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",20;
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",20;
+      if (.@sum>=18) {
+         bonus bBaseAtk,15;
+         bonus2 bAddSize,Size_All,5;
+      }
+      if (.@sum>=21) {
+         bonus2 bSkillAtk,"KN_BRANDISHSPEAR",10;
+         bonus2 bSkillAtk,"LK_SPIRALPIERCE",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480322    # 480322
+          - aegis_510120    # 510120
+      - Combo:
+          - aegis_480323    # 480323
+          - aegis_510120    # 510120
+      - Combo:
+          - aegis_480339    # 480339
+          - aegis_510120    # 510120
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,30;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"RG_BACKSTAP",20;
+      bonus2 bSkillAtk,"RG_RAID",20;
+      if (.@sum>=18) {
+         bonus bBaseAtk,15;
+         bonus2 bAddSize,Size_All,5;
+      }
+      if (.@sum>=21) {
+         bonus2 bSkillAtk,"RG_BACKSTAP",10;
+         bonus2 bSkillAtk,"RG_RAID",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480322    # 480322
+          - aegis_640047    # 640047
+      - Combo:
+          - aegis_480323    # 480323
+          - aegis_640047    # 640047
+      - Combo:
+          - aegis_480339    # 480339
+          - aegis_640047    # 640047
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bMatk,30;
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bSkillAtk,"WZ_METEOR",20;
+      bonus2 bSkillAtk,"WZ_VERMILION",20;
+      if (.@sum>=18) {
+         bonus bMatk,15;
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+      }
+      if (.@sum>=21) {
+         bonus2 bSkillAtk,"WZ_METEOR",10;
+         bonus2 bSkillAtk,"WZ_VERMILION",10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480322    # 480322
+          - aegis_650043    # 650043
+      - Combo:
+          - aegis_480323    # 480323
+          - aegis_650043    # 650043
+      - Combo:
+          - aegis_480339    # 480339
+          - aegis_650043    # 650043
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,30;
+      bonus bMatk,30;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",20;
+      bonus2 bSkillAtk,"NJ_HUUMA",20;
+      if (.@sum>=18) {
+         bonus bBaseAtk,15;
+         bonus bMatk,15;
+         bonus2 bAddSize,Size_All,5;
+         bonus2 bMagicAddSize,Size_All,5;
+      }
+      if (.@sum>=21) {
+         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",10;
+         bonus2 bSkillAtk,"NJ_HUUMA",10;
+      }
+  - Combos:
+      - Combo:
+          - Up_Apple_Of_Archer_IL    # 400463
+          - aegis_480322    # 480322
+      - Combo:
+          - aegis_400483    # 400483
+          - aegis_480322    # 480322
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      bonus bVariableCastrate,-5;
+      bonus bAspdRate,5;
+      if (.@sum>=18) {
+         bonus bBaseAtk,25;
+         bonus bMatk,25;
+      }
+      if (.@sum>=21)
+         bonus bLongAtkRate,5;
+  - Combos:
+      - Combo:
+          - Up_Apple_Of_Archer_IL    # 400463
+          - aegis_480323    # 480323
+      - Combo:
+          - aegis_400483    # 400483
+          - aegis_480323    # 480323
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      bonus bVariableCastrate,-5;
+      bonus bAspdRate,5;
+      if (.@sum>=18) {
+         bonus bBaseAtk,25;
+         bonus bMatk,25;
+      }
+      if (.@sum>=21)
+         bonus bCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - Up_Apple_Of_Archer_IL    # 400463
+          - aegis_480339    # 480339
+      - Combo:
+          - aegis_400483    # 400483
+          - aegis_480339    # 480339
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      bonus bVariableCastrate,-5;
+      bonus bAspdRate,5;
+      if (.@sum>=18) {
+         bonus bBaseAtk,25;
+         bonus bMatk,25;
+      }
+      if (.@sum>=21)
+         bonus2 bSubEle,Ele_Neutral,5;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300427    # 300427
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300427    # 300427
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300427    # 300427
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300428    # 300428
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300428    # 300428
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300428    # 300428
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300429    # 300429
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300429    # 300429
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300429    # 300429
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300430    # 300430
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300430    # 300430
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300430    # 300430
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300431    # 300431
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300431    # 300431
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300431    # 300431
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300432    # 300432
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300432    # 300432
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300432    # 300432
+    Script: |
+      bonus2 bSkillAtk,"GS_DISARM",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300433    # 300433
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300433    # 300433
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300433    # 300433
+    Script: |
+      bonus2 bSkillAtk,"GS_DISARM",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300434    # 300434
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300434    # 300434
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300434    # 300434
+    Script: |
+      bonus2 bSkillAtk,"GS_DISARM",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300435    # 300435
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300435    # 300435
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300435    # 300435
+    Script: |
+      bonus2 bSkillAtk,"GS_DISARM",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_300436    # 300436
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_300436    # 300436
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_300436    # 300436
+    Script: |
+      bonus2 bSkillAtk,"GS_DISARM",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310338    # 310338
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310338    # 310338
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310338    # 310338
+    Script: |
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310339    # 310339
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310339    # 310339
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310339    # 310339
+    Script: |
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310340    # 310340
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310340    # 310340
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310340    # 310340
+    Script: |
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310341    # 310341
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310341    # 310341
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310341    # 310341
+    Script: |
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310342    # 310342
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310342    # 310342
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310342    # 310342
+    Script: |
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310343    # 310343
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310343    # 310343
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310343    # 310343
+    Script: |
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310344    # 310344
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310344    # 310344
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310344    # 310344
+    Script: |
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310345    # 310345
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310345    # 310345
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310345    # 310345
+    Script: |
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310346    # 310346
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310346    # 310346
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310346    # 310346
+    Script: |
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310347    # 310347
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310347    # 310347
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310347    # 310347
+    Script: |
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310348    # 310348
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310348    # 310348
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310348    # 310348
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310349    # 310349
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310349    # 310349
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310349    # 310349
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310350    # 310350
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310350    # 310350
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310350    # 310350
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310351    # 310351
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310351    # 310351
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310351    # 310351
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310352    # 310352
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310352    # 310352
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310352    # 310352
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310353    # 310353
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310353    # 310353
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310353    # 310353
+    Script: |
+      bonus2 bSkillAtk,"CR_GRANDCROSS",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310354    # 310354
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310354    # 310354
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310354    # 310354
+    Script: |
+      bonus2 bSkillAtk,"CR_GRANDCROSS",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310355    # 310355
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310355    # 310355
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310355    # 310355
+    Script: |
+      bonus2 bSkillAtk,"CR_GRANDCROSS",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310356    # 310356
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310356    # 310356
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310356    # 310356
+    Script: |
+      bonus2 bSkillAtk,"CR_GRANDCROSS",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310357    # 310357
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310357    # 310357
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310357    # 310357
+    Script: |
+      bonus2 bSkillAtk,"CR_GRANDCROSS",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310358    # 310358
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310358    # 310358
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310358    # 310358
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310359    # 310359
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310359    # 310359
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310359    # 310359
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310360    # 310360
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310360    # 310360
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310360    # 310360
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310361    # 310361
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310361    # 310361
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310361    # 310361
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310362    # 310362
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310362    # 310362
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310362    # 310362
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310363    # 310363
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310363    # 310363
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310363    # 310363
+    Script: |
+      bonus2 bSkillAtk,"WZ_VERMILION",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310364    # 310364
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310364    # 310364
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310364    # 310364
+    Script: |
+      bonus2 bSkillAtk,"WZ_VERMILION",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310365    # 310365
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310365    # 310365
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310365    # 310365
+    Script: |
+      bonus2 bSkillAtk,"WZ_VERMILION",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310366    # 310366
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310366    # 310366
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310366    # 310366
+    Script: |
+      bonus2 bSkillAtk,"WZ_VERMILION",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310367    # 310367
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310367    # 310367
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310367    # 310367
+    Script: |
+      bonus2 bSkillAtk,"WZ_VERMILION",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310368    # 310368
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310368    # 310368
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310368    # 310368
+    Script: |
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310369    # 310369
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310369    # 310369
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310369    # 310369
+    Script: |
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310370    # 310370
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310370    # 310370
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310370    # 310370
+    Script: |
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310371    # 310371
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310371    # 310371
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310371    # 310371
+    Script: |
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310372    # 310372
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310372    # 310372
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310372    # 310372
+    Script: |
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310373    # 310373
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310373    # 310373
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310373    # 310373
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",10;
+      bonus2 bSkillAtk,"MG_COLDBOLT",10;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310374    # 310374
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310374    # 310374
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310374    # 310374
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",20;
+      bonus2 bSkillAtk,"MG_COLDBOLT",20;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310375    # 310375
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310375    # 310375
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310375    # 310375
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",30;
+      bonus2 bSkillAtk,"MG_COLDBOLT",30;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310376    # 310376
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310376    # 310376
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310376    # 310376
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",40;
+      bonus2 bSkillAtk,"MG_COLDBOLT",40;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310377    # 310377
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310377    # 310377
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310377    # 310377
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",50;
+      bonus2 bSkillAtk,"MG_COLDBOLT",50;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310378    # 310378
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310378    # 310378
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310378    # 310378
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310379    # 310379
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310379    # 310379
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310379    # 310379
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310380    # 310380
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310380    # 310380
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310380    # 310380
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310381    # 310381
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310381    # 310381
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310381    # 310381
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310382    # 310382
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310382    # 310382
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310382    # 310382
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310383    # 310383
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310383    # 310383
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310383    # 310383
+    Script: |
+      bonus bCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310384    # 310384
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310384    # 310384
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310384    # 310384
+    Script: |
+      bonus bCritAtkRate,10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310385    # 310385
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310385    # 310385
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310385    # 310385
+    Script: |
+      bonus bCritAtkRate,15;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310386    # 310386
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310386    # 310386
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310386    # 310386
+    Script: |
+      bonus bCritAtkRate,20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310387    # 310387
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310387    # 310387
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310387    # 310387
+    Script: |
+      bonus bCritAtkRate,25;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310388    # 310388
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310388    # 310388
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310388    # 310388
+    Script: |
+      bonus2 bSkillAtk,"AM_ACIDTERROR",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310389    # 310389
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310389    # 310389
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310389    # 310389
+    Script: |
+      bonus2 bSkillAtk,"AM_ACIDTERROR",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310390    # 310390
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310390    # 310390
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310390    # 310390
+    Script: |
+      bonus2 bSkillAtk,"AM_ACIDTERROR",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310391    # 310391
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310391    # 310391
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310391    # 310391
+    Script: |
+      bonus2 bSkillAtk,"AM_ACIDTERROR",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310392    # 310392
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310392    # 310392
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310392    # 310392
+    Script: |
+      bonus2 bSkillAtk,"AM_ACIDTERROR",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310393    # 310393
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310393    # 310393
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310393    # 310393
+    Script: |
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310394    # 310394
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310394    # 310394
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310394    # 310394
+    Script: |
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310395    # 310395
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310395    # 310395
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310395    # 310395
+    Script: |
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310396    # 310396
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310396    # 310396
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310396    # 310396
+    Script: |
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310397    # 310397
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310397    # 310397
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310397    # 310397
+    Script: |
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310398    # 310398
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310398    # 310398
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310398    # 310398
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310399    # 310399
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310399    # 310399
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310399    # 310399
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310400    # 310400
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310400    # 310400
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310400    # 310400
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310401    # 310401
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310401    # 310401
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310401    # 310401
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310402    # 310402
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310402    # 310402
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310402    # 310402
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310403    # 310403
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310403    # 310403
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310403    # 310403
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310404    # 310404
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310404    # 310404
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310404    # 310404
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310405    # 310405
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310405    # 310405
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310405    # 310405
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310406    # 310406
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310406    # 310406
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310406    # 310406
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310407    # 310407
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310407    # 310407
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310407    # 310407
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310408    # 310408
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310408    # 310408
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310408    # 310408
+    Script: |
+      bonus2 bSkillAtk,"RG_BACKSTAP",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310409    # 310409
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310409    # 310409
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310409    # 310409
+    Script: |
+      bonus2 bSkillAtk,"RG_BACKSTAP",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310410    # 310410
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310410    # 310410
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310410    # 310410
+    Script: |
+      bonus2 bSkillAtk,"RG_BACKSTAP",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310411    # 310411
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310411    # 310411
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310411    # 310411
+    Script: |
+      bonus2 bSkillAtk,"RG_BACKSTAP",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310412    # 310412
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310412    # 310412
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310412    # 310412
+    Script: |
+      bonus2 bSkillAtk,"RG_BACKSTAP",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310413    # 310413
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310413    # 310413
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310413    # 310413
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310414    # 310414
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310414    # 310414
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310414    # 310414
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310415    # 310415
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310415    # 310415
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310415    # 310415
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310416    # 310416
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310416    # 310416
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310416    # 310416
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310417    # 310417
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310417    # 310417
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310417    # 310417
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310418    # 310418
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310418    # 310418
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310418    # 310418
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310419    # 310419
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310419    # 310419
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310419    # 310419
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310420    # 310420
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310420    # 310420
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310420    # 310420
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310421    # 310421
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310421    # 310421
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310421    # 310421
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310422    # 310422
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310422    # 310422
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310422    # 310422
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310423    # 310423
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310423    # 310423
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310423    # 310423
+    Script: |
+      bonus2 bAddSize,Size_All,5;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310424    # 310424
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310424    # 310424
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310424    # 310424
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310425    # 310425
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310425    # 310425
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310425    # 310425
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310426    # 310426
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310426    # 310426
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310426    # 310426
+    Script: |
+      bonus2 bAddSize,Size_All,20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310427    # 310427
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310427    # 310427
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310427    # 310427
+    Script: |
+      bonus2 bAddSize,Size_All,25;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310428    # 310428
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310428    # 310428
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310428    # 310428
+    Script: |
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310429    # 310429
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310429    # 310429
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310429    # 310429
+    Script: |
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310430    # 310430
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310430    # 310430
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310430    # 310430
+    Script: |
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310431    # 310431
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310431    # 310431
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310431    # 310431
+    Script: |
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310432    # 310432
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310432    # 310432
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310432    # 310432
+    Script: |
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310433    # 310433
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310433    # 310433
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310433    # 310433
+    Script: |
+      bonus2 bSkillAtk,"MO_COMBOFINISH",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310434    # 310434
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310434    # 310434
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310434    # 310434
+    Script: |
+      bonus2 bSkillAtk,"MO_COMBOFINISH",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310435    # 310435
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310435    # 310435
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310435    # 310435
+    Script: |
+      bonus2 bSkillAtk,"MO_COMBOFINISH",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310436    # 310436
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310436    # 310436
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310436    # 310436
+    Script: |
+      bonus2 bSkillAtk,"MO_COMBOFINISH",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310437    # 310437
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310437    # 310437
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310437    # 310437
+    Script: |
+      bonus2 bSkillAtk,"MO_COMBOFINISH",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310438    # 310438
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310438    # 310438
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310438    # 310438
+    Script: |
+      bonus2 bSkillAtk,"HT_BLITZBEAT",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310439    # 310439
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310439    # 310439
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310439    # 310439
+    Script: |
+      bonus2 bSkillAtk,"HT_BLITZBEAT",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310440    # 310440
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310440    # 310440
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310440    # 310440
+    Script: |
+      bonus2 bSkillAtk,"HT_BLITZBEAT",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310441    # 310441
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310441    # 310441
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310441    # 310441
+    Script: |
+      bonus2 bSkillAtk,"HT_BLITZBEAT",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310442    # 310442
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310442    # 310442
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310442    # 310442
+    Script: |
+      bonus2 bSkillAtk,"HT_BLITZBEAT",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310443    # 310443
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310443    # 310443
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310443    # 310443
+    Script: |
+      bonus2 bSkillAtk,"AC_DOUBLE",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310444    # 310444
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310444    # 310444
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310444    # 310444
+    Script: |
+      bonus2 bSkillAtk,"AC_DOUBLE",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310445    # 310445
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310445    # 310445
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310445    # 310445
+    Script: |
+      bonus2 bSkillAtk,"AC_DOUBLE",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310446    # 310446
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310446    # 310446
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310446    # 310446
+    Script: |
+      bonus2 bSkillAtk,"AC_DOUBLE",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310447    # 310447
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310447    # 310447
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310447    # 310447
+    Script: |
+      bonus2 bSkillAtk,"AC_DOUBLE",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310448    # 310448
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310448    # 310448
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310448    # 310448
+    Script: |
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
+      bonus2 bSkillAtk,"DC_THROWARROW",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310449    # 310449
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310449    # 310449
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310449    # 310449
+    Script: |
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20;
+      bonus2 bSkillAtk,"DC_THROWARROW",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310450    # 310450
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310450    # 310450
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310450    # 310450
+    Script: |
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",30;
+      bonus2 bSkillAtk,"DC_THROWARROW",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310451    # 310451
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310451    # 310451
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310451    # 310451
+    Script: |
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",40;
+      bonus2 bSkillAtk,"DC_THROWARROW",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310452    # 310452
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310452    # 310452
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310452    # 310452
+    Script: |
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",50;
+      bonus2 bSkillAtk,"DC_THROWARROW",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310453    # 310453
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310453    # 310453
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310453    # 310453
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310454    # 310454
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310454    # 310454
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310454    # 310454
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310455    # 310455
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310455    # 310455
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310455    # 310455
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310456    # 310456
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310456    # 310456
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310456    # 310456
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310457    # 310457
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310457    # 310457
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310457    # 310457
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310458    # 310458
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310458    # 310458
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310458    # 310458
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310459    # 310459
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310459    # 310459
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310459    # 310459
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310460    # 310460
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310460    # 310460
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310460    # 310460
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310461    # 310461
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310461    # 310461
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310461    # 310461
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310462    # 310462
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310462    # 310462
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310462    # 310462
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310463    # 310463
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310463    # 310463
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310463    # 310463
+    Script: |
+      bonus2 bSkillAtk,"NJ_HUUMA",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310464    # 310464
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310464    # 310464
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310464    # 310464
+    Script: |
+      bonus2 bSkillAtk,"NJ_HUUMA",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310465    # 310465
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310465    # 310465
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310465    # 310465
+    Script: |
+      bonus2 bSkillAtk,"NJ_HUUMA",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310466    # 310466
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310466    # 310466
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310466    # 310466
+    Script: |
+      bonus2 bSkillAtk,"NJ_HUUMA",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310467    # 310467
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310467    # 310467
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310467    # 310467
+    Script: |
+      bonus2 bSkillAtk,"NJ_HUUMA",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310468    # 310468
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310468    # 310468
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310468    # 310468
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",10;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",10;
+      bonus2 bSkillAtk,"NJ_HUUJIN",10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310469    # 310469
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310469    # 310469
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310469    # 310469
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",20;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",20;
+      bonus2 bSkillAtk,"NJ_HUUJIN",20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310470    # 310470
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310470    # 310470
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310470    # 310470
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",30;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",30;
+      bonus2 bSkillAtk,"NJ_HUUJIN",30;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310471    # 310471
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310471    # 310471
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310471    # 310471
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",40;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",40;
+      bonus2 bSkillAtk,"NJ_HUUJIN",40;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310472    # 310472
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310472    # 310472
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310472    # 310472
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",50;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",50;
+      bonus2 bSkillAtk,"NJ_HUUJIN",50;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310473    # 310473
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310473    # 310473
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310473    # 310473
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310474    # 310474
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310474    # 310474
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310474    # 310474
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310475    # 310475
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310475    # 310475
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310475    # 310475
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Water,15;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310476    # 310476
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310476    # 310476
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310476    # 310476
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,20;
+      bonus2 bMagicAtkEle,Ele_Fire,20;
+      bonus2 bMagicAtkEle,Ele_Water,20;
+      bonus2 bMagicAtkEle,Ele_Wind,20;
+  - Combos:
+      - Combo:
+          - Muffler_IL    # 20838
+          - aegis_310477    # 310477
+      - Combo:
+          - Cape_Of_Ancient_Lord_IL    # 20840
+          - aegis_310477    # 310477
+      - Combo:
+          - Clack_Of_Servival_IL    # 20847
+          - aegis_310477    # 310477
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,25;
+      bonus2 bMagicAtkEle,Ele_Fire,25;
+      bonus2 bMagicAtkEle,Ele_Water,25;
+      bonus2 bMagicAtkEle,Ele_Wind,25;
+  - Combos:
+      - Combo:
+          - Ancient_Mimic_Card    # 4387
+          - Ceres_Armor_TW_LT    # 450293
+    Script: |
+      bonus bBaseAtk,100;
+      bonus bMatk,100;
+      bonus bLongAtkRate,20;
+      bonus2 bMagicAtkEle,Ele_All,20;
+  - Combos:
+      - Combo:
+          - Clown_Card    # 4560
+          - Ceres_Armor_TW_LT    # 450293
+      - Combo:
+          - Gypsy_Card    # 4566
+          - Ceres_Armor_TW_LT    # 450293
+    Script: |
+      bonus bBaseAtk,100;
+      bonus bMatk,100;
+      bonus bLongAtkRate,25;
+      bonus2 bMagicAtkEle,Ele_All,25;
+      bonus2 bSubRace,RC_All,10;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Combos:
+      - Combo:
+          - Grave_Verit_Card    # 4658
+          - Jupiter_Armor_TW_LT    # 450294
+    Script: |
+      bonus bMatk,100;
+      bonus bMdef,10;
+      bonus2 bMagicAddRace,RC_All,15;
+  - Combos:
+      - Combo:
+          - Fallen_Bishop_Card    # 4441
+          - Jupiter_Armor_TW_LT    # 450294
+    Script: |
+      bonus bMatk,100;
+      bonus bMaxSPrate,50;
+      bonus bMdef,20;
+      bonus2 bMagicAddRace,RC_All,30;
+  - Combos:
+      - Combo:
+          - Ferus__Card    # 4381
+          - Apollo_Armor_TW_LT    # 450295
+    Script: |
+      bonus bDelayrate,-8;
+      bonus bLongAtkRate,15;
+      bonus bShortAtkRate,15;
+  - Combos:
+      - Combo:
+          - Eddga_Card    # 4123
+          - Apollo_Armor_TW_LT    # 450295
+    Script: |
+      bonus bDelayrate,-8;
+      bonus bLongAtkRate,30;
+      bonus bShortAtkRate,30;
+      bonus3 bAddEffWhenHit,Eff_Freeze,5000,ATF_MAGIC;
+      bonus3 bAddEffWhenHit,Eff_Bleeding,5000,ATF_MAGIC;
+      bonus3 bAddEffWhenHit,Eff_Stone,5000,ATF_MAGIC;
+  - Combos:
+      - Combo:
+          - Whisper_Boss_Card    # 4303
+          - Mars_Armor_TW_LT    # 450296
+    Script: |
+      bonus bFlee,30;
+      bonus bBaseAtk,100;
+  - Combos:
+      - Combo:
+          - Kades_Card    # 4580
+          - Mars_Armor_TW_LT    # 450296
+    Script: |
+      bonus bFlee,50;
+      bonus bBaseAtk,150;
+      bonus2 bSubEle,Ele_Ghost,20;
+      bonus2 bSubEle,Ele_Holy,20;
+  - Combos:
+      - Combo:
+          - Antique_Firelock_Card    # 4160
+          - Vinus_Armor_TW_LT    # 450297
+    Script: |
+      bonus bBaseAtk,100;
+      bonus2 bSubRace,RC_All,5;
+      bonus2 bAddClass,Class_Boss,10;
+  - Combos:
+      - Combo:
+          - Lady_Tanee_Card    # 4376
+          - Vinus_Armor_TW_LT    # 450297
+    Script: |
+      bonus bMaxHPrate,50;
+      bonus2 bSubRace,RC_All,5;
+      bonus bBaseAtk,100;
+      bonus2 bAddClass,Class_Boss,30;
+  - Combos:
+      - Combo:
+          - Porcellio_Card    # 4337
+          - Vulcan_Armor_TW_LT    # 450298
+    Script: |
+      bonus bBaseAtk,100;
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bIgnoreDefClassRate,Class_Normal,20;
+  - Combos:
+      - Combo:
+          - Gloom_Under_Night_Card    # 4408
+          - Vulcan_Armor_TW_LT    # 450298
+    Script: |
+      bonus bBaseAtk,100;
+      bonus2 bAddSize,Size_All,30;
+      bonus2 bIgnoreDefClassRate,Class_Normal,20;
+  - Combos:
+      - Combo:
+          - Astraea_Shoes_LT    # 470205
+          - Astraea_Cape_LT    # 480338
+    Script: |
+      bonus2 bSubRace,RC_All,10;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+  - Combos:
+      - Combo:
+          - Force3    # 4910
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus bShortAtkRate,20;
+      bonus2 bSubRace,RC_All,-15;
+  - Combos:
+      - Combo:
+          - Intellect3    # 4913
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,20;
+      bonus2 bSubRace,RC_All,-15;
+  - Combos:
+      - Combo:
+          - Swiftness3    # 4916
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus bDelayrate,-10;
+      bonus bMaxHPrate,-20;
+  - Combos:
+      - Combo:
+          - Artful3    # 4922
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus bLongAtkRate,20;
+      bonus2 bSubRace,RC_All,-15;
+  - Combos:
+      - Combo:
+          - Tough3    # 4919
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus bMaxHPrate,30;
+      bonus bAspdRate,-50;
+  - Combos:
+      - Combo:
+          - Fortune3    # 4925
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus bCritAtkRate,20;
+      bonus bHealPower,20;
+      bonus bDelayrate,10;
+  - Combos:
+      - Combo:
+          - Ahat_Card    # 27322
+          - Moroc_Slave_TW    # 420236
+      - Combo:
+          - Shnaim_Card    # 27323
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bMagicAddRace,RC_All,15;
+  - Combos:
+      - Combo:
+          - DespairGodMorocc_Card    # 27321
+          - Moroc_Slave_TW    # 420236
+    Script: |
+      bonus bMaxHPrate,50;
+      bonus2 bAddRace,RC_All,40;
+  - Combos:
+      - Combo:
+          - Justice_Power    # 312014
+          - aegis_312447    # 312447
+    Script: |
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",30;
+      bonus bShortAtkRate,20;
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+  - Combos:
+      - Combo:
+          - Injustice_Power    # 312021
+          - aegis_312448    # 312448
+    Script: |
+      bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",30;
+      bonus bCritAtkRate,20;
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+  - Combos:
+      - Combo:
+          - Justice_Power    # 312014
+          - aegis_312449    # 312449
+    Script: |
+      bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",20;
+      bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",40;
+      bonus2 bAddEle,Ele_All,20;
+      bonus bDelayrate,-5;
+  - Combos:
+      - Combo:
+          - Injustice_Power    # 312021
+          - aegis_312450    # 312450
+    Script: |
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",20;
+      bonus2 bSkillAtk,"DK_STORMSLASH",40;
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;

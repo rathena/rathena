@@ -40080,6 +40080,19 @@ Body:
       bonus bBaseAtk,20;
       bonus2 bAddRace,RC_Demon,30;
       bonus2 bAddRace,RC_Undead,30;
+  - Id: 27191
+    AegisName: Gaster_Card_J
+    Name: Gaster Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubClass,Class_Normal,40;
+      bonus2 bSubClass,Class_Boss,40;
   - Id: 27196
     AegisName: S_Nihil_Card
     Name: Nihil M. Heine Card
@@ -41564,11 +41577,11 @@ Body:
       if (eaclass()&EAJL_THIRD && BaseJob == Job_knight) {
          if (.@p == EQP_ACC_L) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH",50;
-            bonus4 bAddEff,Eff_Heat,1000,ATF_WEAPON|ATF_MAGIC,3000;
+            bonus4 bAddEff,Eff_Heat,50,ATF_WEAPON|ATF_MAGIC,3000;
          }
          if (.@p == EQP_ACC_R) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",50;
-            autobonus2 "{ sc_start SC_CHILL; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
+            autobonus2 "{ sc_start SC_CHILL,3000,1; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
          }
       }
       /*Unknow Rate*/
@@ -44239,7 +44252,7 @@ Body:
          bonus bLongAtkRate,10;
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
          bonus bDelayrate,-90;
-         autobonus3 "{ sc_start SC_WEAPONBLOCKING; }",1000,50000,"GC_HALLUCINATIONWALK";
+         autobonus3 "{ sc_start SC_WEAPONBLOCKING,50000,1; }",1000,50000,"GC_HALLUCINATIONWALK";
       }
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
          bonus bFixedCastrate,-50;
@@ -46215,6 +46228,92 @@ Body:
     Script: |
       bonus bShortAtkRate,44;
       bonus bPerfectHitRate,10;
+  - Id: 29716
+    AegisName: StarE_Enchant_1
+    Name: Solar
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bWeaponAtkRate,10;
+         bonus2 bVariableCastrate,"SJ_PROMINENCEKICK",-50;
+         bonus2 bSkillAtk,"SJ_SOLARBURST",50;
+      }
+  - Id: 29717
+    AegisName: StarE_Enchant_2
+    Name: Moon
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bMaxHPrate,20;
+         bonus2 bVariableCastrate,"SJ_NEWMOONKICK",-50;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",50;
+      }
+  - Id: 29718
+    AegisName: StarE_Enchant_3
+    Name: Star
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bAspdRate,10;
+         bonus2 bAddEff,Eff_Stun,1000;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR",50;
+      }
+  - Id: 29719
+    AegisName: SoulR_Enchant_1
+    Name: S
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus bMatk,50;
+         bonus2 bSkillAtk,"SP_SHA",BaseLevel/10;
+         bonus2 bSkillAtk,"SP_SPA",BaseLevel/10;
+         bonus2 bSkillAtk,"SP_SWHOO",BaseLevel/10;
+      }
+  - Id: 29720
+    AegisName: SoulR_Enchant_2
+    Name: Ghost
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus bMatk,50;
+         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",BaseLevel/10;
+      }
+  - Id: 29721
+    AegisName: SoulR_Enchant_3
+    Name: Soul
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus2 bSubRace,RC_Player_Human,3;
+         bonus2 bSubRace,RC_Player_Doram,3;
+         skill "SA_DISPELL",5;
+         bonus bMaxHP,50*BaseLevel;
+         bonus bMaxSP,5*BaseLevel;
+      }
+  - Id: 29722
+    AegisName: Curse_Effect_J
+    Name: Curse
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_Qscaraba,true;
+    UnEquipScript: |
+      hateffect HAT_EF_Qscaraba,false;
+  - Id: 29723
+    AegisName: Star_Effect_J
+    Name: Star
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_ManyStars,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ManyStars,false;
   - Id: 29724
     AegisName: Murderous_Grudge
     Name: Muederous Grudge
@@ -48969,7 +49068,7 @@ Body:
     Script: |
       bonus bMaxSPrate,15;
       bonus bDelayrate,-15;
-      autobonus "{ sc_start SC_REFRESH; }",10,20000,BF_MAGIC;
+      autobonus "{ sc_start SC_REFRESH,20000,1; }",10,20000,BF_MAGIC;
   - Id: 300226
     AegisName: L_Skia_Card
     Name: Skia Nerius (Sign Stamp) Card
@@ -48983,7 +49082,7 @@ Body:
     Script: |
       bonus bMaxHPrate,15;
       bonus bVariableCastrate,-15;
-      autobonus "{ sc_start SC_REFRESH; }",10,20000,BF_WEAPON;
+      autobonus "{ sc_start SC_REFRESH,20000,1; }",10,20000,BF_WEAPON;
   - Id: 300227
     AegisName: EP18_Schulang_Card
     Name: Schulang Card
@@ -50613,7 +50712,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bNoKnockback;
-      autobonus "{ sc_start SC_CP_ARMOR; sc_start SC_CP_WEAPON; sc_start SC_CP_SHIELD; sc_start SC_CP_HELM; }",10,60000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ sc_start SC_CP_ARMOR,60000,1; sc_start SC_CP_WEAPON,60000,1; sc_start SC_CP_SHIELD,60000,1; sc_start SC_CP_HELM,60000,1; }",50,60000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_CHEMICALPROTECTION; }";
   - Id: 300358
     AegisName: L_Issac_Card
     Name: Isaac Wigner (Sign Stamp) Card
@@ -51429,6 +51528,56 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
       bonus bLongAtkRate,5+4*(getrefine()/2);
+  - Id: 300427
+    AegisName: aegis_300427
+    Name: Hammer of God Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 300428
+    AegisName: aegis_300428
+    Name: Hammer of God Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 300429
+    AegisName: aegis_300429
+    Name: Hammer of God Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 300430
+    AegisName: aegis_300430
+    Name: Hammer of God Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 300431
+    AegisName: aegis_300431
+    Name: Hammer of God Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 300432
+    AegisName: aegis_300432
+    Name: Disarm Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 300433
+    AegisName: aegis_300433
+    Name: Disarm Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 300434
+    AegisName: aegis_300434
+    Name: Disarm Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 300435
+    AegisName: aegis_300435
+    Name: Disarm Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 300436
+    AegisName: aegis_300436
+    Name: Disarm Lv.5
+    Type: Card
+    SubType: Enchant
   - Id: 300441
     AegisName: Burning_Knight_Card
     Name: Burning Night Card
@@ -51601,7 +51750,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubSkill,"NPC_RAYOFGENESIS",50;
-      autobonus "{ sc_start SC_ASSUMPTIO; }",50,30000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ sc_start SC_ASSUMPTIO,30000,1; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_ASSUMPTIO; }";
   - Id: 300452
     AegisName: aegis_300452
     Name: Friedrich Stolz Heine (Sign Stamp) Card
@@ -51628,7 +51777,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bRegenPercentSP,1,1000;
-      autobonus "{ sc_start SC_ENERGYCOAT; }",50,30000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ sc_start SC_ENERGYCOAT,30000,1; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_ENERGYCOAT; }";
   - Id: 300454
     AegisName: Ice_C_Orb_Hp
     Name: Glacier Flower Meow Power (Vital)
@@ -54935,6 +55084,706 @@ Body:
     SubType: Enchant
     Script: |
       bonus bIntravision;
+  - Id: 310338
+    AegisName: aegis_310338
+    Name: Bowling Bash Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310339
+    AegisName: aegis_310339
+    Name: Bowling Bash Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310340
+    AegisName: aegis_310340
+    Name: Bowling Bash Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310341
+    AegisName: aegis_310341
+    Name: Bowling Bash Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310342
+    AegisName: aegis_310342
+    Name: Bowling Bash Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310343
+    AegisName: aegis_310343
+    Name: Brandish Spear Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310344
+    AegisName: aegis_310344
+    Name: Brandish Spear Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310345
+    AegisName: aegis_310345
+    Name: Brandish Spear Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310346
+    AegisName: aegis_310346
+    Name: Brandish Spear Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310347
+    AegisName: aegis_310347
+    Name: Brandish Spear Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310348
+    AegisName: aegis_310348
+    Name: Holy Cross Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310349
+    AegisName: aegis_310349
+    Name: Holy Cross Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310350
+    AegisName: aegis_310350
+    Name: Holy Cross Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310351
+    AegisName: aegis_310351
+    Name: Holy Cross Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310352
+    AegisName: aegis_310352
+    Name: Holy Cross Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310353
+    AegisName: aegis_310353
+    Name: Grand Cross Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310354
+    AegisName: aegis_310354
+    Name: Grand Cross Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310355
+    AegisName: aegis_310355
+    Name: Grand Cross Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310356
+    AegisName: aegis_310356
+    Name: Grand Cross Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310357
+    AegisName: aegis_310357
+    Name: Grand Cross Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310358
+    AegisName: aegis_310358
+    Name: Meteor Storm Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310359
+    AegisName: aegis_310359
+    Name: Meteor Storm Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310360
+    AegisName: aegis_310360
+    Name: Meteor Storm Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310361
+    AegisName: aegis_310361
+    Name: Meteor Storm Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310362
+    AegisName: aegis_310362
+    Name: Meteor Storm Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310363
+    AegisName: aegis_310363
+    Name: Lord of Vermilion Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310364
+    AegisName: aegis_310364
+    Name: Lord of Vermilion Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310365
+    AegisName: aegis_310365
+    Name: Lord of Vermilion Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310366
+    AegisName: aegis_310366
+    Name: Lord of Vermilion Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310367
+    AegisName: aegis_310367
+    Name: Lord of Vermilion Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310368
+    AegisName: aegis_310368
+    Name: Heaven's Drive Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310369
+    AegisName: aegis_310369
+    Name: Heaven's Drive Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310370
+    AegisName: aegis_310370
+    Name: Heaven's Drive Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310371
+    AegisName: aegis_310371
+    Name: Heaven's Drive Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310372
+    AegisName: aegis_310372
+    Name: Heaven's Drive Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310373
+    AegisName: aegis_310373
+    Name: Fire/Cold/Lightning Bolt Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310374
+    AegisName: aegis_310374
+    Name: Fire/Cold/Lightning Bolt Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310375
+    AegisName: aegis_310375
+    Name: Fire/Cold/Lightning Bolt Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310376
+    AegisName: aegis_310376
+    Name: Fire/Cold/Lightning Bolt Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310377
+    AegisName: aegis_310377
+    Name: Fire/Cold/Lightning Bolt Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310378
+    AegisName: aegis_310378
+    Name: Cart Termination Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310379
+    AegisName: aegis_310379
+    Name: Cart Termination Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310380
+    AegisName: aegis_310380
+    Name: Cart Termination Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310381
+    AegisName: aegis_310381
+    Name: Cart Termination Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310382
+    AegisName: aegis_310382
+    Name: Cart Termination Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310383
+    AegisName: aegis_310383
+    Name: Critical Damage Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310384
+    AegisName: aegis_310384
+    Name: Critical Damage Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310385
+    AegisName: aegis_310385
+    Name: Critical Damage Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310386
+    AegisName: aegis_310386
+    Name: Critical Damage Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310387
+    AegisName: aegis_310387
+    Name: Critical Damage Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310388
+    AegisName: aegis_310388
+    Name: Acid Terror Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310389
+    AegisName: aegis_310389
+    Name: Acid Terror Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310390
+    AegisName: aegis_310390
+    Name: Acid Terror Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310391
+    AegisName: aegis_310391
+    Name: Acid Terror Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310392
+    AegisName: aegis_310392
+    Name: Acid Terror Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310393
+    AegisName: aegis_310393
+    Name: Acid Demonstration Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310394
+    AegisName: aegis_310394
+    Name: Acid Demonstration Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310395
+    AegisName: aegis_310395
+    Name: Acid Demonstration Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310396
+    AegisName: aegis_310396
+    Name: Acid Demonstration Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310397
+    AegisName: aegis_310397
+    Name: Acid Demonstration Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310398
+    AegisName: aegis_310398
+    Name: Sonic Blow Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310399
+    AegisName: aegis_310399
+    Name: Sonic Blow Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310400
+    AegisName: aegis_310400
+    Name: Sonic Blow Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310401
+    AegisName: aegis_310401
+    Name: Sonic Blow Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310402
+    AegisName: aegis_310402
+    Name: Sonic Blow Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310403
+    AegisName: aegis_310403
+    Name: Meteor Assault Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310404
+    AegisName: aegis_310404
+    Name: Meteor Assault Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310405
+    AegisName: aegis_310405
+    Name: Meteor Assault Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310406
+    AegisName: aegis_310406
+    Name: Meteor Assault Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310407
+    AegisName: aegis_310407
+    Name: Meteor Assault Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310408
+    AegisName: aegis_310408
+    Name: Back Stap Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310409
+    AegisName: aegis_310409
+    Name: Back Stap Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310410
+    AegisName: aegis_310410
+    Name: Back Stap Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310411
+    AegisName: aegis_310411
+    Name: Back Stap Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310412
+    AegisName: aegis_310412
+    Name: Back Stap Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310413
+    AegisName: aegis_310413
+    Name: Raid Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310414
+    AegisName: aegis_310414
+    Name: Raid Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310415
+    AegisName: aegis_310415
+    Name: Raid Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310416
+    AegisName: aegis_310416
+    Name: Raid Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310417
+    AegisName: aegis_310417
+    Name: Raid Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310418
+    AegisName: aegis_310418
+    Name: Magnus Exorcismus Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310419
+    AegisName: aegis_310419
+    Name: Magnus Exorcismus Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310420
+    AegisName: aegis_310420
+    Name: Magnus Exorcismus Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310421
+    AegisName: aegis_310421
+    Name: Magnus Exorcismus Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310422
+    AegisName: aegis_310422
+    Name: Magnus Exorcismus Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310423
+    AegisName: aegis_310423
+    Name: All Size Physical Damage Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310424
+    AegisName: aegis_310424
+    Name: All Size Physical Damage Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310425
+    AegisName: aegis_310425
+    Name: All Size Physical Damage Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310426
+    AegisName: aegis_310426
+    Name: All Size Physical Damage Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310427
+    AegisName: aegis_310427
+    Name: All Size Physical Damage Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310428
+    AegisName: aegis_310428
+    Name: Raging Quadruple Blow Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310429
+    AegisName: aegis_310429
+    Name: Raging Quadruple Blow Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310430
+    AegisName: aegis_310430
+    Name: Raging Quadruple Blow Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310431
+    AegisName: aegis_310431
+    Name: Raging Quadruple Blow Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310432
+    AegisName: aegis_310432
+    Name: Raging Quadruple Blow Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310433
+    AegisName: aegis_310433
+    Name: Raging Thrust Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310434
+    AegisName: aegis_310434
+    Name: Raging Thrust Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310435
+    AegisName: aegis_310435
+    Name: Raging Thrust Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310436
+    AegisName: aegis_310436
+    Name: Raging Thrust Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310437
+    AegisName: aegis_310437
+    Name: Raging Thrust Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310438
+    AegisName: aegis_310438
+    Name: Blitz Beat Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310439
+    AegisName: aegis_310439
+    Name: Blitz Beat Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310440
+    AegisName: aegis_310440
+    Name: Blitz Beat Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310441
+    AegisName: aegis_310441
+    Name: Blitz Beat Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310442
+    AegisName: aegis_310442
+    Name: Blitz Beat Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310443
+    AegisName: aegis_310443
+    Name: Double Strafing Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310444
+    AegisName: aegis_310444
+    Name: Double Strafing Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310445
+    AegisName: aegis_310445
+    Name: Double Strafing Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310446
+    AegisName: aegis_310446
+    Name: Double Strafing Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310447
+    AegisName: aegis_310447
+    Name: Double Strafing Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310448
+    AegisName: aegis_310448
+    Name: Musical Strike/Throw Arrow Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310449
+    AegisName: aegis_310449
+    Name: Musical Strike/Throw Arrow Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310450
+    AegisName: aegis_310450
+    Name: Musical Strike/Throw Arrow Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310451
+    AegisName: aegis_310451
+    Name: Musical Strike/Throw Arrow Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310452
+    AegisName: aegis_310452
+    Name: Musical Strike/Throw Arrow Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310453
+    AegisName: aegis_310453
+    Name: Arrow Vulcan Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310454
+    AegisName: aegis_310454
+    Name: Arrow Vulcan Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310455
+    AegisName: aegis_310455
+    Name: Arrow Vulcan Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310456
+    AegisName: aegis_310456
+    Name: Arrow Vulcan Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310457
+    AegisName: aegis_310457
+    Name: Arrow Vulcan Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310458
+    AegisName: aegis_310458
+    Name: Cross Slash Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310459
+    AegisName: aegis_310459
+    Name: Cross Slash Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310460
+    AegisName: aegis_310460
+    Name: Cross Slash Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310461
+    AegisName: aegis_310461
+    Name: Cross Slash Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310462
+    AegisName: aegis_310462
+    Name: Cross Slash Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310463
+    AegisName: aegis_310463
+    Name: Throw Huuma Shuriken Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310464
+    AegisName: aegis_310464
+    Name: Throw Huuma Shuriken Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310465
+    AegisName: aegis_310465
+    Name: Throw Huuma Shuriken Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310466
+    AegisName: aegis_310466
+    Name: Throw Huuma Shuriken Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310467
+    AegisName: aegis_310467
+    Name: Throw Huuma Shuriken Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310468
+    AegisName: aegis_310468
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310469
+    AegisName: aegis_310469
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310470
+    AegisName: aegis_310470
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310471
+    AegisName: aegis_310471
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310472
+    AegisName: aegis_310472
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310473
+    AegisName: aegis_310473
+    Name: Water/Wind/Earth/Fire Magic Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310474
+    AegisName: aegis_310474
+    Name: Water/Wind/Earth/Fire Magic Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310475
+    AegisName: aegis_310475
+    Name: Water/Wind/Earth/Fire Magic Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310476
+    AegisName: aegis_310476
+    Name: Water/Wind/Earth/Fire Magic Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310477
+    AegisName: aegis_310477
+    Name: Water/Wind/Earth/Fire Magic Lv.5
+    Type: Card
+    SubType: Enchant
   - Id: 310478
     AegisName: Wolf_Orb_Str_1
     Name: Wolf Orb (Str) Level 1
@@ -68351,6 +69200,13 @@ Body:
     Name: Evil Spell
     Type: Card
     SubType: Enchant
+  - Id: 312023
+    AegisName: aegis_312023
+    Name: MaxSP+15%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,15;
   - Id: 312050
     AegisName: Ice_C_Orb_Str
     Name: Glacier Flower Meow Power (STR)
@@ -72121,6 +72977,40 @@ Body:
             }
          }
       }
+  - Id: 312445
+    AegisName: aegis_312445
+    Name: Autospell (Chain Lightning)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus3 bAutoSpell,"WL_CHAINLIGHTNING",5,100;
+  - Id: 312446
+    AegisName: aegis_312446
+    Name: Magic Ore
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNoGemStone;
+  - Id: 312447
+    AegisName: aegis_312447
+    Name: Good Vigor (Biolo)
+    Type: Card
+    SubType: Enchant
+  - Id: 312448
+    AegisName: aegis_312448
+    Name: Evil Vigor (Biolo)
+    Type: Card
+    SubType: Enchant
+  - Id: 312449
+    AegisName: aegis_312449
+    Name: Good Vigor (Dragon Knight)
+    Type: Card
+    SubType: Enchant
+  - Id: 312450
+    AegisName: aegis_312450
+    Name: Evil Vigor (Dragon Knight)
+    Type: Card
+    SubType: Enchant
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event

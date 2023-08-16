@@ -4154,6 +4154,26 @@ Body:
       Duration: 10000
     Script: |
       itemheal 0,180;
+  - Id: 11626
+    AegisName: Kings_Melon_5
+    Name: Recooked Melon Bread
+    Type: Healing
+    Buy: 20
+    Weight: 30
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemheal 325,80;
+      sc_end SC_BLIND;
+      sc_end SC_Hallucination;
+      sc_end SC_CONFUSION;
+      sc_end SC_SILENCE;
+      sc_end SC_POISON;
+      sc_end SC_CURSE;
+      sc_end SC_BLEEDING;
+      sc_end SC_DPOISON;
+      sc_end SC_FEAR;
+      sc_end SC_DECAGI;
   - Id: 11701
     AegisName: Girl_Bunch_Of_Flower
     Name: Girl's Bouquet
