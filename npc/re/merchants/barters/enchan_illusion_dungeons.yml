@@ -229,3 +229,186 @@ Body:
           - Index: 4
             Item: IllusionStone
             Amount: 100
+  - Name: barter_ill_twins
+    Items:
+      - Index: 0
+        Item: Sprint_Mail_IL
+        RequiredItems:
+          - Index: 0
+            Item: Sprint_Mail
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Fur
+            Amount: 125
+          - Index: 2
+            Item: IL_Twins_Hat
+            Amount: 55
+          - Index: 3
+            Item: IllusionStone
+            Amount: 100
+      - Index: 1
+        Item: Sprint_Shoes_IL
+        RequiredItems:
+          - Index: 0
+            Item: Sprint_Shoes
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Shovel
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Leg
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 100
+      - Index: 2
+        Item: Thorn_Staff_IL
+        RequiredItems:
+          - Index: 0
+            Item: Thorn_Staff
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Fang
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Shovel
+            Amount: 75
+          - Index: 3
+            Item: IllusionStone
+            Amount: 135
+      - Index: 3
+        Item: Dea_Staff_IL
+        RequiredItems:
+          - Index: 0
+            Item: Dea_Staff
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Crown
+            Amount: 15
+          - Index: 2
+            Item: IL_Twins_Leg
+            Amount: 125
+          - Index: 3
+            Item: IL_Twins_Shovel
+            Amount: 75
+          - Index: 4
+            Item: IllusionStone
+            Amount: 150
+      - Index: 4
+        Item: Gelerdria_IL
+        RequiredItems:
+          - Index: 0
+            Item: Gelerdria
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Hat
+            Amount: 55
+          - Index: 2
+            Item: IL_Twins_Feeler
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 150
+      - Index: 5
+        Item: Excalibur_IL
+        RequiredItems:
+          - Index: 0
+            Item: Excalibur
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Fang
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Acid
+            Amount: 75
+          - Index: 3
+            Item: IllusionStone
+            Amount: 135
+      - Index: 6
+        Item: Doom_Slayer_IL
+        RequiredItems:
+          - Index: 0
+            Item: Doom_Slayer
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Acid
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Leg
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 150
+      - Index: 7
+        Item: Ancient_Dagger_IL
+        RequiredItems:
+          - Index: 0
+            Item: Ancient_Dagger
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Fang
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Fur
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 135
+      - Index: 8
+        Item: Guard_IL
+        RequiredItems:
+          - Index: 0
+            Item: Guard
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Feeler
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Fur
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 100
+      - Index: 9
+        Item: Siver_Guard_IL
+        RequiredItems:
+          - Index: 0
+            Item: Siver_Guard
+            Refine: 9
+          - Index: 1
+            Item: IL_Twins_Jaw
+            Amount: 55
+          - Index: 2
+            Item: IL_Twins_Feeler
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 100
+      - Index: 10
+        Item: Sprint_Ring_IL
+        RequiredItems:
+          - Index: 0
+            Item: Sprint_Ring
+          - Index: 1
+            Item: IL_Twins_Acid
+            Amount: 75
+          - Index: 2
+            Item: IL_Twins_Feeler
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 120
+      - Index: 11
+        Item: Sprint_Glove_IL
+        RequiredItems:
+          - Index: 0
+            Item: Sprint_Glove
+          - Index: 1
+            Item: IL_Twins_Jaw
+            Amount: 55
+          - Index: 2
+            Item: IL_Twins_Fur
+            Amount: 125
+          - Index: 3
+            Item: IllusionStone
+            Amount: 120

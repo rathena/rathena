@@ -3535,6 +3535,15 @@ Body:
       BuyingStore: true
     Script: |
       itemheal 325,0;
+  - Id: 11562
+    AegisName: Pie_Fruit
+    Name: Pie Fruit
+    Type: Healing
+    Weight: 30
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemheal rand(65,90),rand(35,40);
   - Id: 11563
     AegisName: Hot_Tee
     Name: Hot Tea
@@ -4145,6 +4154,26 @@ Body:
       Duration: 10000
     Script: |
       itemheal 0,180;
+  - Id: 11626
+    AegisName: Kings_Melon_5
+    Name: Recooked Melon Bread
+    Type: Healing
+    Buy: 20
+    Weight: 30
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemheal 325,80;
+      sc_end SC_BLIND;
+      sc_end SC_Hallucination;
+      sc_end SC_CONFUSION;
+      sc_end SC_SILENCE;
+      sc_end SC_POISON;
+      sc_end SC_CURSE;
+      sc_end SC_BLEEDING;
+      sc_end SC_DPOISON;
+      sc_end SC_FEAR;
+      sc_end SC_DECAGI;
   - Id: 11701
     AegisName: Girl_Bunch_Of_Flower
     Name: Girl's Bouquet
@@ -4299,6 +4328,7 @@ Body:
     Name: Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4309,6 +4339,7 @@ Body:
     Name: Iron Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4319,6 +4350,7 @@ Body:
     Name: Steel Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4329,6 +4361,7 @@ Body:
     Name: Oridecon Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4339,6 +4372,7 @@ Body:
     Name: Fire Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4349,6 +4383,7 @@ Body:
     Name: Silver Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4359,6 +4394,7 @@ Body:
     Name: Wind Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4369,6 +4405,7 @@ Body:
     Name: Stone Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4379,6 +4416,7 @@ Body:
     Name: Crystal Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4389,6 +4427,7 @@ Body:
     Name: Shadow Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4399,6 +4438,7 @@ Body:
     Name: Immaterial Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -4409,6 +4449,7 @@ Body:
     Name: Rusty Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -6317,6 +6358,7 @@ Body:
     Name: Holy Arrow Quiver
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -6669,7 +6711,7 @@ Body:
   - Id: 12212
     AegisName: Giant_Fly_Wing
     Name: Giant Fly Wing
-    Type: DelayConsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Trade:
@@ -8312,11 +8354,12 @@ Body:
     Name: Special Alloy Trap Box
     Type: Usable
     Buy: 30000
+    Sell: 0
     Weight: 100
     Flags:
       BuyingStore: true
     Script: |
-      getitem 7940,100;
+      getitem 7940,500;
   - Id: 12342
     AegisName: Manuk's_Opportunity
     Name: Manuk's Opportunity
@@ -9457,7 +9500,7 @@ Body:
   - Id: 12438
     AegisName: F_Giant_Fly_Wing
     Name: F Giant Fly Wing
-    Type: DelayConsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Script: |
@@ -10005,7 +10048,7 @@ Body:
   - Id: 12494
     AegisName: E_Giant_Fly_Wing
     Name: E Giant Fly Wing
-    Type: DelayConsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Script: |
@@ -10918,6 +10961,7 @@ Body:
     Name: Arrow Of Elf Cntr
     Type: Usable
     Buy: 500
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -10928,6 +10972,7 @@ Body:
     Name: Hunting Arrow Cntr
     Type: Usable
     Buy: 500
+    Sell: 0
     Weight: 250
     Flags:
       BuyingStore: true
@@ -12128,6 +12173,7 @@ Body:
     Name: Siege Arrow Quiver S
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 100
     EquipLevelMin: 130
     Flags:
@@ -12139,6 +12185,7 @@ Body:
     Name: Siege Arrow Quiver A
     Type: Usable
     Buy: 2
+    Sell: 0
     Weight: 100
     EquipLevelMin: 95
     Flags:
@@ -46135,7 +46182,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12212,86400;
+      rentitem 23023,86400;
   - Id: 17315
     AegisName: Silvervine_Box10_
     Name: Lucky Silvervine Fruit Box(10)
@@ -47017,7 +47064,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12212,432000;
+      rentitem 12887,432000;
   - Id: 17475
     AegisName: LC_Max_Weight_Up_10Box
     Name: (Limited)Gym Membership Card Box(10)
@@ -53622,21 +53669,20 @@ Body:
       getitem 23042,30;
   - Id: 23044
     AegisName: Elvira_Candy
-    Name: Elvira Candy    # !todo check english name
+    Name: Elvira Candy
     Type: Usable
     Weight: 10
     Delay:
-      Duration: 10000
+      Duration: 60000
     Flags:
       BuyingStore: true
     Script: |
       specialeffect2 EF_HEAL3;
-      sc_end SC_SILENCE;
-      sc_end SC_BLEEDING;
-      sc_end SC_POISON;
-      sc_end SC_CURSE;
-      sc_end SC_ORCISH;
-      sc_end SC_CHANGEUNDEAD;
+      sc_end SC_CURSEDCIRCLE;
+      sc_end SC_SLOWCAST;
+      sc_end SC_CRITICALWOUND;
+      sc_end SC_CRYSTALIZE;
+      /*Todo Howling Effect And Sit Effect From Skill*/
   - Id: 23045
     AegisName: Mont_Blanc_Cake
     Name: Mont Blanc
@@ -57584,6 +57630,7 @@ Body:
     Name: Trap Box
     Type: Usable
     Buy: 20
+    Sell: 0
     Weight: 250
     Script: |
       getitem "Booby_Trap",500;
@@ -60179,6 +60226,7 @@ Body:
     Name: Poison Arrow Quiver
     Type: Usable
     Buy: 20
+    Sell: 0
     Weight: 250
     Script: |
       getitem "Poison_Arrow",500;
@@ -66762,6 +66810,61 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 102332
+    AegisName: aegis_102332
+    Name: Costume Enchant Stone Box 31
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box31);
+  - Id: 102333
+    AegisName: aegis_102333
+    Name: 3rd/Expanded Stone III (Garment) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      /* TODO getgroupitem(IG_THIRD_JOB_STONE_GARMENT_BOX3); */
+  - Id: 102342
+    AegisName: Loki_Advice_3
+    Name: Loki's advice (distance physics)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102343
+    AegisName: Loki_Coin_3
+    Name: Loki's Black Coin    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102344
+    AegisName: Fan_Upgrade_Kit_EX
+    Name: Fan Modification Kit EX    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 102373
+    AegisName: Bar_D_A_Seal
+    Name: Deep Runic Armor Inscription    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102374
+    AegisName: Bar_D_A_Unseal
+    Name: Depth Rune Armor Unengraved    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)

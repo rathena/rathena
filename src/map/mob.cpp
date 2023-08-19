@@ -568,7 +568,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		struct map_data *mapdata = map_getmapdata(md->bl.m);
 		char output[128];
 		
-		if( mapdata->flag[MF_ALLOWKS] || mapdata_flag_ks(mapdata) )
+		if( mapdata->getMapFlag(MF_ALLOWKS) || mapdata_flag_ks(mapdata) )
 			return false; // Ignores GVG, PVP and AllowKS map flags
 
 		if( md->get_bosstype() == BOSSTYPE_MVP || md->master_id )
@@ -684,7 +684,7 @@ int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* 
 		if (mob_id == MOBID_EMPERIUM)
 		{
 			std::shared_ptr<guild_castle> gc = castle_db.mapindex2gc(map_getmapdata(m)->index);
-			struct guild* g = (gc) ? guild_search(gc->guild_id) : nullptr;
+			auto g = (gc) ? guild_search(gc->guild_id) : nullptr;
 			if (gc)
 			{
 				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
@@ -694,8 +694,8 @@ int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* 
 				md->guardian_data->guild_id = gc->guild_id;
 				if (g)
 				{
-					md->guardian_data->emblem_id = g->emblem_id;
-					memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
+					md->guardian_data->emblem_id = g->guild.emblem_id;
+					memcpy(md->guardian_data->guild_name, g->guild.name, NAME_LENGTH);
 				}
 				else if (gc->guild_id) // Guild is not yet available, retry after the configured timespan.
 					add_timer(gettick() + battle_config.mob_respawn_time,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
@@ -774,7 +774,6 @@ static TIMER_FUNC(mob_spawn_guardian_sub){
 	//Needed because the guild_data may not be available at guardian spawn time.
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md;
-	struct guild* g;
 	int guardup_lv;
 
 	if (bl == nullptr) //It is possible mob was already removed from map when the castle has no owner. [Skotlex]
@@ -788,7 +787,7 @@ static TIMER_FUNC(mob_spawn_guardian_sub){
 
 	md = (struct mob_data*)bl;
 	nullpo_ret(md->guardian_data);
-	g = guild_search((int)data);
+	auto g = guild_search((int)data);
 
 	if (g == nullptr)
 	{	//Liberate castle, if the guild is not found this is an error! [Skotlex]
@@ -808,9 +807,9 @@ static TIMER_FUNC(mob_spawn_guardian_sub){
 		}
 		return 0;
 	}
-	guardup_lv = guild_checkskill(g,GD_GUARDUP);
-	md->guardian_data->emblem_id = g->emblem_id;
-	memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
+	guardup_lv = guild_checkskill(g->guild, GD_GUARDUP);
+	md->guardian_data->emblem_id = g->guild.emblem_id;
+	memcpy(md->guardian_data->guild_name, g->guild.name, NAME_LENGTH);
 	md->guardian_data->guardup_lv = guardup_lv;
 	if( guardup_lv )
 		status_calc_mob(md, SCO_NONE); //Give bonuses.
@@ -824,7 +823,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 {
 	struct mob_data *md=nullptr;
 	struct spawn_data data;
-	struct guild *g=nullptr;
+	std::shared_ptr<MapGuild> g = nullptr;
 	int16 m;
 	memset(&data, 0, sizeof(struct spawn_data)); //fixme
 	data.num = 1;
@@ -913,9 +912,9 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	}
 	if (g)
 	{
-		md->guardian_data->emblem_id = g->emblem_id;
-		memcpy (md->guardian_data->guild_name, g->name, NAME_LENGTH);
-		md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
+		md->guardian_data->emblem_id = g->guild.emblem_id;
+		memcpy (md->guardian_data->guild_name, g->guild.name, NAME_LENGTH);
+		md->guardian_data->guardup_lv = guild_checkskill(g->guild,GD_GUARDUP);
 	} else if (md->guardian_data->guild_id)
 		add_timer(gettick() + battle_config.mob_respawn_time,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
 	mob_spawn(md);
@@ -1570,6 +1569,12 @@ int mob_randomwalk(struct mob_data *md,t_tick tick)
 	int speed;
 
 	nullpo_ret(md);
+
+	// Initialize next_walktime
+	if (md->next_walktime == INVALID_TIMER) {
+		md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
+		return 1;
+	}
 
 	if(DIFF_TICK(md->next_walktime,tick)>0 ||
 	   status_has_mode(&md->status,MD_NORANDOMWALK) ||
@@ -3206,7 +3211,6 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 
 int mob_guardian_guildchange(struct mob_data *md)
 {
-	struct guild *g;
 	nullpo_ret(md);
 
 	if (!md->guardian_data)
@@ -3227,7 +3231,7 @@ int mob_guardian_guildchange(struct mob_data *md)
 		return 0;
 	}
 
-	g = guild_search(md->guardian_data->castle->guild_id);
+	auto g = guild_search(md->guardian_data->castle->guild_id);
 	if (g == NULL)
 	{	//Properly remove guardian info from Castle data.
 		ShowError("mob_guardian_guildchange: New Guild (id %d) does not exists!\n", md->guardian_data->guild_id);
@@ -3237,10 +3241,10 @@ int mob_guardian_guildchange(struct mob_data *md)
 		return 0;
 	}
 
-	md->guardian_data->guild_id = g->guild_id;
-	md->guardian_data->emblem_id = g->emblem_id;
-	md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
-	memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
+	md->guardian_data->guild_id = g->guild.guild_id;
+	md->guardian_data->emblem_id = g->guild.emblem_id;
+	md->guardian_data->guardup_lv = guild_checkskill(g->guild, GD_GUARDUP);
+	memcpy(md->guardian_data->guild_name, g->guild.name, NAME_LENGTH);
 
 	return 1;
 }
@@ -6171,9 +6175,9 @@ uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 	
 	if (this->nodeExists(node, "Ratio")) {
-		uint16 ratio;
+		uint32 ratio;
 
-		if (!this->asUInt16(node, "Ratio", ratio))
+		if (!this->asUInt32(node, "Ratio", ratio))
 			return 0;
 
 		data->drop_ratio = ratio;
@@ -6545,7 +6549,7 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<u
 	}
 
 	if( !exists ){
-		drops[drop->nameid] = drop;
+		drops[index] = drop;
 	}
 
 	return true;

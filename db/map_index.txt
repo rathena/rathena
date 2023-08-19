@@ -1230,6 +1230,7 @@ jor_safty2
 jor_sanct
 jor_twice
 jor_twig
+bl_depth1
 
 //======================================================================================
 // - Other/Extra maps -

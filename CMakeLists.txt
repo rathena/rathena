@@ -35,7 +35,7 @@ project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
-set(CMAKE_CXX_STANDARD 14) # C++14...
+set(CMAKE_CXX_STANDARD 17) # C++17...
 set(CMAKE_CXX_STANDARD_REQUIRED ON) #...is required...
 #set(CMAKE_CXX_EXTENSIONS OFF) #...without compiler extensions like gnu++11
 
@@ -306,6 +306,17 @@ option( ENABLE_EXTRA_DEBUG_CODE "enable extra debug code (default=OFF)" OFF )
 if( ENABLE_EXTRA_DEBUG_CODE )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDEBUG" )
 	message( STATUS "Enabled extra DEBUG code" )
+endif()
+
+
+#
+# Enable EPOLL (default=OFF)
+# Only for Linux
+#
+option( ENABLE_EXTRA_SOCKET_POLL "enable SOCKET_EPOLL (default=OFF)" OFF )
+if( ENABLE_EXTRA_SOCKET_POLL )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DSOCKET_EPOLL" )
+	message( STATUS "Enabled SOCKET_EPOLL" )
 endif()
 
 

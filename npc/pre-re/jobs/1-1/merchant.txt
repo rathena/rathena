@@ -994,7 +994,7 @@ prontera,248,42,0	script	Kafra Employee#mer	116,{
 			else if (job_merchant_q2 == 2)
 				mes "ordered had the serial number 2328137. I'm sure it's not this.";
 			else
-				mes "ordered had the serial number 2328137 or 2328137.";
+				mes "ordered had the serial number 2485741 or 2328137.";
 			next;
 			mes "[Kafra Employee]";
 			mes "I'm afraid there";

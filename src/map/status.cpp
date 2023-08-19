@@ -111,7 +111,7 @@ static unsigned int status_calc_maxap_pc(map_session_data* sd);
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->getMapFlag(MF_PVP) != 0, mapdata_flag_gvg2_no_te((m)), m->getMapFlag(MF_BATTLEGROUND) != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 const std::string RefineDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/refine.yml";
@@ -1922,13 +1922,18 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  */
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag) {
 	struct status_data *status;
-	status_change *sc = NULL, *tsc;
 	int hide_flag;
 
-	status = src ? status_get_status_data(src) : &dummy_status;
+	if (src) {
+		if (src->type != BL_PC && status_isdead(src))
+			return false;
+		status = status_get_status_data(src);
+	}else{
+		status = &dummy_status;
+	}
 
-	if (src && src->type != BL_PC && status_isdead(src))
-		return false;
+	status_change *sc = status_get_sc(src);
+	status_change *tsc = status_get_sc(target);
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
@@ -1945,12 +1950,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( skill_id ) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
-			if( flag && target ) {
-				// Gloria Avoids pretty much everything....
-				tsc = status_get_sc(target);
-				if(tsc && tsc->option&OPTION_HIDE)
-					return false;
-			}
+			if( flag && tsc && tsc->option&OPTION_HIDE)
+				return false; // Gloria Avoids pretty much everything....
 			break;
 #endif
 		case GN_WALLOFTHORN:
@@ -1971,9 +1972,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		default:
 			break;
 	}
-
-	if ( src )
-		sc = status_get_sc(src);
 
 	if( sc && sc->count ) {
 		if (sc->getSCE(SC_ALL_RIDING))
@@ -2093,10 +2091,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 	}
 
-	if (target == NULL || target == src) // No further checking needed.
+	if (target == nullptr || target == src) // No further checking needed.
 		return true;
-
-	tsc = status_get_sc(target);
 
 	if (tsc && tsc->count) {
 		/**
@@ -2605,7 +2601,12 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	//Critical
 	if( bl->type&battle_config.enable_critical ) {
 		stat = status->cri;
+#ifdef RENEWAL
+		stat += (level / 10); // (every 10 BaseLevel = +0.1 critical)
+		stat += 10 + (status->luk*3); // (every 1 luk = +0.3 critical)
+#else
 		stat += 10 + (status->luk*10/3); // (every 1 luk = +0.3 critical)
+#endif
 		status->cri = cap_value(stat, 1, SHRT_MAX);
 	} else
 		status->cri = 0;
@@ -7560,7 +7561,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 
 		if( mapdata_flag_gvg(mapdata) )
 			flee -= flee * battle_config.gvg_flee_penalty/100;
-		else if( mapdata->flag[MF_BATTLEGROUND] )
+		else if( mapdata->getMapFlag(MF_BATTLEGROUND) )
 			flee -= flee * battle_config.bg_flee_penalty/100;
 	}
 
@@ -9231,9 +9232,9 @@ int status_get_emblem_id(struct block_list *bl)
 			break;
 		case BL_NPC:
 			if (((TBL_NPC*)bl)->subtype == NPCTYPE_SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
-				struct guild *g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
+				auto g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
 				if (g)
-					return g->emblem_id;
+					return g->guild.emblem_id;
 			}
 			break;
 		case BL_ELEM:
@@ -10473,12 +10474,26 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 						target_class = MAPID_WIZARD;
 						break;
 					case SL_HIGH:
-						if( sd->status.base_level < 70 ){
+						if( sd->status.base_level >= 70 ){
 							return 0;
 						}
 
-						mask |= JOBL_UPPER;
-						target_class = MAPID_NOVICE_HIGH;
+						switch (sd->class_) {
+							case MAPID_SWORDMAN_HIGH:
+							case MAPID_MAGE_HIGH:
+							case MAPID_ARCHER_HIGH:
+							case MAPID_ACOLYTE_HIGH:
+							case MAPID_MERCHANT_HIGH:
+							case MAPID_THIEF_HIGH:
+								// Only these classes are allowed.
+								break;
+							default:
+								return 0;
+						}
+
+						// Set these to pass the check below.
+						mask = sd->class_;
+						target_class = sd->class_;
 						break;
 					default:
 						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
@@ -10743,7 +10758,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_POISONREACT:
 #ifdef RENEWAL
-			val2=(val1 - ((val1-1) % 1 - 1)) / 2;
+			val2= (val1 + 1) / 2;
 #else
 			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
 #endif
@@ -12673,11 +12688,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_RELIEVE_ON:
 			val2 = min(10*val1, 99); // % damage received reduced from 10 * skill lvl up to 99%
 			break;
-		case SC_VIGOR: {
-				uint8 hp_loss[10] = { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10 };
-
-				val2 = hp_loss[val1- 1];
-			}
+		case SC_VIGOR:
+			val2 = 100 - 10 * (val1 - 1); // HP consumption with each attack is reduced by skill lvl
+			val2 = max(val2, 0);
 			break;
 		case SC_POWERFUL_FAITH:
 			val2 = 5 + 5 * val1;// ATK Increase
@@ -12736,7 +12749,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 300;
 			break;
 		case SC_POTENT_VENOM:
-			val2 = 3 * val1;// Res Pierce Percentage
+			val2 = 2 * val1;// Res Pierce Percentage
 			break;
 		case SC_A_MACHINE:
 			val4 = tick / 1000;
@@ -15183,34 +15196,35 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 	//Clears buffs with specified flag and type
 	for (const auto &it : status_db) {
 		sc_type status = static_cast<sc_type>(it.first);
-		std::bitset<SCF_MAX> flag = it.second->flag;
-
+		const std::bitset<SCF_MAX>& flag = it.second->flag;
+		bool end = false;
 		if (!sc->getSCE(status))
 			continue;
 		// Skip status with SCF_NOCLEARBUFF, no matter what
 		if (flag[SCF_NOCLEARBUFF])
 			continue;
 		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA and has the SCF_REMOVEONLUXANIMA flag
-		if ((type & SCCB_LUXANIMA) && !flag[SCF_REMOVEONLUXANIMA])
-			continue;
+		if ((type & SCCB_LUXANIMA) && flag[SCF_REMOVEONLUXANIMA])
+			end = true;
 		// &SCCB_CHEM_PROTECT : Clears AM_CP_ARMOR/HELP/SHIELD/WEAPON
-		if ((type & SCCB_CHEM_PROTECT) && !flag[SCF_REMOVECHEMICALPROTECT])
-			continue;
+		else if ((type & SCCB_CHEM_PROTECT) && flag[SCF_REMOVECHEMICALPROTECT])
+			end = true;
 		// &SCCB_REFRESH : Cleared by RK_REFRESH and has the SCF_REMOVEONREFRESH flag
-		if ((type & SCCB_REFRESH) && !flag[SCF_REMOVEONREFRESH])
-			continue;
-		// &SCCB_DEBUFFS : Clears debuffs - skip if it is not a debuff
-		if (type & SCCB_DEBUFFS && !flag[SCF_DEBUFF] && !(type & SCCB_BUFFS))
-			continue;
+		else if ((type & SCCB_REFRESH) && flag[SCF_REMOVEONREFRESH])
+			end = true;
+		// &SCCB_DEBUFFS : Clears debuffs
+		else if ((type & SCCB_DEBUFFS) && flag[SCF_DEBUFF])
+			end = true;
 		// &SCCB_BUFFS : Clears buffs - skip if it is a debuff
-		if (type & SCCB_BUFFS && flag[SCF_DEBUFF] && !(type & SCCB_DEBUFFS))
-			continue;
+		else if ((type & SCCB_BUFFS) && !flag[SCF_DEBUFF])
+			end = true;
 		// &SCCB_HERMODE : Cleared by CG_HERMODE and has the SCF_REMOVEONHERMODE flag
-		if ((type & SCCB_HERMODE) && !flag[SCF_REMOVEONHERMODE])
-			continue;
+		else if ((type & SCCB_HERMODE) && flag[SCF_REMOVEONHERMODE])
+			end = true;
 		if (status == SC_SATURDAYNIGHTFEVER || status == SC_BERSERK) // Mark to not lose HP
 			sc->getSCE(status)->val2 = 0;
-		status_change_end(bl, status);
+		if(end)
+			status_change_end(bl, status);
 	}
 
 	//Removes bonus_script
@@ -15562,9 +15576,9 @@ void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc)
 	if (sc && sc->count) {
 		struct map_data *mapdata = map_getmapdata(bl->m);
 		bool mapIsVS = mapdata_flag_vs2(mapdata);
-		bool mapIsPVP = mapdata->flag[MF_PVP] != 0;
+		bool mapIsPVP = mapdata->getMapFlag(MF_PVP) != 0;
 		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
-		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
+		bool mapIsBG = mapdata->getMapFlag(MF_BATTLEGROUND) != 0;
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
 
 		for (const auto &it : status_db) {
