@@ -6225,7 +6225,7 @@ BUILDIN_FUNC(deletearray)
 	}
 
 	if (!src->vars->array_id_exists(id)) {
-		return SCRIPT_CMD_FAILURE;// not a variable
+		return SCRIPT_CMD_SUCCESS;// not registered yet, no need to delete.
 	}
 
 	end = script_array_highest_key(st, sd, name, reference_getref(data));
