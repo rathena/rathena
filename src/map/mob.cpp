@@ -4363,25 +4363,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, const ryml::NodeRef& node,
 /**
  * Mob DB constructor
  */
-s_mob_db::s_mob_db() :
-	id(0),
-	sprite(""),
-	name(""),
-	jname(name),
-	base_exp(0),
-	job_exp(0),
-	mexp(0),
-	range2(0),
-	range3(0),
-	race2(),
-	lv(1),
-	dropitem(),
-	mvpitem(),
-	status(),
-	vd(),
-	option(0),
-	skill(),
-	damagetaken(100)
+s_mob_db::s_mob_db()
 {
 	status.max_hp = 1;
 	status.max_sp = 1;
