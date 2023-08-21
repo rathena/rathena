@@ -11180,7 +11180,7 @@ bool pc_setreg(map_session_data* sd, int64 reg, int64 val)
 /*==========================================
  * Read '@type$' variables (temporary string char reg)
  *------------------------------------------*/
-std::string pc_readregstr(map_session_data* sd, int64 reg)
+std::string& pc_readregstr(map_session_data* sd, int64 reg)
 {
 	return sd->regs.vars->getstr(reg);
 }
@@ -11232,7 +11232,7 @@ int64 pc_readregistry(map_session_data *sd, int64 reg)
  * - '#type$' (permanent str account reg)
  * - '##type$' (permanent str account reg2)
  **/
-std::string pc_readregistry_str(map_session_data *sd, int64 reg)
+std::string& pc_readregistry_str(map_session_data *sd, int64 reg)
 {
 	struct script_reg_str *p = NULL;
 
@@ -11241,7 +11241,7 @@ std::string pc_readregistry_str(map_session_data *sd, int64 reg)
 		//This really shouldn't happen, so it's possible the data was lost somewhere, we should request it again.
 		//intif->request_registry(sd,type==3?4:type);
 		set_eof(sd->fd);
-		return "";
+		return empty_string;
 	}
 
 	return pc_readregstr(sd, reg);

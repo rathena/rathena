@@ -49,7 +49,7 @@ int64 mapreg_readreg(int64 uid)
  * @param uid: variable's unique identifier
  * @return: variable's string value
  */
-std::string mapreg_readregstr(int64 uid)
+std::string& mapreg_readregstr(int64 uid)
 {
 	return regs.vars->getstr(uid);
 }

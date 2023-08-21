@@ -16,7 +16,7 @@ void mapreg_init(void);
 bool mapreg_config_read(const char* w1, const char* w2);
 
 int64 mapreg_readreg(int64 uid);
-std::string mapreg_readregstr(int64 uid);
+std::string& mapreg_readregstr(int64 uid);
 bool mapreg_setreg(int64 uid, int64 val);
 bool mapreg_setregstr(int64 uid, std::string str);
 

@@ -2356,4 +2356,5 @@ unsigned int script_array_highest_key(struct script_state *st, map_session_data 
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
+extern std::string empty_string;
 #endif /* SCRIPT_HPP */

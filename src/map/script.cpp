@@ -82,7 +82,7 @@ std::shared_ptr<reg_db::regs> reg_db::create() {
 	return std::move(std::make_shared<regs>());
 }
 
-std::string empty_string;
+std::string empty_string = "";
 
 int64 reg_db::GetUID(int id, int index) {
 	return (int64)id | ((int64)index << 32);
