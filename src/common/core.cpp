@@ -475,8 +475,10 @@ void Core::signal_crash(){
 		this->handle_crash();
 	}
 
+#ifdef WIN32
 	// Now stop the process
 	exit( EXIT_FAILURE );
+#endif
 }
 
 void Core::signal_shutdown(){
