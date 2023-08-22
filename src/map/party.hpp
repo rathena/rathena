@@ -53,8 +53,6 @@ struct s_party_booking_requirement{
 	uint16 maximum_level;
 };
 
-extern int party_create_byscript;
-
 void do_init_party(void);
 void do_final_party(void);
 struct party_data* party_search(int party_id);
