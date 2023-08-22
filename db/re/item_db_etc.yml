@@ -61003,13 +61003,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"DK_STORMSLASH",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"DK_STORMSLASH",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"DK_STORMSLASH",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"DK_STORMSLASH",6;
             }
           }
@@ -61023,13 +61023,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"DK_HACKANDSLASHER",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"DK_HACKANDSLASHER",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
             }
           }
@@ -61043,13 +61043,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"MT_AXE_STOMP",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"MT_AXE_STOMP",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"MT_AXE_STOMP",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"MT_AXE_STOMP",6;
             }
           }
@@ -61064,13 +61064,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NC_AXETORNADO",5;
       bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NC_AXETORNADO",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NC_AXETORNADO",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NC_AXETORNADO",10;
             }
           }
@@ -61085,15 +61085,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",3;
         bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",4;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6;
               bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",6;
             }
@@ -61108,13 +61108,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"GN_CART_TORNADO",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"GN_CART_TORNADO",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"GN_CART_TORNADO",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"GN_CART_TORNADO",10;
             }
           }
@@ -61128,13 +61128,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SHC_IMPACT_CRATER",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SHC_IMPACT_CRATER",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SHC_IMPACT_CRATER",6;
             }
           }
@@ -61148,13 +61148,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",10;
             }
           }
@@ -61169,15 +61169,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",5;
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",3;
         bonus2 bSkillAtk,"AG_FROZEN_SLASH",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",4;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",6;
               bonus2 bSkillAtk,"AG_FROZEN_SLASH",6;
             }
@@ -61192,13 +61192,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",10;
             }
           }
@@ -61212,13 +61212,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",6;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",6;
             }
           }
@@ -61232,13 +61232,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
             }
           }
@@ -61253,15 +61253,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"EM_CONFLAGRATION",5;
       bonus2 bSkillAtk,"EM_LIGHTNING_LAND",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"EM_CONFLAGRATION",6;
         bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"EM_CONFLAGRATION",4;
             bonus2 bSkillAtk,"EM_LIGHTNING_LAND",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"EM_CONFLAGRATION",6;
               bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6;
             }
@@ -61277,13 +61277,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",5;
       bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1500;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
             }
           }
@@ -61297,13 +61297,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"WH_GALESTORM",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"WH_GALESTORM",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"WH_GALESTORM",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"WH_GALESTORM",6;
             }
           }
@@ -61318,13 +61318,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"RA_ARROWSTORM",5;
       bonus2 bSkillCooldown,"RA_ARROWSTORM",-1200;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"RA_ARROWSTORM",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"RA_ARROWSTORM",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"RA_ARROWSTORM",10;
             }
           }
@@ -61339,15 +61339,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"IQ_SECOND_FAITH",5;
       bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"IQ_SECOND_FAITH",3;
         bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"IQ_SECOND_FAITH",4;
             bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"IQ_SECOND_FAITH",6;
               bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",6;
             }
@@ -61363,15 +61363,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"IQ_THIRD_PUNISH",10;
       bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"IQ_THIRD_PUNISH",7;
         bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"IQ_THIRD_PUNISH",8;
             bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"IQ_THIRD_PUNISH",10;
               bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",10;
             }
@@ -61386,13 +61386,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",4;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",5;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",7;
             }
           }
@@ -61406,13 +61406,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"PA_SHIELDCHAIN",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"PA_SHIELDCHAIN",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
             }
           }
@@ -61426,15 +61426,15 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"CD_FRAMEN",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"CD_FRAMEN",3;
         bonus bHealPower,6;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"CD_FRAMEN",4;
             bonus bHealPower,6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"CD_FRAMEN",6;
               bonus bHealPower,6;
             }
@@ -61449,15 +61449,15 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",7;
         bonus bHealPower,6;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",8;
             bonus bHealPower,6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
               bonus bHealPower,6;
             }
@@ -61472,13 +61472,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SKE_NOON_BLAST",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SKE_NOON_BLAST",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SKE_NOON_BLAST",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SKE_NOON_BLAST",6;
             }
           }
@@ -61492,13 +61492,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SKE_RISING_SUN",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SKE_RISING_SUN",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SKE_RISING_SUN",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SKE_RISING_SUN",10;
             }
           }
@@ -61512,13 +61512,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",6;
             }
           }
@@ -61532,13 +61532,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",10;
             }
           }
@@ -61552,13 +61552,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",6;
             }
           }
@@ -61572,13 +61572,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",6;
             }
           }
@@ -61592,13 +61592,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",6;
             }
           }
@@ -61613,15 +61613,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",5;
       bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",3;
         bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",4;
             bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",6;
               bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",6;
             }
@@ -61636,13 +61636,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SS_KAGENOMAI",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SS_KAGENOMAI",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,6;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SS_KAGENOMAI",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SS_KAGENOMAI",5;
             }
           }
@@ -61656,13 +61656,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SS_ANTENPOU",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SS_ANTENPOU",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,6;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SS_ANTENPOU",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SS_ANTENPOU",5;
             }
           }
@@ -61677,15 +61677,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",5;
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",3;
         bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",4;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",6;
               bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",6;
             }
@@ -61701,13 +61701,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5;
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
             }
           }
@@ -61722,15 +61722,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",7;
       bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",7;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",5;
         bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",5;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",6;
             bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",7;
               bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",7;
             }
@@ -61746,15 +61746,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",7;
       bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",5;
         bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",6;
             bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",7;
               bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7;
             }
@@ -66070,9 +66070,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bPow,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,1;
         }
       }
@@ -66083,9 +66083,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bPow,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,2;
         }
       }
@@ -66096,9 +66096,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bPow,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,3;
         }
       }
@@ -66109,9 +66109,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bCon,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,1;
         }
       }
@@ -66122,9 +66122,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bCon,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,2;
         }
       }
@@ -66135,9 +66135,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bCon,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,3;
         }
       }
@@ -66148,9 +66148,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSpl,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bSMatk,1;
         }
       }
@@ -66161,9 +66161,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSpl,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bSMatk,2;
         }
       }
@@ -66174,9 +66174,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSpl,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bSMatk,3;
         }
       }
@@ -66187,9 +66187,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSta,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,1;
         }
       }
@@ -66200,9 +66200,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSta,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,2;
         }
       }
@@ -66213,9 +66213,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSta,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,3;
         }
       }
@@ -66228,13 +66228,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",6;
             }
           }
@@ -66248,13 +66248,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",6;
             }
           }
@@ -66268,13 +66268,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_WILD_FIRE",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_WILD_FIRE",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_WILD_FIRE",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_WILD_FIRE",6;
             }
           }
@@ -66288,13 +66288,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SS_FUUMASHOUAKU",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SS_FUUMASHOUAKU",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SS_FUUMASHOUAKU",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SS_FUUMASHOUAKU",6;
             }
           }
