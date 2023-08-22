@@ -9757,8 +9757,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_RANDOMMOVE:
 		if (md) {
 			md->next_walktime = tick - 1;
-			if (md->special_state.ai == AI_SPHERE)
+			if (md->special_state.ai == AI_SPHERE){
+				md->ud.walk_count = WALK_SKILL_INTERVAL - 1;
 				unit_escape(&md->bl, bl, 7, 2);
+			}
 			else
 				mob_randomwalk(md,tick);
 		}
