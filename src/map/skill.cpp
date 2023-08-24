@@ -5984,6 +5984,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						clif_blown(src);
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation
 					break;
+				}
 				case AG_CRYSTAL_IMPACT_ATK:
 					if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 5)
 						splash_size = 2;// Gives the aftershock hit a 5x5 splash AoE.
