@@ -1913,7 +1913,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 				skill_break_equip(src, bl, EQP_WEAPON, rate * 100, BCT_ENEMY);
 				break;
 		}
-		break;
+		} break;
 	case LG_RAYOFGENESIS:	// 50% chance to cause Blind on Undead and Demon monsters.
 		if ( battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON )
 			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
