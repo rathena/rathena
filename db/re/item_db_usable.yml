@@ -5720,8 +5720,8 @@ Body:
     Buy: 1
     Weight: 10
     Script: |
-      .@r = BaseLevel*100;
-      getexp2 .@r,.@r;
+      .@a = BaseLevel*100;
+      getexp2 .@a,.@a;
   - Id: 12135
     AegisName: Green_Ale
     Name: Green Ale
@@ -50789,24 +50789,24 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      .@r = rand(1,10);
-      if (.@r == 1)
+      .@rnd = rand(1,10);
+      if (.@rnd == 1)
          sc_start SC_PACKING_ENVELOPE1,30000,33; // +atk
-      else if (.@r == 2)
+      else if (.@rnd == 2)
          sc_start SC_PACKING_ENVELOPE2,30000,33; // +matk
-      else if (.@r == 3)
+      else if (.@rnd == 3)
          sc_start SC_PACKING_ENVELOPE3,30000,3; // +hp%
-      else if (.@r == 4)
+      else if (.@rnd == 4)
          sc_start SC_PACKING_ENVELOPE4,30000,3; // +sp%
-      else if (.@r == 5)
+      else if (.@rnd == 5)
          sc_start SC_PACKING_ENVELOPE5,30000,33; // +flee
-      else if (.@r == 6)
+      else if (.@rnd == 6)
          sc_start SC_PACKING_ENVELOPE6,30000,3; // +aspd
-      else if (.@r == 7)
+      else if (.@rnd == 7)
          sc_start SC_PACKING_ENVELOPE7,30000,33; // +def
-      else if (.@r == 8)
+      else if (.@rnd == 8)
          sc_start SC_PACKING_ENVELOPE8,30000,33; // +mdef
-      else if (.@r == 9)
+      else if (.@rnd == 9)
          sc_start SC_PACKING_ENVELOPE9,30000,33; // +crit
       else
          sc_start SC_PACKING_ENVELOPE10,30000,33; // +hit
@@ -51209,12 +51209,12 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      .@r = rand(1,3);
-      if (.@r == 1) {
+      .@rnd = rand(1,3);
+      if (.@rnd == 1) {
          specialeffect2 EF_DEVIL;
          warp "niflheim",193,186;
       }
-      else if (.@r == 2) {
+      else if (.@rnd == 2) {
          heal -500,-1000;
          sc_start SC_STUN,3000,0;
       }
@@ -56347,10 +56347,10 @@ Body:
     Flags:
       Container: true
     Script: |
-      .@r = rand(1,3);
-      if (.@r == 1)
+      .@rnd = rand(1,3);
+      if (.@rnd == 1)
          getitem callfunc("F_Rand",14849,14850,14851,14852,14853,14854),10;
-      else if (.@r == 2)
+      else if (.@rnd == 2)
          getitem 14841,50;
       else
          getitem 14886,2;
