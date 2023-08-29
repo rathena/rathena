@@ -187,12 +187,22 @@ void party_created(uint32 account_id,uint32 char_id,int fail,int party_id,char *
 		if(sd->party_create_byscript) {	// returns party id in $@party_create_id if party is created by script
 			mapreg_setreg(add_str("$@party_create_id"),party_id);
 			sd->party_create_byscript_result = 1;
-			run_script_main(sd->st);
+
+			if (sd->st) {
+				run_script_main(sd->st);
+			} else {
+				sd->party_create_byscript = 0;
+			}
 		}
 	} else {
 		clif_party_created( *sd, 1 ); // "party name already exists"
 		sd->party_create_byscript_result = -3;
-		run_script_main(sd->st);
+
+		if (sd->st) {
+			run_script_main(sd->st);
+		} else {
+			sd->party_create_byscript = 0;
+		}
 	}
 }
 
