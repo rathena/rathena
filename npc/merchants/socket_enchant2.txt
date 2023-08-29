@@ -18,70 +18,70 @@
 -	script	Leablem#dummy::SocketEnchant2	-1,{
 	if (checkweight(1201,1) == 0)
 	{
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you lose some weight. -";
+		mes "- เดี๋ยวก่อน!! -";
+		mes "- ขณะนี้คุณกำลังพกพา -";
+		mes "- สิ่งของมากเกินไป -";
+		mes "- โปรดลองอีกครั้ง -";
+		mes "- หลังจากคุณลดน้ำหนักลงบ้างแล้ว -";
 		close;
 	}
 	mes "[Leablem]";
-	mes "Good day. My name is Leablem,";
-	mes "and I'm a technician that specializes in";
-	mes "adding slots to weapons and armors.";
-	mes "It can be very hard sometimes, but I like";
-	mes "what I do, and take pride in it.";
+	mes "สวัสดี. ชื่อของฉันคือ Leablem,";
+	mes "และฉันเป็นช่างเทคนิคที่เชี่ยวชาญ";
+	mes "ในการเพิ่ม slots ให้กับอาวุธและชุดเกราะ";
+	mes "บางครั้งอาจเป็นเรื่องยากมาก, แต่ฉันชอบ";
+	mes "สิ่งที่ฉันทำ, และภาคภูมิใจกับมัน";
 	next;
 	mes "[Leablem]";
-	mes "I've learned most of the things from my brother, Seyablem,";
-	mes "but I think I still have a lot to learn.";
-	mes "So please understand my slotting services are limited,";
-	mes "unlike my brother Seyablem.";
+	mes "ฉันได้เรียนรู้หลายสิ่งหลายอย่างจากพี่ชายของฉัน, Seyablem,";
+	mes "แต่ฉันคิดว่าฉันยังมีอะไรต้องเรียนรู้อีกมาก";
+	mes "ดังนั้น โปรดเข้าใจว่าบริการ slotting ของฉันมีจำกัด,";
+	mes "ไม่เหมือนพี่ชายของฉัน Seyablem.";
 	next;
 	mes "[Leablem]";
-	mes "My brother wasn't so happy to teach me";
-	mes "his skills because he was worried that his skills";
-	mes "wouldn't be unique anymore. He did, however, his best";
-	mes "to teach me.";
+	mes "พี่ชายของฉันไม่ค่อยมีความสุขที่จะสอนทักษะของเขาให้ฉัน";
+	mes "เพราะเขากังวลว่าทักษะของเขาจะไม่เป็นเอกลักษณ์อีกต่อไป";
+	mes "อย่างไรก็ตาม, เขาพยายาม, อย่างเต็มที่";
+	mes "ที่จะสอนฉัน";
 	next;
 	mes "[Leablem]";
-	mes "Thanks to him, I've learned lots of things.";
-	mes "I'm not very confident";
-	mes "in trying many different things,";
-	mes "but I'll do what";
-	mes "I can do for now.";
+	mes "ขอบคุณเขา, ฉันได้เรียนรู้หลายสิ่งหลายอย่าง";
+	mes "ฉันไม่ค่อยมั่นใจ";
+	mes "ในการพยายามทําสิ่งต่างๆมากมาย,";
+	mes "แต่ฉันจะทำสิ่งที่ฉัน";
+	mes "สามารถทำได้ในตอนนี้";
 	next;
 	mes "[Leablem]";
-	mes "In fact, there's one thing";
-	mes "that my brother doesn't want me to do.";
-	mes "I don't want to upset him, so...let's just skip that part.";
-	mes "I'll say no more about it!";
+	mes "อันที่จริง, มีสิ่งหนึ่ง";
+	mes "ที่พี่ชายของฉันไม่อยากให้ฉันทำ";
+	mes "ฉันไม่อยากทำให้เขาเสียใจ, ดังนั้น... ข้ามส่วนนั้นไปเถอะ";
+	mes "ฉันจะไม่พูดอะไรมากเกี่ยวกับเรื่องนี้!";
 	next;
 	mes "[Leablem]";
-	mes "Anyways, do you have any equipment";
-	mes "which you'd like to add to the slots?";
-	mes "My service charge, the materials,";
-	mes "and the success chance all depend on";
-	mes "the specific item I'm working on.";
+	mes "ยังไงก็ตาม, คุณมีอุปกรณ์อะไร";
+	mes "ที่คุณต้องการจะเพิ่ม slots หรือไม่?";
+	mes "ค่าบริการ, วัตถุดิบ,";
+	mes "และโอกาสที่จะประสบความสำเร็จ";
+	mes "ขึ้นอยู่กับรายการเฉพาะที่ฉันกำลังทำอยู่";
 	next;
-	switch(select("Weapon:Armor:About that thing you skipped:More information:Quit"))
+	switch(select("^2ECC71•^000000 อาวุธ:^2ECC71•^000000 ชุดเกราะ:^2ECC71•^000000 เกี่ยวกับสิ่งที่คุณข้ามไป:^2ECC71•^000000 ข้อมูลเพิ่มเติม:^FF0000x^000000 ยกเลิก"))
 	{
 		case 1:
 			mes "[Leablem]";
-			mes "Weapon, you said? Sure, no problem.";
-			mes "Weapons are divided into 4 different class";
-			mes "depending on the work difficulty.";
-			mes "C class is the easiest one, and S class is the hardest one.";
-			mes "Which class would you like to try?";
+			mes "อาวุธเหรอ? แน่นอน, ไม่มีปัญหา";
+			mes "อาวุธแบ่งออกเป็น 4 คลาสที่แตกต่างกัน";
+			mes "ขึ้นอยู่กับความยากง่ายในการทำงาน";
+			mes "C class เป็นคลาสที่ง่ายที่สุด, และ S class เป็นคลาสที่ยากที่สุด";
+			mes "คลาสไหนที่คุณอยากลอง?";
 			next;
-			switch(select("C:B:A:S"))
+			switch(select("^2ECC71•^000000 C:^2ECC71•^000000 B:^2ECC71•^000000 A:^2ECC71•^000000 S"))
 			{
 				case 1:
 					mes "[Leablem]";
-					mes "C class, I see.";
-					mes "So, what kind of weapon do you have?";
+					mes "C class, เข้าใจแล้ว";
+					mes "แล้ว, คุณมีอาวุธประเภทไหน?";
 					next;
-					switch(select("Book of Mother Earth:Book of Billows:Book of Gust of Wind:Book of the Blazing Sun"))
+					switch(select("^2ECC71•^000000 Book of Mother Earth:^2ECC71•^000000 Book of Billows:^2ECC71•^000000 Book of Gust of Wind:^2ECC71•^000000 Book of the Blazing Sun"))
 					{
 						case 1: callfunc "Func_Socket2",1554,1569,40,66,200,1010,10;
 						case 2: callfunc "Func_Socket2",1553,1568,40,66,200,1010,10;
@@ -90,10 +90,10 @@
 					}
 				case 2:
 					mes "[Leablem]";
-					mes "You have chosen average B class.";
-					mes "So, what kind of weapon do you have?";
+					mes "คุณได้เลือก B class ธรรมดา";
+					mes "แล้ว, คุณมีอาวุธประเภทไหน?";
 					next;
-					switch(select("Orcish Axe:Scimiter:Spike"))
+					switch(select("^2ECC71•^000000 Orcish Axe:S^2ECC71•^000000 cimiter:^2ECC71•^000000 Spike"))
 					{
 						case 1: callfunc "Func_Socket2",1304,1309,40,66,200,984,1;
 						case 2: callfunc "Func_Socket2",1113,1114,40,66,200,984,1;
@@ -101,10 +101,10 @@
 					}
 				case 3:
 					mes "[Leablem]";
-					mes "A class? You seem to want little too much. But, no problem.";
-					mes "So, what kind of weapon do you have?";
+					mes "A class? ดูเหมือนคุณจะต้องการมากเกินไปสักหน่อย แต่, ไม่มีปัญหา";
+					mes "แล้ว, คุณมีอาวุธประเภทไหน?";
 					next;
-					switch(select("Dragon Killer:Katar of Quaking:Katar of Raging Blaze:Katar of Frozen Icicle:Katar of Piercing Wind:Golden Mace:Oriental Lute:Queen's Whip:Spectral Spear:Gae Bolg:Schweizersabel"))
+					switch(select("^2ECC71•^000000 Dragon Killer:^2ECC71•^000000 Katar of Quaking:^2ECC71•^000000 Katar of Raging Blaze:^2ECC71•^000000 Katar of Frozen Icicle:^2ECC71•^000000 Katar of Piercing Wind:^2ECC71•^000000 Golden Mace:^2ECC71•^000000 Oriental Lute:Queen's Whip:^2ECC71•^000000 Spectral Spear:^2ECC71•^000000 Gae Bolg:^2ECC71•^000000 Schweizersabel"))
 					{
 						case 1:  callfunc "Func_Socket2",13001,13030,40,61,500,984,2;
 						case 2:  callfunc "Func_Socket2", 1257, 1276,40,66,500,984,2;
@@ -120,10 +120,10 @@
 					}
 				case 4:
 					mes "[Leablem]";
-					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
-					mes "So...which S class weapon would you like to make a slot?!";
+					mes "ฮ๊ะ, S Class?! โอ้พระเจ้า, คุณพูดจริงหรือเปล่า?*Tremble*";
+					mes "แล้ว... อาวุธ S class อะไรที่คุณอยากจะทำ slot?!";
 					next;
-					switch(select("Zephyrus:Mailbreaker:Dragon Slayer:Swordbreaker:Assasin Dagger:Grand Cross:Executioner"))
+					switch(select("^2ECC71•^000000 Zephyrus:^2ECC71•^000000 Mailbreaker:^2ECC71•^000000 Dragon Slayer:^2ECC71•^000000 Swordbreaker:^2ECC71•^000000 Assasin Dagger:^2ECC71•^000000 Grand Cross:^2ECC71•^000000 Executioner"))
 					{
 						case 1: callfunc "Func_Socket2",1468, 1481,40,51,1000,984,5,999,10;
 						case 2: callfunc "Func_Socket2",1225,13032,40,51,1000,984,5,999,10;
@@ -136,20 +136,20 @@
 			}
 		case 2:
 			mes "[Leablem]";
-			mes "Armor, you said? Sure, no problem.";
-			mes "Armors are divided into 4 different class";
-			mes "depending on the work difficulty.";
-			mes "C class is the easiest one, and S class is the hardest one.";
-			mes "Which class would you like to try?";
+			mes "เหรอ? แน่นอน, ไม่มีปัญหา";
+			mes "ชุดเกราะแบ่งออกเป็น 4 class ที่แตกต่างกัน";
+			mes "ขึ้นอยู่กับความยากง่ายในการทำงาน";
+			mes "C class เป็นคลาสที่ง่ายที่สุด, และ S class เป็นคลาสที่ยากที่สุด";
+			mes "คลาสไหนที่คุณอยากลอง?";
 			next;
-			switch(select("C:B:A:S"))
+			switch(select("^2ECC71•^000000 C:^2ECC71•^000000 B:^2ECC71•^000000 A:^2ECC71•^000000 S"))
 			{
 				case 1:
 					mes "[Leablem]";
-					mes "C class, I see.";
-					mes "So, what kind of armor do you have?";
+					mes "C class, เข้าใจแล้ว";
+					mes "แล้ว, คุณมีชุดเกราะประเภทไหน?";
 					next;
-					switch(select("Sunflower:Ph.D Hat:Big Ribbon:Boys Cap"))
+					switch(select("^2ECC71•^000000 Sunflower:^2ECC71•^000000 Ph.D Hat:^2ECC71•^000000 Big Ribbon:^2ECC71•^000000 Boys Cap"))
 					{
 						case 1: callfunc "Func_Socket2",2253,5351,40,66,100,999,3;
 						case 2: callfunc "Func_Socket2",5012,5347,40,66,100,999,3;
@@ -158,20 +158,20 @@
 					}
 				case 2:
 					mes "[Leablem]";
-					mes "You have chosen average B class.";
-					mes "So, what kind of armor do you have?";
+					mes "คุณได้เลือก B class ธรรมดา";
+					mes "แล้ว, คุณมีชุดเกราะประเภทไหน?";
 					next;
-					switch(select("Skull Ring:High Heels"))
+					switch(select("^2ECC71•^000000 Skull Ring:^2ECC71•^000000 High Heels"))
 					{
 						case 1: callfunc "Func_Socket2",2609,2715,40,61,300,999,5;
 						case 2: callfunc "Func_Socket2",2409,2432,40,61,300,999,5;
 					}
 				case 3:
 					mes "[Leablem]";
-					mes "A class? You seem to want little too much. But, no problem.";
-					mes "So, what kind of armor do you have?";
+					mes "A class? ดูเหมือนคุณจะต้องการมากเกินไปสักหน่อย แต่, ไม่มีปัญหา";
+					mes "แล้ว, คุณมีชุดเกราะประเภทไหน?";
 					next;
-					switch(select("Pirate Bandana:Black Leather Boots"))
+					switch(select("^2ECC71•^000000 Pirate Bandana:^2ECC71•^000000 Black Leather Boots"))
 					{
 						case 1: callfunc "Func_Socket2",2287,5350,50,61,500,985,1; // 50,61 - it's not a typo
 						case 2: callfunc "Func_Socket2",2425,2434,40,51,500,985,1;
@@ -179,10 +179,10 @@
 					}
 				case 4:
 					mes "[Leablem]";
-					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
-					mes "So...which S class armor would you like to make a slot?!";
+					mes "ฮ๊ะ, S Class?! โอ้พระเจ้า, คุณพูดจริงหรือเปล่า?*Tremble*";
+					mes "แล้ว... ชุดเกราะ S class อะไรที่คุณอยากจะทำ slot?!";
 					next;
-					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
+					switch(select("^2ECC71•^000000 Mage Coat:^2ECC71•^000000 Holy Robe:^2ECC71•^000000 Sacred Mission:^2ECC71•^000000 Undershirt:Pantie"))
 					{
 						case 1: callfunc "Func_Socket2",2334,2372,40,51,1000,985,1; // Mage Coat has 10% success chance
 						case 2: callfunc "Func_Socket2",2327,2373,45,51,1000,985,1; // the rest has 5%
