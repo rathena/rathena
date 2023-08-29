@@ -7,231 +7,231 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
-prt_in,136,34,3	script	Leader Joel#joel	1_M_ORIENT01,{
+prt_in,136,34,3	script	Commander Joel#joel	1_M_ORIENT01,{
 	if (BaseLevel < 100) {
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Hello, what business are you here for?";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "If you wish to join the Illusion Investigation Corps, you're lacking in skills yet.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Please visit again when you have reached a certain level.";
 		next;
 		mes "^4d4dff== You must be level 100 or higher to join. ==^000000";
 		close;
 	}
 	if (isbegin_quest(3470) == 0) {
-		mes "[Director Joel]";
-		mes "Hello, I'm Joel, the leader of the Illusion Investigation Corps.";
+		mes "[Commander Joel]";
+		mes "Hello, I'm Joel, the Commander of the Illusion Investigation Corps.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Have you ever heard of or experienced illusions?";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Until now, illusions have been discovered all over the world and are somewhat known to the public.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "It is also used as a hunting ground for many adventurers because it is easy to obtain rare materials.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Also, the monsters in Illusion are new monsters that have never been discovered before, and the monsters in Illusion are multiplying abnormally.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Despite many adventurers hunting the monsters that exist in Illusion to obtain materials, the reason for the very rapid recovery of the population has not been identified.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Our Illusion Investigation Team was organized to uncover the mystery of the Illusion, and first we decided to figure out the ecology of the monsters inside the Illusion.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "What we found was that all illusions are affected by dimensional rifts.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "I've been speculating that it might be related to the dimensional rift for a long time, but with the results of this investigation, it's clear.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "There are still many adventurers visiting Illusion with a purpose, so the monster population is fortunately maintained.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "If no one sets foot there, it's very dangerous because the monsters can go beyond saturation and invade other areas.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "For that reason, the number of individuals is still being investigated, and one investigator is currently assigned to each illusion.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "And we're recruiting members with the ability to control the number of monsters inside Illusion.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "And if you're an adventurer, you seem to be strong enough for that role...";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Would you like to join the Illusion Investigation Team and join us in investigating illusions?";
 		next;
 		if (select( "I'm joining", "I'll think about it" ) == 2) {
-			mes "[Director Joel]";
+			mes "[Commander Joel]";
 			mes "It's very meaningful.";
 			next;
-			mes "[Director Joel]";
+			mes "[Commander Joel]";
 			mes "Please think about it before you tell me.";
 			close;
 		}
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Okay, you're welcome!!";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "The procedure is simple, please fill out the pledge here...";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Here... please sign this.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes ".";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "..";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "...";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Yes, with this you have become a member of the Illusionary Survey Corps, welcome again!";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "If you have time during your adventure, I would like you to stop by the Illusions located in various places and help me with the investigation.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "A dispatched investigator will guide you.";
 		next;
-		mes "[Director Joel]";
+		mes "[Commander Joel]";
 		mes "Then I hope you have a nice day";
 		close2;
 		setquest 3470;
 		completequest 3470;
 		end;
 	}
-	mes "[Director Joel]";
+	mes "[Commander Joel]";
 	mes "I think the investigation will be much easier thanks to you, adventurer.";
 	next;
-	mes "[Director Joel]";
+	mes "[Commander Joel]";
 	mes "New illusions will appear again.";
 	next;
-	mes "[Director Joel]";
+	mes "[Commander Joel]";
 	mes "Every new discovery takes a lot of time for us to adapt to it";
 	next;
-	mes "[Director Joel]";
+	mes "[Commander Joel]";
 	mes "This investigation will at least help reduce that time.";
 	next;
-	mes "[Director Joel]";
+	mes "[Commander Joel]";
 	mes "Thank you and look forward to many more activities in the future.";
 	close;
 
 OnInit:
-	questinfo( QTYPE_EVENT, QMARK_YELLOW, "isbegin_quest(3470) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3470) == 0" );
 	end;
 }
 
-prt_in,136,29,3	script	Unit Zenhi#zenhi	4_F_KHELLY,{
-	mes "[Unit good]";
+prt_in,136,29,3	script	Member Zenhi#zenhi	4_F_KHELLY,{
+	mes "[Member Zenhi]";
 	mes "Hello~~!!";
 	next;
-	mes "[Unit good]";
+	mes "[Member Zenhi]";
 	mes "The Illusion Investigation Corps is getting bigger little by little.";
 	next;
-	mes "[Unit good]";
+	mes "[Member Zenhi]";
 	mes "The more members, the more things we can do, right?";
 	close;
 }
 
-prt_in,121,36,6	script	Unit Zenian#zenian	4_F_HUWOMAN,{
-	mes "[Unit Xenian]";
-	mes "Hello, I'm Xenian, a new member of the team.";
+prt_in,121,36,6	script	Member Zenian#zenian	4_F_HUWOMAN,{
+	mes "[Member Zenian]";
+	mes "Hello, I'm Zenian, a new member of the team.";
 	next;
-	mes "[Unit Xenian]";
+	mes "[Member Zenian]";
 	mes "I've been paying attention to the phenomenon of dimensional rifts for a long time. Clearly, despite many subjugations, monsters are constantly appearing.";
 	next;
-	mes "[Unit Xenian]";
+	mes "[Member Zenian]";
 	mes "It has been proven that this phenomenon also occurs in illusions, so I decided to join the Illusion Investigation Team.";
 	next;
-	mes "[Unit Xenian]";
+	mes "[Member Zenian]";
 	mes "Good luck in the future!!";
 	close;
 }
 
-prt_in,124,21,1	script	 Unit link#yeonsu	4_M_DEWWOMAN,{
-	mes "[Unit link]";
+prt_in,124,21,1	script	 Member link#yeonsu	4_M_DEWWOMAN,{
+	mes "[Member link]";
 	mes "Nice to meet you, this is the Welcome Survey Team.";
 	next;
-	mes "[Unit link]";
+	mes "[Member link]";
 	mes "Investigate the ecosystem of monsters in Illusion...";
 	next;
-	mes "[Unit link]";
+	mes "[Member link]";
 	mes "Also... I thought it might have something to do with the dimensional rift.";
 	next;
-	mes "[Unit link]";
+	mes "[Member link]";
 	mes "I hope that everyone who is working hard at this time will return safely without any incident.";
 	close;
 }
 
-pay_d03_i,149,34,5	script	Jiroker#ziroker	4_M_ORIENT02,{
+pay_d03_i,149,34,5	script	Girocker#ziroker	4_M_ORIENT02,{
 	if (BaseLevel < 100)
 		end;
 	if (isbegin_quest(3470) == 0) {
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Hello!!";
 		next;
-		mes "[Jiroker]";
-		mes "I am J-Jiroker from the Illusion Investigation Corps.";
+		mes "[Girocker]";
+		mes "I am J-Girocker from the Illusion Investigation Corps.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Ugh... to really come to a place like this... I wish adventurers would help me too...";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "You haven't joined the investigation team yet.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Would you like to investigate the monsters here with me? It will definitely be meaningful!!";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the investigator in Prontera, and come!!";
 		close;
 	}
 	if (isbegin_quest(3446) == 0) {
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Hello!!";
 		next;
-		mes "[Jiroker]";
-		mes "I am J-Jiroker from the Illusion Investigation Corps.";
+		mes "[Girocker]";
+		mes "I am J-Girocker from the Illusion Investigation Corps.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Ugh... To come to a place like this...";
 		next;
-		mes "[Jiroker]";
-		mes "I usually pretended to be brave, but I think I was conscious of Allysia, the member I have a crush on.";
+		mes "[Girocker]";
+		mes "I usually pretended to be brave, but I think I was conscious of Elysia, the member I have a crush on.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Actually, I'm the one who's more timid than anyone else... heck";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Anyway... I'm in charge of investigating this place.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Have you heard about the investigation from Captain Joel? Adventurer, you have to completely hunt 100 monsters by yourself.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Would you like to participate in the investigation of this place?";
 		next;
 		if (select( "Participate", "Do not participate" ) == 2) {
-			mes "[Jiroker]";
+			mes "[Girocker]";
 			mes "Then should I ask another adventurer...";
 			close;
 		}
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "I like it!!";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Just kill 100 monsters of any type here.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Then be careful!";
 		close2;
 		setquest 3446;
@@ -244,10 +244,10 @@ pay_d03_i,149,34,5	script	Jiroker#ziroker	4_M_ORIENT02,{
 		break;
 	case 0:
 	case 1:
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Ah, that's enough for today's investigation.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "It will be restored tomorrow, so if you can afford it, I would appreciate it if you could come and help me with the investigation!!";
 		close;
 	case 2:
@@ -256,44 +256,44 @@ pay_d03_i,149,34,5	script	Jiroker#ziroker	4_M_ORIENT02,{
 	}
 	switch( checkquest(3447,HUNTING) ) {
 	case -1:
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Hello, are you here today to help with the investigation?";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "The content is the same as last time.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "If you kill 100 monsters of any type, would you like to participate?";
 		next;
 		if (select( "Participate", "Do not participate" ) == 2) {
-			mes "[Jiroker]";
+			mes "[Girocker]";
 			mes "It would be nice if you could help me today...";
 			close;
 		}
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "I like it!!";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Just kill 100 monsters of any type here.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Then be careful!";
 		close2;
 		setquest 3447;
 		end;
 	case 0:
 	case 1:
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Kill 100 monsters of any type.";
 		close;
 	case 2:
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "You're back safely!";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Okay... Then hmm... I'll have to wait and see how much monsters spawn for a while.";
 		next;
-		mes "[Jiroker]";
+		mes "[Girocker]";
 		mes "Leave the rest to me!! Thanks!!";
 		close2;
 		erasequest 3447;
@@ -306,92 +306,92 @@ pay_d03_i,149,34,5	script	Jiroker#ziroker	4_M_ORIENT02,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 100 && isbegin_quest(3470) == 2 && isbegin_quest(3446) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3447,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3447,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3446) == 2 && checkquest(3448,PLAYTIME) == -1 && checkquest(3447,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3448,PLAYTIME) == 2" );
 	end;
 }
 
-ice_dun02,142,18,5	script	Allysia#elisia	4_F_OPERATION,{
+ice_dun02,142,18,5	script	Elysia#elisia	4_F_OPERATION,{
 	if (BaseLevel < 120) {
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Oh, must you have a hard time enduring the cold here?";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Come back when you're a little hotter.";
 		next;
 		mes "^4d4dff== This is a level 120 or higher quest. ==^000000";
 		close;
 	}
 	if (isbegin_quest(3470) == 0) {
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Hello~";
 		next;
-		mes "[Allysia]";
-		mes "I'm Allysia from the Illusion Investigation Team~";
+		mes "[Elysia]";
+		mes "I'm Elysia from the Illusion Investigation Team~";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "It's really cold here...";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "I'd like to ask the adventurer for help...";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "You haven't joined the investigation team yet.";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "If you don't mind, why don't you join the Illusionary Survey Corps? Then you can help me!!!";
 		next;
-		mes "[Allysia]";
-		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the investigator in Prontera, and come!!";
+		mes "[Elysia]";
+		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the Commander in Prontera, and come!!";
 		close;
 	}
 	if (isbegin_quest(3449) == 0) {
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Hello~";
 		next;
-		mes "[Allysia]";
-		mes "I'm Allysia from the Illusion Investigation Team~";
+		mes "[Elysia]";
+		mes "I'm Elysia from the Illusion Investigation Team~";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "It's really cold here...";
 		next;
-		mes "[Allysia]";
-		mes "I never thought I would be sent to such a dangerous place alone... I wanted to come with G-Locker...";
+		mes "[Elysia]";
+		mes "I never thought I would be sent to such a dangerous place alone... I wanted to come with Jirocker...";
 		next;
-		mes "[Allysia]";
-		mes "Well, even if there was a G-Locker, he's a coward, so I'd be in a position to protect him...";
+		mes "[Elysia]";
+		mes "Well, even if there was a Jirocker, he's a coward, so I'd be in a position to protect him...";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "You pretended to be brave... but I already noticed";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Is Jirocker doing his investigation safely in the abandoned village? I'm worried.";
 		next;
-		mes "[Allysia]";
-		mes "Hmm... Actually, now is not the time to worry about G-Locker, Adventurer. Can you help me?";
+		mes "[Elysia]";
+		mes "Hmm... Actually, now is not the time to worry about Jirocker, Adventurer. Can you help me?";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Did you hear that this is an investigation into how the monster population is maintained? Many adventurers come here to hunt, but it's a bit lacking.";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "It's easy to figure out the number of monsters when you deal with them hotly. How about you? Would you like to participate in the investigation of this place?";
 		next;
 		if (select( "Participate", "Do not participate" ) == 2) {
-			mes "[Allysia]";
+			mes "[Elysia]";
 			mes "Yeah, that's right...";
 			next;
-			mes "[Allysia]";
+			mes "[Elysia]";
 			mes "Then I'll be shivering a little longer...";
 			close;
 		}
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Oh yes!! Thanks!!";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "After entering, kill 100 monsters of any type.";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "I look forward to your hot hunting skills~~!!";
 		close2;
 		setquest 3449;
@@ -404,10 +404,10 @@ ice_dun02,142,18,5	script	Allysia#elisia	4_F_OPERATION,{
 		break;
 	case 0:
 	case 1:
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Ah, I think this should be enough for today!!";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "If you come after tomorrow, you'll have something else to do~";
 		close;
 	case 2:
@@ -416,44 +416,44 @@ ice_dun02,142,18,5	script	Allysia#elisia	4_F_OPERATION,{
 	}
 	switch( checkquest(3450,HUNTING) ) {
 	case -1:
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Ah, nice to meet you!! Are you here today to help with the investigation??";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Your help is the same as last time~";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "If you kill 100 monsters of any type, would you like to participate?";
 		next;
 		if (select( "Participate", "Do not participate" ) == 2) {
-			mes "[Allysia]";
+			mes "[Elysia]";
 			mes "Okay... I'll keep shivering in the cold...";
 			close;
 		}
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Thank you";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "After entering, kill 100 monsters of any type.";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Then be careful!";
 		close2;
 		setquest 3450;
 		end;
 	case 0:
 	case 1:
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Kill 100 monsters regardless of type.";
 		close;
 	case 2:
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Have you finished already? You've done it hotly as expected~";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Then I'll do the rest of the research for you~";
 		next;
-		mes "[Allysia]";
+		mes "[Elysia]";
 		mes "Thank you for your hard work. I hope we can meet again!!";
 		close2;
 		erasequest 3450;
@@ -466,7 +466,7 @@ ice_dun02,142,18,5	script	Allysia#elisia	4_F_OPERATION,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 120 && isbegin_quest(3470) == 2 && isbegin_quest(3449) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3450,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3450,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3449) == 2 && checkquest(3451,PLAYTIME) == -1 && checkquest(3450,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3451,PLAYTIME) == 2" );
 	end;
@@ -492,7 +492,7 @@ gef_d01_i,122,237,3	script	Radimir#ridimir	8_F,{
 		mes "Would you like to do something meaningful with me?";
 		next;
 		mes "[Radimir]";
-		mes "If you are interested, please meet <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the Investigator in Prontera, and join the Investigation Team and come back.";
+		mes "If you are interested, please meet <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the Commander in Prontera, and join the Investigation Team and come back.";
 		close;
 	}
 	if (isbegin_quest(3452) == 0) {
@@ -612,7 +612,7 @@ gef_d01_i,122,237,3	script	Radimir#ridimir	8_F,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 130 && isbegin_quest(3470) == 2 && isbegin_quest(3452) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3453,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3453,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3452) == 2 && checkquest(3454,PLAYTIME) == -1 && checkquest(3453,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3454,PLAYTIME) == 2" );
 	end;
@@ -639,7 +639,7 @@ ein_d02_i,161,180,5	script	Machoko#machoco	8_F_GIRL,{
 		mes "But it's impossible for me... I don't have enough strength... But you haven't joined the investigation team yet...";
 		next;
 		mes "[Machoko]";
-		mes "You can sign up by going to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the investigation leader in Prontera. Sign up and come here~";
+		mes "You can sign up by going to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the Commander in Prontera. Sign up and come here~";
 		close;
 	}
 	if (isbegin_quest(3455) == 0) {
@@ -762,7 +762,7 @@ ein_d02_i,161,180,5	script	Machoko#machoco	8_F_GIRL,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 150 && isbegin_quest(3470) == 2 && isbegin_quest(3455) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3456,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3456,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3455) == 2 && checkquest(3457,PLAYTIME) == -1 && checkquest(3456,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3457,PLAYTIME) == 2" );
 	end;
@@ -789,7 +789,7 @@ tur_d03_i,125,186,5	script	Orian#orian	4_M_LGTPOOR,{
 		mes "Uh, but you haven't joined the investigation team yet.";
 		next;
 		mes "[Orian]";
-		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the investigator in Prontera, and come!!";
+		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the Commander in Prontera, and come!!";
 		close;
 	}
 	if (isbegin_quest(3458) == 0) {
@@ -912,7 +912,7 @@ tur_d03_i,125,186,5	script	Orian#orian	4_M_LGTPOOR,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 150 && isbegin_quest(3470) == 2 && isbegin_quest(3458) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3459,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3459,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3458) == 2 && checkquest(3460,PLAYTIME) == -1 && checkquest(3459,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3460,PLAYTIME) == 2" );
 	end;
@@ -944,7 +944,7 @@ ant_d02_i,167,184,5	script	Sheshin#sesin	1_M_MOC_LORD,{
 		mes "Would you like to join the Illusionary Investigation Team? Wouldn't it be exciting to explore unknown phenomena?";
 		next;
 		mes "[Sheshin]";
-		mes "If you would like to sign up, please go see Director <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera.";
+		mes "If you would like to sign up, please go see Commander <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera.";
 		close;
 	}
 	if (isbegin_quest(3507) == 0) {
@@ -961,7 +961,7 @@ ant_d02_i,167,184,5	script	Sheshin#sesin	1_M_MOC_LORD,{
 		mes "I was guessing to some extent that the illusions appearing everywhere had something to do with the power of the dimensional rift.";
 		next;
 		mes "[Sheshin]";
-		mes "It has been officially announced by Director Joel that the Illusion is a phenomenon caused by a dimensional rift.";
+		mes "It has been officially announced by Commander Joel that the Illusion is a phenomenon caused by a dimensional rift.";
 		next;
 		mes "[Sheshin]";
 		mes "And soon a new illusion was discovered, yes... right here";
@@ -1076,7 +1076,7 @@ ant_d02_i,167,184,5	script	Sheshin#sesin	1_M_MOC_LORD,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && isbegin_quest(3470) == 2 && isbegin_quest(3507) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3508,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3508,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3507) == 2 && checkquest(3509,PLAYTIME) == -1 && checkquest(3508,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3509,PLAYTIME) == 2" );
 	end;
@@ -1105,7 +1105,7 @@ com_d02_i,253,232,3	script	Cassis#kesis	4_M_KHBOY,{
 		mes "Would you like to join the Illusionary Investigation Team too? Would you like to investigate strange phenomena?";
 		next;
 		mes "[Cassis]";
-		mes "If you don't mind, please apply for membership with the investigator <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera and come!";
+		mes "If you don't mind, please apply for membership with the Commander <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera and come!";
 		close;
 	}
 	if (isbegin_quest(3461) == 0) {
@@ -1222,7 +1222,7 @@ com_d02_i,253,232,3	script	Cassis#kesis	4_M_KHBOY,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 160 && isbegin_quest(3470) == 2 && isbegin_quest(3461) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3462,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3462,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3461) == 2 && checkquest(3463,PLAYTIME) == -1 && checkquest(3462,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3463,PLAYTIME) == 2" );
 	end;
@@ -1260,7 +1260,7 @@ prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
 		mes "Would you like to join me too, adventurer? Uh... but you're not yet a member of the Illusion Investigation Corps.";
 		next;
 		mes "[Terrian]";
-		mes "If you don't mind, please apply for membership with the investigator <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera.";
+		mes "If you don't mind, please apply for membership with the Commander <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI> in Prontera.";
 		close;
 	}
 	if (isbegin_quest(3467) == 0) {
@@ -1389,7 +1389,7 @@ prt_fild01,131,364,5	script	Terrian#terian	4W_M_02,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 170 && isbegin_quest(3470) == 2 && isbegin_quest(3464) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3465,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3465,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3464) == 2 && checkquest(3466,PLAYTIME) == -1 && checkquest(3465,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3466,PLAYTIME) == 2" );
 	end;
@@ -1436,7 +1436,7 @@ iz_d04_i,127,224,5	script	Lister#ristar	4_F_01,{
 		mes "Uh, but you haven't joined the investigation team yet.";
 		next;
 		mes "[Lister]";
-		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the investigator in Prontera, and come!!";
+		mes "Please apply for membership to <NAVI>[Joel]<INFO>prt_in,136,34,</INFO></NAVI>, the Commander in Prontera, and come!!";
 		close;
 	}
 	if (isbegin_quest(3467) == 0) {
@@ -1550,7 +1550,7 @@ iz_d04_i,127,224,5	script	Lister#ristar	4_F_01,{
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 180 && isbegin_quest(3470) == 2 && isbegin_quest(3467) == 0" );
 
-	questinfo( QTYPE_EVENT2, QMARK_YELLOW, "checkquest(3468,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3468,HUNTING) == 2" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3467) == 2 && checkquest(3469,PLAYTIME) == -1 && checkquest(3468,HUNTING) == -1" );
 	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3469,PLAYTIME) == 2" );
 	end;
