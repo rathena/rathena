@@ -8709,3 +8709,599 @@ Body:
             Amount: 14
         ResultItem: Glacier_Helm_3
         ChangeRefine: 1
+  - Item: FA_Armor_Reform_1
+    BaseItems:
+      - BaseItem: Thanatos_Sword
+        MinimumRefine: 9
+        CardsAllowed: false
+        Materials:
+          - Material: Armor_Stone_1
+            Amount: 200
+          - Material: Piece_Of_Bone_Armor
+            Amount: 15
+          - Material: Mine_As
+            Amount: 50
+          - Material: Sakray_Fury2
+            Amount: 5
+          - Material: Sakray_Regret2
+            Amount: 5
+        ResultItem: Thanatos_Sword_FA
+        ChangeRefine: -5
+  - Item: FA_Armor_Reform_2
+    BaseItems:
+      - BaseItem: Thanatos_Sword
+        MinimumRefine: 9
+        CardsAllowed: false
+        Materials:
+          - Material: Armor_Stone_2
+            Amount: 200
+          - Material: Piece_Of_Bone_Armor
+            Amount: 30
+          - Material: Mine_As
+            Amount: 100
+          - Material: Sakray_Fury2
+            Amount: 9
+          - Material: Sakray_Regret2
+            Amount: 9
+        ResultItem: Thanatos_Sword_FA
+        ChangeRefine: -1
+  - Item: Bar_D_A_Seal
+    BaseItems:
+      - BaseItem: Flame_E_R_Armor
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_Fl_Rune
+            Amount: 30
+          - Material: Bar_D_Ea_Rune
+            Amount: 30
+          - Material: Bar_D_Fl_Essence
+            Amount: 15
+          - Material: Bar_D_Ea_Essence
+            Amount: 15
+        ResultItem: Flame_E_R_Armor2
+      - BaseItem: Ice_S_R_Suits
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_Ic_Rune
+            Amount: 30
+          - Material: Bar_D_St_Rune
+            Amount: 30
+          - Material: Bar_D_Ic_Essence
+            Amount: 15
+          - Material: Bar_D_St_Essence
+            Amount: 15
+        ResultItem: Ice_S_R_Suits2
+      - BaseItem: Soul_P_R_Robe
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_So_Rune
+            Amount: 30
+          - Material: Bar_D_Pu_Rune
+            Amount: 30
+          - Material: Bar_D_So_Essence
+            Amount: 15
+          - Material: Bar_D_Pu_Essence
+            Amount: 15
+        ResultItem: Soul_P_R_Robe2
+      - BaseItem: Corrupt_P_R_Cloth
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_Co_Rune
+            Amount: 30
+          - Material: Bar_D_Po_Rune
+            Amount: 30
+          - Material: Bar_D_Co_Essence
+            Amount: 15
+          - Material: Bar_D_Po_Essence
+            Amount: 15
+        ResultItem: Corrupt_P_R_Cloth2
+  - Item: Bar_D_A_Unseal
+    BaseItems:
+      - BaseItem: Flame_E_R_Armor2
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_Fl_Rune
+            Amount: 60
+          - Material: Bar_D_Ea_Rune
+            Amount: 60
+          - Material: Bar_D_Fl_Essence
+            Amount: 30
+          - Material: Bar_D_Ea_Essence
+            Amount: 30
+        ResultItem: Flame_E_R_Armor
+      - BaseItem: Ice_S_R_Suits2
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_Ic_Rune
+            Amount: 60
+          - Material: Bar_D_St_Rune
+            Amount: 60
+          - Material: Bar_D_Ic_Essence
+            Amount: 30
+          - Material: Bar_D_St_Essence
+            Amount: 30
+        ResultItem: Ice_S_R_Suits
+      - BaseItem: Soul_P_R_Robe2
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_So_Rune
+            Amount: 60
+          - Material: Bar_D_Pu_Rune
+            Amount: 60
+          - Material: Bar_D_So_Essence
+            Amount: 30
+          - Material: Bar_D_Pu_Essence
+            Amount: 30
+        ResultItem: Soul_P_R_Robe
+      - BaseItem: Corrupt_P_R_Cloth2
+        CardsAllowed: false
+        Materials:
+          - Material: Bar_D_Co_Rune
+            Amount: 60
+          - Material: Bar_D_Po_Rune
+            Amount: 60
+          - Material: Bar_D_Co_Essence
+            Amount: 30
+          - Material: Bar_D_Po_Essence
+            Amount: 30
+        ResultItem: Corrupt_P_R_Cloth
+  - Item: FateSin_Boots_Hammer
+    BaseItems:
+      - BaseItem: FateSin_Boots_CD
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_CD
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_IQ
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_IQ
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_SOA
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_SOA
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_BO
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_BO
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_DK
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_DK
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_SH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_SH
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_EM
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_EM
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_WH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_WH
+        ChangeRefine: 1
+      - BaseItem: FateSin_Boots_SKE
+        MinimumRefine: 9
+        MaximumRefine: 11
+        CardsAllowed: false
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 14
+        ResultItem: FateSin_Boots_SKE
+        ChangeRefine: 1
+  - Item: R_Ep17_Box
+    BaseItems:
+      - BaseItem: Saphir_Hall_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Saphir_Hall_OS
+        ChangeRefine: -20
+      - BaseItem: ElectricFox_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_ElectricFox_OS
+        ChangeRefine: -20
+      - BaseItem: Rutilus_Stick_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Rutilus_Stick_OS
+        ChangeRefine: -20
+      - BaseItem: Circuit_Board_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Circuit_Board_OS
+        ChangeRefine: -20
+      - BaseItem: Boost_Lance_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Boost_Lance_OS
+        ChangeRefine: -20
+      - BaseItem: Blasti_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Blasti_OS
+        ChangeRefine: -20
+      - BaseItem: Beam_Claymore_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Beam_Claymore_OS
+        ChangeRefine: -20
+      - BaseItem: Cannon_Rapier_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Cannon_Rapier_OS
+        ChangeRefine: -20
+      - BaseItem: AC_B44_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_AC_B44_OS
+        ChangeRefine: -20
+      - BaseItem: Virtual_Bow_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Virtual_Bow_OS
+        ChangeRefine: -20
+      - BaseItem: HR_S55_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_HR_S55_OS
+        ChangeRefine: -20
+      - BaseItem: MH_P89_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_MH_P89_OS
+        ChangeRefine: -20
+      - BaseItem: Kuroiro_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Kuroiro_OS
+        ChangeRefine: -20
+      - BaseItem: Meuchler_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Meuchler_OS
+        ChangeRefine: -20
+      - BaseItem: Burning_Knuckle_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Burning_Knuckle_OS
+        ChangeRefine: -20
+      - BaseItem: Ultio_Spes_OS
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ultio_Spes_OS
+        ChangeRefine: -20
+      - BaseItem: Auto_BC_R
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_BC_R
+        ChangeRefine: -20
+      - BaseItem: Auto_B_R
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_B_R
+        ChangeRefine: -20
+      - BaseItem: Auto_Armor_A
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_Armor_A
+        ChangeRefine: -20
+      - BaseItem: Auto_Engine_A
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_Engine_A
+        ChangeRefine: -20
+      - BaseItem: Auto_Leg_A
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_Leg_A
+        ChangeRefine: -20
+      - BaseItem: Auto_BC_L
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_BC_L
+        ChangeRefine: -20
+      - BaseItem: Auto_B_L
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_B_L
+        ChangeRefine: -20
+      - BaseItem: Auto_Armor_B
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_Armor_B
+        ChangeRefine: -20
+      - BaseItem: Auto_Engine_B
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_Engine_B
+        ChangeRefine: -20
+      - BaseItem: Auto_Leg_B
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Auto_Leg_B
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Sword
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Sword
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Wand
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Wand
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Book
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Book
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Sword2
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Sword2
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Bow
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Bow
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Bow2
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Bow2
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_knuck
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_knuck
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Spear
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Spear
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Spear
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Spear
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Dagger
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Dagger
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Katar
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Katar
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Staff
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Staff
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Book2
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Book2
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Dagger2
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Dagger2
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Whip
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Whip
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Inst
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Inst
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Huuma
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Huuma
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Foxtail
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Foxtail
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Rifle
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Rifle
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Shotgun
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Shotgun
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Gatling
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Gatling
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Grenade
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Grenade
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Axe
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Axe
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Sword
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Sword
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Bow3
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Bow3
+        ChangeRefine: -20
+      - BaseItem: Ep172_Bh_Sword
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_Bh_Sword
+        ChangeRefine: -20
+      - BaseItem: Ep172_1h_Hammer
+        CardsAllowed: false
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Ep172_1h_Hammer
+        ChangeRefine: -20
+      - BaseItem: Card_Coin
+        MaximumRefine: 0
+        CardsAllowed: false
+        ResultItem: R_Recycle_Card

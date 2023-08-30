@@ -66865,6 +66865,33 @@ Body:
     Type: DelayConsume
     Script: |
       item_reform();
+  - Id: 102396 # note: item doesn't exist in itemInfo_true but exists in itemreformsystem
+    AegisName: FA_Armor_Reform_1
+    Name: FA_Armor_Reform_1
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102397 # note: item doesn't exist in itemInfo_true but exists in itemreformsystem
+    AegisName: FA_Armor_Reform_2
+    Name: FA_Armor_Reform_1
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102440
+    AegisName: R_Ep17_Box
+    Name: Rune Tablet Engraving    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 102482
+    AegisName: FateSin_Boots_Hammer
+    Name: Boots of Good and Evil Smelting Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
