@@ -42830,7 +42830,7 @@ Body:
   - Combos:
       - Combo:
           - Justice_Power    # 312014
-          - aegis_312447    # 312447
+          - Justice_Vigor_BO    # 312447
     Script: |
       bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",30;
       bonus bShortAtkRate,20;
@@ -42839,7 +42839,7 @@ Body:
   - Combos:
       - Combo:
           - Injustice_Power    # 312021
-          - aegis_312448    # 312448
+          - Injustice_Vigor_BO    # 312448
     Script: |
       bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",30;
       bonus bCritAtkRate,20;
@@ -42848,7 +42848,7 @@ Body:
   - Combos:
       - Combo:
           - Justice_Power    # 312014
-          - aegis_312449    # 312449
+          - Justice_Vigor_DK    # 312449
     Script: |
       bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",20;
       bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",40;
@@ -42857,7 +42857,7 @@ Body:
   - Combos:
       - Combo:
           - Injustice_Power    # 312021
-          - aegis_312450    # 312450
+          - Injustice_Vigor_DK    # 312450
     Script: |
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",20;
       bonus2 bSkillAtk,"DK_STORMSLASH",40;
@@ -43160,3 +43160,259 @@ Body:
          bonus2 bSkillAtk,"SS_KINRYUUHOU",12;
          bonus bSpl,1;
       }
+  - Combos:
+      - Combo:
+          - Justice_Vigor_CD   # 312422
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",40;
+      bonus2 bSkillAtk,"CD_FRAMEN",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_IQ   # 312423
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"IQ_FIRST_BRAND",40;
+      bonus2 bSkillAtk,"IQ_THIRD_PUNISH",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_SOA   # 312424
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",40;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_CD   # 312425
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritAtkRate,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"CD_PETITIO",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_IQ   # 312426
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"IQ_OLEUM_SANCTUM",40;
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_SOA   # 312427
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",40;
+      bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",20;
+  - Combos:
+      - Combo:
+          - M_Crystal_S_Cast   # 312428
+          - Dolor_HatK_LT   # 400465
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Combos:
+      - Combo:
+          - M_Crystal_S_Delay   # 312429
+          - Dolor_HatK_LT   # 400465
+    Script: |
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - M_Crystal_HitTarget   # 312430
+          - Dolor_HatK_LT   # 400465
+    Script: |
+      bonus bPerfectHitRate,10;
+  - Combos:
+      - Combo:
+          - M_Crystal_CRI   # 312431
+          - Dolor_HatK_LT   # 400465
+    Script: |
+      bonus bCritical,10;
+  - Combos:
+      - Combo:
+          - M_Crystal_Atk_Speed   # 312432
+          - Dolor_HatK_LT   # 400465
+    Script: |
+      bonus bAspdRate,10;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_SH   # 312451
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",40;
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_SH   # 312452
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",40;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",20;
+  - Combos:
+      - Combo:
+          - aegis_312476   # 312476
+          - aegis_311460   # 311460
+    Script: |
+      .@a = getskilllv("SKE_WAR_BOOK_MASTERY")/2;
+      bonus bCRate,.@a;
+      bonus bCritical,.@a;
+  - Combos:
+      - Combo:
+          - aegis_312476   # 312476
+          - aegis_311461   # 311461
+    Script: |
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",10;
+  - Combos:
+      - Combo:
+          - aegis_312476   # 312476
+          - aegis_311462   # 311462
+    Script: |
+      bonus2 bSkillAtk,"SKE_SUNSET_BLAST",15;
+  - Combos:
+      - Combo:
+          - aegis_312477   # 312477
+          - Sorcerer_Top3   # 311011
+    Script: |
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",10;
+      bonus2 bSkillAtk,"EM_TERRA_DRIVE",10;
+  - Combos:
+      - Combo:
+          - aegis_312477   # 312477
+          - Sorcerer_Middle3   # 311012
+    Script: |
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",10;
+  - Combos:
+      - Combo:
+          - aegis_312477   # 312477
+          - Sorcerer_Bottom3   # 311013
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,3*getskilllv("EM_SPELL_ENCHANTING");
+  - Combos:
+      - Combo:
+          - aegis_312478   # 312478
+          - aegis_311430   # 311430
+    Script: |
+      bonus2 bSkillAtk,"MT_TRIPLE_LASER",10;
+  - Combos:
+      - Combo:
+          - aegis_312478   # 312478
+          - aegis_311431   # 311431
+    Script: |
+      bonus2 bAddSize,Size_All,3*(getskilllv("MT_TWOAXEDEF")/2);
+  - Combos:
+      - Combo:
+          - aegis_312478   # 312478
+          - aegis_311432   # 311432
+    Script: |
+      bonus2 bSkillAtk,"MT_SPARK_BLASTER",15;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_EM   # 312639
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"EM_TERRA_DRIVE",40;
+      bonus2 bSkillAtk,"EM_DIAMOND_STORM",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_WH   # 312640
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"WH_GALESTORM",40;
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_SKE   # 312641
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"SKE_SUNSET_BLAST",40;
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_EM   # 312642
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",40;
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_WH   # 312643
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"WH_DEEPBLINDTRAP",40;
+      bonus2 bSkillAtk,"WH_SWIFTTRAP",40;
+      bonus2 bSkillAtk,"WH_SOLIDTRAP",20;
+      bonus2 bSkillAtk,"WH_FLAMETRAP",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_SKE   # 312644
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SKE_DAWN_BREAK",40;
+      bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",20;
+  - Combos:
+      - Combo:
+          - Thanatos_Sword_FA   # 480324
+          - Dolor_HatK_LT   # 400465
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bVariableCastrate,-10;
+      if (.@r>=7) {
+         bonus2 bMagicAddEle,Ele_Holy,20;
+         bonus2 bAddEle,Ele_Holy,20;
+         bonus2 bMagicAddEle,Ele_Dark,20;
+         bonus2 bAddEle,Ele_Dark,20;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Angel,15;
+            bonus2 bMagicAddRace,RC_Angel,15;
+            bonus2 bAddRace,RC_Dragon,15;
+            bonus2 bMagicAddRace,RC_Dragon,15;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_Medium,15;
+               bonus2 bMagicAddSize,Size_Medium,15;
+               bonus2 bAddSize,Size_Large,15;
+               bonus2 bMagicAddSize,Size_Large,15;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - Thanatos_Sword_FA   # 480324
+          - Red_Force_Pendant_LT   # 490382
+      - Combo:
+          - Thanatos_Sword_FA   # 480324
+          - Blue_Mental_Pendant_LT   # 490383
+    Script: |
+      bonus bPAtk,3;
+      bonus bSMatk,3;
+      bonus bMatk,50;
+      bonus bBaseAtk,50;
+      bonus2 bAddSize,Size_Medium,15;
+      bonus2 bMagicAddSize,Size_Medium,15;
+      bonus2 bAddSize,Size_Large,15;
+      bonus2 bMagicAddSize,Size_Large,15;

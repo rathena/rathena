@@ -4982,7 +4982,7 @@ Body:
                 Chance: 50
   - Id: 14
     TargetItems:
-      Cheesy_Snack_In_Mouth: true
+      Octopus_Leg_In_Mouth: true
     Reset:
       Chance: 100000
       Price: 10000
@@ -25774,3 +25774,1560 @@ Body:
                 Chance: 9900
               - Item: Dragoon_Badge
                 Chance: 9900
+  - Id: 104
+    TargetItems:
+      Dolor_HatK_LT: true
+    Reset:
+      Chance: 80000
+      Price: 1000000
+      Materials:
+        - Material: Polluted_Spell
+          Amount: 10
+        - Material: Coagulated_Spell
+          Amount: 10
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 500000
+        Materials:
+          - Material: Polluted_Spell
+            Amount: 5
+          - Material: Coagulated_Spell
+            Amount: 30
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Expert_Archer3
+                Chance: 33333
+              - Item: Expert_Magician3
+                Chance: 33334
+              - Item: Expert_Fighter3
+                Chance: 33333
+          - Enchantgrade: 1
+            Items:
+              - Item: Expert_Archer3
+                Chance: 33333
+              - Item: Expert_Magician3
+                Chance: 33334
+              - Item: Expert_Fighter3
+                Chance: 33333
+          - Enchantgrade: 2
+            Items:
+              - Item: Expert_Archer3
+                Chance: 33333
+              - Item: Expert_Magician3
+                Chance: 33334
+              - Item: Expert_Fighter3
+                Chance: 33333
+          - Enchantgrade: 3
+            Items:
+              - Item: Expert_Archer3
+                Chance: 33333
+              - Item: Expert_Magician3
+                Chance: 33334
+              - Item: Expert_Fighter3
+                Chance: 33333
+          - Enchantgrade: 4
+            Items:
+              - Item: Expert_Archer3
+                Chance: 33333
+              - Item: Expert_Magician3
+                Chance: 33334
+              - Item: Expert_Fighter3
+                Chance: 33333
+        Upgrades:
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 30
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 30
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 30
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        Price: 100000
+        Materials:
+          - Material: Polluted_Spell
+            Amount: 10
+          - Material: Coagulated_Spell
+            Amount: 50
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: MasterArcher1
+                Chance: 20000
+              - Item: MagicEessence1
+                Chance: 20000
+              - Item: Acute1
+                Chance: 20000
+              - Item: Tenacity1
+                Chance: 20000
+              - Item: Mettle1
+                Chance: 20000
+          - Enchantgrade: 1
+            Items:
+              - Item: MasterArcher1
+                Chance: 20000
+              - Item: MagicEessence1
+                Chance: 20000
+              - Item: Acute1
+                Chance: 20000
+              - Item: Tenacity1
+                Chance: 20000
+              - Item: Mettle1
+                Chance: 20000
+          - Enchantgrade: 2
+            Items:
+              - Item: MasterArcher1
+                Chance: 20000
+              - Item: MagicEessence1
+                Chance: 20000
+              - Item: Acute1
+                Chance: 20000
+              - Item: Tenacity1
+                Chance: 20000
+              - Item: Mettle1
+                Chance: 20000
+          - Enchantgrade: 3
+            Items:
+              - Item: MasterArcher1
+                Chance: 20000
+              - Item: MagicEessence1
+                Chance: 20000
+              - Item: Acute1
+                Chance: 20000
+              - Item: Tenacity1
+                Chance: 20000
+              - Item: Mettle1
+                Chance: 20000
+          - Enchantgrade: 4
+            Items:
+              - Item: MasterArcher1
+                Chance: 20000
+              - Item: MagicEessence1
+                Chance: 20000
+              - Item: Acute1
+                Chance: 20000
+              - Item: Tenacity1
+                Chance: 20000
+              - Item: Mettle1
+                Chance: 20000
+        Upgrades:
+          - Enchant: MasterArcher1
+            Upgrade: MasterArcher2
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: Enchant_Ticket
+          - Enchant: MagicEessence1
+            Upgrade: MagicEessence2
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: Enchant_Ticket
+          - Enchant: Acute1
+            Upgrade: Acute2
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: Enchant_Ticket
+          - Enchant: Tenacity1
+            Upgrade: Tenacity2
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: Enchant_Ticket
+          - Enchant: Mettle1
+            Upgrade: Mettle2
+            Materials:
+              - Material: Coagulated_Spell
+                Amount: 200
+              - Material: Enchant_Ticket
+          - Enchant: MasterArcher2
+            Upgrade: MasterArcher3
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: MagicEessence2
+            Upgrade: MagicEessence3
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Acute2
+            Upgrade: Acute3
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Tenacity2
+            Upgrade: Tenacity3
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Enchant: Mettle2
+            Upgrade: Mettle3
+            Materials:
+              - Material: Polluted_Spell
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 105
+    TargetItems:
+      Red_Force_Pendant_LT: true
+      Blue_Mental_Pendant_LT: true
+    Reset:
+      Chance: 80000
+      Price: 1000000
+      Materials:
+        - Material: Dark_Stone
+        - Material: PendantStoneForWork
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        Price: 100000
+        Materials:
+          - Material: PendantStoneForWork
+            Amount: 2
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: M_Crystal_S_Cast
+                Chance: 20000
+              - Item: M_Crystal_S_Delay
+                Chance: 20000
+              - Item: M_Crystal_HitTarget
+                Chance: 20000
+              - Item: M_Crystal_CRI
+                Chance: 20000
+              - Item: M_Crystal_Atk_Speed
+                Chance: 20000
+      - Slot: 2
+        Price: 100000
+        Materials:
+          - Material: Dark_Stone
+            Amount: 2
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: F_Crystal_CRI
+                Chance: 20000
+              - Item: F_Crystal_MATK
+                Chance: 20000
+              - Item: F_Crystal_MSP
+                Chance: 20000
+              - Item: F_Crystal_ATK
+                Chance: 20000
+              - Item: F_Crystal_MHP
+                Chance: 20000
+  - Id: 106
+    TargetItems:
+      FateSin_Boots_CD: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_CD
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_CD
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 107
+    TargetItems:
+      FateSin_Boots_IQ: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_IQ
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_IQ
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 108
+    TargetItems:
+      FateSin_Boots_SOA: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_SOA
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_SOA
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 109
+    TargetItems:
+      FateSin_Boots_BO: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_BO
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_BO
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 110
+    TargetItems:
+      FateSin_Boots_DK: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_DK
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_DK
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 111
+    TargetItems:
+      FateSin_Boots_SH: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_SH
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_SH
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 114
+    TargetItems:
+      FateSin_Boots_EM: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_EM
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_EM
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 115
+    TargetItems:
+      FateSin_Boots_WH: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_WH
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_WH
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 116
+    TargetItems:
+      FateSin_Boots_SKE: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_SKE
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_SKE
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket

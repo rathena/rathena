@@ -52245,6 +52245,14 @@ Body:
       .@r = getrefine();
       bonus bMaxHPrate,(min(15,.@r)*2);
       bonus bMaxSPrate,(min(15,.@r)*2);
+  - Id: 300482
+    AegisName: R_Recycle_Card
+    Name: Lesser Rune Card    # !todo check english name
+    Type: Card
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -65224,9 +65232,11 @@ Body:
       .@r = getrefine();
       bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10+5*(.@r/4);
       bonus2 bSkillAtk,"AG_CRIMSON_ARROW",10+5*(.@r/4);
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",10+5*(.@r/4);
       if (.@r>=9) {
         bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10;
         bonus2 bSkillAtk,"AG_CRIMSON_ARROW",10;
+        bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",10;
       }
   - Id: 311291
     AegisName: Glacier_F_Orb_99
@@ -69446,6 +69456,31 @@ Body:
     SubType: Enchant
     Script: |
       bonus bMaxSPrate,15;
+  - Id: 312031
+    AegisName: aegis_312031
+    Name: Latent Release (Archmage II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312037
+    AegisName: aegis_312037
+    Name: Latent Release (Elemental Master II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312038
+    AegisName: aegis_312038
+    Name: Latent Release (Cardinal II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312040
+    AegisName: aegis_312040
+    Name: Latent Release (Dragon Knight II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312043
+    AegisName: aegis_312043
+    Name: Latent Release (Biolo II)
+    Type: Card
+    SubType: Enchant
   - Id: 312050
     AegisName: Ice_C_Orb_Str
     Name: Glacier Flower Meow Power (STR)
@@ -70821,31 +70856,6 @@ Body:
       bonus2 bAddRace,RC_All,10;
       bonus2 bAddRace,RC_Player_Human,-10;
       bonus2 bAddRace,RC_Player_Doram,-10;
-  - Id: 312031
-    AegisName: aegis_312031
-    Name: Latent Release (Archmage II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312037
-    AegisName: aegis_312037
-    Name: Latent Release (Elemental Master II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312038
-    AegisName: aegis_312038
-    Name: Latent Release (Cardinal II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312040
-    AegisName: aegis_312040
-    Name: Latent Release (Dragon Knight II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312043
-    AegisName: aegis_312043
-    Name: Latent Release (Biolo II)
-    Type: Card
-    SubType: Enchant
   - Id: 312189
     AegisName: M_Pow3
     Name: POW+3
@@ -73244,6 +73254,96 @@ Body:
             }
          }
       }
+  - Id: 312422
+    AegisName: Justice_Vigor_CD
+    Name: Good Vigor (Cardinal)
+    Type: Card
+    SubType: Enchant
+  - Id: 312423
+    AegisName: Justice_Vigor_IQ
+    Name: Good Vigor (Inquisitor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312424
+    AegisName: Justice_Vigor_SOA
+    Name: Good Vigor (Soul Ascetic)
+    Type: Card
+    SubType: Enchant
+  - Id: 312425
+    AegisName: Injustice_Vigor_CD
+    Name: Evil Vigor (Cardinal)
+    Type: Card
+    SubType: Enchant
+  - Id: 312426
+    AegisName: Injustice_Vigor_IQ
+    Name: Evil Vigor (Inquisitor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312427
+    AegisName: Injustice_Vigor_SOA
+    Name: Evil Vigor (Soul Ascetic)
+    Type: Card
+    SubType: Enchant
+  - Id: 312428
+    AegisName: M_Crystal_S_Cast
+    Name: Memory Crystal (Variable Casting)
+    Type: Card
+    SubType: Enchant
+  - Id: 312429
+    AegisName: M_Crystal_S_Delay
+    Name: Memory Crystal (Global Cooldown)
+    Type: Card
+    SubType: Enchant
+  - Id: 312430
+    AegisName: M_Crystal_HitTarget
+    Name: Memory Crystal (Perfect Hit)
+    Type: Card
+    SubType: Enchant
+  - Id: 312431
+    AegisName: M_Crystal_CRI
+    Name: Memory Crystal (Critical)
+    Type: Card
+    SubType: Enchant
+  - Id: 312432
+    AegisName: M_Crystal_Atk_Speed
+    Name: Memory Crystal (Attack Speed)
+    Type: Card
+    SubType: Enchant
+  - Id: 312433
+    AegisName: F_Crystal_CRI
+    Name: Memory Fragment (Relaxation)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,10;
+  - Id: 312434
+    AegisName: F_Crystal_MATK
+    Name: Memory Fragment (Admiration)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+  - Id: 312435
+    AegisName: F_Crystal_MSP
+    Name: Memory Fragment (Freedom)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,5;
+  - Id: 312436
+    AegisName: F_Crystal_ATK
+    Name: Memory Fragment (Bravery)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+  - Id: 312437
+    AegisName: F_Crystal_MHP
+    Name: Memory Fragment (Hope)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
   - Id: 312445
     AegisName: aegis_312445
     Name: Autospell (Chain Lightning)
@@ -73259,23 +73359,89 @@ Body:
     Script: |
       bonus bNoGemStone;
   - Id: 312447
-    AegisName: aegis_312447
+    AegisName: Justice_Vigor_BO
     Name: Good Vigor (Biolo)
     Type: Card
     SubType: Enchant
   - Id: 312448
-    AegisName: aegis_312448
+    AegisName: Injustice_Vigor_BO
     Name: Evil Vigor (Biolo)
     Type: Card
     SubType: Enchant
   - Id: 312449
-    AegisName: aegis_312449
+    AegisName: Justice_Vigor_DK
     Name: Good Vigor (Dragon Knight)
     Type: Card
     SubType: Enchant
   - Id: 312450
-    AegisName: aegis_312450
+    AegisName: Injustice_Vigor_DK
     Name: Evil Vigor (Dragon Knight)
+    Type: Card
+    SubType: Enchant
+  - Id: 312451
+    AegisName: Justice_Vigor_SH
+    Name: Good Vigor (Spirit Handler)
+    Type: Card
+    SubType: Enchant
+  - Id: 312452
+    AegisName: Injustice_Vigor_SH
+    Name: Evil Vigor (Spirit Handler)
+    Type: Card
+    SubType: Enchant
+  - Id: 312476
+    AegisName: aegis_312476
+    Name: Sky Emperor Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@a = getskilllv("SKE_SKY_MASTERY")/2;
+      bonus bCritical,10;
+      bonus2 bAddRace,RC_All,.@a;
+      bonus2 bAddRace,RC_Player_Human,-.@a;
+      bonus2 bAddRace,RC_Player_Doram,-.@a;
+  - Id: 312477
+    AegisName: aegis_312477
+    Name: Elemental Master Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,2*getskilllv("EM_INCREASING_ACTIVITY");
+      bonus2 bMagicAtkEle,Ele_Fire,2*getskilllv("EM_INCREASING_ACTIVITY");
+  - Id: 312478
+    AegisName: aegis_312478
+    Name: Meister Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("MT_M_MACHINE");
+  - Id: 312639
+    AegisName: Justice_Vigor_EM
+    Name: Good Vigor (Elemental Master)
+    Type: Card
+    SubType: Enchant
+  - Id: 312640
+    AegisName: Justice_Vigor_WH
+    Name: Good Vigor (Windhawk)
+    Type: Card
+    SubType: Enchant
+  - Id: 312641
+    AegisName: Justice_Vigor_SKE
+    Name: Good Vigor (Sky Emperor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312642
+    AegisName: Injustice_Vigor_EM
+    Name: Evil Vigor (Elemental Master)
+    Type: Card
+    SubType: Enchant
+  - Id: 312643
+    AegisName: Injustice_Vigor_WH
+    Name: Evil Vigor (Windhawk)
+    Type: Card
+    SubType: Enchant
+  - Id: 312644
+    AegisName: Injustice_Vigor_SKE
+    Name: Evil Vigor (Sky Emperor)
     Type: Card
     SubType: Enchant
   - Id: 1000000
@@ -78254,6 +78420,18 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001282
+    AegisName: Imperfect_Rune
+    Name: Imperfect Rune
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001283
+    AegisName: Perfect_Rune
+    Name: Perfect Rune
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1001289
     AegisName: Bar_D_Docu_1
     Name: In-depth 1st floor research material    # !todo check english name
@@ -78619,6 +78797,609 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001359
+    AegisName: Unidentified_Bug
+    Name: Unidentified Bug    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001360
+    AegisName: R_Saphir_Hall_OS
+    Name: Printed Saphir Mace-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001361
+    AegisName: R_ElectricFox_OS
+    Name: Printed Electric Fox-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001362
+    AegisName: R_Rutilus_Stick_OS
+    Name: Printed Rutilus Stick-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001363
+    AegisName: R_Circuit_Board_OS
+    Name: Printed Circuit Board-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001364
+    AegisName: R_Boost_Lance_OS
+    Name: Printed Boost Lance-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001365
+    AegisName: R_Blasti_OS
+    Name: Printed Blasti-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001366
+    AegisName: R_Beam_Claymore_OS
+    Name: Printed Beam Claymor-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001367
+    AegisName: R_Cannon_Rapier_OS
+    Name: Printed Cannon Rapier-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001368
+    AegisName: R_AC_B44_OS
+    Name: Printed AC-B44-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001369
+    AegisName: R_Virtual_Bow_OS
+    Name: Printed Virtual Bow-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001370
+    AegisName: R_HR_S55_OS
+    Name: Printed HR-S55-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001371
+    AegisName: R_MH_P89_OS
+    Name: Printed MH-P89-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001372
+    AegisName: R_Kuroiro_OS
+    Name: Printed Kuroiro-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001373
+    AegisName: R_Meuchler_OS
+    Name: Printed Meuchler-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001374
+    AegisName: R_Burning_Knuckle_OS
+    Name: Printed Burning Knuckle-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001375
+    AegisName: R_Ultio_Spes_OS
+    Name: Printed Ultio-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001376
+    AegisName: aegis_1001376
+    Name: Barmund Stuffed Doll    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001377
+    AegisName: R_Auto_BC_R
+    Name: Printed Automatic Battle Chip R
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001378
+    AegisName: R_Auto_B_R
+    Name: Printed Automatic Booster R
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001379
+    AegisName: R_Auto_Armor_A
+    Name: Printed Automatic Armor A-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001380
+    AegisName: R_Auto_Engine_A
+    Name: Printed Automatic Engine wing A-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001381
+    AegisName: R_Auto_Leg_A
+    Name: Printed Automatic Leg A-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001382
+    AegisName: R_Auto_BC_L
+    Name: Printed Automatic Battle Chip L
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001383
+    AegisName: R_Auto_B_L
+    Name: Printed Automatic Booster L
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001384
+    AegisName: R_Auto_Armor_B
+    Name: Printed Automatic Armor B-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001385
+    AegisName: R_Auto_Engine_B
+    Name: Printed Automatic Engine wing B-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001386
+    AegisName: R_Auto_Leg_B
+    Name: Printed Automatic Leg B-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001387
+    AegisName: R_Ep172_1h_Sword
+    Name: Printed Hypocrisy Machine
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001388
+    AegisName: R_Ep172_1h_Wand
+    Name: Printed Greed Wand
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001389
+    AegisName: R_Ep172_1h_Book
+    Name: Printed Sloth Text
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001390
+    AegisName: R_Ep172_1h_Sword2
+    Name: Printed Invidia Bundle
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001391
+    AegisName: R_Ep172_Bh_Bow
+    Name: Printed Superbia String
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001392
+    AegisName: R_Ep172_Bh_Bow2
+    Name: Printed Gula Gun
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001393
+    AegisName: R_Ep172_Bh_knuck
+    Name: Printed Ira Fist
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001394
+    AegisName: R_Ep172_1h_Spear
+    Name: Printed Gluttony Stick
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001395
+    AegisName: R_Ep172_Bh_Spear
+    Name: Printed Luxuria Pierce
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001396
+    AegisName: R_Ep172_1h_Dagger
+    Name: Printed Wrath Rack
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001397
+    AegisName: R_Ep172_Bh_Katar
+    Name: Printed Avaritia Metal
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001398
+    AegisName: R_Ep172_Bh_Staff
+    Name: Printed Pride Stone
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001399
+    AegisName: R_Ep172_1h_Book2
+    Name: Printed Sloth Bible
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001400
+    AegisName: R_Ep172_1h_Dagger2
+    Name: Printed Gula Teeth
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001401
+    AegisName: R_Ep172_1h_Whip
+    Name: Printed Pigritia Spark
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001402
+    AegisName: R_Ep172_1h_Inst
+    Name: Printed Pigritia Wave
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001403
+    AegisName: R_Ep172_Bh_Huuma
+    Name: Printed Wrath Wheel
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001404
+    AegisName: R_Ep172_1h_Hammer
+    Name: Printed Envy Blunt
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001405
+    AegisName: R_Ep172_1h_Foxtail
+    Name: Printed Addiction Plant
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001406
+    AegisName: R_Ep172_1h_Rifle
+    Name: Printed Lust Pointer
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001407
+    AegisName: R_Ep172_1h_Shotgun
+    Name: Printed Lust Shatter
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001408
+    AegisName: R_Ep172_1h_Gatling
+    Name: Printed Lust Crusher
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001409
+    AegisName: R_Ep172_1h_Grenade
+    Name: Printed Lust Boom
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001410
+    AegisName: R_Ep172_1h_Axe
+    Name: Printed Pride Steel
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001411
+    AegisName: R_Ep172_Bh_Sword
+    Name: Printed Hypocrisy Edge
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001412
+    AegisName: R_Ep172_Bh_Bow3
+    Name: Printed Pigritia Rhythm
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001419
+    AegisName: SkyEmperorStone_Robe
+    Name: Sky Emperor Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001420
+    AegisName: ElementalStone_Robe
+    Name: Elemental Master Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001421
+    AegisName: MeisterStone_Robe
+    Name: Meister Stone (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
