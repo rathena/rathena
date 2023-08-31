@@ -2162,7 +2162,7 @@ Body:
   - Id: 9514
     AegisName: Ein_Ddbox
     Name: Physical Modification Permit
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -2210,7 +2210,7 @@ Body:
   - Id: 9529
     AegisName: Ein_Ddbox2
     Name: Magical Modification Permit
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -2389,7 +2389,7 @@ Body:
   - Id: 9785
     AegisName: Frozen_Box_IL
     Name: Frozen Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -2482,21 +2482,21 @@ Body:
   - Id: 9933
     AegisName: True_Hunting_9Refine
     Name: Troi Hunting 9 Refinement Package
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 9934
     AegisName: True_Hunting_Opt_A
     Name: Trois Hunting Physical Craft Kit
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 9935
     AegisName: True_Hunting_Opt_B
     Name: Trois Hunting Magical Craft Kit
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -58938,7 +58938,7 @@ Body:
   - Id: 23981
     AegisName: Abyss_Ddbox
     Name: Turbulence Dragon's Power
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -59077,7 +59077,7 @@ Body:
   - Id: 100009
     AegisName: Joy_Of_Victory
     Name: Victorious Happiness
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -59815,7 +59815,7 @@ Body:
   - Id: 100125
     AegisName: Metal_7_Ticket
     Name: Metal Weapon +7 Refinement Ticket
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60021,7 +60021,7 @@ Body:
   - Id: 100142
     AegisName: Abyss_Ddbox2
     Name: Stable Dragon's Power
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -60036,14 +60036,14 @@ Body:
   - Id: 100144
     AegisName: Abyss_Ddbox3
     Name: Burning Dragon's Power
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100145
     AegisName: Abyss_Ddbox4
     Name: Hot Dragon's Power
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -60071,7 +60071,7 @@ Body:
   - Id: 100151
     AegisName: Skill_Sha_M_S_Weapon
     Name: Skill Shadow Weapon Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60147,37 +60147,37 @@ Body:
   - Id: 100164
     AegisName: Auto_Imp_Melee_1
     Name: Normal Automatic Improvement Device (Physical)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       laphine_upgrade();
   - Id: 100165
     AegisName: Auto_Imp_Melee_2
     Name: Advanced Automatic Improvement Device (Physical)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       laphine_upgrade();
   - Id: 100166
     AegisName: Auto_Imp_Melee_3
     Name: Premium Automatic Improvement Device (Physical)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       laphine_upgrade();
   - Id: 100167
     AegisName: Auto_Imp_Magic_1
     Name: Normal Automatic Improvement Device (Magical)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       laphine_upgrade();
   - Id: 100168
     AegisName: Auto_Imp_Magic_2
     Name: Advanced Automatic Improvement Device (Magical)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       laphine_upgrade();
   - Id: 100169
     AegisName: Auto_Imp_Magic_3
     Name: Premium Automatic Improvement Device (Magical)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       laphine_upgrade();
   - Id: 100170
@@ -60428,7 +60428,7 @@ Body:
   - Id: 100205
     AegisName: Class_Sha_R_M_Melee
     Name: Class Shadow Spellbook (Melee)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60437,7 +60437,7 @@ Body:
   - Id: 100206
     AegisName: Class_Sha_R_M_Magic
     Name: Class Shadow Spellbook (Magic)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60446,7 +60446,7 @@ Body:
   - Id: 100207
     AegisName: Skill_Sha_R_M_Melee
     Name: Skill Shadow Spellbook (Melee)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60455,7 +60455,7 @@ Body:
   - Id: 100208
     AegisName: Skill_Sha_R_M_Magic
     Name: Skill Shadow Spellbook (Magic)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60464,35 +60464,35 @@ Body:
   - Id: 100209
     AegisName: Skill_Sha_M_S_Shield
     Name: Skill Shadow Shield Recipe
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100210
     AegisName: Skill_Sha_M_S_Pendant
     Name: Skill Shadow Pendant Recipe
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100211
     AegisName: Skill_Sha_M_S_Earing
     Name: Skill Shadow Earring Recipe
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100212
     AegisName: Skill_Sha_M_S_Shoes
     Name: Skill Shadow Shoes Recipe
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100213
     AegisName: Skill_Sha_M_S_Armor
     Name: Skill Shadow Armor Recipe
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
@@ -60543,7 +60543,7 @@ Body:
   - Id: 100251
     AegisName: Illu_Enhance_Cube
     Name: Illusion Reinforcement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60557,7 +60557,7 @@ Body:
   - Id: 100252
     AegisName: Auto_Enhance_Cube
     Name: Automatic Reinforcement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60589,7 +60589,7 @@ Body:
   - Id: 100268
     AegisName: Temporal_Refine_Cube
     Name: Temporal Equipment 11 Refine Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60598,7 +60598,7 @@ Body:
   - Id: 100269
     AegisName: Geffen_Refine_Cube
     Name: Geffen Magic Tournament 12 Refine Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60607,7 +60607,7 @@ Body:
   - Id: 100270
     AegisName: Old_Refine_Cube
     Name: Fallen Warrior's Headgear 12 Refine Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60616,7 +60616,7 @@ Body:
   - Id: 100271
     AegisName: Refine_Hero_Weapon
     Name: Ancient Hero Weapon 9 Refine Permission
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60625,42 +60625,42 @@ Body:
   - Id: 100272
     AegisName: Refine_Hero_Boots
     Name: Ancient Hero Boots 9 Refine Permission
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100273
     AegisName: Remodel_Hero_Boots
     Name: Ancient Hero Boots Modification Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100274
     AegisName: Oriental_Sword_Cube
     Name: Oriental Sword Modification Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100275
     AegisName: Dragonic_Slayer_Cube
     Name: Dragonic Slayer Modification Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100276
     AegisName: Shiver_Katar_K_Cube
     Name: Shiver Katar Modification Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100277
     AegisName: Blade_Katar_Cube
     Name: Blade Katar Modification Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
@@ -60708,7 +60708,7 @@ Body:
   - Id: 100321
     AegisName: OS_Weapon_Refine_Cube
     Name: OS Weapon +11 Refinement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60717,7 +60717,7 @@ Body:
   - Id: 100322
     AegisName: Racecap_Refine_Cube
     Name: Racing Cap +11 Refinement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -60762,35 +60762,35 @@ Body:
   - Id: 100327
     AegisName: Sword_Of_Bluefire_Cube
     Name: Red Lotus Sword Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100328
     AegisName: Slate_Sword_Cube
     Name: Slate Sword Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100329
     AegisName: Narcis_Bow_Cube
     Name: Narcissus Bow Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100330
     AegisName: Trumpet_Shell_K_Cube
     Name: Trumpet Shell Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100331
     AegisName: Barb_Wire_K_Cube
     Name: Barbed Wire Whip Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
@@ -60880,7 +60880,7 @@ Body:
   - Id: 100338
     AegisName: Booster_W_Up_1
     Name: Booster Weapon Phase 1 Upgrade Package
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60894,7 +60894,7 @@ Body:
   - Id: 100339
     AegisName: Booster_W_Up_2
     Name: Booster Weapon Phase 2 Upgrade Package
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60908,7 +60908,7 @@ Body:
   - Id: 100340
     AegisName: Booster_W_Up_3
     Name: Booster Weapon Upgrade Package
-    Type: DelayConsume
+    Type: Delayconsume
     EquipLevelMin: 100
     Trade:
       NoDrop: true
@@ -60923,7 +60923,7 @@ Body:
   - Id: 100341
     AegisName: E_ILL_Up
     Name: Illusion (Bound) Upgrade Package
-    Type: DelayConsume
+    Type: Delayconsume
     EquipLevelMin: 130
     Trade:
       NoDrop: true
@@ -61031,7 +61031,7 @@ Body:
   - Id: 100354
     AegisName: Auto_Armor_Refine_Cube
     Name: Automatic Armor +11 Refinement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -61040,7 +61040,7 @@ Body:
   - Id: 100355
     AegisName: Bio_Weapon_Refine_Cube
     Name: Bio Lab Weapon +11 Refinement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -61085,35 +61085,35 @@ Body:
   - Id: 100360
     AegisName: Avenger_Cube
     Name: Avenger Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100361
     AegisName: Meteor_Striker_Cube
     Name: Meteor Striker Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100362
     AegisName: Magic_Sword_Cube
     Name: Mado Sword Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100363
     AegisName: Fatalist_Cube
     Name: Fatalist Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100365
     AegisName: MD_Geffen_Rarmor
     Name: MD Geffen Refine Armor
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -61128,7 +61128,7 @@ Body:
   - Id: 100366
     AegisName: MD_Geffen_Rhood
     Name: MD Geffen Refine Hood
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -61143,7 +61143,7 @@ Body:
   - Id: 100367
     AegisName: MD_Geffen_Racc
     Name: MD Geffen Refine Accessory
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -61158,7 +61158,7 @@ Body:
   - Id: 100368
     AegisName: MD_Geffen_Rsheild
     Name: MD Geffen Refine Shield
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -61216,168 +61216,168 @@ Body:
   - Id: 100376
     AegisName: Royal_Bow_K_Cube
     Name: Royal Bow Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100377
     AegisName: Scalet_Dragon_L_Cube
     Name: Scarlet Dragon Leather Bow Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100378
     AegisName: Shadow_Staff_K_Cube
     Name: Shadow Staff Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100379
     AegisName: Freezing_Rod_Cube
     Name: Chilling Cane Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100381
     AegisName: 3Lv_9Refine_Weapon_7Gu
     Name: +9 Lv3 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100382
     AegisName: 3Lv_10Refine_Weapon_8Gu
     Name: +10 Lv3 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100383
     AegisName: 3Lv_11Refine_Weapon_9Gu
     Name: +11 Lv3 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100384
     AegisName: 3Lv_12Refine_Weapon_10G
     Name: +12 Lv3 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100385
     AegisName: 4Lv_9Refine_Weapon_8Gu
     Name: +9 Lv4 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100386
     AegisName: 4Lv_10Refine_Weapon_9Gu
     Name: +10 Lv4 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100387
     AegisName: 4Lv_11Refine_Weapon_10G
     Name: +11 Lv4 Weapon Refine Permission Exchange Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100388
     AegisName: Iron_Nail_K_Cube
     Name: Iron Nail Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100390
     AegisName: Ray_Knuckle_Cube
     Name: Ray Knuckle Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100391
     AegisName: Moonlight_Box_IL
     Name: Moonlight Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100392
     AegisName: S_Moonlight_Box_IL
     Name: Special Moonlight Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100393
     AegisName: Undine_Spear_K_Cube
     Name: Aquatic Spear Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100394
     AegisName: Light_Blade_Cube
     Name: Light Blade Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100395
     AegisName: Iron_Staff_Cube
     Name: Iron Staff Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100396
     AegisName: Blue_Crystal_Staff_Cube
     Name: Blue Crystal Staff Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100397
     AegisName: Demon_Hunt_Bible_Cube
     Name: Exorcist's Bible Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100398
     AegisName: Saint_Hall_Cube
     Name: Saint Scepter Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100399
     AegisName: MeawFoxtail_Cube
     Name: Meowmeow Foxtail Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100400
     AegisName: Fog_Dew_Sword_Cube
     Name: Kiri no Tsuyu Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100401
     AegisName: Humma_Clear_Cube
     Name: Clarity Huuma Shuriken Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
@@ -61433,105 +61433,105 @@ Body:
   - Id: 100412
     AegisName: Great_Hero_Bravery
     Name: Great Hero's Bravery
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100413
     AegisName: Great_Hero_Wisdom
     Name: Great Hero's Wisdom
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100414
     AegisName: Vampire_Box_IL
     Name: Vampire Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100415
     AegisName: S_Vampire_Box_IL
     Name: Special Vampire Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100416
     AegisName: S_Frozen_Box_IL
     Name: Special Frozen Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100417
     AegisName: Turtle_Is_Box_IL
     Name: Turtle Island Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100418
     AegisName: S_Turtle_Is_Box_IL
     Name: Special Turtle Island Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100419
     AegisName: Teddy_Bear_Box_IL
     Name: Teddy Bear Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100420
     AegisName: S_Teddy_Bear_Box_IL
     Name: Special Teddy Bear Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100421
     AegisName: Luanda_Box_IL
     Name: Luanda Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100422
     AegisName: S_Luanda_Box_IL
     Name: Special Luanda Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100423
     AegisName: Labyrinth_Box_IL
     Name: Labyrinth Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100424
     AegisName: S_Teddy_Labyrinth_IL
     Name: Special Labyrinth Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100425
     AegisName: Underwater_Box_IL
     Name: Underwater Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100426
     AegisName: S_Underwater_Box_IL
     Name: Special Underwater Refine Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -61547,14 +61547,14 @@ Body:
   - Id: 100433
     AegisName: EnchantStone_Recipe_3m
     Name: March Costume Enchant Stone Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100436
     AegisName: Circlet_Refine_Cube
     Name: Temporal Circlet +11 Refine Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -61693,21 +61693,21 @@ Body:
   - Id: 100466
     AegisName: Egir_Power_Box
     Name: Aegir's Power Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100467
     AegisName: Egir_Magic_Box
     Name: Aegir's Magical Power Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100468
     AegisName: Egirnion_Box
     Name: Aegirnian Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
@@ -61734,7 +61734,7 @@ Body:
   - Id: 100476
     AegisName: MD_Airboat_Random
     Name: Ymir Beads
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -61778,42 +61778,42 @@ Body:
   - Id: 100479
     AegisName: Sakray_Fury
     Name: Sakrai's Wraith
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100480
     AegisName: Sakray_Fury2
     Name: Condensed Sakrai's Wrath
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100481
     AegisName: Overclocker
     Name: Battle Processor Accelerator
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100485
     AegisName: Sakray_Regret
     Name: Sakrai's Regret
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100486
     AegisName: Sakray_Regret2
     Name: Condensed Sakrai's Regret
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100487
     AegisName: Loki_Coin_2
     Name: Loki's White Coin    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -61822,7 +61822,7 @@ Body:
   - Id: 100488
     AegisName: Loki_Advice_2
     Name: Loki's Advice (Magic)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62124,7 +62124,7 @@ Body:
   - Id: 100572
     AegisName: FullPeneShadow_Mix
     Name: Full Penetration Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62150,14 +62150,14 @@ Body:
   - Id: 100579
     AegisName: PendantStoneForWork
     Name: Pendant Gemstone of Force
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 100580
     AegisName: Dark_Stone
     Name: Dark Stone
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -62174,19 +62174,19 @@ Body:
   - Id: 100591
     AegisName: Thanos_W_Reform_1
     Name: Thanos Weapon Reform Cube (Lower)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100592
     AegisName: Thanos_W_Reform_2
     Name: Thanos Weapon Reform Cube (Middle)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100596
     AegisName: FullTempShadow_Mix
     Name: Full Tempest Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62195,7 +62195,7 @@ Body:
   - Id: 100600
     AegisName: Shadow_Mix_Recipe2
     Name: New Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62204,7 +62204,7 @@ Body:
   - Id: 100601
     AegisName: Illusion_Module_Mix
     Name: Illusion Module Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62213,7 +62213,7 @@ Body:
   - Id: 100602
     AegisName: Automatic_Module_Mix
     Name: Automatic Module Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62250,7 +62250,7 @@ Body:
   - Id: 100619
     AegisName: Thanos_Refine_Hammer
     Name: Modified Thanos Refinement Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62259,7 +62259,7 @@ Body:
   - Id: 100620
     AegisName: True_GemShadow_Mix
     Name: True Gemstone Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62268,7 +62268,7 @@ Body:
   - Id: 100621
     AegisName: Mammoth_Mix
     Name: Maximum Mammonth Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62277,7 +62277,7 @@ Body:
   - Id: 100623
     AegisName: Shadow_Mix_Recipe_TH
     Name: Lapine Box (Shadow)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62286,7 +62286,7 @@ Body:
   - Id: 100626
     AegisName: GrayWolf_7_Ticket
     Name: Gray Wolf +7 Refinement Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -62300,7 +62300,7 @@ Body:
   - Id: 100627
     AegisName: GrayWolf_9_Ticket
     Name: Gray Wolf +9 Refinement Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -62314,19 +62314,19 @@ Body:
   - Id: 100648
     AegisName: Consecrate_Weapon_1
     Name: Purification Ritual
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100649
     AegisName: Consecrate_Weapon_2
     Name: Advanced Purification Ritual
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100650
     AegisName: Pontifex_Courage
     Name: Pontifex Courage
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 180
     Flags:
@@ -62336,7 +62336,7 @@ Body:
   - Id: 100651
     AegisName: Pontifex_Wisdom
     Name: Pontifex Wisdom
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 180
     Flags:
@@ -62346,7 +62346,7 @@ Body:
   - Id: 100652
     AegisName: Pontifex_Tenacity
     Name: Pontifex Tenacity
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 180
     Flags:
@@ -62356,7 +62356,7 @@ Body:
   - Id: 100653
     AegisName: Pontifex_Belief
     Name: Pontifex Belief
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 180
     Flags:
@@ -62376,7 +62376,7 @@ Body:
   - Id: 100661
     AegisName: EXPShadow_Mix
     Name: Experience Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62385,7 +62385,7 @@ Body:
   - Id: 100684
     AegisName: Bio_Helm_Refine_Cube
     Name: Biological Lab Helmet +11 Refinement Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62404,7 +62404,7 @@ Body:
   - Id: 100691
     AegisName: AbsorbShadow_Mix
     Name: Absolve Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62413,26 +62413,26 @@ Body:
   - Id: 100694
     AegisName: C_Armor_Reform_1
     Name: Armor Modification Box (Lower)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100695
     AegisName: C_Armor_Reform_2
     Name: Armor Modification Box (Middle)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100699
     AegisName: Twins_Box_IL
     Name: Twins Refinement Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100700
     AegisName: S_Twins_Box_IL
     Name: Special Twins Refinement Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -62479,7 +62479,7 @@ Body:
   - Id: 100710
     AegisName: EXP_Overclocker
     Name: EXP Overclocker
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
@@ -62504,7 +62504,7 @@ Body:
   - Id: 100722
     AegisName: Booster_RandomOpt_P
     Name: Booster Modification Stone(Physical)
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -62518,7 +62518,7 @@ Body:
   - Id: 100723
     AegisName: Booster_RandomOpt_M
     Name: Booster Modification Stone(Magical)
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -62595,33 +62595,33 @@ Body:
   - Id: 100744
     AegisName: Hero_LT_Refine_Melee
     Name: Hero's Weapon Modifier(Physical)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100745
     AegisName: Hero_LT_Refine_Magic
     Name: Hero's Weapon Modifier(Magical)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 100746
     AegisName: C_Weapon_Reform_1
     Name: Weapon Modification Box (Lower)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100747
     AegisName: C_Weapon_Reform_2
     Name: Weapon Modification Box (Middle)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100748
     AegisName: C_Weapon_Reform_3
     Name: Weapon Modification Box (Upper)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100750
@@ -62657,7 +62657,7 @@ Body:
   - Id: 100753
     AegisName: Hero_Equipment_Cube
     Name: Ancient Hero's Release Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62666,7 +62666,7 @@ Body:
   - Id: 100783
     AegisName: MajorAutoSpell_Mix
     Name: Auto Spell Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62675,7 +62675,7 @@ Body:
   - Id: 100784
     AegisName: Shadow_Changer_W_Shi
     Name: Shadow Changer (Weapon→Shield)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62694,7 +62694,7 @@ Body:
   - Id: 100786
     AegisName: C_Armor_Reform_3
     Name: Armor Modification Box (Upper)
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 100810
@@ -62717,35 +62717,35 @@ Body:
   - Id: 100817
     AegisName: Thanos_Upgrade_Box
     Name: Thanos Upgrade Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100819
     AegisName: Hero_Weapon_Up_Box_1
     Name: Hero's Weapon Modification Box I
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100820
     AegisName: Hero_Weapon_Up_Box_2
     Name: Hero's Weapon Modification Box II
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100821
     AegisName: Hero_Weapon_Hammer_1
     Name: Modified Hero's Weapon Refinement Hammer I
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100822
     AegisName: Hero_Weapon_Hammer_2
     Name: Modified Hero's Weapon Refinement Hammer II
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
@@ -62759,14 +62759,14 @@ Body:
   - Id: 100834
     AegisName: Hero_Weapon_Up_Box_3
     Name: Hero's Weapon Modification Box III
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100835
     AegisName: Hero_Weapon_Hammer_3
     Name: Modified Hero's Weapon Refinement Hammer III
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
@@ -62856,7 +62856,7 @@ Body:
   - Id: 100887
     AegisName: MagicalShadow_Mix
     Name: Clever Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62865,7 +62865,7 @@ Body:
   - Id: 100888
     AegisName: PhysicalShadow_Mix
     Name: Durable Shadow Pick-Up Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -62874,7 +62874,7 @@ Body:
   - Id: 100890
     AegisName: Shadow_Changer_A_W
     Name: Shadow Changer (Armor→Weapon)
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -63008,14 +63008,14 @@ Body:
   - Id: 100917
     AegisName: Hero_Weapon_Hammer_4
     Name: Modified Hero's Weapon Refinement Hammer IV
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100918
     AegisName: Hero_Weapon_Up_Box_4
     Name: Hero's Weapon Modification Box IV
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
@@ -63081,14 +63081,14 @@ Body:
   - Id: 100938
     AegisName: Hero_Weapon_Hammer_5
     Name: Modified Hero's Weapon Refinement Hammer V
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 100939
     AegisName: Hero_Weapon_Up_Box_5
     Name: Hero's Weapon Modification Box V
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
@@ -64735,19 +64735,19 @@ Body:
   - Id: 101060
     AegisName: Select_Example1
     Name: TestA
-    Type: DelayConsume
+    Type: Delayconsume
     Flags:
       BuyingStore: true
   - Id: 101062
     AegisName: Select_Example2
     Name: TestB
-    Type: DelayConsume
+    Type: Delayconsume
     Flags:
       BuyingStore: true
   - Id: 101075
     AegisName: SLD_Card_Recipe
     Name: Sealed Boss Card Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -64756,7 +64756,7 @@ Body:
   - Id: 101077
     AegisName: Vivatus_Weapon_Hammer
     Name: Vivatus Weapon Refinement Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -64765,7 +64765,7 @@ Body:
   - Id: 101078
     AegisName: Adulter_Weapon_Up_Box
     Name: Adulter Weapon Modification Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -64994,7 +64994,7 @@ Body:
   - Id: 101181
     AegisName: ReloadShadow_Mix
     Name: Reload Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65003,7 +65003,7 @@ Body:
   - Id: 101182
     AegisName: SpellCasterShadow_Mix
     Name: Spell Caster Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65026,7 +65026,7 @@ Body:
   - Id: 101184
     AegisName: Ice_F_Stone_Box2
     Name: Ice Magic Stone Box 2
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65097,14 +65097,14 @@ Body:
   - Id: 101189
     AegisName: Hero_Weapon_Hammer_6
     Name: Modified Hero's Weapon Refinement Hammer VI
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
   - Id: 101190
     AegisName: Hero_Weapon_Up_Box_6
     Name: Hero's Weapon Modification Box VI
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       item_reform();
@@ -65167,13 +65167,13 @@ Body:
   - Id: 101243
     AegisName: Shadow_Changer_NPC
     Name: Shadow Changer
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 101257
     AegisName: R_BearersShadow_Mix
     Name: Lord Bearer's Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65182,7 +65182,7 @@ Body:
   - Id: 101258
     AegisName: M_BlitzShadow_Mix
     Name: Mega Blitz Shadow Thump Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65191,7 +65191,7 @@ Body:
   - Id: 101259
     AegisName: Special_Hat_Hammer
     Name: Refinement Hammer for Special Hats
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65274,7 +65274,7 @@ Body:
   - Id: 101306
     AegisName: Poenitentia_Hammer
     Name: Poenitentia Refining Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65283,7 +65283,7 @@ Body:
   - Id: 101307
     AegisName: Barmund_Hammer
     Name: Barmund Refining Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65292,7 +65292,7 @@ Body:
   - Id: 101308
     AegisName: True_GemShadow_Up
     Name: True Gemstone Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65301,7 +65301,7 @@ Body:
   - Id: 101309
     AegisName: EXPShadow_Up
     Name: Experience Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65310,7 +65310,7 @@ Body:
   - Id: 101310
     AegisName: MagicalShadow_Up
     Name: Clever Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65319,7 +65319,7 @@ Body:
   - Id: 101311
     AegisName: InfinityShadow_Up
     Name: Infinity Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65380,7 +65380,7 @@ Body:
   - Id: 101340
     AegisName: Bs_Item_M_S_52
     Name: Blacksmith's Blessing Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65390,7 +65390,7 @@ Body:
     AegisName: Bs_Item_M_S_53
     # Name: Hollgrehenn's Shadow Refine Hammer Combination Scroll
     Name: Hollgrehenn Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65399,7 +65399,7 @@ Body:
   - Id: 101342
     AegisName: Bs_Item_M_S_54
     Name: Powerful Soul Essence Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65408,7 +65408,7 @@ Body:
   - Id: 101343
     AegisName: Bs_Item_M_S_55
     Name: Powerful Dimension Essence Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65417,7 +65417,7 @@ Body:
   - Id: 101344
     AegisName: Bs_Item_M_S_56
     Name: Enchantment Ticket Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65426,7 +65426,7 @@ Body:
   - Id: 101345
     AegisName: Bs_Item_M_S_57
     Name: Beast's Leather Shoes Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 200
     Flags:
@@ -65436,7 +65436,7 @@ Body:
   - Id: 101346
     AegisName: Bs_Item_M_S_58
     Name: Pirate Captain's Coat Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 200
     Flags:
@@ -65446,7 +65446,7 @@ Body:
   - Id: 101347
     AegisName: Bs_Item_M_S_59
     Name: Phreeoni Wing Suit Combination Scroll
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 200
     Flags:
@@ -65473,13 +65473,13 @@ Body:
   - Id: 101355
     AegisName: OS_Weapon_Reform
     Name: OS Weapon Modification Box
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 101359
     AegisName: MajorAutoSpell_Up
     Name: Major Auto Spell Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65488,7 +65488,7 @@ Body:
   - Id: 101360
     AegisName: Hasty_Up
     Name: Hasty Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65497,7 +65497,7 @@ Body:
   - Id: 101361
     AegisName: PhysicalShadow_Up
     Name: Durable Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65506,7 +65506,7 @@ Body:
   - Id: 101362
     AegisName: PerfectSize_Up
     Name: Perfect Size Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65515,7 +65515,7 @@ Body:
   - Id: 101363
     AegisName: OS_Helm_Hammer
     Name: Upgraded OS Helmet Refine Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65524,7 +65524,7 @@ Body:
   - Id: 101364
     AegisName: OS_Weapon_Hammer
     Name: Upgraded OS Weapon Refine Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65533,7 +65533,7 @@ Body:
   - Id: 101389
     AegisName: Helm_Of_Faith_Hammer
     Name: Helm of Faith Refine Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65542,7 +65542,7 @@ Body:
   - Id: 101390
     AegisName: Clock_Tower_W_Hammer
     Name: Clock Tower Basement Refine Hammer
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65560,7 +65560,7 @@ Body:
   - Id: 101423
     AegisName: Boost_Armor_Box
     Name: Boost Armor Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     EquipLevelMin: 100
     Trade:
       NoDrop: true
@@ -65573,7 +65573,7 @@ Body:
   - Id: 101453
     AegisName: Special_Coin_Pack
     Name: Special Coin Pack    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     EquipLevelMin: 200
     Trade:
       NoDrop: true
@@ -65587,7 +65587,7 @@ Body:
   - Id: 101454
     AegisName: Metal_W_Box
     Name: Metal Weapon Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65599,7 +65599,7 @@ Body:
   - Id: 101455
     AegisName: E_Auto_Up
     Name: Automatic (bound) upgrade package    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     EquipLevelMin: 160
     Trade:
       NoDrop: true
@@ -65614,7 +65614,7 @@ Body:
   - Id: 101456
     AegisName: Memento_Box
     Name: Souvenir Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65626,7 +65626,7 @@ Body:
   - Id: 101457
     AegisName: P_Memento_Box
     Name: Premium Souvenir Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65638,7 +65638,7 @@ Body:
   - Id: 101458
     AegisName: Booster_Hat_Box
     Name: Booster Costume Helmet Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65650,7 +65650,7 @@ Body:
   - Id: 101459
     AegisName: Booster_Back_Box
     Name: Booster Costume Backpack Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65692,13 +65692,13 @@ Body:
   - Id: 101470
     AegisName: aegis_101470
     Name: Stats Soul Potion Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Flags:
       BuyingStore: true
   - Id: 101471
     AegisName: aegis_101471
     Name: Alchemist Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Buy: 20
     Weight: 10
     Flags:
@@ -65706,14 +65706,14 @@ Body:
   - Id: 101482
     AegisName: Freedom_Stick_Cube
     Name: Freedom Stick Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 101483
     AegisName: Blessed_Knife_Cube
     Name: Blessed Knife Remodeling Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
@@ -65745,7 +65745,7 @@ Body:
   - Id: 101542
     AegisName: aegis_101542
     Name: Full Penetration Shadow Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65788,7 +65788,7 @@ Body:
   - Id: 101547
     AegisName: aegis_101547
     Name: Full Tempest Shadow Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65831,7 +65831,7 @@ Body:
   - Id: 101552
     AegisName: aegis_101552
     Name: Durable Shadow Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65856,7 +65856,7 @@ Body:
   - Id: 101555
     AegisName: aegis_101555
     Name: Clever Shadow Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65881,14 +65881,14 @@ Body:
   - Id: 101563
     AegisName: aegis_101563
     Name: Helmet Selection Box for OS Weapons
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 101564
     AegisName: AllMighty_Up
     Name: Almighty Shadow Spellbook
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65897,14 +65897,14 @@ Body:
   - Id: 101565
     AegisName: aegis_101565
     Name: Shadow Spellbook Selection Box
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 101637
     AegisName: EP19_DGW_Refine
     Name: Dim Glacier Reinforcement Device    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 200
     Flags:
       BuyingStore: true
@@ -65914,7 +65914,7 @@ Body:
   - Id: 101639
     AegisName: D_Gw_Extractor
     Name: Dim Glacier Extractor    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65929,7 +65929,7 @@ Body:
   - Id: 101645
     AegisName: GMT_Robe_Stone
     Name: Geffen Secret Stone
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65938,7 +65938,7 @@ Body:
   - Id: 101654
     AegisName: aegis_101654
     Name: Almighty Shadow Selection Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -65963,7 +65963,7 @@ Body:
   - Id: 101657
     AegisName: aegis_101657
     Name: True Gemstone Shadow Selection Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66006,7 +66006,7 @@ Body:
   - Id: 101662
     AegisName: aegis_101662
     Name: Perfect Size Shadow Selection Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66031,7 +66031,7 @@ Body:
   - Id: 101665
     AegisName: EXPShadow_Mix2
     Name: Experience Shadow Pickbox (Weapon)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66139,34 +66139,34 @@ Body:
   - Id: 101727
     AegisName: aegis_101727
     Name: Maximum Mammoth Shadow Selection Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 101728
     AegisName: aegis_101728
     Name: Spell Caster Shadow Selection Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 101729
     AegisName: aegis_101729
     Name: Absorb Shadow Selection Box    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 101745
     AegisName: Dimmen_A_Reform
     Name: Unsealing the dimension    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 101769
     AegisName: Barmund_Plain_Reform
     Name: Grassland Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66181,7 +66181,7 @@ Body:
   - Id: 101770
     AegisName: Barmund_Death_Reform
     Name: Death Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66196,7 +66196,7 @@ Body:
   - Id: 101771
     AegisName: Barmund_Flame_Reform
     Name: Fire Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66211,7 +66211,7 @@ Body:
   - Id: 101772
     AegisName: Barmund_Ice_Reform
     Name: Ice Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66226,7 +66226,7 @@ Body:
   - Id: 101792
     AegisName: SubjectCape_Refine_Cube
     Name: Subject Manteau 12 Refine Cube
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66235,7 +66235,7 @@ Body:
   - Id: 101816
     AegisName: Dimmen_A_Refine
     Name: Dimension Enhancer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 101876
@@ -66250,7 +66250,7 @@ Body:
   - Id: 101933
     AegisName: Barmund_Soul_Reform
     Name: Soul Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66265,7 +66265,7 @@ Body:
   - Id: 101934
     AegisName: Barmund_Venom_Reform
     Name: Poison Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66280,7 +66280,7 @@ Body:
   - Id: 101935
     AegisName: Barmund_Temple_Reform
     Name: Crusade Rune Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66295,7 +66295,7 @@ Body:
   - Id: 101936
     AegisName: Barmund_S_Reform
     Name: Soul Magic Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66310,7 +66310,7 @@ Body:
   - Id: 101937
     AegisName: Barmund_V_Reform
     Name: Poison Magic Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66325,7 +66325,7 @@ Body:
   - Id: 101938
     AegisName: Barmund_T_Reform
     Name: Temple Magic Upgrade    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66371,300 +66371,300 @@ Body:
   - Id: 102017
     AegisName: Mocadas_Refine_Box
     Name: Smelting Mocadas Equipment 9~10    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 102018
     AegisName: Amp_Blueprint1
     Name: Amplification Schematic (Metal Detector MK47)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102019
     AegisName: Amp_Blueprint3
     Name: Amplification Blueprint (Safety Saver)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102020
     AegisName: Amp_Blueprint2
     Name: Amplification Schematic (Gem Detector Mk47)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102021
     AegisName: Amp_Blueprint4
     Name: Amplification Schematic (Safety Foxtail)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102022
     AegisName: Amp_Blueprint6
     Name: Amplification Blueprint (Crowsword)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102023
     AegisName: Amp_Blueprint5
     Name: Amplification Schematic (Blocking Spear)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102024
     AegisName: Amp_Blueprint7
     Name: Amplification Schematic (Rubber Hammer)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102025
     AegisName: Amp_Blueprint8
     Name: Amplification Blueprint (Saw Ax)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102026
     AegisName: Amp_Blueprint9
     Name: Amplification Schematic (Safety Knuckle)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102027
     AegisName: Amp_Blueprint10
     Name: Amplification Schematic (Safety Manual)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102028
     AegisName: Amp_Blueprint11
     Name: Amplification Schematic (Welding Wand)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102029
     AegisName: Amp_Blueprint12
     Name: Amplification Blueprint (Detecting Staff)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102030
     AegisName: Amp_Blueprint13
     Name: Amplification Blueprint (Grinder Fengma Shuriken)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102031
     AegisName: Amp_Blueprint14
     Name: Amplification Schematic (Volt Shooter)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102032
     AegisName: Amp_Blueprint15
     Name: Amplified Blueprint (Bolt Crusher)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102033
     AegisName: Amp_Blueprint16
     Name: Amplified Schematic (Volt Revolver)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102034
     AegisName: Amp_Blueprint17
     Name: Amplified Schematic (Safety Whip)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102035
     AegisName: Amp_Blueprint18
     Name: Amplification Schematic (Safety Lute)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
   - Id: 102040
     AegisName: Mocadas_Slabs1
     Name: Mocadas Slate (Sashir)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102041
     AegisName: Mocadas_Slabs2
     Name: Mocadas Slate (Panjira)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102042
     AegisName: Mocadas_Slabs3
     Name: Mocadas Slate (Jedogar)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102043
     AegisName: Mocadas_Slabs4
     Name: Mocadas Slate (Kiteb)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102044
     AegisName: Mocadas_Slabs5
     Name: Mocadas Slate (Tasiripati)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102045
     AegisName: Mocadas_Slabs6
     Name: Mocadas Slate (Dest)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102046
     AegisName: Mocadas_Slabs7
     Name: Mocadas Slate (Tavar)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102047
     AegisName: Mocadas_Slabs8
     Name: Mocadas Slate (Dawablunt)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102048
     AegisName: Mocadas_Slabs9
     Name: Mocadas Slate (Mesht)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102049
     AegisName: Mocadas_Slabs10
     Name: Mocadas Slate (Baru)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102050
     AegisName: Mocadas_Slabs11
     Name: Mocadas Slate (Blessing)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102051
     AegisName: Mocadas_Slabs12
     Name: Mocadas Slate (Saz)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102052
     AegisName: Mocadas_Slabs13
     Name: Mocadas Slate (Sharrak)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102053
     AegisName: Mocadas_Slabs14
     Name: Mocadas Slate (Tea Man)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102054
     AegisName: Mocadas_Slabs15
     Name: Mocadas Slate (Gross)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102055
     AegisName: Mocadas_Slabs16
     Name: Mocadas Slate (Kaguaz)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102056
     AegisName: Mocadas_Slabs17
     Name: Mocadas Slate (Nazal)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102057
     AegisName: Mocadas_Slabs18
     Name: Mocadas Slate (Kanjar)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102058
     AegisName: Mocadas_Slabs19
     Name: Mocadas Slate (Eisa)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102059
     AegisName: Mocadas_Slabs20
     Name: Mocadas Slate (Naraenzac)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102060
     AegisName: Mocadas_Slabs21
     Name: Mocadas Slate (Tapang)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102061
     AegisName: Mocadas_Slabs22
     Name: Mocadas Slate (Saka)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102062
     AegisName: Mocadas_Slabs23
     Name: Mocadas Slate (Thelin)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       laphine_synthesis();
   - Id: 102072
     AegisName: Justice_Weapon_Hammer
     Name: Good Weapon Smelting Hammer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66673,7 +66673,7 @@ Body:
   - Id: 102073
     AegisName: Injustice_Weapon_Hammer
     Name: Evil Weapon Forge Hammer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66682,7 +66682,7 @@ Body:
   - Id: 102075
     AegisName: GoodnEvil_Helm_Hammer
     Name: Crown of Good and Evil Smelting Hammer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66691,7 +66691,7 @@ Body:
   - Id: 102124
     AegisName: F_Ein_Weapon_Hammer
     Name: Flush Weapon Smelting Hammer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66700,7 +66700,7 @@ Body:
   - Id: 102126
     AegisName: Amp_Blueprint19
     Name: Amplification Schematic (Metal Detector MK47-2)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 1250
     Script: |
       item_reform();
@@ -66716,13 +66716,13 @@ Body:
   - Id: 102224
     AegisName: Hero_Up_Cube_11
     Name: +11 Ancient Hero Armor Opening Cube    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 102227
     AegisName: Glacier_Armor_9Refine
     Name: Glaceon Armor 9 refine cube    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Trade:
       NoDrop: true
@@ -66736,7 +66736,7 @@ Body:
   - Id: 102228
     AegisName: EP20_DGA_Refine
     Name: Dim Glaceon Armor Enhancer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 200
     Flags:
       BuyingStore: true
@@ -66746,7 +66746,7 @@ Body:
   - Id: 102238
     AegisName: Isgard_Crown_Hammer
     Name: Isgard Crown Smelting Hammer    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66755,7 +66755,7 @@ Body:
   - Id: 102277
     AegisName: Loki_Advice
     Name: Loki's advice (near physics)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66764,7 +66764,7 @@ Body:
   - Id: 102278
     AegisName: Loki_Coin
     Name: Loki's Coin    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66773,7 +66773,7 @@ Body:
   - Id: 102295
     AegisName: Bs_Item_M_S_60
     Name: Voitata Hat Recipe    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 240
     Flags:
@@ -66783,7 +66783,7 @@ Body:
   - Id: 102308
     AegisName: Bs_Item_M_S_61
     Name: Beelzebub's Crown Combination Scroll    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 240
     Flags:
@@ -66793,7 +66793,7 @@ Body:
   - Id: 102310
     AegisName: Bs_Item_M_S_62
     Name: Vesper Headgear Combination Scroll    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 240
     Flags:
@@ -66803,7 +66803,7 @@ Body:
   - Id: 102311
     AegisName: Bs_Item_M_S_63
     Name: Groan of Corruption Recipe    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     EquipLevelMin: 240
     Flags:
@@ -66831,7 +66831,7 @@ Body:
   - Id: 102342
     AegisName: Loki_Advice_3
     Name: Loki's advice (distance physics)    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66840,7 +66840,7 @@ Body:
   - Id: 102343
     AegisName: Loki_Coin_3
     Name: Loki's Black Coin    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Flags:
       BuyingStore: true
@@ -66849,20 +66849,20 @@ Body:
   - Id: 102344
     AegisName: Fan_Upgrade_Kit_EX
     Name: Fan Modification Kit EX    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Weight: 10
     Script: |
       laphine_upgrade();
   - Id: 102373
     AegisName: Bar_D_A_Seal
     Name: Deep Runic Armor Inscription    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 102374
     AegisName: Bar_D_A_Unseal
     Name: Depth Rune Armor Unengraved    # !todo check english name
-    Type: DelayConsume
+    Type: Delayconsume
     Script: |
       item_reform();
   - Id: 102396 # note: item doesn't exist in itemInfo_true but exists in itemreformsystem
