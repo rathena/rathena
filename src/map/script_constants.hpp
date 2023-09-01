@@ -4220,6 +4220,7 @@
 	export_constant(RC2_EP172ALPHA);
 	export_constant(RC2_EP172BETA);
 	export_constant(RC2_EP172BATH);
+	export_constant(RC2_ILLUSION_TURTLE);
 	export_constant(RC2_MAX);
 
 	/* monster ai */

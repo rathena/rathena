@@ -92522,6 +92522,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demon
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 200
@@ -92569,6 +92571,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
@@ -92616,6 +92620,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 170
@@ -92663,6 +92669,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -92710,6 +92718,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 250
@@ -92757,6 +92767,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200

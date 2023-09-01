@@ -10593,7 +10593,7 @@ Body:
       skill "AL_RUWACH",1;
   - Id: 4550
     AegisName: Upd_Bow_Guardian_Card
-    Name: Upd Bow Guardian Card
+    Name: Upgrade Bow Guardian Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -40480,6 +40480,20 @@ Body:
          bonus bMatkRate,15;
          bonus bUseSPrate,15;
       }
+  - Id: 27228
+    AegisName: Big_Eggring_Card_J
+    Name: Big Eggring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAllStats,getrefine();
   - Id: 27237
     AegisName: Faceworm_Q_Card_J
     Name: Faceworm Queen Card
@@ -71653,6 +71667,11 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",2+(getrefine()/2);
+  - Id: 312300
+    AegisName: aegis_312300
+    Name: Latent Release (Dragon Knight III)
+    Type: Card
+    SubType: Enchant
   - Id: 312302
     AegisName: DK_Soul_DB
     Name: Dragon Knight Soul (Dragonic Breath)
@@ -73254,6 +73273,43 @@ Body:
             }
          }
       }
+  - Id: 312417
+    AegisName: aegis_312417
+    Name: Amplified Resentment
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,10;
+  - Id: 312418
+    AegisName: aegis_312418
+    Name: Prayer Bell
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bMagicAddSize,Size_All,10;
+  - Id: 312419
+    AegisName: aegis_312419
+    Name: All Hit
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitRate,100;
+  - Id: 312420
+    AegisName: aegis_312420
+    Name: Flame of Regeneration
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus5 bAutoSpell,"IG_ULTIMATE_SACRIFICE",2,100,BF_WEAPON|BF_MAGIC,0;
+  - Id: 312421
+    AegisName: aegis_312421
+    Name: Ruler of the Farthest
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHPGainValue,100;
+      bonus bSPGainValue,10;
   - Id: 312422
     AegisName: Justice_Vigor_CD
     Name: Good Vigor (Cardinal)
@@ -73388,6 +73444,18 @@ Body:
     Name: Evil Vigor (Spirit Handler)
     Type: Card
     SubType: Enchant
+  - Id: 312473
+    AegisName: aegis_312473
+    Name: Latent Release (Archmage III)
+    Type: Card
+    SubType: Enchant
+  - Id: 312475
+    AegisName: aegis_312475
+    Name: No Thoughts
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bCritical,100; bonus bCritAtkRate,100; }",100,10000,BF_WEAPON;
   - Id: 312476
     AegisName: aegis_312476
     Name: Sky Emperor Stone (Garment)
