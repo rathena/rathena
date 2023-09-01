@@ -68,7 +68,7 @@ bool mapreg_setreg(int64 uid, int64 val)
 	const char* name = get_str(num);
 
 	if (val != 0) {
-		if (regs.vars->exists(uid)) {
+		if (regs.vars->exists(uid) && !regs.vars->get(uid).empty()) {
 			auto& m = regs.vars->get(uid);
 			m = val;
 
@@ -125,7 +125,7 @@ bool mapreg_setregstr(int64 uid, std::string str)
 		}
 		regs.vars->erase(uid);
 	} else {
-		if (regs.vars->exists(uid)) {
+		if (regs.vars->exists(uid) && !regs.vars->get(uid).empty()) {
 			auto& m = regs.vars->get(uid);
 			m = str;
 
