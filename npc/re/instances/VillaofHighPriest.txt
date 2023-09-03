@@ -1062,8 +1062,8 @@ OnStart:
 	monster 'map_adv$,122,351,"Resurrected Schulang",21314,1, .@label$;	// EP18_MD_SCHULANG
 	monster 'map_adv$,124,356,"False God",21315,1, .@label$;	// EP18_MD_DEMI_FREYJA
 
-	// unofficial spawn of HIDDEN_MOB8 to cast NPC_CANE_OF_EVIL_EYE
-	monster 'map_adv$,123,338," ",20562,1, instance_npcname("adv_demigod_boss") + "::OnTempDead";	// HIDDEN_MOB8
+	// unofficial spawn of HIDDEN_MOB7 to cast NPC_CANE_OF_EVIL_EYE
+	monster 'map_adv$,123,338," ",3038,1, instance_npcname("adv_demigod_boss") + "::OnTempDead";	// HIDDEN_MOB7
 	.@mob_id = $@mobid[0];
 	unitskilluseid .@mob_id,"NPC_INVISIBLE",3,-50;
 	unitskillusepos .@mob_id,"NPC_CANE_OF_EVIL_EYE",3,123,349,-50;

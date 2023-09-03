@@ -7879,7 +7879,7 @@ wolfvill,50,234,6	script(CLOAKED)	Hazar#ep18_1	4_EP18_HAZAR,{
 		next;
 		npctalk "Did I say that I had to leave today or not?", "Hazar#ep18_1", bc_self;
 		next;
-		npctalk "haThank you.", "Camille#ep18_1", bc_self;
+		npctalk "Ha thank you.", "Camille#ep18_1", bc_self;
 		next;
 		npctalk "By the way, what's the shape of this cart? There's a crack in the wheel. Maybe you replaced it with a new one, but my eyes aren't getting old?", "Hazar#ep18_1", bc_self;
 		next;
@@ -8137,6 +8137,12 @@ gw_fild01,205,102,4	script(CLOAKED)	#ep18_2_mon	EP18_GREY_WOLF,{
 					cloakonnpcself( "#ep18_2_mon" );
 					playbgm "183";
 					close;
+				}
+				if (.@camille_hp < 1) {
+					next;
+					mes "^ff0000Dangerous!! I need to stop the battle and restore Camille's health.^000000";
+					playbgm "183";
+					close
 				}
 			}
 			break;
