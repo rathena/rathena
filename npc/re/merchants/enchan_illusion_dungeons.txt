@@ -1715,16 +1715,23 @@ prontera,88,113,5	script	Illusion Merchant#0829	HIDDEN_NPC,{
 	mes "I'm selling two random optional weapon grant scrolls that I made myself. You can choose the payment method you like.";
 	next;
 	switch( select( "Purchase with Zeny.", "Purchase with Illusion Stones" )) {
-		mes "[Illusion Merchant]";
-		mes "I hope you like it.";
-		close2;
-		case 1: callshop "market_resonance_stone"; end;
-		case 2: callshop "resonance_stone_barter"; end;
+		case 1:
+			mes "[Illusion Merchant]";
+			mes "I hope you like it.";
+			close2;
+			callshop "market_resonance_stone";
+			end;
+		case 2:
+			mes "[Illusion Merchant]";
+			mes "I hope you like it.";
+			close2;
+			callshop "resonance_stone_barter";
+			end;
 	}
 OnInit:
 	.@npc_id = getnpcid(0);
 	setunitdata .@npc_id,UNPC_CLASS, JOB_MAGE_HIGH;
-	setunitdata .@npc_id,UNPC_SEX,2;
+	setunitdata .@npc_id,UNPC_SEX,SEX_FEMALE;
 	setunitdata .@npc_id,UNPC_HEADTOP,142;
 	setunitdata .@npc_id,UNPC_HEADMIDDLE,92;
 	setunitdata .@npc_id,UNPC_HAIRSTYLE,2;
