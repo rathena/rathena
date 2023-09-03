@@ -8142,7 +8142,7 @@ gw_fild01,205,102,4	script(CLOAKED)	#ep18_2_mon	EP18_GREY_WOLF,{
 					next;
 					mes "^ff0000Dangerous!! I need to stop the battle and restore Camille's health.^000000";
 					playbgm "183";
-					close
+					close;
 				}
 			}
 			break;
