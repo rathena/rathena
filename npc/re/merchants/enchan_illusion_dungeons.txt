@@ -1710,7 +1710,6 @@ OnInit:
 //= Illusion Merchant
 //============================================================
 -	marketshop	market_resonance_stone	-1,100003:2000000:99999,100004:2000000:99999
-// prontera,88,113,5	script	Illusion Merchant#0829	MAGICIAN_H,{
 prontera,88,113,5	script	Illusion Merchant#0829	HIDDEN_NPC,{
 	mes "[Illusion Merchant]";
 	mes "I'm selling two random optional weapon grant scrolls that I made myself. You can choose the payment method you like.";
