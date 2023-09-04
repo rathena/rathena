@@ -928,6 +928,9 @@ bool guild_invite( map_session_data *sd, map_session_data *tsd ){
 
 	auto &g = sd->guild;
 
+	if( !g ){
+		return false;
+	}
 
 	if( g->instance_id && battle_config.instance_block_invite ){
 		// TODO: message?
@@ -2190,7 +2193,9 @@ int guild_broken(int guild_id,int flag) {
 bool guild_gm_change( int guild_id, uint32 char_id, bool showMessage ){
 	auto g = guild_search( guild_id );
 
-	nullpo_retr( false, g );
+	if( !g ){
+		return false;
+	}
 
 	if( g->instance_id > 0 && battle_config.instance_block_leaderchange ){
 		//TODO: message
