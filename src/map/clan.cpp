@@ -5,14 +5,15 @@
 
 #include <string.h> //memset
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
 
 #include "battle.hpp"
 #include "clif.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
 #include "log.hpp"
 #include "pc.hpp"
@@ -73,7 +74,7 @@ struct clan* clan_searchname( const char* name ){
 	return c;
 }
 
-struct map_session_data* clan_getavailablesd( struct clan* clan ){
+map_session_data* clan_getavailablesd( struct clan* clan ){
 	int i;
 
 	nullpo_retr(NULL, clan);
@@ -110,13 +111,17 @@ int clan_getNextFreeMemberIndex( struct clan* clan ){
 	}
 }
 
-void clan_member_joined( struct map_session_data* sd ){
-	struct clan* clan;
-	int index;
-
+void clan_member_joined( map_session_data* sd ){
 	nullpo_retv(sd);
 
-	clan = clan_search(sd->status.clan_id);
+	if( sd->clan != nullptr ){
+		clif_clan_basicinfo( sd );
+		clif_clan_onlinecount( sd->clan );
+		return;
+	}
+
+	struct clan* clan = clan_search(sd->status.clan_id);
+	int index;
 
 	nullpo_retv(clan);
 
@@ -132,7 +137,7 @@ void clan_member_joined( struct map_session_data* sd ){
 	}
 }
 
-void clan_member_left( struct map_session_data* sd ){
+void clan_member_left( map_session_data* sd ){
 	int index;
 	struct clan* clan;
 
@@ -148,7 +153,7 @@ void clan_member_left( struct map_session_data* sd ){
 	}
 }
 
-bool clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_id, uint32 char_id ){
+bool clan_member_join( map_session_data *sd, int clan_id, uint32 account_id, uint32 char_id ){
 	struct clan *clan;
 
 	nullpo_ret(sd);
@@ -172,7 +177,7 @@ bool clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_
 	return true;
 }
 
-bool clan_member_leave( struct map_session_data* sd, int clan_id, uint32 account_id, uint32 char_id ){
+bool clan_member_leave( map_session_data* sd, int clan_id, uint32 account_id, uint32 char_id ){
 	struct clan *clan;
 
 	nullpo_ret(sd);
@@ -203,7 +208,7 @@ void clan_recv_message(int clan_id,uint32 account_id,const char *mes,int len) {
 	clif_clan_message(clan,mes,len);
 }
 
-void clan_send_message( struct map_session_data *sd, const char *mes, int len ){
+void clan_send_message( map_session_data *sd, const char *mes, int len ){
 	nullpo_retv(sd);
 	nullpo_retv(sd->clan);
 

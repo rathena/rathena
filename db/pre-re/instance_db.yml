@@ -1,0 +1,83 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Instance Database
+###########################################################################
+#
+# Instance Settings
+#
+###########################################################################
+# - Id                Instance ID.
+#   Name              Instance Name.
+#   TimeLimit         Total lifetime of instance in seconds. Use 0 to define infinite time. (Default: 3600)
+#   IdleTimeOut       Time before an idle instance is destroyed in seconds. Use 0 to define infinite idle time. (Default: 300)
+#   NoNpc             Prevent copying NPCs from the source map. (Default: false)
+#   NoMapFlag         Prevent copying Mapflags from the source map. (Default: false)
+#   Destroyable       Toggles the ability to destroy the instance using instance 'Destroy' button. (Default: true)
+#                     Note: the button is displayed based on parties. For any mode, it requires the party leader to be the instance owner to destroy it.
+#   Enter:            Instance entrance coordinates.
+#     Map             Map Name where players start.
+#     X               X Coordinate where players start.
+#     Y               Y Coordinate where players start.
+#   AdditionalMaps:   List of maps that are part of an instance. (Optional)
+###########################################################################
+
+Header:
+  Type: INSTANCE_DB
+  Version: 2
+
+Body:
+  - Id: 1
+    Name: Endless Tower
+    TimeLimit: 14400
+    Enter:
+      Map: 1@tower
+      X: 50
+      Y: 355
+    AdditionalMaps:
+      2@tower: true
+      3@tower: true
+      4@tower: true
+      5@tower: true
+      6@tower: true
+  - Id: 2
+    Name: Sealed Catacomb
+    TimeLimit: 7200
+    Enter:
+      Map: 1@cata
+      X: 100
+      Y: 224
+    AdditionalMaps:
+      2@cata: true
+  - Id: 3
+    Name: Orc's Memory
+    Enter:
+      Map: 1@orcs
+      X: 179
+      Y: 15
+    AdditionalMaps:
+      2@orcs: true
+  - Id: 4
+    Name: Nidhoggur's Nest
+    TimeLimit: 14400
+    Enter:
+      Map: 1@nyd
+      X: 32
+      Y: 36
+    AdditionalMaps:
+      2@nyd: true

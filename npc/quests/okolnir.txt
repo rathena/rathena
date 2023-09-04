@@ -2274,8 +2274,24 @@ que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403
 	end;
 	
 OnTouch_:
-	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
-	warp .@t$,157,369;
+	.@i = charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1);
+	if(compare(strnpcinfo(4),"aru")) {
+		switch(.@i) {
+			case 1:	warp "arug_cas01",157,369;	break;
+			case 2:	warp "arug_cas02",349,355;	break;
+			case 3:	warp "arug_cas03",321,153;	break;
+			case 4:	warp "arug_cas04",321,153;	break;
+			case 5:	warp "arug_cas05",321,153;	break;
+		}
+	} else {
+		switch(.@i) {
+			case 1:	warp "schg_cas01",369,306;	break;
+			case 2:	warp "schg_cas02",177,355;	break;
+			case 3:	warp "schg_cas03",81,95;	break;
+			case 4:	warp "schg_cas04",369,306;	break;
+			case 5:	warp "schg_cas05",369,306;	break;
+		}
+	}
 	end;
 	
 OnInit:

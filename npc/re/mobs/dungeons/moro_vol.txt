@@ -18,6 +18,3 @@ moro_vol	monster	Fire Sandman	3021,30
 moro_vol	monster	Fire Frilldora	3022,30
 moro_vol	monster	Fire Golem	3023,30
 moro_vol	monster	Fire Bug	3027,10
-moro_vol	monster	Blazing Morocc Reincarnation	3039,1
-moro_vol	monster	Distorted Morocc Reincarnation	3040,1
-moro_vol	monster	Freezing Morocc Reincarnation	3041,1

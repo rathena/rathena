@@ -9,20 +9,20 @@
 #include <string>
 #include <unordered_map>
 
-#include "../common/cli.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/md5calc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/msg_conf.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" //ip2str
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
-#include "../config/core.hpp"
+#include <common/cli.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/md5calc.hpp>
+#include <common/mmo.hpp>
+#include <common/msg_conf.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> //ip2str
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
+#include <config/core.hpp>
 
 #include "account.hpp"
 #include "ipban.hpp"
@@ -32,6 +32,7 @@
 #include "loginlog.hpp"
 
 using namespace rathena;
+using namespace rathena::server_login;
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
@@ -98,6 +99,8 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
 		}
 	}
 
+	accounts->enable_webtoken( accounts, account_id );
+
 	return p;
 }
 
@@ -117,6 +120,8 @@ void login_remove_online_user(uint32 account_id) {
 	if( p->waiting_disconnect != INVALID_TIMER ){
 		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
 	}
+
+	accounts->disable_webtoken( accounts, account_id );
 
 	online_db.erase( account_id );
 }
@@ -316,9 +321,14 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	// Account creation with _M/_F
 	if( login_config.new_account_flag ) {
 		if( len > 2 && strnlen(sd->passwd, NAME_LENGTH) > 0 && // valid user and password lengths
-			sd->passwdenc == 0 && // unencoded password
 			sd->userid[len-2] == '_' && memchr("FfMm", sd->userid[len-1], 4) ) // _M/_F suffix
 		{
+			// Encoded password
+			if( sd->passwdenc != 0 ){
+				ShowError( "Account '%s' could not be created because client side password encryption is enabled.\n", sd->userid );
+				return 0; // unregistered id
+			}
+
 			int result;
 			// remove the _M/_F suffix
 			len -= 2;
@@ -404,8 +414,11 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
+	accounts->save(accounts, &acc, true);
 
-	accounts->save(accounts, &acc);
+	if( login_config.use_web_auth_token ){
+		safestrncpy( sd->web_auth_token, acc.web_auth_token, WEB_AUTH_TOKEN_LENGTH );
+	}
 
 	if( sd->sex != 'S' && sd->account_id < START_ACCOUNT_NUM )
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", sd->userid, sd->account_id, START_ACCOUNT_NUM);
@@ -632,6 +645,10 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
 		else if(!strcmpi(w1, "client_hash_check"))
 			login_config.client_hash_check = config_switch(w2);
+		else if(!strcmpi(w1, "use_web_auth_token"))
+			login_config.use_web_auth_token = config_switch(w2);
+		else if (!strcmpi(w1, "disable_webtoken_delay"))
+			login_config.disable_webtoken_delay = cap_value(atoi(w2), 0, INT_MAX);
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
@@ -668,11 +685,11 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.usercount_high = atoi(w2);
 		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
-			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
-				if( login_config.char_per_account > MAX_CHARS ) {
-					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", login_config.char_per_account, MAX_CHARS);
-					login_config.char_per_account = MAX_CHARS;
-				}
+			if( login_config.char_per_account > MAX_CHARS ) {
+				ShowWarning("Exceeded limit of max chars per account '%d'. Capping to '%d'.\n", login_config.char_per_account, MAX_CHARS);
+				login_config.char_per_account = MAX_CHARS;
+			}else if( login_config.char_per_account < 0 ){
+				ShowWarning("Max chars per account '%d' is negative. Capping to '%d'.\n", login_config.char_per_account, MIN_CHARS);
 				login_config.char_per_account = MIN_CHARS;
 			}
 		}
@@ -746,6 +763,8 @@ void login_set_defaults() {
 	login_config.vip_sys.char_increase = MAX_CHAR_VIP;
 	login_config.vip_sys.group = 5;
 #endif
+	login_config.use_web_auth_token = true;
+	login_config.disable_webtoken_delay = 10000;
 
 	//other default conf
 	safestrncpy(login_config.loginconf_name, "conf/login_athena.conf", sizeof(login_config.loginconf_name));
@@ -762,7 +781,7 @@ void login_set_defaults() {
  * Login-serv destructor
  *  dealloc..., function called at exit of the login-serv
  */
-void do_final(void) {
+void LoginServer::finalize(){
 	struct client_hash_node *hn = login_config.client_hash_nodes;
 	AccountDB* db = accounts;
 
@@ -804,45 +823,14 @@ void do_final(void) {
 	ShowStatus("Finished.\n");
 }
 
-/**
- * Signal handler
- *  This function attempts to properly close the server when an interrupt signal is received.
- *  current signal catch : SIGTERM, SIGINT
- */
-void do_shutdown(void) {
-	if( runflag != LOGINSERVER_ST_SHUTDOWN ) {
-		runflag = LOGINSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
-		do_shutdown_loginchrif();
-		flush_fifos();
-		runflag = CORE_ST_STOP;
-	}
+void LoginServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+	// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
+	do_shutdown_loginchrif();
+	flush_fifos();
 }
 
-/**
- * Signal handler
- *  Function called when the server has received a crash signal.
- *  current signal catch : SIGSEGV, SIGFPE
- */
-void do_abort(void) {
-}
-
-// Is this still used ??
-void set_server_type(void) {
-	SERVER_TYPE = ATHENA_SERVER_LOGIN;
-}
-
-/**
- * Login serv constructor
- *  Initialisation, function called at start of the login-serv.
- * @param argc : number of argument from main()
- * @param argv : arguments values from main()
- * @return 0 everything ok else stopping programme execution.
- */
-int do_init(int argc, char** argv) {
-	runflag = LOGINSERVER_ST_STARTING;
-
+bool LoginServer::initialize( int argc, char* argv[] ){
 	// Init default value
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
@@ -882,23 +870,18 @@ int do_init(int argc, char** argv) {
 	// Account database init
 	if( accounts == NULL ) {
 		ShowFatalError("do_init: account engine not found.\n");
-		exit(EXIT_FAILURE);
+		return false;
 	} else {
 		if(!accounts->init(accounts)) {
 			ShowFatalError("do_init: Failed to initialize account engine.\n");
-			exit(EXIT_FAILURE);
+			return false;
 		}
 	}
 
 	// server port open & binding
 	if( (login_fd = make_listen_bind(login_config.login_ip,login_config.login_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",login_config.login_port);
-		exit(EXIT_FAILURE);
-	}
-
-	if( runflag != CORE_ST_STOP ) {
-		shutdown_callback = do_shutdown;
-		runflag = LOGINSERVER_ST_RUNNING;
+		return false;
 	}
 
 	do_init_logincnslif();
@@ -906,5 +889,9 @@ int do_init(int argc, char** argv) {
 	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
 
-	return 0;
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<LoginServer>( argc, argv );
 }

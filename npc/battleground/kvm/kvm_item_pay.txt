@@ -1,12 +1,6 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - KvM Item Dealer
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Kreiger Von Midgard Battleground Point redemption NPC
 //= * NOTE * 
@@ -14,8 +8,8 @@
 //= keep track of points. This NPC when talked to will
 //= convert already-given tokens and convert them to points.
 //= under the player variable kvm_point.
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //============================================================
 
 bat_room,151,144,3	script	KVM Logistic Officer#a	734,{

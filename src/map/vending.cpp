@@ -5,11 +5,11 @@
 
 #include <stdlib.h> // atoi
 
-#include "../common/malloc.hpp" // aMalloc, aFree
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp" // ShowInfo
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"  // DIFF_TICK
+#include <common/malloc.hpp> // aMalloc, aFree
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp> // ShowInfo
+#include <common/strlib.hpp>
+#include <common/timer.hpp>  // DIFF_TICK
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
@@ -55,7 +55,7 @@ static int vending_getuid(void)
  * Make a player close his shop
  * @param sd : player session
  */
-void vending_closevending(struct map_session_data* sd)
+void vending_closevending(map_session_data* sd)
 {
 	nullpo_retv(sd);
 
@@ -77,9 +77,9 @@ void vending_closevending(struct map_session_data* sd)
  * @param sd : player requestion the list
  * @param id : vender account id (gid)
  */
-void vending_vendinglistreq(struct map_session_data* sd, int id)
+void vending_vendinglistreq(map_session_data* sd, int id)
 {
-	struct map_session_data* vsd;
+	map_session_data* vsd;
 	nullpo_retv(sd);
 
 	if( (vsd = map_id2sd(id)) == NULL )
@@ -94,7 +94,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 
 	sd->vended_id = vsd->vender_id;  // register vending uid
 
-	clif_vendinglist(sd, id, vsd->vending);
+	clif_vendinglist( sd, vsd );
 }
 
 /**
@@ -103,7 +103,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
  * @param zeny: Total amount to tax
  * @return Total amount after taxes
  */
-static double vending_calc_tax(struct map_session_data *sd, double zeny)
+static double vending_calc_tax(map_session_data *sd, double zeny)
 {
 	if (battle_config.vending_tax && zeny >= battle_config.vending_tax_min)
 		zeny -= zeny * (battle_config.vending_tax / 10000.);
@@ -120,12 +120,12 @@ static double vending_calc_tax(struct map_session_data *sd, double zeny)
  *	data := {<index>.w <amount>.w }[count]
  * @param count : number of different items he's trying to buy
  */
-void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const uint8* data, int count)
+void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* data, int count)
 {
 	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
 	double z;
 	struct s_vending vending[MAX_VENDING]; // against duplicate packets
-	struct map_session_data* vsd = map_id2sd(aid);
+	map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
 	if( vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id )
@@ -213,10 +213,10 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		}
 	}
 
-	pc_payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd);
+	pc_payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd->status.char_id);
 	achievement_update_objective(sd, AG_SPEND_ZENY, 1, (int)z);
 	z = vending_calc_tax(sd, z);
-	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd);
+	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd->status.char_id);
 
 	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
@@ -227,7 +227,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		// vending item
 		pc_additem(sd, &vsd->cart.u.items_cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		z += ((double)vsd->vending[i].value * (double)amount);
+		z += ((double)vsd->vending[vend_list[i]].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_table, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->cart.u.items_cart[idx].id ) != SQL_SUCCESS ) {
@@ -295,7 +295,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
  * @param at Autotrader info, or NULL if requetsed not from autotrade persistance
  * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
  */
-int8 vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count, struct s_autotrader *at)
+int8 vending_openvending(map_session_data* sd, const char* message, const uint8* data, int count, struct s_autotrader *at)
 {
 	int i, j;
 	int vending_skill_lvl;
@@ -350,8 +350,11 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		i++; // item successfully added
 	}
 
-	if( i != j )
-		clif_displaymessage (sd->fd, msg_txt(sd,266)); //"Some of your items cannot be vended and were removed from the shop."
+	if (i != j) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
+		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		return 5;
+	}
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
@@ -385,7 +388,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	StringBuf_Destroy(&buf);
 
 	clif_openvending(sd,sd->bl.id,sd->vending);
-	clif_showvendingboard(&sd->bl,message,0);
+	clif_showvendingboard( *sd );
 
 	idb_put(vending_db, sd->status.char_id, sd);
 
@@ -398,7 +401,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
  * @param nameid : item id
  * @return 0:not selling it, 1: yes
  */
-bool vending_search(struct map_session_data* sd, unsigned short nameid)
+bool vending_search(map_session_data* sd, t_itemid nameid)
 {
 	int i;
 
@@ -406,7 +409,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 		return false;
 	}
 
-	ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == (short)nameid );
+	ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == nameid );
 	if( i == sd->vend_num ) { // not found
 		return false;
 	}
@@ -420,7 +423,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
  * @param s : parameter of the search (see s_search_store_search)
  * @return Whether or not the search should be continued.
  */
-bool vending_searchall(struct map_session_data* sd, const struct s_search_store_search* s)
+bool vending_searchall(map_session_data* sd, const struct s_search_store_search* s)
 {
 	int i, c, slot;
 	unsigned int idx, cidx;
@@ -430,7 +433,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 		return true;
 
 	for( idx = 0; idx < s->item_count; idx++ ) {
-		ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == s->itemlist[idx] );
+		ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == s->itemlist[idx].itemId );
 		if( i == sd->vend_num ) { // not found
 			continue;
 		}
@@ -448,10 +451,10 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			if( itemdb_isspecial(it->card[0]) ) { // something, that is not a carded
 				continue;
 			}
-			slot = itemdb_slot(it->nameid);
+			slot = itemdb_slots(it->nameid);
 
 			for( c = 0; c < slot && it->card[c]; c ++ ) {
-				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx] == it->card[c] );
+				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx].itemId == it->card[c] );
 				if( cidx != s->card_count ) { // found
 					break;
 				}
@@ -462,9 +465,26 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			}
 		}
 
-		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine) ) { // result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->vender_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = sd->vending[i].amount;
+		ssitem->price = sd->vending[i].value;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = it->card[j];
+		}
+		ssitem->refine = it->refine;
+		ssitem->enchantgrade = it->enchantgrade;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;
@@ -474,7 +494,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 * Open vending for Autotrader
 * @param sd Player as autotrader
 */
-void vending_reopen( struct map_session_data* sd )
+void vending_reopen( map_session_data* sd )
 {
 	struct s_autotrader *at = NULL;
 	int8 fail = -1;
@@ -596,7 +616,7 @@ void do_init_vending_autotrade(void)
 					at->sit = battle_config.feature_autotrade_sit;
 
 				// initialize player
-				CREATE(at->sd, struct map_session_data, 1);
+				CREATE(at->sd, map_session_data, 1); // TODO: Dont use Memory Manager allocation anymore and rely on the C++ container
 				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
 				at->sd->state.autotrade = 1|2;
 				if (battle_config.autotrade_monsterignore)
@@ -691,6 +711,20 @@ static int vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
+* Update vendor location
+* @param sd: Player's session data
+*/
+void vending_update(map_session_data &sd)
+{
+	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
+		vendings_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
+		sd.vender_id
+	) != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+	}
+}
+
+/**	
  * Initialise the vending module
  * called in map::do_init
  */

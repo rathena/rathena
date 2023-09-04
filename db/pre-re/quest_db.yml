@@ -1,0 +1,7104 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Quest Database
+###########################################################################
+#
+# Quest Settings
+#
+###########################################################################
+# - Id                     Quest ID.
+#   Title                  Quest title.
+#   TimeLimit              Amount of time before the quest expires. (Default: 0)
+#   Targets:               Quest objective target. (Default: null)
+#     - Mob                Name of monster to kill.
+#       Count              Amount of monsters to kill. Set to 0 to skip the target on import.
+#       Id                 Unique target index for the quest Id. Requires a positive number.
+#       Race               Monster race target. (Default: All)
+#       Size               Monster size target. (Default: All)
+#       Element            Monster element target. (Default: All)
+#       MinLevel           Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
+#       MaxLevel           Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       Location           Map name where kills are counted. (Default: All)
+#       MapName            Displayed map name in quest UI. (Default: empty string)
+#       MapMobTargets      List of monster names. Only names in the list will increase the kill counter. Only active when Id is used. (Default: all monsters)
+#         <name>: <bool>   Monster name and whether the monster is added or removed from the list.
+#   Drops:                 Quest item drop targets. (Default: null)
+#     - Mob                Monster to kill. 0 will apply to all monsters. (Default: 0)
+#       Item               Item to drop.
+#       Count              Amount of items that will drop. Non-stackable items default to 1. (Default: 1)
+#       Rate               Item drop rate. (10000 = 100%)
+###########################################################################
+
+Header:
+  Type: QUEST_DB
+  Version: 3
+
+Body:
+  - Id: 1000
+    Title: Transcend
+  - Id: 1001
+    Title: Job Change to Acolyte
+  - Id: 1002
+    Title: Job Change to Acolyte
+  - Id: 1003
+    Title: Job Change to Acolyte
+  - Id: 1004
+    Title: Job Change to Archer
+  - Id: 1005
+    Title: Job Change to Mage
+  - Id: 1006
+    Title: Job Change to Mage
+  - Id: 1007
+    Title: Job Change to Mage
+  - Id: 1008
+    Title: Job Change to Mage
+  - Id: 1009
+    Title: Job Change to Merchant
+  - Id: 1010
+    Title: Job Change to Merchant
+  - Id: 1011
+    Title: Job Change to Merchant
+  - Id: 1012
+    Title: Job Change to Merchant
+  - Id: 1013
+    Title: Job Change to Thief
+  - Id: 1014
+    Title: Job Change to Swordman
+  - Id: 1015
+    Title: Your first quest
+  - Id: 1016
+    Title: Gaining base levels
+  - Id: 1100
+    Title: Solo in the Sphinx Dungeon!
+    Targets:
+      - Mob: ZEROM
+        Count: 20
+  - Id: 1101
+    Title: Soloing Sphinx Dungeon!
+    Targets:
+      - Mob: REQUIEM
+        Count: 20
+  - Id: 1102
+    Title: Soloing Clock Tower!
+    Targets:
+      - Mob: ARCLOUSE
+        Count: 40
+  - Id: 1103
+    Title: Soloing Clock Tower!
+    Targets:
+      - Mob: HIGH_ORC
+        Count: 30
+  - Id: 1104
+    Title: Solo at Luoyang!
+    Targets:
+      - Mob: CHUNG_E
+        Count: 20
+  - Id: 1105
+    Title: Solo at Luoyang!
+    Targets:
+      - Mob: CIVIL_SERVANT
+        Count: 50
+  - Id: 1106
+    Title: Solo at Amatsu Dungeon!
+    Targets:
+      - Mob: THE_PAPER
+        Count: 20
+  - Id: 1107
+    Title: Solo at Amatsu Dungeon!
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 40
+  - Id: 1108
+    Title: Solo at Luoyang!
+    Targets:
+      - Mob: CHUNG_E_
+        Count: 20
+  - Id: 1109
+    Title: Ropewa & Yuridi - Survivors of the Labyrinth
+  - Id: 1110
+    Title: Ropewa & Yuridi - Victims of the Labyrinth
+  - Id: 1111
+    Title: Ropewa & Yuridi - Maze in the Labyrinth
+  - Id: 1112
+    Title: Ropewa & Yuridi - Lost in the Labyrinth
+  - Id: 1113
+    Title: Ropewa & Yuridi - Torn Apart
+  - Id: 1114
+    Title: Ropewa & Yuridi - The Cost of Restoration
+  - Id: 1115
+    Title: Ropewa & Yuridi - Song of the Abyss
+  - Id: 1116
+    Title: Ropewa & Yuridi - Dead Man's Song
+  - Id: 1117
+    Title: Ropewa & Yuridi - Eternal Promise, Broken Ring
+  - Id: 1118
+    Title: Neighborhood Knight - I Need Clues
+  - Id: 1119
+    Title: Neighborhood Knight - Cooldown
+    TimeLimit: +23h
+  - Id: 1145
+    Title: Help the poor cat
+  - Id: 1146
+    Title: Help the poor cat
+  - Id: 1147
+    Title: Help the poor cat
+  - Id: 1148
+    Title: Help the poor cat
+  - Id: 1149
+    Title: Help the poor cat
+  - Id: 1150
+    Title: Help the poor cat
+  - Id: 1151
+    Title: Help the poor cat
+  - Id: 1152
+    Title: Help the poor cat
+    TimeLimit: +23h
+  - Id: 1153
+    Title: Help the poor cat
+  - Id: 1154
+    Title: Help the poor cat
+  - Id: 1155
+    Title: Help the poor cat
+  - Id: 1174
+    Title: Rumor, Time and Legend
+  - Id: 1175
+    Title: Rumor, Time and Legend
+  - Id: 1176
+    Title: Rumor, Time and Legend
+  - Id: 1177
+    Title: Rumor, Time and Legend
+  - Id: 1178
+    Title: Rumor, Time and Legend
+  - Id: 1179
+    Title: Rumor, Time and Legend
+  - Id: 1180
+    Title: Get Rid of Bakonawa
+  - Id: 1181
+    Title: Get Rid of Bakonawa
+  - Id: 1182
+    Title: Get Rid of Bakonawa
+  - Id: 1183
+    Title: Get Rid of Bakonawa
+  - Id: 1184
+    Title: Get Rid of Bakonawa
+  - Id: 1185
+    Title: Get Rid of Bakonawa
+  - Id: 1186
+    Title: Get Rid of Bakonawa
+  - Id: 1187
+    Title: Get Rid of Bakonawa
+  - Id: 1188
+    Title: Get Rid of Bakonawa
+  - Id: 1189
+    Title: Get Rid of Bakonawa
+  - Id: 1190
+    Title: Get Rid of Bakonawa
+  - Id: 1191
+    Title: Get Rid of Bakonawa
+  - Id: 1192
+    Title: Get Rid of Bakonawa
+  - Id: 1193
+    Title: Get Rid of Bakonawa
+  - Id: 1194
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1195
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1196
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1197
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1198
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1199
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1200
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1201
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1202
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1203
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1204
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1205
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1206
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1207
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1208
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1209
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1210
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1211
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1212
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1213
+    Title: Look out the window, Cheers for Raccoon Hurray team!
+  - Id: 1214
+    Title: Getting back Professor Worm's memory
+  - Id: 1215
+    Title: Getting back Professor Worm's memory
+  - Id: 1216
+    Title: Getting back Professor Worm's memory
+  - Id: 1217
+    Title: Getting back Professor Worm's memory
+  - Id: 1218
+    Title: Getting back Professor Worm's memory
+  - Id: 1219
+    Title: Getting back Professor Worm's memory
+  - Id: 1220
+    Title: Getting back Professor Worm's memory
+  - Id: 1221
+    Title: Getting back Professor Worm's memory
+  - Id: 1222
+    Title: Getting back Professor Worm's memory
+  - Id: 1223
+    Title: Getting back Professor Worm's memory
+  - Id: 1224
+    Title: Getting back Professor Worm's memory
+  - Id: 1225
+    Title: Getting back Professor Worm's memory
+  - Id: 1226
+    Title: Getting back Professor Worm's memory
+  - Id: 1227
+    Title: Getting back Professor Worm's memory
+  - Id: 1228
+    Title: Getting back Professor Worm's memory
+  - Id: 2000
+    Title: Job Change to Blacksmith
+  - Id: 2001
+    Title: Job Change to Blacksmith
+  - Id: 2002
+    Title: Job Change to Blacksmith
+  - Id: 2003
+    Title: Job Change to Blacksmith
+  - Id: 2004
+    Title: Job Change to Blacksmith
+  - Id: 2005
+    Title: Job Change to Blacksmith
+  - Id: 2006
+    Title: Job Change to Blacksmith
+  - Id: 2007
+    Title: Job Change to Blacksmith
+  - Id: 2008
+    Title: Job Change to Blacksmith
+  - Id: 2009
+    Title: Job Change to Blacksmith
+  - Id: 2010
+    Title: Job Change to Blacksmith
+  - Id: 2011
+    Title: Job Change to Blacksmith
+  - Id: 2012
+    Title: Job Change to Blacksmith
+  - Id: 2013
+    Title: Job Change to Blacksmith
+  - Id: 2014
+    Title: Job Change to Blacksmith
+  - Id: 2015
+    Title: Job Change to Blacksmith
+  - Id: 2016
+    Title: Job Change to Blacksmith
+  - Id: 2017
+    Title: Job Change to Rogue
+  - Id: 2018
+    Title: Job Change to Rogue
+  - Id: 2019
+    Title: Job Change to Rogue
+  - Id: 2020
+    Title: Job Change to Rogue
+  - Id: 2021
+    Title: Job Change to Rogue
+  - Id: 2022
+    Title: Job Change to Rogue
+  - Id: 2023
+    Title: Job Change to Rogue
+  - Id: 2024
+    Title: Job Change to Rogue
+  - Id: 2025
+    Title: Job Change to Rogue
+  - Id: 2026
+    Title: Job Change to Rogue
+  - Id: 2027
+    Title: Job Change to Rogue
+  - Id: 2028
+    Title: Job Change to Alchemist
+  - Id: 2029
+    Title: Job Change to Alchemist
+  - Id: 2030
+    Title: Job Change to Alchemist
+  - Id: 2031
+    Title: Job Change to Alchemist
+  - Id: 2032
+    Title: Job Change to Alchemist
+  - Id: 2033
+    Title: Job Change to Alchemist
+  - Id: 2034
+    Title: Job Change to Alchemist
+  - Id: 2035
+    Title: Job Change to Alchemist
+  - Id: 2036
+    Title: Job Change to Alchemist
+  - Id: 2037
+    Title: Job Change to Alchemist
+  - Id: 2038
+    Title: Job Change to Alchemist
+  - Id: 2039
+    Title: Job Change to Alchemist
+  - Id: 2040
+    Title: Job Change to Alchemist
+  - Id: 2041
+    Title: Job Change to Sage
+  - Id: 2042
+    Title: Job Change to Sage
+  - Id: 2043
+    Title: Job Change to Sage
+  - Id: 2044
+    Title: Job Change to Sage
+  - Id: 2045
+    Title: Job Change to Sage
+  - Id: 2046
+    Title: Job Change to Sage
+  - Id: 2047
+    Title: Job Change to Sage
+  - Id: 2048
+    Title: Job Change to Sage
+  - Id: 2049
+    Title: Job Change to Sage
+  - Id: 2050
+    Title: Job Change to Sage
+  - Id: 2051
+    Title: Job Change to Sage
+  - Id: 2052
+    Title: Job Change to Sage
+  - Id: 2053
+    Title: Job Change to Sage
+  - Id: 2054
+    Title: Job Change to Sage
+  - Id: 2055
+    Title: Job Change to Sage
+  - Id: 2056
+    Title: Job Change to Sage
+  - Id: 2057
+    Title: Job Change to Sage
+  - Id: 2058
+    Title: Job Change to Sage
+  - Id: 2059
+    Title: Job Change to Sage
+  - Id: 2060
+    Title: Job Change to Sage
+  - Id: 2061
+    Title: Job Change to Sage
+  - Id: 2062
+    Title: Job Change to Sage
+  - Id: 2063
+    Title: The Crow of the Fate - 1
+  - Id: 2064
+    Title: The Crow of the Fate - 2
+  - Id: 2065
+    Title: The Crow of the Fate - 3
+  - Id: 2066
+    Title: The Crow of the Fate - 4
+  - Id: 2067
+    Title: The Crow of the Fate - 5
+  - Id: 2068
+    Title: The Crow of the Fate - 6
+  - Id: 2069
+    Title: Tierra Gorge Battle
+    TimeLimit: +5mn
+  - Id: 2070
+    Title: Flavius Battle
+    TimeLimit: +5mn
+  - Id: 2071
+    Title: Cursed Property
+  - Id: 2072
+    Title: Cursed Property
+  - Id: 2073
+    Title: Cursed Property
+  - Id: 2074
+    Title: Cursed Property
+  - Id: 2075
+    Title: Cursed Property
+  - Id: 2076
+    Title: Cursed Property
+  - Id: 2077
+    Title: Cursed Property
+  - Id: 2078
+    Title: Cursed Property
+  - Id: 2079
+    Title: The past went wrong
+  - Id: 2080
+    Title: The past went wrong
+  - Id: 2081
+    Title: The past went wrong
+  - Id: 2082
+    Title: The past went wrong
+  - Id: 2083
+    Title: The past went wrong
+  - Id: 2084
+    Title: The past went wrong
+  - Id: 2085
+    Title: The past went wrong
+  - Id: 2086
+    Title: The Enterprise
+  - Id: 2087
+    Title: The Enterprise
+  - Id: 2088
+    Title: The Enterprise
+  - Id: 2089
+    Title: The Enterprise
+  - Id: 2090
+    Title: The Enterprise
+  - Id: 2091
+    Title: The Enterprise
+  - Id: 2092
+    Title: The Enterprise
+  - Id: 2093
+    Title: The Enterprise
+  - Id: 2094
+    Title: The Enterprise
+  - Id: 2095
+    Title: The Enterprise
+  - Id: 2109
+    Title: A Mage in the Ice Dungeon
+  - Id: 2110
+    Title: A Mage in the Ice Dungeon
+  - Id: 2111
+    Title: A Mage in the Ice Dungeon
+  - Id: 2112
+    Title: A Mage in the Ice Dungeon
+  - Id: 2113
+    Title: A Mage in the Ice Dungeon
+  - Id: 2114
+    Title: Thor Volcano base camp
+  - Id: 2115
+    Title: Thor Volcano base camp
+  - Id: 2116
+    Title: Thor Volcano base camp
+  - Id: 2117
+    Title: Thor Volcano base camp
+  - Id: 2118
+    Title: Thor Volcano base camp
+  - Id: 2119
+    Title: Thor Volcano base camp
+  - Id: 2120
+    Title: Thor Volcano base camp
+  - Id: 2121
+    Title: Thor Volcano base camp
+  - Id: 2122
+    Title: Thor Volcano base camp
+  - Id: 2123
+    Title: Thor Volcano base camp
+  - Id: 2124
+    Title: Thor Volcano base camp
+  - Id: 2125
+    Title: Thor Volcano base camp
+  - Id: 2126
+    Title: Thor Volcano base camp
+  - Id: 2127
+    Title: Thor Volcano base camp
+  - Id: 2128
+    Title: Thor Volcano base camp
+  - Id: 2129
+    Title: Thor Volcano base camp
+  - Id: 2130
+    Title: Thor Volcano base camp
+  - Id: 2131
+    Title: Thor Volcano base camp
+  - Id: 2132
+    Title: For Arunafeltz
+  - Id: 2133
+    Title: For Arunafeltz
+  - Id: 2134
+    Title: For Arunafeltz
+  - Id: 2135
+    Title: For Arunafeltz
+  - Id: 2136
+    Title: For Arunafeltz
+  - Id: 2137
+    Title: For Arunafeltz
+  - Id: 2138
+    Title: For Arunafeltz
+  - Id: 2139
+    Title: For Arunafeltz
+  - Id: 2140
+    Title: For Arunafeltz
+  - Id: 2141
+    Title: For Arunafeltz
+  - Id: 2142
+    Title: For Arunafeltz
+  - Id: 2143
+    Title: Guild Dungeon Event
+    TimeLimit: +50s
+  - Id: 2144
+    Title: Guild Dungeon Event
+  - Id: 2147
+    Title: Attitude to the New
+  - Id: 2148
+    Title: Attitude to the New
+  - Id: 2149
+    Title: Attitude to the New
+  - Id: 2150
+    Title: Attitude to the New
+    Targets:
+      - Mob: PINGUICULA
+        Count: 30
+  - Id: 2151
+    Title: Attitude to the New
+    Targets:
+      - Mob: CORNUS
+        Count: 10
+  - Id: 2152
+    Title: Attitude to the New
+  - Id: 2153
+    Title: Attitude to the New
+  - Id: 2154
+    Title: Attitude to the New
+  - Id: 2155
+    Title: Attitude to the New
+  - Id: 2156
+    Title: Attitude to the New
+  - Id: 2157
+    Title: Attitude to the New
+    Targets:
+      - Mob: TATACHO
+        Count: 10
+  - Id: 2158
+    Title: Finding a Fairy
+  - Id: 2159
+    Title: Finding a Tree Giant
+  - Id: 2179
+    Title: Dr. Lifeguard's request
+  - Id: 2180
+    Title: Dr. Lifeguard's request
+  - Id: 2181
+    Title: Dr. Lifeguard's request
+  - Id: 2182
+    Title: Rough Minerals
+    TimeLimit: +18h
+  - Id: 2183
+    Title: Flower of Alfheim
+  - Id: 2184
+    Title: Flower of Alfheim
+  - Id: 2185
+    Title: Spirit of Alfheim
+  - Id: 2186
+    Title: Helping Grenouille
+    TimeLimit: +18h
+  - Id: 2187
+    Title: Arch Bishop job changing quest
+  - Id: 2188
+    Title: Arch Bishop job changing quest
+  - Id: 2189
+    Title: Arch Bishop job changing quest
+  - Id: 2190
+    Title: Arch Bishop job changing quest
+  - Id: 2191
+    Title: Arch Bishop job changing quest
+  - Id: 2192
+    Title: Guarana quest
+  - Id: 2193
+    Title: Guarana quest
+  - Id: 2194
+    Title: Guarana quest
+  - Id: 2195
+    Title: Guarana quest
+  - Id: 2196
+    Title: Guarana quest
+  - Id: 2197
+    Title: Guarana quest
+  - Id: 2198
+    Title: Guarana quest
+  - Id: 2199
+    Title: Guarana quest
+  - Id: 2200
+    Title: Guarana quest
+  - Id: 2201
+    Title: Brasilis Water Lily
+  - Id: 2202
+    Title: Brasilis Water Lily
+  - Id: 2203
+    Title: Brasilis Water Lily
+  - Id: 2204
+    Title: Brasilis Water Lily
+  - Id: 2205
+    Title: Brasilis Water Lily
+  - Id: 2206
+    Title: Brasilis Water Lily
+  - Id: 2207
+    Title: Brasilis Water Lily
+  - Id: 2208
+    Title: Bathroom Ghost
+  - Id: 2209
+    Title: Generic Job Change Quest
+  - Id: 2210
+    Title: Generic Job Change Quest
+  - Id: 2211
+    Title: Generic Job Change Quest
+  - Id: 2212
+    Title: Generic Job Change Quest
+  - Id: 2213
+    Title: Generic Job Change Quest
+  - Id: 2214
+    Title: Generic Job Change Quest
+  - Id: 2215
+    Title: Generic Job Change Quest
+  - Id: 2216
+    Title: Generic Job Change Quest
+  - Id: 2217
+    Title: Generic Job Change Quest
+  - Id: 2218
+    Title: Wanderer Job Change Quest
+  - Id: 2219
+    Title: Wanderer Job Change Quest
+  - Id: 2220
+    Title: Wanderer Job Change Quest
+  - Id: 2221
+    Title: Wanderer Job Change Quest
+    TimeLimit: +10mn
+    Targets:
+      - Mob: NOVUS_
+        Count: 50
+  - Id: 2222
+    Title: Wanderer Job Change Quest
+  - Id: 2223
+    Title: Generic Job Change Quest
+    Targets:
+      - Mob: G_POISON_SPORE
+        Count: 100
+  - Id: 2271
+    Title: Secret in the Woods
+  - Id: 2272
+    Title: Secret in the Woods
+  - Id: 2273
+    Title: Secret in the Woods
+  - Id: 2274
+    Title: Secret in the Woods
+  - Id: 2275
+    Title: Secret in the Woods
+  - Id: 2276
+    Title: Secret in the Woods
+  - Id: 2277
+    Title: Secret in the Woods
+  - Id: 2278
+    Title: Secret in the Woods
+  - Id: 2279
+    Title: Secret in the Woods
+  - Id: 2280
+    Title: Secret in the Woods
+  - Id: 2281
+    Title: Get Rid of Buwaya
+  - Id: 2289
+    Title: Verit Hunting (Nightmare)
+  - Id: 2290
+    Title: Verit Hunting - Cooldown
+    TimeLimit: +23h
+  - Id: 2291
+    Title: Mummy Hunting - Cooldown
+    TimeLimit: +23h
+  - Id: 2292
+    Title: Mummy Hunting (Nightmare)
+  - Id: 2299
+    Title: "Training Center: Talk to Lisa"
+  - Id: 2300
+    Title: "Training Center: Talk to General Reindeer"
+  - Id: 2301
+    Title: "Training Center: Leave the boat"
+  - Id: 2302
+    Title: "Training Center: Formation"
+  - Id: 3000
+    Title: Job Change to Bard
+  - Id: 3001
+    Title: Job Change to Bard
+  - Id: 3002
+    Title: Job Change to Bard
+  - Id: 3003
+    Title: Job Change to Bard
+  - Id: 3004
+    Title: Job Change to Bard
+  - Id: 3006
+    Title: Job Change to Crusader
+  - Id: 3007
+    Title: Job Change to Crusader
+  - Id: 3008
+    Title: Job Change to Crusader
+  - Id: 3009
+    Title: Job Change to Crusader
+  - Id: 3010
+    Title: Job Change to Crusader
+  - Id: 3011
+    Title: Job Change to Crusader
+  - Id: 3012
+    Title: Job Change to Crusader
+  - Id: 3013
+    Title: Job Change to Crusader
+  - Id: 3014
+    Title: Job Change to Crusader
+  - Id: 3015
+    Title: Job Change to Crusader
+  - Id: 3016
+    Title: Job Change to Monk
+  - Id: 3017
+    Title: Job Change to Monk
+  - Id: 3018
+    Title: Job Change to Monk
+  - Id: 3019
+    Title: Job Change to Monk
+  - Id: 3020
+    Title: Job Change to Monk
+  - Id: 3021
+    Title: Job Change to Monk
+  - Id: 3022
+    Title: Job Change to Monk
+  - Id: 3023
+    Title: Job Change to Monk
+  - Id: 3024
+    Title: Job Change to Monk
+  - Id: 3025
+    Title: Job Change to Monk
+  - Id: 3026
+    Title: Job Change to Monk
+  - Id: 3027
+    Title: Job Change to Monk
+  - Id: 3028
+    Title: Job Change to Monk - Marathon
+  - Id: 3029
+    Title: Job Change to Monk - Final test
+  - Id: 3031
+    Title: Job Change to Monk - Spiritual Training
+  - Id: 3032
+    Title: Job Change to Monk - Become a Monk
+  - Id: 3040
+    Title: The Curse of Baphomet
+    TimeLimit: +12h
+  - Id: 3041
+    Title: The Curse of Baphomet
+    TimeLimit: +3mn
+  - Id: 3042
+    Title: The Cursed Baphomet Doll
+  - Id: 3043
+    Title: The Gigantic Magestic Goat
+  - Id: 3044
+    Title: The Gigantic Magestic Goat
+  - Id: 3045
+    Title: Sealed Shrine
+    TimeLimit: +2h
+  - Id: 3046
+    Title: Sealed Shrine After-effect
+  - Id: 3050
+    Title: Resurrection of Satan Morocc - 1
+  - Id: 3051
+    Title: Resurrection of Satan Morocc - 2
+  - Id: 3052
+    Title: Resurrection of Satan Morocc - 3
+  - Id: 3053
+    Title: Resurrection of Satan Morocc - 4
+  - Id: 3054
+    Title: Resurrection of Satan Morocc - 5
+  - Id: 3055
+    Title: Resurrection of Satan Morocc - 6
+  - Id: 3056
+    Title: Resurrection of Satan Morocc - 7
+  - Id: 3060
+    Title: Kids in Veins - Where's the Little Sis?
+  - Id: 3061
+    Title: Kids in Veins - Find a way to unlock the shackles!
+  - Id: 3062
+    Title: Kids in Veins - Find the Locksmith!
+  - Id: 3063
+    Title: Kids in Veins - Mr. Lockenlock?
+  - Id: 3064
+    Title: Kids in Veins - Organic Chamelepu Soap
+  - Id: 3065
+    Title: Kids in Veins - Soap Ingredients
+  - Id: 3066
+    Title: Kids in Veins - To make a Chamelepu Soap...
+  - Id: 3067
+    Title: Kids in Veins - Camel Appetite Stimulants
+  - Id: 3068
+    Title: Kids in Veins - Getting the Camel Dung
+  - Id: 3069
+    Title: Kids in Veins - Where's the Silk Sand Camel?
+  - Id: 3070
+    Title: Kids in Veins - Silk Sand Camel is gone!
+  - Id: 3071
+    Title: Kids in Veins - Silk Sand Camel is found!
+  - Id: 3072
+    Title: Kids in Veins - 1 lump of Camel dung obtained
+  - Id: 3073
+    Title: Kids in Veins - 2 lumps of Camel dung obtained
+  - Id: 3074
+    Title: Kids in Veins - 3 lumps of Camel dung obtained
+  - Id: 3075
+    Title: Kids in Veins - 4 lumps of Camel dung obtained
+  - Id: 3076
+    Title: Kids in Veins - 5 lumps of Camel dung obtained
+  - Id: 3077
+    Title: Kids in Veins - Go to Ms. Ivory
+  - Id: 3078
+    Title: Kids in Veins - Chamalepu Soap is completed!
+  - Id: 3079
+    Title: Kids in Veins - Making the key mold
+  - Id: 3080
+    Title: Kids in Veins - Bringing the key mold
+  - Id: 3081
+    Title: Kids in Veins - All you need is Steel!
+  - Id: 3082
+    Title: Kids in Veins - The Key is Made!
+  - Id: 3083
+    Title: Kids in Veins - Mr. Lockenlock's key
+  - Id: 3085
+    Title: Call from the commander
+  - Id: 3086
+    Title: Commander's Duty
+  - Id: 3087
+    Title: Report to Rune Midgard
+  - Id: 3088
+    Title: Report to the continent - Accident!
+  - Id: 3089
+    Title: Report to the continent - How to restore
+  - Id: 3090
+    Title: Report to the continent - Location of reports
+  - Id: 3091
+    Title: Report to the continent - Location of reports
+    TimeLimit: +30mn
+  - Id: 3092
+    Title: Report to the continent - Success to restore!
+  - Id: 3093
+    Title: Report to the continent - Report to the continent
+  - Id: 3094
+    Title: Report to the continent - Return to the expedition
+  - Id: 3100
+    Title: Consolidating Heavy Debt - Lost Bond of Debt
+  - Id: 3101
+    Title: Consolidating Heavy Debt - Strange Heap of Earth
+  - Id: 3102
+    Title: Consolidating Heavy Debt - Bond of Debt Found, but...
+  - Id: 3103
+    Title: Consolidating Heavy Debt - Inventor Dorian
+  - Id: 3104
+    Title: Consolidating Heavy Debt - Repair Materials of Magic Dryer
+  - Id: 3105
+    Title: Consolidating Heavy Debt - Repairing Magic Dryer
+  - Id: 3106
+    Title: Consolidating Heavy Debt - Repairing Magic Dryer Failed
+  - Id: 3107
+    Title: Consolidating Heavy Debt - Repairing Magic Dryer Successful
+  - Id: 3108
+    Title: Consolidating Heavy Debt - Let's Run the Magic Dryer
+  - Id: 3109
+    Title: Consolidating Heavy Debt - Restoring the Bond of Debt
+  - Id: 3110
+    Title: Stolen Diamond - Tracking the Diamond
+  - Id: 3111
+    Title: Stolen Diamond - Leblo's Favor
+  - Id: 3112
+    Title: Stolen Diamond - Wola the Doctor
+  - Id: 3113
+    Title: Stolen Diamond - Wola the Doctor
+  - Id: 3114
+    Title: Stolen Diamond - Wola the Doctor
+  - Id: 3115
+    Title: Stolen Diamond - Leblo's Information
+  - Id: 3116
+    Title: Stolen Diamond - Information from Rogue Investigator
+  - Id: 3117
+    Title: Stolen Diamond - Odd Switches
+  - Id: 3118
+    Title: Stolen Diamond - Diamond Found!
+  - Id: 3119
+    Title: Z Gang Wanted - Wanted Notice
+  - Id: 3120
+    Title: Z Gang Wanted - About Z Gang
+  - Id: 3121
+    Title: Z Gang Wanted - Valdes's Favor
+  - Id: 3122
+    Title: Z Gang Wanted - Information from Valdes
+  - Id: 3123
+    Title: Z Gang Wanted - Marybell's Test
+  - Id: 3124
+    Title: Z Gang Wanted - Challenging Moonho Ahn
+  - Id: 3125
+    Title: Z Gang Wanted - Challenging Moonho Ahn
+  - Id: 3126
+    Title: Z Gang Wanted - Information from Marybell
+  - Id: 3127
+    Title: Z Gang Wanted - Z Gang's Attack
+  - Id: 3128
+    Title: Z Gang Wanted - Z Gang's Attack
+  - Id: 3129
+    Title: Z Gang Wanted - Strange Letter
+  - Id: 3130
+    Title: Z Gang Wanted - Decrypting the letter...
+  - Id: 3131
+    Title: Z Gang Wanted - Code's Broken!
+  - Id: 3132
+    Title: Z Gang Wanted - Find the Z Gang's Agit
+  - Id: 3133
+    Title: Z Gang Wanted - Agit Found!
+  - Id: 3134
+    Title: Z Gang Wanted - Clean Sweep of Z Gang
+  - Id: 3135
+    Title: Nidhoggur's Nest
+    TimeLimit: +3d
+  - Id: 3136
+    Title: Nidhoggur's Nest Time Limit
+    TimeLimit: +4h
+  - Id: 3200
+    Title: Job changes to Rune knight - Recommendation for Rune knight
+  - Id: 3201
+    Title: Job changes to Rune knight - Secret rendezvous of Rune knight
+  - Id: 3202
+    Title: Job changes to Rune knight - The first test
+  - Id: 3203
+    Title: Job changes to Rune knight - The first test
+  - Id: 3204
+    Title: Job changes to Rune knight - Pass the first test
+  - Id: 3205
+    Title: Job changes to Rune knight - The second test
+  - Id: 3206
+    Title: Job changes to Rune knight - The second test
+  - Id: 3207
+    Title: Job changes to Rune knight - The second test
+  - Id: 3208
+    Title: Job changes to Rune knight - The second test
+  - Id: 3209
+    Title: Job changes to Rune knight - Accumulation of magic energy1
+    Targets:
+      - Mob: DULLAHAN
+        Count: 10
+  - Id: 3210
+    Title: Job changes to Rune knight - Accumulation of magic energy2
+    Targets:
+      - Mob: DISGUISE
+        Count: 10
+  - Id: 3211
+    Title: Job changes to Rune knight - Accumulation of magic energy3
+    Targets:
+      - Mob: QUVE
+        Count: 10
+  - Id: 3212
+    Title: Job changes to Rune knight - Accumulation of magic energy4
+    Targets:
+      - Mob: HYLOZOIST
+        Count: 10
+  - Id: 3213
+    Title: Job changes to Rune knight - The second test
+  - Id: 3214
+    Title: Job changes to Rune knight - The second test
+  - Id: 3215
+    Title: Job changes to Rune knight - Pass the second test
+  - Id: 3216
+    Title: Job changes to Rune knight - The final test
+  - Id: 3217
+    Title: Job changes to Rune knight - The final test
+  - Id: 3218
+    Title: Job changes to Rune knight - Pass the final test
+  - Id: 3219
+    Title: Job changes to Rune knight - The end of all test
+  - Id: 3220
+    Title: Job changes to Rune knight - Waiting time of test
+    TimeLimit: +10mn
+  - Id: 3250
+    Title: Request - What is this bandage for?
+    Targets:
+      - Mob: MUMMY
+        Count: 30
+  - Id: 3251
+    Title: Request - An alligator of Counterattack
+    Targets:
+      - Mob: ALLIGATOR
+        Count: 30
+  - Id: 3252
+    Title: Request - My mermaid don't do like this way!
+    Targets:
+      - Mob: MERMAN
+        Count: 30
+  - Id: 3253
+    Title: Request - Missing occult mania
+  - Id: 3254
+    Title: Request - A country wants you
+  - Id: 3255
+    Title: Request - A wild boar subjugate operation
+    Targets:
+      - Mob: SAVAGE
+        Count: 30
+  - Id: 3256
+    Title: Request - Ready for waiting summer
+  - Id: 3257
+    Title: Request - A grudge of women
+    Targets:
+      - Mob: SOHEE
+        Count: 30
+  - Id: 3258
+    Title: Request - A material of delicacy
+  - Id: 3259
+    Title: Request - A agony of a doll master
+    Targets:
+      - Mob: MARIONETTE
+        Count: 30
+  - Id: 3260
+    Title: Request - Tiresome flies
+    Targets:
+      - Mob: HUNTER_FLY
+        Count: 30
+  - Id: 3261
+    Title: Request - Unclean girl
+    Targets:
+      - Mob: MUNAK
+        Count: 30
+  - Id: 3262
+    Title: Request - Queer hobby
+  - Id: 3263
+    Title: Request - A mallet of goblin
+  - Id: 3265
+    Title: Request - Missing occult mania
+  - Id: 4000
+    Title: Sherin's Job Interview
+  - Id: 4001
+    Title: Job Change to Hunter
+  - Id: 4002
+    Title: Job Change to Hunter
+  - Id: 4003
+    Title: Job Change to Hunter
+  - Id: 4004
+    Title: Job Change to Hunter
+  - Id: 4005
+    Title: Job Change to Hunter
+  - Id: 4006
+    Title: Job Change to Hunter
+  - Id: 4007
+    Title: Job Change to Hunter
+  - Id: 4008
+    Title: Job Change to Hunter
+  - Id: 4009
+    Title: Job Change to Hunter
+  - Id: 4010
+    Title: Job Change to Hunter
+  - Id: 4011
+    Title: Job Change to Hunter - Test
+  - Id: 4012
+    Title: Job Change to Hunter
+  - Id: 4013
+    Title: Job Change to Hunter
+  - Id: 4133
+    Title: Iara
+  - Id: 4134
+    Title: Iara
+  - Id: 4135
+    Title: Iara
+    TimeLimit: +1d
+  - Id: 4154
+    Title: Homunculus Researcher
+  - Id: 4155
+    Title: Homunculus S Mutation Mission - 1
+  - Id: 4156
+    Title: Homunculus S Mutation Mission - 2
+  - Id: 4157
+    Title: Homunculus S Mutation Mission - 3
+  - Id: 4158
+    Title: Homunculus S Mutation Mission - 4
+  - Id: 4159
+    Title: Homunculus S Mutation Mission - 5
+  - Id: 4160
+    Title: Homunculus S Mutation Mission - 6
+  - Id: 4161
+    Title: Siege Expert
+  - Id: 4162
+    Title: Party Recruiting Expert
+  - Id: 4163
+    Title: Battleground Expert
+  - Id: 4164
+    Title: Memorial Dungeon Expert
+  - Id: 4165
+    Title: Map Expert
+  - Id: 4166
+    Title: Passing Grades
+  - Id: 4167
+    Title: "Paradise: Dragon Tail Handling"
+    Targets:
+      - Mob: DRAGON_TAIL
+        Count: 30
+  - Id: 4168
+    Title: "Paradise: Spring Rabbit Handling"
+    Targets:
+      - Mob: SPRING_RABBIT
+        Count: 30
+  - Id: 4169
+    Title: "Paradise: Pest Handling"
+    Targets:
+      - Mob: PEST
+        Count: 30
+  - Id: 4170
+    Title: "Paradise: Bathory Handling"
+    Targets:
+      - Mob: BATHORY
+        Count: 30
+  - Id: 4171
+    Title: "Paradise: Alarm Handling"
+    Targets:
+      - Mob: ALARM
+        Count: 30
+  - Id: 4172
+    Title: "Paradise: Babayaga Handling"
+    Targets:
+      - Mob: VAVAYAGA
+        Count: 30
+  - Id: 4173
+    Title: "Paradise: Hyegun Handling"
+    Targets:
+      - Mob: HYEGUN
+        Count: 30
+  - Id: 4174
+    Title: "Paradise: Antique Firelock Handling"
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 30
+  - Id: 4175
+    Title: "Paradise: Zipper Bear Handling"
+    Targets:
+      - Mob: ZIPPER_BEAR
+        Count: 30
+  - Id: 4176
+    Title: "Paradise: Earth Petite Handling"
+    Targets:
+      - Mob: PETIT
+        Count: 30
+  - Id: 4177
+    Title: "Paradise: Rafflesia Handling"
+    Targets:
+      - Mob: RAFFLESIA
+        Count: 30
+  - Id: 4178
+    Title: "Paradise: Venomous Handling"
+    Targets:
+      - Mob: VENOMOUS
+        Count: 30
+  - Id: 4179
+    Title: "Paradise: Pitman Handling"
+    Targets:
+      - Mob: PITMAN
+        Count: 30
+  - Id: 4180
+    Title: "Paradise: Yellow Novus Handling"
+    Targets:
+      - Mob: NOVUS_
+        Count: 30
+  - Id: 4181
+    Title: "Paradise: Solider Handling"
+    Targets:
+      - Mob: SOLIDER
+        Count: 30
+  - Id: 4182
+    Title: "Paradise: Freezer Handling"
+    Targets:
+      - Mob: FREEZER
+        Count: 30
+  - Id: 4183
+    Title: "Paradise: Heater Handling"
+    Targets:
+      - Mob: HEATER
+        Count: 30
+  - Id: 4184
+    Title: "Paradise: Injustice Handling"
+    Targets:
+      - Mob: INJUSTICE
+        Count: 30
+  - Id: 4185
+    Title: "Paradise: Rybio Handling"
+    Targets:
+      - Mob: RYBIO
+        Count: 30
+  - Id: 4186
+    Title: "Paradise: Dark Priest Handling"
+    Targets:
+      - Mob: DARK_PRIEST
+        Count: 30
+  - Id: 4187
+    Title: "Paradise: Stapo Handling"
+    Targets:
+      - Mob: STAPO
+        Count: 30
+  - Id: 4188
+    Title: "Paradise: Roween Handling"
+    Targets:
+      - Mob: ROWEEN
+        Count: 30
+  - Id: 4189
+    Title: "Paradise: Siroma Handling"
+    Targets:
+      - Mob: SIROMA
+        Count: 30
+  - Id: 4190
+    Title: "Paradise: Shinobi Handling"
+    Targets:
+      - Mob: SHINOBI
+        Count: 30
+  - Id: 4191
+    Title: "Paradise: Evil Nymph Handling"
+    Targets:
+      - Mob: WICKED_NYMPH
+        Count: 30
+  - Id: 4192
+    Title: "Paradise: Deviruchi Handling"
+    Targets:
+      - Mob: DEVIRUCHI
+        Count: 30
+  - Id: 4193
+    Title: "Paradise: Mineral Handling"
+    Targets:
+      - Mob: MINERAL
+        Count: 30
+  - Id: 4194
+    Title: "Paradise: Kaho Handling"
+    Targets:
+      - Mob: KAHO
+        Count: 30
+  - Id: 4195
+    Title: "Paradise: Neraid Handling"
+    Targets:
+      - Mob: NERAID
+        Count: 30
+  - Id: 4196
+    Title: "Paradise: Disguise Handling"
+    Targets:
+      - Mob: DISGUISE
+        Count: 30
+  - Id: 4197
+    Title: Octopus
+    TimeLimit: +3h
+  - Id: 4198
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4199
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4200
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4201
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4202
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4203
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4204
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4205
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4206
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4207
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4208
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4209
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4210
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4211
+    Title: 86-90 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4212
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4213
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4214
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4215
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4216
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4217
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4218
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4219
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4220
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4221
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4222
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4223
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4224
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4225
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4226
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4227
+    Title: 91-99 Mission Board Timer
+    TimeLimit: +3h
+  - Id: 4229
+    Title: Devil in the Cave
+    TimeLimit: +23h
+  - Id: 4254
+    Title: Fairy with a stomache
+  - Id: 4255
+    Title: Revenge!
+  - Id: 4256
+    Title: An accomplice?
+  - Id: 4257
+    Title: Conspiracy
+  - Id: 4258
+    Title: Eirinn
+  - Id: 4259
+    Title: Bourbon
+  - Id: 4260
+    Title: Bee
+  - Id: 4261
+    Title: Counterattack (1)
+  - Id: 4262
+    Title: Counterattack (2)
+  - Id: 4263
+    Title: Counteroffensive (1)
+  - Id: 4264
+    Title: Counteroffensive (2)
+  - Id: 4265
+    Title: Bookshelf use
+  - Id: 4266
+    Title: ????? ??
+  - Id: 4267
+    Title: ????? ??
+  - Id: 4999
+    Title: Extermination Crisis
+  - Id: 5000
+    Title: The Crow of the Fate - 7
+  - Id: 5001
+    Title: King Froggie VII's revenge
+    Targets:
+      - Mob: SIDE_WINDER
+        Count: 50
+  - Id: 5002
+    Title: The hero of the frogs
+  - Id: 5003
+    Title: Frog Hiding Skill
+  - Id: 5004
+    Title: Food Shortage
+    Targets:
+      - Mob: ARGIOPE
+        Count: 50
+  - Id: 5016
+    Title: Bring me a Research Tool Bag
+  - Id: 5017
+    Title: Revenge of the Reseacher
+  - Id: 5018
+    Title: Revenge of the Reseacher
+  - Id: 5019
+    Title: Bathroom Sample Studying
+  - Id: 5020
+    Title: Sample Researching
+    TimeLimit: +1d
+  - Id: 5021
+    Title: Sample Collecting
+  - Id: 5022
+    Title: Sample Collecting
+  - Id: 5023
+    Title: Inspection of the Sample
+    TimeLimit: +6h
+  - Id: 5024
+    Title: Eastern Pool Research
+  - Id: 5025
+    Title: Western Pool Research
+  - Id: 5026
+    Title: Southern Pool Research
+  - Id: 5027
+    Title: Northern Pool Research
+  - Id: 5028
+    Title: Inspection of the Sample
+    TimeLimit: +12h
+  - Id: 5029
+    Title: Unidentified Creature
+    TimeLimit: +1h
+  - Id: 5030
+    Title: The creature's family
+  - Id: 5031
+    Title: The creature's family
+  - Id: 5032
+    Title: The creature's family
+  - Id: 5033
+    Title: The creature's family
+  - Id: 5034
+    Title: News from the family
+  - Id: 5035
+    Title: Help the old man!
+  - Id: 5036
+    Title: Help the old man!
+  - Id: 5037
+    Title: Help the old man!
+  - Id: 5038
+    Title: Help the old man!
+  - Id: 5039
+    Title: Help the old man!
+  - Id: 5040
+    Title: Help the old man!
+  - Id: 5041
+    Title: Help the old man!
+  - Id: 5042
+    Title: Help the old man!
+  - Id: 5043
+    Title: Help the old man!
+    TimeLimit: +5mn
+  - Id: 5044
+    Title: Help the old man!
+    TimeLimit: +1d
+  - Id: 5045
+    Title: Help the old man!
+  - Id: 5046
+    Title: Help the old man!
+  - Id: 5047
+    Title: Help the old man!
+  - Id: 5048
+    Title: Help the old man!
+  - Id: 5049
+    Title: Help the old man!
+  - Id: 5050
+    Title: Help the old man!
+  - Id: 5051
+    Title: Help the old man!
+  - Id: 5052
+    Title: Traditional Weapon
+  - Id: 5053
+    Title: Traditional Weapon
+  - Id: 5054
+    Title: Traditional Weapon
+  - Id: 5055
+    Title: Local Rising - Headless Horse
+    Targets:
+      - Mob: HEADLESS_MULE
+        Count: 15
+  - Id: 5056
+    Title: Local Rising - Tamruan
+    Targets:
+      - Mob: TAMRUAN
+        Count: 15
+  - Id: 5057
+    Title: Local Rising - Ready the Festival
+  - Id: 5058
+    Title: The mood of the players-(1)
+  - Id: 5059
+    Title: The mood of the players-(2)
+  - Id: 5060
+    Title: Cat Shock
+    TimeLimit: +3mn
+  - Id: 5061
+    Title: Am I scared?
+  - Id: 5062
+    Title: I met Eryu.
+  - Id: 5063
+    Title: I met Stew.
+  - Id: 5064
+    Title: I met Ketchup.
+  - Id: 5065
+    Title: I met Eff.
+  - Id: 5066
+    Title: Scary image-(1)
+  - Id: 5067
+    Title: Scary image-(2)
+  - Id: 5068
+    Title: Collecting complaint
+    TimeLimit: +20h
+  - Id: 5069
+    Title: Token of honor
+    TimeLimit: +1h
+  - Id: 5070
+    Title: Rock Paper Scissors
+    TimeLimit: +1d
+  - Id: 5071
+    Title: Chamchamcham
+    TimeLimit: +1d
+  - Id: 5072
+    Title: Kkongnyangkkong
+    TimeLimit: +1d
+  - Id: 5073
+    Title: Challenging of flag wave
+    TimeLimit: +1d
+  - Id: 5074
+    Title: Cat's Meal
+    Targets:
+      - Mob: PHEN
+        Count: 30
+  - Id: 5075
+    Title: Health food
+    Targets:
+      - Mob: MARSE
+        Count: 50
+  - Id: 5076
+    Title: Enemies
+    Targets:
+      - Mob: KOBOLD_ARCHER
+        Count: 30
+  - Id: 5077
+    Title: Reaction Training
+    Targets:
+      - Mob: CRAMP
+        Count: 10
+  - Id: 5078
+    Title: Light bird food
+    Targets:
+      - Mob: PECOPECO
+        Count: 50
+  - Id: 5079
+    Title: How to stabilize the mind
+  - Id: 5080
+    Title: Lack of Snack
+  - Id: 5081
+    Title: Banned foods
+  - Id: 5082
+    Title: Cool food
+  - Id: 5083
+    Title: Please come back Eryu-(1)
+  - Id: 5084
+    Title: Please come back Eryu-(2)
+  - Id: 5085
+    Title: Please come back Stew-(1)
+  - Id: 5086
+    Title: Please come back Stew-(2)
+  - Id: 5087
+    Title: Please come back Ketchup-(1)
+  - Id: 5088
+    Title: Please come back Ketchup-(2)
+  - Id: 5089
+    Title: Please come back Eff-(1)
+  - Id: 5090
+    Title: Please come back Eff-(2)
+  - Id: 5091
+    Title: Go Malangdo
+  - Id: 5092
+    Title: Unlocking the Ultimate Mediocrity
+  - Id: 5093
+    Title: Unlocking the Ultimate Mediocrity
+  - Id: 5094
+    Title: Unlocking the Ultimate Mediocrity
+    Targets:
+      - Mob: PORING
+        Count: 1000
+  - Id: 5095
+    Title: Unlocking the Ultimate Mediocrity
+    Targets:
+      - Mob: LUNATIC
+        Count: 1000
+  - Id: 5096
+    Title: Unlocking the Ultimate Mediocrity
+    Targets:
+      - Mob: FABRE
+        Count: 1000
+  - Id: 5097
+    Title: Unlocking the Ultimate Mediocrity
+    Targets:
+      - Mob: PICKY
+        Count: 1000
+  - Id: 5098
+    Title: Unlocking the Ultimate Mediocrity
+  - Id: 5099
+    Title: Unlocking the Ultimate Mediocrity
+  - Id: 5100
+    Title: Unlocking the Ultimate Mediocrity
+  - Id: 5109
+    Title: Light but Unconfirmed Rumor
+  - Id: 5110
+    Title: The Rumored Character
+  - Id: 5111
+    Title: To the Lab...
+  - Id: 5112
+    Title: Laboratory Restricted Access
+    TimeLimit: +3d
+  - Id: 5113
+    Title: "[Rest] Lord Knight"
+  - Id: 5114
+    Title: "[Rest] Paladin"
+  - Id: 5115
+    Title: "[Rest] High Priest"
+  - Id: 5116
+    Title: "[Rest] Champion"
+  - Id: 5117
+    Title: "[Rest] High Wizard"
+  - Id: 5118
+    Title: "[Rest] Professor"
+  - Id: 5119
+    Title: "[Rest] Whitesmith"
+  - Id: 5120
+    Title: "[Rest] Creator"
+  - Id: 5121
+    Title: "[Rest] Assassin Cross"
+  - Id: 5122
+    Title: "[Rest] Stalker"
+  - Id: 5123
+    Title: "[Rest] Sniper"
+  - Id: 5124
+    Title: "[Rest] Clown"
+  - Id: 5125
+    Title: "[Rest] Gypsy"
+  - Id: 5131
+    Title: Strange Conversation
+  - Id: 5132
+    Title: Family Business-(1)
+  - Id: 5133
+    Title: Family Business-(2)
+  - Id: 5134
+    Title: New path
+  - Id: 5135
+    Title: 4 tests
+  - Id: 5136
+    Title: Knowledge test
+  - Id: 5137
+    Title: Survival test
+  - Id: 5138
+    Title: Weapons test
+  - Id: 5139
+    Title: The guy looks familiar!!
+  - Id: 5140
+    Title: Uncertain chilliness
+  - Id: 5141
+    Title: Got a curse!!
+    TimeLimit: +2mn
+  - Id: 5142
+    Title: Prototype-(1)
+  - Id: 5143
+    Title: Prototype-(2)
+  - Id: 5144
+    Title: Prototype-(2)
+  - Id: 5145
+    Title: Prototype-(3)
+  - Id: 5146
+    Title: Battle test
+  - Id: 5161
+    Title: Low Level collection request[Stand by]
+    TimeLimit: +1d
+  - Id: 5162
+    Title: Low Level collection request
+    Targets:
+      - Mob: REQUIEM
+        Count: 100
+  - Id: 5163
+    Title: Low Level collection request
+    Targets:
+      - Mob: BATHORY
+        Count: 100
+  - Id: 5164
+    Title: Low Level collection request
+    Targets:
+      - Mob: SPRING_RABBIT
+        Count: 100
+  - Id: 5165
+    Title: Low Level collection request
+    Targets:
+      - Mob: SLEEPER
+        Count: 100
+  - Id: 5166
+    Title: Low Level collection request
+    Targets:
+      - Mob: EVIL_DRUID
+        Count: 100
+  - Id: 5167
+    Title: Low Level collection request
+    Targets:
+      - Mob: PETIT
+        Count: 100
+  - Id: 5168
+    Title: Low Level collection request
+    Targets:
+      - Mob: CLOCK
+        Count: 100
+  - Id: 5169
+    Title: Mid-Level collection request[Stand by]
+    TimeLimit: +1d
+  - Id: 5170
+    Title: Mid-Level collection request
+    Targets:
+      - Mob: SIROMA
+        Count: 100
+  - Id: 5171
+    Title: Mid-Level collection request
+    Targets:
+      - Mob: DARK_PRIEST
+        Count: 100
+  - Id: 5172
+    Title: Mid-Level collection request
+    Targets:
+      - Mob: STAPO
+        Count: 100
+  - Id: 5173
+    Title: Mid-Level collection request
+    Targets:
+      - Mob: SOLIDER
+        Count: 100
+  - Id: 5174
+    Title: High level collectiong request[Stand by]
+    TimeLimit: +1d
+  - Id: 5175
+    Title: High level collection request
+    Targets:
+      - Mob: DESERT_WOLF
+        Count: 100
+  - Id: 5176
+    Title: High level collection request
+    Targets:
+      - Mob: MEDUSA
+        Count: 100
+  - Id: 5177
+    Title: High level collection request
+    Targets:
+      - Mob: PINGUICULA
+        Count: 100
+  - Id: 5178
+    Title: High level collection request
+    Targets:
+      - Mob: MAJORUROS
+        Count: 100
+  - Id: 5179
+    Title: Highest level collection request
+    Targets:
+      - Mob: RAYDRIC
+        Count: 100
+  - Id: 5180
+    Title: Highest level collection request
+    Targets:
+      - Mob: NAGA
+        Count: 100
+  - Id: 5181
+    Title: Highest level collection request
+    Targets:
+      - Mob: ANCIENT_MUMMY
+        Count: 100
+  - Id: 5182
+    Title: Highest level collection request
+    Targets:
+      - Mob: ANCIENT_MIMIC
+        Count: 100
+  - Id: 5222
+    Title: Saving the energy crystals
+  - Id: 5223
+    Title: Saving the energy crystals
+  - Id: 5224
+    Title: Saving the energy crystals
+  - Id: 5225
+    Title: Saving energy crystal[Stand by]
+    TimeLimit: +2h
+  - Id: 5226
+    Title: Saving energy crystal[Stand by]
+    TimeLimit: +2h
+  - Id: 5227
+    Title: Saving energy crystal[Stand by]
+    TimeLimit: +2h
+  - Id: 6000
+    Title: Job Change to Taekwon
+  - Id: 6001
+    Title: Job Change to Taekwon
+  - Id: 6002
+    Title: Job Change to Taekwon
+  - Id: 6005
+    Title: Job Change to Soul-Linker
+  - Id: 6006
+    Title: Job Change to Soul-Linker
+  - Id: 6007
+    Title: Job Change to Soul-Linker
+  - Id: 6008
+    Title: Job Change to Soul-Linker
+  - Id: 6010
+    Title: Job Change to Super Novice
+  - Id: 6015
+    Title: A favor from Cougar
+  - Id: 6016
+    Title: A favor from a Suspicious Man
+  - Id: 6017
+    Title: Red Leopard Joe's Reply
+  - Id: 6018
+    Title: Cougar's Madness
+  - Id: 6020
+    Title: Master Miller's Letter
+  - Id: 6021
+    Title: Wise Bull Horn's voucher
+  - Id: 6022
+    Title: Making a voucher
+  - Id: 6023
+    Title: Wise Bull Horn's Favor
+  - Id: 6024
+    Title: Job Change to Gunslinger!
+  - Id: 6025
+    Title: KVM Guillaume
+    TimeLimit: +5mn
+  - Id: 6026
+    Title: KVM Croix
+    TimeLimit: +5mn
+  - Id: 6027
+    Title: KVM Indicator
+    TimeLimit: +5mn
+  - Id: 7000
+    Title: Job Change to Dancer!
+  - Id: 7001
+    Title: Job Change to Dancer!
+  - Id: 7002
+    Title: Job Change to Dancer!
+  - Id: 7003
+    Title: Job Change to Dancer!
+  - Id: 7004
+    Title: Job Change to Dancer!
+  - Id: 7005
+    Title: Job Change to Dancer!
+  - Id: 7006
+    Title: Job Change to Dancer!
+  - Id: 7007
+    Title: Warrior of the Sun, the Moon, and the Stars
+  - Id: 7008
+    Title: Warrior of the Sun, the Moon, and the Stars - Nature
+  - Id: 7009
+    Title: Warrior of the Sun, the Moon, and the Stars - the Altar
+  - Id: 7010
+    Title: Warrior of the Sun, the Moon, and the Stars - Stars?
+  - Id: 7011
+    Title: Warrior of the Sun, the Moon, and the Stars
+  - Id: 7012
+    Title: Pursuing Rayan Moore
+  - Id: 7013
+    Title: Pursuing Rayan Moore
+  - Id: 7014
+    Title: Pursuing Rayan Moore
+  - Id: 7015
+    Title: Pursuing Rayan Moore
+  - Id: 7016
+    Title: Pursuing Rayan Moore
+  - Id: 7017
+    Title: Pursuing Rayan Moore
+  - Id: 7018
+    Title: Pursuing Rayan Moore
+  - Id: 7019
+    Title: Pursuing Rayan Moore
+  - Id: 7020
+    Title: Pursuing Rayan Moore
+  - Id: 7021
+    Title: Pursuing Rayan Moore
+  - Id: 7022
+    Title: Pursuing Rayan Moore
+  - Id: 7023
+    Title: Pursuing Rayan Moore
+  - Id: 7024
+    Title: Pursuing Rayan Moore
+  - Id: 7025
+    Title: Pursuing Rayan Moore
+  - Id: 7026
+    Title: Pursuing Rayan Moore
+  - Id: 7027
+    Title: Pursuing Rayan Moore
+  - Id: 7028
+    Title: Pursuing Rayan Moore
+  - Id: 7029
+    Title: Pursuing Rayan Moore
+  - Id: 7030
+    Title: Pursuing Rayan Moore
+  - Id: 7031
+    Title: Pursuing Rayan Moore
+  - Id: 7032
+    Title: Pursuing Rayan Moore
+  - Id: 7033
+    Title: Pursuing Rayan Moore
+  - Id: 7034
+    Title: Pursuing Rayan Moore
+  - Id: 7035
+    Title: Pursuing Rayan Moore
+  - Id: 7036
+    Title: Pursuing Rayan Moore
+  - Id: 7037
+    Title: Case closed?
+  - Id: 7038
+    Title: Passion for Baked Sweet Potatoes
+  - Id: 7039
+    Title: Dodging the conversation
+  - Id: 7040
+    Title: Dodging the conversation
+  - Id: 7041
+    Title: Politics is for the Politicians
+  - Id: 7042
+    Title: Part-time Job - Tatacho's feed
+  - Id: 7043
+    Title: Part-time Job - Cornus's feed
+  - Id: 7044
+    Title: Part-time Job - Hillthrion's feed1
+  - Id: 7045
+    Title: Part-time Job - Hillthrion's feed2
+  - Id: 7046
+    Title: Part-time Job - warm rugs
+  - Id: 7047
+    Title: Part-time Job - Let's call it a day!
+    TimeLimit: +5h
+  - Id: 7048
+    Title: Thanatos Tower - Burled's Favor
+  - Id: 7049
+    Title: Thanatos Tower - Sealed Tower
+  - Id: 7050
+    Title: Thanatos Tower - Sealed Tower
+  - Id: 7051
+    Title: Thanatos Tower - Sealed Tower
+  - Id: 7052
+    Title: Thanatos Tower - Sealed Tower
+  - Id: 7053
+    Title: Thanatos Tower - What they want is..
+  - Id: 7054
+    Title: Myu's Favor - Teach them a lesson!
+    Targets:
+      - Mob: KOBOLD_ARCHER
+        Count: 1000
+  - Id: 7055
+    Title: Myu's Favor - Not the cat!
+    Targets:
+      - Mob: WILD_ROSE
+        Count: 1
+  - Id: 7056
+    Title: Messenger - Arc's Favor
+  - Id: 7057
+    Title: Messenger - Arc's Favor
+  - Id: 7058
+    Title: Messenger - Arc's Favor
+  - Id: 7059
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7060
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7061
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7062
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7063
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7064
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7065
+    Title: Messenger - Terra's Whereabouts
+  - Id: 7066
+    Title: Messenger - Prove the Truth
+  - Id: 7067
+    Title: Messenger - Prove the Truth
+  - Id: 7068
+    Title: Messenger - Prove the Truth
+  - Id: 7069
+    Title: Messenger - Too late!
+  - Id: 7070
+    Title: Messenger - Terra's Return
+  - Id: 7071
+    Title: Messenger - Invitation
+  - Id: 7074
+    Title: Rata Hunt
+    Targets:
+      - Mob: RATA
+        Count: 1
+  - Id: 7075
+    Title: Duneyrr Hunt
+    Targets:
+      - Mob: DUNEYRR
+        Count: 1
+  - Id: 7076
+    Title: "Wanted: Dandelion"
+    Targets:
+      - Mob: DANDELION_
+        Count: 1
+  - Id: 7077
+    Title: Collecting Dragon Eggs
+  - Id: 7078
+    Title: Collecting Dragon Eggs
+    TimeLimit: +1d
+  - Id: 7079
+    Title: Finding Refined Bradium
+  - Id: 7080
+    Title: Finding Refined Bradium
+    TimeLimit: +1d
+  - Id: 7081
+    Title: Helping the Laphine Craftsman
+  - Id: 7082
+    Title: Helping the Laphine Craftsman
+    TimeLimit: +1d
+  - Id: 7091
+    Title: An advice of Diora 01
+  - Id: 7092
+    Title: An advice of Diora 02
+  - Id: 7093
+    Title: An advice of Diora 03
+  - Id: 7094
+    Title: An advice of Diora 04
+  - Id: 7095
+    Title: An advice of Diora 05
+  - Id: 7096
+    Title: A proof of new requirement
+  - Id: 7097
+    Title: A proof of new requirement
+  - Id: 7098
+    Title: A proof of new requirement
+  - Id: 7099
+    Title: A proof of new requirement
+  - Id: 7100
+    Title: A message of Bercascell
+  - Id: 7101
+    Title: Special task of an assassin guild  1
+  - Id: 7102
+    Title: Special task of an assassin guild  2
+  - Id: 7103
+    Title: Special task of an assassin guild  3
+  - Id: 7104
+    Title: Special task of an assassin guild  4
+  - Id: 7105
+    Title: Special task of an assassin guild  4
+  - Id: 7106
+    Title: Special task of an assassin guild  5
+  - Id: 7107
+    Title: Special task of an assassin guild  6
+  - Id: 7108
+    Title: Special task of an assassin guild  7
+  - Id: 7109
+    Title: Special task of an assassin guild  8
+  - Id: 7110
+    Title: Special task of an assassin guild  9
+  - Id: 7111
+    Title: Special task of an assassin guild  10
+  - Id: 7112
+    Title: Information of Madelle
+  - Id: 7113
+    Title: Information of Crave
+  - Id: 7114
+    Title: Information of Trovan
+  - Id: 7115
+    Title: Information of a peddler
+  - Id: 7116
+    Title: Information of a old man
+  - Id: 7117
+    Title: Your first quest!
+  - Id: 7118
+    Title: Novice Training
+  - Id: 7119
+    Title: Novice Training
+  - Id: 7120
+    Title: Novice Training
+  - Id: 7121
+    Title: Novice Training
+  - Id: 7122
+    Title: First battle - Poring Hunt
+    Targets:
+      - Mob: PORING
+        Count: 1
+  - Id: 7123
+    Title: Battle Basics -Swordman
+    Targets:
+      - Mob: PICKY
+        Count: 2
+  - Id: 7124
+    Title: Battle Basics -Mage
+    Targets:
+      - Mob: LUNATIC
+        Count: 5
+  - Id: 7126
+    Title: Selling items
+  - Id: 7127
+    Title: Battle Basics -Thief
+    Targets:
+      - Mob: WILOW
+        Count: 5
+  - Id: 7128
+    Title: Training course 'conquest a desert!' -start
+  - Id: 7129
+    Title: The training course 'conquer the desert!' - A real battle 1
+    Targets:
+      - Mob: CONDOR
+        Count: 10
+  - Id: 7130
+    Title: The training course 'conquer the desert!' - A real battle 2
+    Targets:
+      - Mob: DESERT_WOLF_B
+        Count: 10
+  - Id: 7131
+    Title: The training course 'conquer the desert!' - A real battle 3
+    Targets:
+      - Mob: SCORPION
+        Count: 5
+  - Id: 7132
+    Title: The training course 'conquer the desert!' - Complete a quest
+  - Id: 7133
+    Title: The training course 'conquer the culvert!' - Start
+  - Id: 7134
+    Title: The training course 'conquer the culvert!' - A real battle 1
+    Targets:
+      - Mob: THIEF_BUG
+        Count: 10
+  - Id: 7135
+    Title: The training course 'conquer the culvert!' - A real battle 2
+    Targets:
+      - Mob: TAROU
+        Count: 10
+  - Id: 7136
+    Title: The training course 'conquer the culvert!' - A real battle 3
+    Targets:
+      - Mob: FARMILIAR
+        Count: 5
+  - Id: 7137
+    Title: The training course 'conquer the culvert!' - Complete a quest
+  - Id: 7138
+    Title: The training course 'conquer the haunted cave!' - Start
+  - Id: 7139
+    Title: The training course 'conquer the haunted cave!' - A real battle 1
+    Targets:
+      - Mob: SKELETON
+        Count: 15
+  - Id: 7140
+    Title: The training course 'conquer the haunted cave!' - A real battle 2
+    Targets:
+      - Mob: POPORING
+        Count: 10
+  - Id: 7141
+    Title: The training course 'conquer the haunted cave!' - Complete a quest
+  - Id: 7142
+    Title: The training course 'conquer ant hell!' - Start
+  - Id: 7143
+    Title: The training course 'conquer ant hell!' - A real battle 1
+    Targets:
+      - Mob: PIERE
+        Count: 15
+  - Id: 7144
+    Title: The training course 'conquer ant hell!' - A real battle 2
+    Targets:
+      - Mob: ANDRE
+        Count: 15
+  - Id: 7145
+    Title: The training course 'conquer ant hell!' - A real battle 3
+    Targets:
+      - Mob: VITATA
+        Count: 10
+  - Id: 7146
+    Title: The training course 'conquer ant hell!' - Complete a quest
+  - Id: 7147
+    Title: The training course 'conquer the orc village!' - start
+  - Id: 7148
+    Title: The training course 'conquer the orc village!' - A real battle 1
+    Targets:
+      - Mob: ORC_BABY
+        Count: 10
+  - Id: 7149
+    Title: The training course 'conquer the orc village!' - A real battle 2
+    Targets:
+      - Mob: ORK_WARRIOR
+        Count: 10
+  - Id: 7150
+    Title: The training course 'conquer the orc village!' - A real battle 3
+    Targets:
+      - Mob: ORC_LADY
+        Count: 10
+  - Id: 7151
+    Title: The training course 'conquer the orc village!' - Complete a quest
+  - Id: 7152
+    Title: The training course 'conquer the orc dungeon!' - start
+  - Id: 7153
+    Title: The training course 'conquer the orc dungeon!' - A real battle 1
+    Targets:
+      - Mob: ORC_ZOMBIE
+        Count: 20
+  - Id: 7154
+    Title: The training course 'conquer the orc dungeon!'- A real battle 2
+    Targets:
+      - Mob: ORC_SKELETON
+        Count: 20
+  - Id: 7155
+    Title: The training course 'conquer the orc dungeon!' - complete a quest
+  - Id: 7156
+    Title: The training course 'conquer an undersea city!' - start
+  - Id: 7157
+    Title: The training course 'conquer an undersea city!' - A real battle 1
+    Targets:
+      - Mob: MERMAN
+        Count: 15
+  - Id: 7158
+    Title: The training course 'conquer an undersea city!' - A real battle 2
+    Targets:
+      - Mob: STROUF
+        Count: 10
+  - Id: 7159
+    Title: The training course 'conquer an undersea city!' - Complete a quest
+  - Id: 7160
+    Title: Mysterious Cryptogram
+  - Id: 7161
+    Title: Mysterious Cryptogram - 2nd
+  - Id: 7162
+    Title: Mysterious Cryptogram - 2nd
+  - Id: 7163
+    Title: Mysterious Cryptogram - 2nd
+  - Id: 7164
+    Title: Hunt for shadow of deception
+    Targets:
+      - Mob: S_WIND_GHOST
+        Count: 1
+  - Id: 7165
+    Title: Key of deception
+  - Id: 7166
+    Title: Rachel Branch of Shadow Workshop
+  - Id: 7167
+    Title: Mysterious Cryptogram - 3rd
+  - Id: 7168
+    Title: Mysterious Cryptogram - 3rd
+  - Id: 7169
+    Title: Mysterious Cryptogram - 3rd
+  - Id: 7170
+    Title: Mysterious Cryptogram - 3rd
+  - Id: 7171
+    Title: Hunt for shadow of delusion
+    Targets:
+      - Mob: S_SKOGUL
+        Count: 1
+  - Id: 7172
+    Title: Key of delusion
+  - Id: 7173
+    Title: Message to Halled from Paul
+  - Id: 7174
+    Title: Mysterious Cryptogram - 4th
+  - Id: 7175
+    Title: Hunft for shadow of gaiety
+    Targets:
+      - Mob: S_SUCCUBUS
+        Count: 1
+  - Id: 7176
+    Title: Key of Gaiety
+  - Id: 7177
+    Title: A young guy in Lighthalzen
+  - Id: 7178
+    Title: Destination of Deception, Delusion and Gaiety
+  - Id: 7179
+    Title: Vicente, you dare!
+  - Id: 7180
+    Title: Message from Doomk
+  - Id: 7181
+    Title: Karakas's ring
+  - Id: 7182
+    Title: Sapha's Visit
+  - Id: 7183
+    Title: Invitation from Sapha
+  - Id: 7184
+    Title: To El Dicastes!
+  - Id: 7185
+    Title: Inspector Doha
+  - Id: 7186
+    Title: Secret Order from Doha - Investigation
+  - Id: 7187
+    Title: Secret Order from Doha - Shay
+  - Id: 7188
+    Title: Information Gathering - in the Plaza
+  - Id: 7189
+    Title: Information Gathering - in the Factory
+  - Id: 7190
+    Title: Information Gathering - at the Guards
+  - Id: 7191
+    Title: Shay's designation - BK
+  - Id: 7192
+    Title: BK's Information
+  - Id: 7193
+    Title: Dimensional Crack Investigation
+  - Id: 7194
+    Title: What's this bloodstain?
+  - Id: 7195
+    Title: What's this skin piece?
+  - Id: 7196
+    Title: What's this suspicious magic power?
+  - Id: 7197
+    Title: Sapha Certifications?
+  - Id: 7198
+    Title: Audience with Ahat
+  - Id: 7199
+    Title: Secret Order from Ahat
+  - Id: 7200
+    Title: Cheshire's call
+    TimeLimit: +23h
+  - Id: 7201
+    Title: Removing traces
+  - Id: 7202
+    Title: Secret order from Doha - Collect proof
+  - Id: 7203
+    Title: Secret order from Doha - Final Report
+  - Id: 7206
+    Title: New Day for Cheshire
+  - Id: 7207
+    Title: Cheshire's Box
+  - Id: 7208
+    Title: Wait for Cheshire?
+    TimeLimit: +1d
+  - Id: 7209
+    Title: Forget the box.
+  - Id: 7210
+    Title: Daily delivery
+  - Id: 7211
+    Title: Misty Forest Labyrinth Exploration
+    TimeLimit: +2h30mn
+  - Id: 7212
+    Title: Loki's Search
+  - Id: 7213
+    Title: Wandering Protector
+  - Id: 7214
+    Title: "Paradise Advanced: Romeo Training"
+  - Id: 7215
+    Title: "Paradise Advanced: Romeo Hunt 1"
+    Targets:
+      - Mob: STALACTIC_GOLEM
+        Count: 3
+  - Id: 7216
+    Title: "Paradise Advanced: Romeo Hunt 2"
+    Targets:
+      - Mob: STALACTIC_GOLEM
+        Count: 10
+  - Id: 7217
+    Title: "Paradise Advanced: Romeo Hunt 3"
+  - Id: 7218
+    Title: "Paradise Advanced: Romeo Complete"
+  - Id: 7219
+    Title: "Paradise Advanced: Johan Training"
+  - Id: 7220
+    Title: "Paradise Advanced: Johan Hunt 1"
+    Targets:
+      - Mob: WRAITH
+        Count: 20
+  - Id: 7221
+    Title: "Paradise Advanced: Johan Hunt 2"
+    Targets:
+      - Mob: EVIL_DRUID
+        Count: 10
+  - Id: 7222
+    Title: "Paradise Advanced: Johan Complete"
+  - Id: 7223
+    Title: "Paradise Advanced: Kiren Training"
+  - Id: 7224
+    Title: "Paradise Advanced: Kiren Hunt 1"
+    Targets:
+      - Mob: PORCELLIO
+        Count: 30
+  - Id: 7225
+    Title: "Paradise Advanced: Removed"
+    Targets:
+      - Mob: NOXIOUS
+        Count: 30
+  - Id: 7226
+    Title: "Paradise Advanced: Kiren Hunt 2 (Part A)"
+    Targets:
+      - Mob: VENOMOUS
+        Count: 30
+  - Id: 7227
+    Title: "Paradise Advanced: Kiren Hunt 2 (Part B)"
+    Targets:
+      - Mob: TEDDY_BEAR
+        Count: 5
+  - Id: 7228
+    Title: "Paradise Advanced: Kiren Complete"
+  - Id: 7229
+    Title: "Paradise Advanced: Naomi Training"
+  - Id: 7230
+    Title: "Paradise Advanced: Naomi Hunt 1"
+    Targets:
+      - Mob: SIROMA
+        Count: 30
+  - Id: 7231
+    Title: "Paradise Advanced: Naomi Hunt 2"
+    Targets:
+      - Mob: SIROMA
+        Count: 30
+  - Id: 7232
+    Title: "Paradise Advanced: Naomi Complete"
+  - Id: 7233
+    Title: "Paradise Advanced: Margaret Training"
+  - Id: 7234
+    Title: "Paradise Advanced: Margaret's Favor"
+  - Id: 7235
+    Title: "Paradise Advanced: Margaret Hunt 1"
+    Targets:
+      - Mob: NEPENTHES
+        Count: 1
+  - Id: 7236
+    Title: "Paradise Advanced: Margaret Hunt 2"
+    Targets:
+      - Mob: PINGUICULA
+        Count: 5
+  - Id: 7237
+    Title: "Paradise Advanced: Margaret Complete"
+  - Id: 7238
+    Title: Toren's Errands (Easy)
+  - Id: 7239
+    Title: Toren's Errands (Normal)
+  - Id: 7240
+    Title: Strengthening Equipment
+  - Id: 7241
+    Title: Toren's Errands - Tomorrow
+    TimeLimit: +1d
+  - Id: 7242
+    Title: Play with the baby cat
+  - Id: 7243
+    Title: Nyadventure-Duruduru Compass
+  - Id: 7244
+    Title: Nyadventure-Duruduru Race
+    TimeLimit: +3mn
+  - Id: 7245
+    Title: Nyadventure-Duruduru Race
+    TimeLimit: +3mn
+  - Id: 7246
+    Title: Nyadventure-I'm coming now.
+  - Id: 7247
+    Title: Nyadventure-Stop the Bang!
+  - Id: 7249
+    Title: Nyadventure-Bang! See you next time
+    TimeLimit: +1d
+  - Id: 7250
+    Title: Nyadventure-Hidden Treasure?
+  - Id: 7251
+    Title: Nyadventure-The First piece of Painting
+  - Id: 7252
+    Title: Nyadventure-The Second piece of Painting
+  - Id: 7253
+    Title: Nyadventure-The Third piece of Painting
+  - Id: 7254
+    Title: Nyadventure-The Fourth piece of Painting
+  - Id: 7255
+    Title: Nyadventure-The Fifth piece of Painting
+  - Id: 7256
+    Title: Nyadventure-The Sixth piece of Painting
+  - Id: 7257
+    Title: Nyadventure-Race, Come back tomorrow!
+    TimeLimit: +1d
+  - Id: 7258
+    Title: Nyadventure-Painting completed
+  - Id: 7259
+    Title: Gift from the Mew Bravery Team
+  - Id: 7260
+    Title: The origin of Bugs
+  - Id: 7261
+    Title: Cat Biscuits - Table
+  - Id: 7262
+    Title: Cat Biscuits - Mattress
+  - Id: 7263
+    Title: Cat Biscuits - Grill
+  - Id: 7264
+    Title: To Chef Nyas
+  - Id: 7265
+    Title: Rage of Chef Nyas
+  - Id: 7266
+    Title: Declaration of Chef Nyas
+  - Id: 7267
+    Title: Appointed time with Cleanyang
+    TimeLimit: +1d
+  - Id: 7268
+    Title: Find the Cat's hard biscuits!
+  - Id: 7269
+    Title: Cat Biscuits - Resting Place
+  - Id: 7270
+    Title: Cat Biscuits - Sand
+  - Id: 7271
+    Title: Cat Biscuits - Bottom of the Stairs
+  - Id: 7272
+    Title: Cat Biscuits - Corner
+  - Id: 7273
+    Title: Cat Biscuits - Locker
+  - Id: 7274
+    Title: Cat Biscuits - Foothold
+  - Id: 7275
+    Title: Cat Biscuits - Sand
+  - Id: 7276
+    Title: Promise to deliver more food
+    TimeLimit: +1d
+  - Id: 7281
+    Title: List of Errands
+  - Id: 7282
+    Title: List of Errands
+  - Id: 7283
+    Title: List of Errands
+  - Id: 7284
+    Title: List of Errands
+  - Id: 7285
+    Title: List of Errands
+  - Id: 7286
+    Title: List of Errands
+  - Id: 7287
+    Title: List of Errands
+  - Id: 7288
+    Title: List of Errands
+  - Id: 7289
+    Title: List of Errands
+  - Id: 7290
+    Title: List of Errands
+  - Id: 7291
+    Title: List of Errands
+  - Id: 7292
+    Title: List of Errands
+  - Id: 7293
+    Title: List of Errands
+  - Id: 7294
+    Title: List of Errands
+  - Id: 7295
+    Title: List of Errands
+  - Id: 7296
+    Title: List of Errands
+  - Id: 7297
+    Title: List of Errands
+  - Id: 7298
+    Title: List of Errands
+  - Id: 7299
+    Title: List of Errands
+  - Id: 7300
+    Title: List of Errands
+  - Id: 7301
+    Title: List of Errands
+  - Id: 7302
+    Title: List of Errands
+  - Id: 7303
+    Title: List of Errands
+  - Id: 7304
+    Title: List of Errands
+  - Id: 7305
+    Title: List of Errands
+  - Id: 7306
+    Title: List of Errands
+  - Id: 7307
+    Title: List of Errands
+  - Id: 7308
+    Title: List of Errands
+  - Id: 7309
+    Title: List of Errands
+  - Id: 7310
+    Title: List of Errands
+  - Id: 7311
+    Title: List of Errands
+  - Id: 7312
+    Title: List of Errands
+  - Id: 7313
+    Title: List of Errands
+  - Id: 7314
+    Title: List of Errands
+  - Id: 7315
+    Title: List of Errands
+  - Id: 7316
+    Title: List of Errands
+  - Id: 7317
+    Title: List of Errands
+  - Id: 7318
+    Title: List of Errands
+  - Id: 7319
+    Title: List of Errands
+  - Id: 7320
+    Title: List of Errands
+  - Id: 7321
+    Title: List of Errands
+  - Id: 7322
+    Title: List of Errands
+  - Id: 7323
+    Title: List of Errands
+  - Id: 7324
+    Title: List of Errands
+  - Id: 7325
+    Title: List of Errands
+  - Id: 7326
+    Title: List of Errands
+  - Id: 7327
+    Title: List of Errands
+  - Id: 7328
+    Title: List of Errands
+  - Id: 7329
+    Title: List of Errands
+  - Id: 7330
+    Title: List of Errands
+  - Id: 7331
+    Title: List of Errands
+  - Id: 7332
+    Title: List of Errands
+  - Id: 7333
+    Title: List of Errands
+  - Id: 7334
+    Title: List of Errands
+  - Id: 7335
+    Title: List of Errands
+  - Id: 7336
+    Title: List of Errands
+  - Id: 7337
+    Title: List of Errands
+  - Id: 7338
+    Title: List of Errands
+  - Id: 7339
+    Title: List of Errands
+  - Id: 7340
+    Title: List of Errands
+  - Id: 7341
+    Title: List of Errands
+  - Id: 7342
+    Title: List of Errands
+  - Id: 7343
+    Title: List of Errands
+  - Id: 7344
+    Title: List of Errands
+  - Id: 7345
+    Title: List of Errands
+  - Id: 7346
+    Title: List of Errands
+  - Id: 7349
+    Title: Vote
+    TimeLimit: +30mn
+  - Id: 7350
+    Title: Cautious Village
+  - Id: 7351
+    Title: Better than My Old Button
+  - Id: 7352
+    Title: Sailor Wants a Button
+  - Id: 7353
+    Title: Old Man Wants a Button
+  - Id: 7354
+    Title: Young Man Wants a Button
+  - Id: 7355
+    Title: Merchant Wants a Button
+  - Id: 7356
+    Title: Little Kid Wants a Button
+  - Id: 7357
+    Title: Middle-aged Guy Wants a Button
+  - Id: 7358
+    Title: Why do they want my Buttons?
+  - Id: 7359
+    Title: Deliver Holy Item to Sailor
+  - Id: 7360
+    Title: Deliver Holy Item to Old Man
+  - Id: 7361
+    Title: Deliver Holy Item to Young Man
+  - Id: 7362
+    Title: Deliver Holy Item to Merchant
+  - Id: 7363
+    Title: Deliver Holy Item to Little Kid
+  - Id: 7364
+    Title: Deliver Holy Item to Middle-aged Man
+  - Id: 7365
+    Title: Better than My Old Button-2
+  - Id: 7366
+    Title: Traditional Spiritual Protection and Impudent Girl-1
+  - Id: 7367
+    Title: Traditional Spiritual Protection and Impudent Girl-2
+    TimeLimit: +10mn
+  - Id: 7368
+    Title: Deliver Spiritual Protection-Pedro
+  - Id: 7369
+    Title: Deliver Spiritual Protection-Nardo
+  - Id: 7370
+    Title: Deliver Spiritual Protection-Pandoi
+  - Id: 7371
+    Title: Deliver Spiritual Protection-Woeon
+  - Id: 7372
+    Title: Deliver Spiritual Protection-Talah
+  - Id: 7373
+    Title: Deliver Spiritual Protection-Romel
+  - Id: 7374
+    Title: Love and Spiritual Protection for All
+  - Id: 7375
+    Title: Love and Spiritual Protection Continues
+    TimeLimit: +23h
+  - Id: 7376
+    Title: Old Man and Cast-Iron Caldron-1
+  - Id: 7377
+    Title: Old Man and Cast-Iron Caldron-2
+  - Id: 7378
+    Title: Old Man and Cast-Iron Caldron-Regular Trades
+    TimeLimit: +23h
+  - Id: 7379
+    Title: Peace Preacher
+  - Id: 7380
+    Title: To Smith a Traditional Spiritual Protection
+  - Id: 7381
+    Title: High Demand on Spiritual Protection Material
+    TimeLimit: +23h
+  - Id: 7382
+    Title: Deliver to Pedro
+  - Id: 7383
+    Title: Deliver to Nardo
+  - Id: 7384
+    Title: Deliver to Pandoi
+  - Id: 7385
+    Title: Deliver to Woeon
+  - Id: 7386
+    Title: Deliver to Talah
+  - Id: 7387
+    Title: Deliver to Romel
+  - Id: 7388
+    Title: Maries's Child
+  - Id: 7389
+    Title: Give the Shirt to Maries's Child
+  - Id: 7390
+    Title: Worried about Maries's Child
+    TimeLimit: +23h
+  - Id: 7391
+    Title: Jejeling and Jejellopy
+  - Id: 7392
+    Title: Collect Jejellopy Regularly
+    TimeLimit: +1d
+  - Id: 7393
+    Title: Shiny Silver Blade
+  - Id: 7394
+    Title: Shiny Tomorrow
+    TimeLimit: +23h
+  - Id: 7395
+    Title: Ghost on the Ferry Ship
+  - Id: 7396
+    Title: Angry Soul on Ferry Ship
+  - Id: 7397
+    Title: Mumbaki Phong's Advice
+  - Id: 7398
+    Title: Offering Bouquet Recommended by Mumbaki
+  - Id: 7399
+    Title: Soul Diwata's Story
+  - Id: 7400
+    Title: Mumbaki of Port Malaya
+  - Id: 7401
+    Title: All Aboard for Perry Sailing
+    TimeLimit: +23h
+  - Id: 7402
+    Title: Bouquet for Diwata
+  - Id: 7403
+    Title: Stabilized Perry
+  - Id: 7404
+    Title: Get Rid of Jejeling
+  - Id: 7405
+    Title: Get Rid of Jejeling - Same Time Tomorrow
+    TimeLimit: +23h
+  - Id: 7406
+    Title: Agree to Collecting Bones!
+  - Id: 7407
+    Title: Purified Bone
+  - Id: 7408
+    Title: Agree to Come Back Tomorrow?
+    TimeLimit: +23h
+  - Id: 7409
+    Title: Cannot Meet Eyes with Him!
+  - Id: 7410
+    Title: Teach Another Lesson Tomorrow!
+    TimeLimit: +23h
+  - Id: 7411
+    Title: The traveler, Fome's story
+  - Id: 7412
+    Title: The traveler, Litrip's story
+  - Id: 7413
+    Title: The traveler, Chiba's story
+  - Id: 7414
+    Title: Eclage guard's message
+  - Id: 7415
+    Title: Laphine's Chief of Staff
+  - Id: 7416
+    Title: Waiting to meet
+    TimeLimit: +10mn
+  - Id: 7417
+    Title: Kardui's request
+  - Id: 7418
+    Title: For Eclage 1
+  - Id: 7419
+    Title: For Eclage 2
+  - Id: 7420
+    Title: For Eclage 3
+  - Id: 7421
+    Title: That's enough
+  - Id: 7422
+    Title: Kardui's gift
+  - Id: 7423
+    Title: A rumor about the King 1
+  - Id: 7424
+    Title: A rumor about the King 2
+  - Id: 7425
+    Title: A rumor about the King 3
+  - Id: 7426
+    Title: A rumor about the King 4
+  - Id: 7427
+    Title: At times like this, face it straight on!
+  - Id: 7428
+    Title: Yai of the wild
+  - Id: 7429
+    Title: Wild recent trend!
+    TimeLimit: +23h
+  - Id: 7430
+    Title: Deliveryman that runs through space
+  - Id: 7431
+    Title: A mailman never rests!
+    TimeLimit: +23h
+  - Id: 7432
+    Title: The troublemakers in the land of blooming flowers
+  - Id: 7433
+    Title: Need constant guidance
+    TimeLimit: +23h
+  - Id: 7434
+    Title: Kardui's big brother
+  - Id: 7435
+    Title: Time for reading the letter
+    TimeLimit: +3mn
+  - Id: 7436
+    Title: Avant the Scholar of Magics
+  - Id: 7437
+    Title: Shenime's favor
+  - Id: 7438
+    Title: Secret sponsorship
+  - Id: 7439
+    Title: The scholar of magics sponsored by Shenime
+  - Id: 7440
+    Title: Minuel's witness
+  - Id: 7441
+    Title: Mail is here!
+  - Id: 7442
+    Title: The identity of the scholar of magics
+  - Id: 7443
+    Title: Interfere with the research!
+  - Id: 7444
+    Title: What Avant was researching
+  - Id: 7445
+    Title: Avant's back
+  - Id: 7446
+    Title: Unfruitful conversation
+  - Id: 7447
+    Title: Dilemma surrounding the Orb
+  - Id: 7448
+    Title: Something's not right
+  - Id: 7449
+    Title: Temptation toward the Orb
+  - Id: 7450
+    Title: Orb's lighting room
+  - Id: 7451
+    Title: Betrayal
+  - Id: 7452
+    Title: Find the chief of staff!
+  - Id: 7453
+    Title: The last of the chief of staff
+  - Id: 8000
+    Title: Quitting Job Change
+  - Id: 8001
+    Title: Job Change to Assassin
+  - Id: 8002
+    Title: Job Change to Assassin
+  - Id: 8003
+    Title: Job Change to Assassin
+  - Id: 8004
+    Title: Job Change to Assassin
+  - Id: 8005
+    Title: Job Change to Assassin
+  - Id: 8006
+    Title: Find the Guild Master!
+  - Id: 8007
+    Title: Acceptance from the Guild Master
+  - Id: 8008
+    Title: Job Change to Assassin
+  - Id: 8009
+    Title: Applying for Job Change to Priest
+  - Id: 8010
+    Title: Job Change to Priest
+  - Id: 8011
+    Title: Job Change to Priest
+  - Id: 8012
+    Title: Job Change to Priest
+  - Id: 8013
+    Title: Job Change to Priest
+  - Id: 8014
+    Title: Job Change to Priest
+  - Id: 8015
+    Title: Job Change to Priest
+  - Id: 8016
+    Title: Job Change to Priest
+  - Id: 8017
+    Title: Factory Inspection
+  - Id: 8018
+    Title: Factory Inspection
+  - Id: 8019
+    Title: Factory Inspection
+  - Id: 8020
+    Title: Factory Inspection
+  - Id: 8021
+    Title: Factory Inspection
+  - Id: 8022
+    Title: Factory Inspection
+  - Id: 8023
+    Title: Factory Inspection
+  - Id: 8024
+    Title: Factory Inspection
+  - Id: 8025
+    Title: Factory Inspection
+  - Id: 8026
+    Title: Factory Inspection
+  - Id: 8027
+    Title: Factory Inspection
+  - Id: 8028
+    Title: Factory Inspection
+  - Id: 8029
+    Title: Factory Inspection
+  - Id: 8030
+    Title: Factory Inspection
+  - Id: 8031
+    Title: Factory Inspection
+  - Id: 8032
+    Title: Tarlock's Favor
+  - Id: 8033
+    Title: Ferlock's Favor
+  - Id: 8034
+    Title: Ferlock's Favor
+  - Id: 8035
+    Title: How the Airship Works
+  - Id: 8036
+    Title: Hallen's Favor
+  - Id: 8037
+    Title: The Dice Roller
+  - Id: 8038
+    Title: The Dice Roller
+  - Id: 8039
+    Title: Secret of Airships
+  - Id: 8040
+    Title: Secret of Airships
+  - Id: 8041
+    Title: Secret of Airships
+  - Id: 8042
+    Title: Secret of Airships
+  - Id: 8043
+    Title: Secret of Airships
+  - Id: 8044
+    Title: Euslan's Fiancee
+  - Id: 8045
+    Title: Tips from Kaci
+  - Id: 8046
+    Title: Ferlock's Passengers list
+  - Id: 8047
+    Title: Euslan's Favor
+  - Id: 8048
+    Title: Eukran's Testimony
+  - Id: 8049
+    Title: Thierry's Favor
+  - Id: 8050
+    Title: Danger coming on to Thierry
+  - Id: 8051
+    Title: Euslan's Medicine
+  - Id: 8052
+    Title: Thierry's Favor
+  - Id: 8053
+    Title: Find Postell
+  - Id: 8054
+    Title: Message from Postell
+  - Id: 8055
+    Title: Nursing Allen
+  - Id: 8056
+    Title: Little something in return
+  - Id: 8057
+    Title: Grumbling Manainne
+  - Id: 8058
+    Title: Conversation with El Schatt
+  - Id: 8059
+    Title: Conversation with Perfitz
+  - Id: 8060
+    Title: Stubborn El Schatt
+  - Id: 8061
+    Title: Stories of the past
+  - Id: 8062
+    Title: Kanainne
+  - Id: 8063
+    Title: Kanainne's spirit
+  - Id: 8064
+    Title: Cellette's Fish Cake Soup
+  - Id: 8065
+    Title: Cellette's Fish Cake Soup
+  - Id: 8066
+    Title: Cellette's Fish Cake Soup
+  - Id: 8067
+    Title: Cellette's Fish Cake Soup
+  - Id: 8068
+    Title: Cellette's Fish Cake Soup
+  - Id: 8069
+    Title: Cellette's Fish Cake Soup
+  - Id: 8070
+    Title: Cellette's Fish Cake Soup
+  - Id: 8071
+    Title: Cellette's Fish Cake Soup
+  - Id: 8072
+    Title: Cellette's Fish Cake Soup
+  - Id: 8073
+    Title: Cellette's Fish Cake Soup
+  - Id: 8074
+    Title: Cellette's Fish Cake Soup
+  - Id: 8075
+    Title: Cellette's Fish Cake Soup
+  - Id: 8076
+    Title: Klitzer and Calla
+  - Id: 8077
+    Title: Klitzer and Calla
+  - Id: 8078
+    Title: Klitzer and Calla
+  - Id: 8079
+    Title: Klitzer and Calla
+  - Id: 8080
+    Title: Klitzer and Calla
+  - Id: 8081
+    Title: Klitzer and Calla
+  - Id: 8082
+    Title: Klitzer and Calla
+  - Id: 8083
+    Title: Klitzer and Calla
+  - Id: 8084
+    Title: Klitzer and Calla
+  - Id: 8085
+    Title: Klitzer and Calla
+  - Id: 8086
+    Title: Klitzer and Calla
+  - Id: 8087
+    Title: Klitzer and Calla
+  - Id: 8088
+    Title: Klitzer and Calla
+  - Id: 8089
+    Title: Stolen Gemstone
+  - Id: 8090
+    Title: Mr. Manson
+  - Id: 8091
+    Title: Jenny the gardener
+  - Id: 8092
+    Title: Searching the Market
+  - Id: 8093
+    Title: Mysterious Message
+  - Id: 8094
+    Title: Double Crossed?
+  - Id: 8095
+    Title: Find Phobe
+  - Id: 8096
+    Title: Stolen Gemstone Found
+  - Id: 8097
+    Title: Informing Jenny
+  - Id: 8098
+    Title: Keeping the Secret
+  - Id: 8099
+    Title: Vincent's Recommendation
+  - Id: 8100
+    Title: Recommendation from High Priest Zhed
+  - Id: 8101
+    Title: Recommendation from High Priest Zhed
+  - Id: 8102
+    Title: Recommendation from High Priest Zhed
+  - Id: 8103
+    Title: Recommendation from High Priest Zhed
+  - Id: 8104
+    Title: Recommendation from High Priest Zhed
+  - Id: 8105
+    Title: Recommendation from High Priest Zhed
+  - Id: 8106
+    Title: Mr. Shendar's daughter
+  - Id: 8107
+    Title: Lachellen's Testimony
+  - Id: 8108
+    Title: A Foreigner, Katinshuell
+  - Id: 8109
+    Title: Bruspetti's scent
+  - Id: 8110
+    Title: Bruspetti's scent
+  - Id: 8111
+    Title: Lachellen's Testimony
+  - Id: 8112
+    Title: Freya's Spring
+  - Id: 8113
+    Title: Bruspetti's Diary
+  - Id: 8114
+    Title: Bruspetti's Diary
+  - Id: 8115
+    Title: Suspicious Katinshuell
+  - Id: 8116
+    Title: Lachellen's Testimony
+  - Id: 8117
+    Title: Freya's Spring
+  - Id: 8118
+    Title: Conversation with Mr. Shendar
+  - Id: 8119
+    Title: Bruspetti's Diary
+  - Id: 8120
+    Title: Conversation with Katinshuell
+  - Id: 8121
+    Title: Conversation with Katinshuell
+  - Id: 8122
+    Title: Bruspetti's resting place
+  - Id: 8123
+    Title: Ayothaya's world famous dish, Tom Yum Goong
+  - Id: 8124
+    Title: Ayothaya's world famous dish, Tom Yum Goong
+  - Id: 8125
+    Title: Ayothaya's world famous dish, Tom Yum Goong
+  - Id: 8126
+    Title: Ayothaya's world famous dish, Tom Yum Goong
+  - Id: 8127
+    Title: Momotaro Field Trip
+  - Id: 8128
+    Title: Momotaro Field Trip
+  - Id: 8129
+    Title: Momotaro Field Trip
+  - Id: 8130
+    Title: Momotaro Field Trip
+  - Id: 8131
+    Title: The mother of lord in Amatsu
+  - Id: 8132
+    Title: The mother of lord in Amatsu
+  - Id: 8133
+    Title: Song of the fox
+  - Id: 8134
+    Title: Boy at the Northern Shrine
+  - Id: 8135
+    Title: Fox Expelled
+  - Id: 8136
+    Title: The Gray Wolf's Warning
+  - Id: 8137
+    Title: Finding the Keymaker
+  - Id: 8138
+    Title: Blacksmith's Request
+  - Id: 8139
+    Title: The Golden Key
+  - Id: 8140
+    Title: The Red Ring
+  - Id: 8141
+    Title: Mashenka's Red Ring
+  - Id: 8142
+    Title: Searching the Marsh
+  - Id: 8143
+    Title: The Flute's Voice
+  - Id: 8144
+    Title: Ryubaba's Confession
+  - Id: 8145
+    Title: Worried Mother's Request
+  - Id: 8146
+    Title: Finding Lusalka
+  - Id: 8147
+    Title: Lusalka's Beloved
+  - Id: 8148
+    Title: Lusalka's Beloved
+  - Id: 8149
+    Title: Searching for Igor
+  - Id: 8150
+    Title: Igor's message
+  - Id: 8151
+    Title: Marozka's Cave
+  - Id: 8152
+    Title: The Golden Thread
+  - Id: 8153
+    Title: Test of mind and wisdom
+  - Id: 8154
+    Title: The Keymaker
+  - Id: 8155
+    Title: Baba Yaga's Favor
+  - Id: 8156
+    Title: Baba Yaga's Favor
+  - Id: 8157
+    Title: Baba Yaga's Favor
+  - Id: 8158
+    Title: Baba Yaga's Favor
+  - Id: 8159
+    Title: Baba Yaga's Favor
+  - Id: 8160
+    Title: Baba Yaga's Favor
+  - Id: 8161
+    Title: Baba Yaga's Favor
+  - Id: 8162
+    Title: Baba Yaga's Favor
+  - Id: 8163
+    Title: Baba Yaga's Favor
+  - Id: 8164
+    Title: Baba Yaga's Favor
+  - Id: 8165
+    Title: Baba Yaga's Favor
+  - Id: 8166
+    Title: Baba Yaga's Favor
+  - Id: 8167
+    Title: The Golden Key
+  - Id: 8168
+    Title: Koshei, the Immortal
+  - Id: 8169
+    Title: Living and Dead Water
+  - Id: 8170
+    Title: Living and Dead Water
+  - Id: 8171
+    Title: Living and Dead Water
+  - Id: 8181
+    Title: Sight Blaster
+  - Id: 8182
+    Title: Push Back Theory
+  - Id: 8183
+    Title: Sight Blaster
+  - Id: 8184
+    Title: Elemental Converter
+  - Id: 8185
+    Title: Elemental Change
+  - Id: 8186
+    Title: Fire Elemental Change
+  - Id: 8187
+    Title: Earth Elemental Change
+  - Id: 8188
+    Title: Wind Elemental Change
+  - Id: 8189
+    Title: Water Elemental Change
+  - Id: 8190
+    Title: Charming Wink
+  - Id: 8191
+    Title: Charming Advisor
+  - Id: 8192
+    Title: Selfish Advisor
+  - Id: 8193
+    Title: Selfish Advisor
+  - Id: 8194
+    Title: Drunken Advisor
+  - Id: 8195
+    Title: Kind Canell
+  - Id: 8196
+    Title: The Tripartite Union's Feud
+  - Id: 8197
+    Title: Document Delivery
+  - Id: 8198
+    Title: Report to the United Research Official
+  - Id: 8199
+    Title: United Research Official's Favor
+  - Id: 8200
+    Title: Ryosen's Document Requests
+  - Id: 8201
+    Title: Missing Document
+  - Id: 8202
+    Title: Document Restoration
+  - Id: 8203
+    Title: Document Restoration
+  - Id: 8204
+    Title: Ryosen
+  - Id: 8205
+    Title: Report to the United Research Official
+  - Id: 8206
+    Title: Researchers' Meeting
+  - Id: 8207
+    Title: Hansenne is not guilty.
+  - Id: 8208
+    Title: Hansenne's Favor
+  - Id: 8209
+    Title: Hue's Report
+  - Id: 8210
+    Title: Report to the United Research Official
+  - Id: 8211
+    Title: Shurank's Lecture
+  - Id: 8212
+    Title: Shurank's Lecture
+  - Id: 8213
+    Title: Shurank's Lecture
+  - Id: 8214
+    Title: Shurank's Lecture
+  - Id: 8215
+    Title: Shurank's Lecture
+  - Id: 8216
+    Title: Shurank's Order
+  - Id: 8217
+    Title: Dequ'ee's Message
+  - Id: 8218
+    Title: Shurank's Lecture
+  - Id: 8219
+    Title: Shurank's Lecture
+  - Id: 8220
+    Title: Shurank's Lecture
+  - Id: 8221
+    Title: Shurank's Lecture
+  - Id: 8222
+    Title: Shurank's order
+  - Id: 8223
+    Title: Dequ'ee's order
+  - Id: 8224
+    Title: The clue
+  - Id: 8225
+    Title: Dequ'ee's Reasoning
+  - Id: 8226
+    Title: Bankley's Death
+  - Id: 8227
+    Title: Return to Shurank
+  - Id: 8228
+    Title: Shurank's Lecture
+  - Id: 8229
+    Title: Guarnien's Lecture
+  - Id: 8230
+    Title: Guarnien's Lecture
+  - Id: 8231
+    Title: Guarnien's Lecture
+  - Id: 8232
+    Title: Guarnien's Lecture
+  - Id: 8233
+    Title: Guarnien's Lecture
+  - Id: 8234
+    Title: Prontera Market Research
+  - Id: 8235
+    Title: Guarnien's Lecture
+  - Id: 8236
+    Title: Guarnien's Lecture
+  - Id: 8237
+    Title: Guarnien's Lecture
+  - Id: 8238
+    Title: Guarnien's Lecture
+  - Id: 8239
+    Title: Guarnien's Lecture
+  - Id: 8240
+    Title: Guarnien's Lecture
+  - Id: 8241
+    Title: Collection of Red Jewel
+  - Id: 8242
+    Title: Collection of blue Jewel
+  - Id: 8243
+    Title: Learning new languages
+  - Id: 8244
+    Title: Fairies and Tree Giants
+  - Id: 8245
+    Title: Language sample investigation
+  - Id: 8246
+    Title: Language sample investigation
+  - Id: 8247
+    Title: Research progress
+  - Id: 8248
+    Title: Research progress
+  - Id: 8249
+    Title: Compressing Information
+  - Id: 8250
+    Title: Storage Gem
+  - Id: 8251
+    Title: Injection of Magic
+  - Id: 8252
+    Title: Handworked jewels
+  - Id: 8253
+    Title: Language translation device
+    TimeLimit: +1h
+  - Id: 8254
+    Title: with a light heart and body
+  - Id: 8255
+    Title: The test of power for existence
+  - Id: 8256
+    Title: The test of power for existence
+  - Id: 8257
+    Title: Providing food of Teardrop
+  - Id: 8258
+    Title: Providing food of Teardrop
+  - Id: 8259
+    Title: to a place for taking a practical technique test
+  - Id: 8260
+    Title: Mission! Documents delivery
+  - Id: 8261
+    Title: When you play the flute,then the wolf show up!
+  - Id: 8262
+    Title: Ranger master never again
+  - Id: 8265
+    Title: One time a one hour!
+  - Id: 8266
+    Title: Hunting poison spore!
+    Targets:
+      - Mob: POISON_SPORE
+        Count: 10
+  - Id: 8267
+    Title: Hunting smokie!
+    Targets:
+      - Mob: SMOKIE
+        Count: 10
+  - Id: 8268
+    Title: Hunt elder wilow!
+    Targets:
+      - Mob: ELDER_WILOW
+        Count: 10
+  - Id: 8269
+    Title: Hunt coco!
+    Targets:
+      - Mob: COCO
+        Count: 10
+  - Id: 8270
+    Title: Hunt tharafrog!
+    Targets:
+      - Mob: THARA_FROG
+        Count: 10
+  - Id: 8271
+    Title: Toxic sprays delivery!
+  - Id: 8272
+    Title: Deliver a honey!
+  - Id: 8273
+    Title: Deliver a  blanket!
+  - Id: 8274
+    Title: Collect bones!
+  - Id: 8275
+    Title: Collect feet!
+  - Id: 8276
+    Title: Collect scell!
+  - Id: 8277
+    Title: Collect tails!
+  - Id: 8278
+    Title: Collect cookies!
+  - Id: 8279
+    Title: Collect mustache!
+  - Id: 9000
+    Title: Job Change to Knight
+  - Id: 9001
+    Title: Loyalty of a Knight
+  - Id: 9002
+    Title: Loyalty of a Knight
+  - Id: 9003
+    Title: The Honor of a Knight
+  - Id: 9004
+    Title: The Honor of a Knight
+  - Id: 9005
+    Title: Tenacity of a Knight
+  - Id: 9006
+    Title: Tenacity of a Knight
+  - Id: 9007
+    Title: The Honor of a Knight
+  - Id: 9008
+    Title: Etiquette as a Knight
+  - Id: 9009
+    Title: Life as a Knight
+  - Id: 9010
+    Title: Quality of reverence
+  - Id: 9011
+    Title: Life as a Knight
+  - Id: 9012
+    Title: Glory of a Knight!
+  - Id: 9013
+    Title: Job Change to Wizard
+  - Id: 9014
+    Title: Job Change to Wizard
+  - Id: 9015
+    Title: Job Change to Wizard
+  - Id: 9016
+    Title: Job Change to Wizard
+  - Id: 9017
+    Title: Job Change to Wizard
+  - Id: 9018
+    Title: Certified as a Wizard!
+  - Id: 9058
+    Title: O'Riley's Request
+  - Id: 9059
+    Title: Happy St. Patrick's Day
+  - Id: 9117
+    Title: Lina's Curse
+  - Id: 9118
+    Title: Lina's Curse - Deviruchi Hunt
+    Targets:
+      - Mob: DEVIRUCHI
+        Count: 50
+  - Id: 9119
+    Title: Lina's Curse - Wraith Dead Hunt
+    Targets:
+      - Mob: WRAITH_DEAD
+        Count: 50
+  - Id: 9120
+    Title: Lina's Curse - Dullahan Hunt
+    Targets:
+      - Mob: DULLAHAN
+        Count: 50
+  - Id: 9121
+    Title: Lina's Curse - Nightmare Terror Hunt
+    Targets:
+      - Mob: NIGHTMARE_TERROR
+        Count: 50
+  - Id: 9122
+    Title: Lina's Curse
+  - Id: 9123
+    Title: Lina's Curse
+  - Id: 9024
+    Title: An errand boy from Einbroch
+  - Id: 9028
+    Title: strange Hydra
+  - Id: 9029
+    Title: "Strange Hydra : present conditions"
+    TimeLimit: +1d
+  - Id: 9030
+    Title: Find a puppy
+  - Id: 9031
+    Title: Find a puppy
+  - Id: 9032
+    Title: Find a puppy
+    TimeLimit: +1d
+  - Id: 9155
+    Title: Getting materials for the Jaty Crown
+  - Id: 9156
+    Title: Make the Jaty Crown
+  - Id: 9157
+    Title: Reward from Sage, Kasyapa
+  - Id: 9158
+    Title: Delivery of Good News(1)
+  - Id: 9159
+    Title: Back to Paiko
+  - Id: 9160
+    Title: Delivery of Good News(2)
+  - Id: 9161
+    Title: Back to Paiko
+  - Id: 9162
+    Title: Delivery of Good News(3)
+  - Id: 9163
+    Title: Back to Paiko
+  - Id: 9164
+    Title: Delivery of Good News(4)
+  - Id: 9165
+    Title: Reward from Paiko for success of Jaty Crown
+  - Id: 9167
+    Title: Tutorial - Mercenary for Hire
+  - Id: 9168
+    Title: Quest Window Check
+  - Id: 9169
+    Title: Window Shopper Catalogue
+  - Id: 9170
+    Title: Window Shopper Catalogue
+  - Id: 9171
+    Title: Enchanting Items
+  - Id: 9172
+    Title: Enchanted Items
+  - Id: 9173
+    Title: Tutorial Timer Cooldown
+    TimeLimit: +20h
+  - Id: 9222
+    Title: Get Rid of Bangungot from Hospital 2F
+  - Id: 9223
+    Title: Will there be Peace at the Hospital?
+    TimeLimit: +7d
+  - Id: 9224
+    Title: Explore Hospital 2F
+    TimeLimit: +1h
+  - Id: 9225
+    Title: Mystery Robbery Incident 1
+  - Id: 9226
+    Title: Mystery Robbery Incident 2
+  - Id: 9227
+    Title: Mystery Robbery Incident 3
+  - Id: 9228
+    Title: Mystery Robbery Incident 4
+  - Id: 9229
+    Title: Mystery Robbery Incident 5
+  - Id: 9230
+    Title: Mystery Robbery Incident 6
+  - Id: 9231
+    Title: Mystery Robbery Incident 7
+  - Id: 9232
+    Title: Mystery Robbery Incident 8
+  - Id: 9233
+    Title: Mystery Robbery Incident 9
+  - Id: 9234
+    Title: Mystery Robbery Incident 10
+  - Id: 9235
+    Title: Mystery Robbery Incident 11
+  - Id: 9236
+    Title: Mystery Robbery Incident 12
+  - Id: 9237
+    Title: Mystery Robbery Incident 13
+  - Id: 9238
+    Title: Mystery Robbery Incident 14
+  - Id: 9239
+    Title: Mystery Robbery Incident 15
+  - Id: 9240
+    Title: Luen's statement notes
+  - Id: 9241
+    Title: Luen's statement notes
+  - Id: 9242
+    Title: Luen's statement notes
+  - Id: 9243
+    Title: Luen's statement notes
+  - Id: 9244
+    Title: Dames's statement notes
+  - Id: 9245
+    Title: Dames's statement notes
+  - Id: 9246
+    Title: Dames's statement notes
+  - Id: 9247
+    Title: Dames's statement notes
+  - Id: 9248
+    Title: Rosa's statement notes
+  - Id: 9249
+    Title: Rosa's statement notes
+  - Id: 9250
+    Title: Rosa's statement notes
+  - Id: 9251
+    Title: Rosa's statement notes
+  - Id: 9252
+    Title: Observing Poppy
+  - Id: 9253
+    Title: Examining a messy bookshelf
+  - Id: 9254
+    Title: Examining a damaged book
+  - Id: 9255
+    Title: Examining a container for soda cans
+  - Id: 9256
+    Title: Examining a messed up table
+  - Id: 9257
+    Title: Examining a foreign object
+  - Id: 9258
+    Title: Field examination results
+  - Id: 9259
+    Title: Confirming Cruyan's statements
+  - Id: 9260
+    Title: Survey investigation notes
+  - Id: 9262
+    Title: Mystery Robbery Incident 16
+  - Id: 10000
+    Title: To the Prontera Royal Court
+  - Id: 10001
+    Title: Qualification Test
+  - Id: 10002
+    Title: Qualification Review
+  - Id: 10003
+    Title: Instructions on what to do
+  - Id: 10004
+    Title: Interim Report
+  - Id: 10005
+    Title: Prince Eigen Ahrum
+  - Id: 10006
+    Title: Prince Ernst
+  - Id: 10007
+    Title: Prince Poe
+  - Id: 10008
+    Title: Prince Peter
+  - Id: 10009
+    Title: Prince Urugen
+  - Id: 10010
+    Title: Prince Helmut
+  - Id: 10011
+    Title: Prince Erich
+  - Id: 10012
+    Title: Conversation of the two princes
+  - Id: 10013
+    Title: Searching for the unknown girl
+  - Id: 10014
+    Title: Back to Peter
+  - Id: 10015
+    Title: Test 15
+  - Id: 10016
+    Title: A Guest from the Walter Family
+  - Id: 10017
+    Title: Conspiracy
+  - Id: 10018
+    Title: Villainous Ahrum - Poe
+  - Id: 10019
+    Title: Villainous Ahrum - Peter
+  - Id: 10020
+    Title: Villainous Ahrum - Erich
+  - Id: 10021
+    Title: Villainous Ahrum - Urugen
+  - Id: 10022
+    Title: Villainous Ahrum - Helmut
+  - Id: 10023
+    Title: Eigen Ahrum and Ernst -Former-
+  - Id: 10024
+    Title: Eigen Ahrum and Ernst -Latter-
+  - Id: 10025
+    Title: Good-bye, dear!
+  - Id: 10026
+    Title: Reforming Meto
+  - Id: 10027
+    Title: Reforming Meto
+  - Id: 10028
+    Title: Reforming Meto
+  - Id: 10029
+    Title: Reforming Meto
+  - Id: 10030
+    Title: Reforming Meto
+  - Id: 10031
+    Title: Reforming Meto
+  - Id: 10032
+    Title: Reforming Meto
+  - Id: 10033
+    Title: Reforming Meto
+  - Id: 10034
+    Title: Search the knife
+  - Id: 10035
+    Title: Deliver the knife
+  - Id: 10036
+    Title: Material Supply-Candy
+  - Id: 10037
+    Title: Material Supply-Crap Shells
+  - Id: 10038
+    Title: Material Supply-Conch
+  - Id: 10039
+    Title: Material Supply-Fish Tail
+  - Id: 10040
+    Title: Material Supply-White Platter
+  - Id: 10041
+    Title: Material Supply-?
+  - Id: 10042
+    Title: Find the Piano Keys-5 remained
+  - Id: 10043
+    Title: Find the Piano Keys-5 remained
+  - Id: 10044
+    Title: Find the Piano Keys-4 remained
+  - Id: 10045
+    Title: Find the Piano Keyboard-4 remained
+  - Id: 10046
+    Title: Find the Piano Keyboard-3 remained
+  - Id: 10047
+    Title: Find the Piano Keyboard-3 remained
+  - Id: 10048
+    Title: Find the Piano Keyboard-2 remained
+  - Id: 10049
+    Title: Find the Piano Keyboard-2 remained
+  - Id: 10050
+    Title: Find the Piano Keyboard-1 remained
+  - Id: 10051
+    Title: Find the Piano Keyboard-1 remained
+  - Id: 10052
+    Title: Find the Piano Keyboard-To the piano
+  - Id: 10053
+    Title: Find the Piano Keyboard-Fill the empty spot
+  - Id: 10054
+    Title: On the Verge of the Escape-Clint Kana
+  - Id: 10055
+    Title: Understanding the culture of Utan
+  - Id: 10056
+    Title: Learning Utan Language
+  - Id: 10057
+    Title: Onward to the Other World
+  - Id: 10058
+    Title: Onward to the Other World
+  - Id: 10059
+    Title: Onward to the Other World
+  - Id: 10060
+    Title: Onward to the Other World
+  - Id: 10061
+    Title: Onward to the Other World
+  - Id: 10062
+    Title: Onward to the Other World
+  - Id: 10063
+    Title: Onward to the Other World
+  - Id: 10064
+    Title: Onward to the Other World
+  - Id: 10065
+    Title: Onward to the Other World
+  - Id: 10066
+    Title: Onward to the Other World
+  - Id: 10067
+    Title: Onward to the Other World
+  - Id: 10068
+    Title: Onward to the Other World
+  - Id: 10069
+    Title: Onward to the Other World
+  - Id: 10070
+    Title: Onward to the Other World
+  - Id: 10071
+    Title: Onward to the Other World
+  - Id: 10072
+    Title: Onward to the Other World
+  - Id: 10073
+    Title: Onward to the Other World
+  - Id: 10074
+    Title: Onward to the Other World
+  - Id: 10075
+    Title: Onward to the Other World
+  - Id: 10076
+    Title: Onward to the Other World
+  - Id: 10077
+    Title: Onward to the Other World
+  - Id: 10078
+    Title: Onward to the Other World
+  - Id: 10079
+    Title: Escape from the reality, into the broad world
+  - Id: 10080
+    Title: Escape from the reality, into the broad world
+  - Id: 10081
+    Title: Escape from the reality, into the broad world
+  - Id: 10082
+    Title: Escape from the reality, into the broad world
+  - Id: 10083
+    Title: Escape from the reality, into the broad world
+  - Id: 10084
+    Title: Escape from the reality, into the broad world
+  - Id: 10085
+    Title: Escape from the reality, into the broad world
+    TimeLimit: +1d
+  - Id: 10086
+    Title: Escape from the reality, into the broad world
+  - Id: 10087
+    Title: Escape from the reality, into the broad world
+    TimeLimit: +1d
+  - Id: 10088
+    Title: Escape from the reality, into the broad world
+  - Id: 10089
+    Title: Escape from the reality, into the broad world
+  - Id: 10090
+    Title: Job changes to Mechanic
+  - Id: 10091
+    Title: Job changes to Mechanic
+  - Id: 10092
+    Title: Job changes to Mechanic
+  - Id: 10093
+    Title: Job changes to Mechanic
+  - Id: 10094
+    Title: Job changes to Mechanic
+  - Id: 10095
+    Title: Job changes to Mechanic
+  - Id: 10096
+    Title: Job changes to Mechanic
+  - Id: 10097
+    Title: Job changes to Mechanic
+  - Id: 10098
+    Title: Job changes to Mechanic
+  - Id: 10099
+    Title: Job changes to Mechanic
+  - Id: 10100
+    Title: Job changes to Mechanic
+  - Id: 10101
+    Title: Job changes to Mechanic
+  - Id: 10102
+    Title: To client - the chapter of the sphinx dungeon
+  - Id: 10103
+    Title: To client - the chapter of Glast heim
+  - Id: 10104
+    Title: To client - the chapter of Juno
+  - Id: 10105
+    Title: To client - the chapter of a clock tower
+  - Id: 10106
+    Title: "To client - the chapter of localizing "
+  - Id: 10107
+    Title: Sphinx dungeon - Requiem
+    Targets:
+      - Mob: REQUIEM
+        Count: 10
+  - Id: 10108
+    Title: Sphinx dungeon - Marduk
+    Targets:
+      - Mob: MARDUK
+        Count: 10
+  - Id: 10109
+    Title: Sphinx dungeon - Pasana
+    Targets:
+      - Mob: PASANA
+        Count: 10
+  - Id: 10110
+    Title: Glast heim - Dark Frame
+    Targets:
+      - Mob: DARK_FRAME
+        Count: 10
+  - Id: 10111
+    Title: Glast heim - Evil druid
+    Targets:
+      - Mob: EVIL_DRUID
+        Count: 10
+  - Id: 10112
+    Title: Glast heim - Wraith
+    Targets:
+      - Mob: WRAITH
+        Count: 10
+  - Id: 10113
+    Title: Glast Heim - Raydric Archer
+    Targets:
+      - Mob: RAYDRIC_ARCHER
+        Count: 10
+  - Id: 10114
+    Title: Juno - Grand Peco
+    Targets:
+      - Mob: GRAND_PECO
+        Count: 20
+  - Id: 10115
+    Title: Juno - sleeper
+    Targets:
+      - Mob: SLEEPER
+        Count: 20
+  - Id: 10116
+    Title: Juno - Goat
+    Targets:
+      - Mob: GOAT
+        Count: 20
+  - Id: 10117
+    Title: Juno - Harpy
+    Targets:
+      - Mob: HARPY
+        Count: 20
+  - Id: 10118
+    Title: clock tower - Clock
+    Targets:
+      - Mob: CLOCK
+        Count: 15
+  - Id: 10119
+    Title: clock tower - Punk
+    Targets:
+      - Mob: PUNK
+        Count: 15
+  - Id: 10120
+    Title: clock tower - Rideword
+    Targets:
+      - Mob: RIDEWORD
+        Count: 15
+  - Id: 10121
+    Title: Localizing - Uzhas
+    Targets:
+      - Mob: UZHAS
+        Count: 15
+  - Id: 10122
+    Title: Localizing - Miyabi Doll
+    Targets:
+      - Mob: MIYABI_NINGYO
+        Count: 15
+  - Id: 10123
+    Title: Localizing - Mi Gao
+    Targets:
+      - Mob: INCREASE_SOIL
+        Count: 15
+  - Id: 11000
+    Title: Inspection of Odin Shrine
+  - Id: 11001
+    Title: Inspection of Odin Shrine
+  - Id: 11002
+    Title: Inspection of Odin Shrine
+  - Id: 11003
+    Title: Inspection of Odin Shrine
+  - Id: 11004
+    Title: Inspection of Odin Shrine
+  - Id: 11005
+    Title: Inspection of Odin Shrine
+  - Id: 11006
+    Title: Inspection of Odin Shrine
+  - Id: 11007
+    Title: Inspection of Odin Shrine
+  - Id: 11008
+    Title: Inspection of Odin Shrine
+  - Id: 11009
+    Title: Morriphen's Request
+  - Id: 11010
+    Title: Fetching the medicine
+  - Id: 11011
+    Title: Medicine for two
+  - Id: 11012
+    Title: Find Makkie
+  - Id: 11013
+    Title: Red Plant Stem Powder
+  - Id: 11014
+    Title: The researcher's medicine
+  - Id: 11015
+    Title: Siria's cure
+  - Id: 11016
+    Title: Morriphen's story
+  - Id: 11017
+    Title: Exploring Juperos
+  - Id: 11018
+    Title: Exploring Juperos
+  - Id: 11019
+    Title: Exploring Juperos
+  - Id: 11020
+    Title: Exploring Juperos
+  - Id: 11021
+    Title: Exploring Juperos
+  - Id: 11022
+    Title: Exploring Juperos
+  - Id: 11029
+    Title: Going to the Turtle Island..
+  - Id: 11030
+    Title: Going to the Turtle Island..
+  - Id: 11031
+    Title: Going to the Turtle Island..
+  - Id: 11032
+    Title: Going to the Turtle Island..
+  - Id: 11033
+    Title: Going to the Turtle Island..
+  - Id: 11034
+    Title: Going to the Turtle Island..
+  - Id: 11035
+    Title: Going to the Turtle Island..
+  - Id: 11036
+    Title: Going to the Turtle Island..
+  - Id: 11037
+    Title: Going to the Turtle Island..
+  - Id: 11038
+    Title: Meet the Dead
+  - Id: 11039
+    Title: Meet the Dead
+  - Id: 11040
+    Title: Meet the Dead
+  - Id: 11041
+    Title: Meet the Dead
+  - Id: 11042
+    Title: Meet the Dead
+  - Id: 11043
+    Title: Meet the Dead
+  - Id: 11044
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11045
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11046
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11047
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11048
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11049
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11050
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11051
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11052
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11053
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11054
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11055
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11056
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11057
+    Title: Herb Medicine - Being a Doctor's Assistance
+  - Id: 11070
+    Title: Poison King
+  - Id: 11071
+    Title: Poison King
+  - Id: 11072
+    Title: Poison King
+  - Id: 11073
+    Title: Poison King
+  - Id: 11074
+    Title: Poison King
+  - Id: 11075
+    Title: Poison King
+  - Id: 11076
+    Title: Poison King
+  - Id: 11077
+    Title: Poison King
+  - Id: 11078
+    Title: Poison King
+  - Id: 11079
+    Title: Poison King
+  - Id: 11080
+    Title: Poison King
+  - Id: 11081
+    Title: Poison King
+  - Id: 11082
+    Title: Poison King
+  - Id: 11083
+    Title: Poison King
+  - Id: 11084
+    Title: New Surroundings
+  - Id: 11085
+    Title: New Surroundings
+  - Id: 11086
+    Title: New Surroundings
+  - Id: 11087
+    Title: Repairing the Tent
+  - Id: 11088
+    Title: Repairing the Tent
+  - Id: 11089
+    Title: Repairing the Tent
+  - Id: 11090
+    Title: Repairing the Tent
+  - Id: 11091
+    Title: Delivering Supplies
+  - Id: 11092
+    Title: Delivering Supplies
+  - Id: 11093
+    Title: Delivering Supplies
+  - Id: 11094
+    Title: Delivering Supplies
+  - Id: 11095
+    Title: Delivering Supplies
+  - Id: 11096
+    Title: Delivering Supplies
+  - Id: 11097
+    Title: Delivering Supplies
+  - Id: 11098
+    Title: Delivering Supplies
+  - Id: 11099
+    Title: To My Friend
+  - Id: 11100
+    Title: To My Friend
+  - Id: 11101
+    Title: Secret note of Bazet
+  - Id: 11102
+    Title: Secret note of Bazet
+  - Id: 11103
+    Title: Secret note of Bazet
+  - Id: 11104
+    Title: Resting time
+    TimeLimit: +23h
+  - Id: 11105
+    Title: Tendrilrion skin
+  - Id: 11106
+    Title: Job changing to Warlock
+  - Id: 11107
+    Title: Job changing to Warlock
+  - Id: 11108
+    Title: Job changing to Warlock
+  - Id: 11109
+    Title: Job changing to Warlock
+  - Id: 11110
+    Title: Job changing to Warlock
+  - Id: 11111
+    Title: Job changing to Warlock
+  - Id: 11112
+    Title: Job changing to Warlock
+  - Id: 11113
+    Title: Until radering is functioning
+    TimeLimit: +23h
+  - Id: 11114
+    Title: "Request : Hunt Honet"
+    Targets:
+      - Mob: HORNET
+        Count: 10
+  - Id: 11115
+    Title: "Request : Hunt Condor"
+    Targets:
+      - Mob: CONDOR
+        Count: 20
+  - Id: 11116
+    Title: "Request : Hunt Grasshopper's Leg"
+    Targets:
+      - Mob: ROCKER
+        Count: 10
+  - Id: 11117
+    Title: "Request : Hunt Worm tail"
+    Targets:
+      - Mob: WORM_TAIL
+        Count: 20
+  - Id: 11118
+    Title: "Request : Hunt Spore"
+    Targets:
+      - Mob: SPORE
+        Count: 30
+  - Id: 11119
+    Title: "Request : Pest Control"
+    Targets:
+      - Mob: THIEF_BUG_EGG
+        Count: 20
+  - Id: 11120
+    Title: "Request : Hunt Muka"
+    Targets:
+      - Mob: MUKA
+        Count: 20
+  - Id: 11121
+    Title: "Request : Hunt Farmiliar"
+    Targets:
+      - Mob: FARMILIAR
+        Count: 20
+  - Id: 11122
+    Title: "Request : Collect Feather"
+    Targets:
+      - Mob: PECOPECO
+        Count: 30
+  - Id: 11123
+    Title: "Request : Collect Poison Spore"
+    Targets:
+      - Mob: POISON_SPORE
+        Count: 30
+  - Id: 11124
+    Title: "Request : Hunt Honet - Complete"
+    TimeLimit: +1d
+  - Id: 11125
+    Title: "Request : Hunt Condor - Complete"
+    TimeLimit: +1d
+  - Id: 11126
+    Title: "Request : Hunt Grasshopper's Leg - Complete"
+    TimeLimit: +1d
+  - Id: 11127
+    Title: "Request : Hunt Worm Tail - Complete"
+    TimeLimit: +1d
+  - Id: 11128
+    Title: "Request : Hunt Spore - Complete"
+    TimeLimit: +1d
+  - Id: 11129
+    Title: "Request : Pest Control - Complete"
+    TimeLimit: +1d
+  - Id: 11130
+    Title: "Request : Hunt Muka - Complete"
+    TimeLimit: +1d
+  - Id: 11131
+    Title: "Request : Hunt Farmiliar - Complete"
+    TimeLimit: +1d
+  - Id: 11132
+    Title: "Request : Collect Feather - Complete"
+    TimeLimit: +1d
+  - Id: 11133
+    Title: "Request : Collect Poison Spore - Complete"
+    TimeLimit: +1d
+  - Id: 11135
+    Title: Looking for Maestro Song
+  - Id: 11136
+    Title: Looking for Maestro Song
+  - Id: 11137
+    Title: Looking for Maestro Song
+  - Id: 11138
+    Title: Looking for Maestro Song
+  - Id: 11139
+    Title: Looking for Maestro Song
+  - Id: 11140
+    Title: The sky, plane and travel sickness.
+  - Id: 11141
+    Title: Human & gossip is towarding to the bar
+  - Id: 11142
+    Title: Fearful metalic sound
+  - Id: 11143
+    Title: Thanatos tower
+  - Id: 11144
+    Title: "Juno manager : click"
+  - Id: 11145
+    Title: "I want to get the "
+    Targets:
+      - Mob: TEDDY_BEAR
+        Count: 33
+  - Id: 11146
+    Title: to ice tunnel...
+  - Id: 11147
+    Title: Lared's dew
+  - Id: 11148
+    Title: Toward Comodo with the bow
+  - Id: 11149
+    Title: Just pour the water. Pour! Pour!...
+  - Id: 11150
+    Title: Looking for Maestro Song
+  - Id: 11151
+    Title: Looking for Maestro Song
+  - Id: 11152
+    Title: to the quiet place!...
+  - Id: 11153
+    Title: Missing watch top
+  - Id: 11154
+    Title: I will remember the memories with you....
+  - Id: 11155
+    Title: undefinable battler
+  - Id: 11156
+    Title: annoying homework
+    Targets:
+      - Mob: DESERT_WOLF
+        Count: 100
+  - Id: 11157
+    Title: "Helmes valley "
+  - Id: 11158
+    Title: On the way for meditation
+  - Id: 11159
+    Title: Story of Brian
+  - Id: 11160
+    Title: Story of John
+  - Id: 11161
+    Title: Story of Tyler
+  - Id: 11162
+    Title: Story of Rose
+  - Id: 11163
+    Title: Story of Bain
+  - Id: 11164
+    Title: Story of Lash
+  - Id: 11165
+    Title: Delivery to Brian
+  - Id: 11166
+    Title: Delivery to John
+  - Id: 11167
+    Title: Delivery to Tyler
+  - Id: 11168
+    Title: Delivery to Rose
+  - Id: 11169
+    Title: Delivery to Bain
+  - Id: 11170
+    Title: Delivery to Lash
+  - Id: 11171
+    Title: Request from Frede
+  - Id: 11172
+    Title: Request from Frede
+  - Id: 11173
+    Title: Request from Frede
+  - Id: 11174
+    Title: Supply Shortage
+  - Id: 11175
+    Title: Supply Shortage
+    TimeLimit: +2h
+  - Id: 11176
+    Title: For my friends
+  - Id: 11182
+    Title: Theore's Report
+    TimeLimit: +1mn
+  - Id: 11183
+    Title: Theore's Favor
+  - Id: 11184
+    Title: Runaway Laphine
+  - Id: 11185
+    Title: Pouch
+  - Id: 11186
+    Title: Pouch
+  - Id: 11187
+    Title: Pouch
+  - Id: 11188
+    Title: Pouch
+  - Id: 11189
+    Title: Roast Beef
+  - Id: 11190
+    Title: Roast Beef
+  - Id: 11191
+    Title: Shortage of Roast Beef
+  - Id: 11192
+    Title: Mora Village...
+  - Id: 11193
+    Title: Sonya's Friend
+  - Id: 11194
+    Title: Runaway Laphine
+  - Id: 11195
+    Title: Pouch
+  - Id: 11196
+    Title: Pouch
+  - Id: 11197
+    Title: Pouch
+  - Id: 11198
+    Title: Mora Village...
+  - Id: 11199
+    Title: Theo's Friend
+  - Id: 11200
+    Title: Pouch
+  - Id: 11201
+    Title: Roast Beef
+  - Id: 11202
+    Title: Roast Beef
+  - Id: 11203
+    Title: Shortage of Roast Beef
+  - Id: 11206
+    Title: Quick Delivery Yoneseu
+  - Id: 11207
+    Title: A Very Heavy Burden
+  - Id: 11208
+    Title: Daphne
+  - Id: 11209
+    Title: Hardships of Thomas
+  - Id: 11210
+    Title: Malangdo Reunion
+  - Id: 11211
+    Title: Malangdo Reunion
+  - Id: 11212
+    Title: Malangdo Reunion
+  - Id: 11213
+    Title: Malangdo Reunion
+  - Id: 11214
+    Title: Malangdo Reunion
+  - Id: 11215
+    Title: Malangdo Reunion
+  - Id: 11216
+    Title: Malangdo Reunion
+  - Id: 11217
+    Title: Malangdo Reunion
+  - Id: 11218
+    Title: Malangdo Reunion
+  - Id: 11219
+    Title: Malangdo Reunion
+  - Id: 11220
+    Title: Malangdo Reunion
+  - Id: 11221
+    Title: Repair of cracks
+  - Id: 11222
+    Title: Repair of cracks
+  - Id: 11223
+    Title: Repair of cracks
+  - Id: 11224
+    Title: Repair of cracks
+  - Id: 11225
+    Title: Repair of cracks
+  - Id: 11226
+    Title: Repair of cracks
+  - Id: 11227
+    Title: Repair of cracks
+  - Id: 11228
+    Title: Repair of cracks
+  - Id: 11229
+    Title: Repair of cracks
+  - Id: 11230
+    Title: Repair of cracks
+  - Id: 11231
+    Title: Repair of cracks
+  - Id: 11232
+    Title: Repair of cracks
+  - Id: 11233
+    Title: Repair of cracks
+  - Id: 11234
+    Title: Repair of cracks
+  - Id: 11235
+    Title: Repair of cracks
+  - Id: 11236
+    Title: Repair of cracks
+  - Id: 11237
+    Title: Repair of cracks
+  - Id: 11238
+    Title: Malangdo Fruits
+  - Id: 11239
+    Title: Malangdo Fruits
+    TimeLimit: +23h
+  - Id: 11240
+    Title: Repair of cracks
+  - Id: 11241
+    Title: Repair of cracks
+  - Id: 11242
+    Title: Repair of cracks
+  - Id: 11243
+    Title: Repair of cracks
+    TimeLimit: +23h
+  - Id: 11244
+    Title: Soft Jelly
+  - Id: 11245
+    Title: Soft Jelly
+    TimeLimit: +23h
+  - Id: 11284
+    Title: Nurse at Port Malaya-1
+  - Id: 11285
+    Title: Nurse at Port Malaya-2
+  - Id: 11286
+    Title: Nurse at Port Malaya-3
+  - Id: 11287
+    Title: Nurse at Port Malaya-4
+  - Id: 11288
+    Title: Nurse at Port Malaya-5
+  - Id: 11289
+    Title: Nurse at Port Malaya-6
+  - Id: 11290
+    Title: Nurse at Port Malaya-7
+  - Id: 11291
+    Title: Nurse at Port Malaya-8
+  - Id: 11292
+    Title: Nurse at Port Malaya-9
+  - Id: 11293
+    Title: Nurse at Port Malaya-10
+  - Id: 11294
+    Title: Nurse at Port Malaya-11
+  - Id: 11295
+    Title: Nurse at Port Malaya-12
+  - Id: 11296
+    Title: Nurse at Port Malaya-13
+  - Id: 11297
+    Title: Nurse at Port Malaya-14
+  - Id: 11298
+    Title: Nurse at Port Malaya-15
+  - Id: 11299
+    Title: Nurse at Port Malaya-16
+  - Id: 11300
+    Title: Nurse at Port Malaya-17
+  - Id: 11301
+    Title: Nurse at Port Malaya-18
+  - Id: 11302
+    Title: Nurse at Port Malaya-19
+  - Id: 11303
+    Title: Nurse at Port Malaya-20
+  - Id: 11304
+    Title: Nurse at Port Malaya-21
+  - Id: 11305
+    Title: Nurse at Port Malaya-22
+  - Id: 11306
+    Title: Nurse at Port Malaya-23
+  - Id: 11307
+    Title: Nurse at Port Malaya-24
+  - Id: 11308
+    Title: Nurse at Port Malaya-25
+  - Id: 11309
+    Title: Nurse at Port Malaya-26
+  - Id: 11310
+    Title: Eclage's Entrance
+    TimeLimit: +30s
+  - Id: 11311
+    Title: Eclage's Entrance
+  - Id: 11312
+    Title: Goliath
+  - Id: 11313
+    Title: Goliath
+  - Id: 11314
+    Title: Goliath
+  - Id: 11315
+    Title: And time keeps on flowing
+  - Id: 11316
+    Title: And time keeps on flowing
+  - Id: 11317
+    Title: And time keeps on flowing
+  - Id: 11318
+    Title: And time keeps on flowing
+  - Id: 11319
+    Title: And time keeps on flowing
+  - Id: 11320
+    Title: And time keeps on flowing
+  - Id: 11321
+    Title: And time keeps on flowing
+  - Id: 11322
+    Title: And time keeps on flowing
+  - Id: 11323
+    Title: And time keeps on flowing
+  - Id: 11324
+    Title: And time keeps on flowing
+  - Id: 11325
+    Title: The chicken or the egg
+  - Id: 11326
+    Title: The chicken or the egg
+  - Id: 11327
+    Title: The chicken or the egg
+  - Id: 11328
+    Title: The chicken or the egg
+  - Id: 11329
+    Title: The chicken or the egg
+  - Id: 11330
+    Title: The chicken or the egg
+  - Id: 11331
+    Title: The chicken or the egg
+  - Id: 11332
+    Title: The chicken or the egg
+  - Id: 11333
+    Title: Red seed and green seed
+  - Id: 11334
+    Title: Red seed and green seed
+  - Id: 11335
+    Title: Dreaming boy
+  - Id: 11336
+    Title: Dreaming boy
+  - Id: 11337
+    Title: Dreaming boy
+  - Id: 11378
+    Title: "Trick or treat "
+  - Id: 12000
+    Title: An old friend
+  - Id: 12001
+    Title: Digotz, Maku's old friend
+  - Id: 12002
+    Title: Messenger of Friendship
+  - Id: 12003
+    Title: Digotz's message
+  - Id: 12004
+    Title: Maku's other friend
+  - Id: 12005
+    Title: Benkaistein
+  - Id: 12006
+    Title: Benkaistein's lost item
+  - Id: 12007
+    Title: Kazien
+  - Id: 12008
+    Title: Researcher Garins
+  - Id: 12009
+    Title: Failed mission
+  - Id: 12010
+    Title: No entrance
+  - Id: 12011
+    Title: Lyozien
+  - Id: 12012
+    Title: Meet Mr. Ahman
+  - Id: 12013
+    Title: Delivery complete
+  - Id: 12014
+    Title: More missions
+  - Id: 12015
+    Title: Ghalstein
+  - Id: 12016
+    Title: Sneaking into the Laboratory
+  - Id: 12017
+    Title: Membership approved
+  - Id: 12018
+    Title: Meeting the President
+  - Id: 12019
+    Title: The President's Mission
+  - Id: 12020
+    Title: Rescuing a Secret Wing Member
+  - Id: 12021
+    Title: The Sealed File Folder
+  - Id: 12022
+    Title: The Sealed File Folder
+  - Id: 12023
+    Title: Shinokas the researcher
+  - Id: 12024
+    Title: Kafra Corporation Agent
+  - Id: 12025
+    Title: Rekenber's Secret Archive
+  - Id: 12026
+    Title: Rekenber's Secret Archive
+  - Id: 12027
+    Title: Rekenber's Secret Archive
+  - Id: 12028
+    Title: Kurelle the traitor
+  - Id: 12029
+    Title: Lost Engagement Ring
+  - Id: 12030
+    Title: Engagement Ring Found
+  - Id: 12031
+    Title: Find Annon
+  - Id: 12032
+    Title: Searching for Annon
+  - Id: 12033
+    Title: Traces of blood
+  - Id: 12034
+    Title: Annon's side of the story
+  - Id: 12035
+    Title: Holy Threads
+  - Id: 12036
+    Title: The Stone Slate Message
+  - Id: 12037
+    Title: Holier Threads
+  - Id: 12038
+    Title: Searching for the Sa-mhing Tiger
+  - Id: 12039
+    Title: Boonthom's Comrade
+  - Id: 12040
+    Title: Benkaistein's Journal
+  - Id: 12041
+    Title: Benkaistein's Journal
+  - Id: 12042
+    Title: Benkaistein's Journal
+  - Id: 12043
+    Title: Pass to the Slums
+  - Id: 12044
+    Title: Soothing a crying child 1
+  - Id: 12045
+    Title: Soothing a crying child 2
+  - Id: 12046
+    Title: Soothing a crying child 3
+  - Id: 12047
+    Title: Soothing a crying child 4
+  - Id: 12048
+    Title: Soothing a crying child 5
+  - Id: 12049
+    Title: Job Quest 1 - Rogue
+  - Id: 12050
+    Title: Job Quest 2 - Rogue
+  - Id: 12051
+    Title: Job Quest 3 - Rogue
+  - Id: 12052
+    Title: Job Quest 4 - Rogue
+  - Id: 12053
+    Title: Job Quest 5 - Rogue
+  - Id: 12054
+    Title: Job Quest 6 - Rogue
+  - Id: 12055
+    Title: Job Quest - Assassin
+  - Id: 12056
+    Title: Job Quest - Assassin
+  - Id: 12057
+    Title: Pass to the Lab
+  - Id: 12058
+    Title: Admission Restricted to the 102 Tower
+    TimeLimit: +7d
+  - Id: 12059
+    Title: Orc's Memory Time Limit
+    TimeLimit: +2h
+  - Id: 12060
+    Title: Today's Fishing Closed
+    TimeLimit: +1d
+  - Id: 12061
+    Title: Concentration
+    TimeLimit: +10s
+  - Id: 12062
+    Title: Today's Mining Closed
+    TimeLimit: +1d
+  - Id: 12070
+    Title: Limited time for enter
+    TimeLimit: +4h
+  - Id: 12071
+    Title: Stamp a seal on the attendance book
+    TimeLimit: +1d
+  - Id: 12072
+    Title: Hunt tharafrog
+    Targets:
+      - Mob: THARA_FROG
+        Count: 20
+  - Id: 12073
+    Title: Remove Cruiser
+    Targets:
+      - Mob: CRUISER
+        Count: 15
+  - Id: 12074
+    Title: Remove Kukre
+    Targets:
+      - Mob: KUKRE
+        Count: 30
+  - Id: 12075
+    Title: Remove orcbaby
+    Targets:
+      - Mob: ORC_BABY
+        Count: 15
+  - Id: 12076
+    Title: Remove orcwarroir
+    Targets:
+      - Mob: ORK_WARRIOR
+        Count: 20
+  - Id: 12077
+    Title: Hunt vadon
+    Targets:
+      - Mob: VADON
+        Count: 15
+  - Id: 12078
+    Title: Hunt Megalodon
+    Targets:
+      - Mob: MEGALODON
+        Count: 30
+  - Id: 12079
+    Title: Hunt Marse
+    Targets:
+      - Mob: MARSE
+        Count: 15
+  - Id: 12080
+    Title: Hunt Cornutus
+    Targets:
+      - Mob: CORNUTUS
+        Count: 20
+  - Id: 12081
+    Title: Remove Myst
+    Targets:
+      - Mob: MYST
+        Count: 15
+  - Id: 12082
+    Title: Hunt shellfish
+    Targets:
+      - Mob: SHELLFISH
+        Count: 30
+  - Id: 12083
+    Title: Hunt Marine sphere
+    Targets:
+      - Mob: MARINE_SPHERE
+        Count: 15
+  - Id: 12084
+    Title: Hunt Phen
+    Targets:
+      - Mob: PHEN
+        Count: 20
+  - Id: 12085
+    Title: Remove orcskeleton
+    Targets:
+      - Mob: ORC_SKELETON
+        Count: 15
+  - Id: 12086
+    Title: Remove Zenorc
+    Targets:
+      - Mob: ZENORC
+        Count: 30
+  - Id: 12087
+    Title: Remove mummy
+    Targets:
+      - Mob: MUMMY
+        Count: 15
+  - Id: 12088
+    Title: Accomplishing a request
+  - Id: 12090
+    Title: Mysterious guy
+  - Id: 12091
+    Title: Just save the burning heart
+  - Id: 12092
+    Title: Long lasting story
+  - Id: 12093
+    Title: the record the intelligence Lyoda left
+  - Id: 12094
+    Title: The damaged shield letter
+  - Id: 12096
+    Title: Towards Karakas
+  - Id: 12097
+    Title: Basic preparation
+  - Id: 12098
+    Title: Tour of dungeon
+  - Id: 12099
+    Title: Remove Root Cause
+    Targets:
+      - Mob: DRACO_EGG
+        Count: 10
+  - Id: 12100
+    Title: Violent Winged Insect
+    Targets:
+      - Mob: LUCIOLA_VESPA
+        Count: 12
+  - Id: 12101
+    Title: Work Interference
+    Targets:
+      - Mob: DRACO
+        Count: 5
+  - Id: 12102
+    Title: Intelligent Snakes
+    Targets:
+      - Mob: NAGA
+        Count: 10
+  - Id: 12103
+    Title: Legendary Creature
+    Targets:
+      - Mob: CORNUS
+        Count: 1
+  - Id: 12104
+    Title: Insects with an Appetite
+    Targets:
+      - Mob: CENTIPEDE
+        Count: 15
+  - Id: 12105
+    Title: Moving Rocks
+    Targets:
+      - Mob: BRADIUM_GOLEM
+        Count: 10
+  - Id: 12106
+    Title: A child on a flower
+    Targets:
+      - Mob: PINGUICULA
+        Count: 15
+  - Id: 12107
+    Title: Twisted Love
+    Targets:
+      - Mob: PINGUICULA_D
+        Count: 10
+  - Id: 12108
+    Title: Dangerous Plant Removal
+    Targets:
+      - Mob: NEPENTHES
+        Count: 12
+  - Id: 12109
+    Title: Larva Extermination
+    Targets:
+      - Mob: CENTIPEDE_LARVA
+        Count: 14
+  - Id: 12110
+    Title: Demon of Water
+    Targets:
+      - Mob: AQUA_ELEMENTAL
+        Count: 7
+  - Id: 12111
+    Title: Bird with ugly face
+    Targets:
+      - Mob: TATACHO
+        Count: 10
+  - Id: 12117
+    Title: Withered Flower
+  - Id: 12118
+    Title: Welcomed Mineral
+  - Id: 12119
+    Title: Valuable Textile
+  - Id: 12120
+    Title: Curious Meat
+  - Id: 12121
+    Title: Materials to Clear Snow
+  - Id: 12122
+    Title: Best Cooler Material
+  - Id: 12123
+    Title: Best Paint
+  - Id: 12124
+    Title: Rare Valuable
+  - Id: 12125
+    Title: Armory Material
+  - Id: 12126
+    Title: Advanced Armory Material
+  - Id: 12127
+    Title: Supervisor's Tool
+  - Id: 12128
+    Title: Preparation for Heating
+  - Id: 12129
+    Title: Suspicious Food
+  - Id: 12130
+    Title: Useful Material
+  - Id: 12131
+    Title: Essential Material for Construction
+  - Id: 12132
+    Title: Essential Material for Construction 2
+  - Id: 12133
+    Title: Decoration arrangement
+  - Id: 12134
+    Title: Instant Receptacle
+  - Id: 12135
+    Title: Not enough medicine
+  - Id: 12136
+    Title: Honey robber
+  - Id: 12137
+    Title: Tools for Experiment
+  - Id: 12138
+    Title: Fine Gift Samples
+  - Id: 12139
+    Title: Respect for Taste!
+  - Id: 12140
+    Title: Courtesy for Regulars
+  - Id: 12141
+    Title: Special Package
+  - Id: 12142
+    Title: Dangerous Request
+  - Id: 12143
+    Title: Strange Trend
+  - Id: 12144
+    Title: Unknown Usage
+  - Id: 12145
+    Title: Other World Cuisine
+  - Id: 12146
+    Title: Filling in Cracks
+  - Id: 12147
+    Title: Adhesive Material
+  - Id: 12148
+    Title: Bait for Tatacho Hunting
+  - Id: 12149
+    Title: Swordmanship Practice
+  - Id: 12150
+    Title: Pretty reddish vegetable
+  - Id: 12151
+    Title: Tenacity of the pub owner
+  - Id: 12152
+    Title: Tastes like home cooking
+  - Id: 12153
+    Title: Hazardous plant when burnt
+  - Id: 12154
+    Title: Unexpectedly Normal
+  - Id: 12155
+    Title: Gift with heart
+  - Id: 12156
+    Title: Respect personal appetite!
+  - Id: 12157
+    Title: Resolution of the pub owner
+  - Id: 12158
+    Title: Rage of the pub owner
+  - Id: 12159
+    Title: Quest record from Laponte
+    TimeLimit: +23h
+  - Id: 12160
+    Title: Quest record from Kalipo
+    TimeLimit: +23h
+  - Id: 12161
+    Title: Quest record from Pura
+    TimeLimit: +23h
+  - Id: 12162
+    Title: Quest record from Tragis
+    TimeLimit: +23h
+  - Id: 12163
+    Title: Quest record from Calyon
+    TimeLimit: +23h
+  - Id: 12164
+    Title: Quest record from Moltuka
+    TimeLimit: +23h
+  - Id: 12165
+    Title: Dizziness
+    TimeLimit: +6h
+  - Id: 12166
+    Title: Tree Root Doc.
+  - Id: 12167
+    Title: Reptile Tongue Doc.
+  - Id: 12168
+    Title: Scorpion Tail Doc.
+  - Id: 12169
+    Title: Stem Doc.
+  - Id: 12170
+    Title: Pointed Scale Doc.
+  - Id: 12171
+    Title: Resin Doc.
+  - Id: 12172
+    Title: Spawn Doc.
+  - Id: 12173
+    Title: Jellopy Doc.
+  - Id: 12174
+    Title: Fish Tail Doc.
+  - Id: 12175
+    Title: Worm Peeling Doc.
+  - Id: 12176
+    Title: Gill Doc.
+  - Id: 12177
+    Title: Tooth of Bat Doc.
+  - Id: 12178
+    Title: Fluff Doc.
+  - Id: 12179
+    Title: Chrysalis Doc.
+  - Id: 12180
+    Title: Feather of Birds Doc.
+  - Id: 12181
+    Title: Talon Document Doc.
+  - Id: 12182
+    Title: Sticky Webfoot Doc.
+  - Id: 12183
+    Title: Animal Skin Doc.
+  - Id: 12184
+    Title: Wolf Claw Doc.
+  - Id: 12185
+    Title: Mushroom Spore Doc.
+  - Id: 12186
+    Title: Orc's Fang Doc.
+  - Id: 12187
+    Title: Evil Horn Doc.
+  - Id: 12188
+    Title: Powder of Butterfly Doc.
+  - Id: 12189
+    Title: Bill of Birds Doc.
+  - Id: 12190
+    Title: Snake Scale Doc.
+  - Id: 12191
+    Title: Insect Feeler Doc.
+  - Id: 12192
+    Title: Immortal Heart Doc.
+  - Id: 12193
+    Title: Rotten Bandage Doc.
+  - Id: 12194
+    Title: Decayed Nail Doc.
+  - Id: 12195
+    Title: Horrendous Mouth Doc.
+  - Id: 12196
+    Title: Tentacle Doc.
+  - Id: 12197
+    Title: Shell Doc.
+  - Id: 12198
+    Title: Scale Shell Doc.
+  - Id: 12199
+    Title: Venom Canine Doc.
+  - Id: 12200
+    Title: Sticky Mucus Doc.
+  - Id: 12201
+    Title: Bee Sting Doc.
+  - Id: 12202
+    Title: Grasshopper's Leg Doc.
+  - Id: 12203
+    Title: Royal Jelly Doc.
+  - Id: 12204
+    Title: Yoyo Tail Doc.
+  - Id: 12205
+    Title: Solid Shell Doc.
+  - Id: 12206
+    Title: Yam Doc.
+  - Id: 12207
+    Title: Raccoon Leaf Doc.
+  - Id: 12208
+    Title: Snail's Shell Doc.
+  - Id: 12209
+    Title: Horn Doc.
+  - Id: 12210
+    Title: Bear's Footskin Doc.
+  - Id: 12211
+    Title: Feather Doc.
+  - Id: 12212
+    Title: Red Herb Doc.
+  - Id: 12213
+    Title: Carrot Doc.
+  - Id: 12214
+    Title: Cactus Needle Doc.
+  - Id: 12215
+    Title: Stone Heart Doc.
+  - Id: 12216
+    Title: Pouty Jahbong
+    TimeLimit: +6h
+  - Id: 12217
+    Title: Request - Traces of wild boar hunt
+  - Id: 12218
+    Title: How to make lava elixir
+  - Id: 12219
+    Title: How to creat flame elixir
+  - Id: 12220
+    Title: How to create glaicer elixir
+  - Id: 12221
+    Title: How to create fossil elixir
+  - Id: 12222
+    Title: How to create storm elixir
+  - Id: 12225
+    Title: Pom Spider Hunting
+  - Id: 12226
+    Title: Angra Mantis Hunting
+  - Id: 12227
+    Title: Parus Hunting
+  - Id: 12228
+    Title: Little Fatam Hunting
+  - Id: 12229
+    Title: Miming Hunting
+  - Id: 12230
+    Title: Mora Monster Hunt
+    TimeLimit: +23h
+  - Id: 12231
+    Title: Insect Feeler Collecting
+  - Id: 12232
+    Title: Immortal Heart Collecting
+  - Id: 12233
+    Title: Rotten Bandage Collecting
+  - Id: 12234
+    Title: Orcish Voucher Collecting
+  - Id: 12235
+    Title: Skeleton Bone Collecting
+  - Id: 12236
+    Title: Memento Collecting
+  - Id: 12237
+    Title: Shell Collecting
+  - Id: 12238
+    Title: Scale Shell Collecting
+  - Id: 12239
+    Title: Venom Canine Collecting
+  - Id: 12240
+    Title: Sticky Mucus Collecting
+  - Id: 12241
+    Title: Mora Item Request 1
+    TimeLimit: +23h
+  - Id: 12242
+    Title: Mora Item Request 2
+    TimeLimit: +23h
+  - Id: 12243
+    Title: Missing Information on Tajareu
+  - Id: 12244
+    Title: Missing Information on Tokenizer
+  - Id: 12245
+    Title: Missing Information on Mesile
+  - Id: 12246
+    Title: Missing Information on Noir
+  - Id: 12247
+    Title: Missing Information on Pajama God
+  - Id: 12248
+    Title: Missing Information on Mendel
+  - Id: 12249
+    Title: Missing Information on Miles
+  - Id: 12250
+    Title: Missing Information on Kunmune
+  - Id: 12251
+    Title: Missing Information on Chayihokin
+  - Id: 12252
+    Title: Missing Information on Tuale
+  - Id: 12253
+    Title: Missing Person Search Time Limit
+    TimeLimit: +23h
+  - Id: 12254
+    Title: Now it's cleaning
+    TimeLimit: +1h
+  - Id: 12255
+    Title: Hunt deep sea crab
+  - Id: 12256
+    Title: Hunt deep sea squid
+  - Id: 12257
+    Title: Hunt Ancient crustacean
+  - Id: 12258
+    Title: Hunt deep sea shell
+  - Id: 12259
+    Title: Hunt ancient kukre
+  - Id: 12260
+    Title: Hunt deep sea conch
+  - Id: 12261
+    Title: Hunt deep sea horse
+  - Id: 12262
+    Title: Hunt ancient sword fish
+  - Id: 12263
+    Title: Hunt ancient sea god
+  - Id: 12264
+    Title: Hunt mutation anolian
+  - Id: 12265
+    Title: Hunt deep sea mermaid
+  - Id: 12266
+    Title: Hunt transformable kapha
+  - Id: 12267
+    Title: Hunt weird coelacanth
+  - Id: 12268
+    Title: Hunt dark coelacanth
+  - Id: 12269
+    Title: Hunt Cruel coelacanth
+  - Id: 12270
+    Title: Hunt mutation coelacanth
+  - Id: 12271
+    Title: In progress general culvert single day service
+    TimeLimit: +23h
+  - Id: 12272
+    Title: In progress hard culvert single day service
+    TimeLimit: +23h
+  - Id: 12273
+    Title: In progress general culvert weekly service
+    TimeLimit: +6d17h
+  - Id: 12274
+    Title: In progress hard culvert weekly service
+    TimeLimit: +6d17h
+  - Id: 12278
+    Title: Towards Bakonawa Lake...
+    TimeLimit: +7d
+  - Id: 12279
+    Title: Get Rid of Bakonawa
+  - Id: 12280
+    Title: A suspicious prisoner
+  - Id: 12281
+    Title: An unwanted favor
+  - Id: 12282
+    Title: Gossip king Clever
+  - Id: 12283
+    Title: The rift researcher
+  - Id: 12284
+    Title: A cat merchant's source of information
+  - Id: 12285
+    Title: A way to calm down a cat
+  - Id: 12286
+    Title: Information traded for some canned foods
+  - Id: 12287
+    Title: A weird experience
+  - Id: 12288
+    Title: A successful experience
+  - Id: 12289
+    Title: Another visitation
+  - Id: 12290
+    Title: Clever's historical documents
+  - Id: 12291
+    Title: Hidden historical documents (?)
+  - Id: 12292
+    Title: The unknown ones
+  - Id: 12293
+    Title: Figures in history
+  - Id: 12294
+    Title: Tour of Eclage
+  - Id: 12295
+    Title: Error
+  - Id: 12296
+    Title: Fun times with the reactor
+  - Id: 12297
+    Title: Encountering Etran
+  - Id: 12298
+    Title: Two wishes
+  - Id: 12299
+    Title: Revisiting Robert
+  - Id: 12300
+    Title: Revisiting Etran
+  - Id: 12301
+    Title: Two remaining friends
+  - Id: 12317
+    Title: Fake Keyblade
+    TimeLimit: +23h
+  - Id: 12318
+    Title: "Upper Cats: annoying guy"
+  - Id: 12319
+    Title: "Upper Cats: annoying guy"
+  - Id: 12363
+    Title: ?????? ?? ??
+  - Id: 13000
+    Title: RWC2011Card Gathering
+  - Id: 13001
+    Title: RWC2011Card Gathering - Hold
+    TimeLimit: +23h
+  - Id: 13002
+    Title: Brigan collecting
+  - Id: 13003
+    Title: Carat Request
+    Targets:
+      - Mob: CARAT
+        Count: 30
+  - Id: 13004
+    Title: Carat Request timer
+    TimeLimit: +1h
+  - Id: 13005
+    Title: Arclouse Request
+    Targets:
+      - Mob: ARCLOUSE
+        Count: 22
+  - Id: 13006
+    Title: Arclouse Request timer
+    TimeLimit: +1h
+  - Id: 13007
+    Title: Anolian Request
+    Targets:
+      - Mob: ANOLIAN
+        Count: 30
+  - Id: 13008
+    Title: Anolian Request timer
+    TimeLimit: +1h
+  - Id: 13009
+    Title: Sting Request
+    Targets:
+      - Mob: STING
+        Count: 30
+  - Id: 13010
+    Title: Sting Request timer
+    TimeLimit: +1h
+  - Id: 13011
+    Title: Majoruros Request
+    Targets:
+      - Mob: MAJORUROS
+        Count: 30
+  - Id: 13012
+    Title: Majoruros Request timer
+    TimeLimit: +1h
+  - Id: 13013
+    Title: Pinguicula Request
+    Targets:
+      - Mob: PINGUICULA
+        Count: 30
+  - Id: 13014
+    Title: Pinguicula Request timer
+    TimeLimit: +1h
+  - Id: 13015
+    Title: Luciola Vespa Request
+    Targets:
+      - Mob: LUCIOLA_VESPA
+        Count: 30
+  - Id: 13016
+    Title: Luciola Vespa Request timer
+    TimeLimit: +1h
+  - Id: 13017
+    Title: Desert Wolf Request
+    Targets:
+      - Mob: DESERT_WOLF
+        Count: 30
+  - Id: 13018
+    Title: Desert Wolf Request timer
+    TimeLimit: +1h
+  - Id: 13019
+    Title: Snowier Request
+    Targets:
+      - Mob: SNOWIER
+        Count: 30
+  - Id: 13020
+    Title: Snowier Request timer
+    TimeLimit: +1h
+  - Id: 13021
+    Title: Ice Titan Request
+    Targets:
+      - Mob: ICE_TITAN
+        Count: 30
+  - Id: 13022
+    Title: Ice Titan Request Timer
+    TimeLimit: +1h
+  - Id: 13023
+    Title: Nightmare Terror Request
+    Targets:
+      - Mob: NIGHTMARE_TERROR
+        Count: 30
+  - Id: 13024
+    Title: Nightmare Terror Request Timer
+    TimeLimit: +1h
+  - Id: 13025
+    Title: Flying Deleter Request
+    Targets:
+      - Mob: DELETER
+        Count: 30
+  - Id: 13026
+    Title: Deleter Request Timer
+    TimeLimit: +1h
+  - Id: 13040
+    Title: Loli Ruri Request
+    Targets:
+      - Mob: LOLI_RURI
+        Count: 30
+  - Id: 13041
+    Title: Loli Ruri Request Timer
+    TimeLimit: +1h
+  - Id: 13042
+    Title: Medusa Request
+    Targets:
+      - Mob: MEDUSA
+        Count: 30
+  - Id: 13043
+    Title: Medusa Request Timer
+    TimeLimit: +1h
+  - Id: 13044
+    Title: Anubis Request
+    Targets:
+      - Mob: ANUBIS
+        Count: 20
+  - Id: 13045
+    Title: Anubis Request Timer
+    TimeLimit: +1h
+  - Id: 13046
+    Title: Tendrilion Request
+    Targets:
+      - Mob: TENDRILRION
+        Count: 1
+  - Id: 13047
+    Title: Tendrilion Request Timer
+    TimeLimit: +1h
+  - Id: 13048
+    Title: Tendrilion Request
+    Targets:
+      - Mob: TENDRILRION
+        Count: 1
+  - Id: 13049
+    Title: Tendrilion Request Timer
+    TimeLimit: +1h
+  - Id: 13050
+    Title: The Laphine that loves the land
+  - Id: 13051
+    Title: The singing Laphine
+  - Id: 13052
+    Title: The watering Laphine
+  - Id: 13053
+    Title: The dancing Laphine
+  - Id: 13054
+    Title: The smiling Laphine
+  - Id: 13055
+    Title: See if all the adventurers are safe
+  - Id: 13056
+    Title: Reporter Rossi
+  - Id: 13057
+    Title: Adventurer Euncheong
+  - Id: 13058
+    Title: Troublemaker New Oz
+  - Id: 13059
+    Title: End of project
+    TimeLimit: +22h
+  - Id: 13060
+    Title: Safety confirmation complete!
+    TimeLimit: +22h
+  - Id: 13061
+    Title: Food support
+  - Id: 13062
+    Title: Food support - complete
+    TimeLimit: +22h
+  - Id: 13063
+    Title: Dusting off
+  - Id: 13064
+    Title: Dusting off - complete
+    TimeLimit: +22h
+  - Id: 13065
+    Title: Collecting a souvenir
+  - Id: 13066
+    Title: This is enough for souvenirs
+    TimeLimit: +22h
+  - Id: 13067
+    Title: Raydric research
+    Targets:
+      - Mob: RAYDRIC
+        Count: 30
+  - Id: 13068
+    Title: Raydric research - timer
+    TimeLimit: +1h
+  - Id: 13069
+    Title: Khalitzburg research
+    Targets:
+      - Mob: KHALITZBURG
+        Count: 30
+  - Id: 13070
+    Title: Khalitzburg research - timer
+    TimeLimit: +1h
+  - Id: 13071
+    Title: Wander Man research
+    Targets:
+      - Mob: WANDER_MAN
+        Count: 30
+  - Id: 13072
+    Title: Wander Man research - timer
+    TimeLimit: +1h
+  - Id: 13073
+    Title: Ancient Mimic research
+    Targets:
+      - Mob: ANCIENT_MIMIC
+        Count: 30
+  - Id: 13074
+    Title: Ancient Mimic research - timer
+    TimeLimit: +1h
+  - Id: 13075
+    Title: Death Word research
+    Targets:
+      - Mob: DEATHWORD
+        Count: 30
+  - Id: 13076
+    Title: Death Word research - timer
+    TimeLimit: +1h
+  - Id: 13077
+    Title: Owl Baron research
+    Targets:
+      - Mob: OWL_BARON
+        Count: 20
+  - Id: 13078
+    Title: Owl Baron research - timer
+    TimeLimit: +1h
+  - Id: 13079
+    Title: Bloody Page Research
+  - Id: 13080
+    Title: Bloody Page Research - Wait
+    TimeLimit: +1h
+  - Id: 13081
+    Title: Dark Pinguicula research
+    Targets:
+      - Mob: PINGUICULA_D
+        Count: 30
+  - Id: 13082
+    Title: Dark Pinguicula research - timer
+    TimeLimit: +1h
+  - Id: 13083
+    Title: Nepenthes research
+    Targets:
+      - Mob: NEPENTHES
+        Count: 30
+  - Id: 13084
+    Title: Nepenthes research - timer
+    TimeLimit: +1h
+  - Id: 13085
+    Title: Naga research
+    Targets:
+      - Mob: NAGA
+        Count: 30
+  - Id: 13086
+    Title: Naga research - timer
+    TimeLimit: +1h
+  - Id: 13087
+    Title: Centipede Larva research
+    Targets:
+      - Mob: CENTIPEDE_LARVA
+        Count: 20
+  - Id: 13088
+    Title: Centipede Larva research - timer
+    TimeLimit: +1h
+  - Id: 13089
+    Title: Cornus research
+    Targets:
+      - Mob: CORNUS
+        Count: 30
+  - Id: 13090
+    Title: Cornus research - timer
+    TimeLimit: +1h
+  - Id: 13091
+    Title: Mystic Horn Research
+  - Id: 13092
+    Title: Mystic Horn Research - Wait
+    TimeLimit: +1h
+  - Id: 13093
+    Title: Ancient Mummy research
+    Targets:
+      - Mob: ANCIENT_MUMMY
+        Count: 30
+  - Id: 13094
+    Title: Ancient Mummy research - timer
+    TimeLimit: +1h
+  - Id: 13095
+    Title: Geffenia expedition
+    Targets:
+      - Mob: INCUBUS
+        Count: 10
+      - Mob: SUCCUBUS
+        Count: 10
+      - Mob: VIOLY
+        Count: 10
+  - Id: 13096
+    Title: Geffenia expedition - Wait
+    TimeLimit: +1h
+  - Id: 13097
+    Title: Juperos expedition
+    Targets:
+      - Mob: VENATU_2
+        Count: 30
+      - Mob: VENATU_3
+        Count: 30
+      - Mob: VENATU_4
+        Count: 30
+  - Id: 13098
+    Title: Juperos expedition - Wait
+    TimeLimit: +1h
+  - Id: 13099
+    Title: Fragments and Rusty Screw
+  - Id: 13100
+    Title: Fragments and Rusty Screw - Wait
+    TimeLimit: +1h
+  - Id: 13107
+    Title: Thanatos Tower Search
+  - Id: 13108
+    Title: Rachel holy ground Search
+  - Id: 13109
+    Title: Unknown island Search
+  - Id: 13110
+    Title: Abyss Lake Search
+  - Id: 13111
+    Title: Thanatos Tower Search - Reporting results
+  - Id: 13112
+    Title: Rachel holy ground Search - Reporting results
+  - Id: 13113
+    Title: Nameless Island Search - Reporting results
+  - Id: 13114
+    Title: Abyss Lake Search - Reporting results
+  - Id: 13115
+    Title: Thanatos Tower Search - Wait
+    TimeLimit: +1h
+  - Id: 13116
+    Title: Rachel holy ground Search - Wait
+    TimeLimit: +1h
+  - Id: 13117
+    Title: Unknown island Search - Wait
+    TimeLimit: +1h
+  - Id: 13118
+    Title: Abyss Lake Search - Wait
+    TimeLimit: +1h
+  - Id: 13119
+    Title: Combat Baroness of Retribution
+    Targets:
+      - Mob: RETRIBUTION
+        Count: 30
+  - Id: 13120
+    Title: Combat Baroness of Retribution - Wait
+    TimeLimit: +1h
+  - Id: 13121
+    Title: Combat Lady Solace
+    Targets:
+      - Mob: SOLACE
+        Count: 30
+  - Id: 13122
+    Title: Combat Lady Solace - Wait
+    TimeLimit: +1h
+  - Id: 13123
+    Title: Combat Mistress of Shelter
+    Targets:
+      - Mob: SHELTER
+        Count: 30
+  - Id: 13124
+    Title: Combat Mistress of Shelter - Wait
+    TimeLimit: +1h
+  - Id: 13125
+    Title: Combat Dame of Sentinel
+    Targets:
+      - Mob: OBSERVATION
+        Count: 30
+  - Id: 13126
+    Title: Combat Dame of Sentinel - Wait
+    TimeLimit: +1h
+  - Id: 13127
+    Title: Combat Vanberk and Isilla
+    Targets:
+      - Mob: VANBERK
+        Count: 20
+      - Mob: ISILLA
+        Count: 20
+  - Id: 13128
+    Title: Combat Vanberk and Isilla - Wait
+    TimeLimit: +1h
+  - Id: 13129
+    Title: Combat Hodremlin
+    Targets:
+      - Mob: HODREMLIN
+        Count: 30
+  - Id: 13130
+    Title: Combat Hodremlin - Wait
+    TimeLimit: +1h
+  - Id: 13131
+    Title: Combat Agav and Echio
+    Targets:
+      - Mob: AGAV
+        Count: 20
+      - Mob: ECHIO
+        Count: 20
+  - Id: 13132
+    Title: Combat Agav and Echio - Wait
+    TimeLimit: +1h
+  - Id: 13133
+    Title: Combat Ragged Zombie
+    Targets:
+      - Mob: RAGGED_ZOMBIE
+        Count: 30
+  - Id: 13134
+    Title: Combat Ragged Zombie - Wait
+    TimeLimit: +1h
+  - Id: 13135
+    Title: Combat Zombie Slaughter
+    Targets:
+      - Mob: ZOMBIE_SLAUGHTER
+        Count: 30
+  - Id: 13136
+    Title: Combat Zombie Slaughter - Wait
+    TimeLimit: +1h
+  - Id: 13137
+    Title: Combat Banshee
+    Targets:
+      - Mob: BANSHEE
+        Count: 30
+  - Id: 13138
+    Title: Combat Banshee - Wait
+    TimeLimit: +1h
+  - Id: 13139
+    Title: Combat Ferus and Bewler
+    Targets:
+      - Mob: FERUS
+        Count: 30
+      - Mob: FERUS_
+        Count: 30
+  - Id: 13140
+    Title: Combat Ferus and Bewler - Wait
+    TimeLimit: +1h
+  - Id: 13141
+    Title: Combat Acidus
+    Targets:
+      - Mob: ACIDUS
+        Count: 30
+      - Mob: ACIDUS_
+        Count: 30
+  - Id: 13142
+    Title: Combat Acidus - Wait
+    TimeLimit: +1h
+  - Id: 13143
+    Title: Egnigem Story
+    Targets:
+      - Mob: YGNIZEM
+        Count: 30
+  - Id: 13144
+    Title: Egnigem Story - Wait
+    TimeLimit: +1h
+  - Id: 13145
+    Title: Armeyer Story
+    Targets:
+      - Mob: ARMAIA
+        Count: 30
+  - Id: 13146
+    Title: Armeyer Story - Wait
+    TimeLimit: +1h
+  - Id: 13147
+    Title: Whikebain Story
+    Targets:
+      - Mob: WHIKEBAIN
+        Count: 30
+  - Id: 13148
+    Title: Whikebain Story - Wait
+    TimeLimit: +1h
+  - Id: 13149
+    Title: Kavach Story
+    Targets:
+      - Mob: KAVAC
+        Count: 30
+  - Id: 13150
+    Title: Kavach Story - Wait
+    TimeLimit: +1h
+  - Id: 13151
+    Title: Errende Story
+    Targets:
+      - Mob: EREND
+        Count: 30
+  - Id: 13152
+    Title: Errende Story - Wait
+    TimeLimit: +1h
+  - Id: 13153
+    Title: Laurell Story
+    Targets:
+      - Mob: RAWREL
+        Count: 30
+  - Id: 13154
+    Title: Laurell Story - Wait
+    TimeLimit: +1h
+  - Id: 13155
+    Title: Morocc Story1
+    Targets:
+      - Mob: MOROCC_1
+        Count: 30
+  - Id: 13156
+    Title: Morocc Story1 - Wait
+    TimeLimit: +1h
+  - Id: 13157
+    Title: Morocc Story2
+    Targets:
+      - Mob: MOROCC_2
+        Count: 30
+  - Id: 13158
+    Title: Morocc Story2 - Wait
+    TimeLimit: +1h
+  - Id: 13159
+    Title: Morocc Story3
+    Targets:
+      - Mob: MOROCC_4
+        Count: 30
+  - Id: 13160
+    Title: Morocc Story3 - Wait
+    TimeLimit: +1h
+  - Id: 13161
+    Title: Uni-horn Scaraba Story
+  - Id: 13162
+    Title: Uni-horn Scaraba Story - Wait
+    TimeLimit: +1h
+  - Id: 13163
+    Title: Horn Scaraba Story
+  - Id: 13164
+    Title: Horn Scaraba Story - Wait
+    TimeLimit: +1h
+  - Id: 13165
+    Title: Antler Scaraba Story
+  - Id: 13166
+    Title: Antler Scaraba Story - Wait
+    TimeLimit: +1h
+  - Id: 13167
+    Title: Rake horn Scaraba Story
+  - Id: 13168
+    Title: Rake horn Scaraba Story - Wait
+    TimeLimit: +1h
+  - Id: 14118
+    Title: Wuhari's concern
+  - Id: 14119
+    Title: Test of patience
+  - Id: 14120
+    Title: Test of patience 2
+  - Id: 14121
+    Title: Test of patience 3
+  - Id: 14122
+    Title: Time for two
+  - Id: 14123
+    Title: Wuharu's favor
+  - Id: 14125
+    Title: Surveying the area
+  - Id: 14126
+    Title: Searching for Ms. Goatie
+  - Id: 14127
+    Title: Searching for Ms. Goatie's husband
+  - Id: 14128
+    Title: Obtaining the research report
+  - Id: 14131
+    Title: Analysis time
+    TimeLimit: +5mn
+  - Id: 14133
+    Title: Another favor
+  - Id: 14134
+    Title: Sharp Ms. Goatie
+  - Id: 14135
+    Title: Searching for Mr. Pompe
+  - Id: 14136
+    Title: A terrible scene in the field
+  - Id: 14137
+    Title: An interesting proposition
+  - Id: 14138
+    Title: The big corpse
+  - Id: 14139
+    Title: To Wuhuru
+  - Id: 14140
+    Title: To Wuhari
+  - Id: 14141
+    Title: Ingredients for research
+  - Id: 15055
+    Title: "Christmas : We are the great Single Union Army!"
+  - Id: 15056
+    Title: "Christmas : Declare war against couples!"
+  - Id: 15057
+    Title: "Christmas : Prepare the festival!"
+  - Id: 15059
+    Title: "Christmas : Cooldown Timer"
+    TimeLimit: +1d
+  - Id: 15060
+    Title: "Christmas : Kwami has joined"
+  - Id: 15061
+    Title: "Christmas : Willer has joined"
+  - Id: 15062
+    Title: "Christmas : Rinka has joined"
+  - Id: 15063
+    Title: "Christmas : Jee has joined"
+  - Id: 15064
+    Title: "Christmas : Marty has joined"
+  - Id: 16000
+    Title: Metz Brayde's Notice
+  - Id: 16001
+    Title: First examination
+  - Id: 16002
+    Title: Fetching Items for Arian -1
+  - Id: 16003
+    Title: Fetching Items for Arian -2
+  - Id: 16004
+    Title: Fetching Items for Arian -3
+  - Id: 16005
+    Title: Fetching Items for Arian -4
+  - Id: 16006
+    Title: Fetching Items for Arian -5
+  - Id: 16007
+    Title: Fetching Items for Arian -6
+  - Id: 16008
+    Title: Quiz time!
+  - Id: 16009
+    Title: Quiz time!
+  - Id: 16010
+    Title: Daewoon's Test
+  - Id: 16011
+    Title: Sir Jore's Test
+  - Id: 16012
+    Title: Sir Jore's Materials
+  - Id: 16013
+    Title: The Stone of Sage
+  - Id: 16014
+    Title: The Stone of Sage
+  - Id: 16015
+    Title: Lady Jesqurienne
+  - Id: 16016
+    Title: Jesquerinne's Quiz Challenge
+  - Id: 16017
+    Title: Failed Quiz Challenge
+  - Id: 16018
+    Title: Quiz Challenge Triumph
+  - Id: 16019
+    Title: Search for Dearles
+  - Id: 16020
+    Title: Dearles' Test
+  - Id: 16021
+    Title: Test of Appreciation
+  - Id: 16022
+    Title: Dearles' Test Part Two
+  - Id: 16023
+    Title: Rhythm Test Passed
+  - Id: 16024
+    Title: Find Bakerlan
+  - Id: 16025
+    Title: Bakerlan's delivery
+  - Id: 16026
+    Title: Mahatra's delivery
+  - Id: 16027
+    Title: Bakerlan's Receipt
+  - Id: 16028
+    Title: Find Seylin
+  - Id: 16029
+    Title: Vigorgra Medicine
+  - Id: 16030
+    Title: Vigorgra Ingredients
+  - Id: 16031
+    Title: Vigorgra Ingredients
+  - Id: 16032
+    Title: Seylin's Request
+  - Id: 16033
+    Title: Back to Seylin
+  - Id: 16034
+    Title: Back to Mahatra
+  - Id: 16035
+    Title: Report to Bakerlan
+  - Id: 16036
+    Title: The last Crumb
+  - Id: 16037
+    Title: Finding Engel Howard
+  - Id: 16038
+    Title: Liana's Letter
+  - Id: 16039
+    Title: Combining the Starlight
+  - Id: 16040
+    Title: Letter to Engel's Family
+  - Id: 16041
+    Title: Talk to Liana
+  - Id: 16042
+    Title: Sobbing Starlight Progress
+  - Id: 16043
+    Title: Restored Sobbing Starlight
+  - Id: 16044
+    Title: Combining the Starlight
+  - Id: 16045
+    Title: Starlight message
+  - Id: 16046
+    Title: The man in Umbala
+  - Id: 16047
+    Title: Into the Tree
+  - Id: 16048
+    Title: Ancient Papers
+  - Id: 16049
+    Title: Record of Ancient Language
+  - Id: 16050
+    Title: The Fastidious Old Man
+  - Id: 16051
+    Title: Blurry Vision
+  - Id: 16052
+    Title: Translating the Document
+  - Id: 16053
+    Title: Translated Ancient Language
+  - Id: 16054
+    Title: Where the rejected live
+  - Id: 16055
+    Title: Misfortunate of Niflheim
+  - Id: 16056
+    Title: Removed Curse
+  - Id: 16057
+    Title: Meeting the witch
+  - Id: 16058
+    Title: Wing Of Crow
+  - Id: 16059
+    Title: Wing Of Crow
+  - Id: 16060
+    Title: Misfortunate of Niflheim
+  - Id: 16061
+    Title: Bard in Niflheim
+  - Id: 16062
+    Title: Gen of Niflheim
+  - Id: 16063
+    Title: The Witch's Aid
+  - Id: 16064
+    Title: Misfortunate of Niflheim
+  - Id: 16065
+    Title: The Queen's Symbol
+  - Id: 16066
+    Title: Knowledge of the Symbol
+  - Id: 16067
+    Title: Knowledge of Asgard
+  - Id: 16068
+    Title: Finding the Soul Pieces
+  - Id: 16069
+    Title: Finding the Soul Pieces
+  - Id: 16070
+    Title: Finding the Soul Pieces
+  - Id: 16071
+    Title: Finding the Soul Pieces
+  - Id: 16072
+    Title: Finding the Soul Pieces
+  - Id: 16073
+    Title: Agrboda's Soul
+  - Id: 16074
+    Title: Symbol of the Nine Realms
+  - Id: 16075
+    Title: Serin's Ambitions
+  - Id: 16076
+    Title: Witch's Tonic
+  - Id: 16077
+    Title: Serin's Release
+  - Id: 16078
+    Title: Visit with Lady Hell
+  - Id: 16079
+    Title: The Sign
+  - Id: 16080
+    Title: Dark Lord's return
+  - Id: 16081
+    Title: Serin's Ambitions
+  - Id: 16082
+    Title: Dark Lord's return
+  - Id: 16083
+    Title: Serin's Realization
+  - Id: 16084
+    Title: The Sign
+  - Id: 16085
+    Title: The Sign
+  - Id: 16086
+    Title: The Sign
+  - Id: 16087
+    Title: The Sign
+  - Id: 16101
+    Title: Kiel Hyre Academy
+  - Id: 16102
+    Title: Kiel Hyre Academy
+  - Id: 16103
+    Title: Kiel Hyre Academy
+  - Id: 16104
+    Title: Kiel Hyre Academy
+  - Id: 16105
+    Title: Kiel Hyre Academy
+  - Id: 16106
+    Title: Kiel Hyre Academy
+  - Id: 16107
+    Title: Kiel Hyre Academy
+  - Id: 16108
+    Title: Kiel Hyre Academy
+  - Id: 16109
+    Title: Kiel Hyre Academy
+  - Id: 16110
+    Title: Kiel Hyre Academy
+  - Id: 16111
+    Title: Kiel Hyre Academy
+  - Id: 16112
+    Title: Kiel Hyre Academy
+  - Id: 16113
+    Title: Kiel Hyre Academy
+  - Id: 16114
+    Title: Kiel Hyre Academy
+  - Id: 16115
+    Title: Kiel Hyre Academy
+  - Id: 16116
+    Title: Kiel Hyre Academy
+  - Id: 16117
+    Title: Mysterious World Map
+  - Id: 16118
+    Title: Hidden poem
+  - Id: 16119
+    Title: Snake swords
+  - Id: 16120
+    Title: A dream?
+  - Id: 16121
+    Title: Secret Code?
+  - Id: 16122
+    Title: Old Copper Key
+  - Id: 16123
+    Title: Green Keycard
+  - Id: 16124
+    Title: Steel Box
+  - Id: 16125
+    Title: Kiel Hyre Academy
+  - Id: 16126
+    Title: Kiel Hyre Academy
+  - Id: 16127
+    Title: Kiel Hyre Academy
+  - Id: 16128
+    Title: Kiel Hyre Academy
+  - Id: 16129
+    Title: Kiel Hyre Academy
+  - Id: 16130
+    Title: Kiel Hyre Academy
+  - Id: 16131
+    Title: Kiel Hyre Academy
+  - Id: 16132
+    Title: Kiel Hyre Academy
+  - Id: 16133
+    Title: Kiel Hyre Academy
+  - Id: 16134
+    Title: Kiel Hyre Academy
+  - Id: 16135
+    Title: Kiel Hyre Academy
+  - Id: 16136
+    Title: Kiel Hyre Academy
+  - Id: 16137
+    Title: Kiel Hyre Academy
+  - Id: 16138
+    Title: Kiel Hyre Academy
+  - Id: 16139
+    Title: Kiel Hyre Academy
+  - Id: 16140
+    Title: Kiel Hyre Academy
+  - Id: 16141
+    Title: Kiel Hyre Academy
+  - Id: 16142
+    Title: Kiel Hyre Academy
+  - Id: 16143
+    Title: Kiel Hyre Academy
+  - Id: 16144
+    Title: Kiel Hyre Academy
+  - Id: 16145
+    Title: Kiel Hyre Academy
+  - Id: 16146
+    Title: Kiel Hyre Academy
+  - Id: 16200
+    Title: Limberg's Request
+  - Id: 16201
+    Title: TPS Report
+  - Id: 16202
+    Title: TPS Report
+  - Id: 16203
+    Title: TPS Report
+  - Id: 16204
+    Title: Crack in the Wall
+  - Id: 16205
+    Title: The Empty Lava Tube
+  - Id: 17000
+    Title: Meet with Father Bamph
+  - Id: 17001
+    Title: Meet with Larjes
+  - Id: 17002
+    Title: Report to Father Bamph
+  - Id: 17003
+    Title: Travel to Rachel
+  - Id: 17004
+    Title: Travel to Veins
+  - Id: 17005
+    Title: Frustrated Magistrate
+  - Id: 17006
+    Title: Interrogated Smugglers
+  - Id: 17007
+    Title: Written Orders
+  - Id: 17008
+    Title: Investigating
+  - Id: 17009
+    Title: More Investigating
+  - Id: 17010
+    Title: Further Investigations
+  - Id: 17011
+    Title: Kurdi's Father
+  - Id: 17012
+    Title: Karyn's Boat
+  - Id: 17013
+    Title: To the Island
+  - Id: 17014
+    Title: Investigating the Island
+  - Id: 17015
+    Title: The Research Note
+  - Id: 17016
+    Title: Regicide
+  - Id: 17017
+    Title: Reporting the King's Death
+  - Id: 18001
+    Title: Delivery for Rooney
+  - Id: 18002
+    Title: Delivery for Rooney
+  - Id: 18003
+    Title: Delivery for Rooney
+  - Id: 18004
+    Title: Lasda's Request
+  - Id: 18005
+    Title: Jesse's Request
+  - Id: 18006
+    Title: Sir Krieg's Approval
+  - Id: 18007
+    Title: Sir Krieg's Trust
+  - Id: 18008
+    Title: Sir Krieg's Trust
+  - Id: 18009
+    Title: Into the prison
+  - Id: 18010
+    Title: Jail Break
+  - Id: 18011
+    Title: Bodyguard work
+  - Id: 18012
+    Title: Bodyguard work
+  - Id: 18013
+    Title: Bodyguard work
+  - Id: 18014
+    Title: Bodyguard work
+  - Id: 18015
+    Title: Bodyguard work
+  - Id: 18016
+    Title: Bodyguard work
+  - Id: 18017
+    Title: Jail Break
+  - Id: 18018
+    Title: Jail Break
+  - Id: 18019
+    Title: Vitre's Songs
+  - Id: 18020
+    Title: Vitre's Songs
+  - Id: 18021
+    Title: Vitre's Songs
+  - Id: 18022
+    Title: Vitre's Songs
+  - Id: 18023
+    Title: Vitre the Spy
+  - Id: 18030
+    Title: Gaebolg Family Curse
+  - Id: 18031
+    Title: Gaebolg Family Curse
+  - Id: 18032
+    Title: Gaebolg Family Curse
+  - Id: 18033
+    Title: Gaebolg Family Curse
+  - Id: 18034
+    Title: Gaebolg Family Curse
+  - Id: 18035
+    Title: Gaebolg Family Curse
+  - Id: 18036
+    Title: Gaebolg Family Curse
+  - Id: 18037
+    Title: Gaebolg Family Curse
+  - Id: 18038
+    Title: Gaebolg Family Curse
+  - Id: 18039
+    Title: Gaebolg Family Curse
+  - Id: 18040
+    Title: Gaebolg Family Curse
+  - Id: 18041
+    Title: Gaebolg Family Curse
+  - Id: 18042
+    Title: Gaebolg Family Curse
+  - Id: 18043
+    Title: Gaebolg Family Curse
+  - Id: 18044
+    Title: Gaebolg Family Curse
+  - Id: 18045
+    Title: Gaebolg Family Curse
+  - Id: 18046
+    Title: Gaebolg Family Curse
+  - Id: 18047
+    Title: Gaebolg Family Curse
+  - Id: 18048
+    Title: Gaebolg Family Curse
+  - Id: 18049
+    Title: Gaebolg Family Curse
+  - Id: 18050
+    Title: Gaebolg Family Curse
+  - Id: 18051
+    Title: Gaebolg Family Curse
+  - Id: 18052
+    Title: Gaebolg Family Curse
+  - Id: 18060
+    Title: Missing boy Mikhail
+  - Id: 18061
+    Title: Mikhail's Whereabouts
+  - Id: 18062
+    Title: Missing boy Mikhail
+  - Id: 18063
+    Title: The isolated swamp
+  - Id: 18064
+    Title: Back to the Village
+  - Id: 18065
+    Title: High-strength Adhesive
+  - Id: 18066
+    Title: Back to the swamp
+  - Id: 18067
+    Title: Make the paste
+  - Id: 18068
+    Title: Fixing the Matrushka
+  - Id: 18069
+    Title: Report to Gallina
+  - Id: 18070
+    Title: Banishing Winter
+  - Id: 18071
+    Title: Making the magic dust
+  - Id: 18072
+    Title: Making the magic dust
+  - Id: 18073
+    Title: The Dragon's Lair
+  - Id: 18074
+    Title: The Magic Gourd Bottle
+  - Id: 18075
+    Title: Containing People's Speech
+  - Id: 18076
+    Title: Containing People's Speech
+  - Id: 18077
+    Title: Csar's Request
+  - Id: 18078
+    Title: Baba Yaga's Secret Medicine
+  - Id: 18079
+    Title: Winter is Banished
+  - Id: 18100
+    Title: Legends from Moscovia
+  - Id: 18101
+    Title: The Moving Island
+  - Id: 18102
+    Title: In Search of The Moving Island
+  - Id: 18103
+    Title: In Search of The Moving Island
+  - Id: 18104
+    Title: Mr. Ibanoff's New Friend
+  - Id: 18105
+    Title: Repairing Charabel
+  - Id: 18106
+    Title: As the Tide Turns
+  - Id: 18107
+    Title: Departing
+  - Id: 18108
+    Title: The Moving Island?
+  - Id: 18109
+    Title: The Moving Island???
+  - Id: 18110
+    Title: The Aged Stranger
+  - Id: 18111
+    Title: Whale Island!
+  - Id: 18112
+    Title: A Story for the Csar
+  - Id: 18113
+    Title: Evidence for the Csar
+  - Id: 18114
+    Title: Before Sunset
+  - Id: 18115
+    Title: Departing
+  - Id: 18116
+    Title: Whale Island!
+  - Id: 18117
+    Title: Materials for Evidence
+  - Id: 18118
+    Title: Mysterious Musical Instrument
+  - Id: 18119
+    Title: Gusli
+  - Id: 18120
+    Title: Gusli
+  - Id: 18121
+    Title: Shafka
+  - Id: 19101
+    Title: The Eye of Hellion
+  - Id: 19102
+    Title: The Eye of Hellion
+  - Id: 19103
+    Title: The Eye of Hellion
+  - Id: 19104
+    Title: The Eye of Hellion
+  - Id: 19105
+    Title: The Eye of Hellion
+  - Id: 19106
+    Title: The Eye of Hellion
+  - Id: 19107
+    Title: The Eye of Hellion
+  - Id: 19108
+    Title: The Eye of Hellion
+  - Id: 19109
+    Title: The Eye of Hellion
+  - Id: 19110
+    Title: The Eye of Hellion
+  - Id: 19111
+    Title: The Eye of Hellion
+  - Id: 19112
+    Title: The Eye of Hellion
+  - Id: 19113
+    Title: The Eye of Hellion
+  - Id: 19114
+    Title: The Eye of Hellion
+  - Id: 19115
+    Title: The Eye of Hellion
+  - Id: 19116
+    Title: The Eye of Hellion
+  - Id: 19117
+    Title: The Eye of Hellion
+  - Id: 19118
+    Title: The Eye of Hellion
+  - Id: 19119
+    Title: The Eye of Hellion
+  - Id: 19120
+    Title: The Eye of Hellion
+  - Id: 19121
+    Title: The Eye of Hellion
+  - Id: 19122
+    Title: The Eye of Hellion
+  - Id: 19123
+    Title: The Eye of Hellion
+  - Id: 19124
+    Title: The Eye of Hellion
+  - Id: 19125
+    Title: The Eye of Hellion
+  - Id: 19126
+    Title: The Eye of Hellion
+  - Id: 19127
+    Title: The Eye of Hellion
+  - Id: 19128
+    Title: The Eye of Hellion
+  - Id: 19129
+    Title: The Eye of Hellion
+  - Id: 50000
+    Title: Pirate Dagger materials
+  - Id: 50001
+    Title: Weather Beaten Old Man
+  - Id: 50002
+    Title: Lost Treasure?
+  - Id: 50003
+    Title: Lost Treasure?
+  - Id: 50004
+    Title: The Old Man's Treasure
+  - Id: 50005
+    Title: The Old Man's Treasure
+  - Id: 50006
+    Title: The Old Man's Treasure
+  - Id: 50007
+    Title: The Old Man's Treasure
+  - Id: 50008
+    Title: The Old Man's Treasure
+  - Id: 50009
+    Title: The Old Man's Treasure
+  - Id: 50010
+    Title: A special lock pick
+  - Id: 50011
+    Title: The special lock pick
+  - Id: 50012
+    Title: Use the lock pick
+  - Id: 50013
+    Title: Broken lock pick
+  - Id: 50015
+    Title: The empty treasure box
+  - Id: 50016
+    Title: The empty treasure box
+  - Id: 50017
+    Title: The empty treasure box
+  - Id: 50018
+    Title: The empty treasure box
+  - Id: 50019
+    Title: The empty treasure box
+  - Id: 50020
+    Title: The empty treasure box
+  - Id: 50021
+    Title: J Roger
+  - Id: 50022
+    Title: J Roger's key materials
+  - Id: 50023
+    Title: Conversation with J Roger
+  - Id: 50024
+    Title: Bury the treasure
+  - Id: 50025
+    Title: Bury the treasure
+  - Id: 50026
+    Title: Bury the treasure
+  - Id: 50027
+    Title: Buried treasure
+  - Id: 50028
+    Title: Stolen treasure!
+  - Id: 50029
+    Title: A Pirate's Spirit!
+  - Id: 60001
+    Title: Monster Extermination
+  - Id: 60002
+    Title: Monster Extermination
+  - Id: 60003
+    Title: Monster Extermination
+  - Id: 60004
+    Title: Monster Extermination
+  - Id: 60005
+    Title: Monster Extermination
+  - Id: 60006
+    Title: Monster Extermination
+  - Id: 60007
+    Title: Endless Tower Effect
+  - Id: 60008
+    Title: Endless Tower Time Limit
+  - Id: 60009
+    Title: Orc Hero
+  - Id: 60010
+    Title: Derik Ver's Request
+  - Id: 60011
+    Title: Investigation of Byalan
+  - Id: 60012
+    Title: Investigation of Abyss
+  - Id: 60013
+    Title: Monster Investigation
+  - Id: 60014
+    Title: Geffen Dungeon's Monster Investigation
+  - Id: 60015
+    Title: Geffen Dungeon's Monster Investigation
+  - Id: 60016
+    Title: Geffen Dungeon's Monster Investigation
+  - Id: 60017
+    Title: Geffen Dungeon's Monster Investigation
+  - Id: 60018
+    Title: Byalan Dungeon's Monster Investigation
+  - Id: 60019
+    Title: Byalan Dungeon's Monster Investigation
+  - Id: 60020
+    Title: Byalan Dungeon's Monster Investigation
+  - Id: 60021
+    Title: Byalan Dungeon's Monster Investigation
+  - Id: 60022
+    Title: Abyss Lake's Monster Investigation
+  - Id: 60023
+    Title: Abyss Lake's Monster Investigation
+  - Id: 60024
+    Title: Abyss Lake's Monster Investigation
+  - Id: 60025
+    Title: Abyss Lake's Monster Investigation
+  - Id: 60026
+    Title: Continuing the Investigation
+  - Id: 60027
+    Title: Investigating Aldebaran
+  - Id: 60028
+    Title: Monster Investigation
+  - Id: 60029
+    Title: Aldebaran Monster Investigation
+  - Id: 60030
+    Title: Clock Tower Monster Investigation
+  - Id: 60031
+    Title: Clock Tower Monster Investigation
+  - Id: 60032
+    Title: Lutie Field Monster Investigation
+  - Id: 60033
+    Title: Clock Tower Monster Investigation
+  - Id: 60034
+    Title: Clock Tower Monster Investigation
+  - Id: 60035
+    Title: Aldebaran Monster Investigation
+  - Id: 60036
+    Title: Clock Tower Monster Investigation
+  - Id: 60037
+    Title: Clock Tower Monster Investigation
+  - Id: 60038
+    Title: Aldebaran Monster Investigation
+  - Id: 60039
+    Title: Investigation of Glastheim
+  - Id: 60040
+    Title: Investigation of Glastheim
+  - Id: 60041
+    Title: Monster Investigation
+  - Id: 60042
+    Title: Investigation of Glastheim
+  - Id: 60043
+    Title: Glastheim Monster Investigation
+  - Id: 60044
+    Title: Glastheim Monster Investigation
+  - Id: 60045
+    Title: Investigation of Glastheim
+  - Id: 60046
+    Title: Glastheim Monster Investigation
+  - Id: 60047
+    Title: Glastheim Monster Investigation
+  - Id: 60048
+    Title: Investigation of Glastheim
+  - Id: 60049
+    Title: Glastheim Monster Investigation
+  - Id: 60050
+    Title: Glastheim Monster Investigation
+  - Id: 60051
+    Title: Investigation of Glastheim
+  - Id: 60052
+    Title: Glastheim Monster Investigation
+  - Id: 60053
+    Title: Glastheim Monster Investigation
+  - Id: 60054
+    Title: Investigation of Glastheim
+  - Id: 60055
+    Title: Glastheim Monster Investigation
+  - Id: 60056
+    Title: Glastheim Monster Investigation
+  - Id: 60057
+    Title: Glastheim Monster Investigation
+  - Id: 60058
+    Title: Derik Ver's Brother
+  - Id: 60059
+    Title: A history lesson
+  - Id: 60060
+    Title: The Crown of Deceit
+  - Id: 60061
+    Title: A magic solvent
+  - Id: 60062
+    Title: Rendering the crown Inert
+  - Id: 60101
+    Title: Hunting Peco Pecos
+    Targets:
+      - Mob: PECOPECO
+        Count: 50
+  - Id: 60102
+    Title: Hunting Peco Pecos
+    Targets:
+      - Mob: PECOPECO
+        Count: 100
+  - Id: 60103
+    Title: Hunting Peco Pecos
+    Targets:
+      - Mob: PECOPECO
+        Count: 150
+  - Id: 60104
+    Title: Hunting Hodes
+    Targets:
+      - Mob: HODE
+        Count: 50
+  - Id: 60105
+    Title: Hunting Hodes
+    Targets:
+      - Mob: HODE
+        Count: 100
+  - Id: 60106
+    Title: Hunting Hodes
+    Targets:
+      - Mob: HODE
+        Count: 150
+  - Id: 60107
+    Title: Hunting Fabres
+    Targets:
+      - Mob: FABRE
+        Count: 50
+  - Id: 60108
+    Title: Hunting Fabres
+    Targets:
+      - Mob: FABRE
+        Count: 100
+  - Id: 60109
+    Title: Hunting Fabres
+    Targets:
+      - Mob: FABRE
+        Count: 150
+  - Id: 60110
+    Title: Hunting Pupa
+    Targets:
+      - Mob: PUPA
+        Count: 50
+  - Id: 60111
+    Title: Hunting Pupa
+    Targets:
+      - Mob: PUPA
+        Count: 100
+  - Id: 60112
+    Title: Hunting Pupa
+    Targets:
+      - Mob: PUPA
+        Count: 150
+  - Id: 60113
+    Title: Hunting Cocos
+    Targets:
+      - Mob: COCO
+        Count: 50
+  - Id: 60114
+    Title: Hunting Cocos
+    Targets:
+      - Mob: COCO
+        Count: 100
+  - Id: 60115
+    Title: Hunting Cocos
+    Targets:
+      - Mob: COCO
+        Count: 150
+  - Id: 60116
+    Title: Hunting Caramels
+    Targets:
+      - Mob: CARAMEL
+        Count: 50
+  - Id: 60117
+    Title: Hunting Caramels
+    Targets:
+      - Mob: CARAMEL
+        Count: 100
+  - Id: 60118
+    Title: Hunting Caramels
+    Targets:
+      - Mob: CARAMEL
+        Count: 150
+  - Id: 60119
+    Title: Hunting Alligators
+    Targets:
+      - Mob: ALLIGATOR
+        Count: 50
+  - Id: 60120
+    Title: Hunting Alligators
+    Targets:
+      - Mob: ALLIGATOR
+        Count: 100
+  - Id: 60121
+    Title: Hunting Alligators
+    Targets:
+      - Mob: ALLIGATOR
+        Count: 150
+  - Id: 60122
+    Title: Hunting Creamys
+    Targets:
+      - Mob: CREAMY
+        Count: 50
+  - Id: 60123
+    Title: Hunting Creamys
+    Targets:
+      - Mob: CREAMY
+        Count: 100
+  - Id: 60124
+    Title: Hunting Creamys
+    Targets:
+      - Mob: CREAMY
+        Count: 150
+  - Id: 60125
+    Title: Hunting Demon Pungus
+    Targets:
+      - Mob: DEMON_PUNGUS
+        Count: 50
+  - Id: 60126
+    Title: Hunting Demon Pungus
+    Targets:
+      - Mob: DEMON_PUNGUS
+        Count: 100
+  - Id: 60127
+    Title: Hunting Demon Pungus
+    Targets:
+      - Mob: DEMON_PUNGUS
+        Count: 150
+  - Id: 60128
+    Title: Hunting Dokebi
+    Targets:
+      - Mob: DOKEBI
+        Count: 50
+  - Id: 60129
+    Title: Hunting Dokebi
+    Targets:
+      - Mob: DOKEBI
+        Count: 100
+  - Id: 60130
+    Title: Hunting Dokebi
+    Targets:
+      - Mob: DOKEBI
+        Count: 150
+  - Id: 60131
+    Title: Hunting Dryads
+    Targets:
+      - Mob: DRYAD
+        Count: 50
+  - Id: 60132
+    Title: Hunting Dryads
+    Targets:
+      - Mob: DRYAD
+        Count: 100
+  - Id: 60133
+    Title: Hunting Dryads
+    Targets:
+      - Mob: DRYAD
+        Count: 150
+  - Id: 60134
+    Title: Hunting Frilldora
+    Targets:
+      - Mob: FRILLDORA
+        Count: 50
+  - Id: 60135
+    Title: Hunting Frilldora
+    Targets:
+      - Mob: FRILLDORA
+        Count: 100
+  - Id: 60136
+    Title: Hunting Frilldora
+    Targets:
+      - Mob: FRILLDORA
+        Count: 150
+  - Id: 60137
+    Title: Hunting Goats
+    Targets:
+      - Mob: GOAT
+        Count: 50
+  - Id: 60138
+    Title: Hunting Goats
+    Targets:
+      - Mob: GOAT
+        Count: 100
+  - Id: 60139
+    Title: Hunting Goats
+    Targets:
+      - Mob: GOAT
+        Count: 150
+  - Id: 60140
+    Title: Hunting Golems
+    Targets:
+      - Mob: GOLEM
+        Count: 50
+  - Id: 60141
+    Title: Hunting Golems
+    Targets:
+      - Mob: GOLEM
+        Count: 100
+  - Id: 60142
+    Title: Hunting Golems
+    Targets:
+      - Mob: GOLEM
+        Count: 150
+  - Id: 60143
+    Title: Hunting Leaf Cats
+    Targets:
+      - Mob: LEAF_CAT
+        Count: 50
+  - Id: 60144
+    Title: Hunting Leaf Cats
+    Targets:
+      - Mob: LEAF_CAT
+        Count: 100
+  - Id: 60145
+    Title: Hunting Leaf Cats
+    Targets:
+      - Mob: LEAF_CAT
+        Count: 150
+  - Id: 60146
+    Title: Hunting Skeletons
+    Targets:
+      - Mob: SKELETON
+        Count: 50
+  - Id: 60147
+    Title: Hunting Skeletons
+    Targets:
+      - Mob: SKELETON
+        Count: 100
+  - Id: 60148
+    Title: Hunting Skeletons
+    Targets:
+      - Mob: SKELETON
+        Count: 150
+  - Id: 60149
+    Title: Hunting Munaks
+    Targets:
+      - Mob: MUNAK
+        Count: 50
+  - Id: 60150
+    Title: Hunting Munaks
+    Targets:
+      - Mob: MUNAK
+        Count: 100
+  - Id: 60151
+    Title: Hunting Munaks
+    Targets:
+      - Mob: MUNAK
+        Count: 150
+  - Id: 60152
+    Title: Hunting Sohees
+    Targets:
+      - Mob: SOHEE
+        Count: 50
+  - Id: 60153
+    Title: Hunting Sohees
+    Targets:
+      - Mob: SOHEE
+        Count: 100
+  - Id: 60154
+    Title: Hunting Sohees
+    Targets:
+      - Mob: SOHEE
+        Count: 150
+  - Id: 60155
+    Title: Hunting Firelock Soldiers
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 50
+  - Id: 60156
+    Title: Hunting Firelock Soldiers
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 100
+  - Id: 60157
+    Title: Hunting Firelock Soldiers
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 150
+  - Id: 60158
+    Title: Hunting Tengus
+    Targets:
+      - Mob: TENGU
+        Count: 50
+  - Id: 60159
+    Title: Hunting Tengus
+    Targets:
+      - Mob: TENGU
+        Count: 100
+  - Id: 60160
+    Title: Hunting Tengus
+    Targets:
+      - Mob: TENGU
+        Count: 150
+  - Id: 60161
+    Title: Hunting Venatu
+    Targets:
+      - Mob: VENATU
+        Count: 25
+  - Id: 60162
+    Title: Hunting Venatu
+    Targets:
+      - Mob: VENATU
+        Count: 50
+  - Id: 60163
+    Title: Hunting Venatu
+    Targets:
+      - Mob: VENATU
+        Count: 75
+  - Id: 60164
+    Title: Hunting Archdam
+    Targets:
+      - Mob: ARCHDAM
+        Count: 50
+  - Id: 60165
+    Title: Hunting Archdam
+    Targets:
+      - Mob: ARCHDAM
+        Count: 100
+  - Id: 60166
+    Title: Hunting Archdam
+    Targets:
+      - Mob: ARCHDAM
+        Count: 150
+  - Id: 60167
+    Title: Hunting Siromas
+    Targets:
+      - Mob: SIROMA
+        Count: 50
+  - Id: 60168
+    Title: Hunting Siromas
+    Targets:
+      - Mob: SIROMA
+        Count: 100
+  - Id: 60169
+    Title: Hunting Siroma
+    Targets:
+      - Mob: SIROMA
+        Count: 150
+  - Id: 60170
+    Title: Hunting Ice Titans
+    Targets:
+      - Mob: ICE_TITAN
+        Count: 50
+  - Id: 60171
+    Title: Hunting Ice Titans
+    Targets:
+      - Mob: ICE_TITAN
+        Count: 100
+  - Id: 60172
+    Title: Hunting Ice Titans
+    Targets:
+      - Mob: ICE_TITAN
+        Count: 150
+  - Id: 60173
+    Title: Hunting Disguises
+    Targets:
+      - Mob: DISGUISE
+        Count: 50
+  - Id: 60174
+    Title: Hunting Disguises
+    Targets:
+      - Mob: DISGUISE
+        Count: 100
+  - Id: 60175
+    Title: Hunting Disguises
+    Targets:
+      - Mob: DISGUISE
+        Count: 150
+  - Id: 60176
+    Title: Hunting Loli Ruri
+    Targets:
+      - Mob: LOLI_RURI
+        Count: 50
+  - Id: 60177
+    Title: Hunting Loli Ruri
+    Targets:
+      - Mob: LOLI_RURI
+        Count: 100
+  - Id: 60178
+    Title: Hunting Loli Ruri
+    Targets:
+      - Mob: LOLI_RURI
+        Count: 150
+  - Id: 60179
+    Title: Hunting Mantis
+    Targets:
+      - Mob: MANTIS
+        Count: 50
+  - Id: 60180
+    Title: Hunting Mantis
+    Targets:
+      - Mob: MANTIS
+        Count: 100
+  - Id: 60181
+    Title: Hunting Mantis
+    Targets:
+      - Mob: MANTIS
+        Count: 150
+  - Id: 60182
+    Title: Hunting Dancing Dragons
+    Targets:
+      - Mob: DANCING_DRAGON
+        Count: 50
+  - Id: 60183
+    Title: Hunting Dancing Dragons
+    Targets:
+      - Mob: DANCING_DRAGON
+        Count: 100
+  - Id: 60184
+    Title: Hunting Dancing Dragons
+    Targets:
+      - Mob: DANCING_DRAGON
+        Count: 150
+  - Id: 60185
+    Title: Hunting Necromancers
+    Targets:
+      - Mob: NECROMANCER
+        Count: 20
+  - Id: 60186
+    Title: Hunting Necromancers
+    Targets:
+      - Mob: NECROMANCER
+        Count: 40
+  - Id: 60187
+    Title: Hunting Necromancers
+    Targets:
+      - Mob: NECROMANCER
+        Count: 60
+  - Id: 60188
+    Title: Hunting Apocalypse
+    Targets:
+      - Mob: APOCALIPS
+        Count: 50
+  - Id: 60189
+    Title: Hunting Apocalypse
+    Targets:
+      - Mob: APOCALIPS
+        Count: 100
+  - Id: 60190
+    Title: Hunting Apocalypse
+    Targets:
+      - Mob: APOCALIPS
+        Count: 150
+  - Id: 60200
+    Title: Endless Tower Effect
+    TimeLimit: +7d
+  - Id: 60201
+    Title: Endless Tower Time Limit
+    TimeLimit: +4h
+  - Id: 60211
+    Title: Thor Volcano base camp
+  - Id: 60212
+    Title: Thor Volcano base camp
+  - Id: 60213
+    Title: Thor Volcano base camp
+  - Id: 60301
+    Title: Dragon Hunting
+    Targets:
+      - Mob: PETIT
+        Count: 100
+  - Id: 60302
+    Title: Dragon Hunting
+    Targets:
+      - Mob: PETIT
+        Count: 200
+  - Id: 60303
+    Title: Dragon Hunting
+    Targets:
+      - Mob: FERUS
+        Count: 100
+  - Id: 60304
+    Title: Dragon Hunting
+    Targets:
+      - Mob: FERUS
+        Count: 200
+  - Id: 60305
+    Title: Dragon Hunting
+    Targets:
+      - Mob: FERUS_
+        Count: 100
+  - Id: 60306
+    Title: Dragon Hunting
+    Targets:
+      - Mob: FERUS_
+        Count: 200
+  - Id: 60307
+    Title: Dragon Hunting
+    Targets:
+      - Mob: ACIDUS
+        Count: 100
+  - Id: 60308
+    Title: Dragon Hunting
+    Targets:
+      - Mob: ACIDUS
+        Count: 200
+  - Id: 60309
+    Title: Dragon Hunting
+    Targets:
+      - Mob: ACIDUS_
+        Count: 100
+  - Id: 60310
+    Title: Dragon Hunting
+    Targets:
+      - Mob: ACIDUS_
+        Count: 200
+  - Id: 60351
+    Title: Bathroom Ghost
+  - Id: 60352
+    Title: Bathroom Ghost
+  - Id: 60353
+    Title: Bathroom Ghost
+  - Id: 60354
+    Title: Bathroom Ghost
+  - Id: 60355
+    Title: Bathroom Ghost
+  - Id: 62238
+    Title: Midgardian Mercenary timer
+    TimeLimit: +1h

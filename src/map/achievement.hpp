@@ -11,11 +11,11 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/mmo.hpp"
-#include "../common/database.hpp"
-#include "../common/db.hpp"
+#include <common/mmo.hpp>
+#include <common/database.hpp>
+#include <common/db.hpp>
 
-struct map_session_data;
+class map_session_data;
 struct block_list;
 
 enum e_achievement_group {
@@ -24,23 +24,21 @@ enum e_achievement_group {
 	AG_ADVENTURE,
 	AG_BABY,
 	AG_BATTLE,
-	AG_CHAT,
-	AG_CHAT_COUNT,
-	AG_CHAT_CREATE,
-	AG_CHAT_DYING,
+	AG_CHATTING,
+	AG_CHATTING_COUNT,
+	AG_CHATTING_CREATE,
+	AG_CHATTING_DYING,
 	AG_EAT,
 	AG_GET_ITEM,
 	AG_GET_ZENY,
 	AG_GOAL_ACHIEVE,
 	AG_GOAL_LEVEL,
 	AG_GOAL_STATUS,
-	AG_HEAR,
 	AG_JOB_CHANGE,
 	AG_MARRY,
 	AG_PARTY,
-	AG_REFINE_FAIL,
-	AG_REFINE_SUCCESS,
-	AG_SEE,
+	AG_ENCHANT_FAIL,
+	AG_ENCHANT_SUCCESS,
 	AG_SPEND_ZENY,
 	AG_TAMING,
 	AG_MAX
@@ -65,6 +63,12 @@ enum e_achievement_info {
 	ACHIEVEINFO_MAX,
 };
 
+enum e_title_table : uint16 {
+	TITLE_NONE = 0,
+	TITLE_BASE = 1000,
+	TITLE_MAX = 1046,
+};
+
 struct achievement_target {
 	int mob;
 	int count;
@@ -79,7 +83,8 @@ struct s_achievement_db {
 	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
-		unsigned short nameid, amount;
+		t_itemid nameid;
+		unsigned short amount;
 		struct script_code *script;
 		uint32 title_id;
 		ach_reward();
@@ -94,17 +99,17 @@ struct s_achievement_db {
 
 class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
 private:
-	// Avoids checking achievements on every mob killed
-	std::vector<uint32> achievement_mobs;
+	std::vector<uint32> achievement_mobs; // Avoids checking achievements on every mob killed
 
 public:
-	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 1 ){
+	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 2 ){
 
 	}
 
-	void clear();
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	void clear() override;
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+	void loadingFinished() override;
 
 	// Additional
 	bool mobexists(uint32 mob_id);
@@ -123,23 +128,24 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 };
 
 extern AchievementLevelDatabase achievement_level_db;
 
-void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
-struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
-bool achievement_remove(struct map_session_data *sd, int achievement_id);
-bool achievement_update_achievement(struct map_session_data *sd, int achievement_id, bool complete);
-void achievement_check_reward(struct map_session_data *sd, int achievement_id);
-void achievement_free(struct map_session_data *sd);
-int achievement_check_progress(struct map_session_data *sd, int achievement_id, int type);
-int *achievement_level(struct map_session_data *sd, bool flag);
-bool achievement_check_condition(struct script_code* condition, struct map_session_data* sd);
+void achievement_get_reward(map_session_data *sd, int achievement_id, time_t rewarded);
+struct achievement *achievement_add(map_session_data *sd, int achievement_id);
+bool achievement_remove(map_session_data *sd, int achievement_id);
+bool achievement_update_achievement(map_session_data *sd, int achievement_id, bool complete);
+void achievement_check_reward(map_session_data *sd, int achievement_id);
+void achievement_free(map_session_data *sd);
+int achievement_check_progress(map_session_data *sd, int achievement_id, int type);
+int *achievement_level(map_session_data *sd, bool flag);
+bool achievement_check_condition(struct script_code* condition, map_session_data* sd);
 void achievement_get_titles(uint32 char_id);
-void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
+void achievement_update_objective(map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
+int achievement_update_objective_sub(block_list *bl, va_list ap);
 void achievement_read_db(void);
 void achievement_db_reload(void);
 

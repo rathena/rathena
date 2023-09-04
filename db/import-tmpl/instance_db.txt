@@ -1,6 +1,0 @@
-// Instance Database
-//
-// Structure of Database:
-// ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,...,Map255
-//
-// EnterMap is considered as Map1

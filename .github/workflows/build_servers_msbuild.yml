@@ -1,0 +1,48 @@
+name: Build servers with MSVS
+# build_servers_msbuild.yml
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      # Always trigger all Github Actions if an action or something CI related was changed
+      - '.github/workflows/**'
+      - 'tools/ci/**'
+      # This workflow should run when a file in a source directory has been modified.
+      - 'src/**'
+      - '3rdparty/**'
+
+jobs:
+  build:
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          # The windows-latest label currently points to windows-2019.
+          # Available: windows-2016, windows-2019 and windows-2022
+          os: [windows-latest]
+          # We run build checks for both Renewal and PRE-Renewal
+          mode: ['PRE', 'RE']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build solution in Debug
+        if: ${{ matrix.mode == 'PRE' }}
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT%3BPRERE"
+
+      - name: Build solution in Debug
+        if: ${{ matrix.mode == 'RE' }}
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT"

@@ -339,3 +339,260 @@ S_Slot:
 	}
 	close;
 }
+
+// Temporal shoes slotted - npc enchant
+glast_01,184,283,4	script	Dark magic master#pa082	1_F_01,{
+	disable_items;
+	if ((MaxWeight - Weight) < 1000) {
+		mes "Your bag is too heavy. Reduce some weight and come back.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "You seem to be carrying too many items. Put some items in storage and come back again.";
+		close;
+	}
+	// requirements
+	.@coagulated_id = 6608;// Coagulated_Spell
+	.@polluted_id = 6755;// Polluted_Spell
+	.@cost_zeny = 100000;
+
+	mes "[Dark magic master]";
+	mes "I deal with the Temporal Boots with socket only.";
+	next;
+	if (select( "How does the enchanting work?", "Give effect to my Temporal Boots" ) == 1) {
+		mes "[Dark magic master]";
+		mes "You should ask Hugin's magic master all the basic things. I want deeper conversation about enchating work.";
+		next;
+		mes "[Dark magic master]";
+		mes "I need 4 items. ^0000ff" + callfunc("F_InsertComma",.@cost_zeny) + ", " + getitemname(.@polluted_id) + ", " + getitemname(.@coagulated_id) + ", Temporal Boots(Socket) Series^000000. If you don't have any of these, I cannot help you.";
+		next;
+		mes "[Dark magic master]";
+		mes "It's my small hobby.. To enchant Socketed Temporal Boots using polluted and coagulated spell.";
+		next;
+		mes "[Dark magic master]";
+		mes "Of course, you must cope with bigger risk of destruction whenever you'd like to enchant again and again.";
+		next;
+		mes "[Dark magic master]";
+		mes "The enchant order is same as Hugin's magic master's enchantment. Please refer to his explanation.";
+		close;
+	}
+	.@equip_id = getequipid(EQI_SHOES);
+
+	switch(.@equip_id) {
+	case 22006:	// Temporal_Str_Boots_
+	case 22007:	// Temporal_Vit_Boots_
+	case 22008:	// Temporal_Dex_Boots_
+	case 22009:	// Temporal_Int_Boots_
+	case 22010:	// Temporal_Agi_Boots_
+	case 22011:	// Temporal_Luk_Boots_
+	case 22113:	// Modified_Str_Boots_
+	case 22114:	// Modified_Int_Boots_
+	case 22115:	// Modified_Agi_Boots_
+	case 22116:	// Modified_Vit_Boots_
+	case 22117:	// Modified_Dex_Boots_
+	case 22118:	// Modified_Luk_Boots_
+		break;
+	case -1:
+		mes "[Dark magic master]";
+		mes "Are you wearing the item?";
+		close;
+	default:
+		mes "[Dark magic master]";
+		mes "This is not the right item for this enchant. Remember, only those 6 types of Temporal Boots with socket are available for hidden enchanting..";
+		close;
+	}
+	// enchants ID
+	setarray .@enchant_1[0],4808,4832,4814,4741,4869,4752;// Fighting_Spirit4	Expert_Archer1	Spell2	Vitality2	DelayafterAttack1Lv	Luck3
+	setarray .@enchant_2[0],4820,4833,4813,4742,4872,4753;// Fighting_Spirit5	Expert_Archer2	Spell3	Vitality3	DelayafterAttack2Lv	Luck4
+	setarray .@enchant_3[0],4821,4834,4812,4861,4873,4754;// Fighting_Spirit6	Expert_Archer3	Spell4	MHP1		DelayafterAttack3Lv	Luck5
+	setarray .@enchant_4[0],4822,4835,4826,4862,4881,4755;// Fighting_Spirit7	Expert_Archer4	Spell5	MHP2		DelayafterAttack4Lv	Luck6
+
+	// requirements amount
+	setarray .@en_amount_coag[0],3,10,20,40,50;
+	setarray .@en_amount_polluted[0],1,2,4,7,10;
+
+	// (custom) chances of success (official value unknown)
+	setarray .@chances[0],100,70,70,70,70;
+
+	// data of item equipped
+	.@equip_name$ = getequipname(EQI_SHOES);
+	setarray .@card[0],
+		getequipcardid(EQI_SHOES,0),
+		getequipcardid(EQI_SHOES,1),
+		getequipcardid(EQI_SHOES,2),
+		getequipcardid(EQI_SHOES,3);
+	copyarray .@equip_card[0], .@card[0], 4;
+	.@equip_refine = getequiprefinerycnt(EQI_SHOES);
+
+	if (.@card[2] > 0) {
+		mes "[Dark magic master]";
+		mes "These boots have already passed the enchanting limit. We can't enchant them any more.";
+		close;
+	}
+	if (.@card[3] == 0) {// 4th slot 1st try enchanting
+		.@amount_coag = .@en_amount_coag[0];
+		.@amount_poll = .@en_amount_polluted[0];
+
+		mes "[Dark magic master]";
+		mes "Want to enchant ^0000ff" + .@equip_name$ + " (Socket)^000000? For the 1st enchanting, you need ^0000ff" + .@amount_poll + " " + getitemname(.@polluted_id) + ", " + .@amount_coag + " " + getitemname(.@coagulated_id) + ", and " + callfunc("F_InsertComma",.@cost_zeny) + " zeny^000000.";
+		mes "It has some risk of failing..";
+		next;
+		.@s = select( "Quit", "Fighting Spirit", "Archery", "Spell", "Vitality", "Attack Speed", "Lucky" ) - 2;
+		if (.@s == -1) {
+			mes "[Dark magic master]";
+			mes "Ok, come back when you are ready.";
+			close;
+		}
+		.@card[3] = .@enchant_1[.@s];
+		.@string$ = "enchant number ^6300001^000000.";
+		.@num = 0;
+	}
+	else {
+		for ( .@num = 1; .@num < 5; .@num++ ) {
+			for ( .@type = 0; .@type < 6 && .@card[3] != getd( ".@enchant_" + .@num + "[" + .@type + "]" ); .@type++ )
+				continue;
+			if (.@type < 6)
+				break;
+		}
+		if (.@num == 5) {
+			mes "[Dark magic master]";
+			mes "Something wrong happened.";
+			close;
+		}
+		.@amount_coag = .@en_amount_coag[.@num];
+		.@amount_poll = .@en_amount_polluted[.@num];
+
+		mes "[Dark magic master]";
+		if (.@num == 4) {
+			.@card[2] = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power, Runaway_Magic, Speed_Of_Light, Muscle_Fool, Hawkeye, Lucky_Day
+			.@string$ = "^990000 Bonus effect ^000000 upgrade.";
+			mes "Would you like a random bonus effect for the 3rd slot? You need ^0000ff" + .@amount_poll + " " + getitemname(.@polluted_id) + ", " + .@amount_coag + " " + getitemname(.@coagulated_id) + ", and " + callfunc("F_InsertComma",.@cost_zeny) + " zeny^000000. But it has high risk of failing..";
+		}
+		else {
+			.@level = .@num + 1;
+			.@card[3] = getd( ".@enchant_" + (.@num+1) + "[" + .@type + "]" );
+			.@string$ = "enchant number ^990000" + .@level + "^000000.";
+			mes "Enchanting ^0000ff" + .@equip_name$ + " (Socket)^000000's 4th slot as ^0000ff" + .@level + "^000000 level effect. Requires ^0000ff" + .@amount_poll + " " + getitemname(.@polluted_id) + ", " + .@amount_coag + " " + getitemname(.@coagulated_id) + ", and " + callfunc("F_InsertComma",.@cost_zeny) + " z^000000. It has some risk of failing..";
+		}
+		next;
+		if (select( "Quit", "Effect Upgrade!" ) == 1) {
+			mes "[Dark magic master]";
+			mes "Ok, come back when you are ready.";
+			close;
+		}
+	}
+	if (countitem(.@coagulated_id) < .@amount_coag) {
+		mes "[Dark magic master]";
+		mes "Hmm, you are missing " + (.@amount_coag - countitem(.@coagulated_id)) + " " + getitemname(.@coagulated_id) + " items. Go get more, and then we can talk about more enchants.";
+		close;
+	}
+	if (countitem(.@polluted_id) < .@amount_poll) {
+		mes "[Dark magic master]";
+		mes "Hmm, you are missing " + (.@amount_poll - countitem(.@polluted_id)) + " " + getitemname(.@polluted_id) + " items. Go get more, and then we can talk about more enchants.";
+		close;
+	}
+	if (Zeny < .@cost_zeny) {
+		mes "[Dark magic master]";
+		mes "You must bring ^0000ff" + callfunc("F_InsertComma",.@cost_zeny) + " zeny^000000. Nothing is free you know...";
+		close;
+	}
+	delitem .@coagulated_id, .@amount_coag;
+	delitem .@polluted_id, .@amount_poll;
+	Zeny -= .@cost_zeny;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@equip_refine))
+		close;
+
+	delequip EQI_SHOES;
+	if (.@chances[.@num] < rand(1,100)) {
+		specialeffect2 EF_LORD;
+		mes "[Dark magic master]";
+		mes "Arrggg, we failed. Better luck next time.";
+		close;
+	}
+	specialeffect2 EF_REPAIRWEAPON;
+	mes "[Hugin's Magician]";
+	mes "Trying for " + .@string$;
+	getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card[2],.@card[3];
+	close;
+}
+
+// Items exchange for card
+glast_01,216,292,5	script	Portrait collector#0002	4_M_OILMAN,{
+	disable_items;
+	if ((MaxWeight - Weight) < 1000) {
+		mes "Your bag is too heavy. Reduce some weight and come back.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "You seem to be carrying too many items. Put some items in storage and come back again.";
+		close;
+	}
+	.@coagulated_id = 6608;		// Coagulated_Spell
+	.@polluted_id = 6755;		// Polluted_Spell
+	.@white_card = 4608;		// White_Knightage_Card
+	.@khalitzburg_card = 4609;	// Khaliz_Knightage_Card
+
+	mes "[Portrait collector]";
+	mes "I have been collecting portraits for an year already. Now it's time to show people my collection.";
+	next;
+	mes "[Portrait collector]";
+	mes "Hey, do you have a lot of " + getitemname(.@polluted_id) + " or " + getitemname(.@coagulated_id) + "? If so, why don't you trade a nice portrait that I have?";
+	next;
+	switch( select( "Cancel", "Exchange for " + getitemname(.@white_card), "Exchange for " + getitemname(.@khalitzburg_card) ) ) {
+	case 1:
+		mes "[Portrait collector]";
+		mes "Well, OK. Come back when you are ready.";
+		close;
+	case 2:
+		.@reward_id = .@white_card;
+		.@amount_coag = 3000;
+		.@amount_polluted = 70;
+		break;
+	case 3:
+		.@reward_id = .@khalitzburg_card;
+		.@amount_coag = 5000;
+		.@amount_polluted = 100;
+		break;
+	}
+	mes "[Portrait collector]";
+	mes "What would you like in exchange for the " + getitemname(.@reward_id) + "?";
+	next;
+	if (countitem(.@coagulated_id) < .@amount_coag)
+		.@color$[0] = "^666666";
+	if (countitem(.@polluted_id) < .@amount_polluted)
+		.@color$[1] = "^666666";
+	switch( select( "Cancel", sprintf("%s%s %s^000000", .@color$[0], callfunc("F_InsertComma",.@amount_coag), getitemname(.@coagulated_id)), sprintf("%s%s %s^000000", .@color$[1], callfunc("F_InsertComma",.@amount_polluted), getitemname(.@polluted_id)) ) ) {
+	case 1:
+		mes "[Portrait collector]";
+		mes "Well, OK. Come back when you are ready.";
+		close;
+	case 2:
+		.@id = .@coagulated_id;
+		.@amount = .@amount_coag;
+		break;
+	case 3:
+		.@id = .@polluted_id;
+		.@amount = .@amount_polluted;
+		break;
+	}
+	if (countitem(.@id) < .@amount) {
+		mes "[Portrait collector]";
+		mes "Hmm, you don't have enough Spell now. Go get more.";
+		close;
+	}
+	mes "[Portrait collector]";
+	mes "Are you sure that you won't regret it?";
+	next;
+	if (select( "Cancel", "Sure" ) == 1) {
+		mes "[Portrait collector]";
+		mes "Well, OK. Come back when you are ready.";
+		close;
+	}
+	mes "[Portrait collector]";
+	mes "Cool, let's make a deal.";
+	delitem .@id, .@amount;
+	getitem .@reward_id,1;
+	close;
+}

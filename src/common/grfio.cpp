@@ -455,6 +455,42 @@ void* grfio_reads(const char* fname, int* size)
 	return buf2;
 }
 
+int32 grfio_read_rsw_water_level( const char* fname ){
+	unsigned char* rsw = (unsigned char *)grfio_read( fname );
+
+	if( rsw == nullptr ){
+		// Error already reported in grfio_read
+		return RSW_NO_WATER;
+	}
+
+	if( strncmp( (char*)rsw, "GRSW", strlen( "GRSW" ) ) ){
+		ShowError( "grfio_read_rsw_water_level: Invalid RSW signature in file %s\n", fname );
+		aFree( rsw );
+		return RSW_NO_WATER;
+	}
+
+	uint16 version = ( rsw[4] << 8 ) | rsw[5];
+
+	if( version < 0x104 || version > 0x205 ){
+		ShowError( "grfio_read_rsw_water_level: Unsupported RSW version 0x%04x in file %s\n", version, fname );
+		aFree( rsw );
+		return RSW_NO_WATER;
+	}
+
+	int32 level;
+
+	if( version >= 0x205 ){
+		level = (int32)*(float*)( rsw + 171 );
+	} else if( version >= 0x202 ){
+		level = (int32)*(float*)( rsw + 167 );
+	}else{
+		level = (int32)*(float*)( rsw + 166 );
+	}
+
+	aFree( rsw );
+
+	return level;
+}
 
 /// Decodes encrypted filename from a version 01xx grf index.
 static char* decode_filename(unsigned char* buf, int len)
@@ -509,6 +545,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 	if( strcmp((const char*)grf_header,"Master of Magic") != 0 || fseek(fp,getlong(grf_header+0x1e),SEEK_CUR) != 0 ) {
 		fclose(fp);
 		ShowError("GRF %s read error\n", grfname);
+		ShowError("GRF possibly over 2GB in size.\n");
 		return 2;	// 2:file format error
 	}
 

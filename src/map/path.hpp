@@ -4,7 +4,7 @@
 #ifndef PATH_HPP
 #define PATH_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 enum cell_chk : uint8;
 
@@ -69,6 +69,7 @@ bool check_distance_client(int dx, int dy, int distance);
 int distance_client(int dx, int dy);
 
 bool direction_diagonal( enum directions direction );
+bool direction_opposite( enum directions direction );
 
 //
 void do_init_path();

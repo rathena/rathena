@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -22,14 +22,15 @@
 //= 1.9 More accurate spawns [Playtester]
 //= 2.0 Updated spawns to renewal. [L0ne_W0lf]
 //= 2.1 Renewal spawn update.
+//= 2.2 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================
 // yuno_fild01 - Border Posts 
 //==================================================
-yuno_fild01,0,0	monster	Geographer	1368,50,5000
-yuno_fild01,0,0	monster	Dustiness	1114,35,5000
-yuno_fild01,0,0	monster	Mantis	1139,35,5000
+yuno_fild01,0,0	monster	Geographer	1368,75,5000
+yuno_fild01,0,0	monster	Dustiness	1114,52,5000
+yuno_fild01,0,0	monster	Mantis	1139,52,5000
 yuno_fild01,0,0	monster	Red Plant	1078,15,1800000,900000
 yuno_fild01,70,370,10,10	monster	Blue Plant	1079,2,1800000,900000
 yuno_fild01,70,370,10,10	monster	Shining Plant	1083,1,1800000,900000
@@ -38,23 +39,25 @@ yuno_fild01,238,326,40,40	monster	Yellow Plant	1081,6,1800000,900000
 yuno_fild01,238,326,40,40	monster	Shining Plant	1083,2,1800000,900000
 yuno_fild01,0,0	monster	Yellow Plant	1081,15,1800000,900000
 yuno_fild01,0,0	monster	Green Plant	1080,20,1800000,900000
+//yuno_fild01,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild02 - Kiel Hyre's Cottage
 //==================================================
-yuno_fild02,0,0	monster	Sleeper	1386,130,5000
-yuno_fild02,0,0	monster	Grand Peco	1369,35,5000
-yuno_fild02,0,0	monster	Harpy	1376,35,5000
+yuno_fild02,0,0	monster	Sleeper	1386,185,5000
+yuno_fild02,0,0	monster	Grand Peco	1369,50,5000
+yuno_fild02,0,0	monster	Harpy	1376,50,5000
 yuno_fild02,0,0	monster	Red Plant	1078,10,1800000,900000
 yuno_fild02,0,0	monster	Yellow Plant	1081,10,1800000,900000
 yuno_fild02,0,0	monster	Green Plant	1080,10,1800000,900000
+//yuno_fild02,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild03 - El Mes Plateau
 //==================================================
-yuno_fild03,0,0	monster	Harpy	1376,130,5000
-yuno_fild03,0,0	monster	Goat	1372,35,5000
-yuno_fild03,0,0	monster	Sleeper	1386,35,5000
+yuno_fild03,0,0	monster	Harpy	1376,174,5000
+yuno_fild03,0,0	monster	Goat	1372,46,5000
+yuno_fild03,0,0	monster	Sleeper	1386,46,5000
 yuno_fild03,0,0	monster	Deviling	1582,1,3600000,1800000
 yuno_fild03,0,0	monster	Angeling	1096,1,3600000,1800000
 yuno_fild03,0,0	monster	Red Plant	1078,15,1800000,900000
@@ -62,18 +65,20 @@ yuno_fild03,0,0	monster	Yellow Plant	1081,15,1800000,900000
 yuno_fild03,0,0	monster	Green Plant	1080,15,1800000,900000
 yuno_fild03,358,215,10,10	monster	Shining Plant	1083,1,1800000,900000
 yuno_fild03,358,215,10,10	monster	Blue Plant	1079,4,1800000,900000
+//yuno_fild03,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild04 - El Mes Plateau
 //==================================================
-yuno_fild04,0,0	monster	Harpy	1376,130,5000
-yuno_fild04,0,0	monster	Goat	1372,35,5000
-yuno_fild04,0,0	monster	Geographer	1368,35,5000
+yuno_fild04,0,0	monster	Harpy	1376,133,5000
+yuno_fild04,0,0	monster	Goat	1372,36,5000
+yuno_fild04,0,0	monster	Geographer	1368,36,5000
 yuno_fild04,0,0	monster	Arc Angeling	1388,1,3600000,180000
 yuno_fild04,0,0	monster	Mastering	1090,1,3600000,1800000
 yuno_fild04,0,0	monster	Red Plant	1078,10,1800000,900000
 yuno_fild04,0,0	monster	Yellow Plant	1081,10,1800000,900000
 yuno_fild04,0,0	monster	Green Plant	1080,10,1800000,900000
+//yuno_fild04,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild05 - Disabled on Renewal
@@ -82,11 +87,12 @@ yuno_fild04,0,0	monster	Green Plant	1080,10,1800000,900000
 //==================================================
 // yuno_fild06 - El Mes Plateau
 //==================================================
-yuno_fild06,0,0	monster	Sleeper	1386,80,5000
-yuno_fild06,0,0	monster	Geographer	1368,20,5000
+yuno_fild06,0,0	monster	Sleeper	1386,117,5000
+yuno_fild06,0,0	monster	Geographer	1368,29,5000
 yuno_fild06,0,0	monster	Red Plant	1078,10,5000
 yuno_fild06,0,0	monster	Yellow Plant	1081,10,10000
 yuno_fild06,0,0	monster	Green Plant	1080,10,10000
+//yuno_fild06,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild07 - El Mes Gorge (Valley of Abyss)
@@ -97,26 +103,29 @@ yuno_fild07,0,0	monster	Grand Peco	1369,30,5000
 yuno_fild07,0,0	monster	Red Plant	1078,10,180000,90000
 yuno_fild07,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild07,0,0	monster	Yellow Plant	1081,10,180000,90000
+//yuno_fild07,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild08 - Kiel Hyre's Academy
 //==================================================
-yuno_fild08,0,0	monster	Grand Peco	1369,130,5000
-yuno_fild08,0,0	monster	Goat	1372,30,5000
-yuno_fild08,0,0	monster	Geographer	1368,30,5000
+yuno_fild08,0,0	monster	Grand Peco	1369,157,5000
+yuno_fild08,0,0	monster	Goat	1372,36,5000
+yuno_fild08,0,0	monster	Geographer	1368,36,5000
 yuno_fild08,0,0	monster	Red Plant	1078,10,180000,90000
 yuno_fild08,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild08,0,0	monster	Yellow Plant	1081,10,180000,90000
+//yuno_fild08,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild09 - Schwarzwald Guards Camp 
 //==================================================
-yuno_fild09,0,0	monster	Grand Peco	1369,130,5000
-yuno_fild09,0,0	monster	Sleeper	1386,30,5000
-yuno_fild09,0,0	monster	Geographer	1368,30,5000
+yuno_fild09,0,0	monster	Grand Peco	1369,182,5000
+yuno_fild09,0,0	monster	Sleeper	1386,42,5000
+yuno_fild09,0,0	monster	Geographer	1368,42,5000
 yuno_fild09,0,0	monster	Red Plant	1078,10,180000,90000
 yuno_fild09,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild09,0,0	monster	Yellow Plant	1081,10,180000,90000
+//yuno_fild09,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.
 
 //==================================================
 // yuno_fild10 - Disabled on Renewal
@@ -125,8 +134,8 @@ yuno_fild09,0,0	monster	Yellow Plant	1081,10,180000,90000
 //==================================================
 // yuno_fild11 - Juno Field
 //==================================================
-yuno_fild11,0,0	monster	Goat	1372,100,5000
-yuno_fild11,0,0	monster	Geographer	1368,40,5000
+yuno_fild11,0,0	monster	Goat	1372,139,5000
+yuno_fild11,0,0	monster	Geographer	1368,55,5000
 yuno_fild11,0,0	monster	Red Plant	1078,10,180000,90000
 yuno_fild11,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild11,0,0	monster	Yellow Plant	1081,10,180000,90000
@@ -134,5 +143,6 @@ yuno_fild11,0,0	monster	Yellow Plant	1081,10,180000,90000
 //==================================================
 // yuno_fild12 - Border Checkpoint
 //==================================================
-yuno_fild12,0,0	monster	Geographer	1368,60,5000
-yuno_fild12,0,0	monster	Mantis	1139,30,5000
+yuno_fild12,0,0	monster	Geographer	1368,68,5000
+yuno_fild12,0,0	monster	Mantis	1139,34,5000
+//yuno_fild12,0,0	monster	Runaway Book	2414,1,5000	//-- Monster for Free Transcend Quest.

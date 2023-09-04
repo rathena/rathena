@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/malloc.hpp"
-#include "../common/md5calc.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp" //show notice
-#include "../common/socket.hpp" //wfifo session
-#include "../common/strlib.hpp" //safeprint
-#include "../common/timer.hpp" //difftick
-#include "../common/utils.hpp"
+#include <common/malloc.hpp>
+#include <common/md5calc.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp> //show notice
+#include <common/socket.hpp> //wfifo session
+#include <common/strlib.hpp> //safeprint
+#include <common/timer.hpp> //difftick
+#include <common/utils.hpp>
 
 #include "account.hpp"
 #include "ipban.hpp" //ipban_check
@@ -59,7 +59,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	int size = 160;
 #endif
 
-	if( runflag != LOGINSERVER_ST_RUNNING ){
+	if( !global_core->is_running() ){
 		// players can only login while running
 		logclif_sent_auth_result(fd,1); // server closed
 		return;
@@ -130,7 +130,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
 #if PACKETVER >= 20170315
-	memset(WFIFOP(fd,47),0,17); // Unknown
+	safestrncpy( WFIFOCP( fd, 47 ), sd->web_auth_token, WEB_AUTH_TOKEN_LENGTH ); // web authentication token
 #endif
 	for( i = 0, n = 0; i < ARRAYLENGTH(ch_server); ++i ) {
 		if( !session_isValid(ch_server[i].fd) )
@@ -144,6 +144,13 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 		WFIFOW(fd,header+n*size+30) = ch_server[i].new_;
 #if PACKETVER >= 20170315
 		memset(WFIFOP(fd, header+n*size+32), 0, 128); // Unknown
+#endif
+#ifdef DEBUG
+		ShowDebug(
+			"Sending the client (%d %d.%d.%d.%d) to char-server %s with ip %d.%d.%d.%d and port "
+			"%hu\n",
+			sd->account_id, CONVIP(ip), ch_server[i].name,
+			CONVIP((subnet_char_ip) ? subnet_char_ip : ch_server[i].ip), ch_server[i].port);
 #endif
 		n++;
 	}
@@ -420,7 +427,7 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 		login_log(session[fd]->client_addr, sd->userid, 100, message);
 
 		result = login_mmo_auth(sd, true);
-		if( runflag == LOGINSERVER_ST_RUNNING &&
+		if( global_core->is_running() &&
 			result == -1 &&
 			sd->sex == 'S' &&
 			sd->account_id < ARRAYLENGTH(ch_server) &&
@@ -454,6 +461,20 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 			WFIFOSET(fd,3);
 		}
 	}
+	return 1;
+}
+
+int logclif_parse_otp_login( int fd, struct login_session_data* sd ){
+	RFIFOSKIP( fd, 68 );
+
+	WFIFOHEAD( fd, 34 );
+	WFIFOW( fd, 0 ) = 0xae3;
+	WFIFOW( fd, 2 ) = 34;
+	WFIFOL( fd, 4 ) = 0; // normal login
+	safestrncpy( WFIFOCP( fd, 8 ), "S1000", 6 );
+	safestrncpy( WFIFOCP( fd, 28 ), "token", 6 );
+	WFIFOSET( fd, 34 );
+
 	return 1;
 }
 
@@ -521,6 +542,10 @@ int logclif_parse(int fd) {
 			break;
 		// Sending request of the coding key
 		case 0x01db: next = logclif_parse_reqkey(fd, sd); break;
+		// OTP token login
+		case 0x0acf:
+			next = logclif_parse_otp_login( fd, sd );
+			break;
 		// Connection request of a char-server
 		case 0x2710: logclif_parse_reqcharconnec(fd,sd, ip); return 0; // processing will continue elsewhere
 		default:

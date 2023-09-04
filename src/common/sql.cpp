@@ -93,6 +93,14 @@ Sql* Sql_Malloc(void)
 }
 
 
+/**
+ * Retrieves the last error number.
+ * @param self : sql handle
+ * @return last error number
+ */
+unsigned int Sql_GetError( Sql* self ){
+	return mysql_errno( &self->handle );
+}
 
 static int Sql_P_Keepalive(Sql* self);
 
@@ -112,6 +120,15 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 		return SQL_ERROR;
 
 	StringBuf_Clear(&self->buf);
+
+#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 50710
+	unsigned int md = SSL_MODE_DISABLED;
+
+	if( mysql_options( &self->handle, MYSQL_OPT_SSL_MODE, &md ) ){
+		ShowSQL( "Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider upgrading - especially if you encounter SSL related error messages from your MySQL server.\n" );
+	}
+#endif
+
 	if( !mysql_real_connect(&self->handle, host, user, passwd, db, (unsigned int)port, NULL/*unix_socket*/, 0/*clientflag*/) )
 	{
 		ShowSQL("%s\n", mysql_error(&self->handle));
@@ -425,6 +442,12 @@ void Sql_FreeResult(Sql* self)
 	}
 }
 
+/// Closes the handle
+void Sql_Close(Sql* self) {
+	if (self) {
+		mysql_close(&self->handle);
+	}
+}
 
 
 /// Shows debug information (last query).
@@ -448,6 +471,7 @@ void Sql_Free(Sql* self)
 		Sql_FreeResult(self);
 		StringBuf_Destroy(&self->buf);
 		if( self->keepalive != INVALID_TIMER ) delete_timer(self->keepalive, Sql_P_KeepaliveTimer);
+		Sql_Close(self);
 		aFree(self);
 	}
 }

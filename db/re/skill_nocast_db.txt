@@ -19,6 +19,7 @@
 // 1024 - cannot be used in zone 6 maps
 // 2048 - cannot be used in zone 7 maps
 // 4096 - cannot be used in zone 8 maps
+// 8192 - cannot be used in zone 9 maps
 //
 // Example:
 // 8,6  // Endure cannot be used in PvP and GvG maps (2+4)
@@ -26,11 +27,23 @@
 //----------------------------------------------------------------------------
 // Normal
 //----------------------------------------------------------------------------
+308,1	//BD_ETERNALCHAOS
+311,1	//BD_ROKISWEIL
+317,1	//BA_DISSONANCE
+325,1	//DC_UGLYDANCE
+328,1	//DC_DONTFORGETME
 2422,1	//WM_LULLABY_DEEPSLEEP
 2423,1	//WM_SIRCLEOFNATURE
+2425,1	//WM_GLOOMYDAY
+2429,1	//WM_SOUND_OF_DESTRUCTION
 2430,1	//WM_SATURDAY_NIGHT_FEVER
+2432,1	//WM_MELODYOFSINK
+2433,1	//WM_BEYOND_OF_WARCRY
 2455,1	//SO_ARRULLO
 2299,1	//SC_MANHOLE
+5359,1	//TR_ROKI_CAPRICCIO
+5363,1	//TR_NIPELHEIM_REQUIEM
+5367,1	//EM_ACTIVITY_BURN
 
 //----------------------------------------------------------------------------
 // PVP
@@ -54,9 +67,9 @@
 491,4	//CR_CULTIVATION
 530,4	//NJ_KIRIKAGE
 691,4	//CASH_ASSUMPTIO
-2284,4	//SC_FATALMENACE
 2300,4	//SC_DIMENSIONDOOR
 5063,4	//WE_CALLALLFAMILY
+462,4	//SL_KAIZEL
 
 //----------------------------------------------------------------------------
 // Battlegrounds
@@ -73,7 +86,6 @@
 395,8	//CG_MOONLIT
 409,8	//WE_CALLPARENT
 410,8	//WE_CALLBABY
-491,8	//CR_CULTIVATION
 411,8	//TK_RUN
 426,8	//TK_HIGHJUMP
 427,8	//SG_FEEL
@@ -90,11 +102,13 @@
 438,8	//SG_SUN_BLESS
 439,8	//SG_MOON_BLESS
 440,8	//SG_STAR_BLESS
+491,8	//CR_CULTIVATION
 530,8	//NJ_KIRIKAGE
 691,8	//CASH_ASSUMPITO
-2284,8	//SC_FATALMENACE
 2300,8	//SC_DIMENSIONDOOR
 5063,8	//WE_CALLALLFAMILY
+5023,8	//SU_LOPE
+462,8	//SL_KAIZEL
 
 //----------------------------------------------------------------------------
 // Mixed
@@ -124,13 +138,12 @@
 409,16	// WE_CALLPARENT
 410,16	// WE_CALLBABY
 426,16	// TK_HIGHJUMP
-491,16	// CR_CULTIVATION
+491,16	//CR_CULTIVATION
 529,16	// NJ_SHADOWJUMP
 // 530,16	// NJ_KIRIKAGE
 691,16	// CASH_ASSUMPTIO
 2300,16	// SC_DIMENSIONDOOR
 //!TODO: More 3rd Class skills
-// 2284,16	// SC_FATALMENACE
 // 2293,16	// SC_GROOMY
 // 2296,16	// SC_UNLUCKY
 // 2494,16	// GN_CHANGEMATERIAL
@@ -155,7 +168,6 @@
 387,32	//WS_CARTBOOST
 389,32	//ST_CHASEWALK
 395,32	//CG_MOONLIT
-2284,32	//SC_FATALMENACE
 2300,32	//SC_DIMENSIONDOOR
 2478,32	//GN_CARTBOOST
 
@@ -171,7 +183,6 @@
 //----------------------------------------------------------------------------
 219,128 //RG_INTIMIDATE
 26,128	//AL_TELEPORT
-2284,128	//SC_FATALMENACE
 2300,128	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -179,6 +190,8 @@
 //----------------------------------------------------------------------------
 426,256 //TK_HIGHJUMP
 290,256	//SA_ABRACADABRA
+5023,256	//SU_LOPE
+462,256	//SL_KAIZEL
 
 //----------------------------------------------------------------------------
 // Zone 5 - Sealed Shrine
@@ -188,7 +201,6 @@
 219,512	//RG_INTIMIDATE
 361,512	//HP_ASSUMPTIO
 691,512	//CASH_ASSUMPTIO
-2284,512	//SC_FATALMENACE
 2294,512	//SC_IGNORANCE
 2300,512	//SC_DIMENSIONDOOR
 
@@ -200,7 +212,6 @@
 219,1024	//RG_INTIMIDATE
 405,1024	//PF_SPIDERWEB
 674,1024	//NPC_EXPULSION
-2284,1024	//SC_FATALMENACE
 2294,1024	//SC_IGNORANCE
 2300,1024	//SC_DIMENSIONDOOR
 
@@ -222,3 +233,17 @@
 409,4096 // WE_CALLPARENT
 410,4096 // WE_CALLBABY
 5063,4096	//WE_CALLALLFAMILY
+
+//----------------------------------------------------------------------------
+// Zone 9 - Wave Mode
+//----------------------------------------------------------------------------
+26,8192	//AL_TELEPORT
+87,8192	//WZ_ICEWALL
+197,8192	//NPC_EMOTION
+219,8192	//RG_INTIMIDATE
+405,8192	//PF_SPIDERWEB
+474,8192	//NPC_EMOTION_ON
+674,8192	//NPC_EXPULSION
+2284,8192	//SC_FATALMENACE
+2294,8192	//SC_IGNORANCE
+2300,8192	//SC_DIMENSIONDOOR
