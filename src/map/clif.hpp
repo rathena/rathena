@@ -1196,8 +1196,6 @@ void clif_guild_storage_log( map_session_data* sd, std::vector<struct guild_log_
 
 void clif_camerainfo( map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f );
 
-void clif_noask_sub( struct map_session_data *sd, struct map_session_data *tsd, int type );
-
 /// Equip Switch System
 void clif_equipswitch_list( map_session_data* sd );
 void clif_equipswitch_add( map_session_data* sd,uint16 index, uint32 pos, uint8 flag );
@@ -1254,5 +1252,7 @@ void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> 
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
+
+void clif_noask_sub( map_session_data *sd, map_session_data *tsd, int type );
 
 #endif /* CLIF_HPP */

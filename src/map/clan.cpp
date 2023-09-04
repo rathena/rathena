@@ -154,9 +154,9 @@ void clan_member_left( map_session_data* sd ){
 }
 
 bool clan_member_join( map_session_data *sd, int clan_id, uint32 account_id, uint32 char_id ){
-	struct clan *clan;
-
 	nullpo_ret(sd);
+
+	struct clan *clan;
 
 	if( ( clan = clan_search( clan_id ) ) == nullptr ){
 		return false;
@@ -167,6 +167,7 @@ bool clan_member_join( map_session_data *sd, int clan_id, uint32 account_id, uin
 	}
 
 	if( clan->instance_id > 0 && battle_config.instance_block_invite ){
+		// TODO: message?
 		return false;
 	}
 
@@ -178,15 +179,16 @@ bool clan_member_join( map_session_data *sd, int clan_id, uint32 account_id, uin
 }
 
 bool clan_member_leave( map_session_data* sd, int clan_id, uint32 account_id, uint32 char_id ){
-	struct clan *clan;
-
 	nullpo_ret(sd);
+
+	struct clan *clan;
 
 	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != clan_id || ( clan = sd->clan ) == nullptr ){
 		return false;
 	}
 
 	if( clan->instance_id > 0 && battle_config.instance_block_leave ){
+		// TODO: message?
 		return false;
 	}
 

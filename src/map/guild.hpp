@@ -41,7 +41,7 @@ int guild_checkskill(const struct mmo_guild &g,int id);
 bool guild_check_skill_require(const struct mmo_guild &g,uint16 id); // [Komurka]
 int guild_checkcastles(const struct mmo_guild &g); // [MouseJstr]
 bool guild_isallied(int guild_id, int guild_id2); //Checks alliance based on guild Ids. [Skotlex]
-bool guild_has_permission( struct map_session_data* sd, enum e_guild_permission permission );
+bool guild_has_permission( map_session_data* sd, enum e_guild_permission permission );
 
 void do_init_guild(void);
 std::shared_ptr<MapGuild> guild_search(int guild_id);
@@ -60,15 +60,15 @@ int guild_request_info(int guild_id);
 int guild_recv_noinfo(int guild_id);
 int guild_recv_info(const struct mmo_guild &sg);
 int guild_npc_request_info(int guild_id,const char *ev);
-int guild_invite(map_session_data *sd,map_session_data *tsd);
-int guild_reply_invite(map_session_data *sd,int guild_id,int flag);
+bool guild_invite(map_session_data *sd,map_session_data *tsd);
+bool guild_reply_invite(map_session_data *sd,int guild_id,int flag);
 void guild_member_joined(map_session_data *sd);
 int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag);
-int guild_leave(map_session_data *sd,int guild_id,
+bool guild_leave(map_session_data *sd,int guild_id,
 	uint32 account_id,uint32 char_id,const char *mes);
 int guild_member_withdraw(int guild_id,uint32 account_id,uint32 char_id,int flag,
 	const char *name,const char *mes);
-int guild_expulsion(map_session_data *sd,int guild_id,
+bool guild_expulsion(map_session_data *sd,int guild_id,
 	uint32 account_id,uint32 char_id,const char *mes);
 void guild_skillup(map_session_data* sd, uint16 skill_id);
 void guild_block_skill(map_session_data *sd, int time);
