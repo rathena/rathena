@@ -21586,7 +21586,7 @@ Body:
   - Id: 6720
     AegisName: Status_Reset_Coupon
     Name: Status Reset Coupon
-    Type: Cash
+    Type: Etc
     Buy: 10
     EquipLevelMin: 1
     Trade:
@@ -21601,7 +21601,7 @@ Body:
   - Id: 6721
     AegisName: Status_Reset_Coupon2
     Name: Status Reset Coupon
-    Type: Cash
+    Type: Etc
     Buy: 10
     EquipLevelMin: 1
     Trade:
