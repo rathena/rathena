@@ -8404,7 +8404,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bMagicDamageReturn,getrefine()*2;
+      bonus bMagicDamageReturn,min(10,getrefine())*2;
       if (BaseClass == Job_Mage)
          bonus bMdef,3;
   - Id: 4406
@@ -8979,7 +8979,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Neutral,20;
+      bonus2 bSubEle,Ele_Neutral,20;
       bonus2 bAddEle,Ele_Neutral,5;
   - Id: 4443
     AegisName: Aqua_Elemental_Card
@@ -8993,7 +8993,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Water,20;
+      bonus2 bSubEle,Ele_Water,20;
       bonus2 bAddEle,Ele_Water,5;
   - Id: 4444
     AegisName: Draco_Card
@@ -9007,7 +9007,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Earth,20;
+      bonus2 bSubEle,Ele_Earth,20;
       bonus2 bAddEle,Ele_Earth,5;
   - Id: 4445
     AegisName: Luciola_Vespa_Card
@@ -9021,7 +9021,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Wind,20;
+      bonus2 bSubEle,Ele_Wind,20;
       bonus2 bAddEle,Ele_Wind,5;
   - Id: 4446
     AegisName: P_Skeleton_Card
@@ -9049,7 +9049,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Poison,20;
+      bonus2 bSubEle,Ele_Poison,20;
       bonus2 bAddEle,Ele_Poison,5;
   - Id: 4448
     AegisName: Cornus_Card
@@ -9063,7 +9063,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Holy,20;
+      bonus2 bSubEle,Ele_Holy,20;
       bonus2 bAddEle,Ele_Holy,5;
   - Id: 4449
     AegisName: Dark_Shadow_Card
@@ -9077,7 +9077,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Dark,20;
+      bonus2 bSubEle,Ele_Dark,20;
       bonus2 bAddEle,Ele_Dark,5;
   - Id: 4450
     AegisName: Banshee_Master_Card
@@ -10593,7 +10593,7 @@ Body:
       skill "AL_RUWACH",1;
   - Id: 4550
     AegisName: Upd_Bow_Guardian_Card
-    Name: Upd Bow Guardian Card
+    Name: Upgrade Bow Guardian Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -11962,7 +11962,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubRace,RC_Brute,20;
-      bonus2 bSubRace,RC_Player_Doram,20;
       bonus2 bSubRace,RC_Undead,20;
   - Id: 4654
     AegisName: Grave_Mimic_Card
@@ -11977,7 +11976,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Brute,5;
-      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Undead,5;
   - Id: 4655
     AegisName: Grave_Minorous_Card
@@ -11992,7 +11990,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,10;
-      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bAddRace,RC_Undead,10;
   - Id: 4656
     AegisName: Grave_Mummy_Card
@@ -12034,12 +12031,12 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bMagicAddClass,Class_All,5;
+      bonus bMatkRate,5;
       if (getrefine()>6) {
-         bonus2 bMagicAddClass,Class_All,3;
+         bonus bMatkRate,3;
       }
       if (getrefine()>8) {
-         bonus2 bMagicAddClass,Class_All,2;
+         bonus bMatkRate,2;
       }
   - Id: 4659
     AegisName: Eggring_Card
@@ -12187,7 +12184,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      bonus2 bAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3));
+      bonus2 bMagicAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3));
   - Id: 4670
     AegisName: Fru_Pom_Spider_Card
     Name: Fruit Pom Spider Card
@@ -12200,7 +12197,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      bonus2 bAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3));
+      bonus2 bMagicAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3));
   - Id: 4671
     AegisName: Sorcerer_Card
     Name: Sorcerer Celia Card
@@ -12315,7 +12312,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
          bonus bCritical,20;
-         bonus bLongAtkRate,15;
+         bonus2 bWeaponDamageRate,W_BOW,15;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12664,7 +12661,7 @@ Body:
          .@b += 20;
       if (getequipweaponlv() == 4)
          .@b += 20;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20+.@b;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",20+.@b;
   - Id: 4696
     AegisName: Real_Alphoccio_Card
     Name: True Alphoccio Card
@@ -13675,7 +13672,7 @@ Body:
     SubType: Enchant
     Buy: 20
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
   - Id: 4820
     AegisName: Fighting_Spirit5
     Name: Fighting Spirit5
@@ -14010,7 +14007,7 @@ Body:
       if (.@r>=8) {
          bonus bVit,3;
          if (.@r>=9) {
-            bonus bMaxSP,1;
+            bonus bMaxSPrate,1;
             if (.@r>=12) {
                bonus bFixedCastrate,-7;
                bonus bAspd,1;
@@ -14273,7 +14270,7 @@ Body:
     SubType: Enchant
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
   - Id: 4883
     AegisName: Matk1p
     Name: MATK + 1%
@@ -38199,7 +38196,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDef,50;
-      bonus2 bSubDefEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Fire,10;
   - Id: 27028
     AegisName: Fire_Frilldora_Card
     Name: Fire Frilldora Card
@@ -38224,7 +38221,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Fire,20;
+      bonus2 bSubEle,Ele_Fire,20;
       bonus2 bAddEle,Ele_Fire,5;
   - Id: 27030
     AegisName: Fulbuk_Card
@@ -38633,7 +38630,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSkillAtk,"GN_CRAZYWEED",50;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",50;
   - Id: 27076
     AegisName: Real_Ceila_Card_J
     Name: True Celia Alde Card
@@ -38955,7 +38952,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Neutral,10;
+      bonus2 bSubEle,Ele_Neutral,10;
       bonus bMaxHP,500;
   - Id: 27110
     AegisName: AngerGazeti_Card
@@ -39197,6 +39194,7 @@ Body:
          .@val += 5;
       }
       bonus2 bMagicAddRace,RC_Brute,.@val;
+      bonus2 bMagicAddRace,RC_Player_Doram,.@val;
   - Id: 27125
     AegisName: Headless_Mule_Card
     Name: Headless Mule Card
@@ -39224,6 +39222,7 @@ Body:
       bonus2 bAddEle,Ele_Wind,40;
       bonus2 bAddEle,Ele_Earth,40;
       bonus2 bAddRace,RC_Brute,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddRace,RC_Insect,40;
   - Id: 27127
     AegisName: AncientKing_Groza_Card
@@ -39451,9 +39450,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5+.@r;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5+.@r;
       if (.@r>=10)
-         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5;
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5;
   - Id: 27138
     AegisName: Card_Of_Hierophant
     Name: The Hierophant
@@ -39664,8 +39663,8 @@ Body:
       .@r = getrefine();
       bonus2 bAddEle,Ele_Water,(.@r >= 9 ? 10 : 5);
       bonus2 bAddEle,Ele_Earth,(.@r >= 9 ? 10 : 5);
-      bonus2 bSubDefEle,Ele_Water,-5;
-      bonus2 bSubDefEle,Ele_Earth,-5;
+      bonus2 bSubEle,Ele_Water,-5;
+      bonus2 bSubEle,Ele_Earth,-5;
   - Id: 27158
     AegisName: Les_Card
     Name: Les Card
@@ -40080,6 +40079,19 @@ Body:
       bonus bBaseAtk,20;
       bonus2 bAddRace,RC_Demon,30;
       bonus2 bAddRace,RC_Undead,30;
+  - Id: 27191
+    AegisName: Gaster_Card_J
+    Name: Gaster Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubClass,Class_Normal,40;
+      bonus2 bSubClass,Class_Boss,40;
   - Id: 27196
     AegisName: S_Nihil_Card
     Name: Nihil M. Heine Card
@@ -40283,11 +40295,11 @@ Body:
     Script: |
       if (getrefine()<15) {
          bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",1,1,BF_WEAPON,1;
-         bonus2 bAddClass,Class_All,(readparam(bAgi)>=110) ? 6 : 3;
+         bonus bAtkRate,(readparam(bAgi)>=110) ? 6 : 3;
       }
       else {
          bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",3,1,BF_WEAPON,1;
-         bonus2 bAddClass,Class_All,(readparam(bAgi)>=110) ? 10 : 5;
+         bonus bAtkRate,(readparam(bAgi)>=110) ? 10 : 5;
       }
   - Id: 27216
     AegisName: SLD_Creator_Card
@@ -40468,6 +40480,20 @@ Body:
          bonus bMatkRate,15;
          bonus bUseSPrate,15;
       }
+  - Id: 27228
+    AegisName: Big_Eggring_Card_J
+    Name: Big Eggring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAllStats,getrefine();
   - Id: 27237
     AegisName: Faceworm_Q_Card_J
     Name: Faceworm Queen Card
@@ -41182,7 +41208,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDef,50;
-      bonus2 bSubDefEle,Ele_Poison,10;
+      bonus2 bSubEle,Ele_Poison,10;
   - Id: 27317
     AegisName: Mt_Caput_Card
     Name: Mutant Twin Caput Card
@@ -41305,7 +41331,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Fire,30;
+      bonus2 bSubEle,Ele_Fire,30;
   - Id: 27326
     AegisName: MinionOfMorocc_Card
     Name: Morocc's Minion Card
@@ -41441,7 +41467,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Poison,15;
+      bonus2 bSubEle,Ele_Poison,15;
       bonus2 bSubRace,RC_Brute,15;
       bonus2 bSubRace,RC_Player_Doram,15;
   - Id: 27337
@@ -41455,7 +41481,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Wind,15;
+      bonus2 bSubEle,Ele_Wind,15;
       bonus2 bSubRace,RC_Insect,15;
   - Id: 27338
     AegisName: Chaos_Mantis_Card
@@ -41506,7 +41532,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Water,15;
+      bonus2 bSubEle,Ele_Water,15;
       bonus2 bSubRace,RC_Fish,15;
   - Id: 27342
     AegisName: Chaos_Stem_W_Card
@@ -41520,8 +41546,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bHit,10;
-      bonus2 bSubDefEle,Ele_Earth,20;
-      bonus2 bSubDefEle,Ele_Neutral,10;
+      bonus2 bSubEle,Ele_Earth,20;
+      bonus2 bSubEle,Ele_Neutral,10;
   - Id: 27343
     AegisName: Chaos_Acolyte_Card
     Name: Chaotic Acolyte Card
@@ -41534,6 +41560,20 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-4;
+  - Id: 27344
+    AegisName: Witch_Zilant_Card
+    Name: Witch Zilant Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Fire,100;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bResEff,Eff_WhiteImprison,10000;
   - Id: 27345
     AegisName: Dragon_Zilant_Card
     Name: Ancient Dragon Zilant Card
@@ -41550,11 +41590,11 @@ Body:
       if (eaclass()&EAJL_THIRD && BaseJob == Job_knight) {
          if (.@p == EQP_ACC_L) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH",50;
-            bonus4 bAddEff,Eff_Heat,1000,ATF_WEAPON|ATF_MAGIC,3000;
+            bonus4 bAddEff,Eff_Heat,50,ATF_WEAPON|ATF_MAGIC,3000;
          }
          if (.@p == EQP_ACC_R) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",50;
-            autobonus2 "{ sc_start SC_CHILL; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
+            autobonus2 "{ sc_start SC_CHILL,3000,1; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
          }
       }
       /*Unknow Rate*/
@@ -41610,7 +41650,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubRace,RC_Dragon,15;
-      bonus2 bSubDefEle,Ele_Fire,15;
+      bonus2 bSubEle,Ele_Fire,15;
   - Id: 27350
     AegisName: Firm_Deleter1_Card
     Name: Rigid Earth Deleter Card
@@ -41662,7 +41702,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubRace,RC_Demon,15;
-      bonus2 bSubDefEle,Ele_Neutral,15;
+      bonus2 bSubEle,Ele_Neutral,15;
   - Id: 27354
     AegisName: Polluted_Raydric_Card
     Name: Polluted Raydric Card
@@ -42044,7 +42084,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bHPrecovRate,30;
+      bonus bHPrecovRate,50;  /* note: 30% from the description */
   - Id: 27393
     AegisName: Kathryn_Card
     Name: Kathryn Card
@@ -42229,6 +42269,20 @@ Body:
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bUseSPrate,-70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
+  - Id: 27417
+    AegisName: aegis_27417
+    Name: 2nd Anniversary Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bAtkRate,3;
+      bonus bMatkRate,3;
   - Id: 29000
     AegisName: Neev_INT_1
     Name: Rune of Intellect Lv 1
@@ -42545,14 +42599,14 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bAddRace,RC_All,1;
+      bonus bAtkRate,1;
   - Id: 29029
     AegisName: Atk1p_Bottom
     Name: ATK+1%(Lower)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bAddRace,RC_All,1;
+      bonus bAtkRate,1;
   - Id: 29030
     AegisName: Matk1p_Top
     Name: MATK+1%
@@ -42599,6 +42653,17 @@ Body:
       hateffect HAT_EF_LJOSALFAR,true;
     UnEquipScript: |
       hateffect HAT_EF_LJOSALFAR,false;
+  - Id: 29045
+    AegisName: Storm
+    Name: Gale
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Fish,15;
+      bonus2 bMagicAddRace,RC_Fish,15;
+      bonus2 bAddEle,Ele_Water,15;
+      bonus2 bMagicAddEle,Ele_Water,15;
+      autobonus "{ bonus bAspdRate,70; bonus bVariableCastrate,-70; bonus bDelayrate,-70; }",5,10000,BF_WEAPON|BF_MAGIC;
   - Id: 29046
     AegisName: Greed
     Name: Greed
@@ -43286,7 +43351,7 @@ Body:
     SubType: Enchant
     Buy: 10
     Script: |
-      bonus bLongAtkRate,5;
+      bonus2 bWeaponDamageRate,W_BOW,5;
       bonus bCritical,5;
   - Id: 29126
     AegisName: InsightOfGoddess_S
@@ -43295,7 +43360,7 @@ Body:
     SubType: Enchant
     Buy: 10
     Script: |
-      bonus bLongAtkRate,10;
+      bonus2 bWeaponDamageRate,W_BOW,10;
       bonus bCritical,10;
   - Id: 29140
     AegisName: Orcish_Hero_Of_Anger
@@ -44200,7 +44265,7 @@ Body:
          bonus bLongAtkRate,10;
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
          bonus bDelayrate,-90;
-         autobonus3 "{ sc_start SC_WEAPONBLOCKING; }",1000,50000,"GC_HALLUCINATIONWALK";
+         autobonus3 "{ sc_start SC_WEAPONBLOCKING,50000,1; }",1000,50000,"GC_HALLUCINATIONWALK";
       }
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
          bonus bFixedCastrate,-50;
@@ -44693,6 +44758,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@r = getrefine();
       bonus bHit,((.@r>=9)?40:((.@r>=7)?30:20));
   - Id: 29383
     AegisName: Neev_Honor_Flee
@@ -44700,6 +44766,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@r = getrefine();
       bonus bFlee,((.@r>=9)?40:((.@r>=7)?30:20));
   - Id: 29384
     AegisName: Neev_Honor_Luk
@@ -44707,6 +44774,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@r = getrefine();
       bonus bFlee2,((.@r>=9)?7:((.@r>=7)?5:3));
   - Id: 29385
     AegisName: Neev_Death_Tech
@@ -44714,6 +44782,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@r = getrefine();
       bonus bLongAtkRate,((.@r>=9)?5:((.@r>=7)?4:3));
   - Id: 29386
     AegisName: Neev_Death_Luk
@@ -44721,6 +44790,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@r = getrefine();
       bonus bCritAtkRate,((.@r>=9)?5:((.@r>=7)?4:3));
   - Id: 29423
     AegisName: Sura_Top
@@ -44959,7 +45029,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bHealPower,2*getskilllv("AM_POTIONPITCHER");
+      .@val = 2*getskilllv("AM_POTIONPITCHER");
+      bonus bHealPower,.@val;
+      bonus bHealPower2,.@val;
   - Id: 29466
     AegisName: Genetic_Bottom
     Name: Creator Stone (Bottom)
@@ -45091,7 +45163,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
   - Id: 29509
     AegisName: Hero
     Name: The Hero
@@ -45815,7 +45887,8 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",20;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20;
       bonus2 bSkillAtk,"SJ_SOLARBURST",20;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",20;
   - Id: 29659
@@ -46103,7 +46176,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,4;
-      bonus bPerfectHitRate,1;
+      bonus bPerfectHitAddRate,1;
   - Id: 29707
     AegisName: Tenacity2
     Name: Tenacity Lv2
@@ -46111,7 +46184,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,8;
-      bonus bPerfectHitRate,2;
+      bonus bPerfectHitAddRate,2;
   - Id: 29708
     AegisName: Tenacity3
     Name: Tenacity Lv3
@@ -46119,7 +46192,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,12;
-      bonus bPerfectHitRate,3;
+      bonus bPerfectHitAddRate,3;
   - Id: 29709
     AegisName: Tenacity4
     Name: Tenacity Lv4
@@ -46127,7 +46200,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,16;
-      bonus bPerfectHitRate,4;
+      bonus bPerfectHitAddRate,4;
   - Id: 29710
     AegisName: Tenacity5
     Name: Tenacity Lv5
@@ -46135,7 +46208,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,20;
-      bonus bPerfectHitRate,5;
+      bonus bPerfectHitAddRate,5;
   - Id: 29711
     AegisName: Tenacity6
     Name: Tenacity Lv6
@@ -46143,7 +46216,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,24;
-      bonus bPerfectHitRate,6;
+      bonus bPerfectHitAddRate,6;
   - Id: 29712
     AegisName: Tenacity7
     Name: Tenacity Lv7
@@ -46151,7 +46224,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,28;
-      bonus bPerfectHitRate,7;
+      bonus bPerfectHitAddRate,7;
   - Id: 29713
     AegisName: Tenacity8
     Name: Tenacity Lv8
@@ -46159,7 +46232,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,32;
-      bonus bPerfectHitRate,10;
+      bonus bPerfectHitAddRate,8;
   - Id: 29714
     AegisName: Tenacity9
     Name: Tenacity Lv9
@@ -46167,7 +46240,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,36;
-      bonus bPerfectHitRate,9;
+      bonus bPerfectHitAddRate,9;
   - Id: 29715
     AegisName: Tenacity10
     Name: Tenacity Lv10
@@ -46175,7 +46248,93 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,44;
-      bonus bPerfectHitRate,10;
+      bonus bPerfectHitAddRate,10;
+  - Id: 29716
+    AegisName: StarE_Enchant_1
+    Name: Solar
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bWeaponAtkRate,10;
+         bonus2 bVariableCastrate,"SJ_PROMINENCEKICK",-50;
+         bonus2 bSkillAtk,"SJ_SOLARBURST",50;
+      }
+  - Id: 29717
+    AegisName: StarE_Enchant_2
+    Name: Moon
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bMaxHPrate,20;
+         bonus2 bVariableCastrate,"SJ_NEWMOONKICK",-50;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",50;
+      }
+  - Id: 29718
+    AegisName: StarE_Enchant_3
+    Name: Star
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+         bonus bAspdRate,10;
+         bonus2 bAddEff,Eff_Stun,1000;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR",50;
+      }
+  - Id: 29719
+    AegisName: SoulR_Enchant_1
+    Name: S
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus bMatk,50;
+         bonus2 bSkillAtk,"SP_SHA",BaseLevel/10;
+         bonus2 bSkillAtk,"SP_SPA",BaseLevel/10;
+         bonus2 bSkillAtk,"SP_SWHOO",BaseLevel/10;
+      }
+  - Id: 29720
+    AegisName: SoulR_Enchant_2
+    Name: Ghost
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus bMatk,50;
+         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",BaseLevel/10;
+      }
+  - Id: 29721
+    AegisName: SoulR_Enchant_3
+    Name: Soul
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+         bonus2 bSubRace,RC_Player_Human,3;
+         bonus2 bSubRace,RC_Player_Doram,3;
+         skill "SA_DISPELL",5;
+         bonus bMaxHP,50*BaseLevel;
+         bonus bMaxSP,5*BaseLevel;
+      }
+  - Id: 29722
+    AegisName: Curse_Effect_J
+    Name: Curse
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_Qscaraba,true;
+    UnEquipScript: |
+      hateffect HAT_EF_Qscaraba,false;
+  - Id: 29723
+    AegisName: Star_Effect_J
+    Name: Star
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_ManyStars,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ManyStars,false;
   - Id: 29724
     AegisName: Murderous_Grudge
     Name: Muederous Grudge
@@ -46647,7 +46806,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bMaxHP,10;
+      bonus bMaxHPrate,10;
       bonus2 bSkillAtk,"SO_EARTHGRAVE",10;
   - Id: 300006
     AegisName: Jeweliant_Card
@@ -46937,7 +47096,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"RL_FIREDANCE",60;
-      bonus bUseSPrate,25;
+      bonus2 bSkillUseSPrate,"RL_FIREDANCE",25;
   - Id: 300079
     AegisName: Redpepper_Card
     Name: Red Pepper Card
@@ -47096,6 +47255,7 @@ Body:
       bonus bShortAtkRate,.@r;
       if (.@r>=10) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       }
   - Id: 300089
@@ -47112,7 +47272,7 @@ Body:
       bonus bStr,2;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
-      bonus2 bSkillAtk,"MS_MAGNUM",25;
+      bonus2 bSkillAtk,"SM_MAGNUM",25;
   - Id: 300090
     AegisName: Verporte_H_Card
     Name: Verporte Card
@@ -47498,7 +47658,7 @@ Body:
       bonus bVit,1;
       bonus bInt,2;
       bonus bMaxHPrate,10;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",10;
       bonus2 bSkillAtk,"WM_REVERBERATION",10;
   - Id: 300114
     AegisName: Plaga3_Card
@@ -47584,6 +47744,7 @@ Body:
       bonus bVit,1;
       bonus bMaxHPrate,10;
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",10;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",10;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
   - Id: 300119
     AegisName: EP17_2_Sword_Fish_Card
@@ -47725,6 +47886,9 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Script: |
+      bonus2 bAddRace,RC_Plant,15;
+      bonus2 bMagicAddRace,RC_Plant,15;
   - Id: 300131
     AegisName: Card_Of_Justice_R
     Name: The Justice Reversed
@@ -48066,7 +48230,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLongAtkRate,25;
-      bonus bPerfectHitRate,5;
+      bonus bPerfectHitAddRate,5;
   - Id: 300152
     AegisName: AngelBlessing_Effect
     Name: Angel Blessing Effect
@@ -48217,6 +48381,20 @@ Body:
       bonus2 bSkillAtk,"SU_SVG_SPIRIT",5+.@r;
       if (.@r>=10)
          bonus2 bSkillAtk,"SU_SVG_SPIRIT",5;
+  - Id: 300169
+    AegisName: Lucky_Riceball_C
+    Name: Meatball Monster Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bDelayrate,-2;
+      bonus bAtkRate,2;
+      bonus bMatkRate,2;
+      bonus bMaxHPrate,1;
   - Id: 300170
     AegisName: MD_Airboat_Card
     Name: Rotten Tree Card
@@ -48259,7 +48437,7 @@ Body:
     Script: |
       bonus bMaxHPrate,-15;
       bonus bSPDrainValue,-2;
-      bonus2 bHPDrainRate,1,20;
+      bonus2 bHPDrainRate,10,20;
   - Id: 300173
     AegisName: MD_Airboat_Card4
     Name: Mosquilo Card
@@ -48546,7 +48724,7 @@ Body:
     Script: |
       bonus bDelayrate,-5;
       bonus bPAtk,1;
-      bonus bSmatk,1;
+      bonus bSMatk,1;
   - Id: 300194
     AegisName: SLD_V_Kimera_Card
     Name: Sealed Venomous Chimera Card
@@ -48574,11 +48752,13 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Insect,20;
       bonus2 bAddRace,RC_Brute,20;
+      bonus2 bAddRace,RC_Player_Doram,20;
       bonus2 bAddEle,Ele_Earth,20;
       bonus2 bAddEle,Ele_Wind,20;
       if (getrefine()>=15) {
          bonus2 bAddRace,RC_Insect,10;
          bonus2 bAddRace,RC_Brute,10;
+         bonus2 bAddRace,RC_Player_Doram,10;
          bonus2 bAddEle,Ele_Earth,10;
          bonus2 bAddEle,Ele_Wind,10;
       }
@@ -48690,10 +48870,13 @@ Body:
     Script: |
       bonus2 bSubRace,RC_Demon,30;
       bonus2 bSubRace,RC_Brute,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
       bonus2 bSubRace,RC_Dragon,30;
-      bonus2 bAddClass,Class_Normal,20;
       if (getrefine()>=15) {
-         bonus2 bAddClass,Class_Normal,10;
+         bonus2 bAddClass,Class_Normal,-10;
+      }
+      else {
+         bonus2 bAddClass,Class_Normal,-20;
       }
   - Id: 300207
     AegisName: SLD_Shining_T_Bear_Card
@@ -48745,8 +48928,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubDefEle,Ele_Dark,10;
-      bonus2 bMagicSubDefEle,Ele_Dark,10;
+      bonus2 bSubEle,Ele_Dark,10;
       bonus bDef,50;
   - Id: 300213
     AegisName: EP18_Spark_Card
@@ -48916,7 +49098,7 @@ Body:
     Script: |
       bonus bMaxSPrate,15;
       bonus bDelayrate,-15;
-      autobonus "{ sc_start SC_REFRESH; }",10,20000,BF_MAGIC;
+      autobonus "{ sc_start SC_REFRESH,20000,1; }",10,20000,BF_MAGIC;
   - Id: 300226
     AegisName: L_Skia_Card
     Name: Skia Nerius (Sign Stamp) Card
@@ -48930,7 +49112,7 @@ Body:
     Script: |
       bonus bMaxHPrate,15;
       bonus bVariableCastrate,-15;
-      autobonus "{ sc_start SC_REFRESH; }",10,20000,BF_WEAPON;
+      autobonus "{ sc_start SC_REFRESH,20000,1; }",10,20000,BF_WEAPON;
   - Id: 300227
     AegisName: EP18_Schulang_Card
     Name: Schulang Card
@@ -49062,7 +49244,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bIgnoreMDefRaceRate,RC_Brute,15;
+      bonus2 bIgnoreMdefRaceRate,RC_Brute,15;
       bonus2 bMagicAddRace,RC_Brute,5*(getrefine()/2);
   - Id: 300238
     AegisName: ILL_Vitata_Card
@@ -49092,6 +49274,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Brute,50;
+      bonus2 bMagicAddRace,RC_Player_Doram,50;
       bonus2 bMagicAddRace,RC_Plant,50;
       bonus bUseSPrate,50;
   - Id: 300240
@@ -49958,11 +50141,9 @@ Body:
       bonus bMatkRate,5;
       if (.@r>=7) {
          bonus2 bMagicAddRace,RC_Brute,10;
-         bonus2 bMagicAddRace,RC_Player_Doram,10;
       }
       if (.@r>=9) {
          bonus2 bMagicAddRace,RC_Brute,7;
-         bonus2 bMagicAddRace,RC_Player_Doram,7;
       }
   - Id: 300296
     AegisName: Sieglouse_Card
@@ -49990,9 +50171,8 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddRace,RC_All,10;
+      bonus bAtkRate,10;
       bonus2 bAddRace,RC_Brute,35;
-      bonus2 bAddRace,RC_Player_Doram,35;
       bonus2 bSubRace,RC_Brute,-10;
       bonus2 bSubRace,RC_Player_Doram,-10;
   - Id: 300306
@@ -50560,7 +50740,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bNoKnockback;
-      autobonus "{ sc_start SC_CP_ARMOR; sc_start SC_CP_WEAPON; sc_start SC_CP_SHIELD; sc_start SC_CP_HELM; }",10,60000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ sc_start SC_CP_ARMOR,60000,1; sc_start SC_CP_WEAPON,60000,1; sc_start SC_CP_SHIELD,60000,1; sc_start SC_CP_HELM,60000,1; }",50,60000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_CHEMICALPROTECTION; }";
   - Id: 300358
     AegisName: L_Issac_Card
     Name: Isaac Wigner (Sign Stamp) Card
@@ -50759,7 +50939,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bMagicAtkEle,Ele_Fire,35;
+      bonus2 bMagicAtkEle,Ele_Ghost,35;
       bonus bUseSPrate,10;
   - Id: 300371
     AegisName: Cave_Calmaring_Card
@@ -50786,7 +50966,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,15;
-      bonus2 bMagicAtkEle,Ele_Fire,3*getrefine();
+      bonus2 bMagicAtkEle,Ele_Ghost,3*getrefine();
   - Id: 300373
     AegisName: B_Hallucigenia_Card
     Name: Hallucigenia Baby Card
@@ -50800,10 +50980,9 @@ Body:
     Script: |
       bonus bDef,-30;
       bonus bRes,15;
-      bonus2 bSubDefEle,Ele_Earth,15;
-      bonus2 bMagicSubDefEle,Ele_Earth,15;
+      bonus2 bSubEle,Ele_Earth,15;
       bonus2 bSubRace,RC_Insect,15;
-      bonus2 bWeaponSubSize,Size_Small,15;
+      bonus2 bSubSize,Size_Small,15;
   - Id: 300374
     AegisName: Hallucigenia_Card
     Name: Hallucigenia Card
@@ -51376,6 +51555,56 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
       bonus bLongAtkRate,5+4*(getrefine()/2);
+  - Id: 300427
+    AegisName: aegis_300427
+    Name: Hammer of God Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 300428
+    AegisName: aegis_300428
+    Name: Hammer of God Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 300429
+    AegisName: aegis_300429
+    Name: Hammer of God Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 300430
+    AegisName: aegis_300430
+    Name: Hammer of God Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 300431
+    AegisName: aegis_300431
+    Name: Hammer of God Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 300432
+    AegisName: aegis_300432
+    Name: Disarm Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 300433
+    AegisName: aegis_300433
+    Name: Disarm Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 300434
+    AegisName: aegis_300434
+    Name: Disarm Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 300435
+    AegisName: aegis_300435
+    Name: Disarm Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 300436
+    AegisName: aegis_300436
+    Name: Disarm Lv.5
+    Type: Card
+    SubType: Enchant
   - Id: 300441
     AegisName: Burning_Knight_Card
     Name: Burning Night Card
@@ -51535,6 +51764,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
+      bonus bUseSPrate,10;
       bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
   - Id: 300451
     AegisName: aegis_300451
@@ -51548,7 +51778,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubSkill,"NPC_RAYOFGENESIS",50;
-      autobonus "{ sc_start SC_ASSUMPTIO; }",50,30000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ sc_start SC_ASSUMPTIO,30000,1; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_ASSUMPTIO; }";
   - Id: 300452
     AegisName: aegis_300452
     Name: Friedrich Stolz Heine (Sign Stamp) Card
@@ -51575,7 +51805,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bRegenPercentSP,1,1000;
-      autobonus "{ sc_start SC_ENERGYCOAT; }",50,30000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ sc_start SC_ENERGYCOAT,30000,1; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_ENERGYCOAT; }";
   - Id: 300454
     AegisName: Ice_C_Orb_Hp
     Name: Glacier Flower Meow Power (Vital)
@@ -51629,7 +51859,7 @@ Body:
       bonus bDelayrate,-3;
       if (getrefine()>=10) {
          bonus bDelayrate,-2;
-         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+         if (getequiparmorlv()==2) {
             bonus bDelayrate,-2;
          }
       }
@@ -51647,7 +51877,7 @@ Body:
       bonus bVariableCastrate,-5;
       bonus bUseSPrate,7;
       bonus bAtkRate,5;
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+      if (getequiparmorlv()==2) {
          bonus bVariableCastrate,-3;
          bonus bPow,3;
          bonus bCon,3;
@@ -51666,7 +51896,7 @@ Body:
       bonus bVariableCastrate,-5;
       bonus bUseSPrate,7;
       bonus bMatkRate,5;
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+      if (getequiparmorlv()==2) {
          bonus bVariableCastrate,-3;
          bonus bSpl,3;
          bonus bCon,3;
@@ -51814,10 +52044,10 @@ Body:
       bonus bVit,15;
       bonus bLuk,-25;
       bonus2 bSubSize,Size_All,20;
-      bonus2 bMagicAtkEle,Ele_Poison,-25;
-      bonus2 bMagicAtkEle,Ele_Ghost,-25;
-      bonus2 bMagicAtkEle,Ele_Holy,-25;
-      bonus2 bMagicAtkEle,Ele_Dark,-25;
+      bonus2 bMagicAddEle,Ele_Poison,-25;
+      bonus2 bMagicAddEle,Ele_Ghost,-25;
+      bonus2 bMagicAddEle,Ele_Holy,-25;
+      bonus2 bMagicAddEle,Ele_Dark,-25;
       bonus bDef,20*.@r;
       bonus bRes,5*.@r;
       if (.@r>=7) {
@@ -51964,7 +52194,7 @@ Body:
     Script: |
       bonus bLongAtkRate,30+5*(getrefine()/3);
       bonus bCritical,-5*(readparam(bLuk)/20);
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+      if (getequiparmorlv()==2) {
          bonus2 bAddClass,Class_Boss,10;
       }
   - Id: 300474
@@ -51980,9 +52210,63 @@ Body:
     Script: |
       bonus bShortAtkRate,30+5*(getrefine()/3);
       bonus bCritical,-5*(readparam(bLuk)/20);
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_ARMORLEVEL)==2) {
+      if (getiteminfo(getequipid(EQI_GARMENT), ITEMINFO_ARMORLEVEL)==2) {
          bonus2 bAddClass,Class_Boss,10;
       }
+  - Id: 300479
+    AegisName: aegis_300479
+    Name: "[3rd Anniversary] Agony of Royal Knight Card"
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bHit,-30;
+      bonus2 bAddEle,Ele_Fire,3*(.@r/2);
+      bonus2 bAddEle,Ele_Dark,3*(.@r/2);
+  - Id: 300480
+    AegisName: aegis_300480
+    Name: "[3rd Anniversary] Grudge of Royal Knight Card"
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_All,-30;
+      bonus2 bMagicAddRace,RC_DemiHuman,5*.@r;
+      bonus2 bMagicAddRace,RC_Demon,5*.@r;
+  - Id: 300481
+    AegisName: aegis_300481
+    Name: "[3rd Anniversary] Himmelmez Card"
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,(min(15,.@r)*2);
+      bonus bMaxSPrate,(min(15,.@r)*2);
+  - Id: 300482
+    AegisName: R_Recycle_Card
+    Name: Lesser Rune Card    # !todo check english name
+    Type: Card
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -52680,8 +52964,8 @@ Body:
          bonus2 bSkillAtk,"RK_SONICWAVE",3;
       }
       if (.@r>=11) {
+         bonus2 bSkillAtk,"RK_SONICWAVE",7;
          bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-250;
-         bonus2 bSkillCooldown,"RK_SONICWAVE",-250;
       }
   - Id: 310129
     AegisName: Automatic_Orb48
@@ -52827,13 +53111,13 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillCooldown,"GN_MANDRAGORA",-300;
-      bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
       if (.@r>=9) {
          bonus2 bSkillCooldown,"GN_MANDRAGORA",-300;
-         bonus2 bSkillAtk,"GN_CRAZYWEED",3;
+         bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",3;
          if (.@r>=11) {
             bonus2 bSkillCooldown,"GN_MANDRAGORA",-400;
-            bonus2 bSkillAtk,"GN_CRAZYWEED",7;
+            bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",7;
          }
       }
   - Id: 310138
@@ -52975,13 +53259,13 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
       bonus2 bSkillAtk,"WL_JACKFROST",15;
       if (.@r>=9) {
-         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",3;
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",3;
          bonus2 bSkillAtk,"WL_JACKFROST",3;
          if (.@r>=11) {
-            bonus2 bSkillAtk,"WL_CHAINLIGHTNING",7;
+            bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",7;
             bonus2 bSkillAtk,"WL_JACKFROST",7;
          }
       }
@@ -53098,13 +53382,16 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillCooldown,"HP_BASILICA",-2000;
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
       if (.@r>=9) {
          bonus2 bSkillCooldown,"HP_BASILICA",-3000;
-         bonus2 bSkillAtk,"AB_DUPLELIGHT",3;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",3;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",3;
          if (.@r>=11) {
             bonus2 bSkillCooldown,"HP_BASILICA",-5000;
-            bonus2 bSkillAtk,"AB_DUPLELIGHT",7;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",7;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",7;
          }
       }
   - Id: 310154
@@ -53243,13 +53530,13 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
       bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
       if (.@r>=9) {
-         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",3;
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",3;
          bonus2 bSkillAtk,"CG_ARROWVULCAN",3;
          if (.@r>=11) {
-            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
+            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",7;
             bonus2 bSkillAtk,"CG_ARROWVULCAN",7;
          }
       }
@@ -53296,12 +53583,15 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
       bonus2 bSkillAtk,"SJ_FLASHKICK",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",3;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",3;
          bonus2 bSkillAtk,"SJ_FLASHKICK",3;
          if (.@r>=11) {
             bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",7;
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",7;
             bonus2 bSkillAtk,"SJ_FLASHKICK",7;
          }
       }
@@ -53628,6 +53918,15 @@ Body:
     SubType: Enchant
     Script: |
       bonus bDelayrate,-getskilllv("ASC_BREAKER");
+  - Id: 310192
+    AegisName: Extreme
+    Name: Extreme
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitAddRate,20;
+      autobonus "{ bonus bDex,100; }",30,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 3253,10000; }";
+      bonus2 bResEff,Eff_WhiteImprison,10000;
   - Id: 310195
     AegisName: Magnificat_Lv5
     Name: Magnificat Lv5
@@ -54119,7 +54418,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"GN_CRAZYWEED",20;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",20;
   - Id: 310262
     AegisName: Genetic_Top2
     Name: Creator Stone II (Top)
@@ -54657,7 +54956,7 @@ Body:
       bonus bRestartFullRecover;
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
          bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",50;
-         bonus2 bSkillAtk,"GN_CRAZYWEED",50;
+         bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",50;
       }
   - Id: 310318
     AegisName: Hit_the_Target25
@@ -54827,6 +55126,706 @@ Body:
     SubType: Enchant
     Script: |
       bonus bIntravision;
+  - Id: 310338
+    AegisName: aegis_310338
+    Name: Bowling Bash Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310339
+    AegisName: aegis_310339
+    Name: Bowling Bash Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310340
+    AegisName: aegis_310340
+    Name: Bowling Bash Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310341
+    AegisName: aegis_310341
+    Name: Bowling Bash Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310342
+    AegisName: aegis_310342
+    Name: Bowling Bash Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310343
+    AegisName: aegis_310343
+    Name: Brandish Spear Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310344
+    AegisName: aegis_310344
+    Name: Brandish Spear Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310345
+    AegisName: aegis_310345
+    Name: Brandish Spear Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310346
+    AegisName: aegis_310346
+    Name: Brandish Spear Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310347
+    AegisName: aegis_310347
+    Name: Brandish Spear Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310348
+    AegisName: aegis_310348
+    Name: Holy Cross Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310349
+    AegisName: aegis_310349
+    Name: Holy Cross Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310350
+    AegisName: aegis_310350
+    Name: Holy Cross Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310351
+    AegisName: aegis_310351
+    Name: Holy Cross Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310352
+    AegisName: aegis_310352
+    Name: Holy Cross Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310353
+    AegisName: aegis_310353
+    Name: Grand Cross Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310354
+    AegisName: aegis_310354
+    Name: Grand Cross Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310355
+    AegisName: aegis_310355
+    Name: Grand Cross Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310356
+    AegisName: aegis_310356
+    Name: Grand Cross Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310357
+    AegisName: aegis_310357
+    Name: Grand Cross Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310358
+    AegisName: aegis_310358
+    Name: Meteor Storm Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310359
+    AegisName: aegis_310359
+    Name: Meteor Storm Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310360
+    AegisName: aegis_310360
+    Name: Meteor Storm Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310361
+    AegisName: aegis_310361
+    Name: Meteor Storm Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310362
+    AegisName: aegis_310362
+    Name: Meteor Storm Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310363
+    AegisName: aegis_310363
+    Name: Lord of Vermilion Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310364
+    AegisName: aegis_310364
+    Name: Lord of Vermilion Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310365
+    AegisName: aegis_310365
+    Name: Lord of Vermilion Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310366
+    AegisName: aegis_310366
+    Name: Lord of Vermilion Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310367
+    AegisName: aegis_310367
+    Name: Lord of Vermilion Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310368
+    AegisName: aegis_310368
+    Name: Heaven's Drive Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310369
+    AegisName: aegis_310369
+    Name: Heaven's Drive Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310370
+    AegisName: aegis_310370
+    Name: Heaven's Drive Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310371
+    AegisName: aegis_310371
+    Name: Heaven's Drive Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310372
+    AegisName: aegis_310372
+    Name: Heaven's Drive Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310373
+    AegisName: aegis_310373
+    Name: Fire/Cold/Lightning Bolt Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310374
+    AegisName: aegis_310374
+    Name: Fire/Cold/Lightning Bolt Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310375
+    AegisName: aegis_310375
+    Name: Fire/Cold/Lightning Bolt Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310376
+    AegisName: aegis_310376
+    Name: Fire/Cold/Lightning Bolt Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310377
+    AegisName: aegis_310377
+    Name: Fire/Cold/Lightning Bolt Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310378
+    AegisName: aegis_310378
+    Name: Cart Termination Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310379
+    AegisName: aegis_310379
+    Name: Cart Termination Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310380
+    AegisName: aegis_310380
+    Name: Cart Termination Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310381
+    AegisName: aegis_310381
+    Name: Cart Termination Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310382
+    AegisName: aegis_310382
+    Name: Cart Termination Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310383
+    AegisName: aegis_310383
+    Name: Critical Damage Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310384
+    AegisName: aegis_310384
+    Name: Critical Damage Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310385
+    AegisName: aegis_310385
+    Name: Critical Damage Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310386
+    AegisName: aegis_310386
+    Name: Critical Damage Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310387
+    AegisName: aegis_310387
+    Name: Critical Damage Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310388
+    AegisName: aegis_310388
+    Name: Acid Terror Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310389
+    AegisName: aegis_310389
+    Name: Acid Terror Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310390
+    AegisName: aegis_310390
+    Name: Acid Terror Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310391
+    AegisName: aegis_310391
+    Name: Acid Terror Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310392
+    AegisName: aegis_310392
+    Name: Acid Terror Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310393
+    AegisName: aegis_310393
+    Name: Acid Demonstration Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310394
+    AegisName: aegis_310394
+    Name: Acid Demonstration Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310395
+    AegisName: aegis_310395
+    Name: Acid Demonstration Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310396
+    AegisName: aegis_310396
+    Name: Acid Demonstration Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310397
+    AegisName: aegis_310397
+    Name: Acid Demonstration Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310398
+    AegisName: aegis_310398
+    Name: Sonic Blow Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310399
+    AegisName: aegis_310399
+    Name: Sonic Blow Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310400
+    AegisName: aegis_310400
+    Name: Sonic Blow Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310401
+    AegisName: aegis_310401
+    Name: Sonic Blow Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310402
+    AegisName: aegis_310402
+    Name: Sonic Blow Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310403
+    AegisName: aegis_310403
+    Name: Meteor Assault Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310404
+    AegisName: aegis_310404
+    Name: Meteor Assault Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310405
+    AegisName: aegis_310405
+    Name: Meteor Assault Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310406
+    AegisName: aegis_310406
+    Name: Meteor Assault Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310407
+    AegisName: aegis_310407
+    Name: Meteor Assault Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310408
+    AegisName: aegis_310408
+    Name: Back Stap Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310409
+    AegisName: aegis_310409
+    Name: Back Stap Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310410
+    AegisName: aegis_310410
+    Name: Back Stap Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310411
+    AegisName: aegis_310411
+    Name: Back Stap Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310412
+    AegisName: aegis_310412
+    Name: Back Stap Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310413
+    AegisName: aegis_310413
+    Name: Raid Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310414
+    AegisName: aegis_310414
+    Name: Raid Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310415
+    AegisName: aegis_310415
+    Name: Raid Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310416
+    AegisName: aegis_310416
+    Name: Raid Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310417
+    AegisName: aegis_310417
+    Name: Raid Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310418
+    AegisName: aegis_310418
+    Name: Magnus Exorcismus Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310419
+    AegisName: aegis_310419
+    Name: Magnus Exorcismus Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310420
+    AegisName: aegis_310420
+    Name: Magnus Exorcismus Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310421
+    AegisName: aegis_310421
+    Name: Magnus Exorcismus Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310422
+    AegisName: aegis_310422
+    Name: Magnus Exorcismus Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310423
+    AegisName: aegis_310423
+    Name: All Size Physical Damage Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310424
+    AegisName: aegis_310424
+    Name: All Size Physical Damage Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310425
+    AegisName: aegis_310425
+    Name: All Size Physical Damage Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310426
+    AegisName: aegis_310426
+    Name: All Size Physical Damage Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310427
+    AegisName: aegis_310427
+    Name: All Size Physical Damage Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310428
+    AegisName: aegis_310428
+    Name: Raging Quadruple Blow Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310429
+    AegisName: aegis_310429
+    Name: Raging Quadruple Blow Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310430
+    AegisName: aegis_310430
+    Name: Raging Quadruple Blow Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310431
+    AegisName: aegis_310431
+    Name: Raging Quadruple Blow Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310432
+    AegisName: aegis_310432
+    Name: Raging Quadruple Blow Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310433
+    AegisName: aegis_310433
+    Name: Raging Thrust Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310434
+    AegisName: aegis_310434
+    Name: Raging Thrust Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310435
+    AegisName: aegis_310435
+    Name: Raging Thrust Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310436
+    AegisName: aegis_310436
+    Name: Raging Thrust Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310437
+    AegisName: aegis_310437
+    Name: Raging Thrust Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310438
+    AegisName: aegis_310438
+    Name: Blitz Beat Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310439
+    AegisName: aegis_310439
+    Name: Blitz Beat Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310440
+    AegisName: aegis_310440
+    Name: Blitz Beat Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310441
+    AegisName: aegis_310441
+    Name: Blitz Beat Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310442
+    AegisName: aegis_310442
+    Name: Blitz Beat Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310443
+    AegisName: aegis_310443
+    Name: Double Strafing Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310444
+    AegisName: aegis_310444
+    Name: Double Strafing Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310445
+    AegisName: aegis_310445
+    Name: Double Strafing Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310446
+    AegisName: aegis_310446
+    Name: Double Strafing Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310447
+    AegisName: aegis_310447
+    Name: Double Strafing Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310448
+    AegisName: aegis_310448
+    Name: Musical Strike/Throw Arrow Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310449
+    AegisName: aegis_310449
+    Name: Musical Strike/Throw Arrow Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310450
+    AegisName: aegis_310450
+    Name: Musical Strike/Throw Arrow Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310451
+    AegisName: aegis_310451
+    Name: Musical Strike/Throw Arrow Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310452
+    AegisName: aegis_310452
+    Name: Musical Strike/Throw Arrow Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310453
+    AegisName: aegis_310453
+    Name: Arrow Vulcan Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310454
+    AegisName: aegis_310454
+    Name: Arrow Vulcan Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310455
+    AegisName: aegis_310455
+    Name: Arrow Vulcan Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310456
+    AegisName: aegis_310456
+    Name: Arrow Vulcan Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310457
+    AegisName: aegis_310457
+    Name: Arrow Vulcan Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310458
+    AegisName: aegis_310458
+    Name: Cross Slash Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310459
+    AegisName: aegis_310459
+    Name: Cross Slash Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310460
+    AegisName: aegis_310460
+    Name: Cross Slash Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310461
+    AegisName: aegis_310461
+    Name: Cross Slash Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310462
+    AegisName: aegis_310462
+    Name: Cross Slash Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310463
+    AegisName: aegis_310463
+    Name: Throw Huuma Shuriken Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310464
+    AegisName: aegis_310464
+    Name: Throw Huuma Shuriken Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310465
+    AegisName: aegis_310465
+    Name: Throw Huuma Shuriken Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310466
+    AegisName: aegis_310466
+    Name: Throw Huuma Shuriken Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310467
+    AegisName: aegis_310467
+    Name: Throw Huuma Shuriken Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310468
+    AegisName: aegis_310468
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310469
+    AegisName: aegis_310469
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310470
+    AegisName: aegis_310470
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310471
+    AegisName: aegis_310471
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310472
+    AegisName: aegis_310472
+    Name: Flaming Petals/Freezing Spear/Wind Blade Lv.5
+    Type: Card
+    SubType: Enchant
+  - Id: 310473
+    AegisName: aegis_310473
+    Name: Water/Wind/Earth/Fire Magic Lv.1
+    Type: Card
+    SubType: Enchant
+  - Id: 310474
+    AegisName: aegis_310474
+    Name: Water/Wind/Earth/Fire Magic Lv.2
+    Type: Card
+    SubType: Enchant
+  - Id: 310475
+    AegisName: aegis_310475
+    Name: Water/Wind/Earth/Fire Magic Lv.3
+    Type: Card
+    SubType: Enchant
+  - Id: 310476
+    AegisName: aegis_310476
+    Name: Water/Wind/Earth/Fire Magic Lv.4
+    Type: Card
+    SubType: Enchant
+  - Id: 310477
+    AegisName: aegis_310477
+    Name: Water/Wind/Earth/Fire Magic Lv.5
+    Type: Card
+    SubType: Enchant
   - Id: 310478
     AegisName: Wolf_Orb_Str_1
     Name: Wolf Orb (Str) Level 1
@@ -54978,7 +55977,7 @@ Body:
          if (.@r>=9) {
             bonus bAgi,1;
             if (.@r>=11) {
-               bonus bPerfectHitRate,1;
+               bonus bPerfectHitAddRate,1;
                bonus bAgi,2;
             }
          }
@@ -55086,7 +56085,7 @@ Body:
          if (.@r>=9) {
             bonus bAgi,1;
             if (.@r>=11) {
-               bonus bPerfectHitRate,3;
+               bonus bPerfectHitAddRate,3;
                bonus bAgi,2;
             }
          }
@@ -55712,13 +56711,13 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
       if (.@r>=7) {
-         bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+         bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
          if (.@r>=9) {
-            bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+            bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
             bonus2 bSkillAtk,"GN_CARTCANNON",15;
             if (.@r>=11) {
                bonus2 bSkillCooldown,"GN_CRAZYWEED",-1000;
@@ -55897,16 +56896,16 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
       bonus2 bSkillAtk,"WL_JACKFROST",15;
       if (.@r>=7) {
-         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
          bonus2 bSkillAtk,"WL_JACKFROST",15;
          if (.@r>=9) {
-            bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+            bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
             bonus2 bSkillAtk,"WL_JACKFROST",15;
             if (.@r>=11) {
-               bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+               bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
                bonus2 bSkillAtk,"WL_JACKFROST",15;
             }
          }
@@ -56045,16 +57044,20 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bShortAtkRate,5;
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
       if (.@r>=7) {
          bonus bShortAtkRate,10;
-         bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
          if (.@r>=9) {
             bonus bShortAtkRate,10;
-            bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
             if (.@r>=11) {
                bonus bShortAtkRate,15;
-               bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+               bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+               bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
             }
          }
       }
@@ -56229,16 +57232,16 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
       bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
       if (.@r>=7) {
-         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
          bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
          if (.@r>=9) {
-            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
             bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
             if (.@r>=11) {
-               bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+               bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
                bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
             }
          }
@@ -56293,15 +57296,19 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
       bonus2 bSkillAtk,"SJ_FLASHKICK",15;
       if (.@r>=7) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
          bonus2 bSkillAtk,"SJ_FLASHKICK",15;
          if (.@r>=9) {
             bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
             bonus2 bSkillAtk,"SJ_FLASHKICK",15;
             if (.@r>=11) {
                bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+               bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
                bonus2 bSkillAtk,"SJ_FLASHKICK",15;
             }
          }
@@ -56634,11 +57641,11 @@ Body:
       .@r = getrefine();
       bonus bHit,20;
       if (.@r>=7) {
-         bonus bPerfectHitRate,6;
+         bonus bPerfectHitAddRate,6;
          if (.@r>=9) {
-            bonus bPerfectHitRate,6;
+            bonus bPerfectHitAddRate,6;
             if (.@r>=11) {
-               bonus bPerfectHitRate,8;
+               bonus bPerfectHitAddRate,8;
             }
          }
       }
@@ -56702,11 +57709,11 @@ Body:
       .@r = getrefine();
       bonus bHit,20;
       if (.@r>=7) {
-         bonus bPerfectHitRate,6;
+         bonus bPerfectHitAddRate,6;
          if (.@r>=9) {
-            bonus bPerfectHitRate,8;
+            bonus bPerfectHitAddRate,8;
             if (.@r>=11) {
-               bonus bPerfectHitRate,8;
+               bonus bPerfectHitAddRate,8;
             }
          }
       }
@@ -56771,11 +57778,11 @@ Body:
       .@r = getrefine();
       bonus bHit,30;
       if (.@r>=7) {
-         bonus bPerfectHitRate,8;
+         bonus bPerfectHitAddRate,8;
          if (.@r>=9) {
-            bonus bPerfectHitRate,8;
+            bonus bPerfectHitAddRate,8;
             if (.@r>=11) {
-               bonus bPerfectHitRate,8;
+               bonus bPerfectHitAddRate,8;
             }
          }
       }
@@ -57389,7 +58396,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,4;
-      bonus bPerfectHitRate,2;
+      bonus bPerfectHitAddRate,2;
   - Id: 310619
     AegisName: Wolf_Orb_Spell_1
     Name: Wolf Orb (Spell) Level 1
@@ -57429,7 +58436,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,6;
-      bonus bPerfectHitRate,3;
+      bonus bPerfectHitAddRate,3;
   - Id: 310624
     AegisName: Wolf_Orb_Spell_2
     Name: Wolf Orb (Spell) Level 2
@@ -57469,7 +58476,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,8;
-      bonus bPerfectHitRate,4;
+      bonus bPerfectHitAddRate,4;
   - Id: 310629
     AegisName: Wolf_Orb_Spell_3
     Name: Wolf Orb (Spell) Level 3
@@ -57509,7 +58516,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,10;
-      bonus bPerfectHitRate,5;
+      bonus bPerfectHitAddRate,5;
   - Id: 310634
     AegisName: Wolf_Orb_Spell_4
     Name: Wolf Orb (Spell) Level 4
@@ -57580,7 +58587,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bHPDrainRate,20,4;
+      bonus2 bHPDrainRate,40,2;
   - Id: 310644
     AegisName: Wolf_Orb_Soul
     Name: Wolf Orb (Drain Soul)
@@ -58089,7 +59096,7 @@ Body:
                bonus bPAtk,3*.@param;
                if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,3*.@param;
-                  bonus bCrate,.@param;
+                  bonus bPAtk,3*.@param;
                }
             }
          }
@@ -58194,7 +59201,7 @@ Body:
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
                if (.@g >= ENCHANTGRADE_A) {
-                  bonus bHplus,.@param;
+                  bonus bHPlus,.@param;
                   bonus bMaxSPrate,.@param;
                }
             }
@@ -58219,10 +59226,10 @@ Body:
             bonus bHealPower,2*.@param;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,2*.@param;
-               bonus bHplus,.@param;
+               bonus bHPlus,.@param;
                bonus bMaxSPrate,.@param;
                if (.@g >= ENCHANTGRADE_A) {
-                  bonus bHplus,2*.@param;
+                  bonus bHPlus,2*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
             }
@@ -58247,10 +59254,10 @@ Body:
             bonus bHealPower,2*.@param;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,3*.@param;
-               bonus bHplus,2*.@param;
+               bonus bHPlus,2*.@param;
                bonus bMaxSPrate,2*.@param;
                if (.@g >= ENCHANTGRADE_A) {
-                  bonus bHplus,3*.@param;
+                  bonus bHPlus,3*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
             }
@@ -58384,7 +59391,7 @@ Body:
     Script: |
       bonus bCritAtkRate,15;
       bonus bCritical,8;
-      bonus bCrate,1;
+      bonus bCRate,1;
       bonus bPAtk,2;
   - Id: 310707
     AegisName: Star_Of_Spell1
@@ -58479,7 +59486,7 @@ Body:
     Script: |
       bonus bMaxHPrate,2;
       bonus bRes,1;
-      bonus bMres,1;
+      bonus bMRes,1;
   - Id: 310718
     AegisName: Star_Of_Vital2
     Name: Star of Vital Lv2
@@ -58488,7 +59495,7 @@ Body:
     Script: |
       bonus bMaxHPrate,3;
       bonus bRes,2;
-      bonus bMres,2;
+      bonus bMRes,2;
   - Id: 310719
     AegisName: Star_Of_Vital3
     Name: Star of Vital Lv3
@@ -58497,7 +59504,7 @@ Body:
     Script: |
       bonus bMaxHPrate,5;
       bonus bRes,4;
-      bonus bMres,4;
+      bonus bMRes,4;
   - Id: 310720
     AegisName: Star_Of_Vital4
     Name: Star of Vital Lv4
@@ -58506,7 +59513,7 @@ Body:
     Script: |
       bonus bMaxHPrate,7;
       bonus bRes,6;
-      bonus bMres,6;
+      bonus bMRes,6;
   - Id: 310721
     AegisName: Star_Of_Vital5
     Name: Star of Vital Lv5
@@ -58515,7 +59522,7 @@ Body:
     Script: |
       bonus bMaxHPrate,10;
       bonus bRes,10;
-      bonus bMres,10;
+      bonus bMRes,10;
   - Id: 310722
     AegisName: Star_Of_Spirit1
     Name: Star of Spirit Lv1
@@ -58542,7 +59549,7 @@ Body:
     Script: |
       bonus bHealPower,10;
       bonus bMaxSPrate,5;
-      bonus bHplus,1;
+      bonus bHPlus,1;
       bonus bSPrecovRate,15;
   - Id: 310725
     AegisName: Star_Of_Spirit4
@@ -58552,7 +59559,7 @@ Body:
     Script: |
       bonus bHealPower,10;
       bonus bMaxSPrate,7;
-      bonus bHplus,3;
+      bonus bHPlus,3;
       bonus bSPrecovRate,15;
   - Id: 310726
     AegisName: Star_Of_Spirit5
@@ -58562,7 +59569,7 @@ Body:
     Script: |
       bonus bHealPower,15;
       bonus bMaxSPrate,10;
-      bonus bHplus,5;
+      bonus bHPlus,5;
       bonus bSPrecovRate,20;
   - Id: 310727
     AegisName: Nebula_Of_FS1
@@ -59580,7 +60587,7 @@ Body:
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
                if (.@g >= ENCHANTGRADE_A) {
-                  bonus bHplus,.@param;
+                  bonus bHPlus,.@param;
                   bonus bMaxSPrate,2*.@param;
                }
             }
@@ -59604,10 +60611,10 @@ Body:
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
             if (.@g >= ENCHANTGRADE_B) {
-               bonus bHplus,.@param;
+               bonus bHPlus,.@param;
                bonus bMaxSPrate,.@param;
                if (.@g >= ENCHANTGRADE_A) {
-                  bonus bHplus,2*.@param;
+                  bonus bHPlus,2*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
             }
@@ -60046,13 +61053,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"DK_STORMSLASH",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"DK_STORMSLASH",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"DK_STORMSLASH",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"DK_STORMSLASH",6;
             }
           }
@@ -60066,13 +61073,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"DK_HACKANDSLASHER",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"DK_HACKANDSLASHER",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
             }
           }
@@ -60086,13 +61093,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"MT_AXE_STOMP",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"MT_AXE_STOMP",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"MT_AXE_STOMP",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"MT_AXE_STOMP",6;
             }
           }
@@ -60107,13 +61114,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NC_AXETORNADO",5;
       bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NC_AXETORNADO",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NC_AXETORNADO",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NC_AXETORNADO",10;
             }
           }
@@ -60128,15 +61135,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",3;
         bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",4;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6;
               bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",6;
             }
@@ -60150,14 +61157,14 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"GN_CART_TORNADO",5;
-      if (.@g >= 1) {
+      bonus2 bSkillAtk,"GN_CART_TORNADO",10;
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"GN_CART_TORNADO",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"GN_CART_TORNADO",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"GN_CART_TORNADO",10;
             }
           }
@@ -60171,13 +61178,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SHC_IMPACT_CRATER",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SHC_IMPACT_CRATER",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SHC_IMPACT_CRATER",6;
             }
           }
@@ -60191,13 +61198,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",10;
             }
           }
@@ -60210,17 +61217,21 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW",5;
       bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",5;
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"AG_CRIMSON_ARROW",3;
         bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",3;
         bonus2 bSkillAtk,"AG_FROZEN_SLASH",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
+            bonus2 bSkillAtk,"AG_CRIMSON_ARROW",4;
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",4;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
+              bonus2 bSkillAtk,"AG_CRIMSON_ARROW",6;
               bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",6;
               bonus2 bSkillAtk,"AG_FROZEN_SLASH",6;
             }
@@ -60234,14 +61245,18 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
+      bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT",10;
       bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT",7;
         bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
+            bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT",8;
             bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
+              bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT",10;
               bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",10;
             }
           }
@@ -60255,13 +61270,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",5;
-      if (.@g >= 1) {
-        bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",6;
-        if (.@g >= 2) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",3;
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",6;
             }
           }
@@ -60274,15 +61289,15 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
-      if (.@g >= 1) {
-        bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",7;
-        if (.@g >= 2) {
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS_ATK",10;
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS_ATK",7;
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
-            bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",8;
-            if (.@g >= 4) {
-              bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
+          if (.@g >= ENCHANTGRADE_B) {
+            bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS_ATK",8;
+            if (.@g >= ENCHANTGRADE_A) {
+              bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS_ATK",10;
             }
           }
         }
@@ -60296,15 +61311,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"EM_CONFLAGRATION",5;
       bonus2 bSkillAtk,"EM_LIGHTNING_LAND",5;
-      if (.@g >= 1) {
-        bonus2 bSkillAtk,"EM_CONFLAGRATION",6;
-        bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6;
-        if (.@g >= 2) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"EM_CONFLAGRATION",3;
+        bonus2 bSkillAtk,"EM_LIGHTNING_LAND",3;
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"EM_CONFLAGRATION",4;
             bonus2 bSkillAtk,"EM_LIGHTNING_LAND",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"EM_CONFLAGRATION",6;
               bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6;
             }
@@ -60320,13 +61335,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",5;
       bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1500;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
             }
           }
@@ -60340,13 +61355,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"WH_GALESTORM",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"WH_GALESTORM",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"WH_GALESTORM",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"WH_GALESTORM",6;
             }
           }
@@ -60361,13 +61376,13 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"RA_ARROWSTORM",5;
       bonus2 bSkillCooldown,"RA_ARROWSTORM",-1200;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"RA_ARROWSTORM",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"RA_ARROWSTORM",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"RA_ARROWSTORM",10;
             }
           }
@@ -60382,15 +61397,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"IQ_SECOND_FAITH",5;
       bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"IQ_SECOND_FAITH",3;
         bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"IQ_SECOND_FAITH",4;
             bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"IQ_SECOND_FAITH",6;
               bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",6;
             }
@@ -60406,15 +61421,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"IQ_THIRD_PUNISH",10;
       bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"IQ_THIRD_PUNISH",7;
         bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"IQ_THIRD_PUNISH",8;
             bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"IQ_THIRD_PUNISH",10;
               bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",10;
             }
@@ -60429,13 +61444,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",4;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",5;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",7;
             }
           }
@@ -60449,13 +61464,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"PA_SHIELDCHAIN",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"PA_SHIELDCHAIN",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
             }
           }
@@ -60469,15 +61484,15 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"CD_FRAMEN",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"CD_FRAMEN",3;
         bonus bHealPower,6;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"CD_FRAMEN",4;
             bonus bHealPower,6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"CD_FRAMEN",6;
               bonus bHealPower,6;
             }
@@ -60491,16 +61506,20 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
+      bonus2 bSkillAtk,"CD_ARBITRIUM",10;
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"CD_ARBITRIUM",7;
         bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",7;
         bonus bHealPower,6;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
+            bonus2 bSkillAtk,"CD_ARBITRIUM",8;
             bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",8;
             bonus bHealPower,6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
+              bonus2 bSkillAtk,"CD_ARBITRIUM",10;
               bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
               bonus bHealPower,6;
             }
@@ -60515,13 +61534,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SKE_NOON_BLAST",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SKE_NOON_BLAST",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SKE_NOON_BLAST",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SKE_NOON_BLAST",6;
             }
           }
@@ -60535,13 +61554,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SKE_RISING_SUN",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SKE_RISING_SUN",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SKE_RISING_SUN",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SKE_RISING_SUN",10;
             }
           }
@@ -60555,13 +61574,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",6;
             }
           }
@@ -60575,13 +61594,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",10;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",7;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",10;
             }
           }
@@ -60595,13 +61614,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",6;
             }
           }
@@ -60615,13 +61634,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",6;
             }
           }
@@ -60635,13 +61654,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",6;
             }
           }
@@ -60656,15 +61675,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",5;
       bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",3;
         bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",4;
             bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",6;
               bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",6;
             }
@@ -60679,13 +61698,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SS_KAGENOMAI",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SS_KAGENOMAI",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,6;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SS_KAGENOMAI",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SS_KAGENOMAI",5;
             }
           }
@@ -60699,13 +61718,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SS_ANTENPOU",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SS_ANTENPOU",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,6;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SS_ANTENPOU",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SS_ANTENPOU",5;
             }
           }
@@ -60718,17 +61737,21 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",5;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",5;
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"TR_ROSEBLOSSOM",3;
         bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",3;
         bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
+            bonus2 bSkillAtk,"TR_ROSEBLOSSOM",4;
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",4;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
+              bonus2 bSkillAtk,"TR_ROSEBLOSSOM",6;
               bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",6;
               bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",6;
             }
@@ -60742,16 +61765,16 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5;
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
-      if (.@g >= 1) {
-        bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
-        if (.@g >= 2) {
+      if (.@g >= ENCHANTGRADE_D) {
+        bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",7;
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
-            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",8;
-            if (.@g >= 4) {
-              bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
+          if (.@g >= ENCHANTGRADE_B) {
+            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",8;
+            if (.@g >= ENCHANTGRADE_A) {
+              bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",10;
             }
           }
         }
@@ -60765,15 +61788,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",7;
       bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",7;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",5;
         bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",5;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",6;
             bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",7;
               bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",7;
             }
@@ -60789,15 +61812,15 @@ Body:
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",7;
       bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",5;
         bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bMagicAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",6;
             bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",6;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",7;
               bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7;
             }
@@ -60979,28 +62002,28 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCrate,1;
+      bonus bCRate,1;
   - Id: 311089
     AegisName: CRATE_Lv2
     Name: C.RATE Lv2
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bCrate,2;
+      bonus bCRate,2;
   - Id: 311090
     AegisName: HPLUS_Lv1
     Name: H.PLUS Lv1
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bHplus,1;
+      bonus bHPlus,1;
   - Id: 311091
     AegisName: HPLUS_Lv2
     Name: H.PLUS Lv2
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bHplus,2;
+      bonus bHPlus,2;
   - Id: 311092
     AegisName: Ice_F_Orb_Str
     Name: Ice Magic Orb (STR)
@@ -61051,7 +62074,7 @@ Body:
           bonus bAgi,1;
           if (.@r >= 11) {
             bonus bWis,1;
-            bonus bPerfectHitRate,3;
+            bonus bPerfectHitAddRate,3;
           }
         }
       }
@@ -61321,11 +62344,11 @@ Body:
       bonus bHit,30;
       .@r = getrefine();
       if (.@r >= 7) {
-        bonus bPerfectHitRate,8;
+        bonus bPerfectHitAddRate,8;
         if (.@r >= 9) {
-          bonus bPerfectHitRate,8;
+          bonus bPerfectHitAddRate,8;
           if (.@r >= 11) {
-            bonus bPerfectHitRate,8;
+            bonus bPerfectHitAddRate,8;
           }
         }
       }
@@ -61581,7 +62604,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,10;
-      bonus bPerfectHitRate,5;
+      bonus bPerfectHitAddRate,5;
   - Id: 311130
     AegisName: Ice_F_Orb_Spell
     Name: Ice Magic Orb (Magic)
@@ -61660,6 +62683,7 @@ Body:
             bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15;
             bonus2 bSkillAtk,"RK_DRAGONBREATH",15;
             bonus2 bSkillAtk,"DK_HACKANDSLASHER",15;
+            bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",15;
           }
         }
       }
@@ -61791,7 +62815,7 @@ Body:
           if (.@r>=11) {
             bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
             bonus2 bSkillAtk,"NC_ARMSCANNON",15;
-            bonus2 bSkillCooldown,"MT_SUMMON_ABR_DUAL_CANNON",-5000;
+            bonus2 bSkillAtk,"MT_SPARK_BLASTER",15;
           }
         }
       }
@@ -61814,6 +62838,7 @@ Body:
             bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
             bonus2 bSkillAtk,"NC_VULCANARM",15;
             bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-2000;
+            bonus2 bSkillAtk,"MT_TRIPLE_LASER",15;
           }
         }
       }
@@ -61836,6 +62861,7 @@ Body:
             bonus2 bSkillAtk,"NC_AXETORNADO",15;
             bonus2 bSkillAtk,"NC_POWERSWING",15;
             bonus2 bSkillAtk,"MT_AXE_STOMP",15;
+            bonus2 bSkillAtk,"MT_MIGHTY_SMASH",15;
           }
         }
       }
@@ -61859,6 +62885,7 @@ Body:
             bonus2 bSkillAtk,"GN_HELLS_PLANT",15;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",15;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",15;
+            bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",15;
           }
         }
       }
@@ -61869,16 +62896,16 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
       if (.@r>=7) {
-        bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+        bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
         bonus2 bSkillAtk,"GN_CARTCANNON",15;
         if (.@r>=9) {
-          bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+          bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
           bonus2 bSkillAtk,"GN_CARTCANNON",15;
           if (.@r>=11) {
-            bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+            bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",15;
             bonus2 bSkillAtk,"GN_CARTCANNON",15;
             bonus2 bSkillCooldown,"GN_CRAZYWEED",-1500;
           }
@@ -61903,6 +62930,7 @@ Body:
             bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",15;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",15;
+            bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",15;
           }
         }
       }
@@ -62054,6 +63082,7 @@ Body:
             bonus2 bSkillAtk,"WL_EARTHSTRAIN",15;
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW",15;
             bonus2 bSkillAtk,"AG_ROCK_DOWN",15;
+            bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",15;
           }
         }
       }
@@ -62065,16 +63094,16 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"WL_JACKFROST",15;
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
       if (.@r>=7) {
         bonus2 bSkillAtk,"WL_JACKFROST",15;
-        bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+        bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
         if (.@r>=9) {
           bonus2 bSkillAtk,"WL_JACKFROST",15;
-          bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+          bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
           if (.@r>=11) {
             bonus2 bSkillAtk,"WL_JACKFROST",15;
-            bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+            bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",15;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",15;
             bonus2 bSkillAtk,"AG_STORM_CANNON",15;
           }
@@ -62192,6 +63221,7 @@ Body:
             bonus2 bSkillAtk,"PR_MAGNUS",15;
             bonus2 bSkillAtk,"AB_ADORAMUS",15;
             bonus2 bSkillAtk,"CD_ARBITRIUM",15;
+            bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",15;
           }
         }
       }
@@ -62224,19 +63254,23 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
       if (.@r>=7) {
-        bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+        bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+        bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
         bonus bLongAtkRate,10;
         bonus bShortAtkRate,10;
         if (.@r>=9) {
-          bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+          bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+          bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
           bonus bLongAtkRate,10;
           bonus bShortAtkRate,10;
           if (.@r>=11) {
-            bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",15;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",15;
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus2 bSkillAtk,"CD_PETITIO",15;
@@ -62341,10 +63375,10 @@ Body:
         bonus bCritAtkRate,10;
         if (.@r>=9) {
           bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
-          bonus bCritAtkRate,10;
+          bonus bCritAtkRate,15;
           if (.@r>=11) {
             bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
-            bonus bCritAtkRate,10;
+            bonus bCritAtkRate,15;
             bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",15;
           }
         }
@@ -62396,14 +63430,15 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
       if (.@r>=7) {
-        bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+        bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
         if (.@r>=9) {
-          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
           if (.@r>=11) {
-            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM",15;
+            bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",15;
           }
         }
       }
@@ -63143,11 +64178,11 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"GN_CRAZYWEED",20+10*(.@r/3);
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",20+10*(.@r/3);
       if (.@r>=9) {
         bonus2 bSkillCooldown,"GN_CRAZYWEED",-2500;
         if (.@r>=11) {
-          bonus2 bSkillAtk,"GN_CRAZYWEED",20;
+          bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",20;
         }
       }
   - Id: 311214
@@ -63272,17 +64307,17 @@ Body:
       .@r = getrefine();
       bonus2 bSkillAtk,"WL_CRIMSONROCK",20+10*(.@r/3);
       bonus2 bSkillAtk,"WL_JACKFROST",20+10*(.@r/3);
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",20+10*(.@r/3);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",20+10*(.@r/3);
       bonus2 bSkillAtk,"WL_EARTHSTRAIN",20+10*(.@r/3);
       if (.@r>=9) {
         bonus2 bSkillAtk,"WL_CRIMSONROCK",20;
         bonus2 bSkillAtk,"WL_JACKFROST",20;
-        bonus2 bSkillAtk,"WL_CHAINLIGHTNING",20;
+        bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",20;
         bonus2 bSkillAtk,"WL_EARTHSTRAIN",20;
         if (.@r>=11) {
           bonus2 bSkillAtk,"WL_CRIMSONROCK",20;
           bonus2 bSkillAtk,"WL_JACKFROST",20;
-          bonus2 bSkillAtk,"WL_CHAINLIGHTNING",20;
+          bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",20;
           bonus2 bSkillAtk,"WL_EARTHSTRAIN",20;
         }
       }
@@ -63419,11 +64454,14 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",20+10*(.@r/3);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",20+10*(.@r/3);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",20+10*(.@r/3);
       if (.@r>=9) {
-        bonus2 bSkillAtk,"AB_DUPLELIGHT",20;
+        bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",20;
+        bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",20;
         if (.@r>=11) {
-          bonus2 bSkillAtk,"AB_DUPLELIGHT",20;
+          bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",20;
+          bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",20;
         }
       }
   - Id: 311233
@@ -63545,11 +64583,11 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20+10*(.@r/3);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",20+10*(.@r/3);
       if (.@r>=9) {
         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
         if (.@r>=11) {
-          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
+          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",20;
         }
       }
   - Id: 311242
@@ -64208,9 +65246,11 @@ Body:
       .@r = getrefine();
       bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10+5*(.@r/4);
       bonus2 bSkillAtk,"AG_CRIMSON_ARROW",10+5*(.@r/4);
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",10+5*(.@r/4);
       if (.@r>=9) {
         bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10;
         bonus2 bSkillAtk,"AG_CRIMSON_ARROW",10;
+        bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",10;
       }
   - Id: 311291
     AegisName: Glacier_F_Orb_99
@@ -64338,8 +65378,10 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"CD_ARBITRIUM",10+5*(.@r/4);
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10+5*(.@r/4);
       if (.@r>=9) {
         bonus2 bSkillAtk,"CD_ARBITRIUM",10;
+        bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
       }
   - Id: 311302
     AegisName: Glacier_F_Orb_110
@@ -64467,8 +65509,10 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM",10+5*(.@r/4);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10+5*(.@r/4);
       if (.@r>=9) {
         bonus2 bSkillAtk,"TR_ROSEBLOSSOM",10;
+        bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
       }
   - Id: 311313
     AegisName: Glacier_F_Orb_121
@@ -65060,7 +66104,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bDelayrate,-1*getskilllv("RA_RANGERMAIN");
+      bonus bDelayrate,-getskilllv("RA_RANGERMAIN")/2;
   - Id: 311360
     AegisName: Ranger_Middle3
     Name: Ranger Stone (Middle)
@@ -65095,8 +66139,8 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bLongAtkRate,1*getskilllv("SC_REPRODUCE");
-      bonus bShortAtkRate,1*getskilllv("SC_REPRODUCE");
+      bonus bLongAtkRate,getskilllv("SC_REPRODUCE");
+      bonus bShortAtkRate,getskilllv("SC_REPRODUCE");
   - Id: 311365
     AegisName: Royal_Glory
     Name: Royal Glory
@@ -65113,9 +66157,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bPow,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,1;
         }
       }
@@ -65126,9 +66170,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bPow,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,2;
         }
       }
@@ -65139,9 +66183,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bPow,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,3;
         }
       }
@@ -65152,9 +66196,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bCon,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,1;
         }
       }
@@ -65165,9 +66209,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bCon,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,2;
         }
       }
@@ -65178,9 +66222,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bCon,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,3;
         }
       }
@@ -65191,9 +66235,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSpl,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bSMatk,1;
         }
       }
@@ -65204,9 +66248,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSpl,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bSMatk,2;
         }
       }
@@ -65217,9 +66261,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSpl,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bSMatk,3;
         }
       }
@@ -65230,9 +66274,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSta,1;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,1;
         }
       }
@@ -65243,9 +66287,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSta,2;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,2;
         }
       }
@@ -65256,9 +66300,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade(EQI_HEAD_TOP);
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus bSta,3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus bPAtk,3;
         }
       }
@@ -65271,13 +66315,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",6;
             }
           }
@@ -65291,13 +66335,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",6;
             }
           }
@@ -65311,13 +66355,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"NW_WILD_FIRE",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"NW_WILD_FIRE",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"NW_WILD_FIRE",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"NW_WILD_FIRE",6;
             }
           }
@@ -65331,13 +66375,13 @@ Body:
     Script: |
       .@g = getenchantgrade();
       bonus2 bSkillAtk,"SS_FUUMASHOUAKU",5;
-      if (.@g >= 1) {
+      if (.@g >= ENCHANTGRADE_D) {
         bonus2 bSkillAtk,"SS_FUUMASHOUAKU",3;
-        if (.@g >= 2) {
+        if (.@g >= ENCHANTGRADE_C) {
           bonus2 bAddSize,Size_All,10;
-          if (.@g >= 3) {
+          if (.@g >= ENCHANTGRADE_B) {
             bonus2 bSkillAtk,"SS_FUUMASHOUAKU",4;
-            if (.@g >= 4) {
+            if (.@g >= ENCHANTGRADE_A) {
               bonus2 bSkillAtk,"SS_FUUMASHOUAKU",6;
             }
           }
@@ -65545,7 +66589,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
+      bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_CHANGE");
   - Id: 311430
     AegisName: aegis_311430
     Name: Mechanic Stone (Upper)
@@ -65626,6 +66670,10 @@ Body:
     Name: RO 20th Anniversary Firecracker    # !todo check english name
     Type: Card
     SubType: Enchant
+    Script: |
+       /* TODO implement skill
+       skill "All_EVENT_20TH_ANNIVERSARY",1;
+       */
   - Id: 311442
     AegisName: aegis_311442
     Name: Perfect Ripe
@@ -65717,6 +66765,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,3;
          if (.@r>=9) {
+            bonus bVariableCastrate,-3;
             bonus bDelayrate,-3;
          }
       }
@@ -65755,6 +66804,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,6;
          if (.@r>=9) {
+            bonus bVariableCastrate,-6;
             bonus bDelayrate,-6;
          }
       }
@@ -65793,6 +66843,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,9;
          if (.@r>=9) {
+            bonus bVariableCastrate,-9;
             bonus bDelayrate,-9;
          }
       }
@@ -65827,6 +66878,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,12;
          if (.@r>=9) {
+            bonus bVariableCastrate,-12;
             bonus bDelayrate,-12;
          }
       }
@@ -65861,6 +66913,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,15;
          if (.@r>=9) {
+            bonus bVariableCastrate,-15;
             bonus bDelayrate,-15;
          }
       }
@@ -65894,6 +66947,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,3;
          if (.@r>=9) {
+            bonus bVariableCastrate,-3;
             bonus bDelayrate,-3;
          }
       }
@@ -65931,6 +66985,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,6;
          if (.@r>=9) {
+            bonus bVariableCastrate,-6;
             bonus bDelayrate,-6;
          }
       }
@@ -65968,6 +67023,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,9;
          if (.@r>=9) {
+            bonus bVariableCastrate,-9;
             bonus bDelayrate,-9;
          }
       }
@@ -66001,6 +67057,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,12;
          if (.@r>=9) {
+            bonus bVariableCastrate,-12;
             bonus bDelayrate,-12;
          }
       }
@@ -66034,6 +67091,7 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,15;
          if (.@r>=9) {
+            bonus bVariableCastrate,-15;
             bonus bDelayrate,-15;
          }
       }
@@ -66079,7 +67137,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",4*getskilllv("SG_STAR_BLESS");
+      .@val = 4*getskilllv("SG_STAR_BLESS");
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",.@val;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",.@val;
   - Id: 311463
     AegisName: aegis_311463
     Name: Rebellion Stone (Upper)    # !todo check english name
@@ -66808,15 +67868,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,10;
       bonus2 bAddEle,Ele_Fire,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Dark,2;
+         bonus2 bAddEle,Ele_Fire,2;
          bonus2 bMagicAddEle,Ele_Dark,2;
          bonus2 bMagicAddEle,Ele_Fire,2;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Dark,2;
+            bonus2 bAddEle,Ele_Fire,2;
             bonus2 bMagicAddEle,Ele_Dark,2;
             bonus2 bMagicAddEle,Ele_Fire,2;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Dark,3;
+               bonus2 bAddEle,Ele_Fire,3;
                bonus2 bMagicAddEle,Ele_Dark,3;
                bonus2 bMagicAddEle,Ele_Fire,3;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Dark,3;
+                  bonus2 bAddEle,Ele_Fire,3;
                   bonus2 bMagicAddEle,Ele_Dark,3;
                   bonus2 bMagicAddEle,Ele_Fire,3;
                }
@@ -66835,15 +67903,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,10;
       bonus2 bAddEle,Ele_Fire,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Dark,3;
+         bonus2 bAddEle,Ele_Fire,3;
          bonus2 bMagicAddEle,Ele_Dark,3;
          bonus2 bMagicAddEle,Ele_Fire,3;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Dark,4;
+            bonus2 bAddEle,Ele_Fire,4;
             bonus2 bMagicAddEle,Ele_Dark,4;
             bonus2 bMagicAddEle,Ele_Fire,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Dark,4;
+               bonus2 bAddEle,Ele_Fire,4;
                bonus2 bMagicAddEle,Ele_Dark,4;
                bonus2 bMagicAddEle,Ele_Fire,4;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Dark,4;
+                  bonus2 bAddEle,Ele_Fire,4;
                   bonus2 bMagicAddEle,Ele_Dark,4;
                   bonus2 bMagicAddEle,Ele_Fire,4;
                }
@@ -66862,15 +67938,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,10;
       bonus2 bAddEle,Ele_Fire,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Dark,4;
+         bonus2 bAddEle,Ele_Fire,4;
          bonus2 bMagicAddEle,Ele_Dark,4;
          bonus2 bMagicAddEle,Ele_Fire,4;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Dark,4;
+            bonus2 bAddEle,Ele_Fire,4;
             bonus2 bMagicAddEle,Ele_Dark,4;
             bonus2 bMagicAddEle,Ele_Fire,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Dark,6;
+               bonus2 bAddEle,Ele_Fire,6;
                bonus2 bMagicAddEle,Ele_Dark,6;
                bonus2 bMagicAddEle,Ele_Fire,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Dark,6;
+                  bonus2 bAddEle,Ele_Fire,6;
                   bonus2 bMagicAddEle,Ele_Dark,6;
                   bonus2 bMagicAddEle,Ele_Fire,6;
                }
@@ -66889,15 +67973,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,10;
       bonus2 bAddEle,Ele_Fire,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Dark,6;
+         bonus2 bAddEle,Ele_Fire,6;
          bonus2 bMagicAddEle,Ele_Dark,6;
          bonus2 bMagicAddEle,Ele_Fire,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Dark,6;
+            bonus2 bAddEle,Ele_Fire,6;
             bonus2 bMagicAddEle,Ele_Dark,6;
             bonus2 bMagicAddEle,Ele_Fire,6;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Dark,6;
+               bonus2 bAddEle,Ele_Fire,6;
                bonus2 bMagicAddEle,Ele_Dark,6;
                bonus2 bMagicAddEle,Ele_Fire,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Dark,7;
+                  bonus2 bAddEle,Ele_Fire,7;
                   bonus2 bMagicAddEle,Ele_Dark,7;
                   bonus2 bMagicAddEle,Ele_Fire,7;
                }
@@ -66916,15 +68008,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Fire,10;
       bonus2 bAddEle,Ele_Fire,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Dark,7;
+         bonus2 bAddEle,Ele_Fire,7;
          bonus2 bMagicAddEle,Ele_Dark,7;
          bonus2 bMagicAddEle,Ele_Fire,7;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Dark,7;
+            bonus2 bAddEle,Ele_Fire,7;
             bonus2 bMagicAddEle,Ele_Dark,7;
             bonus2 bMagicAddEle,Ele_Fire,7;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Dark,8;
+               bonus2 bAddEle,Ele_Fire,8;
                bonus2 bMagicAddEle,Ele_Dark,8;
                bonus2 bMagicAddEle,Ele_Fire,8;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Dark,8;
+                  bonus2 bAddEle,Ele_Fire,8;
                   bonus2 bMagicAddEle,Ele_Dark,8;
                   bonus2 bMagicAddEle,Ele_Fire,8;
                }
@@ -66943,15 +68043,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,10;
       bonus2 bAddEle,Ele_Water,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Holy,2;
+         bonus2 bAddEle,Ele_Water,2;
          bonus2 bMagicAddEle,Ele_Holy,2;
          bonus2 bMagicAddEle,Ele_Water,2;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Holy,2;
+            bonus2 bAddEle,Ele_Water,2;
             bonus2 bMagicAddEle,Ele_Holy,2;
             bonus2 bMagicAddEle,Ele_Water,2;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Holy,3;
+               bonus2 bAddEle,Ele_Water,3;
                bonus2 bMagicAddEle,Ele_Holy,3;
                bonus2 bMagicAddEle,Ele_Water,3;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Holy,3;
+                  bonus2 bAddEle,Ele_Water,3;
                   bonus2 bMagicAddEle,Ele_Holy,3;
                   bonus2 bMagicAddEle,Ele_Water,3;
                }
@@ -66970,15 +68078,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,10;
       bonus2 bAddEle,Ele_Water,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Holy,3;
+         bonus2 bAddEle,Ele_Water,3;
          bonus2 bMagicAddEle,Ele_Holy,3;
          bonus2 bMagicAddEle,Ele_Water,3;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Holy,4;
+            bonus2 bAddEle,Ele_Water,4;
             bonus2 bMagicAddEle,Ele_Holy,4;
             bonus2 bMagicAddEle,Ele_Water,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Holy,4;
+               bonus2 bAddEle,Ele_Water,4;
                bonus2 bMagicAddEle,Ele_Holy,4;
                bonus2 bMagicAddEle,Ele_Water,4;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Holy,4;
+                  bonus2 bAddEle,Ele_Water,4;
                   bonus2 bMagicAddEle,Ele_Holy,4;
                   bonus2 bMagicAddEle,Ele_Water,4;
                }
@@ -66997,15 +68113,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,10;
       bonus2 bAddEle,Ele_Water,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Holy,4;
+         bonus2 bAddEle,Ele_Water,4;
          bonus2 bMagicAddEle,Ele_Holy,4;
          bonus2 bMagicAddEle,Ele_Water,4;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Holy,4;
+            bonus2 bAddEle,Ele_Water,4;
             bonus2 bMagicAddEle,Ele_Holy,4;
             bonus2 bMagicAddEle,Ele_Water,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Holy,6;
+               bonus2 bAddEle,Ele_Water,6;
                bonus2 bMagicAddEle,Ele_Holy,6;
                bonus2 bMagicAddEle,Ele_Water,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Holy,6;
+                  bonus2 bAddEle,Ele_Water,6;
                   bonus2 bMagicAddEle,Ele_Holy,6;
                   bonus2 bMagicAddEle,Ele_Water,6;
                }
@@ -67024,15 +68148,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,10;
       bonus2 bAddEle,Ele_Water,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Holy,6;
+         bonus2 bAddEle,Ele_Water,6;
          bonus2 bMagicAddEle,Ele_Holy,6;
          bonus2 bMagicAddEle,Ele_Water,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Holy,6;
+            bonus2 bAddEle,Ele_Water,6;
             bonus2 bMagicAddEle,Ele_Holy,6;
             bonus2 bMagicAddEle,Ele_Water,6;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Holy,6;
+               bonus2 bAddEle,Ele_Water,6;
                bonus2 bMagicAddEle,Ele_Holy,6;
                bonus2 bMagicAddEle,Ele_Water,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Holy,7;
+                  bonus2 bAddEle,Ele_Water,7;
                   bonus2 bMagicAddEle,Ele_Holy,7;
                   bonus2 bMagicAddEle,Ele_Water,7;
                }
@@ -67051,15 +68183,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,10;
       bonus2 bAddEle,Ele_Water,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Holy,7;
+         bonus2 bAddEle,Ele_Water,7;
          bonus2 bMagicAddEle,Ele_Holy,7;
          bonus2 bMagicAddEle,Ele_Water,7;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Holy,7;
+            bonus2 bAddEle,Ele_Water,7;
             bonus2 bMagicAddEle,Ele_Holy,7;
             bonus2 bMagicAddEle,Ele_Water,7;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Holy,8;
+               bonus2 bAddEle,Ele_Water,8;
                bonus2 bMagicAddEle,Ele_Holy,8;
                bonus2 bMagicAddEle,Ele_Water,8;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Holy,8;
+                  bonus2 bAddEle,Ele_Water,8;
                   bonus2 bMagicAddEle,Ele_Holy,8;
                   bonus2 bMagicAddEle,Ele_Water,8;
                }
@@ -67078,15 +68218,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Wind,10;
       bonus2 bAddEle,Ele_Wind,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Earth,2;
+         bonus2 bAddEle,Ele_Wind,2;
          bonus2 bMagicAddEle,Ele_Earth,2;
          bonus2 bMagicAddEle,Ele_Wind,2;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Earth,2;
+            bonus2 bAddEle,Ele_Wind,2;
             bonus2 bMagicAddEle,Ele_Earth,2;
             bonus2 bMagicAddEle,Ele_Wind,2;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Earth,3;
+               bonus2 bAddEle,Ele_Wind,3;
                bonus2 bMagicAddEle,Ele_Earth,3;
                bonus2 bMagicAddEle,Ele_Wind,3;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Earth,3;
+                  bonus2 bAddEle,Ele_Wind,3;
                   bonus2 bMagicAddEle,Ele_Earth,3;
                   bonus2 bMagicAddEle,Ele_Wind,3;
                }
@@ -67105,15 +68253,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Wind,10;
       bonus2 bAddEle,Ele_Wind,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Earth,3;
+         bonus2 bAddEle,Ele_Wind,3;
          bonus2 bMagicAddEle,Ele_Earth,3;
          bonus2 bMagicAddEle,Ele_Wind,3;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Earth,4;
+            bonus2 bAddEle,Ele_Wind,4;
             bonus2 bMagicAddEle,Ele_Earth,4;
             bonus2 bMagicAddEle,Ele_Wind,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Earth,4;
+               bonus2 bAddEle,Ele_Wind,4;
                bonus2 bMagicAddEle,Ele_Earth,4;
                bonus2 bMagicAddEle,Ele_Wind,4;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Earth,4;
+                  bonus2 bAddEle,Ele_Wind,4;
                   bonus2 bMagicAddEle,Ele_Earth,4;
                   bonus2 bMagicAddEle,Ele_Wind,4;
                }
@@ -67132,15 +68288,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Wind,10;
       bonus2 bAddEle,Ele_Wind,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Earth,4;
+         bonus2 bAddEle,Ele_Wind,4;
          bonus2 bMagicAddEle,Ele_Earth,4;
          bonus2 bMagicAddEle,Ele_Wind,4;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Earth,4;
+            bonus2 bAddEle,Ele_Wind,4;
             bonus2 bMagicAddEle,Ele_Earth,4;
             bonus2 bMagicAddEle,Ele_Wind,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Earth,6;
+               bonus2 bAddEle,Ele_Wind,6;
                bonus2 bMagicAddEle,Ele_Earth,6;
                bonus2 bMagicAddEle,Ele_Wind,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Earth,6;
+                  bonus2 bAddEle,Ele_Wind,6;
                   bonus2 bMagicAddEle,Ele_Earth,6;
                   bonus2 bMagicAddEle,Ele_Wind,6;
                }
@@ -67159,15 +68323,23 @@ Body:
       bonus2 bMagicAddEle,Ele_Wind,10;
       bonus2 bAddEle,Ele_Wind,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Earth,6;
+         bonus2 bAddEle,Ele_Wind,6;
          bonus2 bMagicAddEle,Ele_Earth,6;
          bonus2 bMagicAddEle,Ele_Wind,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Earth,6;
+            bonus2 bAddEle,Ele_Wind,6;
             bonus2 bMagicAddEle,Ele_Earth,6;
             bonus2 bMagicAddEle,Ele_Wind,6;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Earth,6;
+               bonus2 bAddEle,Ele_Wind,6;
                bonus2 bMagicAddEle,Ele_Earth,6;
                bonus2 bMagicAddEle,Ele_Wind,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Earth,7;
+                  bonus2 bAddEle,Ele_Wind,7;
                   bonus2 bMagicAddEle,Ele_Earth,7;
                   bonus2 bMagicAddEle,Ele_Wind,7;
                }
@@ -67186,16 +68358,24 @@ Body:
       bonus2 bMagicAddEle,Ele_Wind,10;
       bonus2 bAddEle,Ele_Wind,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Earth,7;
          bonus2 bMagicAddEle,Ele_Earth,7;
+         bonus2 bAddEle,Ele_Wind,7;
          bonus2 bMagicAddEle,Ele_Wind,7;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Earth,7;
             bonus2 bMagicAddEle,Ele_Earth,7;
+            bonus2 bAddEle,Ele_Wind,7;
             bonus2 bMagicAddEle,Ele_Wind,7;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Earth,8;
                bonus2 bMagicAddEle,Ele_Earth,8;
+               bonus2 bAddEle,Ele_Wind,8;
                bonus2 bMagicAddEle,Ele_Wind,8;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Earth,8;
                   bonus2 bMagicAddEle,Ele_Earth,8;
+                  bonus2 bAddEle,Ele_Wind,8;
                   bonus2 bMagicAddEle,Ele_Wind,8;
                }
             }
@@ -67213,16 +68393,24 @@ Body:
       bonus2 bMagicAddEle,Ele_Ghost,10;
       bonus2 bAddEle,Ele_Ghost,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Undead,2;
          bonus2 bMagicAddEle,Ele_Undead,2;
+         bonus2 bAddEle,Ele_Ghost,2;
          bonus2 bMagicAddEle,Ele_Ghost,2;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Undead,2;
             bonus2 bMagicAddEle,Ele_Undead,2;
+            bonus2 bAddEle,Ele_Ghost,2;
             bonus2 bMagicAddEle,Ele_Ghost,2;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Undead,3;
                bonus2 bMagicAddEle,Ele_Undead,3;
+               bonus2 bAddEle,Ele_Ghost,3;
                bonus2 bMagicAddEle,Ele_Ghost,3;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Undead,3;
                   bonus2 bMagicAddEle,Ele_Undead,3;
+                  bonus2 bAddEle,Ele_Ghost,3;
                   bonus2 bMagicAddEle,Ele_Ghost,3;
                }
             }
@@ -67240,16 +68428,24 @@ Body:
       bonus2 bMagicAddEle,Ele_Ghost,10;
       bonus2 bAddEle,Ele_Ghost,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Undead,3;
          bonus2 bMagicAddEle,Ele_Undead,3;
+         bonus2 bAddEle,Ele_Ghost,3;
          bonus2 bMagicAddEle,Ele_Ghost,3;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Undead,4;
             bonus2 bMagicAddEle,Ele_Undead,4;
+            bonus2 bAddEle,Ele_Ghost,4;
             bonus2 bMagicAddEle,Ele_Ghost,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Undead,4;
                bonus2 bMagicAddEle,Ele_Undead,4;
+               bonus2 bAddEle,Ele_Ghost,4;
                bonus2 bMagicAddEle,Ele_Ghost,4;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Undead,4;
                   bonus2 bMagicAddEle,Ele_Undead,4;
+                  bonus2 bAddEle,Ele_Ghost,4;
                   bonus2 bMagicAddEle,Ele_Ghost,4;
                }
             }
@@ -67267,16 +68463,24 @@ Body:
       bonus2 bMagicAddEle,Ele_Ghost,10;
       bonus2 bAddEle,Ele_Ghost,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Undead,4;
          bonus2 bMagicAddEle,Ele_Undead,4;
+         bonus2 bAddEle,Ele_Ghost,4;
          bonus2 bMagicAddEle,Ele_Ghost,4;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Undead,4;
             bonus2 bMagicAddEle,Ele_Undead,4;
+            bonus2 bAddEle,Ele_Ghost,4;
             bonus2 bMagicAddEle,Ele_Ghost,4;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Undead,6;
                bonus2 bMagicAddEle,Ele_Undead,6;
+               bonus2 bAddEle,Ele_Ghost,6;
                bonus2 bMagicAddEle,Ele_Ghost,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Undead,6;
                   bonus2 bMagicAddEle,Ele_Undead,6;
+                  bonus2 bAddEle,Ele_Ghost,6;
                   bonus2 bMagicAddEle,Ele_Ghost,6;
                }
             }
@@ -67294,16 +68498,24 @@ Body:
       bonus2 bMagicAddEle,Ele_Ghost,10;
       bonus2 bAddEle,Ele_Ghost,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Undead,6;
          bonus2 bMagicAddEle,Ele_Undead,6;
+         bonus2 bAddEle,Ele_Ghost,6;
          bonus2 bMagicAddEle,Ele_Ghost,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Undead,6;
             bonus2 bMagicAddEle,Ele_Undead,6;
+            bonus2 bAddEle,Ele_Ghost,6;
             bonus2 bMagicAddEle,Ele_Ghost,6;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Undead,6;
                bonus2 bMagicAddEle,Ele_Undead,6;
+               bonus2 bAddEle,Ele_Ghost,6;
                bonus2 bMagicAddEle,Ele_Ghost,6;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Undead,7;
                   bonus2 bMagicAddEle,Ele_Undead,7;
+                  bonus2 bAddEle,Ele_Ghost,7;
                   bonus2 bMagicAddEle,Ele_Ghost,7;
                }
             }
@@ -67321,16 +68533,24 @@ Body:
       bonus2 bMagicAddEle,Ele_Ghost,10;
       bonus2 bAddEle,Ele_Ghost,10;
       if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Undead,7;
          bonus2 bMagicAddEle,Ele_Undead,7;
+         bonus2 bAddEle,Ele_Ghost,7;
          bonus2 bMagicAddEle,Ele_Ghost,7;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Undead,7;
             bonus2 bMagicAddEle,Ele_Undead,7;
+            bonus2 bAddEle,Ele_Ghost,7;
             bonus2 bMagicAddEle,Ele_Ghost,7;
             if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Undead,8;
                bonus2 bMagicAddEle,Ele_Undead,8;
+               bonus2 bAddEle,Ele_Ghost,8;
                bonus2 bMagicAddEle,Ele_Ghost,8;
                if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Undead,8;
                   bonus2 bMagicAddEle,Ele_Undead,8;
+                  bonus2 bAddEle,Ele_Ghost,8;
                   bonus2 bMagicAddEle,Ele_Ghost,8;
                }
             }
@@ -68204,7 +69424,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bPerfectHitRate,3+3*getenchantgrade();
+      bonus bPerfectHitAddRate,3+3*getenchantgrade();
   - Id: 312008
     AegisName: Bishop_Blessing5
     Name: Bishop's Blessing (Cri)
@@ -68241,6 +69461,38 @@ Body:
   - Id: 312021
     AegisName: Injustice_Power
     Name: Evil Spell
+    Type: Card
+    SubType: Enchant
+  - Id: 312023
+    AegisName: aegis_312023
+    Name: MaxSP+15%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,15;
+  - Id: 312031
+    AegisName: aegis_312031
+    Name: Latent Release (Archmage II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312037
+    AegisName: aegis_312037
+    Name: Latent Release (Elemental Master II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312038
+    AegisName: aegis_312038
+    Name: Latent Release (Cardinal II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312040
+    AegisName: aegis_312040
+    Name: Latent Release (Dragon Knight II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312043
+    AegisName: aegis_312043
+    Name: Latent Release (Biolo II)
     Type: Card
     SubType: Enchant
   - Id: 312050
@@ -68593,11 +69845,11 @@ Body:
       .@r = getrefine();
       bonus bHit,30;
       if (.@r>=7) {
-         bonus bPerfectHitRate,8;
+         bonus bPerfectHitAddRate,8;
          if (.@r>=9) {
-            bonus bPerfectHitRate,8;
+            bonus bPerfectHitAddRate,8;
             if (.@r>=11) {
-               bonus bPerfectHitRate,8;
+               bonus bPerfectHitAddRate,8;
             }
          }
       }
@@ -68624,16 +69876,26 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bLongAtkRate,3;
+      bonus bShortAtkRate,3;
       bonus2 bMagicAtkEle,Ele_All,3;
       if (.@r>=7) {
+         bonus bLongAtkRate,3;
+         bonus bShortAtkRate,3;
          bonus2 bMagicAtkEle,Ele_All,3;
          if (.@r>=9) {
+            bonus bLongAtkRate,3;
+            bonus bShortAtkRate,3;
             bonus2 bMagicAtkEle,Ele_All,3;
          }
       }
       if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,3;
+         bonus bShortAtkRate,3;
          bonus2 bMagicAtkEle,Ele_All,3;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,3;
+            bonus bShortAtkRate,3;
             bonus2 bMagicAtkEle,Ele_All,3;
          }
       }
@@ -69608,31 +70870,6 @@ Body:
       bonus2 bAddRace,RC_All,10;
       bonus2 bAddRace,RC_Player_Human,-10;
       bonus2 bAddRace,RC_Player_Doram,-10;
-  - Id: 312031
-    AegisName: aegis_312031
-    Name: Latent Release (Archmage II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312037
-    AegisName: aegis_312037
-    Name: Latent Release (Elemental Master II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312038
-    AegisName: aegis_312038
-    Name: Latent Release (Cardinal II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312040
-    AegisName: aegis_312040
-    Name: Latent Release (Dragon Knight II)
-    Type: Card
-    SubType: Enchant
-  - Id: 312043
-    AegisName: aegis_312043
-    Name: Latent Release (Biolo II)
-    Type: Card
-    SubType: Enchant
   - Id: 312189
     AegisName: M_Pow3
     Name: POW+3
@@ -69802,6 +71039,8 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",2+(.@r/2);
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",2+(getrefine()/2);
   - Id: 312213
     AegisName: ABC_Soul_FS
@@ -69837,7 +71076,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CD_ARBITRIUM",2+(.@r/2);
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",2+(.@r/2);
   - Id: 312218
     AegisName: CD_Soul_FL
     Name: Cardinal Soul (Flamen)    # !todo check english name
@@ -69992,6 +71233,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",2+(getrefine()/2);
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",2+(getrefine()/2);
   - Id: 312239
     AegisName: TR_Soul_RS
@@ -70034,7 +71276,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW",2+(.@r/2);
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",2+(.@r/2);
   - Id: 312245
     AegisName: AG_Soul_RC
     Name: Arch Mage Soul (Rain of Crystal)    # !todo check english name
@@ -70393,6 +71637,8 @@ Body:
     Name: Hyper Novice Soul (Jupitel Thunder Storm)    # !todo check english name
     Type: Card
     SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",2+(getrefine()/2);
   - Id: 312296
     AegisName: HN_Soul_JF
     Name: Hyper Novice Soul (Jack Frost Nova)    # !todo check english name
@@ -70421,6 +71667,11 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",2+(getrefine()/2);
+  - Id: 312300
+    AegisName: aegis_312300
+    Name: Latent Release (Dragon Knight III)
+    Type: Card
+    SubType: Enchant
   - Id: 312302
     AegisName: DK_Soul_DB
     Name: Dragon Knight Soul (Dragonic Breath)
@@ -71608,6 +72859,7 @@ Body:
          bonus bLongAtkRate,6;
          bonus bPAtk,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
             bonus bLongAtkRate,10;
             bonus bPAtk,9;
          }
@@ -71628,6 +72880,7 @@ Body:
          bonus bLongAtkRate,6;
          bonus bPAtk,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
             bonus bLongAtkRate,10;
             bonus bPAtk,9;
             if (.@g>=ENCHANTGRADE_B) {
@@ -71651,6 +72904,7 @@ Body:
          bonus bLongAtkRate,6;
          bonus bPAtk,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
             bonus bLongAtkRate,10;
             bonus bPAtk,9;
             if (.@g>=ENCHANTGRADE_B) {
@@ -71675,6 +72929,7 @@ Body:
          bonus bLongAtkRate,6;
          bonus bPAtk,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
             bonus bLongAtkRate,10;
             bonus bPAtk,9;
             if (.@g>=ENCHANTGRADE_B) {
@@ -71702,6 +72957,7 @@ Body:
          bonus bLongAtkRate,6;
          bonus bPAtk,6;
          if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,10;
             bonus bLongAtkRate,10;
             bonus bPAtk,9;
             if (.@g>=ENCHANTGRADE_B) {
@@ -71748,8 +73004,12 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      skill "NV_BREAKTHROUGH",5;
-      skill "NV_TRANSCENDENCE",10;
+      if (getskilllv("NV_BREAKTHROUGH")>=5) {
+         skill "RK_WINDCUTTER",5;
+      }
+      if (getskilllv("NV_TRANSCENDENCE")>=5) {
+         skill "AB_JUDEX",10;
+      }
   - Id: 312403
     AegisName: aegis_312403
     Name: Super Novice Stone (Upper)
@@ -71801,17 +73061,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Formless,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Formless,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Formless,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Formless,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Formless,5;
             }
          }
       }
@@ -71823,17 +73083,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Undead,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Undead,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Undead,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Undead,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Undead,5;
             }
          }
       }
@@ -71845,17 +73105,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Brute,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Brute,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Brute,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Brute,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Brute,5;
             }
          }
       }
@@ -71867,17 +73127,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Plant,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Plant,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Plant,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Plant,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Plant,5;
             }
          }
       }
@@ -71889,17 +73149,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Insect,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Insect,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Insect,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Insect,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Insect,5;
             }
          }
       }
@@ -71911,17 +73171,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Fish,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Fish,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Fish,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Fish,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Fish,5;
             }
          }
       }
@@ -71933,17 +73193,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Demon,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Demon,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Demon,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Demon,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Demon,5;
             }
          }
       }
@@ -71955,17 +73215,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_DemiHuman,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_DemiHuman,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_DemiHuman,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_DemiHuman,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_DemiHuman,5;
             }
          }
       }
@@ -71977,17 +73237,17 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Angel,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Angel,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Angel,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Angel,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Angel,5;
             }
          }
       }
@@ -71999,20 +73259,259 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (BaseLevel<175) {
-         bonus2 bExpAddRace,RC_All,15;
+         bonus2 bExpAddRace,RC_Dragon,15;
       }
       if (BaseLevel>=175) {
-         bonus2 bExpAddRace,RC_All,7;
+         bonus2 bExpAddRace,RC_Dragon,7;
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus2 bExpAddRace,RC_All,1;
+         bonus2 bExpAddRace,RC_Dragon,1;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus2 bExpAddRace,RC_All,3;
+            bonus2 bExpAddRace,RC_Dragon,3;
             if (.@g>=ENCHANTGRADE_B) {
-               bonus2 bExpAddRace,RC_All,5;
+               bonus2 bExpAddRace,RC_Dragon,5;
             }
          }
       }
+  - Id: 312417
+    AegisName: aegis_312417
+    Name: Amplified Resentment
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,10;
+  - Id: 312418
+    AegisName: aegis_312418
+    Name: Prayer Bell
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bMagicAddSize,Size_All,10;
+  - Id: 312419
+    AegisName: aegis_312419
+    Name: All Hit
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPerfectHitRate,100;
+  - Id: 312420
+    AegisName: aegis_312420
+    Name: Flame of Regeneration
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus5 bAutoSpell,"IG_ULTIMATE_SACRIFICE",2,100,BF_WEAPON|BF_MAGIC,0;
+  - Id: 312421
+    AegisName: aegis_312421
+    Name: Ruler of the Farthest
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHPGainValue,100;
+      bonus bSPGainValue,10;
+  - Id: 312422
+    AegisName: Justice_Vigor_CD
+    Name: Good Vigor (Cardinal)
+    Type: Card
+    SubType: Enchant
+  - Id: 312423
+    AegisName: Justice_Vigor_IQ
+    Name: Good Vigor (Inquisitor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312424
+    AegisName: Justice_Vigor_SOA
+    Name: Good Vigor (Soul Ascetic)
+    Type: Card
+    SubType: Enchant
+  - Id: 312425
+    AegisName: Injustice_Vigor_CD
+    Name: Evil Vigor (Cardinal)
+    Type: Card
+    SubType: Enchant
+  - Id: 312426
+    AegisName: Injustice_Vigor_IQ
+    Name: Evil Vigor (Inquisitor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312427
+    AegisName: Injustice_Vigor_SOA
+    Name: Evil Vigor (Soul Ascetic)
+    Type: Card
+    SubType: Enchant
+  - Id: 312428
+    AegisName: M_Crystal_S_Cast
+    Name: Memory Crystal (Variable Casting)
+    Type: Card
+    SubType: Enchant
+  - Id: 312429
+    AegisName: M_Crystal_S_Delay
+    Name: Memory Crystal (Global Cooldown)
+    Type: Card
+    SubType: Enchant
+  - Id: 312430
+    AegisName: M_Crystal_HitTarget
+    Name: Memory Crystal (Perfect Hit)
+    Type: Card
+    SubType: Enchant
+  - Id: 312431
+    AegisName: M_Crystal_CRI
+    Name: Memory Crystal (Critical)
+    Type: Card
+    SubType: Enchant
+  - Id: 312432
+    AegisName: M_Crystal_Atk_Speed
+    Name: Memory Crystal (Attack Speed)
+    Type: Card
+    SubType: Enchant
+  - Id: 312433
+    AegisName: F_Crystal_CRI
+    Name: Memory Fragment (Relaxation)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,10;
+  - Id: 312434
+    AegisName: F_Crystal_MATK
+    Name: Memory Fragment (Admiration)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+  - Id: 312435
+    AegisName: F_Crystal_MSP
+    Name: Memory Fragment (Freedom)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,5;
+  - Id: 312436
+    AegisName: F_Crystal_ATK
+    Name: Memory Fragment (Bravery)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+  - Id: 312437
+    AegisName: F_Crystal_MHP
+    Name: Memory Fragment (Hope)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
+  - Id: 312445
+    AegisName: aegis_312445
+    Name: Autospell (Chain Lightning)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus3 bAutoSpell,"WL_CHAINLIGHTNING",5,100;
+  - Id: 312446
+    AegisName: aegis_312446
+    Name: Magic Ore
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNoGemStone;
+  - Id: 312447
+    AegisName: Justice_Vigor_BO
+    Name: Good Vigor (Biolo)
+    Type: Card
+    SubType: Enchant
+  - Id: 312448
+    AegisName: Injustice_Vigor_BO
+    Name: Evil Vigor (Biolo)
+    Type: Card
+    SubType: Enchant
+  - Id: 312449
+    AegisName: Justice_Vigor_DK
+    Name: Good Vigor (Dragon Knight)
+    Type: Card
+    SubType: Enchant
+  - Id: 312450
+    AegisName: Injustice_Vigor_DK
+    Name: Evil Vigor (Dragon Knight)
+    Type: Card
+    SubType: Enchant
+  - Id: 312451
+    AegisName: Justice_Vigor_SH
+    Name: Good Vigor (Spirit Handler)
+    Type: Card
+    SubType: Enchant
+  - Id: 312452
+    AegisName: Injustice_Vigor_SH
+    Name: Evil Vigor (Spirit Handler)
+    Type: Card
+    SubType: Enchant
+  - Id: 312473
+    AegisName: aegis_312473
+    Name: Latent Release (Archmage III)
+    Type: Card
+    SubType: Enchant
+  - Id: 312475
+    AegisName: aegis_312475
+    Name: No Thoughts
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bCritical,100; bonus bCritAtkRate,100; }",100,10000,BF_WEAPON;
+  - Id: 312476
+    AegisName: aegis_312476
+    Name: Sky Emperor Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@a = getskilllv("SKE_SKY_MASTERY")/2;
+      bonus bCritical,10;
+      bonus2 bAddRace,RC_All,.@a;
+      bonus2 bAddRace,RC_Player_Human,-.@a;
+      bonus2 bAddRace,RC_Player_Doram,-.@a;
+  - Id: 312477
+    AegisName: aegis_312477
+    Name: Elemental Master Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,2*getskilllv("EM_INCREASING_ACTIVITY");
+      bonus2 bMagicAtkEle,Ele_Fire,2*getskilllv("EM_INCREASING_ACTIVITY");
+  - Id: 312478
+    AegisName: aegis_312478
+    Name: Meister Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("MT_M_MACHINE");
+  - Id: 312639
+    AegisName: Justice_Vigor_EM
+    Name: Good Vigor (Elemental Master)
+    Type: Card
+    SubType: Enchant
+  - Id: 312640
+    AegisName: Justice_Vigor_WH
+    Name: Good Vigor (Windhawk)
+    Type: Card
+    SubType: Enchant
+  - Id: 312641
+    AegisName: Justice_Vigor_SKE
+    Name: Good Vigor (Sky Emperor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312642
+    AegisName: Injustice_Vigor_EM
+    Name: Evil Vigor (Elemental Master)
+    Type: Card
+    SubType: Enchant
+  - Id: 312643
+    AegisName: Injustice_Vigor_WH
+    Name: Evil Vigor (Windhawk)
+    Type: Card
+    SubType: Enchant
+  - Id: 312644
+    AegisName: Injustice_Vigor_SKE
+    Name: Evil Vigor (Sky Emperor)
+    Type: Card
+    SubType: Enchant
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -76989,6 +78488,18 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001282
+    AegisName: Imperfect_Rune
+    Name: Imperfect Rune
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001283
+    AegisName: Perfect_Rune
+    Name: Perfect Rune
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1001289
     AegisName: Bar_D_Docu_1
     Name: In-depth 1st floor research material    # !todo check english name
@@ -77354,6 +78865,609 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001359
+    AegisName: Unidentified_Bug
+    Name: Unidentified Bug    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001360
+    AegisName: R_Saphir_Hall_OS
+    Name: Printed Saphir Mace-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001361
+    AegisName: R_ElectricFox_OS
+    Name: Printed Electric Fox-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001362
+    AegisName: R_Rutilus_Stick_OS
+    Name: Printed Rutilus Stick-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001363
+    AegisName: R_Circuit_Board_OS
+    Name: Printed Circuit Board-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001364
+    AegisName: R_Boost_Lance_OS
+    Name: Printed Boost Lance-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001365
+    AegisName: R_Blasti_OS
+    Name: Printed Blasti-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001366
+    AegisName: R_Beam_Claymore_OS
+    Name: Printed Beam Claymor-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001367
+    AegisName: R_Cannon_Rapier_OS
+    Name: Printed Cannon Rapier-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001368
+    AegisName: R_AC_B44_OS
+    Name: Printed AC-B44-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001369
+    AegisName: R_Virtual_Bow_OS
+    Name: Printed Virtual Bow-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001370
+    AegisName: R_HR_S55_OS
+    Name: Printed HR-S55-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001371
+    AegisName: R_MH_P89_OS
+    Name: Printed MH-P89-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001372
+    AegisName: R_Kuroiro_OS
+    Name: Printed Kuroiro-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001373
+    AegisName: R_Meuchler_OS
+    Name: Printed Meuchler-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001374
+    AegisName: R_Burning_Knuckle_OS
+    Name: Printed Burning Knuckle-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001375
+    AegisName: R_Ultio_Spes_OS
+    Name: Printed Ultio-OS
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001376
+    AegisName: aegis_1001376
+    Name: Barmund Stuffed Doll    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001377
+    AegisName: R_Auto_BC_R
+    Name: Printed Automatic Battle Chip R
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001378
+    AegisName: R_Auto_B_R
+    Name: Printed Automatic Booster R
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001379
+    AegisName: R_Auto_Armor_A
+    Name: Printed Automatic Armor A-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001380
+    AegisName: R_Auto_Engine_A
+    Name: Printed Automatic Engine wing A-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001381
+    AegisName: R_Auto_Leg_A
+    Name: Printed Automatic Leg A-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001382
+    AegisName: R_Auto_BC_L
+    Name: Printed Automatic Battle Chip L
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001383
+    AegisName: R_Auto_B_L
+    Name: Printed Automatic Booster L
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001384
+    AegisName: R_Auto_Armor_B
+    Name: Printed Automatic Armor B-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001385
+    AegisName: R_Auto_Engine_B
+    Name: Printed Automatic Engine wing B-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001386
+    AegisName: R_Auto_Leg_B
+    Name: Printed Automatic Leg B-type
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001387
+    AegisName: R_Ep172_1h_Sword
+    Name: Printed Hypocrisy Machine
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001388
+    AegisName: R_Ep172_1h_Wand
+    Name: Printed Greed Wand
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001389
+    AegisName: R_Ep172_1h_Book
+    Name: Printed Sloth Text
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001390
+    AegisName: R_Ep172_1h_Sword2
+    Name: Printed Invidia Bundle
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001391
+    AegisName: R_Ep172_Bh_Bow
+    Name: Printed Superbia String
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001392
+    AegisName: R_Ep172_Bh_Bow2
+    Name: Printed Gula Gun
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001393
+    AegisName: R_Ep172_Bh_knuck
+    Name: Printed Ira Fist
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001394
+    AegisName: R_Ep172_1h_Spear
+    Name: Printed Gluttony Stick
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001395
+    AegisName: R_Ep172_Bh_Spear
+    Name: Printed Luxuria Pierce
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001396
+    AegisName: R_Ep172_1h_Dagger
+    Name: Printed Wrath Rack
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001397
+    AegisName: R_Ep172_Bh_Katar
+    Name: Printed Avaritia Metal
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001398
+    AegisName: R_Ep172_Bh_Staff
+    Name: Printed Pride Stone
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001399
+    AegisName: R_Ep172_1h_Book2
+    Name: Printed Sloth Bible
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001400
+    AegisName: R_Ep172_1h_Dagger2
+    Name: Printed Gula Teeth
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001401
+    AegisName: R_Ep172_1h_Whip
+    Name: Printed Pigritia Spark
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001402
+    AegisName: R_Ep172_1h_Inst
+    Name: Printed Pigritia Wave
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001403
+    AegisName: R_Ep172_Bh_Huuma
+    Name: Printed Wrath Wheel
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001404
+    AegisName: R_Ep172_1h_Hammer
+    Name: Printed Envy Blunt
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001405
+    AegisName: R_Ep172_1h_Foxtail
+    Name: Printed Addiction Plant
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001406
+    AegisName: R_Ep172_1h_Rifle
+    Name: Printed Lust Pointer
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001407
+    AegisName: R_Ep172_1h_Shotgun
+    Name: Printed Lust Shatter
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001408
+    AegisName: R_Ep172_1h_Gatling
+    Name: Printed Lust Crusher
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001409
+    AegisName: R_Ep172_1h_Grenade
+    Name: Printed Lust Boom
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001410
+    AegisName: R_Ep172_1h_Axe
+    Name: Printed Pride Steel
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001411
+    AegisName: R_Ep172_Bh_Sword
+    Name: Printed Hypocrisy Edge
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001412
+    AegisName: R_Ep172_Bh_Bow3
+    Name: Printed Pigritia Rhythm
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001419
+    AegisName: SkyEmperorStone_Robe
+    Name: Sky Emperor Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001420
+    AegisName: ElementalStone_Robe
+    Name: Elemental Master Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001421
+    AegisName: MeisterStone_Robe
+    Name: Meister Stone (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
