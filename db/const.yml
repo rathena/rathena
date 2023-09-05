@@ -46,7 +46,7 @@ Body:
   - Name: JUMPINGCLAN
     Value: 5
   - Name: REPUTATION_EP18
-    Value: 5
+    Value: 3
 
 Footer:
   Imports:
