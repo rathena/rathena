@@ -40229,20 +40229,20 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 500
-    Cooldown: 500
+    Cooldown: 700
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 105
+          Amount: 70
         - Level: 2
-          Amount: 110
+          Amount: 76
         - Level: 3
-          Amount: 115
+          Amount: 82
         - Level: 4
-          Amount: 120
+          Amount: 88
         - Level: 5
-          Amount: 125
+          Amount: 94
       Weapon:
         Bow: true
         Musical: true
@@ -40299,21 +40299,21 @@ Body:
         Amount: 2
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
-    Cooldown: 1000
+    AfterCastActDelay: 350
+    Cooldown: 1150
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 66
+          Amount: 36
         - Level: 2
-          Amount: 72
+          Amount: 40
         - Level: 3
-          Amount: 78
+          Amount: 44
         - Level: 4
-          Amount: 84
+          Amount: 48
         - Level: 5
-          Amount: 90
+          Amount: 52
       Weapon:
         Bow: true
         Musical: true
@@ -40344,31 +40344,21 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp:
-      - Level: 1
-        Amount: 2
-      - Level: 2
-        Amount: 2
-      - Level: 3
-        Amount: 2
-      - Level: 4
-        Amount: 3
-      - Level: 5
-        Amount: 3
+    GiveAp: 2
     CastCancel: true
-    Cooldown: 500
+    Cooldown: 300
     Requires:
       SpCost:
         - Level: 1
-          Amount: 120
+          Amount: 70
         - Level: 2
-          Amount: 132
+          Amount: 76
         - Level: 3
-          Amount: 144
+          Amount: 82
         - Level: 4
-          Amount: 156
+          Amount: 88
         - Level: 5
-          Amount: 168
+          Amount: 94
       Weapon:
         Musical: true
         Whip: true
@@ -40436,15 +40426,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 40
         - Level: 2
-          Amount: 92
+          Amount: 50
         - Level: 3
-          Amount: 104
+          Amount: 60
         - Level: 4
-          Amount: 116
+          Amount: 70
         - Level: 5
-          Amount: 128
+          Amount: 80
       Weapon:
         Musical: true
         Whip: true

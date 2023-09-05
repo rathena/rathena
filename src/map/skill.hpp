@@ -587,6 +587,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 #endif
 int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id);
+//Check sc of bl [Muh]
+int skill_check_bl_sc(struct block_list *target, va_list ap);
 
 // Skill conditions check and remove [Inkfish]
 bool skill_check_condition_castbegin(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
