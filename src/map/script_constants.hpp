@@ -4221,6 +4221,7 @@
 	export_constant(RC2_EP172ALPHA);
 	export_constant(RC2_EP172BETA);
 	export_constant(RC2_EP172BATH);
+	export_constant(RC2_ILLUSION_TURTLE);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -9378,6 +9379,13 @@
 	export_constant(HAT_EF_SUBJECT_AURA_NAVY);
 	export_constant(HAT_EF_20TH_SCARF_J);
 	export_constant(HAT_EF_GHOST_FIRE);
+	export_constant(HAT_EF_SERPENT_SHADOW);
+	export_constant(HAT_EF_C_1ST_EVT_HAT_MSP);
+	export_constant(HAT_EF_C_1ST_EVT_BALLOON_MSP);
+	export_constant(HAT_EF_RABBIT_AURA);
+	export_constant(HAT_EF_ALICE_TEA);
+	export_constant(HAT_EF_C_DARK_LORD_CLOAK);
+	export_constant(HAT_EF_C_SAKURA_FUBUKI);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);

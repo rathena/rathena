@@ -475,8 +475,6 @@ void Core::signal_crash(){
 		this->handle_crash();
 	}
 
-	// Now stop the process
-	exit( EXIT_FAILURE );
 }
 
 void Core::signal_shutdown(){

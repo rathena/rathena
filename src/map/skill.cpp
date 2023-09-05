@@ -2176,21 +2176,6 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 	case ABC_UNLUCKY_RUSH:
 		sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case ABC_CHAIN_REACTION_SHOT:
-		skill_castend_damage_id(src, bl, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick, SD_LEVEL);
-		break;
-	case WH_DEEPBLINDTRAP:// Need official success chances for all 4 Windhawk traps.
-		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_SOLIDTRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_SWIFTTRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_LIGHTNINGSTRIKE, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case WH_FLAMETRAP:
-		sc_start(src, bl, SC_HANDICAPSTATE_CONFLAGRATION, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
 	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
 		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
 	case WM_METALICSOUND:
@@ -5214,7 +5199,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_BANISHING_BUSTER:
 	case RL_SLUGSHOT:
 	case RL_AM_BLAST:
-	case DK_SERVANTWEAPON_ATK:
 	case BO_ACIDIFIED_ZONE_WATER_ATK:
 	case BO_ACIDIFIED_ZONE_GROUND_ATK:
 	case BO_ACIDIFIED_ZONE_WIND_ATK:
@@ -5626,6 +5610,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
+	case DK_SERVANTWEAPON_ATK:
 	case DK_SERVANT_W_PHANTOM:
 	case DK_SERVANT_W_DEMOL:
 	case DK_MADNESS_CRUSHER:
@@ -5667,7 +5652,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
 	case TR_ROSEBLOSSOM_ATK:
-	case TR_METALIC_FURY:
 	case ABC_FROM_THE_ABYSS_ATK:
 	case EM_ELEMENTAL_BUSTER_FIRE:
 	case EM_ELEMENTAL_BUSTER_WATER:
@@ -5815,13 +5799,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case CD_PETITIO:
 				case CD_FRAMEN:
 				case ABC_DEFT_STAB:
-				case ABC_CHAIN_REACTION_SHOT:
 				case EM_EL_FLAMEROCK:
 				case EM_EL_AGE_OF_ICE:
 				case EM_EL_STORM_WIND:
 				case EM_EL_AVALANCHE:
 				case EM_EL_DEADLY_POISON:
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+					break;
+				case ABC_CHAIN_REACTION_SHOT:
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+					map_foreachinrange(skill_area_sub, bl, skill_get_splash(ABC_CHAIN_REACTION_SHOT_ATK, skill_lv), BL_CHAR|BL_SKILL, src, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick + (200 + status_get_amotion(src)), flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 					break;
 				case IQ_THIRD_PUNISH:
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -5859,11 +5846,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 					break;
-				case TR_METALIC_FURY:
-					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-					if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-						skill_area_temp[0] = 1 + rnd()%4;
-					break;
 				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
@@ -5892,6 +5874,24 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				return 0;
 			}
 		}
+		break;
+	case TR_METALIC_FURY:
+	{
+		if (flag & 1) {
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			int area = skill_get_splash(skill_id, skill_lv);
+			int count = map_forcountinarea(skill_check_bl_sc,bl->m,bl->x - area,bl->y - area,bl->x + area,bl->y + area,5,BL_MOB,SC_SOUNDBLEND);
+			if (count > 0){
+				map_foreachinarea(skill_area_sub, bl->m, bl->x - area, bl->y - area, bl->x + area, bl->y + area, BL_CHAR,
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+			} else{
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			}
+		}
+	}
 		break;
 
 	//Place units around target
@@ -12973,7 +12973,6 @@ TIMER_FUNC(skill_castend_id){
 	map_session_data *sd;
 	struct mob_data *md;
 	struct unit_data *ud;
-	status_change *sc = NULL;
 	int flag = 0;
 
 	src = map_id2bl(id);
@@ -12992,6 +12991,7 @@ TIMER_FUNC(skill_castend_id){
 
 	sd = BL_CAST(BL_PC,  src);
 	md = BL_CAST(BL_MOB, src);
+	status_change *sc = status_get_sc(src);
 
 	if( src->prev == NULL ) {
 		ud->skilltimer = INVALID_TIMER;
@@ -13155,6 +13155,11 @@ TIMER_FUNC(skill_castend_id){
 								sd->skill_id_old = ud->skill_id; // Prevents AP bonus on non Retro Spection use.
 							}
 							break;
+						case WH_CRESCIVE_BOLT:
+							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
+								add_ap += 2;
+							}
+							break;
 					}
 
 					status_heal(&sd->bl, 0, 0, add_ap, 0);
@@ -13204,7 +13209,7 @@ TIMER_FUNC(skill_castend_id){
 				else
 					type = SC_STRIPSHIELD;
 
-				if ((sc = status_get_sc(src)) && sc->getSCE(type)) {
+				if (sc && sc->getSCE(type)) {
 					const struct TimerData* timer = get_timer(sc->getSCE(type)->timer);
 
 					if (timer && timer->func == status_change_timer && DIFF_TICK(timer->tick, gettick() + skill_get_time(ud->skill_id, ud->skill_lv)) > 0)
@@ -13233,7 +13238,6 @@ TIMER_FUNC(skill_castend_id){
 			sd->skill_keep_using.tid = add_timer( sd->ud.canact_tick + 100, skill_keep_using, sd->bl.id, 0 );
 		}
 
-		sc = status_get_sc(src);
 		if(sc && sc->count) {
 			if (ud->skill_id != RA_CAMOUFLAGE)
 				status_change_end(src, SC_CAMOUFLAGE); // Applies to the first skill if active
@@ -17000,6 +17004,28 @@ static bool skill_check_condition_sc_required(map_session_data *sd, unsigned sho
 	}
 
 	return true;
+}
+
+/**
+* Check SC of BL
+* @param sc
+* @param skill_id
+* @return 1 if condition is met, 0 otherwise
+**/
+
+int skill_check_bl_sc(struct block_list *target, va_list ap) {
+
+	nullpo_ret(target);
+
+	int sc_id = va_arg(ap,int);
+
+	status_change *sc = status_get_sc(target);
+
+	if (sc && sc->getSCE(sc_id))
+		return 1;
+
+	return 0;
+
 }
 
 /** 
