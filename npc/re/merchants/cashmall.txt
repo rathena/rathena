@@ -330,79 +330,79 @@ itemmall,19,74,5	script	Stylist#cash	91,{
 	close;
 }
 
-itemmall,35,63,3	script	신비한 광대	4_M_PIERROT,{
-	mes "[신비한 광대]";
-	mes "어서와요~";
-	mes "나는 세계 제일의 광대이자 마법사~ 당신의 스테이터스를 완전히 초기화해 드릴 수 있는 세상에 단 하나뿐인 사람이죠~";
+itemmall,35,63,3	script	Mysterious Clown	4_M_PIERROT,{
+	mes "[Mysterious Clown]";
+	mes "Welcome~";
+	mes "I'm the world's greatest clown and wizard~ I'm the only person in the world who can completely reset your status~";
 	next;
-	mes "[신비한 광대]";
-	mes "스테이터스 초기화권 1장을 소지하신채로 제게 말을 걸어주시면 스테이터스를 초기화 해 드리도록 하겠습니다.";
+	mes "[Mysterious Clown]";
+	mes "If you talk to me while holding 1 status reset ticket, I will reset the status.";
 	next;
-	mes "[신비한 광대]";
-	mes "단, 소지품 무게가 1 이상이거나 카트나 페코페코, 팔콘, 워그, 드래곤 혹은 마도기어 등을 이용하고 있으면 초기화 서비스를 받을 수 없으니 주의하세요.";
+	mes "[Mysterious Clown]";
+	mes "However, be aware that you cannot receive the status reset service if your weight more than 1 or if you are using a Cart, Peco Peco, Falcon, Warg, Dragon, or Mado Gear.";
 	next;
 	if(Weight > 0) {
-		mes "[신비한 광대]";
-		mes "이런~ 소지품의 무게가 0이 되지 않으면 초기화를 시켜드릴 수가 없습니다.";
+		mes "[Mysterious Clown]";
+		mes "Oh~ If your weight is not 0, I can't reset your status.";
 		next;
-		mes "[신비한 광대]";
-		mes "가진 모든것을 다 정리하신 후에 다시 저를 찾아오세요.";
+		mes "[Mysterious Clown]";
+		mes "Please come back to me after you have stored everything you have.";
 		close;
 	}
 	if(!(!checkriding() && !checkfalcon() && !checkcart() && !ismounting() && !checkdragon() && !checkwug() && !checkmadogear())) {
-		mes "[신비한 광대]";
-		mes "뭔가 몸에 치렁치렁 달고 계신게 있는 것 같은데... 그건 곤란하죠.";
+		mes "[Mysterious Clown]";
+		mes "It seems like you are riding a creature... That could be troublesome.";
 		next;
-		mes "[신비한 광대]";
-		mes "다시 한번 말씀드리지만 카트나 페코페코, 팔콘, 워그, 드래곤 혹은 마도기어 등을 이용하고 있으면 초기화 서비스를 받을 수 없으니 주의하세요.";
+		mes "[Mysterious Clown]";
+		mes "Again, please note that you cannot receive the status reset service if you are using a Cart, Peco Peco, Falcon, Warg, Dragon or Mado Gear.";
 		close;
 	}
 	if(isbegin_quest(12332) == 1) {
 		if(checkquest(12332,PLAYTIME) == 0) {
 			if(resetstat > 0) {
-				mes "[신비한 광대]";
-				mes "제한시간동안 남은 초기화 횟수는 "+resetstat+"회 군요. 계속 초기화 해보시겠습니까? 어차피 시간이 지나면 초기화권을 사용할 수 없습니다만.";
+				mes "[Mysterious Clown]";
+				mes "The number of resets remaining during the time limit is "+resetstat+" times. Would you like to continue resetting? Anyway, you can't use the status reset right after time passes.";
 			} else { //custom dialog
-				mes "[신비한 광대]";
-				mes "초기화 횟수를 모두 소진했습니다. 제한시간이 지날 때까진 더이상 초기화 서비스를 받을 수 없습니다.";
+				mes "[Mysterious Clown]";
+				mes "You have used up all the reset attempts. You won't be able to receive the status reset service anymore until the time limit expires.";
 				close;
 			}
 		} else if(checkquest(12332,PLAYTIME) == 2) {
-			mes "[신비한 광대]";
-			mes "오우~ 시간이 다 되었군요. 잠시 준비를 하고 있을테니 능력치를 초기화 하고 싶다면 다시 말을 걸어 주세요.";
-			if(resetstat > 0 && countitem(6721)) { //Official dialog. Diaglog added without next;
-				mes "[신비한 광대]";
-				mes "폐기 처분되어야 할 초기화권을 아직 소지하고 계시군요. 이건 제가 수거해 가도록 하겠습니다.";
+			mes "[Mysterious Clown]";
+			mes "Oh~ It seems like time has run out. I'll be preparing for a moment, so if you want to reset your status, please talk to me again.";
+			if(resetstat > 0 && countitem(6721)) {
+				mes "[Mysterious Clown]";
+				mes "It appears you still have a status reset ticket that should be disposed of. I will arrange to collect it.";
 				delitem 6721,1;
 			}
 			erasequest 12332;
 			close;
 		}
 	} else {
-		mes "[신비한 광대]";
-		mes "좋아요. 원하신다면 당신의 스테이터스가 초기화 되는 묘기를 부려보겠어요. 관람료는 스테이터스 초기화권 1장이면 충분해요.";
+		mes "[Mysterious Clown]";
+		mes "Alright. If you wish, I can perform the trick where your status are reset. The admission fee is just one status reset ticket.";
 	}
 	next;
-	if( select( "다음 기회에 하겠다!", "능력치를 초기화 한다!" ) == 1) {
-		mes "[신비한 광대]";
-		mes "그래요, 마음이 바뀌면 다시 절 찾아주세요";
+	if( select( "I will do it next time!", "status reset!" ) == 1) {
+		mes "[Mysterious Clown]";
+		mes "Yes, if you change your mind, come back to me";
 		close;
 	}
 	if((!isbegin_quest(12332) && countitem(6720) < 1) || (isbegin_quest(12332) && countitem(6721) < 1)) {
-		mes "[신비한 광대]";
-		mes "이 묘기는 무료로 해 드리는게 아니라 ^ff0000스테이터스 초기화권^000000 1장을 소지 하셔야합니다.";
+		mes "[Mysterious Clown]";
+		mes "This trick isn't free; you should have 1 ^ff0000status reset ticket^000000 to proceed.";
 		next;
-		mes "[신비한 광대]";
-		mes "또한 최초 초기화 이후 ^ff00001시간동안 2회의 추가 초기화 기회^000000를 드리고 있습니다.";
+		mes "[Mysterious Clown]";
+		mes "Furthermore, after the initial status reset, we also offer ^ff00002 additional status reset opportunities^000000 within the first hour.";
 		next;
-		mes "[신비한 광대]";
-		mes "물론 1시간 이내에 추가로 2회의 초기화까지 다 하셨다면 초기화권이 있더라도 추가적인 초기화를 할 수 없다는 점을 유의하셔야합니다.";
+		mes "[Mysterious Clown]";
+		mes "Certainly, please be aware that even if you have the status reset tickets, you won't be able to perform additional status reset beyond the initial 2 if you've already used them within the first hour.";
 		close;
 	}
 	specialeffect2 EF_LORD;
 	resetstatus;
-	mes "[신비한 광대]";
-	mes "좋아요~~ 이제 다 되었습니다. 너무 순식간이라 모르겠다고요? 스테이터스창을 열어 확인해보세요 모든게 변해있을테니까...";
+	mes "[Mysterious Clown]";
+	mes "Great~~ It's all done now. Can't believe it happened so quickly, right? Go ahead and open your status window to check; everything should have changed...";
 	if(!isbegin_quest(12332)) {
 		delitem 6720,1;
 		getitem 6721,1;
@@ -412,8 +412,8 @@ itemmall,35,63,3	script	신비한 광대	4_M_PIERROT,{
 		resetstat = resetstat - 1;
 	if(resetstat == 0) {//custom dialog
 		next;
-		mes "[신비한 광대]";
-		mes "초기화 횟수를 모두 소진하여 초기화권은 회수해드리도록 하겠습니다.";
+		mes "[Mysterious Clown]";
+		mes "I will collect the status reset tickets since you have used up all the reset attempts.";
 		delitem 6721,1;
 	}
 	close;
