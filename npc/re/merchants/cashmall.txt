@@ -410,10 +410,11 @@ itemmall,35,63,3	script	신비한 광대	4_M_PIERROT,{
 		set resetstat,2;
 	} else
 		resetstat = resetstat - 1;
-	if(resetstat == 0) //custom dialog
+	if(resetstat == 0) {//custom dialog
 		next;
 		mes "[신비한 광대]";
 		mes "초기화 횟수를 모두 소진하여 초기화권은 회수해드리도록 하겠습니다.";
 		delitem 6721,1;
+	}
 	close;
 }
