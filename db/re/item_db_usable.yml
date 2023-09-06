@@ -52032,6 +52032,12 @@ Body:
     Script: |
       specialeffect2 EF_BASH3D;
       sc_start SC_ALMIGHTY,3600000,10;
+      sc_start SC_FOOD_STR_CASH,3600000,10;
+      sc_start SC_FOOD_AGI_CASH,3600000,10;
+      sc_start SC_FOOD_INT_CASH,3600000,10;
+      sc_start SC_FOOD_DEX_CASH,3600000,10;
+      sc_start SC_FOOD_LUK_CASH,3600000,10;
+      sc_start SC_FOOD_VIT_CASH,3600000,10;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 22820
     AegisName: G_ASPD_Potion
