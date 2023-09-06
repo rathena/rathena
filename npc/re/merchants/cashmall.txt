@@ -383,7 +383,7 @@ itemmall,35,63,3	script	Mysterious Clown	4_M_PIERROT,{
 		mes "Alright. If you wish, I can perform the trick where your status are reset. The admission fee is just one status reset ticket.";
 	}
 	next;
-	if( select( "I will do it next time!", "status reset!" ) == 1) {
+	if( select( "I will do it next time!", "Reset status!" ) == 1) {
 		mes "[Mysterious Clown]";
 		mes "Yes, if you change your mind, come back to me";
 		close;
