@@ -329,3 +329,91 @@ itemmall,19,74,5	script	Stylist#cash	91,{
 	mes "to see you again. Take care!";
 	close;
 }
+
+itemmall,35,63,3	script	신비한 광대	4_M_PIERROT,{
+	mes "[신비한 광대]";
+	mes "어서와요~";
+	mes "나는 세계 제일의 광대이자 마법사~ 당신의 스테이터스를 완전히 초기화해 드릴 수 있는 세상에 단 하나뿐인 사람이죠~";
+	next;
+	mes "[신비한 광대]";
+	mes "스테이터스 초기화권 1장을 소지하신채로 제게 말을 걸어주시면 스테이터스를 초기화 해 드리도록 하겠습니다.";
+	next;
+	mes "[신비한 광대]";
+	mes "단, 소지품 무게가 1 이상이거나 카트나 페코페코, 팔콘, 워그, 드래곤 혹은 마도기어 등을 이용하고 있으면 초기화 서비스를 받을 수 없으니 주의하세요.";
+	next;
+	if(Weight > 0) {
+		mes "[신비한 광대]";
+		mes "이런~ 소지품의 무게가 0이 되지 않으면 초기화를 시켜드릴 수가 없습니다.";
+		next;
+		mes "[신비한 광대]";
+		mes "가진 모든것을 다 정리하신 후에 다시 저를 찾아오세요.";
+		close;
+	}
+	if(!(!checkriding() && !checkfalcon() && !checkcart() && !ismounting() && !checkdragon() && !checkwug() && !checkmadogear())) {
+		mes "[신비한 광대]";
+		mes "뭔가 몸에 치렁치렁 달고 계신게 있는 것 같은데... 그건 곤란하죠.";
+		next;
+		mes "[신비한 광대]";
+		mes "다시 한번 말씀드리지만 카트나 페코페코, 팔콘, 워그, 드래곤 혹은 마도기어 등을 이용하고 있으면 초기화 서비스를 받을 수 없으니 주의하세요.";
+		close;
+	}
+	if(isbegin_quest(12332) == 1) {
+		if(checkquest(12332,PLAYTIME) == 0) {
+			if(resetstat > 0) {
+				mes "[신비한 광대]";
+				mes "제한시간동안 남은 초기화 횟수는 "+resetstat+"회 군요. 계속 초기화 해보시겠습니까? 어차피 시간이 지나면 초기화권을 사용할 수 없습니다만.";
+			} else { //custom dialog
+				mes "[신비한 광대]";
+				mes "초기화 횟수를 모두 소진했습니다. 제한시간이 지날 때까진 더이상 초기화 서비스를 받을 수 없습니다.";
+				close;
+			}
+		} else if(checkquest(12332,PLAYTIME) == 2) {
+			mes "[신비한 광대]";
+			mes "오우~ 시간이 다 되었군요. 잠시 준비를 하고 있을테니 능력치를 초기화 하고 싶다면 다시 말을 걸어 주세요.";
+			if(resetstat > 0 && countitem(6721)) { //Official dialog. Diaglog added without next;
+				mes "[신비한 광대]";
+				mes "폐기 처분되어야 할 초기화권을 아직 소지하고 계시군요. 이건 제가 수거해 가도록 하겠습니다.";
+				delitem 6721,1;
+			}
+			erasequest 12332;
+			close;
+		}
+	} else {
+		mes "[신비한 광대]";
+		mes "좋아요. 원하신다면 당신의 스테이터스가 초기화 되는 묘기를 부려보겠어요. 관람료는 스테이터스 초기화권 1장이면 충분해요.";
+	}
+	next;
+	if( select( "다음 기회에 하겠다!", "능력치를 초기화 한다!" ) == 1) {
+		mes "[신비한 광대]";
+		mes "그래요, 마음이 바뀌면 다시 절 찾아주세요";
+		close;
+	}
+	if((!isbegin_quest(12332) && countitem(6720) < 1) || (isbegin_quest(12332) && countitem(6721) < 1)) {
+		mes "[신비한 광대]";
+		mes "이 묘기는 무료로 해 드리는게 아니라 ^ff0000스테이터스 초기화권^000000 1장을 소지 하셔야합니다.";
+		next;
+		mes "[신비한 광대]";
+		mes "또한 최초 초기화 이후 ^ff00001시간동안 2회의 추가 초기화 기회^000000를 드리고 있습니다.";
+		next;
+		mes "[신비한 광대]";
+		mes "물론 1시간 이내에 추가로 2회의 초기화까지 다 하셨다면 초기화권이 있더라도 추가적인 초기화를 할 수 없다는 점을 유의하셔야합니다.";
+		close;
+	}
+	specialeffect2 EF_LORD;
+	resetstatus;
+	mes "[신비한 광대]";
+	mes "좋아요~~ 이제 다 되었습니다. 너무 순식간이라 모르겠다고요? 스테이터스창을 열어 확인해보세요 모든게 변해있을테니까...";
+	if(!isbegin_quest(12332)) {
+		delitem 6720,1;
+		getitem 6721,1;
+		setquest 12332;
+		set resetstat,2;
+	} else
+		resetstat = resetstat - 1;
+	if(resetstat == 0) //custom dialog
+		next;
+		mes "[신비한 광대]";
+		mes "초기화 횟수를 모두 소진하여 초기화권은 회수해드리도록 하겠습니다.";
+		delitem 6721,1;
+	close;
+}
