@@ -2271,8 +2271,6 @@ int status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 		val += 1 + skill_lv;
 	if ((skill_lv = pc_checkskill(sd,GS_SINGLEACTION)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		val += ((skill_lv + 1) / 2);
-	if ((skill_lv = pc_checkskill(sd, RG_PLAGIARISM)) > 0)
-		val += skill_lv;
 	if (pc_isriding(sd))
 		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
 	else if (pc_isridingdragon(sd))
@@ -8218,8 +8216,12 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 		map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
 
-		if (sd && (skill_lv = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
-			bonus += skill_lv;
+		if (sd) {
+			if ((skill_lv = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
+				bonus += skill_lv;
+			if ((skill_lv = pc_checkskill(sd, RG_PLAGIARISM)) > 0)
+				bonus += skill_lv;
+		}
 	}
 
 	return bonus;
