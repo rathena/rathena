@@ -358,7 +358,7 @@ itemmall,35,63,3	script	Mysterious Clown	4_M_PIERROT,{
 		close;
 	}
 	if(isbegin_quest(12332) == 1) {
-		if(checkquest(12332,PLAYTIME) == 0) {
+		if(checkquest(12332,PLAYTIME) == 0 || checkquest(12332,PLAYTIME) == 1) {
 			if(resetstat > 0) {
 				mes "[Mysterious Clown]";
 				mes "The number of resets remaining during the time limit is " + resetstat + " times. Would you like to continue resetting? Anyway, you can't use the status reset until some time passes.";
