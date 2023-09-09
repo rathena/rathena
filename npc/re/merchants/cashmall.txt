@@ -349,7 +349,7 @@ itemmall,35,63,3	script	Mysterious Clown	4_M_PIERROT,{
 		mes "Please come back to me after you have stored everything you have.";
 		close;
 	}
-	if (checkriding() || checkfalcon() || checkcart() || ismounting() || checkdragon() || checkwug() || checkmadogear())) {
+	if (checkriding() || checkfalcon() || checkcart() || ismounting() || checkdragon() || checkwug() || checkmadogear()) {
 		mes "[Mysterious Clown]";
 		mes "It seems like you are riding a creature... That could be troublesome.";
 		next;
