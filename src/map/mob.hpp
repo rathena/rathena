@@ -269,6 +269,7 @@ struct s_mob_db {
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
+	std::string& get_name();
 };
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {

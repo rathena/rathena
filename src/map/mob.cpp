@@ -4018,6 +4018,14 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 	return false;
 }
 
+std::string& s_mob_db::get_name(){
+	if( battle_config.mob_names_type == 0 ){
+		return this->name;
+	}else{
+		return this->jname;
+	}
+}
+
 //Flag values:
 //&1: Set special ai (fight mobs, not players)
 //If mode is not passed, a default aggressive mode is used.
@@ -4209,7 +4217,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 	sd->fd = fd;
 
 	//Finally, spawn it.
-	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--", mob_id, event, SZ_SMALL, AI_NONE);
+	md = mob_once_spawn_sub(&sd->bl, m, x, y, sd->status.name, mob_id, event, SZ_SMALL, AI_NONE);
 	if (!md) return 0; //Failed?
 
 	md->special_state.clone = 1;
