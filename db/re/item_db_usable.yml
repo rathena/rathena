@@ -2075,64 +2075,6 @@ Body:
       Sitting: true
     Script: |
       itemskill "MG_FROSTDIVER",1;
-  - Id: 6046
-    AegisName: Clothing_Dye_Coupon
-    Name: Clothing Dye Coupon
-    Type: Usable
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6047
-    AegisName: Clothing_Dye_Coupon2
-    Name: Clothing Dye Coupon II
-    Type: Usable
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6720
-    AegisName: Status_Reset_Coupon
-    Name: Status Reset Coupon
-    Type: Cash
-    Buy: 10
-    EquipLevelMin: 1
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      resetstatus;
-  - Id: 6721
-    AegisName: Status_Reset_Coupon2
-    Name: Status Reset Coupon
-    Type: Cash
-    Buy: 10
-    EquipLevelMin: 1
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      resetstatus;
   - Id: 7037
     AegisName: Trade_Coupon
     Name: Coupon
@@ -7310,7 +7252,6 @@ Body:
     Name: Field Manual
     Type: Usable
     Buy: 2
-    Weight: 10
     Trade:
       NoDrop: true
       NoTrade: true
@@ -7321,7 +7262,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_EXPBOOST,1800000,200;
+      sc_start SC_EXPBOOST,1800000,50;
   - Id: 12264
     AegisName: Comp_Bubble_Gum
     Name: Bubble Gum
@@ -7337,7 +7278,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ITEMBOOST,1800000,200;
+      sc_start SC_ITEMBOOST,1800000,100;
   - Id: 12265
     AegisName: Comp_Insurance
     Name: Life Insurrance
@@ -10717,14 +10658,6 @@ Body:
     AegisName: Poison_Bottle_Box2
     Name: Deadly Poison Box
     Type: Usable
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       getitem 678,30;
   - Id: 12551
@@ -11011,7 +10944,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
-      bonus_script "{ bonus2 bHPRegenRate,(MaxHp/100*6),3000; }",600;
+      sc_start4 SC_G_LIFEPOTION,600000,-6,3,0,0;
   - Id: 12579
     AegisName: Ring_Of_Valkyrie_Box
     Name: Ring Of Valkyrie Box
@@ -14153,6 +14086,12 @@ Body:
     Script: |
       specialeffect2 EF_BASH3D;
       sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_FOOD_STR_CASH,1800000,10;
+      sc_start SC_FOOD_AGI_CASH,1800000,10;
+      sc_start SC_FOOD_INT_CASH,1800000,10;
+      sc_start SC_FOOD_DEX_CASH,1800000,10;
+      sc_start SC_FOOD_LUK_CASH,1800000,10;
+      sc_start SC_FOOD_VIT_CASH,1800000,10;
   - Id: 12884
     AegisName: Infinite_Center_Potion
     Name: Infinite Concentration Potion
@@ -34616,7 +34555,7 @@ Body:
   - Id: 14717
     AegisName: 2013_RWC_Scroll
     Name: 2013 RWC Scroll
-    Type: Cash
+    Type: Usable
     Buy: 10
     Weight: 10
     Trade:
@@ -46169,7 +46108,7 @@ Body:
       rentitem 15023,86400;
   - Id: 17314
     AegisName: C_Wing_Of_Fly_1Day_Box
-    Name: Infinite Giant Fly Wing Box
+    Name: Infinite Fly Wing Box
     Type: Cash
     Buy: 10
     Weight: 10
@@ -46182,7 +46121,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 23023,86400;
+      rentitem 12887,86400;
   - Id: 17315
     AegisName: Silvervine_Box10_
     Name: Lucky Silvervine Fruit Box(10)
@@ -47361,7 +47300,7 @@ Body:
       getitem 12210,2;
       getitem 12883,2;
       getitem 14600,2;
-      /*getitem Mysterious Water of Life,6;*/
+      getitem 12832,6;
       if (!rand(100))
          getitem 22823,1;
   - Id: 17502
@@ -47383,7 +47322,7 @@ Body:
       getitem 12210,20;
       getitem 12883,20;
       getitem 14600,20;
-      /*getitem Mysterious Water of Life,60;*/
+      getitem 12832,60;
       if (!rand(100))
          getitem 22823,11;
   - Id: 17507
@@ -47602,7 +47541,7 @@ Body:
     Script: |
       getitem 14534,20;
       getitem 14535,20;
-      /*getitem Mysterious Water of Life,20;*/
+      getitem 12832,20;
       getitem 22842,1;
   - Id: 17522
     AegisName: 3_Life_Potion_10pack5
@@ -47621,7 +47560,7 @@ Body:
     Script: |
       getitem 14534,200;
       getitem 14535,200;
-      /*getitem Mysterious Water of Life,200;*/
+      getitem 12832,200;
       getitem 22842,11;
   - Id: 17523
     AegisName: Costama_Egg29
@@ -50618,7 +50557,7 @@ Body:
   - Id: 22554
     AegisName: First_Aid_Kit_B
     Name: First Aid Box
-    Type: Cash
+    Type: Usable
     Buy: 10
     Weight: 200
     Trade:
@@ -52059,14 +51998,6 @@ Body:
     Weight: 10
     NoUse:
       Sitting: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
       sc_start2 SC_M_LIFEPOTION,3600000,-4,3;
@@ -52078,14 +52009,6 @@ Body:
     Weight: 10
     NoUse:
       Sitting: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
       sc_start2 SC_S_LIFEPOTION,3600000,-5,5;
@@ -52097,14 +52020,6 @@ Body:
     Weight: 10
     NoUse:
       Sitting: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
       sc_start2 SC_L_LIFEPOTION,3600000,-7,4;
@@ -52114,16 +52029,15 @@ Body:
     Name: True Almighty
     Type: Usable
     Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
       sc_start SC_ALMIGHTY,3600000,10;
+      sc_start SC_FOOD_STR_CASH,3600000,10;
+      sc_start SC_FOOD_AGI_CASH,3600000,10;
+      sc_start SC_FOOD_INT_CASH,3600000,10;
+      sc_start SC_FOOD_DEX_CASH,3600000,10;
+      sc_start SC_FOOD_LUK_CASH,3600000,10;
+      sc_start SC_FOOD_VIT_CASH,3600000,10;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 22820
     AegisName: G_ASPD_Potion
@@ -52132,17 +52046,6 @@ Body:
     Weight: 10
     NoUse:
       Sitting: true
-    Delay:
-      Duration: 3600000
-      Status: Reuse_Limit_Aspd_Potion
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       sc_start SC_ATTHASTE_CASH,3600000,3;
       sc_start SC_SPEEDUP0,600000,25;
@@ -52153,14 +52056,6 @@ Body:
     Weight: 10
     NoUse:
       Sitting: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
       sc_start SC_2011RWC_SCROLL,3600000,0;
@@ -58113,6 +58008,8 @@ Body:
     Name: Giant Orc Helm Combination SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23819
@@ -58120,6 +58017,8 @@ Body:
     Name: Crimson Rose SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23820
@@ -58127,6 +58026,8 @@ Body:
     Name: Grand Peco Hairband SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23821
@@ -58134,6 +58035,8 @@ Body:
     Name: Moonflower Hair Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23822
@@ -58141,6 +58044,8 @@ Body:
     Name: Wings of 8 Purgatories SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23823
@@ -58148,6 +58053,8 @@ Body:
     Name: Tare Neko Cru SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23824
@@ -58155,6 +58062,8 @@ Body:
     Name: Glory Soccer Ball Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23825
@@ -58162,6 +58071,8 @@ Body:
     Name: Wicket marching Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23826
@@ -58169,6 +58080,8 @@ Body:
     Name: Wandering Wolf Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23827
@@ -58176,6 +58089,8 @@ Body:
     Name: Status Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23828
@@ -58183,6 +58098,8 @@ Body:
     Name: Elegant Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23829
@@ -58190,6 +58107,8 @@ Body:
     Name: Tension Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23830
@@ -58197,6 +58116,8 @@ Body:
     Name: Restore Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23831
@@ -58204,6 +58125,8 @@ Body:
     Name: Healing Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23832
@@ -58211,6 +58134,8 @@ Body:
     Name: Amistr Cap SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23833
@@ -58218,6 +58143,8 @@ Body:
     Name: Tiger King Doll Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23834
@@ -58225,6 +58152,8 @@ Body:
     Name: Bacsojin Doll SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23835
@@ -58232,6 +58161,8 @@ Body:
     Name: Candy Pouch Bag SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23836
@@ -58239,6 +58170,8 @@ Body:
     Name: Gold Fish Head Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23837
@@ -58246,6 +58179,8 @@ Body:
     Name: Survival SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23838
@@ -58253,6 +58188,8 @@ Body:
     Name: Toy Sringe SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23839
@@ -58260,6 +58197,8 @@ Body:
     Name: Indigor Rear Ribbon SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23840
@@ -58267,6 +58206,8 @@ Body:
     Name: Magical Booster SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23841
@@ -58274,6 +58215,8 @@ Body:
     Name: Rosario's Necklace SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23842
@@ -58281,6 +58224,8 @@ Body:
     Name: Spirit Crown SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23843
@@ -58288,6 +58233,8 @@ Body:
     Name: Guard's Cap SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23844
@@ -58295,6 +58242,8 @@ Body:
     Name: Bandit's Hood SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23845
@@ -58302,6 +58251,8 @@ Body:
     Name: Angel's Blessing SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23846
@@ -58309,6 +58260,8 @@ Body:
     Name: Rabbit Magic Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23847
@@ -58316,6 +58269,8 @@ Body:
     Name: Anubis Helm SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23848
@@ -58323,6 +58278,8 @@ Body:
     Name: Imp Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23849
@@ -58330,6 +58287,8 @@ Body:
     Name: Red Marching Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23850
@@ -58337,6 +58296,8 @@ Body:
     Name: Ifrit Mask SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23851
@@ -58344,6 +58305,8 @@ Body:
     Name: Incarnation Of Morocc Doll SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23852
@@ -58351,6 +58314,8 @@ Body:
     Name: Samambaia SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23853
@@ -58358,6 +58323,8 @@ Body:
     Name: Chick Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23854
@@ -58365,6 +58332,8 @@ Body:
     Name: Class Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23855
@@ -58372,6 +58341,8 @@ Body:
     Name: Spell Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23856
@@ -58379,6 +58350,8 @@ Body:
     Name: Size Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23857
@@ -58386,6 +58359,8 @@ Body:
     Name: Race Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23858
@@ -58393,6 +58368,8 @@ Body:
     Name: Stability Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23859
@@ -58400,6 +58377,8 @@ Body:
     Name: Special Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23860
@@ -58407,6 +58386,8 @@ Body:
     Name: Physical Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23861
@@ -58414,6 +58395,8 @@ Body:
     Name: Magical Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23862
@@ -58421,6 +58404,8 @@ Body:
     Name: EXP Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23863
@@ -58428,6 +58413,8 @@ Body:
     Name: Mad Bunny SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23864
@@ -58435,6 +58422,8 @@ Body:
     Name: Archangel's Wings SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23865
@@ -58442,6 +58431,8 @@ Body:
     Name: Smokie's Transformation Leaf SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23866
@@ -58449,6 +58440,8 @@ Body:
     Name: Ifrit's Ear SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23867
@@ -58456,6 +58449,8 @@ Body:
     Name: Heartwing Band SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23868
@@ -58463,6 +58458,8 @@ Body:
     Name: Sigrun's Wings SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23869
@@ -58470,6 +58467,8 @@ Body:
     Name: Cat Headdress SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23870
@@ -58477,6 +58476,8 @@ Body:
     Name: Noble Mask SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23871
@@ -58484,6 +58485,8 @@ Body:
     Name: Gemstone Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23872
@@ -58491,6 +58494,8 @@ Body:
     Name: Bearers Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23873
@@ -58498,6 +58503,8 @@ Body:
     Name: Hasty Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23874
@@ -58505,6 +58512,8 @@ Body:
     Name: Critical Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23875
@@ -58512,6 +58521,8 @@ Body:
     Name: Mortal Blow Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23876
@@ -58519,6 +58530,8 @@ Body:
     Name: Fallen Angel Wings SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23877
@@ -58526,6 +58539,8 @@ Body:
     Name: Adventurer's Backpack SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23878
@@ -58550,6 +58565,8 @@ Body:
     Name: Spell Circuit SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23880
@@ -58557,6 +58574,8 @@ Body:
     Name: New Wave Sunglasses SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23881
@@ -58564,6 +58583,8 @@ Body:
     Name: Giant Snake Breath SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23882
@@ -58571,6 +58592,8 @@ Body:
     Name: Judge Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23883
@@ -58578,6 +58601,8 @@ Body:
     Name: Dog Officer SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23884
@@ -58585,6 +58610,8 @@ Body:
     Name: Fancy Feather Hat SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23885
@@ -58592,6 +58619,8 @@ Body:
     Name: Amistr Beret SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23886
@@ -58599,6 +58628,8 @@ Body:
     Name: General Helm SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23887
@@ -58606,6 +58637,8 @@ Body:
     Name: Cursed Knight's Shield SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23888
@@ -58613,6 +58646,8 @@ Body:
     Name: Penetration Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23889
@@ -58620,6 +58655,8 @@ Body:
     Name: Tempest Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23890
@@ -58627,6 +58664,8 @@ Body:
     Name: Blitz Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23891
@@ -58634,6 +58673,8 @@ Body:
     Name: Reload Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23892
@@ -58641,6 +58682,8 @@ Body:
     Name: Force and Spirit Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23893
@@ -58648,6 +58691,8 @@ Body:
     Name: Infinity Shadow SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23894
@@ -58655,6 +58700,8 @@ Body:
     Name: Wickebine's Black Cat's Ear SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23896
@@ -58722,6 +58769,12 @@ Body:
     Script: |
       specialeffect2 EF_BASH3D;
       sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_FOOD_STR_CASH,1800000,10;
+      sc_start SC_FOOD_AGI_CASH,1800000,10;
+      sc_start SC_FOOD_INT_CASH,1800000,10;
+      sc_start SC_FOOD_DEX_CASH,1800000,10;
+      sc_start SC_FOOD_LUK_CASH,1800000,10;
+      sc_start SC_FOOD_VIT_CASH,1800000,10;
   - Id: 23900
     AegisName: Time_Overload_Box
     Name: Temporal Transcendence Box
@@ -65428,7 +65481,6 @@ Body:
     Name: Beast's Leather Shoes Combination Scroll
     Type: DelayConsume
     Weight: 10
-    EquipLevelMin: 200
     Flags:
       BuyingStore: true
     Script: |
@@ -65438,7 +65490,6 @@ Body:
     Name: Pirate Captain's Coat Combination Scroll
     Type: DelayConsume
     Weight: 10
-    EquipLevelMin: 200
     Flags:
       BuyingStore: true
     Script: |
@@ -65448,7 +65499,6 @@ Body:
     Name: Phreeoni Wing Suit Combination Scroll
     Type: DelayConsume
     Weight: 10
-    EquipLevelMin: 200
     Flags:
       BuyingStore: true
     Script: |
