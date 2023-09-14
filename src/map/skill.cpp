@@ -9792,6 +9792,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			block_list* tbl = map_id2bl(md->target_id);
 
 			if (tbl) {
+				md->state.can_escape = 1;
 				mob_unlocktarget(md, tick);
 				unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2); // Send distance in skill level > 1
 			}
