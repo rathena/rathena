@@ -482,11 +482,8 @@ static TIMER_FUNC(unit_walktoxy_timer)
 #endif
 
 		// Remove any possible escape states present for mobs once they stopped moving.
-		if (bl->type == BL_MOB) {
-			mob_data *md = BL_CAST(BL_MOB, bl);
-
-			if (md != nullptr)
-				md->state.can_escape = 0;
+		if (md != nullptr) {
+			md->state.can_escape = 0;
 		}
 
 		ud->state.force_walk = false;
