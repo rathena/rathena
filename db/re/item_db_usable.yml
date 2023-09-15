@@ -13924,7 +13924,6 @@ Body:
     AegisName: Golden_Potion_RG
     Name: RG Golden Potion
     Type: Delayconsume
-    Buy: 0
     Weight: 30
     Delay:
       Duration: 1000
