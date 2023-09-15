@@ -13923,8 +13923,7 @@ Body:
   - Id: 12858
     AegisName: Golden_Potion_RG
     Name: RG Golden Potion
-    Type: Healing
-    Buy: 0
+    Type: Delayconsume
     Weight: 30
     Delay:
       Duration: 1000
