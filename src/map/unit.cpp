@@ -481,6 +481,11 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		}
 #endif
 
+		// Remove any possible escape states present for mobs once they stopped moving.
+		if (md != nullptr) {
+			md->state.can_escape = 0;
+		}
+
 		ud->state.force_walk = false;
 
 		if (ud->walk_done_event[0]){
@@ -1560,7 +1565,7 @@ int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int typ
 			if (bl->type == BL_MOB) {
 				mob_data *md = BL_CAST(BL_MOB, bl);
 
-				if (md && md->state.alchemist == 1) // Sphere Mine needs to escape, don't stop it
+				if (md && md->state.can_escape == 1) // Mob needs to escape, don't stop it
 					return 0;
 			}
 			unit_stop_walking(bl,4); //Unit might still be moving even though it can't move
