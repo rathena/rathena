@@ -11274,7 +11274,6 @@ Body:
           - S_Liberation_Shoes
     Script: |
       bonus2 bAddClass,Class_Boss,5;
-      bonus2 bMagicAddClass,Class_Boss,5;
   - Combos:
       - Combo:
           - S_Brutal_Shield
@@ -22425,18 +22424,12 @@ Body:
   - Combos:
       - Combo:
           - Cvt_Physical_Wing
-          - Battle_Processor
-      - Combo:
-          - Cvt_Physical_Wing
           - Battle_Processor_
     Script: |
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
       bonus bAtkRate,7;
   - Combos:
-      - Combo:
-          - Cvt_Physical_Wing
-          - Deepblue_Sunglasses
       - Combo:
           - Deepblue_Sunglasses_
           - Cvt_Physical_Wing
@@ -22453,17 +22446,11 @@ Body:
   - Combos:
       - Combo:
           - Cvt_Magical_Wing
-          - Battle_Processor
-      - Combo:
-          - Cvt_Magical_Wing
           - Battle_Processor_
     Script: |
       bonus2 bMagicAtkEle,Ele_All,5;
       bonus bMatkRate,7;
   - Combos:
-      - Combo:
-          - Cvt_Magical_Wing
-          - Deepblue_Sunglasses
       - Combo:
           - Deepblue_Sunglasses_
           - Cvt_Magical_Wing

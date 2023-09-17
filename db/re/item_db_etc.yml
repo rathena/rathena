@@ -15891,6 +15891,30 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 6046
+    AegisName: Clothing_Dye_Coupon
+    Name: Clothing Dye Coupon
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6047
+    AegisName: Clothing_Dye_Coupon2
+    Name: Clothing Dye Coupon II
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6048
     AegisName: Unidentified_Mineral
     Name: Unidentified Mineral
@@ -20987,6 +21011,8 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6650
     AegisName: Shabby_Ring
     Name: Old Ring
@@ -21557,6 +21583,36 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 100
+  - Id: 6720
+    AegisName: Status_Reset_Coupon
+    Name: Status Reset Coupon
+    Type: Etc
+    Buy: 10
+    EquipLevelMin: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6721
+    AegisName: Status_Reset_Coupon2
+    Name: Status Reset Coupon
+    Type: Etc
+    Buy: 10
+    EquipLevelMin: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6722
     AegisName: Delicious_Clam
     Name: Delicious Clam Flesh
@@ -23895,6 +23951,14 @@ Body:
     AegisName: Evt_Cos_Coin
     Name: Event Stone Coin
     Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 7001
     AegisName: Mould_Powder
     Name: Mould Powder
@@ -36555,6 +36619,8 @@ Body:
     Name: Orc Warlord Token
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25509
     AegisName: Shining_Round_Shell
     Name: Shiny Round Shell
@@ -36624,6 +36690,8 @@ Body:
     Name: White Snake's Tear
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25627
     AegisName: Gold_Card
     Name: Gold Card
@@ -36635,6 +36703,8 @@ Body:
     Name: Knotted Letter
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25633
     AegisName: Token_Of_Wootan
     Name: Wootan's Token
@@ -39632,7 +39702,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddEffWhenHit,Eff_Freeze,3000 + (readparam(bInt) >= 110 ? 1000 : 0);
+      bonus2 bAddEffWhenHit,Eff_Freezing,3000 + (readparam(bInt) >= 110 ? 1000 : 0);
       bonus bMdef,5;
   - Id: 27152
     AegisName: Cutie_Card
@@ -40747,7 +40817,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bDef,300; }",20,10000,BF_WEAPON|BF_SHORT,"{ specialeffect2 EF_POTION_BERSERK; active_transform 1040,10000; }";
+      autobonus "{ bonus bDef,300; }",20,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; active_transform 1040,10000; }";
   - Id: 27264
     AegisName: Evil_Shadow_Card
     Name: Evil Shadow Card
@@ -43526,9 +43596,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      hateffect HAT_EF_GUMGANG,true;
+      hateffect HAT_EF_CIRCLEPOWER,true;
     UnEquipScript: |
-      hateffect HAT_EF_GUMGANG,false;
+      hateffect HAT_EF_CIRCLEPOWER,false;
   - Id: 29161
     AegisName: Pink_Glow_Effect
     Name: Pink Glow Effect
@@ -43872,16 +43942,18 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      hateffect HAT_EF_WATER_BELOW2,true;
+      hateffect HAT_EF_WATER_BELOW4,true;
     UnEquipScript: |
-      hateffect HAT_EF_WATER_BELOW2,false;
+      hateffect HAT_EF_WATER_BELOW4,false;
   - Id: 29226
     AegisName: ExplodingWave_Effect
     Name: Crimson Wave Effect
     Type: Card
     SubType: Enchant
     Script: |
-      /* todo */
+      hateffect HAT_EF_DOUBLEGUMGANG,true;
+    UnEquipScript: |
+      hateffect HAT_EF_DOUBLEGUMGANG,false;
   - Id: 29227
     AegisName: Heal
     Name: Heal
@@ -46819,7 +46891,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",1,100,BF_WEAPON,1;
+      bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",1,100,BF_SHORT,1;
   - Id: 300007
     AegisName: Jungoliant_Card
     Name: Jeweled Ungoliant Card
@@ -51017,7 +51089,7 @@ Body:
       }
       bonus2 bMagicAtkEle,Ele_Dark,.@rate;
       bonus2 bMagicAtkEle,Ele_Holy,.@rate;
-      bonus2 bMagicAtkEle,Ele_Fire,.@rate;
+      bonus2 bMagicAtkEle,Ele_Ghost,.@rate;
       bonus2 bMagicAtkEle,Ele_Neutral,.@rate;
   - Id: 300376
     AegisName: Eyes_Dollocaris_Card
