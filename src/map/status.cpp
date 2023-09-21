@@ -5780,7 +5780,11 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		if (status->luk == b_status->luk)
 			status->cri = status_calc_critical(bl, sc, b_status->cri);
 		else
+#ifdef RENEWAL
 			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
+#else
+			status->cri = status_calc_critical(bl, sc, b_status->cri + (status->luk - b_status->luk)*10/3);
+#endif
 
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
 		if (sd) {
