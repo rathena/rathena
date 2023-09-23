@@ -38252,7 +38252,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Both_Accessory: true
+      Right_Accessory: true
     Flags:
       DropEffect: CLIENT
     Script: |
@@ -81425,6 +81425,7 @@ Body:
     AegisName: aegis_1001478
     Name: Pure Diamond    # !todo check english name
     Type: Etc
+    Buy: 200000
     Weight: 300
     Flags:
       DropEffect: CLIENT
@@ -81432,6 +81433,7 @@ Body:
     AegisName: aegis_1001479
     Name: Black diamond    # !todo check english name
     Type: Etc
+    Buy: 400000
     Weight: 300
     Flags:
       DropEffect: CLIENT
@@ -81439,6 +81441,7 @@ Body:
     AegisName: aegis_1001480
     Name: Golden Diamond    # !todo check english name
     Type: Etc
+    Buy: 600000
     Weight: 300
     Flags:
       DropEffect: CLIENT
