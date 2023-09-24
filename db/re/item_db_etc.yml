@@ -35426,6 +35426,7 @@ Body:
     AegisName: HazyDream
     Name: Hazy Dream Fragment
     Type: Etc
+    Buy: 1235
     Weight: 10
     Flags:
       BuyingStore: true
@@ -35433,7 +35434,7 @@ Body:
     AegisName: Bloody_LoveLetter
     Name: Bloody Love Letter
     Type: Etc
-    Buy: 780
+    Buy: 976
     Weight: 10
     Flags:
       BuyingStore: true
@@ -35441,7 +35442,7 @@ Body:
     AegisName: BrokenArrow
     Name: Broken Arrow
     Type: Etc
-    Buy: 550
+    Buy: 687
     Weight: 10
     Flags:
       BuyingStore: true
@@ -36603,16 +36604,19 @@ Body:
     AegisName: Jokers_Wild
     Name: Jokers Wild
     Type: Etc
+    Buy: 1300
     Weight: 10
   - Id: 25506
     AegisName: Cute_Broom
     Name: Cute Broom
     Type: Etc
+    Buy: 1288
     Weight: 10
   - Id: 25507
     AegisName: Showy_Coral_Reef
     Name: Colorful Coral
     Type: Etc
+    Buy: 1784
     Weight: 10
   - Id: 25508
     AegisName: Token_of_OrcGeneral
@@ -36625,6 +36629,7 @@ Body:
     AegisName: Shining_Round_Shell
     Name: Shiny Round Shell
     Type: Etc
+    Buy: 1920
     Weight: 10
   - Id: 25511
     AegisName: Evt_March04_KR
@@ -36654,6 +36659,7 @@ Body:
     AegisName: NasariansSoulstone
     Name: Nasarin's Soul Stone
     Type: Etc
+    Buy: 440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37514,6 +37520,7 @@ Body:
     AegisName: Delicious_Juice
     Name: Delicious Juice
     Type: Etc
+    Buy: 892
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37521,6 +37528,7 @@ Body:
     AegisName: Snake_Deadly_Poison
     Name: Snake's Venom
     Type: Etc
+    Buy: 952
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37528,6 +37536,7 @@ Body:
     AegisName: Mantis_Flower
     Name: Mantis Flower
     Type: Etc
+    Buy: 884
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37535,6 +37544,7 @@ Body:
     AegisName: Soft_Scarf
     Name: Fluffy Cloth Piece
     Type: Etc
+    Buy: 1062
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37542,6 +37552,7 @@ Body:
     AegisName: Purple_Solid_Shell
     Name: Very Solid Purple Shell
     Type: Etc
+    Buy: 1139
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37549,6 +37560,7 @@ Body:
     AegisName: Suspicious_Sap
     Name: Mysterious Sap
     Type: Etc
+    Buy: 986
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37556,6 +37568,7 @@ Body:
     AegisName: Brilliant_Jelly
     Name: Autumn Light Jelly Piece
     Type: Etc
+    Buy: 969
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37563,6 +37576,7 @@ Body:
     AegisName: Short_Rope
     Name: Short Binding Rope
     Type: Etc
+    Buy: 1156
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37948,6 +37962,7 @@ Body:
     AegisName: Abysmal_Clam
     Name: Deep Sea Shell
     Type: Etc
+    Buy: 840
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37955,6 +37970,7 @@ Body:
     AegisName: Deepsea_Fish_Tail
     Name: Deep Sea Fish's Tail
     Type: Etc
+    Buy: 840
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37962,6 +37978,7 @@ Body:
     AegisName: Rotten_Deepseafish
     Name: Rotten Deep Sea Fish
     Type: Etc
+    Buy: 840
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37969,6 +37986,7 @@ Body:
     AegisName: Deep_Sea_Starfish
     Name: Deep Sea Starfish
     Type: Etc
+    Buy: 840
     Weight: 10
     Flags:
       BuyingStore: true
@@ -37976,6 +37994,7 @@ Body:
     AegisName: Deep_Sea_Crab
     Name: Deep Sea Crab
     Type: Etc
+    Buy: 840
     Weight: 10
     Flags:
       BuyingStore: true
@@ -38003,6 +38022,7 @@ Body:
     AegisName: E_Abyss1
     Name: Abyssal Essence
     Type: Etc
+    Buy: 1200
     Weight: 10
     Flags:
       BuyingStore: true
@@ -38232,7 +38252,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Both_Accessory: true
+      Right_Accessory: true
     Flags:
       DropEffect: CLIENT
     Script: |
@@ -73516,6 +73536,106 @@ Body:
     Name: Evil Vigor (Spirit Handler)
     Type: Card
     SubType: Enchant
+  - Id: 312453
+    AegisName: aegis_312453
+    Name: Constellation Barrier (1)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312454
+    AegisName: aegis_312454
+    Name: Constellation Barrier (2)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312455
+    AegisName: aegis_312455
+    Name: Constellation Barrier (3)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312456
+    AegisName: aegis_312456
+    Name: Constellation Barrier (4)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312457
+    AegisName: aegis_312457
+    Name: Constellation Barrier (5)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312458
+    AegisName: aegis_312458
+    Name: Constellation Barrier (6)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312459
+    AegisName: aegis_312459
+    Name: Constellation Barrier (7)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312460
+    AegisName: aegis_312460
+    Name: Constellation Barrier (8)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312461
+    AegisName: aegis_312461
+    Name: Constellation Barrier (9)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312462
+    AegisName: aegis_312462
+    Name: Constellation Barrier (10)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312463
+    AegisName: aegis_312463
+    Name: Constellation Barrier (11)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312464
+    AegisName: aegis_312464
+    Name: Constellation Barrier (12)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312465
+    AegisName: aegis_312465
+    Name: Constellation Barrier (13)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312466
+    AegisName: aegis_312466
+    Name: Constellation Barrier (14)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312467
+    AegisName: aegis_312467
+    Name: Constellation Barrier (15)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312468
+    AegisName: aegis_312468
+    Name: Constellation Barrier (16)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312469
+    AegisName: aegis_312469
+    Name: Constellation Barrier (17)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312470
+    AegisName: aegis_312470
+    Name: Constellation Barrier (18)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312471
+    AegisName: aegis_312471
+    Name: Constellation Barrier (19)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312472
+    AegisName: aegis_312472
+    Name: Constellation Barrier (20)    # !todo check english name
+    Type: Card
+    SubType: Enchant
   - Id: 312473
     AegisName: aegis_312473
     Name: Latent Release (Archmage III)
@@ -73554,6 +73674,1336 @@ Body:
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("MT_M_MACHINE");
+  - Id: 312479
+    AegisName: Physical_Seed_1
+    Name: Seed of Might 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,1;
+      bonus bDef,5;
+  - Id: 312480
+    AegisName: Physical_Seed_2
+    Name: Seed of Might 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,2;
+      bonus bDef,10;
+  - Id: 312481
+    AegisName: Physical_Seed_3
+    Name: Seed of Might 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,3;
+      bonus bDef,15;
+  - Id: 312482
+    AegisName: Physical_Seed_4
+    Name: Seed of Might 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,4;
+      bonus bDef,20;
+  - Id: 312483
+    AegisName: Physical_Seed_5
+    Name: Seed of Strength 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,5;
+      bonus bDef,25;
+  - Id: 312484
+    AegisName: Physical_Seed_6
+    Name: Seed of Might 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,6;
+      bonus bDef,30;
+  - Id: 312485
+    AegisName: Physical_Seed_7
+    Name: Seed of Might 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,7;
+      bonus bDef,35;
+  - Id: 312486
+    AegisName: Physical_Seed_8
+    Name: Seed of Might 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,8;
+      bonus bDef,40;
+  - Id: 312487
+    AegisName: Physical_Seed_9
+    Name: Seed of Might 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,9;
+      bonus bDef,45;
+  - Id: 312488
+    AegisName: Physical_Seed_10
+    Name: Seed of Strength 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bDef,50;
+  - Id: 312489
+    AegisName: Magical_Seed_1
+    Name: Seed of Magic 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,1;
+      bonus bDef,5;
+  - Id: 312490
+    AegisName: Magical_Seed_2
+    Name: Seed of Magic 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,2;
+      bonus bDef,10;
+  - Id: 312491
+    AegisName: Magical_Seed_3
+    Name: Seed of Magic 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,3;
+      bonus bDef,15;
+  - Id: 312492
+    AegisName: Magical_Seed_4
+    Name: Seed of Magic 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,4;
+      bonus bDef,20;
+  - Id: 312493
+    AegisName: Magical_Seed_5
+    Name: Seed of Magic 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,5;
+      bonus bDef,25;
+  - Id: 312494
+    AegisName: Magical_Seed_6
+    Name: Seed of Magic 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,6;
+      bonus bDef,30;
+  - Id: 312495
+    AegisName: Magical_Seed_7
+    Name: Seed of Magic 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,7;
+      bonus bDef,35;
+  - Id: 312496
+    AegisName: Magical_Seed_8
+    Name: Seed of Magic 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,8;
+      bonus bDef,40;
+  - Id: 312497
+    AegisName: Magical_Seed_9
+    Name: Seed of Magic 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,9;
+      bonus bDef,45;
+  - Id: 312498
+    AegisName: Magical_Seed_10
+    Name: Seed of Magic 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+      bonus bDef,50;
+  - Id: 312499
+    AegisName: Physical_Leaf_1
+    Name: Leaf of Might 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,12;
+      bonus bDef,50;
+  - Id: 312500
+    AegisName: Physical_Leaf_2
+    Name: Leaf of Might 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,14;
+      bonus bDef,50;
+  - Id: 312501
+    AegisName: Physical_Leaf_3
+    Name: Leaf of Might 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,16;
+      bonus bDef,50;
+  - Id: 312502
+    AegisName: Physical_Leaf_4
+    Name: Leaf of Might 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,18;
+      bonus bDef,50;
+  - Id: 312503
+    AegisName: Physical_Leaf_5
+    Name: Leaf of Might 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,20;
+      bonus bDef,50;
+  - Id: 312504
+    AegisName: Magical_Leaf_1
+    Name: Magic Leaf 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,12;
+      bonus bDef,50;
+  - Id: 312505
+    AegisName: Magical_Leaf_2
+    Name: Magical Leaf 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,14;
+      bonus bDef,50;
+  - Id: 312506
+    AegisName: Magical_Leaf_3
+    Name: Magical Leaf 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,16;
+      bonus bDef,50;
+  - Id: 312507
+    AegisName: Magical_Leaf_4
+    Name: Magical Leaf 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,18;
+      bonus bDef,50;
+  - Id: 312508
+    AegisName: Magical_Leaf_5
+    Name: Magical Leaf 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,20;
+      bonus bDef,50;
+  - Id: 312509
+    AegisName: Physical_Flower_1
+    Name: Flower of Strength 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,22;
+      bonus bDef,50;
+      bonus bMRes,5;
+      bonus bRes,5;
+  - Id: 312510
+    AegisName: Physical_Flower_2
+    Name: Flower of Might 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,24;
+      bonus bDef,50;
+      bonus bMRes,10;
+      bonus bRes,10;
+  - Id: 312511
+    AegisName: Physical_Flower_3
+    Name: Flower of Strength 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,26;
+      bonus bDef,50;
+      bonus bMRes,15;
+      bonus bRes,15;
+  - Id: 312512
+    AegisName: Physical_Flower_4
+    Name: Flower of Strength 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,28;
+      bonus bDef,50;
+      bonus bMRes,20;
+      bonus bRes,20;
+  - Id: 312513
+    AegisName: Physical_Flower_5
+    Name: Flower of Strength 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+      bonus bMRes,25;
+      bonus bRes,25;
+  - Id: 312514
+    AegisName: Magical_Flower_1
+    Name: Magical Flower 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,22;
+      bonus bDef,50;
+      bonus bMRes,5;
+      bonus bRes,5;
+  - Id: 312515
+    AegisName: Magical_Flower_2
+    Name: Magical Flower 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,24;
+      bonus bDef,50;
+      bonus bMRes,10;
+      bonus bRes,10;
+  - Id: 312516
+    AegisName: Magical_Flower_3
+    Name: Magical Flower 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,26;
+      bonus bDef,50;
+      bonus bMRes,15;
+      bonus bRes,15;
+  - Id: 312517
+    AegisName: Magical_Flower_4
+    Name: Magical Flower 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,28;
+      bonus bDef,50;
+      bonus bMRes,20;
+      bonus bRes,20;
+  - Id: 312518
+    AegisName: Magical_Flower_5
+    Name: Magical Flower 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,30;
+      bonus bDef,50;
+      bonus bMRes,25;
+      bonus bRes,25;
+  - Id: 312519
+    AegisName: Physical_Fruit_1
+    Name: Fruit of Strength 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,3;
+      bonus bDef,5;
+  - Id: 312520
+    AegisName: Physical_Fruit_2
+    Name: Fruit of Strength 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,6;
+      bonus bDef,10;
+  - Id: 312521
+    AegisName: Physical_Fruit_3
+    Name: Fruit of Strength 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,9;
+      bonus bDef,15;
+  - Id: 312522
+    AegisName: Physical_Fruit_4
+    Name: Fruit of Strength 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,12;
+      bonus bDef,20;
+  - Id: 312523
+    AegisName: Physical_Fruit_5
+    Name: Fruit of Strength 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,15;
+      bonus bDef,25;
+  - Id: 312524
+    AegisName: Physical_Fruit_6
+    Name: Fruit of Strength 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,18;
+      bonus bDef,30;
+  - Id: 312525
+    AegisName: Physical_Fruit_7
+    Name: Fruit of Strength 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,21;
+      bonus bDef,35;
+  - Id: 312526
+    AegisName: Physical_Fruit_8
+    Name: Fruit of Strength 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,24;
+      bonus bDef,40;
+  - Id: 312527
+    AegisName: Physical_Fruit_9
+    Name: Fruit of Strength 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,27;
+      bonus bDef,45;
+  - Id: 312528
+    AegisName: Physical_Fruit_10
+    Name: Fruit of Strength 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+  - Id: 312529
+    AegisName: Physical_Fruit_11
+    Name: Fruit of Strength 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,1;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+  - Id: 312530
+    AegisName: Physical_Fruit_12
+    Name: Fruit of Strength 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,2;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+  - Id: 312531
+    AegisName: Physical_Fruit_13
+    Name: Fruit of Strength 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,3;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+  - Id: 312532
+    AegisName: Physical_Fruit_14
+    Name: Fruit of Strength 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,4;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+  - Id: 312533
+    AegisName: Physical_Fruit_15
+    Name: Fruit of Strength 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+  - Id: 312534
+    AegisName: Physical_Fruit_16
+    Name: Fruit of Strength 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,6;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+      bonus2 bAddSize,Size_All,3;
+  - Id: 312535
+    AegisName: Physical_Fruit_17
+    Name: Fruit of Strength 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,7;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+      bonus2 bAddSize,Size_All,6;
+  - Id: 312536
+    AegisName: Physical_Fruit_18
+    Name: Fruit of Strength 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,7;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+      bonus2 bAddSize,Size_All,9;
+  - Id: 312537
+    AegisName: Physical_Fruit_19
+    Name: Fruit of Strength 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,7;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+      bonus2 bAddSize,Size_All,12;
+  - Id: 312538
+    AegisName: Physical_Fruit_20
+    Name: Fruit of Strength 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,7;
+      bonus bBaseAtk,30;
+      bonus bDef,50;
+      bonus2 bAddSize,Size_All,15;
+  - Id: 312539
+    AegisName: Magical_Fruit_1
+    Name: Magic Fruit 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,3;
+      bonus bDef,5;
+  - Id: 312540
+    AegisName: Magical_Fruit_2
+    Name: Magic Fruit 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,6;
+      bonus bDef,10;
+  - Id: 312541
+    AegisName: Magical_Fruit_3
+    Name: Magic Fruit 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,9;
+      bonus bDef,15;
+  - Id: 312542
+    AegisName: Magical_Fruit_4
+    Name: Magic Fruit 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,12;
+      bonus bDef,20;
+  - Id: 312543
+    AegisName: Magical_Fruit_5
+    Name: Magic Fruit 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,15;
+      bonus bDef,25;
+  - Id: 312544
+    AegisName: Magical_Fruit_6
+    Name: Magic Fruit 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,18;
+      bonus bDef,30;
+  - Id: 312545
+    AegisName: Magical_Fruit_7
+    Name: Magic Fruit 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,21;
+      bonus bDef,35;
+  - Id: 312546
+    AegisName: Magical_Fruit_8
+    Name: Magic Fruit 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,24;
+      bonus bDef,40;
+  - Id: 312547
+    AegisName: Magical_Fruit_9
+    Name: Magic Fruit 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,27;
+      bonus bDef,45;
+  - Id: 312548
+    AegisName: Magical_Fruit_10
+    Name: Fruit of Magic 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,30;
+      bonus bDef,50;
+  - Id: 312549
+    AegisName: Magical_Fruit_11
+    Name: Fruit of Magic 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,1;
+      bonus bMatk,30;
+      bonus bDef,50;
+  - Id: 312550
+    AegisName: Magical_Fruit_12
+    Name: Magic Fruit 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2;
+      bonus bMatk,30;
+      bonus bDef,50;
+  - Id: 312551
+    AegisName: Magical_Fruit_13
+    Name: Magic Fruit 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,3;
+      bonus bMatk,30;
+      bonus bDef,50;
+  - Id: 312552
+    AegisName: Magical_Fruit_14
+    Name: Magic Fruit 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,4;
+      bonus bMatk,30;
+      bonus bDef,50;
+  - Id: 312553
+    AegisName: Magical_Fruit_15
+    Name: Magic Fruit 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+      bonus bMatk,30;
+      bonus bDef,50;
+  - Id: 312554
+    AegisName: Magical_Fruit_16
+    Name: Magic Fruit 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,6;
+      bonus bMatk,30;
+      bonus bDef,50;
+      bonus2 bMagicAddSize,Size_All,3;
+  - Id: 312555
+    AegisName: Magical_Fruit_17
+    Name: Magic Fruit 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMatk,30;
+      bonus bDef,50;
+      bonus2 bMagicAddSize,Size_All,6;
+  - Id: 312556
+    AegisName: Magical_Fruit_18
+    Name: Magic Fruit 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMatk,30;
+      bonus bDef,50;
+      bonus2 bMagicAddSize,Size_All,9;
+  - Id: 312557
+    AegisName: Magical_Fruit_19
+    Name: Magic Fruit 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMatk,30;
+      bonus bDef,50;
+      bonus2 bMagicAddSize,Size_All,12;
+  - Id: 312558
+    AegisName: Magical_Fruit_20
+    Name: Magic Fruit 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMatk,30;
+      bonus bDef,50;
+      bonus2 bMagicAddSize,Size_All,15;
+  - Id: 312559
+    AegisName: Life_of_Spring_1
+    Name: Spring Life 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,1;
+      bonus bShortAtkRate,1;
+  - Id: 312560
+    AegisName: Life_of_Spring_2
+    Name: Spring Life 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,2;
+      bonus bShortAtkRate,2;
+  - Id: 312561
+    AegisName: Life_of_Spring_3
+    Name: Spring Life 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bShortAtkRate,3;
+  - Id: 312562
+    AegisName: Life_of_Spring_4
+    Name: Spring Life 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,4;
+      bonus bShortAtkRate,4;
+  - Id: 312563
+    AegisName: Life_of_Spring_5
+    Name: Spring Life 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus bShortAtkRate,5;
+  - Id: 312564
+    AegisName: Life_of_Spring_6
+    Name: Spring Life 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,6;
+      bonus bShortAtkRate,6;
+  - Id: 312565
+    AegisName: Life_of_Spring_7
+    Name: Spring Life 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,7;
+      bonus bShortAtkRate,7;
+  - Id: 312566
+    AegisName: Life_of_Spring_8
+    Name: Spring Life 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,8;
+      bonus bShortAtkRate,8;
+  - Id: 312567
+    AegisName: Life_of_Spring_9
+    Name: Spring Life 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,9;
+      bonus bShortAtkRate,9;
+  - Id: 312568
+    AegisName: Life_of_Spring_10
+    Name: Spring Life 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,10;
+      bonus bShortAtkRate,10;
+  - Id: 312569
+    AegisName: Life_of_Spring_11
+    Name: Spring Life 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,11;
+      bonus bShortAtkRate,10;
+  - Id: 312570
+    AegisName: Life_of_Spring_12
+    Name: Spring Life 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,12;
+      bonus bShortAtkRate,10;
+  - Id: 312571
+    AegisName: Life_of_Spring_13
+    Name: Spring Life 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,13;
+      bonus bShortAtkRate,10;
+  - Id: 312572
+    AegisName: Life_of_Spring_14
+    Name: Spring Life 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,14;
+      bonus bShortAtkRate,10;
+  - Id: 312573
+    AegisName: Life_of_Spring_15
+    Name: Spring Life 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,15;
+      bonus bShortAtkRate,10;
+  - Id: 312574
+    AegisName: Life_of_Spring_16
+    Name: Spring Life 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,16;
+      bonus bShortAtkRate,13;
+  - Id: 312575
+    AegisName: Life_of_Spring_17
+    Name: Spring Life 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,17;
+      bonus bShortAtkRate,16;
+  - Id: 312576
+    AegisName: Life_of_Spring_18
+    Name: Spring Life 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,18;
+      bonus bShortAtkRate,19;
+  - Id: 312577
+    AegisName: Life_of_Spring_19
+    Name: Spring Life 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,19;
+      bonus bShortAtkRate,22;
+  - Id: 312578
+    AegisName: Life_of_Spring_20
+    Name: Spring Life 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bShortAtkRate,25;
+  - Id: 312579
+    AegisName: Life_of_Summer_1
+    Name: Summer Life 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,1;
+      bonus bLongAtkRate,1;
+  - Id: 312580
+    AegisName: Life_of_Summer_2
+    Name: Summer Life 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,2;
+      bonus bLongAtkRate,2;
+  - Id: 312581
+    AegisName: Life_of_Summer_3
+    Name: Summer Life 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bLongAtkRate,3;
+  - Id: 312582
+    AegisName: Life_of_Summer_4
+    Name: Summer Life 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,4;
+      bonus bLongAtkRate,4;
+  - Id: 312583
+    AegisName: Life_of_Summer_5
+    Name: Summer Life 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus bLongAtkRate,5;
+  - Id: 312584
+    AegisName: Life_of_Summer_6
+    Name: Summer Life 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,6;
+      bonus bLongAtkRate,6;
+  - Id: 312585
+    AegisName: Life_of_Summer_7
+    Name: Summer Life 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,7;
+      bonus bLongAtkRate,7;
+  - Id: 312586
+    AegisName: Life_of_Summer_8
+    Name: Summer Life 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,8;
+      bonus bLongAtkRate,8;
+  - Id: 312587
+    AegisName: Life_of_Summer_9
+    Name: Summer Life 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,9;
+      bonus bLongAtkRate,9;
+  - Id: 312588
+    AegisName: Life_of_Summer_10
+    Name: Summer Life 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,10;
+      bonus bLongAtkRate,10;
+  - Id: 312589
+    AegisName: Life_of_Summer_11
+    Name: Summer Life 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,11;
+      bonus bLongAtkRate,10;
+  - Id: 312590
+    AegisName: Life_of_Summer_12
+    Name: Summer Life 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,12;
+      bonus bLongAtkRate,10;
+  - Id: 312591
+    AegisName: Life_of_Summer_13
+    Name: Summer Life 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,13;
+      bonus bLongAtkRate,10;
+  - Id: 312592
+    AegisName: Life_of_Summer_14
+    Name: Summer Life 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,14;
+      bonus bLongAtkRate,10;
+  - Id: 312593
+    AegisName: Life_of_Summer_15
+    Name: Summer Life 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,15;
+      bonus bLongAtkRate,10;
+  - Id: 312594
+    AegisName: Life_of_Summer_16
+    Name: Summer Life 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,16;
+      bonus bLongAtkRate,13;
+  - Id: 312595
+    AegisName: Life_of_Summer_17
+    Name: Summer Life 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,17;
+      bonus bLongAtkRate,16;
+  - Id: 312596
+    AegisName: Life_of_Summer_18
+    Name: Summer Life 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,18;
+      bonus bLongAtkRate,19;
+  - Id: 312597
+    AegisName: Life_of_Summer_19
+    Name: Summer Life 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,19;
+      bonus bLongAtkRate,22;
+  - Id: 312598
+    AegisName: Life_of_Summer_20
+    Name: Summer Life 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bLongAtkRate,25;
+  - Id: 312599
+    AegisName: Life_of_Autumn_1
+    Name: Autumn Life 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,1;
+      bonus2 bMagicAtkEle,Ele_All,1;
+  - Id: 312600
+    AegisName: Life_of_Autumn_2
+    Name: Autumn Life 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,2;
+      bonus2 bMagicAtkEle,Ele_All,2;
+  - Id: 312601
+    AegisName: Life_of_Autumn_3
+    Name: Autumn Life 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 312602
+    AegisName: Life_of_Autumn_4
+    Name: Autumn Life 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,4;
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Id: 312603
+    AegisName: Life_of_Autumn_5
+    Name: Autumn Life 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 312604
+    AegisName: Life_of_Autumn_6
+    Name: Autumn Life 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,6;
+      bonus2 bMagicAtkEle,Ele_All,6;
+  - Id: 312605
+    AegisName: Life_of_Autumn_7
+    Name: Autumn Life 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,7;
+      bonus2 bMagicAtkEle,Ele_All,7;
+  - Id: 312606
+    AegisName: Life_of_Autumn_8
+    Name: Autumn Life 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,8;
+      bonus2 bMagicAtkEle,Ele_All,8;
+  - Id: 312607
+    AegisName: Life_of_Autumn_9
+    Name: Autumn Life 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,9;
+      bonus2 bMagicAtkEle,Ele_All,9;
+  - Id: 312608
+    AegisName: Life_of_Autumn_10
+    Name: Autumn Life 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,10;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312609
+    AegisName: Life_of_Autumn_11
+    Name: Autumn Life 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,11;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312610
+    AegisName: Life_of_Autumn_12
+    Name: Autumn Life 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,12;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312611
+    AegisName: Life_of_Autumn_13
+    Name: Autumn Life 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,13;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312612
+    AegisName: Life_of_Autumn_14
+    Name: Autumn Life 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,14;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312613
+    AegisName: Life_of_Autumn_15
+    Name: Autumn Life 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,15;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312614
+    AegisName: Life_of_Autumn_16
+    Name: Autumn Life 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,16;
+      bonus2 bMagicAtkEle,Ele_All,13;
+  - Id: 312615
+    AegisName: Life_of_Autumn_17
+    Name: Autumn Life 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,17;
+      bonus2 bMagicAtkEle,Ele_All,16;
+  - Id: 312616
+    AegisName: Life_of_Autumn_18
+    Name: Autumn Life 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,18;
+      bonus2 bMagicAtkEle,Ele_All,19;
+  - Id: 312617
+    AegisName: Life_of_Autumn_19
+    Name: Autumn Life 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,19;
+      bonus2 bMagicAtkEle,Ele_All,22;
+  - Id: 312618
+    AegisName: Life_of_Autumn_20
+    Name: Autumn Life 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,20;
+      bonus2 bMagicAtkEle,Ele_All,25;
+  - Id: 312619
+    AegisName: Life_of_Winter_1
+    Name: Winter Life 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,1;
+      bonus bCritAtkRate,1;
+  - Id: 312620
+    AegisName: Life_of_Winter_2
+    Name: Winter Life 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,2;
+      bonus bCritAtkRate,2;
+  - Id: 312621
+    AegisName: Life_of_Winter_3
+    Name: Winter Life 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bCritAtkRate,3;
+  - Id: 312622
+    AegisName: Life_of_Winter_4
+    Name: Winter Life 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,4;
+      bonus bCritAtkRate,4;
+  - Id: 312623
+    AegisName: Life_of_Winter_5
+    Name: Winter Life 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,5;
+      bonus bCritAtkRate,5;
+  - Id: 312624
+    AegisName: Life_of_Winter_6
+    Name: Winter Life 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,6;
+      bonus bCritAtkRate,6;
+  - Id: 312625
+    AegisName: Life_of_Winter_7
+    Name: Winter Life 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,7;
+      bonus bCritAtkRate,7;
+  - Id: 312626
+    AegisName: Life_of_Winter_8
+    Name: Winter Life 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,8;
+      bonus bCritAtkRate,8;
+  - Id: 312627
+    AegisName: Life_of_Winter_9
+    Name: Winter Life 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,9;
+      bonus bCritAtkRate,9;
+  - Id: 312628
+    AegisName: Life_of_Winter_10
+    Name: Winter Life 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,10;
+      bonus bCritAtkRate,10;
+  - Id: 312629
+    AegisName: Life_of_Winter_11
+    Name: Winter Life 11Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,11;
+      bonus bCritAtkRate,10;
+  - Id: 312630
+    AegisName: Life_of_Winter_12
+    Name: Winter Life 12Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,12;
+      bonus bCritAtkRate,10;
+  - Id: 312631
+    AegisName: Life_of_Winter_13
+    Name: Winter Life 13Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,13;
+      bonus bCritAtkRate,10;
+  - Id: 312632
+    AegisName: Life_of_Winter_14
+    Name: Winter Life 14Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,14;
+      bonus bCritAtkRate,10;
+  - Id: 312633
+    AegisName: Life_of_Winter_15
+    Name: Winter Life 15Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,15;
+      bonus bCritAtkRate,10;
+  - Id: 312634
+    AegisName: Life_of_Winter_16
+    Name: Winter Life 16Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,16;
+      bonus bCritAtkRate,13;
+  - Id: 312635
+    AegisName: Life_of_Winter_17
+    Name: Winter Life 17Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,17;
+      bonus bCritAtkRate,16;
+  - Id: 312636
+    AegisName: Life_of_Winter_18
+    Name: Winter Life 18Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,18;
+      bonus bCritAtkRate,19;
+  - Id: 312637
+    AegisName: Life_of_Winter_19
+    Name: Winter Life 19Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,19;
+      bonus bCritAtkRate,22;
+  - Id: 312638
+    AegisName: Life_of_Winter_20
+    Name: Winter Life 20Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bCritAtkRate,25;
   - Id: 312639
     AegisName: Justice_Vigor_EM
     Name: Good Vigor (Elemental Master)
@@ -73582,6 +75032,36 @@ Body:
   - Id: 312644
     AegisName: Injustice_Vigor_SKE
     Name: Evil Vigor (Sky Emperor)
+    Type: Card
+    SubType: Enchant
+  - Id: 312649
+    AegisName: Justice_Vigor_MT
+    Name: Zen Aura (Meister)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312650
+    AegisName: Justice_Vigor_SHC
+    Name: Zen Aura (Shadow Cross)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312651
+    AegisName: Justice_Vigor_SS
+    Name: Spirit of Zen (Shinkiro & Shiranui)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312652
+    AegisName: Injustice_Vigor_MT
+    Name: Evil Spirit (Meister)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312653
+    AegisName: Injustice_Vigor_SHC
+    Name: Evil Spirit (Shadow Cross)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 312654
+    AegisName: Injustice_Vigor_SS
+    Name: Evil Energy (Shinkiro & Shiranui)    # !todo check english name
     Type: Card
     SubType: Enchant
   - Id: 1000000
@@ -75598,6 +77078,7 @@ Body:
     AegisName: IL_Twins_Feeler
     Name: Ant Antennae
     Type: Etc
+    Buy: 720
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75605,6 +77086,7 @@ Body:
     AegisName: IL_Twins_Leg
     Name: Ant Legs
     Type: Etc
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75612,6 +77094,7 @@ Body:
     AegisName: IL_Twins_Jaw
     Name: Ant's Jaw
     Type: Etc
+    Buy: 900
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75619,6 +77102,7 @@ Body:
     AegisName: IL_Twins_Acid
     Name: Dangerous Acid
     Type: Etc
+    Buy: 900
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75626,6 +77110,7 @@ Body:
     AegisName: IL_Twins_Hat
     Name: Gaia's Worn Hat
     Type: Etc
+    Buy: 1000
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75633,6 +77118,7 @@ Body:
     AegisName: IL_Twins_Shovel
     Name: Small Shovel
     Type: Etc
+    Buy: 937
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75640,6 +77126,7 @@ Body:
     AegisName: IL_Twins_Fang
     Name: Bat Jawbone
     Type: Etc
+    Buy: 875
     Weight: 10
     Flags:
       BuyingStore: true
@@ -75647,6 +77134,7 @@ Body:
     AegisName: IL_Twins_Fur
     Name: Bat Fur
     Type: Etc
+    Buy: 840
     Weight: 10
     Flags:
       BuyingStore: true
@@ -76113,8 +77601,11 @@ Body:
   - Id: 1000707
     AegisName: Ep19_Rgan_Core_F
     Name: Low-quality Rgan Magic Core
-    Weight: 10
     Type: Etc
+    Buy: 525
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000708
     AegisName: Ep19_Ice_Meat
     Name: Frozen Meat
@@ -76570,47 +78061,91 @@ Body:
   - Id: 1000822
     AegisName: EP19_Shell_Of_Rgan
     Name: Rgan Shell
+    Type: Etc
+    Buy: 920
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000823
     AegisName: EP19_Unknown_Cell
     Name: Monstrous Cell
+    Type: Etc
+    Buy: 960
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000824
     AegisName: EP19_Calapy
     Name: Calapy
+    Type: Etc
+    Buy: 800
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000825
     AegisName: EP19_CaCalapy
     Name: Cacalapy
+    Type: Etc
+    Buy: 1000
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000826
     AegisName: EP19_Prickle_Shell
     Name: Prickly Shell
+    Type: Etc
+    Buy: 880
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000827
     AegisName: EP19_Thin_Nipper
     Name: Thin Nipper
+    Type: Etc
+    Buy: 840
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000828
     AegisName: EP19_Transparency_Shell
     Name: Transparent Shell
+    Type: Etc
+    Buy: 920
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000829
     AegisName: EP19_Bell_Flower
     Name: Bait Bellflower
+    Type: Etc
+    Buy: 1080
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000830
     AegisName: EP19_Thin_Shell
     Name: Thin Tough Shell
+    Type: Etc
+    Buy: 920
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000831
     AegisName: EP19_Shiny_Seaweed
     Name: Shiny Seaweed Stem
+    Type: Etc
+    Buy: 880
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000832
     AegisName: EP19_Frozen_Shell
     Name: Frozen Insect Shell
+    Type: Etc
+    Buy: 900
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000833
     AegisName: EP19_Luminant
     Name: Mysterious Luminant
@@ -77504,91 +79039,109 @@ Body:
     AegisName: aegis_1001072
     Name: Evil Orb    # !todo check english name
     Type: Etc
+    Buy: 1480
     Weight: 10
   - Id: 1001073
     AegisName: aegis_1001073
     Name: Actoplasmic Stone    # !todo check english name
     Type: Etc
+    Buy: 1460
     Weight: 10
   - Id: 1001074
     AegisName: aegis_1001074
     Name: Heavy chain    # !todo check english name
     Type: Etc
+    Buy: 1480
     Weight: 10
   - Id: 1001075
     AegisName: aegis_1001075
     Name: Ruby with a grudge    # !todo check english name
     Type: Etc
+    Buy: 1500
     Weight: 10
   - Id: 1001076
     AegisName: aegis_1001076
     Name: Small ring    # !todo check english name
     Type: Etc
+    Buy: 1640
     Weight: 10
   - Id: 1001077
     AegisName: Whittling
     Name: Wood chips    # !todo check english name
     Type: Etc
+    Buy: 1600
     Weight: 10
   - Id: 1001078
     AegisName: aegis_1001078
     Name: Blue Moon Shard    # !todo check english name
     Type: Etc
+    Buy: 1720
     Weight: 10
   - Id: 1001079
     AegisName: aegis_1001079
     Name: Bizarre Tentacles    # !todo check english name
     Type: Etc
+    Buy: 1520
     Weight: 10
   - Id: 1001080
     AegisName: aegis_1001080
     Name: Condensed Poison    # !todo check english name
     Type: Etc
+    Buy: 1600
     Weight: 10
   - Id: 1001081
     AegisName: aegis_1001081
     Name: Slippery liquid    # !todo check english name
     Type: Etc
+    Buy: 1560
     Weight: 10
   - Id: 1001082
     AegisName: aegis_1001082
     Name: Monster's Stone    # !todo check english name
     Type: Etc
+    Buy: 1720
     Weight: 10
   - Id: 1001083
     AegisName: aegis_1001083
     Name: Maple Leaf    # !todo check english name
     Type: Etc
+    Buy: 1640
     Weight: 10
   - Id: 1001084
     AegisName: Blaze_Stone
     Name: Flamestone    # !todo check english name
     Type: Etc
+    Buy: 1480
     Weight: 10
   - Id: 1001085
     AegisName: aegis_1001085
     Name: Cool liquid    # !todo check english name
     Type: Etc
+    Buy: 1460
     Weight: 10
   - Id: 1001086
     AegisName: aegis_1001086
     Name: Blue Crystal Fragment    # !todo check english name
     Type: Etc
+    Buy: 1480
     Weight: 10
   - Id: 1001087
     AegisName: Shining_Crystal
     Name: Brightly shining crystal    # !todo check english name
     Type: Etc
+    Buy: 1600
     Weight: 10
   - Id: 1001088
     AegisName: aegis_1001088
     Name: Fresh pears    # !todo check english name
     Type: Etc
+    Buy: 1640
     Weight: 10
   - Id: 1001089
     AegisName: Aromatic_Flower
     Name: Fragrant flowers    # !todo check english name
     Type: Etc
+    Buy: 1680
     Weight: 10
   - Id: 1001090
     AegisName: Dimmen_Jewel_Fragment
@@ -78299,6 +79852,7 @@ Body:
     AegisName: aegis_1001226
     Name: Legan's Advanced Magic Core    # !todo check english name
     Type: Etc
+    Buy: 1170
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78306,6 +79860,7 @@ Body:
     AegisName: aegis_1001227
     Name: Coral bracelet    # !todo check english name
     Type: Etc
+    Buy: 1440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78313,6 +79868,7 @@ Body:
     AegisName: aegis_1001228
     Name: Seashell hairpin    # !todo check english name
     Type: Etc
+    Buy: 1440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78320,6 +79876,7 @@ Body:
     AegisName: aegis_1001229
     Name: Seaweed Belt    # !todo check english name
     Type: Etc
+    Buy: 1440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78327,6 +79884,7 @@ Body:
     AegisName: aegis_1001230
     Name: Scale Armor Fragment    # !todo check english name
     Type: Etc
+    Buy: 1440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78334,6 +79892,7 @@ Body:
     AegisName: aegis_1001231
     Name: Soft Fluorescent Cell (Sour)    # !todo check english name
     Type: Etc
+    Buy: 1800
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78341,6 +79900,7 @@ Body:
     AegisName: aegis_1001232
     Name: Soft Fluorescent Cell (salty)    # !todo check english name
     Type: Etc
+    Buy: 1440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78348,6 +79908,7 @@ Body:
     AegisName: aegis_1001233
     Name: Fluorescent Fluorescent Cell (Daldal)    # !todo check english name
     Type: Etc
+    Buy: 1530
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78355,6 +79916,7 @@ Body:
     AegisName: aegis_1001234
     Name: Bear Hide    # !todo check english name
     Type: Etc
+    Buy: 1710
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78383,6 +79945,7 @@ Body:
     AegisName: aegis_1001238
     Name: Mystic Magic Mass    # !todo check english name
     Type: Etc
+    Buy: 1530
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78390,6 +79953,7 @@ Body:
     AegisName: aegis_1001239
     Name: Broken Trident    # !todo check english name
     Type: Etc
+    Buy: 1170
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78397,6 +79961,7 @@ Body:
     AegisName: aegis_1001240
     Name: Irwin Private Hat    # !todo check english name
     Type: Etc
+    Buy: 1260
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78404,6 +79969,7 @@ Body:
     AegisName: aegis_1001241
     Name: Private Irwin Hat    # !todo check english name
     Type: Etc
+    Buy: 1350
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78411,6 +79977,7 @@ Body:
     AegisName: aegis_1001242
     Name: Corporal Irwin Hat    # !todo check english name
     Type: Etc
+    Buy: 1440
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78418,6 +79985,7 @@ Body:
     AegisName: aegis_1001243
     Name: Arwin Manic Hat    # !todo check english name
     Type: Etc
+    Buy: 1530
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78425,6 +79993,7 @@ Body:
     AegisName: aegis_1001244
     Name: Large Gray Feather    # !todo check english name
     Type: Etc
+    Buy: 1260
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78432,6 +80001,7 @@ Body:
     AegisName: aegis_1001245
     Name: Large White Feather    # !todo check english name
     Type: Etc
+    Buy: 1710
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78439,6 +80009,7 @@ Body:
     AegisName: aegis_1001246
     Name: Copo's Head Feather    # !todo check english name
     Type: Etc
+    Buy: 1170
     Weight: 10
     Flags:
       BuyingStore: true
@@ -78446,6 +80017,7 @@ Body:
     AegisName: aegis_1001247
     Name: Kkopo Eggshell Fragment    # !todo check english name
     Type: Etc
+    Buy: 945
     Weight: 10
     Flags:
       BuyingStore: true
@@ -79525,6 +81097,21 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001414
+    AegisName: aegis_1001414
+    Name: Dimensional Crystal Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001415
+    AegisName: aegis_1001415
+    Name: Hall of Life Key    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1001419
     AegisName: SkyEmperorStone_Robe
     Name: Sky Emperor Stone (Garment)
@@ -79540,6 +81127,324 @@ Body:
     Name: Meister Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001424
+    AegisName: aegis_1001424
+    Name: Water droplet jewel with heat    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001425
+    AegisName: aegis_1001425
+    Name: Cold water droplet gem    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001426
+    AegisName: aegis_1001426
+    Name: Dry Wind Leaf Jewel    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001427
+    AegisName: aegis_1001427
+    Name: Strong Wind Leaf Jewel    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001428
+    AegisName: aegis_1001428
+    Name: Red Flame Heart Jewel    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001429
+    AegisName: aegis_1001429
+    Name: Blue Flame Heart Jewel    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001430
+    AegisName: aegis_1001430
+    Name: Crystal of Solid Earth    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001431
+    AegisName: aegis_1001431
+    Name: Blue Earth Crystal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001432
+    AegisName: aegis_1001432
+    Name: Rage of Polluted Spirits    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001433
+    AegisName: aegis_1001433
+    Name: Corrupted Wrath of Agni    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001434
+    AegisName: aegis_1001434
+    Name: Corrupted Aqua’s Fury    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001435
+    AegisName: aegis_1001435
+    Name: Corrupted Fury of Ventus    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001436
+    AegisName: aegis_1001436
+    Name: Corrupted Rage of Terra    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001440
+    AegisName: Energy_Of_Spring
+    Name: Spring energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001441
+    AegisName: Energy_Of_Summer
+    Name: Summer energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001442
+    AegisName: Energy_Of_Autumn
+    Name: Autumn energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001443
+    AegisName: Energy_Of_Winter
+    Name: Winter spirit    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001444
+    AegisName: Spring_Material_1
+    Name: Floral Pegasus Mane Hair    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001445
+    AegisName: Spring_Material_2
+    Name: Floral Pegasus Symbol    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001446
+    AegisName: Spring_Material_3
+    Name: Floral Pegasus Wings    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001447
+    AegisName: Summer_Material_1
+    Name: Coral Marine's Tail    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001448
+    AegisName: Summer_Material_2
+    Name: Coral in Coral Marine    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001449
+    AegisName: Summer_Material_3
+    Name: Coral Marine Fin    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001450
+    AegisName: Autumn_Material_1
+    Name: Maple tree leaves    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001451
+    AegisName: Autumn_Material_2
+    Name: Maple tree branches    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001452
+    AegisName: Autumn_Material_3
+    Name: Maple tree bark fragments    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001453
+    AegisName: Winter_Material_1
+    Name: Monarch Penguin's Coat    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001454
+    AegisName: Winter_Material_2
+    Name: Monarch Penguin Ice Crystal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001455
+    AegisName: Winter_Material_3
+    Name: Monarch penguin symbol    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001456
+    AegisName: Circul_Of_Life
+    Name: Cycle of life    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001457
+    AegisName: Fruit_Of_Birth
+    Name: Fruit of Birth    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001458
+    AegisName: Fruit_Of_Extinction
+    Name: Fruit of Extinction    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001459
+    AegisName: Truth_Of_Life
+    Name: The truth of life    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001460
+    AegisName: Light_Of_Life
+    Name: Light of life    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001461
+    AegisName: Energy_Of_Flame
+    Name: Fire energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001462
+    AegisName: Energy_Of_Water
+    Name: The energy of water    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001463
+    AegisName: Energy_Of_Wind
+    Name: The energy of the wind    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001464
+    AegisName: Energy_Of_Ground
+    Name: Energy of the Earth    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001465
+    AegisName: Grace_Of_Spirit
+    Name: Spirit’s Protection    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001478
+    AegisName: aegis_1001478
+    Name: Pure Diamond    # !todo check english name
+    Type: Etc
+    Buy: 200000
+    Weight: 300
+    Flags:
+      DropEffect: CLIENT
+  - Id: 1001479
+    AegisName: aegis_1001479
+    Name: Black diamond    # !todo check english name
+    Type: Etc
+    Buy: 400000
+    Weight: 300
+    Flags:
+      DropEffect: CLIENT
+  - Id: 1001480
+    AegisName: aegis_1001480
+    Name: Golden Diamond    # !todo check english name
+    Type: Etc
+    Buy: 600000
+    Weight: 300
+    Flags:
+      DropEffect: CLIENT
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
