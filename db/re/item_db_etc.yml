@@ -38259,8 +38259,7 @@ Body:
       bonus bDef,30;
       bonus bMdef,10;
       bonus2 bAddEff,Eff_Silence,900;
-      /* TODO: Confirm Mob ID to transform */
-      autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 1875,7000; }";
+      autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 3658,7000; }";
   - Id: 27026
     AegisName: Fire_Condor_Card
     Name: Fire Condor Card
