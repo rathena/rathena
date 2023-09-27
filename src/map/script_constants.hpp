@@ -4222,6 +4222,7 @@
 	export_constant(RC2_EP172BETA);
 	export_constant(RC2_EP172BATH);
 	export_constant(RC2_ILLUSION_TURTLE);
+	export_constant(RC2_RACHEL_SANCTUARY);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -6778,6 +6779,7 @@
 	export_constant(IG_CLASS_SHADOW_EA_CUBE);
 	export_constant(IG_ENCHANT_STONE_BOX30);
 	export_constant(IG_ENCHANT_STONE_BOX31);
+	export_constant(IG_ENCHANT_STONE_BOX32);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

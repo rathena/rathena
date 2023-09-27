@@ -25573,6 +25573,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 140
@@ -25620,6 +25622,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 190
@@ -31172,6 +31176,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Ghost
     ElementLevel: 3
     WalkSpeed: 200
@@ -31228,6 +31234,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 300
@@ -31275,6 +31283,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 250
@@ -31322,6 +31332,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 250
@@ -31369,6 +31381,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 300
@@ -31416,6 +31430,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 140
@@ -31465,6 +31481,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Wind
     ElementLevel: 3
     WalkSpeed: 190
@@ -60651,6 +60669,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 187
@@ -68263,6 +68283,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 300
@@ -68734,6 +68756,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 140
@@ -70573,6 +70597,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 250
@@ -73816,6 +73842,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 225
