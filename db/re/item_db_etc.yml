@@ -80218,6 +80218,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001256
+    AegisName: Ymir_Heart_P_TW
+    Name: Imela Heart Energy Fragments    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 1001258
     AegisName: VIP_Black_Coin
     Name: Premium Black Coin    # !todo check english name
@@ -80655,6 +80660,21 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001355
+    AegisName: aegis_1001355
+    Name: Ancient Hero's Modification Coupon I
+    Type: Etc
+    Weight: 10
+  - Id: 1001356
+    AegisName: aegis_1001356
+    Name: Ancient Hero's Modification Coupon II
+    Type: Etc
+    Weight: 10
+  - Id: 1001357
+    AegisName: aegis_1001357
+    Name: Ancient Hero's Modification Coupon III
+    Type: Etc
+    Weight: 10
   - Id: 1001359
     AegisName: Unidentified_Bug
     Name: Unidentified Bug    # !todo check english name
