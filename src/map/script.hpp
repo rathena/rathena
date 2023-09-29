@@ -404,12 +404,14 @@ struct reg_db {
 		}
 	};
 
-	std::shared_ptr<regs> vars;
-	static std::shared_ptr<regs> create();
+	regs* vars;
+	static regs* create(const char *file, int line, const char *func);
 	static int64 GetUID(int id, int index);
 	static int GetID(int64 uid);
 	static int GetIndex(int64 uid);
 };
+
+#define reg_db_create() reg_db::create(ALC_MARK)
 
 struct script_retinfo {
 	struct reg_db scope;        ///< scope variables
@@ -2318,7 +2320,7 @@ void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
-void script_free_vars(std::shared_ptr<reg_db::regs>& storage);
+void script_free_vars(reg_db::regs* storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);
 void script_free_state(struct script_state* st);
 

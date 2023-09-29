@@ -665,7 +665,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 	entry->id = db->id;
 	entry->owner_id = owner_id;
 	entry->mode = mode;
-	entry->regs.vars = reg_db::create();
+	entry->regs.vars = reg_db_create();
 	instances.insert({ instance_id, entry });
 
 	switch(mode) {
@@ -1022,6 +1022,7 @@ bool instance_destroy(int instance_id)
 	}
 
 	script_free_vars(idata->regs.vars);
+	idata->regs.vars = NULL;
 
 	ShowInfo("[Instance] Destroyed: %s (%d)\n", instance_db.find(idata->id)->name.c_str(), instance_id);
 

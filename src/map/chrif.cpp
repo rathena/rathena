@@ -147,6 +147,7 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 
 		if ( node->sd ) {
 			script_free_vars(node->sd->regs.vars);
+			node->sd->regs.vars = NULL;
 			aFree(node->sd);
 		}
 
@@ -1891,6 +1892,7 @@ int auth_db_final(DBKey key, DBData *data, va_list ap) {
 
 	if (node->sd) {
 		script_free_vars(node->sd->regs.vars);
+		node->sd->regs.vars = NULL;
 		aFree(node->sd);
 	}
 

@@ -2136,7 +2136,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->mail.pending_zeny = 0;
 	sd->mail.pending_slots = 0;
 
-	sd->regs.vars = reg_db::create();
+	sd->regs.vars = reg_db_create();
 	sd->vars_dirty = false;
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;

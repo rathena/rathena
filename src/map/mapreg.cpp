@@ -257,7 +257,7 @@ void mapreg_reload(void)
 	script_save_mapreg();
 
 	script_free_vars(regs.vars);
-	regs.vars = reg_db::create();
+	regs.vars = reg_db_create();
 
 	script_load_mapreg();
 }
@@ -270,6 +270,7 @@ void mapreg_final(void)
 	script_save_mapreg();
 
 	script_free_vars(regs.vars);
+	regs.vars = NULL;
 }
 
 /**
@@ -277,7 +278,7 @@ void mapreg_final(void)
  */
 void mapreg_init(void)
 {
-	regs.vars = reg_db::create();
+	regs.vars = reg_db_create();
 
 	skip_insert = false;
 

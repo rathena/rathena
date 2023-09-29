@@ -78,8 +78,10 @@ unsigned int next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
 
-std::shared_ptr<reg_db::regs> reg_db::create() {
-	return std::move(std::make_shared<regs>());
+reg_db::regs* reg_db::create(const char *file, int line, const char *func) {
+	auto* p = static_cast<regs*>(_mmalloc(sizeof(regs), file, line, func));
+	new(p) regs();
+	return p;
 }
 
 std::string empty_string = "";
@@ -3395,9 +3397,12 @@ void pop_stack(struct script_state* st, int start, int end)
 /*==========================================
  * Release script dependent variable, dependent variable of function
  *------------------------------------------*/
-void script_free_vars(std::shared_ptr<reg_db::regs>& storage)
+void script_free_vars(reg_db::regs* storage)
 {
-	storage = nullptr;
+	if (storage) {
+		storage->~regs();
+		aFree(storage);
+	}
 }
 
 void script_free_code(struct script_code* code)
@@ -3407,6 +3412,7 @@ void script_free_code(struct script_code* code)
 	if (code->instances)
 		script_stop_scriptinstances(code);
 	script_free_vars(code->local.vars);
+	code->local.vars = NULL;
 	aFree(code->script_buf);
 	aFree(code);
 }
@@ -3428,7 +3434,7 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int pos,
 	st->stack->sp_max = 64;
 	CREATE(st->stack->stack_data, struct script_data, st->stack->sp_max);
 	st->stack->defsp = st->stack->sp;
-	st->stack->scope.vars = reg_db::create();
+	st->stack->scope.vars = reg_db_create();
 	st->state = RUN;
 	st->script = rootscript;
 	st->pos = pos;
@@ -3446,7 +3452,7 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int pos,
 	}
 
 	if (!st->script->local.vars)
-		st->script->local.vars = reg_db::create();
+		st->script->local.vars = reg_db_create();
 
 	st->id = next_id++;
 	active_scripts++;
@@ -3480,6 +3486,7 @@ void script_free_state(struct script_state* st)
 			delete_timer(st->sleep.timer, run_script_timer);
 		if (st->stack) {
 			script_free_vars(st->stack->scope.vars);
+			st->stack->scope.vars = NULL;
 			pop_stack(st, 0, st->stack->sp);
 			aFree(st->stack->stack_data);
 			ers_free(stack_ers, st->stack);
@@ -3950,6 +3957,7 @@ int run_func(struct script_state *st)
 			return 1;
 		}
 		script_free_vars(st->stack->scope.vars);
+		st->stack->scope.vars = NULL;
 
 		ri = st->stack->stack_data[st->stack->defsp-1].u.ri;
 		nargs = ri->nargs;
@@ -5152,10 +5160,10 @@ BUILDIN_FUNC(callfunc)
 	st->script = scr;
 	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
-	st->stack->scope.vars = reg_db::create();
+	st->stack->scope.vars = reg_db_create();
 	
 	if (!st->script->local.vars)
-		st->script->local.vars = reg_db::create();
+		st->script->local.vars = reg_db_create();
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -5202,7 +5210,7 @@ BUILDIN_FUNC(callsub)
 	st->pos = pos;
 	st->stack->defsp = st->stack->sp;
 	st->state = GOTO;
-	st->stack->scope.vars = reg_db::create();
+	st->stack->scope.vars = reg_db_create();
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19818,7 +19826,7 @@ BUILDIN_FUNC(getvariableofnpc)
 	}
 
 	if (!nd->u.scr.script->local.vars)
-		nd->u.scr.script->local.vars = reg_db::create();
+		nd->u.scr.script->local.vars = reg_db_create();
 
 	push_val2(st->stack, C_NAME, reference_getuid(data), &nd->u.scr.script->local);
 	return SCRIPT_CMD_SUCCESS;
@@ -25690,7 +25698,7 @@ BUILDIN_FUNC(getinstancevar)
 	}
 
 	if (!im->regs.vars)
-		im->regs.vars = reg_db::create();
+		im->regs.vars = reg_db_create();
 
 	push_val2(st->stack, C_NAME, reference_getuid(data), &im->regs);
 	return SCRIPT_CMD_SUCCESS;
