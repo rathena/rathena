@@ -46446,6 +46446,15 @@ Body:
     SubType: Enchant
     Script: |
       skill "AL_BLESSING",10;
+  - Id: 29727
+    AegisName: aegis_29727
+    Name: Rumble Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_RESONATETAEGO,true;
+    UnEquipScript: |
+      hateffect HAT_EF_RESONATETAEGO,false;
   - Id: 31000
     AegisName: Rudo_Card_J
     Name: Rudo Card
@@ -46832,6 +46841,34 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
       autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Id: 101592
+    AegisName: Force_of_Fullmoon
+    Name: The Power of The Full Moon
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
+  - Id: 101952
+    AegisName: SunShine_Sand
+    Name: Sunny Powder Sand
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
+  - Id: 102038
+    AegisName: Dead_Soul_Aura
+    Name: The Evil Breath of The Dead
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
+  - Id: 102354
+    AegisName: Battle_Aura_TW
+    Name: Fighting Spirit
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
   - Id: 300000
     AegisName: IDTest_Card
     Name: IDTest Card
@@ -51591,6 +51628,15 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,10*.@r;
+  - Id: 300419
+    AegisName: aegis_300419
+    Name: Camellia Smoke Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_Camellia_Hair_Pin,true;
+    UnEquipScript: |
+      hateffect HAT_EF_Camellia_Hair_Pin,false;
   - Id: 300420
     AegisName: aegis_300420
     Name: Labyrinth Berzebub Card
@@ -79175,6 +79221,11 @@ Body:
     Name: Power Stone (Dual)
     Type: Etc
     Weight: 100
+  - Id: 1001069
+    AegisName: aegis_1001069
+    Name: Camellia Smoke Effect Stone (Head)
+    Type: Etc
+    Weight: 10
   - Id: 1001071
     AegisName: aegis_1001071
     Name: Niflheim Research Paper    # !todo check english name
@@ -80199,6 +80250,11 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001252
+    AegisName: aegis_1001252
+    Name: Rumble Effect Stone (Head)
+    Type: Etc
+    Weight: 10
   - Id: 1001253
     AegisName: S_Enchant_Essence
     Name: Shadow Essence    # !todo check english name

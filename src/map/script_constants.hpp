@@ -6780,6 +6780,10 @@
 	export_constant(IG_ENCHANT_STONE_BOX30);
 	export_constant(IG_ENCHANT_STONE_BOX31);
 	export_constant(IG_ENCHANT_STONE_BOX32);
+	export_constant(IG_ANCIENT_HERO_BOX_2);
+	export_constant(IG_ANCIENT_HERO_BOX_3);
+	export_constant(IG_INTAKE_HAIR_BOX);
+	export_constant(IG_PONYTAIL_HAIR_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

@@ -66512,6 +66512,15 @@ Body:
       NoAuction: true
     Script: |
       getitem 101947,10;
+  - Id: 101954
+    AegisName: Intake_Hair_Box
+    Name: Intake Hair Gift Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Intake_Hair_Box);
   - Id: 102017
     AegisName: Mocadas_Refine_Box
     Name: Smelting Mocadas Equipment 9~10    # !todo check english name
@@ -66832,6 +66841,14 @@ Body:
       BuyingStore: true
     Script: |
       item_reform();
+  - Id: 102121
+    AegisName: aegis_102121
+    Name: "[Scroll] AGI Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Script: |
+      sc_start SC_FOOD_AGI_CASH,1800000,15;
+      sc_start SC_FLEEFOOD,600000,rand(11,33);
   - Id: 102124
     AegisName: F_Ein_Weapon_Hammer
     Name: Flush Weapon Smelting Hammer    # !todo check english name
@@ -67032,6 +67049,24 @@ Body:
       Sitting: true
     Script: |
       sc_start SC_Intravision,60000,0;
+  - Id: 102413
+    AegisName: aegis_102413
+    Name: Ancient Hero Box 2
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Ancient_Hero_Box_2);
+  - Id: 102414
+    AegisName: aegis_102414
+    Name: Ancient Hero Box 3
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Ancient_Hero_Box_3);
   - Id: 102440
     AegisName: R_Ep17_Box
     Name: Rune Tablet Engraving    # !todo check english name
@@ -67056,6 +67091,15 @@ Body:
       BuyingStore: true
     Script: |
       item_reform();
+  - Id: 102580
+    AegisName: aegis_102580
+    Name: Ponytail Gift Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Ponytail_Hair_Box);
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)

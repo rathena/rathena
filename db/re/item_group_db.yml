@@ -50182,3 +50182,103 @@ Body:
             Rate: 400
           - Item: Stone_Bottom2_Box
             Rate: 400
+  - Group: ANCIENT_HERO_BOX_2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Dragonic_Slayer
+            Rate: 100
+          - Item: Meteor_Striker
+            Rate: 100
+          - Item: Light_Blade
+            Rate: 100
+          - Item: Slate_Sword
+            Rate: 100
+          - Item: Trumpet_Shell_K
+            Rate: 100
+          - Item: Barb_Wire_K
+            Rate: 100
+          - Item: Saint_Hall
+            Rate: 100
+          - Item: Ray_Knuckle
+            Rate: 100
+          - Item: Blade_Katar
+            Rate: 100
+          - Item: Fatalist
+            Rate: 100
+          - Item: Scalet_Dragon_L_Bow
+            Rate: 100
+          - Item: Blue_Crystal_Staff
+            Rate: 100
+          - Item: Freezing_Rod
+            Rate: 100
+  - Group: ANCIENT_HERO_BOX_3
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: OneSkyOneSun
+            Rate: 100
+          - Item: SoulWeight
+            Rate: 100
+          - Item: MeawFoxtail
+            Rate: 100
+          - Item: Master_Soul_Rifle
+            Rate: 100
+          - Item: Crimson_Rose
+            Rate: 100
+          - Item: Demon_S_Shot
+            Rate: 100
+          - Item: Golden_L_Launcher
+            Rate: 100
+          - Item: The_Black_Gatling
+            Rate: 100
+          - Item: Sharp_Wind_Sword
+            Rate: 100
+          - Item: Fog_Dew_Sword
+            Rate: 100
+          - Item: Humma_Clear
+            Rate: 100
+          - Item: Freedom_Stick
+            Rate: 100
+          - Item: Blessed_Knife
+            Rate: 100
+  - Group: INTAKE_HAIR_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_Intake_WH
+            Rate: 100
+          - Item: C_Intake_RD
+            Rate: 100
+          - Item: C_Intake_PP
+            Rate: 100
+          - Item: C_Intake_GN
+            Rate: 100
+          - Item: C_Intake_BU
+            Rate: 100
+          - Item: C_Intake_OM
+            Rate: 100
+          - Item: C_Intake_YL
+            Rate: 100
+          - Item: C_Intake_BL
+            Rate: 100
+  - Group: PONYTAIL_HAIR_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_AB_Hair_WH
+            Rate: 100
+          - Item: C_AB_Hair_LPP
+            Rate: 100
+          - Item: C_AB_Hair_RD
+            Rate: 100
+          - Item: C_AB_Hair_PP
+            Rate: 100
+          - Item: C_AB_Hair_GN
+            Rate: 100
+          - Item: C_AB_Hair_BU
+            Rate: 100
+          - Item: C_AB_Hair_YL
+            Rate: 100
+          - Item: C_AB_Hair_BL
+            Rate: 100
