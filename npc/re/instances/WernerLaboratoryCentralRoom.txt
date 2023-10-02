@@ -1050,7 +1050,6 @@ OnTouch:
 	removespecialeffect2 EF_DEVIL7;
 	removespecialeffect2 EF_DEVIL8;
 	removespecialeffect2 EF_DEVIL9;
-	enablenpc instance_npcname("Mana Mass#seyren_battle_starter");
 	end;
 }
 
