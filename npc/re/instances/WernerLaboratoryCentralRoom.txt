@@ -723,7 +723,6 @@ OnTouch:
 		close;
 	}
 	.@seyren$ = instance_npcname("Seyren Windsor#seiren");
-	.@seyren_battle_starter$ = instance_npcname("Mana Mass#seyren_battle_starter");
 	cutin "ep16_eisen01.bmp",1;
 	mes "[Eisen Werner]";
 	mes "This place is the core of the laboratory, and contains everything of my research.";
@@ -1043,7 +1042,7 @@ OnTouch:
 	mapannounce 'map_slw$, "The setting of the central room has been initialized.", bc_map,0xFF99;
 	// warpparty 'map_slw$,54,134,getcharid(1),'map_slw$,2,2;
 	disablenpc .@seyren$;
-	enablenpc .@seyren_battle_starter$;
+	enablenpc instance_npcname("Mana Mass#seyren_battle_starter");
 	removespecialeffect2 EF_DEVIL3;
 	removespecialeffect2 EF_DEVIL4;
 	removespecialeffect2 EF_DEVIL5;
