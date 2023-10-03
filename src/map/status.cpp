@@ -4835,8 +4835,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	}
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill))) {
 #if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-		// Client doesn't delete unavailable skills even if we refresh
-		// the skill tree, individually delete them.
+		// Client doesn't delete unavailable skills even if we refresh the skill tree, individually delete them.
 		for (i = 0; i < MAX_SKILL; i++) {
 			if (b_skill[i].id != 0 && sd->status.skill[i].id == 0)
 				clif_deleteskill(sd, b_skill[i].id, true);
