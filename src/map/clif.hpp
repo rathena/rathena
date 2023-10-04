@@ -735,7 +735,7 @@ void clif_skillinfoblock(map_session_data *sd);
 void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
 void clif_skillinfo(map_session_data *sd,int skill_id, int inf);
 void clif_addskill(map_session_data *sd, int skill_id);
-void clif_deleteskill(map_session_data *sd, int skill_id);
+void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock = false);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
