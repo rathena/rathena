@@ -1450,7 +1450,6 @@ Body:
     DurationLookup: PF_SPIDERWEB
     States:
       NoMove: true
-      NoMoveCond: true
     CalcFlags:
       Flee: true
     Flags:
