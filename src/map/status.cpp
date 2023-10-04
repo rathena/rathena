@@ -13305,9 +13305,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
 					clif_status_change(bl,EFST_MOON,0,0,0,0,0);
-#ifndef RENEWAL
-				status_change_end(bl, SC_LONGING, INVALID_TIMER);
-#endif
 			}
 			break;
 		case SC_NOCHAT:
