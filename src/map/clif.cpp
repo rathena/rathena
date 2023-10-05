@@ -22512,8 +22512,18 @@ void clif_parse_unequipall( int fd, map_session_data* sd ){
 		return;
 	}
 
-	for( int i = 0; i < EQI_COSTUME_HEAD_TOP; i++ ){
-		if( sd->equip_index[i] >= 0 ){
+	struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL* p = (struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL*)RFIFOP( fd, 0 );
+
+#if PACKETVER_MAIN_NUM >= 20230906
+	uint32 location = p->location;
+	int max = EQI_MAX;
+#else
+	uint32 location = 0xFFFFFFFF;
+	int max = EQI_COSTUME_HEAD_TOP;
+#endif
+
+	for( int i = 0; i < max; i++ ){
+		if( sd->equip_index[i] >= 0 && ( location & equip_bitmask[i] ) != 0 ){
 			pc_unequipitem( sd, sd->equip_index[i], 1 );
 		}
 	}

@@ -4264,6 +4264,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Fail:
+      Berserk: true
     EndOnStart:
       Voiceofsiren: true
       Deepsleep: true
