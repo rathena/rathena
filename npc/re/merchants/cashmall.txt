@@ -413,7 +413,7 @@ itemmall,35,63,3	script	Mysterious Clown	4_M_PIERROT,{
 	if(resetstat == 0) {//custom dialog
 		next;
 		mes "[Mysterious Clown]";
-		mes "I will collect the status reset tickets since you have used up all the reset attempts.";
+		mes "I will collect the Status Reset Tickets since you have used up all the reset attempts.";
 		delitem 6721,1;
 	}
 	close;
