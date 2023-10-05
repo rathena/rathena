@@ -10488,9 +10488,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val3 = sce->val3;
 				val4 = sce->val4;
 				break;
-			case SC_LERADSDEW:
-				if (sc && sc->getSCE(SC_BERSERK))
-					return 0;
 			case SC_SHAPESHIFT:
 			case SC_PROPERTYWALK:
 				break;
