@@ -44555,3 +44555,57 @@ Body:
          bonus2 bSkillAtk,"PR_MAGNUS",10;
          bonus bCritAtkRate,10;
       }
+  - Combos:
+      - Combo:
+          - Justice_Vigor_MT   # 312649
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"MT_AXE_STOMP",40;
+      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_SHC   # 312650
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",40;
+      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_SS   # 312651
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SS_FUUMASHOUAKU",40;
+      bonus2 bSkillAtk,"SS_FUUMAKOUCHIKU",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_MT   # 312652
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritAtkRate,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"MT_TRIPLE_LASER",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_SHC   # 312653
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritAtkRate,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_SS   # 312654
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"SS_SEKIENHOU",40;
+      bonus2 bSkillAtk,"SS_ANTENPOU",20;
