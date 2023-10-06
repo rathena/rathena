@@ -5652,7 +5652,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
 	case TR_ROSEBLOSSOM_ATK:
-	case TR_METALIC_FURY:
 	case ABC_FROM_THE_ABYSS_ATK:
 	case EM_ELEMENTAL_BUSTER_FIRE:
 	case EM_ELEMENTAL_BUSTER_WATER:
@@ -5847,11 +5846,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 					break;
-				case TR_METALIC_FURY:
-					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-					if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-						skill_area_temp[0] = 1 + rnd()%4;
-					break;
 				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
@@ -5880,6 +5874,24 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				return 0;
 			}
 		}
+		break;
+	case TR_METALIC_FURY:
+	{
+		if (flag & 1) {
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			int area = skill_get_splash(skill_id, skill_lv);
+			int count = map_forcountinarea(skill_check_bl_sc,bl->m,bl->x - area,bl->y - area,bl->x + area,bl->y + area,5,BL_MOB,SC_SOUNDBLEND);
+			if (count > 0){
+				map_foreachinarea(skill_area_sub, bl->m, bl->x - area, bl->y - area, bl->x + area, bl->y + area, BL_CHAR,
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+			} else{
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			}
+		}
+	}
 		break;
 
 	//Place units around target
@@ -6670,7 +6682,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case SR_TIGERCANNON:
 		if (flag & 1) {
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION);
 		} else if (sd) {
 			if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == SR_FALLENEMPIRE && !sc->getSCE(SC_FLASHCOMBO))
 				flag |= 8; // Only apply Combo bonus when Tiger Cannon is not used through Flash Combo
@@ -9780,6 +9792,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			block_list* tbl = map_id2bl(md->target_id);
 
 			if (tbl) {
+				md->state.can_escape = 1;
 				mob_unlocktarget(md, tick);
 				unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2); // Send distance in skill level > 1
 			}
@@ -16992,6 +17005,28 @@ static bool skill_check_condition_sc_required(map_session_data *sd, unsigned sho
 	}
 
 	return true;
+}
+
+/**
+* Check SC of BL
+* @param sc
+* @param skill_id
+* @return 1 if condition is met, 0 otherwise
+**/
+
+int skill_check_bl_sc(struct block_list *target, va_list ap) {
+
+	nullpo_ret(target);
+
+	int sc_id = va_arg(ap,int);
+
+	status_change *sc = status_get_sc(target);
+
+	if (sc && sc->getSCE(sc_id))
+		return 1;
+
+	return 0;
+
 }
 
 /** 

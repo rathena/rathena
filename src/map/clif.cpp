@@ -2319,11 +2319,6 @@ void clif_npc_market_open(map_session_data *sd, struct npc_data *nd) {
 			continue;
 		}
 
-		// Out of stock
-		if( item->qty == 0 ){
-			continue;
-		}
-
 		p->list[count].nameid = client_nameid( item->nameid );
 		p->list[count].type = itemtype( item->nameid );
 		p->list[count].price = item->value;
@@ -5804,7 +5799,7 @@ void clif_addskill(map_session_data *sd, int skill_id)
 
 /// Deletes a skill from the skill tree (ZC_SKILLINFO_DELETE).
 /// 0441 <skill id>.W
-void clif_deleteskill(map_session_data *sd, int skill_id)
+void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock)
 {
 #if PACKETVER >= 20081217
 	nullpo_retv(sd);
@@ -5820,7 +5815,10 @@ void clif_deleteskill(map_session_data *sd, int skill_id)
 	WFIFOW(fd,2) = skill_id;
 	WFIFOSET(fd,packet_len(0x441));
 #endif
-	clif_skillinfoblock(sd);
+#if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+	if (!skip_infoblock)
+#endif
+		clif_skillinfoblock(sd);
 }
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
@@ -22514,8 +22512,18 @@ void clif_parse_unequipall( int fd, map_session_data* sd ){
 		return;
 	}
 
-	for( int i = 0; i < EQI_COSTUME_HEAD_TOP; i++ ){
-		if( sd->equip_index[i] >= 0 ){
+	struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL* p = (struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL*)RFIFOP( fd, 0 );
+
+#if PACKETVER_MAIN_NUM >= 20230906
+	uint32 location = p->location;
+	int max = EQI_MAX;
+#else
+	uint32 location = 0xFFFFFFFF;
+	int max = EQI_COSTUME_HEAD_TOP;
+#endif
+
+	for( int i = 0; i < max; i++ ){
+		if( sd->equip_index[i] >= 0 && ( location & equip_bitmask[i] ) != 0 ){
 			pc_unequipitem( sd, sd->equip_index[i], 1 );
 		}
 	}
