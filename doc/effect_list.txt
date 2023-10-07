@@ -73,8 +73,8 @@ Number	Constant		Description
 53.	EF_POISONHIT		Puff of Purpulish Smoke?
 54.	EF_BEGINSPELL2		Cast Initiation Aura (Water Element)
 55.	EF_BEGINSPELL3		Cast Initiation Aura (Fire Element)
-56.	EF_BEGINSPELL4		Cast Initiation Aura (Wind Element)
-57.	EF_BEGINSPELL5		Cast Initiation Aura (Earth Element)
+56.	EF_BEGINSPELL4		Cast Initiation Aura (Earth Element)
+57.	EF_BEGINSPELL5		Cast Initiation Aura (Wind Element)
 58.	EF_BEGINSPELL6		Cast Initiation Aura (Holy Element)
 59.	EF_BEGINSPELL7		Cast Initiation Aura (Poison Element)
 60.	EF_LOCKON		Cast target circle
