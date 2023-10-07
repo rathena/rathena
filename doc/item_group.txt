@@ -49,35 +49,6 @@ Index: Unique number that can be used to add the same Item with different data i
 
 Item: Available item that will be obtained from this item group.
       Requires the AegisName of the item.
-	  This field is required in any case.
-
----------------------------------------
-
-Example, we define a list of 3 elements in a subgroup:
-  - Group: MyItemGroup
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Red_Potion
-            Amount: 1
-            Rate: 5
-          - Index: 1
-            Item: Red_Potion
-            Amount: 2
-            Rate: 1
-          - Index: 2
-            Item: Red_Potion
-            Amount: 2
-            Rate: 1
-
-On import, to change the amount of Red_Potion in Index 1:
-  - Group: MyItemGroup
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 1
-            Amount: 7
 
 ---------------------------------------
 

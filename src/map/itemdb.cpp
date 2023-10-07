@@ -3312,7 +3312,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						continue;
 
 					if (random->data.erase(index) == 0)
-						this->invalidWarning(listit["Clear"], "Item or Index entry doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", subgroup, group_name.c_str());
+						this->invalidWarning(listit["Clear"], "Index %d doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
 
 					continue;
 				}
