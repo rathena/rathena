@@ -11359,3 +11359,10 @@ Note: Only works with classes that use the ranking system.
 Returns true if the player is dead else false.
 
 ---------------------------------------
+
+*autoloot(<rate>{, <char_id>});
+
+This command set the rate of autoloot.
+Returns autoloot value on success.
+
+---------------------------------------
