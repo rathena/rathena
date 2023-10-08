@@ -4027,6 +4027,7 @@ Body:
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
+      NoMail: true
       NoAuction: true
     Script: |
       itemheal rand(27,37),0;
@@ -4041,6 +4042,7 @@ Body:
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
+      NoMail: true
       NoAuction: true
     Script: |
       itemheal rand(15,23),0;
@@ -5708,7 +5710,6 @@ Body:
     Type: Usable
     Weight: 100
     Trade:
-      NoDrop: true
       NoTrade: true
       NoSell: true
       NoCart: true
@@ -12341,7 +12342,6 @@ Body:
     Flags:
       Container: true
     Trade:
-      NoDrop: true
       NoTrade: true
       NoCart: true
       NoGuildStorage: true
@@ -50635,7 +50635,6 @@ Body:
     Trade:
       NoCart: true
       NoStorage: true
-      NoGuildStorage: true
     Script: |
       sc_start SC_CHILL,10000,0;
   - Id: 22567
@@ -53236,6 +53235,14 @@ Body:
     Name: Infinite Cat Hand Ticket
     Type: DelayConsume
     Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       callfunc "F_CashStore";
   - Id: 22999
@@ -53413,9 +53420,7 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoSell: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -53488,9 +53493,9 @@ Body:
     Buy: 20
     Weight: 0
     Trade:
-      NoSell: true
       NoDrop: true
       NoTrade: true
+      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -53505,9 +53510,9 @@ Body:
     Buy: 20
     Weight: 0
     Trade:
-      NoSell: true
       NoDrop: true
       NoTrade: true
+      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -53742,9 +53747,9 @@ Body:
     Buy: 0
     Weight: 0
     Trade:
-      NoSell: true
       NoDrop: true
       NoTrade: true
+      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -54297,13 +54302,13 @@ Body:
     Name: Minor Growth Elixir
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+      Override: 100
     Buy: 2
     Weight: 10
     Script: |
@@ -54313,13 +54318,13 @@ Body:
     Name: Minor Job Elixir
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+      Override: 100
     Buy: 2
     Weight: 10
     Script: |
@@ -55859,6 +55864,7 @@ Body:
       NoDrop: true
       NoTrade: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -56355,6 +56361,7 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
+      NoSell: true
       NoCart: true
       NoGuildStorage: true
       NoMail: true
@@ -56742,6 +56749,7 @@ Body:
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
+      NoMail: true
       NoAuction: true
     Script: |
       getitem 11566,20;
@@ -56755,6 +56763,7 @@ Body:
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
+      NoMail: true
       NoAuction: true
     Script: |
       getitem 11565,20;
@@ -60871,6 +60880,7 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
+      NoSell: true
       NoCart: true
       NoGuildStorage: true
       NoMail: true
@@ -65614,8 +65624,8 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -65628,8 +65638,8 @@ Body:
       NoDrop: true
       NoTrade: true
       NoSell: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -65640,8 +65650,8 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -65667,8 +65677,8 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -65679,8 +65689,8 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -65691,8 +65701,8 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -65703,8 +65713,8 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoStorage: true
       NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -67597,7 +67607,6 @@ Body:
       NoTrade: true
       NoSell: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -67616,7 +67625,6 @@ Body:
       NoTrade: true
       NoSell: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -67635,7 +67643,6 @@ Body:
       NoTrade: true
       NoSell: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
