@@ -3312,7 +3312,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						continue;
 
 					if (random->data.erase(index) == 0)
-						this->invalidWarning(listit["Clear"], "Index %d doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
+						this->invalidWarning(listit["Clear"], "Index %u doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
 
 					continue;
 				}
@@ -3350,7 +3350,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 				// (shouldn't happen)
 				if (item == nullptr) {
-					this->invalidWarning(listit["index"], "Missing Item definition for Index %d.\n", index);
+					this->invalidWarning(listit["index"], "Missing Item definition for Index %u.\n", index);
 					continue;
 				}
 
