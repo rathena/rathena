@@ -11132,6 +11132,13 @@ Returns 1 on success.
 
 ---------------------------------------
 
+*channel_join "<chname>"{, <char_id>};
+
+Join an existing public or private channel.
+Returns 1 on success.
+
+---------------------------------------
+
 *channel_setopt "<chname>",<option>,<value>;
 
 Set option for the channel. Use 1 in <value> to set it, or 0 to unset.

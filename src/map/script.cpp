@@ -24656,6 +24656,32 @@ BUILDIN_FUNC(channel_create) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// ===================================
+// *channel_join "<chname>"{, <char_id>};
+// Join an existing public or private channel.
+// Returns 1 on success.
+// ===================================
+BUILDIN_FUNC(channel_join) {
+	map_session_data *sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st, 2);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_join: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	channel_join(ch, sd);
+	script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Set channel option
  * channel_setopt "<chname>",<option>,<value>;
@@ -27600,6 +27626,7 @@ struct script_function buildin_func[] = {
 
 	// Channel System
 	BUILDIN_DEF(channel_create,"ss?????"),
+	BUILDIN_DEF(channel_join, "s?"),
 	BUILDIN_DEF(channel_setopt,"sii"),
 	BUILDIN_DEF(channel_getopt,"si"),
 	BUILDIN_DEF(channel_setcolor,"si"),
