@@ -35158,6 +35158,12 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25212
+    AegisName: Coagulated_Blood
+    Name: Condensed Magic Blood
+    Type: Etc
+    Buy: 20
+    Weight: 10
   - Id: 25218
     AegisName: Tree_Branches
     Name: Tree Branch
@@ -38258,8 +38264,7 @@ Body:
     Script: |
       bonus bDef,30;
       bonus bMdef,10;
-      bonus2 bAddEff,Eff_Silence,900;
-      autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 3658,7000; }";
+      bonus3 bAddEffWhenHit,Eff_Silence,2000,ATF_WEAPON|ATF_MAGIC;
   - Id: 27026
     AegisName: Fire_Condor_Card
     Name: Fire Condor Card
@@ -46441,6 +46446,15 @@ Body:
     SubType: Enchant
     Script: |
       skill "AL_BLESSING",10;
+  - Id: 29727
+    AegisName: aegis_29727
+    Name: Rumble Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_RESONATETAEGO,true;
+    UnEquipScript: |
+      hateffect HAT_EF_RESONATETAEGO,false;
   - Id: 31000
     AegisName: Rudo_Card_J
     Name: Rudo Card
@@ -46827,6 +46841,34 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
       autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Id: 101592
+    AegisName: Force_of_Fullmoon
+    Name: The Power of The Full Moon
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
+  - Id: 101952
+    AegisName: SunShine_Sand
+    Name: Sunny Powder Sand
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
+  - Id: 102038
+    AegisName: Dead_Soul_Aura
+    Name: The Evil Breath of The Dead
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
+  - Id: 102354
+    AegisName: Battle_Aura_TW
+    Name: Fighting Spirit
+    Type: Etc
+    Trade:
+      NoDrop: true
+    Weight: 10
   - Id: 300000
     AegisName: IDTest_Card
     Name: IDTest Card
@@ -51243,6 +51285,28 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,100;
       bonus2 bMagicAtkEle,Ele_Undead,100;
       bonus2 bSubEle,Ele_All,-30;
+  - Id: 300383
+    AegisName: FightingSpirit_of_Veins
+    Name: Veins Fighting Spirit
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bAddEle,Ele_Neutral,10;
+      bonus2 bMagicAddEle,Ele_Neutral,10;
+  - Id: 300384
+    AegisName: TheExorcist_Of_Veins
+    Name: Veins Exorcist
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Demon,15;
+      bonus2 bMagicAddRace,RC_Demon,15;
+      bonus2 bAddRace,RC_Undead,15;
+      bonus2 bMagicAddRace,RC_Undead,15;
+      bonus2 bAddEle,Ele_Undead,15;
+      bonus2 bMagicAddEle,Ele_Undead,15;
   - Id: 300385
     AegisName: VF_Effect_TW
     Name: Valhalla Effect Effect
@@ -51564,6 +51628,15 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,10*.@r;
+  - Id: 300419
+    AegisName: aegis_300419
+    Name: Camellia Smoke Effect
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_Camellia_Hair_Pin,true;
+    UnEquipScript: |
+      hateffect HAT_EF_Camellia_Hair_Pin,false;
   - Id: 300420
     AegisName: aegis_300420
     Name: Labyrinth Berzebub Card
@@ -52358,6 +52431,28 @@ Body:
       Right_Hand: true
     Flags:
       DropEffect: CLIENT
+  - Id: 300484
+    AegisName: aegis_300484
+    Name: Very Miss Rabbit Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,15;
+  - Id: 300485
+    AegisName: aegis_300485
+    Name: Little Naught Dog Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSPrate,15;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -66645,6 +66740,50 @@ Body:
     SubType: Enchant
     Script: |
       skill "ALL_ODINS_POWER",2;
+  - Id: 311419
+    AegisName: aegis_311419
+    Name: Magnum Break Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "SM_MAGNUM",5;
+  - Id: 311420
+    AegisName: aegis_311420
+    Name: Fixed Cast Time - 70%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCastrate,-70;
+  - Id: 311421
+    AegisName: aegis_311421
+    Name: Variable Cast Time - 15%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-15;
+  - Id: 311422
+    AegisName: aegis_311422
+    Name: Attack Speed + 15%
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,15;
+  - Id: 311423
+    AegisName: aegis_311423
+    Name: Pure Brightness
+    Type: Card
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+  - Id: 311424
+    AegisName: aegis_311424
+    Name: Grain Rain
+    Type: Card
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
   - Id: 311425
     AegisName: aegis_311425
     Name: Spell Stone (Dual)
@@ -73373,7 +73512,7 @@ Body:
       bonus bAspdRate,10;
   - Id: 312418
     AegisName: aegis_312418
-    Name: Prayer Bell
+    Name: Evening Bell of Prayer
     Type: Card
     SubType: Enchant
     Script: |
@@ -78300,14 +78439,68 @@ Body:
     Name: Valhalla Effect (Middle)
     Type: Etc
     Weight: 100
+  - Id: 1000876
+    AegisName: Veins_Quest_Soup
+    Name: Veins Soup
+    Type: Etc
+  - Id: 1000877
+    AegisName: UK_Invention
+    Name: Unknown Invention
+    Type: Etc
+    Weight: 10
+  - Id: 1000878
+    AegisName: Soap_Base
+    Name: Soap Base
+    Type: Etc
+    Weight: 10
+  - Id: 1000879
+    AegisName: Appetite_Booster
+    Name: Appetite Booster
+    Type: Etc
+    Weight: 10
+  - Id: 1000880
+    AegisName: Kofte
+    Name: Kofte
+    Type: Etc
+    Weight: 10
+  - Id: 1000881
+    AegisName: Veins_Sealed_Letter
+    Name: Sealed Letter
+    Type: Etc
+    Weight: 5
   - Id: 1000882
     AegisName: aegis_1000882
     Name: Electric Effect (Bottom)
     Type: Etc
     Weight: 100
+  - Id: 1000883
+    AegisName: Dangerous_Sacredness
+    Name: Dangerous Relic
+    Type: Etc
+    Weight: 20
+  - Id: 1000884
+    AegisName: Dangerous_Box
+    Name: Sealed Dangerous Box
+    Type: Etc
+    Weight: 40
+  - Id: 1000885
+    AegisName: VeinsQ_Violin
+    Name: Violin
+    Type: Etc
+    Weight: 800
+  - Id: 1000886
+    AegisName: Megaphone_Veins
+    Name: Megaphone
+    Type: Etc
+    Weight: 10
+  - Id: 1000888
+    AegisName: Veins_Coin
+    Name: Veins Coin
+    Type: Etc
+    Weight: 1
   - Id: 1000889
     AegisName: aegis_1000889
-    Name: Complex Fruit Juice
+    Name: Compound Fruit Juice
     Type: Etc
     Weight: 10
     Flags:
@@ -78337,19 +78530,19 @@ Body:
       NoAuction: true
   - Id: 1000897
     AegisName: aegis_1000897
-    Name: Donor List Keias 1
+    Name: Donor List Chaos 1
     Type: Etc
   - Id: 1000898
     AegisName: aegis_1000898
-    Name: Donor List Keias 2
+    Name: Donor List Chaos 2
     Type: Etc
   - Id: 1000899
     AegisName: aegis_1000899
-    Name: Donor List Keias 3
+    Name: Donor List Chaos 3
     Type: Etc
   - Id: 1000900
     AegisName: aegis_1000900
-    Name: Donor List Keias 4
+    Name: Donor List Chaos 4
     Type: Etc
   - Id: 1000901
     AegisName: aegis_1000901
@@ -79028,6 +79221,11 @@ Body:
     Name: Power Stone (Dual)
     Type: Etc
     Weight: 100
+  - Id: 1001069
+    AegisName: aegis_1001069
+    Name: Camellia Smoke Effect Stone (Head)
+    Type: Etc
+    Weight: 10
   - Id: 1001071
     AegisName: aegis_1001071
     Name: Niflheim Research Paper    # !todo check english name
@@ -80052,6 +80250,11 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001252
+    AegisName: aegis_1001252
+    Name: Rumble Effect Stone (Head)
+    Type: Etc
+    Weight: 10
   - Id: 1001253
     AegisName: S_Enchant_Essence
     Name: Shadow Essence    # !todo check english name
@@ -80071,6 +80274,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001256
+    AegisName: Ymir_Heart_P_TW
+    Name: Imela Heart Energy Fragments    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 1001258
     AegisName: VIP_Black_Coin
     Name: Premium Black Coin    # !todo check english name
@@ -80508,6 +80716,21 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001355
+    AegisName: aegis_1001355
+    Name: Ancient Hero's Modification Coupon I
+    Type: Etc
+    Weight: 10
+  - Id: 1001356
+    AegisName: aegis_1001356
+    Name: Ancient Hero's Modification Coupon II
+    Type: Etc
+    Weight: 10
+  - Id: 1001357
+    AegisName: aegis_1001357
+    Name: Ancient Hero's Modification Coupon III
+    Type: Etc
+    Weight: 10
   - Id: 1001359
     AegisName: Unidentified_Bug
     Name: Unidentified Bug    # !todo check english name
