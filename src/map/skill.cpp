@@ -4390,6 +4390,8 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 		case BL_MER: sd = ((TBL_MER*)bl)->master; break;
 	}
 
+	nullpo_retr(0, sd);
+
 	status = status_get_status_data(bl);
 	skill_lv = cap_value(skill_lv, 1, MAX_SKILL_LEVEL);
 
@@ -7281,7 +7283,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case CD_REPARATIO: {
 		if (bl->type != BL_PC) { // Only works on players.
-			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 			break;
 		}
 
@@ -8028,7 +8031,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			status_fix_apdamage(src, bl, ap_burn[skill_lv - 1], 0, skill_id);
-		} else
+		} else if (sd)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 		break;
 
@@ -8036,7 +8039,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (bl->type == BL_PC) {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			status_heal(bl, 0, 0, 10 * skill_lv, 0);
-		} else
+		} else if (sd)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 		break;
 
@@ -10437,7 +10440,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 			else
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		} else
+		} else if (sd)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		break;
 
@@ -11049,7 +11052,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !(tsc && tsc->getSCE(type)) ){
 				i = sc_start2(src,bl,type,rate,skill_lv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skill_id,skill_lv):skill_get_time2(skill_id, skill_lv));
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,i);
-				if( !i )
+				if( sd && !i )
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			}
 		}else
@@ -12142,7 +12145,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SP_SOULDIVISION:
 		if (skill_id == SP_SOULDIVISION) { // Usable only on other players.
 			if (bl->type != BL_PC) {
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				if (sd)
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 				break;
 			}
 		}
@@ -13750,7 +13754,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			return 0;
 		} else { // Create Basilica. Start SC on caster. Unit timer start SC on others.
 			if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+				if (sd)
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
 				return 0;
 			}
 			skill_clear_unitgroup(src);
@@ -14137,7 +14142,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
 
 			if( group == nullptr || group->unit == nullptr ) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				if (sd)
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return 1;
 			}
 			map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl); // Release all targets against the caster
@@ -17709,8 +17715,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 		case NPC_ELECTRICWALK:	// Can't be casted until you've walked all cells.
 			if( sc && sc->getSCE(SC_PROPERTYWALK) &&
 			   sc->getSCE(SC_PROPERTYWALK)->val3 < skill_get_maxcount(sc->getSCE(SC_PROPERTYWALK)->val1,sc->getSCE(SC_PROPERTYWALK)->val2) ) {
-				if( sd )
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
 			break;
@@ -18219,14 +18224,12 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 		}
 #ifdef RENEWAL
 		case ASC_EDP:
-			if(sd) {
-				int16 item_edp = itemdb_group.item_exists_pc(sd, IG_EDP);
-				if (item_edp < 0) {
-					clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, 1, ITEMID_POISON_BOTTLE ); // [%s] required '%d' amount.
-					return false;
-				} else
-					pc_delitem(sd, item_edp, 1, 0, 1, LOG_TYPE_CONSUME);
-			}
+			int16 item_edp = itemdb_group.item_exists_pc(sd, IG_EDP);
+			if (item_edp < 0) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, 1, ITEMID_POISON_BOTTLE ); // [%s] required '%d' amount.
+				return false;
+			} else
+				pc_delitem(sd, item_edp, 1, 0, 1, LOG_TYPE_CONSUME);
 			break;
 #endif
 	}
