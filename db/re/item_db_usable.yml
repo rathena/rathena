@@ -7743,7 +7743,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_PC_BANG_COIN_BOX3);
+      getitem 2738,1;
   - Id: 12297
     AegisName: PC_Bang_Coin_Box4
     Name: PC-Room Coin Box
@@ -19262,7 +19262,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1729,604800;
+      getgroupitem(IG_BOW_OF_RUDRA_BOX1);
   - Id: 13683
     AegisName: Cutlas_Box1
     Name: Refined Cutlus Box
@@ -21812,9 +21812,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 683,1;
-      getitem 12123,1;
-      getitem 12122,1;
+      getgroupitem(IG_POWER_BOX2);
   - Id: 13828
     AegisName: Resist_Box1
     Name: Resist Box 1
@@ -22510,7 +22508,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_OBSERVER_BOX);
+      rentitem 5315,604800;
   - Id: 13866
     AegisName: Flying_Angel_Box
     Name: Flying Angel Box
@@ -24392,7 +24390,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_LUCKY_CLIP_BOX);
+      rentitem 2742,86400;
   - Id: 13970
     AegisName: Iron_10_Box
     Name: Iron Box
@@ -38682,19 +38680,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      getitem 12208,10;
-      getitem 12210,10;
-      getitem 12216,20;
-      getitem 12215,20;
-      getitem 7621,10;
-      getitem 12209,10;
-      getitem 12211,5;
-      getitem 12445,10;
-      getitem 12446,10;
-      getitem 12447,10;
-      getitem 12448,10;
-      getitem 12449,10;
-      getitem 12450,10;
+      getgroupitem(IG_F_PET_EGG_SCROLL9);
   - Id: 16421
     AegisName: F_Marriage_Covenant_Box
     Name: Written Oath Of Marriage Box
@@ -38710,7 +38696,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 5280,604800;
+      getgroupitem(IG_F_MAGESTIC_GOAT_BOX);
   - Id: 16423
     AegisName: F_Pet_Egg_Scroll3
     Name: Episode 13.1 Key Package
@@ -38718,9 +38704,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      getitem 7782,1;
-      getitem 12208,2;
-      getitem 14582,10;
+      getgroupitem(IG_F_PET_EGG_SCROLL3);
   - Id: 16424
     AegisName: F_Executioner_Box
     Name: Executioner Box
@@ -38728,7 +38712,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1174,604800;
+      getgroupitem(IG_F_EXECUTIONER_BOX);
   - Id: 16425
     AegisName: F_Cutlas_Box
     Name: Cutlus Box
@@ -38736,7 +38720,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 13402,604800;
+      getgroupitem(IG_F_CUTLAS_BOX);
   - Id: 16426
     AegisName: F_Moonlight_Sword_Box
     Name: Moonlight Dagger Box
@@ -38744,7 +38728,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 13026,604800;
+      getgroupitem(IG_F_MOONLIGHT_SWORD_BOX);
   - Id: 16427
     AegisName: F_Spanner_Box
     Name: Wrench Box
@@ -38752,7 +38736,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1534,604800;
+      getgroupitem(IG_F_SPANNER_BOX);
   - Id: 16428
     AegisName: F_Solar_Sword_Box
     Name: Solar Sword Box
@@ -38760,7 +38744,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 13403,604800;
+      getgroupitem(IG_F_SOLAR_SWORD_BOX);
   - Id: 16429
     AegisName: F_Tomahawk_Box
     Name: Tomahawk Box
@@ -38768,7 +38752,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1374,604800;
+      getgroupitem(IG_F_TOMAHAWK_BOX);
   - Id: 16430
     AegisName: F_Bow_Of_Rudra_Box
     Name: Rudra Bow Box
@@ -38776,7 +38760,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1729,604800;
+      getgroupitem(IG_F_BOW_OF_RUDRA_BOX);
   - Id: 16431
     AegisName: F_Pole_Axe_Box
     Name: Pole Axe Box
@@ -38784,7 +38768,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1419,604800;
+      getgroupitem(IG_F_POLE_AXE_BOX);
   - Id: 16432
     AegisName: BM_Pack_Box_A
     Name: Battle Manual Package Box(A)
@@ -39602,7 +39586,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
+      getgroupitem(IG_F_THOUGHTFUL_HAT_BOX);
   - Id: 16590
     AegisName: E_Thoughtful_Hat_Box
     Name: Thoughtful Hat Box
@@ -39610,7 +39594,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
+      getgroupitem(IG_E_THOUGHTFUL_HAT_BOX);
   - Id: 16591
     AegisName: Summer_Scroll2
     Name: Overseas Care Package Remix XIII Mini
@@ -40164,7 +40148,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      getitem callfunc("F_Rand",5545,5549,5569,5581,5589,5599,5663,5677,5740,5745,5512,5514),1;
+      getgroupitem(IG_ZODIAC_DIADEM_PACK);
   - Id: 16664
     AegisName: Leo_Scroll
     Name: Leo Scroll
@@ -40271,7 +40255,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5546,5550,5570,5582,5588,5598,5662,5676,5739,5744,5513,5515),1;
+      getgroupitem(IG_ZODIAC_CROWN_PACK);
   - Id: 16677
     AegisName: Vending_Scroll2_Box10
     Name: Universal Catalog Gold 10 Box
@@ -41396,8 +41380,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12212,500,Bound_Account;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_C_GIANT_FLY_WING_BOX);
   - Id: 16821
     AegisName: C_Dun_Tele_Scroll_Box5
     Name: Dungeon Teleport Scroll Box(5)
@@ -41559,7 +41542,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,10;
+      getgroupitem(IG_C_SIEGE_SCROLL_BOX1_10);
   - Id: 16865
     AegisName: C_Siege_Scroll_Box1_30
     Name: Siege Map Teleport Scroll Box(30)
@@ -41607,7 +41590,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,30;
+      getgroupitem(IG_C_SIEGE_SCROLL_BOX2_30);
   - Id: 16878
     AegisName: C_Umbala_Spirit_Box2
     Name: Umbala Spirit Box
@@ -45850,7 +45833,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",24018,24019,24020,24024,24025,24026),1;
+      getgroupitem(IG_PHYSICAL_S_PACKAGE);
   - Id: 17294
     AegisName: Magical_S_Package
     Name: Shadow Magical Package
@@ -45866,7 +45849,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",24021,24022,24023,24024,24025,24026),1;
+      getgroupitem(IG_MAGICAL_S_PACKAGE);
   - Id: 17298
     AegisName: Vigorgra_Package
     Name: Support Package
@@ -46958,7 +46941,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_Costama_Egg21);
+      getgroupitem(IG_COSTAMA_EGG21);
   - Id: 17482
     AegisName: Solaris_Festival_Scroll
     Name: Solaris Festival Scroll
@@ -49547,10 +49530,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12832,100,Bound_Account;
-      getitem 14534,100;
-      getitem 14535,100;
-      getitembound 23919,11,Bound_Account;
+      getgroupitem(IG_A_3_LIFE_POTION_10PACK);
   - Id: 17972
     AegisName: A_3_Life_Potion_pack
     Name: Life Potion Sampler Crate
@@ -49565,10 +49545,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12832,10,Bound_Account;
-      getitem 14534,10;
-      getitem 14535,10;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_A_3_LIFE_POTION_PACK);
   - Id: 17973
     AegisName: A_Almighty100_Box
     Name: Almighty package 10set
@@ -49703,8 +49680,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 23475,200;
-      getitembound 23919,11,Bound_Account;
+      getgroupitem(IG_A_INFINITY_10_BOX);
   - Id: 17982
     AegisName: A_Infinity_Box
     Name: Infinity Drink 20 Box
@@ -49719,8 +49695,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 23475,20;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_A_INFINITY_BOX);
   - Id: 17983
     AegisName: A_DEF_Scroll_Box_Set
     Name: Defense Scroll Box(10)
@@ -50448,11 +50423,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
+      getgroupitem(IG_FIRST_AID_KIT_B);
   - Id: 22555
     AegisName: HQ_Chocolate
     Name: Gourmet Chocolate
@@ -52662,7 +52633,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      callfunc("F_Mysterious_box");
+      getgroupitem(IG_BLUEBOXOFQUESTIONS);
   - Id: 22902
     AegisName: Sealed_Scroll2
     Name: Sealed Card Album Scroll II
@@ -53795,7 +53766,7 @@ Body:
     Buy: 1
     Weight: 500
     Script: |
-      callfunc("F_Cursed_Crystal");
+      getgroupitem(IG_CRYSTAL_OF_GRUDGE);
   - Id: 23081
     AegisName: Kunai_Scroll_Of_Flame
     Name: Heat Wave Kunai Summon Scroll
@@ -67097,8 +67068,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 7136,50,Bound_Account;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_C_ACID_B_50BOX);
   - Id: 200056
     AegisName: C_Acid_B_500_Box
     Name: Acid Bomb 500 Box
@@ -67113,8 +67083,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 7136,500,Bound_Account;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_C_ACID_B_500_BOX);
   - Id: 200064
     AegisName: Giant_Fly_Wing_2500
     Name: Giant Flywing 2500 Box
@@ -67129,8 +67098,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12212,2500,Bound_Account;
-      getitembound 23919,12,Bound_Account;
+      getgroupitem(IG_GIANT_FLY_WING_2500);
   - Id: 200069
     AegisName: A_HD_Elunium_Box
     Name: HD Elunium Package
