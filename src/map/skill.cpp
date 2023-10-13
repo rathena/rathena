@@ -5425,7 +5425,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #else
 				uint8 dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
 
-				if (!map_check_dir(dir, t_dir) || bl->type == BL_SKILL) {
+				if (bl->type == BL_SKILL) {
 #endif
 					status_change_end(src, SC_HIDING);
 					dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
