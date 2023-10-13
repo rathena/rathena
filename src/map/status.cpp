@@ -5403,12 +5403,20 @@ void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SC
 				  || (sc->getSCE(SC_SPIDERWEB) && sc->getSCE(SC_SPIDERWEB)->val1)
 				  || (sc->getSCE(SC_HIDING) && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
 				  || (sc->getSCE(SC_DANCING) && sc->getSCE(SC_DANCING)->val4 && (
+#ifndef RENEWAL
+						!sc->getSCE(SC_LONGING) ||
+#endif
 						(sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_MOONLIT ||
 						(sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_HERMODE
 						))
 				  || (sc->getSCE(SC_CRYSTALIZE) && bl->type != BL_MOB)
  				 )
 				 sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
+#ifndef RENEWAL
+		// Remove movement restriction when Longing for Freedom becomes active with an Ensemble skill.
+		if (start && sc->getSCE(SC_DANCING) && sc->getSCE(SC_DANCING)->val4 && sc->getSCE(SC_LONGING))
+			sc->cant.move = 0;
+#endif
 	}
 
 	// Can't use skills
