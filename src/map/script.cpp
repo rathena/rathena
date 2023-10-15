@@ -13179,6 +13179,10 @@ void script_detach_rid(struct script_state* st)
  *	    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  *	5 : All players in the map.
  *	    [ Parameters: "<map name>" ]
+ *	6 : Battleground members of a specified battleground ID.
+ *	    [ Parameters: <battleground id> ]
+ *	7 : Clan members of a specified clan ID.
+ *	    [ Parameters: <clan id> ]
  *	Account ID: The specified account ID.
  * <flag>:
  *	0 : Players are always attached. (default)
@@ -13271,6 +13275,30 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_FAILURE;
 			}
 			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
+			break;
+		case 6:
+			if (script_getnum(st, 4) == 0) {
+				script_pushint(st, 0);
+				mapit_free(iter);
+				return SCRIPT_CMD_SUCCESS;
+			}
+			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
+				if (!forceflag || !sd->st)
+					if ((sd->status.account_id != st->rid) && (sd->bg_id == script_getnum(st, 4))) //attached player already runs.
+						run_script(st->script, st->pos, sd->status.account_id, st->oid);
+			}
+			break;
+		case 7:
+			if (script_getnum(st, 4) == 0) {
+				script_pushint(st, 0);
+				mapit_free(iter);
+				return SCRIPT_CMD_SUCCESS;
+			}
+			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
+				if (!forceflag || !sd->st)
+					if ((sd->status.account_id != st->rid) && (sd->status.clan_id == script_getnum(st, 4))) //attached player already runs.
+						run_script(st->script, st->pos, sd->status.account_id, st->oid);
+			}
 			break;
 		default:
 			mapit_free(iter);
