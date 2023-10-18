@@ -1,15 +1,3 @@
-<!--
-//===== rAthena Documentation ================================
-//= Achievement Database Structure
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Last Updated: ========================================
-//= 20200220
-//===== Description: =========================================
-//= Explanation of the achievements_db.yml file and structure.
-//============================================================
--->
-
 # Achievement Database Structure
 
 ### Id

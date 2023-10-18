@@ -1,15 +1,3 @@
-<!--
-//===== rAthena Documentation ================================
-//= Packet Structure Notation
-//===== By: ==================================================
-//= Ai4rei
-//===== Last Updated: ========================================
-//= 20120810
-//===== Description: =========================================
-//= Explanation how packets are and should be documented.
-//============================================================
--->
-
 # Packet Structure Notation
 
 This document specifies how packets are and should be documented, to
