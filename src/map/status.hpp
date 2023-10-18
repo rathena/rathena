@@ -1282,7 +1282,8 @@ enum sc_type : int16 {
 
 	SC_RUSH_QUAKE1,
 	SC_RUSH_QUAKE2,
-
+	
+	SC_G_LIFEPOTION,
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -3031,6 +3032,7 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONUNEQUIPWEAPON,
 	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_REMOVEONHERMODE,
+	SCF_REQUIRENOWEAPON,
 	SCF_MAX
 };
 

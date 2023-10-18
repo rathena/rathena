@@ -13,6 +13,7 @@
 //= 1.4 Added Illusion of Turtle enchanter [Capuche]
 //= 1.5 Added Illusion of Luanda enchanter [Capuche]
 //= 1.6 Added Illusion of Underwater exchange [Capuche]
+//= 1.7 Added Illusion of Twins enchanter [Capuche]
 //============================================================
 
 //============================================================
@@ -1673,5 +1674,33 @@ iz_d04_i,134,228,4	script	Horen#Horen	4_M_BIBI,{
 	mes "There are many types, so take your time. If you want something, I can enhance it right away.";
 	close2;
 	callshop( "barter_ill_underwater" );
+	end;
+}
+
+//============================================================
+//= Illusion of Twins
+//============================================================
+// ant_d02_i,175,186,3	script	From#iltw	MECHANIC,{
+ant_d02_i,175,186,3	script	From#iltw	HIDDEN_NPC,{
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed with the quest because you have too many items. -";
+		close;
+	}
+	mes "[From]";
+	mes "I feel like I'm going crazy.";
+	mes "It's because of my mood. I'm human and it's not like you're mistaken.";
+	mes "I'll help you if you get a lot here.";
+	mes "Do you want to enhance your equipment?";
+	close2;
+	callshop( "barter_ill_twins" );
+	end;
+
+OnInit:
+	.@npc_id = getnpcid(0);
+	setunitdata .@npc_id, UNPC_CLASS, 4058;
+	setunitdata .@npc_id, UNPC_SEX, SEX_MALE;
+	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
+	setunitdata .@npc_id, UNPC_HAIRSTYLE, 11;
+	setunitdata .@npc_id, UNPC_HAIRCOLOR, 6;
 	end;
 }

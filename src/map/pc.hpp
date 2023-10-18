@@ -33,6 +33,8 @@ enum e_instance_mode : uint8;
 enum e_log_pick_type : uint32;
 enum sc_type : int16;
 
+class MapGuild;
+
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
@@ -716,7 +718,7 @@ public:
 	int party_invite, party_invite_account; // for handling party invitation (holds party id and account id)
 	int adopt_invite; // Adoption
 
-	struct guild *guild; // [Ind] speed everything up
+	std::shared_ptr<MapGuild> guild; // [Ind] speed everything up
 	int guild_invite,guild_invite_account;
 	int guild_emblem_id,guild_alliance,guild_alliance_account;
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]

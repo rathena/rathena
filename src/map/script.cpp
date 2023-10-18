@@ -5810,7 +5810,7 @@ BUILDIN_FUNC(warpparty)
 
 			struct map_data *mapdata = map_getmapdata(m);
 
-			if ( mapdata == nullptr || mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
+			if ( mapdata == nullptr || mapdata->getMapFlag(MF_NOWARP) || mapdata->getMapFlag(MF_NOTELEPORT) )
 				return SCRIPT_CMD_FAILURE;
 
 			i = 0;
@@ -5851,15 +5851,15 @@ BUILDIN_FUNC(warpparty)
 		switch( type )
 		{
 		case WARPPARTY_RANDOM:
-			if (!mapdata->flag[MF_NOWARP])
+			if (!mapdata->getMapFlag(MF_NOWARP))
 				ret = (e_setpos)pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case WARPPARTY_SAVEPOINTALL:
-			if (!mapdata->flag[MF_NORETURN])
+			if (!mapdata->getMapFlag(MF_NORETURN))
 				ret = pc_setpos( pl_sd, mapindex_name2id( pl_sd->status.save_point.map ), pl_sd->status.save_point.x, pl_sd->status.save_point.y, CLR_TELEPORT );
 		break;
 		case WARPPARTY_SAVEPOINT:
-			if (!mapdata->flag[MF_NORETURN])
+			if (!mapdata->getMapFlag(MF_NORETURN))
 				ret = pc_setpos( pl_sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 		break;
 		case WARPPARTY_LEADER:
@@ -5873,7 +5873,7 @@ BUILDIN_FUNC(warpparty)
 			}
 			// Fall through
 		case WARPPARTY_RANDOMALLAREA:
-			if(!mapdata->flag[MF_NORETURN] && !mapdata->flag[MF_NOWARP] && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
+			if(!mapdata->getMapFlag(MF_NORETURN) && !mapdata->getMapFlag(MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
 				if (rx || ry) {
 					int x1 = x + rx, y1 = y + ry,
 						x0 = x - rx, y0 = y - ry,
@@ -5916,7 +5916,6 @@ BUILDIN_FUNC(warpguild)
 {
 	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
-	struct guild* g;
 	struct s_mapiterator* iter;
 	int type, mapindex = 0, m = -1;
 
@@ -5925,7 +5924,7 @@ BUILDIN_FUNC(warpguild)
 	int y           = script_getnum(st,4);
 	int gid         = script_getnum(st,5);
 
-	g = guild_search(gid);
+	auto g = guild_search(gid);
 	if( g == NULL )
 		return SCRIPT_CMD_SUCCESS;
 
@@ -6652,7 +6651,7 @@ BUILDIN_FUNC(inarray)
 {
 	struct script_data *data;
 	const char* name;
-	int id, i, array_size;
+	int id;
 	map_session_data* sd = NULL;
 	struct reg_db *ref = NULL;
 	data = script_getdata(st, 2);
@@ -6671,15 +6670,15 @@ BUILDIN_FUNC(inarray)
 	if (not_server_variable(*name) && !script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	array_size = script_array_highest_key(st, sd, name, ref) - 1;
+	const uint32 array_size = script_array_highest_key(st, sd, name, ref);
 
-	if (array_size < 0)
+	if (array_size == 0)
 	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (array_size > SCRIPT_MAX_ARRAYSIZE)
+	if (array_size >= SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_inarray: The array is too large.\n");
 		script_reportdata(data);
@@ -6692,7 +6691,7 @@ BUILDIN_FUNC(inarray)
 	if( is_string_variable( name ) ){
 		const char* value = script_getstr( st, 3 );
 
-		for( i = 0; i <= array_size; ++i ){
+		for( uint32 i = 0; i < array_size; ++i ){
 			const char* temp = get_val2_str( st, reference_uid( id, i ), ref );
 
 			if( !strcmp( temp, value ) ){
@@ -6708,7 +6707,7 @@ BUILDIN_FUNC(inarray)
 	}else{
 		int64 value = script_getnum64( st, 3 );
 
-		for( i = 0; i <= array_size; ++i ){
+		for( uint32 i = 0; i < array_size; ++i ){
 			int64 temp = get_val2_num( st, reference_uid( id, i ), ref );
 
 			if( temp == value ){
@@ -6731,7 +6730,7 @@ BUILDIN_FUNC(countinarray)
 	struct script_data *data1 , *data2;
 	const char* name1;
 	const char* name2;
-	int id1, id2, i, j, array_size1, array_size2, case_count = 0;
+	int id1, id2, case_count = 0;
 	map_session_data* sd = NULL;
 	struct reg_db *ref1 = NULL, *ref2 = NULL;
 	data1 = script_getdata(st, 2);
@@ -6754,16 +6753,16 @@ BUILDIN_FUNC(countinarray)
 	if (not_server_variable(*name1) && not_server_variable(*name2) && !script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
-	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
+	const uint32 array_size1 = script_array_highest_key(st, sd, name1, ref1);
+	const uint32 array_size2 = script_array_highest_key(st, sd, name2, ref2);
 
-	if (array_size1 < 0 || array_size2 < 0)
+	if (array_size1 == 0 || array_size2 == 0)
 	{
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (array_size1 > SCRIPT_MAX_ARRAYSIZE || array_size2 > SCRIPT_MAX_ARRAYSIZE)
+	if (array_size1 >= SCRIPT_MAX_ARRAYSIZE || array_size2 >= SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_countinarray: The array is too large.\n");
 		script_reportdata(data1);
@@ -6772,9 +6771,9 @@ BUILDIN_FUNC(countinarray)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	i = reference_getindex(data1);
-	j = reference_getindex(data2);
-	if (array_size1 < i || array_size2 < j)
+	uint32 i = reference_getindex(data1);
+	uint32 j = reference_getindex(data2);
+	if (i > array_size1 - 1 || j > array_size2 - 1)
 	{	//To prevent unintended behavior
 		ShowError("buildin_countinarray: The given index of the array is higher than the array size.\n");
 		script_reportdata(data1);
@@ -6787,10 +6786,10 @@ BUILDIN_FUNC(countinarray)
 	id2 = reference_getid(data2);
 
 	if( is_string_variable( name1 ) && is_string_variable( name2 ) ){
-		for( ; i <= array_size1; ++i ){
+		for( ; i < array_size1; ++i ){
 			const char* temp1 = get_val2_str( st, reference_uid( id1, i ), ref1 );
 
-			for( j = reference_getindex( data2 ); j <= array_size2; j++ ){
+			for( j = reference_getindex( data2 ); j < array_size2; j++ ){
 				const char* temp2 = get_val2_str( st, reference_uid( id2, j ), ref2 );
 
 				if( !strcmp( temp1, temp2 ) ){
@@ -6805,10 +6804,10 @@ BUILDIN_FUNC(countinarray)
 			script_removetop( st, -1, 0 );
 		}
 	}else if( !is_string_variable( name1 ) && !is_string_variable( name2 ) ){
-		for( ; i <= array_size1; ++i ){
+		for( ; i < array_size1; ++i ){
 			int64 temp1 = get_val2_num( st, reference_uid( id1, i ), ref1 );
 
-			for( j = reference_getindex( data2 ); j <= array_size2; j++ ){
+			for( j = reference_getindex( data2 ); j < array_size2; j++ ){
 				int64 temp2 = get_val2_num( st, reference_uid( id2, j ), ref2 );
 
 				if( temp1 == temp2 ){
@@ -9005,11 +9004,11 @@ BUILDIN_FUNC(getpartyleader)
 BUILDIN_FUNC(getguildname)
 {
 	int guild_id;
-	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-	if( ( g = guild_search(guild_id) ) != NULL )
-		script_pushstrcopy(st,g->name);
+	auto g = guild_search(guild_id);
+	if (g)
+		script_pushstrcopy(st,g->guild.name);
 	else 
 		script_pushconststr(st,"null");
 	return SCRIPT_CMD_SUCCESS;
@@ -9022,11 +9021,11 @@ BUILDIN_FUNC(getguildname)
 BUILDIN_FUNC(getguildmaster)
 {
 	int guild_id;
-	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-	if( ( g = guild_search(guild_id) ) != NULL )
-		script_pushstrcopy(st,g->member[0].name);
+	auto g = guild_search(guild_id);
+	if (g)
+		script_pushstrcopy(st,g->guild.member[0].name);
 	else 
 		script_pushconststr(st,"null");
 	return SCRIPT_CMD_SUCCESS;
@@ -9035,11 +9034,11 @@ BUILDIN_FUNC(getguildmaster)
 BUILDIN_FUNC(getguildmasterid)
 {
 	int guild_id;
-	struct guild* g;
 
 	guild_id = script_getnum(st,2);
-	if( ( g = guild_search(guild_id) ) != NULL )
-		script_pushint(st,g->member[0].char_id);
+	auto g = guild_search(guild_id);
+	if (g)
+		script_pushint(st,g->guild.member[0].char_id);
 	else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
@@ -9059,7 +9058,6 @@ BUILDIN_FUNC(strcharinfo)
 {
 	TBL_PC *sd;
 	int num;
-	struct guild* g;
 	struct party_data* p;
 
 	if (!script_charid2sd(3,sd)) {
@@ -9080,8 +9078,8 @@ BUILDIN_FUNC(strcharinfo)
 			}
 			break;
 		case 2:
-			if( ( g = sd->guild ) != NULL ) {
-				script_pushstrcopy(st,g->name);
+			if (sd->guild) {
+				script_pushstrcopy(st,sd->guild->guild.name);
 			} else {
 				script_pushconststr(st,"");
 			}
@@ -10296,15 +10294,14 @@ BUILDIN_FUNC(getgdskilllv)
 {
 	int guild_id;
 	uint16 skill_id;
-	struct guild* g;
 
 	guild_id = script_getnum(st,2);
 	skill_id = ( script_isstring(st, 3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
-	g = guild_search(guild_id);
-	if( g == NULL )
+	auto g = guild_search(guild_id);
+	if (!g)
 		script_pushint(st, -1);
 	else
-		script_pushint(st, guild_checkskill(g,skill_id));
+		script_pushint(st, guild_checkskill(g->guild,skill_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10878,9 +10875,9 @@ BUILDIN_FUNC(guild_has_permission){
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	int position = guild_getposition(sd);
+	int position = guild_getposition(*sd);
 	
-	if( position < 0 || ( sd->guild->position[position].mode&permission ) != permission ){
+	if( position < 0 || ( sd->guild->guild.position[position].mode&permission ) != permission ){
 		script_pushint( st, false );
 
 		return SCRIPT_CMD_SUCCESS;
@@ -11157,11 +11154,18 @@ BUILDIN_FUNC(monster)
 	else
 		m = map_mapname2mapid(mapn);
 
+	TBL_MOB* md;
+
 	for(i = 0; i < amount; i++) { //not optimised
 		int mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
 
-		if (mobid)
+		if (mobid > 0) {
+			md = map_id2md(mobid);
+			if (md)
+				md->next_walktime = INVALID_TIMER;
+
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
+		}
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -11274,11 +11278,18 @@ BUILDIN_FUNC(areamonster)
 	else
 		m = map_mapname2mapid(mapn);
 
+	TBL_MOB* md;
+
 	for(i = 0; i < amount; i++) { //not optimised
 		int mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai);
 
-		if (mobid)
+		if (mobid > 0) {
+			md = map_id2md(mobid);
+			if (md)
+				md->next_walktime = INVALID_TIMER;
+
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
+		}
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -11967,20 +11978,19 @@ BUILDIN_FUNC(getmapguildusers)
 	int16 m;
 	int gid;
 	int c=0;
-	struct guild *g = NULL;
 	str=script_getstr(st,2);
 	gid=script_getnum(st,3);
 	if ((m = map_mapname2mapid(str)) < 0) { // map id on this server (m == -1 if not in actual map-server)
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	g = guild_search(gid);
+	auto g = guild_search(gid);
 
 	if (g){
 		unsigned short i;
-		for(i = 0; i < g->max_member; i++)
+		for(i = 0; i < g->guild.max_member; i++)
 		{
-			if (g->member[i].sd && g->member[i].sd->bl.m == m)
+			if (g->guild.member[i].sd && g->guild.member[i].sd->bl.m == m)
 				c++;
 		}
 	}
@@ -13202,17 +13212,20 @@ BUILDIN_FUNC(addrid)
 		bl = map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
 	iter = mapit_getallusers();
 
-	switch(script_getnum(st,2)) {
+	int type = script_getnum(st,2);
+	bool forceflag = (script_hasdata(st,3) ? script_getnum(st,3) != 0 : 0);
+
+	switch(type) {
 		case 0:
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if(sd->status.account_id != st->rid) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 1:
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if((sd->bl.m == bl->m) && (sd->status.account_id != st->rid))
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
@@ -13224,7 +13237,7 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if((sd->status.account_id != st->rid) && (sd->status.party_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
@@ -13236,7 +13249,7 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if((sd->status.account_id != st->rid) && (sd->status.guild_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
@@ -13244,7 +13257,7 @@ BUILDIN_FUNC(addrid)
 		case 4:
 			map_foreachinallarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
-			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
+			st,forceflag);//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
 		case 5:
 			if (script_getstr(st, 4) == NULL) {
@@ -13261,12 +13274,12 @@ BUILDIN_FUNC(addrid)
 			break;
 		default:
 			mapit_free(iter);
-			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
+			if((map_id2sd(type)) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return SCRIPT_CMD_SUCCESS;
 			}
-			if(!script_getnum(st,3) || !map_id2sd(script_getnum(st,2))->st) {
-				run_script(st->script,st->pos,script_getnum(st,2),st->oid);
+			if(!forceflag || !map_id2sd(type)->st) {
+				run_script(st->script,st->pos,type,st->oid);
 				script_pushint(st,1);
 			}
 			return SCRIPT_CMD_SUCCESS;
@@ -14085,7 +14098,7 @@ BUILDIN_FUNC(failedremovecards) {
 BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 {
 	int x,y,m,check_val=0,check_ID=0,i=0;
-	struct guild *g = NULL;
+	std::shared_ptr<MapGuild> g;
 	struct party_data *p = NULL;
 	const char *str;
 	const char *mapname;
@@ -14109,10 +14122,10 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 		case 1:
 			g = guild_search(check_ID);
 			if (g){
-				for( i=0; i < g->max_member; i++)
+				for( i=0; i < g->guild.max_member; i++)
 				{
-					if(g->member[i].sd && g->member[i].sd->bl.m==m){
-						pc_setpos(g->member[i].sd,index,x,y,CLR_TELEPORT);
+					if(g->guild.member[i].sd && g->guild.member[i].sd->bl.m==m){
+						pc_setpos(g->guild.member[i].sd,index,x,y,CLR_TELEPORT);
 					}
 				}
 			}
@@ -15640,7 +15653,6 @@ BUILDIN_FUNC(recovery)
 		}
 		case 2:
 		{
-			struct guild* g;
 			//When no guild given, we use invoker guild
 			int g_id = 0, i;
 			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
@@ -15654,12 +15666,12 @@ BUILDIN_FUNC(recovery)
 				g_id = script_getnum(st,3);
 			else if(script_rid2sd(sd))
 				g_id = sd->status.guild_id;
-			g = guild_search(g_id);
+			auto g = guild_search(g_id);
 			if(g == NULL)
 				return SCRIPT_CMD_SUCCESS;
 			for (i = 0; i < MAX_GUILD; i++) {
 				map_session_data* pl_sd;
-				if((!(pl_sd = g->member[i].sd) || pl_sd->status.guild_id != g_id)
+				if((!(pl_sd = g->guild.member[i].sd) || pl_sd->status.guild_id != g_id)
 					|| (map_idx && pl_sd->bl.m != map_idx))
 					continue;
 				recovery_sub(pl_sd, revive);
@@ -17002,16 +17014,16 @@ BUILDIN_FUNC(implode)
 	}
 
 	//count chars
-	size_t array_size = script_array_highest_key( st, sd, name, reference_getref( data ) ) - 1;
+	const uint32 array_size = script_array_highest_key( st, sd, name, reference_getref( data ) );
 
-	if(array_size == -1) { //empty array check (AmsTaff)
+	if(array_size == 0) {
 		ShowWarning("script:implode: array length = 0\n");
 		script_pushstrcopy( st, "NULL" );
 	} else {
 		const char *glue = nullptr, *temp;
 		size_t len = 0, glue_len = 0, k = 0;
 
-		for( int i = 0; i <= array_size; ++i ){
+		for( uint32 i = 0; i < array_size; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len += strlen(temp);
 			// Remove stack entry from get_val2_str
@@ -17022,13 +17034,13 @@ BUILDIN_FUNC(implode)
 		if( script_hasdata(st,3) ) {
 			glue = script_getstr(st,3);
 			glue_len = strlen(glue);
-			len += glue_len * array_size;
+			len += glue_len * (size_t)( array_size - 1 );
 		}
 
 		char* output = (char*)aMalloc( len + 1 );
 
 		//build output
-		for( int i = 0; i < array_size; ++i ){
+		for( uint32 i = 0; i < array_size - 1; ++i ){
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len = strlen(temp);
 			memcpy(&output[k], temp, len);
@@ -17042,7 +17054,7 @@ BUILDIN_FUNC(implode)
 			}
 		}
 
-		temp = get_val2_str( st, reference_uid( id, array_size ), reference_getref( data ) );
+		temp = get_val2_str( st, reference_uid( id, array_size - 1), reference_getref( data ) );
 		len = strlen(temp);
 		memcpy(&output[k], temp, len);
 		k += len;
@@ -21298,7 +21310,7 @@ int script_instancegetid(struct script_state* st, e_instance_mode mode)
 	if (mode == IM_NONE) {
 		struct npc_data *nd = map_id2nd(st->oid);
 
-		if (nd->instance_id > 0)
+		if (nd && nd->instance_id > 0)
 			instance_id = nd->instance_id;
 	} else {
 		map_session_data *sd = map_id2sd(st->rid);
@@ -21317,7 +21329,7 @@ int script_instancegetid(struct script_state* st, e_instance_mode mode)
 				}
 					break;
 				case IM_GUILD: {
-					struct guild *gd = guild_search(sd->status.guild_id);
+					auto gd = guild_search(sd->status.guild_id);
 
 					if (gd && gd->instance_id > 0)
 						instance_id = gd->instance_id;
@@ -21721,7 +21733,6 @@ BUILDIN_FUNC(instance_check_party)
 BUILDIN_FUNC(instance_check_guild)
 {
 	int amount, min, max, i, guild_id = 0, c = 0;
-	struct guild *g = NULL;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Guild members for the Instance.
 	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
@@ -21740,7 +21751,8 @@ BUILDIN_FUNC(instance_check_guild)
 	else
 		return SCRIPT_CMD_FAILURE;
 
-	if (!(g = guild_search(guild_id))) {
+	auto g = guild_search(guild_id);
+	if (!g) {
 		script_pushint(st, 0); // Returns false if guild does not exist.
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -21748,7 +21760,7 @@ BUILDIN_FUNC(instance_check_guild)
 	for(i = 0; i < MAX_GUILD; i++) {
 		map_session_data *pl_sd;
 
-		if ((pl_sd = g->member[i].sd)) {
+		if ((pl_sd = g->guild.member[i].sd)) {
 			if (map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if (pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
@@ -23479,10 +23491,9 @@ BUILDIN_FUNC(disable_command) {
  */
 BUILDIN_FUNC(getguildmember)
 {
-	struct guild *g = NULL;
 	uint8 j = 0;
 
-	g = guild_search(script_getnum(st,2));
+	auto g = guild_search(script_getnum(st,2));
 
 	if (g) {
 		uint8 i, type = 0;
@@ -23514,25 +23525,25 @@ BUILDIN_FUNC(getguildmember)
 		}
 
 		for (i = 0; i < MAX_GUILD; i++) {
-			if (g->member[i].account_id) {
+			if (g->guild.member[i].account_id) {
 				switch (type) {
 					case 2:
 						if (data)
-							setd_sub_num( st, NULL, varname, j, g->member[i].account_id, data->ref );
+							setd_sub_num( st, NULL, varname, j, g->guild.member[i].account_id, data->ref );
 						else
-							mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
+							mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->guild.member[i].account_id);
 						break;
 					case 1:
 						if (data)
-							setd_sub_num( st, NULL, varname, j, g->member[i].char_id, data->ref );
+							setd_sub_num( st, NULL, varname, j, g->guild.member[i].char_id, data->ref );
 						else
-							mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
+							mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->guild.member[i].char_id);
 						break;
 					default:
 						if (data)
-							setd_sub_str( st, NULL, varname, j, g->member[i].name, data->ref );
+							setd_sub_str( st, NULL, varname, j, g->guild.member[i].name, data->ref );
 						else
-							mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
+							mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->guild.member[i].name);
 						break;
 				}
 				j++;
@@ -24519,7 +24530,6 @@ BUILDIN_FUNC(jobcanentermap) {
  */
 BUILDIN_FUNC(getguildalliance)
 {
-	struct guild *guild_data1, *guild_data2;
 	int guild_id1, guild_id2, i = 0;
 
 	guild_id1 = script_getnum(st,2);
@@ -24535,8 +24545,8 @@ BUILDIN_FUNC(getguildalliance)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	guild_data1 = guild_search(guild_id1);
-	guild_data2 = guild_search(guild_id2);
+	auto guild_data1 = guild_search(guild_id1);
+	auto guild_data2 = guild_search(guild_id2);
 
 	if (guild_data1 == NULL) {
 		ShowWarning("buildin_getguildalliance: Requesting non-existent GuildID1 '%d'.\n", guild_id1);
@@ -24549,13 +24559,13 @@ BUILDIN_FUNC(getguildalliance)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	ARR_FIND(0, MAX_GUILDALLIANCE, i, guild_data1->alliance[i].guild_id == guild_id2);
+	ARR_FIND(0, MAX_GUILDALLIANCE, i, guild_data1->guild.alliance[i].guild_id == guild_id2);
 	if (i == MAX_GUILDALLIANCE) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (guild_data1->alliance[i].opposition)
+	if (guild_data1->guild.alliance[i].opposition)
 		script_pushint(st, 2);
 	else
 		script_pushint(st, 1);
@@ -25799,7 +25809,17 @@ BUILDIN_FUNC(mail){
 			for( k = 0; k < num_items && start < end; k++, start++ ){
 				msg.item[k].card[i] = (t_itemid)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
-				if( msg.item[k].card[i] > 0 && !item_db.exists(msg.item[k].card[i]) ){
+				if( msg.item[k].card[i] == 0 ){
+					// Continue with the next card, no further checks needed
+					continue;
+				}
+
+				if( itemdb_isspecial( msg.item[k].card[0] ) ){
+					// Continue with the next card, but do not check it against the item database
+					continue;
+				}
+
+				if( !item_db.exists( msg.item[k].card[i] ) ){
 					ShowError( "buildin_mail: invalid card id %u.\n", msg.item[k].card[i] );
 					return SCRIPT_CMD_FAILURE;
 				}
@@ -25915,7 +25935,6 @@ BUILDIN_FUNC(identifyall) {
 BUILDIN_FUNC(is_guild_leader)
 {
 	map_session_data* sd;
-	struct guild* guild_data;
 	int guild_id;
 
 	if (!script_rid2sd(sd)) {
@@ -25928,9 +25947,9 @@ BUILDIN_FUNC(is_guild_leader)
 	else
 		guild_id = sd->status.guild_id;
 
-	guild_data = guild_search(guild_id);
+	auto guild_data = guild_search(guild_id);
 	if (guild_data)
-		script_pushint(st, (guild_data->member[0].char_id == sd->status.char_id));
+		script_pushint(st, (guild_data->guild.member[0].char_id == sd->status.char_id));
 	else
 		script_pushint(st, false);
 	return SCRIPT_CMD_SUCCESS;

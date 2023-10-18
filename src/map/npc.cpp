@@ -99,7 +99,6 @@ static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 
 /* hello */
 static char *npc_last_path;
-static char *npc_last_ref;
 
 struct npc_path_data {
 	char* path;
@@ -3471,7 +3470,6 @@ int npc_unload(struct npc_data* nd, bool single) {
 
 			if (npd == npc_last_npd) {
 				npc_last_npd = NULL;
-				npc_last_ref = NULL;
 				npc_last_path = NULL;
 			}
 		}
@@ -3621,6 +3619,8 @@ void npc_loadsrcfiles() {
 #endif
 		npc_parsesrcfile(file.c_str());
 	}
+	int npc_total = npc_warp + npc_shop + npc_script;
+
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
@@ -3628,7 +3628,7 @@ void npc_loadsrcfiles() {
 		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
 		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
-		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+		npc_total, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 }
 
 /// Parses and sets the name and exname of a npc.
@@ -3704,10 +3704,9 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		npd->references++;
 
 		npc_last_npd = npd;
-		npc_last_ref = npd->path;
-		npc_last_path = (char*) filepath;
+		npc_last_path = npd->path;
 	} else {
-		nd->path = npc_last_ref;
+		nd->path = npc_last_path;
 		if( npc_last_npd )
 			npc_last_npd->references++;
 	}
@@ -4122,7 +4121,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			ShowWarning("npc_parse_shop: Item %s [%u] is being sold for FREE in file '%s', line '%d'.\n",
 				id->name.c_str(), nameid2, filepath, strline(buffer,start-buffer));
 		}
-		if( type == NPCTYPE_SHOP && value*0.75 < id->value_sell*1.24 ) { // Exploit possible: you can buy and sell back with profit
+		if( ( type == NPCTYPE_SHOP || type == NPCTYPE_MARKETSHOP ) && value*0.75 < id->value_sell*1.24 ) { // Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
 				id->name.c_str(), nameid2, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
@@ -4921,6 +4920,19 @@ static void npc_market_fromsql(void) {
 		Sql_GetData(mmysql_handle, 2, &data, NULL); list.value = atoi(data);
 		Sql_GetData(mmysql_handle, 3, &data, NULL); list.qty = atoi(data);
 		Sql_GetData(mmysql_handle, 4, &data, NULL); list.flag = atoi(data);
+
+		std::shared_ptr<item_data> id = item_db.find(list.nameid);
+
+		if (id == nullptr) {
+			ShowWarning("npc_market_fromsql: Invalid sell item in table '%s' (id '%u').\n", market_table, list.nameid);
+			continue;
+		}
+
+		if (list.value * 0.75 < id->value_sell * 1.24) { // Exploit possible: you can buy and sell back with profit
+			ShowWarning("npc_market_fromsql: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) in table '%s'. Assigning to current sell value.\n",
+						id->name.c_str(), list.nameid, list.value, (int)(list.value * 0.75), id->value_sell, (int)(id->value_sell * 1.24), market_table);
+			list.value = id->value_sell;
+		}
 
 		RECREATE(market->list, struct npc_item_list, market->count+1);
 		market->list[market->count++] = list;

@@ -5,6 +5,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 Prontera castle map changed in ep16.1 [Capuche]
 //= 1.1 Episode 17.2 Sage's Legacy update [crazyarashi]
+//= 1.2 Added warp to the Illusion Investigation room [Capuche]
 //============================================================
 
 prt_lib_q,9,25,0	script	lib_q_to_pprt	WARPNPC,1,1,{
@@ -169,3 +170,6 @@ prt_cas,254,347,0	warp	#ep172_prt_to_prt-6	1,1,prt_cas,96,18
 prt_cas,96,14,0	warp	#ep172_prt_to_prt-7	1,1,prt_cas,254,343
 prt_cas,174,342,0	warp	#ep172_prt_to_prt-8	1,1,prt_cas,322,336
 prt_cas,318,336,0	warp	#ep172_prt_to_prt-9	1,1,prt_cas,170,342
+
+prontera,50,228,0	warp	illusion123	2,2,prt_in,128,40
+prt_in,128,45,0	warp	illusion124	2,2,prontera,47,228
