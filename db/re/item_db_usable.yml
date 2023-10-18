@@ -7712,7 +7712,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2740,1;
+      getgroupitem(IG_PC_BANG_COIN_BOX1);
   - Id: 12295
     AegisName: PC_Bang_Coin_Box2
     Name: PC-Room Coin Box
@@ -7728,7 +7728,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2739,1;
+      getgroupitem(IG_PC_BANG_COIN_BOX2);
   - Id: 12296
     AegisName: PC_Bang_Coin_Box3
     Name: PC-Room Coin Box
@@ -7760,7 +7760,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2738,2;
+      getgroupitem(IG_PC_BANG_COIN_BOX4);
   - Id: 12298
     AegisName: SP_Potion
     Name: SP Consumption Reduction Potion
@@ -19262,7 +19262,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1729,604800;
+      getgroupitem(IG_BOW_OF_RUDRA_BOX1);
   - Id: 13683
     AegisName: Cutlas_Box1
     Name: Refined Cutlus Box
@@ -19316,7 +19316,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13024,604800;
+      getgroupitem(IG_SWORD_BREAKER_BOX1);
   - Id: 13686
     AegisName: Mail_Breaker_Box1
     Name: Refined Mailbreaker Box
@@ -19334,7 +19334,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13025,604800;
+      getgroupitem(IG_MAIL_BREAKER_BOX1);
   - Id: 13687
     AegisName: Moonlight_Sword_Box1
     Name: Refined Moonlight Dagger Box
@@ -21154,7 +21154,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1273,86400;
+      getgroupitem(IG_BLOODY_ROAR_BOX1);
   - Id: 13791
     AegisName: Hardback_Box1
     Name: Refined Hardcover Book Box
@@ -21172,7 +21172,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1567,86400;
+      getgroupitem(IG_HARDBACK_BOX1);
   - Id: 13792
     AegisName: Fire_Brand_Box1
     Name: Refined Fireblend Box
@@ -21370,7 +21370,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2710,86400;
+      getgroupitem(IG_BLOODY_IRON_BALL_BOX1);
   - Id: 13803
     AegisName: Spiritual_Ring_Box1
     Name: Refined Spiritual Ring Box
@@ -21532,12 +21532,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14551,1;
-      getitem 14554,1;
-      getitem 14557,1;
-      getitem 14560,1;
-      getitem 14563,1;
-      getitem 14566,1;
+      getgroupitem(IG_FOOD_BOX_LV1);
   - Id: 13812
     AegisName: Food_Box_Lv2
     Name: Food Box Vol 2
@@ -21555,12 +21550,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14552,1;
-      getitem 14555,1;
-      getitem 14558,1;
-      getitem 14561,1;
-      getitem 14564,1;
-      getitem 14567,1;
+      getgroupitem(IG_FOOD_BOX_LV2);
   - Id: 13813
     AegisName: Food_Box_Lv3
     Name: Food Box Vol 3
@@ -21578,12 +21568,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14553,1;
-      getitem 14556,1;
-      getitem 14559,1;
-      getitem 14562,1;
-      getitem 14565,1;
-      getitem 14568,1;
+      getgroupitem(IG_FOOD_BOX_LV3);
   - Id: 13814
     AegisName: Indonesia_Box
     Name: Healing Box
@@ -21809,9 +21794,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 682,1;
-      getitem 12123,1;
-      getitem 12122,1;
+      getgroupitem(IG_POWER_BOX1);
   - Id: 13827
     AegisName: Power_Box2
     Name: Power Box 2
@@ -21829,9 +21812,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 683,1;
-      getitem 12123,1;
-      getitem 12122,1;
+      getgroupitem(IG_POWER_BOX2);
   - Id: 13828
     AegisName: Resist_Box1
     Name: Resist Box 1
@@ -22473,9 +22454,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12208,2;
-      getitem 12215,15;
-      getitem 12216,15;
+      getgroupitem(IG_TRIAL_BOX);
   - Id: 13863
     AegisName: Repair_Scroll_Box10
     Name: Repair Weapon Scroll 10 Box
@@ -22493,11 +22472,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14521,10;
-      getitem 1002,10;
-      getitem 998,10;
-      getitem 756,10;
-      getitem 999,10;
+      getgroupitem(IG_REPAIR_SCROLL_BOX10);
   - Id: 13864
     AegisName: Hockey_Mask_Box
     Name: Hockey Mask Box
@@ -22515,7 +22490,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5314,604800;
+      getgroupitem(IG_HOCKEY_MASK_BOX);
   - Id: 13865
     AegisName: Observer_Box
     Name: Observer Box
@@ -22755,10 +22730,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4244,1;
-      getitem 4299,1;
-      getitem 4313,1;
-      getitem 4229,1;
+      getgroupitem(IG_CLOCK_TOWER_CARD_BOX);
   - Id: 13878
     AegisName: Geffenia_Card_Box
     Name: Geffenia Card Box
@@ -22776,8 +22748,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4218,1;
-      getitem 4269,1;
+      getgroupitem(IG_GEFFENIA_CARD_BOX);
   - Id: 13879
     AegisName: Owl_Card_Box
     Name: Owl Card Box
@@ -22795,8 +22766,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4237,1;
-      getitem 4238,1;
+      getgroupitem(IG_OWL_CARD_BOX);
   - Id: 13880
     AegisName: Ghost_Card_Box
     Name: Ghost Card Box
@@ -22814,8 +22784,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4193,1;
-      getitem 4294,1;
+      getgroupitem(IG_GHOST_CARD_BOX);
   - Id: 13881
     AegisName: Nightmare_Card_Box
     Name: Nightmare Card Box
@@ -22833,8 +22802,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4127,1;
-      getitem 4166,1;
+      getgroupitem(IG_NIGHTMARE_CARD_BOX);
   - Id: 13882
     AegisName: Curse_Card_Box
     Name: Curse Card Box
@@ -23085,20 +23053,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7229,2;
-      getitem 569,300;
-      getitem 504,20;
-      getitem 505,20;
-      getitem 7060,30;
-      getitem 2403,1;
-      getitem 5039,1;
-      getitem 2503,1;
-      getitem 2307,1;
-      getitem 616,1;
-      getitem 603,1;
-      getitem 617,1;
-      getitem 610,5;
-      getitem 604,5;
+      getgroupitem(IG_STARTER_PACK);
   - Id: 13896
     AegisName: Mimic_Scroll_Box5
     Name: Mimic Summoning 5 Box
@@ -23464,7 +23419,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12287,604800;
+      getgroupitem(IG_LOVE_ANGEL_BOX);
   - Id: 13916
     AegisName: Squirrel_Box
     Name: Squirrel Magic Powder Box
@@ -23482,7 +23437,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12288,604800;
+      getgroupitem(IG_SQUIRREL_BOX);
   - Id: 13917
     AegisName: Gogo_Box
     Name: Gogo Magic Powder Box
@@ -23500,7 +23455,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12289,604800;
+      getgroupitem(IG_GOGO_BOX);
   - Id: 13918
     AegisName: Drooping_Kitty__Box
     Name: Koneko Hat Box
@@ -23662,10 +23617,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4371,1;
-      getitem 4311,1;
-      getitem 4319,1;
-      getitem 4331,1;
+      getgroupitem(IG_CRUSADER_CARD_BOX);
   - Id: 13927
     AegisName: Alchemist_Card_Box
     Name: Alchemist Card Box
@@ -23683,11 +23635,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4281,1;
-      getitem 4233,1;
-      getitem 4343,1;
-      getitem 4186,1;
-      getitem 4036,1;
+      getgroupitem(IG_ALCHEMIST_CARD_BOX);
   - Id: 13928
     AegisName: Rogue_Card_Box
     Name: Rogue Card Box
@@ -23705,11 +23653,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4039,1;
-      getitem 4210,1;
-      getitem 4257,1;
-      getitem 4230,1;
-      getitem 4348,1;
+      getgroupitem(IG_ROGUE_CARD_BOX);
   - Id: 13929
     AegisName: Bard_Dancer_Card_Box
     Name: Bard Dancer Card Box
@@ -23727,11 +23671,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4297,1;
-      getitem 4234,1;
-      getitem 4178,1;
-      getitem 4381,1;
-      getitem 4252,1;
+      getgroupitem(IG_BARD_DANCER_CARD_BOX);
   - Id: 13930
     AegisName: Sage_Card_Box
     Name: Sage card box
@@ -23749,11 +23689,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4382,1;
-      getitem 4258,1;
-      getitem 4325,1;
-      getitem 4208,1;
-      getitem 4327,1;
+      getgroupitem(IG_SAGE_CARD_BOX);
   - Id: 13931
     AegisName: Monk_Card_Box
     Name: Monk Card Box
@@ -23771,10 +23707,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4312,1;
-      getitem 4332,1;
-      getitem 4185,1;
-      getitem 4293,1;
+      getgroupitem(IG_MONK_CARD_BOX);
   - Id: 13932
     AegisName: Sylph_Box
     Name: Sylph Box
@@ -23970,7 +23903,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14009,1;
+      getgroupitem(IG_LOVE_ANGEL_BOX_1M);
   - Id: 13943
     AegisName: Squirrel_Box_1m
     Name: Squirrel Magic Powder Box 30 Days
@@ -23988,7 +23921,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14010,1;
+      getgroupitem(IG_SQUIRREL_BOX_1M);
   - Id: 13944
     AegisName: Gogo_Box_1m
     Name: Gogo Magic Powder Box 30 Days
@@ -24006,7 +23939,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14011,1;
+      getgroupitem(IG_GOGO_BOX_1M);
   - Id: 13945
     AegisName: BRO_SM_Package
     Name: Swordman Package
@@ -24132,7 +24065,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13109,604800;
+      getgroupitem(IG_WASTELAND_OUTLAW_BOX);
   - Id: 13952
     AegisName: Lever_Action_Rifle_Box
     Name: Lever Action Rifle Box
@@ -24150,7 +24083,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13170,604800;
+      getgroupitem(IG_LEVER_ACTION_RIFLE_BOX);
   - Id: 13953
     AegisName: All_In_One_Ring_Box
     Name: All In One Ring Box
@@ -24187,7 +24120,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2384,604800;
+      getgroupitem(IG_SPIRITUAL_TUNIC_BOX);
   - Id: 13955
     AegisName: Recuperative_Armor_Box
     Name: Recuvative Armor Box
@@ -24205,7 +24138,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2385,604800;
+      getgroupitem(IG_RECUPERATIVE_ARMOR_BOX);
   - Id: 13956
     AegisName: Shelter_Resistance_Box
     Name: Shell Of Resistance Box
@@ -24223,7 +24156,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2132,604800;
+      getgroupitem(IG_SHELTER_RESISTANCE_BOX);
   - Id: 13957
     AegisName: Sylphid_Manteau_Box
     Name: Silf Manteau Box
@@ -24241,7 +24174,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2543,604800;
+      getgroupitem(IG_SYLPHID_MANTEAU_BOX);
   - Id: 13958
     AegisName: Refresh_Shoes_Box
     Name: Refresh Shoes Box
@@ -24259,7 +24192,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2439,604800;
+      getgroupitem(IG_REFRESH_SHOES_BOX);
   - Id: 13959
     AegisName: Toast_Box
     Name: Crunch Toast Box
@@ -24277,7 +24210,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5391,604800;
+      getgroupitem(IG_TOAST_BOX);
   - Id: 13960
     AegisName: Name_Change_Coupon_Box
     Name: Identification Box
@@ -24439,7 +24372,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5394,86400;
+      getgroupitem(IG_BUBBLEGUM_LOWER_BOX);
   - Id: 13969
     AegisName: Lucky_Clip_Box
     Name: Lucky Clip Box
@@ -24563,7 +24496,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12304,604800;
+      getgroupitem(IG_PICTURE_DIARY_BOX);
   - Id: 13976
     AegisName: Mini_Heart_Box
     Name: Mini Heart Magic Powder Box
@@ -24581,7 +24514,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12305,604800;
+      getgroupitem(IG_MINI_HEART_BOX);
   - Id: 13977
     AegisName: Newcomer_Box
     Name: Freshman Magic Powder Box
@@ -24599,7 +24532,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12306,604800;
+      getgroupitem(IG_NEWCOMER_BOX);
   - Id: 13978
     AegisName: Kid_Box
     Name: Kid Magic Powder Box
@@ -24617,7 +24550,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12307,604800;
+      getgroupitem(IG_KID_BOX);
   - Id: 13979
     AegisName: Magic_Castle_Box
     Name: Magic Magic Powder Box
@@ -24635,7 +24568,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12308,604800;
+      getgroupitem(IG_MAGIC_CASTLE_BOX);
   - Id: 13980
     AegisName: Bulging_Head_Box
     Name: JJangu Magic Powder Box
@@ -24653,7 +24586,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12309,604800;
+      getgroupitem(IG_BULGING_HEAD_BOX);
   - Id: 13981
     AegisName: Picture_Diary_Box_1m
     Name: Diary Magic Powder Box 30 Days
@@ -24671,7 +24604,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12304,2592000;
+      getgroupitem(IG_PICTURE_DIARY_BOX_1M);
   - Id: 13982
     AegisName: Mini_Heart_Box_1m
     Name: Mini Heart Magic Powder Box 30 Days
@@ -24689,7 +24622,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12305,2592000;
+      getgroupitem(IG_MINI_HEART_BOX_1M);
   - Id: 13983
     AegisName: Newcomer_Box_1m
     Name: Freshman Magic Powder Box 30 Days
@@ -24707,7 +24640,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12306,2592000;
+      getgroupitem(IG_NEWCOMER_BOX_1M);
   - Id: 13984
     AegisName: Kid_Box_1m
     Name: Kid Magic Powder Box 30 Days
@@ -24725,7 +24658,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12307,2592000;
+      getgroupitem(IG_KID_BOX_1M);
   - Id: 13985
     AegisName: Magic_Castle_Box_1m
     Name: Magic Magic Powder Box 30 Days
@@ -24743,7 +24676,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12308,2592000;
+      getgroupitem(IG_MAGIC_CASTLE_BOX_1M);
   - Id: 13986
     AegisName: Bulging_Head_Box_1m
     Name: JJangu Magic Powder Box 30 Days
@@ -24761,7 +24694,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12309,2592000;
+      getgroupitem(IG_BULGING_HEAD_BOX_1M);
   - Id: 13987
     AegisName: Ori_Stone_5_Box
     Name: Rough Oridecon 5 Box
@@ -25179,7 +25112,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12287,604800;
+      getgroupitem(IG_F_LOVE_ANGEL_BOX);
   - Id: 14010
     AegisName: F_Squirrel_Box
     Name: Squillroll Magic Powder Box
@@ -25197,7 +25130,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12288,604800;
+      getgroupitem(IG_F_SQUIRREL_BOX);
   - Id: 14011
     AegisName: F_Gogo_Box
     Name: Gogo Magic Powder Box
@@ -25215,7 +25148,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12289,604800;
+      getgroupitem(IG_F_GOGO_BOX);
   - Id: 14012
     AegisName: F_Love_Angel_Box_1m
     Name: Love Angel Magic Powder Box 30 Days
@@ -25233,7 +25166,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13915,2592000;
+      getgroupitem(IG_F_LOVE_ANGEL_BOX_1M);
   - Id: 14013
     AegisName: F_Squirrel_Box_1m
     Name: Squillroll Magic Powder Box 30 Days
@@ -25251,7 +25184,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13916,2592000;
+      getgroupitem(IG_F_SQUIRREL_BOX_1M);
   - Id: 14014
     AegisName: F_Gogo_Box_1m
     Name: Gogo Magic Powder Box 30 Days
@@ -25269,7 +25202,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13917,2592000;
+      getgroupitem(IG_F_GOGO_BOX_1M);
   - Id: 14015
     AegisName: F_Wasteland_Outlaw_Box
     Name: Western Outlaw Box
@@ -25287,7 +25220,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13107,604800;
+      getgroupitem(IG_F_WASTELAND_OUTLAW_BOX);
   - Id: 14016
     AegisName: F_Lever_Action_Rifle_Bo
     Name: Lever Action Rifle Box
@@ -25323,7 +25256,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2741,604800;
+      getgroupitem(IG_F_ALL_IN_ONE_RING_BOX);
   - Id: 14018
     AegisName: F_Spritual_Tunic_Box
     Name: Spiritual Tunic Box
@@ -25341,7 +25274,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2384,604800;
+      getgroupitem(IG_F_SPRITUAL_TUNIC_BOX);
   - Id: 14019
     AegisName: F_Recuperative_Box
     Name: Recuvative Armor Box
@@ -25359,7 +25292,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2385,604800;
+      getgroupitem(IG_F_RECUPERATIVE_BOX);
   - Id: 14020
     AegisName: F_Shelter_Resist_Box
     Name: Shell Of Resistance Box
@@ -25377,7 +25310,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2132,604800;
+      getgroupitem(IG_F_SHELTER_RESIST_BOX);
   - Id: 14021
     AegisName: F_Sylphid_Manteau_Box
     Name: Silf Manteau Box
@@ -25395,7 +25328,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2543,604800;
+      getgroupitem(IG_F_SYLPHID_MANTEAU_BOX);
   - Id: 14022
     AegisName: F_Refresh_Shoes_Box
     Name: Refresh Shoes Box
@@ -25431,7 +25364,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5391,604800;
+      getgroupitem(IG_F_TOAST_BOX);
   - Id: 14024
     AegisName: F_Robo_Eye_Box
     Name: Robo Eye Box
@@ -25683,11 +25616,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14521,5;
-      getitem 1002,5;
-      getitem 998,5;
-      getitem 756,5;
-      getitem 999,5;
+      getgroupitem(IG_F_REPAIR_SCROLL_BOX);
   - Id: 14038
     AegisName: F_Repair_Scroll_Box10
     Name: Repair Weapon Scroll 10 Box
@@ -25705,11 +25634,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14521,10;
-      getitem 1002,10;
-      getitem 998,10;
-      getitem 756,10;
-      getitem 999,10;
+      getgroupitem(IG_F_REPAIR_SCROLL_BOX10);
   - Id: 14039
     AegisName: F_Hockey_Mask_Box
     Name: Hockey Mask Box
@@ -25727,7 +25652,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5314,604800;
+      getgroupitem(IG_F_HOCKEY_MASK_BOX);
   - Id: 14040
     AegisName: F_Observer_Box
     Name: Observer Box
@@ -25745,7 +25670,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5315,604800;
+      getgroupitem(IG_F_OBSERVER_BOX);
   - Id: 14041
     AegisName: F_WOB_Rune_Box5
     Name: Yellow Butterfly Wing 5 Box
@@ -26015,7 +25940,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13407,604800;
+      getgroupitem(IG_F_NAGAN_BOX);
   - Id: 14056
     AegisName: F_Skewer_Box
     Name: Refined Brocca Box
@@ -26033,7 +25958,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1424,604800;
+      getgroupitem(IG_F_SKEWER_BOX);
   - Id: 14057
     AegisName: F_Survival_Rod_Box
     Name: Refined Survivor's Rod Box
@@ -26051,7 +25976,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1628,604800;
+      getgroupitem(IG_F_SURVIVAL_ROD_BOX);
   - Id: 14058
     AegisName: F_Quadrille_Box
     Name: Refined Quadrille Box
@@ -26069,7 +25994,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1537,604800;
+      getgroupitem(IG_F_QUADRILLE_BOX);
   - Id: 14059
     AegisName: F_Great_Axe_Box
     Name: Refined Great Axe Box
@@ -26087,7 +26012,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1378,604800;
+      getgroupitem(IG_F_GREAT_AXE_BOX);
   - Id: 14060
     AegisName: F_Bloody_Roar_Box
     Name: Refined Bloody Roar Box
@@ -26105,7 +26030,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1273,604800;
+      getgroupitem(IG_F_BLOODY_ROAR_BOX);
   - Id: 14061
     AegisName: F_Hardback_Box
     Name: Refined Hardcover Book Box
@@ -26123,7 +26048,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1567,604800;
+      getgroupitem(IG_F_HARDBACK_BOX);
   - Id: 14062
     AegisName: F_Fire_Brand_Box
     Name: Refined Fireblend Box
@@ -26141,7 +26066,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13408,604800;
+      getgroupitem(IG_F_FIRE_BRAND_BOX);
   - Id: 14063
     AegisName: F_Immaterial_Sword_Box
     Name: Refined Immaterial Sword Box
@@ -26159,7 +26084,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13409,604800;
+      getgroupitem(IG_F_IMMATERIAL_SWORD_BOX);
   - Id: 14064
     AegisName: F_Unholy_Touch_Box
     Name: Refined Unholy Touch Box
@@ -26177,7 +26102,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1274,604800;
+      getgroupitem(IG_F_UNHOLY_TOUCH_BOX);
   - Id: 14065
     AegisName: F_Clack_Of_Servival_Box
     Name: Refined Survivor's Manteau Box
@@ -26195,7 +26120,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2535,1209600;
+      getgroupitem(IG_F_CLACK_OF_SERVIVAL_BOX);
   - Id: 14066
     AegisName: F_Masquerade_Box
     Name: Refined Masquerade Box
@@ -26213,7 +26138,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5326,1209600;
+      getgroupitem(IG_F_MASQUERADE_BOX);
   - Id: 14067
     AegisName: F_Orc_Hero_Helm_Box
     Name: Refined Helmet of Orc Hero Box
@@ -26231,7 +26156,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5327,1209600;
+      getgroupitem(IG_F_ORC_HERO_HELM_BOX);
   - Id: 14068
     AegisName: F_Ear_Of_Devil_Wing_Box
     Name: Refined Wing of Diablo Box
@@ -26249,7 +26174,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5328,1209600;
+      getgroupitem(IG_F_EAR_OF_DEVIL_WING_BOX);
   - Id: 14069
     AegisName: F_Dark_Blindfold_Box
     Name: Refined Dark Blinder Box
@@ -26267,7 +26192,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5329,1209600;
+      getgroupitem(IG_F_DARK_BLINDFOLD_BOX);
   - Id: 14070
     AegisName: F_K_Drooping_Kitty_Box
     Name: Refined Drooping Cat Box
@@ -26285,7 +26210,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5330,1209600;
+      getgroupitem(IG_F_K_DROOPING_KITTY_BOX);
   - Id: 14071
     AegisName: F_Corsair_Box
     Name: Refined Corsair Box
@@ -26303,7 +26228,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5331,1209600;
+      getgroupitem(IG_F_CORSAIR_BOX);
   - Id: 14072
     AegisName: F_Bloody_Iron_Ball_Box
     Name: Refined Bloodied Shackle Ball Box
@@ -26321,7 +26246,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2710,604800;
+      getgroupitem(IG_F_BLOODY_IRON_BALL_BOX);
   - Id: 14073
     AegisName: F_Spiritual_Ring_Box
     Name: Refined Spiritual Ring Box
@@ -26339,7 +26264,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2711,604800;
+      getgroupitem(IG_F_SPIRITUAL_RING_BOX);
   - Id: 14074
     AegisName: F_G_O_I_Box5
     Name: Wine Glass of Illusion 5 Box
@@ -27095,7 +27020,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1267,604800;
+      getgroupitem(IG_F_INFILTRATOR_BOX);
   - Id: 14116
     AegisName: F_Muramasa_Box
     Name: Refined Muramasa Box
@@ -27113,7 +27038,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1173,604800;
+      getgroupitem(IG_F_MURAMASA_BOX);
   - Id: 14117
     AegisName: F_Excalibur_Box
     Name: Refined Excalibur Box
@@ -27131,7 +27056,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13401,604800;
+      getgroupitem(IG_F_EXCALIBUR_BOX);
   - Id: 14118
     AegisName: F_Combat_Knife_Box
     Name: Combat Knife Box
@@ -27149,7 +27074,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13021,604800;
+      getgroupitem(IG_F_COMBAT_KNIFE_BOX);
   - Id: 14119
     AegisName: F_Counter_Dagger_Box
     Name: Counter Dagger Box
@@ -27167,7 +27092,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13022,604800;
+      getgroupitem(IG_F_COUNTER_DAGGER_BOX);
   - Id: 14120
     AegisName: F_Kaiser_Knuckle_Box
     Name: Refined Kaiser Knuckle Box
@@ -27185,7 +27110,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1817,604800;
+      getgroupitem(IG_F_KAISER_KNUCKLE_BOX);
   - Id: 14121
     AegisName: F_Mighty_Staff_Box
     Name: Refined Mighty Staff Box
@@ -27203,7 +27128,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1623,604800;
+      getgroupitem(IG_F_MIGHTY_STAFF_BOX);
   - Id: 14122
     AegisName: F_Right_Epsilon_Box
     Name: Light Epsilon Box
@@ -27221,7 +27146,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1372,604800;
+      getgroupitem(IG_F_RIGHT_EPSILON_BOX);
   - Id: 14123
     AegisName: F_Balistar_Box
     Name: Refined Ballista Box
@@ -27239,7 +27164,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1728,604800;
+      getgroupitem(IG_F_BALISTAR_BOX);
   - Id: 14124
     AegisName: F_Diary_Of_Great_Sage
     Name: Sage's Diary Box
@@ -27257,7 +27182,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1563,604800;
+      getgroupitem(IG_F_DIARY_OF_GREAT_SAGE);
   - Id: 14125
     AegisName: F_Asura_Box
     Name: Asura Box
@@ -27275,7 +27200,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 13023,604800;
+      getgroupitem(IG_F_ASURA_BOX);
   - Id: 14126
     AegisName: F_Apple_Of_Archer_Box
     Name: Apple of Archer Box
@@ -27293,7 +27218,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5265,1209600;
+      getgroupitem(IG_F_APPLE_OF_ARCHER_BOX);
   - Id: 14127
     AegisName: F_Bunny_Band_Box
     Name: Bunny Band Box
@@ -27311,7 +27236,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5266,1209600;
+      getgroupitem(IG_F_BUNNY_BAND_BOX);
   - Id: 14128
     AegisName: F_Sahkkat_Box
     Name: Refined Sakkat Box
@@ -27329,7 +27254,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5267,1209600;
+      getgroupitem(IG_F_SAHKKAT_BOX);
   - Id: 14129
     AegisName: F_Lord_Circlet_Box
     Name: Refined Grand Circlet Box
@@ -27347,7 +27272,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 5268,1209600;
+      getgroupitem(IG_F_LORD_CIRCLET_BOX);
   - Id: 14130
     AegisName: F_Elven_Ears_Box
     Name: Elven Ears Box
@@ -27365,7 +27290,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2686,1209600;
+      getgroupitem(IG_F_ELVEN_EARS_BOX);
   - Id: 14131
     AegisName: F_Steel_Flower_Box
     Name: Steel Flower Box
@@ -27383,7 +27308,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2687,1209600;
+      getgroupitem(IG_F_STEEL_FLOWER_BOX);
   - Id: 14132
     AegisName: F_Critical_Ring_Box
     Name: Critical Ring Box
@@ -27401,7 +27326,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2688,604800;
+      getgroupitem(IG_F_CRITICAL_RING_BOX);
   - Id: 14133
     AegisName: F_Earring_Box
     Name: Earring Box
@@ -27419,7 +27344,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2689,604800;
+      getgroupitem(IG_F_EARRING_BOX);
   - Id: 14134
     AegisName: F_Ring_Box
     Name: Ring Box
@@ -27437,7 +27362,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2690,604800;
+      getgroupitem(IG_F_RING_BOX);
   - Id: 14135
     AegisName: F_Necklace_Box
     Name: Necklace Box
@@ -27455,7 +27380,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2691,604800;
+      getgroupitem(IG_F_NECKLACE_BOX);
   - Id: 14136
     AegisName: F_Glove_Box
     Name: Glove Box
@@ -27473,7 +27398,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2692,604800;
+      getgroupitem(IG_F_GLOVE_BOX);
   - Id: 14137
     AegisName: F_Brooch_Box
     Name: Brooch Box
@@ -27491,7 +27416,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2693,604800;
+      getgroupitem(IG_F_BROOCH_BOX);
   - Id: 14138
     AegisName: F_Rosary_Box
     Name: Rosary Box
@@ -27509,7 +27434,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2694,604800;
+      getgroupitem(IG_F_ROSARY_BOX);
   - Id: 14139
     AegisName: F_Safety_Ring_Box
     Name: Safety Ring Box
@@ -27527,7 +27452,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2695,604800;
+      getgroupitem(IG_F_SAFETY_RING_BOX);
   - Id: 14140
     AegisName: F_Vesper_Core_Box01
     Name: Refined Vesper Core 01 Box
@@ -27545,7 +27470,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2696,604800;
+      getgroupitem(IG_F_VESPER_CORE_BOX01);
   - Id: 14141
     AegisName: F_Vesper_Core_Box02
     Name: Refined Vesper Core 02 Box
@@ -27563,7 +27488,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2697,604800;
+      getgroupitem(IG_F_VESPER_CORE_BOX02);
   - Id: 14142
     AegisName: F_Vesper_Core_Box03
     Name: Refined Vesper Core 03 Box
@@ -27581,7 +27506,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2698,604800;
+      getgroupitem(IG_F_VESPER_CORE_BOX03);
   - Id: 14143
     AegisName: F_Vesper_Core_Box04
     Name: Refined Vesper Core 04 Box
@@ -27599,7 +27524,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2699,604800;
+      getgroupitem(IG_F_VESPER_CORE_BOX04);
   - Id: 14144
     AegisName: F_Vigorgra_Package1
     Name: Vigorgra Box1
@@ -27617,13 +27542,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,2;
-      getitem 12251,2;
-      getitem 12208,2;
-      getitem 12215,15;
-      getitem 12216,15;
-      getitem 12211,1;
-      getitem 7621,1;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE1);
   - Id: 14145
     AegisName: F_Vigorgra_Package2
     Name: Vigorgra Box2
@@ -27641,13 +27560,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,2;
-      getitem 12255,2;
-      getitem 12208,2;
-      getitem 12215,15;
-      getitem 12216,15;
-      getitem 12211,1;
-      getitem 7621,1;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE2);
   - Id: 14146
     AegisName: F_Vigorgra_Package3
     Name: Vigorgra Box3
@@ -27713,13 +27626,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,2;
-      getitem 12250,2;
-      getitem 12208,2;
-      getitem 12215,15;
-      getitem 12216,15;
-      getitem 12211,1;
-      getitem 7621,1;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE5);
   - Id: 14149
     AegisName: F_Vigorgra_Package6
     Name: Vigorgra Box6
@@ -27737,13 +27644,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,2;
-      getitem 12251,2;
-      getitem 12208,2;
-      getitem 12215,15;
-      getitem 12217,20;
-      getitem 12211,1;
-      getitem 7621,1;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE6);
   - Id: 14150
     AegisName: F_Vigorgra_Package7
     Name: Vigorgra Box7
@@ -27761,13 +27662,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,4;
-      getitem 12251,4;
-      getitem 12208,4;
-      getitem 12215,30;
-      getitem 12216,30;
-      getitem 12211,2;
-      getitem 7621,2;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE7);
   - Id: 14151
     AegisName: F_Vigorgra_Package8
     Name: Vigorgra Box8
@@ -27785,13 +27680,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,4;
-      getitem 12255,4;
-      getitem 12208,4;
-      getitem 12215,30;
-      getitem 12216,30;
-      getitem 12211,2;
-      getitem 7621,2;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE8);
   - Id: 14152
     AegisName: F_Vigorgra_Package9
     Name: Start your Journey Pack
@@ -27809,13 +27698,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,4;
-      getitem 12253,4;
-      getitem 12208,4;
-      getitem 12215,30;
-      getitem 12216,30;
-      getitem 12211,2;
-      getitem 7621,2;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE9);
   - Id: 14153
     AegisName: F_Vigorgra_Package10
     Name: Siege Mode Pack
@@ -27833,13 +27716,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,4;
-      getitem 12255,4;
-      getitem 12208,4;
-      getitem 12215,30;
-      getitem 12216,30;
-      getitem 12211,2;
-      getitem 7621,2;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE10);
   - Id: 14154
     AegisName: F_Vigorgra_Package11
     Name: 1 Hour Survival Pack
@@ -27857,13 +27734,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,4;
-      getitem 12250,4;
-      getitem 12208,4;
-      getitem 12215,30;
-      getitem 12216,30;
-      getitem 12211,2;
-      getitem 7621,2;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE11);
   - Id: 14155
     AegisName: F_Vigorgra_Package12
     Name: Weekend Hunting Pack
@@ -27881,13 +27752,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,4;
-      getitem 12251,4;
-      getitem 12208,4;
-      getitem 12215,30;
-      getitem 12217,40;
-      getitem 12211,2;
-      getitem 7621,2;
+      getgroupitem(IG_F_VIGORGRA_PACKAGE12);
   - Id: 14156
     AegisName: F_Battle_Manual_Box
     Name: Battle Manual Box
@@ -28175,8 +28040,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12217,10;
-      getitem 523,10;
+      getgroupitem(IG_F_ASPERSIO_5_SCROLL_BOX);
   - Id: 14172
     AegisName: F_Assumptio_5_Box
     Name: Assumptio 5 Scroll Box
@@ -28680,8 +28544,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12217,30;
-      getitem 523,30;
+      getgroupitem(IG_F_ASPERSIO_5_BOX30);
   - Id: 14200
     AegisName: F_Aspersio_5_Box50
     Name: Aspersio Scroll 50 Box
@@ -28699,8 +28562,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12217,50;
-      getitem 523,50;
+      getgroupitem(IG_F_ASPERSIO_5_BOX50);
   - Id: 14201
     AegisName: F_Agi_Dish_Box30
     Name: Steamed Scorpion 30 Box
@@ -29186,7 +29048,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 1638,604800;
+      getgroupitem(IG_HEALING_STAFF_BOX);
   - Id: 14228
     AegisName: Praxinus_Box
     Name: Praccsinos Box
@@ -29204,7 +29066,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 2752,604800;
+      getgroupitem(IG_PRAXINUS_BOX);
   - Id: 14229
     AegisName: Sakura
     Name: Cherry Blossom Scroll
@@ -34824,7 +34686,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_Shapeshifter_Costume);
+      getgroupitem(IG_COSTAMA_EGG22);
   - Id: 14739
     AegisName: Sealed_B_Ygnizem_Scroll
     Name: Sealed General Egnigem Cenia Scroll
@@ -38818,19 +38680,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      getitem 12208,10;
-      getitem 12210,10;
-      getitem 12216,20;
-      getitem 12215,20;
-      getitem 7621,10;
-      getitem 12209,10;
-      getitem 12211,5;
-      getitem 12445,10;
-      getitem 12446,10;
-      getitem 12447,10;
-      getitem 12448,10;
-      getitem 12449,10;
-      getitem 12450,10;
+      getgroupitem(IG_F_PET_EGG_SCROLL9);
   - Id: 16421
     AegisName: F_Marriage_Covenant_Box
     Name: Written Oath Of Marriage Box
@@ -38846,7 +38696,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 5280,604800;
+      getgroupitem(IG_F_MAGESTIC_GOAT_BOX);
   - Id: 16423
     AegisName: F_Pet_Egg_Scroll3
     Name: Episode 13.1 Key Package
@@ -38854,9 +38704,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      getitem 7782,1;
-      getitem 12208,2;
-      getitem 14582,10;
+      getgroupitem(IG_F_PET_EGG_SCROLL3);
   - Id: 16424
     AegisName: F_Executioner_Box
     Name: Executioner Box
@@ -38864,7 +38712,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1174,604800;
+      getgroupitem(IG_F_EXECUTIONER_BOX);
   - Id: 16425
     AegisName: F_Cutlas_Box
     Name: Cutlus Box
@@ -38872,7 +38720,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 13402,604800;
+      getgroupitem(IG_F_CUTLAS_BOX);
   - Id: 16426
     AegisName: F_Moonlight_Sword_Box
     Name: Moonlight Dagger Box
@@ -38880,7 +38728,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 13026,604800;
+      getgroupitem(IG_F_MOONLIGHT_SWORD_BOX);
   - Id: 16427
     AegisName: F_Spanner_Box
     Name: Wrench Box
@@ -38888,7 +38736,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1534,604800;
+      getgroupitem(IG_F_SPANNER_BOX);
   - Id: 16428
     AegisName: F_Solar_Sword_Box
     Name: Solar Sword Box
@@ -38896,7 +38744,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 13403,604800;
+      getgroupitem(IG_F_SOLAR_SWORD_BOX);
   - Id: 16429
     AegisName: F_Tomahawk_Box
     Name: Tomahawk Box
@@ -38904,7 +38752,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1374,604800;
+      getgroupitem(IG_F_TOMAHAWK_BOX);
   - Id: 16430
     AegisName: F_Bow_Of_Rudra_Box
     Name: Rudra Bow Box
@@ -38912,7 +38760,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1729,604800;
+      getgroupitem(IG_F_BOW_OF_RUDRA_BOX);
   - Id: 16431
     AegisName: F_Pole_Axe_Box
     Name: Pole Axe Box
@@ -38920,7 +38768,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      rentitem 1419,604800;
+      getgroupitem(IG_F_POLE_AXE_BOX);
   - Id: 16432
     AegisName: BM_Pack_Box_A
     Name: Battle Manual Package Box(A)
@@ -39730,7 +39578,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
+      getgroupitem(IG_THOUGHTFUL_HAT_BOX);
   - Id: 16589
     AegisName: F_Thoughtful_Hat_Box
     Name: Thoughtful Hat Box
@@ -39738,7 +39586,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
+      getgroupitem(IG_F_THOUGHTFUL_HAT_BOX);
   - Id: 16590
     AegisName: E_Thoughtful_Hat_Box
     Name: Thoughtful Hat Box
@@ -39746,7 +39594,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
+      getgroupitem(IG_E_THOUGHTFUL_HAT_BOX);
   - Id: 16591
     AegisName: Summer_Scroll2
     Name: Overseas Care Package Remix XIII Mini
@@ -40300,7 +40148,7 @@ Body:
     Buy: 20
     Weight: 1
     Script: |
-      getitem callfunc("F_Rand",5545,5549,5569,5581,5589,5599,5663,5677,5740,5745,5512,5514),1;
+      getgroupitem(IG_ZODIAC_DIADEM_PACK);
   - Id: 16664
     AegisName: Leo_Scroll
     Name: Leo Scroll
@@ -40407,7 +40255,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem callfunc("F_Rand",5546,5550,5570,5582,5588,5598,5662,5676,5739,5744,5513,5515),1;
+      getgroupitem(IG_ZODIAC_CROWN_PACK);
   - Id: 16677
     AegisName: Vending_Scroll2_Box10
     Name: Universal Catalog Gold 10 Box
@@ -41532,8 +41380,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12212,500,Bound_Account;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_C_GIANT_FLY_WING_BOX);
   - Id: 16821
     AegisName: C_Dun_Tele_Scroll_Box5
     Name: Dungeon Teleport Scroll Box(5)
@@ -41695,7 +41542,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,10;
+      getgroupitem(IG_C_SIEGE_SCROLL_BOX1_10);
   - Id: 16865
     AegisName: C_Siege_Scroll_Box1_30
     Name: Siege Map Teleport Scroll Box(30)
@@ -41743,7 +41590,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,30;
+      getgroupitem(IG_C_SIEGE_SCROLL_BOX2_30);
   - Id: 16878
     AegisName: C_Umbala_Spirit_Box2
     Name: Umbala Spirit Box
@@ -43835,8 +43682,7 @@ Body:
     Flags:
       UniqueId: true
     Script: |
-      getitem 7135,50;
-      getitem 7136,50;
+      getgroupitem(IG_ACIDBOMB_BOX50);
   - Id: 17069
     AegisName: Acidbomb_Box100
     Name: Acidbomb Box100
@@ -44846,7 +44692,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12622,604800;
+      getgroupitem(IG_BOARDING_HALTER_BOX7);
   - Id: 17164
     AegisName: Mystic_Powder_Box30_2
     Name: Mystic Powder Box
@@ -45940,7 +45786,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 14645,2592000;
+      getgroupitem(IG_WING_OF_BAALZEBUB_BOX);
   - Id: 17290
     AegisName: Orleans_Full_Course_Box
     Name: Orleans Full Course Box
@@ -45971,7 +45817,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",24018,24019,24020,24021,24022,24023,24024,24025,24026),1;
+      getgroupitem(IG_SHADOW_BOX);
   - Id: 17293
     AegisName: Physical_S_Package
     Name: Shadow Physical Package
@@ -45987,7 +45833,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",24018,24019,24020,24024,24025,24026),1;
+      getgroupitem(IG_PHYSICAL_S_PACKAGE);
   - Id: 17294
     AegisName: Magical_S_Package
     Name: Shadow Magical Package
@@ -46003,7 +45849,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",24021,24022,24023,24024,24025,24026),1;
+      getgroupitem(IG_MAGICAL_S_PACKAGE);
   - Id: 17298
     AegisName: Vigorgra_Package
     Name: Support Package
@@ -47095,7 +46941,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getgroupitem(IG_Costama_Egg21);
+      getgroupitem(IG_COSTAMA_EGG21);
   - Id: 17482
     AegisName: Solaris_Festival_Scroll
     Name: Solaris Festival Scroll
@@ -47824,7 +47670,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 14506,3600;
+      getgroupitem(IG_DUN_VOUCHER_BOX1);
   - Id: 17570
     AegisName: Dun_Voucher_Box2
     Name: Sky Fortress Ticket 3 Hours Box
@@ -47840,7 +47686,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 14506,10800;
+      getgroupitem(IG_DUN_VOUCHER_BOX2);
   - Id: 17572
     AegisName: Erzulie_Lucky_Scroll
     Name: Erzulie Lucky Egg
@@ -49684,10 +49530,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12832,100,Bound_Account;
-      getitem 14534,100;
-      getitem 14535,100;
-      getitembound 23919,11,Bound_Account;
+      getgroupitem(IG_A_3_LIFE_POTION_10PACK);
   - Id: 17972
     AegisName: A_3_Life_Potion_pack
     Name: Life Potion Sampler Crate
@@ -49702,10 +49545,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12832,10,Bound_Account;
-      getitem 14534,10;
-      getitem 14535,10;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_A_3_LIFE_POTION_PACK);
   - Id: 17973
     AegisName: A_Almighty100_Box
     Name: Almighty package 10set
@@ -49840,8 +49680,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 23475,200;
-      getitembound 23919,11,Bound_Account;
+      getgroupitem(IG_A_INFINITY_10_BOX);
   - Id: 17982
     AegisName: A_Infinity_Box
     Name: Infinity Drink 20 Box
@@ -49856,8 +49695,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 23475,20;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_A_INFINITY_BOX);
   - Id: 17983
     AegisName: A_DEF_Scroll_Box_Set
     Name: Defense Scroll Box(10)
@@ -50247,7 +50085,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      getgroupitem(IG_Sealed_Mind_Box);
+      getgroupitem(IG_CLOSEDMIND_BOX);
   - Id: 22535
     AegisName: WorkerScroll_A
     Name: Scroll Summoning Workers(Male)
@@ -50585,11 +50423,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
+      getgroupitem(IG_FIRST_AID_KIT_B);
   - Id: 22555
     AegisName: HQ_Chocolate
     Name: Gourmet Chocolate
@@ -52798,7 +52632,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      callfunc("F_Mysterious_box");
+      getgroupitem(IG_BLUEBOXOFQUESTIONS);
   - Id: 22902
     AegisName: Sealed_Scroll2
     Name: Sealed Card Album Scroll II
@@ -53937,7 +53771,7 @@ Body:
     Buy: 1
     Weight: 500
     Script: |
-      callfunc("F_Cursed_Crystal");
+      getgroupitem(IG_CRYSTAL_OF_GRUDGE);
   - Id: 23081
     AegisName: Kunai_Scroll_Of_Flame
     Name: Heat Wave Kunai Summon Scroll
@@ -54504,7 +54338,7 @@ Body:
     Flags:
       Container: true
     Script: |
-      getitem callfunc("F_Rand",7135,7136,7137,7138,7139),1;
+      getgroupitem(IG_ALCHEMIST_BOX);
   - Id: 23170
     AegisName: Fan_Upgrade_Kit
     Name: Fan Modification Kit
@@ -55060,8 +54894,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem(2192,1);
-      getitem(2743,1);
+      getgroupitem(IG_ROSE_BUNDLE_A);
   - Id: 23252
     AegisName: Orleans_Bundle_A
     Name: Orleans's Bundle A
@@ -55077,8 +54910,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem(2365,1);
-      getitem(2881,1);
+      getgroupitem(IG_ORLEANS_BUNDLE_A);
   - Id: 23253
     AegisName: Black_Shiba_Bundle_A
     Name: Black Shiba Inu Bundle A
@@ -55094,8 +54926,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem(2959,1);
-      getitem(18756,1);
+      getgroupitem(IG_BLACK_SHIBA_BUNDLE_A);
   - Id: 23254
     AegisName: Valkyrie_Bundle_A
     Name: Valkyrie Bundle A
@@ -55111,8 +54942,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 1420,1;
-      getitem 2115,1;
+      getgroupitem(IG_VALKYRIE_BUNDLE_A);
   - Id: 23255
     AegisName: Kardui_Bundle_A
     Name: Kardui Bundle A
@@ -55128,8 +54958,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem(1649,1);
-      getitem(15169,1);
+      getgroupitem(IG_KARDUI_BUNDLE_A);
   - Id: 23256
     AegisName: Elixir_Bandage
     Name: Elixir Bandages
@@ -55225,10 +55054,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2387,1;
-      getitem 2440,1;
-      getitem 2744,1;
-      getitem 2935,1;
+      getgroupitem(IG_SPRINT_BUNDLE_A);
   - Id: 23266
     AegisName: Etran_Bundle_A
     Name: Etran Bundle A
@@ -55244,8 +55070,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem(2371,1);
-      getitem(20797,1);
+      getgroupitem(IG_ETRAN_BUNDLE_A);
   - Id: 23267
     AegisName: 1LVUP
     Name: Level Up Box (1)
@@ -55589,8 +55414,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem(1646,1);
-      getitem(22104,1);
+      getgroupitem(IG_POROROCA_SHOES_BUNDLE_A);
   - Id: 23295
     AegisName: Lian_Bundle_B
     Name: Lian Bundle A
@@ -55606,9 +55430,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2195,1;
-      getitem 20753,1;
-      getitem 22069,1;
+      getgroupitem(IG_LIAN_BUNDLE_B);
   - Id: 23297
     AegisName: Lovely_Egg_Box
     Name: Lovely Egg Box
@@ -67256,8 +67078,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 7136,50,Bound_Account;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_C_ACID_B_50BOX);
   - Id: 200056
     AegisName: C_Acid_B_500_Box
     Name: Acid Bomb 500 Box
@@ -67272,8 +67093,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 7136,500,Bound_Account;
-      getitembound 23919,1,Bound_Account;
+      getgroupitem(IG_C_ACID_B_500_BOX);
   - Id: 200064
     AegisName: Giant_Fly_Wing_2500
     Name: Giant Flywing 2500 Box
@@ -67288,8 +67108,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitembound 12212,2500,Bound_Account;
-      getitembound 23919,12,Bound_Account;
+      getgroupitem(IG_GIANT_FLY_WING_2500);
   - Id: 200069
     AegisName: A_HD_Elunium_Box
     Name: HD Elunium Package
