@@ -395,6 +395,10 @@ struct reg_db {
 			return arrays[id].rend();
 		}
 
+		auto& array_get(int id) {
+			return arrays[id];
+		}
+
 		auto array_lower_bound(int id, int index) {
 			return arrays[id].lower_bound(index);
 		}

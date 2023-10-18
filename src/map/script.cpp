@@ -6220,6 +6220,8 @@ BUILDIN_FUNC(deletearray)
 	start = reference_getindex(data);
 	name = reference_getname(data);
 
+	bool is_string = is_string_variable( name );
+
 	if( not_server_variable(*name) ) {
 		if( !script_rid2sd(sd) )
 			return SCRIPT_CMD_SUCCESS;// no player attached
@@ -6249,7 +6251,7 @@ BUILDIN_FUNC(deletearray)
 
 		for (; it != it_end;) {
 			auto uid = reg_db::GetUID(id, it->first);
-			src->vars->erase(uid);
+			clear_reg( st, sd, uid, name, reference_getref( data ) );
 			it = src->vars->array_erase_iterator(id, it);
 		}
 
@@ -6266,11 +6268,24 @@ BUILDIN_FUNC(deletearray)
 			auto new_uid = reg_db::GetUID(id, new_index);
 
 			src->vars->move(new_uid, src->vars->get(old_uid));
-			src->vars->erase(old_uid);
+			if( is_string ){
+				auto value = get_val2_str( st, old_uid, reference_getref( data ) );
+				set_reg_str( st, sd, new_uid, name, value.c_str(), reference_getref( data ) );
+			}else{
+				int64 value = get_val2_num( st, old_uid, reference_getref( data ) );
+				set_reg_num( st, sd, new_uid, name, value, reference_getref( data ) );
+			}
+
+			clear_reg( st, sd, old_uid, name, reference_getref( data ) );
 
 			it_ = src->vars->array_erase_iterator(id, it_);
 		}
 	} else {
+		for (auto it : src->vars->array_get(id)) {
+			auto uid = reg_db::GetUID(id, it.first);
+			clear_reg( st, sd, uid, name, reference_getref( data ) );
+		}
+		
 		src->vars->id_erase(id);
 	}
 
