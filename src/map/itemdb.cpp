@@ -196,6 +196,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->subtype = 0;
 	}
 
+	bool has_buy = false, has_sell = false;
+
 	if (this->nodeExists(node, "Buy")) {
 		uint32 buy;
 
@@ -207,6 +209,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			buy = MAX_ZENY;
 		}
 
+		has_buy = true;
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
@@ -225,12 +228,15 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			sell = MAX_ZENY;
 		}
 
+		has_sell = true;
 		item->value_sell = sell;
 	} else {
 		if (!exists) {
 			item->value_sell = 0;
 		}
 	}
+
+	hasPriceValue[item->nameid] = { has_buy, has_sell };
 
 	if (this->nodeExists(node, "Weight")) {
 		uint32 weight;
@@ -1153,9 +1159,9 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		// When a particular price is not given, we should base it off the other one
-		if (item->value_buy == 0 && item->value_sell > 0)
+		if (!hasPriceValue[item->nameid].has_buy && hasPriceValue[item->nameid].has_sell)
 			item->value_buy = item->value_sell * 2;
-		else if (item->value_buy > 0 && item->value_sell == 0)
+		else if (hasPriceValue[item->nameid].has_buy && !hasPriceValue[item->nameid].has_sell)
 			item->value_sell = item->value_buy / 2;
 
 		if (item->value_buy / 124. < item->value_sell / 75.) {
@@ -1186,6 +1192,7 @@ void ItemDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+	hasPriceValue.clear();
 }
 
 /**
@@ -3293,43 +3300,58 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			const auto& listNode = subit["List"];
 
 			for (const auto& listit : listNode) {
+				uint32 index;
+
+				if (!this->asUInt32(listit, "Index", index))
+					continue;
+
 				if (this->nodeExists(listit, "Clear")) {
-					std::string item_name;
+					bool active;
 
-					if (!this->asString(listit, "Clear", item_name))
+					if (!this->asBool(listit, "Clear", active) || !active)
 						continue;
 
-					std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-					if (item == nullptr) {
-						this->invalidWarning(listit["Clear"], "Unknown Item %s. Clear failed.\n", item_name.c_str());
-						continue;
-					}
-
-					if (random->data.erase(item->nameid) == 0)
-						this->invalidWarning(listit["Clear"], "Item %hu doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", item->nameid, subgroup, group_name.c_str());
+					if (random->data.erase(index) == 0)
+						this->invalidWarning(listit["Clear"], "Index %u doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
 
 					continue;
 				}
 
-				std::string item_name;
-
-				if (!this->asString(listit, "Item", item_name))
-					continue;
-
-				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-				if (item == nullptr) {
-					this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
-					continue;
-				}
-
-				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, item->nameid);
+				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, index);
 				bool entry_exists = entry != nullptr;
 
 				if (!entry_exists) {
+					if (!this->nodesExist(listit, { "Item" }))
+						return 0;
+
 					entry = std::make_shared<s_item_group_entry>();
-					random->data[item->nameid] = entry;
+					random->data[index] = entry;
+				}
+
+				std::shared_ptr<item_data> item = nullptr;
+
+				if (this->nodeExists(listit, "Item")) {
+					std::string item_name;
+
+					if (!this->asString(listit, "Item", item_name))
+						continue;
+
+					item = item_db.search_aegisname( item_name.c_str() );
+
+					if (item == nullptr) {
+						this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
+						continue;
+					}
+				} else {
+					if (!entry_exists) {
+						item = item_db.find( entry->nameid );
+					}
+				}
+
+				// (shouldn't happen)
+				if (item == nullptr) {
+					this->invalidWarning(listit["index"], "Missing Item definition for Index %u.\n", index);
+					continue;
 				}
 
 				entry->nameid = item->nameid;
@@ -4211,11 +4233,11 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip&2 && mapdata->getMapFlag(MF_PVP)) || // PVP
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) // Zone restriction
 		)
 		return true;
 	return false;

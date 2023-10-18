@@ -42,7 +42,7 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 	}
 	.@md_name$ = "Weekend Dungeon";
 
-	if (is_party_leader() == false) {
+	if (getcharid(1) < 1) {
 		mes "[Marry Jae]";
 		mes "You need to form a party of one member or more.";
 		close;
@@ -72,11 +72,15 @@ pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
 		mes "You may re-enter the Memorial Dungeon.";
 		close;
 	}
+
+	if (is_party_leader() == true)
+		.@menu$ = "Prepare Memorial Dungeon";
+
 	mes "[Marry Jae]";
 	mes "I think you're just about ready.";
 	mes "Now, would you like to enter it now?";
 	next;
-	switch( select( "Prepare Memorial Dungeon", "Enter Weekend Dungeon", "Cancel" ) ) {
+	switch( select( .@menu$, "Enter Weekend Dungeon", "Cancel" ) ) {
 	case 1:
 		instance_create(.@md_name$);
 		mes "[Marry Jae]";

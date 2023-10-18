@@ -219,7 +219,7 @@ public:
 
 struct s_mob_item_drop_ratio {
 	t_itemid nameid;
-	uint16 drop_ratio;
+	uint32 drop_ratio;
 	std::vector<uint16> mob_ids;
 };
 
@@ -331,7 +331,7 @@ struct mob_data {
 		unsigned int aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
-		unsigned int alchemist: 1;
+		unsigned int can_escape: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;

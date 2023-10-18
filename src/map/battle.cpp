@@ -2044,16 +2044,16 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 		if ((status_bl_has_mode(bl,MD_SKILLIMMUNE) || (class_ == MOBID_EMPERIUM && !skill_get_inf2(skill_id, INF2_TARGETEMPERIUM))) && flag&BF_SKILL) //Skill immunity.
 			return false;
 		if( src->type != BL_MOB || mob_is_clone( ((struct mob_data*)src)->mob_id ) ){
-			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
+			auto g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
 
-			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g,GD_APPROVAL) <= 0 ))
+			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g->guild, GD_APPROVAL) <= 0 ))
 				return false;
 
 			if (g != nullptr) {
-				if (battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
+				if (battle_config.guild_max_castles && guild_checkcastles(g->guild)>=battle_config.guild_max_castles)
 					return false; // [MouseJstr]
 
-				if (md->special_state.ai == AI_GUILD && g->guild_id == md->master_id)
+				if (md->special_state.ai == AI_GUILD && g->guild.guild_id == md->master_id)
 					return false;
 			}
 		}
@@ -2674,12 +2674,12 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 
 	map_data *mapdata = map_getmapdata(src->m);
 
-	if ((damage->map&1 && (!mapdata->flag[MF_PVP] && !mapdata_flag_gvg2(mapdata) && !mapdata->flag[MF_BATTLEGROUND] && !mapdata->flag[MF_SKILL_DAMAGE] && !mapdata->flag[MF_RESTRICTED])) ||
-		(damage->map&2 && mapdata->flag[MF_PVP]) ||
+	if ((damage->map&1 && (!mapdata->getMapFlag(MF_PVP) && !mapdata_flag_gvg2(mapdata) && !mapdata->getMapFlag(MF_BATTLEGROUND) && !mapdata->getMapFlag(MF_SKILL_DAMAGE) && !mapdata->getMapFlag(MF_RESTRICTED))) ||
+		(damage->map&2 && mapdata->getMapFlag(MF_PVP)) ||
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
-		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
-		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
-		(damage->map&mapdata->zone && mapdata->flag[MF_RESTRICTED]))
+		(damage->map&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
+		(damage->map&16 && mapdata->getMapFlag(MF_SKILL_DAMAGE)) ||
+		(damage->map&mapdata->zone && mapdata->getMapFlag(MF_RESTRICTED)))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -2697,7 +2697,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	map_data *mapdata = map_getmapdata(src->m);
 
-	if (!mapdata || !mapdata->flag[MF_SKILL_DAMAGE])
+	if (!mapdata || !mapdata->getMapFlag(MF_SKILL_DAMAGE))
 		return 0;
 
 	int rate = 0;
@@ -4027,7 +4027,23 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
-		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
+		if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
+			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
+		{
+			int chance = rnd()%100;
+			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
+				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
+				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
+				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
+				case 2:
+				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
+			}
+			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
+			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
+			if (wd->div_ > 1)
+				wd->type = DMG_MULTI_HIT;
+		}
+		if( wd->div_ == 1 && ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
 			|| ( pc_checkskill_flag(*sd, TF_DOUBLE) > SKILL_FLAG_PERMANENT && sd->weapontype1 != W_FIST )
 			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
 			|| ( sc && sc->getSCE(SC_KAGEMUSYA) && sd->weapontype1 != W_FIST )) // Will fail bare-handed
@@ -4048,7 +4064,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->type = DMG_MULTI_HIT;
 			}
 		}
-		else if( ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
+		if( wd->div_ == 1 && ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
 			|| (sc && sc->count && sc->getSCE(SC_E_CHAIN) && (skill_lv = sc->getSCE(SC_E_CHAIN)->val1) > 0)) //Chain Action of ETERNAL_CHAIN
 			&& rnd()%100 < 5*skill_lv ) //Success rate
 		{
@@ -4056,22 +4072,6 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			wd->type = DMG_MULTI_HIT;
 
 			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
-		}
-		else if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
-			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
-		{
-			int chance = rnd()%100;
-			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
-				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
-				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
-				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
-				case 2:
-				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
-			}
-			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
-			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
-			if (wd->div_ > 1)
-				wd->type = DMG_MULTI_HIT;
 		}
 	}
 
@@ -5363,31 +5363,31 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
 		case DK_SERVANTWEAPON_ATK:
-			skillratio += -100 + 200 + 50 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 500 + 400 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_SERVANT_W_PHANTOM:
-			skillratio += 100 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 200 + 300 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_SERVANT_W_DEMOL:
-			skillratio += 600 + 120 * skill_lv;
+			skillratio += -100 + 500 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_HACKANDSLASHER:
 		case DK_HACKANDSLASHER_ATK:
-			skillratio += -100 + 500 + 250 * skill_lv;
-			skillratio += 5 * sstatus->pow;
+			skillratio += -100 + 300 + 700 * skill_lv;
+			skillratio += 7 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_DRAGONIC_AURA:
-			skillratio += 950 * skill_lv + 10 * sstatus->pow;
+			skillratio += 3650 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
-				skillratio += 450 * skill_lv;
+				skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case DK_MADNESS_CRUSHER:
-			skillratio += -100 + 600 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 400 + 800 * skill_lv + 7 * sstatus->pow;
 			if( sd != nullptr ){
 				int16 index = sd->equip_index[EQI_HAND_R];
 
@@ -5400,92 +5400,97 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio *= 2;
 			break;
 		case DK_STORMSLASH:
-			skillratio += -100 + 120 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 170 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_GIANTGROWTH))
+			if (sc && sc->getSCE(SC_GIANTGROWTH) && rnd()%100 < 30)
 				skillratio *= 2;
 			break;
 		case IQ_OLEUM_SANCTUM:
-			skillratio += -100 + 400 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 500 + 2000 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_MASSIVE_F_BLASTER:
-			skillratio += -100 + 800 * skill_lv + 10 * sstatus->pow;
+			skillratio += -100 + 2150 * skill_lv + 15 * sstatus->pow;
 			if (tstatus->race == RC_BRUTE || tstatus->race == RC_DEMON)
-				skillratio += 300 * skill_lv;
+				skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_EXPOSION_BLASTER:
-			skillratio += -100 + 650 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 2800 * skill_lv + 15 * sstatus->pow;
 
 			if( tsc != nullptr && tsc->getSCE( SC_HOLY_OIL ) ){
-				skillratio += 200 * skill_lv;
+				skillratio += 400 * skill_lv;
 			}
 
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_FIRST_BRAND:
-			skillratio += -100 + 450 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 1200 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_SECOND_FLAME:
-			skillratio += -100 + 550 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 200 + 2900 * skill_lv + 9 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_SECOND_FAITH:
-			skillratio += -100 + 500 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 2300 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_SECOND_JUDGEMENT:
-			skillratio += -100 + 500 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 150 + 2600 * skill_lv + 7 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_THIRD_PUNISH:
-			skillratio += -100 + 650 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 350 + 1500 * skill_lv + 10 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_THIRD_FLAME_BOMB:
-			skillratio += -100 + 650 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 650 * skill_lv + 10 * sstatus->pow;
 			skillratio += sstatus->max_hp * 20 / 100;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_THIRD_CONSECRATION:
-			skillratio += -100 + 650 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IG_GRAND_JUDGEMENT:
-			skillratio += -100 + 750 * skill_lv + 10 * sstatus->pow;
+			skillratio += -100 + 250 + 1500 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
-				skillratio += 350 * skill_lv;
+				skillratio += 100 + 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
 				skillratio += skillratio * i / 100;
 			break;
 		case IG_SHIELD_SHOOTING:
-			skillratio += -100 + 600 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 1400 + 2100 * skill_lv + 5 * sstatus->pow;
 			skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
 			if (sd) { // Damage affected by the shield's weight and refine. Need official formula. [Rytech]
 				short index = sd->equip_index[EQI_HAND_L];
 
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-					skillratio += sd->inventory_data[index]->weight / 20 * sd->inventory.u.items_inventory[index].refine;
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
+					skillratio += (sd->inventory_data[index]->weight * 7 / 6) / 10;
+					skillratio += sd->inventory.u.items_inventory[index].refine * 4;
+				}
 			}
 			RE_LVL_DMOD(100);
 			break;
 		case IG_OVERSLASH:
-			skillratio += -100 + 60 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + (120 + pc_checkskill(sd, IG_SPEAR_SWORD_M) * 10) * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
 				skillratio += skillratio * i / 100;
 			break;
 		case CD_EFFLIGO:
-			skillratio += -100 + 800 * skill_lv + 5 * sstatus->pow;
-			if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-				skillratio += 400 * skill_lv;
+			skillratio += -100 + 1650 * skill_lv + 7 * sstatus->pow;
+			skillratio += 8 * pc_checkskill( sd, CD_MACE_BOOK_M );
+			if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
+				skillratio += 150 * skill_lv;
+				skillratio += 7 * pc_checkskill( sd, CD_MACE_BOOK_M );
+			}
 			RE_LVL_DMOD(100);
 			break;
 		case CD_PETITIO:
-			skillratio += -100 + 270 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + (1050 + pc_checkskill(sd,CD_MACE_BOOK_M) * 10) * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_DANCING_KNIFE:
@@ -5493,40 +5498,45 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SAVAGE_IMPACT:
-			skillratio += -100 + 60 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
-				skillratio += 100 * skill_lv;
+				skillratio += 20 * skill_lv + 3 * sstatus->pow;	// !TODO: check POW ratio
 			}
 
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_ETERNAL_SLASH:
-			skillratio += -100 + 350 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 265 * skill_lv + 2 * sstatus->pow;
+
+			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
+				skillratio += 100 * skill_lv + sstatus->pow;
+			}
+
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SHADOW_STAB:
-			skillratio += -100 + 750 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 300 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_IMPACT_CRATER:
-			skillratio += -100 + 65 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 80 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_FATAL_SHADOW_CROW:
-			skillratio += -100 + 650 * skill_lv + 10 * sstatus->pow;
+			skillratio += -100 + 1300 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_DRAGON)
-				skillratio += 300 * skill_lv;
+				skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_AXE_STOMP:
-			skillratio += -100 + 400 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 350 + 850 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_RUSH_QUAKE:
-			skillratio += -100 + 750 * skill_lv + 10 * sstatus->pow;
+			skillratio += -100 + 3600 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_FORMLESS || tstatus->race == RC_INSECT)
-				skillratio += 350 * skill_lv;
+				skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_A_MACHINE:// Formula unknown. Using Dancing Knife's formula for now. [Rytech]
@@ -5534,7 +5544,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_ABYSS_DAGGER:
-			skillratio += -100 + 350 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 500 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_UNLUCKY_RUSH:
@@ -5542,43 +5552,43 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT:
-			skillratio += -100 + 600 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 850 * skill_lv + 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT_ATK:
-			skillratio += -100 + 950 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 600 + 2350 * skill_lv + 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
-			skillratio += -100 + 360 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 350 + 550 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_FRENZY_SHOT:
-			skillratio += -100 + 350 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 400 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case WH_HAWKRUSH:
-			skillratio += -100 + 200 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 500 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case WH_HAWKBOOMERANG:// Affected by trait stats??? CON for sure but the other one unknown. Likely POW. [Rytech]
-			skillratio += -100 + 500 * skill_lv + 10 * sstatus->pow + 10 * sstatus->con;
+			skillratio += -100 + 600 * skill_lv + 10 * sstatus->pow + 10 * sstatus->con;
 			if (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH)
-				skillratio += 250 * skill_lv;
+				skillratio += skillratio * 50 / 100;
 			RE_LVL_DMOD(100);
 			break;
 		case WH_GALESTORM:
-			skillratio += -100 + 250 * skill_lv + 10 * sstatus->con;
+			skillratio += -100 + 950 * skill_lv + 10 * sstatus->con;
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_CALAMITYGALE) && (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH))
-					skillratio += skillratio * 50 / 100;
+				skillratio += skillratio * 50 / 100;
 			break;
 		case WH_CRESCIVE_BOLT:
-			skillratio += -100 + 300 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 340 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
-			if (sc) { // At level 10 the SP usage of 100 increased by 20 on each count. So maybe damage increase is 20%??? [Rytech]
+			if (sc) {
 				if (sc->getSCE(SC_CRESCIVEBOLT))
-					skillratio += skillratio * (20 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
+					skillratio += skillratio * (10 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
 
 				if (sc->getSCE(SC_CALAMITYGALE)) {
 					skillratio += skillratio * 20 / 100;
@@ -5592,7 +5602,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case WH_SOLIDTRAP:
 		case WH_SWIFTTRAP:
 		case WH_FLAMETRAP:
-			skillratio += -100 + 250 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 850 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			skillratio += skillratio * (20 * (sd ? pc_checkskill(sd, WH_ADVANCED_TRAP) : 5)) / 100;
 			break;
@@ -5616,46 +5626,57 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case TR_ROSEBLOSSOM:
-			skillratio += -100 + 750 * skill_lv + (sd ? pc_checkskill(sd, TR_STAGE_MANNER) : 5) * sstatus->con;
+			skillratio += -100 + 200 + 2000 * skill_lv;
+
+			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
+				skillratio += 3 * sstatus->con;
 
 			if( tsc != nullptr && tsc->getSCE( SC_SOUNDBLEND ) ){
-				skillratio += 250 * skill_lv;
+				skillratio += 200 * skill_lv;
 			}
 
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio += skillratio * 100 / 100;
+				skillratio *= 2;
 
 				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
 					skillratio += skillratio * 50 / 100;
 			}
 			break;
 		case TR_ROSEBLOSSOM_ATK:
-			skillratio += -100 + 350 * skill_lv + (sd ? pc_checkskill(sd, TR_STAGE_MANNER) : 5) * sstatus->con;
+			skillratio += -100 + 250 + 2800 * skill_lv;
+
+			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
+				skillratio += 3 * sstatus->con;
 
 			if( tsc != nullptr && tsc->getSCE( SC_SOUNDBLEND ) ){
-				skillratio += 400 * skill_lv;
+				skillratio += 200 * skill_lv;
 			}
 
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio += skillratio * 100 / 100;
+				skillratio *= 2;
 
 				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
 					skillratio += skillratio * 50 / 100;
 			}
 			break;
 		case TR_RHYTHMSHOOTING:
-			skillratio += -100 + 120 * skill_lv + (sd ? pc_checkskill(sd, TR_STAGE_MANNER) : 5) * sstatus->con;
+			skillratio += -100 + 200 + 120 * skill_lv;
+
+			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
+				skillratio += 3 * sstatus->con;
+
+			if (tsc && tsc->getSCE(SC_SOUNDBLEND))
+				skillratio += 100 + 100 * skill_lv;
+
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio += skillratio * 100 / 100;
+				skillratio *= 2;
 
 				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
 					skillratio += skillratio * 50 / 100;
 			}
-			if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-				skillratio += skillratio * 50 / 100;
 			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
@@ -6334,14 +6355,14 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 			wd->damage = battle_calc_damage(src,target,wd,wd->damage,skill_id,skill_lv);
 			if( mapdata_flag_gvg2(mapdata) )
 				wd->damage=battle_calc_gvg_damage(src,target,wd->damage,skill_id,wd->flag);
-			else if( mapdata->flag[MF_BATTLEGROUND] )
+			else if( mapdata->getMapFlag(MF_BATTLEGROUND) )
 				wd->damage=battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
 		}
 		else if(!wd->damage) {
 			wd->damage2 = battle_calc_damage(src,target,wd,wd->damage2,skill_id,skill_lv);
 			if( mapdata_flag_gvg2(mapdata) )
 				wd->damage2 = battle_calc_gvg_damage(src,target,wd->damage2,skill_id,wd->flag);
-			else if( mapdata->flag[MF_BATTLEGROUND] )
+			else if( mapdata->getMapFlag(MF_BATTLEGROUND) )
 				wd->damage2 = battle_calc_bg_damage(src,target,wd->damage2,skill_id,wd->flag);
 		}
 		else {
@@ -6351,7 +6372,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				wd->damage = battle_calc_gvg_damage(src, target, wd->damage, skill_id, wd->flag);
 				wd->damage2 = battle_calc_gvg_damage(src, target, wd->damage2, skill_id, wd->flag);
 			}
-			else if (mapdata->flag[MF_BATTLEGROUND]) {
+			else if (mapdata->getMapFlag(MF_BATTLEGROUND)) {
 				wd->damage = battle_calc_bg_damage(src, target, wd->damage, skill_id, wd->flag);
 				wd->damage2 = battle_calc_bg_damage(src, target, wd->damage2, skill_id, wd->flag);
 			}
@@ -7162,9 +7183,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (mflag == 2)
 				ad.div_ = 2;
 			break;
-		case TR_METALIC_FURY:// Deals up to 5 additional hits. But what affects the number of hits? [Rytech]
-			ad.div_ = min(ad.div_ + mflag, 5); // Number of hits doesn't go above 5.
-			break;
 		case AG_CRIMSON_ARROW_ATK:
 			if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
 				ad.div_ = 2;
@@ -7750,62 +7768,60 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 200 * skill_lv;
 						break;
 					case AG_DEADLY_PROJECTION:
-						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 2800 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE:
-						skillratio += -100 + 1600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 250 + 2800 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						if (sc && sc->getSCE(SC_CLIMAX))
 						{
 							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 2;
+								skillratio *= 3;
 							else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
-								skillratio += skillratio * 70 / 100;
+								skillratio += skillratio * 50 / 100;
 						}
 						break;
 					case AG_RAIN_OF_CRYSTAL:
-						skillratio += -100 + 150 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 180 + 760 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_MYSTERY_ILLUSION:
-						skillratio += -100 + 500 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 950 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_VIOLENT_QUAKE_ATK:
-						skillratio += -100 + 120 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						if (sc && sc->getSCE(SC_CLIMAX)) {
 							if (sc->getSCE(SC_CLIMAX)->val1 == 1)
 								skillratio /= 2;
 							else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 2;
+								skillratio *= 3;
 						}
 						break;
 					case AG_SOUL_VC_STRIKE:
-						skillratio += -100 + 180 * skill_lv + 3 * sstatus->spl;
+						skillratio += -100 + 250 * skill_lv + 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_STRANTUM_TREMOR:
-						skillratio += -100 + 250 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 100 + 730 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ALL_BLOOM_ATK:
-						skillratio += -100 + 100 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 2)
-								skillratio /= 2;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 2;
+							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+								skillratio *= 4;
 						}
 						break;
 					case AG_ALL_BLOOM_ATK2:// Is this affected by BaseLV and SPL too??? [Rytech]
-						skillratio += -100 + 7000 + 5 * sstatus->spl;
+						skillratio += -100 + 85000 + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRYSTAL_IMPACT:
-						skillratio += -100 + 800 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						if (sc && sc->getSCE(SC_CLIMAX)) {
 							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
@@ -7821,21 +7837,21 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += skillratio * 150 / 100;
 						break;
 					case AG_TORNADO_STORM:
-						skillratio += -100 + 90 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 100 + 760 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_FLORAL_FLARE_ROAD:
-						skillratio += -100 + 200 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 50 + 740 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE:
-						skillratio += -100 + 500 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 1800 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-							skillratio += 600 * skill_lv;
+							skillratio += 340 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE_ATK:
-						skillratio += -100 + 200 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 650 * skill_lv + 10 * sstatus->spl;
 						// Not confirmed, but if the main hit deal additional damage
 						// on certain races then the repeated damage should too right?
 						// Guessing a formula here for now. [Rytech]
@@ -7844,19 +7860,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ROCK_DOWN:
-						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 950 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 250 * skill_lv;
+							skillratio += 300 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_STORM_CANNON:
-						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 950 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 250 * skill_lv;
+							skillratio += 300 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);
@@ -7870,51 +7886,54 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_FROZEN_SLASH:
-						skillratio += -100 + 600 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 250 + 900 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 250 * skill_lv;
+							skillratio += 150 + 350 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case IG_JUDGEMENT_CROSS:
-						skillratio += -100 + 750 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 1950 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
-							skillratio += 350 * skill_lv;
+							skillratio += 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
 							skillratio += skillratio * i / 100;
 						break;
 					case IG_CROSS_RAIN:
 						if( sc && sc->getSCE( SC_HOLY_S ) ){
-							skillratio += -100 + ( 250 + 10 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
+							skillratio += -100 + ( 450 + 10 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
 						}else{
-							skillratio += -100 + ( 150 + 5 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
+							skillratio += -100 + ( 320 + 5 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
 						}
 						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case CD_ARBITRIUM:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
-						skillratio += 100 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
+						skillratio += -100 + 1000 * skill_lv + 7 * sstatus->spl;
+						skillratio += 10 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case CD_ARBITRIUM_ATK:
-						skillratio += -100 + 550 * skill_lv + 5 * sstatus->spl;
-						skillratio += 100 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
+						skillratio += -100 + 1250 * skill_lv + 7 * sstatus->spl;
+						skillratio += 10 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case CD_PNEUMATICUS_PROCELLA:
-						skillratio += -100 + 200 * skill_lv + 10 * sstatus->spl;
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-							skillratio += 100 * skill_lv;
+						skillratio += -100 + 150 + 2100 * skill_lv + 10 * sstatus->spl;
+						skillratio += 3 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
+						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
+							skillratio += 50 + 150 * skill_lv;
+							skillratio += 2 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
+						}
 						RE_LVL_DMOD(100);
 						break;
 					case CD_FRAMEN:
-						skillratio += -100 + 500 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + (800 + 5 * pc_checkskill(sd,CD_FIDUS_ANIMUS)) * skill_lv + 5 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-							skillratio += 150 * skill_lv;
+							skillratio += 100 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:// Is this affected by BaseLV and SPL too??? [Rytech]
@@ -7922,18 +7941,21 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case ABC_ABYSS_STRIKE:
-						skillratio += -100 + 600 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 2200 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_DEMON || tstatus->race == RC_ANGEL)
-							skillratio += 550 * skill_lv;
+							skillratio += 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case ABC_ABYSS_SQUARE:
-						skillratio += -100 + ( 200 + 20 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) ) * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + ( 570 + 20 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) ) * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
-					case TR_METALIC_FURY:
-						skillratio += -100 + 900 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
+					case TR_METALIC_FURY: {
+							int area = skill_get_splash(skill_id, skill_lv);
+							int count = map_forcountinarea(skill_check_bl_sc,target->m,target->x - area,target->y - area,target->x + area,target->y + area,5,BL_MOB,SC_SOUNDBLEND);
+							skillratio += -100 + (2200 + 300 * count) * skill_lv + 5 * sstatus->spl;
+							RE_LVL_DMOD(100);
+						}
 						break;
 					case TR_SOUNDBLEND:
 						skillratio += -100 + 120 * skill_lv + 5 * sstatus->spl;
@@ -7946,16 +7968,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						}
 						break;
 					case EM_DIAMOND_STORM:
-						skillratio += -100 + 1250 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_DILUVIO ) ){
-							skillratio += 3500 + 500 * skill_lv;
+							skillratio += 5000 + 250 * skill_lv  + 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_LIGHTNING_LAND:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_PROCELLA ) ){
 							skillratio += 400 * skill_lv;
@@ -7964,7 +7986,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_VENOM_SWAMP:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
 
 						if( sc && sc->getSCE( SC_SUMMON_ELEMENTAL_SERPENS ) ){
 							skillratio += 400 * skill_lv;
@@ -7973,7 +7995,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_CONFLAGRATION:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_ARDOR ) ){
 							skillratio += 400 * skill_lv;
@@ -7982,16 +8004,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_TERRA_DRIVE:
-						skillratio += -100 + 1250 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
-							skillratio += 3500 + 500 * skill_lv;
+							skillratio += 5000 + 250 * skill_lv + 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case ABC_FROM_THE_ABYSS_ATK:
-						skillratio += 50 + 70 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 100 + 500 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case EM_ELEMENTAL_BUSTER_FIRE:
@@ -7999,9 +8021,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case EM_ELEMENTAL_BUSTER_WIND:
 					case EM_ELEMENTAL_BUSTER_GROUND:
 					case EM_ELEMENTAL_BUSTER_POISON:
-						skillratio += -100 + 480 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 500 + 2200 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_FORMLESS || tstatus->race == RC_DRAGON)
-							skillratio += 620 * skill_lv;
+							skillratio += 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case EM_EL_FLAMEROCK:
@@ -8207,7 +8229,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	ad.damage = battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
 	if (mapdata_flag_gvg2(mapdata))
 		ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
-	else if (mapdata->flag[MF_BATTLEGROUND])
+	else if (mapdata->getMapFlag(MF_BATTLEGROUND))
 		ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
 
 	// Skill damage adjustment
@@ -8587,7 +8609,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	md.damage = battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
 	if(mapdata_flag_gvg2(mapdata))
 		md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
-	else if(mapdata->flag[MF_BATTLEGROUND])
+	else if(mapdata->getMapFlag(MF_BATTLEGROUND))
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
 
 	// Skill damage adjustment
@@ -8714,10 +8736,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	status_change *sc = status_get_sc(src);
 
 	if (sc) {
-		if (sc->getSCE(SC_HELLS_PLANT))
+		if (skill_id == GN_HELLS_PLANT_ATK && sc->getSCE(SC_HELLS_PLANT))
 			return 0;
-		if (sc->getSCE(SC_REF_T_POTION))
-			return 1; // Returns 1 damage
 	}
 
 	map_session_data *tsd = BL_CAST(BL_PC, tbl);
@@ -8726,7 +8746,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && tsd && tsd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * tsd->bonus.short_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
 		} else if( status_reflect && tsc && tsc->count ) {
 			if( tsc->getSCE(SC_REFLECTSHIELD) ) {
 				status_change_entry *sce_d;
@@ -8747,7 +8766,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					rdamage = 0;
 				else {
 					rdamage += damage * tsc->getSCE(SC_REFLECTSHIELD)->val2 / 100;
-					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8766,26 +8784,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	} else {
 		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
 			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (rdamage > 0) {
-		map_session_data* sd = BL_CAST(BL_PC, src);
-		if (sd && sd->bonus.reduce_damage_return != 0) {
-			rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-	}
-
-	if (sc) {
-		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
-			rdamage -= damage * sc->getSCE(SC_REFLECTDAMAGE)->val2 / 100;
-			rdamage = i64max(rdamage, 1);
-		}
-		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
-			rdamage -= damage * sc->getSCE(SC_VENOMBLEED)->val2 / 100;
-			rdamage = i64max(rdamage, 1);
 		}
 	}
 
@@ -8794,9 +8792,9 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (mapdata_flag_gvg2(mapdata))
 		rdamage = battle_calc_gvg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->flag[MF_BATTLEGROUND])
+	else if (mapdata->getMapFlag(MF_BATTLEGROUND))
 		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->flag[MF_PVP])
+	else if (mapdata->getMapFlag(MF_PVP))
 		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
 
 	// Skill damage adjustment
@@ -8804,7 +8802,29 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 
 	if (skill_damage != 0) {
 		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 0);
+	}
+
+	int64 reduce = 0;
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd && sd->bonus.reduce_damage_return != 0) {
+		reduce += (sd->bonus.reduce_damage_return);
+	}
+
+	if (sc) {
+		if (status_reflect && sc->getSCE(SC_REFLECTDAMAGE)) {
+			reduce += sc->getSCE(SC_REFLECTDAMAGE)->val2;
+		}
+		if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 0) {
+			reduce += sc->getSCE(SC_VENOMBLEED)->val2;
+		}
+		if (sc->getSCE(SC_REF_T_POTION))
+			reduce += 100;
+	}
+
+	if (rdamage > 0) {
+		rdamage -= rdamage * i64min(100, reduce) / 100;
+		rdamage = i64max(rdamage, 1);
 	}
 
 	if (rdamage == 0)
@@ -9227,7 +9247,10 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			wd.damage += wd.damage * 150 / 100; // 2.5 times damage
 
 		if( sc->getSCE( SC_VIGOR ) && ( wd.flag&BF_SHORT ) && !is_infinite_defense( target, wd.flag ) && !vellum_damage ){
-			int mod = 200;
+			int mod = 100 + sc->getSCE(SC_VIGOR)->val1 * 15;
+
+			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
+				mod += sc->getSCE(SC_VIGOR)->val1 * 10;
 
 			wd.damage += wd.damage * mod / 100;
 		}
@@ -9694,7 +9717,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						case NC_AXETORNADO:
 						case SR_SKYNETBLOW:
 							// Can only hit traps in PVP/GVG maps
-							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
+							if (!mapdata->getMapFlag(MF_PVP) && !mapdata->getMapFlag(MF_GVG))
 								return 0;
 							break;
 					}
@@ -9711,7 +9734,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case NC_AXETORNADO:
 					case SR_SKYNETBLOW:
 						// Can only hit icewall in PVP/GVG maps
-						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
+						if (!mapdata->getMapFlag(MF_PVP) && !mapdata->getMapFlag(MF_GVG))
 							return 0;
 						break;
 					case HT_CLAYMORETRAP:
@@ -9821,7 +9844,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					state |= BCT_ENEMY; // Can kill anything
 					strip_enemy = 0;
 				}
-				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && mapdata->flag[MF_PVP]) || (!battle_config.duel_allow_gvg && mapdata_flag_gvg(mapdata))) )
+				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && mapdata->getMapFlag(MF_PVP)) || (!battle_config.duel_allow_gvg && mapdata_flag_gvg(mapdata))) )
 				{
 					if( t_bl->type == BL_PC && (sd->duel_group == ((TBL_PC*)t_bl)->duel_group) )
 						return (BCT_ENEMY&flag)?1:-1; // Duel targets can ONLY be your enemy, nothing else.
@@ -9886,7 +9909,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	if( mapdata_flag_vs(mapdata) )
 	{ //Check rivalry settings.
 		int sbg_id = 0, tbg_id = 0;
-		if(mapdata->flag[MF_BATTLEGROUND] )
+		if(mapdata->getMapFlag(MF_BATTLEGROUND) )
 		{
 			sbg_id = bg_team_get_id(s_bl);
 			tbg_id = bg_team_get_id(t_bl);
@@ -9894,7 +9917,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		if( flag&(BCT_PARTY|BCT_ENEMY) )
 		{
 			int s_party = status_get_party_id(s_bl);
-			if( s_party && s_party == status_get_party_id(t_bl) && !(mapdata->flag[MF_PVP] && mapdata->flag[MF_PVP_NOPARTY]) && !(mapdata_flag_gvg(mapdata) && mapdata->flag[MF_GVG_NOPARTY]) && (!mapdata->flag[MF_BATTLEGROUND] || sbg_id == tbg_id) )
+			if( s_party && s_party == status_get_party_id(t_bl) && !(mapdata->getMapFlag(MF_PVP) && mapdata->getMapFlag(MF_PVP_NOPARTY)) && !(mapdata_flag_gvg(mapdata) && mapdata->getMapFlag(MF_GVG_NOPARTY)) && (!mapdata->getMapFlag(MF_BATTLEGROUND) || sbg_id == tbg_id) )
 				state |= BCT_PARTY;
 			else
 				state |= BCT_ENEMY;
@@ -9903,12 +9926,12 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			int s_guild = status_get_guild_id(s_bl);
 			int t_guild = status_get_guild_id(t_bl);
-			if( !(mapdata->flag[MF_PVP] && mapdata->flag[MF_PVP_NOGUILD]) && s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))) && (!mapdata->flag[MF_BATTLEGROUND] || sbg_id == tbg_id) )
+			if( !(mapdata->getMapFlag(MF_PVP) && mapdata->getMapFlag(MF_PVP_NOGUILD)) && s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))) && (!mapdata->getMapFlag(MF_BATTLEGROUND) || sbg_id == tbg_id) )
 				state |= BCT_GUILD;
 			else
 				state |= BCT_ENEMY;
 		}
-		if( state&BCT_ENEMY && mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
+		if( state&BCT_ENEMY && mapdata->getMapFlag(MF_BATTLEGROUND) && sbg_id && sbg_id == tbg_id )
 			state &= ~BCT_ENEMY;
 
 		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
