@@ -37,7 +37,7 @@ such as `(PACKETVER >= 20111111)`.
 Second line describes the packet's field structure, beginning with a
 `%04x` formatted packet type, followed by the individual fields and
 their types. Each field begins with it's name enclosed in angle
-brackets ( <field name> ) followed by a dot and the data size type.
+brackets ( `<field name>` ) followed by a dot and the data size type.
 Field names should be lower-case and without underscores. If other
 packets already have a field in common, use that name, rather than
 inventing your own (ex. "packet len" and "account id"). Repeated and
