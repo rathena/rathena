@@ -17953,6 +17953,41 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
+  - Id: 749
+    Name: NPC_WIDECRITICALWOUND
+    Description: Wide Critical Wounds
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+      - Level: 6
+        Area: 14
+      - Level: 7
+        Area: 14
+      - Level: 8
+        Area: 14
+      - Level: 9
+        Area: 14
+      - Level: 10
+        Area: 2
+    Element: Weapon
+    Duration2: 30000
   - Id: 751
     Name: NPC_ALL_STAT_DOWN
     Description: Decrease All Stats

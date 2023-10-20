@@ -11445,8 +11445,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = rnd()%ELE_ALL;
 			break;
 		case SC_CRITICALWOUND:
-			val2 = 20*val1; // Heal effectiveness decrease
-			break;
 		case SC_MAGICMIRROR:
 			// Level 1 ~ 5 & 6 ~ 10 has different duration
 			// Level 6 ~ 10 use effect of level 1 ~ 5
