@@ -3300,43 +3300,58 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			const auto& listNode = subit["List"];
 
 			for (const auto& listit : listNode) {
+				uint32 index;
+
+				if (!this->asUInt32(listit, "Index", index))
+					continue;
+
 				if (this->nodeExists(listit, "Clear")) {
-					std::string item_name;
+					bool active;
 
-					if (!this->asString(listit, "Clear", item_name))
+					if (!this->asBool(listit, "Clear", active) || !active)
 						continue;
 
-					std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-					if (item == nullptr) {
-						this->invalidWarning(listit["Clear"], "Unknown Item %s. Clear failed.\n", item_name.c_str());
-						continue;
-					}
-
-					if (random->data.erase(item->nameid) == 0)
-						this->invalidWarning(listit["Clear"], "Item %hu doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", item->nameid, subgroup, group_name.c_str());
+					if (random->data.erase(index) == 0)
+						this->invalidWarning(listit["Clear"], "Index %u doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
 
 					continue;
 				}
 
-				std::string item_name;
-
-				if (!this->asString(listit, "Item", item_name))
-					continue;
-
-				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-				if (item == nullptr) {
-					this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
-					continue;
-				}
-
-				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, item->nameid);
+				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, index);
 				bool entry_exists = entry != nullptr;
 
 				if (!entry_exists) {
+					if (!this->nodesExist(listit, { "Item" }))
+						return 0;
+
 					entry = std::make_shared<s_item_group_entry>();
-					random->data[item->nameid] = entry;
+					random->data[index] = entry;
+				}
+
+				std::shared_ptr<item_data> item = nullptr;
+
+				if (this->nodeExists(listit, "Item")) {
+					std::string item_name;
+
+					if (!this->asString(listit, "Item", item_name))
+						continue;
+
+					item = item_db.search_aegisname( item_name.c_str() );
+
+					if (item == nullptr) {
+						this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
+						continue;
+					}
+				} else {
+					if (!entry_exists) {
+						item = item_db.find( entry->nameid );
+					}
+				}
+
+				// (shouldn't happen)
+				if (item == nullptr) {
+					this->invalidWarning(listit["index"], "Missing Item definition for Index %u.\n", index);
+					continue;
 				}
 
 				entry->nameid = item->nameid;
