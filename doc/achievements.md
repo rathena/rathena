@@ -3,7 +3,7 @@
 # Table of contents
 1. [Id](#id)
 2. [Group](#group)
-  1. [Valid Groups](#valid-groups)
+    1. [Valid Groups](#valid-groups)
 4. [Name](#name)
 5. [Targets](#targets)
 6. [Condition](#condition)
