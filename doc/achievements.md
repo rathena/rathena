@@ -1,15 +1,28 @@
 # Achievement Database Structure
 
-### Id
+# Table of contents
+1. [Id](#id)
+2. [Group](#group)
+  1. [Valid Groups](#valid-groups)
+4. [Name](#name)
+5. [Targets](#targets)
+6. [Condition](#condition)
+7. [Map](#map)
+8. [Dependents](#dependents)
+9. [Rewards](#rewards)
+10. [Score](#score)
+11. [Example](#example)
+
+### Id <a name="id"></a>
 
 Unique achievement ID.
 
-### Group
+### Group <a name="group"></a>
 
 Achievement group type.
 Each achievement type calls a specific objective check.
 
-#### Valid groups
+#### Valid groups <a name="valid-groups"></a>
 
 <ul>
   <li><code>None</code> - Can be used for custom achievements that are given through a script with no trigger events.</li>
@@ -36,11 +49,11 @@ Each achievement type calls a specific objective check.
   <li><code>Taming</code> - Triggered when a player tames a monster.</li>
 </ul>
 
-### Name
+### Name <a name="name"></a>
 
 Achievement name. Used when sending rewards through RODEX.
 
-### Targets
+### Targets <a name="targets"></a>
 
 A list of monster names and count values that the achievement requires. The target count can also be used for
 achievements that keep a counter while not being related to monster kills. Capped at `MAX_ACHIEVEMENT_OBJECTIVES`. See
@@ -69,7 +82,7 @@ Condition: " ARG0 >= 100 "
       Count: 100
 ```
 
-### Condition
+### Condition <a name="condition"></a>
 
 A conditional statement that must be met for the achievement to be considered complete. Accepts script constants, player
 variables, and ARGX (where X is the argument vector value). The ARGX values are sent from the server to the achievement
@@ -88,12 +101,12 @@ equipment is successfully refined.
 achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 ```
 
-### Map
+### Map <a name="map"></a>
 
 A map name that is used for the Chatting group which increments the counter based on the player's map.
 > NOTICE: This option is currently disabled until the official behavior is confirmed.
 
-### Dependents
+### Dependents <a name="dependents"></a>
 
 A list of achievement IDs that need to be completed before this achievement is considered complete. See examples below:
 
@@ -113,7 +126,7 @@ Dependents:
   10002: false
 ```
 
-### Rewards
+### Rewards <a name="rewards"></a>
 
 A list of rewards that are given on completion. All fields are optional.
 
@@ -125,11 +138,11 @@ Script: Bonus Script
 TitleId: Title ID
 ```
 
-### Score
+### Score <a name="score"></a>
 
 Achievement points that are given on completion.
 
-## Example
+### Example <a name="example"></a>
 
 ```yml
  - Id: 99
