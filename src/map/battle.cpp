@@ -9616,6 +9616,23 @@ struct block_list* battle_get_master(struct block_list *src)
 	return prev;
 }
 
+int battle_get_exception_ai(struct block_list* src) {
+	struct mob_data* md = BL_CAST(BL_MOB, src);
+
+	if (!md)
+		return 0;
+
+	switch (md->special_state.ai) {
+		case AI_ABR:
+		case AI_ATTACK:
+		case AI_BIONIC:
+		case AI_ZANZOU:
+			return 1;
+			break;
+	}
+	return 0;
+}
+
 /*==========================================
  * Checks the state between two targets
  * (enemy, friend, party, guild, etc)
@@ -9867,7 +9884,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if( !md->special_state.ai )
 			{ //Normal mobs
 				if(
-					( target->type == BL_MOB && t_bl->type == BL_PC && ( ((TBL_MOB*)target)->special_state.ai != AI_ZANZOU && ((TBL_MOB*)target)->special_state.ai != AI_ATTACK ) ) ||
+					( target->type == BL_MOB && t_bl->type == BL_PC && !battle_get_exception_ai(target) ) ||
 					( t_bl->type == BL_MOB && (((TBL_MOB*)t_bl)->special_state.ai == AI_NONE || ((TBL_MOB*)t_bl)->special_state.ai == AI_WAVEMODE ))
 				  )
 					state |= BCT_PARTY; //Normal mobs with no ai or with AI_WAVEMODE are friends.
