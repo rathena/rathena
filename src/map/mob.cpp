@@ -3478,6 +3478,33 @@ int mob_countslave(struct block_list *bl)
 	return map_foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id);
 }
 
+/**
+ * Remove slaves if master logs off.
+ * @param bl: Mob data
+ * @param ap: List of arguments
+ * @return 1 on removal, otherwise 0
+ */
+int mob_removeslave_sub(block_list *bl, va_list ap) {
+	int id = va_arg(ap, int);
+	mob_data *md = (mob_data *)bl;
+
+	if (md != nullptr && md->master_id == id) {
+		unit_free(bl, CLR_OUTSIGHT);
+		return 1;
+	}
+
+	return 0;
+}
+
+/**
+ * Remove slaves on a map.
+ * @param bl: Player data
+ * @return 1 on removal, otherwise 0
+ */
+int mob_removeslave(block_list *bl) {
+	return map_foreachinmap(mob_removeslave_sub, bl->m, BL_MOB, bl->id);
+}
+
 /*==========================================
  * Summons amount slaves contained in the value[5] array using round-robin. [adapted by Skotlex]
  *------------------------------------------*/
