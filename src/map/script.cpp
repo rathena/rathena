@@ -21310,7 +21310,7 @@ int script_instancegetid(struct script_state* st, e_instance_mode mode)
 	if (mode == IM_NONE) {
 		struct npc_data *nd = map_id2nd(st->oid);
 
-		if (nd->instance_id > 0)
+		if (nd && nd->instance_id > 0)
 			instance_id = nd->instance_id;
 	} else {
 		map_session_data *sd = map_id2sd(st->rid);
@@ -25809,7 +25809,17 @@ BUILDIN_FUNC(mail){
 			for( k = 0; k < num_items && start < end; k++, start++ ){
 				msg.item[k].card[i] = (t_itemid)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
-				if( msg.item[k].card[i] > 0 && !item_db.exists(msg.item[k].card[i]) ){
+				if( msg.item[k].card[i] == 0 ){
+					// Continue with the next card, no further checks needed
+					continue;
+				}
+
+				if( itemdb_isspecial( msg.item[k].card[0] ) ){
+					// Continue with the next card, but do not check it against the item database
+					continue;
+				}
+
+				if( !item_db.exists( msg.item[k].card[i] ) ){
 					ShowError( "buildin_mail: invalid card id %u.\n", msg.item[k].card[i] );
 					return SCRIPT_CMD_FAILURE;
 				}

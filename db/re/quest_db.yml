@@ -1576,22 +1576,22 @@ Body:
     TimeLimit: 4h
   - Id: 3507
     Title: Illusion Investigation Team - Sheshin
-  # - Id: 3508
-    # Title: Illusion of Twins 100 Kills
-    # Targets:
-      # - Id: 1
-        # Count: 100
-        # Location: ant_d02_i
-        # MapMobTargets:
-          # ILL_ANDRE_LARVA: true
-          # ILL_ANT_EGG: true
-          # ILL_FARMILIAR: true
-          # ILL_ANDRE: true
-          # ILL_DENIRO: true
-          # ILL_PIERE: true
-          # ILL_GIEARTH: true
-          # ILL_SOLDIER_ANDR: true
-          # ILL_VITATA: true
+  - Id: 3508
+    Title: Illusion of Twins 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ant_d02_i
+        MapMobTargets:
+          ILL_ANDRE_LARVA: true
+          ILL_ANT_EGG: true
+          ILL_FARMILIAR: true
+          ILL_ANDRE: true
+          ILL_DENIRO: true
+          ILL_PIERE: true
+          ILL_GIEARTH: true
+          ILL_SOLDIER_ANDR: true
+          ILL_VITATA: true
   - Id: 3509
     Title: Illusion of Twins 100 Kills - Standby
     TimeLimit: 4h

@@ -9,28 +9,6 @@
 //= 2.0 Official Conversion. [Capuche]
 //============================================================
 
-function	script	F_Mysterious_box	{
-	.@r = rand(1,1000);
-	if (.@r < 122) getitem 6919,8;
-	else if (.@r < 321) getitem 6919,16;
-	else if (.@r < 356) getitem 6919,55;
-	else if (.@r < 402) getitem 6936,3;
-	else if (.@r < 453) getitem 6937,3;
-	else if (.@r < 513) getitem 6938,3;
-	else if (.@r < 552) getitem 6939,3;
-	else if (.@r < 606) getitem 6940,3;
-	else if (.@r < 623) getitem 6941,1;
-	else if (.@r < 671) getitem 6942,3;
-	else if (.@r < 705) getitem 11600,2;
-	else if (.@r < 797) getitem 22847,3;
-	else if (.@r < 844) getitem 22848,1;
-	else if (.@r < 887) getitem 22849,1;
-	else if (.@r < 888) getitem 22854,1;
-	else if (.@r < 892) getitem 22856,1;
-	else getitem 22899,2;
-	return;
-}
-
 // Main Quest
 prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	if (checkweight(1301,5) == 0) {
