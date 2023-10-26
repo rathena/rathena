@@ -1449,9 +1449,9 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 		}
 
 		if(md->target_id) {//Slave is busy with a target.
-			if (bl->type == BL_PC && md->master_dist > MOB_SLAVEDISTANCE) {//Player's slave should come back when master's too far, even if it is doing with a target.
+			if (bl->type == BL_PC && md->master_dist > 5) {//Player's slave should come back when master's too far, even if it is doing with a target.
 				mob_unlocktarget(md, tick);
-				unit_walktobl(&md->bl, bl, 2, 1);
+				unit_walktobl(&md->bl, bl, MOB_SLAVEDISTANCE, 1);
 				return 1;
 			} else {
 				return 0;
