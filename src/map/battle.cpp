@@ -5534,9 +5534,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_MIGHTY_SMASH:
-			skillratio += -100 + 100 + 300 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 25 + 180 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			if (sc && sc->getSCE(SC_AXE_STOMP))
-				skillratio += 50;
+				skillratio += 25;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_RUSH_QUAKE:
@@ -5550,11 +5551,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_SPARK_BLASTER:
-			skillratio += -100 + 250 + 750 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 250 + 900 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_TRIPLE_LASER:
-			skillratio += -100 + 300 + 600 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 550 + 900 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_ABYSS_DAGGER:
@@ -6656,7 +6659,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				break;
 			case MT_MIGHTY_SMASH:
 				if (sc && sc->getSCE(SC_AXE_STOMP))
-					wd.div_ = 5;
+					wd.div_ = 7;
 				break;
 		}
 	} else {
