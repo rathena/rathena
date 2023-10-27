@@ -41496,8 +41496,9 @@ Body:
       Splash: true
     Flags:
       AllowOnMado: true
+    Range: 1
     Hit: Multi_Hit
-    HitCount: 3
+    HitCount: 5
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -41521,29 +41522,30 @@ Body:
       - Level: 10
         Area: 3
     CastCancel: true
-    Cooldown: 300
+    AfterCastActDelay: 250
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 51
+          Amount: 68
         - Level: 2
-          Amount: 54
+          Amount: 71
         - Level: 3
-          Amount: 57
+          Amount: 74
         - Level: 4
-          Amount: 60
+          Amount: 77
         - Level: 5
-          Amount: 63
+          Amount: 80
         - Level: 6
-          Amount: 66
+          Amount: 83
         - Level: 7
-          Amount: 69
+          Amount: 86
         - Level: 8
-          Amount: 72
+          Amount: 89
         - Level: 9
-          Amount: 75
+          Amount: 92
         - Level: 10
-          Amount: 78
+          Amount: 95
       Weapon:
         1hAxe: true
         2hAxe: true
