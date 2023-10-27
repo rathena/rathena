@@ -41471,8 +41471,8 @@ Body:
     CastCancel: true
     CastTime: 1000
     FixedCastTime: 500
-    AfterCastActDelay: 500
-    Cooldown: 250
+    AfterCastActDelay: 250
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
