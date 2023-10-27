@@ -41430,7 +41430,7 @@ Body:
     CastTime: 1500
     FixedCastTime: 500
     AfterCastActDelay: 500
-    Cooldown: 700
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
