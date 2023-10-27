@@ -7314,6 +7314,11 @@ Body:
             Level: 3
           - Name: BO_WOODEN_FAIRY
             Level: 3
+      - Name: BO_EXPLOSIVE_POWDER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 3
   - Job: Abyss_Chaser
     Inherit:
       Novice: true

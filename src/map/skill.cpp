@@ -5663,6 +5663,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EM_EL_STORM_WIND:
 	case EM_EL_AVALANCHE:
 	case EM_EL_DEADLY_POISON:
+	case BO_EXPLOSIVE_POWDER:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -8487,6 +8488,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SHC_IMPACT_CRATER:
 	case MT_AXE_STOMP:
 	case ABC_ABYSS_DAGGER:
+	case BO_EXPLOSIVE_POWDER:
 	{
 		status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;

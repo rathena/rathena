@@ -41389,6 +41389,34 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 6005
+    Name: BO_EXPLOSIVE_POWDER
+    Description: Explosive Powder
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    GiveAp: 2
+    SplashArea: 3
+    CastCancel: true
+    AfterCastActDelay: 250
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 58
+        - Level: 2
+          Amount: 62
+        - Level: 3
+          Amount: 66
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 74
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
