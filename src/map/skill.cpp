@@ -5645,6 +5645,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MT_MIGHTY_SMASH:
 	case MT_RUSH_QUAKE:
 	case MT_A_MACHINE:
+	case MT_SPARK_BLASTER:
 	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
@@ -5732,6 +5733,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
 				case DK_HACKANDSLASHER:
+				case MT_SPARK_BLASTER:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					break;
 #ifdef RENEWAL

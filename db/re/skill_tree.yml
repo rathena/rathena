@@ -6765,6 +6765,11 @@ Body:
             Level: 3
           - Name: MT_SUMMON_ABR_BATTLE_WARIOR
             Level: 2
+      - Name: MT_SPARK_BLASTER
+        MaxLevel: 10
+        Requires:
+          - Name: MT_M_MACHINE
+            Level: 1
       - Name: MT_TRIPLE_LASER
         MaxLevel: 5
         Requires:
