@@ -7319,6 +7319,13 @@ Body:
         Requires:
           - Name: BO_BIONICS_M
             Level: 3
+      - Name: BO_MAYHEMIC_THORNS
+        MaxLevel: 10
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 5
+          - Name: BO_EXPLOSIVE_POWDER
+            Level: 3
   - Job: Abyss_Chaser
     Inherit:
       Novice: true

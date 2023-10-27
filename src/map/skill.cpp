@@ -5664,6 +5664,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EM_EL_AVALANCHE:
 	case EM_EL_DEADLY_POISON:
 	case BO_EXPLOSIVE_POWDER:
+	case BO_MAYHEMIC_THORNS:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -5730,6 +5731,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case LG_EARTHDRIVE:
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
+				case BO_MAYHEMIC_THORNS:
 				case DK_HACKANDSLASHER:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					break;
