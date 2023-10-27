@@ -5641,6 +5641,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SHC_IMPACT_CRATER:
 	case SHC_FATAL_SHADOW_CROW:
 	case MT_AXE_STOMP:
+	case MT_MIGHTY_SMASH:
 	case MT_RUSH_QUAKE:
 	case MT_A_MACHINE:
 	case ABC_ABYSS_DAGGER:
@@ -8486,6 +8487,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case IQ_EXPOSION_BLASTER:
 	case SHC_IMPACT_CRATER:
 	case MT_AXE_STOMP:
+	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
 	{
 		status_change *sc = status_get_sc(src);

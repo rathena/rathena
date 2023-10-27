@@ -41389,6 +41389,67 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 6004
+    Name: MT_MIGHTY_SMASH
+    Description: Mighty Smash
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      AllowOnMado: true
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    CastCancel: true
+    Cooldown: 300
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 51
+        - Level: 2
+          Amount: 54
+        - Level: 3
+          Amount: 57
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 63
+        - Level: 6
+          Amount: 66
+        - Level: 7
+          Amount: 69
+        - Level: 8
+          Amount: 72
+        - Level: 9
+          Amount: 75
+        - Level: 10
+          Amount: 78
+      Weapon:
+        1hAxe: true
+        2hAxe: true
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
