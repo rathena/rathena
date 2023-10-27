@@ -41408,15 +41408,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 58
+          Amount: 69
         - Level: 2
-          Amount: 62
+          Amount: 76
         - Level: 3
-          Amount: 66
+          Amount: 83
         - Level: 4
-          Amount: 70
+          Amount: 90
         - Level: 5
-          Amount: 74
+          Amount: 97
   - Id: 6006
     Name: BO_MAYHEMIC_THORNS
     Description: Mayhemic Thorns
