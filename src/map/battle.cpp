@@ -5406,8 +5406,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio *= 2;
 			break;
 		case DK_DRAGONIC_BREATH:
+			skillratio += -100 + 50 + 350 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			//TODO: needs official HP/SP scaling [Muh]
-			skillratio += -100 + 50 + 350 * skill_lv + 5 * sstatus->pow;
 			skillratio += sstatus->max_hp / 500 + status_get_max_sp(src) / 40;
 			if (sc && sc->getSCE(SC_DRAGONIC_AURA))
 				skillratio += sstatus->max_hp / 500 + status_get_max_sp(src) / 40;
