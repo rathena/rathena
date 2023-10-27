@@ -5549,6 +5549,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 200 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
+		case MT_TRIPLE_LASER:
+			skillratio += -100 + 300 + 600 * skill_lv + 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
 		case ABC_ABYSS_DAGGER:
 			skillratio += -100 + 100 + 500 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);

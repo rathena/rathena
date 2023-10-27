@@ -41389,6 +41389,38 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 6003
+    Name: MT_TRIPLE_LASER
+    Description: Triple Laser
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      AllowOnMado: true
+    DamageFlags:
+      Critical: true
+    Range: 11
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    CastCancel: true
+    CastTime: 1000
+    FixedCastTime: 500
+    AfterCastActDelay: 500
+    Cooldown: 250
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+      State: Mado
   - Id: 6004
     Name: MT_MIGHTY_SMASH
     Description: Mighty Smash
