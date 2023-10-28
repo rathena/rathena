@@ -2954,6 +2954,10 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case WH_GALESTORM:
 				if (sc && !sc->getSCE(SC_CALAMITYGALE))
 					return false;
+			case SH_CHUL_HO_SONIC_CLAW:
+				if (!(sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+					return false;
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -5727,6 +5731,19 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
+		case SH_CHUL_HO_SONIC_CLAW: {
+			int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+			skillratio += -100 + 850 + 1650 * skill_lv;
+			skillratio += 50 * tmp_val;
+			skillratio += 5 * sstatus->pow;
+
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+				skillratio += 100 + 400 * skill_lv;
+				skillratio += 50 * tmp_val;
+			}
+			RE_LVL_DMOD(100);
+			break;
+		}
 	}
 	return skillratio;
 }
