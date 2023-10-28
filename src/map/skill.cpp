@@ -3123,6 +3123,8 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 			status_change_end(target, SC_ROLLINGCUTTER);
 		if (tsc->getSCE(SC_CRESCIVEBOLT))
 			status_change_end(target, SC_CRESCIVEBOLT);
+		if (tsc->getSCE(SC_KI_SUL_RAMPAGE))
+			status_change_end(target, SC_KI_SUL_RAMPAGE);
 		if (tsc->getSCE(SC_SV_ROOTTWIST)) // Shouldn't move.
 			return 0;
 	}
@@ -12827,8 +12829,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		break;
 	case SH_KI_SUL_WATER_SPRAYING:
-		if (flag & 1)
-		{
+		if (flag & 1) {
 			int heal = 500 * skill_lv + status_get_int(src) * 5;
 			if (sd)
 				heal += pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY)*100;
@@ -12842,8 +12843,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_heal(bl, heal, 0, 0, 0);
 			clif_skill_nodamage(0, bl, AL_HEAL, heal, 1);
 		}
-		else
-		{
+		else {
 			i = skill_get_splash(skill_id, skill_lv);
 			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 				i += 2;
@@ -12860,12 +12860,26 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				time *= 2;
 			sc_start(src, bl, type, 100, skill_lv, time);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		} else {
+		}
+		else {
 			i = skill_get_splash(skill_id, skill_lv);
 			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 				i += 2;
 
 			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_PARTY | SD_SPLASH | 1, skill_castend_nodamage_id);
+		}
+		break;
+	case SH_KI_SUL_RAMPAGE:
+		if (flag & 1) {
+			if (!(src == bl)) {
+				if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+					status_heal(bl, 0, 0, 4, 0);
+				else
+					status_heal(bl, 0, 0, 2, 0);
+			}
+		}
+		else {
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		break;
 

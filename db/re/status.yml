@@ -8787,3 +8787,8 @@ Body:
       Sta: true
     EndOnStart:
       Religio: true
+  - Status: Ki_Sul_Rampage
+    Icon: EFST_KI_SUL_RAMPAGE
+    DurationLookup: SH_KI_SUL_RAMPAGE
+    States:
+      NoCast: true

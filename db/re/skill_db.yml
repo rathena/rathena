@@ -41675,6 +41675,53 @@ Body:
         - Level: 5
           Amount: 120
     Status: Sandy_Festival
+  - Id: 5442
+    Name: SH_KI_SUL_RAMPAGE
+    Description: Kisul Rampage
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    SplashArea: 3
+    Duration1: 
+     - Level: 1
+       Time: 4000
+     - Level: 2
+       Time: 5000
+     - Level: 3
+       Time: 6000
+     - Level: 4
+       Time: 7000
+     - Level: 5
+       Time: 8000
+     - Level: 6
+       Time: 9000
+     - Level: 7
+       Time: 10000
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 60000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 90
+        - Level: 2
+          Amount: 100
+        - Level: 3
+          Amount: 110
+        - Level: 4
+          Amount: 120
+        - Level: 5
+          Amount: 130
+        - Level: 6
+          Amount: 140
+        - Level: 7
+          Amount: 150
+    Status: Ki_Sul_Rampage
   - Id: 5443
     Name: SH_COMMUNE_WITH_HYUN_ROK
     Description: Commune with Hyunrok

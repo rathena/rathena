@@ -12719,6 +12719,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SANDY_FESTIVAL:
 			val2 = 2 * val1;
 			break;
+		case SC_KI_SUL_RAMPAGE:
+			val4 = tick / 1000;
+			tick_time = 100;
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
@@ -14839,6 +14843,22 @@ TIMER_FUNC(status_change_timer){
 	case SC_KILLING_AURA:
 		if (sce->val4 >= 0)
 			skill_castend_damage_id( bl, bl, NPC_KILLING_AURA, sce->val1, tick, 0 );
+		break;
+	case SC_KI_SUL_RAMPAGE:
+		if (sce->val4-- > 0) {
+			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);
+			int lv = sce->val1;
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+			{
+				i += 2;
+				lv += skill_get_max(SH_KI_SUL_RAMPAGE);
+			}
+			clif_skill_nodamage(bl, bl, SH_KI_SUL_RAMPAGE, lv, 1);
+			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR,
+				bl, SH_KI_SUL_RAMPAGE, lv, tick, BCT_PARTY | SD_SPLASH | 1, skill_castend_nodamage_id);
+			sc_timer_next(1000 + tick);
+			return 0;
+		}
 		break;
 	}
 
