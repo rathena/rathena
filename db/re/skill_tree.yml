@@ -7870,7 +7870,6 @@ Body:
     Tree:
       - Name: SH_MYSTICAL_CREATURE_MASTERY
         MaxLevel: 10
-        Requires:
       - Name: SH_CHUL_HO_SONIC_CLAW
         MaxLevel: 7
         Requires:

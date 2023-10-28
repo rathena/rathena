@@ -41389,6 +41389,10 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 5433
+    Name: SH_MYSTICAL_CREATURE_MASTERY
+    Description: Mystical Creature Mastery
+    MaxLevel: 10
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath
