@@ -12853,6 +12853,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case SH_MARINE_FESTIVAL_OF_KI_SUL:
+	case SH_SANDY_FESTIVAL_OF_KI_SUL:
 		if (flag & 1) {	
 			int time = skill_get_time(skill_id, skill_lv);
 			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))

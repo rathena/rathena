@@ -7823,6 +7823,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Sandy_Festival: true
   - Status: Benedictum
     Icon: EFST_BENEDICTUM
     DurationLookup: CD_BENEDICTUM
@@ -8776,3 +8778,12 @@ Body:
       Crt: true
     EndOnStart:
       Benedictum: true
+  - Status: Sandy_Festival
+    Icon: EFST_SANDY_FESTIVAL
+    DurationLookup: SH_SANDY_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Spl: true
+      Wis: true
+      Sta: true
+    EndOnStart:
+      Religio: true

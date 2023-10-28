@@ -6886,6 +6886,8 @@ static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		sta += sc->getSCE(SC_RELIGIO)->val2;
+	if (sc->getSCE(SC_SANDY_FESTIVAL))
+		sta += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(sta, 0, USHRT_MAX);
 }
@@ -6904,6 +6906,8 @@ static unsigned short status_calc_wis(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		wis += sc->getSCE(SC_RELIGIO)->val2;
+	if (sc->getSCE(SC_SANDY_FESTIVAL))
+		wis += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(wis, 0, USHRT_MAX);
 }
@@ -6922,6 +6926,8 @@ static unsigned short status_calc_spl(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		spl += sc->getSCE(SC_RELIGIO)->val2;
+	if (sc->getSCE(SC_SANDY_FESTIVAL))
+		spl += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(spl, 0, USHRT_MAX);
 }
@@ -12710,6 +12716,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = val1 * 3;
 			break;
 		case SC_MARINE_FESTIVAL:
+		case SC_SANDY_FESTIVAL:
 			val2 = 2 * val1;
 			break;
 
