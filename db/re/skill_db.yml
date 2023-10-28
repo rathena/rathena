@@ -41855,6 +41855,26 @@ Body:
       SpCost: 100
       ApCost: 150
     Status: Temporary_Communion
+  - Id: 5448
+    Name: SH_BLESSING_OF_MYSTICAL_CREATURES
+    Description: Blessing of Mystical Creatures
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Support
+    Range: -9
+    DamageFlags:
+      NoDamage: true
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 1500
+    Duration1: 10000
+    Duration2: 60000
+    Requires:
+      SpCost: 100
+      ApCost: 100
+    Status: Blessing_of_M_Creatures
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath

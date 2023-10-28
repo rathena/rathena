@@ -8501,6 +8501,8 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 	}
 	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
 		patk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
+	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES))
+		patk += sc->getSCE(SC_BLESSING_OF_M_CREATURES)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -8530,6 +8532,8 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 	}
 	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
 		smatk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
+	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES))
+		smatk += sc->getSCE(SC_BLESSING_OF_M_CREATURES)->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -12723,6 +12727,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / 1000;
 			tick_time = 100;
 			break;
+		case SC_BLESSING_OF_M_CREATURES:
+			val2 = val1 * 10;
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
@@ -13696,6 +13703,10 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if( sd ){
 				pc_delabyssball( *sd, sd->abyssball );
 			}
+			break;
+		case SC_BLESSING_OF_M_CREATURES:
+			sc_start(bl,bl, SC_BLESSING_OF_M_C_DEBUFF, 100, 1, skill_get_time2(SH_BLESSING_OF_MYSTICAL_CREATURES, 1));
+			status_percent_change(bl,bl,0, 0, -100,1);
 			break;
 	}
 

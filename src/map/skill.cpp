@@ -12893,6 +12893,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
+	case SH_BLESSING_OF_MYSTICAL_CREATURES:
+		status_heal(bl, 0, 0, 200-status_get_ap(bl), 0);
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
 
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -13020,6 +13025,10 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case IQ_THIRD_CONSECRATION:
 			if (!tsc || !tsc->getSCE(SC_SECOND_BRAND))
 				return USESKILL_FAIL_LEVEL;
+			break;
+		case SH_BLESSING_OF_MYSTICAL_CREATURES:
+			if (src == target || battle_check_target(src, target, BCT_PARTY) <= 0 || (status_get_class_(target) & MAPID_BASEMASK) == MAPID_SUMMONER || (tsc && tsc->getSCE(SC_BLESSING_OF_M_C_DEBUFF)))
+				return USESKILL_FAIL_TOTARGET;
 			break;
 	}
 

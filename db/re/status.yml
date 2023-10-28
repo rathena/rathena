@@ -8849,3 +8849,15 @@ Body:
       Colors_of_Hyun_Rok_3: true
       Colors_of_Hyun_Rok_4: true
       Colors_of_Hyun_Rok_5: true
+  - Status: Blessing_of_M_Creatures
+    Icon: EFST_BLESSING_OF_M_CREATURES
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
+  - Status: Blessing_of_M_C_Debuff
+    Icon: EFST_BLESSING_OF_M_C_DEBUFF
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
