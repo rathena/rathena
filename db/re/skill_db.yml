@@ -41726,6 +41726,21 @@ Body:
     Name: SH_COMMUNE_WITH_HYUN_ROK
     Description: Commune with Hyunrok
     MaxLevel: 1
+  - Id: 5444
+    Name: SH_COLORS_OF_HYUN_ROK
+    Description: Colors of Hyunrok
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Duration1:  300000
+    CastCancel: true
+    CastTime: 1700
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 90
+    Status: Colors_of_Hyun_Rok_Buff
   - Id: 5447
     Name: SH_TEMPORARY_COMMUNION
     Description: Temporary Communion

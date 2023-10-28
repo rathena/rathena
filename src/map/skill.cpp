@@ -12882,6 +12882,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		break;
+	case SH_COLORS_OF_HYUN_ROK:
+		for(i = SC_COLORS_OF_HYUN_ROK_1; i < SC_COLORS_OF_HYUN_ROK_1+6; i++)
+			status_change_end(src, (sc_type)i);
+		if (skill_lv < 7) {
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			sc_start(src, bl, (sc_type)(SC_COLORS_OF_HYUN_ROK_1+skill_lv-1), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
+		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
 
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);

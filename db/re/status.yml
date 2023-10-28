@@ -8792,3 +8792,60 @@ Body:
     DurationLookup: SH_KI_SUL_RAMPAGE
     States:
       NoCast: true
+  - Status: Colors_of_Hyun_Rok_Buff
+    Icon: EFST_COLORS_OF_HYUN_ROK_BUFF
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+  - Status: Colors_of_Hyun_Rok_1
+    Icon: EFST_COLORS_OF_HYUN_ROK_1
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_2
+    Icon: EFST_COLORS_OF_HYUN_ROK_2
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_3
+    Icon: EFST_COLORS_OF_HYUN_ROK_3
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_4
+    Icon: EFST_COLORS_OF_HYUN_ROK_4
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_5
+    Icon: EFST_COLORS_OF_HYUN_ROK_5
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_6
+    Icon: EFST_COLORS_OF_HYUN_ROK_6
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
