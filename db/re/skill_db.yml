@@ -41442,6 +41442,41 @@ Body:
           Amount: 52
         - Level: 7
           Amount: 54
+  - Id: 5436
+    Name: SH_HOWLING_OF_CHUL_HO
+    Description: Howling of Chulho
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Self
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: -3
+    GiveAp: 2
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 4
+    Duration1: 12000
+    Cooldown: 1000
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 72
+    Status: Hogogong
   - Id: 5438
     Name: SH_COMMUNE_WITH_KI_SUL
     Description: Commune with Chulho

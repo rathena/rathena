@@ -8751,3 +8751,10 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Hogogong
+    Icon: EFST_HOGOGONG
+    DurationLookup: SH_HOWLING_OF_CHUL_HO
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true

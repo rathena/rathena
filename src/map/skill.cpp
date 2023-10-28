@@ -2202,6 +2202,9 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 	case MT_RUSH_QUAKE:
 		sc_start( src, bl, SC_RUSH_QUAKE1, 100, skill_lv, skill_get_time( skill_id, skill_lv ) );
 		break;
+	case SH_HOWLING_OF_CHUL_HO:
+		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
 	} //end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai && md->special_state.ai != AI_ABR && md->special_state.ai != AI_BIONIC)
@@ -5907,6 +5910,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 		}
 	}
+		break;
+
+	case SH_HOWLING_OF_CHUL_HO:
+		if (flag & 1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	//Place units around target
@@ -12790,6 +12798,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
 			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
 		}
+		break;
+
+	case SH_HOWLING_OF_CHUL_HO:
+		i = skill_get_splash(skill_id, skill_lv);
+		if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+			i += 1;
+		skill_area_temp[0] = 0;
+		skill_area_temp[1] = bl->id;
+		skill_area_temp[2] = 0;
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		break;
 
 	default: {

@@ -5744,6 +5744,19 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		}
+		case SH_HOWLING_OF_CHUL_HO: {
+			int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+			skillratio += -100 + 600 + 1050 * skill_lv;
+			skillratio += 50 * tmp_val;
+			skillratio += 5 * sstatus->pow;
+
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+				skillratio += 100 + 100 * skill_lv;
+				skillratio += 50 * tmp_val;
+			}
+			RE_LVL_DMOD(100);
+			break;
+		}
 	}
 	return skillratio;
 }
