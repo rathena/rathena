@@ -8758,3 +8758,10 @@ Body:
       Debuff: true
       BlEffect: true
       DisplayPc: true
+  - Status: Temporary_Communion
+    Icon: EFST_TEMPORARY_COMMUNION
+    DurationLookup: SH_TEMPORARY_COMMUNION
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      Hplus: true

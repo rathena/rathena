@@ -8487,6 +8487,8 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		patk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+		patk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -8514,6 +8516,8 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		smatk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+		smatk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -8581,6 +8585,9 @@ static signed short status_calc_hplus(struct block_list *bl, status_change *sc, 
 {
 	if (!sc || !sc->count)
 		return cap_value(hplus, 0, SHRT_MAX);
+
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+		hplus += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
 
 	return (short)cap_value(hplus, 0, SHRT_MAX);
 }
@@ -12692,6 +12699,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WEAPONBREAKER:
 			val2 = val1 * 2 * 100; // Chance to break weapon
+			break;
+		case SC_TEMPORARY_COMMUNION:
+			val2 = val1 * 3;
 			break;
 
 		default:

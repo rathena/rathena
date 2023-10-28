@@ -41533,6 +41533,34 @@ Body:
     Name: SH_COMMUNE_WITH_HYUN_ROK
     Description: Commune with Hyunrok
     MaxLevel: 1
+  - Id: 5447
+    Name: SH_TEMPORARY_COMMUNION
+    Description: Temporary Communion
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 1500
+    Duration1: 
+     - Level: 1
+       Time: 30000
+     - Level: 2
+       Time: 60000
+     - Level: 3
+       Time: 90000
+     - Level: 4
+       Time: 12000
+     - Level: 5
+       Time: 150000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+    Status: Temporary_Communion
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath
