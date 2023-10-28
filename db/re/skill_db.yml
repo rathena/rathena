@@ -41529,6 +41529,52 @@ Body:
     Name: SH_COMMUNE_WITH_KI_SUL
     Description: Commune with Chulho
     MaxLevel: 1
+  - Id: 5439
+    Name: SH_KI_SUL_WATER_SPRAYING
+    Description: Kisul Water Spraying
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Self
+    GiveAp: 1
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+      - Level: 6
+        Area: 5
+      - Level: 7
+        Area: 6
+    CastCancel: true
+    CastTime: 1700
+    AfterCastActDelay: 1000
+    FixedCastTime: 1000
+    Cooldown: 300
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 61
+        - Level: 2
+          Amount: 65
+        - Level: 3
+          Amount: 69
+        - Level: 4
+          Amount: 73
+        - Level: 5
+          Amount: 77
+        - Level: 6
+          Amount: 81
+        - Level: 7
+          Amount: 85
   - Id: 5443
     Name: SH_COMMUNE_WITH_HYUN_ROK
     Description: Commune with Hyunrok
