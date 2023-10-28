@@ -6866,6 +6866,8 @@ static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		pow += sc->getSCE(SC_BENEDICTUM)->val2;
+	if (sc->getSCE(SC_MARINE_FESTIVAL))
+		pow += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(pow, 0, USHRT_MAX);
 }
@@ -6938,6 +6940,8 @@ static unsigned short status_calc_con(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		con += sc->getSCE(SC_BENEDICTUM)->val2;
+	if (sc->getSCE(SC_MARINE_FESTIVAL))
+		con += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(con, 0, USHRT_MAX);
 }
@@ -6956,6 +6960,8 @@ static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		crt += sc->getSCE(SC_BENEDICTUM)->val2;
+	if (sc->getSCE(SC_MARINE_FESTIVAL))
+		crt += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(crt, 0, USHRT_MAX);
 }
@@ -12702,6 +12708,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_TEMPORARY_COMMUNION:
 			val2 = val1 * 3;
+			break;
+		case SC_MARINE_FESTIVAL:
+			val2 = 2 * val1;
 			break;
 
 		default:

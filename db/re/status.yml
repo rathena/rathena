@@ -7833,6 +7833,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Marine_Festival: true
   - Status: Axe_Stomp
     Icon: EFST_AXE_STOMP
     DurationLookup: MT_AXE_STOMP
@@ -8765,3 +8767,12 @@ Body:
       Patk: true
       Smatk: true
       Hplus: true
+  - Status: Marine_Festival
+    Icon: EFST_MARINE_FESTIVAL
+    DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    EndOnStart:
+      Benedictum: true

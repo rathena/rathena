@@ -41575,6 +41575,56 @@ Body:
           Amount: 81
         - Level: 7
           Amount: 85
+  - Id: 5440
+    Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+    Description: Marine Festival of Kisul
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    GiveAp: 4
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration1: 
+     - Level: 1
+       Time: 60000
+     - Level: 2
+       Time: 75000
+     - Level: 3
+       Time: 90000
+     - Level: 4
+       Time: 105000
+     - Level: 5
+       Time: 120000
+    CastCancel: true
+    CastTime: 1700
+    AfterCastActDelay: 1000
+    FixedCastTime: 1000
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+    Status: Marine_Festival
   - Id: 5443
     Name: SH_COMMUNE_WITH_HYUN_ROK
     Description: Commune with Hyunrok
