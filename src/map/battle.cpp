@@ -8185,6 +8185,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					}
+					case SH_HYUN_ROK_CANNON: {
+						int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+						skillratio += -100 + 1050 + 1550 * skill_lv;
+						skillratio += 50 * tmp_val;
+						skillratio += 5 * sstatus->spl;
+
+						if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+							skillratio += 300 * skill_lv;
+							skillratio += 25 * tmp_val;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					}
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.

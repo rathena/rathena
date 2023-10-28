@@ -6125,6 +6125,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case IG_JUDGEMENT_CROSS:
 	case TR_SOUNDBLEND:
+	case SH_HYUN_ROK_CANNON:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -13278,6 +13279,10 @@ TIMER_FUNC(skill_castend_id){
 							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
 								add_ap += 2;
 							}
+							break;
+						case SH_HYUN_ROK_CANNON:
+							if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+								add_ap += 1;
 							break;
 					}
 

@@ -41796,6 +41796,37 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+  - Id: 5446
+    Name: SH_HYUN_ROK_CANNON
+    Description: Hyunrok Cannon
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Attack
+    Range: -11
+    GiveAp: 1
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Endowed
+    CastCancel: true
+    CastTime: 2000
+    Cooldown: 300
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 47
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 53
+        - Level: 4
+          Amount: 56
+        - Level: 5
+          Amount: 59
+        - Level: 6
+          Amount: 62
+        - Level: 7
+          Amount: 65
   - Id: 5447
     Name: SH_TEMPORARY_COMMUNION
     Description: Temporary Communion
