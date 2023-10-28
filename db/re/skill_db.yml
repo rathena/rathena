@@ -41397,6 +41397,10 @@ Body:
     Name: SH_COMMUNE_WITH_CHUL_HO
     Description: Commune with Chulho
     MaxLevel: 1
+  - Id: 5438
+    Name: SH_COMMUNE_WITH_KI_SUL
+    Description: Commune with Chulho
+    MaxLevel: 1
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath
