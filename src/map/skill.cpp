@@ -5916,6 +5916,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if (flag & 1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
+	case SH_HOGOGONG_STRIKE:
+		if ((flag & 1) && (tsc && tsc->getSCE(SC_HOGOGONG))) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		}
+		break;
 
 	//Place units around target
 	case NJ_BAKUENRYU:
@@ -12804,6 +12809,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		i = skill_get_splash(skill_id, skill_lv);
 		if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 			i += 1;
+		skill_area_temp[0] = 0;
+		skill_area_temp[1] = bl->id;
+		skill_area_temp[2] = 0;
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		break;
+	case SH_HOGOGONG_STRIKE:
+		i = skill_get_splash(skill_id, skill_lv);
+		if( (sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+			status_heal(src, 0, 0, 1, 0);
 		skill_area_temp[0] = 0;
 		skill_area_temp[1] = bl->id;
 		skill_area_temp[2] = 0;

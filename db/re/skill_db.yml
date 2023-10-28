@@ -41477,6 +41477,54 @@ Body:
     Requires:
       SpCost: 72
     Status: Hogogong
+  - Id: 5437
+    Name: SH_HOGOGONG_STRIKE
+    Description: Hogogong Strike
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Self
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: 3
+    GiveAp: 1
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+      Critical: true
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 4
+      - Level: 6
+        Area: 4
+      - Level: 7
+        Area: 5
+    Cooldown: 350
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 67
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 73
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 79
+        - Level: 6
+          Amount: 82
+        - Level: 7
+          Amount: 85
   - Id: 5438
     Name: SH_COMMUNE_WITH_KI_SUL
     Description: Commune with Chulho

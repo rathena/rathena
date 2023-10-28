@@ -2955,6 +2955,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 				if (sc && !sc->getSCE(SC_CALAMITYGALE))
 					return false;
 			case SH_CHUL_HO_SONIC_CLAW:
+			case SH_HOGOGONG_STRIKE:
 				if (!(sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 					return false;
 				break;
@@ -5753,6 +5754,19 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 				skillratio += 100 + 100 * skill_lv;
 				skillratio += 50 * tmp_val;
+			}
+			RE_LVL_DMOD(100);
+			break;
+		}
+		case SH_HOGOGONG_STRIKE: {
+			int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+			skillratio += -100 + 180 + 200 * skill_lv;
+			skillratio += 10 * tmp_val;
+			skillratio += 5 * sstatus->pow;
+
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+				skillratio += 70 + 150 * skill_lv;
+				skillratio += 10 * tmp_val;
 			}
 			RE_LVL_DMOD(100);
 			break;
