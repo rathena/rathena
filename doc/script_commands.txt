@@ -11360,7 +11360,7 @@ Returns true if the player is dead else false.
 
 ---------------------------------------
 
-*is_autoloot({<char_id>});
+*has_autoloot({<char_id>});
 
 This command checks whether a player configured autoloot.
 Returns current autoloot value on success.
