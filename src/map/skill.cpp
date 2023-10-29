@@ -5222,7 +5222,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		sc_start(src, src, SC_SHIELD_POWER, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case DK_DRAGONIC_AURA:
-	case IG_GRAND_JUDGEMENT:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src, src, SC_DRAGONIC_AURA, 100, skill_lv, skill_get_time(skill_id,skill_lv));
@@ -7261,6 +7260,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	type = skill_get_sc(skill_id);
 	tsc = status_get_sc(bl);
 	tsce = (tsc && type != SC_NONE)?tsc->getSCE(type):NULL;
+	status_change *sc = status_get_sc(src);
 
 	if (src!=bl && type > SC_NONE &&
 		CHK_ELEMENT((i = skill_get_ele(skill_id, skill_lv))) && i > ELE_NEUTRAL &&
@@ -7608,8 +7608,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				map_freeblock_unlock();
 				return 1;
 			}
-
-			status_change* sc = status_get_sc(src);
 
 			if( sc && tsc )
 			{
@@ -7981,7 +7979,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		} else {
 			uint16 climax_lv = 0, splash_size = skill_get_splash(skill_id, skill_lv);
-			status_change *sc = status_get_sc(src);
 
 			if (sc && sc->getSCE(SC_CLIMAX))
 				climax_lv = sc->getSCE(SC_CLIMAX)->val1;
@@ -8522,7 +8519,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
 	{
-		status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
 
 		if (skill_id == SR_HOWLINGOFLION)
@@ -11126,8 +11122,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONWB:
 	case WL_SUMMONSTONE:
 		{
-			status_change *sc = status_get_sc(src);
-
 			if (sc == nullptr)
 				break;
 
@@ -11637,7 +11631,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WM_LERADS_DEW:
 	case WM_UNLIMITED_HUMMING_VOICE:
 		if( flag&1 ) {	// These affect to to all party members near the caster.
-			status_change *sc = status_get_sc(src);
 			if( sc && sc->getSCE(type) ) {
 				sc_start2(src,bl,type,100,skill_lv,pc_checkskill(sd, WM_LESSON),skill_get_time(skill_id,skill_lv));
 			}
@@ -12909,8 +12902,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 
 	if (skill_id != SR_CURSEDCIRCLE && skill_id != NPC_SR_CURSEDCIRCLE) {
-		status_change *sc = status_get_sc(src);
-
 		if (sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER)) // Should only remove after the skill had been casted.
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
 	}
