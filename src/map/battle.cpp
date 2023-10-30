@@ -5644,6 +5644,20 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 
 			RE_LVL_DMOD(100);
 			break;
+		case BO_EXPLOSIVE_POWDER:
+			skillratio += -100 + 400 + 550 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc && sc->getSCE(SC_RESEARCHREPORT))
+				skillratio += 100 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case BO_MAYHEMIC_THORNS:
+			skillratio += -100 + 200 + 300 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc && sc->getSCE(SC_RESEARCHREPORT))
+				skillratio += 150;
+			RE_LVL_DMOD(100);
+			break;
 		case TR_ROSEBLOSSOM:
 			skillratio += -100 + 200 + 2000 * skill_lv;
 
@@ -6662,6 +6676,14 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case MT_MIGHTY_SMASH:
 				if (sc && sc->getSCE(SC_AXE_STOMP))
 					wd.div_ = 7;
+				break;
+			case BO_EXPLOSIVE_POWDER:
+				if (sc && sc->getSCE(SC_RESEARCHREPORT))
+					wd.div_ = 5;
+				break;
+			case BO_MAYHEMIC_THORNS:
+				if (sc && sc->getSCE(SC_RESEARCHREPORT))
+					wd.div_ = 4;
 				break;
 		}
 	} else {

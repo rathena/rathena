@@ -5668,6 +5668,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EM_EL_STORM_WIND:
 	case EM_EL_AVALANCHE:
 	case EM_EL_DEADLY_POISON:
+	case BO_EXPLOSIVE_POWDER:
+	case BO_MAYHEMIC_THORNS:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -5734,6 +5736,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case LG_EARTHDRIVE:
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
+				case BO_MAYHEMIC_THORNS:
 				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -8495,6 +8498,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
+	case BO_EXPLOSIVE_POWDER:
 	{
 		status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
