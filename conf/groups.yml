@@ -180,8 +180,37 @@ Body:
       Player: true
     Level: 0
     Commands:
+      # Informational commands
+      commands: true
+      charcommands: true
+      help: true
       rates: true
-      who: true
+      uptime: true
+      showdelay: true
+      exp: true
+      mobinfo: true
+      iteminfo: true
+      whodrops: true
+      time: true
+      jailtime: true
+      hominfo: true
+      homstats: true
+      showexp: true
+      showzeny: true
+      whereis: true
+      # Feature commands
+      refresh: true
+      noask: true
+      noks: true
+      autoloot: true
+      alootid: true
+      autoloottype: true
+      autotrade: true
+      request: true
+      go: true
+      breakguild: true
+      channel: true
+      langtype: true
   - Id: 10
     Name: Law Enforcement
     Inherit:
