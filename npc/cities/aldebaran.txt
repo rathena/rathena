@@ -1430,7 +1430,7 @@ aldeba_in,88,161,3	script	Kafra Employee#reserve2	4_F_KAFRA3,{
 					getitem 504,30;// White_Potion
 					mes "What a pity!";
 					mes "You got the 4th prize!!";
-					mes "The prize is ^00FF00White_Potion 30��~^000000";
+					mes "The prize is ^00FF0030 White Potions~^000000";
 					next;
 					mes "[Kafra Employee]";
 					mes "The greatest among potions! Use it before you fall into faint~";
