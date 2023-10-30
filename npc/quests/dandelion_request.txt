@@ -5395,7 +5395,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[Kidd]";
 		mes "What, Lin's client?!";
 		mes "Wait, "+ strcharinfo(0) +", do you recall";
-		mes "what Lin's assigment was?";
+		mes "what Lin's assignment was?";
 		next;
 		switch( select( "Well, um...","Bodyguard, right?" ) )
 		{
