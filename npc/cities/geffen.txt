@@ -1256,7 +1256,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 			mes "Eventually, they create trees that grow celebrity impersonators. Today, it looks like a miracle of science, and a threat to Hollywood starlets.";
 			next;
 			mes "[Psychic Advisor]";
-			mes "However, the people who buy these trees are the same kind who who wear those really tacky shirts...";
+			mes "However, the people who buy these trees are the same kind who wear those really tacky shirts...";
 			next;
 			mes "[Psychic Advisor]";
 			mes "You know, the kind with a lame sense of humor where it will have the word 'Cat-o-strophic' and there's this little kitten dressed like a mad scientist or something.";
