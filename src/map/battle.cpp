@@ -5542,6 +5542,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 350 + 850 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
+		case MT_MIGHTY_SMASH:
+			skillratio += -100 + 25 + 180 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc && sc->getSCE(SC_AXE_STOMP)) {
+				skillratio += 25;
+				skillratio += 5 * sstatus->pow;
+			}
+			RE_LVL_DMOD(100);
+			break;
 		case MT_RUSH_QUAKE:
 			skillratio += -100 + 3600 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_FORMLESS || tstatus->race == RC_INSECT)
@@ -5550,6 +5559,16 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case MT_A_MACHINE:// Formula unknown. Using Dancing Knife's formula for now. [Rytech]
 			skillratio += -100 + 200 * skill_lv + 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case MT_SPARK_BLASTER:
+			skillratio += -100 + 250 + 900 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case MT_TRIPLE_LASER:
+			skillratio += -100 + 550 + 900 * skill_lv;
+			skillratio += 12 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_ABYSS_DAGGER:
@@ -5632,6 +5651,20 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 					skillratio += skillratio * 50 / 100;
 			}
 
+			RE_LVL_DMOD(100);
+			break;
+		case BO_EXPLOSIVE_POWDER:
+			skillratio += -100 + 400 + 550 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc && sc->getSCE(SC_RESEARCHREPORT))
+				skillratio += 100 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case BO_MAYHEMIC_THORNS:
+			skillratio += -100 + 200 + 300 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc && sc->getSCE(SC_RESEARCHREPORT))
+				skillratio += 150;
 			RE_LVL_DMOD(100);
 			break;
 		case TR_ROSEBLOSSOM:
@@ -6648,6 +6681,18 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				break;
 			case SHC_SAVAGE_IMPACT:
 				wd.div_ = wd.div_ + wd.miscflag;
+				break;
+			case MT_MIGHTY_SMASH:
+				if (sc && sc->getSCE(SC_AXE_STOMP))
+					wd.div_ = 7;
+				break;
+			case BO_EXPLOSIVE_POWDER:
+				if (sc && sc->getSCE(SC_RESEARCHREPORT))
+					wd.div_ = 5;
+				break;
+			case BO_MAYHEMIC_THORNS:
+				if (sc && sc->getSCE(SC_RESEARCHREPORT))
+					wd.div_ = 4;
 				break;
 		}
 	} else {

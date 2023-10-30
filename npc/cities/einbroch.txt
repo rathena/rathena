@@ -919,7 +919,7 @@ einbroch,235,141,5	script	Bulletin Board#ein22	858,{
 einbroch,162,256,5	script	Bulletin Board#ein33	858,{
 	mes "East - Train Station";
 	mes "Southeast - Hotel";
-	mes "South - Weapon Shop,Factory";
+	mes "South - Weapon Shop, Factory";
 	mes "Southwest - Airport, Airship Repair Shop, Laboratory";
 	close;
 }
