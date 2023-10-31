@@ -6895,7 +6895,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			//PATK mod applies to Dragonbreaths if Dragonic Aura is skilled only - [munkrej]
-			if (!((skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER) && !pc_checkskill( sd, DK_DRAGONIC_AURA ) >= 1)) {
+			if (!((skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER) && pc_checkskill( sd, DK_DRAGONIC_AURA ) == 0)) {
 				wd.damage = (int64)floor((float)((wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.percentAtk) * (100 + sstatus->patk) / 100 + wd.masteryAtk + bonus_damage));
 				if (is_attack_left_handed(src, skill_id))
 					wd.damage2 = (int64)floor((float)((wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.percentAtk2) * (100 + sstatus->patk) / 100 + wd.masteryAtk2 + bonus_damage));
