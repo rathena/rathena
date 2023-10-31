@@ -41549,6 +41549,96 @@ Body:
       Weapon:
         1hAxe: true
         2hAxe: true
+  - Id: 6005
+    Name: BO_EXPLOSIVE_POWDER
+    Description: Explosive Powder
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    GiveAp: 2
+    SplashArea: 3
+    CastCancel: true
+    AfterCastActDelay: 250
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 69
+        - Level: 2
+          Amount: 76
+        - Level: 3
+          Amount: 83
+        - Level: 4
+          Amount: 90
+        - Level: 5
+          Amount: 97
+  - Id: 6006
+    Name: BO_MAYHEMIC_THORNS
+    Description: Mayhemic Thorns
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    Range: 9
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 4
+      - Level: 7
+        Area: 4
+      - Level: 8
+        Area: 4
+      - Level: 9
+        Area: 4
+      - Level: 10
+        Area: 4
+    CastCancel: true
+    CastTime: 1000
+    FixedCastTime: 500
+    AfterCastActDelay: 150
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 68
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 72
+        - Level: 4
+          Amount: 74
+        - Level: 5
+          Amount: 76
+        - Level: 6
+          Amount: 78
+        - Level: 7
+          Amount: 80
+        - Level: 8
+          Amount: 82
+        - Level: 9
+          Amount: 84
+        - Level: 10
+          Amount: 86
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
