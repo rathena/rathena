@@ -6683,6 +6683,13 @@ Body:
         Requires:
           - Name: DK_TWOHANDDEF
             Level: 5
+      - Name: DK_DRAGONIC_BREATH
+        MaxLevel: 10
+        Requires:
+          - Name: RK_DRAGONBREATH
+            Level: 10
+          - Name: RK_DRAGONBREATH_WATER
+            Level: 10
       - Name: DK_DRAGONIC_AURA
         MaxLevel: 10
         Requires:
