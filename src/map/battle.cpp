@@ -5405,6 +5405,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sc && sc->getSCE(SC_GIANTGROWTH) && rnd()%100 < 30)
 				skillratio *= 2;
 			break;
+		case DK_DRAGONIC_BREATH:
+			skillratio += -100 + 50 + 350 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			//TODO: needs official HP/SP scaling [Muh]
+			skillratio += sstatus->max_hp / 500 + status_get_max_sp(src) / 40;
+			if (sc && sc->getSCE(SC_DRAGONIC_AURA))
+				skillratio += sstatus->max_hp / 500 + status_get_max_sp(src) / 40;
+			RE_LVL_DMOD(100);
+			break;
 		case IQ_OLEUM_SANCTUM:
 			skillratio += -100 + 500 + 2000 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
