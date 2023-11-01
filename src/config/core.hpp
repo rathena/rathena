@@ -53,14 +53,14 @@
 /// The primary effects of this are restrictions on non-VIP players, such as requiring
 /// a Reset Stone to change into third classes, paying more for equipment upgrades, and
 /// so forth. Note that the changes are based on euRO, not iRO.
-#define VIP_SCRIPT 0
+#define VIP_SCRIPT 1
 
 #ifdef VIP_ENABLE
 	#ifndef MIN_STORAGE
 		#define MIN_STORAGE 300 // Default number of storage slots.
 	#endif
 	#ifndef MAX_CHAR_VIP
-		#define MAX_CHAR_VIP 6 // This must be less than MAX_CHARS
+		#define MAX_CHAR_VIP 12 // This must be less than MAX_CHARS
 	#endif
 #else
 	#ifndef MIN_STORAGE

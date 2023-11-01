@@ -21699,7 +21699,7 @@ void clif_parse_open_ui( int fd, map_session_data* sd ){
 }
 
 /// Response for attedance request
-/// 0AF0 <unknown>.L <data>.L
+/// 0AF0 <action>.L <data>.L
 void clif_attendence_response( map_session_data *sd, int32 data ){
 	nullpo_retv(sd);
 
@@ -21707,7 +21707,7 @@ void clif_attendence_response( map_session_data *sd, int32 data ){
 
 	WFIFOHEAD(fd,packet_len(0xAF0));
 	WFIFOW(fd,0) = 0xAF0;
-	WFIFOL(fd,2) = 0;
+	WFIFOL(fd,2) = battle_config.feature_attendance_close;
 	WFIFOL(fd,6) = data;
 	WFIFOSET(fd,packet_len(0xAF0));
 }
