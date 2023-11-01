@@ -96,8 +96,8 @@ OnClock0000:
 	npcshopupdate "para_hei10",7642,0,1;
 	npcshopupdate "para_hei10",22687,0,1;
 	npcshopupdate "para_hei10",23016,0,1;
-	npcshopupdate "para_key10",7026,10;
-	npcshopupdate "para_key10",7027,10;
+	npcshopupdate "para_key10",7026,100;
+	npcshopupdate "para_key10",7027,100;
 	npcshopupdate "para_wp00",1181,0,1;
 	npcshopupdate "para_arm10",5007,0,1;
 	npcshopupdate "para_ptn00",678,0,999;
