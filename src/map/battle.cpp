@@ -3468,6 +3468,7 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 				element = sd->bonus.arrow_ele;
 			break;
 		case SU_CN_METEOR:
+		case SU_CN_METEOR2:
 		case SH_HYUN_ROKS_BREEZE:
 		case SH_HYUN_ROK_CANNON:
 			if (sc && sc->count) {
