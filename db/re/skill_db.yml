@@ -41389,6 +41389,85 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 6001
+    Name: DK_DRAGONIC_BREATH
+    Description: Dragonic Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Flags:
+      TargetTrap: true
+    Range: 9
+    GiveAp: 2
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 4
+      - Level: 7
+        Area: 4
+      - Level: 8
+        Area: 4
+      - Level: 9
+        Area: 4
+      - Level: 10
+        Area: 4
+    CastCancel: true
+    CastTime:
+      - Level: 4
+        Time: 1000
+      - Level: 5
+        Time: 1000
+      - Level: 6
+        Time: 1000
+      - Level: 7
+        Time: 1500
+      - Level: 8
+        Time: 1500
+      - Level: 9
+        Time: 2000
+      - Level: 10
+        Time: 2000
+    AfterCastActDelay: 150
+    FixedCastTime: 500
+    Cooldown: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 61
+        - Level: 2
+          Amount: 64
+        - Level: 3
+          Amount: 67
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 73
+        - Level: 6
+          Amount: 76
+        - Level: 7
+          Amount: 79
+        - Level: 8
+          Amount: 82
+        - Level: 9
+          Amount: 85
+        - Level: 10
+          Amount: 88
+      State: Ridingdragon
   - Id: 6002
     Name: MT_SPARK_BLASTER
     Description: Spark Blaster
