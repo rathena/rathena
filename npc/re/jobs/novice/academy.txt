@@ -2373,7 +2373,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		if (Class == Job_Novice) {
 			if (isbegin_quest(7478) == 1) {
 				mes "[Lumin]";
-				mes "I guess you should go back to Therapist.";
+				mes "I guess you should go back to the Therapist.";
 				mes "He's probably waiting for you..";
 				cutin "nov_lumin01.bmp", 2;
 				close2;
