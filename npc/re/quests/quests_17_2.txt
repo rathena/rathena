@@ -4711,7 +4711,7 @@ ba_bath,165,43,3	script	Shrine#172ba02	4_EP17_BUCKETS,5,5,{
 		next;
 		cutin "16loo_03",2;
 		mes "[Rookie]";
-		mes "We should focus on searching for the dangerous goods rather than the the missing persons. The identity of the dangerous being has not yet been revealed, and various testimonies and circumstances presumed it's a humans, monster, automatic doll, and supernatural beings.";
+		mes "We should focus on searching for the dangerous goods rather than the missing persons. The identity of the dangerous being has not yet been revealed, and various testimonies and circumstances presumed it's a humans, monster, automatic doll, and supernatural beings.";
 		next;
 		cutin "16loo_01",2;
 		mes "[Rookie]";
