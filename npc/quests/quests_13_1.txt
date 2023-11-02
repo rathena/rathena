@@ -9263,7 +9263,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 			mes "As a last resort, they had to select Commander Agip since he's unaffiliated with any of those countries, but is talented enough to lead the expedition.";
 			next;
 			mes "[Staff Officer Abidal]";
-			mes "We, the commander, Igrid, and I aren't used to the leadership role. We're having trouble taking care of everything that's happening. *Sigh*";
+			mes "We, the commanders, Igrid, and I aren't used to the leadership role. We're having trouble taking care of everything that's happening. *Sigh*";
 			next;
 			mes "[Staff Officer Abidal]";
 			mes "The members of the Midgard Expedition are conducting various kinds of research about the Ash-Vacuum searching for possible living creatures and studying what might be beneficial for the development of the mainland.";
