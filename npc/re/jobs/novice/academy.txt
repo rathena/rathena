@@ -2373,7 +2373,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		if (Class == Job_Novice) {
 			if (isbegin_quest(7478) == 1) {
 				mes "[Lumin]";
-				mes "I guess you should go back to the Therapist.";
+				mes "I guess you should go back to Therapist.";
 				mes "He's probably waiting for you..";
 				cutin "nov_lumin01.bmp", 2;
 				close2;
@@ -4248,11 +4248,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "�糪ƽī��.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "�ĺ긣ī��.bmp", 3;
+				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4274,11 +4274,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "����ī��.bmp", 3;
+				cutin "Æ÷¸µÄ«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "�糪ƽī��.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4300,15 +4300,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "����ī��.bmp", 3;
+				cutin "Æ÷¸µÄ«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "�ĺ긣ī��.bmp", 3;
+				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "�糪ƽī��.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4330,11 +4330,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "����ī��.bmp", 3;
+				cutin "Æ÷¸µÄ«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "�糪ƽī��.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;
@@ -4405,7 +4405,7 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 	case 1:
 		if (isbegin_quest(4269) && isbegin_quest(7478)) {
 			mes "[Querrie]";
-			mes "Have you been treated by the Therapist?";
+			mes "Have you been treated by Therapist?";
 			mes "At the medical botany class, you may receive a guild book.";
 			next;
 			if (select("Ah... is that so?", "I lost it.") == 1) {
