@@ -4405,7 +4405,7 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 	case 1:
 		if (isbegin_quest(4269) && isbegin_quest(7478)) {
 			mes "[Querrie]";
-			mes "Have you been treated by the Therapistst?";
+			mes "Have you been treated by the Therapist?";
 			mes "At the medical botany class, you may receive a guild book.";
 			next;
 			if (select("Ah... is that so?", "I lost it.") == 1) {
