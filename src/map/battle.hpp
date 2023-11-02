@@ -736,6 +736,7 @@ struct Battle_Config
 	int feature_goldpc_time;
 	int feature_goldpc_max_points;
 	int feature_goldpc_vip;
+	int feature_goldpc_script;
 	
 	int feature_attendance_close;
 	

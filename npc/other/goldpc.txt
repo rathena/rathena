@@ -10,7 +10,11 @@
 //= 1.4 Added replay version of buff NPC [eppc0330]
 //============================================================
 
-prontera,0,0,0	script	BonusOnline::GOLDPCCAFE	4_F_02,{
+
+//==============================================================
+//      Files : feature.conf For Set feature.goldpc_script: yes
+//==============================================================
+-	script	GOLDPCCAFE	-,{
 	if( Goldpc_Points == 0 ){
 		dispbottom "[ BonusOnline ] : ��� Online �ͧ�س ����� 0 �������ö�Ѻ Cash ��";
 	}else{
@@ -22,273 +26,18 @@ prontera,0,0,0	script	BonusOnline::GOLDPCCAFE	4_F_02,{
 	end;
 }
 
-
-
-
-//prontera,0,0,0	script	Goldpoint Manager::GOLDPCCAFE	4_F_02,{
-//	// ID:AMOUNT:PRICE
-//	setarray .items$[1],
-//		"25464:1:2", // World_Tour_Ticket 1
-//		"23919:1:10",  // K_Secret_Key 1
-//		"23919:11:100",// K_Secret_Key 11
-//		"23919:33:300";// K_Secret_Key 33
-//
-//	mes "[Goldpoint Manager]";
-//	mes "You currently have ^0000ff"+Goldpc_Points+"^000000 points.";
-//	mes "What reward do you want?";
-//	next;
-//
-//	.@menu$ = "View current points";
-//
-//	for(.@i = 1; .@i < getarraysize(.items$); .@i++) {
-//		explode(.@array$, .items$[.@i], ":");
-//		.@cost = atoi(.@array$[2]);
-//		.@menu$ += ":" + .@cost + " points gift";
-//		if( Goldpc_Points < .@cost ){
-//			.@menu$ += " ^ff0000(not enough points)^000000";
-//		}
+//==============================================================
+//      Files : feature.conf For Set feature.goldpc_script: no
+//==============================================================
+//prontera,0,0,0	script	BonusOnline::GOLDPCCAFE	4_F_02,{
+//	if( Goldpc_Points == 0 ){
+//		dispbottom "[ BonusOnline ] : ��� Online �ͧ�س ����� 0 �������ö�Ѻ Cash ��";
+//	}else{
+//		.@amount = Goldpc_Points;
+//		Goldpc_Points -= .@amount;
+//		#CASHPOINTS += .@amount;
+//		dispbottom "[ BonusOnline ] : �س���Ѻ�ӹǹ Cash : "+.@amount+" Cash";
 //	}
-//
-//	.@s = select(.@menu$)-1;
-//
-//	if(.@s == 0) {
-//		mes "[Goldpoint Manager]";
-//		mes "You currently have ^0000ff"+Goldpc_Points+"^000000 points.";
-//		close;
-//	}
-//
-//	explode(.@array$, .items$[.@s], ":");
-//	.@itemid = atoi(.@array$[0]);
-//	.@amount = atoi(.@array$[1]);
-//	.@cost = atoi(.@array$[2]);
-//
-//	if(Goldpc_Points < .@cost) {
-//		mes "[Goldpoint Manager]";
-//		mes "You have ^0000ff"+Goldpc_Points+"^000000 points remaining.";
-//		mes "You cannot get the prize with this amount of points.";
-//		close;
-//	}
-//
-//	mes "[Goldpoint Manager]";
-//	mes "You chose the "+.@cost+" points gift. We will reward you immediately.";
-//	Goldpc_Points -= .@cost;
-//	getitem .@itemid,.@amount;
-//	mes "You have ^0000ff"+Goldpc_Points+"^000000 points remaining.";
-//	close;
+//	end;
 //}
-//
-//prontera,146,93,5	script	프버방시피	4_M_MANAGER,{
-//	mes "[프버방시피]";
-//	mes "여~ 계속 보게 되는군 친구.";
-//	mes "별로 소개도 필요없을 정도로";
-//	mes "많이 본 것 같지만 아무튼...";
-//	mes "..입아프게 말하는 것도 귀찮고,";
-//	mes "이미 익히들 잘 알고 있을거라고";
-//	mes "생각하니 간단하게 이야기할게.";
-//	next;
-//	mes "[프버방시피]";
-//	mes "자네가 있는 장소에 따라서,";
-//	mes "나는 자네에게 여러가지";
-//	mes "서비스를 해 줄 예정이야.";
-//	next;
-//	mes "[프버방시피]";
-//	mes "아무튼 자네가 지금 서비스를";
-//	mes "받을 수 있는가 체크를 해";
-//	mes "보도록 하겠어. 잠깐만";
-//	mes "기다려봐.";
-//	next;
-//	if(vip_status(VIP_STATUS_ACTIVE)==1||getgroupid()==99)
-//		goto VIP; //Custom. In KRo there's two PC cafe grade : gold and silver.
-//	else
-//		goto Normal;
-//Normal:
-//	mes "[프버방시피]";
-//	mes "애석하게도 자네는 서비스를";
-//	mes "받을 수 있는 곳에 존재하고";
-//	mes "있지않군... 정 서비스를 받고";
-//	mes "싶다면 다른 장소에서 컨택트";
-//	mes "하도록 해.";
-//	next;
-//	mes "[프버방시피]";
-//	mes "거 왜, 많은 사람들이 모여서";
-//	mes "각자 다른 세계와 조우하는 그";
-//	mes "장소 있잖아? 거기로 가서";
-//	mes "이쪽 세계로 들어오란 말야.";
-//	next;
-//	mes "[프버방시피]";
-//	mes "그 때 다시 이야기";
-//	mes "하도록 하지. 좋은 하루되게.";
-//	close;
-//
-//Vip:
-//	// ID:갯수:가격:이름:조사
-//	setarray .items$[1],
-//	"14529:10:2000:을", //탐욕스크롤
-//	"12274:1:10000:을",	//대환단
-//	"12275:1:10000:을", //태청단
-//	"12262:10:10000:를"; //마패
-//
-//	mes "[프버방시피]";
-//	mes "오케이. 자네는 서비스를 받을";
-//	mes "수 있는 장소...거기서 등급을";
-//	mes "나눠보자면 골드 등급인가.";
-//	mes "탐욕 스크롤, 대환단, 태청단,";
-//	mes "마패를 받을 수 있는데...";
-//	next;
-//	mes "[프버방시피]";
-//	mes "각자 탐욕 스크롤이 2000제니.";
-//	mes "대환단이 10000제니";
-//	mes "태청단이 10000제니";
-//	mes "마패가 10000제니!";
-//	mes "자아, 자네는 이중에 뭘 받고";
-//	mes "싶어?";
-//	next;
-//
-//	for(.@i = 1; .@i < getarraysize(.items$); .@i++) {
-//		explode(.@array$, .items$[.@i], ":");
-//		.@menu$ += ":"+getitemname(atoi(.@array$[0]));
-//	}
-//	.@s = select(.@menu$+":받지 않는다.")-1;
-//	if(.@s == getarraysize(.items$)) {
-//		mes "[프버방시피]";
-//		mes "확고한 인간이로군. 오케이.";
-//		mes "뭐 강요할 생각은 없다네.";
-//		mes "그럼 좋은 하루되게나.";
-//		close;
-//	}
-//	explode(.@array$, .items$[.@s], ":");
-//	.@itemid = atoi(.@array$[0]);
-//	.@amount = atoi(.@array$[1]);
-//	.@cost = atoi(.@array$[2]);
-//	.@name$ = getitemname(atoi(.@array$[0]));
-//	.@part$ = (.@array$[3]);
-//	if(zeny < .@cost) {
-//		mes "[프버방시피]";
-//		mes "애석하게도 자넨 "+.@cost+"제니라는";
-//		mes "돈도 없구만... 서비스받기는";
-//		mes "글렀어. 아무리 서비스라지만";
-//		mes "그렇게 정해졌으니 공짜로 해";
-//		mes "줄 수는 없다네.";
-//		close;
-//	}
-//	if(countitem(.@itemid) > 0) {
-//		mes "[프버방시피]";
-//		mes "애석하게도 음... 자네는";
-//		mes "이미 "+.@name$+""+.@part$+" 하나";
-//		mes "가지고 있구만. 내가 이야기";
-//		mes "안했었나? 아..이거 원 요즘";
-//		mes "건망증이 늘어서 말이지.";
-//		mes "핫핫핫.";
-//		next;
-//		mes "[프버방시피]";
-//		mes "좌우지간, 물건이 많지는 않은";
-//		mes "관계로 물건을 소지하고 있는";
-//		mes "사람에게는 지급 할 수가 없어.";
-//		next;
-//		mes "[프버방시피]";
-//		mes "다음 기회를 이용해 달라구.";
-//		mes "다음에 또 보자구~!";
-//		close;
-//	}
-//	mes "[프버방시피]";
-//	mes "오케이. 잘 생각했어. 정말";
-//	mes "탁월한 선택이야. 핫핫핫.";
-//	mes "잘 쓰도록 하라구~";
-//	set Zeny, Zeny - .@cost;
-//	getitem .@itemid,.@amount;
-//	next;
-//	mes "[프버방시피]";
-//	mes "그리고... 약속의 서비스다-!";
-//	next;
-//	mes "[프버방시피]";
-//	mes "여기서 골드 등급의 손님을";
-//	mes "위한 깜짝 선택! 서비스 4가지";
-//	mes "중에 하나를 선택가능!";
-//	next;
-//	mes "[프버방시피]";
-//	mes "첫 번째, ^FF0000STR+8, AGI+6, DEX+4,";
-//	mes "^FF0000ATK+32, FLEE+5!";
-//	mes "^000000두 번째, ^FF0000INT+8, DEX+6,";
-//	mes "^FF0000VIT+4, MATK+40!^000000";
-//	next;
-//	mes "[프버방시피]";
-//	mes "세 번째, ^FF0000DEX+8, AGI+6, LUK+4,";
-//	mes "^FF0000ATK+24, MATK+24!";
-//	mes "^000000네 번째, ^FF0000올+6 ATK+24, MATK+24!!^000000";
-//	next;
-//	mes "[프버방시피]";
-//	mes "넷 중 뭘 받을래!";
-//	next;
-//	.@s2 = (select("첫 번째:두 번째:세 번째:네 번째"));
-//
-//	mes "[프버방시피]";
-//	mes "이야아아아아아아압!";
-//	if(.@s2 == 1) {
-//		sc_start SC_STRFOOD,5400000,8;
-//		sc_start SC_AGIFOOD,5400000,6;
-//		sc_start SC_DEXFOOD,5400000,4;
-//		sc_start SC_ATKPOTION,5400000,32;
-//		sc_start SC_FLEEFOOD,5400000,5;
-//	} else if(.@s2 == 2) {
-//		sc_start SC_INTFOOD,5400000,8;
-//		sc_start SC_DEXFOOD,5400000,6;
-//		sc_start SC_VITFOOD,5400000,4;
-//		sc_start SC_MATKPOTION,5400000,40;
-//	} else if(.@s2 == 3) {
-//		sc_start SC_DEXFOOD,5400000,8;
-//		sc_start SC_AGIFOOD,5400000,6;
-//		sc_start SC_LUKFOOD,5400000,4;
-//		sc_start SC_ATKPOTION,5400000,24;
-//		sc_start SC_MATKPOTION,5400000,24;
-//	} else {
-//		sc_start SC_STRFOOD,5400000,6;
-//		sc_start SC_AGIFOOD,5400000,6;
-//		sc_start SC_VITFOOD,5400000,6;
-//		sc_start SC_INTFOOD,5400000,6;
-//		sc_start SC_DEXFOOD,5400000,6;
-//		sc_start SC_LUKFOOD,5400000,6;
-//		sc_start SC_ATKPOTION,5400000,24;
-//		sc_start SC_MATKPOTION,5400000,24;
-//	}
-//	next;
-//	mes "[프버방시피]";
-//	mes "힘을 불어넣어주었어. 어때?";
-//	mes "손해봤다는 생각은 죽어도";
-//	mes "안들지? 핫핫핫. 글쎄 남는";
-//	mes "남는 장사도 이렇게 남는";
-//	mes "장사가 있을 수가 없대두.";
-//	next;
-//	mes "[프버방시피]";
-//	mes "자 그럼 다음에 또~";
-//	close;
-//}
-//
-//alberta,104,60,5	duplicate(프버방시피)	프버방시피#alb	4_M_MANAGER
-//aldebaran,146,116,5	duplicate(프버방시피)	프버방시피#ald	4_M_MANAGER
-//amatsu,102,152,5	duplicate(프버방시피)	프버방시피#ama	4_M_MANAGER
-//ayothaya,212,173,5	duplicate(프버방시피)	프버방시피#ayo	4_M_MANAGER
-//brasilis,200,224,5	duplicate(프버방시피)	프버방시피#bra	4_M_MANAGER
-//comodo,199,149,5	duplicate(프버방시피)	프버방시피#com	4_M_MANAGER
-//dewata,202,188,5	duplicate(프버방시피)	프버방시피#dew	4_M_MANAGER
-//dicastes01,193,191,5	duplicate(프버방시피)	프버방시피#dic	4_M_MANAGER
-//einbroch,235,207,5	duplicate(프버방시피)	프버방시피#ein	4_M_MANAGER
-//geffen,126,64,5	duplicate(프버방시피)	프버방시피#gef	4_M_MANAGER
-//gonryun,156,122,5	duplicate(프버방시피)	프버방시피#gon	4_M_MANAGER
-//hugel,80,152,5	duplicate(프버방시피)	프버방시피#hug	4_M_MANAGER
-//izlude,125,148,5	duplicate(프버방시피)	프버방시피#izl	4_M_MANAGER
-//lighthalzen,167,97,5	duplicate(프버방시피)	프버방시피#lig	4_M_MANAGER
-//louyang,210,107,5	duplicate(프버방시피)	프버방시피#lou	4_M_MANAGER
-//malangdo,178,139,5	duplicate(프버방시피)	프버방시피#mld	4_M_MANAGER
-//malaya,234,218,5	duplicate(프버방시피)	프버방시피#mly	4_M_MANAGER
-//manuk,296,147,5	duplicate(프버방시피)	프버방시피#man	4_M_MANAGER
-//mid_camp,201,237,5	duplicate(프버방시피)	프버방시피#mid	4_M_MANAGER
-//mora,113,112,5	duplicate(프버방시피)	프버방시피#mra	4_M_MANAGER
-//morocc,164,255,5	duplicate(프버방시피)	프버방시피#mro	4_M_MANAGER
-//moscovia,220,191,5	duplicate(프버방시피)	프버방시피#mos	4_M_MANAGER
-//niflheim,206,179,5	duplicate(프버방시피)	프버방시피#nif	4_M_MANAGER
-//payon,184,102,5	duplicate(프버방시피)	프버방시피#pay	4_M_MANAGER
-//rachel,111,143,5	duplicate(프버방시피)	프버방시피#rah	4_M_MANAGER
-//splendide,201,153,5	duplicate(프버방시피)	프버방시피#spl	4_M_MANAGER
-//umbala,93,160,5	duplicate(프버방시피)	프버방시피#umb	4_M_MANAGER
-//veins,210,109,5	duplicate(프버방시피)	프버방시피#vei	4_M_MANAGER
-//yuno,149,187,5	duplicate(프버방시피)	프버방시피#yun	4_M_MANAGER
+
