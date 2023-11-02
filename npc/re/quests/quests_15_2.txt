@@ -2155,7 +2155,7 @@ verus01,41,103,4	script	Exhausted Journalist#1	52,{
 					mes "I haven't been able to eat at all from all the running away. All day! I noticed these bugs that eat metal.";
 					next;
 					mes "[Grylls]";
-					mes "I need to taste these bugs. I think it will be good news story as well! The survival king's roasted metal bugs! That's the headline!";
+					mes "I need to taste these bugs. I think it will be a good news story as well! The survival king's roasted metal bugs! That's the headline!";
 					setquest 13204;// Monthly Brigan : Grylls' Request
 				}
 				close;
