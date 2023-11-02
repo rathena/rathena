@@ -9935,7 +9935,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 					mes "I don't understand you. What do you want? Kehehehehe.";
 					close;
 				} else if (.@input > 100) {
-					mes "I said no more then 100 at a time. Kehehehehe.";
+					mes "I said no more than 100 at a time. Kehehehehe.";
 					next;
 				} else break;
 			}
@@ -10650,15 +10650,15 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	HIDDEN_NPC,{
 			cutin "",255;
 			switch( .@rucard_game01 ) {
 			case 1:
-				cutin "Æ÷¸µÄ«µå",4; // Poring Card
+				cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4; // Poring Card
 				.@win_string$ = "You are good. Can you do it next time?";
 				break;
 			case 2:
-				cutin "¿£Á©¸µÄ«µå",4; // Angeling Card
+				cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4; // Angeling Card
 				.@win_string$ = "You are pretty good at this. Ok, but can you do it again?";
 				break;
 			case 3:
-				cutin "°í½ºÆ®¸µÄ«µå",4; // Ghostring Card
+				cutin "ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½Ä«ï¿½ï¿½",4; // Ghostring Card
 				.@win_string$ = "You are pretty good at this. Ok, but can you do it again?";
 				break;
 			}

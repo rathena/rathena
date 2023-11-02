@@ -228,7 +228,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Deviruchi]";
@@ -626,7 +626,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	set .@a_tname$,getpartyname($@wop_team_a);
@@ -757,7 +757,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	set .@d_tname$,getpartyname($@wop_team_d);
@@ -1221,7 +1221,7 @@ poring_w02,99,201,3	script	Deviruchi#wop_endmaster	738,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	set .@a_point,$@wop_deadcount_a;
