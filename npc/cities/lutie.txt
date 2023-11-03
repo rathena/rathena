@@ -756,7 +756,7 @@ xmas,134,112,4	script	Snowman	710,{
 			cutin "rutie_snownow03.bmp",2;
 			mes "[Snowysnow]";
 			mes "Bye bye, friend~!";
-			mes "Thank you for listening me~";
+			mes "Thank you for listening to me~";
 			mes "I'll see you again, someday! You'll always be in my heart~";
 			close2;
 			cutin "",255;
@@ -815,7 +815,7 @@ xmas,146,136,4	script	Hashokii	715,{
 			mes "Of course I know him! Anyone who doesn't know Snowysnow is a total stranger around here! Sometimes, he and I share a nice chat...";
 			next;
 			mes "[Hashokii]";
-			mes "He makes such a a good audience for my show. But to be honest, I'm not sure if he really likes it or not. Most people don't seem to care for my jokes.";
+			mes "He makes such a good audience for my show. But to be honest, I'm not sure if he really likes it or not. Most people don't seem to care for my jokes.";
 			next;
 			mes "[Hashokii]";
 			mes "It totally baffles me! How could they not like the best jokes in the world?! Sheeeeesh~";
