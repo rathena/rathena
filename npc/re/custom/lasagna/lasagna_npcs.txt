@@ -7691,7 +7691,7 @@ lasagna,298,84,5	script	Vigilante#dorcon01	4_DR_SOLDIER,{
 			mes "[Vigilante]";
 			mes "Come with me then. The <NAVI>^4D4DFF[Dragon's Nest]^000000<INFO>lasa_fild02,340,244,000,1,</INFO></NAVI> is in the cave at the right end of the field outside the village.";
 			erasequest 14548;// Crazy Dragon
-			setquest 14549;// No news is not good news
+			setquest 14549;// No news is not a good news
 			lasagna_quest[1] = 22;
 			close;
 		}
@@ -7720,7 +7720,7 @@ lasagna,298,84,5	script	Vigilante#dorcon01	4_DR_SOLDIER,{
 		mes "[Vigilante]";
 		mes "You know, the <NAVI>^4D4DFF[Dragon's Nest]^000000<INFO>lasa_fild02,340,244,000,1,</INFO></NAVI>. It is in the cave at the right end of the field outside the village. You should go first. I'll follow you after making some preparations.";
 		erasequest 14539;// Crazy Dragon
-		setquest 14541;// No news is not good news
+		setquest 14541;// No news is not a good news
 		lasagna_quest[1] = 22;
 		close;
 	}
@@ -7874,7 +7874,7 @@ lasa_dun01,153,103,3	script	Vigilante#dorcon02	4_DR_SOLDIER,{
 			next;
 			mes "[Vigilante]";
 			mes "Yes! don't be scared!";
-			erasequest 14541;// No news is not good news
+			erasequest 14541;// No news is not a good news
 			setquest 14542;// How is the Dragon
 			lasagna_quest[1] = 23;
 			close2;
@@ -7923,7 +7923,7 @@ lasa_dun01,153,103,3	script	Vigilante#dorcon02	4_DR_SOLDIER,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "Yes. I'll make sure to resolve the problem.";
 			close2;
-			erasequest 14549;// No news is not good news
+			erasequest 14549;// No news is not a good news
 			setquest 14550;// How is the Dragon
 			lasagna_quest[1] = 23;
 			end;
