@@ -41527,7 +41527,7 @@ Body:
           Amount: 85
   - Id: 5438
     Name: SH_COMMUNE_WITH_KI_SUL
-    Description: Commune with Chulho
+    Description: Commune with Kisul
     MaxLevel: 1
   - Id: 5439
     Name: SH_KI_SUL_WATER_SPRAYING
