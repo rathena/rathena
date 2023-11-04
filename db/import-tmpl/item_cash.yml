@@ -31,3 +31,236 @@
 Header:
   Type: ITEM_CASH_DB
   Version: 1
+  
+#Body:
+#  - Tab: New
+#    Items:
+#      - Item: Apple
+#        Price: 1
+#
+#  - Tab: Hot
+#    Items:
+#      - Item: Apple
+#        Price: 1
+#
+#  - Tab: Limited
+#    Items:
+#      - Item: Apple
+#        Price: 1
+#
+#  - Tab: Rental
+#    Items:
+#      - Item: B_Halter_Box_30Days
+#        Price: 150
+#      - Item: Boarding_Halter_Box
+#        Price: 50
+#      - Item: F_Apple_Of_Archer_Box
+#        Price: 250
+#      - Item: F_Asura_Box
+#        Price: 250
+#      - Item: F_Bow_Of_Rudra_Box
+#        Price: 250
+#      - Item: F_Brooch_Box
+#        Price: 250
+#      - Item: F_Bunny_Band_Box
+#        Price: 250
+#      - Item: F_Combat_Knife_Box
+#        Price: 250
+#      - Item: F_Counter_Dagger_Box
+#        Price: 250
+#      - Item: F_Critical_Ring_Box
+#        Price: 250
+#      - Item: F_Cutlas_Box
+#        Price: 250
+#      - Item: F_Diary_Of_Great_Sage
+#        Price: 250
+#      - Item: F_Earring_Box
+#        Price: 250
+#      - Item: F_Elven_Ears_Box
+#        Price: 250
+#      - Item: F_Executioner_Box
+#        Price: 250
+#      - Item: F_Glove_Box
+#        Price: 250
+#      - Item: F_Right_Epsilon_Box
+#        Price: 250
+#      - Item: F_Moonlight_Sword_Box
+#        Price: 250
+#      - Item: F_Necklace_Box
+#        Price: 250
+#      - Item: F_Ring_Box
+#        Price: 250
+#      - Item: F_Rosary_Box
+#        Price: 250
+#      - Item: F_Solar_Sword_Box
+#        Price: 250
+#      - Item: F_Pole_Axe_Box
+#        Price: 250
+#      - Item: F_Safety_Ring_Box
+#        Price: 250
+#      - Item: F_Steel_Flower_Box
+#        Price: 250
+#      - Item: F_Tomahawk_Box
+#        Price: 250
+#      - Item: F_Spanner_Box
+#        Price: 250
+#
+#  - Tab: Permanent
+#    Items:
+#      - Item: Comin_Actor_Box
+#        Price: 300
+#      - Item: Weather_Report_Box
+#        Price: 600
+#      - Item: Yellow_Hat_Box
+#        Price: 150
+#      - Item: Singing_Bird_Box
+#        Price: 150
+#      - Item: Red_Minicrown_Box
+#        Price: 150
+#      - Item: Butterfly_ear_Box
+#        Price: 150
+#      - Item: Stuckhead_Screw_Box
+#        Price: 150
+#      - Item: F_Robo_Eye_Box
+#        Price: 500
+#      - Item: F_Pecopeco_Hairband_Box
+#        Price: 150
+#      - Item: Yggdrasil_Crown_Box
+#        Price: 300
+#      - Item: F_Chick_Hat_Box
+#        Price: 500
+#      - Item: F_Flying_Angel_Box
+#        Price: 1000
+#      - Item: F_All_In_One_Ring_Box
+#        Price: 400
+#      - Item: F_Red_Glasses_Box
+#        Price: 300
+#
+#  - Tab: Scrolls
+#    Items:
+#      - Item: Blue_Potion_Box
+#        Price: 5
+#      - Item: F_Neuralizer_Box
+#        Price: 400
+#      - Item: FPr_Reset_Stone_Box
+#        Price: 100
+#      - Item: F_Abrasive_Box10
+#        Price: 75
+#      - Item: F_G_O_I_Box10
+#        Price: 25
+#      - Item: F_Greed_Box30
+#        Price: 30
+#      - Item: F_M_Life_Potion_Box
+#        Price: 70
+#      - Item: F_S_Life_Potion_Box
+#        Price: 50
+#      - Item: F_Regeneration_Box5
+#        Price: 25
+#      - Item: FS_Def_Potion_Box10
+#        Price: 30
+#      - Item: FB_Mdef_Potion_Box10
+#        Price: 60
+#      - Item: FS_Mdef_Potion_Box10
+#        Price: 30
+#      - Item: FB_Def_Potion_Box10
+#        Price: 60
+#      - Item: F_Blessing_10_Box
+#        Price: 40
+#      - Item: F_Inc_Agi_10_Scroll_Box
+#        Price: 40
+#      - Item: F_Assumptio_5_Box
+#        Price: 40
+#      - Item: F_Wind_Walk_10_Box
+#        Price: 40
+#      - Item: F_Aspersio_5_Scroll_Box
+#        Price: 40
+#      - Item: F_Adrenaline_Scroll_Box
+#        Price: 40
+#      - Item: F_Str_Dish_Box
+#        Price: 100
+#      - Item: F_Agi_Dish_Box
+#        Price: 100
+#      - Item: F_Int_Dish_Box
+#        Price: 100
+#      - Item: F_Dex_Dish_Box
+#        Price: 100
+#      - Item: F_Luk_Dish_Box
+#        Price: 100
+#      - Item: F_Vit_Dish_Box
+#        Price: 100
+#      - Item: F_Pet_Egg_Scroll9
+#        Price: 1500
+#
+#  - Tab: Consumables
+#    Items:
+#      - Item: Vending_Scroll2_Box10
+#        Price: 25
+#      - Item: Job_Manual50_Box
+#        Price: 400
+#      - Item: HD_Elu_Box10
+#        Price: 100
+#      - Item: HD_Ori_Box10
+#        Price: 100
+#      - Item: Max_Weight_Up_10Box
+#        Price: 500
+#      - Item: HD_Elunium
+#        Price: 10
+#      - Item: HD_Oridecon
+#        Price: 10
+#      - Item: HD_Carnium
+#        Price: 15
+#      - Item: HD_Bradium
+#        Price: 15
+#      - Item: Adv_Siege_Supply_Box
+#        Price: 5
+#      - Item: F_Marriage_Covenant
+#        Price: 500
+#      - Item: Max_Weight_Up_Scroll
+#        Price: 50
+#      - Item: Enriched_Elunium
+#        Price: 30
+#      - Item: Enriched_Oridecon
+#        Price: 30
+#      - Item: Battle_Manual
+#        Price: 40
+#      - Item: F_Battle_Manual_Box
+#        Price: 400
+#      - Item: Bubble_Gum
+#        Price: 40
+#      - Item: F_Bubble_Gum_Box
+#        Price: 400
+#      - Item: F_WOB_Rune_Box10
+#        Price: 50
+#      - Item: F_WOB_Schwaltz_Box10
+#        Price: 50
+#      - Item: F_WOB_Rachel_Box10
+#        Price: 50
+#      - Item: F_WOB_Local_Box10
+#        Price: 50
+#      - Item: F_Dun_Tele_Scroll_Box10
+#        Price: 50
+#      - Item: F_Giant_Fly_Wing_Box
+#        Price: 40
+#      - Item: F_Giant_Fly_Wing_Box500
+#        Price: 500
+#      - Item: F_Siege_Tele_10Sc_Box
+#        Price: 400
+#      - Item: F_Kafra_Card_Box
+#        Price: 100
+#      - Item: F_Insurance_Package
+#        Price: 100
+#      - Item: F_Siegfried_Box
+#        Price: 100
+#
+#  - Tab: Other
+#    Items:
+#      - Item: F_Clothing_Dye_Coupon
+#        Price: 150
+#      - Item: Apple
+#        Price: 2
+#
+#  - Tab: Sale
+#    Items:
+#      - Item: Apple
+#        Price: 1
+
