@@ -1,0 +1,44 @@
+//===== rAthena Script =======================================
+//= CTRO-Server
+//===== By: ==================================================
+//= SamMeePay (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A bank which has an interest %
+//===== Additional Comments: =================================
+// สคลิป npc เฉพาะ CTRO-Server
+//============================================================
+
+
+// Start NPC CTRO-Server
+//===================================================================
+
+prontera,145,173,1	script	SetVIP for player	833,{
+	switch(select(
+		" ~ เซ็ต VIP ให้ Player 1 วัน: ~ ใช้คำสั่ง GM สำหรับ Player: ~ ^777777ยกเลิก^000000"
+	)) {
+	case 1:
+		mes "[ Service Player ]";
+		mes "ว่าไงต้องเป็น VIP ใช่ไหม";
+		next;
+		mes "[ Service Player ]";
+		mes "งั้นให้เป็นเพิ่มเป็น 1 วัน ละกันนะ";
+		atcommand "@vip +1d " + strcharinfo(0);
+		close;
+	case 2:
+		mes "[ Service Player ]";
+		mes "เชิญใส่คำสั่งเลย";
+		next;
+		input .@cmd$;
+		atcommand .@cmd$;
+		close;
+	case 3:
+		mes "[ Service Player ]";
+		mes "งั้นมาใหม่นะ";
+		close;
+	}
+	end;
+}
