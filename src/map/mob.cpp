@@ -4447,6 +4447,8 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		name.resize(NAME_LENGTH);
 		mob->jname = name;
+	} else if (!exists) {
+		mob->jname = mob->name;
 	}
 
 	if (this->nodeExists(node, "Level")) {
