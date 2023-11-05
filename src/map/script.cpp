@@ -13212,17 +13212,20 @@ BUILDIN_FUNC(addrid)
 		bl = map_id2bl(st->rid); //if run without rid it'd error,also oid if npc, else rid for map
 	iter = mapit_getallusers();
 
-	switch(script_getnum(st,2)) {
+	int type = script_getnum(st,2);
+	bool forceflag = (script_hasdata(st,3) ? script_getnum(st,3) != 0 : 0);
+
+	switch(type) {
 		case 0:
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if(sd->status.account_id != st->rid) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
 			break;
 		case 1:
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if((sd->bl.m == bl->m) && (sd->status.account_id != st->rid))
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
@@ -13234,7 +13237,7 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if((sd->status.account_id != st->rid) && (sd->status.party_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
@@ -13246,7 +13249,7 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-				if(!script_getnum(st,3) || !sd->st)
+				if(!forceflag || !sd->st)
 					if((sd->status.account_id != st->rid) && (sd->status.guild_id == script_getnum(st,4))) //attached player already runs.
 						run_script(st->script,st->pos,sd->status.account_id,st->oid);
 			}
@@ -13254,7 +13257,7 @@ BUILDIN_FUNC(addrid)
 		case 4:
 			map_foreachinallarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
-			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
+			st,forceflag);//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
 		case 5:
 			if (script_getstr(st, 4) == NULL) {
@@ -13271,12 +13274,12 @@ BUILDIN_FUNC(addrid)
 			break;
 		default:
 			mapit_free(iter);
-			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
+			if((map_id2sd(type)) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return SCRIPT_CMD_SUCCESS;
 			}
-			if(!script_getnum(st,3) || !map_id2sd(script_getnum(st,2))->st) {
-				run_script(st->script,st->pos,script_getnum(st,2),st->oid);
+			if(!forceflag || !map_id2sd(type)->st) {
+				run_script(st->script,st->pos,type,st->oid);
 				script_pushint(st,1);
 			}
 			return SCRIPT_CMD_SUCCESS;
@@ -21307,7 +21310,7 @@ int script_instancegetid(struct script_state* st, e_instance_mode mode)
 	if (mode == IM_NONE) {
 		struct npc_data *nd = map_id2nd(st->oid);
 
-		if (nd->instance_id > 0)
+		if (nd && nd->instance_id > 0)
 			instance_id = nd->instance_id;
 	} else {
 		map_session_data *sd = map_id2sd(st->rid);
@@ -25806,7 +25809,17 @@ BUILDIN_FUNC(mail){
 			for( k = 0; k < num_items && start < end; k++, start++ ){
 				msg.item[k].card[i] = (t_itemid)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
-				if( msg.item[k].card[i] > 0 && !item_db.exists(msg.item[k].card[i]) ){
+				if( msg.item[k].card[i] == 0 ){
+					// Continue with the next card, no further checks needed
+					continue;
+				}
+
+				if( itemdb_isspecial( msg.item[k].card[0] ) ){
+					// Continue with the next card, but do not check it against the item database
+					continue;
+				}
+
+				if( !item_db.exists( msg.item[k].card[i] ) ){
 					ShowError( "buildin_mail: invalid card id %u.\n", msg.item[k].card[i] );
 					return SCRIPT_CMD_FAILURE;
 				}

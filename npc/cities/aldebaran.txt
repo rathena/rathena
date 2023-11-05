@@ -27,7 +27,7 @@
 //=     Kafra and Clock Tower NPCs pending remake. [DZeroX]
 //= 2.01 removed all .GATs [Lupus]
 //= 2.1 Rescripted most NPCs to Aegis 10.3 standards. [L0ne_W0lf]
-//= 2.2 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
+//= 2.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.3 Fixed exploit with kafra pass
 //= 2.4 Updated Kafra Reserve to official dialog. [Capuche]
 //============================================================
@@ -258,7 +258,7 @@ aldebaran,121,231,4	script	Alchemy Guy#alde	49,{
 		mes "These Payon Alchemists were able to create Gold out of different materials. However, Payon Alchemy never advanced as much as the Alchemy in Al De Baran.";
 		next;
 		mes "[Chemirre]";
-		mes "Materials for Alchemy in Payon were scarse and interest in that field eventually waned. Now, you can only study Alchemy here in Al De Baran.";
+		mes "Materials for Alchemy in Payon were scarce and interest in that field eventually waned. Now, you can only study Alchemy here in Al De Baran.";
 		next;
 		mes "[Chemirre]";
 		mes "Still, I can't help but wonder what secrets were lost after the Payon art of Alchemy disappeared from the face of the Earth...";
@@ -497,7 +497,7 @@ aldebaran,146,124,4	script	Town Girl#alde	101,{
 	mes "Somewhere in the world there is an ^3355FFAssassin Guild^000000, where they teach people the subtle art of assassination.";
 	next;
 	mes "[Nastasia]";
-	mes "But isn't killing illegal? And do they even collect educational tutition?";
+	mes "But isn't killing illegal? And do they even collect educational tuition?";
 	next;
 	if (select("Continue conversation.:End Conversation.") == 1) {
 		mes "[Nastasia]";
@@ -553,7 +553,7 @@ aldeba_in,232,241,4	script	RS125#alde	48,{
 		mes "[RS125]";
 		mes "It's been 3 years already.";
 		mes "My brother 996 used to be a short track athlete in the Al De Baran city field team.";
-		mes "Back then, people gave him a nickname, 'Al De Baran's Pco Peco',";
+		mes "Back then, people gave him a nickname, 'Al De Baran's Peco Peco',";
 		mes "for his amazingly fast legs...";
 		next;
 		mes "[RS125]";
@@ -702,7 +702,7 @@ aldeba_in,156,179,4	script	Master#alde	61,{
 		mes "The original Kafra Mascot, the classic blue haired lady! Candidate Number One: ^3355FFPavianne^000000!";
 		next;
 		mes "[Master]";
-		mes "Her graceful ponytail takes mens' breath away! The fan favorite amongst teen males! Candidate Number Two: ^5533FFBlossom^000000!";
+		mes "Her graceful ponytail takes men's breath away! The fan favorite amongst teen males! Candidate Number Two: ^5533FFBlossom^000000!";
 		next;
 		mes "[Master]";
 		mes "Her long, straight hair, like silk from the East, is her charm point. Direct from Payon, it's Candidate Number Three: ^555555Jasmine^000000!";
@@ -714,7 +714,7 @@ aldeba_in,156,179,4	script	Master#alde	61,{
 		mes "Intelligent, sophisticated and never seen without her luxurious glasses. It's Candidate Number Five: ^33FF55Leilah^000000!";
 		next;
 		mes "[Master]";
-		mes "Pretty, cute and fresh faced. Although She looks young and immature,She's the best staff!";
+		mes "Pretty, cute and fresh faced. Although She looks young and immature, she's the best staff!";
 		mes "Candidate Number (6) ^AAAA00Curly Sue^000000 !!";
 		next;
 		switch(select("(1) Pavianne:(2) Blossom:(3) Jasmine:(4) Roxie:(5) Leilah:(6) Curly Sue")) {
@@ -1430,7 +1430,7 @@ aldeba_in,88,161,3	script	Kafra Employee#reserve2	4_F_KAFRA3,{
 					getitem 504,30;// White_Potion
 					mes "What a pity!";
 					mes "You got the 4th prize!!";
-					mes "The prize is ^00FF00White_Potion 30°³~^000000";
+					mes "The prize is ^00FF0030 White Potions~^000000";
 					next;
 					mes "[Kafra Employee]";
 					mes "The greatest among potions! Use it before you fall into faint~";
@@ -1505,7 +1505,7 @@ function	script	F_ClockTowerGate	{
 	switch(select("About Clock Tower:About the "+ .@floor$ +" Floor:Move to the "+ .@floor$ +" Floor:End Dialogue")) {
 	case 1:
 		mes "[Gatekeeper Boy]";
-		mes "Homeland of Alchemy,Aldebaran!";
+		mes "Homeland of Alchemy, Aldebaran!";
 		mes "Long Time ago, there were";
 		mes "3 Legendary Alchemists...They are";
 		mes "Bruke Seimer";
@@ -1567,7 +1567,7 @@ function	script	F_ClockTowerGate	{
 			mes "[Gatekeeper Boy]";
 			mes "Hmm! I already felt that you are not an Ordinary person,";
 			mes "Now it seems to be successful in Speculation.";
-			mes "Please,You may enter.";
+			mes "Please, you may enter.";
 			mes "May God bless you ..";
 			close2;
 			delitem .@item_req,1;

@@ -1576,22 +1576,22 @@ Body:
     TimeLimit: 4h
   - Id: 3507
     Title: Illusion Investigation Team - Sheshin
-  # - Id: 3508
-    # Title: Illusion of Twins 100 Kills
-    # Targets:
-      # - Id: 1
-        # Count: 100
-        # Location: ant_d02_i
-        # MapMobTargets:
-          # ILL_ANDRE_LARVA: true
-          # ILL_ANT_EGG: true
-          # ILL_FARMILIAR: true
-          # ILL_ANDRE: true
-          # ILL_DENIRO: true
-          # ILL_PIERE: true
-          # ILL_GIEARTH: true
-          # ILL_SOLDIER_ANDR: true
-          # ILL_VITATA: true
+  - Id: 3508
+    Title: Illusion of Twins 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ant_d02_i
+        MapMobTargets:
+          ILL_ANDRE_LARVA: true
+          ILL_ANT_EGG: true
+          ILL_FARMILIAR: true
+          ILL_ANDRE: true
+          ILL_DENIRO: true
+          ILL_PIERE: true
+          ILL_GIEARTH: true
+          ILL_SOLDIER_ANDR: true
+          ILL_VITATA: true
   - Id: 3509
     Title: Illusion of Twins 100 Kills - Standby
     TimeLimit: 4h
@@ -6270,6 +6270,57 @@ Body:
           MAGMARING: true
           DROSERA: true
           MUSCIPULAR: true
+  - Id: 8719
+    Title: A new area somewhere in the anthill
+  - Id: 8720
+    Title: Mirko's Request (1)
+  - Id: 8721
+    Title: Where is Briashen
+  - Id: 8722
+    Title: Briashen's message
+  - Id: 8723
+    Title: Mirko's Request (2)
+  - Id: 8724
+    Title: Where is Khahris
+  - Id: 8725
+    Title: The same look...? (1)
+  - Id: 8726
+    Title: The same look...? (2)
+  - Id: 8727
+    Title: The same look...? (3)
+  - Id: 8728
+    Title: Who is Khahris?
+  - Id: 8729
+    Title: Where is Briashen (2)
+  - Id: 8730
+    Title: The Labyrinth of Perception
+  - Id: 8731
+    Title: Geological Survey
+  - Id: 8732
+    Title: Geological Survey - Standby
+    TimeLimit: 4h
+  - Id: 8733
+    Title: Source of Power
+  - Id: 8734
+    Title: Source of Power - Standby
+    TimeLimit: 4h
+  - Id: 8735
+    Title: Same thing
+    Targets:
+      - Mob: ILL_SOLDIER_ANDR
+        Count: 10
+      - Mob: ILL_PIERE
+        Count: 10
+      - Mob: ILL_VITATA
+        Count: 10
+  - Id: 8736
+    Title: The Same Thing - Standby
+    TimeLimit: 4h
+  - Id: 8737
+    Title: Shared Memories
+  - Id: 8738
+    Title: Shared Memories - Standby
+    TimeLimit: 4h
   - Id: 9000
     Title: Job Change to Knight
   - Id: 9001
