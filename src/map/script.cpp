@@ -26947,7 +26947,7 @@ BUILDIN_FUNC(opentips){
 #else
 	map_session_data* sd;
 
-	if (!script_charid2sd(2, sd)) {
+	if (!script_charid2sd(3, sd)) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -27711,7 +27711,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
-	BUILDIN_DEF(opentips, "i"),
+	BUILDIN_DEF(opentips, "i?"),
 
 #include <custom/script_def.inc>
 
