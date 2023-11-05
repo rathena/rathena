@@ -26628,6 +26628,7 @@ BUILDIN_FUNC(getjobexp_ratio){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+
 BUILDIN_FUNC( enchantgradeui ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	map_session_data* sd;
@@ -26937,6 +26938,22 @@ BUILDIN_FUNC(macro_detector) {
 	pc_macro_reporter_process(*sd);
 
 	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(opentips){
+#if PACKETVER < 20151202
+	ShowError( "buildin_opentips: This command requires PACKETVER 20151202 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	map_session_data* sd;
+
+	if (!script_charid2sd(2, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( *sd, OUT_UI_TIP, script_getnum(st, 2) );
+	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 #include <custom/script.inc>
@@ -27694,6 +27711,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
+	BUILDIN_DEF(opentips, "i"),
 
 #include <custom/script_def.inc>
 
