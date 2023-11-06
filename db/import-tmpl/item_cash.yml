@@ -251,6 +251,12 @@ Header:
 #        Price: 100
 #      - Item: F_Siegfried_Box
 #        Price: 100
+#      - Item: Premium_Box_1d
+#        Price: 100
+#      - Item: Premium_Box_5d7
+#        Price: 500
+#      - Item: Premium_Box
+#        Price: 1000
 #
 #  - Tab: Other
 #    Items:
