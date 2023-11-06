@@ -26941,7 +26941,7 @@ BUILDIN_FUNC(macro_detector) {
 
 BUILDIN_FUNC(opentips){
 #if PACKETVER < 20171122
-	ShowError( "buildin_opentips: This command requires PACKETVER 20151202 or newer.\n" );
+	ShowError( "buildin_opentips: This command requires PACKETVER 20171122 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #else
 	map_session_data* sd;
