@@ -1,0 +1,1841 @@
+function	script	GetRefineSuccessRate	{
+	.@sumRefineRate = 10000;	//100%
+	
+	.@sumRefineRate -= 2500;	//-25%
+	if(myRefine > 10)
+	.@sumRefineRate -= 2500;	//-25%
+	if(myRefine > 10000)
+	.@sumRefineRate -= 1000;	//-10%
+	if(myRefine > 100000)
+	.@sumRefineRate -= 500;		//-5%
+	if(myRefine > 1000000)
+	.@sumRefineRate -= 1000;	//-10%
+	if(myRefine > 50000000)
+	.@sumRefineRate -= 1400;	//-14%
+	if(myRefine > 100000000)
+	.@sumRefineRate -= 90;		//-0.9%
+	if(myRefine > 500000000)
+	.@sumRefineRate -= 9;		//-0.09%
+
+	.@sumRefineRate += Perk5;	//+0.01% ~ +1%
+	
+	//Archer
+	if(Class == 3)
+	.@sumRefineRate += 1500;	//+15%
+	//Hunter
+	else if(Class == 11)
+	.@sumRefineRate += 3000;	//+30%
+	//Sniper
+	else if(Class == 4012)
+	.@sumRefineRate += 4500;	//+45%
+	//Ranger
+	else if(Class == 4062)
+	.@sumRefineRate += 7500;	//+75%
+	//Sage
+	else if(perkSage)
+	.@sumRefineRate += perkSage;//+0 ~ 50%
+	//Summoner
+	else if(Class == 4218 && perkSummoner)
+	{
+		perkSummoner = 0;
+		.@sumRefineRate += 2000;//+20%
+		callfunc("Dispbottom","Summoner!!");
+	}
+	return .@sumRefineRate;
+}
+function	script	GetAutoRefineSuccessRate	{
+	.@sumRefineRate = callfunc("GetRefineSuccessRate");
+	.@sumRefineRate /= 2;
+	.@sumRefineRate += -.@sumRefineRate + (Perk6 * (.@sumRefineRate / 100));
+	if(.@sumRefineRate <= 0)
+	.@sumRefineRate = 0;
+	//Super Novice
+	if(Class == 23)
+	.@sumRefineRate += 500;
+	//Ex.Super Novice
+	else if(Class == 4190)
+	.@sumRefineRate += 5000;
+	return .@sumRefineRate;
+}
+function	script	GetRefinePrice	{
+	.@sumPrice = 0;
+	
+	if(myRefine > 10)
+	.@sumPrice += 5;
+	if(myRefine > 10000)
+	.@sumPrice += 95;
+	if(myRefine > 100000)
+	.@sumPrice += 900;
+	if(myRefine > 1000000)
+	.@sumPrice += 9000;
+	if(myRefine > 50000000)
+	.@sumPrice += 90000;
+	if(myRefine > 100000000)
+	.@sumPrice += 900000;
+	if(myRefine > 500000000)
+	.@sumPrice += 9000000;
+
+	return .@sumPrice;
+}
+function	script	GetRefineEarning	{
+	.@sumEarning = 5;
+	
+	if(myRefine > 10)
+	.@sumEarning += 9;
+	if(myRefine > 10000)
+	.@sumEarning += 490;
+	if(myRefine > 100000)
+	.@sumEarning += 4500;
+	if(myRefine > 1000000)
+	.@sumEarning += 15000;
+	if(myRefine > 50000000)
+	.@sumEarning += 180000;
+	if(myRefine > 100000000)
+	.@sumEarning += 1800000;
+	if(myRefine > 500000000)
+	.@sumEarning += 18000000;
+
+	return .@sumEarning;
+}
+function	script	UpgradePerkPrice	{
+	.@sumPerkLv = getd("Perk" + getarg(0));
+	if(.@sumPerkLv >= 100)
+	return "(Max)";
+	if(.@sumPerkLv <= 10)
+	return "(100z)";
+	else if(.@sumPerkLv <= 20)
+	return "(10K)";
+	else if(.@sumPerkLv <= 30)
+	return "(100K)";
+	else if(.@sumPerkLv <= 40)
+	return "(1M)";
+	else if(.@sumPerkLv <= 50)
+	return "(10M)";
+	else if(.@sumPerkLv <= 60)
+	return "(20M)";
+	else if(.@sumPerkLv <= 70)
+	return "(30M)";
+	else if(.@sumPerkLv <= 80)
+	return "(40M)";
+	else if(.@sumPerkLv <= 90)
+	return "(50M)";
+	else if(.@sumPerkLv <= 100)
+	return "(100M)";
+}
+function	script	UpgradePerk	{
+	.@sumPerkLv = getd("Perk" + getarg(0));
+	if(.@sumPerkLv >= 100){
+		message strcharinfo(0),"Perk นี้ระดับสูงสุดแล้ว";
+		end;
+	}
+	if(.@sumPerkLv <= 10)
+	.@sumPrice = 100;
+	else if(.@sumPerkLv <= 20)
+	.@sumPrice = 10000;
+	else if(.@sumPerkLv <= 30)
+	.@sumPrice = 100000;
+	else if(.@sumPerkLv <= 40)
+	.@sumPrice = 1000000;
+	else if(.@sumPerkLv <= 50)
+	.@sumPrice = 10000000;
+	else if(.@sumPerkLv <= 60)
+	.@sumPrice = 20000000;
+	else if(.@sumPerkLv <= 70)
+	.@sumPrice = 30000000;
+	else if(.@sumPerkLv <= 80)
+	.@sumPrice = 40000000;
+	else if(.@sumPerkLv <= 90)
+	.@sumPrice = 50000000;
+	else if(.@sumPerkLv <= 100)
+	.@sumPrice = 100000000;
+	if(Zeny >= .@sumPrice)
+	Zeny -= .@sumPrice;
+	else{
+		message strcharinfo(0),"ต้องการ Zeny: " + callfunc("F_InsertComma",.@sumPrice);
+		end;
+	}
+	.@sumPerkLv++;
+	set getd("Perk" + getarg(0)),.@sumPerkLv;
+	if(getarg(0) == 1)
+	.@sumPerkName$ = "Safe Refine";
+	else if(getarg(0) == 2)
+	.@sumPerkName$ = "Safe Zeny";
+	else if(getarg(0) == 3)
+	.@sumPerkName$ = "Double Refine";
+	else if(getarg(0) == 4)
+	.@sumPerkName$ = "Double Earning";
+	else if(getarg(0) == 5)
+	.@sumPerkName$ = "Refine Mastery";
+	else if(getarg(0) == 6)
+	.@sumPerkName$ = "Auto Refine";
+	else if(getarg(0) == 7)
+	.@sumPerkName$ = "Turbo Auto Refine";
+	else if(getarg(0) == 8)
+	.@sumPerkName$ = "AFK Refine";
+	message strcharinfo(0),.@sumPerkName$ + " Lv.: " + callfunc("F_InsertComma",.@sumPerkLv);
+	callfunc("PerkInformation");
+	return;
+}
+function	script	PerkInformation	{
+	dispbottom "====";
+	dispbottom "- Safe Refine Lv." + callfunc("F_InsertComma",Perk1) + " เมื่อตีบวกไม่สำเร็จจะไม่ลดจำนวนตีบวกลง โอกาสติด >> " + (Perk1 / 2) + "%";
+	dispbottom "- Safe Zeny Lv." + callfunc("F_InsertComma",Perk2) + " เมื่อตีบวกไม่สำเร็จจะไม่ลด Zeny โอกาสติด >> " + (Perk2 / 2) + "%";
+	dispbottom "- Double Refine Lv." + callfunc("F_InsertComma",Perk3) + " เมื่อตีบวกสำเร็จจะเพิ่มขึ้นให้ฟรีอีก 1 ระดับ โอกาสติด >> " + (Perk3 / 2) + "%";
+	dispbottom "- Double Earning Lv." + callfunc("F_InsertComma",Perk4) + " เมื่อตีบวกสำเร็จจะได้รับเงิน 2 เท่า โอกาสติด >> " + (Perk4 / 2) + "%";
+	
+	//Refine Mastery
+	if(Perk5 < 10)
+	dispbottom "- Refine Mastery Lv." + callfunc("F_InsertComma",Perk5) + " เพิ่มโอกาสตีบวก >> 0.0" + Perk5 + "%";
+	else if(Perk5 >= 100)
+	dispbottom "- Refine Mastery Lv." + callfunc("F_InsertComma",Perk5) + " เพิ่มโอกาสตีบวก >> 1%";
+	else
+	dispbottom "- Refine Mastery Lv." + callfunc("F_InsertComma",Perk5) + " เพิ่มโอกาสตีบวก >> 0." + (Perk5 / 10) + "%";
+
+	//Auto Refine
+	.@sumPerk6RefineRate = callfunc("GetAutoRefineSuccessRate");
+	if(Perk6<=0)
+	.@sumPerk6RefineRate = 0;
+	if(.@sumPerk6RefineRate>=100)
+	dispbottom "- Auto Refine Lv." + callfunc("F_InsertComma",Perk6) + " ตีบวกพิเศษทุก ๆ การตีบวก 10 ครั้ง  โอกาสสำเร็จ >> " + .@sumPerk6RefineRate / 100 + "% หากตีบวกพิเศษสำเร็จ Zeny ที่ได้รับจะหาร 4 หากไม่สำเร็จจะไม่มีผลกระทบใด ๆ";
+	else if(.@sumPerk6RefineRate>9)
+	dispbottom "- Auto Refine Lv." + callfunc("F_InsertComma",Perk6) + " ตีบวกพิเศษทุก ๆ การตีบวก 10 ครั้ง  โอกาสสำเร็จ >> 0." + .@sumPerk6RefineRate / 10 + "% หากตีบวกพิเศษสำเร็จ Zeny ที่ได้รับจะหาร 4 หากไม่สำเร็จจะไม่มีผลกระทบใด ๆ";
+	else
+	dispbottom "- Auto Refine Lv." + callfunc("F_InsertComma",Perk6) + " ตีบวกพิเศษทุก ๆ การตีบวก 10 ครั้ง  โอกาสสำเร็จ >> 0.0" + .@sumPerk6RefineRate + "% หากตีบวกพิเศษสำเร็จ Zeny ที่ได้รับจะหาร 4 หากไม่สำเร็จจะไม่มีผลกระทบใด ๆ";
+
+	//Turbo Auto Refine
+	dispbottom "- Turbo Auto Refine Lv." + callfunc("F_InsertComma",Perk7) + " เพิ่มจำนวนตีบวกให้ Auto Refine เมื่อตีบวกสำเร็จ >> " + Perk7 + "";
+	
+	//AFK Refine
+	dispbottom "- AFK Refine Lv." + callfunc("F_InsertComma",Perk8) + " ทุก ๆ 1 นาทีที่ Offline จะได้รับ >> " + callfunc("F_InsertComma",Perk8 * 10000) + " จำนวนตีบวก";
+	
+	//Refine Rate
+	.@refineRate = callfunc("GetRefineSuccessRate");
+	if(.@refineRate>=100)
+	dispbottom "+ โอกาสตีบวกสำเร็จขณะนี้: " + (callfunc("GetRefineSuccessRate") / 100) + "%";
+	else if(.@refineRate>9)
+	dispbottom "+ โอกาสตีบวกสำเร็จขณะนี้: 0." + (callfunc("GetRefineSuccessRate") / 10) + "%";
+	else
+	dispbottom "+ โอกาสตีบวกสำเร็จขณะนี้: 0.0" + callfunc("GetRefineSuccessRate") + "%";
+	return;
+}
+
+function	script	IsZenyEnoughSR	{
+	if(Zeny >= getarg(0))
+	return;
+	else{
+		freeloop(0);
+		mes "ต้องการ: " + callfunc("F_InsertComma",getarg(0)) + " Zeny";
+		message strcharinfo(0),"ต้องการ: " + callfunc("F_InsertComma",getarg(0)) + " Zeny";
+		close2;
+		end;
+	}
+}
+function	script	MyZenySR	{
+	if(disableInfo)
+	return;
+	if(getarg(0) == 1){
+		specialeffect2 18;
+		announce "คงเหลือ: " + callfunc("F_InsertComma",Zeny) + " Zeny",bc_self,0xffffe0;
+	}
+	else if(getarg(0) == 2){
+		specialeffect2 10;
+		announce "เพิ่มเป็น: " + callfunc("F_InsertComma",Zeny) + " Zeny",bc_self,0xedbdff;
+	}
+	else
+	announce "คุณมี:    " + callfunc("F_InsertComma",Zeny) + " Zeny",bc_self,0xfcffa8;
+	return;
+}
+function	script	UseZenySR	{
+	Zeny -= getarg(0);
+	callfunc("MyZenySR",1);
+	return;
+}
+function	script	AddZenySR	{
+	Zeny += getarg(0);
+	callfunc("MyZenySR",2);
+	return;
+}
+
+function	script	PlayerCheck	{
+	if(!playerattached())
+	end;
+	return;
+}
+
+function	script	Mes	{
+	if(getarg(1)==0)//Topic,Header
+	mes "^0d00f7" + getarg(0) + "^000000";
+	else if(getarg(1)==1)//Infomation
+	mes "^02630c" + getarg(0) + "^000000";
+	else if(getarg(1)==2)//Important,Danger
+	mes "^990808" + getarg(0) + "^000000";
+	return;
+}
+
+function	script	SetRefineCount	{
+	if(getarg(0) < 0)
+	specialeffect2 155;
+	else{
+		.@sumSuccess = 1;
+		
+		specialeffect2 154;
+	}
+	
+	myRefine += getarg(0);
+	
+	if(myRefine <= 0)
+	myRefine = 0;
+
+	else if(myRefine >= 1000000000){
+		mySuperRefine++;
+		
+		myRefine = 0;
+		
+		atcommand "@job 0";
+		
+		announce "สุดยอดดด!! " + strcharinfo(0) + " ตีบวกครบ 1,000M ครั้งแล้ว! แต้ม Super Refine เป็น " + callfunc("F_InsertComma",mySuperRefine) + " แต้ม",bc_all,0x34ebcc;
+	}
+	return;
+}
+
+function	script	Refiner	{
+	if($isRescripts)
+	end;
+
+	callfunc("PlayerCheck");
+
+	if(disableNormalRefine && disableAutoRefine){
+		dispbottom "คุณหยุดการใช้งาน Macro เนื่องจาก OFF ทั้ง 2 โหมดเลย  [เปิด-ปิด บวก Auto คำสั่ง @auto][เปิด-ปิด บวกปกติ คำสั่ง @normal]";
+		macroRun = 0;
+		end;
+	}
+	
+	//Auto Refine
+	if(!disableAutoRefine){
+		.@sumPrefix$ = "(Auto)";
+		if(autoRefineCount >= 10)
+		{
+			autoRefineCount = 0;
+			.@isAutomatic = 1;
+		}
+	}
+
+	.@sumPostfix$ = " [เปิด-ปิด บวก Auto คำสั่ง @auto][เปิด-ปิด บวกปกติ คำสั่ง @normal][หยุดการทำงาน คำสั่ง @macro]";
+
+	//[OVERLOAD CHECK]
+	if(macroRun && getarg(0) == 0)
+	end;
+	else if(!macroRun && getarg(0) == 0)
+	macroRun = 1;
+	if(!macroRun && getarg(0) == 2)
+	end;
+
+	//Rogue [GLOBAL PERK]
+	if($perkRogue && myRefine > 1000){
+		if(getcharid(0) != $perkRogueCID)
+		callfunc("SetRefineCount",-10);
+	}
+	//Stalker [GLOBAL PERK]
+	if($perkStalker && myRefine > 100000){
+		if(getcharid(0) != $perkStalkerCID)
+		callfunc("SetRefineCount",-100);
+	}
+	//Shadow Chaser [GLOBAL PERK]
+	if($perkShadowChaser && myRefine > 1000000){
+		if(getcharid(0) != $perkShadowChaserCID)
+		callfunc("SetRefineCount",-1000);
+	}
+	
+	//Star Gladiator || Star Emperor
+	if(Class == 4047 || Class == 4239){
+		perkStarGladiator++;
+		if(perkStarGladiator >= 60){
+			perkStarGladiator = 0;
+			if(Class == 4047 && rand(1,10) == 1){
+				callfunc("SetRefineCount",600);
+				callfunc("Dispbottom","Star Gladiator!!");
+			}
+			else if(Class == 4239 && rand(1,10) == 1){
+				callfunc("SetRefineCount",6000);
+				callfunc("Dispbottom","Star Emperor!!");
+			}
+		}
+	}
+	//Soul Linker || Soul Reaper
+	else if(Class == 4049 || Class == 4240){
+		perkSoulLinker++;
+		if(perkSoulLinker >= 60){
+			perkSoulLinker = 0;
+			if(Class == 4049 && rand(1,10) <= 5){
+				callfunc("SetRefineCount",$playerCount * 100);
+				callfunc("Dispbottom","Soul Linker!!");
+			}
+			else if(Class == 4240){
+				callfunc("SetRefineCount",$playerCount * 100);
+				callfunc("Dispbottom","Soul Reaper!!");
+			}
+		}
+	}
+
+	//[STOP NORMAL REFINE?]
+	if(disableNormalRefine && !.@isAutomatic){
+		//Do nothing
+	}
+	else{
+		//[CHECK ZENY]
+		if(Zeny < callfunc("GetRefinePrice") && !.@isAutomatic)
+		{
+			callfunc("SetRefineCount",-1);
+			callfunc("AddZenySR",callfunc("GetRefinePrice"));
+			callfunc("Dispbottom","คุณโดนลดค่าตีบวกลงแต่จะได้รับ Zeny เนื่องจากคุณมี Zeny ไม่พอ");
+		}
+		else{
+			//Taekwon
+			if(Class == 4046){
+				perkTaekwon++;
+				if(perkTaekwon >= 60){
+					perkTaekwon = 0;
+					callfunc("SetRefineCount",1);
+					callfunc("Dispbottom","Taekwon!!");
+				}
+			}
+			
+			//Ninja
+			if(Class == 25 && rand(1,100) <= 45)
+			.@sumNinjaPerk = 1;
+			
+			//[PAY REFINE COST]
+			if(!.@isAutomatic && !.@sumNinjaPerk)
+			callfunc("UseZenySR",callfunc("GetRefinePrice"));
+			
+			//[SUCCESS REFINE]
+			if(perkStarGladiator
+					|| (!.@isAutomatic && rand(0,10000) < callfunc("GetRefineSuccessRate"))
+					|| (.@isAutomatic && rand(0,10000) < callfunc("GetAutoRefineSuccessRate"))){
+				callfunc("SetRefineCount",1);
+				
+				//Turbo Auto Refine
+				if(Perk7 > 0 && .@isAutomatic)
+				callfunc("SetRefineCount",Perk7);
+				
+				//Double Refine
+				if(Perk3 > 0 && rand(1,100 <= (Perk3 / 2))){
+					callfunc("Dispbottom","Double Refine!!");
+					callfunc("SetRefineCount",1);
+				}
+				
+				//Thief
+				if(Class == 6 && .@isAutomatic){
+					callfunc("Dispbottom","Thief!!");
+					callfunc("SetRefineCount",30);
+				}
+				//Assassin
+				else if(Class == 12 && .@isAutomatic){
+					callfunc("Dispbottom","Assassin!!");
+					callfunc("SetRefineCount",60);
+				}
+				//Assassin Cross
+				else if(Class == 4013 && .@isAutomatic){
+					callfunc("Dispbottom","Assassin Cross!!");
+					callfunc("SetRefineCount",900);
+				}
+				//Guillotine Cross
+				else if(Class == 4065 && .@isAutomatic){
+					callfunc("Dispbottom","Guillotine Cross!!");
+					callfunc("SetRefineCount",2000);
+				}
+				
+				//Kagerou && Oboro
+				else if((Class == 4211 || Class == 4212) && rand(1,100) == 1){
+					callfunc("Dispbottom","Kagerou && Oboro!!");
+					callfunc("SetRefineCount",rand(1,100000000));
+				}
+				
+				//Swordman
+				else if(Class == 1){
+					callfunc("Dispbottom","Swordman!!");
+					callfunc("SetRefineCount",10);
+				}
+				//Knight
+				else if(Class == 7){
+					callfunc("Dispbottom","Knight!!");
+					callfunc("SetRefineCount",100);
+				}
+				//Lord Knight
+				else if(Class == 4008){
+					callfunc("Dispbottom","Lord Knight!!");
+					callfunc("SetRefineCount",500);
+				}
+				//Rune Knight
+				else if(Class == 4060){
+					callfunc("Dispbottom","Rune Knight!!");
+					callfunc("SetRefineCount",1000);
+				}
+				
+				//Monk
+				else if(Class == 15 && rand(1,10000) == 1){
+					callfunc("Dispbottom","Monk!!");
+					callfunc("SetRefineCount",myRefine);
+				}
+				//Champion
+				else if(Class == 4016 && rand(1,10000) == 1){
+					callfunc("Dispbottom","Champion!!");
+					callfunc("SetRefineCount",myRefine * 2);
+				}
+				//Sura
+				else if(Class == 4077 && rand(1,10000) == 1){
+					callfunc("Dispbottom","Sura!!");
+					callfunc("SetRefineCount",myRefine * 4);
+				}
+				
+				//Sage
+				else if(Class == 16){
+					perkSage += 1000;
+					if(perkSage >= 9000)
+					perkSage = 9000;
+				}
+				//Professor
+				else if(Class == 4017){
+					perkSage += 2000;
+					if(perkSage >= 9000)
+					perkSage = 9000;
+				}
+				//Sorcerer
+				else if(Class == 4074){
+					perkSage += 3000;
+					if(perkSage >= 9000)
+					perkSage = 9000;
+				}
+				
+				//Alchemist
+				else if(Class == 18 && .@isAutomatic && rand(1,100) == 1){
+					callfunc("Dispbottom","Alchemist!!");
+					callfunc("SetRefineCount",myRefine);
+				}
+				//Creator
+				else if(Class == 4019 && .@isAutomatic && rand(1,100) == 1){
+					callfunc("Dispbottom","Creator!!");
+					callfunc("SetRefineCount",myRefine * 2);
+				}
+				//Genetic
+				else if(Class == 4078 && .@isAutomatic && rand(1,100) == 1){
+					callfunc("Dispbottom","Genetic!!");
+					callfunc("SetRefineCount",myRefine * 4);
+				}
+				else if((Class == 18 || Class == 4019 || Class == 4078) && .@isAutomatic)
+				callfunc("SetRefineCount",-(myRefine / 100));
+				
+				//Bard & Dancer
+				else if(Class == 19 || Class == 20){
+					callfunc("Dispbottom","Bard & Dancer!!");
+					callfunc("SetRefineCount",$playerCount);
+				}
+				//Clown & Gypsy
+				else if(Class == 4020 || Class == 4021){
+					callfunc("Dispbottom","Clown & Gypsy!!");
+					callfunc("SetRefineCount",$playerCount * 3);
+				}
+				//Minstrel & Wanderer
+				else if(Class == 4075 || Class == 4076){
+					callfunc("Dispbottom","Minstrel & Wanderer!!");
+					callfunc("SetRefineCount",$playerCount * 5);
+				}
+				
+				//[EARNING]
+				callfunc("AddZenySR", callfunc("GetRefineEarning"));
+				if(Perk4 > 0 && rand(1,100 <= (Perk4 / 2))){
+					callfunc("Dispbottom","Double Earning!!");
+					callfunc("AddZenySR", callfunc("GetRefineEarning"));
+				}
+				
+				//Merchant
+				if(Class == 5){
+					callfunc("Dispbottom","Merchant!!");
+					callfunc("AddZenySR", callfunc("GetRefineEarning"));
+				}
+				//Blacksmith
+				else if(Class == 10){
+					callfunc("Dispbottom","Blacksmith!!");
+					callfunc("AddZenySR", callfunc("GetRefineEarning") * 2);
+				}
+				//Whitesmith
+				else if(Class == 4011){
+					callfunc("Dispbottom","Whitesmith!!");
+					callfunc("AddZenySR", callfunc("GetRefineEarning") * 3);
+				}
+				//Mechanic
+				else if(Class == 4064){
+					callfunc("Dispbottom","Mechanic!!");
+					callfunc("AddZenySR", callfunc("GetRefineEarning") * 5);
+				}
+				
+				//Gunslinger
+				else if(Class == 24){
+					perkGunslinger++;
+					if(perkGunslinger>=2){
+						perkGunslinger = 0;
+						callfunc("Dispbottom","Gunslinger!!");
+						callfunc("SetRefineCount",50);
+					}
+				}
+				//Rebellion
+				else if(Class == 4215){
+					perkGunslinger++;
+					if(perkGunslinger>=2){
+						perkGunslinger = 0;
+						callfunc("Dispbottom","Rebellion!!");
+						callfunc("SetRefineCount",500);
+					}
+				}
+			}
+			//[FAILED REFINE]
+			else
+			{
+				if(perkSage > 0){
+					//Sage
+					if(Class == 16)
+					callfunc("AddZenySR", callfunc("GetRefinePrice"));
+					//Sage
+					if(Class == 4017)
+					callfunc("AddZenySR", callfunc("GetRefinePrice") * 2);
+					//Sage
+					if(Class == 4074)
+					callfunc("AddZenySR", callfunc("GetRefinePrice") * 3);
+					perkSage = 0;
+				}
+				
+				perkGunslinger = 0;
+				
+				//Magician
+				if(Class == 2 && rand(1,100) <= 15){
+					callfunc("Dispbottom","Magician!!");
+					callfunc("SetRefineCount",1);
+				}
+				//Wizard
+				else if(Class == 9 && rand(1,100) <= 30){
+					callfunc("Dispbottom","Wizard!!");
+					callfunc("SetRefineCount",1);
+				}
+				//High Wizard
+				else if(Class == 4010 && rand(1,100) <= 45){
+					callfunc("Dispbottom","High Wizard!!");
+					callfunc("SetRefineCount",1);
+				}
+				//Warlock
+				else if(Class == 4061 && rand(1,100) <= 90){
+					callfunc("Dispbottom","Warlock!!");
+					callfunc("SetRefineCount",1);
+				}
+				
+				//Acoltye
+				else if(Class == 4){
+					perkAcolyte++;
+					if(perkAcolyte>=10){
+						callfunc("Dispbottom","Acolyte!!");
+						callfunc("SetRefineCount",1);
+						callfunc("AddZenySR", callfunc("GetRefineEarning"));
+						perkAcolyte = 0;
+					}
+				}
+				//Priest
+				else if(Class == 8){
+					perkAcolyte++;
+					if(perkAcolyte>=6){
+						callfunc("Dispbottom","Priest!!");
+						callfunc("SetRefineCount",1);
+						callfunc("AddZenySR", callfunc("GetRefineEarning"));
+						perkAcolyte = 0;
+					}
+				}
+				//High Priest
+				else if(Class == 4009){
+					perkAcolyte++;
+					if(perkAcolyte>=4){
+						callfunc("Dispbottom","High Priest!!");
+						callfunc("SetRefineCount",1);
+						callfunc("AddZenySR", callfunc("GetRefineEarning"));
+						perkAcolyte = 0;
+					}
+				}
+				//Arch Bishop
+				else if(Class == 4063){
+					perkAcolyte++;
+					if(perkAcolyte>=2){
+						callfunc("Dispbottom","Arch Bishop!!");
+						callfunc("SetRefineCount",1);
+						callfunc("AddZenySR", callfunc("GetRefineEarning"));
+						perkAcolyte = 0;
+					}
+				}
+				
+				//Summoner
+				else if(Class == 4218)
+				perkSummoner = 1;
+				
+				//Crusader
+				else if(Class == 14){
+					if(!.@isAutomatic && rand(0,10000) < 5){
+						callfunc("Dispbottom","Crusader!!");
+						callfunc("SetRefineCount",myRefine / 100);
+					}
+				}
+				//Paladin
+				else if(Class == 4015){
+					if(!.@isAutomatic && rand(0,10000) < 5){
+						callfunc("Dispbottom","Paladin!!");
+						callfunc("SetRefineCount",myRefine / 50);
+					}
+				}
+				//Royal Guard
+				else if(Class == 4073){
+					if(!.@isAutomatic && rand(0,10000) < 5){
+						callfunc("Dispbottom","Royal Guard!!");
+						callfunc("SetRefineCount",myRefine / 25);
+					}
+				}
+				
+				//Rogue
+				else if(Class == 17)
+				perkRogue++;
+				//Stalker
+				else if(Class == 4018)
+				perkStalker++;
+				//Shadow Chaser
+				else if(Class == 4079)
+				perkShadowChaser++;
+				
+				//[MACRO]
+				if(!.@isAutomatic){
+					//Safe Zeny
+					if(Perk2 > 0 && rand(1,100) <= (Perk2 / 2)){
+						callfunc("Dispbottom","Safe Zeny!!");
+						callfunc("AddZenySR", callfunc("GetRefinePrice"));
+					}
+					//Safe Refine
+					if(Perk1 > 0 && rand(1,100) <= (Perk1 / 2))
+					callfunc("Dispbottom","Safe Refine!!");
+					//FAILED REFINE >> Decrease Refine Count
+					else
+					callfunc("SetRefineCount",-1);
+				}
+			}
+		}
+	}
+
+	//Rogue
+	if(perkRogue >= 100){
+		perkRogue = 0;
+		$perkRogueCID = getcharid(0);
+		$perkRogue = 1;
+	}
+	//Stalker
+	if(perkStalker >= 100){
+		perkStalker = 0;
+		$perkStalkerCID = getcharid(0);
+		$perkStalker = 1;
+	}
+	//Shadow Chaser
+	if(perkShadowChaser >= 100){
+		perkShadowChaser = 0;
+		$perkShadowChaserCID = getcharid(0);
+		$perkShadowChaser = 1;
+	}
+	
+	//[INFOMATION]
+	if(!disableInfo){
+		if(disableNormalRefine && !.@isAutomatic){
+			//Do nothing
+		}
+		else{
+			if(!disableAutoRefine)
+			message strcharinfo(0),.@sumPrefix$ + "ระดับตีบวก: " + callfunc("F_InsertComma",myRefine) + .@sumPostfix$ + "[" + autoRefineCount + "/10]";
+			else
+			message strcharinfo(0),"ระดับตีบวก: " + callfunc("F_InsertComma",myRefine) + .@sumPostfix$;
+		}
+	}
+
+	if($isRescripts)
+	end;
+	callfunc("PlayerCheck");
+
+	//[FORCE MACRO]
+	sleep2 100;
+	
+	if($isRescripts)
+	end;
+	callfunc("PlayerCheck");
+
+	//Auto Refine
+	if(!disableAutoRefine && !.@isAutomatic)
+	autoRefineCount++;
+
+	callfunc("Refiner",2);
+
+	end;
+}
+
+function	script	Minimal	{
+	.@sum = getarg(0);
+	
+	if(.@sum <= 999)
+	.@s$ = .@sum;
+	else if(.@sum <= 999999)
+	.@s$ = callfunc("F_InsertComma",(.@sum / 1000)) + "K";
+	else
+	.@s$ = callfunc("F_InsertComma",(.@sum / 1000000)) + "M";
+
+	return .@s$;
+}
+
+function	script	Dispbottom	{
+	if(disableInfo)
+	return;
+
+	dispbottom getarg(0);
+	
+	return;
+}
+
+-	script	GMController	-1,{
+OnInit:
+	bindatcmd "gm",strnpcinfo(3) + "::OnGMMenu",99,99;
+	bindatcmd "r",strnpcinfo(3) + "::OnRescript",99,99;
+	end;
+	
+OnRescript:
+	announce "GM กำลังจะรัน Scripts ใหม่ โปรดรอสักครู่",bc_all,0xf5dd42;
+	$isRescripts = 1;
+	end;
+	
+OnGMMenu:
+	if(!getgmlevel())
+	end;
+	menu "ใส่คำพูดตอนเข้าเกม",L_AddWelcomeMessage
+	,"ลบคำพูดตอนเข้าเกม",L_RemoveWelcomeMessage
+	,"Reset Refine Lv.",L_ResetRefineLv
+	,"Set Refine Lv.",L_SetRefineLv
+	,"Set Super Refine Lv.",L_SetSuperRefineLv
+	,"Check Refine Info.",L_CheckRefineInfomation;
+
+	L_CheckRefineInfomation:
+	message strcharinfo(0),"ระดับตีบวก: " + callfunc("F_InsertComma",myRefine);
+	.@sumRefineRate = callfunc("GetRefineSuccessRate");
+	if(.@sumRefineRate<10)
+	dispbottom "Success Rate: 0.0" + callfunc("GetRefineSuccessRate") + "%";
+	else if(.@sumRefineRate<100)
+	dispbottom "Success Rate: 0." + (callfunc("GetRefineSuccessRate") / 10) + "%";
+	else
+	dispbottom "Success Rate: " + (callfunc("GetRefineSuccessRate") / 100) + "%";
+	dispbottom "Refine Price: " + callfunc("F_InsertComma",callfunc("GetRefinePrice")) + "z";
+	dispbottom "Success Earning: " + callfunc("F_InsertComma",callfunc("GetRefineEarning")) + "z";
+	callfunc("PerkInformation");
+	end;
+
+	L_SetRefineLv:
+	input .@i;
+	myRefine = .@i;
+	specialeffect2 154;
+	message strcharinfo(0),"ระดับตีบวก: " + callfunc("F_InsertComma",myRefine);
+	end;
+	
+	L_SetSuperRefineLv:
+	input .@i;
+	mySuperRefine = .@i;
+	specialeffect2 154;
+	message strcharinfo(0),"ระดับตีบวก: " + callfunc("F_InsertComma",mySuperRefine);
+	end;
+	
+	L_ResetRefineLv:
+	myRefine = 0;
+	specialeffect2 155;
+	message strcharinfo(0),"ระดับตีบวก: " + callfunc("F_InsertComma",myRefine);
+	end;
+	
+	L_RemoveWelcomeMessage:
+	$loginMes$ = "";
+	dispbottom "====";
+	dispbottom "ลบคำพูดตอนเข้าเกม เรียบร้อย";
+	close;
+
+	L_AddWelcomeMessage:
+	dispbottom "====";
+	dispbottom "โปรด ใส่คำพูดตอนเข้าเกม";
+	dispbottom " ";
+	dispbottom "*หากไม่ใส่ จะเป็นการลบคำพูดตอนเข้าเกม";
+	input .@s$;
+	if(.@s$ == " " || .@s$ == "")
+	goto L_RemoveWelcomeMessage;
+	else{
+		$loginMes$ = .@s$;
+		dispbottom "ใส่คำพูดตอนเข้าเกม เรียบร้อย";
+		end;
+	}
+}
+
+-	script	LoginController	-1,{
+OnPCLoginEvent:
+	macroRun = 0;
+	
+	nude;
+	
+	.@item1 = countitem(673);
+	atcommand "@clearinventory";
+	atcommand "@skillall";
+	if(.@item1 > 0)
+	getitem 673,.@item1;
+
+	if($loginMes$ != " " && $loginMes$ != "")
+	message strcharinfo(0),$loginMes$;
+
+	setfont 0;
+	setlook LOOK_HEAD_TOP,dressSlot1;
+	setlook LOOK_HEAD_MID,dressSlot2;
+	setlook LOOK_HEAD_BOTTOM,dressSlot3;
+	
+	$playerCount++;
+	
+	//Afk
+	if(afk > 0){
+		if(getgmlevel())
+		dispbottom gettimetick(2) + " vs " + afk;
+		
+		.@currentUnixTime = gettimetick(2);
+		.@currentUnixTime -= afk;
+		afk = 0;
+		
+		freeloop(1);
+		while(.@currentUnixTime >= 60){
+			.@sumAFKBonus++;
+			.@currentUnixTime -= 60;
+		}
+		freeloop(0);
+		
+		.@sumPerk8 = Perk8 * 10000;
+		.@sumRefineBonus = .@sumAFKBonus * .@sumPerk8;
+		
+		callfunc("SetRefineCount",.@sumRefineBonus);
+		
+		dispbottom "คุณได้รับ AFK Refine: " + callfunc("F_InsertComma",.@sumRefineBonus) + " จำนวนตีบวก";
+	}
+
+	callfunc("Refiner",0);
+
+	end;
+	
+OnPCLogoutEvent:
+	if(Perk8>0)
+	afk = gettimetick(2);
+
+	$playerCount--;
+	
+	if($playerCount<=0)
+	$playerCount = 0;
+
+	end;
+}
+
+-	script	CashToZenyController	-1,{
+	callfunc("Mes","50 Cash >> 100,000z",1);
+	callfunc("Mes","250 Cash >> 1,000,000z",1);
+	callfunc("Mes","500 Cash >> 10,000,000z",1);
+	callfunc("Mes","2,500 Cash >> 100,000,000z",1);
+	callfunc("Mes","5,000 Cash >> 1,000,000,000z",1);
+	next;
+	menu "50 Cash",L_1
+	,"250 Cash",L_2
+	,"500 Cash",L_3
+	,"2,500 Cash",L_4
+	,"5,000 Cash",L_5;
+	
+	L_1:
+	.@sumCash = 50;
+	.@sumZeny = 100000;
+	goto L_Trade;
+	L_2:
+	.@sumCash = 250;
+	.@sumZeny = 1000000;
+	goto L_Trade;
+	L_3:
+	.@sumCash = 500;
+	.@sumZeny = 10000000;
+	goto L_Trade;
+	L_4:
+	.@sumCash = 2500;
+	.@sumZeny = 100000000;
+	goto L_Trade;
+	L_5:
+	.@sumCash = 5000;
+	.@sumZeny = 1000000000;
+	goto L_Trade;
+	
+	L_Trade:
+	callfunc("IsCashEnough",.@sumCash,"",1);
+	callfunc("AddZenySR",.@sumZeny);
+	close;
+	
+OnInit:
+	waitingroom "แลก Cash เป็น Zeny",0;
+	end;
+}
+
+prontera,148,193,5	duplicate(CashToZenyController)	 ::CashToZenyController#1	563
+
+-	script	CashPointController	-1,{
+OnInit:
+	bindatcmd "cc",strnpcinfo(3) + "::OnCCount",99,99;				//Use this everytime before you call 'cr' or 'crc'
+	bindatcmd "cr",strnpcinfo(3) + "::OnRefreshChar",99,99;			//Add menu to add cash to players
+	bindatcmd "crc",strnpcinfo(3) + "::OnRefreshCharCheck",99,99;	//Add mes to check cash each players
+	bindatcmd "c",strnpcinfo(3) + "::OnC",99,99;					//Call after 'cr or 'crc'
+	end;
+	
+OnCCount:
+	if(!getgmlevel())
+	end;
+	cleararray $aid[0],0,getarraysize($aid);
+	cleararray $cid[0],0,getarraysize($cid);
+	cleararray $name$[0],0,getarraysize($name$);
+	$size_aid = 0;
+	addrid(0);
+	$aid[$size_aid] = playerattached();
+	$cid[$size_aid] = getcharid(0);
+	$name$[$size_aid] = strcharinfo(0);
+	$size_aid++;
+	$cMenu = 0;
+	end;
+	
+OnRefreshCharCheck:
+	if(!getgmlevel())
+	end;
+	$menu$ = "";
+	freeloop(1);
+	while(.@i<$size_aid){
+		.@points = 0;
+		query_sql "SELECT acc_reg_num.`value` " + "FROM acc_reg_num LEFT JOIN `login` ON acc_reg_num.account_id = `login`.account_id WHERE acc_reg_num.`key` = '#CASHPOINTS' AND acc_reg_num.`account_id` = '" + $aid[.@i] + "' " + "ORDER BY CAST(acc_reg_num.`value` AS SIGNED) DESC",.@points;
+		$menu$ = $menu$ + $name$[.@i] + ": " + .@points + " Points \n";
+		.@i++;
+	}
+	freeloop(0);
+	$cMenu = 1;
+	end;
+	
+OnRefreshChar:
+	if(!getgmlevel())
+	end;
+	$menu$ = "";
+	freeloop(1);
+	while(.@i < $size_aid){
+		$menu$ = $menu$ + $name$[.@i] + ":";
+		.@i++;
+	}
+	freeloop(0);
+	$cMenu = 2;
+	end;
+	
+OnC:
+	if(!getgmlevel())
+	end;
+	if($cMenu == 1)
+	goto L_2;
+	else if($cMenu == 2)
+	goto L_1;
+	
+	L_1:
+	.@npcName$ = "[RACHA - Cash System]";
+	mes .@npcName$;
+	mes "เลือกตัวละครที่ต้องการเพิ่ม Cash";
+	next;
+	.@s = select($menu$) - 1;
+	mes .@npcName$;
+	mes "จำนวน Cash";
+	input .@i;
+	next;
+	mes .@npcName$;
+	mes "เพิ่ม " + callfunc("F_InsertComma",.@i) + " Cash ให้ " + $name$[.@s] + "?";
+	next;
+	if(select("ยกเลิก","ยืนยัน") == 1){
+		mes .@npcName$;
+		mes "ยกเลิก เรียบร้อยแล้ว";
+		close;
+	}
+	if(select("ประกาศ","ไม่ประกาศ") == 1){
+		.@noticeAllPlayers = 1;
+	}
+	if(select("Cash","ค่าตีบวก") == 2){
+		.@isRefineCount = 1;
+	}
+	mes .@npcName$;
+	mes "กดอีกที เพื่อเพิ่ม Cash";
+	mes "(กด Alt+F4 เพื่อยกเลิกเท่านั้น)";
+	close2;
+	attachrid($aid[.@s]);
+	if(!.@isRefineCount){
+		.@bCash = #CASHPOINTS;
+		dispbottom "ก่อนหน้านี้คุณมี: " + callfunc("F_InsertComma",#CASHPOINTS) + " Cash";
+		callfunc("AddCash",.@i);
+		if(.@noticeAllPlayers)
+		announce "GM ได้เพิ่ม " + callfunc("F_InsertComma",.@i) + " Cash ให้กับ " + $name$[.@s] + " (จาก " + callfunc("F_InsertComma",.@bCash) + " เป็น " + callfunc("F_InsertComma",#CASHPOINTS) + ")",bc_all,0xc99eff;
+		detachrid;
+		end;
+	}
+	else{
+		myRefine = .@i;
+		specialeffect2 154;
+		message strcharinfo(0),"ระดับตีบวก: " + callfunc("F_InsertComma",myRefine);
+		detachrid;
+		end;
+	}
+
+	L_2:
+	mes .@npcName$;
+	mes $menu$;
+	close;
+}
+
+-	script	UpgradePerkController	-1,{
+	menu "Safe Refine Lv." + callfunc("F_InsertComma",Perk1) + " " + callfunc("UpgradePerkPrice",1),L_1
+	,"Safe Zeny Lv." + callfunc("F_InsertComma",Perk2) + " " + callfunc("UpgradePerkPrice",2),L_2
+	,"Double Refine Lv." + callfunc("F_InsertComma",Perk3) + " " + callfunc("UpgradePerkPrice",3),L_3
+	,"Double Earning Lv." + callfunc("F_InsertComma",Perk4) + " " + callfunc("UpgradePerkPrice",4),L_4
+	,"Refine Mastery Lv." + callfunc("F_InsertComma",Perk5) + " " + callfunc("UpgradePerkPrice",5),L_5
+	,"Auto Refine Lv." + callfunc("F_InsertComma",Perk6) + " " + callfunc("UpgradePerkPrice",6),L_6
+	,"Turbo Auto Refine Lv." + callfunc("F_InsertComma",Perk7) + " " + callfunc("UpgradePerkPrice",7),L_7
+	,"AFK Refine Lv." + callfunc("F_InsertComma",Perk8) + " " + callfunc("UpgradePerkPrice",8),L_8;
+	
+	L_1:
+	callfunc("UpgradePerk",1);
+	end;
+	
+	L_2:
+	callfunc("UpgradePerk",2);
+	end;
+	
+	L_3:
+	callfunc("UpgradePerk",3);
+	end;
+	
+	L_4:
+	callfunc("UpgradePerk",4);
+	end;
+	
+	L_5:
+	callfunc("UpgradePerk",5);
+	end;
+	
+	L_6:
+	callfunc("UpgradePerk",6);
+	end;
+	
+	L_7:
+	callfunc("UpgradePerk",7);
+	end;
+	
+	L_8:
+	callfunc("UpgradePerk",8);
+	end;
+	
+OnInit:
+	waitingroom "อัพเกรด Perk",0;
+	end;
+}
+
+prontera,158,193,4	duplicate(UpgradePerkController)	 ::UpgradePerkController#1	564
+
+-	script	CheckPerkController	-1,{
+	callfunc("PerkInformation");
+	end;
+
+OnInit:
+	waitingroom "เช็ค Perk",0;
+	end;
+}
+
+prontera,163,193,4	duplicate(CheckPerkController)	 ::CheckPerkController#1	858
+
+-	script	AutoRefineController	-1,{
+OnInit:
+	$isRescripts = 0;
+	bindatcmd "auto",strnpcinfo(3) + "::OnAuto";
+	bindatcmd "macro",strnpcinfo(3) + "::OnMacro";
+	bindatcmd "normal",strnpcinfo(3) + "::OnNormal";
+	initnpctimer;
+	startnpctimer;
+	end;
+	
+OnAuto:
+	if(!disableAutoRefine){
+		dispbottom "คุณปิดการใช้งาน Auto Refine Perk";
+		disableAutoRefine = 1;
+	}
+	else{
+		dispbottom "คุณเปิดการใช้งาน Auto Refine Perk";	
+		disableAutoRefine = 0;
+	}
+	end;
+
+OnMacro:
+	dispbottom "คุณหยุดการใช้งาน Macro";
+	macroRun = 0;
+	end;
+
+OnNormal:
+	if(!disableNormalRefine){
+		dispbottom "คุณปิดการใช้งาน การตีบวกปกติ";
+		disableNormalRefine = 1;
+	}
+	else{
+		dispbottom "คุณเปิดการใช้งาน การตีบวกปกติ";	
+		disableNormalRefine = 0;
+	}
+	end;
+	
+OnTimer1000:
+	$perkRogue = 0;
+	$perkRogueCID = 0;
+	$perkStalker = 0;
+	$perkStalkerCID = 0;
+	$perkShadowChaser = 0;
+	$perkShadowChaserCID = 0;
+	setnpctimer(0);
+	end;
+
+}
+
+-	script	RefineAgainController	-1,{
+OnInit:
+	addrid(0);
+	if(macroRun)
+	callfunc("Refiner",2);
+	end;
+}
+
+-	script	MaintainenceController	-1,{
+OnInit:
+	initnpctimer;
+	startnpctimer;
+	end;
+
+OnTimer600000:
+	announce "นักตีบวกกำลังพักผ่อน โปรดรอ 10 วินาที",bc_all,0x42f59c;
+	$isRescripts = 1;
+	end;
+	
+OnTimer610000:
+	announce "นักตีบวก บวกต่อแล้วววว",bc_all,0x42f59c;
+	$isRescripts = 0;
+	setnpctimer(0);
+	addrid(0);
+	if(macroRun)
+	callfunc("Refiner",2);
+	end;
+}
+
+-	script	JobController	-1,{
+	mes "คุณสามารถเปลี่ยนอาชีพได้ตลอดเวลา";
+	mes "โดยมีระดับอาชีพดังนี้";
+	mes "===";
+	mes "ระดับตีบวกที่ 0-10";
+	mes "- Novice";
+	mes "===";
+	mes "ระดับตีบวกที่ 11-99,999";
+	mes "- Class 1";
+	mes "===";
+	mes "ระดับตีบวกที่ 100,000-999,999";
+	mes "- Class 2";
+	mes "===";
+	mes "ระดับตีบวกที่ 1,000,000-99,999,999";
+	mes "- Hi-Class";
+	mes "===";
+	mes "ระดับตีบวกที่ 100,000,000 ขึ้นไป";
+	mes "- Class 3";
+	.@sum = myRefine;
+	next;
+	if(.@sum <= 10){
+		menu "Novice",L_Novice;
+	}
+	else if(.@sum <= 99999){
+		menu "Swordman",L_Swordman
+		,"Magician",L_Magician
+		,"Archer",L_Archer
+		,"Acolyte",L_Acolyte
+		,"Merchant",L_Merchant
+		,"Thief",L_Thief
+		,"Super Novice",L_SuperNovice
+		,"Gunslinger",L_Gunslinger
+		,"Ninja",L_Ninja
+		,"Taekwon",L_Taekwon
+		,"Summoner",L_Summoner;
+	}
+	else if(.@sum <= 999999){
+		menu "Knight",L_Knight
+		,"Priest",L_Priest
+		,"Wizard",L_Wizard
+		,"Blacksmith",L_Blacksmith
+		,"Hunter",L_Hunter
+		,"Assassin",L_Assassin
+		,"Crusader",L_Crusader
+		,"Monk",L_Monk
+		,"Sage",L_Sage
+		,"Rogue",L_Rogue
+		,"Alchemist",L_Alchemist
+		,"Bard",L_Bard
+		,"Dancer",L_Dancer
+		,"Star Gladiator",L_StarGladiator
+		,"Soul Linker",L_SoulLinker
+		,"Super Novice",L_SuperNovice
+		,"Gunslinger",L_Gunslinger
+		,"Ninja",L_Ninja
+		,"Summoner",L_Summoner;
+	}
+	else if(.@sum <= 99999999){
+		menu "Lord Knight",L_LordKnight
+		,"High Priest",L_HighPriest
+		,"High Wizard",L_HighWizard
+		,"Whitesmith",L_Whitesmith
+		,"Sniper",L_Sniper
+		,"Assassin Cross",L_AssassinCross
+		,"Paladin",L_Paladin
+		,"Champion",L_Champion
+		,"Professor",L_Professor
+		,"Stalker",L_Stalker
+		,"Creator",L_Creator
+		,"Clown",L_Clown
+		,"Gypsy",L_Gypsy
+		,"Star Gladiator",L_StarGladiator
+		,"Soul Linker",L_SoulLinker
+		,"Super Novice",L_SuperNovice
+		,"Gunslinger",L_Gunslinger
+		,"Ninja",L_Ninja
+		,"Summoner",L_Summoner;
+	}
+	else{
+		menu "Rune Knight",L_RuneKnight
+		,"Arch Bishop",L_ArchBishop
+		,"Warlock",L_Warlock
+		,"Mechanic",L_Mechanic
+		,"Ranger",L_Ranger
+		,"Guillotine Cross",L_GuillotineCross
+		,"Royal Guard",L_RoyalGuard
+		,"Sura",L_Sura
+		,"Sorcerer",L_Sorcerer
+		,"Shadow Chaser",L_ShadowChaser
+		,"Genetic",L_Genetic
+		,"Minstrel",L_Minstrel
+		,"Wanderer",L_Wanderer
+		,"Star Emperor",L_StarEmperor
+		,"Soul Reaper",L_SoulReaper
+		,"Ex.Super Novice",L_ExSuperNovice
+		,"Rebellion",L_Rebellion
+		,"Kagerou",L_Kagerou
+		,"Oboro",L_Oboro
+		,"Summoner",L_Summoner;
+	}
+	close;
+
+	L_Novice:
+	.@sumJob = 0;
+	
+	goto L_ChangeJob;
+	L_Swordman:
+	.@sumJob = 1;
+	goto L_ChangeJob;
+	L_Magician:
+	.@sumJob = 2;
+	goto L_ChangeJob;
+	L_Archer:
+	.@sumJob = 3;
+	goto L_ChangeJob;
+	L_Acolyte:
+	.@sumJob = 4;
+	goto L_ChangeJob;
+	L_Merchant:
+	.@sumJob = 5;
+	goto L_ChangeJob;
+	L_Thief:
+	.@sumJob = 6;
+	goto L_ChangeJob;
+	
+	L_SuperNovice:
+	.@sumJob = 23;
+	goto L_ChangeJob;
+	L_Gunslinger:
+	.@sumJob = 24;
+	goto L_ChangeJob;
+	L_Ninja:
+	.@sumJob = 25;
+	goto L_ChangeJob;
+	L_Taekwon:
+	.@sumJob = 4046;
+	goto L_ChangeJob;
+	
+	L_Summoner:
+	.@sumJob = 4218;
+	goto L_ChangeJob;
+	
+	L_Knight:
+	.@sumJob = 7;
+	goto L_ChangeJob;
+	L_Priest:
+	.@sumJob = 8;
+	goto L_ChangeJob;
+	L_Wizard:
+	.@sumJob = 9;
+	goto L_ChangeJob;
+	L_Blacksmith:
+	.@sumJob = 10;
+	goto L_ChangeJob;
+	L_Hunter:
+	.@sumJob = 11;
+	goto L_ChangeJob;
+	L_Assassin:
+	.@sumJob = 12;
+	goto L_ChangeJob;
+	L_Crusader:
+	.@sumJob = 14;
+	goto L_ChangeJob;
+	L_Monk:
+	.@sumJob = 15;
+	goto L_ChangeJob;
+	L_Sage:
+	.@sumJob = 16;
+	goto L_ChangeJob;
+	L_Rogue:
+	.@sumJob = 17;
+	goto L_ChangeJob;
+	L_Alchemist:
+	.@sumJob = 18;
+	goto L_ChangeJob;
+	L_Bard:
+	.@sumJob = 19;
+	goto L_ChangeJob;
+	L_Dancer:
+	.@sumJob = 20;
+	goto L_ChangeJob;
+	L_StarGladiator:
+	.@sumJob = 4047;
+	goto L_ChangeJob;
+	L_SoulLinker:
+	.@sumJob = 4049;
+	goto L_ChangeJob;
+	
+	L_LordKnight:
+	.@sumJob = 4008;
+	goto L_ChangeJob;
+	L_HighPriest:
+	.@sumJob = 4009;
+	goto L_ChangeJob;
+	L_HighWizard:
+	.@sumJob = 4010;
+	goto L_ChangeJob;
+	L_Whitesmith:
+	.@sumJob = 4011;
+	goto L_ChangeJob;
+	L_Sniper:
+	.@sumJob = 4012;
+	goto L_ChangeJob;
+	L_AssassinCross:
+	.@sumJob = 4013;
+	goto L_ChangeJob;
+	L_Paladin:
+	.@sumJob = 4015;
+	goto L_ChangeJob;
+	L_Champion:
+	.@sumJob = 4016;
+	goto L_ChangeJob;
+	L_Professor:
+	.@sumJob = 4017;
+	goto L_ChangeJob;
+	L_Stalker:
+	.@sumJob = 4018;
+	goto L_ChangeJob;
+	L_Creator:
+	.@sumJob = 4019;
+	goto L_ChangeJob;
+	L_Clown:
+	.@sumJob = 4020;
+	goto L_ChangeJob;
+	L_Gypsy:
+	.@sumJob = 4021;
+	goto L_ChangeJob;
+
+	L_RuneKnight:
+	.@sumJob = 4060;
+	goto L_ChangeJob;
+	L_ArchBishop:
+	.@sumJob = 4063;
+	goto L_ChangeJob;
+	L_Warlock:
+	.@sumJob = 4061;
+	goto L_ChangeJob;
+	L_Mechanic:
+	.@sumJob = 4064;
+	goto L_ChangeJob;
+	L_Ranger:
+	.@sumJob = 4062;
+	goto L_ChangeJob;
+	L_GuillotineCross:
+	.@sumJob = 4065;
+	goto L_ChangeJob;
+	L_RoyalGuard:
+	.@sumJob = 4073;
+	goto L_ChangeJob;
+	L_Sura:
+	.@sumJob = 4077;
+	goto L_ChangeJob;
+	L_Sorcerer:
+	.@sumJob = 4074;
+	goto L_ChangeJob;
+	L_ShadowChaser:
+	.@sumJob = 4079;
+	goto L_ChangeJob;
+	L_Genetic:
+	.@sumJob = 4078;
+	goto L_ChangeJob;
+	L_Minstrel:
+	.@sumJob = 4075;
+	goto L_ChangeJob;
+	L_Wanderer:
+	.@sumJob = 4076;
+	goto L_ChangeJob;
+	L_StarEmperor:
+	.@sumJob = 4239;
+	goto L_ChangeJob;
+	L_SoulReaper:
+	.@sumJob = 4240;
+	goto L_ChangeJob;
+	L_ExSuperNovice:
+	.@sumJob = 4190;
+	goto L_ChangeJob;
+	L_Rebellion:
+	.@sumJob = 4215;
+	goto L_ChangeJob;
+	L_Kagerou:
+	.@sumJob = 4211;
+	goto L_ChangeJob;
+	L_Oboro:
+	.@sumJob = 4212;
+	goto L_ChangeJob;
+
+
+	L_ChangeJob:
+	atcommand "@job " + .@sumJob;
+	setlook LOOK_HEAD_TOP,dressSlot1;
+	setlook LOOK_HEAD_MID,dressSlot2;
+	setlook LOOK_HEAD_BOTTOM,dressSlot3;
+	close;
+
+OnInit:
+	waitingroom "เปลี่ยนอาชีพ",0;
+	end;
+}
+
+prontera,170,181,4	duplicate(JobController)	 ::JobController#1	745
+
+-	script	RankController	-1,{
+	query_sql "SELECT `char`.`name`, char_reg_num.`value` "
+	+ "FROM char_reg_num LEFT JOIN `char` ON char_reg_num.char_id = `char`.char_id "
+	+ "WHERE char_reg_num.`key` = 'mySuperRefine' "
+	+ "ORDER BY CAST(char_reg_num.`value` AS SIGNED) DESC "
+	+ "LIMIT 10", .@name$, .@points;
+	mes "สุดยอดนักตีบวก Super Refine!!";
+	for(.@i = 0; .@i < getarraysize(.@name$); .@i++)
+	mes "^cf5236" + (.@i + 1) + ". " + .@name$[.@i] + " (" + callfunc("Minimal",.@points[.@i]) + ")^000000";
+	mes " ";
+	query_sql "SELECT `char`.`name`, char_reg_num.`value` "
+	+ "FROM char_reg_num LEFT JOIN `char` ON char_reg_num.char_id = `char`.char_id "
+	+ "WHERE char_reg_num.`key` = 'myRefine' "
+	+ "ORDER BY CAST(char_reg_num.`value` AS SIGNED) DESC "
+	+ "LIMIT 10", .@name$, .@points;
+	mes "ผู้ที่มีจำนวนตีบวกมากที่สุด";
+	for(.@i = 0; .@i < getarraysize(.@name$); .@i++)
+	mes (.@i + 1) + ". " + .@name$[.@i] + " (" + callfunc("Minimal",.@points[.@i]) + ")";
+	close;
+
+OnInit:
+	waitingroom "Rank",0;
+	end;
+}
+
+prontera,148,173,5	duplicate(RankController)	 ::RankController#1	744
+
+-	script	RefineOptionController	-1,{
+	if(disableNormalRefine)
+	.@menu1$ = "-ตีบวกปกติ [Off]";
+	else
+	.@menu1$ = "-ตีบวกปกติ [On]";
+	if(disableAutoRefine)
+	.@menu2$ = "-ตีบวก Auto [Off]";
+	else
+	.@menu2$ = "-ตีบวก Auto [On]";
+	if(disableInfo)
+	.@menu3$ = "-แจ้งข้อมูลการตีบวก [Off]";
+	else
+	.@menu3$ = "-แจ้งข้อมูลการตีบวก [On]";
+	menu .@menu1$,L_1
+	,.@menu2$,L_2
+	,.@menu3$,L_3;
+	
+	L_1:
+	if(!disableNormalRefine){
+		dispbottom "-ตีบวกปกติ [Off]";
+		disableNormalRefine = 1;
+	}
+	else{
+		dispbottom "-ตีบวกปกติ [On]";	
+		disableNormalRefine = 0;
+	}
+	if(disableNormalRefine && disableAutoRefine)
+	goto L_StopRefiner;
+	end;
+	
+	L_2:
+	if(!disableAutoRefine){
+		dispbottom "-ตีบวก Auto [Off]";
+		disableAutoRefine = 1;
+	}
+	else{
+		dispbottom "-ตีบวก Auto [On]";	
+		disableAutoRefine = 0;
+	}
+	if(disableNormalRefine && disableAutoRefine)
+	goto L_StopRefiner;
+	end;
+	
+	L_3:
+	if(!disableInfo){
+		dispbottom "-แจ้งข้อมูลการตีบวก [Off]";
+		disableInfo = 1;
+	}
+	else{
+		dispbottom "-แจ้งข้อมูลการตีบวก [On]";	
+		disableInfo = 0;
+	}
+	end;
+
+	L_StopRefiner:
+	dispbottom "คุณหยุดการใช้งาน Macro เนื่องจาก OFF ทั้ง 2 โหมดเลย";
+	macroRun = 0;
+	end;
+	
+OnInit:
+	waitingroom "เปิด-ปิด การทำงานต่าง ๆ",0;
+	end;
+}
+
+prontera,141,181,5	duplicate(RefineOptionController)	 ::RefineOptionController#1	837
+
+-	script	BonusTimerController	-1,{
+OnInit:
+	disablenpc "Bonus";
+	initnpctimer;
+	startnpctimer;
+	end;
+	
+OnTimer600000:
+	announce "Bonus ได้ปรากฎขึ้นที่ Prontera (สุ่มจุดเกิด)!",bc_all,0xbf73eb;
+	enablenpc "Bonus";
+	getfreecell("prontera",.@x,.@y);
+	movenpc "Bonus",.@x,.@y,rand(0,7);
+	setnpctimer(0);
+	end;
+}
+prontera,0,0,0	script	Bonus	10005,{
+	.@i = rand(100000,10000000);
+	callfunc("SetRefineCount",.@i);
+	announce "นักตีบวก: " + strcharinfo(0) + " พบ Bonus! ได้รับ  " + callfunc("F_InsertComma",.@i) + " จำนวนตีบวก!",bc_all,0xbf73eb;
+	disablenpc "Bonus";
+	end;
+	
+}
+
+function	script	MyRefineCurrency	{
+	mes "คุณมี: " + callfunc("F_InsertComma",mySuperRefine) + " Super Refine";
+	mes "คุณมี: " + callfunc("F_InsertComma",myRefine) + " Refine";
+	return;
+}
+function	script	SetNewWorldBoss	{
+	.@sumMonster = rand(1,5);
+	if(.@sumMonster == 1)//Osiris
+	{
+		$worldBossReward = 1;
+		$worldBossSR = 0;
+		$worldBossHP = 1000000000;
+		$worldBossSprite = 1038;
+	}
+	else if(.@sumMonster == 2)//Baphomet
+	{
+		$worldBossReward = 1;
+		$worldBossSR = 1;
+		$worldBossHP = 1000000000;
+		$worldBossSprite = 1039;
+	}
+	else if(.@sumMonster == 3)//Doppelganger
+	{
+		$worldBossReward = 2;
+		$worldBossSR = 2;
+		$worldBossHP = 1000000000;
+		$worldBossSprite = 1046;
+	}
+	else if(.@sumMonster == 4)//Mistress
+	{
+		$worldBossReward = 2;
+		$worldBossSR = 3;
+		$worldBossHP = 1000000000;
+		$worldBossSprite = 1059;
+	}
+	else if(.@sumMonster == 5)//Golden Thief Bug
+	{
+		$worldBossReward = 3;
+		$worldBossSR = 4;
+		$worldBossHP = 1000000000;
+		$worldBossSprite = 1086;
+	}
+	setnpcdisplay("WorldBoss",getmonsterinfo($worldBossSprite,MOB_NAME),$worldBossSprite);
+	delwaitingroom;
+	waitingroom "World Boss HP: " + callfunc("Minimal",$worldBossHP) + " (SR: " + $worldBossSR + ")",0;
+	return;
+}
+function	script	CheckWorldBoss	{
+	if($worldBossSR <= 0 && $worldBossHP <= 0){
+		freeloop(0);
+		$worldBossSR = 0;
+		$worldBossHP = 0;
+		announce "World Boss ถูกกำจัดลงแล้ว ทุกคนที่ออนไลน์จะได้รับ (" + $worldBossReward + " x ดาเมจทำ) จำนวนตีบวก!!",bc_all,0xf54242;
+		callfunc("SetNewWorldBoss");
+		addrid(0);
+		callfunc("SetRefineCount",$worldBossReward * myWorldBossDmg);
+		myWorldBossDmg = 0;
+		end;
+	}
+	delwaitingroom;
+	waitingroom "World Boss HP: " + callfunc("Minimal",$worldBossHP) + " (SR: " + $worldBossSR + ")",0;
+	return;
+}
+
+-	script	WorldBossController	-1,{
+	callfunc("MyRefineCurrency");
+	next;
+	menu "โจมตีด้วย Super Refine",L_1
+	,"โจมตีด้วย Refine",L_2;
+	
+	L_1:
+	input .@i;
+	if(mySuperRefine < .@i || .@i <= 0){
+		mes "Super Refine ไม่เพียงพอ";
+		mes "คุณมี: " + callfunc("F_InsertComma",mySuperRefine) + " Super Refine";
+		close;
+	}
+	else{
+		announce strcharinfo(0) + " โจมตี World Boss ด้วย " + callfunc("F_InsertComma",.@i) + " Super Refine!!",bc_all,0xf54242;
+		mySuperRefine -= .@i;
+		myWorldBossDmg += (.@i * 1000000000);
+		dispbottom "คุณได้รับ World Boss Damage Point: " + callfunc("F_InsertComma",(.@i * 1000000000)) + " แต้มสะสมทั้งหมด: " + callfunc("F_InsertComma",myWorldBossDmg);
+		.@dmg = .@i;
+		freeloop(1);
+		while(.@dmg > 0 && ($worldBossSR > 0 || $worldBossHP > 0)){
+			.@dmg--;
+			if($worldBossSR > 0)
+			$worldBossSR -= 1;
+			else if($worldBossHP > 0)
+			$worldBossHP = 0;
+			callfunc("CheckWorldBoss");
+		}
+		freeloop(0);
+	}
+	end;
+	
+	L_2:
+	input .@i;
+	if(myRefine < .@i || .@i <= 0){
+		mes "Refine ไม่เพียงพอ";
+		mes "คุณมี: " + callfunc("F_InsertComma",myRefine) + " Refine";
+		close;
+	}
+	else{
+		announce strcharinfo(0) + " โจมตี World Boss ด้วย " + callfunc("F_InsertComma",.@i) + " Refine!!",bc_all,0xf54242;
+		myWorldBossDmg += .@i;
+		dispbottom "คุณได้รับ World Boss Damage Point: " + callfunc("F_InsertComma",.@i) + " แต้มสะสมทั้งหมด: " + callfunc("F_InsertComma",myWorldBossDmg);
+		myRefine -= .@i;
+		$worldBossHP -= .@i;
+		if($worldBossHP <= 0 && $worldBossSR > 0){
+			$worldBossSR--;
+			$worldBossHP = 1000000000;
+		}
+		callfunc("CheckWorldBoss");
+	}
+	end;
+	
+OnInit:
+	if($worldBossSR <= 0 && $worldBossHP <= 0)
+	callfunc("SetNewWorldBoss");
+	setnpcdisplay("WorldBoss",getmonsterinfo($worldBossSprite,MOB_NAME),$worldBossSprite);
+	delwaitingroom;
+	waitingroom "World Boss HP: " + callfunc("Minimal",$worldBossHP) + " (SR: " + $worldBossSR + ")",0;
+	end;
+}
+
+prontera,156,178,5	duplicate(WorldBossController)	WorldBoss	111
+
+function	script	People	{
+	callfunc("MyRefineCurrency");
+	mes " ";
+	mes "ข้าต้องการซื้อ 1 Super Refine";
+	next;
+	menu "ขาย 1 Super Refine",L_1;
+	
+	L_1:
+	if(mySuperRefine > 0){
+		mySuperRefine -= 1;
+		getitem 673,1;
+		npctalk "โอ้ว ขอบคุณมาก ข้าจะนำไปตีบวกอุปกรณ์!";
+		getfreecell("prontera",.@x,.@y);
+		movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+		end;
+	}
+	else{
+		npctalk "ข้าต้องการ 1 Super Refine น่ะ เจ้าไม่เห็นมีมันเลย";
+		getfreecell("prontera",.@x,.@y);
+		movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+		end;
+	}
+}
+
+prontera,0,0,0	script	นักตีบวก#1	968,{
+	callfunc("People");
+	
+OnInit:
+	getfreecell("prontera",.@x,.@y);
+	movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+	end;
+}
+prontera,0,0,0	script	นักตีบวก#2	958,{
+	callfunc("People");
+	
+OnInit:
+	getfreecell("prontera",.@x,.@y);
+	movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+	end;
+}
+prontera,0,0,0	script	นักตีบวก#3	959,{
+	callfunc("People");
+	
+OnInit:
+	getfreecell("prontera",.@x,.@y);
+	movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+	end;
+}
+prontera,0,0,0	script	นักตีบวก#4	960,{
+	callfunc("People");
+	
+OnInit:
+	getfreecell("prontera",.@x,.@y);
+	movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+	end;
+}
+prontera,0,0,0	script	นักตีบวก#5	967,{
+	callfunc("People");
+	
+OnInit:
+	getfreecell("prontera",.@x,.@y);
+	movenpc strnpcinfo(0),.@x,.@y,rand(0,7);
+	end;
+}

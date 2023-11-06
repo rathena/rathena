@@ -18,68 +18,68 @@
 -	script	Leablem#dummy::SocketEnchant2	-1,{
 	if (checkweight(1201,1) == 0)
 	{
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you lose some weight. -";
+		mes "- ÃÍ¡èÍ¹ !! -";
+		mes "- ¡ÃĞà»ëÒ¢Í§à¨éÒ -";
+		mes "- ÁÕ¢Í§ÁÒ¡à¡Ô¹ä». -";
+		mes "- ä´éâ»Ã´ÅÍ§ -";
+		mes "- Å´¨Ó¹Ç¹¢Í§Å§¡èÍ¹. -";
 		close;
 	}
 	mes "[Leablem]";
-	mes "Good day. My name is Leablem,";
-	mes "and I'm a technician that specializes in";
-	mes "adding slots to weapons and armors.";
-	mes "It can be very hard sometimes, but I like";
-	mes "what I do, and take pride in it.";
+	mes "ËÇÑ´´Õ. ¢éÒª×èÍÇèÒ Leablem,";
+	mes "áÅĞ¢éÒà»ç¹ªèÒ§à·¤¹Ô¤ã¹¡ÒÃ";
+	mes "à¨ÒĞÃÙÍÒÇØ¸áÅĞà¡ÃÒĞ.";
+	mes "ÁÑ¹ÍÒ¨¨Ğ´ÙÂÒ¡, áµè¢éÒªÍº·ÓÁÑ¹¹èĞ";
+	mes "¢éÒ¤èÍ¹¢éÒ§à¡è§ã¹àÃ×èÍ§¹Õé·Õà´ÕÂÇ.";
 	next;
 	mes "[Leablem]";
-	mes "I've learned most of the things from my brother, Seyablem,";
-	mes "but I think I still have a lot to learn.";
-	mes "So please understand my slotting services are limited,";
-	mes "unlike my brother Seyablem.";
+	mes "¢éÒä´éàÃÕÂ¹ÃÙéÇÔ¸Õ·ÓÁÒ¨Ò¡¾ÕèªÒÂ¢éÒ, Seyablem,";
+	mes "áµè¢éÒ¤Ô´ÇèÒ¢éÒµéÍ§ÈÖ¡ÉÒà¾ÔèÁàµÔÁ.";
+	mes "à¾ÃÒĞ¤ÇÒÁÃÙé¢Í§¢éÒ¶Ö§·Ò§µÑ¹,";
+	mes "à»ç¹àËµØãËé¢éÒäÁèªÍº¾ÕèªÒÂ¢éÒ Seyablem.";
 	next;
 	mes "[Leablem]";
-	mes "My brother wasn't so happy to teach me";
-	mes "his skills because he was worried that his skills";
-	mes "wouldn't be unique anymore. He did, however, his best";
-	mes "to teach me.";
+	mes "¾ÕèªÒÂ¢éÒäÁèªÍºàÇÅÒ·ÕèÊÍ¹¢éÒ";
+	mes "à¾ÃÒĞà¤éÒ¡Ñ§ÇÅà¡ÕèÂÇ¡Ñº·Ñ¡ÉĞ¢Í§à¤éÒ";
+	mes "ÁÑ¹äÁè´Õ¾Í. à¤éÒ¤Ô´áºº¹Ñé¹, ÍÂèÒ§äÃ¡çµÒÁ, à¤éÒà»ç¹¤¹·ÕèÂÍ´àÂÕèÂÁ";
+	mes "·ÕèÊÍ¹¢éÒÁÒ¡¾Í´Ù.";
 	next;
 	mes "[Leablem]";
-	mes "Thanks to him, I've learned lots of things.";
-	mes "I'm not very confident";
-	mes "in trying many different things,";
-	mes "but I'll do what";
-	mes "I can do for now.";
+	mes "¢Íº¤Ø³à¤éÒ¨ÃÔ§æ, ·Õè·ÓãËé¢éÒä´éàÃÕÂ¹ÃÙé.";
+	mes "¢éÒäÁè¤èÍÂÁÑè¹ã¨¹Ñ¡";
+	mes "·Õè¨Ğ·ÓÊÔè§·Õèáµ¡µèÒ§,";
+	mes "áµèËÅÑ§¨Ò¡·Õè¢éÒä´éÅÍ§·Ó´Ù";
+	mes "µÍ¹¹ÕéÁÑ¹·ÓãËé¢éÒÊÒÁÒÃ¶·ÓÁÑ¹ä´é.";
 	next;
 	mes "[Leablem]";
-	mes "In fact, there's one thing";
-	mes "that my brother doesn't want me to do.";
-	mes "I don't want to upset him, so...let's just skip that part.";
-	mes "I'll say no more about it!";
+	mes "·Õè¨ÃÔ§áÅéÇ";
+	mes "¾ÕèªÒÂ¢éÒäÁèÍÂÒ¡ãËé¢éÒ·Ó.";
+	mes "¢éÒäÁèÍÂÒ¡ãËéà¤éÒàÊÕÂã¨, ´Ñ§¹Ñé¹áÅéÇ...¢éÒ¨Ö§¢éÒÁÍĞäÃºÒ§ÍÂèÒ§ä».";
+	mes "«Öè§¢éÒºÍ¡äÁèä´é!";
 	next;
 	mes "[Leablem]";
-	mes "Anyways, do you have any equipment";
-	mes "which you'd like to add to the slots?";
-	mes "My service charge, the materials,";
-	mes "and the success chance all depend on";
-	mes "the specific item I'm working on.";
+	mes "¶éÒà¨éÒÁÕ¢Í§ÊÇÁãÊè";
+	mes "áÅĞÍÂÒ¡¨ĞÅÍ§·Õè¨Ğà¨ÒĞÃÙ´Ù ?";
+	mes "¤èÒºÃÔ¡ÒÃ¢Í§¢éÒ, ¢Íá¤èáÃè,";
+	mes "áÅĞâÍ¡ÒÊ·ÓÊÓàÃç¨";
+	mes "¡ÑºäÍà·çÁà·èÒ¹Ñé¹¾Í.";
 	next;
-	switch(select("Weapon:Armor:About that thing you skipped:More information:Quit"))
+	switch(select("ÍÒÇØ¸:à¡ÃÒĞ:à¡ÕèÂÇ¡ÑºÊÔè§·Õè¢éÒÁä»:ÃÒÂÅĞàÍÕÂ´à¾ÔèÁàµÔÁ:ÍÍ¡"))
 	{
 		case 1:
 			mes "[Leablem]";
-			mes "Weapon, you said? Sure, no problem.";
-			mes "Weapons are divided into 4 different class";
-			mes "depending on the work difficulty.";
-			mes "C class is the easiest one, and S class is the hardest one.";
-			mes "Which class would you like to try?";
+			mes "ÍÒÇØ¸, á¹èã¨ ? ä´é, äÁèÁÕ»Ñ­ËÒ.";
+			mes "ÍÒÇØ¸áºè§ÍÍ¡à»ç¹ 4 ¤ÅÒÊ";
+			mes "µÒÁ¤ÇÒÁÂÒ¡§èÒÂ.";
+			mes "C class §èÒÂÊØ´, áÅĞ S class ÂÒ¡ÊØ´.";
+			mes "¤ÅÒÊäË¹·Õèà¨éÒµéÍ§¡ÒÃ·Ó ?";
 			next;
 			switch(select("C:B:A:S"))
 			{
 				case 1:
 					mes "[Leablem]";
-					mes "C class, I see.";
-					mes "So, what kind of weapon do you have?";
+					mes "C class, Í×ÁÁÁÁ.";
+					mes "ÍÒÇØ¸ÍĞäÃ·Õèà¨éÒÁÕÅĞ ?";
 					next;
 					switch(select("Book of Mother Earth:Book of Billows:Book of Gust of Wind:Book of the Blazing Sun"))
 					{
@@ -90,8 +90,8 @@
 					}
 				case 2:
 					mes "[Leablem]";
-					mes "You have chosen average B class.";
-					mes "So, what kind of weapon do you have?";
+					mes "à¨éÒàÅ×Í¡ B class.";
+					mes "§Ñé¹, ÍÒÇØ¸ÍĞäÃ·Õèà¨éÒÁÕÅĞ ?";
 					next;
 					switch(select("Orcish Axe:Scimiter:Spike"))
 					{
@@ -101,8 +101,8 @@
 					}
 				case 3:
 					mes "[Leablem]";
-					mes "A class? You seem to want little too much. But, no problem.";
-					mes "So, what kind of weapon do you have?";
+					mes "A class? à¨éÒá¹èã¨¹èĞ. ä´éàÅÂ, äÁèÁÕ»Ñ­ËÒ.";
+					mes "§Ñé¹, ÍÒÇØ¸ÍĞäÃ·Õèà¨éÒÁÕÅĞ ?";
 					next;
 					switch(select("Dragon Killer:Katar of Quaking:Katar of Raging Blaze:Katar of Frozen Icicle:Katar of Piercing Wind:Golden Mace:Oriental Lute:Queen's Whip:Spectral Spear:Gae Bolg:Schweizersabel"))
 					{
@@ -120,8 +120,8 @@
 					}
 				case 4:
 					mes "[Leablem]";
-					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
-					mes "So...which S class weapon would you like to make a slot?!";
+					mes "ËÙÇÇ, S Class?! à¨éÒàÍÒ¨ÃÔ§´Ô ?*µÖ¡µÑ¡*";
+					mes "§Ñé¹...ÍÒÇØ¸ S class ªÔé¹äË¹·Õèà¨éÒµéÍ§¡ÒÃ¨Ğà¨ÒĞÃÙ ?!";
 					next;
 					switch(select("Zephyrus:Mailbreaker:Dragon Slayer:Swordbreaker:Assasin Dagger:Grand Cross:Executioner"))
 					{
@@ -136,18 +136,18 @@
 			}
 		case 2:
 			mes "[Leablem]";
-			mes "Armor, you said? Sure, no problem.";
-			mes "Armors are divided into 4 different class";
-			mes "depending on the work difficulty.";
-			mes "C class is the easiest one, and S class is the hardest one.";
-			mes "Which class would you like to try?";
+			mes "à¡ÃÒĞ, á¹èã¨ ? ä´é, äÁèÁÕ»Ñ­ËÒ.";
+			mes "à¡ÃÒĞáºè§ÍÍ¡à»ç¹ 4 ¤ÅÒÊ";
+			mes "µÒÁ¤ÇÒÁÂÒ¡§èÒÂ.";
+			mes "C class §èÒÂÊØ´, áÅĞ S class ÂÒ¡ÊØ´.";
+			mes "¤ÅÒÊäË¹·Õèà¨éÒµéÍ§¡ÒÃ·Ó ?";
 			next;
 			switch(select("C:B:A:S"))
 			{
 				case 1:
 					mes "[Leablem]";
-					mes "C class, I see.";
-					mes "So, what kind of armor do you have?";
+					mes "C class, Í×ÁÁÁÁ.";
+					mes "à¡ÃÒĞÍĞäÃ·Õèà¨éÒÁÕÅĞ ?";
 					next;
 					switch(select("Sunflower:Ph.D Hat:Big Ribbon:Boys Cap"))
 					{
@@ -158,8 +158,8 @@
 					}
 				case 2:
 					mes "[Leablem]";
-					mes "You have chosen average B class.";
-					mes "So, what kind of armor do you have?";
+					mes "à¨éÒàÅ×Í¡ B class.";
+					mes "§Ñé¹, à¡ÃÒĞÍĞäÃ·Õèà¨éÒÁÕÅĞ ?";
 					next;
 					switch(select("Skull Ring:High Heels"))
 					{
@@ -168,8 +168,8 @@
 					}
 				case 3:
 					mes "[Leablem]";
-					mes "A class? You seem to want little too much. But, no problem.";
-					mes "So, what kind of armor do you have?";
+					mes "A class? à¨éÒá¹èã¨¹èĞ. ä´éàÅÂ, äÁèÁÕ»Ñ­ËÒ.";
+					mes "§Ñé¹, à¡ÃÒĞÍĞäÃ·Õèà¨éÒÁÕÅĞ ?";
 					next;
 					switch(select("Pirate Bandana:Black Leather Boots"))
 					{
@@ -179,8 +179,8 @@
 					}
 				case 4:
 					mes "[Leablem]";
-					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
-					mes "So...which S class armor would you like to make a slot?!";
+					mes "ËÙÇÇ, S Class?! à¨éÒàÍÒ¨ÃÔ§´Ô ?*µÖ¡µÑ¡*";
+					mes "§Ñé¹...à¡ÃÒĞ S class ªÔé¹äË¹·Õèà¨éÒµéÍ§¡ÒÃ¨Ğà¨ÒĞÃÙ ?!";
 					next;
 					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
 					{
@@ -193,45 +193,45 @@
 			}
 		case 3:
 			mes "[Leablem]";
-			mes "Oh, it's nothing special, but he thinks";
-			mes "it's not something for humans to mess with. ";
-			mes "I don't want to upset my brother,";
-			mes "so I'd better forget about it.";
+			mes "âÍé, ÁÑ¹äÁè¾ÔàÈÉÍĞäÃËÃÍ¡, áµèà¤éÒ¤Ô´ÇèÒ";
+			mes "ÁÑ¹ÍÒ¨·ÓãËé¼Ùé¤¹áµ¡µ×è¹ä´é. ";
+			mes "¢éÒäÁèÍÂÒ¡ãËé¾ÕèªÒÂ¢éÒàÊÕÂã¨,";
+			mes "´Ñ§¹Ñé¹áÅéÇÅ×ÁÁÑ¹ä»à¶ÍĞ.";
 			next;
 			mes "[Leablem]";
-			mes "...That service itself has a very high success chance,";
-			mes "but requires a lot of materials and a high-rate service charge.";
-			mes "I highly doubt that anyone would actually want to use";
-			mes "the service, even if I did open it.";
+			mes "...ÁÑ¹ÁÕ¢Í§ÍÂÙèÊÔè§Ë¹Öè§·ÕèÁÕâÍ¡ÒÊ·ÓÊÓàÃç¨ÊÙ§ÁÒ¡æ,";
+			mes "áµè¡çáÅ¡ÁÒ¡ÑºáÃèáÅĞ¤èÒãªé¨èÒÂ·ÕèÊÙ§¾Íæ¡Ñ¹. ";
+			mes "¢éÒÊ§ÊÑÂÇèÒ¨ĞÁÕã¤ÃãªéºÃÔ¡ÒÃ¹Õé¡Ñ¹";
+			mes "¶éÒ¢éÒà»Ô´ãËé·Ó.";
 			next;
 			mes "[Leablem]";
-			mes "...Ummm...";
-			next;
-			mes "[Leablem]";
-			mes ".............";
+			mes "...Í×ÁÁÁÁ...";
 			next;
 			mes "[Leablem]";
 			mes ".............";
 			next;
 			mes "[Leablem]";
-			mes "You seem interested in using that service.";
-			mes "If you want, I can at least tell you about it.";
-			mes "But you must promise to keep this a secret.";
-			mes "If my brother finds out what I'm about to tell you,";
-			mes "he's gonna give me a beating!";
+			mes ".............";
 			next;
 			mes "[Leablem]";
-			mes "This special service has a 90% success chance,";
-			mes "but requires 2 Gold and 2 hundred million zeny:";
-			mes "I can add slots to the Hat of the Sun God.";
+			mes "à¨éÒ´ÙàËÁ×Í¹¨ĞÊ¹ã¨¹èĞ.";
+			mes "¶éÒà¨éÒÍÂÒ¡, ¢éÒÍÒ¨ºÍ¡à¨éÒ¡çä´é. ";
+			mes "áµèà¨éÒµéÍ§ÊÑ­­Ò¡èÍ¹ÇèÒ¨Ğà¡çºà»ç¹¤ÇÒÁÅÑº.";
+			mes "¶éÒ¾ÕèªÒÂ¢éÒÃÙéÇèÒ¢éÒºÍ¡à¨éÒ,";
+			mes "à¤éÒµéÍ§¦èÒ¢éÒá¹èæ!";
 			next;
 			mes "[Leablem]";
-			mes "My brother said that, even since ancient times, it's forbidden to modify that hat.";
-			mes "But I believe humans are too curious not to";
-			mes "experiment, especially when it's forbidden.";
-			mes "I just don't want my brother to yell at me. That's all.";
+			mes "¹Õéà»ç¹ºÃÔ¡ÒÃ¾ÔàÈÉ·ÕèâÍ¡ÒÊÊÓàÃç¨ÊÙ§¶Ö§ 90%,";
+			mes "áµèµéÍ§¡ÒÃ 2 Gold áÅĞ 2 ÃéÍÂÅéÒ¹ zeny:";
+			mes "¢éÒ¨Ğà¨ÒĞÃÙ Hat of the Sun God ãËé.";
 			next;
-			switch(select("Use the Service","Quit"))
+			mes "[Leablem]";
+			mes "¾ÕèªÒÂ¢éÒºÍ¡ÇèÒ, ã¹ÊÁÑÂ¡èÍ¹, ËéÒÁäÁèãËé´Ñ´á»Å§ËÁÇ¡ãº¹Ñé¹. ";
+			mes "áµè¢éÒàª×èÍÇèÒÁ¹ØÉÂì¹Ñé¹ÍÂÒ¡¨ĞÃÙé";
+			mes "·´ÅÍ§, â´Âà©¾ÒĞÍÂèÒ§ÂÔè§àÁ×èÍÁÑ¹à»ç¹ÊÔè§µéÍ§ËéÒÁ.";
+			mes "¢éÒäÁèÍÂÒ¡ãËé¾ÕèªÒÂ¢éÒÃÙé. ÊÔè§·Õè¢éÒ¡ÓÅÑ§·Ó.";
+			next;
+			switch(select("ãªéºÃÔ¡ÒÃ","ÍÍ¡"))
 			{
 				case 1:
 					mes "[Leablem]";
@@ -241,141 +241,141 @@
 					mes ".................";
 					next;
 					mes "[Leablem]";
-					mes "...Wh... What? No!";
-					mes "Giving me that dirty look";
-					mes "won't make me do it!";
-					mes "No, I said no! No is no! No!";
+					mes "...ÍĞ... ÍĞäÃ¹Ğ ? ÁèÒÂ!";
+					mes "ãËé¢éÒà»ç¹¤¹·Ó";
+					mes "ÁÑ¹à»ç¹ä»äÁèä´é!";
+					mes "ÁèÒÂ, ¢éÒºÍ¡ÇèÒäÁè! äÁè à¢éÒã¨äËÁ! ÁèÒÂ!";
 					next;
 					mes "[Leablem]";
-					mes "No, I won't! No!";
+					mes "äÁè, ¢éÒäÁèÍÒ¨! äÁè!";
 					next;
 					mes "[Leablem]";
-					mes "I can't do it...";
+					mes "¢éÒ·ÓäÁèä´é...";
 					next;
 					mes "[Leablem]";
-					mes "I can't do... It...";
+					mes "¢éÒ·ÓäÁè... ä´é...";
 					next;
 					mes "[Leablem]";
 					mes ".................";
 					next;
 					mes "[Leablem]";
-					mes "Umm...";
+					mes "Í×ÁÁÁ...";
 					next;
 					mes "[Leablem]";
-					mes "You're so persistent. Okay, I'll make you an exception.";
-					mes "Just don't tell anyone,";
-					mes "especially my brother. Do you promise?";
+					mes "à¨éÒ´ÙÁÑè¹ã¨. Okay, ¢éÒ¨Ğ·ÓµÒÁ¤ÇÒÁ¤Ò´ËÇÑ§¢Í§à¨éÒ.";
+					mes "ÍÂèÒä»ºÍ¡ã¤Ã,";
+					mes "â´Âà©¾ÒĞ¾ÕèªÒÂ¢éÒ. ÊÑ­­ÒÊÔ ?";
 					next;
 					mes "[Leablem]";
-					mes "Okay then, please bring me";
-					mes "^FF00002 Gold, 2 hundred million zeny -- the service charge --,";
-					mes "^FF0000and a Hat of the Sun God.";
-					mes "^FF0000You know your chance of success is 90% with this, don't you?^000000";
-					mes "We don't have time to waste,";
-					mes "so let's get down to business right away.";
+					mes "Okay §Ñé¹, à¨éÒµéÍ§ÁÕ";
+					mes "^FF00002 Gold, 2 ÃéÍÂÅéÒ¹ zeny -- à»ç¹¤èÒºÃÔ¡ÒÃ --,";
+					mes "^FF0000áÅĞËÁÇ¡ Hat of the Sun God.";
+					mes "^FF0000à¨éÒÃÙéäËÁÇèÒâÍ¡ÒÊÊÓàÃç¨ÍÂÙè·Õè 90%, ¢éÒºÍ¡ä»ÂÑ§ ?^000000";
+					mes "¾Ç¡àÃÒ¤§äÁèÍÂÒ¡àÊÕÂàÇÅÒä»ÁÒ¡¡ÇèÒ¹ÕéáÅéÇ,";
+					mes "§Ñé¹ÁÒàÃÔèÁ¸ØÃ¡Ô¨¡Ñ¹àÅÂ.";
 					next;
 					if ((Zeny > 199999999) && (countitem(969) > 1) && (countitem(5022) > 0))
 					{
 						mes "[Leablem]";
-						mes "Shall we start now?";
-						mes "Pray to your gods for good luck.";
+						mes "àÍÒÅĞ¹Ğ ?";
+						mes "¢ÍãËé¾ÃĞà¨éÒÍÂÙè¢éÒ§à¨éÒ.";
 						next;
 						set .@a, rand(1,100);
 						if ((.@a > 4) && (.@a < 95))
 						{
 							specialeffect EF_LORD;
 							mes "[Leablem]";
-							mes "Excellent! Wow, I guess the 90% success chance is true!";
-							mes "Look, the slot was added in the perfect place.";
-							mes "Congratulations.";
+							mes "ÂÍ´àÂÕèÂÁ! ÇéÒÇ, ¢éÒà´ÒÇèÒâÍ¡ÒÊÊÓàÃç¨ 90% à»ç¹ÊÔè§·Õè¶Ù¡µéÍ§!";
+							mes "´ÙÊÔ, à»ç¹¡ÒÃà¨ÒĞÃÙ·Õèà¾ÍÃìà¿¡µì¨ÃÔ§æ.";
+							mes "ÊÓàÃç¨ÍÂèÒ§§´§ÒÁ.";
 							delitem 5022,1; //Helm_Of_Sun
 							delitem 969,2; //Gold
 							set Zeny, Zeny - 200000000;
 							getitem 5353,1; //Helm_Of_Sun_
 							next;
 							mes "[Leablem]";
-							mes "This is the first and last time I will do this for you.";
-							mes "Don't ever tell anyone";
-							mes "about this. Okay?";
+							mes "¹Õè¨Ğà»ç¹¤ÃÑé§áÃ¡áÅĞ¤ÃÑé§ÊØ´·éÒÂ·Õè¢éÒ¨Ğ·ÓãËéà¨éÒ.";
+							mes "áÅéÇÍÂèÒä»ºÍ¡ã¤ÃÅèĞ";
+							mes "¡ÑºÊÔè§·Õèà¡Ô´¢Öé¹. Okay?";
 							close;
 						}
 						else
 						{
 							specialeffect EF_SUI_EXPLOSION;
 							mes "[Leablem]";
-							mes "Wah! Oh my god, we failed!";
-							mes "My god, I guess we had the worst kind of luck...";
-							mes "What should we do? ...This is why";
-							mes "I didn't want to do in the first place!";
+							mes "¨éÒ¡¡! ¾ÃĞà¨éÒªèÇÂ¡ÅéÇÂ·Í´, ÁÑ¹ÅéÁàËÅÇ!";
+							mes "¢éÒ¤Ô´ÇèÒà¾ÃÒĞ´Ç§«ÇÂÁÒ¡¡ÇèÒ´Ç§´Õ...";
+							mes "àÃÒ¤ÇÃ·ÓÍÂèÒ§äÃ´Õ? ...ã¹àÁ×èÍ";
+							mes "¢éÒäÁèÍÂÒ¡¨Ğ·ÓÁÑ¹àÅÂ!";
 							delitem 5022,1; //Helm_Of_Sun
 							delitem 969,2; //Gold
 							set Zeny, Zeny - 200000000;
 							next;
 							mes "[Leablem]";
-							mes "No, don't ever ask me to do such a risky thing again!";
-							mes "Bah~";
+							mes "ÁèÒÂ, ÍÂèÒÁÍ§¢éÒ´éÇÂÊÒÂµÒáºº¹Ñé¹!";
+							mes "ºÃéÒ~";
 							close;
 						}
 					}
 					else
 					{
 						mes "[Leablem]";
-						mes "Umm...";
+						mes "Í×ÁÁÁ...";
 						next;
 						mes "[Leablem]";
-						mes "You don't have enough materials.";
-						mes "Man, why did you even ask me to try?";
-						mes "I'm not going to do this again for you,";
-						mes "even if you bring enough materials. Bah~";
+						mes "à¨éÒÁÕ¢Í§äÁè¤Ãº.";
+						mes "áºº¹Õé¡çáÂèÊÔ ?";
+						mes "à¨éÒä»ËÒ¢Í§¡èÍ¹áÅéÇ¤èÍÂ¡ÅÑºÁÒãËÁè,";
+						mes "àÁ×èÍà¨éÒÁÕ¢Í§¤Ãº. àÎéÍ~";
 						close;
 					}
 				case 2:
 					mes "[Leablem]";
-					mes "Don't ever tell anyone";
-					mes "about what I told you. Okay?";
+					mes "ÍÂèÒä»ºÍ¡ã¤Ã";
+					mes "¡ÑºàÃ×èÍ§·Õè¢éÒºÍ¡¡Ñºà¨éÒ. Okay?";
 					close;
 			}
 		case 4:
 			mes "[Leablem]";
-			mes "Do you want to know more information?";
-			mes "Well, I don't think there's something";
-			mes "that you specifically need to know.";
-			mes "But I can at least give you a tip.";
+			mes "à¨éÒÍÂÒ¡·ÃÒºÃÒÂÅĞàÍÕÂ´à¾ÔèÁàµÔÁ ?";
+			mes "àÂÕèÂÁ, ¢éÒäÁè¤Ô´ÇèÒ";
+			mes "ÁÑ¹¨ĞÁÕÍĞäÃà»ç¹¾ÔàÈÉËÃÍ¡.";
+			mes "áµè¢éÒ¨ĞºÍ¡à¨éÒàÍ§.";
 			next;
 			mes "[Leablem]";
-			mes "The slot technicians in each town";
-			mes "provide different slotting success chances";
-			mes "depending on your equipment's upgrade level.";
-			mes "I don't know if that's true,";
-			mes "but I can see the difference in each town.";
+			mes "ªèÒ§à¨ÒĞÃÙã¹ºÒ§àÁ×Í§";
+			mes "ÍÒ¨¨Ğà¨ÒĞÃÙÊÓàÃç¨ÁÒ¡ÂÔè§¢Öé¹";
+			mes "¶éÒ¢Í§ÊÇÁãÊèÁÕ¡ÒÃÍÑ¾à¡Ã´.";
+			mes "¢éÒäÁèÃÙéÇèÒÁÑ¹à»ç¹àÃ×èÍ§¨ÃÔ§ËÃ×Íà»ÅèÒ,";
+			mes "áµè¢éÒ¡ç¾Í¨ĞàËç¹ÍÂÙèºéÒ§.";
 			next;
 			mes "[Leablem]";
-			mes "For instance, a slot technician in one town";
-			mes "provides a higher success chance to";
-			mes "equipment items at higher upgrade levels,";
-			mes "while a technician in another town has higher";
-			mes "success at lower upgrade levels.";
+			mes "ÍÂèÒ§àªè¹, ªèÒ§à¨ÒĞÃÙàÁ×Í§Ë¹Öè§";
+			mes "ÁÕâÍ¡ÒÊà¨ÒĞÃÙÊÓàÃç¨";
+			mes "¶éÒ¢Í§ÊÇÁãÊèÁÕ¡ÒÃÍÑ¾à¡Ã´·ÕèÊÙ§,";
+			mes "ÊèÇ¹ªèÒ§à¨ÒĞÃÙ·ÕèÍ×è¹";
+			mes "âÍ¡ÒÊà¨ÒĞÃÙÊÓàÃç¨ÍÒ¨¢Öé¹ÍÂÙè¡Ñº¢Í§ÍÑ¾à¡Ã´·ÕèµèÓ.";
 			next;
 			mes "[Leablem]";
-			mes "When you fail to add a slot, the equipment";
-			mes "will become broken and disappear.";
-			mes "I try my best to succeed, but";
-			mes "slotting is complicated work.";
+			mes "àÁ×èÍÁÑ¹ÅéÁàËÅÇ, ¢Í§ÊÇÁãÊè¹Ñé¹";
+			mes "¨Ğáµ¡áÅĞËÒÂä».";
+			mes "¢éÒ¨Ğ¾ÂÒÂÒÁàµçÁ·Õèà¾×èÍäÁèãËéÁÑ¹áµ¡, áµè";
+			mes "¡ÒÃà¨ÒĞÃÙà»ç¹§Ò¹·ÕèÅĞàÍÕÂ´ÍèÍ¹.";
 			next;
 			mes "[Leablem]";
-			mes "Oh, there's an important thing that you need to be careful about.";
-			mes "^FF0000Try not to carry two identical equipment items";
-			mes "^FF0000with you when you add slots.";
-			mes "^FF0000Otherwise, slots may be added to one of the randomly chosen items,";
-			mes "^FF0000and in the worst case, you may lose an item that is more valuable to you.^000000";
+			mes "âÍé, ÁÕÊÔè§ÊÓ¤Ñ­·ÕèµéÍ§ºÍ¡äÇé.";
+			mes "^FF0000ÍÂèÒ¹Ó¢Í§·ÕèàËÁ×Í¹¡Ñ¹ÁÒã¹¡ÃĞà»ëÒ¢Í§à¨éÒ";
+			mes "^FF0000à¾ÃÒĞàÁ×èÍà¨éÒà¨ÒĞÃÙ.";
+			mes "^FF0000OÁÑ¹¨ĞÊØèÁà¨ÒĞÃÙ¢Í§ã¹¡ÃĞà»ëÒ¢Í§à¨éÒ,";
+			mes "^FF0000à¾×èÍäÁèãËéÁÑ¹¼Ô´¾ÅÒ´, à¨éÒ¤ÇÃ¹Ó¢Í§ÁÒá¤èªÔé¹à´ÕÂÇ.^000000";
 			next;
 			mes "[Leablem]";
-			mes "I hope this information will be helpful to you.";
-			mes "Thanks.";
+			mes "¢éÒËÇÑ§ÇèÒà¨éÒ¨Ğä´éÃÑº»ÃĞâÂª¹ì¨Ò¡ÊÔè§·Õè¢éÒºÍ¡¹èĞ.";
+			mes "ºÒÂ.";
 			close;
 		case 5:
 			mes "[Leablem]";
-			mes "Alright, then.";
+			mes "Í×Á.";
 			close;
 	}
 }
@@ -383,6 +383,7 @@
 payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
 lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
 prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
+moc_ruins,154,86,3	duplicate(SocketEnchant2)	Leablem#moc	86
 
 function	script	Func_Socket2	{
 	.@item_id = getarg(0);
@@ -394,42 +395,42 @@ function	script	Func_Socket2	{
 	mes "[Leablem]";
 	if (.@item_req[1] != 0 && .@req_amount[1] != 0)
 	{
-		mes getitemname(.@item_id) +"... Okay, then you need to bring me";
-		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny as service charge,";
+		mes getitemname(.@item_id) +"... Okay, à¨éÒµéÍ§¹Ó";
+		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny à»ç¹¤èÒºÃÔ¡ÒÃ,";
 		mes "^FF0000"+ .@req_amount[0] +"ea "+ getitemname(.@item_req[0]) +" and "+ .@req_amount[1] +"ea "+ getitemname(.@item_req[1]) +".";
-		mes "^FF0000Of course, you need a "+ getitemname(.@item_id) +".^000000";
+		mes "^FF0000à¨éÒµéÍ§ÁÕ "+ getitemname(.@item_id) +".^000000";
 	}
 	else
 	{
-		mes getitemname(.@item_id) +"? Okay, then you need to bring me";
-		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req/1000 +",000") : .@zeny_req) +",000 zeny as service charge and "+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +" as the requirement.";
-		mes "^FF0000Of course, don't forget to bring me a "+ getitemname(.@item_id) +".";
-		mes "^FF0000You should have all items.^000000";
+		mes getitemname(.@item_id) +"? Okay, à¨éÒµéÍ§¹Ó";
+		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req/1000 +",000") : .@zeny_req) +",000 zeny à»ç¹¤èÒºÃÔ¡ÒÃáÅĞ "+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +" ´éÇÂ.";
+		mes "^FF0000à¨éÒµéÍ§äÁèÅ×Á "+ getitemname(.@item_id) +".";
+		mes "^FF0000à¨éÒµéÍ§ÁÕ¢Í§ãËé¤Ãº¹èĞ.^000000";
 	}
 	next;
 	mes "[Leablem]";
-	mes "Did you already bring all of them?";
-	mes "For your information, if you fail to create a slot,";
-	mes "you will lose all the item requirement as well as the target "+ ((getiteminfo(.@item_id, ITEMINFO_LOCATIONS)&EQP_HAND_R) ? "weapon" : "armor") +".";
-	mes "Also remember, if the "+ ((getiteminfo(.@item_id, ITEMINFO_LOCATIONS)&EQP_HAND_R) ? "weapon" : "armor") +" has been upgraded, and has been inserted with a card,";
-	mes "you will lose them even if you succeed in creating a slot.";
+	mes "à¨éÒ¾ÃéÍÁáÅéÇÃÖÂÑ§ ?";
+	mes "ã¹ÃÒÂÅĞàÍÕÂ´, ¶éÒà¨ÒĞÃÙÅéÁàËÅÇ,";
+	mes "à¨éÒ¨ĞÊÙ­àÊÕÂ¢Í§ä» "+ ((getiteminfo(.@item_id,5)&EQP_HAND_R) ? "weapon" : "armor") +".";
+	mes "¨ÓàÍÒäÇé, ¶éÒ "+ ((getiteminfo(.@item_id,5)&EQP_HAND_R) ? "weapon" : "armor") +" ÁÕ¡ÒÃÍÑ¾à¡Ã´, áÅĞä´éãÊè¡ÒÃì´ä»áÅéÇ,";
+	mes "ÁÑ¹¨ĞËÒÂä»·Ñé§ËÁ´¶éÒà¨ÒĞÃÙÊÓàÃç¨.";
 	next;
-	switch(select("Ask for slot creation.:Try next time."))
+	switch(select("à¨ÒĞÃÙàÅÂ.:äÇéâÍ¡ÒÊË¹éÒ."))
 	{
 		case 1:
 			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no .@req_amount[0] and .@req_amount[1] provided, check itemcount against 0 (we still need a valid item ID though)
 			{
 				mes "[Leablem]";
-				mes "Alright then, let the work begin!";
-				mes "You'd better pray for a successful result.";
+				mes "ä´éàÅÂ, ÁÒàÃÔèÁ§Ò¹¡Ñ¹!";
+				mes "à¨éÒ¨ĞÀÒÇ¹ÒãËéÊÓàÃç¨¡çä´é¹èĞ.";
 				next;
 				set .@a, rand(1,100);
 				if ((.@a > getarg(2)) && (.@a < getarg(3)))
 				{
 					specialeffect EF_LORD;
 					mes "[Leablem]";
-					mes "Great, it seems to be successful.";
-					mes "It looks pretty well done. Congratulations!";
+					mes "àÂÕèÂÁ, ÁÑ¹ÊÓàÃç¨.";
+					mes "ÁÑ¹´ÙÊØ´ÂÍ´ÁÒ¡æ!";
 					delitem .@item_id,1;
 					delitem .@item_req[0],.@req_amount[0];
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
@@ -438,18 +439,18 @@ function	script	Func_Socket2	{
 					getitem getarg(1),1;
 					next;
 					mes "[Leablem]";
-					mes "See you again, buddy!";
+					mes "áÅéÇà¨Í¡Ñ¹ãËÁè, à¨éÒà¡ÅÍ!";
 					close;
 				}
 				else
 				{
 					specialeffect EF_SUI_EXPLOSION;
 					mes "[Leablem]";
-					mes "Wah! ...I am so sorry, it failed.";
-					mes "However, I am completely innocent.";
-					mes "This is your luck, and it is destined by god, okay?";
-					mes "Don't be so disappointed,";
-					mes "and try next time.";
+					mes "ËÇèÒ! ...¢éÒ¢Íâ·É, ÁÑ¹ÅéÁàËÅÇ.";
+					mes "ÍÂèÒ§äÃ¡çµÒÁ, ¢éÒÇèÒÁÑ¹»¡µÔáÅéÇ.";
+					mes "à¾ÃÒĞà¨éÒÁÑ¹äÁèÁÕâª¤àÍ§, ËÃ×ÍÇèÒäÁèãªè ?";
+					mes "ÍÂèÒàÈÃéÒä»àÅÂ.";
+					mes "ÅÍ§ãËÁè¤ÃÑé§Ë¹éÒ.";
 					delitem .@item_id,1;
 					delitem .@item_req[0],.@req_amount[0];
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
@@ -457,20 +458,20 @@ function	script	Func_Socket2	{
 					Zeny = Zeny - .@zeny_req *1000;
 					next;
 					mes "[Leablem]";
-					mes "See you again, buddy!";
+					mes "áÅéÇà¨Í¡Ñ¹ãËÁè, à¨éÒà¡ÅÍ!";
 					close;
 				}
 			}
 			else
 			{
 				mes "[Leablem]";
-				mes "Are you stupid or what? You didn't bring all of the required items!";
-				mes "Go bring them quick!";
+				mes "à¨éÒÁÕ¢Í§äÁè¤Ãº!";
+				mes "ä»àÍÒÁÒãËé¤Ãº!";
 				close;
 			}
 		case 2:
 			mes "[Leablem]";
-			mes "See you next time.";
+			mes "áÅéÇ¾º¡Ñ¹ãËÁè.";
 			close;
 	}
 }

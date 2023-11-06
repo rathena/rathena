@@ -20,31 +20,31 @@
 //============================================================
 prontera,98,121,4	script	Acolyte#Prtclear	90,{
 	mes "[Keiki]";
-	mes "Hello there, adventurer.";
-	mes "I've been studying magic from all over Rune-Midgarts to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
+	mes "สวัสดีนักผจญภัย";
+	mes "ฉันได้ศึกษาเวทมนตร์จากทั่ว Rune-Midgarts เพื่อยกระดับสิ่งที่ฉันเชื่อว่าเป็นหนึ่งในทักษะที่ยอดเยี่ยมที่สุดสำหรับคลาสฝึกหัด";
 	next;
 
 	if (is_function("VIP_iRO_Acolyte"))
 		callfunc "VIP_iRO_Acolyte","[Keiki]","Juno";
 
 	mes "[Keiki]";
-	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
+	mes "ฉันเป็น Acolyte เพียงหนึ่งเดียวเท่านั้นที่ได้รับทักษะ Level 10 Warp Portal!";
 	emotion ET_THINK, playerattached();
 	next;
 	mes "[Keiki]";
-	mes "That's right! And...";
-	mes "I promise you that I don't forget locations that I have already memorized.";
-	mes "One day I will level up my skills to warp to wherever I please~";
+	mes "ถูกตัอง! และ...";
+	mes "ฉันสัญญากับคุณว่าฉันจะไม่ลืมสถานที่ที่ฉันจำได้ไปแล้ว";
+	mes "อยู่มาวันหนึ่งฉันจะเพิ่มทักษะของฉันในการวาร์ปไปที่ใดก็ได้ที่ฉันต้องการ ~";
 	next;
 	mes "[Keiki]";
-	mes "I am willing to warp you to the many locations that I have memorized for a small fee.";
-	mes "Would you like to use this service?";
+	mes "ฉันยินดีที่จะแปรปรวนคุณไปยังสถานที่ต่างๆที่ฉันจำได้ด้วยค่าธรรมเนียมเล็กน้อย";
+	mes "คุณต้องการใช้บริการนี้หรือไม่?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช่:ไม่")) {
 	case 1:
 		mes "[Keiki]";
-		mes "Where would you like to go to?";
-		mes "I wish you goodluck on your journey.";
+		mes "คุณอยากไปที่ไหน";
+		mes "ฉันขอให้คุณโชคดีในการเดินทางของคุณ";
 		next;
 
 		setarray .@towns$[0], "Izlude", "Geffen", "Payon", "Morocc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno";
@@ -53,15 +53,15 @@ prontera,98,121,4	script	Acolyte#Prtclear	90,{
 		set .@size, getarraysize(.@towns$);
 		for(set .@i,0; .@i<.@size; set .@i,.@i+1)
 			set .@menu$, .@menu$+.@towns$[.@i]+" -> "+.@cost[.@i]+"z:";
-		set .@i, select(.@menu$+"Cancel")-1;
+		set .@i, select(.@menu$+"ยกเลิก")-1;
 		if (.@i == .@size)
 			close;
 		if (Zeny < .@cost[.@i]) {
 			mes "[Keiki]";
-			mes "I'm sorry, but you don't have";
-			mes "enough zeny for the Teleport";
-			mes "Service. The fee to teleport";
-			mes "to "+.@towns$[.@i]+" is "+.@cost[.@i]+" zeny.";
+			mes "ฉันขอโทษ แต่คุณไม่มี";
+			mes "zeny เพียงพอสำหรับบริการเทเลพอร์ต";
+			mes "ค่าเทเลพอร์ต";
+			mes "ไป "+.@towns$[.@i]+" = "+.@cost[.@i]+" zeny.";
 			close;
 		}
 		specialeffect2 EF_READYPORTAL;
@@ -88,29 +88,29 @@ prontera,98,121,4	script	Acolyte#Prtclear	90,{
 
 yuno,142,184,6	script	Acolyte#Junoclear	90,{
 	mes "[Isalei]";
-	mes "Hello, adventurer.";
-	mes "My companion Keiki and I have discovered a way to increase our warp portal abilities.";
+	mes "สวัสดีนักผจญภัย";
+	mes "เพื่อนของฉัน Keiki และฉันได้ค้นพบวิธีเพิ่มความสามารถในการวาร์ปของเรา";
 	next;
 
 	if (is_function("VIP_iRO_Acolyte"))
 		callfunc "VIP_iRO_Acolyte","[Isalei]","Prontera";
 
 	mes "[Isalei]";
-	mes "Though I have not mastered up to the level that she has, I have been able to attain Level 5.";
+	mes "แม้ว่าฉันจะยังไม่เชี่ยวชาญจนถึงระดับที่เธอมี แต่ฉันสามารถบรรลุระดับ 5 ได้";
 	emotion ET_THINK, playerattached();
 	next;
 	mes "[Isalei]";
-	mes "Maybe one day I can level up my skills enough so that I can use Warp portal to more saved locations.";
+	mes "บางทีวันหนึ่งฉันสามารถยกระดับทักษะของฉันให้เพียงพอเพื่อที่ฉันจะสามารถใช้พอร์ทัล Warp ไปยังตำแหน่งที่บันทึกไว้มากขึ้น";
 	next;
 	mes "[Isalei]";
-	mes "I am willing to warp you to the many locations that I have memorized for a small fee.";
-	mes "Would you like to use this service?";
+	mes "ฉันยินดีที่จะแปรปรวนคุณไปยังสถานที่ต่างๆที่ฉันจำได้ด้วยค่าธรรมเนียมเล็กน้อย";
+	mes "คุณต้องการใช้บริการนี้หรือไม่?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช่:ไม่")) {
 	case 1:
 		mes "[Isalei]";
-		mes "Where would you like to go to?";
-		mes "I wish you goodluck on your journey.";
+		mes "คุณอยากไปที่ไหน";
+		mes "ฉันขอให้คุณโชคดีในการเดินทางของคุณ";
 		next;
 
 		setarray .@towns$[0], "Einbroch", "Lighthalzen", "Hugel", "Rachel", "Prontera";
@@ -119,15 +119,15 @@ yuno,142,184,6	script	Acolyte#Junoclear	90,{
 		set .@size, getarraysize(.@towns$);
 		for(set .@i,0; .@i<.@size; set .@i,.@i+1)
 			set .@menu$, .@menu$+.@towns$[.@i]+" -> "+.@cost[.@i]+"z:";
-		set .@i, select(.@menu$+"Cancel")-1;
+		set .@i, select(.@menu$+"ยกเลิก")-1;
 		if (.@i == .@size)
 			close;
 		if (Zeny < .@cost[.@i]) {
 			mes "[Isalei]";
-			mes "I'm sorry, but you don't have";
-			mes "enough zeny for the Teleport";
-			mes "Service. The fee to teleport";
-			mes "to "+.@towns$[.@i]+" is "+.@cost[.@i]+" zeny.";
+			mes "ฉันขอโทษ แต่คุณไม่มี";
+			mes "zeny เพียงพอสำหรับบริการเทเลพอร์ต";
+			mes "ค่าเทเลพอร์ต";
+			mes "ไป "+.@towns$[.@i]+" = "+.@cost[.@i]+" zeny.";
 			close;
 		}
 		specialeffect2 EF_READYPORTAL;

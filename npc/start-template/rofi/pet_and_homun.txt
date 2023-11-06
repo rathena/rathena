@@ -1,0 +1,73 @@
+prontera,163,163,3	script	ฟักไข่ Pet	10299,{
+	atcommand "@hatch";
+	end;
+	
+OnInit:
+	waitingroom "ฟักไข่ Pet",0;
+	end;
+}
+
+prontera,163,159,3	script	Pet & Homun. อิ่มสนิท	10125,{
+	atcommand "@petfriendly 1000";
+	atcommand "@pethungry 100";
+	atcommand "@homfriendly 1000";
+	atcommand "@homhungry 100";
+	end;
+	
+OnInit:
+	waitingroom "ให้อาหาร Pet & Homun.",0;
+	end;
+}
+
+prontera,163,155,3	script	Evolution Homun.	10126,{
+	homevolution;
+	end;
+	
+OnInit:
+	waitingroom "Evolution Homun.",0;
+	end;
+}
+
+prontera,163,151,3	script	Homun. S.	10119,{
+	if(!getskilllv("AM_BIOETHICS")){
+		mes "คุณไม่มีสกิล Bioethics";
+		close;
+	}
+	if(!gethominfo(1)){
+		mes "โปรดเรียกโฮมุนครุส";
+		close; 
+	}
+	if(gethominfo(1) < 6009){
+		mes "ต้องอีโวโฮมุนครุสมาก่อน";
+		close;
+	}
+	if(gethominfo(6) < 99){
+		mes "โฮมุนครุสต้องเลเวล 99 ก่อน";
+		close;
+	}
+	if(gethominfo(1) == 6048 || gethominfo(1) == 6049 || gethominfo(1) == 6050 || gethominfo(1) == 6051 || gethominfo(1) == 6052){
+		mes "คุณมีทุกอย่างครบหมดแล้ว";
+		close;
+	}
+	mes "เลือกโฮมุนครุส";
+	next;
+	switch(Select("เลือก!:ยกเลิก")){
+	case 1:
+		set .@i, select("Eira:Bayeri:Sera:Dieter:Eleanor:ยกเลิก");
+		if(.@i == 6){
+			mes "ไว้เจอกัน!";
+			close;
+		}
+		morphembryo;
+		hommutate 6047 + .@i;
+		mes "เรียบร้อย!";
+		close;
+	case 2:
+		mes "ไว้เจอกัน!";
+		close;
+	}
+	
+OnInit:
+	waitingroom "Homun. S.",0;
+	end;
+}

@@ -16,16 +16,16 @@
 
 pay_arche,122,100,0	script	Dollshoi	88,{
 	mes "[Mage Guildsman]";
-	mes "You want a Solution? Hmm, give me 50 Zeny and at least 1 Empty Test Tube.";
+	mes "คุณต้องการทางออกหรือไม่อืมให้ 50 Zeny กับ Empty Test Tube 1 อัน";
 	next;
-	if (select("Alright, Deal.:Nah, forget it.") == 1) {
+	if (select("ตกลงตกลง:ไม่ลืมมันซะ") == 1) {
 		mes "[Mage Guildsman]";
 		if (Zeny < 50) {
-			mes "Hey! You don't have enough money to cover my 50 Zeny charge.";
+			mes "เฮ้! เจ้ามีเงินไม่พอที่จะจ่าย 50 Zeny ของฉัน";
 			close;
 		}
 		if (countitem(1092) == 0) {
-			mes "You can't carry solutions without a bottle! Bring me an Empty Test Tube.";
+			mes "เจ้าไม่สามารถพกสารละลายได้โดยไม่ต้องใช้ขวดเลยนำ Empty Test Tube มาให้ข้าด้วย";
 			close;
 		}
 		delitem 1092,1; //Empty_Cylinder
@@ -37,16 +37,16 @@ pay_arche,122,100,0	script	Dollshoi	88,{
 
 moc_ruins,91,150,0	script	Ponka-Hontas	93,{
 	mes "[Mage Guildsman]";
-	mes "Would you like a Solution? Then please give me 50 Zeny and at least 1 Empty Test Tube.";
+	mes "คุณต้องการทางออกหรือไม่อืมให้ 50 Zeny กับ Empty Test Tube 1 อัน";
 	next;
-	if (select("Alright, Deal.:Nah, forget it.") == 1) {
+	if (select("ตกลงตกลง:ไม่ลืมมันซะ") == 1) {
 		mes "[Mage Guildsman]";
 		if (Zeny < 50) {
-			mes "I'm sorry, but you don't have enough money to cover the 50 Zeny fee.";
+			mes "เฮ้! เจ้ามีเงินไม่พอที่จะจ่าย 50 Zeny ของฉัน";
 			close;
 		}
 		if (countitem(1092) == 0) {
-			mes "You can't carry liquids without using a bottle. Bring an Empty Test Tube the next time you see me.";
+			mes "เจ้าไม่สามารถพกสารละลายได้โดยไม่ต้องใช้ขวดเลยนำ Empty Test Tube มาให้ข้าด้วย";
 			close;
 		}
 		delitem 1092,1; //Empty_Cylinder

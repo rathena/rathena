@@ -507,7 +507,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		mes "I knew you were not worth trying my magical refining hammer for.";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 		mes "[Clink]";
 		mes "Wow!!";
 		mes "This "+.@type$+" has been refined quite a bit, huh?";
@@ -546,7 +546,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		close;
 	}
 
-	if (getequippercentrefinery(.@part) <= rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 		failedrefitem .@part;
 		mes "[Clink]";
 		mes "Cry Hammer!! Cry!!!";

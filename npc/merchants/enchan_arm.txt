@@ -21,21 +21,21 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 	disable_items;
 	mes "[Apprentice Craftsman]";
 	if (Zeny >= 400000) {
-		mes "I've been studying ways to enhance an armor to maximize its capability.";
+		mes "ข้ากำลังศึกษาการออฟเกราะอยู่.";
 		next;
 		mes "[Apprentice Craftsman]";
-		mes "Enchanting is an awesome skill that infuses a mysterious status powers into the armor's hidden socket.";
+		mes "มันเป็นการปลุกพลังความสามารถพิเศษที่ซ่อนอยู่ในเกราะออกมา.";
 		next;
 		mes "[Apprentice Craftsman]";
-		mes "However, you have to keep in mind that if there are two armors of the same kind in your possession, the Enchantment will be applied in the order they are placed in your inventory.";
+		mes "อย่างไรก็ตาม, ถ้าเจ้ามีเกราะที่เหมือนกันอยู่ในกระเป๋า, ออฟอาจจะไปโผล่ในเกราะที่อยู่ในกระเป๋าแทน.";
 		next;
 		mes "[Apprentice Craftsman]";
-		mes "In that case, the Enchantment may be applied to an item which you didn't mean to Enchant. So just bring ^5555ffONE Armor^000000 you want enchanted to be safe...";
+		mes "ในกรณีนี้, ไม่ได้หมายความว่าเจ้ายังไม่ได้ออฟของชิ้นนั้น. เพื่อเป็นการกันโปรดมีแค่ ^5555ffหนึ่ง Armor^000000 ที่เจ้าอยากจะออฟเท่านั้น...";
 		next;
 		mes "[Apprentice Craftsman]";
-		mes "I'm not responsible for what would happen if you have more than one of the same kind in your inventory.";
+		mes "ข้าจะไม่รับผิดชอบต่อสิ่งที่เกิดขึ้นในกระเป๋าของเจ้า.";
 		next;
-		switch(select("Non Slotted Armor.:Slotted Armor.:High Grade Armor.:Maybe next time.")) {
+		switch(select("Non Slotted Armor.:Slotted Armor.:High Grade Armor.:ไว้โอกาสหน้า.")) {
 		case 1:
 			setarray .@Items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
 			set .@j,50;
@@ -51,7 +51,7 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 			break;
 		case 4:
 			mes "[Apprentice Craftsman]";
-			mes "Please come back when you have any interest in enchanting your armor.";
+			mes "กลับมาใหม่เมื่อเจ้าสนใจที่จะออฟเกราะ.";
 			close;
 		}
 		set .@menu$,"";
@@ -60,10 +60,10 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 		callsub S_EnchantArmor, .@Items[select(.@menu$)-1], .@j;
 		end;
 	}
-	mes "I am in charge of Enchanting Armors. Simply put, I've been studying ways to power-up armor.";
+	mes "ข้ากำลังศึกษาการเพิ่มพลังให้เกราะอยู่.";
 	next;
 	mes "[Apprentice Craftsman]";
-	mes "If by any chance, you would want to enchant your armor, bring me 400,000 zeny and the armor you want to enchant and you are all set to go.";
+	mes "ถ้าเจ้าต้องการออฟเกราะของเจ้า, นำเงิน 400,000 zeny และเกราะที่เจ้าต้องการจะออฟมาให้ข้า.";
 	close;
 
 S_EnchantArmor:
@@ -71,27 +71,27 @@ S_EnchantArmor:
 	set .@failrate,getarg(1);
 	mes "[Apprentice Craftsman]";
 	if (countitem(.@itemid) == 1) {
-		mes "Socket enchant will cost you 400,000 zeny. And there will be a random option enchanted. Of course, there is a chance of breaking your armor.";
+		mes "ในการออฟเจ้าต้องจ่าย 400,000 zeny. และมันจะสุ่มค่าออฟที่ได้. ระวัง, มันมีโอกาสที่เกราะจะแตกได้.";
 		next;
 		mes "[Apprentice Craftsman]";
-		mes "First and most importantly.";
-		mes "^ff5555Existing Refine Level of the Armor";
-		mes "and Cards will be GONE.^000000";
-		mes "Do you still want to try an Enchant?";
+		mes "สิ่งสำคัญที่สุด.";
+		mes "^ff5555ค่าตีบวก";
+		mes "และการ์ดจะหายไป.^000000";
+		mes "เจ้ายังอยากจะออฟอยู่ไหม ?";
 		next;
-		if(select("Hmm... Let me think it over.:Go ahead.") == 1) {
+		if(select("หืมมม... ขอเวลาคิดสักหน่อย.:เอาเลย.") == 1) {
 			mes "[Apprentice Craftsman]";
-			mes "Well, I can't blame you. Safety first, eh?";
-			mes "Now you have a nice day.";
+			mes "เยี่ยม, ข้าจะไม่ตำหนิเจ้า. ความปลอดภัยมาก่อนเสมอ ?";
+			mes "ขอให้เป็นวันที่ดี.";
 			close;
 		}
 		mes "[Apprentice Craftsman]";
-		mes "Quite of an adventurer huh? Well, shall we?";
+		mes "สมแล้วที่เป็นนักผจญภัย ?";
 		close2;
 		specialeffect2 EF_MAPPILLAR;
 		if (Zeny < 400000) {
 			mes "[Apprentice Craftsman]";
-			mes "Sorry, but you don't have enough zeny.";
+			mes "โทษที, แต่เจ้ามีเงินไม่พอ.";
 			close;
 		}
 		progressbar "ffff00",7;
@@ -137,15 +137,15 @@ S_EnchantArmor:
 			default:
 				specialeffect2 EF_PHARMACY_FAIL;
 				mes "[Apprentice Craftsman]";
-				mes "Well that's too bad.";
-				mes "The requested equipment has failed to enchant.";
+				mes "แย่จริงๆ.";
+				mes "การออฟล้มเหลว.";
 				close;
 		}
 		getitem2 .@itemid, 1, 1, 0, 0, 0, 0, 0, .@addpart;
 	}
 	else {
-		mes "Hmm? There's nothing to be enchanted!";
-		mes "Please come back with just ONE equipment to be enchanted.";
+		mes "หืมม? ไม่มีอะไรจะออฟ!";
+		mes "กลับมาใหม่เมื่อเจ้ามีของอยากจะออฟ.";
 		close;
 	}
 }

@@ -1,0 +1,55 @@
+//===== rAthena Script =============================================
+//= Punching Bag NPC
+//===== By: ========================================================
+//= Secretdataz
+//===== Current Version: ===========================================
+//= 0.2
+//===== Changelog: =================================================
+//= 0.1 Initial commit
+//= 0.2 Add MD_KNOCKBACK_IMMUNE
+//===== Compatible With: ===========================================
+//= rAthena Project
+//===== Additional Comments: =======================================
+//= When duplicating this NPC. Only use NUMBER after the # [secret]
+//==================================================================
+prontera,224,79,0	script	PunchingBag#0	844,{
+	end;
+	
+OnMyMobDead:
+OnInit:
+	getunitdata(getnpcid(0), .@d);
+	monster strnpcinfo(4),.@d[UNPC_X],.@d[UNPC_Y],"Punching Bag",2411,1,strnpcinfo(0)+"::OnMyMobDead";
+	.@dupid = atoi(strnpcinfo(2));
+	.gid[.@dupid] = $@mobid[0];
+	.mhp[.@dupid] = strmobinfo(4,2411);
+	setunitdata .gid[.@dupid],UMOB_MODE,.@d[UMOB_MODE]|0x4000000|0x0200000; // Set MD_STATUS_IMMUNE (0x4000000) because EDP/burn/%MHP based status can skew the DPS counter so much.
+	initnpctimer;
+	end;
+	
+OnTimer5000:
+	.@dupid = atoi(strnpcinfo(2));
+	if(unitexists(.gid[.@dupid])){
+		getunitdata(.gid[.@dupid],.@d);
+		.@diff = (.mhp[.@dupid] - .@d[UMOB_HP]);
+		if(.@diff > 0){
+			npctalk "Punching Bag : ข้าโดน " + (.@diff/5) + " DPS ภายใน 5 วินาทีที่แล้ว";
+			setunitdata .gid[.@dupid],UMOB_HP,.mhp[.@dupid];
+			specialeffect EF_HEAL;
+		}
+	}
+	initnpctimer;
+}
+
+prontera,216,79,0	duplicate(PunchingBag#0)	PunchingBag#1	844
+prontera,224,70,0	duplicate(PunchingBag#0)	PunchingBag#2	844
+prontera,216,58,0	duplicate(PunchingBag#0)	PunchingBag#3	844
+prontera,224,58,0	duplicate(PunchingBag#0)	PunchingBag#4	844
+
+prontera,139,175,5	script	ไปทดสอบ Damage	2035,{
+	warp "prontera",237,66;
+	end;
+}
+prontera,237,70,5	script	กลับกลางเมือง	2035,{
+	warp "prontera",156,191;
+	end;
+}

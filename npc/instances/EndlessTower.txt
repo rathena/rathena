@@ -38,122 +38,122 @@
 //= 2.4 Added GM management function. [Euphy]
 //============================================================ 
 
-alberta,214,77,6	script	Captain Janssen	709,{
+alberta,214,77,6	script	กัปตัน Janssen	709,{
 	if (checkweight(1201,1) == 0) {
-		mes "^008800Wait here!!";
-		mes "You're carrying too much stuff. Why don't you put some of it away, and then come back.^000000";
+		mes "^008800รอซักครู่!!";
+		mes "คุณมีน้ำหนักเกินกำหนด กรุณากลับมาใหม่อีกครั้งเมือมีน้ำหนักที่เหมาะสม^000000";
 		close;
 	}
 	if (BaseLevel < 50) {
-		mes "[Captain Janssen]";
-		mes "Sigh... I don't know if I can ever go back to sailing the sea...";
+		mes "[กัปตัน Janssen]";
+		mes "อ้าา... ฉันก็ไม่แน่ใจเหมือนกันว่าจะได้กลับไปออกเรืออีกครั้งเมื่อไหร่...";
 		close;
 	}
 	set .@name$,strcharinfo(0);
 	if (in_102tower == 1) {
-		mes "^0000ffLooking incredibly excited, the old man ran into the marine shop hurriedly ordering goods. You don't have anything better to do, so you decide to ask him why he is in such a rush.^000000";
+		mes "^0000ffมันน่าตื่นเต้นเป้นบ้า ลุงคนนั้นรีบวิ่งเข้าไปที่ร้านขายอุปกรณ์ออกเรือเพื่อสั่งซื้อของ ท่านไม่ร้จะทำอย่างไร นอกจากตัดสินใจถามเขาว่าจะรีบทำไม?^000000";
 		next;
-		mes "^0000ffThe old man, after finishing his orders, walks towards you.^000000";
+		mes "^0000ffตาลุงนั่น หลังจากที่เสร็จจากการซื้อของ ก็เดินมาหาท่าน^000000";
 		next;
-		mes "[Captain Janssen]";
-		mes "I was touched when you accepted a request from me, a stranger, so easily. You must truly be one of those good, heroic adventurers. Are you interested in setting out on an ocean voyage?";
+		mes "[กัปตัน Janssen]";
+		mes "ข้าแค่รู้สึกประทับใจ เมื่อท่านยอมรับข้อเสนอของข้า ชายแปลกหน้า! อย่างง่ายดาย ฮ่าๆ ท่านน่าจะเป็นคนที่ข้อไว้ใจได้ เป็นนักเดินทางที่แข็งแกร่ง ว่าแต่ท่านสนใจจะออกเรือข้ามสมุทรไปกับข้าไหม?";
 		next;
 		mes "["+.@name$+"]";
-		mes "I've sailed a few times... But now that I think about it, I've never gone across the continent.";
+		mes "เอ่อ.. ข้าก็เคยล่องเรือมาบ้างนะ. แต่คิดๆดูแล้ว เคยมีแค่ไม่กี่คนเองนะที่ลจะ่องเรือข้ามทวีปได้";
 		next;
-		mes "[Captain Janssen]";
-		mes "No, that's good enough. I may just have one small fishing vessel, but I used to be a captain that commanded a fleet.";
+		mes "[กัปตัน Janssen]";
+		mes "ฮ่ะ แค่นั้นก็เพียงพอแล้ว  ข้าอาจจะมีแค่เบ็ดตกปลาเล็กๆอันเดียว แต่เห็นอย่างนี้ข้าเคยเป็นถึงกับตันเรือรบเชียวนะ";
 		next;
-		mes "[Captain Janssen]";
-		mes "As you may know after a few sea voyages, not many people have gone across the ocean beyond the continent. I too have failed to conquer the ocean.";
+		mes "[กัปตัน Janssen]";
+		mes "อย่างที่ท่านเคยรู้มาแหละ มีแค่ไม่กี่คนเท่านั้นที่สามารถล่องสมุทรข้ามทวีปได้ ตัวข้าเองก็ล้มเหลวมาไม่น้อยในการพิชิตมหาสมุทรนี้";
 		next;
-		mes "^0000ffMr. Janssen talked about his perilous ocean journeys for quite a while. You have enough time on your hands, so you sit down, quietly listening to his story.^000000";
+		mes "^0000ffMr. Janssen พูดคุยเกี่ยวกับประสบการณ์ล่องเรือข้ามสมุทรของเขาเองอยู่พักหนึ่ง ท่านเห็นว่าไม่ได้รีบร้อนอะไร จึงนั่งลง และตั้งใจฟังเรื่องราวของเขา^000000";
 		next;
-		mes "^0000ffAt least half of his story sounded grossly exaggerated, but something caught your ear: he insists that a humongous tower exists on the ocean, and that it's so tall, it scrapes across the sky.^000000";
+		mes "^0000ffถึงแม้ว่าเรื่องราวเกินครึ่งที่เล่ามา มันจะดูเว่อร์และเกินจริง แต่มีบางสิ่งที่สะดุดใจท่าน เป็นเรื่องราวของหอคอยลึกลับขนาดใหญ่ สูงเสียดฟ้า ที่ตั้งตระหง่านอยู่กลางมหาสมุทร^000000";
 		set in_102tower,2;
 		close;
 	} else if (in_102tower == 2) {
-		mes "[Captain Janssen]";
-		mes "So all I could do was cast anchor at that humongous tower after my fleet was wrecked. At first, we were only going to stay there until the rainstorm was over, but it didn't end as soon as we had hoped.";
+		mes "[กัปตัน Janssen]";
+		mes "ในตอนนั้น หลังจากที่เรือใกล้จะล่ม ข้าได้ทอดสมอทลงี่หอคอยลึบลับนั้น พวกเราตั้งใจว่าจะพักอยู่ที่นั้นจนกว่าพายุฝนจะหยุด... แต่ดูเหมือนว่ามันไม่มีทีท่าจะหยุด";
 		next;
-		mes "[Captain Janssen]";
-		mes "My crew was starving, and a few of them walked into the tower in order to find food... They never came back.";
-		next;
-		mes "["+.@name$+"]";
-		mes "Why didn't you go in there with them?";
-		next;
-		mes "[Captain Janssen]";
-		mes "My instincts told me that tower was dangerous. I was curious, but I wasn't going to risk my life. We waited for them to come back for 7 days until the rainstorm was finally over, but no one returned.";
-		next;
-		mes "[Captain Janssen]";
-		mes "In our desperation to survive, we abandoned all our goods, and left the tower only with a little bit of the water and edible plants we'd found around the tower. When we finally reached land, I was the only one alive...";
-		next;
-		mes "^0000ffYou could imagine the heartwretching scene of the dying fleet on their last voyage, even if he didn't explain it any further. A look of somber regret swept over his face as he remained silent a while, and then he said:^000000";
-		next;
-		mes "[Captain Janssen]";
-		mes "I have something I must do before I die. I must retrieve the remains of my crew that died in the tower, and give them a proper burial.";
-		next;
-		mes "[Captain Janssen]";
-		mes "I feel so lucky to meet a warm-hearted adventurer like you. With the money you've given me, I can finally go sailing to the tower again.";
+		mes "[กัปตัน Janssen]";
+		mes "ลูกเรือของข้าเริ่มหิวโซ จนผู้คนบางส่วนเริ่มเดินเข้าไปในหอคอยนั่น ... แต่ไม่มีใครที่ได้กลับออกมาเลย";
 		next;
 		mes "["+.@name$+"]";
-		mes "How about hiring me as your first mate?";
+		mes "แล้วทำไมท่าน ไม่เข้าไปกับพวกเขารึ?";
 		next;
-		mes "[Captain Janssen]";
-		mes "Thank you, but it is an extremely dangerous place. I have my duty to fulfill, but you don't have any obligation to me or them. I don't wish to sacrifice someone as young as you to such a dangerous place.";
+		mes "[กัปตัน Janssen]";
+		mes "สัญชาตญาณมันบอกน่ะ ว่าข้างในนั้นมันต้องมีอันตรายรออยู่...  แม้ว่าข้าจะอยากรู้อยากเห็น แต่ข้าก็ไม่เอาชีวิตไปเสี่ยงหรอก พวกเรารอให้เขากลับมานานถึง 7 วัน จนกระทั่งพายุฝนหยุดลง แต่ตอนนั้นก็ไม่มีใครได้กลับออกมาเลย";
+		next;
+		mes "[กัปตัน Janssen]";
+		mes "จนถึงจุดที่พวกข้าเริ่มอยากมีชีวิตรอดอย่างสิ้นคิด พวกเรายอมละทิ้งทุกอย่างเอาไว้ และออกจากหอคอยบ้านั่นพร้อมกับน้ำดื่มและพืชรอบๆหอคอยอันน้อยนิด ... ซึ่งในที่สุด .. ข้าเป็นคนเดียวที่รอดมาได้...";
+		next;
+		mes "^0000ffคุณจินตนาการได้ถึงความสูญเสียที่เกิดขึ้น การเผชิญกับลูกเรือคนสุดท้ายที่กำลังจะตาย  ชายแก่ไม่พูดอะไรต่อ แต่ใบหน้าของเขาดูเศร้าหมอง จนผ่านไปซักครู่หนึ่งเขาก็เริ่มพูดอีกครั้ง^000000";
+		next;
+		mes "[กัปตัน Janssen]";
+		mes "ข้ามีบางสิ่ง ที่อยากจะทำก่อนตาย ข้าอยากจะได้ร่างของลูกเรือที่ติดอยู่ในหอคอยนั่น พวกเขาควรจะได้รับการทำพิธีและฝังอย่างเหมาะสม";
+		next;
+		mes "[กัปตัน Janssen]";
+		mes "ข้ารุ้สึกโชคดีที่ได้พบนักเดินทางอย่างท่าน ถ้าท่านมอบเงินให้ข้านิดหน่อย ข้ามั่นใจว่าจะออกเรือไปที่หอคอยนั่นได้อีกครั้งแน่";
 		next;
 		mes "["+.@name$+"]";
-		mes "No...";
+		mes "ท่านจะให้ข้าจ้างท่านเท่าไรล่ะ?";
+		next;
+		mes "[กัปตัน Janssen]";
+		mes "ขอบคุณท่านมาก แต่สถานที่นั้นมันอันตรายมาก ข้ามีหน้าที่ที่จะต้องทำให้ได้ ซึ่งจริงๆท่านก็ไม่ได้มีอะไรติดค้างกับข้าหรือพวกเขาเหล่านั้น ... ข้าไม่อยากให้คนหนุ่มอย่างท่านจะต้องมาสละชีวิตในสถานที่อันตรายแบบนั้น";
+		next;
+		mes "["+.@name$+"]";
+		mes "ไม่หรอก...";
 		mes ".";
 		mes ".";
-		mes "As an adventurer, there's my obligation to those in need. I'm also very curious about that place...";
+		mes "ข้าเป็นนักเดินทาง ข้าอยากจะรู้เกี่ยวกับสถานที่นั้น นั่นแหละคือสิ่งที่ข้าต้องการ...";
 		next;
-		mes "[Captain Janssen]";
-		mes "I was going to leave right away, but since you've joined me, I should give you time to prepare. I'll be waiting here until you're ready to go.";
+		mes "[กัปตัน Janssen]";
+		mes "'งั้นข้าจะรีบไปเตรียมเรือออก ท่านก็เตรียมตัวให้พร้อม ข้าจะรออยู่ที่นี่ หากท่านพร้อมเมื่อไรก็มาบอกข้าแล้วกัน";
 		next;
-		mes "[Captain Janssen]";
-		mes "...Okay then...";
-		mes "Welcome aboard, first mate.";
+		mes "[กัปตัน Janssen]";
+		mes "...OK งั้น...";
+		mes "ยินดีที่ได้ร่วมเดินทางกับท่าน";
 		set in_102tower,3;
 		close;
 	} else if (in_102tower == 3) {
-		mes "[Captain Janssen]";
-		mes "Shall we leave now?";
+		mes "[กัปตัน Janssen]";
+		mes "พร้อมจะออกเรือหรือยัง?";
 		next;
-		switch(select("Yes, let's go!:No, I'm not quite ready...")) {
+		switch(select("ใช่,,ไปกันเถอะ!:No, ข้ายังไม่พร้อม...")) {
 		case 1:
-			mes "[Captain Janssen]";
-			mes "Then pull up the anchor, first mate!";
+			mes "[กัปตัน Janssen]";
+			mes "ดึงสมอขึ้น! ออกเรือได้!!";
 			close2;
 			set in_102tower,4;
 			warp "e_tower",70,114;
 			end;
 		case 2:
-			mes "[Captain Janssen]";
-			mes "Sure, no problem. Come back when you're ready.";
+			mes "[กัปตัน Janssen]";
+			mes "ได้สิ ไม่มีปัญหา ท่านพร้อมเมื่อไรก็บอกข้าได้";
 			close;
 		}
 	} else if (in_102tower > 3) {
-		mes "[Captain Janssen]";
-		mes "Well, to travel the ocean again, we need to restock on goods. If you give me 10,000 Zeny, I'll take care of the rest.";
+		mes "[กัปตัน Janssen]";
+		mes "เอ่อ., หากจะข้ามมหาสมุทรอีกครั้ง เราจะต้องเตรียมอุปกรณ์ใหม่ หากท่านให้ข้า 10,000 zeny ข้าจะจัดการทุกอย่างให้ทันที";
 		next;
-		switch(select("I'll come back later.:Let's go, now!")) {
+		switch(select("เดี๋ยวข้ากลับมาใหม่:ไปกันเลย!")) {
 		case 1:
 			mes "["+.@name$+"]";
-			mes "I'm sorry, but I don't have that much money. I'll come back when I save enough.";
+			mes "เอ่อ ตอนนี้ข้าไม่มีเงิน ไวเดี่ยวข้ากลับมาใหม่เมื่อเงินพอนะ";
 			next;
-			mes "[Captain Janssen]";
-			mes "Sure, no problem. I'll be waiting for your return.";
+			mes "[กัปตัน Janssen]";
+			mes "ได้สิ ไม่มีปัญหา ข้าจะรอท่านอยู่ที่นี่";
 			close;
 		case 2:
 			if (Zeny < 10000) {
-				mes "[Captain Janssen]";
-				mes "I'm sorry, but you don't have enough money. I need at least 10,000 Zeny to restock our supplies...";
+				mes "[กัปตัน Janssen]";
+				mes "ต้องอภัยด้วย ท่านมีเงินไม่พอ ข้าต้องการเงินเพียง 10,000 zeny ในการเตรียมอุปกรณ์สำหรับเดินทาง...";
 				close;
 			}
 			else {
-				mes "[Captain Janssen]";
-				mes "Excellent! Now we're good to go. Let's pull up the anchor again!";
+				mes "[กัปตัน Janssen]";
+				mes "เยี่ยม! งั้นพวกเราออกก็พร้อมออกเดินทางได้ ดึงสมอขึ้นแล้วไปกันเลย!";
 				set Zeny, Zeny-10000;
 				close2;
 				warp "e_tower",70,114;
@@ -161,39 +161,39 @@ alberta,214,77,6	script	Captain Janssen	709,{
 			}
 		}
 	} else {
-		mes "[Captain Janssen]";
-		mes "Excuse me, are you an adventurer?";
+		mes "[กัปตัน Janssen]";
+		mes "ขอโทษนะ ท่านเป็นนักผจญภัยรึเปล่า?";
 		next;
-		mes "[Captain Janssen]";
-		mes "I'm sorry to ask you this, especially when this is the first time we've ever met, but can you do me a favor? I'll make it short.";
+		mes "[กัปตัน Janssen]";
+		mes "ข้าต้องขอโทษที่ถามแบบนั้น โดยเฉพาะคนที่เพิ่งเจอกันครั้งแรก แต่ข้าขออะไรซักอย่างได้ไหม แค่แปปเดียว";
 		next;
-		mes "[Captain Janssen]";
-		mes "Can you donate ^0000ff10,000 Zeny^000000 to me? It's for a cause that's important to me...";
+		mes "[กัปตัน Janssen]";
+		mes "ข้าขอ ^0000ff10,000 Zeny^000000 จากท่านได้มั้ย? มันสำคัญกับตัวข้ามาก...";
 		next;
-		switch(select("No!:Sure thing.")) {
+		switch(select("ไม่!:อ่อ.. ได้สิ")) {
 		case 1:
 			mes "["+.@name$+"]";
-			mes "I'm sorry, but you've got the wrong person to ask that.";
+			mes "ขอโทษด้วยนะ แต่ท่านน่าจะถามผิดคนแล้วล่ะ";
 			next;
-			mes "[Captain Janssen]";
-			mes "I see... Sorry to bother you. I understand it was too rude to ask something like that to begin with.";
+			mes "[กัปตัน Janssen]";
+			mes "ไม่เป็นไรข้าเข้าใจ... ขอโทษที่รบกวน ข้ารู้ว่ามันอาจจะหยาบคายไปหน่อยที่ถามอะไรแบบนี้กับคนที่เพิ่งพบครั้งแรก";
 			close;
 		case 2:
-			mes "[Captain Janssen]";
-			mes "Huh? Are you sure that you don't mind giving me that much money? Wow, thank you so much!";
+			mes "[กัปตัน Janssen]";
+			mes "หืมม? ท่านแน่ใจแล้วนะว่าจะมอบเงินนี้ให้ข้า? ขอบคุณท่านมาก!";
 			next;
 			if (Zeny < 10000) {
-				mes "[Captain Janssen]";
-				mes "...I'm sorry, but I don't think you have 10,000 Zeny. Thank you for your kindness, but I need more than that.";
+				mes "[กัปตัน Janssen]";
+				mes "...ข้าขอโทษ ข้าไม่คิดว่าท่านจะมีเงินไม่ถึง 10,000 zeny ขอบคุณในความหวังดี แต่ข้าต้องใช้เงินมากกว่านั้น";
 				close;
 			} else {
 				mes "["+.@name$+"]";
-				mes "I don't know why you'd need so much money, but here. You can take it.";
+				mes "ข้าก็ไม่รู้นะ ว่าท่านจะเอาเงินไปทำอะไร แต่อ่ะ,,ข้าให้ท่าน";
 				next;
-				mes "^0000ffYou have donated 10,000 Zeny to Captain Janssen^000000.";
+				mes "^0000ffคุณได้มอบ 10,000 Zeny ให้กัปตัน Janssen^000000.";
 				next;
-				mes "[Captain Janssen]";
-				mes "Thank you so much! Now I can stock up on food and materials for my ship. You're kind, very kind!";
+				mes "[กัปตัน Janssen]";
+				mes "ขอบคุณท่านมาก แบบนี้ข้าก็สามารถเตรียมอุปกรณ์สำหรับเรือข้าได้แล้ว ท่านช่างเป็นคนดี คนดีจริงๆ!";
 				set Zeny, Zeny-10000;
 				set in_102tower,1;
 				close;
@@ -210,30 +210,30 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@etower_timer,checkquest(60200,PLAYTIME); // 1 week
 	set .@etower_timer2,checkquest(60201,PLAYTIME); // 4 hours
 
-	if (!instance_check_party(.@party_id,2)) {
-		mes "Make or join a party with more than 1 member and try again.";
+	if (!instance_check_party(.@party_id,1)) {
+		mes "กรุณาสร้าง หรือเข้าร่วมปาร์ตี้ที่มีสมาชิกมากกว่า 1 คนแล้วลองอีกครั้ง";
 		close;
 	}
 	switch(.@etower_timer) {
 	case -1:
 		if (is_party_leader() == true) {
-			mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
+			mes "ปาร์ตี้นี้ได้รับการยืนยัน คุณต้องการที่จะสร้างทางเข้าสู่ Endless Tower หรือไม่?";
 			next;
-			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {
+			switch(select("สร้างดันเจี้ยน "+.@md_name$+":เข้าสู่ดันเจี้ยน:กลับสู่ Alberta:ยกเลิก")) {
 			case 1:
 				if (instance_create(.@md_name$) < 0) {
-					mes "Party Name: "+ getpartyname(.@party_id);
-					mes "Party Leader: "+strcharinfo(0);
-					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+					mes "ชื่อปาร์ตี้: "+ getpartyname(.@party_id);
+					mes "หัวหน้าปาร์ตี้: "+strcharinfo(0);
+					mes "^0000ff"+.@md_name$+" ^000000- การลงทะเบียนล้มเหลว!";
 					close;
 				}
-				mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
-				mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
+				mes "^0000ff"+.@md_name$+"^000000 - พยายามลงทะเบียน";
+				mes "หลังจากลงทะเบียนแล้ว ท่านต้องคุยกับ NPC ด้านหลัง แล้วเลือกเมนู 'เข้าสู่ดันเจี้ยน' เพื่อเข้าไปในดันเจี้ยน";
 				close;
 			case 2:
 				callsub L_Enter,0,1;
 			case 3:
-				mes "I will move you to Alberta.";
+				mes "ข้าจะส่งท่านกลับ Alberta";
 				close2;
 				warp "alberta",223,36;
 				end;
@@ -241,11 +241,11 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 				close;
 			}
 		}
-		switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
+		switch(select("เข้าสู่ "+.@md_name$+":กลับสู่ Alberta:ยกเลิก")) {
 		case 1:
 			callsub L_Enter,1,1;
 		case 2:
-			mes "I will move you to Alberta.";
+			mes "ข้าจะส่งท่านกลับ Alberta";
 			close2;
 			warp "alberta",223,36;
 			end;
@@ -255,13 +255,13 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	case 0:
 	case 1:
 		if (.@etower_timer2 < 2 && getcharid(1) == etower_partyid) {
-			mes "If you have the dungeon generated already, you can enter it. ";
+			mes "หากท่านลงทะเบียนเข้าดันเจี้ยนเรียบร้อยแล้ว ท่านสามารถเข้าไปได้ทันที";
 			next;
-			switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
+			switch(select("เข้าสู่ "+.@md_name$+":กลับสู่ Alberta:ยกเลิก")) {
 			case 1:
 				callsub L_Enter,0,0;
 			case 2:
-				mes "I will move you to Alberta.";
+				mes "ข้าจะส่งท่านกลับ Alberta";
 				close2;
 				warp "alberta",223,36;
 				end;
@@ -277,9 +277,9 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			set .@dun_m,(.@dun_ent_t - (.@dun_h * 3600)) / 60;
 			set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
 
-			mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
+			mes "เนื่องจากผลข้างเคียงในการเข้าสู่หอคอย ท่านจะไม่สามารถเข้าสู่หอคอยได้ชั่วคราวอีก " + .@dun_h + "ชั่วโมง " + .@dun_m + "นาที " + .@dun_s + "วินาที ";
 			next;
-			mes "It is dangerous here. Let me move you to Alberta.";
+			mes "ที่นี่มันอันตราย เดี๋ยวข้าไปส่งท่านที่ Alberta";
 			close2;
 			warp "alberta",223,36;
 			end;
@@ -288,24 +288,24 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		set etower_timer,0;
 		erasequest 60200;
 		erasequest 60201;
-		mes "^0000ffThe records and after effects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
+		mes "^0000ffผลบันทึก และผลข้างเคียงจากหอคอย ได้สิ้นสุดลงแล้ว ตอนนี้ท่านสามารถลงทะเบียนเข้าสู่หอคอยได้อีกครั้ง^000000";
 		close;
 	}
 
 L_Enter:
 	switch(instance_enter("Endless Tower")) {
 	case IE_OTHER:
-		mes "An unknown error has occurred.";
+		mes "มีข้อผิดพลาดเกิดขึ้น";
 		close;
 	case IE_NOINSTANCE:
-		mes "The memorial dungeon Endless Tower does not exist.";
-		mes "The party leader did not generate the dungeon yet.";
+		mes "The memorial dungeon Endless Tower ไม่ว่าง";
+		mes "หัวหน้าปาร์ตี้ไม่สามารถเปิดดันเจี้ยนได้ขณะนี้";
 		close;
 	case IE_NOMEMBER:
-		mes "You can enter the dungeon after making the party.";
+		mes "ท่านจะเข้าดันเจี้ยนได้ ก็ต่อเมื่ออยู่ในปาร์ตี้";
 		close;
 	case IE_OK:
-		mapannounce "e_tower", strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
+		mapannounce "e_tower", strcharinfo(0) +" จากปาร์ตี้, "+ getpartyname( getcharid(1) ) +", กำลังเข้าสู่ดันเจี้ยน Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
 		if (getarg(1)) {
 			set etower_timer,gettimetick(2);
 			set etower_partyid, getcharid(1);
@@ -321,7 +321,7 @@ L_Enter:
 e_tower,30,30,2	script	Huge Vortex	844,2,2,{
 	end;
 OnTouch:
-	mapannounce "e_tower","[ " + strcharinfo(0) + " ], seems to be engulfed by a huge vortex",bc_map,"0x00ff99",FW_NORMAL,12;
+	mapannounce "e_tower","[ " + strcharinfo(0) + " ], ดูเหมือนจะถูกกลืนไปในกระแสน้ำวน",bc_map,"0x00ff99",FW_NORMAL,12;
 	warp "alberta",223,36;
 	end;
 }
@@ -329,33 +329,33 @@ OnTouch:
 // Original name: "#102Administrator Mode104"
 e_tower,1,1,2	script	#102Administrator Mode	844,{
 	callfunc "F_GM_NPC";
-	mes "Please enter the password";
+	mes "กรุณากรอก Password";
 	set .@i, callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		switch(select("Generate Purification Stone:Remove Purification Stone:Cancel")) {
+		switch(select("เสียบ Purification Stone:เอา Purification Stone ออก:ยกเลิก")) {
 		case 1:
-			mes "Create the Purification Stone that stays for 30 minutes.";
+			mes "เสียบ Purification Stone ซึ่งจะคงอยู่เป็นเวลา 30 นาที";
 			donpcevent "Purification Stone#et1::OnEnable";
 			break;
 		case 2:
-			mes "Destroy the Purification Stone immediately";
+			mes "ทำลาย Purification Stone";
 			donpcevent "Purification Stone#et1::OnDisable";
 			break;
 		case 3:
-			mes "You have canceled it.";
+			mes "คุณได้ยกเลิกการกระทำ";
 			break;
 		}
 		close;
 	} else {
-		mes "Enter the password exactly.";
+		mes "กรอก Password ถูกต้อง";
 		close;
 	}
 }
 
 e_tower,69,117,4	script	Purification Stone#et1	406,{
 	set etower_timer,0;
-	mes "^0000ffThe records and aftereffects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
+	mes "^0000ffผลบันทึก และผลข้างเคียงจากหอคอย ได้สิ้นสุดลงแล้ว ตอนนี้ท่านสามารถลงทะเบียนเข้าสู่หอคอยได้อีกครั้ง^000000";
 	close;
 
 OnInit:
@@ -376,7 +376,7 @@ OnTimer1000:
 	end;
 
 OnTimer1740000:
-	mapannounce "e_tower", "The Purification Stone will be destroyed in one minute.",bc_map,"0x00ff99";
+	mapannounce "e_tower", "Purification Stone กำลังจะถูกทำลายภายใน 1 นาที",bc_map,"0x00ff99";
 	end;
 
 OnTimer1800000:
@@ -387,7 +387,7 @@ OnTimer1800000:
 e_tower,151,185,4	script	Purification Stone#et2	844,{
 	callfunc "F_GM_NPC";
 	set etower_timer,0;
-	mes "^0000ffThe records and aftereffects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
+	mes "^0000ffผลบันทึก และผลข้างเคียงจากหอคอย ได้สิ้นสุดลงแล้ว ตอนนี้ท่านสามารถลงทะเบียนเข้าสู่หอคอยได้อีกครั้ง^000000";
 	close2;
 	warp "e_tower",75,108;
 	end;
@@ -1188,9 +1188,9 @@ function	script	F_Tower_Warp	{
 
 // Levels 1-25
 //============================================================
-1@tower,50,360,0	script	Immortal Brazier#	844,{
-	mes "- A Message is Engraved on the Brazier -";
-	mes "The one who scatters the ashes of the darkness in this place shall become one step closer to Nacht Sieger, the Hegemon King of the Darkness...";
+1@tower,50,360,0	script	เปลวเพลิงอำมฤต#	844,{
+	mes "- มีข้อความถูกแกะสลักไว้ที่คบเพลิง -";
+	mes "ผู้ใดก็ตามที่โปรย Ashes of the Darkness ในสถานที่นี้ จะก้าวเข้าใกล้สู่ Naght Sieger ราชาผู้ยิ่งใหญ่แห่งความมืดมิด...";
 	next;
 
 	setarray .@level$[1],"26th","51st","76th";
@@ -1198,12 +1198,12 @@ function	script	F_Tower_Warp	{
 	set .@i, select("26th Level:51st Level:76th Level");
 
 	if (countitem(6000) < .@i) {
-		mes "-Warning-";
-		mes "To warp to the "+.@level$[.@i]+" Level, you need "+.@i+" Ashes of the Darkness.";
+		mes "-คำเตือน-";
+		mes "การจะวาร์ปไปสู่ชันที่ "+.@level$[.@i]+" คุณจะต้องมี "+.@i+" Ashes of the Darkness.";
 		close;
 	}
 	delitem 6000,.@i; //Dark_Ashes
-	mapannounce instance_mapname("1@tower"), strcharinfo(0)+". You will be warped to the "+.@level$[.@i]+" Level.",bc_map,"0x00ff99";
+	mapannounce instance_mapname("1@tower"), strcharinfo(0)+". คุณจะถูกวาร์ปไปสู่ชั้นที่ "+.@level$[.@i]+" ",bc_map,"0x00ff99";
 	warp instance_mapname(.@map$[.@i]),52,354;
 	close;
 
@@ -1212,7 +1212,7 @@ OnInstanceInit:
 	end;
 
 OnTimer10000:
-	mapannounce instance_mapname("1@tower"), "Notice : Taming a monster does not count towards defeating them.",bc_map,"0xff0000";
+	mapannounce instance_mapname("1@tower"), "ประกาศ : การจับมอนสเตอร์เป็นสัตว์เลี้ยง จะไม่ถูกนับว่าเป็นการกำจัดมอนสเตอร์",bc_map,"0xff0000";
 	stopnpctimer;
 	end;
 }
@@ -1234,11 +1234,11 @@ OnMyMobDead:
 		initnpctimer;
 		//SetItemPartyInMap in_102floor 1
 	} else
-		mapannounce .@map$, "Remaining Monsters on the 1st Level - "+.@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "เหลือมอนสเตอร์ในชั้น 1 อยู่ - "+.@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("1@tower"), "All Monsters on the 1st Level have been defeated.",bc_map,"0xffff00";
+	mapannounce instance_mapname("1@tower"), "มอนสเตอร์ทุกตัวในชั้น 1 ถูกกำจัดหมดแล้ว",bc_map,"0xffff00";
 	donpcevent instance_npcname("1FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1273,12 +1273,12 @@ OnMyMobDead:
 		initnpctimer;
 		//SetItemPartyInMap in_102floor .@level
 	} else
-		mapannounce .@map$, "Remaining Monsters on the "+callfunc("F_GetNumSuffix",.@level)+" Level - "+.@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "เหลือมอนสเตอร์ในชั้น "+callfunc("F_GetNumSuffix",.@level)+" อยู่ - "+.@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
 	set .@level, atoi(replacestr(strnpcinfo(0),"FGate102tower","")) + 1;
-	mapannounce strnpcinfo(4), "All Monsters on the "+callfunc("F_GetNumSuffix",.@level)+" Level have been defeated.",bc_map,"0xffff00";
+	mapannounce strnpcinfo(4), "มอนสเตอร์ทุกตัวในชั้น "+callfunc("F_GetNumSuffix",.@level)+" ถูกกำจัดหมดแล้ว",bc_map,"0xffff00";
 	donpcevent instance_npcname(.@level+"FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1356,10 +1356,10 @@ OnInstanceInit:
 
 OnTimer15000:
 OnTimer60000:
-	mapannounce instance_mapname("1@tower"), "Notice : In any abnormal situation where you defeat a monster, you can't advance to the next level!",bc_map,"0xff0000";
+	mapannounce instance_mapname("1@tower"), "ประกาศ : การกำจัดมอนสเตอร์อย่างไม่โปร่งใสทุกกรณี จะทำให้คุณไม่สามารถไปยังชั้นต่อไปได้!",bc_map,"0xff0000";
 	end;
 OnTimer120000:
-	mapannounce instance_mapname("1@tower"), "Notice : In any abnormal situation where you defeat a monster, you can't advance to the next level!",bc_map,"0xff0000";
+	mapannounce instance_mapname("1@tower"), "ประกาศ : การกำจัดมอนสเตอร์อย่างไม่โปร่งใสทุกกรณี จะทำให้คุณไม่สามารถไปยังชั้นต่อไปได้!",bc_map,"0xff0000";
 	stopnpctimer;
 	end;
 }
@@ -1405,11 +1405,11 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 26
 	}
 	else
-		mapannounce .@map$, "Remaining Monsters on the 26th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "เหลือมอนสเตอร์ในชั้น 26 อยู่ - " + .@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("2@tower"), "All Monsters on the 26th Level have been defeated.",bc_map,"0xffff00";
+	mapannounce instance_mapname("2@tower"), "มอนสเตอร์ทุกตัวในชั้น 26 ถูกกำจัดหมดแล้ว",bc_map,"0xffff00";
 	donpcevent instance_npcname("26FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1521,11 +1521,11 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 51
 	}
 	else
-		mapannounce .@map$, "Remaining Monsters on the 51st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "เหลือมอนสเตอร์ในชั้น 51 อยู่ - " + .@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("3@tower"), "All Monsters on the 51st Level have been defeated.",bc_map,"0xffff00";
+	mapannounce instance_mapname("3@tower"), "มอนสเตอร์ทุกตัวในชั้น 51 ถูกกำจัดหมดแล้ว",bc_map,"0xffff00";
 	donpcevent instance_npcname("51FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1637,11 +1637,11 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 76
 	}
 	else
-		mapannounce .@map$,"Remaining Monsters on the 76th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$,"เหลือมอนสเตอร์ในชั้น 76 อยู่ - " + .@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("4@tower"),"All Monsters on the 76th Level have been defeated.",bc_map,"0xffff00";
+	mapannounce instance_mapname("4@tower"),"มอนสเตอร์ทุกตัวในชั้น 76 ถูกกำจัดหมดแล้ว",bc_map,"0xffff00";
 	donpcevent instance_npcname("76FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1736,40 +1736,40 @@ OnTouch_:
 //============================================================
 5@tower,106,109,2	script	Lucid Crystal#102	844,{
 	if (in_102tower < 10) {
-		mes "^0000ffA mysterious voice echoes through the room as you touch the lucid crystal radiating a strong light.^000000";
+		mes "^0000ffมีเสียงลึกลับสะท้อนผ่านจากห้อง เมื่อท่านสัมผัสกับแสงที่ส่องสะท้อนออกมาจาก Lucid Crystal^000000";
 		next;
-		mes "[Mysterious Voice]";
-		mes "Welcome to my place, intruders. I've had fun watching you endure all the difficulties I've set before you.";
+		mes "[เสียงลึบลับ]";
+		mes "ยินดีต้อนรับสู่สถานที่ของข้า เจ้าผู้บุกรุก! ข้าล่ะสนุกจริงๆที่ได้ดูเจ้าผ่านด่านมาอย่างยากลำบาก ฮ่าๆ ประทับใจจริงๆ";
 		next;
-		mes "[Mysterious Voice]";
-		mes "Unfortunately, the time has come to end the show.";
+		mes "[เสียงลึบลับ]";
+		mes "ถีงยังไงก็เถอะ การโชว์สนุกๆมันได้จบลงแล้ว";
 		next;
-		mes "[Mysterious Voice]";
-		mes "It's still too early to celebrate your victory against my right-hand man Knothen because he isn't completely destroyed!";
+		mes "[เสียงลึบลับ]";
+		mes "มันยังเร็วเกินไปที่แกจะยินดีกับชัยชนะต่อลูกสมุนมือขวาของข้า 'Krothen' ฮ่าาๆ.. มันยังไม่ได้ถูกทำลายไปหรอกนะ.. !";
 		next;
-		mes "[Mysterious Voice]";
-		mes "I shall resurrect him for your next show. Defeat him again, and then I'll gladly accept your challenge.";
+		mes "[เสียงลึบลับ]";
+		mes "ข้าจะนำมันกลับมาอีกครั้ง ในครั้งหน้าถ้าเจ้าแน่จริง! เจ้าจงกลับมาและกำจัดมันดูอีกครั้งสิ หากเจ้าทำได้ ข้าจะยอมเล่นกับเจ้าด้วยแล้วกัน";
 		next;
-		mes "[Mysterious Voice]";
-		mes "Good-bye for now.";
-		mes "Once again, I had such a great time, humans. I look forward to seeing you again.";
+		mes "[เสียงลึบลับ]";
+		mes "ล่า....ก่อน...";
+		mes "อย่าลืมล่ะ เจ้ามนุษย์ ข้าจะรอสนุกกับเจ้าอยู่ที่นี่อีกครั้ง";
 		next;
-		mes "^0000ffAs soon as the voice stopped talking, an irresistible force lifted and moved you somewhere else.";
+		mes "^0000ffหลังจากสิ้นสุดเสียง มีพลังงานประหลาดยกท่านขึ้น แล้วพาท่านไปยังสถานที่บางอย่าง";
 		close2;
 		set in_102tower,10;
 		warp "alberta",223,36;
 	}
 	else {
-		mes "^0000ffThe radiating crystal piece seems to beckon you, just like last time.^000000";
+		mes "^0000ffลำแสงส่องประกายจาก Crystal ดูเหมือนจะส่องกระทบท่าน เช่นเดียวกับครั้งที่แล้ว^000000";
 		next;
-		mes "[Mysterious Voice]";
-		mes "I must have underestimated you... I didn't expect to see you again.";
+		mes "[เสียงลึบลับ]";
+		mes "ดูเหมือนข้าคงประเมิณเจ้าต่ำเกินไปสินะ คิดไม่ถึงจริงๆว่าจะเจอเจ้าอีกครั้ง";
 		next;
-		mes "[Mysterious Voice]";
-		mes "I can smell your sweat, hear the gasps of your exhaustion in combat. Ah~ The human desire for victory always excites me.";
+		mes "[เสียงลึบลับ]";
+		mes "ข้าสัมผัสได้ถึงกลิ่นเหงื่อ ได้ยินถึงเสียงหายใจหอบในการสู้รบของเจ้า อ้าา~ ชัยชนะของเจ้ามนุษย์นี่ทำเอาข้าตื่นเต้นเสียจริง";
 		next;
-		mes "[Mysterious Voice]";
-		mes "I now allow you to come receive an audience from me. Come to me, to Nacht Sieger the Hegemon-King of the Darkness!";
+		mes "[เสียงลึบลับ]";
+		mes "มาสิ ขึ้นมาเจอกับการต้อนรับจากข้า มาเจอกับ Naght Sieger ราชันย์ผู้ยิ่งใหญ่ของโลกแห่งความมืด!";
 		close2;
 		warp instance_mapname("6@tower"),32,12;
 	}
@@ -1844,7 +1844,7 @@ OnMyMobDead:
 	set .@map$, instance_mapname("5@tower");
 	set .@mob_dead_num,mobcount(.@map$,instance_npcname("#102FShadowDust1")+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		mapannounce .@map$, "Mysterious Voice: Who are you to dare intrude upon my sanctuary?!",bc_map,"0xffff00";
+		mapannounce .@map$, "เสียงลึบลับ: เจ้าเป็นใคร ถึงกล้ามาบุกรุกพระราชวังของข้า?!",bc_map,"0xffff00";
 		donpcevent instance_npcname("#102FShadowDust")+"::OnDisable";
 		donpcevent instance_npcname("Lucid Crystal#102")+"::OnEnable";
 		//SetItemPartyInMap in_102floor 100
@@ -1919,7 +1919,7 @@ OnEnable:
 // Level 101
 //============================================================
 6@tower,45,89,2	script	Life Spring#1	844,{
-	mes "^0066ffYou took a sip of the spring's clear water, and you feel invigorated.^000000";
+	mes "^0066ffคุณได้จิบน้ำจากบ่อน้ำสะอาด นั่นทำให้รู้สึกมีพลังกลับมาเพิ่มขึ้น^000000";
 	heal (MaxHp-Hp),(MaxSp-Sp);
 	close;
 
@@ -1982,24 +1982,24 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Guests, huh? I hope you've come here knowing that you'll be buried in this place. If you didn't know, well... it's too late!",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"แขกรับเชิญงั้นหรือ? ข้าหวังว่าเจ้าจะมาที่นี่โดยที่รู้นะว่าอาจไม่ได้กลับไป อ่าา,, หากเจ้าไม่รู้ละก็ ... มันสายไปแล้วล่ะ!",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"This is why you adventurers always end up dead.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"นี่ล่ะว่าทำไม พวกเจ้านักเดินทางถึงต้องมาตายลงที่นี่.",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
-	mapannounce instance_mapname("6@tower"),"I may applaud you for your courage... Of course, I intend to play with you a little bit first.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"ข้าขอชื่นชมความกล้าหาญของเจ้า... ก็ได้ ข้าจะยอมเล่นกับเจ้า..",bc_map,"0x00ffcc";
 	end;
 
 OnTimer15500:
-	mapannounce instance_mapname("6@tower"),"You know, I like watching humans running around in fear.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"เจ้ารู้อะไรรึเปล่า ข้าล่ะชอบจริงๆ เวลาที่เห็นเจ้าพวกมนุษย์วิ่งไปวิ่งมาด้วยความหวาดกลัว",bc_map,"0x00ffcc";
 	end;
 
 OnTimer20500:
 	set .@map$, instance_mapname("6@tower");
-	mapannounce .@map$,"Let's see who runs fastest. Are you ready?",bc_map,"0x00ffcc";
+	mapannounce .@map$,"ไหนดูว่าจะวิ่งได้เร็วแค่ไหน เจ้าพร้อมแล้วหรือยัง?",bc_map,"0x00ffcc";
 	stopnpctimer;
 	areamonster .@map$,151,66,153,106,"Bone Guardian",1152,50,instance_npcname("#1st Beeper")+"::OnMyMobDead";
 	areamonster .@map$,158,66,160,106,"Bone Guardian",1152,50,instance_npcname("#1st Beeper")+"::OnMyMobDead";
@@ -2013,7 +2013,7 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 101
 	}
 	else
-		mapannounce .@map$,"Remaining Targets " + .@mob_dead_num + "ea",bc_map,"0x00ff99";
+		mapannounce .@map$,"เหลือศัตรูอยู่ " + .@mob_dead_num + "ea",bc_map,"0x00ff99";
 	end;
 }
 
@@ -2025,11 +2025,11 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Well, I guess they aren't too challenging for you.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"ยอดเยี่ยม ดูเหมือนเจ้าโง่พวกนี้ยังไม่ท้าทายสำหรับเจ้าสินะ",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"Let's speed up a little bit, shall we?",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"งั้นมาลองเร็วขึ้นอีกนิดไหม เจ้าพร้อมรึยัง?",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
@@ -2048,7 +2048,7 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 102
 	}
 	else
-		mapannounce .@map$,"Remaining Targets " + .@mob_dead_num + "ea",bc_map,"0x00ff99";
+		mapannounce .@map$,"เหลือศัตรูอยู่ " + .@mob_dead_num + "ea",bc_map,"0x00ff99";
 	end;
 }
 
@@ -2060,16 +2060,16 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Yes, this is getting exciting!",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"มันต้องแบบนี้สิ ช่างน่าตื่นเต้นเสียจริง!",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"I'll remember you as one of a few that have managed to entertain me.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"ข้าจะจดจำเอาไว้ ว่าเจ้าเป็นผู้ที่ทำให้ข้าสนุกได้ถึงเพียงนี้",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
 	set .@map$, instance_mapname("6@tower");
-	mapannounce .@map$,"How would you like to play one more round?",bc_map,"0x00ffcc";
+	mapannounce .@map$,"อยากจะลองอีกรอบไหมล่ะ เจ้ามนุษย์?",bc_map,"0x00ffcc";
 	stopnpctimer;
 	areamonster .@map$,151,66,153,106,"Sword Edge Guardian",1132,20,instance_npcname("#3rd Beeper")+"::OnMyMobDead";
 	areamonster .@map$,158,66,160,106,"Sword Edge Guardian",1132,20,instance_npcname("#3rd Beeper")+"::OnMyMobDead";
@@ -2083,7 +2083,7 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 103
 	}
 	else
-		mapannounce .@map$,"Remaining Targets " + .@mob_dead_num + "ea",bc_map,"0x00ff99";
+		mapannounce .@map$,"เหลือศัตรูอยู่ " + .@mob_dead_num + "ea",bc_map,"0x00ff99";
 	end;
 }
 
@@ -2095,101 +2095,101 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Okay, the time has come to make my appearance!",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"OK มันคงถึงเวลาของข้าแล้วล่ะ!",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"Do you want to know who I am?",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"เจ้าอยากรู้จักข้านักใช่ไหม ได้?",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
 	set .@map$, instance_mapname("6@tower");
-	mapannounce .@map$,"You'll soon know. Mine is the face of death!",bc_map,"0x00ffcc";
+	mapannounce .@map$,"เจ้าจะได้รู้! โฉมหน้าของความตายของเจ้า!",bc_map,"0x00ffcc";
 	stopnpctimer;
-	monster .@map$,156,147,"Nacht Sieger",1956,1,instance_npcname("#4th Beeper")+"::OnMyMobDead";
+	monster .@map$,156,147,"Naght Sieger",1956,1,instance_npcname("#4th Beeper")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
-	donpcevent instance_npcname("Lost Soul#102")+"::OnEnable";
+	donpcevent instance_npcname("วิญญาณผู้ถูกลืม#102")+"::OnEnable";
 	end;
 }
 
-6@tower,169,127,2	script	Lost Soul#102	796,{
+6@tower,169,127,2	script	วิญญาณผู้ถูกลืม#102	796,{
 	if (checkweight(1201,1) == 0) {
-		mes "You're carrying too much stuff. Why don't you put some of it away, and then come back?";
+		mes "คุณมีน้ำหนักเกินกำหนด กรุณากลับมาใหม่อีกครั้งเมือมีน้ำหนักที่เหมาะสม?";
 		close;
 	}
-	mes "[Lost Souls]";
-	mes "It's you that have liberated us from the evil Nacht Sieger.";
+	mes "[วิญญาณผู้ถูกลืม]";
+	mes "ท่านเองหรือหรือ ผู้ซึ่งปลดปล่อยพวกเราจาก จอมมาร Naght Sieger.";
 	next;
-	mes "[Lost Souls]";
-	mes "Thank you so much. Now we can escape from this cold and dark place... to heaven.";
+	mes "[วิญญาณผู้ถูกลืม]";
+	mes "ขอบคุณท่านมาก พวกเราจะได้ออกไปจากสถานที่อันมืดมิดและหนาบเหน็บที่นี่ ... ไปสู่สรวงสวรรค์";
 	next;
 	if ((countitem(13412) > 0) && (countitem(13413) > 0)) {
-		mes "[Lost Souls]";
-		mes "Hey, you have the remnants of Nacht Sieger with you.";
+		mes "[วิญญาณผู้ถูกลืม]";
+		mes "เฮ้  ท่านมีเศษซาก Naght Sieger มาด้วยหรือ?";
 		next;
-		mes "[Lost Souls]";
-		mes "They may appear to be one-handed swords, but I can put them together to make a two-handed one if you want. That's the only way I can repay you for freeing me.";
+		mes "[วิญญาณผู้ถูกลืม]";
+		mes "มันอาจจะประกาฏในรูปแบบของ ดาบมือเดียว แต่... ข้าสามารถหลวมรวมเข้าด้วยกันเพื่อสร้างดาบสองมืออันแข็งแกร่งถ้าท่านต้องการ นั่นอาจจะเป็นสิ่งเดียวที่ข้าสามารถตอบแทนให้แก่ท่านได้";
 		next;
-		switch(select("Make a Two-Handed Sword.:No, thanks.")) {
+		switch(select("สร้าง ดาบสองมือ:ไม่เป็นไร ขอบคุณ")) {
 		case 1:
-			mes "[Lost Souls]";
-			mes "If it is already upgraded or has a card inside, those effects will be disappear. Is this ok with you?";
+			mes "[วิญญาณผู้ถูกลืม]";
+			mes "หากอุปกรณ์นี้ผ่านการอัพเกรด หรือมีการ์ดสวมใส่อยู่ข้างใน สิ่งเหล่านั้นจะหายไปทั้งหมด ท่านจะยอมรับมันหรือไม่?";
 			next;
-			switch(select("It's fine with me. Please make one.:No way!")) {
+			switch(select("ข้ายอมรับได้ กรุณาสร้างให้ข้า:ไม่ ข้ารับไม่ได้!")) {
 			case 1:
-				mes "[Lost Souls]";
-				mes "Good, then I'll combine these to create a two-handed sword.";
+				mes "[วิญญาณผู้ถูกลืม]";
+				mes "เยี่ยม ถ้างั้นข้าจะหลอมรวมเพื่อสร้าง ดาบสองมือขึ้นมา";
 				next;
 				delitem 13412,1; //Twin_Edge_B
 				delitem 13413,1; //Twin_Edge_R
 				getitem 1185,1; //Violet_Fear
 				break;
 			case 2:
-				mes "[Lost Souls]";
-				mes "I see. I guess you aren't as greedy or ambitious as those other adventurers.";
+				mes "[วิญญาณผู้ถูกลืม]";
+				mes "ไม่เป็นไร ข้าเข้าใจ ท่านไม่ใช่ผู้ที่โลภมากหรือมีความทะเยอทะยานเหมือนดั่งนักผจญภัยท่านอื่น";
 				next;
 				break;
 			}
 			break;
 		case 2:
-			mes "[Lost Souls]";
-			mes "I see. I guess you aren't as greedy or ambitious as those other adventurers.";
+			mes "[วิญญาณผู้ถูกลืม]";
+			mes "ไม่เป็นไร ข้าเข้าใจ ท่านไม่ใช่ผู้ที่โลภมากหรือมีความทะเยอทะยานเหมือนดั่งนักผจญภัยท่านอื่น";
 			next;
 			break;
 		}
 	}
-	mes "[Lost Souls]";
-	mes "I'd like to talk to you more, but I've... I've got to go now.";
+	mes "[วิญญาณผู้ถูกลืม]";
+	mes "จริงๆข้าอยากจะคุยกับท่านให้มากกว่านี้นะ แต่. มันถึงเวลาที่ข้าต้องไปแล้ว..";
 	next;
-	mes "[Lost Souls]";
-	mes "Farewell, young adventurer. I wish you good luck.";
+	mes "[วิญญาณผู้ถูกลืม]";
+	mes "ลาก่อน ท่านนักผจญภัยหนุ่ม ขอให้ท่านโชคดีและปลอดภัย";
 	close2;
 	warp "alberta",223,36;
 	end;
 
 OnInstanceInit:
-	disablenpc instance_npcname("Lost Soul#102");
+	disablenpc instance_npcname("วิญญาณผู้ถูกลืม#102");
 	end;
 
 OnEnable:
 	initnpctimer;
-	enablenpc instance_npcname("Lost Soul#102");
+	enablenpc instance_npcname("วิญญาณผู้ถูกลืม#102");
 	donpcevent instance_npcname("#Effect30")+"::OnEnable";
 	//SetItemPartyInMap in_102floor 104
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"This... This can't be happening! I can't be defeated!",bc_map,"0xffff00";
+	mapannounce instance_mapname("6@tower"),"ไม่... เป็นไปไม่ได้! ข้าไม่เคยพ่ายแพ้!",bc_map,"0xffff00";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"Nooo! My soul... My shell...! Nooo~!",bc_map,"0xffff00";
+	mapannounce instance_mapname("6@tower"),"ม่าย! ดวงวิญญาณของข้า... เจตจำนงค์ของข้า...! ม่ายยยย~!",bc_map,"0xffff00";
 	end;
 
 OnTimer10500:
-	mapannounce instance_mapname("6@tower"),"Nacht Sieger's body has turned into dark ashes that scattered in the wind.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"ร่างของ Naght Sieger ได้กลายเป็นเถ้าธุลีสีดำ พัดผ่านไปกับสายลม",bc_map,"0x00ffcc";
 	stopnpctimer;
 	end;
 }

@@ -1,0 +1,19 @@
+prontera,150,191,5	script	คลังเก็บของ	10005,{
+	specialeffect2 65;
+	if(getcharid(2) > 0)
+	menu "เปิดคลังปกติ",L_Storage,"เปิดคลังกิลด์",L_Guild_Storage;
+	else
+	menu "เปิดคลังปกติ",L_Storage;
+
+	L_Storage:
+	openstorage;
+	end;
+	
+	L_Guild_Storage:
+	guildopenstorage();
+	end;
+	
+/*OnInit:
+	waitingroom "คลังเก็บของ",0;
+	end;*/
+}

@@ -19,130 +19,87 @@
 //============================================================
 -	script	::Kunlun_Envoy_gonryun	-1,{
 	mes "[Wa Bai Hu]";
-	mes "Good day~";
-	mes "Let me invite you all";
-	mes "to my homeland, Kunlun.";
-	mes "It is my honor to guide";
-	mes "such distinguished quests from";
-	mes "the Rune-Midgarts kingdom.";
+	mes "หวัดดีจ้า~";
+	mes "ขอเชิญทุกท่านมาที่บ้านเกิด Kunlun";
+	mes "เป็นเกียรติของฉันที่ได้นำทางเควสที่โดดเด่นเช่นนี้จากอาณาจักร Rune-Midgarts";
 	next;
-	switch(select("About Kunlun:Visit Kunlun:Cancel")) {
+	switch(select("เกี่ยวกับ Kunlun:เยี่ยมชม Kunlun:ยกเลิก")) {
 	case 1:
 		mes "[Wa Bai Hu]";
-		mes "Kunlun is a beautiful place,";
-		mes "rich with history, and its";
-		mes "own traditions. I also think";
-		mes "Kunlun is the best place for";
-		mes "sightseeing.";
+		mes "Kunlun เป็นสถานที่ที่สวยงามเต็มไปด้วยประวัติศาสตร์และประเพณีของตัวเอง";
+		mes "ฉันยังคิดว่าKunlunเป็นสถานที่ที่ดีที่สุดสำหรับการเที่ยวชม";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "When you arrive at the harbor of";
-		mes "Kunlun, you'll be able to see";
-		mes "miniature replicas of";
-		mes "buildings found in Alberta";
-		mes "and Prontera.";
+		mes "เมื่อคุณมาถึงท่าเรือ Kunlun คุณจะสามารถเห็นอาคารจำลองขนาดเล็กที่พบใน Alberta และ Prontera";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "After enjoying a nice, leisurely";
-		mes "stroll, step into the beautiful";
-		mes "column of light that will take";
-		mes "you up into the clouds to";
-		mes "Kunlun Village.";
+		mes "หลังจากเพลิดเพลินกับการเดินเล่นสบายๆ แล้วก้าวเข้าสู่เสาแสงที่สวยงามซึ่งจะพาคุณขึ้นสู่หมู่เมฆสู่หมู่บ้านKunlun";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "I've heard that on the";
-		mes "Rune-Midgarts continent,";
-		mes "there is another city that is";
-		mes "is kept aloft in the sky by";
-		mes "an ancient, mysterious power...";
+		mes "ฉันได้ยินมาว่าในทวีป Rune-Midgarts มีเมืองอีกเมืองหนึ่งที่ถูกเก็บไว้บนท้องฟ้าด้วยพลังลึกลับอันเก่าแก่...";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "Well, my Kunlun also floats";
-		mes "in the air, but without any";
-		mes "so called technology or";
-		mes "power supply. We consider";
-		mes "our land especially blessed...";
+		mes "Kunlunของฉันก็ลอยอยู่ในอากาศเหมือนกัน แต่ไม่มีสิ่งที่เรียกว่าเทคโนโลยีหรือแหล่งจ่ายไฟ";
+		mes "เราถือว่าแผ่นดินของเรามีความสุขเป็นพิเศษ...";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "When you're in Kunlun, don't";
-		mes "forget to try our specialties";
-		mes "such as the giant dumpling or the heaven peach.";
+		mes "เมื่อคุณอยู่ในKunlunอย่าลืมลองชิมเมนูพิเศษของเราเช่นเกี๊ยวยักษ์หรือลูกพีชสวรรค์";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "You'd better prepare yourself";
-		mes "if you are planning to visit";
-		mes "the Kunlun dungeon. I must";
-		mes "say, that is not a safe place to go for fun.";
+		mes "คุณควรเตรียมตัวให้ดีกว่านี้หากวางแผนจะไปเยือนดันเจี้ยน Kunlun ฉันต้องบอกว่านั่นไม่ใช่สถานที่ที่ปลอดภัยสำหรับการไปสนุก";
 		next;
 		mes "[Wa Bai Hu]";
-		mes "If you are interested in visiting";
-		mes "Kunlun, do not hesitate to let";
-		mes "me know. It's my great pleasure";
-		mes "to serve you, honorable guest.";
+		mes "หากคุณสนใจที่จะเยี่ยมชมKunlunอย่าลังเลที่จะแจ้งให้เราทราบ";
+		mes "ฉันยินดีเป็นอย่างยิ่งที่ได้ให้บริการคุณแขกผู้มีเกียรติ";
 		close;
 	case 2:
 		mes "[Wa Bai Hu]";
-		mes "Excellent choice, I am glad";
-		mes "to have you as our guest~";
-		mes "However, a small fee is required";
-		mes "to board the ship to Kunlun.";
+		mes "ทางเลือกที่ดีฉันดีใจที่มีคุณเป็นแขกของเรา ~";
+		mes "อย่างไรก็ตามต้องเสียค่าธรรมเนียมเล็กน้อยในการขึ้นเรือไป Kunlun";
 		next;
-		mes "[Wa Bai Hu]";
-		mes "We ask that you pay 10,000 zeny";
-		mes "prior to departure. That fee also";
-		mes "covers the cost of returning";
-		mes "to Alberta. I am ready to guide";
-		mes "you to Kunlun at any time.";
+		mes "[หวาไป๋หู่]";
+		mes "เราขอให้คุณจ่าย 10,000 zeny ก่อนออกเดินทางค่าธรรมเนียมนั้นครอบคลุมค่าเดินทางกลับ Alberta ด้วย";
+		mes "ฉันพร้อมจะพาคุณไป Kunlun ได้ทุกเมื่อ";
 		next;
-		mes "[Wa Bai Hu]";
-		mes "Would you like to board?";
+		mes "[หวาไป๋หู่]";
+		mes "คุณอยากขึ้นเครื่องไหม";
 		next;
-		if (select("To Kunlun~!:No.") == 1) {
+		if (select("ไป Kunlun~!:ไม่") == 1) {
 			if (Zeny > 9999) {
 				mes "[Wa Bai Hu]";
-				mes "Thank you, let me guide you there immediately.";
+				mes "ขอบคุณช่วยแนะนำคุณทันที";
 				close2;
 				set Zeny, Zeny-10000;
 				warp "gon_fild01",258,82;
 				end;
 			}
 			mes "[Wa Bai Hu]";
-			mes "I am sorry, but you must have";
-			mes "10,000 zeny to travel to Kunlun.";
-			mes "Please make sure you have enough";
-			mes "zeny with you. Thank you, and";
-			mes "please come again.";
+			mes "ฉันขอโทษ แต่คุณต้องมี 10,000 zeny เพื่อเดินทางไป Kunlun";
+			mes "โปรดแน่ใจว่าคุณมี zeny เพียงพอสำหรับคุณ ขอบคุณและโปรดกลับมาอีกครั้ง";
 			close;
 		}
 		mes "[Wa Bai Hu]";
-		mes "I see. However, whenever you";
-		mes "change your mind, please let";
-		mes "me know. It would be a great";
-		mes "please to serve you, most";
-		mes "honorable guest.";
+		mes "ฉันเข้าใจแล้วอย่างไรก็ตามเมื่อใดก็ตามที่คุณเปลี่ยนใจโปรดแจ้งให้เราทราบ";
+		mes "จะเป็นการดีอย่างยิ่งที่ได้ให้บริการคุณแขกผู้มีเกียรติที่สุด";
 		close;
 	case 3:
 		mes "[Wa Bai Hu]";
-		mes "I see. However, whenever you";
-		mes "change your mind, please let me";
-		mes "know. It would be a great pleasure to serve you, most honorable guest.";
+		mes "ฉันเข้าใจแล้วอย่างไรก็ตามเมื่อใดก็ตามที่คุณเปลี่ยนใจโปรดแจ้งให้เราทราบ";
+		mes "ยินดีเป็นอย่างยิ่งที่ได้ให้บริการคุณแขกผู้มีเกียรติที่สุด";
 		close;
 	}
 }
 
 gon_fild01,255,79,7	script	Kunlun Envoy#gon2	776,{
 	mes "[Wa Bai Hu]";
-	mes "So, did you enjoy your trip?";
-	mes "I guess it's the time for you to";
-	mes "go home. The ship to Rune-Midgarts is ready to depart at any time.";
+	mes "คุณสนุกกับการเดินทางของคุณไหม";
+	mes "ฉันเดาว่าถึงเวลาที่คุณต้องกลับบ้านแล้วเรือไป Rune-Midgarts พร้อมที่จะออกเดินทางได้ทุกเมื่อ";
 	next;
-	if (select("Go back to Alberta:Cancel") == 1) {
+	if (select("กลับไปที่ Alberta:ยกเลิก") == 1) {
 		mes "[Wa Bai Hu]";
-		mes "Please come again.";
-		mes "I hope you will let your friends";
-		mes "know about Kunlun when you get";
-		mes "back. Now, let me guide you";
-		mes "back to Alberta.";
+		mes "โปรดกลับมาอีกครั้ง";
+		mes "ฉันหวังว่าคุณจะบอกให้เพื่อนของคุณรู้เกี่ยวกับ Kunlun เมื่อคุณกลับมา";
+		mes "ตอนนี้ผมขอแนะนำคุณกลับไปที่ Alberta";
 		close2;
 		if (checkre(0))
 			warp "alberta",244,60;
@@ -151,40 +108,34 @@ gon_fild01,255,79,7	script	Kunlun Envoy#gon2	776,{
 		end;
 	}
 	mes "[Wa Bai Hu]";
-	mes "Take your time, my guest.";
-	mes "There should be many places";
-	mes "you may have missed.";
+	mes "ใช้เวลาของคุณแขกของฉัน";
+	mes "น่าจะมีอีกหลายที่ที่คุณอาจพลาดไป";
 	close;
 }
 
 gon_fild01,187,239,7	script	Kunlun Envoy#gon3	776,{
 	mes "[Zhang Quing Long]";
-	mes "Please head north to enter Kunlun.";
-	mes "I hope you will have a great time";
-	mes "while staying in Kunlun.";
+	mes "โปรดมุ่งหน้าไปทางเหนือเพื่อเข้าสู่ Kunlun";
+	mes "ฉันหวังว่าคุณจะมีความสุขในขณะที่อยู่ใน Kunlun";
 	close;
 }
 
 gonryun,153,64,7	script	Kunlun Envoy#gon4	776,{
 	mes "[Zhang Quing Long]";
-	mes "Please make yourself comfortable.";
-	mes "If you want to go back, I will";
-	mes "be more than happy to guide you";
-	mes "to the ship to Alberta.";
+	mes "โปรดทำใจให้สบาย";
+	mes "ถ้าคุณต้องการกลับไปฉันยินดีเป็นอย่างยิ่งที่จะพาคุณขึ้นเรือไปยัง Alberta";
 	next;
-	if (select("Go back to the harbor:Cancel") == 1) {
+	if (select("กลับไปที่ท่าเรือ:ยกเลิก") == 1) {
 		mes "[Zhang Quing Long]";
-		mes "I hope you enjoyed your trip.";
-		mes "Now, let me guide you back";
-		mes "to the harbor.";
+		mes "ฉันหวังว่าคุณจะสนุกกับการเดินทางของคุณ";
+		mes "ตอนนี้ให้ฉันนำทางคุณกลับไปที่ท่าเรือ";
 		close2;
 		warp "gon_fild01",258,82;
 		end;
 	}
 	mes "[Zhang Quing Long]";
-	mes "Take your time, my guest.";
-	mes "There should be many places";
-	mes "you may have missed.";
+	mes "ใช้เวลาของคุณแขกของฉัน";
+	mes "น่าจะมีอีกหลายที่ที่คุณอาจพลาดไป";
 	close;
 }
 
@@ -192,91 +143,69 @@ gonryun,153,64,7	script	Kunlun Envoy#gon4	776,{
 //============================================================
 gonryun,200,82,3	script	Jian Chung Xun#gon	774,{
 	mes "[Jian Chung Xun]";
-	mes "I simply adore festivals.";
-	mes "That's why I love this town.";
-	mes "This town makes me feel like I am";
-	mes "in the middle of a festival all year round.";
+	mes "ฉันแค่ชอบงานเทศกาล";
+	mes "นั่นคือเหตุผลที่ฉันรักเมืองนี้";
+	mes "เมืองนี้ทำให้ฉันรู้สึกเหมือนอยู่ท่ามกลางเทศกาลตลอดทั้งปี";
 	close;
 }
 
 gonryun,268,88,3	script	Liang Zhun Bu#gon	776,{
 	mes "[Liang Zhun Bu]";
-	mes "We are proud to be an independent";
-	mes "nation, and have been fighting";
-	mes "against the evil invaders who've";
-	mes "wanted to conquer this blessed land for many years...";
+	mes "เราภูมิใจที่ได้เป็นประเทศเอกราชและได้ต่อสู้กับผู้รุกรานที่ชั่วร้ายที่ต้องการยึดครองดินแดนแห่งความสุขนี้มาหลายปีแล้ว ... ";
 	next;
 	mes "[Liang Zhun Bu]";
-	mes "But we have victoriously fended";
-	mes "off every invasion! As long";
-	mes "as we believe in ourselves,";
-	mes "we shall never forget the";
-	mes "Triumphal Song that has helped us in our struggles.";
+	mes "แต่เราได้ป้องกันการรุกรานทุกครั้งอย่างมีชัย! ตราบใดที่เราเชื่อมั่นในตัวเองเราจะไม่มีวันลืมเพลงแห่งชัยชนะที่ช่วยเราในการต่อสู้ของเรา";
 	close;
 }
 
 gonryun,118,111,5	script	Qian Yuen Shuang#gon	89,{
 	mes "[Qian Yuen Shuang]";
-	mes "The chief of this town is a man";
-	mes "who opens his heart to others.";
-	mes "However, I have heard that there";
-	mes "are some people who don't like his personality...";
+	mes "หัวหน้าของเมืองนี้เป็นผู้ชายที่เปิดใจให้คนอื่น";
+	mes "อย่างไรก็ตามฉันได้ยินมาว่ามีบางคนที่ไม่ชอบบุคลิกของเขา...";
 	next;
 	mes "[Qian Yuen Shuang]";
-	mes "Well, I like my town. The Chief's";
-	mes "efforts have made our town safer.";
-	mes "I just hope other people feel the";
-	mes "same way about what he has done.";
+	mes "ฉันชอบเมืองของฉันความพยายามของหัวหน้าทำให้เมืองของเราปลอดภัยขึ้น";
+	mes "ฉันแค่หวังว่าคนอื่นจะรู้สึกแบบเดียวกันกับสิ่งที่เขาทำ";
 	close;
 }
 
 gonryun,181,161,3	script	Jing Wen Zhen#gon	773,{
 	mes "[Jing Wen Zhen]";
-	mes "The men in our town, Kunlun, are";
-	mes "all brave and courageous.";
-	mes "But, they are unable to get";
-	mes "married. It's quite a shame really...";
+	mes "คนในเมืองของเราKunlunทุกคนกล้าหาญและกล้าหาญ";
+	mes "แต่พวกเขาไม่สามารถแต่งงานกันได้";
+	mes "มันค่อนข้างน่าเสียดายจริงๆ...";
 	next;
 	mes "[Jing Wen Zhen]";
-	mes "It's all because there are";
-	mes "more men than women.";
-	mes "I am not even sure whether";
-	mes "or not my son will be able to";
-	mes "find me a daughter in law.";
+	mes "ทั้งหมดเป็นเพราะผู้ชายมากกว่าผู้หญิง";
+	mes "ฉันไม่แน่ใจด้วยซ้ำว่าลูกชายของฉันจะสามารถหาลูกสะใภ้ให้ฉันได้หรือไม่";
 	close;
 }
 
 gonryun,113,135,6	script	Gatekeeper#gon	780,{
 	mes "[Kunlun Guard]";
-	mes "Welcome.";
-	mes "This is the residence of Shi Yan Wen, the chief of Kunlun.";
+	mes "ยินดีต้อนรับ";
+	mes "นี่คือบ้านพักของฉื่อหยานเหวินหัวหน้า Kunlun";
 	next;
 	mes "[Kunlun Guard]";
-	mes "You better behave yourself while";
-	mes "you are here. If we see anything";
-	mes "suspicious, we'll arrest you in a heartbeat.";
+	mes "คุณควรทำตัวให้ดีขึ้นในขณะที่คุณอยู่ที่นี่ถ้าเราเห็นอะไรน่าสงสัยเราจะจับกุมคุณในจังหวะการเต้นของหัวใจ";
 	next;
 	mes "[Kunlun Guard]";
-	mes "However, rest assured, you seem";
-	mes "like a trustworthy person.";
-	mes "I'm sure nothing will happen. Enjoy your visit.";
+	mes "อย่างไรก็ตามโปรดมั่นใจว่าคุณดูเหมือนเป็นคนที่น่าเชื่อถือ";
+	mes "ฉันแน่ใจว่าจะไม่มีอะไรเกิดขึ้นขอให้สนุกกับการเยี่ยมชมของคุณ";
 	close;
 }
 
 gonryun,113,127,6	script	Gatekeeper#gon2	780,{
 	mes "[Kunlun Guard]";
-	mes "Welcome.";
-	mes "This is the residence of Shi Yan Wen, the chief of Kunlun.";
+	mes "ยินดีต้อนรับ";
+	mes "นี่คือบ้านพักของฉื่อหยานเหวินหัวหน้า Kunlun";
 	next;
 	mes "[Kunlun Guard]";
-	mes "You better behave yourself while";
-	mes "you are here. If we see anything";
-	mes "suspicious, we'll arrest you in a heartbeat.";
+	mes "คุณควรทำตัวให้ดีขึ้นในขณะที่คุณอยู่ที่นี่ถ้าเราเห็นอะไรน่าสงสัยเราจะจับกุมคุณในจังหวะการเต้นของหัวใจ";
 	next;
 	mes "[Kunlun Guard]";
-	mes "However, rest assured, you seem";
-	mes "like a trustworthy person.";
-	mes "I'm sure nothing will happen. Enjoy your visit.";
+	mes "อย่างไรก็ตามโปรดมั่นใจว่าคุณดูเหมือนเป็นคนที่น่าเชื่อถือ";
+	mes "ฉันแน่ใจว่าจะไม่มีอะไรเกิดขึ้นขอให้สนุกกับการเยี่ยมชมของคุณ";
 	close;
 }
 
@@ -286,129 +215,89 @@ gon_in,73,82,5	script	Ji Chung Zhe#gon	778,{
 		mes "............";
 		next;
 		mes "[Ji Chung Zhe]";
-		mes "puuuuu....This sure is";
-		mes "something to worry about.";
+		mes "puuuuu .... นี่เป็นเรื่องที่ต้องกังวลแน่ๆ ";
 		close;
 	}
 	if (nakha == 3) {
 		// set cha,1;// unused
 		mes "[Ji Chung Zhe]";
-		mes "I am Ji Chung Zhe, a renown brewer";
-		mes "of teas. Everyday, I put all my";
-		mes "efforts in making scrumptious, delicious tea.";
+		mes "ฉันชื่อ Ji Chung Zhe เป็นผู้ผลิตชาที่มีชื่อเสียงทุกๆวันฉันใช้ความพยายามอย่างเต็มที่ในการทำชาที่อร่อยและอร่อย";
 		next;
 		mes "[Ji Chung Zhe]";
-		mes "*Sigh* But lately, the tea I've";
-		mes "been making hasn't been that";
-		mes "great... If I only had some special ingredients...";
+		mes "*เฮ้อ* แต่เมื่อเร็ว ๆ นี้ชาที่ฉันทำยังไม่อร่อยเท่านี้... ";
+		mes "ถ้าฉันมีแค่ส่วนผสมพิเศษ...";
 		next;
 		mes "[Ji Chung Zhe]";
-		mes "I've been told that if you use";
-		mes "a snake, you can concoct a truly";
-		mes "extraordinary beverage~";
-		mes "But...where can I find one";
-		mes "and how can I catch one?";
-		mes "Hmm...";
+		mes "ฉันเคยบอกว่าถ้าคุณใช้งูคุณสามารถปรุงเป็นเครื่องดื่มที่ไม่ธรรมดาได้เลย~";
+		mes "แต่...จะหาได้ที่ไหนและจะจับได้อย่างไร";
+		mes "หืม...";
 		close;
 	}
 }
 
 gon_in,173,27,3	script	Yu Jiu Xia#gon	774,{
 	mes "[Yu Jiu Xia]";
-	mes "Geez, just as I thought.";
-	mes "They won't sell alcohol to me.";
-	mes "Maybe its cuz I'm too young...";
-	mes "Hmmm...I wonder how it tastes...";
+	mes "Geez ก็อย่างที่คิด";
+	mes "พวกเขาจะไม่ขายเหล้าให้ฉัน";
+	mes "อาจจะเพราะฉันยังเด็กเกินไป...";
+	mes "อืม...สงสัยว่ารสชาติมันเป็นยังไง...";
 	next;
 	mes "[Yu Jiu Xia]";
-	mes "However, I know they're making";
-	mes "some tasty tea that even kids";
-	mes "like me can enjoy.";
-	mes "It makes my mouth water just";
-	mes "thinking about this new tea.";
+	mes "อย่างไรก็ตามฉันรู้ว่าพวกเขากำลังชงชาอร่อย ๆ ที่แม้แต่เด็ก ๆ อย่างฉันก็สามารถเพลิดเพลินได้";
+	mes "มันทำให้น้ำในปากของฉันนึกถึงชาใหม่นี้";
 	close;
 }
 
 gonryun,166,196,3	script	Soldier#gon	780,{
 	if (b_sword < 7) {
 		mes "[Wa Qiu Wu]";
-		mes "Let me tell you something";
-		mes "interesting about this place~";
-		mes "Long ago, this entire area used to be a shrine.";
+		mes "ขอเล่าเรื่องที่น่าสนใจเกี่ยวกับสถานที่นี้หน่อย~";
+		mes "นานมาแล้วพื้นที่ทั้งหมดนี้เคยเป็นศาลเจ้า";
 		next;
 		mes "[Wa Qiu Wu]";
-		mes "In those days, Taoist hermits";
-		mes "used to gather here in order to";
-		mes "reach the Sky Kingdom. However,";
-		mes "they failed miserably...slowly the monsters began to come...";
+		mes "ในสมัยนั้นฤๅษีลัทธิเต๋าเคยมารวมตัวกันที่นี่เพื่อที่จะไปยังอาณาจักรท้องฟ้าอย่างไรก็ตามพวกมันล้มเหลวอย่างน่าสังเวช...พวกสัตว์ประหลาดก็เริ่มมาอย่างช้าๆ...";
 		close;
 	}
 	else if ((b_sword > 6) && (b_sword < 10)) {
 		mes "[Wa Qiu Wu]";
-		mes "Don't you think it was quite noisy";
-		mes "last night? It was all because";
-		mes "of that thief. He made quite";
-		mes "a scene...It was so loud that";
-		mes "I couldn't sleep at all...";
+		mes "เมื่อคืนคุณไม่คิดว่าเสียงดังเลยเหรอมันเป็นเพราะโจรคนนั้นเขาสร้างฉาก ... มันดังมากจนฉันนอนไม่หลับเลย ... ";
 		next;
 		mes "[Wa Qiu Wu]";
-		mes "Ahh~~~~!";
-		mes "In the middle of all that";
-		mes "commotion, I saw";
-		mes "something running straight";
-		mes "into the shrine.";
+		mes "อ๊า~~~~!";
+		mes "ท่ามกลางความสับสนวุ่นวายนั้นฉันเห็นอะไรบางอย่างวิ่งตรงเข้าไปในศาลเจ้า";
 		next;
 		mes "[Wa Qiu Wu]";
-		mes "It was moving so fast that";
-		mes "I couldn't even tell what it was.";
-		mes "From what I could recognize, it";
-		mes "looked human. I wonder";
-		mes "what it was...";
+		mes "มันเคลื่อนไหวเร็วมากจนบอกไม่ถูกว่ามันคืออะไร";
+		mes "จากสิ่งที่ฉันจำได้มันดูเป็นมนุษย์ฉันสงสัยว่ามันคืออะไร...";
 		next;
 		mes "[Wa Qiu Wu]";
-		mes "It might have been the";
-		mes "thief, but it moved";
-		mes "so fast, it seemed like";
-		mes "just a blur.";
+		mes "มันอาจจะเป็นขโมย แต่มันเคลื่อนที่เร็วมากดูเหมือนจะเบลอ";
 		close;
 	}
 	mes "[Wa Qiu Wu]";
-	mes "Let me tell you something";
-	mes "interesting~ This entire area";
-	mes "used to be a shrine.";
+	mes "ขอเล่าเรื่องที่น่าสนใจให้ฟังหน่อย~";
+	mes "พื้นที่ทั้งหมดนี้เคยเป็นศาลเจ้า";
 	next;
 	mes "[Wa Qiu Wu]";
-	mes "A long time ago, Taoist hermits";
-	mes "used to gather here in order to";
-	mes "reach the Sky Kingdom. However,";
-	mes "they failed miserably...slowly the monsters began to come.";
+	mes "นานมาแล้วฤๅษีลัทธิเต๋าเคยมารวมตัวกันที่นี่เพื่อไปยังอาณาจักรท้องฟ้าอย่างไรก็ตามพวกมันล้มเหลวอย่างน่าสังเวช...พวกสัตว์ประหลาดก็เริ่มมาอย่างช้าๆ";
 	next;
 	mes "[Wa Qiu Wu]";
-	mes "The town is getting ready for the";
-	mes "Festival, but something is delaying";
-	mes "it. This has never happened before...";
+	mes "เมืองนี้กำลังเตรียมตัวสำหรับเทศกาล แต่มีบางอย่างทำให้มันล่าช้าแบบนี้ไม่เคยเกิดขึ้นมาก่อน...";
 	close;
 }
 
 gonryun,169,71,3	script	Guidev#gon	770,{
 	mes "[Li Xi Jiao]";
-	mes "Welcome to Kunlun!";
-	mes "Did you enjoy all the incredible";
-	mes "scenery on your way here?";
-	mes "The buildings may be small, but we";
-	mes "all worked hard to build this city.";
+	mes "ยินดีต้อนรับสู่ Kunlun!";
+	mes "คุณได้เพลิดเพลินกับทิวทัศน์อันน่าทึ่งระหว่างทางที่นี่หรือไม่";
+	mes "อาคารอาจจะเล็ก แต่เราทุกคนทำงานกันอย่างหนักเพื่อสร้างเมืองนี้";
 	next;
 	mes "[Li Xi Jiao]";
-	mes "I have some miniatures of";
-	mes "the Rune-Midgarts Kingdom.";
-	mes "You can view all of Prontera in a";
-	mes "single glance. The craftsmanship";
-	mes "on these masterpieces is quite stunning!";
+	mes "ฉันมีเพชรประดับอาณาจักร Rune-Midgarts ";
+	mes "คุณสามารถดู Prontera ทั้งหมดได้ในพริบตาฝีมือของผลงานชิ้นเอกเหล่านี้น่าทึ่งมาก!";
 	next;
 	mes "[Li Xi Jiao]";
-	mes "If you look around carefully,";
-	mes "You'll find all sorts of beautiful";
-	mes "sights throughout the town.";
+	mes "ถ้าคุณมองไปรอบ ๆ คุณจะพบกับสถานที่ท่องเที่ยวที่สวยงามมากมายทั่วเมือง";
 	close;
 }
 

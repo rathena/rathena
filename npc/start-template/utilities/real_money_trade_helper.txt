@@ -1,0 +1,174 @@
+-	script	Real_Money_Trade_Helper	-1,{
+	if (getgmlevel()){
+		.@j = 0;
+		freeloop(1);
+		for (.@i = 0; .@i < getarraysize($real_money_trade_helper_title); .@i++){
+			if($real_money_trade_helper_state[.@i] == 0)
+			dispbottom "เลขที่อ้างอิง: " + $real_money_trade_helper_title[.@i]
+			+ ", " + $real_money_trade_helper_zeny[.@i] + "z, "
+			+ $real_money_trade_helper_cash[.@i] + " Cash, ID ผู้ส่ง: "
+			+ $real_money_trade_helper_sender$[.@i] + " , ID ผู้รับ: "
+			+ $real_money_trade_helper_buyer$[.@i];
+		}
+		freeloop(0);
+		menu "ไม่ทำอะไร",-,"ยืนยันการค้าขาย",L_Trade_Confirm;
+	}
+	mes "ใช้สำหรับโอน Zeny/Cash\nไปยัง Account ID ที่ระบุ\nโดย Zeny/Cash จะถูกเก็บไว้ใน Server\nจากนั้น GM จะเป็นคนกดยืนยันให้\nหรือยกเลิก เมื่อพบการโกง";
+	mes "^ff0000*ผมจะกดยืนยันให้ เฉพาะการโอนด้วยเงินนอกเกมจริง ๆ เท่านั้น^000000";
+	next;
+	menu "โอน Zeny/Cash",-,"รับ Zeny/Cash",L_Receive;
+	
+	L_Zeny:
+	callsub L_Input_AID;
+	clear;
+	callsub L_Input_Zeny;
+	clear;
+	callsub L_Input_Cash;
+	clear;
+	callsub L_Confirm;
+	end;
+	
+	L_Input_AID:
+	mes "ระบุ Account ID ผู้รับ";
+	mes "^ff0000*ให้ผู้รับดูที่ข้อความตอนเข้าเกม^000000";
+	input @sum_aid;
+	query_sql("select account_id from `login` WHERE login.account_id = " + @sum_aid,.@is_had_aid);
+	if(.@is_had_aid <= 0){
+		clear;
+		mes "ไม่พบ Account ID ดังกล่าว";
+		close;
+	}
+	else if(getcharid(3) == @sum_aid){
+		clear;
+		mes "Account ID ดังกล่าว\nคือ Account ID ของคุณ";
+		close;
+	}
+	return;
+	
+	L_Input_Zeny:
+	mes "ระบุ Zeny";
+	callfunc("MyZeny");
+	mes "^ff0000*ระบุได้ต่ำสุด 1,000,000z^000000";
+	mes "^ff0000*ระบุได้มากสุด 1,000,000,000z^000000";
+	input @sum_zeny;
+	if(@sum_zeny > 1000000000){
+		mes "Zeny ต้องน้อยกว่า 1,000,000,000";
+		close;
+	}
+	callfunc("IsZenyEnough",@sum_zeny);
+	return;
+	
+	L_Input_Cash:
+	mes "ระบุ Cash";
+	callfunc("MyCash");
+	mes "^ff0000*ระบุได้ต่ำสุด 100 Cash^000000";
+	mes "^ff0000*ระบุได้มากสุด 1,000,000,000 Cash^000000";
+	input @sum_cash;
+	if(@sum_cash > 1000000000){
+		mes "Cash ต้องน้อยกว่า 1,000,000,000";
+		close;
+	}
+	callfunc("IsCashEnough",@sum_cash);
+	return;
+	
+	L_Confirm:
+	if(@sum_zeny <= 0 && @sum_cash <= 0){
+		mes "ยกเลิกเรียบร้อยแล้ว\nเนื่องจาก Zeny/Cash ไม่ได้ระบุทั้งคู่";
+		close;
+	}
+	else if(@sum_zeny < 1000000 && @sum_cash <= 0){
+		mes "ยกเลิกเรียบร้อยแล้ว\nเนื่องจาก Zeny ที่ระบุต่ำกว่า 1,000,000z";
+		close;
+	}
+	else if(@sum_zeny <= 0 && @sum_cash < 100){
+		mes "ยกเลิกเรียบร้อยแล้ว\nเนื่องจาก Cash ที่ระบุต่ำกว่า 100 Cash";
+		close;
+	}
+	
+	mes "Account ID: " + @sum_aid;
+	mes "Zeny: " + @sum_zeny;
+	mes "Cash: " + @sum_cash;
+	mes "^ff0000*โปรดตรวจสอบให้แน่ใจ ไม่สามารถยกเลิกเองได้^000000";
+	next;
+	menu "ยกเลิก",L_Cancel,"ยืนยัน",-;
+	callfunc("UseZeny",@sum_zeny);
+	callfunc("UseCash",@sum_cash);
+	.@index = getarraysize($real_money_trade_helper_aid);
+	setarray $real_money_trade_helper_aid[.@index],@sum_aid;
+	setarray $real_money_trade_helper_owner[.@index],getcharid(3);
+	setarray $real_money_trade_helper_zeny[.@index],@sum_zeny;
+	setarray $real_money_trade_helper_cash[.@index],@sum_cash;
+	$rmth_id++;
+	setarray $real_money_trade_helper_title[.@index],$rmth_id;
+	setarray $real_money_trade_helper_state[.@index],0;
+	query_sql("select userid from `login` WHERE login.account_id = " + @sum_aid,.@userid_receiver$);
+	setarray $real_money_trade_helper_buyer$[.@index],.@userid_receiver$;
+	query_sql("select userid from `login` WHERE login.account_id = " + getcharid(3),.@userid_sender$);
+	setarray $real_money_trade_helper_sender$[.@index],.@userid_sender$;
+	mes "เลขที่อ้างอิง: " + $rmth_id;
+	return;
+	
+	L_Cancel:
+	mes "ยกเลิกเรียบร้อยแล้ว";
+	close;
+	
+	L_Trade_Confirm:
+	input .@sum_id;
+	freeloop(1);
+	for (.@i = 0; .@i < getarraysize($real_money_trade_helper_title); .@i++){
+		if(.@sum_id == $real_money_trade_helper_title[.@i]){
+			mes "Account ID: " + $real_money_trade_helper_aid[.@i];
+			mes "Zeny: " + $real_money_trade_helper_zeny[.@i];
+			mes "Cash: " + $real_money_trade_helper_cash[.@i];
+			next;
+			if($real_money_trade_helper_state[.@i] == 1)
+			goto L_Cancel;
+			menu "ยกเลิก",L_Cancel,"ยืนยัน",L_Good,"ยกเลิกการค้าขายนี้",L_Foul;
+			L_Foul:
+			$real_money_trade_helper_aid[.@i] = $real_money_trade_helper_owner[.@i];
+			L_Good:
+			$real_money_trade_helper_state[.@i] = 1;
+			freeloop(0);
+			close;
+			
+		}
+	}
+	mes "ไม่พบเลขที่อ้างอิงดังกล่าว";
+	freeloop(0);
+	close;
+	
+	L_Receive:
+	mes "โปรดตรวจสอบ Zeny/Cash ของท่านให้แน่ใจว่าไม่เกิน 2,000,000,000 หลังรับ ไม่งั้นบัค";
+	next;
+	menu "ยกเลิก",L_Cancel,"ยืนยัน",-;
+	freeloop(1);
+	for (.@i = getarraysize($real_money_trade_helper_aid) - 1; .@i >= 0; .@i--){
+		if($real_money_trade_helper_aid[.@i] == getcharid(3) && $real_money_trade_helper_state[.@i] == 1){
+			dispbottom "เลขที่อ้างอิง: " + $real_money_trade_helper_title[.@i];
+			dispbottom "Zeny: " + $real_money_trade_helper_zeny[.@i];
+			dispbottom "Cash: " + $real_money_trade_helper_cash[.@i];
+			if($real_money_trade_helper_zeny[.@i] > 0)
+			callfunc("AddZeny",$real_money_trade_helper_zeny[.@i]);
+			if($real_money_trade_helper_cash[.@i] > 0)
+			callfunc("AddCash",$real_money_trade_helper_cash[.@i]);
+			$real_money_trade_helper_state[.@i] = 2;
+			
+			deletearray $real_money_trade_helper_aid[.@i],1;
+			deletearray $real_money_trade_helper_owner[.@i],1;
+			deletearray $real_money_trade_helper_zeny[.@i],1;
+			deletearray $real_money_trade_helper_cash[.@i],1;
+			deletearray $real_money_trade_helper_title[.@i],1;
+			deletearray $real_money_trade_helper_state[.@i],1;
+			deletearray $real_money_trade_helper_buyer$[.@i],1;
+			deletearray $real_money_trade_helper_sender$[.@i],1;
+		}
+	}
+	freeloop(0);
+	end;
+	
+OnInit:
+	waitingroom "(ตัวช่วย) ค้าขายด้วยเงินจริง",0;
+	end;
+}
+
+prontera,145,198,3	duplicate(Real_Money_Trade_Helper)	ตัวช่วย ค้าขายเงินจริง	810

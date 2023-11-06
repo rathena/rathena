@@ -22,40 +22,38 @@
 
 alde_alche,24,188,3	script	Guild Dealer	740,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute! -";
-		mes "- Currently you are carrying -";
-		mes "- too many items with you. -";
-		mes "- Please come back again -";
-		mes "- after you store some items into kafra storage. -";
+		mes "- เดี๋ยวก่อน! -";
+		mes "- ขณะนี้คุณกำลังถือ -";
+		mes "- มีของกับคุณมากเกินไป -";
+		mes "- โปรดกลับมาอีกครั้ง -";
+		mes "- หลังจากที่คุณเก็บสิ่งของบางอย่างลงในที่เก็บของ kafra แล้ว -";
 		close;
 	}
 	mes "[Gever Al Sharp]";
-	mes "Welcome to the";
-	mes "Alchemist Union.";
-	mes "How can I assist you today?";
+	mes "ยินดีต้อนรับสู่ Alchemist Union";
+	mes "วันนี้มีอะไรให้ช่วยไหม";
 	next;
-	switch(select("Purchase materials.:Purchase a production manual.:Quit.")) {
+	switch(select("ซื้อวัสดุ:ซื้อคู่มือการผลิต:ออก")) {
 	case 1:
 		mes "[Gever Al Sharp]";
-		mes "What would you like?";
+		mes "อยากได้อะไร";
 		next;
-		if (select("Medicine Bowl - 8 Zeny:Cancel.") == 1) {
+		if (select("Medicine Bowl - 8 Zeny:ยกเลิก.") == 1) {
 			mes "[Gever Al Sharp]";
-			mes "How many do you want?";
-			mes "Enter '0' if you want to quit.";
+			mes "อยากได้กี่อัน";
+			mes "ป้อน '0' หากคุณต้องการออก";
 			next;
 			while(1) {
 				input .@input,0,2001;
 				if (.@input == 0) {
 					mes "[Gever Al Sharp]";
-					mes "The deal was cancelled.";
-					mes "Come again next time.";
+					mes "ข้อตกลงถูกยกเลิก";
+					mes "คราวหน้าค่อยมาใหม่นะ";
 					close;
 				}
 				else if (.@input < 1 || .@input > 2000) {
 					mes "[Gever Al Sharp]";
-					mes "The number must";
-					mes "be less than 2000.";
+					mes "จำนวนต้องน้อยกว่า 2000";
 					next;
 				}
 				else {
@@ -66,40 +64,32 @@ alde_alche,24,188,3	script	Guild Dealer	740,{
 			set .@item_weight,.@input * 10;
 			if (Zeny < .@sell) {
 				mes "[Gever Al Sharp]";
-				mes "You don't";
-				mes "have enough zeny.";
-				mes "Check how much zeny";
-				mes "you have first.";
+				mes "คุณมี zeny ไม่พอ";
+				mes "ตรวจสอบว่าคุณมี zeny เท่าไหร่ก่อน";
 				close;
 			}
 			if ((MaxWeight - Weight) < .@item_weight) {
 				mes "[Gever Al Sharp]";
-				mes "It doesn't seem like";
-				mes "you can carry everything.";
-				mes "Please check the space";
-				mes "in your inventory.";
+				mes "ดูเหมือนว่าคุณจะแบกทุกอย่างไม่ได้เลย";
+				mes "กรุณาตรวจสอบพื้นที่ในคลังของคุณ";
 				close;
 			}
 			set Zeny, Zeny-.@sell;
 			getitem 7134,.@input; //Medicine_Bowl
 			mes "[Gever Al Sharp]";
-			mes "Thank you.";
-			mes "Come again.";
+			mes "ขอบคุณ";
+			mes "มาอีกแล้ว";
 			close;
 		}
 		mes "[Gever Al Sharp]";
-		mes "Well then,";
-		mes "come again when";
-		mes "you need to purchase";
-		mes "materials related to";
-		mes "Alchemy, alright?";
+		mes "ถ้าอย่างนั้นกลับมาอีกครั้งเมื่อคุณต้องการซื้อวัสดุที่เกี่ยวข้องกับการเล่นแร่แปรธาตุเอาล่ะ?";
 		close;
 	case 2:
 		mes "[Gever Al Sharp]";
-		mes "What do you need?";
-		mes "Manuals are generally 100,000 zeny. But there are a couple of special manuals that will cost more.";
+		mes "คุณต้องการอะไร";
+		mes "คู่มือโดยทั่วไปจะมีราคา 100,000 zeny แต่มีคู่มือพิเศษสองสามอย่างที่จะมีค่าใช้จ่ายมากกว่า";
 		next;
-		switch(select("Potion Creation Guide:Alcohol Creation Guide:Bottle Grenade Creation Guide:Acid Bottle Creation Guide:Plant Bottle Creation Guide:Marine Sphere Bottle Creation Guide:Glistening Coat Creation Guide:Condensed Potion Creation Guide:Cancel Deal.")) {
+		switch(select("Potion Creation Guide:Alcohol Creation Guide:Bottle Grenade Creation Guide:Acid Bottle Creation Guide:Plant Bottle Creation Guide:Marine Sphere Bottle Creation Guide:Glistening Coat Creation Guide:Condensed Potion Creation Guide:ยกเลิก")) {
 		case 1:
 			callsub S_SellManual,7144,100000; //Normal_Potion_Book
 			break;
@@ -126,16 +116,13 @@ alde_alche,24,188,3	script	Guild Dealer	740,{
 			break;
 		case 9:
 			mes "[Gever Al Sharp]";
-			mes "Well then...";
-			mes "Come back if you";
-			mes "ever need to buy";
-			mes "a production manual.";
+			mes "ถ้าอย่างนั้น...";
+			mes "กลับมาถ้าคุณจำเป็นต้องซื้อคู่มือการผลิต";
 			close;
 		}
 	case 3:
 		mes "[Gever Al Sharp]";
-		mes "Alright then,";
-		mes "have a good day.";
+		mes "เอาล่ะขอให้เป็นวันที่ดี";
 		close;
 	}
 
@@ -145,26 +132,22 @@ S_SellManual:
 
 	if (Zeny < .@zeny_req) {
 		mes "[Gever Al Sharp]";
-		mes "You don't";
-		mes "have enough zeny.";
-		mes "Check how much zeny";
-		mes "you have first.";
+		mes "คุณมี zeny ไม่พอ";
+		mes "ตรวจสอบว่าคุณมี zeny เท่าไหร่ก่อน";
 		close;
 	}
 	mes "[Gever Al Sharp]";
 	mes getitemname(.@item_id) +"?";
-	mes "That'll be "+ .@zeny_req +" zeny.";
+	mes "นั่นจะเป็น "+ .@zeny_req +" zeny.";
 	next;
-	if (select("Purchase.:Quit.") == 1) {
+	if (select("ซื้อ.:ออก.") == 1) {
 		Zeny = Zeny - .@zeny_req;
 		getitem .@item_id,1;
 		mes "[Gever Al Sharp]";
-		mes "Thank you for";
-		mes "your patronage.";
+		mes "ขอบคุณที่อุดหนุนครับ";
 		close;
 	}
 	mes "[Gever Al Sharp]";
-	mes "Come again";
-	mes "next time.";
+	mes "คราวหน้าค่อยมาใหม่นะ";
 	close;
 }

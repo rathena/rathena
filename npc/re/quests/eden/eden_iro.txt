@@ -21,31 +21,31 @@
 //============================================================
 moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 	mes "[Aperture]";
-	mes "Hello there, adventurer.";
-	mes "I've been studying magic from all over Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
+	mes "สวัสดีนักผจญภัย";
+	mes "ฉันได้เรียนเวทมนตร์จากทั่ว Midgard เพื่ออัพเกรดสิ่งที่ฉันเชื่อว่าเป็นหนึ่งในทักษะที่ยอดเยี่ยมที่สุดสำหรับคลาสฝึกหัด";
 	next;
 
 	if (is_function("VIP_iRO_Acolyte"))
 		callfunc "VIP_iRO_Acolyte","[Aperture]","Prontera";
 
 	mes "[Aperture]";
-	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
+	mes "ข้าเป็น Acolyte เพียงคนเดียวเท่านั้นที่ได้รับทักษะ Level 10 Warp Portal!";
 	emotion ET_THINK, playerattached();
 	next;
 	mes "[Aperture]";
-	mes "That's right! And...";
-	mes "I promise you that I don't forget locations that I have already memorized.";
-	mes "One day I will level up my skills to warp to wherever I please~";
+	mes "ถูกต้อง! และ ... ";
+	mes "ฉันสัญญากับคุณว่าฉันจะไม่ลืมสถานที่ที่ฉันจำไว้แล้ว";
+	mes "วันหนึ่งฉันจะเพิ่มทักษะของฉันในการวาร์ปไปที่ใดก็ได้ที่ฉันพอใจ ~";
 	next;
 	mes "[Aperture]";
-	mes "I am willing to warp you to the many locations that I have memorized for a small fee.";
-	mes "Would you like to use this service?";
+	mes "ฉันยินดีที่จะทำให้คุณดูถูกคุณไปยังสถานที่ต่าง ๆ ที่ฉันจำได้โดยมีค่าธรรมเนียมเล็กน้อย";
+	mes "คุณต้องการใช้บริการนี้หรือไม่";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช้สิ..:ไม่ขอบคุณ")) {
 	case 1:
 		mes "[Aperture]";
-		mes "Where would you like to go to?";
-		mes "I wish you goodluck on your journey.";
+		mes "คุณอยากจะไปที่ไหน"; 
+		mes "ฉันขอให้คุณโชคดีในการเดินทางของคุณ";
 		next;
 
 		setarray .@towns$[0], "Prontera", "Izlude", "Geffen", "Payon", "Morocc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno", "Einbroch", "Lighthalzen", "Hugel", "Rachel";
@@ -57,15 +57,15 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 		set .@i, select(.@menu$+"Cancel")-1;
 		if (.@i == .@size) {
 			mes "[Aperture]";
-			mes "Come back when you need a warp.";
+			mes "กลับมาเมื่อเจ้าต้องการวาร์ป";
 			close;
 		}
 		if (Zeny < .@cost[.@i]) {
 			mes "[Aperture]";
-			mes "I'm sorry, but you don't have";
-			mes "enough zeny for the Teleport";
-			mes "Service. The fee to teleport";
-			mes "to "+.@towns$[.@i]+" is "+.@cost[.@i]+" zeny.";
+			mes "ฉันขอโทษ แต่คุณไม่มี";
+			mes "zeny เพียงพอสำหรับเทเลพอร์ต";
+			mes "บริการ. ค่าธรรมเนียมในการส่งผ่านทางไกล";
+			mes "ถึง" + .@towns$[.@i] + "คือ" + .@cost[.@i] + "zeny.";
 			close;
 		}
 		specialeffect2 EF_READYPORTAL;
@@ -92,7 +92,7 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 		close;
 	case 2:
 		mes "[Aperture]";
-		mes "Come back when you need a warp.";
+		mes "กลับมาเมื่อเจ้าต้องการวาร์ป";
 		close;
 	}
 }
@@ -100,17 +100,17 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 function	script	VIP_iRO_Acolyte	{
 	if (!vip_status(VIP_STATUS_ACTIVE)) {
 		mes getarg(0);
-		mes "But, my full powers are only available to those who have are VIPs.";
-		mes "I can still offer you a warp to "+getarg(1)+" though.";
+		mes "แต่อำนาจเต็มของข้าใช้ได้เฉพาะกับคนที่มี VIP เท่านั้น";
+		mes "ฉันยังสามารถเสนอวาร์ปให้กับคุณ" + getarg(1) + "ได้";
 		next;
-		switch(select(getarg(0)+" -> 1800z:Cancel")) {
+		switch(select(getarg(0)+" -> 1800z:ยกเลิก")) {
 		case 1:
 			if (Zeny < 1800) {
 				mes getarg(0);
-				mes "I'm sorry, but you don't have";
-				mes "enough zeny for the Teleport";
-				mes "Service. The fee to teleport";
-				mes "to "+getarg(1)+" is 1,800 zeny.";
+				mes "ฉันขอโทษ แต่คุณไม่มี";
+				mes "zeny เพียงพอสำหรับเทเลพอร์ต";
+				mes "บริการ. ค่าธรรมเนียมในการส่งผ่านทางไกล";
+				mes "ถึง" + getarg(1) + "คือ 1,800 zeny";
 				close;
 			}
 			specialeffect2 EF_READYPORTAL;
@@ -135,24 +135,24 @@ function	script	VIP_iRO_Acolyte	{
 //============================================================
 moc_para01,26,15,3	script	Primo d'Buffer	790,{
 	mes "[Primo d'Buffer]";
-	mes "Hello adventurer, you look like you are itching to get out there and save the world!";
+	mes "สวัสดีนักผจญภัยเจ้าดูเหมือนว่าจะออกไปเพื่อช่วยโลก!";
 	if (!vip_status(VIP_STATUS_ACTIVE)) {
-		mes "I can also tell that you haven't been blessed with '^6666ffVIP Status^000000'.";
+		mes "ฉันสามารถบอกได้ว่าคุณไม่ได้รับพร '^6666ffสถานะ VIP^000000'.";
 		next;
 		mes "[Primo d'Buffer]";
-		mes "My orders are to help out any Adventurer marked as VIP with special Buffs!";
-		mes "Currently I will give you ^ff0000+7 to all of your Stats for 30 minutes^000000 if you are VIP.";
+		mes "คำสั่งของฉันคือการช่วยเหลือนักผจญภัยที่ทำเครื่องหมายว่าเป็น VIP ด้วยบัฟพิเศษ!";
+		mes "ปัจจุบันฉันจะให้ ^ff0000 +7 Stat ทั้งหมดของคุณเป็นเวลา 30 นาที^000000 ถ้าคุณเป็น VIP";
 		next;
 		mes "[Primo d'Buffer]";
-		mes "If you would like to be VIP, you can use WarpPortal to ^FF8C42Power-UP^000000 your game account with VIP Status. Of course there are many other advantages to being VIP, like higher EXP and Drop Rates, more Storage, and special buff NPCs like me!";
+		mes "หากคุณต้องการเป็น VIP บัญชีเกมของคุณที่มีสถานะ VIP แน่นอนว่ามีข้อดีอื่น ๆ อีกมากมายสำหรับการเป็น VIP เช่น EXP ที่สูงขึ้นและอัตราลดลงพื้นที่จัดเก็บเพิ่มเติมและ หนังพิเศษ NPC อย่างฉัน! ";
 		mes "Happy Journeys!";
 		close;
 	}
-	mes "I can also tell that you have been blessed with '^007FFFVIP Status^000000'.";
+	mes "ฉันบอกได้เลยว่าคุณได้รับพร '^007FFFสถานะ VIP^000000' แล้ว";
 	next;
 	mes "[Primo d'Buffer]";
-	mes "That is awesome!";
-	mes "Here is +7 to all your stats for 30 minutes to help you on your journey. Just come back when you need to refill your stats!";
+	mes "มันเยี่ยมมาก!";
+	mes "นี่คือ +7 Stat ทั้งหมดของคุณเป็นเวลา 30 นาทีเพื่อช่วยคุณในการเดินทางของคุณเพียงแค่กลับมาเมื่อคุณจำเป็นต้องเติมสถิติของคุณ!";
 	close2;
 	sc_start SC_FOOD_STR_CASH,1200000,7;
 	sc_start SC_FOOD_AGI_CASH,1200000,7;
@@ -167,31 +167,31 @@ moc_para01,26,15,3	script	Primo d'Buffer	790,{
 //============================================================
 moc_para01,53,30,3	script	Clearchus	470,{
 	if (checkquest(62238,PLAYTIME) > -1 && checkquest(62238,PLAYTIME) < 2) {
-		mes "You must wait for the timer to finish before you can hire a new mercenary.";
+		mes "คุณต้องรอให้ตัวจับเวลาเสร็จก่อนจึงจะสามารถจ้างทหารรับจ้างใหม่ได้";
 		close;	
 	}
 	mes "[Clearchus]";
-	mes "Greetings young adventurer! I represent the Midgardian Mercenary Mission.";
+	mes "ทักทายนักผจญภัยหนุ่มๆ ! ฉันเป็นตัวแทนภารกิจ Midgardian Mercenary";
 	next;
 	mes "[Clearchus]";
-	mes "We provide training to aspiring mercenaries by pairing them with adventurers such as yourself.";
+	mes "เราจัดฝึกอบรมให้กับทหารรับจ้างที่ต้องการโดยจับคู่พวกเขากับนักผจญภัยเช่นตัวคุณเอง";
 	next;
 	mes "[Clearchus]";
-	mes "Our organization is 10,000 strong! Now let me see if you are registered for this service.";
+	mes "องค์กรของเราแข็งแกร่ง 10,000 ตอนนี้ให้ฉันดูว่าคุณลงทะเบียนใช้บริการนี้หรือไม่";
 	next;
 	if (!vip_status(VIP_STATUS_ACTIVE)) {
 		mes "[Clearchus]";
-		mes "Unfortunately it appears that you are not VIP, please get VIP so that you can use this service. You can get a temporary VIP access by talking to Gramps at the Eden Group Headquarters.";
+		mes "น่าเสียดายที่ดูเหมือนว่าคุณไม่ได้เป็นวีไอพีโปรดรับวีไอพีเพื่อให้คุณสามารถใช้บริการนี้ได้คุณสามารถเข้าถึงวีไอพีชั่วคราวได้โดยคุยกับ Gramps ที่สำนักงานใหญ่ของกลุ่ม Eden";
 		next;
 		mes "[Clearchus]";
-		mes "Vip is a very useful tool for adventurers to have, giving access to extra Kafra Services, discounted warps, exclusive content, and use of Primo d'Buffer. If an adventurer has full vip they even get an Exp, Drops, and storage boost!";
+		mes "Vip เป็นเครื่องมือที่มีประโยชน์มากสำหรับนักผจญภัยที่มีให้เข้าถึง Kafra Services พิเศษ warps ลดราคาเนื้อหาพิเศษและการใช้ Primo d'Buffer หากนักผจญภัยมี vip เต็มพวกเขายังได้รับ Exp, Drops และการจัดเก็บ เพิ่ม! ";
 		close;
 	}
 	mes "[Clearchus]";
-	mes "Your name is on the list.";
+	mes "ชื่อของคุณอยู่ในรายการ";
 	next;
 	mes "[Clearchus]";
-	mes "What kind of skill set are you looking for in a mercenary?";
+	mes "คุณกำลังมองหาชุดทักษะแบบใดใน Mercenary";
 	next;
 
 	switch(select("Swordsman:Archer:Lancer")) {
@@ -217,10 +217,10 @@ moc_para01,53,30,3	script	Clearchus	470,{
 	else set .@i,9;
 
 	mes "[Clearchus]";
-	mes "I have just the mercenary in mind!";
+	mes "ข้ามีทหารรับจ้างอยู่ในใจ!";
 	next;
 	mes "[Clearchus]";
-	mes "Have fun now, ya hear?";
+	mes "ขอให้สนุกนะได้ยินเหรอ";
 	getitem .@base_id + .@i,1;
 	if (isbegin_quest(62238) > 0)
 		erasequest 62238;
@@ -232,62 +232,62 @@ moc_para01,53,30,3	script	Clearchus	470,{
 //============================================================
 moc_para01,166,51,3	script	Phelix#edco	85,{
 	mes "[Phelix]";
-	mes "Oh... I see from that look that you want me to work and give you Meat and Carrots...";
-	mes "Well my friend Izaac here has some Red Potions with him, but I only have some Carrots.";
-	mes "So I can trade you ^0000CC1 Carrot for 3 Jellopy^000000.";
+	mes "โอ้ ... ข้าเห็นว่าท่านต้องการให้ข้าทำงานและมอบเนื้อและแครอทแก่เจ้า ... ";
+	mes "เอาล่ะ Izaac เพื่อนของข้าที่นี่มียาพิษแดงอยู่กับเขา แต่ข้ามีแครอทเพียงบางตัว";
+	mes "ฉันสามารถแลกเปลี่ยนคุณ ^0000CC1 Carrot - 3 Jellopy ^000000";
 	next;
 	mes "[Phelix]";
-	mes "If you're interested in my offer, get me the Jellopies I mentioned.";
+	mes "หากคุณสนใจข้อเสนอของฉันขอพาฉันไปที่ Jellopy ที่ฉันพูดถึง";
 	next;
-	select("Carrots please.");
+	select("แครอทได้โปรด");
 	mes "[Phelix]";
-	mes "Alright, let's see what ya got...";
+	mes "เอาล่ะเรามาดูกันว่าคุณได้อะไร ...";
 	next;
 	if (countitem(909) < 3) {
 		mes "[Phelix]";
-		mes "Hmm, look dude, I said 3 Jellopies for 1 Carrot... got it?";
+		mes "อืมดูสิฉันพูด 3 Jellopy ต่อ 1 Carrot ... ได้ไหม";
 		close;
 	}
 	mes "[Phelix]";
-	mes "Not too bad...";
-	mes "How many do you want?";
+	mes "ไม่เลวเกินไป ... ";
+	mes "คุณต้องการเท่าไหร่";
 	next;
-	switch(select("As many as I can get, please.:I want to choose.:Never mind, I like my Jellopy.")) {
+	switch(select("ได้มากเท่าที่ฉันจะได้รับได้โปรด: ฉันต้องการเลือก: ไม่ว่าอะไรก็ตามฉันชอบ Jellopy ของฉัน")) {
 	case 1:
 		set .@amount, countitem(909) / 3;
 		break;
 	case 2:
 		set .@available, countitem(909) / 3;
 		mes "[Phelix]";
-		mes "How many do you want?";
-		mes "^ff0000You have enough for up to " + .@available + " Carrots.^000000";
+		mes "คุณต้องการเท่าไหร่";
+		mes "^ff0000คุณมีเพียงพอสำหรับ" + .@available + "Carrot. ^000000";
 		input .@input;
 		next;
 		if (.@input < 1 || .@input > 10000) {
 			mes "[Phelix]";
-			mes "Don't want to deal? Fair enough...";
+			mes "ไม่ต้องการจัดการใช่ไหมพอ ... ";
 			close;
 		}
 		if (.@input > .@available) {
 			mes "[Phelix]";
-			mes "Dude, I said for every 3 Jellopy I'll give you 1 Carrot.";
+			mes "Dude ฉันพูดทุกๆ 3 Jellopy ฉันจะให้ 1 Carrot";
 			close;
 		}
 		set .@amount, .@input;
 		break;
 	case 3:
 		mes "[Phelix]";
-		mes "Don't bother me if you don't want to trade.";
+		mes "อย่ารบกวนฉันถ้าคุณไม่ต้องการแลกเปลี่ยน";
 		close;
 	}
 	if (checkweight(515,.@amount) == 0) {
 		mes "[Phelix]";
-		mes "You are overweight.";
+		mes "เจ้าน้ำหนักเกิน";
 		close;
 	}
 	mes "[Phelix]";
-	mes "There you go~! As I promised.";
-	mes "Try not to stuff yer face.";
+	mes "ไปกันเถอะ ~! ตามที่ข้าสัญญาไว้";
+	mes "พยายามอย่าทำสิ่งที่คุณต้องเผชิญ";
 	delitem 909,.@amount*3; //Jellopy
 	getitem 515,.@amount; //Carrot
 	end;
@@ -295,13 +295,13 @@ moc_para01,166,51,3	script	Phelix#edco	85,{
 
 moc_para01,163,51,7	script	Izaac#edco	86,{
 	mes "[Izaac]";
-	mes "Good day!";
-	mes "Have you collected any weird stuff from monsters?";
-	mes "I want things like Jellopy, Fluff, Shell, Feather of Birds, Tree Root, Worm Peelings, and Chrysalis.";
-	mes "I need those for something.";
+	mes "วันดี ๆ !";
+	mes "เจ้ารวบรวมของแปลก ๆ จากสัตว์ประหลาด";
+	mes "ฉันต้องการสิ่งต่าง ๆ เช่น Jellopy, Fluff, Shell, Feather of Birds, Tree Root, Worm Peelings และ Chrysalis";
+	mes "ฉันต้องการสิ่งเหล่านั้นเพื่ออะไร";
 	next;
 	mes "[Izaac]";
-	mes "Of course, I won't ask you to give me that stuff for free. What if I traded the following for ^CC00001 Red Potion^000000:";
+	mes "แน่นอนฉันจะไม่ขอให้คุณมอบสิ่งนั้นให้ฉันฟรีถ้าฉันแลกเปลี่ยนสิ่งต่อไปนี้เพื่อ ^CC00001 Red Potion^000000:";
 	mes "^00CC005 Shell^000000";
 	mes "^0000CC10 Fluff^000000";
 	mes "^00CC0010 Jellopy^000000";
@@ -310,11 +310,11 @@ moc_para01,163,51,7	script	Izaac#edco	86,{
 	mes "^0000CC7 Feather of Birds^000000";
 	mes "^00CC006 Chrysalis^000000";
 	next;
-	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	switch(select("แน่นอน!: ฉันคิดว่ามันน่าเบื่อ!: ไม่ขอบคุณ")) {
 	case 1:
 		mes "[Izaac]";
-		mes "So which items do";
-		mes "you want to bring me?";
+		mes "ดังนั้นไอเทมตัวไหนที่ทำ";
+		mes "คุณต้องการพาฉันมา";
 		next;
 
 		setarray .@items[0], 935, 914, 909, 902, 955, 916, 915;
@@ -326,8 +326,8 @@ moc_para01,163,51,7	script	Izaac#edco	86,{
 		set .@select, select(.@menu$+"Cancel")-1;
 		if (.@select == .@size) {
 			mes "[Izaac]";
-			mes "Sure~";
-			mes "No problem.";
+			mes "แน่นอน ~";
+			mes "ไม่มีปัญหา";
 			close;
 		}
 		set .@item, .@items[.@select];
@@ -343,56 +343,56 @@ moc_para01,163,51,7	script	Izaac#edco	86,{
 			close;
 		}
 		mes "[Izaac]";
-		mes "Okay, let me check";
-		mes "how much "+.@item$;
-		mes "you have on you.";
-		mes "Hmm...";
+		mes "โอเคให้ฉันตรวจสอบ";
+		mes "เท่าใด" + .@item$;
+		mes "คุณมีต่อคุณ";
+		mes "อืม ... ";
 		next;
 		set .@amount, countitem(.@item) / .@price;
 		set .@trade_amount, .@amount * .@price;
 		mes "[Izaac]";
 		mes "You have";
-		mes "a total of "+countitem(.@item)+" "+.@item$+"...";
-		mes "For all those, I can give you";
-		mes "a total of "+.@amount+" Red Potion(s).";
+		mes "จำนวน" + countitem(.@item) + "" + .@item$ + "... ";
+		mes "สำหรับทุกคนฉันสามารถให้คุณได้";
+		mes "รวม" + .@amount + "Red Potion.";
 		next;
 		mes "[Izaac]";
-		mes "What do you say?";
-		mes "Do we have a deal?";
+		mes "เจ้าพูดว่าอะไร";
+		mes "พวกเรามีข้อตกลงไหม?";
 		next;
-		if(select("Deal.:No deal.") == 2) {
+		if(select("ดีล: ไม่มีข้อตกลง") == 2) {
 			mes "[Izaac]";
-			mes "Huh~";
-			mes "Alright.";
-			mes "Though are";
-			mes .@item$ + " more useful";
-			mes "to an adventurer like you?";
+			mes "Huh ~";
+			mes "ได้เลย";
+			mes "แม้ว่าจะเป็น";
+			mes .@item$ + "มีประโยชน์มากกว่า";
+			mes "ถึงนักผจญภัยอย่างเจ้าเหรอ?";
 			close;
 		}
 		if (checkweight(501,.@amount) == 0) { //custom check
 			mes "[Izaac]";
-			mes "You are overweight.";
+			mes "เจ้าน้ำหนักเกิน";
 			close;
 		}
 		delitem .@item,.@trade_amount;
 		getitem 501,.@amount; //Red_Potion
 		mes "[Izaac]";
-		mes "There you go!";
-		mes "Check how many "+.@item$;
-		mes "I've given you, it should be good.";
-		mes "Thanks, that was a good deal~";
+		mes "เจ้าไปแล้ว!";
+		mes "ตรวจสอบว่ามีกี่รายการ" + .@item$;
+		mes "ฉันให้คุณมันน่าจะดี";
+		mes "ขอบคุณนั่นเป็นข้อตกลงที่ดี ~";
 		close;
 	case 2:
 		mes "[Izaac]";
-		mes "A rip-off...?";
-		mes "If you check the market value";
-		mes "of the items being traded, I'm actually the one getting";
-		mes "ripped off here.";
+		mes "A rip-off ... ?";
+		mes "ถ้าคุณตรวจสอบมูลค่าตลาด";
+		mes "ของไอเท็มที่กำลังแลกเปลี่ยนฉันเป็นคนที่ได้รับจริง ๆ ";
+		mes "ฉีกที่นี่";
 		close;
 	case 3:
 		mes "[Izaac]";
-		mes "Alright, No problem.";
-		mes "But come back to me if you change your mind.";
+		mes "ได้เลยไม่มีปัญหา";
+		mes "แต่กลับมาหาฉันถ้าคุณเปลี่ยนใจ";
 		close;
 	}
 }
@@ -999,181 +999,6 @@ moc_para01,38,162,2	script	Code the Redeemer#Give1	405,{
 	close;
 }
 
-// HD Refiner
-//============================================================
--	script	::MightyHammer#iro	-1,{
-	disable_items;
-	mes "[Blacksmith Mighty Hammer]";
-	mes "Unlike others, I am a blacksmith who refines a very limited number of items.";
-	mes "I refine only items that are ^CC0000+7 to +9^000000.";
-	next;
-	mes "[Blacksmith Mighty Hammer]";
-	mes "My specialty is that even if my refining fails, the refine level decreases by 1 without losing the gear. Isn't it great?";
-	next;
-	mes "[Blacksmith Mighty Hammer]";
-	mes "So lets kick this into overdrive, what d' ya say? What item do you want to refine?";
-	next;
-	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
-	for ( .@i = 1; .@i <= 10; ++.@i )
-		.@menu$ = .@menu$ + ( getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) + "-[Not equipped]" ) + ":";
-	.@part = .@indices[ select(.@menu$) ];
-	if (!getequipisequiped(.@part)) {
-		mes "[Blacksmith Mighty Hammer]";
-		switch(.@part) {
-		case EQI_HEAD_TOP:
-			mes "I'm a blacksmith, not a hairstylist.";
-			break;
-		case EQI_ARMOR:
-			mes "With my hammer, I will make you a star of the sky.";
-			break;
-		case EQI_HAND_L:
-		case EQI_HAND_R:
-			mes "Making artificial hands is not my specialty.";
-			break;
-		case EQI_GARMENT:
-			mes "Bring out the item so I can refine it!";
-			break;
-		case EQI_SHOES:
-			mes "Where is this foot odor coming from?";
-			break;
-		case EQI_ACC_L:
-		case EQI_ACC_R:
-			mes "Where is the accessory?";
-			break;
-		case EQI_HEAD_MID:
-			mes "What do you want me to refine?";
-			break;
-		case EQI_HEAD_LOW:
-			mes "Huh? What do you want me to do?";
-			break;
-		}
-		close;
-	}
-	if (!getequipisenableref(.@part)) {
-		mes "[Blacksmith Mighty Hammer]";
-		mes "This item can't be refined.";
-		close;
-	}
-	switch( getequiprefinerycnt(.@part) ) {
-	case 7:
-		.@blacksmith_blessing_count = 1;
-		break;
-	case 8:
-		.@blacksmith_blessing_count = 2;
-		break;
-	case 9:
-		.@blacksmith_blessing_count = 4;
-		break;
-	default:
-		mes "[Blacksmith Mighty Hammer]";
-		mes "I only handle items with refine levels from +7 to +9.";
-		close;
-	}
-
-	.@refineitemid = getequipid(.@part); // save id of the item
-	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
-	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
-	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	.@price = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
-	.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
-
-	mes "[Blacksmith Mighty Hammer]";
-	mes "In order to refine the gear you selected you need ^ff9999" + getitemname(.@material) + "^000000 and 20,000 zeny as a fee.";
-	mes "Do you have them ready?";
-	next;
-	if (select("Yes:No") == 2) {
-		mes "[Blacksmith Mighty Hammer]";
-		mes "I will wait until you are ready.";
-		close;
-	}
-	if (getequippercentrefinery(.@part) < 100) {
-		mes "[Blacksmith Mighty Hammer]";
-		mes "It looks like this item will likely fail to be refined.";
-		mes "Well, even if it fails, it only decreases by 1 refine level.";
-		mes "Would you like to continue refining?";
-		next;
-		if (countitem(6635) < .@blacksmith_blessing_count)
-			setarray .@menu$[0], "", "Yes", "Not yet";
-		else {
-			mes "[Blacksmith Mighty Hammer]";
-			mes "Ah! Is it the ^0000ffBlacksmith Blessing^000000?";
-			mes "With the Blacksmith Blessing, the equipment won't vanish if the refine fails!";
-			next;
-			mes "[Blacksmith Mighty Hammer]";
-			if ( .@itemtype != IT_WEAPON )
-				mes "For +" + getequiprefinerycnt(.@part) + " equipment, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want use it to refine?";
-			else
-				mes "For +" + getequiprefinerycnt(.@part) + " weapon, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want use it to refine?";
-			next;
-			setarray .@menu$[0], "Use it to refine", "Refine directly without it", "Don't refine yet";
-		}
-		switch( select(.@menu$[0], .@menu$[1], .@menu$[2]) ) {
-		case 1:
-			.@bless_who = 1;
-			break;
-		case 2:
-			break;
-		case 3:
-			mes "[Blacksmith Mighty Hammer]";
-			mes "Only those who overcome fear of failure will obtain a masterpiece.";
-			close;
-		}
-	}
-	if ((.@bless_who && countitem(6635) < .@blacksmith_blessing_count) || countitem(.@material) == 0 || Zeny < .@price) {
-		mes "[Blacksmith Mighty Hammer]";
-		mes "Didn't you just say you had everything ready?";
-		close;
-	}
-	if (.@bless_who)
-		delitem 6635, .@blacksmith_blessing_count;
-	delitem .@material,1;
-	Zeny = Zeny - .@price;
-
-	// anti-hack
-	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
-		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
-		mes "[Blacksmith Mighty Hammer]";
-		emotion ET_FRET;
-		mes "Wait a second...";
-		mes "Do you think I'm stupid?!";
-		mes "You switched the item while I wasn't looking! Get out of here!";
-		close;
-	}
-
-	mes "[Blacksmith Mighty Hammer]";
-	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
-		successrefitem .@part;
-		next;
-		emotion ET_BEST;
-		mes "[Blacksmith Mighty Hammer]";
-		mes "The sound refreshes my mind every time I hear it.";
-		mes "Here, have it. Refine succeeded flawlessly!";
-		close;
-	}
-	if (.@bless_who == 1) {
-		specialeffect EF_HOLYHIT;
-		next;
-		emotion ET_HUK;
-		mes "[Blacksmith Mighty Hammer]";
-		mes "What?!!";
-		next;
-		mes "[Blacksmith Mighty Hammer]";
-		mes "Aiya! I am faceless now. HmHm.";
-		close;
-	}
-	downrefitem .@part;
-	next;
-	emotion ET_HUK;
-	mes "[Blacksmith Mighty Hammer]";
-	mes "Oops!!";
-	next;
-	mes "[Blacksmith Mighty Hammer]";
-	mes "I am sure a person like you would never blame me for a decrease in refine level by 1. Hmm.";
-	close;
-}
-
-
 // Cash Shops
 //============================================================
 /* Due to the irregularity of iRO's databases, some of these sprites may not display properly. */
@@ -1200,7 +1025,7 @@ moc_para01,26,185,4	duplicate(Suhnbi#cash)	Suhnmi#eden	85
 
 // HD Refiner "Blacksmith Mighty Hammer" (re/merchants/hd_refiner.txt)
 // A combination of the +7~9 and +10 and up refiner, currently a placeholder.
-moc_para01,38,185,4	duplicate(MightyHammer#iro)	Mighty Hammer#ed	826
+moc_para01,38,185,4	duplicate(MightyHammer)	Mighty Hammer#ed	826
 
 // Refiner Effect
 -	script	#eden_refine_effect	-1,{

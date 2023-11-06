@@ -19,49 +19,32 @@
 
 moc_para01,48,177,3	script	91-99 Mission Board	857,{
 	if (!callfunc("F_HasEdenGroupMark")) {
-		mes "Wait a minute!";
-		mes "-You need to have an-";
-		mes "-^4d4dff'Eden Group Mark'^000000-";
-		mes "-to receive these missions.-";
+		mes "เดี๋ยวก่อน!";
+		mes "- คุณต้องมี -";
+		mes "- ^4d4dff'Eden Group Mark'^000000 -";
+		mes "- เพื่อรับภารกิจเหล่านี้ -";
 		next;
-		switch(select("Just walk away.:^0000FFEden Group^000000 missions?:How can I be a member of the ^0000FFEden Group^000000?")) {
+		switch(select("เพียงแค่เดินออกไป:ภารกิจ ^0000FFEden Group^000000?:ฉันจะเป็นสมาชิกของ ^0000FFEden Group^000000 ได้อย่างไร")) {
 		case 1:
 			close;
 		case 2:
-			mes "::The Eden Group Missions";
-			mes "::are basically missions";
-			mes "::requested by";
-			mes "::people from all around the kingdom.";
-			mes "::We just categorize them.";
+			mes "::ภารกิจของกลุ่ม Eden เป็นภารกิจที่ผู้คนจากทั่วราชอาณาจักรร้องขอโดยทั่วไป";
+			mes "::เราแค่จัดหมวดหมู่ให้";
 			next;
-			mes "::In the Eden Group,";
-			mes "::we sorted out the missions";
-			mes "::according to the level of difficulty.";
-			mes "::According to this level,";
-			mes "::you can find";
-			mes "::missions that";
-			mes "::suit you.";
+			mes "::ใน Eden Group เราจัดเรียงภารกิจตามระดับความยาก";
+			mes "::ตามระดับนี้คุณจะพบภารกิจที่เหมาะกับคุณ";
 			next;
-			mes "::When you are done,";
-			mes "::you can come back";
-			mes "::to the mission board.";
+			mes "::เมื่อเสร็จแล้วคุณสามารถกลับมาที่กระดานภารกิจได้";
 			next;
-			mes "::Then you will be";
-			mes "::rewarded!!";
-			mes "::Simple, isn't it!!";
-			mes "::No commission required!!";
+			mes "::แล้วคุณจะได้รับรางวัล !!";
+			mes "::ง่ายๆไม่ใช่หรอ !!";
+			mes "::ไม่ต้องมีค่านายหน้า !!";
 			close;
 		case 3:
-			mes "::You can become a member";
-			mes "::of the Eden Group";
-			mes "::to ^0000FFLaime Evenor^000000,";
-			mes "::who is waiting on the 1st floor.";
+			mes "::คุณสามารถเป็นสมาชิกของ Eden Group ได้ที่ ^ 0000FFLaime Evenor ^ 000000 ซึ่งรออยู่ที่ชั้น 1";
 			next;
-			mes "::If you become a member,";
-			mes "::you will get an";
-			mes "::\"^006400Eden Group Mark^000000\".";
-			mes "::Then you will be able";
-			mes "::to see the mission board.";
+			mes "::หากคุณเป็นสมาชิกคุณจะได้รับ \"^006400Eden Group Mark^000000\".";
+			mes "::จากนั้นคุณจะสามารถเห็นกระดานภารกิจ";
 			close;
 		}
 	}
@@ -80,25 +63,19 @@ moc_para01,48,177,3	script	91-99 Mission Board	857,{
 			96000,102000,110000,
 			102000,108000,
 			110000,138000,118000,96000,134000;
-		mes "You must be within level 91-99 to accept these missions.";
+		mes "คุณต้องอยู่ในระดับ 91-99 เพื่อรับภารกิจเหล่านี้";
 		for(set .@quest,4181; .@quest<=4196; set .@quest,.@quest+1) {
 			set .@hunting, checkquest(.@quest,HUNTING);
 			if (.@hunting == 0 || .@hunting == 1) {
 				next;
-				mes ":: You cannot proceed in";
-				mes ":: ^0000FF"+.@names$[.@quest-4181]+" Hunting^000000.";
-				mes ":: The registration to the mission";
-				mes ":: is cancelled.";
+				mes ":: คุณไม่สามารถดำเนินการต่อใน ^0000FF" + .@names$[.@quest-4181] + " Hunting^000000.";
+				mes ":: การลงทะเบียนภารกิจถูกยกเลิก";
 				erasequest .@quest;
 				close;
 			} else if (.@hunting == 2) {
 				next;
-				mes ":: You added information";
-				mes ":: about the mission";
-				mes ":: ^0000FF"+.@names$[.@quest-4181]+" Hunting^000000";
-				mes ":: on the mission board.";
-				mes ":: You've got a";
-				mes ":: salutary experience.";
+				mes ":: คุณเพิ่มข้อมูลเกี่ยวกับภารกิจ ^0000FF" + .@names$[.@quest-4181] + " Hunting^000000 บนกระดานภารกิจ";
+				mes ":: คุณได้รับประสบการณ์ที่ดี";
 				erasequest .@quest;
 				getexp .@exp[.@quest-4181],0;
 				close;
@@ -107,54 +84,54 @@ moc_para01,48,177,3	script	91-99 Mission Board	857,{
 		close;
 	}
 	mes "[91-99 Mission Board]";
-	mes "There are several requests on this board.";
+	mes "มีคำขอมากมายในบอร์ดนี้";
 	next;
 	switch(select("^8B4513Turtle Island^000000:^8B4513Glast Heim^000000:^8B4513Rachel / Veins^000000:^8B4513Expansion Cities^000000:^8B4513Other regions^000000")) {
 	case 1:
 		mes "^8B4513Turtle Island^000000.";
-		mes "Which monster will you hunt or have you finished hunting?";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
 		next;
 		switch(select("^0000FFSolider^000000:^0000FFFreezer^000000:^0000FFHeater^000000")) {
-			case 1: callsub L_Quest,4181,"Solider",90000,"ผึธฎด๕ฤซตๅ","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
-			case 2: callsub L_Quest,4182,"Freezer",94000,"วมธฎภ๚ฤซตๅ","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
-			case 3: callsub L_Quest,4183,"Heater",114000,"ศ๗ลอฤซตๅ","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
+			case 1: callsub L_Quest,4181,"Solider",90000,"Solider","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000";
+			case 2: callsub L_Quest,4182,"Freezer",94000,"Freezer","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000";
+			case 3: callsub L_Quest,4183,"Heater",114000,"Heater","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000";
 		}
 	case 2:
 		mes "^8B4513Glast Heim^000000.";
-		mes "Which monster will you hunt or have you finished hunting?";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
 		next;
 		switch(select("^0000FFInjustice^000000:^0000FFRybio^000000:^0000FFDark Priest^000000")) {
-			case 1: callsub L_Quest,4184,"Injustice",96000,"ภฮภ๚ฝบฦผฝบฤซตๅ","There is a monster only found in ^8B4513Glast Heim prison^000000.";
-			case 2: callsub L_Quest,4185,"Rybio",96000,"ธฎบ๑ฟภฤซตๅ","There is a monster only found in ^8B4513Glast Heim prison^000000.";
-			case 3: callsub L_Quest,4186,"Dark Priest",146000,"ดูลฉวมธฎฝบฦฎฤซตๅ","There is a monster only found in ^8B4513Glast Heim prison^000000.";
+			case 1: callsub L_Quest,4184,"Injustice",96000,"Injustice","มีสัตว์ประหลาดที่พบได้เฉพาะใน ^8B4513Glast Heim prison^000000";
+			case 2: callsub L_Quest,4185,"Rybio",96000,"Rybio","มีสัตว์ประหลาดที่พบได้เฉพาะใน ^8B4513Glast Heim prison^000000";
+			case 3: callsub L_Quest,4186,"Dark Priest",146000,"Dark Priest","มีสัตว์ประหลาดที่พบได้เฉพาะใน ^8B4513Glast Heim prison^000000";
 		}
 	case 3:
 		mes "^8B4513Rachel / Veins^000000.";
-		mes "Which monster will you hunt or have you finished hunting?";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
 		next;
 		switch(select("^0000FFStapo^000000:^0000FFRoween^000000:^0000FFSiroma^000000")) {
-			case 1: callsub L_Quest,4187,"Stapo",96000,"ฝบลยฦ๗ฤซตๅ","There is a monster only found in ^8B4513Veins^000000.";
-			case 2: callsub L_Quest,4188,"Roween",102000,"ทฮฟ์ภฉฤซตๅ","There is a monster only found in ^8B4513Rachel^000000.";
-			case 3: callsub L_Quest,4189,"Siroma",110000,"ฝรทฮธถฤซตๅ","There is a monster only found in ^8B4513Ice Dungeon^000000.";
+			case 1: callsub L_Quest,4187,"Stapo",96000,"Stapo","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Veins^000000.";
+			case 2: callsub L_Quest,4188,"Roween",102000,"Roween","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Rachel^000000.";
+			case 3: callsub L_Quest,4189,"Siroma",110000,"Siroma","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Ice Dungeon^000000.";
 		}
 	case 4:
 		mes "^8B4513Expansion Cities^000000.";
-		mes "Which monster will you hunt or have you finished hunting?";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
 		next;
 		switch(select("^0000FFShinobi^000000:^0000FFEvil Nymph^000000")) {
-			case 1: callsub L_Quest,4190,"Shinobi",102000,"ฝรณ๋บ๑ฤซตๅ","There is a monster only found in ^8B4513Amatsu Dungeon^000000.";
-			case 2: callsub L_Quest,4191,"Evil Nymph",108000,"ฟไผฑณเฤซตๅ","There is a monster only found in ^8B4513Kunlun Dungeon^000000.";
+			case 1: callsub L_Quest,4190,"Shinobi",102000,"Shinobi","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Amatsu Dungeon^000000.";
+			case 2: callsub L_Quest,4191,"Evil Nymph",108000,"Evil Nymph","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Kunlun Dungeon^000000.";
 		}
 	case 5:
 		mes "Other Regions.";
-		mes "Which monster will you hunt or have you finished hunting?";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
 		next;
 		switch(select("^0000FFDeviruchi^000000:^0000FFMineral^000000:^0000FFKaho^000000:^0000FFNeraid^000000:^0000FFDisguise^000000")) {
-			case 1: callsub L_Quest,4192,"Deviruchi",110000,"ตฅบ๑ท็ฤกฤซตๅ","There is a monster only found in ^8B4513Geffen Dungeon^000000.";
-			case 2: callsub L_Quest,4193,"Mineral",138000,"นฬณืถ๖","There is a monster only found in ^8B4513Einbech Dungeon^000000.";
-			case 3: callsub L_Quest,4194,"Kaho",118000,"ฤซศฃฤซตๅ","There is a monster found in ^8B4513Nogg Road Magma 1^000000.";
-			case 4: callsub L_Quest,4195,"Neraid",96000,"ณืทนภฬตๅฤซตๅ","There is a monster only found in ^8B4513Comodo Dungeon^000000.";
-			case 5: callsub L_Quest,4196,"Disguise",134000,"ต๐ฝบฐกภฬม๎ฤซตๅ","There is a monster only found in ^8B4513Niflheim^000000.";
+			case 1: callsub L_Quest,4192,"Deviruchi",110000,"Deviruchi","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Geffen Dungeon^000000.";
+			case 2: callsub L_Quest,4193,"Mineral",138000,"Mineral","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Einbech Dungeon^000000.";
+			case 3: callsub L_Quest,4194,"Kaho",118000,"Kaho","มีสัตว์ประหลาดที่พบใน ^8B4513Nogg Road Magma 1^000000.";
+			case 4: callsub L_Quest,4195,"Neraid",96000,"Neraid","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Comodo Dungeon^000000.";
+			case 5: callsub L_Quest,4196,"Disguise",134000,"Disguise","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Niflheim^000000.";
 		}
 	}
 	end;
@@ -167,18 +144,18 @@ L_Quest:
 	set .@playtime, checkquest(.@quest2,PLAYTIME);
 	if (.@playtime == 0 || .@playtime == 1) {
 		mes "[91-99 Mission Board]";
-		mes "You need to wait 3 hours before you can take this mission again.";
+		mes "คุณต้องรอ 3 ชั่วโมงก่อนจึงจะสามารถทำภารกิจนี้ได้อีกครั้ง";
 		close;
 	}
 	set .@hunting, checkquest(.@quest1,HUNTING);
 	if (.@hunting == 0 || .@hunting == 1) {
 		mes "[91-99 Mission Board]";
-		mes "Have you finished hunting all 30 "+getarg(1)+getarg(5,"")+" yet?";
+		mes "คุณล่าครบ 30 " + getarg(1) + getarg(5,"") + " หรือยัง?";
 		close;
 	} else if (.@hunting == 2) {
 		mes "[91-99 Mission Board]";
-		mes "You have completed the hunting.";
-		mes "Please accept this reward as a compensation.";
+		mes "คุณล่าสัตว์เสร็จแล้ว";
+		mes "โปรดรับรางวัลนี้เป็นค่าตอบแทน";
 		erasequest .@quest1;
 		if (.@playtime > -1) erasequest .@quest2;
 		setquest .@quest2;
@@ -196,7 +173,7 @@ L_Quest:
 //		recall_completequest .@quest1
 		erasequest .@quest1;
 		mes "[91-99 Mission Board]";
-		mes "You have re-accepted the "+getarg(1)+" Hunting mission.";
+		mes "คุณได้ยอมรับ" + getarg(1) + "ภารกิจล่าสัตว์อีกครั้ง";
 		close;
 	}*/ else {
 		mes "[91-99 Mission Board]";
@@ -204,12 +181,12 @@ L_Quest:
 		next;
 		if (.@cutin$ != "") cutin .@cutin$,3;
 		mes "[91-99 Mission Board]";
-		mes "Hunt 30 "+getarg(1)+" monsters there and post your success on this board.";
+		mes "ล่า 30" + getarg(1) + "ที่นั่นแล้วโพสต์ความสำเร็จของคุณบนกระดานนี้";
 		next;
 		if (.@cutin$ != "") cutin .@cutin$,255;
-		if(select("I'll hunt them.:No thanks.") == 1) {
+		if(select("ฉันจะตามล่าพวกมัน:ไม่ต้องขอบคุณ") == 1) {
 			mes "[91-99 Mission Board]";
-			mes "When you have completed the mission, post it on this board and collect your reward.";
+			mes "เมื่อคุณทำภารกิจสำเร็จแล้วให้โพสต์บนกระดานนี้และรับรางวัลของคุณ";
 			if (.@playtime > -1) erasequest .@quest2;
 			setquest .@quest1;
 		}

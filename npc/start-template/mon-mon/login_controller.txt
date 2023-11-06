@@ -1,0 +1,15 @@
+-	script	Mon_Mon_Login_Controller	-1,{
+OnPCLoginEvent:
+	setfont 0;
+	if(.is_mon_mon_enable){
+		if(callfunc("Is_Mon_Mon_Available_To_Play"))
+		callfunc("Monster_Selecter");
+		else 
+		callfunc("Mon_Mon");
+	}
+	end;
+	
+OnInit:
+	.is_mon_mon_enable = 1;
+	end;
+}

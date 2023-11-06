@@ -18,29 +18,29 @@
 que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	disable_items;
 	mes "[Artisan Tene]";
-	mes "Hello? I'm Artisan Tene, the most respectful blacksmith of them all.";
+	mes "หวัดดี ? ข้าชื่อ Artisan Tene, เป็น blacksmith ที่ได้รับความเคารพอย่างมากที่นี้.";
 	next;
 	mes "[Artisan Tene]";
-	mes "How may I help you?";
+	mes "มีอะไรให้ข้าช่วยไหม ?";
 	next;
-	switch(select("Which blacksmith?:I want to add option.:I want to remove option.")) {
+	switch(select("อธิบายคำว่า blacksmith ที ?:ข้าต้องการออฟของ.:ข้าต้องการลบออฟ.")) {
 	case 1:
 		mes "[Artisan Tene]";
-		mes "Oh! Sorry, I didn't introduce myself.";
+		mes "โอ้! โทษที, ข้าลืมแนะนำตัวเอง.";
 		next;
 		mes "[Artisan Tene]";
-		mes "I can add or remove options from some weapons and armor at a small price.";
+		mes "ข้าสามารถออฟหรือลบออฟจากอาวุธและเกราะได้ในราคาถูก.";
 		next;
 		mes "[Artisan Tene]";
-		mes "Oh! Do you want to know the list of weapons and armor I work on?";
+		mes "โอ้! เจ้าอยากรู้รายชื่อของอาวุธและเกราะที่ข้าออฟได้สิน่ะ ?";
 		next;
-		switch(select("Take a look at the weapon list.:Take a look at the armor list.")) {
+		switch(select("ขอดูรายชื่ออาวุธ.:ขอดูรายชื่อเกราะ.")) {
 		case 1:
 			mes "[Artisan Tene]";
-			mes "Are you interested in the weapon list?";
+			mes "เจ้าสนใจรายชื่ออาวุธใช่ไหม ?";
 			next;
 			mes "[Artisan Tene]";
-			mes "The weapons I work on are ";
+			mes "นี่คืออาวุธที่ข้าออฟได้";
 			mes "^ff0000Raksasa Dagger [1]^000000";
 			mes "^ff0000Mikatsuki[1]^000000";
 			mes "^ff0000Huuma Swirling Petal [2]^000000";
@@ -50,10 +50,10 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			break;
 		case 2:
 			mes "[Artisan Tene]";
-			mes "Are you interested in the armor list?";
+			mes "เจ้าสนใจรายชื่อเกราะใช่ไหม?";
 			next;
 			mes "[Artisan Tene]";
-			mes "The armor I work on is";
+			mes "นี่คือเกราะที่ข้าออฟได้";
 			mes "^ff0000Wolf Armguard [1]^000000";
 			mes "^ff0000Crescent Armguard [1]^000000";
 			mes "^ff0000Ninja Scale Armor [1]^000000";
@@ -63,40 +63,40 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			break;
 		}
 		mes "[Artisan Tene]";
-		mes "This is it. I'm still in practice to learn and handle more battlegear.";
+		mes "ในตอนนี้. ข้ายังคงฝึกฝนและเรียนรู้ในการออฟของที่ดียิ่งขึ้นไป.";
 		next;
 		mes "[Artisan Tene]";
-		mes "If you'd like, I can add options to your 4th and 3rd Slots at a small cost.";
+		mes "ถ้าเจ้าอยากออฟ, ข้าจะออฟของให้เจ้าในช่องที่ 4 และ 3 ให้ เพียงแค่จ่ายเงินเล็กน้อย.";
 		close;
 	case 2:
 		mes "[Artisan Tene]";
-		mes "Oh! You need to add an option.";
-		mes "I use the method of adding options to your 4th and 3rd slots of battlegear equipped.";
+		mes "โอ้! เจ้าอยากจะออฟสิน่ะ.";
+		mes "ข้าจะเพิ่มออฟในของสวมใส่ให้ในช่องที่ 4 และ 3.";
 		next;
 		mes "[Artisan Tene]";
-		mes "Since I use a stable and unique way of adding options, there are no risks of ^ff0000'Reset Refine'^000000 or ^ff0000'Losing Cards'^000000 equipped.";
+		mes "ในการออฟ, เจ้าจะไม่สูญเสีย ^ff0000'ค่าตีบวก'^000000 หรือ ^ff0000'การ์ด'^000000 ไป.";
 		next;
 		mes "[Artisan Tene]";
-		mes "But since the costs of materials are high, I only ask for a ^5565AA small cost^000000 for my services with the exception of the material expenses.";
+		mes "แม้ว่าจะต้องใช้แร่ขั้นสูง, แต่ข้ายังคงเอาเพียง ^5565AA เงินเล็กน้อย^000000 สำหรับการออฟเท่านั้น.";
 		next;
 		mes "[Artisan Tene]";
-		mes "Ha ha. I must have talked too much. Which class of equipment do you want to add an option to?";
+		mes "ฮา ฮ่า. ข้าคงพูดมากไป. ไหนล่ะ ของสวมใส่ที่เจ้าอยากจะออฟ?";
 		next;
 		switch(select("Weapon...:Armor...")) {
 		case 1:
 			mes "[Artisan Tene]";
-			mes "So you want to add an option to your weapon. That will be ^ff0000100,000 Zeny for a 1 time service.^000000";
+			mes "เจ้าต้องการที่จะออฟอาวุธสิน่ะ. ข้าขอแค่ ^ff0000100,000 Zeny สำหรับการออฟหนึ่งครั้ง.^000000";
 			next;
 			mes "[Artisan Tene]";
-			mes "^FF0000Ah! I can add an additional option if you equip a one-handed weapon on your right hand because it is easier for me to work on.^000000";
+			mes "^FF0000อาห์! ข้าจะทำงานได้ง่ายขึ้นถ้าเจ้าใส่อาวุธมือเดียวที่ข้างขวานะ.^000000";
 			next;
 			mes "[Artisan Tene]";
-			mes "Which weapon do you want to add an option to?";
+			mes "อาวุธชิ้นไหนที่เจ้าอยากจะออฟ ?";
 			next;
-			switch(select("Later...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm")) {
+			switch(select("ไว้วันหลัง...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm")) {
 			case 1:
 				mes "[Artisan Tene]";
-				mes "Changed your mind? Very well. Hope to see you later.";
+				mes "ทำไมเปลี่ยนใจ ? เยี่ยมเลย. หวังว่าคงพบกันใหม่.";
 				close;
 			case 2:
 				set .@equip_id,13076; //Raksasa_Dagger
@@ -118,15 +118,15 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			break;
 		case 2:
 			mes "[Artisan Tene]";
-			mes "So you want to add an option to your armor. That will be ^ff0000100,000 Zeny for a 1 time service.^000000";
+			mes "เจ้าต้องการที่จะออฟเกราะสิน่ะ. ข้าขอแค่ ^ff0000100,000 Zeny สำหรับการออฟหนึ่งครั้ง.^000000";
 			next;
 			mes "[Artisan Tene]";
-			mes "Which armor do you want to add an option to?";
+			mes "เกราะชิ้นไหนที่เจ้าอยากจะออฟ ?";
 			next;
-			switch(select("Later...:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
+			switch(select("ไว้วันหลัง...:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
 			case 1:
 				mes "[Artisan Tene]";
-				mes "Changed your mind? Very well. Hope to see you later.";
+				mes "ทำไมเปลี่ยนใจ ? เยี่ยมเลย. หวังว่าคงพบกันใหม่.";
 				close;
 			case 2:
 				set .@part, EQI_HAND_L;
@@ -158,18 +158,18 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		break;
 	case 3:
 		mes "[Artisan Tene]";
-		mes "You want to remove an option from your item. You didn't like the option?";
+		mes "เจ้าอยากจะลบออฟออกจากไอเท็ม. เพราะไม่ชอบออฟที่ได้ ?";
 		next;
 		mes "[Artisan Tene]";
-		mes "Sorry but I'm not experienced enough. You've paid me for nothing.";
+		mes "ขอโทษด้วย เพราะข้ามีประสบการ์ณไม่พอ.";
 		next;
 		mes "[Artisan Tene]";
-		mes "^ff0000Removing an option will be 100,000 Zeny.^000000 Which option from the list of items do you want to remove?";
+		mes "^ff0000การลบออฟเจ้าต้องจ่าย 100,000 Zeny.^000000 ของชิ้นไหนที่เจ้าอยากจะลบออฟ ?";
 		next;
-		switch(select("Later...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
+		switch(select("ไว้วันหลัง...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
 		case 1:
 			mes "[Artisan Tene]";
-			mes "Removing options is expensive, isn't it? Sorry. I will work harder in developing my skills and bring down costs as well.";
+			mes "ค่าลบออฟมันแพงหรอ ? ขอโทษด้วย. ข้าจะฝึกให้หนักขึ้นเพื่อที่มันจะได้ถูกลง.";
 			close;
 		case 2:
 			set .@part, EQI_HAND_R;
@@ -217,21 +217,21 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		copyarray .@card[0], .@equip_card[0], 4;
 
 		mes "[Artisan Tene]";
-		mes "You want to reset ^44B7BC" + getitemname(.@equip_id) + "^000000?";
+		mes "เจ้าต้องการที่จะลบออฟของ ^44B7BC" + getitemname(.@equip_id) + "^000000?";
 		next;
 		mes "[Artisan Tene]";
-		mes "The cost is the same but I do provide a service to remove only the option on the 3rd slot and leave the 4th slot as is. Are you interested?";
+		mes "เจ้าสามารถเลือกที่จะลบออฟช่องที่ 3 และ 4 ได้. น่าสนใจไหม ?";
 		next;
-		switch(select("Reset only the 3rd Slot.:Reset all.")) {
+		switch(select("ลบออฟเฉพาะช่องที่ 3.:ลบทั้งหมด.")) {
 		case 1:
 			mes "[Artisan Tene]";
-			mes "Very well. I will reset only your 3rd slot.";
+			mes "ได้เลย. ข้าจะลบออฟเฉพาะช่องที่ 3 ให้.";
 			next;
 			set .@sot03_ck,1;
 			break;
 		case 2:
 			mes "[Artisan Tene]";
-			mes "Very well. I will reset all slots.";
+			mes "ได้เลย. ข้าจะลบออฟออกทั้งหมดเลย.";
 			next;
 			break;
 		}
@@ -240,23 +240,23 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	}
 	if (getequipisequiped(.@part) == 0) {
 		mes "[Artisan Tene]";
-		mes "You will have to equip all items before ^44B7BC" + getitemname(.@equip_id) + "^000000.";
+		mes "เจ้าจะต้องสวมใส่ ^44B7BC" + getitemname(.@equip_id) + "^000000.";
 		close;
 	}
 	if (Zeny < 100000) {  //custom translation
 		mes "[Artisan Tene]";
-		mes "I'm sorry, but you don't have enough Zeny!";
+		mes "ขอโทษด้วย, แต่เจ้ามีเงินไม่พอ!";
 		next;
 		mes "[Artisan Tene]";
-		mes "Our charge is very low, so please bear with me.";
+		mes "ทั้งๆที่มันก็เป็นค่าใช้จ่ายที่ต่ำมากแล้วน่ะ.";
 		close;
 	}
 	if (getequipid(.@part) != .@equip_id) {
 		mes "[Artisan Tene]";
-		mes "I don't think this is the equipment you requested.";
+		mes "ข้าคิดว่าเจ้าสวมใส่ของไม่ถูกต้อง.";
 		next;
 		mes "[Artisan Tene]";
-		mes "I cannot work on equipment other than those from my list.";
+		mes "ข้าทำไม่ได้ถ้ามันอยู่นอกเหนือจากรายชื่อที่ข้าทำได้.";
 		close;
 	}
 
@@ -265,14 +265,14 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		if (.@sot03_ck) {// reset only 3rd slot
 			if (getiteminfo(.@equip_card[2], ITEMINFO_SUBTYPE) != CARD_ENCHANT) { // Armor Enchant System
 				mes "[Artisan Tene]";
-				mes "The third slot is is not enchanted. Please check again."; //custom translation
+				mes "ไม่สามารถออฟช่องที่ 3 ได้. โปรดตรวจสอบอีกครั้ง."; //custom translation
 				close;
 			}
 			set .@equip_card[2],0;
 		} else {
 			if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) != CARD_ENCHANT) { // Armor Enchant System
 				mes "[Artisan Tene]";
-				mes "This equipment is is not enchanted. Please check again."; //custom translation
+				mes "ของสวมใส่ไม่สามารถออฟได้. โปรดตรวจสอบอีกครั้ง."; //custom translation
 				close;
 			}
 			set .@equip_card[2],0;
@@ -290,7 +290,7 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
 
 		mes "[Artisan Tene]";
-		mes "Initialization complete.";
+		mes "การลบออฟสำเร็จ.";
 		close;
 	}
 
@@ -305,36 +305,36 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) == CARD_ENCHANT) { // Armor Enchant System
 		if (getiteminfo(.@equip_card[2], ITEMINFO_SUBTYPE) == CARD_ENCHANT) {
 			mes "[Artisan Tene]";
-			mes "This equipment cannot be further enchanted.";
+			mes "ของสวมใส่นี้ไม่สามารถออฟได้อีก.";
 			next;
 			mes "[Artisan Tene]";
-			mes "If you are not satisfied with the enchantments, I suggest that you initialize.";
+			mes "ถ้าเจ้ายังอยากจะออฟ, ข้าแนะนำให้เจ้าลบออฟออกก่อน.";
 			close;
 		} else {
 			mes "[Artisan Tene]";
-			mes "The fourth slot has already been enchanted. Shall I enchant the third slot as well?";
+			mes "เจ้าได้ออฟช่องที่ 4 ไปแล้ว. อยากจะออฟช่องที่ 3 ไหม ?";
 			next;
-			if(select("Do it later:Do it now") == 1) {
+			if(select("ไว้วันหลัง:ทำเลย") == 1) {
 				mes "[Artisan Tene]";
-				mes "Very well. Hope to see you later.";
+				mes "เยี่ยมเลย. หวังว่าคงพบกันใหม่.";
 				close;
 			}
 			mes "[Artisan Tene]";
-			mes "Starting to enchant the third slot.";
+			mes "จะเริ่มออฟช่องที่ 3 ล่ะน่ะ.";
 			next;
 			set .@ko_type02,2;
 		}
 	} else {
 		mes "[Artisan Tene]";
-		mes "This equipment is not currently enchanted. Shall I enchant the fourth slot?";
+		mes "ของสวมใส่นี้ไม่เคยออฟมาก่อน. เจ้าอยากจะออฟช่องที่ 4 ไหม ?";
 		next;
-		if(select("Do it later:Do it now") == 1) {
+		if(select("ไว้วันหลัง:ทำเลย") == 1) {
 			mes "[Artisan Tene]";
-			mes "Very well. Hope to see you later.";
+			mes "เยี่ยมเลย. หวังว่าคงพบกันใหม่.";
 			close;
 		}
 		mes "[Artisan Tene]";
-		mes "Starting to enchant the fourth slot.";
+		mes "จะเริ่มออฟช่องที่ 4 ล่ะน่ะ.";
 		next;
 		set .@ko_type02,1;
 	}
@@ -514,7 +514,7 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		}
 	} else {
 		mes "[Artisan Tene]";
-		mes "An unknown error has occurred. Please contact customer service. *^_^*";
+		mes "มีข้อผิดพลาดโดยไม่ทราบสาเหตุ. กรุณาติดต่อผู้ดูแล. *^_^*";
 		close;
 	}
 	if (.@ko_type02 == 1) {
@@ -536,6 +536,6 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 
 	mes "[Artisan Tene]";
 	mes "^44B7BC" + getitemname(.@equip_id) + "^000000";
-	mes "The equipment has been enchanted."; //custom translation
+	mes "การออฟประสบความสำเร็จ."; //custom translation
 	close;
 }

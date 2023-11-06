@@ -22,132 +22,99 @@
 //============================================================ 
 -	script	PVP Narrator::pvpe	-1,{
 	mes "[PVP Narrator]";
-	mes "Hello and welcome!";
-	mes "I am in charge of";
-	mes "explaining the PVP Modes.";
-	mes "I am the PVP Narrator!";
+	mes "สวัสดีและยินดีต้อนรับ!";
+	mes "ฉันรับผิดชอบในการอธิบายโหมด PVP";
+	mes "ฉันคือผู้บรรยาย PVP!";
 	next;
-	switch(select("What is PVP?:What are the PVP Modes?:What are the rules for PVP?:Save Position.:End Dialog.")) {
+	switch(select("PVP คืออะไร:โหมด PVP คืออะไร:กฎสำหรับ PVP คืออะไร:บันทึกตำแหน่ง:สิ้นสุดโต้ตอบ")) {
 	case 1:
 		mes "[PVP Narrator]";
-		mes "In short, PVP means";
-		mes "' Player VS Player Mode '";
-		mes "It's a unique place for people";
-		mes "to duel with each other.";
+		mes "ในระยะสั้น PVP หมายถึง 'โหมด Player VS Player'";
+		mes "มันเป็นสถานที่พิเศษสำหรับผู้คนที่จะดวลกันเอง";
 		next;
 		mes "[PVP Narrator]";
-		mes "Just tell the";
+		mes "แค่บอก";
 		mes "^3355FFGate Keeper^000000";
-		mes "that you want to try. He will";
-		mes "let you enter the PVP square.";
+		mes "ที่คุณอยากลองเขาจะ";
+		mes "ให้คุณเข้าไปในช่อง PVP";
 		next;
 		mes "[PVP Narrator]";
-		mes "But, you need to be at";
-		mes "least level 31. And you";
-		mes "must pay 500 zeny entrance fee in order";
-		mes "to enter a PVP fight square.";
+		mes "แต่คุณต้องอยู่ที่";
+		mes "น้อยที่สุด Level 31 และคุณ";
+		mes "ต้องจ่ายค่าเข้า 500 zeny ในการ";
+		mes "เพื่อเข้าสู่การต่อสู้ PVP";
 		break;
 	case 2:
 		mes "[PVP Narrator]";
-		mes "When you are qualified, you";
-		mes "can choose one of the two modes.";
-		mes "Yoyo Mode or Nightmare Mode.";
+		mes "เมื่อคุณมีคุณสมบัติคุณสามารถเลือกโหมดใดโหมดหนึ่งจากสองโหมด";
+		mes "Yoyo Mode หรือ Nightmare Mode.";
 		next;
 		mes "[PVP Narrator]";
-		mes "Yoyo Mode is risk free.";
-		mes "You can experience PVP";
-		mes "without any restriction or";
-		mes "punishment. It is recommended";
-		mes "that you practice your skills";
-		mes "here before you move on.";
+		mes "Yoyo Mode ไร้ความเสี่ยง";
+		mes "คุณสามารถเล่น PVP ได้โดยไม่มีข้อ จำกัด หรือการลงโทษใดๆ";
+		mes "ขอแนะนำให้คุณฝึกฝนทักษะของคุณที่นี่ก่อนที่จะก้าวต่อไป";
 		next;
 		mes "[PVP Narrator]";
-		mes "Nightmare Mode is very";
-		mes "dangerous! Please be cautious,";
-		mes "you will lose some of your";
-		mes "EXP when you are defeated. And";
-		mes "there is a small chance that";
-		mes "you will drop some equipment.";
+		mes "Nightmare Mode อันตรายมาก!";
+		mes "โปรดระวังคุณจะสูญเสีย EXP บางส่วนของคุณเมื่อคุณพ่ายแพ้";
+		mes "และมีโอกาสเล็กน้อยที่คุณจะทำอุปกรณ์บางอย่างหล่น";
 		next;
 		mes "[PVP Narrator]";
-		mes "However, if you win, the";
-		mes "rewards can be great!";
-		mes "To avoid misunderstanding,";
-		mes "you should think twice";
-		mes "before you go there...";
-		mes "Good Luck!";
+		mes "อย่างไรก็ตามถ้าคุณชนะรางวัลจะยิ่งใหญ่มาก!";
+		mes "เพื่อหลีกเลี่ยงความเข้าใจผิดคุณควรคิดให้ดีก่อนไปที่นั่น... ";
+		mes "ขอให้โชคดี!";
 		break;
 	case 3:
 		mes "[PVP Narrator]";
-		mes "Each of the fight squares";
-		mes "have a row of Narrators and";
-		mes "choose them based on your";
-		mes "qualifications.";
+		mes "แต่ละช่องต่อสู้จะมีผู้บรรยายหลายแถวและเลือกตามคุณสมบัติของคุณ";
 		next;
 		mes "[PVP Narrator]";
-		mes "Each Narrator will ask";
-		mes "which of the five PVP maps";
-		mes "you wish to go to.";
-		mes "Choose, and go in!";
+		mes "ผู้บรรยายแต่ละคนจะถามว่าคุณต้องการไปแผนที่ PVP ใดจากห้าแผนที่";
+		mes "เลือกแล้วเข้าไปเลย!";
 		next;
 		mes "[PVP Narrator]";
-		mes "Each map has a limitation on";
-		mes "the number of people who can";
-		mes "participate. So you will see";
-		mes "figures in the corner showing";
-		mes "'Attendee/Total'.";
+		mes "แต่ละแผนที่มีข้อ จำกัด เกี่ยวกับจำนวนคนที่สามารถเข้าร่วมได้";
+		mes "คุณจะเห็นตัวเลขที่มุมแสดง";
+		mes "'ผู้เข้าร่วม / รวม'.";
 		next;
 		mes "[PVP Narrator]";
-		mes "Also, there is a hidden EXP";
-		mes "value in PVP mode. This EXP";
-		mes "score will only apply inside";
-		mes "of the PVP zone, so do not";
-		mes "worry.";
+		mes "นอกจากนี้ยังมีค่า EXP ซ่อนอยู่ในโหมด PVP";
+		mes "คะแนน EXP นี้จะใช้เฉพาะในโซน PVP เท่านั้นไม่ต้องกังวล";
 		next;
 		mes "[PVP Narrator]";
-		mes "Every player's EXP at the";
-		mes "beginning is usually 5 points.";
-		mes "If you win, it will";
-		mes "increase by 1 point";
+		mes "ค่า EXP ของผู้เล่นทุกคนในตอนเริ่มต้นมักจะมี 5 แต้ม";
+		mes "ถ้าคุณชนะมันจะเพิ่มขึ้น 1 แต้ม";
 		next;
 		mes "[PVP Narrator]";
-		mes "In the same way, when you";
-		mes "lose... Your EXP will";
-		mes "drop by 5 points.";
-		mes "So be careful!";
+		mes "ในทำนองเดียวกันเมื่อคุณแพ้... ";
+		mes "EXP ของคุณจะลดลง 5 แต้ม";
+		mes "ระวัง!";
 		next;
 		mes "[PVP Narrator]";
-		mes "When you are defeated";
-		mes "And your EXP is equal";
-		mes "to or less than 0,";
-		mes "You will be removed from PVP";
-		mes "and your duel is finished!";
+		mes "เมื่อคุณพ่ายแพ้";
+		mes "และ EXP ของคุณเท่ากับหรือน้อยกว่า 0";
+		mes "คุณจะถูกลบออกจาก PVP และการต่อสู้ของคุณเสร็จสิ้นแล้ว!";
 		next;
 		mes "[PVP Narrator]";
-		mes "However, if your EXP is more";
-		mes "than 0. You can still get help";
-		mes "through other players healing...";
-		mes "Do you get it?";
+		mes "อย่างไรก็ตามหาก EXP ของคุณมากกว่า 0";
+		mes "คุณยังสามารถขอความช่วยเหลือได้จากการรักษาผู้เล่นคนอื่น ...";
+		mes "เข้าใจไหม";
 		next;
 		mes "[PVP Narrator]";
-		mes "The fighting commands inside of";
-		mes "PVP are the same as the normal.";
-		mes "All the basic controls are the";
-		mes "same.";
+		mes "คำสั่งการต่อสู้ใน PVP จะเหมือนกับคำสั่งปกติ";
+		mes "การควบคุมพื้นฐานเหมือนกันหมด";
 		next;
 		mes "[PVP Narrator]";
-		mes "However, there is one thing...";
-		mes "Within the PVP fight square";
-		mes "and PVP fighting zones,";
-		mes "you cannot save your position.";
-		mes "Remember well... These rules";
-		mes "can help to ensure your victory.";
+		mes "อย่างไรก็ตามมีสิ่งหนึ่ง ... ";
+		mes "ในพื้นที่ต่อสู้ PVP และโซนต่อสู้ PVP คุณไม่สามารถบันทึกตำแหน่งของคุณได้";
+		mes "จำไว้ให้ดี... ";
+		mes "กฎเหล่านี้สามารถช่วยให้คุณได้รับชัยชนะ";
 		break;
 	case 4:
 		mes "[PVP Narrator]";
-		mes "Position successfully saved...";
-		mes "Thank you very much!";
-		mes "We will see you again soon.";
+		mes "บันทึกตำแหน่งเรียบร้อยแล้ว... ";
+		mes "ขอบคุณมาก!";
+		mes "แล้วพบกันใหม่เร็วๆ นี้";
 		if(strnpcinfo(4) == "morocc_in") { savepoint "morocc_in",141,139,1,1; }
 		if(strnpcinfo(4) == "alberta_in") { savepoint "alberta_in",22,148,1,1; }
 		if(strnpcinfo(4) == "prt_in") { savepoint "prt_in",54,137,1,1; }
@@ -156,12 +123,8 @@
 		break;
 	case 5:
 		mes "[PVP Narrator]";
-		mes "With war raging between monsters";
-		mes "and humans, this competition";
-		mes "among people - PVP -";
-		mes "encourages us all to get";
-		mes "stronger. Come again,";
-		mes "we welcome your challenge!";
+		mes "ด้วยสงครามที่ดุเดือดระหว่างสัตว์ประหลาดและมนุษย์การแข่งขันระหว่างผู้คน - PVP - กระตุ้นให้เราทุกคนแข็งแกร่งขึ้น";
+		mes "มาอีกแล้วเรายินดีรับความท้าทายของคุณ!";
 		break;
 	}
 	close;
@@ -177,27 +140,21 @@ geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe6	84
 //============================================================ 
 -	script	Gate Keeper::gkut	-1,{
 	mes "[Gate Keeper]";
-	mes "Glad to be of service.";
-	mes "I will open the PVP fight";
-	mes "square for you! If you have";
-	mes "any questions about the PVP";
-	mes "modes or rules, Please ask";
-	mes "the Narrator...";
+	mes "ยินดีให้บริการครับ";
+	mes "ฉันจะเปิดตารางต่อสู้ PVP ให้คุณ! หากคุณมีคำถามใด ๆ เกี่ยวกับโหมดหรือกฎ PVP โปรดถามผู้บรรยาย ... ";
 	next;
-	switch(select("^FF5533' PvP Nightmare Mode'^000000:^3355FF' PvP Yoyo Mode'^000000:^3355FF' PvP Event Mode'^000000:Quit")) {
+	switch(select("^FF5533' PvP Nightmare Mode'^000000:^3355FF' PvP Yoyo Mode'^000000:^3355FF' PvP Event Mode'^000000:ออก")) {
 		case 1:
 			mes "[Gate Keeper]";
-			mes "I am sorry, but currently the Nightmare mode service is not available.";
-			mes "Please use the Yoyo Mode instead. We apologize for the inconvenience.";
+			mes "ฉันขอโทษ แต่ขณะนี้บริการโหมด Nightmare ไม่สามารถใช้งานได้";
+			mes "กรุณาใช้ Yoyo Mode แทนขออภัยในความไม่สะดวก";
 			break;
 		case 2:
 			mes "[Gate Keeper]";
-			mes "The admission fee is 500 Zeny.";
-			mes "Do you want to move";
-			mes "to the Yoyo Mode";
-			mes "fight square?";
+			mes "ค่าเข้าชม 500 Zeny";
+			mes "คุณต้องการย้ายไปที่ต่อสู้ Yoyo Mode หรือไม่";
 			next;
-			switch(select("Move:Cancel")) {
+			switch(select("ย้าน:ยกเลิก")) {
 			case 1:
 				if ((Zeny > 499) && (BaseLevel > 30)) {
 					set Zeny, Zeny - 500;
@@ -205,51 +162,37 @@ geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe6	84
 				}
 				else {
 					mes "[Gate Keeper]";
-					mes "Excuse me, but";
-					mes "did you not come prepared?";
-					mes "Double check that you have the";
-					mes "500 Zeny entrance fee, and";
-					mes "that you are at least level 31!";
+					mes "ขอโทษนะ แต่คุณไม่ได้เตรียมตัวมา?";
+					mes "ตรวจสอบอีกครั้งว่าคุณมีค่าธรรมเนียมแรกเข้า 500 Zeny และคุณอยู่ในระดับ Level 31 เป็นอย่างน้อย!";
 				}
 				close;
 			case 2:
 				mes "[Gate Keeper]";
-				mes "With war raging between monsters";
-				mes "and humans, this competition";
-				mes "among people - PVP -";
-				mes "encourages us all to get";
-				mes "stronger. Come again,";
-				mes "we welcome your challenge!";
+				mes "ด้วยสงครามที่ดุเดือดระหว่างสัตว์ประหลาดและมนุษย์การแข่งขันระหว่างผู้คน - PVP - กระตุ้นให้เราทุกคนแข็งแกร่งขึ้น";
+				mes "มาอีกแล้วเรายินดีรับความท้าทายของคุณ!";
 				close;
 			}
 		case 3:
 			mes "[Gate Keeper]";
-			mes "Welcome!";
-			mes "Please double check";
-			mes "that you have the admission or viewing ticket.";
+			mes "ยินดีต้อนรับ!";
+			mes "โปรดตรวจสอบอีกครั้งว่าคุณมีบัตรเข้าชมหรือตั๋วเข้าชม";
 			next;
 			if ((countitem(7028) == 0) && (countitem(7029) == 0)) {
 				mes "[Gate Keeper]";
-				mes "Eh? You don't have it? Then I";
-				mes "am sorry, this fight square is";
-				mes "only for people who have";
-				mes "admission or viewing tickets.";
-				mes "You cannot come in without it.";
+				mes "เอ๊ะไม่มีเหรอ?";
+				mes "ถ้าอย่างนั้นฉันขอโทษนะจัตุรัสต่อสู้นี้มีไว้สำหรับผู้ที่มีบัตรเข้าชมหรือดูตั๋วเท่านั้น";
+				mes "ถ้าขาดมันไม่ได้";
 				close;
 			}
 			mes "[Gate Keeper]";
-			mes "Yes, thank you for participating. Have fun!";
+			mes "ใช่ขอบคุณที่เข้าร่วมสนุก!";
 			if (Zeny >= 500) set Zeny, Zeny - 500;
 			callsub L_Warp,"pvp_room";
 			break;
 		case 4:
 			mes "[Gate Keeper]";
-			mes "With war raging between monsters";
-			mes "and humans, This competition";
-			mes "among people - PVP -";
-			mes "encourages us all to get";
-			mes "stronger. Come again,";
-			mes "we welcome your challenge!";
+			mes "ด้วยสงครามที่ดุเดือดระหว่างสัตว์ประหลาดและมนุษย์การแข่งขันระหว่างผู้คน - PVP - กระตุ้นให้เราทุกคนแข็งแกร่งขึ้น";
+			mes "มาอีกแล้วเรายินดีรับความท้าทายของคุณ!";
 			break;
 	}
 	close;
@@ -289,7 +232,7 @@ function	script	F_PVP_FSRS	{
 		setarray .@lvl[0], getarg(0), getarg(1);
 		if (BaseLevel < .@lvl[0] || BaseLevel > .@lvl[1]) {
 			mes "[PVP Fight Square Reception Staff]";
-			mes "Sorry, but you base level has to be between LV "+ .@lvl[0] +" and LV "+ .@lvl[1] +".";
+			mes "ขออภัย base level ของคุณต้องอยู่ระหว่าง LV "+ .@lvl[0] +" และ LV "+ .@lvl[1] +".";
 			close;
 		}
 	}
@@ -305,12 +248,12 @@ function	script	F_PVP_FSRS	{
 	}
 	for(set .@i,0; .@i<5; set .@i,.@i+1)
 		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
-	set .@menu$, .@menu$+"Cancel.";
+	set .@menu$, .@menu$+"ยกเลิก";
 	set .@i, select(.@menu$)-1;
 	if (.@i == 5) close;
 	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
 		mes "[PVP Fight Square Reception Staff]";
-		mes "This map is currently full.";
+		mes "แผนที่นี้เต็มแล้ว";
 		close;
 	}
 	warp .@Maps$[.@i],0,0;
@@ -324,9 +267,9 @@ function	script	F_PVP_FSRS	{
 pvp_room,54,85,4	script	Registration Staff#1	105,{
 	if (countitem(7028) == 0) {
 		mes "[PVP Combat Square Register Staff]";
-		mes "Eh? How did you get in here?";
-		mes "This is the entrance for players only.";
-		mes "For details about viewers please proceed to the Register Staff on your right.";
+		mes "เอ๊ะคุณเข้ามาได้ยังไง";
+		mes "นี่คือทางเข้าสำหรับผู้เล่นเท่านั้น";
+		mes "สำหรับรายละเอียดเกี่ยวกับผู้ชมโปรดไปที่ Register Staff ทางด้านขวาของคุณ";
 		close;
 	}
 	set .@size, getarraysize(.warp_x);
@@ -334,15 +277,15 @@ pvp_room,54,85,4	script	Registration Staff#1	105,{
 		setarray .warp_x,40,59,20,40;
 		setarray .warp_y,59,40,40,20;
 	}
-	if (select("Combat Square one:Cancel") == 1) {
+	if (select("Combat Square one:ยกเลิก") == 1) {
 		mes "[PVP Combat Square Register Staff]";
 		mes "'"+ strcharinfo(0) +"'";
-		mes "Are you ready?!";
+		mes "พร้อมรึยัง!";
 		next;
-		if (select("Yes!:No!") == 1) {
+		if (select("พร้อม!:ไม่!") == 1) {
 			mes "[PVP Combat Square Register Staff]";
-			mes "OK! I will send you inside";
-			mes "Good luck!";
+			mes "ตกลงฉันจะส่งคุณเข้าไปข้างใน";
+			mes "ขอให้โชคดี!";
 			close2;
 			delitem 7028,1; //Invite_For_Duel
 			set .@rand, rand(.@size);
@@ -352,13 +295,13 @@ pvp_room,54,85,4	script	Registration Staff#1	105,{
 			end;
 		}
 		mes "[PVP Combat Square Register Staff]";
-		mes "Come back anytime you are ready.";
+		mes "กลับมาได้ทุกเมื่อที่พร้อม";
 		close;
 	}
 	close;
 
 OnInit:
-	waitingroom "Combat Square players entrance only",0;
+	waitingroom "ทางเข้าของผู้เล่น Combat Square เท่านั้น",0;
 	end;
 }
 
@@ -367,13 +310,13 @@ OnInit:
 -	script	Spectator's Entrance#dum::PVPSpectator	-1,{
 	if (countitem(7029) == 0) {
 		mes "[PVP Compete Square Register Staff]";
-		mes "This is the entrance for viewers.";
-		mes "For details about players entrance please proceed to the Register Staff on your left.";
+		mes "นี่คือทางเข้าสำหรับผู้ชม";
+		mes "สำหรับรายละเอียดเกี่ยวกับทางเข้าของผู้เล่นโปรดไปที่ Register Staff ทางด้านซ้ายของคุณ";
 		close;
 	}
-	if (select("Compete Square one:Cancel") == 1) {
+	if (select("Compete Square one:ยกเลิก") == 1) {
 		mes "[PVP Combat Square Register Staff]";
-		mes "You got it, thanks for participating. Have fun!";
+		mes "เข้าใจแล้วขอบคุณที่เข้าร่วมสนุก!";
 		close2;
 		delitem 7029,1; //Admission_For_Duel
 		switch(rand(1,4)) {
@@ -386,7 +329,7 @@ OnInit:
 	close;
 
 OnInit:
-	waitingroom "Compete Square viewer's entrance",0;
+	waitingroom "แข่งขันทางเข้าของผู้ชม Square",0;
 	end;
 }
 pvp_room,62,85,4	duplicate(PVPSpectator)	Spectator's Entrance#1	105
@@ -399,8 +342,8 @@ pvp_room,86,85,4	duplicate(PVPSpectator)	Spectator's Entrance#4	105
 -	script	Combat Square Staff#dum::PVPSpecWarp	-1,{
 OnTouch_:
 	mes "[Combat Square Staff]";
-	mes "May I help you?";
-	if (select("To the center viewer seat.:Leave Combat Square.") == 1) {
+	mes "ให้ฉันช่วยไหม";
+	if (select("ไปที่ที่นั่งตรงกลางของผู้ชม:ออกจาก Combat Square") == 1) {
 		warp "pvp_2vs2",38,38;
 		end;
 	}
@@ -414,8 +357,8 @@ pvp_2vs2,74,5,0	duplicate(PVPSpecWarp)	Combat Square Staff#4	45,1,1
 
 pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
 	mes "[Combat Square Staff]";
-	mes "May I help you?";
-	switch(select("To the side viewer seat.:Leave Combat Square.")) {
+	mes "ให้ฉันช่วยไหม";
+	switch(select("ไปที่ที่นั่งตรงกลางของผู้ชม:ออกจาก Combat Square")) {
 	case 1:
 		switch(rand(1,4)) {
 			case 1: warp "pvp_2vs2",39,7; end;
@@ -434,10 +377,10 @@ pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
 pvp_room,51,19,0	script	out#eventpvp	45,4,2,{
 OnTouch_:
 	mes "[Combat Square Staff]";
-	mes "Did you have fun in Combat Square?";
-	mes "May I ask where you want to go?";
+	mes "คุณสนุกไหมใน Combat Square";
+	mes "ขอถามว่าอยากไปไหน";
 	next;
-	switch(select("Prontera.:Morocc.:Geffen.:Payon.:Alberta.:Cancel.")) {
+	switch(select("Prontera.:Morocc.:Geffen.:Payon.:Alberta.:ยกเลิก")) {
 		case 1: warp "prontera",107,60; end;
 		case 2: warp "morocc",157,96; end;
 		case 3: warp "geffen",120,36; end;

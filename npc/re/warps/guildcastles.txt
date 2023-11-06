@@ -85,7 +85,7 @@ OnTouch:
 S_Warp:
 	.@castle$ = getarg(0);
 	if (jobcanentermap(.@castle$) == 0) {
-		mes "3rd and expansion job level can't enter in WoE TE.";
+		mes "3rd และ expansion job level ไม่สามารถเข้าใน WoE TE.";
 		close;
 	}
 
@@ -99,11 +99,11 @@ S_Warp:
 
 	if (WoeTETimeStart(3600) == 1) {
 		if (!.@guild_id || !.@my_guild_id) {
-			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
+			mes "ถึงเวลาแล้วที่จะเตรียมการกับ WoE มีเพียงสมาคมแห่งเดียวเท่านั้นที่สามารถเข้าได้";
 			close;
 		}
 		if (getguildalliance(.@my_guild_id,.@guild_id) != 1) {
-			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
+			mes "ถึงเวลาแล้วที่จะเตรียมการกับ WoE มีเพียงสมาคมแห่งเดียวเท่านั้นที่สามารถเข้าได้";
 			close;
 		}
 		mes "Welcome alliance guild.";
