@@ -175,7 +175,7 @@ OnKill:
 
 OnMyMobDead:
 	if (mobcount("bat_b02","OBJ#bat_b02_a::OnMyMobDead") < 1) {
-		mapannounce "bat_b02", "Guillaume's Crystal has been destroyed.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "Crystal ของ Guillaume's ถูกทำลาย",bc_map,"0xFFCE00";
 		if ($@Croix_ScoreBG2 > 0) {
 			set $@FlaviusBG2_Victory,2;
 			set $@Croix_ScoreBG2,$@Croix_ScoreBG2+1;
@@ -211,7 +211,7 @@ OnKill:
 
 OnMyMobDead:
 	if (mobcount("bat_b02","OBJ#bat_b02_b::OnMyMobDead") < 1) {
-		mapannounce "bat_b02", "Croix's Crystal has been destroyed.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "Crystal ของ Croix's ถูกทำลาย",bc_map,"0xFFCE00";
 		if ($@Guill_ScoreBG2 > 0) {
 			set $@FlaviusBG2_Victory,1;
 			set $@Guill_ScoreBG2,$@Guill_ScoreBG2+1;
@@ -248,7 +248,7 @@ OnKill:
 OnMyMobDead:
 	if (mobcount("bat_b02","guardian#bat_b02_a::OnMyMobDead") < 1) {
 		donpcevent "cell#bat_b02_a::OnGreen";
-		mapannounce "bat_b02", "The Guardian protecting Guillaume's Crystal has been slain.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "Guardian ปกป้อง Crystal ของ Guillaume ถูกสังหาร",bc_map,"0xFFCE00";
 		setunitdata $@FlavBG2_C1_ID,UMOB_DMGIMMUNE,0; // Make Crystal damageable again
 	}
 	end;
@@ -267,7 +267,7 @@ OnKill:
 OnMyMobDead:
 	if (mobcount("bat_b02","guardian#bat_b02_b::OnMyMobDead") < 1) {
 		donpcevent "cell#bat_b02_b::OnGreen";
-		mapannounce "bat_b02", "The Guardian protecting Croix's Crystal has been slain.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "Guardian ปกป้อง Crystal ของ Croix's ถูกสังหาร",bc_map,"0xFFCE00";
 		setunitdata $@FlavBG2_C2_ID,UMOB_DMGIMMUNE,0; // Make Crystal damageable again
 	}
 	end;
@@ -312,9 +312,9 @@ OnStop:
 bat_b02,10,294,3	script	Battle Therapist#b02_a	95,{
 	specialeffect2 EF_HEAL;
 	mes "[Battle Therapist]";
-	mes "Just close your eyes,";
-	mes "and take a deep breath.";
-	mes "You can be free from pain.";
+	mes "แค่หลับตา และสูดหายใจ";
+	mes "เข้าลึก ๆ ท่านสามารถ";
+	mes "เป็นอิสระจากความเจ็บปวด";
 	close;
 
 OnTimer25000:
@@ -361,9 +361,9 @@ OnTouch:
 bat_b02,389,14,3	script	Battle Therapist#b02_b	95,{
 	specialeffect2 EF_HEAL;
 	mes "[Battle Therapist]";
-	mes "Just close your eyes,";
-	mes "and take a deep breath.";
-	mes "You can be free from pain.";
+	mes "แค่หลับตา และสูดหายใจ";
+	mes "เข้าลึก ๆ ท่านสามารถ";
+	mes "เป็นอิสระจากความเจ็บปวด";
 	close;
 
 OnTimer25000:
@@ -470,31 +470,31 @@ OnStop:
 	end;
 
 OnTimer7000:
-	mapannounce "bat_b02", "Guillaume Vintenar Axl Rose : Let's attack to destroy that Crystal!",bc_map,"0xFF9900";
+	mapannounce "bat_b02", "Guillaume Vintenar Axl Rose : มาโจมตีและทำลาย Crystal นั่นกัน!",bc_map,"0xFF9900";
 	end;
 
 OnTimer8000:
-	mapannounce "bat_b02", "Croix Vintenar Swandery : Even though Guillaume is struggling to win against us, the victory is ours. Let's show them our power.",bc_map,"0xFF99CC";
+	mapannounce "bat_b02", "Croix Vintenar Swandery : แม้ว่า Guillaume จะดิ้นรนเพื่อเอาชนะเรา แต่ชัยชนะก็เป็นของเรา มาแสดงพลังของพวกเรากันเถอะ",bc_map,"0xFF99CC";
 	end;
 
 OnTimer1800000:
-	mapannounce "bat_b02", "Marollo VII : Guillaume Marollo, Croix Marollo! And their followers!",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : Guillaume Marollo, Croix Marollo! และผู้ติดตามของพวกเขา!",bc_map,"0x99CC00";
 	end;
 
 OnTimer1803000:
-	mapannounce "bat_b02", "Marollo VII : Both camps are competitive, so it's hard to judge which team is superior.",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : ทั้งสองค่ายนั้นมีการแข่งขันกัน ดังนั้นจึงยากที่จะตัดสินว่าทีมใดจะเหนือกว่ากัน",bc_map,"0x99CC00";
 	end;
 
 OnTimer1808000:
-	mapannounce "bat_b02", "Marollo VII : This battle of Flavian is such a waste of time. I will decide victory and defeat by your progress.",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : การต่อสู้ของ Flavian ครั้งนี้เป็นการเสียเวลาเปล่า ฉันจะตัดสินชัยชนะและความพ่ายแพ้ของท่าน",bc_map,"0x99CC00";
 	end;
 
 OnTimer1822000:
-	mapannounce "bat_b02", "Marollo VII : If you can't accept the results, try again in another valley battle!",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : หากท่านไม่สามารถยอมรับผลได้ ลองอีกครั้งในการต่อสู้ในหุบเขาอื่น!",bc_map,"0x99CC00";
 	end;
 
 OnTimer1825000:
-	mapannounce "bat_b02", "Axl Rose, Swandery : Yes, sir.",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Axl Rose, Swandery : ครับท่าน",bc_map,"0x99CC00";
 	end;
 
 OnTimer1830000:
@@ -549,7 +549,7 @@ bat_b02,10,294,3	script	Vintenar#bat_b02_aover	419,{
 	}
 	else {
 		mes "[Axl Rose]";
-		mes "Why are you here, Croix mercenary? I am definitely sure of victory against foolish Croix such as you. Ha!";
+		mes "ทำไมเจ้าถึงอยู่ที่นี่ ทหารรับจ้างของ Croix ข้ามั่นใจในชัยชนะอย่างแน่นอนต่อ Croix ที่โง่เขลาเช่นท่าน ฮา!";
 		close;
 	}
 	bg_leave;
@@ -574,7 +574,7 @@ bat_b02,389,14,3	script	Vintenar#bat_b02_bover	415,{
 	}
 	else {
 		mes "[Swandery]";
-		mes "Why do you come here as a Guillaume? You will be sent to where you should be!";
+		mes "ทำไมเจ้ามาที่นี่ Guillaume? เจ้าจะถูกส่งไปยังที่ที่เจ้าควรอยู่!";
 		close;
 	}
 	bg_leave;
@@ -590,21 +590,21 @@ OnInit:
 bat_b02,1,10,3	script	Release all#b02	81,{
 	set .@i, callfunc("F_GM_NPC",1854,0);
 	if (.@i == -1) {
-		mes "Cancelled.";
+		mes "ยกเลิก";
 		close;
 	} else if (.@i == 0) {
 		end;
 	} else {
-		mes "May I help you?";
+		mes "มีอะไรให้ช่วยไหม";
 		next;
-		switch(select("Release all.:Cancel.")) {
+		switch(select("ปล่อยทั้งหมด:ยกเลิก")) {
 		case 1:
-			mes "Bye.";
+			mes "ลาก่อน";
 			close2;
 			mapwarp "bat_b02","bat_room",154,150;
 			end;
 		case 2:
-			mes "Cancelled.";
+			mes "ยกเลิก";
 			close;
 		}
 	}

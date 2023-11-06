@@ -21,27 +21,27 @@
 	.@zeny_cost = 200000; // Zeny cost is 200,000 according to official script [Secret]
 	disable_items;
 	mes "[Shadow Blacksmith]";
-	mes "Do you want to refine a shadow item? Pick yer poison!";
+	mes "เจ้าต้องการตีบวกไอเท็มชาโดว์ไหม ? เลือกมาสิ!";
 	next;
 	setarray .@indices[1], EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_R, EQI_SHADOW_ACC_L;
 	.@indlen = getarraysize(.@indices) - 1;
 	for(.@i = 1; .@i <= .@indlen; .@i++)
-		.@menu$ = .@menu$ + (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[Not equipped]") +":";
-	.@menu$ = .@menu$ + "Refine info";
+		.@menu$ = .@menu$ + (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[ไม่ได้สวมใส่]") +":";
+	.@menu$ = .@menu$ + "รายละเอียดการตีบวก";
 	.@choice = select(.@menu$);
 	if (.@choice == .@indlen + 1) { // Refine info
 		mes "[Shadow Blacksmith]";
-		mes "When a shadow item is refined, it gains extra bonuses very much like normal items.";
+		mes "เมื่อตีบวกไอเท็มชาโดว์สำเร็จ, มันจะให้ค่าโบนัสพิเศษคล้ายๆกับไอเท็มทั่วไป.";
 		next;
 		mes "[Shadow Blacksmith]";
-		mes "Weapon: ATK, MATK + 1 increase for each +1 refine success.";
-		mes "Etc: HP + 10 increase for each +1 refine success.";
+		mes "อาวุธ: ATK, MATK + 1 มันจะเพิ่มขึ้นทุกครั้งที่บวก +1 สำเร็จ.";
+		mes "อื่นๆ: HP + 10 มันจะเพิ่มขึ้นทุกครั้งที่บวก +1 สำเร็จ.";
 		next;
 		mes "[Shadow Blacksmith]";
-		mes "All types of Oridecon and Elunium can be used to refine shadow items. Each attempt will also cost 20,000 zeny.";
+		mes "แร่จำพวก Oridecon และ Elunium สามารถใช้ตีบวกไอเท็มชาโดว์ได้. แต่ละครั้งจ่ายเพียง 20,000 zeny.";
 		next;
 		mes "[Shadow Blacksmith]";
-		mes "HD ores can be used for gear that is at least refine level +7 and will prevent breaking as long as you stay talking to me.";
+		mes "HD ores สามารถใช้ตีบวกของสวมใส่ที่บวกอย่างน้อยระดับ +7 และมันอาจโดนลดเลเวลบวกได้ตราบเท่าที่เจ้ายังคุยกับข้า.";
 		close;
 	}
 
@@ -49,7 +49,7 @@
 
 	if (!getequipisequiped(.@part)) {
 		mes "[Shadow Blacksmith]";
-		mes "There's nothing here!";
+		mes "ไม่เห็นมีอะไรเลย!";
 		close;
 	}
 	.@equip_id = getequipid(.@part);
@@ -58,14 +58,13 @@
 	while(1) {
 		.@equip_refine = getequiprefinerycnt(.@part);
 		mes "[Shadow Blacksmith]";
-		mes "I require " + callfunc("F_InsertComma", .@zeny_cost) + " zeny as a fee for EACH refine attempt.";
-		mes "Choose your Ore and start refining.";
+		mes "ข้าต้องการ " + callfunc("F_InsertComma", .@zeny_cost) + " zeny เป็นค่าธรรมเนียมในการบวก.";
+		mes "เลือกแร่และมาเริ่มทำกันเลย.";
 		next;
 
 		.@material[0] = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 		.@material[1] = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 		.@material[2] = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
-		.@is_enriched = false;
 
 		if (countitem(.@material[0]))
 			.@mate$[0] = getitemname(.@material[0]);
@@ -83,61 +82,63 @@
 		switch( select( .@mate$[0], .@mate$[1], .@mate$[2], "Cancel" ) ) {
 		case 1:// NORMAL
 			.@choose = .@material[0];
+			.@refine_type = REFINE_COST_NORMAL;
 			break;
 		case 2:// ENRICHED
-			.@is_enriched = true;
 			.@choose = .@material[1];
+			.@refine_type = REFINE_COST_ENRICHED;
 			break;
 		case 3:// HD
 			if (.@equip_refine < 7) {
 				mes "[Shadow Blacksmith]";
-				mes "HD Ore can only used for +7 or higher refine level items.";
+				mes "You've cancelled refining.";
 				close;
 			}
 			.@hoihoi = 1;
 			.@choose = .@material[2];
+			.@refine_type = REFINE_COST_HD;
 			break;
 		case 4:
 			mes "[Shadow Blacksmith]";
-			mes "You've cancelled refining.";
+			mes "เจ้าได้ยกเลิกการบวก.";
 			close;
 		}
 		if (!countitem(.@choose)) {
 			mes "[Shadow Blacksmith]";
-			mes "You do not have enough "+ getitemname(.@choose) +".";
+			mes "เจ้ามีแร่ "+ getitemname(.@choose) +" ไม่พอ.";
 			close;
 		}
 		if (Zeny < .@zeny_cost) {
 			mes "[Shadow Blacksmith]";
-			mes "You do not have enough zeny.";
+			mes "เจ้ามีเงินไม่พอ.";
 			close;
 		}
 		if (.@equip_refine > 9) {
 			mes "[Shadow Blacksmith]";
-			mes "Shadow Equipment can be refined to the maximum of 10...";
+			mes "Shadow Equipment บวกได้สูงสุดแค่บวก 10 เท่านั้น...";
 			close;
 		}
 		if (!getequipisenableref(.@part)) {
 			mes "[Shadow Blacksmith]";
-			mes "This item cannot be refined.";
+			mes "ไอเท็มนี้ตีบวกไม่ได้.";
 			close;
 		}
-		if (getequippercentrefinery(.@part) < 100) {
+		if (getequippercentrefinery(.@part, .@refine_type) < 100) {
 			mes "[Shadow Blacksmith]";
-			mes "The safety refine level for Shadow Equipment is +4.";
+			mes "ค่าบวกที่ปลอดภัยของ Shadow Equipment อยู่ที่ +4.";
 			if (!.@hoihoi)
-				mes "Shadow equipment may be destroyed in subsequent refinements. Want to get started?";
+				mes "Shadow equipment อาจจะเสียหายได้ถ้ายังจะบวกต่อ. ต้องการทำต่อไหม ?";
 			else
-				mes "The next refinement, if it fails, will degrade the refinement. Do you want to refine?";
+				mes "การบวกครั้งต่อไป, ถ้ามันล้มเหลว, ค่าบวกจะลดลง. เจ้าต้องการบวกไหม ?";
 			next;
-			if (select("Proceed","Cancel") == 2) {
+			if (select("ทำเลย","ยกเลิก") == 2) {
 				mes "[Shadow Blacksmith]";
-				mes "Heh, I knew it!";
+				mes "ฮิ้ว, เข้าใจแล้ว!";
 				close;
 			}
 		}
 		mes "[Shadow Blacksmith]";
-		mes "Well then.. here goes nothing!";
+		mes "จะเยี่ยมไปเลย.. ถ้ามันไม่เกิดอะไรขึ้น!";
 		next;
 		delitem .@choose,1;
 		Zeny -= .@zeny_cost;
@@ -146,10 +147,10 @@
 		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
 			close;
 
-		if (getequippercentrefinery(.@part, .@is_enriched) > rand(100)) {
+		if (getequippercentrefinery(.@part, .@refine_type) > rand(100)) {
 			successrefitem .@part;
 			mes "[Shadow Blacksmith]";
-			mes "It worked! It worked!";
+			mes "ทำได้! ข้าทำมันได้!";
 			next;
 		} else {
 			if (.@hoihoi)
@@ -157,7 +158,7 @@
 			else
 				failedrefitem .@part;
 			mes "[Shadow Blacksmith]";
-			mes "Oh Odin No!";
+			mes "โอ้ ม่ายน่าา!";
 			close;
 		}
 	}

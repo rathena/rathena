@@ -1,0 +1,124 @@
+prontera,112,61,4	script	หมีเล่นหวย	505,{
+	.@npcName$ = "[หมีเล่นหวย]";
+	
+	if(getgmlevel())
+	menu "เข้าสู่ NPC ปกติ",-,"จับรางวัลเลย",L_Add,"ล้างค่า",L_Reset;
+
+	if(strcharinfo(0) == $winnerLottoCash$){
+		announce "มีคนถูกหวย: " + strcharinfo(0) + " | ได้รับ 30 Cash",bc_all,0xc99eff;
+		
+		callfunc("AddCash",30);
+		callfunc("MyCash",1);
+		
+		$winnerLottoCash$ = "-";
+	}
+	
+	mes .@npcName$;
+	mes "ต้องการจะทำอะไรโปรดเลือกเมนูได้เลย";
+	next;
+	menu "ซื้อหวย",-,"สอบถาม",L_Info;
+	
+	mes .@npcName$;
+	for(.@i = 1; .@i < getarraysize($buyerLottoCash$); .@i++)
+	mes "หวยเลข " + .@i + " ซื้อโดย: " + $buyerLottoCash$[.@i] + "\n";
+	input .@i;
+	
+	next;
+	if(.@i <= 0 || .@i > 30){
+		clear;
+		mes .@npcName$;
+		mes "ใส่เลข 1 ถึง 30 เท่านั้น";
+		close;
+	}
+	
+	if($buyerLottoCash$[.@i] == "-"){
+		callfunc("IsCashEnough",1,.@npcName$,1);
+		
+		$buyerLottoCash$[.@i] = strcharinfo(0);
+		
+		announce strcharinfo(0)+ " ได้ซื้อหวยเลข " + .@i,bc_all,0xf9ace5;
+		
+		clear;
+		mes .@npcName$;
+		mes "โปรดรอต้นชั่วโมงเพื่อลุ้นรับรางวัล";
+		
+		close;
+	}
+	else{
+		clear;
+		mes .@npcName$;
+		mes $buyerLottoCash$[.@i] + " ได้ซื้อเลขนี้ไปแล้ว";
+		close;
+	}
+	
+	L_Info:
+	mes .@npcName$;
+	mes "ลง 1 Cash ต่อหวย 1 เลข ถ้าถูกรางวัลรับ 30 Cash";
+	mes " ";
+	mes "จับรางวัลทุก ๆ ต้นชั่วโมง ถ้าถูกรางวัล แล้วไม่มารับรางวัลหลังประกาศในชั่วโมงนั้นถือว่าสละสิทธิ";
+	close;
+	
+	L_Cancel:
+	mes .@npcName$;
+	mes "ยกเลิกเรียบร้อยแล้ว";
+	close;
+	
+OnClock0000:
+OnClock0100:
+OnClock0200:
+OnClock0300:
+OnClock0400:
+OnClock0500:
+OnClock0600:
+OnClock0700:
+OnClock0800:
+OnClock0900:
+OnClock1000:
+OnClock1100:
+OnClock1200:
+OnClock1300:
+OnClock1400:
+OnClock1500:
+OnClock1600:
+OnClock1700:
+OnClock1800:
+OnClock1900:
+OnClock2000:
+OnClock2100:
+OnClock2200:
+OnClock2300:
+	L_Add:
+	$winnerLottoCash$ = "";
+	
+	$lottoCash = rand(1,30);
+	announce "หวยออกเลขที่: " + $lottoCash + " ใครลงไว้เลขนี้ไปรับรางวัลที่พี่ หมีเล่นหวย ได้เลย",bc_all,0xf9ace5;
+	
+	for(.@i = 1; .@i < getarraysize($buyerLottoCash$); .@i++){
+		if($buyerLottoCash$[.@i] != "" && .@i == $lottoCash)
+		{
+			$winnerLottoCash$ = $buyerLottoCash$[.@i];
+			break;
+		}
+	}
+	
+	specialeffect 54;
+	
+	setarray $buyerLottoCash$[0],"-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-";
+	
+	delwaitingroom;
+	waitingroom "หวยออก: " + $lottoCash,0;
+	end; 
+	
+	L_Reset:
+	$lottoCash = 0;
+	$winnerLottoCash$ = "";
+	end;
+	
+OnInit:
+	if(getarraysize($buyerLottoCash$) < 31)
+	setarray $buyerLottoCash$[0],"-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-";
+	
+	delwaitingroom;
+	waitingroom "หวยออก: " + $lottoCash,0;
+	end;
+}

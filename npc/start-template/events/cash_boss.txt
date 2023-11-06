@@ -1,0 +1,312 @@
+bossnia_01	mapflag	nowarpto
+bossnia_01	mapflag	nogo
+bossnia_01	mapflag	nosave
+bossnia_01	mapflag	nomemo
+bossnia_01	mapflag	nowarp
+bossnia_01	mapflag	noteleport
+bossnia_01	mapflag	noreturn
+bossnia_01	mapflag	noloot
+bossnia_01	mapflag	noexp
+bossnia_01	mapflag	notomb
+
+bossnia_02	mapflag	nowarpto
+bossnia_02	mapflag	nogo
+bossnia_02	mapflag	nosave
+bossnia_02	mapflag	nomemo
+bossnia_02	mapflag	nowarp
+bossnia_02	mapflag	noteleport
+bossnia_02	mapflag	noreturn
+bossnia_02	mapflag	noloot
+bossnia_02	mapflag	noexp
+bossnia_02	mapflag	notomb
+
+bossnia_03	mapflag	nowarpto
+bossnia_03	mapflag	nogo
+bossnia_03	mapflag	nosave
+bossnia_03	mapflag	nomemo
+bossnia_03	mapflag	nowarp
+bossnia_03	mapflag	noteleport
+bossnia_03	mapflag	noreturn
+bossnia_03	mapflag	noloot
+bossnia_03	mapflag	noexp
+bossnia_03	mapflag	notomb
+
+bossnia_04	mapflag	nowarpto
+bossnia_04	mapflag	nogo
+bossnia_04	mapflag	nosave
+bossnia_04	mapflag	nomemo
+bossnia_04	mapflag	nowarp
+bossnia_04	mapflag	noteleport
+bossnia_04	mapflag	noreturn
+bossnia_04	mapflag	noloot
+bossnia_04	mapflag	noexp
+bossnia_04	mapflag	notomb
+
+vis_h01	mapflag	nowarpto
+vis_h01	mapflag	nogo
+vis_h01	mapflag	nosave
+vis_h01	mapflag	nomemo
+vis_h01	mapflag	nowarp
+vis_h01	mapflag	noteleport
+vis_h01	mapflag	noreturn
+vis_h01	mapflag	noloot
+vis_h01	mapflag	noexp
+vis_h01	mapflag	notomb
+
+vis_h02	mapflag	nowarpto
+vis_h02	mapflag	nogo
+vis_h02	mapflag	nosave
+vis_h02	mapflag	nomemo
+vis_h02	mapflag	nowarp
+vis_h02	mapflag	noteleport
+vis_h02	mapflag	noreturn
+vis_h02	mapflag	noloot
+vis_h02	mapflag	noexp
+vis_h02	mapflag	notomb
+
+vis_h03	mapflag	nowarpto
+vis_h03	mapflag	nogo
+vis_h03	mapflag	nosave
+vis_h03	mapflag	nomemo
+vis_h03	mapflag	nowarp
+vis_h03	mapflag	noteleport
+vis_h03	mapflag	noreturn
+vis_h03	mapflag	noloot
+vis_h03	mapflag	noexp
+vis_h03	mapflag	notomb
+
+vis_h04	mapflag	nowarpto
+vis_h04	mapflag	nogo
+vis_h04	mapflag	nosave
+vis_h04	mapflag	nomemo
+vis_h04	mapflag	nowarp
+vis_h04	mapflag	noteleport
+vis_h04	mapflag	noreturn
+vis_h04	mapflag	noloot
+vis_h04	mapflag	noexp
+vis_h04	mapflag	notomb
+
+function	script	Cash_Boss_Warper	{
+	.@cash_chance = getarg(0);
+	.@stats_penalty = getarg(1);
+	.@map_name$ = getarg(2);
+	
+	mes "* เมื่อกำจัด Monster ภายใน Map ดังกล่าว จะมีโอกาส " + .@cash_chance + "% ที่จะได้รับ 1 Cash";
+	mes "* เมื่อเข้า Map จะติดโทษ ^ff0000(โทษจะหายเมื่อ กดเลือกตัวละคร แล้วเข้าใหม่เท่านั้น)^000000";
+	mes "- ลด พลังโจมตี " + .@stats_penalty + "%";
+	mes "- ลด พลังโจมตีเวทย์ " + .@stats_penalty + "%";
+	mes "- ลด พลังป้องกัน " + .@stats_penalty + "%";
+	mes "- ลด พลังป้องกันเวทย์ " + .@stats_penalty + "%";
+	mes "- ลด Max HP " + .@stats_penalty + "%";
+	mes "- ลด Max SP " + .@stats_penalty + "%";
+	mes "---";
+	mes "^ff0000* ภายใน Map จะไม่ได้รับ EXP, Monster จะไม่ Drop Item";
+	mes "* ไม่สามารถทำการ เคลื่อนย้ายตัวละคร ภายใน Map ได้ ต้อง กดเลือกตัวละคร แล้วเข้าใหม่เท่านั้น^000000";
+	
+	next;
+	menu "ยกเลิก",-,"เข้า",L_Enter;
+	close;
+	
+	L_Enter:
+	bonus_script_clear 8;
+	bonus_script "{"
+	+ "bonus bMaxHPrate,-" + .@stats_penalty + ";"
+	+ "bonus bMaxSPrate,-" + .@stats_penalty + ";"
+	+ "bonus2 bAddClass,Class_All,-" + .@stats_penalty + ";"
+	+ "bonus2 bMagicAddClass,Class_All,-" + .@stats_penalty + ";"
+	+ "bonus2 bSubSize,Size_All,-" + .@stats_penalty + ";"
+	+ "bonus2 bMagicSubSize,Size_All,-" + .@stats_penalty + ";"
+	+ "}",86400000,8;
+	warp .@map_name$,0,0;
+	end;
+}
+
+-	script	Boss_List	-1,{
+OnInit:
+	setarray $all_mvp[0],2075,1874,1832,2236,2238,2237,1646,2235,3074,2241,2239,1719,2022,2240,1647,1650,2165,1917,1648,1649,1651,2319,1871,1768,1751,1734,2362,2255,2251,2253,2249,2341,1708,1785,1658,1779,2202,1312,1583,2996,1252,1492,1623,1272,1885,1630,1112,2156,1373,1157,1251,2087,1039,2483,1059,1150,1688,1046,1389,1399,1038,1511,2443,2444,2445,2447,2448,2449,2442,2441,1685,1115,1086,2529,2532,2533,2534,2535,1147,1418,1876,1159,2446,1087,1980,1502,2068,1190,2131,1802,3621,3628,3633,2052,2094,2095,2096,2097,2098,2099,2100,2101,2103,2104,2105,2106,2107,2108,2109,2110,2111,2112,2113;
+	end;
+}
+
+-	script	Cash_Boss_01_Spawner	-1,{
+OnInit:
+	.map_name$ = "bossnia_01";
+	.cash_chance = 1;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_02_Spawner	-1,{
+OnInit:
+	.map_name$ = "bossnia_02";
+	.cash_chance = 3;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_03_Spawner	-1,{
+OnInit:
+	.map_name$ = "bossnia_03";
+	.cash_chance = 5;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_04_Spawner	-1,{
+OnInit:
+	.map_name$ = "bossnia_04";
+	.cash_chance = 10;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_05_Spawner	-1,{
+OnInit:
+	.map_name$ = "vis_h01";
+	.cash_chance = 20;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_06_Spawner	-1,{
+OnInit:
+	.map_name$ = "vis_h02";
+	.cash_chance = 30;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_07_Spawner	-1,{
+OnInit:
+	.map_name$ = "vis_h03";
+	.cash_chance = 40;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}
+
+-	script	Cash_Boss_08_Spawner	-1,{
+OnInit:
+	.map_name$ = "vis_h04";
+	.cash_chance = 50;
+	
+	freeloop(1);
+	.@spawn_count = 50;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	}
+	freeloop(0);
+	
+	end;
+	
+OnCashBossDead:
+	//dispbottom ".cash_chance: " + .cash_chance;
+	if(rand(1,100) <= .cash_chance)
+	callfunc("AddCash",1);
+	monster .map_name$,0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1,strnpcinfo(3)+"::OnCashBossDead";
+	end;
+}

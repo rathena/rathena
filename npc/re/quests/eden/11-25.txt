@@ -19,9 +19,9 @@
 
 moc_para01,36,38,3	script	Mission [11 - 25]#Tuto	4_BOARD3,{
 	if (!callfunc("F_HasEdenGroupMark")) {
-		mes "- You need to have an -";
+		mes "- คุณต้องมี -";
 		mes "- ^4d4dff'Eden Group Mark'^000000 -";
-		mes "- to receive these missions. -";
+		mes "- เพื่อรับภารกิจเหล่านี้ -";
 		close;
 	}
 	for ( .@i = 11124; .@i < 11134; .@i++ )
@@ -29,49 +29,49 @@ moc_para01,36,38,3	script	Mission [11 - 25]#Tuto	4_BOARD3,{
 	for( .@i = 11114; .@i < 11124; .@i++ ) {
 		.@j = checkquest(.@i,HUNTING);
 		if (.@j == 2) {
-			mes " - You must collect your - ";
-			mes " - reward before starting - ";
-			mes " - a new mission. - ";
-			mes " ";
-			mes " - Manager : Spike - ";
+			mes "- คุณต้องรวบรวม -";
+			mes "- รางวัลก่อนเริ่ม -";
+			mes "- ภารกิจใหม่ -";
+			mes "";
+			mes "- Manager: Spike -";
 			close;
 		}
 		else if (.@j >= 0) {
-			mes " - You can only request - ";
-			mes " - one mission at a time. - ";
-			mes " ";
-			mes " - Manager : Spike - ";
+			mes "- คุณสามารถขอได้ -";
+			mes "- หนึ่งภารกิจในแต่ละครั้ง -";
+			mes "";
+			mes "- Manager: Spike -";
 			close;
 		}
 	}
 	if (BaseLevel < 11) {
-		mes " - There are no tasks - ";
-		mes " - open for you right now. - ";
+		mes "- ไม่มีงาน -";
+		mes "- เปิดให้คุณแล้ว -";
 		close;
 	}
 	if (BaseLevel > 25) {
-		mes " - These missions are too - ";
-		mes " - easy for your caliber - ";
-		mes " - search for a more level - ";
-		mes " - appropriate mission. - ";
+		mes "- ภารกิจเหล่านี้เหมือนกัน -";
+		mes "- ง่ายสำหรับความสามารถของคุณ -";
+		mes "- ค้นหาเลเวลที่มากกว่า -";
+		mes "- ภารกิจที่เหมาะสม -";
 		close;
 	}
-	mes " - Mission bulletin board -";
-	mes " - for beginners. -";
-	mes " ";
-	mes " - Manager : Spike -";
+	mes "- กระดานข่าวภารกิจ -";
+	mes "- สำหรับผู้เริ่มต้น -";
+	mes "";
+	mes "- Manager: Spike -";
 	next;
-	switch(select("Hornet Hunting:Condor Hunting:Grasshopper's Leg:Worm Tail Hunting:Spore Hunting:Pest Control:Muka Hunting:Familiar Hunting:Collect Feathers:Collect Poison Spores:Cancel")) {
-		case 1: callsub L_Quest,11114,"Hornet Hunting"," - Hunt 10 ^4d4dff'Hornets'^000000 - "," - northwest of Prontera. - ";
-		case 2: callsub L_Quest,11115,"Condor Hunting"," - Hunt 20 ^4d4dff'Condors'^000000 - "," - south of Morocc. - ";
-		case 3: callsub L_Quest,11116,"Grasshopper's Leg"," - Hunt 10 ^4d4dff'Rockers'^000000 - "," - southwest of Prontera and - "," - bring 10 ^4d4dffGrasshopper's Legs^000000. - ";
-		case 4: callsub L_Quest,11117,"Worm Tail Hunting"," - Hunt 20 ^4d4dff'Worm Tails'^000000 - "," - southeast of Payon.- ";
-		case 5: callsub L_Quest,11118,"Spore Hunting"," - Hunt 30 ^4d4dff'Spores'^000000 - "," - around Payon. - ";
-		case 6: callsub L_Quest,11119,"Pest Control"," - Hunt 20 ^4d4dffThief Bug Eggs^000000 - "," - in the Prontera Culvert - "," - and bring 10 ^4d4dffChrysalis^000000. - ";
-		case 7: callsub L_Quest,11120,"Muka Hunting"," - Hunt 20 ^4d4dff'Muka'^000000 - "," - south of Prontera. - ";
-		case 8: callsub L_Quest,11121,"Familiar Hunting"," - Hunt 20 ^4d4dffFamiliar^000000 - "," - in the Culvert Sewers - "," - west of Prontera. - ";
-		case 9: callsub L_Quest,11122,"Collect Feathers"," - Hunt 30 ^4d4dff'Peco Pecos'^000000 - "," - south of Prontera. - ";
-		case 10: callsub L_Quest,11123,"Collect Poison Spores"," - Hunt 30 ^4d4dffPoison Spores^000000 - "," - inside the Geffen Tower and - "," - bring 5 ^4d4dffPoison Spores^000000. - ";
+	switch(select("ตามล่า Hornet:ตามล่า Condor:Grasshopper's Leg:ตามล่า Worm Tail:ตามล่า Spore:การควบคุมศัตรูพืช:ตามล่า Muka:ตามล่า Familiar:รวบรวม Feathers:รวบรวม Poison Spores:ยกเลิก")) {
+		case 1: callsub L_Quest,11114,"ตามล่า Hornet"," - ล่า 10 ^4d4dff'Hornets'^000000 - "," - ทางตะวันตกเฉียงเหนือของ Prontera. - ";
+		case 2: callsub L_Quest,11115,"ตามล่า Condor"," - ล่า 20 ^4d4dff'Condors'^000000 - "," - ทางใต้ของ Morocc. - ";
+		case 3: callsub L_Quest,11116,"Grasshopper's Leg"," - ล่า 10 ^4d4dff'Rockers'^000000 - "," - ทางตะวันตกเฉียงใต้ของ Prontera และ - "," - นำ 10 ^4d4dffGrasshopper's Legs^000000. - ";
+		case 4: callsub L_Quest,11117,"ตามล่า Worm Tail"," - ล่า 20 ^4d4dff'Worm Tails'^000000 - "," - ทางตะวันออกเฉียงใต้ของ Payon- ";
+		case 5: callsub L_Quest,11118,"ตามล่า Spore"," - ล่า 30 ^4d4dff'Spores'^000000 - "," - รอบ Payon - ";
+		case 6: callsub L_Quest,11119,"การควบคุมศัตรูพืช"," - ล่า 20 ^4d4dffThief Bug Eggs^000000 - "," - ในท่อระบายน้ำ Prontera - "," - และนำ 10 ^4d4dffChrysalis^000000. - ";
+		case 7: callsub L_Quest,11120,"ตามล่า Muka"," - ล่า 20 ^4d4dff'Muka'^000000 - "," - ทางใต้ของ Prontera. - ";
+		case 8: callsub L_Quest,11121,"ตามล่า Familiar"," - ล่า 20 ^4d4dffFamiliar^000000 - "," - ในท่อระบายน้ำ - "," - ทางตะวันตกของ Prontera. - ";
+		case 9: callsub L_Quest,11122,"รวบรวม Feathers"," - ล่า 30 ^4d4dff'Peco Pecos'^000000 - "," - ทางใต้ของ Prontera - ";
+		case 10: callsub L_Quest,11123,"รวบรวม Poison Spores"," - ล่า 30 ^4d4dffPoison Spores^000000 - "," - ภายในหอคอย Geffen และ - "," - นำ 5 ^4d4dffPoison Spores^000000. - ";
 		case 11:
 			mes " - Stop reading the bulletin board. - ";
 			close;
@@ -80,21 +80,21 @@ moc_para01,36,38,3	script	Mission [11 - 25]#Tuto	4_BOARD3,{
 L_Quest:
 	.@quest_status = checkquest(getarg(0)+10,PLAYTIME);
 	if (.@quest_status == 0 || .@quest_status == 1) {
-		mes " - Mission ^4d4dff"+ getarg(1) +"^000000 - ";
-		mes " - is already finished for today. - ";
+		mes " - ภารกิจ ^4d4dff"+ getarg(1) +"^000000 - ";
+		mes " - เสร็จสิ้นแล้วในวันนี้ - ";
 		mes " ";
 		mes " - Manager : Spike - ";
 		close;
 	}
-	mes " - Mission '"+ getarg(1) +"' - ";
+	mes " - ภารกิจ '"+ getarg(1) +"' - ";
 	for ( .@i = 2; .@i < getargcount(); .@i++ )
 		mes getarg(.@i);
 	mes " ";
 	mes " - Manager : Spike - ";
 	next;
-	if (select("I will do this mission.:Look for other missions.") == 2) {
-		mes " - Let's search for -";
-		mes " - other missions. - ";
+	if (select("ฉันจะทำภารกิจนี้: มองหาภารกิจอื่น ๆ ") == 2) {
+		mes "- ลองค้นหา -";
+		mes "- ภารกิจอื่น ๆ -";
 		close;
 	}
 	for ( .@i = 2; .@i < getargcount(); .@i++ )
@@ -108,31 +108,31 @@ moc_para01,32,30,6	script	Spike	4_F_CHILD,{
 		.@j = checkquest(.@i,HUNTING);
 		if (.@j == 2) {
 			switch(.@i) {
-				case 11114: callsub L_Quest,.@i,"Hornet Hunting",900;
-				case 11115: callsub L_Quest,.@i,"Condor Hunting",1800;
+				case 11114: callsub L_Quest,.@i,"ตามล่า Hornet",900;
+				case 11115: callsub L_Quest,.@i,"ตามล่า Condor",1800;
 				case 11116: callsub L_Quest,.@i,"Grasshopper's Leg",1400,940,10;
-				case 11117: callsub L_Quest,.@i,"Worm Tail Hunting",2600;
-				case 11118: callsub L_Quest,.@i,"Spore Hunting",3900;
+				case 11117: callsub L_Quest,.@i,"ตามล่า Worm Tail",2600;
+				case 11118: callsub L_Quest,.@i,"ตามล่า Spore",3900;
 				case 11119: callsub L_Quest,.@i,"Extirpate Insects",2900,915,10;
-				case 11120: callsub L_Quest,.@i,"Muka Hunting",3200;
-				case 11121: callsub L_Quest,.@i,"Familiar Hunting",3200;
-				case 11122: callsub L_Quest,.@i,"Collect Feathers",5400;
-				case 11123: callsub L_Quest,.@i,"Collect Poison Spores",6000,7033,5;
+				case 11120: callsub L_Quest,.@i,"ตามล่า Muka",3200;
+				case 11121: callsub L_Quest,.@i,"ตามล่า Familiar",3200;
+				case 11122: callsub L_Quest,.@i,"รวบรวม Feathers",5400;
+				case 11123: callsub L_Quest,.@i,"รวบรวม Poison Spores",6000,7033,5;
 			}
 		}
 		else if (.@j >= 0) {
 			mes "[Spike]";
-			mes "You haven't finished your mission yet.";
-			mes "Keep up the good work. You are almost done.";
+			mes "เจ้ายังทำภารกิจไม่สำเร็จ";
+			mes "ติดตามผลงานที่ดีเกือบเสร็จแล้ว";
 			close;
 		}
 	}
 	mes "[Spike]";
-	mes "Are you looking for a job?";
-	mes "We always have lots of work to do.";
+	mes "คุณกำลังมองหางานหรือไม่";
+	mes "เรามีงานต้องทำมากมาย";
 	next;
-	mes "[Spike]";
-	mes "Why don't you look around and find some interesting tasks?";
+	mes "[เข็ม]";
+	mes "ทำไมคุณไม่มองไปรอบ ๆ และหางานที่น่าสนใจ";
 	close;
 
 L_Quest:
@@ -143,19 +143,19 @@ L_Quest:
 		if (.@item_req) {
 			if (countitem(.@item_req) < .@req_amount) {
 				mes "[Spike]";
-				mes "You don't have enough "+ getitemname(.@item_req) +".";
-				mes "You need to bring "+ .@req_amount +" "+ getitemname(.@item_req) +".";
+				mes "คุณมีไม่เพียงพอ" + getitemname(.@item_req) + ".";
+				mes "คุณต้องนำ" + .@req_amount + " " + getitemname(.@item_req) + ".";
 				close;
 			}
 		}
 		mes "[Spike]";
-		mes "Hmm... let me see~";
-		mes "You have completed the '"+ getarg(1) +"' mission.";
+		mes "อืม ... ให้ฉันดู ~";
+		mes "คุณได้ทำภารกิจ '' + getarg(1) + '' สำเร็จแล้ว";
 		next;
 		mes "[Spike]";
-		mes "Good work~!!";
-		mes "Our client is so happy with your work. He will appreciate what you have done.";
-		mes "Please help us again. Thanks!";
+		mes "ทำงานได้ดี ~ !!";
+		mes "ลูกค้าของเรามีความสุขมากกับการทำงานของคุณเขาจะประทับใจในสิ่งที่คุณได้ทำ";
+		mes "โปรดช่วยพวกเราอีกครั้งขอบคุณ!";
 		if (.@item_req)
 			delitem .@item_req,.@req_amount;
 		erasequest .@quest_id;

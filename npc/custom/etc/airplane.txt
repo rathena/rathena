@@ -239,9 +239,9 @@ function	script	F_Porter	{
 
 Board:
 	mes "^FF0000[Porter]^000000";
-	mes "The plane is currently ported.  Would you like to board?";
+	mes "ขณะนี้เครื่องบินกำลังเทียบท่า  คุณต้องการขึ้นเครื่องไหม?";
 	next;
-	menu "Yes.",L_Yes,"No.",L_Nope,"View Hourly Itinerary.",Itin;
+	menu "ใช่",L_Yes,"ไม่",L_Nope,"ดูกำหนดการเดินทางรายชั่วโมง",Itin;
 
 L_Yes:
 	if($destination!=getarg(0))goto Notime;
@@ -249,15 +249,15 @@ L_Yes:
 	specialeffect2 EF_CASTSPIN;
 L_Nope:
 	mes "^FF0000[Porter]^000000";
-	mes "Have a good day.  Thank you for traveling with Airship.";
+	mes "โชคดีนะ  ขอขอบคุณสำหรับการเดินทางไปกับเรือเหาะ";
 	close;
 
 Notime:
 	mes "^FF0000[Porter]^000000";
-	if(Sex==SEX_FEMALE) mes "Sorry, ma'am, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
-	else mes "Sorry, sir, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
+	if(Sex==SEX_FEMALE) mes "ขออภัยแหม่ม แต่เครื่องบินยังไม่ได้รับการติดต่อ อย่างไรก็ตามคุณสามารถดูแผนการเดินทางรายชั่วโมงของเครื่องบินได้";
+	else mes "ขออภัยครับ แต่เครื่องบินยังไม่ได้รับการติดต่อ อย่างไรก็ตามคุณสามารถดูแผนการเดินทางรายชั่วโมงของเครื่องบินได้";
 	next;
-	menu "Yes, please.",Itin,"No thanks.",L_Nope;
+	menu "ได้โปรด",Itin,"ไม่เป็นไรขอบคุณ",L_Nope;
 	close;
 	end;
 
@@ -348,9 +348,9 @@ airplane,102,68,5	script	Docker	852,{
 	mes "^FF0000[Airplane Attendant]^000000";
 	if($destination == 250)goto Notime;
 	set @dockky, $destination;
-	if($destination != 250)mes "We are currently docked at "+$locationsname$[$destination]+".  Would you like to exit?";
+	if($destination != 250)mes "ขณะนี้เรากำลังเทียบท่าอยู่ที่ "+$locationsname$[$destination]+" คุณต้องการออกหรือไม่?";
 	next;
-	menu "Yes.",Lyes,"No.",Lnope;
+	menu "ใช่",Lyes,"ไม่",Lnope;
 
 Lyes:
 	if($destination == 250)goto Notime;
@@ -360,24 +360,24 @@ Lyes:
 
 Lnope:
 	mes "^FF0000[Airplane Attendant]^000000";
-	mes "Have a good day.  Thank you for traveling with us.";
+	mes "โชคดีนะ  ขอบคุณที่ร่วมเดินทางไปกับเรา";
 	close;
 
 Notime:
 	mes "^FF0000[Airplane Attendant]^000000";
-	if(Sex==SEX_FEMALE) mes "Sorry, ma'am, but the plane currently isn't docked.  Please wait.";
-	else mes "Sorry, sir, but the plane currently isn't docked.  Please wait.";
+	if(Sex==SEX_FEMALE) mes "ขออภัยแหม่ม แต่ขณะนี้เครื่องบินไม่ได้เทียบท่า กรุณารอสักครู่...";
+	else mes "ขออภัยครับ แต่ขณะนี้เครื่องบินไม่ได้เทียบท่า กรุณารอสักครู่...";
 	close;
 
 Nowhere:
 	mes "^FF0000[Airplane Attendant]^000000";
-	mes "We're currently in air. Please wait until the pilot has announced that we have safely landed.";
+	mes "ขณะนี้เรากำลังอยู่บนท้องฟ้า โปรดรอจนกว่านักบินจะประกาศว่าเราลงจอดอย่างปลอดภัย";
 	close;
 }
 
 function	script	F_Itin	{
 	//This is the itinerary's function.  It should work well enough.
-	if($@currenttime==0)mes "Try again later.  A recent server reboot or rehash has messed the itinerary up for a bit.";
+	if($@currenttime==0)mes "โปรดลองอีกครั้งในภายหลัง การรีบูตเซิร์ฟเวอร์หรือการรีแฮชครั้งล่าสุดทำให้กำหนดการเดินทางยุ่งขึ้นเล็กน้อย";
 	if($@currenttime==0)close;
 	if($@currenttime==0)end;
 	set @tempo, 0;
@@ -437,6 +437,6 @@ sest:
 	if($alreadygoneto[$locationn[getarg(0)]]==1)goto sest;
 	setarray $alreadygoneto[$locationn[getarg(0)]], 1;
 	set $destination,$locationn[$@currenttime];
-	announce "Pilot: The plane has arrived at "+$locationsname$[$locationn[getarg(1)]]+".  Departure to "+ $locationsname$[$locationn[getarg(2)]] + " is in 3 minutes.",16;
+	announce "นักบิน: เครื่องบินมาถึงที่ "+$locationsname$[$locationn[getarg(1)]]+".  จะออกเดินทางไปยัง "+ $locationsname$[$locationn[getarg(2)]] + " ใน 3 นาที",16;
 	end;
 }

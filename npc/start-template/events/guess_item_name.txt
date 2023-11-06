@@ -1,0 +1,145 @@
+prontera,112,67,4	script	ทายชื่อ Item	569,{
+	.@npcName$ = "[ทายชื่อ Item]";
+	
+	if(getgmlevel())
+	menu "เข้าสู่ NPC ปกติ",-,"เปลี่ยนคำถามเลย",L_Add;
+
+	mes .@npcName$;
+	if($winnerQuestionCash$ != ""){
+		mes $winnerQuestionCash$ + " ได้ตอบคำถามนี้ไปแล้ว";
+		mes " ";
+		mes "เปลี่ยนคำถามใหม่ทุก ๆ 1 ชั่วโมง ณ เวลา 30 นาที เช่น 10:30, 11:30น.";
+		close;
+	}
+	
+	mes "ชื่อไอเท็มเต็ม ๆ คืออะไรเอ่ย?";
+	mes $questionCash$;
+	mes " ";
+	mes "*เขียนตัวเล็กตัวใหญ่ ผลเหมือนกัน ตอบให้ตรงก็พอ";
+	next;
+	menu "ตอบคำถาม",-,"สอบถาม",L_Info;
+	
+	mes .@npcName$;
+	mes "ชื่อไอเท็มเต็ม ๆ คืออะไรเอ่ย?";
+	mes $questionCash$;
+	mes " ";
+	mes "*เขียนตัวเล็กตัวใหญ่ ผลเหมือนกัน ตอบให้ตรงก็พอ";
+	input .@i$;
+	
+	next;
+	
+	if($winnerQuestionCash){
+		clear;
+		mes .@npcName$;
+		mes "มีคนชิงตอบก่อนแล้ว";
+		close;
+	}
+	
+	if(.@i$ == "")
+	goto L_Cancel;
+
+	if(strtolower(.@i$) == strtolower($answerQuestionCash$)){
+		clear;
+		mes .@npcName$;
+		mes "คุณตอบถูก!";
+		announce strcharinfo(0) + " ตอบคำถามประจำชั่วโมงถูก ได้รับ 1 Cash และคำตอบที่ถูกคือ: " + $answerQuestionCash$,bc_all,0xc99eff;
+		
+		callfunc("AddCash",1);
+		
+		$winnerQuestionCash = 1;
+		$winnerQuestionCash$ = strcharinfo(0);
+		close;
+	}
+	clear;
+	mes .@npcName$;
+	mes "คุณตอบผิด";
+	close;
+	
+	L_Info:
+	mes .@npcName$;
+	mes "ตอบคำถามให้ถูก แค่นั้นเลย";
+	mes " ";
+	mes "เปลี่ยนคำถามใหม่ทุก ๆ 1 ชั่วโมง ณ เวลา 30 นาที เช่น 10:30, 11:30น.";
+	close;
+	
+	L_Cancel:
+	mes .@npcName$;
+	mes "ยกเลิกเรียบร้อยแล้ว";
+	close;
+	
+OnClock0030:
+OnClock0130:
+OnClock0230:
+OnClock0330:
+OnClock0430:
+OnClock0530:
+OnClock0630:
+OnClock0730:
+OnClock0830:
+OnClock0930:
+OnClock1030:
+OnClock1130:
+OnClock1230:
+OnClock1330:
+OnClock1430:
+OnClock1530:
+OnClock1630:
+OnClock1730:
+OnClock1830:
+OnClock1930:
+OnClock2030:
+OnClock2130:
+OnClock2230:
+OnClock2330:
+	L_Add:
+	.@lowestItem = 500;
+	.@highestItemId = 32351;
+	
+	$winnerQuestionCash = 0;
+	
+	.@sum = rand(.@lowestItem,.@highestItemId);
+	
+	freeloop(1);
+	while(getiteminfo(.@sum,0) == -1)
+	.@sum = rand(.@lowestItem,.@highestItemId);
+	freeloop(0);
+	
+	.@tempQuestionCash$ = "";
+	$questionCash$ = getitemname(.@sum);
+	for(.@i = 0; .@i < getstrlen($questionCash$); .@i++){
+		if(getstrlen($questionCash$) <= 1)
+		.@tempQuestionCash$ = "_";
+		else if(getstrlen($questionCash$) >= 10){
+			if(.@i == 1 || .@i == 3 || .@i == 5 || .@i == 7)
+			.@tempQuestionCash$ += "_";
+			else
+			.@tempQuestionCash$ += charat($questionCash$,.@i);
+		}else if(getstrlen($questionCash$) >= 6){
+			if(.@i == 1 || .@i == 3)
+			.@tempQuestionCash$ += "_";
+			else
+			.@tempQuestionCash$ += charat($questionCash$,.@i);
+		}else if(getstrlen($questionCash$) >= 2){
+			if(.@i == 1)
+			.@tempQuestionCash$ += "_";
+			else
+			.@tempQuestionCash$ += charat($questionCash$,.@i);
+		}
+	}
+	
+	$questionCash$ = .@tempQuestionCash$;
+	$answerQuestionCash$ = getitemname(.@sum);
+	$winnerQuestionCash$ = "";
+	
+	announce "คำถามประจำชั่วโมง: " + $questionCash$,bc_all,0xf9ace5;
+	
+	specialeffect 54;
+	
+	end; 
+	
+OnInit:
+	if($questionCash$ == "")
+	goto L_Add;
+
+	end;
+}

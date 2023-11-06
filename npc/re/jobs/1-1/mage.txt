@@ -17,113 +17,113 @@ geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
 		if (ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor) {
 			if (Class == Job_Novice_High) {
 				mes "[Mage Guildsman]";
-				mes "Whoa, long time no see! But weren't you supposed to be dead?";
+				mes "โอ้โหไม่เห็นแล้วนะ แต่เจ้าไม่ควรตายเหรอ?";
 				next;
 				mes "[Mage Guildsman]";
-				mes "Ah, you must have been reborn. Well, I'm glad to have you back.";
+				mes "อาเจ้าจะต้องเกิดใหม่ดีฉันดีใจที่ได้เจ้ากลับมา";
 				next;
 				if (!callfunc("F_CanChangeJob")) {
 					mes "[Mage Guildsman]";
-					mes "I'm sorry, but I don't think you're ready to learn magic yet. Why don't you go finish learning the Basic Skills first?";
+					mes "ฉันขอโทษ แต่ฉันยังไม่คิดว่าคุณพร้อมที่จะเรียนรู้เวทย์มนตร์ทำไมคุณไม่ลองเรียนรู้ทักษะพื้นฐานเสียก่อน?";
 					next;
 					mes "[Mage Guildsman]";
-					mes "Take your time. The more you learn, the more ready you'll be to learn magic again.";
+					mes "ใช้เวลาของคุณยิ่งเรียนรู้มากเท่าไหร่คุณก็ยิ่งพร้อมที่จะเรียนรู้เวทมนตร์อีกครั้ง";
 					close;
 				}
 				mes "[Mage Guildsman]";
-				mes "Well, since you have passed the Mage test once, I will not question your qualification. You want to have your magic skills back immediately, don't you?";
+				mes "เพราะเจ้าผ่านการทดสอบผู้วิเศษครั้งหนึ่งข้าจะไม่ถามคุณสมบัติของเจ้าเลยเจ้าต้องการที่จะได้รับทักษะเวทย์มนตร์ของเจ้ากลับมาทันทีใช่ไหม?";
 				next;
 				skill "NV_TRICKDEAD",0,SKILL_PERM;
 				jobchange Job_Mage_High;
 				skill "MG_ENERGYCOAT",1,SKILL_PERM;
 				mes "[Mage Guildsman]";
-				mes "Wow, for some reason, you look way better than you did before. Anyway, I believe you will do a better job being a Mage as well.";
+				mes "ว้าว, ด้วยเหตุผลบางอย่าง, เจ้าดูดีกว่าที่เจ้าเคยทำมาก่อน, อย่างไรก็ตามข้าเชื่อว่าเจ้าจะทำงานได้ดีขึ้นในฐานะ Mage เช่นกัน";
 				close;
 			}else{
 				mes "[Mage Guildsman]";
-				mes "Is there anything more I can help you with? If not, why don't you go test your skills? The world is waiting for you~!";
+				mes "มีอะไรอีกที่ฉันสามารถช่วยคุณได้บ้างถ้าไม่ใช่ทำไมคุณไม่ลองทดสอบทักษะของคุณล่ะโลกกำลังรอคุณอยู่ ~!";
 				close;
 			}
 		}else{
 			mes "[Mage Guildsman]";
-			mes "What, are you interested in the Mage guild? I didn't want to tell you this, but you don't belong here.";
+			mes "ท่านสนใจในสมาคม Mage หรือไม่? ข้าไม่ต้องการที่จะบอกคุณ แต่คุณไม่ได้อยู่ที่นี่";
 			next;
 			mes "[Mage Guildsman]";
-			mes "I am not sure why you're still standing in front of me, but I can tell that you're not meant to be a Mage.";
+			mes "ฉันไม่แน่ใจว่าทำไมคุณถึงยังยืนอยู่ต่อหน้าฉัน แต่ฉันบอกได้เลยว่าคุณไม่ได้เป็นผู้วิเศษ";
 			close;
 		}
 	}
 	mes "[Mage Guildsman]";
 	if(BaseJob != Job_Novice) {
 		if(BaseJob == Job_Mage) {
-			mes "Hey, haven't you realized? You're already a Mage, silly!";
-			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
+			mes "เฮ้เจ้าไม่เคยรู้มาก่อนหรือว่าเจ้าเป็นผู้วิเศษเจ้าเล่ห์!";
+			mes "สักวันหนึ่งเจ้าจะตระหนักถึงพลังภายในของเจ้าเมื่อเจ้าสามารถสร้าง Fire ด้วยความคิดของเจ้า!";
 		} else
-			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
+			mes "เฮ้ ~ C'mon ออกจากการเล่นเกมคุณไม่สามารถเป็น Mage ได้เพราะคุณเป็นอาชีพอื่นอยู่แล้ว";
 		close;
 	}else{
-		mes "Hey?";
+		mes "เฮ้?";
 		next;
-		switch(select("I want to be a Mage:What are the requirements to be a Mage?:Nothing, thanks.")) {
+		switch(select("ฉันต้องการเป็น Mage:อะไรคือข้อกำหนดของ Mage?:ไม่มีอะไรขอบคุณ")) {
 		case 1:
 			mes "[Mage Guildsman]";
-			mes "Wanna be a Mage? Eh...";
+			mes "อยากเป็นนักเวทย์หรือไม่เอ๊ะ ... ";
 			next;
 			mes "[Mage Guildsman]";
 			if (Sex == SEX_MALE) {
-				mes "Hey, look at you! You're kinda cute~! Not my type though...";
+				mes "เฮ้ดูนายสิเจ้าน่ารักจัง ~!";
 			}else{
-				mes "Oooh, you're such a hot babe~!";
-				mes "I like girls like you~";
+				mes "Oooh เธอช่างเป็นเด็กที่ร้อนแรง ~!";
+				mes "ฉันชอบผู้หญิงที่ชอบคุณ ~";
 			}
-			mes "Right, you said that you wanna be a Mage?";
+			mes "ถูกต้องเจ้าพูดว่าเจ้าอยากเป็นนักเวทย์หรือ";
 			next;
-			if(select("I want to be a Mage.:Nothing, thanks.") == 2) {
+			if(select("ฉันต้องการเป็น Mage:ไม่มีอะไรขอบคุณ") == 2) {
 				mes "[Mage Guildsman]";
-				mes "Whaaaaat~?! Right after you tell me that you wanna become a Mage, you change your mind?! Be a bit more decisive!";
+				mes "อะไรรรร~?! หลังจากที่คุณบอกฉันว่าคุณต้องการที่จะเป็นผู้วิเศษคุณเปลี่ยนความคิดของคุณหรือไม่! เด็ดขาด!";
 				close;
 			}
 			mes "[Mage Guildsman]";
 			if (!callfunc("F_CanChangeJob")) {
-				mes "Oh, man your Basic Skill Level doesn't reach enough to be a Mage.";
-				mes "Go back and level up your Basic Skill.";
+				mes "โอ้ระดับความสามารถพื้นฐานของคุณไม่สามารถที่จะเป็น Mage ได้";
+				mes "ย้อนกลับไปและเพิ่มระดับทักษะพื้นฐานของคุณ";
 				close;
 			}
-			mes "Alright.. sign the application form.... Wow~ you have good handwriting! Ahh, okay. That's enough.";
-			mes "You are... "+strcharinfo(0)+".";
+			mes "ได้เลย.. ลงชื่อในแบบฟอร์มใบสมัคร.... ว้าว ~ คุณมีลายมือดี! อ่าโอเคแค่นั้นแหละ";
+			mes "คุณคือ... " + strcharinfo(0) + ".";
 			next;
 			mes "[Mage Guildsman]";
-			mes "Hmm I can see that you've tried hard in your own way. Though it seems to be a little clumsy, but well I think it's okay!";
-			mes "Good! Always sticking to the basics is the best! I will transform you right away.";
+			mes "อืมข้าเห็นว่าเจ้าได้พยายามอย่างหนักในแบบของเจ้าแล้วดูเหมือนว่ามันจะค่อนข้างงุ่มง่าม แต่ข้าคิดว่ามันโอเคแล้ว!";
+			mes "ดีมากการยึดติดกับพื้นฐานเป็นสิ่งที่ดีที่สุดเสมอ! ฉันจะเปลี่ยนคุณทันที";
 			next;
 			mes "[Mage Guildsman]";
-			mes "Hahh..! You are now a Mage, one of our colleagues!";
-			mes "We welcome you to the Mage Guild, our new friend!";
+			mes "Hahh.. ! ตอนนี้คุณเป็นผู้วิเศษหนึ่งในเพื่อนร่วมงานของเรา!";
+			mes "เรายินดีต้อนรับคุณสู่ Mage Guild เพื่อนใหม่ของเรา!";
 			next;
 			mes "[Mage Guildsman]";
-			mes "'Welcome to the Mage Guild~'";
-			mes "Congratulations on becoming a member of the Mage Guild! Go for it!";
+			mes "'ยินดีต้อนรับสู่ Mage Guild~'";
+			mes "ขอแสดงความยินดีกับการเป็นสมาชิกของ Mage Guild! Go for it!";
 			callfunc "Job_Change",Job_Mage;
 			getitem 1639,1;	// N_Rod
 			close;
 		case 2:
 			mes "[Mage Guildsman]";
-			mes "Wanna be a Mage, eh?";
-			mes "I'd be happy to explain the requirements for a pretty girl like you!";
+			mes "อยากเป็นผู้วิเศษใช่มั้ย";
+			mes "ฉันยินดีที่จะอธิบายข้อกำหนดสำหรับเด็กผู้หญิงที่น่ารักอย่างคุณ!";
 			next;
 			mes "[Mage Guildsman]";
-			mes "First of all, you have to reach Novice Job Level 10 and learn all of the Basic Skills.";
+			mes "ก่อนอื่นคุณต้องไปให้ถึงสามเณรงานระดับ 10 และเรียนรู้ทักษะพื้นฐานทั้งหมด";
 			next;
 			mes "[Mage Guildsman]";
-			mes "In the past, there was a complicated potion making test. Because of that, we'd lost an aplicant slowly.";
-			mes "So, we decided to accept all aplicants who meet the basic requirements.";
+			mes "ในอดีตมีการทดสอบยาที่ซับซ้อนเพราะเหตุนี้เราจึงสูญเสีย aplicant ช้า";
+			mes "ดังนั้นเราตัดสินใจที่จะยอมรับผู้ใช้ที่มีคุณสมบัติตรงตามข้อกำหนดขั้นพื้นฐาน";
 			next;
 			mes "[Mage Guildsman]";
-			mes "Don't hesitate. Just be a magician!";
+			mes "อย่าลังเลเพียงเป็นนักมายากล!";
 			close;
 		case 3:
 			mes "[Mage Guildsman]";
-			mes "Nothing...?";
+			mes "ไม่มีอะไร... ?";
 			close;
 		}
 	}

@@ -26,12 +26,12 @@
 prontera,152,187,6	script	Hunting Missions	4_F_EDEN_MASTER,{
 function Chk;
 	mes "[Hunting Missions]";
-	mes "Hello, " + strcharinfo(0) + "!";
+	mes "หวัดดี, " + strcharinfo(0) + "!";
 	if (!#Mission_Delay) {
 		next;
 		mes "[Hunting Missions]";
-		mes "I can't find any records...";
-		mes "You must be new here!";
+		mes "ข้าไม่เคยเห็นเจ้ามาก่อน...";
+		mes "เจ้าต้องเพิ่งมาแน่ๆ!";
 		emotion ET_HUK;
 		next;
 		callsub Mission_Info;
@@ -39,29 +39,29 @@ function Chk;
 		#Mission_Delay = 1;
 		close;
 	}
-	mes F_Rand("Working hard, as always...", "Not slacking, I hope...");
-	mes "Is there anything I can help";
-	mes "you with?";
+	mes F_Rand("ทำงานหนัก, เหมือนเดิม...", "ข้าหวังว่า, จะไม่ได้พัก...");
+	mes "มีอะไรที่ข้าพอจะช่วย";
+	mes "เจ้าได้บ้าง ?";
 	mes " ";
-	mes "^777777~ You've completed " + F_InsertPlural(Mission_Total,"mission",0,"^0055FF%d^777777 %s") + ". ~^000000";
+	mes "^777777~ เจ้าสำเร็จ " + F_InsertPlural(Mission_Total,"ภารกิจ",0,"^0055FF%d^777777 %s") + ". ~^000000";
 	next;
 	switch(select(
-		((!Mission0) ? " ~ New Mission::" : ": ~ Mission Status: ~ Abandon Mission") +
-		": ~ Information: ~ Mission Shop: ~ View Top Hunters: ~ ^777777Cancel^000000"
+		((!Mission0) ? " ~ ภารกิจใหม่::" : ": ~ สถานะภารกิจ: ~ ละทิ้งภารกิจ") +
+		": ~ รายละเอียด: ~ ร้านค้าภารกิจ: ~ ส่องอันดับนักล่า: ~ ^777777ยกเลิก^000000"
 	)) {
 	case 1:
 		mes "[Hunting Missions]";
 		if (#Mission_Count) {
-			mes "You've started a mission";
-			mes "on another character.";
+			mes "เจ้าได้เริ่มภารกิจ";
+			mes "โดยตัวละครอื่น.";
 			if (!@hm_char_del_check) {  // check for deleted character
 				query_sql("SELECT 1 FROM `char_reg_num` WHERE `key` = 'Mission0' AND `char_id` IN(SELECT `char_id` FROM `char` WHERE `account_id` = " + getcharid(3) + ")", .@i);
 				if (!.@i) {
 					next;
 					mes "[Hunting Missions]";
-					mes "I can't seem to find any records";
-					mes "for that character, though...";
-					mes "One moment, please.";
+					mes "ดูเหมือนว่าข้าจะไม่สามารถ";
+					mes "หาตัวละครนั้นพบ, ได้...";
+					mes "กรุณา, รอแป๊ปหนึ่ง.";
 					emotion ET_SCRATCH;
 					#Mission_Count = 0;
 				}
@@ -70,7 +70,7 @@ function Chk;
 			close;
 		}
 		if (#Mission_Delay > gettimetick(2) && .Delay) {
-			mes "I'm afraid you'll have to wait " + Time2Str(#Mission_Delay) + " before taking another mission.";
+			mes "ข้าเกรงว่าเจ้าจะต้องรอ " + Time2Str(#Mission_Delay) + " ก่อนถึงรับภารกิจต่อได้";
 			close;
 		}
 		mes "You must hunt:";
@@ -84,31 +84,31 @@ function Chk;
 		callsub Mission_Status;
 		next;
 		mes "[Hunting Missions]";
-		mes "Report back when";
-		mes "you've finished.";
-		mes "Good luck!";
+		mes "กลับมารายงานเมื่อ";
+		mes "เจ้าสำเร็จภารกิจ.";
+		mes "ขอให้โชคดี!";
 		close;
 	case 2:
 		mes "[Hunting Missions]";
-		mes "Mission status:";
+		mes "สถานะภารกิจ:";
 		callsub Mission_Status;
 		close;
 	case 3:
 		mes "[Hunting Missions]";
-		mes "Do you really want to";
-		mes "abandon your mission?";
+		mes "เจ้าต้องการที่จะ";
+		mes "ละทิ้งภารกิจใช่ไหม ?";
 		if (.Reset < 0 && .Delay)
-			mes "Your delay time will not be reset.";
+			mes "เวลาดีเลย์ภารกิจจะไม่ถูกรีไปด้วย.";
 		else if (.Reset > 0)
-			mes "It will cost " + F_InsertComma(.Reset) + " Zeny.";
+			mes "มันมีค่าใช้จ่าย " + F_InsertComma(.Reset) + " Zeny.";
 		next;
-		switch(select(" ~ Abandon...: ~ ^777777Cancel^000000")) {
+		switch(select(" ~ ละทิ้งภารกิจ...: ~ ^777777ยกเลิก^000000")) {
 		case 1:
 			if (.Reset > 0) {
 				if (Zeny < .Reset) {
 					mes "[Hunting Missions]";
-					mes "You don't have enough";
-					mes "Zeny to drop this mission.";
+					mes "เจ้าไม่มีเงินพอ";
+					mes "ที่จะละทิ้งภารกิจ.";
 					emotion ET_SORRY;
 					close;
 				}
@@ -116,8 +116,8 @@ function Chk;
 				emotion ET_MONEY;
 			}
 			mes "[Hunting Missions]";
-			mes "Alright, I've dropped";
-			mes "your current mission.";
+			mes "เข้าใจแล้ว, ข้าจะทำการ";
+			mes "ละทิ้งภารกิจให้เดี๋ยวนี้้.";
 			specialeffect2 EF_STORMKICK4;
 			for (.@i = 0; .@i < .Quests; .@i++) {
 				setd "Mission"+.@i, 0;
@@ -129,8 +129,8 @@ function Chk;
 			close;
 		case 2:
 			mes "[Hunting Missions]";
-			mes "I knew you were kidding!";
-			mes "Keep up the good work.";
+			mes "ข้ารู้อยู่แล้วว่าเจ้าไม่ทำหรอก!";
+			mes "ตั้งใจทำงานเข้า.";
 			emotion ET_SMILE;
 			close;
 		}
@@ -139,21 +139,21 @@ function Chk;
 		close;
 	case 5:
 		mes "[Hunting Missions]";
-		mes "You have ^0055FF" + #Mission_Points + "^000000 Mission Points.";
-		mes "Use them well!";
+		mes "เจ้ามี ^0055FF" + #Mission_Points + "^000000 แต้มภารกิจ.";
+		mes "ใช้อย่างมีสติ!";
 		callshop "mission_shop",1;
 		npcshopattach "mission_shop";
 		end;
 	case 6:
 		mes "[Hunting Missions]";
-		mes "The top hunters are:";
+		mes "อันดับนักล่า:";
 		query_sql("SELECT char_id AS id, (SELECT `name` FROM `char` WHERE char_id = id),`value` FROM `char_reg_num` WHERE `key` = 'Mission_Total' ORDER BY CAST(`value` AS SIGNED) DESC LIMIT 5", .@id, .@name$, .@val);
 		for (.@i = 0; .@i < 5; .@i++)
 			mes "  [Rank " + (.@i+1) + "]  " + ((.@name$[.@i] == "") ? "^777777none" : "^0055FF" + .@name$[.@i]+"^000000 : ^FF0000" + .@val[.@i] + " pt.") + "^000000";
 		close;
 	case 7:
 		mes "[Hunting Missions]";
-		mes "Nothing? Okay...";
+		mes "ไม่มีอะไร ? Okay...";
 		emotion ET_SCRATCH;
 		close;
 	}
@@ -178,20 +178,20 @@ Mission_Status:
 
 	next;
 	mes "[Hunting Missions]";
-	mes "Mission rewards:";
-	mes " > Mission Points: ^0055FF" + .@Mission_Points + "^000000";
-	mes " > Base Experience: ^0055FF" + F_InsertComma(.@Base_Exp) + "^000000";
-	mes " > Job Experience: ^0055FF" + F_InsertComma(.@Job_Exp) + "^000000";
-	mes " > Zeny: ^0055FF" + F_InsertComma(.@Zeny) + "^000000";
+	mes "รางวัลภารกิจ:";
+	mes " > แต้มภารกิจ: ^0055FF" + .@Mission_Points + "^000000";
+	mes " > ค่าประสบการณ์: ^0055FF" + F_InsertComma(.@Base_Exp) + "^000000";
+	mes " > ค่าประสบการณ์อาชีพ: ^0055FF" + F_InsertComma(.@Job_Exp) + "^000000";
+	mes " > เงิน: ^0055FF" + F_InsertComma(.@Zeny) + "^000000";
 	if (@f) {
 		@f = false;
 		return;
 	}
 	next;
 	mes "[Hunting Missions]";
-	mes "Oh, you're done!";
-	mes "Good work.";
-	mes "Here's your reward.";
+	mes "โอ้, เจ้าทำสำเร็จ!";
+	mes "เยี่ยมมาก.";
+	mes "รับรางวัลของเจ้าไป.";
 	emotion ET_BEST;
 	specialeffect2 EF_ANGEL;
 	specialeffect2 EF_TRUESIGHT;
@@ -215,23 +215,23 @@ Mission_Status:
 
 Mission_Info:
 	mes "[Hunting Missions]";
-	mes "If you so choose, I can assign";
-	mes "you a random hunting quest.";
-	mes "Some are easier than others, but";
-	mes "the rewards increase with difficulty.";
+	mes "เมื่อเจ้าเลือกที่จะทำ, ข้าจะเริ่ม";
+	mes "สุ่มภารกิจให้เจ้า.";
+	mes "บางทีภารกิจอาจง่าย, แต่";
+	mes "ยิ่งยาก รางวัลยิ่งดีตาม.";
 	next;
 	mes "[Hunting Missions]";
-	mes "Missions points are shared";
-	mes "amongst all your characters.";
+	mes "แต้มภารกิจสามารถใช้ร่วมกับ";
+	mes "ตัวละครอื่นๆของเจ้าได้.";
 	if (.Delay)
-		mes "Delay time is, too.";
-	mes "You can't take missions on";
-	mes "multiple characters at once.";
+		mes "เวลาดีเลย์, ก็เหมือนกัน.";
+	mes "เจ้าไม่สามารถรับภารกิจ";
+	mes "พร้อมๆกันกับตัวละครอื่นๆได้.";
 	next;
 	mes "[Hunting Missions]";
-	mes "You can start a quest";
-	mes (.Delay ? "every " + ((.Delay == 1) ? "hour." : .Delay + " hours.") : "whenever you want.");
-	mes "That's everything~";
+	mes "เจ้าสามารถรับภารกิจได้";
+	mes (.Delay ? "ทุก " + ((.Delay == 1) ? "ชั่วโมง." : .Delay + " ชั่วโมง.") : "เมื่อเจ้าต้องการ");
+	mes "ได้เสมอ~";
 	return;
 
 function Chk {
@@ -250,14 +250,14 @@ OnBuyItem:
 	}
 	mes "[Hunting Missions]";
 	if (.@cost > #Mission_Points)
-		mes "You don't have enough Mission Points.";
+		mes "เจ้ามีแต้มภารกิจไม่พอ.";
 	else {
 		for (.@i = 0; .@i < .@size; .@i++) {
 			getitem @bought_nameid[.@i], @bought_quantity[.@i];
-			dispbottom "Purchased " + @bought_quantity[.@i] + "x " + getitemname(@bought_nameid[.@i]) + ".";
+			dispbottom "เลือกซื้อ " + @bought_quantity[.@i] + "x " + getitemname(@bought_nameid[.@i]) + ".";
 		}
 		#Mission_Points -= .@cost;
-		mes "Deal completed.";
+		mes "การซื้อสมบูรณ์.";
 		emotion ET_MONEY;
 	}
 	deletearray @bought_nameid[0], .@size;
@@ -270,8 +270,8 @@ OnNPCKillEvent:
 		for (.@i = 0; .@i < .Quests; .@i++) {
 			if (strmobinfo(1,killedrid) == strmobinfo(1,getd("Mission" + .@i))) {
 				if (getd("Mission" + .@i + "_") < #Mission_Count) {
-					dispbottom "[Hunting Mission] Killed " + (set(getd("Mission" + .@i + "_"),getd("Mission" + .@i + "_") + 1)) +
-					           " of " + #Mission_Count + " " + strmobinfo(1,killedrid) + ".";
+					dispbottom "[Hunting Mission] ได้ล่า " + (set(getd("Mission" + .@i + "_"),getd("Mission" + .@i + "_") + 1)) +
+					           " ของ " + #Mission_Count + " " + strmobinfo(1,killedrid) + ".";
 					end;
 				}
 			}
@@ -296,7 +296,7 @@ OnNPCKillEvent:
 							if (strmobinfo(1,.@mob) == strmobinfo(1,.@my_mob_id)) {
 								if (.@my_count < .@Mission_Count) {
 									setd "Mission"+.@j+"_", (.@my_count+1), $@partymembercid[.@i];
-									dispbottom "[Hunting Mission] Killed " + (.@my_count+1) + " of " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".", 0x777777, $@partymembercid[.@i];
+									dispbottom "[Hunting Mission] ได้ล่า " + (.@my_count+1) + " ของ " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".", 0x777777, $@partymembercid[.@i];
 									break;
 								}
 							}
