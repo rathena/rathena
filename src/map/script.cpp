@@ -26628,7 +26628,6 @@ BUILDIN_FUNC(getjobexp_ratio){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-
 BUILDIN_FUNC( enchantgradeui ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	map_session_data* sd;
@@ -26941,7 +26940,7 @@ BUILDIN_FUNC(macro_detector) {
 }
 
 BUILDIN_FUNC(opentips){
-#if PACKETVER < 20151202
+#if PACKETVER < 20171122
 	ShowError( "buildin_opentips: This command requires PACKETVER 20151202 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #else
