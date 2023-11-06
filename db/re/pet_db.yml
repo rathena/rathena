@@ -1568,7 +1568,6 @@ Body:
         bonus bAtk,15;
       } else {
         bonus bAtk,10;
-        bonus bDef,-3;
       }
 #    Evolution:
 #      - Target: ORK_HERO2
@@ -1987,7 +1986,7 @@ Body:
 #        bonus bAgi,4;
 #      }
   - Mob: ALIOT
-    EggItem: Aliot_Egg
+    EggItem: Aliot_EGG
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -2011,7 +2010,7 @@ Body:
         bonus bAspdRate,2;
       }
   - Mob: ALICEL
-    EggItem: Alicel_Egg
+    EggItem: Alicel_EGG
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -2023,18 +2022,18 @@ Body:
       .@i = getpetinfo(PETINFO_INTIMATE);
       
       if (.@i >= PET_INTIMATE_LOYAL) {
-        bonus bCastrate,-5;
-        bonus2 bMagicAddEle,Ele_Neutral,5;
+        bonus bVariableCastrate,-5;
+        bonus2 bMagicAtkEle,Ele_Neutral,5;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bCastrate,-4;
-        bonus2 bMagicAddEle,Ele_Neutral,3;
+        bonus bVariableCastrate,-4;
+        bonus2 bMagicAtkEle,Ele_Neutral,3;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-        bonus bCastrate,-3;
+        bonus bVariableCastrate,-3;
       } else {
-        bonus bCastrate,-2;
+        bonus bVariableCastrate,-2;
       }
   - Mob: ALIZA
-    EggItem: Aliza_Egg
+    EggItem: Aliza_EGG
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120

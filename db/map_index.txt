@@ -1231,6 +1231,11 @@ jor_sanct
 jor_twice
 jor_twig
 bl_depth1
+1@ba_go
+1@f_lake
+for_dun01
+for_dun02
+t_garden
 
 //======================================================================================
 // - Other/Extra maps -
