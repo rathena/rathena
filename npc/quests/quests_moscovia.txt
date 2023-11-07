@@ -3391,7 +3391,6 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 				mes "Please have a rest, young adventurer.";
 			}
 			else {
-				mes "[Landlord]";
 				mes "Please be comfortable.";
 			}
 			break;
