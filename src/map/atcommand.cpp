@@ -5961,6 +5961,50 @@ ACMD_FUNC(dropall)
 }
 
 /*==========================================
+ * @stockall by [Hanashi]
+ * transfer items from cart to inventory
+ *------------------------------------------*/
+ACMD_FUNC(stockall)
+{
+	int8 type = -1;
+	uint16 i, count = 0, count2 = 0;
+	nullpo_retr(-1, sd);
+	
+	if (pc_iscarton(sd) == 0) {
+		clif_displaymessage(fd, msg_txt(sd,1533)); // You do not have a cart.
+		return -1;
+	}
+
+	if ( message[0] ) {
+		type = atoi(message);
+		if( type != -1 && type != IT_HEALING && type != IT_USABLE && type != IT_ETC && type != IT_WEAPON &&
+			type != IT_ARMOR && type != IT_CARD && type != IT_PETEGG && type != IT_PETARMOR && type != IT_AMMO )
+		{
+			clif_displaymessage(fd, msg_txt(sd,1534)); // Usage: @stockall {<type>}
+			clif_displaymessage(fd, msg_txt(sd,1493)); // Type List: (default) all = -1, healing = 0, usable = 2, etc = 3, armor = 4, weapon = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
+			return -1;
+		}
+	}
+	if (pc_iscarton(sd)) {
+		for( i = 0; i < MAX_CART; i++ ) {
+			if( sd->cart.u.items_cart[i].amount ) {
+				std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_inventory[i].nameid);
+				if( id == nullptr ) {
+					ShowDebug("Non-existant item %d on stockall list (account_id: %d, char_id: %d)\n", sd->cart.u.items_inventory[i].nameid, sd->status.account_id, sd->status.char_id);
+					continue;
+				}
+				if( type == -1 || type == (uint8)id->type ) {
+					if(pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
+						count += sd->cart.u.items_cart[i].amount;
+					else count2 += sd->cart.u.items_cart[i].amount;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+/*==========================================
  * @storeall by [MouseJstr]
  * Put everything into storage
  *------------------------------------------*/
@@ -11078,6 +11122,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(npcmove),
 		ACMD_DEF(killable),
 		ACMD_DEF(dropall),
+		ACMD_DEF(stockall),
 		ACMD_DEF(storeall),
 		ACMD_DEF(skillid),
 		ACMD_DEF(useskill),
