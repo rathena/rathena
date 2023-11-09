@@ -1,0 +1,272 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.1 Added vip function to collect all bounties,
+//=     Fixed a minnor bug with one use of a close command.
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+function	script	F_Bounty_Board	{
+	if (BaseLevel < getarg(0) || (BaseLevel > getarg(1) && getarg(1))){
+		for (.@i = 5; .@i < getargcount(); .@i += 4){
+			if (checkquest(getarg(.@i)) != -1){
+				mes "[Bounty Board]";
+				mes "คุณพร้อมที่จะรวบรวมรางวัลของคุณไหม";
+				mes "คุณต้องการรวบรวมรางวัลใดล่ะ?";
+				next;
+				switch(select("ล่าสะสม 1 รางวัล", "ล่าสะสมรางวัลทั้งหมด", "ฉันอยากจะเลิกล่า", "ยกเลิก")){
+					case 1: goto L_BountyOne;
+					case 2: goto L_BountyAll;
+					case 3: goto L_BountyDel;
+					case 4: close;
+				}
+			}
+		}
+		switch(getarg(3)){
+			case 1: mes "ค่าหัวเหล่านี้มีให้เฉพาะนักผจญภัยที่มีเลเวล "+getarg(0)+"-"+getarg(1)+" เท่านั้น"; break;
+			case 2: mes "ค่าหัวเหล่านี้มีให้เฉพาะนักผจญภัยที่อยู่ระหว่างเลเวลระดับ "+getarg(0)+" ถึง "+getarg(1)+" เท่านั้น"; break;
+			case 3: mes "ค่าหัวเหล่านี้มีให้สำหรับนักผจญภัยที่มีเลเวลมากกว่า "+getarg(0)+" เท่านั้น"; break;
+			case 4: mes "ค่าหัวเหล่านี้มีให้สำหรับนักผจญภัยที่มีเลเวลสูงกว่า "+getarg(0)+" เท่านั้น"; break;
+			case 5: mes "คุณบังเอิญเจอสิ่งที่ดูเหมือนเป็นกระดานข่าวที่มีโฆษณาที่ต้องการ ไม่มีอะไรดูน่าสนใจขนาดนั้น"; break;
+		}
+		close;
+	}
+	mes "[Bounty Board]";
+	mes "คุณบังเอิญเจอสิ่งที่ดูเหมือนเป็นกระดานข่าวที่มีโฆษณาที่ต้องการ";
+	mes "ลองดูอย่างใกล้ชิด?";
+	next;
+	mes "[Bounty Board]";
+	mes "มีรายการล่ามอนสเตอร์มากมาย";
+	next;
+	switch(select("ตรวจสอบภารกิจล่ารางวัล", "รับรางวัลที่ล่าสะสมไว้", "ฉันจะไปล่าที่ไหน?", "ค้นหาล่ารางวัลอื่นๆ", "ฉันอยากจะเลิกล่า", "ไม่สนใจ.")){
+	case 1:	// Check bounty missions
+		mes "[Bounty Board]";
+		mes "มีรายชื่อมอนสเตอร์อยู่บนกระดาน";
+		mes "เมื่อพิจารณาดูแล้ว คุณจึงตัดสินใจทำภารกิจล่าหนึ่งรายการ";
+		next;
+		for (.@i = 4; .@i < getargcount(); .@i += 4)
+			.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+		.@menu$ = .@menu$ + "ล่าทั้งหมด:ยกเลิก";
+		.@bounty = (select(.@menu$) * 4) + 1;
+		if (.@bounty > getargcount()+1){
+			mes "[Bounty Board]";
+			mes "คุณได้ตัดสินใจที่จะไม่รับค่าหัวใดๆ";
+			close;
+		} else if (.@bounty == getargcount()+1){
+			for (.@i = 5; .@i < getargcount(); .@i += 4){
+				if (checkquest(getarg(.@i)) == -1)
+					setquest getarg(.@i);
+				.@HuntAllList$ = .@HuntAllList$ + (.@i+4 > getargcount()?" และ ":(.@i > 5?", ":"")) + getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			}
+			mes "[Bounty Board]";
+			mes "มีค่าหัวในการล่า 150 ตัว " + .@HuntAllList$ + " ตามล่าพวกมันทั้งหมด";
+			close;
+		}
+		.@monster$ = getmonsterinfo(getarg(.@bounty-1),MOB_NAME);
+		mes "[Bounty Board]";
+		mes "มีค่าหัวให้ล่า150 ตัว " + .@monster$ + "";
+		next;
+		if (select("ฉันจะทำมัน.", "เอ่อ จริงๆ แล้วไม่เป็นไรหรอก") == 1){
+			if (checkquest(getarg(.@bounty),HUNTING) == -1)
+				setquest getarg(.@bounty);
+			mes "[Bounty Board]";
+			mes "คุณได้ยอมรับค่าหัวในการล่า "+.@monster$+".";
+		}
+		close;
+	case 2:	// Collect bounty rewards
+		mes "[Bounty Board]";
+		mes "คุณพร้อมที่จะรวบรวมรางวัลของคุณแล้ว";
+		mes "คุณต้องการรวบรวมรางวัลใดล่ะ?";
+		next;
+		switch(select("รวบรวมสะสม 1 รางวัล", "รวบรวมสะสมรางวัลทั้งหมด", "ยกเลิก")){
+			case 1: goto L_BountyOne;
+			case 2: goto L_BountyAll;
+			case 3: close;
+		}
+	case 3:	// Where do I go to hunt?
+		mes "[Bounty Board]";
+		switch(getarg(2)){
+			case 1: mes "คุณสามารถล่าพวกมันได้ที่ดันเจี้ยน คุณกำลังจ้องมองที่ทางเข้าตอนนี้!"; break;
+			case 2: mes "คุณสามารถล่าพวกมันได้ที่ป่ารอบๆ Payon และที่ถ้ำทางเหนือของ Archer Village"; break;
+			case 3: mes "คุณสามารถล่าพวกมันได้ที่ทุ่งต่างๆ รอบๆ  Prontera."; break;
+			case 4: mes "คุณสามารถล่าพวกมันได้ที่ทุ่งนาและดันเจี้ยนต่างๆ Prontera."; break;
+			case 5: mes "คุณสามารถออกล่าที่ทุ่ง Umbala เพื่อเติมเต็มค่าหัวเหล่านี้"; break;
+			case 6:
+				mes "คุณอยากไปสนามล่า monster แห่งไหน?";
+				next;
+				.@bounty = (select("Golem", "Stalactic Golem", "Medusa", "ยกเลิก") * 4) + 1;
+				if (.@bounty > getargcount())
+					close;
+				mes "[Bounty Board]";
+				if (checkquest(getarg(.@bounty),HUNTING) == -1){
+					mes "ขณะนี้คุณไม่ได้ล่า "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+".";
+					close;
+				}
+				mes "กำลังส่งคุณอยู่";
+				close2;
+				switch(.@bounty){
+					case 1: warp "cmd_fild06",147,36; break;
+					case 2: warp "beach_dun2",154,25; break;
+					case 3: warp "beach_dun",266,67; break;
+				}
+				end;
+			case 7: mes "คุณสามารถล่าที่ <NAVI>Juno Fields<INFO>yuno,158,16,</INFO></NAVI> เพื่อเติมเต็มค่าหัวเหล่านี้ได้"; break;
+			case 8: mes "คุณสามารถออกล่าได้ที่ <NAVI>Brasilis Field<INFO>brasilis,309,304,</INFO></NAVI> และ <NAVI>Brasilis Dungeon<INFO>brasilis,183,284,</INFO></NAVI> เพื่อเติมเต็มค่าหัวเหล่านี้"; break;
+			case 9: mes "คุณสามารถล่าพวกมันได้ที่ทุ่งต่างๆ รอบๆ Lighthalzen."; break;
+			case 10: mes "คุณสามารถล่าพวกมันได้ที่ทุ่งนาและดันเจี้ยนต่างๆ รอบๆ Lighthalzen."; break;
+			case 11:
+				mes "คุณสามารถล่าได้ที่ <NAVI>Splendide Field<INFO>mid_camp,14,143,</INFO></NAVI> เพื่อเติมเต็มค่าหัวเหล่านี้";
+				mes "ต้องแน่ใจว่าคุณเป็นสมาชิกที่ได้รับอนุญาตของ Midgard Alliance ก่อนที่จะไปที่นั่น";
+				break;
+			case 12: mes "คุณสามารถออกล่าที่ Dicastes Fields สองแห่งเพื่อเติมเต็มค่าหัวเหล่านี้"; break;
+		}
+		close;
+	case 4:	// Search for other bounty hunters.
+		mes "[Bounty Board]";
+		mes "หากต้องการค้นหาผู้เล่นที่จะปาร์ตี้ด้วย ให้คลิกที่ปุ่ม [Booking] ในเมนูผู้ใช้ของคุณ หรือพิมพ์ \"/booking\" ในกล่องแชทเพื่อเปิดหน้าต่างขึ้นมา";
+		next;
+		mes "[Bounty Board]";
+		mes "จากนั้นคลิก \"Search\" เพื่อแสดงรายชื่อปาร์ตี้ทั้งหมด";
+		mes "หากต้องการโพสต์โฆษณาที่ต้องการสำหรับงานปาร์ตี้ ให้พิมพ์ \"/recruit\" ลงในช่องแชท";
+		close;
+	case 5:	// I want to QUIT hunting
+		goto L_BountyDel;
+	case 6:	// Not interested.
+		mes "[Bounty Board]";
+		mes "ชีวิตเต็มไปด้วยอันตราย";
+		mes "คุณไม่มีชีวิตอยู่เว้นแต่คุณจะตกอยู่ในอันตรายเป็นครั้งคราว";
+		close;
+	}
+
+L_BountyOne:
+	mes "[Bounty Board]";
+	mes "คุณจะได้รับ ^FF00001 Eden Merit Badge^000000 หากรวบรวมค่าหัวทั้งหมดรวมกัน";
+	mes "มิฉะนั้น zeny และ EXP/JEXP จะได้รับรางวัลเพียงอย่างเดียว";
+	mes "^FF0000VIP สามารถเลือกวิธีรับรางวัลประสบการณ์ได้^000000.";
+	next;
+	for (.@i = 4; .@i < getargcount(); .@i += 4)
+		.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+	.@menu$ = .@menu$ + "ยกเลิก";
+	.@bounty = (select(.@menu$) * 4) + 1;
+	if (.@bounty > getargcount()){
+		mes "^000000[Bounty Board]^000000";
+		mes "กลับมาอีกครั้งเมื่อคุณมีล่าค่าหัวเสร็จสิ้น";
+		close;
+	}
+	if (checkquest(getarg(.@bounty),HUNTING) == 2){
+		if (vip_status(1)){
+			mes "^000000[Bounty Board]^000000";
+			mes "คุณจะเรับประสบการณ์ใหม่ของคุณอย่างไร?";
+			next;
+			.@vip_reward = select("^FF0000ทั้ง Base และ Job EXP^000000", "^0000FFฉันต้องการ Base EXP เท่านั้น^000000", "^FFA400ฉันต้องการ Job EXP เท่านั้น^000000");
+		}
+		erasequest getarg(.@bounty);
+		if (Zeny + 37500 <= MAX_ZENY)
+			Zeny += 37500;
+		.@BaseExp = getarg(.@bounty+1);
+		.@JobExp = getarg(.@bounty+2);
+		switch(.@vip_reward){
+			case 2:
+				getexp .@BaseExp,0;
+				getexp .@JobExp,0;
+				break;
+			case 3:
+				getexp 0,.@BaseExp;
+				getexp 0,.@JobExp;
+				break;
+			default:
+				getexp .@BaseExp,.@JobExp;
+				break;
+		}
+	} else {
+		mes "^000000[Bounty Board]^000000";
+		mes "ค่าหัวในการล่า "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+" ยังไม่เสร็จสิ้น";
+	}
+	close;
+
+L_BountyAll:
+	mes "[Bounty Board]";
+	mes "โอ้ คุณคิดว่าตัวเองเป็นนักล่าที่ดีใช่มั้ย?";
+	mes "ให้ฉันดูว่าคุณได้ล่า monsters ทั้งหมดที่คุณบอกว่าจะทำจริงหรือไม่";
+	next;
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) < 2){
+			mes "[Bounty Board]";
+			mes "ค่าหัวในการล่าทั้งหมดยังไม่เสร็จสิ้น";
+			mes "การโกหกจะไม่ได้รับการยอมรับ";
+			close;
+		}
+	}
+	if (vip_status(1)){
+		mes "^000000[Bounty Board]^000000";
+		mes "คุณจะรับประสบการณ์ใหม่ของคุณอย่างไร?";
+		next;
+		.@vip_reward = select("^FF0000ทั้ง Base และ Job EXP^000000", "^0000FFฉันต้องการ Base EXP เท่านั้น^000000", "^FFA400ฉันต้องการ Job EXP เท่านั้น^000000");
+	}
+	for (.@i = 5; .@i < getargcount(); .@i += 4)
+		erasequest getarg(.@i);
+	for (.@i = 6; .@i < getargcount(); .@i += 4){
+		if (Zeny + 37500 <= MAX_ZENY)
+			Zeny += 37500;
+		.@BaseExp = getarg(.@i);
+		.@JobExp = getarg(.@i+1);
+		switch(.@vip_reward){
+			case 2:
+				getexp .@BaseExp,0;
+				getexp .@JobExp,0;
+				break;
+			case 3:
+				getexp 0,.@BaseExp;
+				getexp 0,.@JobExp;
+				break;
+			default:
+				getexp .@BaseExp,.@JobExp;
+				break;
+		}
+	}
+	getitem "Eden_Merit_Badge",1;
+	mes "[Bounty Board]";
+	mes "นี่คือรางวัลของคุณ";
+	close;
+
+L_BountyDel:
+	mes "[Bounty Board]";
+	mes "ฉันจะตรวจสอบภารกิจที่คุณได้ทำไปแล้ว";
+	mes "คุณต้องการเลิกอันไหน?";
+	next;
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) == 1){
+			.@monster$ = getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			mes "[Bounty Board]";
+			mes "คุณยังไม่เสร็จสิ้นภารกิจล่า " + .@monster$;
+			mes "คุณต้องการดำเนินการต่อหรือเลิก?";
+			next;
+			if (select("ล่า "+.@monster$+" ต่อไป", "^FF0000กำจัดยกเลิกภารกิจของฉัน^000000") == 2){
+				erasequest getarg(.@i);
+				mes "[Bounty Board]";
+				mes "บันทึกทั้งหมดของคุณสำหรับภารกิจนี้ถูกลบแล้ว";
+				close2;
+				.@questerased = 1;
+			}
+		}
+	}
+	if (!.@questerased)
+		close;
+	else
+		end;
+
+}

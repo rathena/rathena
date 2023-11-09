@@ -119,6 +119,12 @@ CREATE TABLE `item_db2_re` (
   UNIQUE INDEX `UniqueAegisName` (`name_aegis`)
 ) ENGINE=MyISAM;
 
+# CTRO-Server Items Customs
+#=============================================================
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (35000,'Auto_Trade_Voucher','Auto Trade Voucher','Usable',10,true,true,true,true,true,true,true,'atcommand "@at";');
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (35001,'GM_by_pass_Voucher','GM by pass Voucher','Usable',10,true,true,true,true,true,true,true,'callfunc "menu_GM";');
+
+
 # THQ Quest Items
 #=============================================================
 # REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_sell`,`weight`,`alias_name`) VALUES (1998,'Jeramiah\'s_Jur','Jeramiah\'s Jur','Etc',10,10,'Jur');
