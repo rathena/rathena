@@ -11359,3 +11359,11 @@ Note: Only works with classes that use the ranking system.
 Returns true if the player is dead else false.
 
 ---------------------------------------
+
+*has_autoloot({<char_id>});
+
+This command checks whether a player configured autoloot.
+Returns current autoloot value on success.
+
+---------------------------------------
+
