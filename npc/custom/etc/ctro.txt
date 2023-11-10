@@ -12,7 +12,7 @@
 // สคลิป npc เฉพาะ CTRO-Server
 //============================================================
 
--	script	FloatingRates	-1,{
+-	script	AllEXPRates	-1,{
 
 OnHour00:
 OnHour12:
