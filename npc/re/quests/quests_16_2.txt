@@ -4489,7 +4489,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 		}
 		if (lebedev_quest_16_2 == 0) {
 			mes "[USU commander Elena]";
-			mes "Not busy? That's a good news.";
+			mes "Not busy? That's good news.";
 			mes "Apart from fighting... I would like to ask you for a favor.";
 			next;
 			mes "[USU commander Elena]";

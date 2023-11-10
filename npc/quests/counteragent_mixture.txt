@@ -401,7 +401,7 @@ geffen_in,141,140,3	script	Morgenstein#cm	121,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	if (MISC_QUEST & 4) {
